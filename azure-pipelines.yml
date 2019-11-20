@@ -16,7 +16,7 @@ variables:
 
 pool:
   name: 'Azure Pipelines'
-  vmImage: 'vs2017-win2016'
+  vmImage: 'vs2015-win2012r2'
 
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@5
