@@ -1,0 +1,81 @@
+name: tl-results-and-certification
+trigger:
+  batch: true
+  branches:
+    include:
+      - "*"
+
+pr: none
+
+workspace:
+    clean: all
+
+variables:
+  buildConfiguration: 'release'
+  buildPlatform: 'anycpu'
+
+pool:
+  name: 'Azure Pipelines'
+  vmImage: 'vs2017-win2016'
+
+steps:
+- task: gittools.gitversion.gitversion-task.GitVersion@5
+  displayName: GitVersion
+
+- task: DotNetCoreCLI@2
+  displayName: dot restore
+  inputs:
+    command: restore
+    projects: 'src/Sfa.Tl.ResultsAndCertification.sln'
+    noCache: true
+
+- task: DotNetCoreCLI@2
+  displayName: dotnet build
+  inputs:
+    projects: 'src/**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)  --no-restore'
+    
+- task: DotNetCoreCLI@2
+  displayName: dotnet test
+  inputs:
+    command: test
+    projects: '**/*.UnitTests.csproj'
+    arguments: '--configuration $(buildConfiguration) --no-build'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish Internal API'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: 'src/Sfa.Tl.ResultsAndCertification.Api/Sfa.Tl.ResultsAndCertification.Api.cspro'
+    arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish Web App'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: 'src/Sfa.Tl.ResultsAndCertification.Api/Sfa.Tl.ResultsAndCertification.Api.cspro'
+    arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'   
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish DB Job'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: src/Sfa.Tl.ResultsAndCertification.Database/Sfa.Tl.ResultsAndCertification.Database.sqlproj
+    arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'
+    
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    Contents: |
+     azure\**
+     src\**\*.dacpac
+    TargetFolder: '$(build.artifactstagingdirectory)/'
+    OverWrite: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)/
