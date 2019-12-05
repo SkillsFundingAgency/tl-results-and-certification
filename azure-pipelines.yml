@@ -16,7 +16,7 @@ variables:
 
 pool:
   name: 'Azure Pipelines'
-  vmImage: 'windows-2019'
+  vmImage: 'vs2017-win2016'
 
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@5
@@ -55,17 +55,17 @@ steps:
   inputs:
     command: publish
     publishWebProjects: false
-    projects: 'src/Sfa.Tl.ResultsAndCertification.Api/Sfa.Tl.ResultsAndCertification.Api.csproj'
+    projects: 'src/Sfa.Tl.ResultsAndCertification.Web/Sfa.Tl.ResultsAndCertification.Web.csproj'
     arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'   
 
-- task: DotNetCoreCLI@2
-  displayName: 'Publish DB Job'
+- task: VSBuild@1
+  displayName: 'Build DACPAC'
   inputs:
-    command: publish
-    publishWebProjects: false
-    projects: src/Sfa.Tl.ResultsAndCertification.Database/Sfa.Tl.ResultsAndCertification.Database.sqlproj
-    arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'
-    
+    solution: 'src/Sfa.Tl.ResultsAndCertification.Database/Sfa.Tl.ResultsAndCertification.Database.sqlproj'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    msbuildArgs: '/p:PackageLocation="$(build.artifactstagingdirectory)/publish"'
+
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
   inputs:
