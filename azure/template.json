@@ -200,7 +200,7 @@
                         "value": [
                             {
                                 "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                                "value": "[reference('pp-insights').outputs.InstrumentationKey.value]"
+                                "value": "[reference('web-app-insights').outputs.InstrumentationKey.value]"
                             },
                             {
                                 "name": "EnvironmentName",
