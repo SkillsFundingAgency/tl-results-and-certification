@@ -1,0 +1,17 @@
+{
+  "src": {
+    "default": "Frontend/src/stylesheets/sass/**/*.scss",
+    "defaultJs": "Frontend/src/javascripts/*.js",
+    "defaultAssets": "Frontend/src/assets/**/*"
+  },
+
+  "mid": {
+    "default": "Frontend/src/stylesheets/css"
+  },
+
+  "dist": {
+    "default": "wwwroot/stylesheets",
+    "defaultJs": "wwwroot/javascripts",
+    "defaultAssets": "wwwroot/assets"
+  }
+}
