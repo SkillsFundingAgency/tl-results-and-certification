@@ -1,2 +1,0 @@
-# Assign the following team as codeowners for this repository
-*      @rajeshgaddam17
