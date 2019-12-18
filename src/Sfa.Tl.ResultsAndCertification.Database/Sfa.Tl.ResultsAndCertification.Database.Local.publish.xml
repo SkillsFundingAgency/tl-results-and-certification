@@ -8,5 +8,6 @@
     <ProfileVersionNumber>1</ProfileVersionNumber>
     <BlockOnPossibleDataLoss>False</BlockOnPossibleDataLoss>
     <ScriptDatabaseOptions>True</ScriptDatabaseOptions>
+    <GenerateSmartDefaults>True</GenerateSmartDefaults>
   </PropertyGroup>
 </Project>
