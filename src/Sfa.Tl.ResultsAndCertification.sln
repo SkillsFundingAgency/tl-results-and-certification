@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertificat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Domain", "Sfa.Tl.ResultsAndCertification.Domain\Sfa.Tl.ResultsAndCertification.Domain.csproj", "{75385E05-9487-44CD-99B9-D3BECE5AFBF9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Data", "Sfa.Tl.ResultsAndCertification.Data\Sfa.Tl.ResultsAndCertification.Data.csproj", "{C30A639F-EAD6-4B7F-BF8C-0B1CE9F31D8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{75385E05-9487-44CD-99B9-D3BECE5AFBF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75385E05-9487-44CD-99B9-D3BECE5AFBF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75385E05-9487-44CD-99B9-D3BECE5AFBF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C30A639F-EAD6-4B7F-BF8C-0B1CE9F31D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30A639F-EAD6-4B7F-BF8C-0B1CE9F31D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C30A639F-EAD6-4B7F-BF8C-0B1CE9F31D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C30A639F-EAD6-4B7F-BF8C-0B1CE9F31D8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
