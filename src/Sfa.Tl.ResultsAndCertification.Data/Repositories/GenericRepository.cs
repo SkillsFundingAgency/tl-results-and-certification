@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public virtual async Task<int> Create(T entity)
+        public virtual async Task<int> CreateAsync(T entity)
         {
             await _dbContext.AddAsync(entity);
 
@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return entity.Id;
         }
 
-        public virtual async Task<int> CreateMany(IList<T> entities)
+        public virtual async Task<int> CreateManyAsync(IList<T> entities)
         {
             await _dbContext.AddRangeAsync(entities);
 
@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
         }
 
-        public virtual async Task Update(T entity)
+        public virtual async Task UpdateAsync(T entity)
         {
             _dbContext.Update(entity);
 
@@ -68,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
         }
 
-        public virtual async Task Delete(T entity)
+        public virtual async Task DeleteAsync(T entity)
         {
             _dbContext.Remove(entity);
 
@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
         }
 
-        public virtual async Task<int> Delete(int id)
+        public virtual async Task<int> DeleteAsync(int id)
         {
             var entity = new T
             {
@@ -104,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
         }
 
-        public virtual async Task DeleteMany(IList<T> entities)
+        public virtual async Task DeleteManyAsync(IList<T> entities)
         {
             if (entities.Count == 0) return;
 
@@ -134,19 +134,19 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return await queryable.ToListAsync();
         }
 
-        public async Task<T> GetFirstOrDefault(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] navigationPropertyPath)
+        public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] navigationPropertyPath)
         {
             var queryable = GetQueryableWithIncludes(predicate, null, true, navigationPropertyPath);
             return await queryable.FirstOrDefaultAsync();
         }
 
-        public async Task<TDto> GetFirstOrDefault<TDto>(Expression<Func<T, bool>> predicate, Expression<Func<T, TDto>> selector, Expression<Func<T, object>> orderBy, bool asendingorder = true, params Expression<Func<T, object>>[] navigationPropertyPath)
+        public async Task<TDto> GetFirstOrDefaultAsync<TDto>(Expression<Func<T, bool>> predicate, Expression<Func<T, TDto>> selector, Expression<Func<T, object>> orderBy, bool asendingorder = true, params Expression<Func<T, object>>[] navigationPropertyPath)
         {
             var queryable = GetQueryableWithIncludes(predicate, orderBy, asendingorder, navigationPropertyPath);
             return await queryable.Select(selector).FirstOrDefaultAsync();
         }
 
-        public async Task<T> GetSingleOrDefault(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] navigationPropertyPath)
+        public async Task<T> GetSingleOrDefaultAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] navigationPropertyPath)
         {
             var queryable = GetQueryableWithIncludes(predicate, null, true, navigationPropertyPath);
 
@@ -160,13 +160,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
         }
 
-        public async Task<TDto> GetSingleOrDefault<TDto>(Expression<Func<T, bool>> predicate, Expression<Func<T, TDto>> selector, Expression<Func<T, object>> orderBy, bool asendingorder = true, params Expression<Func<T, object>>[] navigationPropertyPath)
+        public async Task<TDto> GetSingleOrDefaultAsync<TDto>(Expression<Func<T, bool>> predicate, Expression<Func<T, TDto>> selector, Expression<Func<T, object>> orderBy, bool asendingorder = true, params Expression<Func<T, object>>[] navigationPropertyPath)
         {
             var queryable = GetQueryableWithIncludes(predicate, orderBy, asendingorder, navigationPropertyPath);
             return await queryable.Select(selector).SingleOrDefaultAsync();
         }
 
-        public async Task<int> Count(Expression<Func<T, bool>> predicate = null)
+        public async Task<int> CountAsync(Expression<Func<T, bool>> predicate = null)
         {
             return predicate != null ? await _dbContext.Set<T>().CountAsync(predicate) :
                 await _dbContext.Set<T>().CountAsync();
