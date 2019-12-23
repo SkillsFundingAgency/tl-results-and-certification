@@ -133,7 +133,7 @@
         },
         {
             "apiVersion": "2017-05-10",
-            "name": "web-app-insights",
+            "name": "api-app-insights",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
@@ -235,7 +235,7 @@
             "dependsOn": [
                 "app-service-plan",
                 "app-service-certificate",
-                "app-insights"
+                "web-app-insights"
             ]
         },
         {
@@ -297,7 +297,7 @@
             "dependsOn": [
                 "app-service-plan",
                 "app-service-certificate",
-                "app-insights"
+                "api-app-insights"
             ]
         },
         {
