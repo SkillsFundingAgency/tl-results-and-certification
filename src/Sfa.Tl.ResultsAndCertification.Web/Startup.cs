@@ -4,21 +4,36 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Application.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        private readonly IConfiguration _config;
+        private readonly ILogger<Startup> _logger;
+        private readonly IWebHostEnvironment _env;
 
-        public IConfiguration Configuration { get; }
+        protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
+        public Startup(IConfiguration configuration, ILogger<Startup> logger, IWebHostEnvironment env)
+        {
+            _config = configuration;
+            _logger = logger;
+            _env = env;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ResultsAndCertificationConfiguration = ConfigurationLoader.Load(
+               _config[Constants.EnvironmentNameConfigKey],
+               _config[Constants.ConfigurationStorageConnectionStringConfigKey],
+               _config[Constants.VersionConfigKey],
+               _config[Constants.ServiceNameConfigKey]);
+
+            services.AddSingleton(ResultsAndCertificationConfiguration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 

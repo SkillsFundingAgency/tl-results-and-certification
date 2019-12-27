@@ -10,4 +10,10 @@
     <Folder Include="Frontend\src\stylesheets\sass\components\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Application\Sfa.Tl.ResultsAndCertification.Application.csproj" />
+    <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Models\Sfa.Tl.ResultsAndCertification.Models.csproj" />
+  </ItemGroup>
+
 </Project>
