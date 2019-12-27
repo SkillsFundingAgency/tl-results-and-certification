@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertificat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Application", "Sfa.Tl.ResultsAndCertification.Application\Sfa.Tl.ResultsAndCertification.Application.csproj", "{D8B95BF4-8B59-429F-8DBB-BD0D58654A3B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Models", "Sfa.Tl.ResultsAndCertification.Models\Sfa.Tl.ResultsAndCertification.Models.csproj", "{9B7E8012-15A6-44F8-8999-FB4311969264}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{D8B95BF4-8B59-429F-8DBB-BD0D58654A3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8B95BF4-8B59-429F-8DBB-BD0D58654A3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8B95BF4-8B59-429F-8DBB-BD0D58654A3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B7E8012-15A6-44F8-8999-FB4311969264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B7E8012-15A6-44F8-8999-FB4311969264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B7E8012-15A6-44F8-8999-FB4311969264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B7E8012-15A6-44F8-8999-FB4311969264}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
