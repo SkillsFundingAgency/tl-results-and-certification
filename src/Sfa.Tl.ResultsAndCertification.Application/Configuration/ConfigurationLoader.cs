@@ -2,12 +2,13 @@
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Configuration
 {
     public static class ConfigurationLoader
     {
-        public static object Load(string environment, string storageConnectionString,
+        public static ResultsAndCertificationConfiguration Load(string environment, string storageConnectionString,
             string version, string serviceName)
         {
             try
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Configuration
                 var dynResult = result.Result as DynamicTableEntity;
                 var data = dynResult?.Properties["Data"].StringValue;
 
-                return JsonConvert.DeserializeObject(data);
+                return JsonConvert.DeserializeObject<ResultsAndCertificationConfiguration>(data);
             }
             catch (Exception ex)
             {
