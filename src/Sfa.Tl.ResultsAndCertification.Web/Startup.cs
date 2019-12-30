@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Web.Authentication;
 
 namespace Sfa.Tl.ResultsAndCertification.Web
 {
@@ -33,8 +34,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                _config[Constants.VersionConfigKey],
                _config[Constants.ServiceNameConfigKey]);
 
+            services.AddApplicationInsightsTelemetry();
             services.AddSingleton(ResultsAndCertificationConfiguration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+            services.AddWebAuthentication(ResultsAndCertificationConfiguration, _logger, _env);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
