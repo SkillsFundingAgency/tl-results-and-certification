@@ -39,6 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _logger, _env);
+            services.AddAuthorization();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
