@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,9 +36,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                _config[Constants.ServiceNameConfigKey]);
 
             services.AddApplicationInsightsTelemetry();
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services.AddSingleton(ResultsAndCertificationConfiguration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
+            services
+                .AddTransient<CustomCookieAuthenticationEvents>()
+                .AddHttpContextAccessor();
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _logger, _env);
             services.AddAuthorization();
         }
@@ -57,6 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             }
 
             app.UseHttpsRedirection();
+            app.UseCookiePolicy();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
