@@ -22,10 +22,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web
         private readonly IWebHostEnvironment _env;
 
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
-        public Startup(IConfiguration configuration, ILogger<Startup> logger, IWebHostEnvironment env)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             _config = configuration;
-            _logger = logger;
             _env = env;
         }
 
@@ -60,12 +59,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 }
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            services.AddWebAuthentication(ResultsAndCertificationConfiguration, _logger, _env);
+            services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
             services.AddAuthorization();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {

@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Extensions;
@@ -25,12 +24,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 {
     public static class AuthenticationExtensions
     {
-        public static IServiceCollection AddWebAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration config, ILogger logger, IWebHostEnvironment env)
+        public static IServiceCollection AddWebAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration config, IWebHostEnvironment env)
         {
             double cookieAndSessionTimeout = 2;
             var overallSessionTimeout = TimeSpan.FromMinutes(cookieAndSessionTimeout);
             var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
-
+            
             services.AddAntiforgery(options =>
             {
                 options.Cookie.SecurePolicy = cookieSecurePolicy;
@@ -110,8 +109,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
                         if (isSpuriousAuthCbRequest)
                         {
-                            logger.LogWarning("Spurious log in attempt received for DFE sign in");
-
                             context.HandleResponse();
                             context.Response.StatusCode = 302;
                             context.Response.Headers["Location"] = "/";
@@ -126,7 +123,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     // This is derived from the recommended approach: https://github.com/aspnet/Security/issues/1165
                     OnRemoteFailure = ctx =>
                     {
-                        logger.LogWarning("Remote failure for DFE-sign in");
                         ctx.HandleResponse();
                         return Task.FromException(ctx.Failure);
                     },
@@ -141,7 +137,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     // and validated the identity token
                     OnTokenValidated = async x =>
                     {
-                        logger.LogWarning("User has been authorised by DFE");
                         var cliendId = config.DfeSignInSettings.ClientId;
                         var issuer = config.DfeSignInSettings.Issuer;
                         var audience = config.DfeSignInSettings.Audience;
@@ -197,8 +192,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                             throw new SystemException("Could not get Role Type for User");
                         }
 
-                        logger.LogError("User " + userClaims.UserName + " has been authenticated by DFE");
-                        
                         // store both access and refresh token in the claims - hence in the cookie
                         identity.AddClaims(new[]
                         {
