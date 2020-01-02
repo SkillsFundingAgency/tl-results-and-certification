@@ -1,7 +1,6 @@
 ﻿using IdentityModel.Client;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using Sfa.Tl.ResultsAndCertification.Web.Authentication;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Interfaces;
 using System;
 using System.Globalization;
@@ -9,7 +8,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sfa.Poc.ResultsAndCertification.Dfe.Web.Authentication
+namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 {
     public class TokenRefresher : ITokenRefresher
     {

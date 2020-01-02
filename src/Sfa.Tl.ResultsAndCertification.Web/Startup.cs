@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication;
+using Sfa.Tl.ResultsAndCertification.Web.Authentication.Interfaces;
 
 namespace Sfa.Tl.ResultsAndCertification.Web
 {
@@ -45,11 +48,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             });
 
             services.AddSingleton(ResultsAndCertificationConfiguration);
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddHttpClient<ITokenRefresher, TokenRefresher>();
+            services.AddTransient<CustomCookieAuthenticationEvents>().AddHttpContextAccessor();
 
-            services
-                .AddTransient<CustomCookieAuthenticationEvents>()
-                .AddHttpContextAccessor();
+            services.AddMvc(config =>
+            {
+                if (!_env.IsDevelopment())
+                {
+                    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                    config.Filters.Add(new AuthorizeFilter(policy));
+                }
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _logger, _env);
             services.AddAuthorization();
         }
