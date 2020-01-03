@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <Folder Include="Frontend\src\stylesheets\css\" />
-    <Folder Include="Frontend\src\stylesheets\sass\components\" />
     <Folder Include="Authentication\" />
   </ItemGroup>
 
