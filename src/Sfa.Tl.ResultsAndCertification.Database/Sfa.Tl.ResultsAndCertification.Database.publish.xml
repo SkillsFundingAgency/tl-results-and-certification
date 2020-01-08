@@ -7,5 +7,6 @@
     <TargetConnectionString>Data Source=(localdb)\mssqllocaldb;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False</TargetConnectionString>
     <ProfileVersionNumber>1</ProfileVersionNumber>
     <BlockOnPossibleDataLoss>False</BlockOnPossibleDataLoss>
+    <GenerateSmartDefaults>True</GenerateSmartDefaults>
   </PropertyGroup>
 </Project>

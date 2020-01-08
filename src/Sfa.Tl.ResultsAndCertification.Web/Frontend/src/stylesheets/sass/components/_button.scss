@@ -1,0 +1,58 @@
+.tl-button--blue {
+  background: govuk-colour("blue");
+  &:hover,
+  &:focus {
+    background: darken(govuk-colour("blue"), 10%);
+  }
+}
+
+/*.tl-button--grey {
+    background: govuk-colour("grey-3");
+    color: govuk-colour("black") !important;
+
+    &:hover,
+    &:focus {
+        color: govuk-colour("black") !important;
+        background: darken(govuk-colour("grey-3"), 10%);
+    }
+}*/
+
+
+.tl-button--red {
+    background: govuk-colour("red");
+
+    &:hover,
+    &:focus {
+        background: darken(govuk-colour("red"), 10%);
+    }
+}
+
+
+// Rework button to look like a link
+.tl-button--looks-like-link {
+    display: block;
+    padding: govuk-spacing(0);
+    margin: govuk-spacing(0);
+    border: 0;
+    text-decoration: underline;
+    background: none;
+    box-shadow: none;
+    text-align: left;
+    cursor: pointer;
+    color: $govuk-link-colour;
+
+    &:hover, &:active {
+        top: 0;
+        background: none;
+        color: $govuk-link-hover-colour;
+        text-decoration: underline;
+    }
+
+    &:focus {
+        background: $govuk-focus-colour;
+    }
+
+    &:visited {
+        color: $govuk-link-visited-colour;
+    }
+}
