@@ -31,7 +31,7 @@ steps:
 - task: Gulp@0
   displayName: 'gulp'
   inputs:
-      gulpFile: src/Sfa.Tl.ResultsAndCertification.Web/gulpfile.js
+    gulpFile: src/Sfa.Tl.ResultsAndCertification.Web/gulpfile.js
 
 - task: DotNetCoreCLI@2
   displayName: dot restore
