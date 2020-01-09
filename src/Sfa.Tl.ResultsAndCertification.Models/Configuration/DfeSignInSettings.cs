@@ -35,13 +35,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// <value>/// The audience./// </value>
         public string Audience { get; set; }
 
-        /// <summary>/// Gets or sets the API secret./// </summary>
-        /// <value>/// The API secret./// </value>
-        public string APISecret { get; set; }
+        /// <summary>/// Gets or sets the Api secret./// </summary>
+        /// <value>/// The Api secret./// </value>
+        public string ApiSecret { get; set; }
 
-        /// <summary>/// Gets or sets the API URI./// </summary>
-        /// <value>/// The API URI./// </value>
-        public string APIUri { get; set; }
+        /// <summary>/// Gets or sets the Api Uri./// </summary>
+        /// <value>/// The Api Uri./// </value>
+        public string ApiUri { get; set; }
 
         /// <summary>/// Gets or sets the token endpoint./// </summary>
         /// <value>/// The token endpoint./// </value>
