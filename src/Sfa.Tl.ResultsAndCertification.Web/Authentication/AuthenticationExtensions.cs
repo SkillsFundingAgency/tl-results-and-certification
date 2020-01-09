@@ -140,8 +140,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         var cliendId = config.DfeSignInSettings.ClientId;
                         var issuer = config.DfeSignInSettings.Issuer;
                         var audience = config.DfeSignInSettings.Audience;
-                        var apiSecret = config.DfeSignInSettings.APISecret;
-                        var apiUri = config.DfeSignInSettings.APIUri;
+                        var apiSecret = config.DfeSignInSettings.ApiSecret;
+                        var apiUri = config.DfeSignInSettings.ApiUri;
 
                         Throw.IfNull(issuer, nameof(issuer));
                         Throw.IfNull(audience, nameof(audience));

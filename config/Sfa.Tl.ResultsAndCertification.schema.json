@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "id": "http://example.com/example.json",
+  "properties": {
+    "SqlConnectionString": {
+      "minLength": 1,
+      "type": "string",
+      "environmentVariable": "SqlConnectionString"
+    },
+    "BlobStorageConnectionString": {
+      "type": "string",
+      "environmentVariable": "BlobStorageConnectionString"
+    },
+    "ResultsAndCertificationInternalApiUri": {
+      "type": "string",
+      "environmentVariable": "ResultsAndCertificationInternalApiUri"
+    },
+    "DfeSignInSettings": {
+      "properties": {
+        "MetadataAddress": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInMetadataAddress"
+        },
+        "ClientId": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInClientId"
+        },
+        "ClientSecret": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInClientSecret"
+        },
+        "CallbackPath": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInCallbackPath"
+        },
+        "SignedOutCallbackPath": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInSignedOutCallbackPath"
+        },
+        "LogoutPath": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInLogoutPath"
+        },
+        "Issuer": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInIssuer"
+        },
+        "Audience": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInAudience"
+        },
+        "ApiSecret": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInApiSecret"
+        },
+        "ApiUri": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInApiUri"
+        },
+        "TokenEndpoint": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInTokenEndpoint"
+        },
+        "Authority": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInAuthority"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "MetadataAddress",
+        "ClientId",
+        "ClientSecret",
+        "CallbackPath",
+        "SignedOutCallbackPath",
+        "LogoutPath",
+        "Issuer",
+        "Audience",
+        "ApiSecret",
+        "ApiUri",
+        "TokenEndpoint",
+        "Authority"
+      ],
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "SqlConnectionString",
+    "BlobStorageConnectionString",
+    "DfeSignInSettings"
+  ],
+  "type": "object"
+}
