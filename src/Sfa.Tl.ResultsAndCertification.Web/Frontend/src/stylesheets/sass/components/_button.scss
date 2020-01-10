@@ -6,18 +6,6 @@
   }
 }
 
-/*.tl-button--grey {
-    background: govuk-colour("grey-3");
-    color: govuk-colour("black") !important;
-
-    &:hover,
-    &:focus {
-        color: govuk-colour("black") !important;
-        background: darken(govuk-colour("grey-3"), 10%);
-    }
-}*/
-
-
 .tl-button--red {
     background: govuk-colour("red");
 
@@ -26,7 +14,6 @@
         background: darken(govuk-colour("red"), 10%);
     }
 }
-
 
 // Rework button to look like a link
 .tl-button--looks-like-link {
