@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [HttpGet]
         public async Task SignIn()
         {
-            var returnUrl = Url.Action(nameof(AccountController.PostSignIn), "Account");
+            var returnUrl = Url.Action(nameof(AccountController.PostSignIn), Constants.AccountController);
             await HttpContext.ChallengeAsync(new AuthenticationProperties() { RedirectUri = returnUrl });
         }
 
@@ -32,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction(nameof(TlevelHomeController.Index), "TlevelHome");
+                return RedirectToAction(nameof(TlevelHomeController.Index), Constants.TlevelHomeController);
             }
             else
             {
@@ -49,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         public IActionResult SignOutComplete()
         {
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(HomeController.Index), Constants.HomeController);
         }
     }
 }
