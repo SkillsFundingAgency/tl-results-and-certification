@@ -14,5 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             return View();
         }
+        public IActionResult TermsAndConditions()
+        {
+            return View();
+        }
     }
 }
