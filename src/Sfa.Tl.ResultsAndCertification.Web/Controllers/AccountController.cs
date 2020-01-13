@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction(nameof(TlevelHomeController.Index), Constants.TlevelHomeController);
+                return RedirectToAction(nameof(DashboardController.Index), Constants.DashboardController);
             }
             else
             {
