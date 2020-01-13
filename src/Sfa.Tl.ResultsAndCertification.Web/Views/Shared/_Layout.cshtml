@@ -11,7 +11,10 @@
     <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
 
     <partial name="_govuk_Header" />
-
+    @if (Context.User.Identity.IsAuthenticated)
+    {
+        <partial name="_govuk_Menu" />
+    }
     <div class="govuk-width-container">
         @if (User.Identity.IsAuthenticated)
         {
@@ -24,7 +27,6 @@
     </div>
 
     <partial name="_govuk_Footer" />
-
 
 </body>
 </html>
