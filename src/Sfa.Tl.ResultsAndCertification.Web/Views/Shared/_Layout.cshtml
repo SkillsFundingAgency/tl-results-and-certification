@@ -13,6 +13,11 @@
     <partial name="_govuk_Header" />
 
     <div class="govuk-width-container">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <partial name="_govuk_PhaseBanner" />
+        }
+
         <main class="govuk-main-wrapper" id="main-content" role="main">
             @RenderBody()
         </main>
