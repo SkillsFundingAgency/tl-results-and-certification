@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -22,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [HttpGet]
         public async Task SignIn()
         {
-            var returnUrl = Url.Action("PostSignIn", "Account");
+            var returnUrl = Url.Action(nameof(AccountController.PostSignIn), "Account");
             await HttpContext.ChallengeAsync(new AuthenticationProperties() { RedirectUri = returnUrl });
         }
 
@@ -30,12 +32,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "TlevelHome");
+                return RedirectToAction(nameof(TlevelHomeController.Index), "TlevelHome");
             }
             else
             {
                 return RedirectToAction("FailedLogin", "Home");
             }
+        }
+
+        [HttpGet]
+        public async Task SignedOut()
+        {
+            await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        public IActionResult SignOutComplete()
+        {
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     }
 }
