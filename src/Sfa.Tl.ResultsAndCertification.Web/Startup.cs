@@ -12,6 +12,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.Filters;
 
 namespace Sfa.Tl.ResultsAndCertification.Web
 {
@@ -57,6 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                     var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                     config.Filters.Add(new AuthorizeFilter(policy));
                 }
+                config.Filters.Add<CustomExceptionFilterAttribute>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
@@ -83,7 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
