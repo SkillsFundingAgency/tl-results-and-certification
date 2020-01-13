@@ -5,6 +5,6 @@
         // Controller Names
         public const string HomeController = "Home";
         public const string AccountController = "Account";
-        public const string TlevelHomeController = "TlevelHome";
+        public const string DashboardController = "Dashboard";
     }
 }
