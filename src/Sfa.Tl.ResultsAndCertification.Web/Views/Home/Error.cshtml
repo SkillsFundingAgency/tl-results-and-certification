@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting;
+
+@model Sfa.Tl.ResultsAndCertification.Web.Models.ErrorViewModel
+@inject IWebHostEnvironment WebHostingEnvironment
+@{
+    ViewData["Title"] = "Sorry, there is a problem with the service";
+    var ex = ViewData["Exception"] as Exception;
+}
+
+<main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">@ViewData["Title"]</h1>
+            @if (WebHostingEnvironment.IsDevelopment())
+            {
+                <h2 class="govuk-heading-l">An error occurred while processing your request.</h2>
+
+                if (Model.ShowRequestId)
+                {
+                    <p class="govuk-body">
+                        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+                    </p>
+                }
+
+                <h3 class="govuk-heading-m">Development Mode</h3>
+                <p class="govuk-body">
+                    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+                </p>
+                <p class="govuk-body">
+                    <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
+                </p>
+                <h3>@ex.Message</h3>
+                <div>@ex.InnerException?.Message</div>
+                <div>@ex.StackTrace</div>
+            }
+            else
+            {
+                <p class="govuk-body">Try again later.</p>
+                <p class="govuk-body">
+                    <a class="govuk-link" href="#">Contact the Manage T Levels team</a> if you need help with the T Levels tasks you need to complete.
+                </p>
+            }
+        </div>
+    </div>
+</main>

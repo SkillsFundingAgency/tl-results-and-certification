@@ -1,5 +1,3 @@
-using System;
-
 namespace Sfa.Tl.ResultsAndCertification.Web.Models
 {
     public class ErrorViewModel
