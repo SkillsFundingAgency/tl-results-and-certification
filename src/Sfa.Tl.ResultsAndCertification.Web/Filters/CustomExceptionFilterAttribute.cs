@@ -4,12 +4,8 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Web.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Filters
 {
