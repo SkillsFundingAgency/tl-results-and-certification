@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
+    [AllowAnonymous]
     public class HelpController : Controller
     {
         public IActionResult Cookies()
