@@ -26,10 +26,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [Route("page-not-found", Name = "PageNotFound")]
+        public IActionResult PageNotFound()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
+        }
+
+        [Route("/home/error/{statusCode}")]
+        public IActionResult Error(int statusCode)
+        {
+            return statusCode switch
+            {
+                404 => RedirectToRoute("PageNotFound"),
+                _ => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }),
+            };
         }
     }
 }
