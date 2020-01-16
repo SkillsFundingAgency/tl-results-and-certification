@@ -5,8 +5,7 @@ using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Web.Models;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
-{
-    [AllowAnonymous]
+{    
     public class HomeController : Controller
     {
         private readonly ILogger _logger;
@@ -16,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
@@ -26,12 +26,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [Route("page-not-found", Name = "PageNotFound")]
         public IActionResult PageNotFound()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [Route("/home/error/{statusCode}")]
         public IActionResult Error(int statusCode)
         {

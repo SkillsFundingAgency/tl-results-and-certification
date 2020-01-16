@@ -53,11 +53,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web
 
             services.AddMvc(config =>
             {
-                if (!_env.IsDevelopment())
-                {
-                    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-                    config.Filters.Add(new AuthorizeFilter(policy));
-                }
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
                 config.Filters.Add<CustomExceptionFilterAttribute>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
