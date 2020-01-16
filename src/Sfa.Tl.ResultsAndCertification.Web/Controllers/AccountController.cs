@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
-{
+{    
     public class AccountController : Controller
     {
         private readonly ILogger _logger;
@@ -24,6 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await HttpContext.ChallengeAsync(new AuthenticationProperties() { RedirectUri = returnUrl });
         }
 
+        [HttpGet]
         public IActionResult PostSignIn()
         {
             if (User.Identity.IsAuthenticated)
@@ -35,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToAction("FailedLogin", "Home");
             }
         }
-
+        
         [HttpGet]
         public async Task SignedOut()
         {
@@ -43,6 +45,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
+        [AllowAnonymous]
+        [HttpGet]
         public IActionResult SignOutComplete()
         {
             return RedirectToAction(nameof(HomeController.Index), Constants.HomeController);
