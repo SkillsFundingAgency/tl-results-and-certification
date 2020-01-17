@@ -19,11 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-
-        public IActionResult AccessDenied()
-        {
-            return View();
-        }        
+        }               
     }
 }
