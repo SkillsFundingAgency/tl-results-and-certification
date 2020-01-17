@@ -82,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
+            app.UseStatusCodePagesWithRedirects("/Error/{0}");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();

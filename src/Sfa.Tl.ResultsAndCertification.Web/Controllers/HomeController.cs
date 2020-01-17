@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Models;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {    
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger _logger;
@@ -14,8 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             _logger = logger;
         }
-
-        [AllowAnonymous]
+        
         public IActionResult Index()
         {
             return View();
@@ -24,24 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public IActionResult AccessDenied()
         {
             return View();
-        }
-
-        [AllowAnonymous]
-        [Route("page-not-found", Name = "PageNotFound")]
-        public IActionResult PageNotFound()
-        {
-            return View();
-        }
-
-        [AllowAnonymous]
-        [Route("/home/error/{statusCode}")]
-        public IActionResult Error(int statusCode)
-        {
-            return statusCode switch
-            {
-                404 => RedirectToRoute("PageNotFound"),
-                _ => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }),
-            };
-        }
+        }        
     }
 }
