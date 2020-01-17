@@ -7,6 +7,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
     public class ErrorController : Controller
     {
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         [AllowAnonymous]
         [Route("page-not-found", Name = "PageNotFound")]
         public IActionResult PageNotFound()

@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                 options.SlidingExpiration = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(cookieAndSessionTimeout);
                 options.LogoutPath = config.DfeSignInSettings.LogoutPath;
-                options.AccessDeniedPath = "/home/accessdenied";
+                options.AccessDeniedPath = "/error/accessdenied";
                 options.EventsType = typeof(CustomCookieAuthenticationEvents);
             })
             .AddOpenIdConnect(options =>
