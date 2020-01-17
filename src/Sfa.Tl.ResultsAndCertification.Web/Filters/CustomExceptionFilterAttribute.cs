@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Filters
         {
             _logger.LogError(default(int), context.Exception, context.Exception.Message);
 
-            var result = new ViewResult { ViewName = "~/Views/Home/Error.cshtml" };
+            var result = new ViewResult { ViewName = "~/Views/Error/Error.cshtml" };
             var modelMetadata = new EmptyModelMetadataProvider();
             result.ViewData = new ViewDataDictionary(modelMetadata, context.ModelState)
             {

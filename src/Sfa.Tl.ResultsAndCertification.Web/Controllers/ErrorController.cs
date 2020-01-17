@@ -23,11 +23,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("/error/{statusCode}")]
         public IActionResult HandleErrorCode(int statusCode)
         {
-            return statusCode switch
+            switch (statusCode)
             {
-                404 => RedirectToRoute("PageNotFound"),
-                _ => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }),
-            };
+                case 404:
+                    return RedirectToRoute("PageNotFound");
+                case 500:
+                default:
+                    return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
         }
     }
 }
