@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Sfa.Tl.ResultsAndCertification.Application.Extensions;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -36,13 +37,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers
         {
             // Given
             mockHttpContext.Setup(x => x.User.Identity.IsAuthenticated).Returns(true);
-            mockHttpContext.Setup(x => x.User.Claims).Returns(new List<Claim> { new Claim("HasAccessToService", "true") });
+            mockHttpContext.Setup(x => x.User.Claims).Returns(new List<Claim> { new Claim(CustomClaimTypes.HasAccessToService, "true") });
 
             // When
             var result = controller.PostSignIn();
 
             // Then
-            Assert.Same((result as RedirectToActionResult).ActionName, "Index");
+            Assert.Same((result as RedirectToActionResult).ActionName, nameof(DashboardController.Index));
             Assert.Same((result as RedirectToActionResult).ControllerName, "Dashboard");
         }
 
@@ -58,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers
             var result = controller.PostSignIn();
 
             // Then
-            Assert.Same((result as RedirectToActionResult).ActionName, "ServiceAccessDenied");
+            Assert.Same((result as RedirectToActionResult).ActionName, nameof(ErrorController.ServiceAccessDenied));
             Assert.Same((result as RedirectToActionResult).ControllerName, "Error");
         }
 
@@ -72,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers
             var result = controller.PostSignIn();
 
             // Then
-            Assert.Same((result as RedirectToActionResult).ActionName, "Index");
+            Assert.Same((result as RedirectToActionResult).ActionName, nameof(HomeController.Index));
             Assert.Same((result as RedirectToActionResult).ControllerName, "Home");
         }
     }
