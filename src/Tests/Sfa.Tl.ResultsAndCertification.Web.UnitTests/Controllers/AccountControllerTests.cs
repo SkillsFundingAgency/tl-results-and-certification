@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using System.Collections.Generic;
+using System.Security.Claims;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers
@@ -34,13 +36,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers
         {
             // Given
             mockHttpContext.Setup(x => x.User.Identity.IsAuthenticated).Returns(true);
-           
+            mockHttpContext.Setup(x => x.User.Claims).Returns(new List<Claim> { new Claim("HasAccessToService", "true") });
+
             // When
             var result = controller.PostSignIn();
 
             // Then
             Assert.Same((result as RedirectToActionResult).ActionName, "Index");
             Assert.Same((result as RedirectToActionResult).ControllerName, "Dashboard");
+        }
+
+
+        [Fact]
+        public void PostSignIn_WhenUserAuthenticatedWithNoAccessToService_ThenRedirectedToServiceAccessDenied()
+        {
+            // Given
+            mockHttpContext.Setup(x => x.User.Identity.IsAuthenticated).Returns(true);
+            mockHttpContext.Setup(x => x.User.Claims).Returns(new List<Claim>());
+
+            // When
+            var result = controller.PostSignIn();
+
+            // Then
+            Assert.Same((result as RedirectToActionResult).ActionName, "ServiceAccessDenied");
+            Assert.Same((result as RedirectToActionResult).ControllerName, "Error");
         }
 
         [Fact]
@@ -53,7 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers
             var result = controller.PostSignIn();
 
             // Then
-            Assert.Same((result as RedirectToActionResult).ActionName, "FailedLogin");
+            Assert.Same((result as RedirectToActionResult).ActionName, "Index");
             Assert.Same((result as RedirectToActionResult).ControllerName, "Home");
         }
     }

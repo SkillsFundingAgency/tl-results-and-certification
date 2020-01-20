@@ -110,7 +110,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
             using var context = new ResultsAndCertificationDbContext(options);
 
             // Given
-            List<Provider> inputEntity = new List<Provider>
+            List<Provider> providers = new List<Provider>
             {
                 new ProviderBuilder()
                 .WithName("MAN")
@@ -120,14 +120,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
                 .Build(),
 
                 new ProviderBuilder()
-                .WithName("MANManchester University")
+                .WithName("MAN")
+                .WithDisplayName("Manchester University")
+                .WithIsTlevelProvider(false)
                 .WithIsTlevelProvider(true)
-                .WithUkPrn(111)
+                .WithUkPrn(222)
                 .Build(),
             };
 
             var genericRepository = new GenericRepository<Provider>(mockLogger.Object, context);
-            var ids = genericRepository.CreateManyAsync(inputEntity);
+            var ids = genericRepository.CreateManyAsync(providers);
 
             // When
             var resultset = genericRepository.GetFirstOrDefaultAsync(x => x.Name.Equals("MAN") && x.IsTlevelProvider);
