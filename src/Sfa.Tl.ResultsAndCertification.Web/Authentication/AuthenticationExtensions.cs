@@ -173,6 +173,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         {
                             UserId = Guid.Parse(identity.Claims.Where(c => c.Type == "sub").Select(c => c.Value).SingleOrDefault()),
                             ServiceId = Guid.Parse(identity.Claims.Where(c => c.Type == "sid").Select(c => c.Value).SingleOrDefault()),
+                            UKPRN = organisation.UKPRN.HasValue ? organisation.UKPRN.Value.ToString() : string.Empty,
+                            UserName = identity.Claims.Where(c => c.Type == "email").Select(c => c.Value).SingleOrDefault()
                         };
 
                         var client = new HttpClient();
@@ -184,9 +186,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         {
                             var json = response.Content.ReadAsStringAsync().Result;
                             userClaims = JsonConvert.DeserializeObject<DfeClaims>(json);
-                            userClaims.RoleName = userClaims.Roles.Select(r => r.Name).FirstOrDefault();
-                            userClaims.UKPRN = organisation.UKPRN.HasValue ? organisation.UKPRN.Value.ToString() : string.Empty;
-                            userClaims.UserName = identity.Claims.Where(c => c.Type == "email").Select(c => c.Value).SingleOrDefault();
+                            userClaims.RoleName = userClaims.Roles.Select(r => r.Name).FirstOrDefault();                       
                         }
                         else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                         {
@@ -198,28 +198,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         {
                             foreach (var role in userClaims.Roles)
                             {
-                                roleClaims.Add(new Claim(ClaimTypes.Role, role.Name));
-                            }
-
-                            if (roleClaims.Count > 0)
-                            {
-                                identity.AddClaims(roleClaims);
+                                identity.AddClaim(new Claim(ClaimTypes.Role, role.Name));
                             }
                         }
 
                         // store both access and refresh token in the claims - hence in the cookie
                         identity.AddClaims(new[]
                         {
-                                new Claim("access_token", x.TokenEndpointResponse.AccessToken),
-                                new Claim("refresh_token", x.TokenEndpointResponse.RefreshToken),
-                                new Claim("HasAccessToService", hasAccessToService.ToString()),
-                                new Claim("user_id", userClaims.UserId.ToString()),
-                                new Claim("OrganisationId", organisation.Id.ToString().ToUpper())
+                                new Claim(CustomClaimTypes.AccessToken, x.TokenEndpointResponse.AccessToken),
+                                new Claim(CustomClaimTypes.RefreshToken, x.TokenEndpointResponse.RefreshToken),
+                                new Claim(CustomClaimTypes.HasAccessToService, hasAccessToService.ToString()),
+                                new Claim(CustomClaimTypes.UserId, userClaims.UserId.ToString()),
+                                new Claim(CustomClaimTypes.Ukprn, userClaims.UKPRN),
+                                new Claim(CustomClaimTypes.OrganisationId, organisation.Id.ToString().ToUpper())
                         });
 
                         // so that we don't issue a session cookie but one with a fixed expiration
                         x.Properties.IsPersistent = true;
-
                         x.Properties.ExpiresUtc = DateTime.UtcNow.Add(overallSessionTimeout);
                     }
                 };
