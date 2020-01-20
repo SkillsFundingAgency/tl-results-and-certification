@@ -5,7 +5,13 @@
         "resourceEnvironmentName": {
             "type": "string",
             "metadata": {
-                "description": "Enviroment Designation"
+                "description": "Environment name on the resource eg: d01, t01, t02 and p01"
+            }
+        },
+        "environmentName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of environment on VSTS eg: DEV, TEST, PP and PROD"
             }
         },
         "serviceName": {
@@ -204,7 +210,7 @@
                             },
                             {
                                 "name": "EnvironmentName",
-                                "value": "[parameters('resourceEnvironmentName')]"
+                                "value": "[parameters('environmentName')]"
                             },
                             {
                                 "name": "ConfigurationStorageConnectionString",
@@ -266,7 +272,7 @@
                             },
                                    {
                                 "name": "EnvironmentName",
-                                "value": "[parameters('resourceEnvironmentName')]"
+                                "value": "[parameters('environmentName')]"
                             },
                             {
                                 "name": "ConfigurationStorageConnectionString",
