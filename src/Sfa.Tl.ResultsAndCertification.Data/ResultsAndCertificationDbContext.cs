@@ -12,13 +12,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         {
         }
 
+        public virtual DbSet<BaseEntity> BaseEntity { get; set; }
+        public virtual DbSet<Provider> Provider { get; set; }
+        public virtual DbSet<TqProvider> TqProvider { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //This will singularize all table names
-            foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
-            {
-                entityType.Relational().TableName = entityType.DisplayName();
-            }
+            ////This will singularize all table names
+            //foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
+            //{
+            //    entityType.Relational().TableName = entityType.DisplayName();
+            //}
         }
     }
 }
