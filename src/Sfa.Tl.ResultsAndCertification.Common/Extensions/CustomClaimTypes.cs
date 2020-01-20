@@ -1,4 +1,4 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Application.Extensions
+﻿namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
     public static class CustomClaimTypes
     {

@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
-using Sfa.Tl.ResultsAndCertification.Application.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Authentication;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
@@ -172,9 +172,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         var userClaims = new DfeClaims()
                         {
                             UserId = Guid.Parse(identity.Claims.Where(c => c.Type == "sub").Select(c => c.Value).SingleOrDefault()),
-                            ServiceId = Guid.Parse(identity.Claims.Where(c => c.Type == "sid").Select(c => c.Value).SingleOrDefault()),
-                            UKPRN = organisation.UKPRN.HasValue ? organisation.UKPRN.Value.ToString() : string.Empty,
-                            UserName = identity.Claims.Where(c => c.Type == "email").Select(c => c.Value).SingleOrDefault()
+                            ServiceId = Guid.Parse(identity.Claims.Where(c => c.Type == "sid").Select(c => c.Value).SingleOrDefault())                            
                         };
 
                         var client = new HttpClient();
@@ -186,7 +184,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         {
                             var json = response.Content.ReadAsStringAsync().Result;
                             userClaims = JsonConvert.DeserializeObject<DfeClaims>(json);
-                            userClaims.RoleName = userClaims.Roles.Select(r => r.Name).FirstOrDefault();                       
+                            userClaims.RoleName = userClaims.Roles.Select(r => r.Name).FirstOrDefault();    
+                            userClaims.UKPRN = organisation.UKPRN.HasValue ? organisation.UKPRN.Value.ToString() : string.Empty;
+                            userClaims.UserName = identity.Claims.Where(c => c.Type == "email").Select(c => c.Value).SingleOrDefault();                   
                         }
                         else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                         {
