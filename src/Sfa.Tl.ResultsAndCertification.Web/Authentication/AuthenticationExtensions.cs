@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
             double cookieAndSessionTimeout = 2;
             var overallSessionTimeout = TimeSpan.FromMinutes(cookieAndSessionTimeout);
             var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
-            
+
             services.AddAntiforgery(options =>
             {
                 options.Cookie.SecurePolicy = cookieSecurePolicy;
@@ -178,7 +178,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         var client = new HttpClient();
                         client.SetBearerToken(token);
                         var response = await client.GetAsync($"{apiUri}/services/{cliendId}/organisations/{organisation.Id}/users/{userClaims.UserId}");
-
+                        bool hasAccessToService = true;
+                        
                         if (response.IsSuccessStatusCode)
                         {
                             var json = response.Content.ReadAsStringAsync().Result;
@@ -187,9 +188,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                             userClaims.UKPRN = organisation.UKPRN.HasValue ? organisation.UKPRN.Value.ToString() : string.Empty;
                             userClaims.UserName = identity.Claims.Where(c => c.Type == "email").Select(c => c.Value).SingleOrDefault();
                         }
-                        else
+                        else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                         {
-                            throw new SystemException("Could not get Role Type for User");
+                            hasAccessToService = false;
+                        }
+
+                        List<Claim> roleClaims = new List<Claim>();
+                        if (userClaims.Roles != null && userClaims.Roles.Any())
+                        {
+                            foreach (var role in userClaims.Roles)
+                            {
+                                roleClaims.Add(new Claim(ClaimTypes.Role, role.Name));
+                            }
+
+                            if (roleClaims.Count > 0)
+                            {
+                                identity.AddClaims(roleClaims);
+                            }
                         }
 
                         // store both access and refresh token in the claims - hence in the cookie
@@ -197,8 +212,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         {
                                 new Claim("access_token", x.TokenEndpointResponse.AccessToken),
                                 new Claim("refresh_token", x.TokenEndpointResponse.RefreshToken),
+                                new Claim("HasAccessToService", hasAccessToService.ToString()),
                                 new Claim("user_id", userClaims.UserId.ToString()),
-                                new Claim(ClaimTypes.Role, userClaims.RoleName),
+                                new Claim("OrganisationId", organisation.Id.ToString().ToUpper())
                         });
 
                         // so that we don't issue a session cookie but one with a fixed expiration

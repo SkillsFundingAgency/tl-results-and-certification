@@ -13,8 +13,4 @@
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Models\Sfa.Tl.ResultsAndCertification.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
 </Project>

@@ -6,5 +6,6 @@
         public const string HomeController = "Home";
         public const string AccountController = "Account";
         public const string DashboardController = "Dashboard";
+        public const string ErrorController = "Error";
     }
 }

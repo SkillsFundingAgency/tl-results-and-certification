@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Application.Extensions;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -30,11 +31,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction(nameof(DashboardController.Index), Constants.DashboardController);
+                return !HttpContext.User.HasAccessToService()
+                    ? RedirectToAction(nameof(ErrorController.ServiceAccessDenied), Constants.ErrorController)
+                    : RedirectToAction(nameof(DashboardController.Index), Constants.DashboardController);
             }
             else
             {
-                return RedirectToAction("FailedLogin", "Home");
+                return RedirectToAction(nameof(HomeController.Index), Constants.HomeController);
             }
         }
         
