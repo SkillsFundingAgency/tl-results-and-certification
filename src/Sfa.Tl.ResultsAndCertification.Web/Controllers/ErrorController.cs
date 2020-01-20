@@ -13,6 +13,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [AllowAnonymous]
+        [Route("no-service-permission", Name = "ServiceAccessDenied")]
+        public IActionResult ServiceAccessDenied()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
         [Route("page-not-found", Name = "PageNotFound")]
         public IActionResult PageNotFound()
         {
