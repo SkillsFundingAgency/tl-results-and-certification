@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Sfa.Tl.ResultsAndCertification.Application.Extensions;
-using Sfa.Tl.ResultsAndCertification.Web.Controllers;
-using System.Collections.Generic;
-using System.Security.Claims;
 using Xunit;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers
 {
@@ -44,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers
 
             // Then
             Assert.Same((result as RedirectToActionResult).ActionName, nameof(DashboardController.Index));
-            Assert.Same((result as RedirectToActionResult).ControllerName, "Dashboard");
+            Assert.Same((result as RedirectToActionResult).ControllerName, Constants.DashboardController);
         }
 
 
@@ -60,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers
 
             // Then
             Assert.Same((result as RedirectToActionResult).ActionName, nameof(ErrorController.ServiceAccessDenied));
-            Assert.Same((result as RedirectToActionResult).ControllerName, "Error");
+            Assert.Same((result as RedirectToActionResult).ControllerName, Constants.ErrorController);
         }
 
         [Fact]
@@ -74,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers
 
             // Then
             Assert.Same((result as RedirectToActionResult).ActionName, nameof(HomeController.Index));
-            Assert.Same((result as RedirectToActionResult).ControllerName, "Home");
+            Assert.Same((result as RedirectToActionResult).ControllerName, Constants.HomeController);
         }
     }
 }
