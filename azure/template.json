@@ -340,6 +340,14 @@
         "DatabaseName": {
             "type": "string",
             "value": "[variables('DatabaseName')]"
+        },
+        "StorageAccountName": {
+            "type": "string",
+            "value": "[variables('storageAccountName')]"
+        },
+        "StorageConnectionString": {
+            "type": "string",
+            "value": "[reference('storage-account').outputs.storageConnectionString.value]"
         }
     }
 }
