@@ -82,6 +82,7 @@ steps:
   inputs:
     Contents: |
      azure\**
+     config\**
      src\**\*.dacpac
     TargetFolder: '$(build.artifactstagingdirectory)/'
     OverWrite: true
