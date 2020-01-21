@@ -1,12 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Your account does not have permission to access this service";
+    ViewData["Title"] = "Access denied";
 }
 
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
-            <p class="govuk-body">You can request access through <a href="https://dfe.service-now.com/serviceportal" target="_blank">Service Now (opens in a new window or tab).</a></p>
-            <p class="govuk-body">If you do not have access to Service Now, speak to your manager.</p>
-            <a asp-action="SignedOut" asp-controller="Account" class="govuk-button govuk-button--start">Finish</a>
-        </div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+        <p class="govuk-body">You do not have access to the Manage T Levels service. If you think you should have access, please contact the person who set up your DfE Sign-in account.</p>
     </div>
+</div>
