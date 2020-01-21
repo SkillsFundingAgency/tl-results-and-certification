@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
-using Sfa.Tl.ResultsAndCertification.Application.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Authentication;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
             double cookieAndSessionTimeout = 2;
             var overallSessionTimeout = TimeSpan.FromMinutes(cookieAndSessionTimeout);
             var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
-            
+
             services.AddAntiforgery(options =>
             {
                 options.Cookie.SecurePolicy = cookieSecurePolicy;
@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                 options.SlidingExpiration = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(cookieAndSessionTimeout);
                 options.LogoutPath = config.DfeSignInSettings.LogoutPath;
-                options.AccessDeniedPath = "/home/accessdenied";
+                options.AccessDeniedPath = "/error/accessdenied";
                 options.EventsType = typeof(CustomCookieAuthenticationEvents);
             })
             .AddOpenIdConnect(options =>
@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                 options.SaveTokens = true;
                 options.CallbackPath = new PathString(config.DfeSignInSettings.CallbackPath);
                 options.SignedOutCallbackPath = new PathString(config.DfeSignInSettings.SignedOutCallbackPath);
-                options.SignedOutRedirectUri = "/signin/signoutcomplete";
+                options.SignedOutRedirectUri = "/account/signoutcomplete";
                 options.SecurityTokenValidator = new JwtSecurityTokenHandler
                 {
                     InboundClaimTypeMap = new Dictionary<string, string>(),
@@ -172,38 +172,49 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         var userClaims = new DfeClaims()
                         {
                             UserId = Guid.Parse(identity.Claims.Where(c => c.Type == "sub").Select(c => c.Value).SingleOrDefault()),
-                            ServiceId = Guid.Parse(identity.Claims.Where(c => c.Type == "sid").Select(c => c.Value).SingleOrDefault()),
+                            ServiceId = Guid.Parse(identity.Claims.Where(c => c.Type == "sid").Select(c => c.Value).SingleOrDefault())                            
                         };
 
                         var client = new HttpClient();
                         client.SetBearerToken(token);
                         var response = await client.GetAsync($"{apiUri}/services/{cliendId}/organisations/{organisation.Id}/users/{userClaims.UserId}");
-
+                        bool hasAccessToService = true;
+                        
                         if (response.IsSuccessStatusCode)
                         {
                             var json = response.Content.ReadAsStringAsync().Result;
                             userClaims = JsonConvert.DeserializeObject<DfeClaims>(json);
-                            userClaims.RoleName = userClaims.Roles.Select(r => r.Name).FirstOrDefault();
+                            userClaims.RoleName = userClaims.Roles.Select(r => r.Name).FirstOrDefault();    
                             userClaims.UKPRN = organisation.UKPRN.HasValue ? organisation.UKPRN.Value.ToString() : string.Empty;
-                            userClaims.UserName = identity.Claims.Where(c => c.Type == "email").Select(c => c.Value).SingleOrDefault();
+                            userClaims.UserName = identity.Claims.Where(c => c.Type == "email").Select(c => c.Value).SingleOrDefault();                   
                         }
-                        else
+                        else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                         {
-                            throw new SystemException("Could not get Role Type for User");
+                            hasAccessToService = false;
+                        }
+
+                        List<Claim> roleClaims = new List<Claim>();
+                        if (userClaims.Roles != null && userClaims.Roles.Any())
+                        {
+                            foreach (var role in userClaims.Roles)
+                            {
+                                identity.AddClaim(new Claim(ClaimTypes.Role, role.Name));
+                            }
                         }
 
                         // store both access and refresh token in the claims - hence in the cookie
                         identity.AddClaims(new[]
                         {
-                                new Claim("access_token", x.TokenEndpointResponse.AccessToken),
-                                new Claim("refresh_token", x.TokenEndpointResponse.RefreshToken),
-                                new Claim("user_id", userClaims.UserId.ToString()),
-                                new Claim(ClaimTypes.Role, userClaims.RoleName),
+                                new Claim(CustomClaimTypes.AccessToken, x.TokenEndpointResponse.AccessToken),
+                                new Claim(CustomClaimTypes.RefreshToken, x.TokenEndpointResponse.RefreshToken),
+                                new Claim(CustomClaimTypes.HasAccessToService, hasAccessToService.ToString()),
+                                new Claim(CustomClaimTypes.UserId, userClaims.UserId.ToString()),
+                                new Claim(CustomClaimTypes.Ukprn, userClaims.UKPRN),
+                                new Claim(CustomClaimTypes.OrganisationId, organisation.Id.ToString().ToUpper())
                         });
 
                         // so that we don't issue a session cookie but one with a fixed expiration
                         x.Properties.IsPersistent = true;
-
                         x.Properties.ExpiresUtc = DateTime.UtcNow.Add(overallSessionTimeout);
                     }
                 };

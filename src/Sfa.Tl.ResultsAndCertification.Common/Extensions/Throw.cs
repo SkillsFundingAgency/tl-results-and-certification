@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.Extensions
+namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
     public static class Throw
     {

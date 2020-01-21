@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
-{
+{    
     public class AccountController : Controller
     {
         private readonly ILogger _logger;
@@ -22,20 +22,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [HttpGet]
         public async Task SignIn()
         {
-            var returnUrl = Url.Action("PostSignIn", "Account");
+            var returnUrl = Url.Action(nameof(AccountController.PostSignIn), Constants.AccountController);
             await HttpContext.ChallengeAsync(new AuthenticationProperties() { RedirectUri = returnUrl });
         }
 
+        [HttpGet]
         public IActionResult PostSignIn()
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "TlevelHome");
+                return !HttpContext.User.HasAccessToService()
+                    ? RedirectToAction(nameof(ErrorController.ServiceAccessDenied), Constants.ErrorController)
+                    : RedirectToAction(nameof(DashboardController.Index), Constants.DashboardController);
             }
             else
             {
-                return RedirectToAction("FailedLogin", "Home");
+                return RedirectToAction(nameof(HomeController.Index), Constants.HomeController);
             }
+        }
+        
+        [HttpGet]
+        public async Task SignedOut()
+        {
+            await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult SignOutComplete()
+        {
+            return RedirectToAction(nameof(HomeController.Index), Constants.HomeController);
         }
     }
 }

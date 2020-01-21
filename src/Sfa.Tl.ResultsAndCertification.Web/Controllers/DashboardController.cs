@@ -2,7 +2,7 @@
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
-    public class TlevelHomeController : Controller
+    public class DashboardController : Controller
     {
         public IActionResult Index()
         {
