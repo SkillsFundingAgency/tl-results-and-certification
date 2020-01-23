@@ -4,7 +4,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 {
    public partial class TqProvider : BaseEntity
     {
-        public int AwardingOrganisationId { get; set; }
+        public int AwardingOrganisationId { get; set; } 
         public int ProviderId { get; set; }
         public int RouteId { get; set; }
         public int PathwayId { get; set; }
