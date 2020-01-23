@@ -4,8 +4,10 @@ using Moq;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Data.UnitTests.Builders;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
@@ -21,13 +23,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
         }
 
         [Fact]
-        public void CreateAsync_RowAddedToTable() 
+        public async Task CreateAsync_RowAddedToTable() 
         {
-            var options = new DbContextOptionsBuilder<ResultsAndCertificationDbContext>()
-           .UseInMemoryDatabase(databaseName: "CreateAsync_RowAddedToEntity")
-           .Options;
-
-            using var context = new ResultsAndCertificationDbContext(options);
+            using var context = CreateDbContext("CreateAsync_RowAddedToEntity");
 
             // Given
             var genericRepository = new GenericRepository<Provider>(mockLogger.Object, context);
@@ -42,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
             var id = genericRepository.CreateAsync(inputEntity);
 
             // Then
-            var resultEntity = genericRepository.GetManyAsync().Result;
+            var resultEntity = await genericRepository.GetManyAsync();
             Assert.True(resultEntity.Count == 1);
 
             var entity = resultEntity.First();
@@ -52,15 +50,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
             Assert.True(entity.IsTlevelProvider.Equals(true));
             Assert.True(entity.UkPrn.Equals(123));
         }
-        
-        [Fact]
-        public void UpdateAsync_RowUpdatedInTable()
-        {
-            var options = new DbContextOptionsBuilder<ResultsAndCertificationDbContext>()
-                       .UseInMemoryDatabase(databaseName: "UpdateAsync_RowUpdatedInTable")
-                       .Options;
 
-            using var context = new ResultsAndCertificationDbContext(options);
+        [Fact]
+        public async Task UpdateAsync_RowUpdatedInTable()
+        {
+            using var context = CreateDbContext("UpdateAsync_RowUpdatedInTable");
 
             // Given
             var genericRepository = new GenericRepository<Provider>(mockLogger.Object, context);
@@ -89,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
 
 
             // When
-            var results = genericRepository.GetManyAsync().Result;
+            var results = await genericRepository.GetManyAsync();
 
             // Then
             var entity = results.First();
@@ -101,13 +95,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
         }
 
         [Fact]
-        public void GetFirstOrDefaultAsync_ReturnsFirstMatchingRecord()
+        public async Task GetFirstOrDefaultAsync_ReturnsFirstMatchingRecord()
         {
-            var options = new DbContextOptionsBuilder<ResultsAndCertificationDbContext>()
-            .UseInMemoryDatabase(databaseName: "GetFirstDB")
-            .Options;
-
-            using var context = new ResultsAndCertificationDbContext(options);
+            using var context = CreateDbContext("GetFirstOrDefaultAsync_ReturnsFirstMatchingRecord");
 
             // Given
             List<Provider> providers = new List<Provider>
@@ -132,11 +122,20 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
             var ids = genericRepository.CreateManyAsync(providers);
 
             // When
-            var resultset = genericRepository.GetFirstOrDefaultAsync(x => x.Name.Equals("MAN") && x.IsTlevelProvider);
+            var resultset = await genericRepository.GetFirstOrDefaultAsync(x => x.Name.Equals("MAN") && x.IsTlevelProvider);
 
             // Assert result.
-            Assert.NotNull(resultset.Result);
-            Assert.True(resultset.Result.Name.Equals("MAN"));
+            Assert.NotNull(resultset);
+            Assert.True(resultset.Name.Equals("MAN"));
+        }
+
+        private ResultsAndCertificationDbContext CreateDbContext(string dbName)
+        {
+            var options = new DbContextOptionsBuilder<ResultsAndCertificationDbContext>()
+           .UseInMemoryDatabase(dbName)
+           .Options;
+
+            return new ResultsAndCertificationDbContext(options);
         }
     }
 }
