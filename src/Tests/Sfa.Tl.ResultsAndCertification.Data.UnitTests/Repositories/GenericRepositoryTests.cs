@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
             var id = genericRepository.CreateAsync(inputEntity);
 
             // Then
-            var resultEntity = await genericRepository.GetManyAsync();
+            var resultEntity = await genericRepository.GetManyAsync().ToListAsync();
             Assert.True(resultEntity.Count == 1);
 
             var entity = resultEntity.First();
@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
             var id = genericRepository.CreateAsync(inputEntity);
 
             // Get an entity 
-            var providerData = genericRepository.GetManyAsync().Result;
+            var providerData = await genericRepository.GetManyAsync().ToListAsync();
             Assert.True(providerData.Count == 1);
 
             // Update an entity 
@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
 
 
             // When
-            var results = await genericRepository.GetManyAsync();
+            var results = await genericRepository.GetManyAsync().ToListAsync();
 
             // Then
             var entity = results.First();
