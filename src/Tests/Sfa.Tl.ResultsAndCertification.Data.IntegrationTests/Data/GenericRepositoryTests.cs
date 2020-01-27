@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.IntegrationTests.Repositories
+namespace Sfa.Tl.ResultsAndCertification.Data.IntegrationTests.Data
 {
     public class GenericRepositoryTests
     {
