@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.IntegrationTests.Data
             var inputAo = "AO2";
 
            var genericRepository = new GenericRepository<TqProvider>(mockLogger.Object, context);
-           IEnumerable<TqProvider> result = await genericRepository.GetManyAsync(x => x.AwardingOrganisation.Name.Equals(inputAo));
+           var result = await genericRepository.GetManyAsync(x => x.AwardingOrganisation.Name.Equals(inputAo)).ToListAsync();
 
             // 4. Assert results. 
             Assert.NotNull(result);
@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.IntegrationTests.Data
             // Assert not found scenario.
             inputAo = "AO1";
             genericRepository = new GenericRepository<TqProvider>(mockLogger.Object, context);
-            result = await genericRepository.GetManyAsync(x => x.AwardingOrganisation.Name.Equals(inputAo));
+            result = await genericRepository.GetManyAsync(x => x.AwardingOrganisation.Name.Equals(inputAo)).ToListAsync();
 
             // 4. Assert results. 
             Assert.NotNull(result);
