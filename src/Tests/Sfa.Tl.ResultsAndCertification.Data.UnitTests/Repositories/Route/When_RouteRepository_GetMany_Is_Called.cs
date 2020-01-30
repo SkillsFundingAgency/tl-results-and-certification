@@ -1,34 +1,28 @@
 ﻿using Xunit;
-using NSubstitute;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using System.Linq;
 using System.Collections.Generic;
-
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Route
 {
-    public class When_RouteRepository_GetMany_Is_Called
+    public class When_RouteRepository_GetMany_Is_Called : BaseTest<TlRoute>
     {
-        private readonly IEnumerable<Domain.Models.TlRoute> _result;
-        private readonly IList<Domain.Models.TlRoute> _data;
+        private IEnumerable<TlRoute> _result;
+        private IList<TlRoute> _data;
 
-        public When_RouteRepository_GetMany_Is_Called()
+        public override void Given()
         {
-            var logger = Substitute.For<ILogger<GenericRepository<Domain.Models.TlRoute>>>();
+            _data = new TlRouteBuilder().BuildList();
+            DbContext.AddRange(_data);
+            DbContext.SaveChanges();
+        }
 
-            using (var dbContext = InMemoryDbContext.Create())
-            {
-                _data = new TlRouteBuilder().BuildList();
-                dbContext.AddRange(_data);
-                dbContext.SaveChanges();
-
-                var repository = new GenericRepository<Domain.Models.TlRoute>(logger, dbContext);
-                _result = repository.GetManyAsync().ToList();
-            }
+        public override void When()
+        {
+            _result = Repository.GetManyAsync().ToList();
         }
 
         [Fact]

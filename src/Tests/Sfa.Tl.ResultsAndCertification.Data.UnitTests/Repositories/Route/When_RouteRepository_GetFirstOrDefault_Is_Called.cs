@@ -1,31 +1,26 @@
 ﻿using Xunit;
-using NSubstitute;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Route
 {
-    public class When_RouteRepository_GetFirstOrDefault_Is_Called
+    public class When_RouteRepository_GetFirstOrDefault_Is_Called : BaseTest<TlRoute>
     {
-        private readonly Domain.Models.TlRoute _result;
-        private readonly Domain.Models.TlRoute _data;
+        private TlRoute _result;
+        private TlRoute _data;
 
-        public When_RouteRepository_GetFirstOrDefault_Is_Called()
+        public override void Given()
         {
-            var logger = Substitute.For<ILogger<GenericRepository<Domain.Models.TlRoute>>>();
+            _data = new TlRouteBuilder().Build();
+            DbContext.AddRange(_data);
+            DbContext.SaveChanges();
+        }
 
-            using (var dbContext = InMemoryDbContext.Create())
-            {
-                _data = new TlRouteBuilder().Build();
-                dbContext.AddRange(_data);
-                dbContext.SaveChanges();
-
-                var repository = new GenericRepository<Domain.Models.TlRoute>(logger, dbContext);
-                _result = repository.GetFirstOrDefaultAsync(x => x.Id == 1).GetAwaiter().GetResult();
-            }
+        public override void When()
+        {
+            _result = Repository.GetFirstOrDefaultAsync(x => x.Id == 1).GetAwaiter().GetResult();
         }
 
         [Fact]
