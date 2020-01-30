@@ -6,13 +6,13 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
     {
         public TlRoute()
         {
-            TlPathway = new HashSet<TlPathway>();
-            TqProvider = new HashSet<TqProvider>();
+            TlPathways = new HashSet<TlPathway>();
+            TqProviders = new HashSet<TqProvider>();
         }
 
         public string Name { get; set; }
 
-        public virtual ICollection<TlPathway> TlPathway { get; set; }
-        public virtual ICollection<TqProvider> TqProvider { get; set; }
+        public virtual ICollection<TlPathway> TlPathways { get; set; }
+        public virtual ICollection<TqProvider> TqProviders { get; set; }
     }
 }

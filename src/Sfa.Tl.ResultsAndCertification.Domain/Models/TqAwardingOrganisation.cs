@@ -8,13 +8,13 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
     {
         public TqAwardingOrganisation()
         {
-            TqProvider = new HashSet<TqProvider>();
+            TqProviders = new HashSet<TqProvider>();
         }
 
         public string UkAon { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
 
-        public virtual ICollection<TqProvider> TqProvider { get; set; }
+        public virtual ICollection<TqProvider> TqProviders { get; set; }
     }
 }
