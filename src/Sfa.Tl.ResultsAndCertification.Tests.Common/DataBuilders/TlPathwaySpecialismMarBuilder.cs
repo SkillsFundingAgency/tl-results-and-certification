@@ -3,105 +3,105 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
-    public class TlSpecialismBuilder
+    public class TlPathwaySpecialismMarBuilder
     {
-        public Domain.Models.TlSpecialism Build() => new Domain.Models.TlSpecialism
+        public Domain.Models.TlPathwaySpecialismMar Build() => new Domain.Models.TlPathwaySpecialismMar
         {
             Id = 1,
+            MarId = 1,
             PathwayId = 1,
-            Name = "Surveying and design for construction and the built environment",
-            LarId = "10123456",
+            SpecialismId = null,
             CreatedBy = Constants.CreatedByUser,
             CreatedOn = Constants.CreatedOn,
             ModifiedBy = Constants.ModifiedByUser,
             ModifiedOn = Constants.ModifiedOn
         };
 
-        public IList<Domain.Models.TlSpecialism> BuildList() => new List<Domain.Models.TlSpecialism>
+        public IList<Domain.Models.TlPathwaySpecialismMar> BuildList() => new List<Domain.Models.TlPathwaySpecialismMar>
         {
-            new Domain.Models.TlSpecialism
+            new Domain.Models.TlPathwaySpecialismMar
             {
                 Id = 1,
+                MarId = 1,
                 PathwayId = 1,
-                Name = "Surveying and design for construction and the built environment",
-                LarId = "10123456",
+                SpecialismId = null,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
             },
-            new Domain.Models.TlSpecialism
+            new Domain.Models.TlPathwaySpecialismMar
             {
                 Id = 2,
-                PathwayId = 1,
-                Name = "Civil Engineering",
-                LarId = "10123456",
+                MarId = 1,
+                PathwayId = 2,
+                SpecialismId = null,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
             },
-            new Domain.Models.TlSpecialism
+            new Domain.Models.TlPathwaySpecialismMar
             {
                 Id = 3,
-                PathwayId = 1,
-                Name = "Building services design",
-                LarId = "10123456",
+                MarId = 2,
+                PathwayId = null,
+                SpecialismId = 1,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
             },
-            new Domain.Models.TlSpecialism
+            new Domain.Models.TlPathwaySpecialismMar
             {
                 Id = 4,
-                PathwayId = 1,
-                Name = "Hazardous materials analysis and surveying",
-                LarId = "10123456",
+                MarId = 2,
+                PathwayId = null,
+                SpecialismId = 1,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
             },
-            new Domain.Models.TlSpecialism
+            new Domain.Models.TlPathwaySpecialismMar
             {
                 Id = 5,
-                PathwayId = 2,
-                Name = "Early years education and childcare",
-                LarId = "10123456",
+                MarId = 3,
+                PathwayId = null,
+                SpecialismId = 3,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
             },
-            new Domain.Models.TlSpecialism
+            new Domain.Models.TlPathwaySpecialismMar
             {
                 Id = 6,
-                PathwayId = 2,
-                Name = "Assisting teaching",
-                LarId = "10123456",
+                MarId = 3,
+                PathwayId = null,
+                SpecialismId = 4,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
             },
-            new Domain.Models.TlSpecialism
+            new Domain.Models.TlPathwaySpecialismMar
             {
                 Id = 7,
-                PathwayId = 2,
-                Name = "Supporting and mentoring students in further and higher education",
-                LarId = "10123456",
+                MarId = 4,
+                PathwayId = 3,
+                SpecialismId = null,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
             },
-            new Domain.Models.TlSpecialism
+            new Domain.Models.TlPathwaySpecialismMar
             {
                 Id = 8,
+                MarId = 5,
                 PathwayId = 3,
-                Name = "Digital Production, Design and Development",
-                LarId = "10123456",
+                SpecialismId = null,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
