@@ -6,7 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
     {
         public Provider()
         {
-            TqProvider = new HashSet<TqProvider>();
+            TqProviders = new HashSet<TqProvider>();
         }
 
         public long UkPrn { get; set; }
@@ -14,6 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public string DisplayName { get; set; }
         public bool IsTlevelProvider { get; set; } // TODO: do we need this flag?? we get this info fro TqProvider table anyway.
 
-        public virtual ICollection<TqProvider> TqProvider { get; set; }
+        public virtual ICollection<TqProvider> TqProviders { get; set; }
     }
 }

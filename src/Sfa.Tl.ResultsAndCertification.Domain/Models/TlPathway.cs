@@ -6,10 +6,10 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
     {
         public TlPathway()
         {
-            TlPathwaySpecialismCombination = new HashSet<TlPathwaySpecialismCombination>();
-            TlPathwaySpecialismMar = new HashSet<TlPathwaySpecialismMar>();
-            TlSpecialism = new HashSet<TlSpecialism>();
-            TqProvider = new HashSet<TqProvider>();
+            TlPathwaySpecialismCombinations = new HashSet<TlPathwaySpecialismCombination>();
+            TlPathwaySpecialismMars = new HashSet<TlPathwaySpecialismMar>();
+            TlSpecialisms = new HashSet<TlSpecialism>();
+            TqProviders = new HashSet<TqProvider>();
         }
 
         public int RouteId { get; set; }
@@ -17,9 +17,9 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public string Name { get; set; }
 
         public virtual TlRoute Route { get; set; }
-        public virtual ICollection<TlPathwaySpecialismCombination> TlPathwaySpecialismCombination { get; set; }
-        public virtual ICollection<TlPathwaySpecialismMar> TlPathwaySpecialismMar { get; set; }
-        public virtual ICollection<TlSpecialism> TlSpecialism { get; set; }
-        public virtual ICollection<TqProvider> TqProvider { get; set; }
+        public virtual ICollection<TlPathwaySpecialismCombination> TlPathwaySpecialismCombinations { get; set; }
+        public virtual ICollection<TlPathwaySpecialismMar> TlPathwaySpecialismMars { get; set; }
+        public virtual ICollection<TlSpecialism> TlSpecialisms { get; set; }
+        public virtual ICollection<TqProvider> TqProviders { get; set; }
     }
 }
