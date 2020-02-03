@@ -7,7 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
     {
         public Domain.Models.TlRoute Build() => new Domain.Models.TlRoute
         {
-            Id = 1,
             Name = "Construction",
             CreatedBy = Constants.CreatedByUser,
             CreatedOn = Constants.CreatedOn,
@@ -19,7 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             new Domain.Models.TlRoute
             {
-                Id = 1,
                 Name = "Construction",
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
@@ -28,7 +26,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlRoute
             {
-                Id = 2,
                 Name = "Digital",
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
