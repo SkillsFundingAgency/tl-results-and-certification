@@ -15,23 +15,23 @@ USING (VALUES
   (7, 2, 7, 'G1'),
   (8, 3, 8, 'G1')
   )
-  AS Source ([Id], [PathwayId], [SpecialismId], [Group]) 
+  AS Source ([Id], [TlPathwayId], [TlSpecialismId], [Group]) 
 ON Target.[Id] = Source.[Id] 
 -- Update from Source when Id is Matched
 WHEN MATCHED 
-	 AND ((Target.[PathwayId] <> Source.[PathwayId])	 
-	 OR (Target.[SpecialismId] <> Source.[SpecialismId])
+	 AND ((Target.[TlPathwayId] <> Source.[TlPathwayId])	 
+	 OR (Target.[TlSpecialismId] <> Source.[TlSpecialismId])
 	 OR (Target.[Group] <> Source.[Group])) 
 THEN 
 UPDATE SET 
-	[PathwayId] = source.[PathwayId],
-	[SpecialismId] = Source.[SpecialismId],	
+	[TlPathwayId] = source.[TlPathwayId],
+	[TlSpecialismId] = Source.[TlSpecialismId],	
 	[Group] = Source.[Group],	
 	[ModifiedOn] = GETDATE(),
 	[ModifiedBy] = 'System'
 WHEN NOT MATCHED BY TARGET THEN 
-	INSERT ([Id], [PathwayId], [SpecialismId], [Group], [CreatedBy]) 
-	VALUES ([Id], [PathwayId], [SpecialismId], [Group], 'System') 
+	INSERT ([Id], [TlPathwayId], [TlSpecialismId], [Group], [CreatedBy]) 
+	VALUES ([Id], [TlPathwayId], [TlSpecialismId], [Group], 'System') 
 WHEN NOT MATCHED BY SOURCE THEN 
 DELETE;
 
