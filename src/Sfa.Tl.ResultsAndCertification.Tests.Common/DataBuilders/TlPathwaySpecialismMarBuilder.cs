@@ -7,7 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
     {
         public Domain.Models.TlPathwaySpecialismMar Build() => new Domain.Models.TlPathwaySpecialismMar
         {
-            Id = 1,
             MarId = 1,
             PathwayId = 1,
             SpecialismId = null,
@@ -21,7 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             new Domain.Models.TlPathwaySpecialismMar
             {
-                Id = 1,
                 MarId = 1,
                 PathwayId = 1,
                 SpecialismId = null,
@@ -32,7 +30,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                Id = 2,
                 MarId = 1,
                 PathwayId = 2,
                 SpecialismId = null,
@@ -43,7 +40,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                Id = 3,
                 MarId = 2,
                 PathwayId = null,
                 SpecialismId = 1,
@@ -54,7 +50,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                Id = 4,
                 MarId = 2,
                 PathwayId = null,
                 SpecialismId = 1,
@@ -65,7 +60,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                Id = 5,
                 MarId = 3,
                 PathwayId = null,
                 SpecialismId = 3,
@@ -76,7 +70,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                Id = 6,
                 MarId = 3,
                 PathwayId = null,
                 SpecialismId = 4,
@@ -87,7 +80,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                Id = 7,
                 MarId = 4,
                 PathwayId = 3,
                 SpecialismId = null,
@@ -98,7 +90,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                Id = 8,
                 MarId = 5,
                 PathwayId = 3,
                 SpecialismId = null,
