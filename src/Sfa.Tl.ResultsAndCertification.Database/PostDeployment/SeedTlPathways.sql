@@ -10,23 +10,23 @@ USING (VALUES
   (2, N'10223456', N'Education', 2),
   (3, N'10323456', N'Digital Production, Design and Development', 3)
   )
-  AS Source ([Id], [LarId], [Name], [RouteId]) 
+  AS Source ([Id], [LarId], [Name], [TlRouteId]) 
 ON Target.[Id] = Source.[Id] 
 -- Update from Source when Id is Matched
 WHEN MATCHED 
 	 AND ((Target.[LarId] <> Source.[LarId] COLLATE Latin1_General_CS_AS)
 	 OR (Target.[Name] <> Source.[Name] COLLATE Latin1_General_CS_AS)
-	 OR (Target.[RouteId] <> Source.[RouteId])) 
+	 OR (Target.[TlRouteId] <> Source.[TlRouteId])) 
 THEN 
 UPDATE SET 
 	[LarId] = Source.[LarId],
 	[Name] = Source.[Name],
-	[RouteId] = Source.[RouteId],
+	[TlRouteId] = Source.[TlRouteId],
 	[ModifiedOn] = GETDATE(),
 	[ModifiedBy] = 'System'
 WHEN NOT MATCHED BY TARGET THEN 
-	INSERT ([Id], [LarId], [Name], [RouteId], [CreatedBy]) 
-	VALUES ([Id], [LarId], [Name], [RouteId], 'System') 
+	INSERT ([Id], [LarId], [Name], [TlRouteId], [CreatedBy]) 
+	VALUES ([Id], [LarId], [Name], [TlRouteId], 'System') 
 WHEN NOT MATCHED BY SOURCE THEN 
 DELETE;
 
