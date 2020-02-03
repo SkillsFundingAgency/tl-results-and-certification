@@ -7,8 +7,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
     {
         public Domain.Models.TlPathwaySpecialismCombination Build() => new Domain.Models.TlPathwaySpecialismCombination
         {
-            PathwayId = 1,
-            SpecialismId = 1,
+            Pathway = new TlPathwayBuilder().Build(),
+            Specialism = new TlSpecialismBuilder().Build(),
             Group = "G1",
             CreatedBy = Constants.CreatedByUser,
             CreatedOn = Constants.CreatedOn,
