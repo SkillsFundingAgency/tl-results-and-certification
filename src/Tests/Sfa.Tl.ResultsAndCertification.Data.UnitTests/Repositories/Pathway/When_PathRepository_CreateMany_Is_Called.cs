@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
@@ -22,7 +23,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
         }
 
         [Fact]
-        public void Then_Two_Record_Should_Have_Been_Created() =>
-            _result.Should().Be(3);
+        public void Then_Two_Record_Should_Have_Been_Created()
+        {
+            var result = Repository.GetManyAsync();
+            result.Count().Should().Be(3);
+        }
     }
 }
