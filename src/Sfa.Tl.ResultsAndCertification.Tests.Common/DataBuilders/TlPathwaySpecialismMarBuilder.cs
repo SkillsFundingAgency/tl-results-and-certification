@@ -7,9 +7,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
     {
         public Domain.Models.TlPathwaySpecialismMar Build() => new Domain.Models.TlPathwaySpecialismMar
         {
-            MarId = 1,
-            PathwayId = 1,
-            SpecialismId = null,
+            TlMandatoryAdditionalRequirementId = 1,
+            TlPathwayId = 1,
+            TlSpecialismId = null,
             CreatedBy = Constants.CreatedByUser,
             CreatedOn = Constants.CreatedOn,
             ModifiedBy = Constants.ModifiedByUser,
@@ -20,9 +20,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             new Domain.Models.TlPathwaySpecialismMar
             {
-                MarId = 1,
-                PathwayId = 1,
-                SpecialismId = null,
+                TlMandatoryAdditionalRequirementId = 1,
+                TlPathwayId = 1,
+                TlSpecialismId = null,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -30,9 +30,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                MarId = 1,
-                PathwayId = 2,
-                SpecialismId = null,
+                TlMandatoryAdditionalRequirementId = 1,
+                TlPathwayId = 2,
+                TlSpecialismId = null,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -40,9 +40,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                MarId = 2,
-                PathwayId = null,
-                SpecialismId = 1,
+                TlMandatoryAdditionalRequirementId = 2,
+                TlPathwayId = null,
+                TlSpecialismId = 1,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -50,9 +50,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                MarId = 2,
-                PathwayId = null,
-                SpecialismId = 1,
+                TlMandatoryAdditionalRequirementId = 2,
+                TlPathwayId = null,
+                TlSpecialismId = 1,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -60,9 +60,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                MarId = 3,
-                PathwayId = null,
-                SpecialismId = 3,
+                TlMandatoryAdditionalRequirementId = 3,
+                TlPathwayId = null,
+                TlSpecialismId = 3,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -70,9 +70,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                MarId = 3,
-                PathwayId = null,
-                SpecialismId = 4,
+                TlMandatoryAdditionalRequirementId = 3,
+                TlPathwayId = null,
+                TlSpecialismId = 4,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -80,9 +80,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                MarId = 4,
-                PathwayId = 3,
-                SpecialismId = null,
+                TlMandatoryAdditionalRequirementId = 4,
+                TlPathwayId = 3,
+                TlSpecialismId = null,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -90,9 +90,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismMar
             {
-                MarId = 5,
-                PathwayId = 3,
-                SpecialismId = null,
+                TlMandatoryAdditionalRequirementId = 5,
+                TlPathwayId = 3,
+                TlSpecialismId = null,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,

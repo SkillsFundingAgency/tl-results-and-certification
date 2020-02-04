@@ -2,11 +2,12 @@
 {
     public partial class TlPathwaySpecialismMar : BaseEntity
     {
-        public int MarId { get; set; }
-        public int? PathwayId { get; set; }
-        public int? SpecialismId { get; set; }
+        public int TlMandatoryAdditionalRequirementId { get; set; }
+        public int? TlPathwayId { get; set; }
+        public int? TlSpecialismId { get; set; }
 
-        public virtual TlPathway Pathway { get; set; }
-        public virtual TlSpecialism Specialism { get; set; }
+        public virtual TlMandatoryAdditionalRequirement TlMandatoryAdditionalRequirement { get; set; }
+        public virtual TlPathway TlPathway { get; set; }
+        public virtual TlSpecialism TlSpecialism { get; set; }
     }
 }

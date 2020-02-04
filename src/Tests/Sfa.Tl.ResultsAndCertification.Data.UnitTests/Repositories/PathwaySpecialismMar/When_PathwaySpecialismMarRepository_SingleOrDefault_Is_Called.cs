@@ -27,10 +27,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PathwaySpec
         {
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
-            _result.MarId.Should().Be(_data.MarId);
-            _result.PathwayId.Should().Be(_data.PathwayId);
-            _result.SpecialismId.Should().Be(_data.SpecialismId);
-            _result.PathwayId.Should().Be(_data.PathwayId);
+            _result.TlMandatoryAdditionalRequirementId.Should().Be(_data.TlMandatoryAdditionalRequirementId);
+            _result.TlPathwayId.Should().Be(_data.TlPathwayId);
+            _result.TlSpecialismId.Should().Be(_data.TlSpecialismId);
+            _result.TlPathwayId.Should().Be(_data.TlPathwayId);
             _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().BeEquivalentTo(_data.ModifiedBy);

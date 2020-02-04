@@ -26,20 +26,20 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
         public void Then_Results_Not_Null()
         {
             _result.Should().NotBeNull();
-            _result.Route.Should().NotBeNull();
+            _result.TlRoute.Should().NotBeNull();
         }
 
         [Fact]
         public void Then_EntityFields_Are_As_Expected()
         {
-            var expectedResult = _data.Route;
+            var expectedResult = _data.TlRoute;
             
-            _result.Route.Id.Should().Be(expectedResult.Id);
-            _result.Route.Name.Should().Be(expectedResult.Name);
-            _result.Route.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
-            _result.Route.CreatedOn.Should().Be(expectedResult.CreatedOn);
-            _result.Route.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
-            _result.Route.ModifiedOn.Should().Be(expectedResult.ModifiedOn);
+            _result.TlRoute.Id.Should().Be(expectedResult.Id);
+            _result.TlRoute.Name.Should().Be(expectedResult.Name);
+            _result.TlRoute.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
+            _result.TlRoute.CreatedOn.Should().Be(expectedResult.CreatedOn);
+            _result.TlRoute.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
+            _result.TlRoute.ModifiedOn.Should().Be(expectedResult.ModifiedOn);
         }
     }
 }

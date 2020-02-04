@@ -19,9 +19,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PathwaySpec
             DbContext.SaveChanges();
 
             // Update data
-            _data.MarId = 2;
-            _data.PathwayId = 2;
-            _data.SpecialismId = 2;
+            _data.TlMandatoryAdditionalRequirementId = 2;
+            _data.TlPathwayId = 2;
+            _data.TlSpecialismId = 2;
             _data.ModifiedBy = ModifiedBy;
         }
 
@@ -37,9 +37,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PathwaySpec
             _data.Should().NotBeNull();
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
-            _result.MarId.Should().Be(_data.MarId);
-            _result.PathwayId.Should().Be(_data.PathwayId);
-            _result.SpecialismId.Should().Be(_data.SpecialismId);
+            _result.TlMandatoryAdditionalRequirementId.Should().Be(_data.TlMandatoryAdditionalRequirementId);
+            _result.TlPathwayId.Should().Be(_data.TlPathwayId);
+            _result.TlSpecialismId.Should().Be(_data.TlSpecialismId);
             _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);

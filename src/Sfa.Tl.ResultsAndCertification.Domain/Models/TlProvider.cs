@@ -2,18 +2,19 @@
 
 namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 {
-    public partial class Provider : BaseEntity
+    public partial class TlProvider : BaseEntity
     {
-        public Provider()
+        public TlProvider()
         {
             TqProviders = new HashSet<TqProvider>();
         }
 
+        public int TlPathwayId { get; set; }
         public long UkPrn { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
-        public bool IsTlevelProvider { get; set; } // TODO: do we need this flag?? we get this info fro TqProvider table anyway.
 
+        public virtual TlPathway TlPathway { get; set; }
         public virtual ICollection<TqProvider> TqProviders { get; set; }
     }
 }

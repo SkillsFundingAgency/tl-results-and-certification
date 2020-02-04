@@ -35,16 +35,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.IntegrationTests.Data
             var inputAo = "AO2";
 
            var genericRepository = new GenericRepository<TqProvider>(mockLogger.Object, context);
-           var result = await genericRepository.GetManyAsync(x => x.AwardingOrganisation.Name.Equals(inputAo)).ToListAsync();
+           var result = await genericRepository.GetManyAsync(x => x.TqAwardingOrganisation.Name.Equals(inputAo)).ToListAsync();
 
             // 4. Assert results. 
             Assert.NotNull(result);
-            Assert.True(result.First().ProviderId == 2);
+            Assert.True(result.First().TlProviderId == 2);
 
             // Assert not found scenario.
             inputAo = "AO1";
             genericRepository = new GenericRepository<TqProvider>(mockLogger.Object, context);
-            result = await genericRepository.GetManyAsync(x => x.AwardingOrganisation.Name.Equals(inputAo)).ToListAsync();
+            result = await genericRepository.GetManyAsync(x => x.TqAwardingOrganisation.Name.Equals(inputAo)).ToListAsync();
 
             // 4. Assert results. 
             Assert.NotNull(result);
@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.IntegrationTests.Data
         {
             await context.TqProvider.AddRangeAsync(new List<TqProvider>
             {
-                new TqProvider { AwardingOrganisationId  = 1, ProviderId = 1, RouteId = 1, PathwayId = 1, SpecialismId = 1, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                new TqProvider { TqAwardingOrganisationId  = 1, TlProviderId = 1, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
             });
 
             await context.SaveChangesAsync();
@@ -93,14 +93,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.IntegrationTests.Data
         {
             await context.TlSpecialism.AddRangeAsync(new List<TlSpecialism>
             {
-                new TlSpecialism {  Id = 1, Name ="Surveying and design for construction and the built environment", PathwayId = 1, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
-                new TlSpecialism {  Id = 2, Name ="Civil Engineering", PathwayId = 1, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
-                new TlSpecialism {  Id = 3, Name ="Building services design", PathwayId = 1, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
-                new TlSpecialism {  Id = 4, Name ="Hazardous materials analysis and surveying", PathwayId = 1, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
-                new TlSpecialism {  Id = 5, Name ="Early years education and childcare", PathwayId = 2, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
-                new TlSpecialism {  Id = 6, Name ="Assisting teaching", PathwayId = 2, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
-                new TlSpecialism {  Id = 7, Name ="Supporting and mentoring students in further and higher education", PathwayId = 2, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
-                new TlSpecialism {  Id = 8, Name ="Digital Production, Design and Development", PathwayId = 3, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
+                new TlSpecialism {  Id = 1, Name ="Surveying and design for construction and the built environment", TlPathwayId = 1, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
+                new TlSpecialism {  Id = 2, Name ="Civil Engineering", TlPathwayId = 1, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
+                new TlSpecialism {  Id = 3, Name ="Building services design", TlPathwayId = 1, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
+                new TlSpecialism {  Id = 4, Name ="Hazardous materials analysis and surveying", TlPathwayId = 1, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
+                new TlSpecialism {  Id = 5, Name ="Early years education and childcare", TlPathwayId = 2, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
+                new TlSpecialism {  Id = 6, Name ="Assisting teaching", TlPathwayId = 2, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
+                new TlSpecialism {  Id = 7, Name ="Supporting and mentoring students in further and higher education", TlPathwayId = 2, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
+                new TlSpecialism {  Id = 8, Name ="Digital Production, Design and Development", TlPathwayId = 3, CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
             });
 
             await context.SaveChangesAsync();
@@ -110,9 +110,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.IntegrationTests.Data
         {
             var data = new List<TlPathway>
             {
-                new TlPathway {  Id = 1, RouteId = 1, LarId = "10123456", Name = "Design, Surveying and Planning", CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
-                new TlPathway {  Id = 2, RouteId = 2, LarId = "10223456", Name = "Education", CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
-                new TlPathway {  Id = 3, RouteId = 3, LarId = "10223456", Name = "Digital Production, Design and Development", CreatedBy = "Sys", CreatedOn = DateTime.UtcNow }
+                new TlPathway {  Id = 1, TlRouteId = 1, LarId = "10123456", Name = "Design, Surveying and Planning", CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
+                new TlPathway {  Id = 2, TlRouteId = 2, LarId = "10223456", Name = "Education", CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
+                new TlPathway {  Id = 3, TlRouteId = 3, LarId = "10223456", Name = "Digital Production, Design and Development", CreatedBy = "Sys", CreatedOn = DateTime.UtcNow }
             };
 
             var mockLogger = new Mock<ILogger<GenericRepository<TlPathway>>>();
@@ -148,7 +148,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.IntegrationTests.Data
         {
             await context.TqProvider.AddRangeAsync(new List<TqProvider>
             {
-                new TqProvider { AwardingOrganisationId = 2, ProviderId = 2,  CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
+                new TqProvider { TqAwardingOrganisationId = 2, TlProviderId = 2,  CreatedBy = "Sys", CreatedOn = DateTime.UtcNow },
             });
 
             await context.SaveChangesAsync();
@@ -167,10 +167,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.IntegrationTests.Data
 
         private async Task CreateTwoProviders(ResultsAndCertificationDbContext context)
         {
-            await context.Provider.AddRangeAsync(new List<Provider>
+            await context.TlProvider.AddRangeAsync(new List<TlProvider>
             {
-                new Provider{ Name = "P1", DisplayName = "Provider1", UkPrn = 111, IsTlevelProvider = false, CreatedBy = "sys", CreatedOn = DateTime.UtcNow },
-                new Provider{ Name = "P2", DisplayName = "Provider2", UkPrn = 111, IsTlevelProvider = true, CreatedBy = "sys", CreatedOn = DateTime.UtcNow },
+                new TlProvider{ Name = "P1", DisplayName = "Provider1", UkPrn = 111, CreatedBy = "sys", CreatedOn = DateTime.UtcNow },
+                new TlProvider{ Name = "P2", DisplayName = "Provider2", UkPrn = 111, CreatedBy = "sys", CreatedOn = DateTime.UtcNow },
                 // TODO: which process will set the flag - IsTlevelProvider.. 
             });
             await context.SaveChangesAsync();

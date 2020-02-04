@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PathwaySpec
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
 
-            _result.PathwayId.Should().Be(expectedResult.PathwayId);
+            _result.TlPathwayId.Should().Be(expectedResult.TlPathwayId);
             _result.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
             _result.CreatedOn.Should().Be(expectedResult.CreatedOn);
             _result.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
