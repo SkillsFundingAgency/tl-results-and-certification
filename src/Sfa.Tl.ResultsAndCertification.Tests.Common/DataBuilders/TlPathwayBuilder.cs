@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             Name = "Design, Surveying and Planning",
             LarId = "10123456",
-            Route = new TlRouteBuilder().Build(),
+            TlRoute = new TlRouteBuilder().Build(),
             CreatedBy = Constants.CreatedByUser,
             CreatedOn = Constants.CreatedOn,
             ModifiedBy = Constants.ModifiedByUser,
@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 Name = "Design, Surveying and Planning",
                 LarId = "10123456",
-                Route = new TlRouteBuilder().Build(),
+                TlRoute = new TlRouteBuilder().Build(),
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 Name = "Education",
                 LarId = "10123456",
-                Route = new TlRouteBuilder().Build(),
+                TlRoute = new TlRouteBuilder().Build(),
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 Name = "Digital Production, Design and Development",
                 LarId = "10123456",
-                Route = new TlRouteBuilder().Build(),
+                TlRoute = new TlRouteBuilder().Build(),
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,

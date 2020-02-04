@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
             _result.Id.Should().Be(1);
             _result.Name.Should().BeEquivalentTo(_data.Name);
             _result.LarId.Should().BeEquivalentTo(_data.LarId);
-            _result.PathwayId.Should().Be(_data.PathwayId);
+            _result.TlPathwayId.Should().Be(_data.TlPathwayId);
             _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().BeEquivalentTo(_data.ModifiedBy);

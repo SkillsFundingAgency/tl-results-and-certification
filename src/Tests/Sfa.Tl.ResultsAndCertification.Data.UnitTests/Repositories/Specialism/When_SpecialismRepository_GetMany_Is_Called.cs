@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
             actualResult.Id.Should().Be(1);
             actualResult.Name.Should().BeEquivalentTo(expectedResult.Name);
             actualResult.LarId.Should().BeEquivalentTo(expectedResult.LarId);
-            actualResult.PathwayId.Should().Be(expectedResult.PathwayId);
+            actualResult.TlPathwayId.Should().Be(expectedResult.TlPathwayId);
             actualResult.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
             actualResult.CreatedOn.Should().Be(expectedResult.CreatedOn);
             actualResult.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);

@@ -30,22 +30,22 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
         public void Then_Results_Not_Null()
         {
             _result.Should().NotBeNull();
-            _result.Pathway.Should().NotBeNull();
+            _result.TlPathway.Should().NotBeNull();
             _result.TlPathwaySpecialismMars.Should().NotBeNull();
         }
 
         [Fact]
         public void Then_Pathway_EntityFields_Are_As_Expected()
         {
-            var expectedResult = _data.Pathway;
+            var expectedResult = _data.TlPathway;
             
-            _result.Pathway.Id.Should().Be(expectedResult.Id);
-            _result.Pathway.Name.Should().Be(expectedResult.Name);
-            _result.Pathway.LarId.Should().Be(expectedResult.LarId);
-            _result.Pathway.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
-            _result.Pathway.CreatedOn.Should().Be(expectedResult.CreatedOn);
-            _result.Pathway.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
-            _result.Pathway.ModifiedOn.Should().Be(expectedResult.ModifiedOn);
+            _result.TlPathway.Id.Should().Be(expectedResult.Id);
+            _result.TlPathway.Name.Should().Be(expectedResult.Name);
+            _result.TlPathway.LarId.Should().Be(expectedResult.LarId);
+            _result.TlPathway.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
+            _result.TlPathway.CreatedOn.Should().Be(expectedResult.CreatedOn);
+            _result.TlPathway.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
+            _result.TlPathway.ModifiedOn.Should().Be(expectedResult.ModifiedOn);
         }
 
         [Fact]
@@ -54,8 +54,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
             var expectedResult = _data.TlPathwaySpecialismMars.FirstOrDefault();
             var actualResult = _result.TlPathwaySpecialismMars.FirstOrDefault();
 
-            actualResult.PathwayId.Should().Be(expectedResult.PathwayId);
-            actualResult.SpecialismId.Should().Be(expectedResult.SpecialismId);
+            actualResult.TlPathwayId.Should().Be(expectedResult.TlPathwayId);
+            actualResult.TlSpecialismId.Should().Be(expectedResult.TlSpecialismId);
             actualResult.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
             actualResult.CreatedOn.Should().Be(expectedResult.CreatedOn);
             actualResult.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);

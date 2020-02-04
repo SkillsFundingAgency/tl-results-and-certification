@@ -7,8 +7,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
     {
         public Domain.Models.TlPathwaySpecialismCombination Build() => new Domain.Models.TlPathwaySpecialismCombination
         {
-            Pathway = new TlPathwayBuilder().Build(),
-            Specialism = new TlSpecialismBuilder().Build(),
+            TlPathway = new TlPathwayBuilder().Build(),
+            TlSpecialism = new TlSpecialismBuilder().Build(),
             Group = "G1",
             CreatedBy = Constants.CreatedByUser,
             CreatedOn = Constants.CreatedOn,
@@ -19,8 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             new Domain.Models.TlPathwaySpecialismCombination
             {
-                PathwayId = 1,
-                SpecialismId = 1,
+                TlPathwayId = 1,
+                TlSpecialismId = 1,
                 Group = "G1",
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
@@ -29,8 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismCombination
             {
-                PathwayId = 1,
-                SpecialismId = 2,
+                TlPathwayId = 1,
+                TlSpecialismId = 2,
                 Group = "G1",
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismCombination
             {
-                PathwayId = 1,
-                SpecialismId = 3,
+                TlPathwayId = 1,
+                TlSpecialismId = 3,
                 Group = "G2",
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
@@ -49,8 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismCombination
             {
-                PathwayId = 1,
-                SpecialismId = 4,
+                TlPathwayId = 1,
+                TlSpecialismId = 4,
                 Group = "G2",
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
@@ -59,8 +59,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismCombination
             {
-                PathwayId = 2,
-                SpecialismId = 5,
+                TlPathwayId = 2,
+                TlSpecialismId = 5,
                 Group = "G1",
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
@@ -69,8 +69,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismCombination
             {
-                PathwayId = 2,
-                SpecialismId = 6,
+                TlPathwayId = 2,
+                TlSpecialismId = 6,
                 Group = "G1",
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
@@ -79,8 +79,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismCombination
             {
-                PathwayId = 2,
-                SpecialismId = 7,
+                TlPathwayId = 2,
+                TlSpecialismId = 7,
                 Group = "G1",
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
@@ -89,8 +89,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new Domain.Models.TlPathwaySpecialismCombination
             {
-                PathwayId = 3,
-                SpecialismId = 8,
+                TlPathwayId = 3,
+                TlSpecialismId = 8,
                 Group = "G1",
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
