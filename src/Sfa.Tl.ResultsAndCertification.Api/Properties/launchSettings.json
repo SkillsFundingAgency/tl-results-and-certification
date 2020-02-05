@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Sfa.Tl.ResultsAndCertification.Api": {
+    "Sfa.Tl.ResultsAndCertification.InternalApi": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
