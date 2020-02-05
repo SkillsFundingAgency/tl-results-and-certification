@@ -6,19 +6,27 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Application.Configuration;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Builder;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Data.Repositories;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi
 {
     public class Startup
     {
+        protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,8 +37,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ResultsAndCertificationConfiguration = ConfigurationLoader.Load(
+               Configuration[Constants.EnvironmentNameConfigKey],
+               Configuration[Constants.ConfigurationStorageConnectionStringConfigKey],
+               Configuration[Constants.VersionConfigKey],
+               Configuration[Constants.ServiceNameConfigKey]);
+
             services.AddControllers();
-            RegisterApplicationServices(services);
+            RegisterDependencies(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,8 +67,22 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             });
         }
 
+        private void RegisterDependencies(IServiceCollection services)
+        {
+            //Inject DbContext
+            services.AddDbContext<ResultsAndCertificationDbContext>(options =>
+                options.UseSqlServer(ResultsAndCertificationConfiguration.SqlConnectionString,
+                    builder => builder.UseNetTopologySuite()
+                                      .EnableRetryOnFailure()), ServiceLifetime.Transient);
+
+            services.AddSingleton(ResultsAndCertificationConfiguration);
+
+            RegisterApplicationServices(services);
+        }
+
         private static void RegisterApplicationServices(IServiceCollection services)
         {
+            services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
             services.AddTransient<IDbContextBuilder, DbContextBuilder>();
         }
