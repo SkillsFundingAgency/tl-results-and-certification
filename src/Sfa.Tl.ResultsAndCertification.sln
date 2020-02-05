@@ -7,7 +7,7 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Sfa.Tl.ResultsAndCertificat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Web", "Sfa.Tl.ResultsAndCertification.Web\Sfa.Tl.ResultsAndCertification.Web.csproj", "{DFDD3645-BDA3-40EA-920C-31AAC7DA1FC8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Api", "Sfa.Tl.ResultsAndCertification.Api\Sfa.Tl.ResultsAndCertification.Api.csproj", "{699E665A-15AD-4413-B0AD-CAD2E62396A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.InternalApi", "Sfa.Tl.ResultsAndCertification.Api\Sfa.Tl.ResultsAndCertification.InternalApi.csproj", "{699E665A-15AD-4413-B0AD-CAD2E62396A6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Domain", "Sfa.Tl.ResultsAndCertification.Domain\Sfa.Tl.ResultsAndCertification.Domain.csproj", "{75385E05-9487-44CD-99B9-D3BECE5AFBF9}"
 EndProject

@@ -1,6 +1,6 @@
 using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Api
+namespace Sfa.Tl.ResultsAndCertification.InternalApi
 {
     public class WeatherForecast
     {
