@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllTlevels")]
+        [Route("GetAllTlevels/{id}")]
         public async Task<IEnumerable<string>> GetAllTlevelsByAwardingOrganisationIdAsync(int id)
         {
             var result = await _awardingOrganisationService.GetAllTlevelsByAwardingOrganisationIdAsync(id);
