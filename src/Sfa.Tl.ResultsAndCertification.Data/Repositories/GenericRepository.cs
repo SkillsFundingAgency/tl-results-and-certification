@@ -121,19 +121,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
         }
 
-        public IQueryable<T> GetMany(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] navigationPropertyPath)
+        public IQueryable<T> GetManyAsync(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] navigationPropertyPath)
         {
             var queryable = GetQueryableWithIncludes(predicate, null, true, navigationPropertyPath);
             return predicate != null ? queryable.Where(predicate) : queryable;
         }
-
-        public async Task<IList<T>> GetManyAsync(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] navigationPropertyPath)
-        {
-            var queryable = GetQueryableWithIncludes(predicate, null, true, navigationPropertyPath);
-            queryable = predicate != null ? queryable.Where(predicate) : queryable;
-            return await queryable.ToListAsync();
-        }
-
+       
         public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] navigationPropertyPath)
         {
             var queryable = GetQueryableWithIncludes(predicate, null, true, navigationPropertyPath);

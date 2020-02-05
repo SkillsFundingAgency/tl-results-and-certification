@@ -15,23 +15,23 @@ USING (VALUES
   (7, N'17234567', N'Supporting and mentoring students in further and higher education', 2),
   (8, N'18234567', N'Digital Production, Design and Development', 3)
   )
-  AS Source ([Id], [LarId], [Name], [PathwayId]) 
+  AS Source ([Id], [LarId], [Name], [TlPathwayId]) 
 ON Target.[Id] = Source.[Id] 
 -- Update from Source when Id is Matched
 WHEN MATCHED 
 	 AND ((Target.[LarId] <> Source.[LarId] COLLATE Latin1_General_CS_AS)
 	 OR (Target.[Name] <> Source.[Name] COLLATE Latin1_General_CS_AS)
-	 OR (Target.[PathwayId] <> Source.[PathwayId])) 
+	 OR (Target.[TlPathwayId] <> Source.[TlPathwayId])) 
 THEN 
 UPDATE SET 
 	[LarId] = Source.[LarId],
 	[Name] = Source.[Name],
-	[PathwayId] = Source.[PathwayId],
+	[TlPathwayId] = Source.[TlPathwayId],
 	[ModifiedOn] = GETDATE(),
 	[ModifiedBy] = 'System'
 WHEN NOT MATCHED BY TARGET THEN 
-	INSERT ([Id], [LarId], [Name], [PathwayId], [CreatedBy]) 
-	VALUES ([Id], [LarId], [Name], [PathwayId], 'System') 
+	INSERT ([Id], [LarId], [Name], [TlPathwayId], [CreatedBy]) 
+	VALUES ([Id], [LarId], [Name], [TlPathwayId], 'System') 
 WHEN NOT MATCHED BY SOURCE THEN 
 DELETE;
 

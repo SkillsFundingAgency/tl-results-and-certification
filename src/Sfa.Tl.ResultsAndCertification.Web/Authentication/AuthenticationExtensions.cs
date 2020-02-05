@@ -184,16 +184,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         {
                             var json = response.Content.ReadAsStringAsync().Result;
                             userClaims = JsonConvert.DeserializeObject<DfeClaims>(json);
-                            userClaims.RoleName = userClaims.Roles.Select(r => r.Name).FirstOrDefault();    
-                            userClaims.UKPRN = organisation.UKPRN.HasValue ? organisation.UKPRN.Value.ToString() : string.Empty;
-                            userClaims.UserName = identity.Claims.Where(c => c.Type == "email").Select(c => c.Value).SingleOrDefault();                   
+                            userClaims.RoleName = userClaims.Roles.Select(r => r.Name).FirstOrDefault(); 
                         }
                         else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                         {
                             hasAccessToService = false;
                         }
 
-                        List<Claim> roleClaims = new List<Claim>();
+                        userClaims.UKPRN = organisation.UKPRN.HasValue ? organisation.UKPRN.Value.ToString() : string.Empty;
+                        userClaims.UserName = identity.Claims.Where(c => c.Type == "email").Select(c => c.Value).SingleOrDefault();
+
                         if (userClaims.Roles != null && userClaims.Roles.Any())
                         {
                             foreach (var role in userClaims.Roles)

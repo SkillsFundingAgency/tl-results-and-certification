@@ -10,10 +10,11 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-:r ".\SeedTqAwardingOrganisations.sql"
+:r ".\SeedTlAwardingOrganisations.sql"
 :r ".\SeedTlRoutes.sql"
 :r ".\SeedTlPathways.sql"
 :r ".\SeedTlSpecialisms.sql"
 :r ".\SeedTlPathwaySpecialismCombination.sql"
 :r ".\SeedTlMandatoryAdditionalRequirement.sql"
 :r ".\SeedTlPathwaySpecialismMar.sql"
+:r ".\SeedTqAwardingOrganisations.sql"
