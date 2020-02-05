@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Sfa.Tl.ResultsAndCertification.Api.Controllers
+namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]

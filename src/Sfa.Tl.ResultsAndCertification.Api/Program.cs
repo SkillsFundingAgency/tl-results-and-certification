@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Sfa.Tl.ResultsAndCertification.Api
+namespace Sfa.Tl.ResultsAndCertification.InternalApi
 {
     public class Program
     {

@@ -10,8 +10,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Data.Builder;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 
-namespace Sfa.Tl.ResultsAndCertification.Api
+namespace Sfa.Tl.ResultsAndCertification.InternalApi
 {
     public class Startup
     {
@@ -26,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            RegisterApplicationServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +51,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void RegisterApplicationServices(IServiceCollection services)
+        {
+            services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
+            services.AddTransient<IDbContextBuilder, DbContextBuilder>();
         }
     }
 }
