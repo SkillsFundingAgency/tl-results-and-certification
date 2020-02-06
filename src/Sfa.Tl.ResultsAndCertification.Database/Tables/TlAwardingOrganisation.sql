@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[TlAwardingOrganisation]
 (
 	[Id] INT IDENTITY(1,1) NOT NULL, 
-	[UkAon] NVARCHAR(100) NOT NULL,
+	[UkPrn] BIGINT NOT NULL,
     [Name] NVARCHAR(100) NOT NULL, 
     [DisplayName] NVARCHAR(100) NOT NULL, 
     [CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
