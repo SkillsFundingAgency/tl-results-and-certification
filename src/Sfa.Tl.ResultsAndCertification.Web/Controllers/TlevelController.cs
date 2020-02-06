@@ -9,8 +9,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
     public class TlevelController : Controller
     {
-        private readonly IMapper _mapper;
         private readonly IAwardingOrganisationLoader _awardingOrganisationLoader;
+        private readonly IMapper _mapper;
 
         public TlevelController(IAwardingOrganisationLoader awardingOrganisationLoader, IMapper mapper)
         {
@@ -21,9 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> Index()
         {
             // TODO: How to get the loggedin AO userId?
-            var data = await _awardingOrganisationLoader.GetTlevelsByAwardingOrganisationAsync(1);
+            var tLevels = await _awardingOrganisationLoader.GetTlevelsByAwardingOrganisationAsync(1);
+            var viewModel = _mapper.Map<IEnumerable<YourTlevelsViewModel>>(tLevels);
             
-            var viewModel = _mapper.Map<IEnumerable<YourTlevelsViewModel>>(data);
             return View(viewModel);
         }
 

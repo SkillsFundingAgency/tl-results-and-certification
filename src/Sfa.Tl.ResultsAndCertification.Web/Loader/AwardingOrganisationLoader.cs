@@ -7,7 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 {
     public class AwardingOrganisationLoader : IAwardingOrganisationLoader
     {
-
         // TODO: Inject ApiClient 
         public AwardingOrganisationLoader()
         {

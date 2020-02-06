@@ -2,12 +2,14 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
+using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AwardingOrganisationController : ControllerBase
+    public class AwardingOrganisationController : ControllerBase, IAwardingOrganisationController
     {
         private readonly IAwardingOrganisationService _awardingOrganisationService;
 
@@ -18,11 +20,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpGet]
         [Route("GetAllTlevels/{id}")]
-        public async Task<IEnumerable<string>> GetAllTlevelsByAwardingOrganisationIdAsync(int id)
+        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(int id)
         {
-            var result = await _awardingOrganisationService.GetAllTlevelsByAwardingOrganisationIdAsync(id);
-
-            return result;
+            return await _awardingOrganisationService.GetAllTlevelsByAwardingOrganisationIdAsync(id);
         }
     }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces
+namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
 {
-    public interface IAwardingOrganisationService
+    public interface IAwardingOrganisationController
     {
         Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(int id);
     }
