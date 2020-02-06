@@ -3,7 +3,7 @@
 
 var gulp = require('gulp');
 
-//require('./gulp/tasks/dev');
+require('./gulp/tasks/dev');
 require('./gulp/tasks/default');
 
 gulp.task('default', gulp.series('govuk-js', 'copy-js', 'copy-assets', 'merge-css',
