@@ -9,8 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data
             : base(options)
         {
         }
-
-        public virtual DbSet<BaseEntity> BaseEntity { get; set; }
+       
         public virtual DbSet<TlAwardingOrganisation> TlAwardingOrganisation { get; set; }
         public virtual DbSet<TlMandatoryAdditionalRequirement> TlMandatoryAdditionalRequirement { get; set; }
         public virtual DbSet<TlPathway> TlPathway { get; set; }
