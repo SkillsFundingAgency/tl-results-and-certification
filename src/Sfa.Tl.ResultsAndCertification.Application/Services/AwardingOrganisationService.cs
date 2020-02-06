@@ -1,30 +1,37 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class AwardingOrganisationService : IAwardingOrganisationService
     {
-        private readonly IDbContextBuilder _builder;
-        private readonly ILogger<IRepository<TqAwardingOrganisation>> _logger;
         private readonly IRepository<TqAwardingOrganisation> _awardingOrganisationRepository;
-
-        public AwardingOrganisationService(IDbContextBuilder builder, 
-            ILogger<IRepository<TqAwardingOrganisation>> logger, IRepository<TqAwardingOrganisation> _repository)
+        private readonly IMapper _mapper;
+        private readonly ILogger<IRepository<TqAwardingOrganisation>> _logger;
+        
+        public AwardingOrganisationService(
+            IRepository<TqAwardingOrganisation> _repository,
+            IMapper mapper,
+            ILogger<IRepository<TqAwardingOrganisation>> logger)
         {
-            _builder = builder;
-            _logger = logger;
             _awardingOrganisationRepository = _repository;
+            _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<string>> GetAllTlevelsByAwardingOrganisationIdAsync(int id)
         {
-            _awardingOrganisationRepository.GetManyAsync(x => x.Id == 1);
+            var tlevels = _awardingOrganisationRepository.GetManyAsync().ToList();
+
+            var autoresult = _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(tlevels);
+            
             var result =  new string[] {"Hello", "World"};
             return await Task.Run(() => result);
         }

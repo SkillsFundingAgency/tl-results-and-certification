@@ -2,15 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Configuration;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
@@ -19,6 +17,7 @@ using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Builder;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi
@@ -77,12 +76,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
 
             services.AddSingleton(ResultsAndCertificationConfiguration);
 
+            services.AddAutoMapper(typeof(Startup));
+
             RegisterApplicationServices(services);
         }
 
         private static void RegisterApplicationServices(IServiceCollection services)
         {
-            services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
+            services.AddTransient(typeof(IRepository<TqAwardingOrganisation>), typeof(GenericRepository<TqAwardingOrganisation>));
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
             services.AddTransient<IDbContextBuilder, DbContextBuilder>();
         }
