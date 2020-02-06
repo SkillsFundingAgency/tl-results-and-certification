@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +15,9 @@ using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.Filters;
+using Sfa.Tl.ResultsAndCertification.Web.Loader;
+using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web
 {
@@ -61,6 +65,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web
 
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
             services.AddAuthorization();
+
+            RegisterDependencies(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,5 +95,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 endpoints.MapDefaultControllerRoute();
             });
         }
+
+        private void RegisterDependencies(IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(Startup));
+            services.AddTransient<IAwardingOrganisationLoader, AwardingOrganisationLoader>();
+        }
+
     }
 }
