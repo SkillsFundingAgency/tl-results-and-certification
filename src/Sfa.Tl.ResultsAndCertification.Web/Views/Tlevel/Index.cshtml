@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Sfa.Tl.ResultsAndCertification.Web.Models.YourTlevelsViewModel>
+
+@{
+    ViewData["Title"] = "Your T Levels";
+}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Your T Levels</h1>
+            <p class="govuk-body">You are assessing the following T Levels.</p>
+            <dl class="govuk-summary-list">
+
+                @foreach (var item in Model)
+                {
+                <div class="govuk-summary-list__row">
+                    <dd class="govuk-summary-list__value">
+                        @item.TLevelDescription
+                    </dd>
+                    <dd class="govuk-summary-list__value">
+                        @item.TLevelStatus
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="Details/@item.PathId">
+                            Details<span class="govuk-visually-hidden"> Construction: Design, Surveying and Planning</span>
+                        </a>
+                    </dd>
+                </div>
+                }
+
+            </dl>
+
+            <a asp-controller="Dashboard"
+               asp-action="Index" class="govuk-button" data-module="govuk-button">Home</a>
+        </div>
+    </div>
