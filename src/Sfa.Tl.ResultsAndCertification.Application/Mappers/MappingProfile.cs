@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             CreateMap<TlAwardingOrganisation, AwardingOrganisation>();
             CreateMap<TqAwardingOrganisation, AwardingOrganisationPathwayStatus>();
             CreateMap<TlPathway, Pathway>();
-            CreateMap<TlRoute, TlRoute>();
+            CreateMap<TlRoute, Route>();
         }
     }
 }

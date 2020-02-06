@@ -26,14 +26,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<string>> GetAllTlevelsByAwardingOrganisationIdAsync(int id)
+        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(int id)
         {
-            var tlevels = _awardingOrganisationRepository.GetManyAsync().ToList();
-
-            var autoresult = _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(tlevels);
+            // TODO: GetManyAsync change this to async method?
+            var tlevels = _awardingOrganisationRepository.GetManyAsync(x => x.TlAwardingOrganisatonId == id).ToList();
+            var awardOrgPathwayStatus = _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(tlevels);
             
-            var result =  new string[] {"Hello", "World"};
-            return await Task.Run(() => result);
+            return await Task.Run(() => awardOrgPathwayStatus);
         }
     }
 }
