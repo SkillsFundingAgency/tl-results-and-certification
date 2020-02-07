@@ -26,5 +26,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         {
             return user.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Upn)?.Value;
         }
+
+        public static string GetUkPrn(this ClaimsPrincipal user)
+        {
+            return user.Claims.SingleOrDefault(c => c.Type == CustomClaimTypes.Ukprn)?.Value;
+        }
     }
 }

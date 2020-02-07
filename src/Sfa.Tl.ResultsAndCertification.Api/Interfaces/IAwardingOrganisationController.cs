@@ -6,6 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
 {
     public interface IAwardingOrganisationController
     {
-        Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(int id);
+        Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync();
     }
 }

@@ -6,10 +6,10 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 {
     public partial class TqAwardingOrganisation : BaseEntity
     {
-        //public TqAwardingOrganisation()
-        //{
-        //    TqProviders = new HashSet<TqProvider>();
-        //}
+        public TqAwardingOrganisation()
+        {
+            TqProviders = new HashSet<TqProvider>();
+        }
 
         public int TlAwardingOrganisatonId { get; set; }
         public int TlRouteId { get; set; }

@@ -9,5 +9,6 @@
 
         public Pathway Pathway { get; set; }
         public Route Route { get; set; }
+        public AwardingOrganisation AwardingOrganisaton { get; set; }
     }
 }
