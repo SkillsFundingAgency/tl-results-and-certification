@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertificat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Tests.Common", "Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj", "{FC6E0F25-FCC0-4908-A883-E792600092EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfa.Tl.ResultsAndCertification.Api.Client", "Sfa.Tl.ResultsAndCertification.Api.Client\Sfa.Tl.ResultsAndCertification.Api.Client.csproj", "{6FFDE65E-61D1-4FAA-B649-B05FD2EEA23D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{FC6E0F25-FCC0-4908-A883-E792600092EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC6E0F25-FCC0-4908-A883-E792600092EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC6E0F25-FCC0-4908-A883-E792600092EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FFDE65E-61D1-4FAA-B649-B05FD2EEA23D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FFDE65E-61D1-4FAA-B649-B05FD2EEA23D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FFDE65E-61D1-4FAA-B649-B05FD2EEA23D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FFDE65E-61D1-4FAA-B649-B05FD2EEA23D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
