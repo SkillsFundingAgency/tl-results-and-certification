@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -26,14 +27,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<string>> GetAllTlevelsByAwardingOrganisationIdAsync(int id)
+        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(long id)
         {
-            var tlevels = _awardingOrganisationRepository.GetManyAsync().ToList();
-
-            var autoresult = _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(tlevels);
+            // TODO: GetManyAsync change this to async method?
+            var tlevels = await _awardingOrganisationRepository
+                .GetManyAsync(x => x.TlAwardingOrganisaton.UkPrn == id, 
+                        n => n.TlRoute, 
+                        n => n.TlPathway, 
+                        n => n.TlAwardingOrganisaton)
+                .ToListAsync();
             
-            var result =  new string[] {"Hello", "World"};
-            return await Task.Run(() => result);
+            var awardOrgPathwayStatus = _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(tlevels);
+            return awardOrgPathwayStatus;
         }
     }
 }

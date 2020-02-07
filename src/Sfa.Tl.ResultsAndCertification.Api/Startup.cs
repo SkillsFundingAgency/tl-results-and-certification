@@ -76,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
 
             services.AddSingleton(ResultsAndCertificationConfiguration);
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             RegisterApplicationServices(services);
         }

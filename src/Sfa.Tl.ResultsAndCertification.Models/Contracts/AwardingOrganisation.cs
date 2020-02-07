@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
             AwardingOrganisationPathwayStatus = new List<AwardingOrganisationPathwayStatus>();
         }
 
-        public string UkAon { get; set; }
+        public long UkPrn { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
 

@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
             TqAwardingOrganisations = new HashSet<TqAwardingOrganisation>();
         }
 
-        public string UkPrn { get; set; }
+        public long UkPrn { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
 
