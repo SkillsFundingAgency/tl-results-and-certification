@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 
@@ -19,9 +20,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllTlevels/{id}")]
-        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(int id)
+        [Route("GetAllTlevels")]
+        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync()
         {
+            // TODO: following statement to be updated?
+            var id = !string.IsNullOrEmpty(User.GetUkPrn()) ? int.Parse(User.GetUkPrn()) : 10009696;
+           
             return await _awardingOrganisationService.GetAllTlevelsByAwardingOrganisationIdAsync(id);
         }
     }

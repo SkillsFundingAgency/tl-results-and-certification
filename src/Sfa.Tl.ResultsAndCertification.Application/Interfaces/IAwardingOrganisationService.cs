@@ -6,6 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces
 {
     public interface IAwardingOrganisationService
     {
-        Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(int id);
+        Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(long id);
     }
 }
