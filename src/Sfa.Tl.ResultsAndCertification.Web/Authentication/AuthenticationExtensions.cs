@@ -199,6 +199,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                             foreach (var role in userClaims.Roles)
                             {
                                 identity.AddClaim(new Claim(ClaimTypes.Role, role.Name));
+
+                                // Todo: Get below roles form DfE Signin
+                                identity.AddClaim(new Claim(ClaimTypes.Role, "Site Administrator"));
+                                identity.AddClaim(new Claim(ClaimTypes.Role, "Tlevels Reviewer"));
+                                identity.AddClaim(new Claim(ClaimTypes.Role, "Centres Editor"));
                             }
                         }
 

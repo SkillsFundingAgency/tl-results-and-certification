@@ -5,6 +5,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
     public static class RolesExtensions
     {
+        public const string SiteAdministrator = "Site Administrator";
+        public const string TlevelsReviewer = "Tlevels Reviewer";
+        public const string CentresEditor = "Centres Editor";
+
         public static bool HasAccessToService(this ClaimsPrincipal user)
         {
             var hasAccess = user.Claims.SingleOrDefault(c => c.Type == CustomClaimTypes.HasAccessToService)?.Value;
@@ -14,6 +18,21 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
                 return result;
             }
             return false;
+        }
+
+        public static bool HasSiteAdministratorRole(this ClaimsPrincipal user)
+        {
+            return user.IsInRole(SiteAdministrator);
+        }
+
+        public static bool HasTlevelsReviewerRole(this ClaimsPrincipal user)
+        {
+            return user.IsInRole(TlevelsReviewer);
+        }
+
+        public static bool HasCentresEditorRole(this ClaimsPrincipal user)
+        {
+            return user.IsInRole(CentresEditor);
         }
 
         public static string GetUserName(this ClaimsPrincipal user)
