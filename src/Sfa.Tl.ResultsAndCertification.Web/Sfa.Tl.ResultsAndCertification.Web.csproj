@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <Folder Include="Frontend\src\stylesheets\css\" />
-    <Folder Include="Authentication\" />
   </ItemGroup>
 
 
@@ -25,6 +24,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Api.Client\Sfa.Tl.ResultsAndCertification.Api.Client.csproj" />
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Application\Sfa.Tl.ResultsAndCertification.Application.csproj" />
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Common\Sfa.Tl.ResultsAndCertification.Common.csproj" />
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Models\Sfa.Tl.ResultsAndCertification.Models.csproj" />

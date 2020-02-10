@@ -1,19 +1,25 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+﻿using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 {
     public class AwardingOrganisationLoader : IAwardingOrganisationLoader
     {
         // TODO: Inject ApiClient 
-        public AwardingOrganisationLoader()
+        private readonly IResultsAndCertificationInternalApiClient _internalApiClient;
+        public AwardingOrganisationLoader(IResultsAndCertificationInternalApiClient internalApiClient)
         {
+            _internalApiClient = internalApiClient;
         }
 
         public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByAwardingOrganisationAsync(int id)
         {
+            var result1 = await _internalApiClient.GetAllTlevelsByAwardingOrganisationIdAsync(1);
+
             var result = new List<AwardingOrganisationPathwayStatus>
             {
                 new AwardingOrganisationPathwayStatus { TlPathwayId = 1, TlRouteId = 1, Route = new Route { Name = "Route 1"}, Pathway = new Pathway { Name = "Pathway 1" }, ReviewStatus = 1 },

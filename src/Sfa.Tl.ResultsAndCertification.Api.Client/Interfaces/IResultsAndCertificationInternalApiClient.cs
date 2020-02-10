@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 {
-    interface IResultsAndCertificationInternalApiClient
+    public interface IResultsAndCertificationInternalApiClient
     {
         Task<IEnumerable<string>> GetAllTlevelsByAwardingOrganisationIdAsync(int id);
     }
