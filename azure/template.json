@@ -448,7 +448,7 @@
             },
             "dependsOn": [
                 "app-service-plan",
-                "internal-app-service-certificate",
+                "internal-api-app-service-certificate",
                 "internal-api-app-insights"
             ]
         },
