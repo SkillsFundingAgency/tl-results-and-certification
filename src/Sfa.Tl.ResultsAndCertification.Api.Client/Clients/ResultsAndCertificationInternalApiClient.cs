@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -26,10 +27,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _httpClient.BaseAddress = new Uri(_internalApiUri);
         }
 
-        public async Task<IEnumerable<string>> GetAllTlevelsByAwardingOrganisationIdAsync(int id)
+        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(int id)
         {
             var requestUri = $"/api/AwardingOrganisation/GetAllTLevels/{id}";
-            var response = await GetAsync<IEnumerable<string>>(requestUri);
+            var response = await GetAsync<IEnumerable<AwardingOrganisationPathwayStatus>>(requestUri);
             return response;
         }
 

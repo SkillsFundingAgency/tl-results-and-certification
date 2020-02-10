@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllTlevels/{1}")]
+        [Route("GetAllTlevels")]
         public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync()
         {
             // TODO: following statement to be updated?
