@@ -405,7 +405,7 @@
                         "value": "[variables('internalApiAppServiceName')]"
                     },
                     "appServicePlanName": {
-                        "value": "[variables('internalApiAppServiceName')]"
+                        "value": "[variables('appServicePlanName')]"
                     },
                     "appServicePlanResourceGroup": {
                         "value": "[resourceGroup().name]"
@@ -430,7 +430,7 @@
                             },
                             {
                                 "name": "ServiceName",
-                                "value": "TBA"
+                                "value": "Sfa.Tl.ResultsAndCertification"
                             }
                         ]
                     },
