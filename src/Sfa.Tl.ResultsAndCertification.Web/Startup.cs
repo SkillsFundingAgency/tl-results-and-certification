@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
+using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Configuration;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
@@ -55,7 +57,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddSingleton(ResultsAndCertificationConfiguration);
             services.AddHttpClient<ITokenRefresher, TokenRefresher>();
             services.AddTransient<CustomCookieAuthenticationEvents>().AddHttpContextAccessor();
-
+            services.AddTransient<ITokenServiceClient, TokenServiceClient>();
+            services.AddHttpClient<IResultsAndCertificationInternalApiClient, ResultsAndCertificationInternalApiClient>();
             services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
@@ -101,6 +104,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddTransient<IAwardingOrganisationLoader, AwardingOrganisationLoader>();
         }
-
     }
 }

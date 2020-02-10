@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public async Task<IEnumerable<string>> GetAllTlevelsByAwardingOrganisationIdAsync(int id)
         {
-            var requestUri = $"/api/awardingOrganisation/GetAllTLevels/{id}";
+            var requestUri = $"/api/AwardingOrganisation/GetAllTLevels/{id}";
             var response = await GetAsync<IEnumerable<string>>(requestUri);
             return response;
         }
