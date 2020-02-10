@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _httpClient = httpClient;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _internalApiUri = configuration.ResultsAndCertificationInternalApiUri.TrimEnd('/');
+            _internalApiUri = configuration.ResultsAndCertificationApiSettings.InternalApiUri.TrimEnd('/');
             _httpClient.BaseAddress = new Uri(_internalApiUri);
         }
 
