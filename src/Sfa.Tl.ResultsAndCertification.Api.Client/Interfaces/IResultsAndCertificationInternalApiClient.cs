@@ -6,6 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 {
     public interface IResultsAndCertificationInternalApiClient
     {
-        Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(int id);
+        Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationAsync();
     }
 }

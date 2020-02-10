@@ -27,9 +27,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _httpClient.BaseAddress = new Uri(_internalApiUri);
         }
 
-        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(int id)
+        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationAsync()
         {
-            var requestUri = $"/api/AwardingOrganisation/GetAllTLevels/{id}";
+            var requestUri = $"/api/AwardingOrganisation/GetAllTLevels";
             var response = await GetAsync<IEnumerable<AwardingOrganisationPathwayStatus>>(requestUri);
             return response;
         }
