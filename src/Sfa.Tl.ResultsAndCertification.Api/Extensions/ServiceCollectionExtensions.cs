@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
         public static IServiceCollection AddApiAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration configuration)
         {
             // configure jwt authentication
-            var key = Encoding.ASCII.GetBytes(configuration.DfeSignInSettings.ApiSecret);
+            var key = Encoding.ASCII.GetBytes(configuration.ResultsAndCertificationApiSettings.InternalApiSecret);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -21,16 +21,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
             })
             .AddJwtBearer(x =>
             {
-                x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = configuration.DfeSignInSettings.Issuer,
-                    ValidAudience = configuration.DfeSignInSettings.Audience,
+                    ValidIssuer = configuration.ResultsAndCertificationApiSettings.InternalApiIssuer,
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = true,
-                    ValidateAudience = true,
+                    ValidateAudience = false,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
                 };
