@@ -8,6 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 {
     public interface IAwardingOrganisationLoader
     {
-        Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByAwardingOrganisationAsync(int id);
+        Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByAwardingOrganisationAsync();
     }
 }

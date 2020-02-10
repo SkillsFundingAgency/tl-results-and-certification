@@ -21,10 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // TODO: following statement to be updated.
-            var id = !string.IsNullOrEmpty(User.GetUkPrn()) ? int.Parse(User.GetUkPrn()) : 10009696;
-
-            var tLevels = await _awardingOrganisationLoader.GetTlevelsByAwardingOrganisationAsync(id);
+            var tLevels = await _awardingOrganisationLoader.GetTlevelsByAwardingOrganisationAsync();
             var viewModel = _mapper.Map<IEnumerable<YourTlevelsViewModel>>(tLevels);
             
             return View(viewModel);
