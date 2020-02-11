@@ -7,9 +7,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Models
 {
     public class YourTlevelsViewModel
     {
-        public int RouteId { get; internal set; }
-        public int PathId { get; internal set; }
-        public string TLevelDescription { get; internal set; }
-        public string TLevelStatus { get; internal set; }
+        public int RouteId { get; set; }
+        public int PathId { get; set; }
+        public string TLevelDescription { get; set; }
+        public string TLevelStatus { get; set; }
     }
 }
