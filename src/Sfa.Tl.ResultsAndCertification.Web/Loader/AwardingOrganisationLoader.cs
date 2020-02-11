@@ -14,9 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _internalApiClient = internalApiClient;
         }
 
-        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByAwardingOrganisationAsync(int id)
+        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByAwardingOrganisationAsync()
         {
-            var result1 = await _internalApiClient.GetAllTlevelsByAwardingOrganisationIdAsync(10009696);
+            var result1 = await _internalApiClient.GetAllTlevelsByAwardingOrganisationAsync();
 
             var result = new List<AwardingOrganisationPathwayStatus>
             {
