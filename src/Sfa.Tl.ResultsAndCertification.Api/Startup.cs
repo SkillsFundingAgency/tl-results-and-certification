@@ -20,6 +20,7 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Extensions;
+using Sfa.Tl.ResultsAndCertification.InternalApi.Infrastructure;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi
@@ -45,6 +46,16 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                Configuration[Constants.ServiceNameConfigKey]);
 
             services.AddControllers();
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                //options.SuppressModelStateInvalidFilter = true;
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    return new BadRequestObjectResult(new BadRequestResponse(actionContext.ModelState));
+                };
+            });
+
             RegisterDependencies(services);
             services.AddApiAuthentication(ResultsAndCertificationConfiguration).AddApiAuthorization();
         }
@@ -57,6 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.ConfigureExceptionHandlerMiddleware();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();

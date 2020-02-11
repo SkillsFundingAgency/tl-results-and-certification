@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(int id)
         {
-            var requestUri = $"/api/AwardingOrganisation/GetAllTLevels/{id}";
+            var requestUri = $"/api/AwardingOrganisation/GetAllTLevels";
             var response = await GetAsync<IEnumerable<AwardingOrganisationPathwayStatus>>(requestUri);
             return response;
         }
