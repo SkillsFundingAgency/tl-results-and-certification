@@ -6,7 +6,6 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -29,7 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(long id)
         {
-            // TODO: GetManyAsync change this to async method?
             var tlevels = await _awardingOrganisationRepository
                 .GetManyAsync(x => x.TlAwardingOrganisaton.UkPrn == id, 
                         n => n.TlRoute, 
