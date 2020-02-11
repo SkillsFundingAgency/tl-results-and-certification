@@ -9,8 +9,9 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountControllerTests
 {
+    // TODO: To be refactored to use NSubstitute. 
     public class AccountControllerTests
     {
         private readonly Mock<HttpContext> mockHttpContext;
