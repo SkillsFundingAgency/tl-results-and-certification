@@ -11,19 +11,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class TlevelController : Controller
     {
         private readonly IAwardingOrganisationLoader _awardingOrganisationLoader;
-        private readonly IMapper _mapper;
+        
 
-        public TlevelController(IAwardingOrganisationLoader awardingOrganisationLoader, IMapper mapper)
+        public TlevelController(IAwardingOrganisationLoader awardingOrganisationLoader)
         {
             _awardingOrganisationLoader = awardingOrganisationLoader;
-            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
-            var tLevels = await _awardingOrganisationLoader.GetTlevelsByAwardingOrganisationAsync();
-            var viewModel = _mapper.Map<IEnumerable<YourTlevelsViewModel>>(tLevels);
-            
+            var viewModel = await _awardingOrganisationLoader.GetTlevelsByAwardingOrganisationAsync();
             return View(viewModel);
         }
 
