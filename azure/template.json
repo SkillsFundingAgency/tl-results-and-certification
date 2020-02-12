@@ -67,10 +67,10 @@
         "sharedSqlServerName": {
             "type": "string"
         },
-        "DatabaseSkuName": {
+        "databaseSkuName": {
             "type": "string"
         },
-        "DatabaseTier": {
+        "databaseTier": {
             "type": "string"
         },
         "configurationStorageConnectionString": {
