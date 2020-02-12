@@ -1,18 +1,17 @@
 ﻿using FluentAssertions;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AwardingOrganisation
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingOrganisation
 {
-    public class When_When_TqAwardingOrganisationRepository_Create_Is_Called : BaseTest<TqAwardingOrganisation>
+    public class When_TlAwardingOrganisationRepository_Create_Is_Called : BaseTest<Domain.Models.TlAwardingOrganisation>
     {
-        private TqAwardingOrganisation _data;
+        private Domain.Models.TlAwardingOrganisation _data;
         private int _result;
 
         public override void Given()
         {
-            _data = new TqAwardingOrganisationBuilder().Build();
+            _data = new TlAwardingOrganisationBuilder().Build();
         }
         
         public override void When()

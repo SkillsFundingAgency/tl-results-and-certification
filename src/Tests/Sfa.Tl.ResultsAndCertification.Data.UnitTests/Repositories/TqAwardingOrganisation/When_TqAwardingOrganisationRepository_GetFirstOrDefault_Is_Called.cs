@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AwardingOrganisation
 {
-    public class When_PathRepository_GetFirstOrDefault_Is_Called : BaseTest<TqAwardingOrganisation>
+    public class When_TqAwardingOrganisationRepository_GetFirstOrDefault_Is_Called : BaseTest<TqAwardingOrganisation>
     {
         private TqAwardingOrganisation _result;
         private IEnumerable<TqAwardingOrganisation> _data;
