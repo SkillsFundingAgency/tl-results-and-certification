@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertificat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Tests.Common", "Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj", "{FC6E0F25-FCC0-4908-A883-E792600092EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfa.Tl.ResultsAndCertification.Api.Client", "Sfa.Tl.ResultsAndCertification.Api.Client\Sfa.Tl.ResultsAndCertification.Api.Client.csproj", "{6FFDE65E-61D1-4FAA-B649-B05FD2EEA23D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Api.Client", "Sfa.Tl.ResultsAndCertification.Api.Client\Sfa.Tl.ResultsAndCertification.Api.Client.csproj", "{6FFDE65E-61D1-4FAA-B649-B05FD2EEA23D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests\Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.csproj", "{18FDF69D-CBBA-4876-8042-48936052771A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,10 @@ Global
 		{6FFDE65E-61D1-4FAA-B649-B05FD2EEA23D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FFDE65E-61D1-4FAA-B649-B05FD2EEA23D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FFDE65E-61D1-4FAA-B649-B05FD2EEA23D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18FDF69D-CBBA-4876-8042-48936052771A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18FDF69D-CBBA-4876-8042-48936052771A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18FDF69D-CBBA-4876-8042-48936052771A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18FDF69D-CBBA-4876-8042-48936052771A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +106,7 @@ Global
 		{98B60545-ED2C-4912-BED2-9CCB2276D978} = {27D1F44A-780E-48E7-8423-7E892F7D51F4}
 		{53D41D57-3DE6-42FE-B1D1-EF2154C04732} = {27D1F44A-780E-48E7-8423-7E892F7D51F4}
 		{FC6E0F25-FCC0-4908-A883-E792600092EB} = {27D1F44A-780E-48E7-8423-7E892F7D51F4}
+		{18FDF69D-CBBA-4876-8042-48936052771A} = {27D1F44A-780E-48E7-8423-7E892F7D51F4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB9971EA-9E54-4506-A8A0-2D78C5C3B588}
