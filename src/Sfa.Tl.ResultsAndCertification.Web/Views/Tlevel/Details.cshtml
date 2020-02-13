@@ -3,5 +3,44 @@
     ViewData["Title"] = "Details";
 }
 
-<p class="govuk-body">Page under construction.</p>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">T Level details</h1>
 
+        <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Route
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Construction
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Pathway
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Construction: Design, Surveying and Planning
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Specialisms
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <p class="govuk-body">Surveying and design for construction and the built environment</p>
+                    <p class="govuk-body">Civil engineering</p>
+                    <p class="govuk-body">Building services design</p>
+                    <p class="govuk-body">Hazardous materials analysis and surveying</p>
+                </dd>
+            </div>
+        </dl>
+
+        <p class="govuk-body govuk-!-margin-bottom-9"><a href="report-tlevel-issue">Something is not right</a></p>
+
+        <form class="form" action="view-all-confirmed-tlevels" method="post">
+            <button class="govuk-button" data-module="govuk-button">Return to your T Levels list</button>
+        </form>
+    </div>
+</div>

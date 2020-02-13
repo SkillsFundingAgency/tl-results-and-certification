@@ -6,28 +6,27 @@
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
+
             <h1 class="govuk-heading-xl">Your T Levels</h1>
-            <p class="govuk-body">You are assessing the following T Levels.</p>
-            <dl class="govuk-summary-list">
+
+            <h2 class="govuk-heading-m">Confirmed T Levels</h2>
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
 
                 @foreach (var item in Model)
                 {
-                <div class="govuk-summary-list__row">
-                    <dd class="govuk-summary-list__value">
-                        @item.TLevelDescription
-                    </dd>
-                    <dd class="govuk-summary-list__value">
-                        @item.TLevelStatus
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="Details/@item.PathId">
-                            Details<span class="govuk-visually-hidden"> Construction: Design, Surveying and Planning</span>
-                        </a>
-                    </dd>
-                </div>
+                    <div class="govuk-summary-list__row">
+                        <dd class="govuk-summary-list__value">
+                            @item.TLevelDescription
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                            <a class="govuk-link" href="Details/@item.PathId">
+                                View<span class="govuk-visually-hidden"> Construction: Design, Surveying and Planning</span>
+                            </a>
+                        </dd>
+                    </div>
                 }
-
-            </dl>
+                </dl>
 
             <a asp-controller="Dashboard"
                asp-action="Index" class="govuk-button" data-module="govuk-button">Home</a>

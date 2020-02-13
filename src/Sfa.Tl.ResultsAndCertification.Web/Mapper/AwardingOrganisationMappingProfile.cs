@@ -11,7 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<AwardingOrganisationPathwayStatus, YourTlevelsViewModel>()
                 .ForMember(d => d.PathId, opts => opts.MapFrom(s => s.PathwayId))
                 .ForMember(d => d.TLevelDescription, opts => opts.MapFrom(s => $"{s.RouteName}: {s.PathwayName}"))
-                .ForMember(d => d.TLevelStatus, opts => opts.MapFrom(s => s.TlevelReviewStatus));
+                .ForMember(d => d.StatusId, opts => opts.MapFrom(s => s.StatusId))
+                .ForMember(d => d.PageTitle, opts => opts.MapFrom(s => "Your T Levels")); // TODO: map this dynamically.
         }
     }
 }
