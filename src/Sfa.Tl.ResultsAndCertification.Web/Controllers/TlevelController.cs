@@ -39,7 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     "Hazardous materials analysis and surveying"
                 }
             };
-            return await Task.Run(() => View());
+
+            return await Task.Run(() => View(viewModel));
         }
     }
 }
