@@ -15,10 +15,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     public class AwardingOrganisationController : ControllerBase, IAwardingOrganisationController
     {
         private readonly IAwardingOrganisationService _awardingOrganisationService;
+        private readonly IPathwayService _pathwayService;
 
-        public AwardingOrganisationController(IAwardingOrganisationService awardingOrganisationService)
+        public AwardingOrganisationController(IAwardingOrganisationService awardingOrganisationService,
+            IPathwayService pathwayService)
         {
             _awardingOrganisationService = awardingOrganisationService;
+            _pathwayService = pathwayService;
         }
 
         [HttpGet]
@@ -28,6 +31,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             // TODO: following statement to be updated?
             var id = !string.IsNullOrEmpty(User.GetUkPrn()) ? long.Parse(User.GetUkPrn()) : 10011881;
             return await _awardingOrganisationService.GetAllTlevelsByAwardingOrganisationIdAsync(id);
+        }
+
+        [HttpGet]
+        [Route("Tlevel/{id}")]
+        public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(int id)
+        {
+            // TODO: Security validation cross-cutting functionality?
+            return await _pathwayService.GetTlevelDetailsByPathwayIdAsync(id);
         }
     }
 }

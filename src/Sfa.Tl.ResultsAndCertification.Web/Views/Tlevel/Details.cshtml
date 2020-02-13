@@ -39,10 +39,11 @@
             </div>
         </dl>
 
-        <p class="govuk-body govuk-!-margin-bottom-9"><a href="report-tlevel-issue">Something is not right</a></p>
+        <p class="govuk-body govuk-!-margin-bottom-9">
+            <a href="/Tlevel/Reportissue">Something is not right</a>
+        </p>
 
-        <form class="form" action="view-all-confirmed-tlevels" method="post">
-            <button class="govuk-button" data-module="govuk-button">Return to your T Levels list</button>
-        </form>
+        <a asp-controller="Tlevel"
+           asp-action="Index" class="govuk-button" data-module="govuk-button">Return to your T Levels list</a>
     </div>
 </div>
