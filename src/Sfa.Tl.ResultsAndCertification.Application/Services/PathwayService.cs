@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -6,40 +7,33 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class PathwayService : IPathwayService
     {
+        private readonly IRepository<TlPathway> _pathwayRepository;
         private readonly IMapper _mapper;
 
-        public PathwayService(IMapper mapper)
+        public PathwayService(IRepository<TlPathway> pathwayRepository, IMapper mapper)
         {
+            _pathwayRepository = pathwayRepository;
             _mapper = mapper;
         }
 
         public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(int id)
         {
-            var tLevelDetails = new TlevelPathwayDetails
-            {
-                RouteId = 1,
-                PathwayId = 1,
-                RouteName = "Construction",
-                PathwayName = "Construction: Design, Surveying and Planning",
-                Specialisms = new List<string>
-                {
-                    "Surveying and design for construction and the built environment",
-                    "Civil engineering",
-                    "Building services design",
-                    "Hazardous materials analysis and surveying"
-                }
-            };
+            // TODO: change this expression to use FirstOrDefault 
+            var tlevel = await _pathwayRepository
+               .GetManyAsync(x => x.Id == id, 
+               n => n.TlRoute,
+               n => n.TlSpecialisms)
+               .ToListAsync();
 
-             // TODO: access repository and get details. 
-
-            var awardOrgPathwayStatus = _mapper.Map<TlevelPathwayDetails>(tLevelDetails);
-            return await Task.Run(() => awardOrgPathwayStatus);
+            var tlevelPathwayDetails = _mapper.Map<TlevelPathwayDetails>(tlevel.FirstOrDefault());
+            return tlevelPathwayDetails;
         }
     }
 }

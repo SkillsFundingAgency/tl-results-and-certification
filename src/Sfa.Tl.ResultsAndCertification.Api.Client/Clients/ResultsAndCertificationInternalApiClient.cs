@@ -36,29 +36,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(int id)
         {
-
             var requestUri = $"/api/AwardingOrganisation/Tlevel/{id}";
             var response = await GetAsync<TlevelPathwayDetails>(requestUri);
             return response;
-
-
-            //// TODO: Write an api and link it. 
-            //var viewModel = new TlevelPathwayDetails
-            //{
-            //    RouteId = 1,
-            //    PathwayId = 1,
-            //    RouteName = "Construction",
-            //    PathwayName = "Construction: Design, Surveying and Planning",
-            //    Specialisms = new List<string>
-            //    {
-            //        "Surveying and design for construction and the built environment",
-            //        "Civil engineering",
-            //        "Building services design",
-            //        "Hazardous materials analysis and surveying"
-            //    }
-            //};
-
-            //return await Task.Run(() => viewModel);
         }
 
         private void SetBearerToken()

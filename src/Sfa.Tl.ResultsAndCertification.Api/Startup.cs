@@ -98,6 +98,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
         private static void RegisterApplicationServices(IServiceCollection services)
         {
             services.AddTransient(typeof(IRepository<TqAwardingOrganisation>), typeof(GenericRepository<TqAwardingOrganisation>));
+            services.AddTransient(typeof(IRepository<TlPathway>), typeof(GenericRepository<TlPathway>));
+
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
             services.AddTransient<IPathwayService, PathwayService>();
             services.AddTransient<IDbContextBuilder, DbContextBuilder>();

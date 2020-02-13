@@ -38,7 +38,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(int id)
         {
             // TODO: Security validation cross-cutting functionality?
-            return await _pathwayService.GetTlevelDetailsByPathwayIdAsync(id);
+
+            // TODO: 1. Validate the input id
+            var tlevelDetails = await _pathwayService.GetTlevelDetailsByPathwayIdAsync(id);
+
+            // TODO: If no-content - then show respective page.  
+
+            return tlevelDetails;
         }
     }
 }
