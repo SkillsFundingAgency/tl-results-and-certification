@@ -2,15 +2,20 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.Models;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Index
 {
-    public class TlevelController_Index_When_No_Data_Returned1 : When_Index_Action_Called
+    public class Then_Return_TwoRecord_ViewModel : When_Index_Action_Called
     {
         public override void Given()
         {
-            var mockresult = new List<YourTlevelsViewModel>();
+            var mockresult = new List<YourTlevelsViewModel>
+            {
+                    new YourTlevelsViewModel { PathId = 1, RouteId = 1, TLevelStatus = "Confirmed", TLevelDescription = "RouteName1: Pathway1" },
+                    new YourTlevelsViewModel { PathId = 2, RouteId = 2, TLevelStatus = "Confirmed", TLevelDescription = "RouteName2: Pathway2"}
+            };
             AwardingOrganistionLoader.GetTlevelsByAwardingOrganisationAsync()
                 .Returns(mockresult);
         }
@@ -26,7 +31,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as IList<YourTlevelsViewModel>;
-            Assert.True(model.Count == 0);
+            Assert.True(model.Count == 2);
+        }
+
+        [Fact]
+        public void Then_GetTlevelsByAwardingOrganisationAsync_Index_Returns_Expected_ViewModel()
+        {
+            var viewResult = Result.Result as ViewResult;
+            var model = viewResult.Model as IList<YourTlevelsViewModel>;
+
+            var expectedModel = model.FirstOrDefault();
+            Assert.True(expectedModel.PathId == 1);
+            Assert.True(expectedModel.RouteId == 1);
+            Assert.True(expectedModel.TLevelStatus.Equals("Confirmed"));
+            Assert.True(expectedModel.TLevelDescription.Equals("RouteName1: Pathway1"));
         }
     }
 }

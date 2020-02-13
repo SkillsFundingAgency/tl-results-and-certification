@@ -6,11 +6,10 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Models;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AwardingOrganisationLoaderTests
 {
-    public class When_Called_Method_GetTlevelsByAwardingOrganisationAsync : BaseTest<AwardingOrganisationLoader>
+    public abstract class When_Called_Method_GetTlevelsByAwardingOrganisationAsync : BaseTest<AwardingOrganisationLoader>
     {
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
         protected IMapper Mapper;
