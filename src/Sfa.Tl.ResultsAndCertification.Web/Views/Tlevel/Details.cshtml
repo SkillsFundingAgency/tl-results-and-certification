@@ -1,11 +1,12 @@
-﻿
+﻿@model Sfa.Tl.ResultsAndCertification.Web.Models.YourTLevelDetailsViewModel
+
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "T Level Details";
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">T Level details</h1>
+        <h1 class="govuk-heading-xl">@Model.PageTitle</h1>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-4">
             <div class="govuk-summary-list__row">
@@ -13,7 +14,7 @@
                     Route
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    Construction
+                    @Model.RouteName
                 </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -21,7 +22,7 @@
                     Pathway
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    Construction: Design, Surveying and Planning
+                    @Model.PathwayName
                 </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -29,10 +30,11 @@
                     Specialisms
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    <p class="govuk-body">Surveying and design for construction and the built environment</p>
-                    <p class="govuk-body">Civil engineering</p>
-                    <p class="govuk-body">Building services design</p>
-                    <p class="govuk-body">Hazardous materials analysis and surveying</p>
+
+                    @foreach (var splsm in Model.Specialisms)
+                    {
+                        <p class="govuk-body">@splsm</p>
+                    }
                 </dd>
             </div>
         </dl>

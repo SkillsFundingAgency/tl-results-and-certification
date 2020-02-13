@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetAllTlev
 
         protected readonly string RouteName = "Construction";
         protected readonly string PathwayName = "Design";
-        protected readonly string Status = "Confirmed";
+        protected readonly int Status = 1;
 
         private ResultsAndCertificationInternalApiClient _apiClient;
         private IEnumerable<AwardingOrganisationPathwayStatus> _mockHttpResult; 
@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetAllTlev
 
             _mockHttpResult = new List<AwardingOrganisationPathwayStatus> 
             { 
-                new AwardingOrganisationPathwayStatus { PathwayName = PathwayName, RouteName = RouteName, TlevelReviewStatus = Status }
+                new AwardingOrganisationPathwayStatus { PathwayName = PathwayName, RouteName = RouteName, StatusId = Status }
             };
             HttpClient = new HttpClient(new MockHttpMessageHandler<IEnumerable<AwardingOrganisationPathwayStatus>>(_mockHttpResult, HttpStatusCode.OK));
             
