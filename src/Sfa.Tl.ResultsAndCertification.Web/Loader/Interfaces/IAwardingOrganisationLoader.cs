@@ -10,5 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     public interface IAwardingOrganisationLoader
     {
         Task<IEnumerable<YourTlevelsViewModel>> GetTlevelsByAwardingOrganisationAsync();
+        Task<YourTLevelDetailsViewModel> GetTlevelDetailsByPathwayIdAsync(int id);
     }
 }

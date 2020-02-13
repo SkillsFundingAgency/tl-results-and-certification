@@ -26,21 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var viewModel = new YourTLevelDetailsViewModel
-            {
-                PageTitle = "T Level details",
-                RouteName = "Construction",
-                PathwayName = "Construction: Design, Surveying and Planning",
-                Specialisms = new List<string>
-                {
-                    "Surveying and design for construction and the built environment",
-                    "Civil engineering",
-                    "Building services design",
-                    "Hazardous materials analysis and surveying"
-                }
-            };
-
-            return await Task.Run(() => View(viewModel));
+            var viewModel = await _awardingOrganisationLoader.GetTlevelDetailsByPathwayIdAsync(id);
+            return View(viewModel); 
         }
     }
 }
