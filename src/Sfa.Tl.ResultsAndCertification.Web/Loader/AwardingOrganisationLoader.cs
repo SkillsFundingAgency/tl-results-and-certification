@@ -21,20 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<YourTLevelDetailsViewModel> GetTlevelDetailsByPathwayIdAsync(int id)
         {
-            var viewModel = new YourTLevelDetailsViewModel
-            {
-                PageTitle = "T Level details",
-                RouteName = "Construction",
-                PathwayName = "Construction: Design, Surveying and Planning",
-                Specialisms = new List<string>
-                {
-                    "Surveying and design for construction and the built environment",
-                    "Civil engineering",
-                    "Building services design",
-                    "Hazardous materials analysis and surveying"
-                }
-            };
-
+            var tLevelPathwayInfo = await _internalApiClient.GetTlevelDetailsByPathwayIdAsync(id);
+            var viewModel = _mapper.Map<YourTLevelDetailsViewModel>(tLevelPathwayInfo);
+            
             return await Task.Run(() => viewModel);
         }
 

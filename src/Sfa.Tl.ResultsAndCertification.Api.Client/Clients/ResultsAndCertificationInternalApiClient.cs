@@ -34,6 +34,27 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return response;
         }
 
+        public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(int id)
+        {
+            // TODO: Write an api and link it. 
+            var viewModel = new TlevelPathwayDetails
+            {
+                RouteId = 1,
+                PathwayId = 1,
+                RouteName = "Construction",
+                PathwayName = "Construction: Design, Surveying and Planning",
+                Specialisms = new List<string>
+                {
+                    "Surveying and design for construction and the built environment",
+                    "Civil engineering",
+                    "Building services design",
+                    "Hazardous materials analysis and surveying"
+                }
+            };
+
+            return await Task.Run(() => viewModel);
+        }
+
         private void SetBearerToken()
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenServiceClient.GetToken());
@@ -65,6 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return new StringContent(json, Encoding.UTF8, "application/json");
         }
 
+        
         private static JsonSerializerSettings MicrosoftDateFormatSettings
         {
             get
