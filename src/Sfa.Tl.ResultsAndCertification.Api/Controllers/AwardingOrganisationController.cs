@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync()
         {
             // TODO: following statement to be updated?
-            var id = !string.IsNullOrEmpty(User.GetUkPrn()) ? long.Parse(User.GetUkPrn()) : 10009696;
+            var id = !string.IsNullOrEmpty(User.GetUkPrn()) ? long.Parse(User.GetUkPrn()) : 10011881;
             return await _awardingOrganisationService.GetAllTlevelsByAwardingOrganisationIdAsync(id);
         }
     }
