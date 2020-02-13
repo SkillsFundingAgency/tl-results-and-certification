@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRepository<TqAwardingOrganisation> _awardingOrganisationRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<IRepository<TqAwardingOrganisation>> _logger;
-        
+
         public AwardingOrganisationService(
             IRepository<TqAwardingOrganisation> _repository,
             IMapper mapper,
@@ -29,12 +29,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(long id)
         {
             var tlevels = await _awardingOrganisationRepository
-                .GetManyAsync(x => x.TlAwardingOrganisaton.UkPrn == id, 
-                        n => n.TlRoute, 
-                        n => n.TlPathway, 
+                .GetManyAsync(x => x.TlAwardingOrganisaton.UkPrn == id,
+                        n => n.TlRoute,
+                        n => n.TlPathway,
                         n => n.TlAwardingOrganisaton)
                 .ToListAsync();
-            
+
             var awardOrgPathwayStatus = _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(tlevels);
             return awardOrgPathwayStatus;
         }

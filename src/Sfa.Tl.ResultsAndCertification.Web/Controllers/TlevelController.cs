@@ -29,5 +29,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = await _awardingOrganisationLoader.GetTlevelDetailsByPathwayIdAsync(id);
             return View(viewModel); 
         }
+
+        public async Task<IActionResult> ReportIssue()
+        {
+            return await Task.Run(() => View());
+        }
     }
 }

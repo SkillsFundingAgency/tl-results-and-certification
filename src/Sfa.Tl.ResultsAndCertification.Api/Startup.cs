@@ -99,6 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
         {
             services.AddTransient(typeof(IRepository<TqAwardingOrganisation>), typeof(GenericRepository<TqAwardingOrganisation>));
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
+            services.AddTransient<IPathwayService, PathwayService>();
             services.AddTransient<IDbContextBuilder, DbContextBuilder>();
         }
     }
