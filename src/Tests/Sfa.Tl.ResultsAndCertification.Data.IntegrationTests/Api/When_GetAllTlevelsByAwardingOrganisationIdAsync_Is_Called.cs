@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Api
             _mapper = Substitute.For<IMapper>();
             _logger = Substitute.For<ILogger<IRepository<TqAwardingOrganisation>>>();
 
-            _data = new AwardingOrganisationPathwayStatus { PathwayId = 1, PathwayName = "Pathway1", RouteName = "Route1", TlevelReviewStatus = "Confirmed" };
+            _data = new AwardingOrganisationPathwayStatus { PathwayId = 1, PathwayName = "Pathway1", RouteName = "Route1", StatusId = 1 };
             _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(Arg.Any<List<TqAwardingOrganisation>>())
                 .Returns(new List<AwardingOrganisationPathwayStatus> { _data });
 
@@ -72,7 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Api
             expectedResult.PathwayId.Should().Be(_data.PathwayId);
             expectedResult.PathwayName.Should().Be(_data.PathwayName);
             expectedResult.RouteName.Should().Be(_data.RouteName);
-            expectedResult.TlevelReviewStatus.Should().Be(_data.TlevelReviewStatus);
+            expectedResult.StatusId.Should().Be(_data.StatusId);
         }
     }
 }

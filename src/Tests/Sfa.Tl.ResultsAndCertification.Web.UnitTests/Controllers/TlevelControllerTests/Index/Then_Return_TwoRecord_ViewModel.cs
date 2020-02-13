@@ -13,8 +13,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         {
             var mockresult = new List<YourTlevelsViewModel>
             {
-                    new YourTlevelsViewModel { PathId = 1, RouteId = 1, TLevelStatus = "Confirmed", TLevelDescription = "RouteName1: Pathway1" },
-                    new YourTlevelsViewModel { PathId = 2, RouteId = 2, TLevelStatus = "Confirmed", TLevelDescription = "RouteName2: Pathway2"}
+                    new YourTlevelsViewModel { PathId = 1, StatusId = 1, TLevelDescription = "RouteName1: Pathway1" },
+                    new YourTlevelsViewModel { PathId = 2, StatusId = 2, TLevelDescription = "RouteName2: Pathway2"}
             };
             AwardingOrganistionLoader.GetTlevelsByAwardingOrganisationAsync()
                 .Returns(mockresult);
@@ -42,8 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
             var expectedModel = model.FirstOrDefault();
             Assert.True(expectedModel.PathId == 1);
-            Assert.True(expectedModel.RouteId == 1);
-            Assert.True(expectedModel.TLevelStatus.Equals("Confirmed"));
+            Assert.True(expectedModel.StatusId.Equals(1));
             Assert.True(expectedModel.TLevelDescription.Equals("RouteName1: Pathway1"));
         }
     }
