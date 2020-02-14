@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.Models;
 
@@ -27,6 +28,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var viewModel = await _awardingOrganisationLoader.GetTlevelDetailsByPathwayIdAsync(id);
+
+            if(viewModel == null)
+            {
+                return RedirectToAction(nameof(ErrorController.PageNotFound), Constants.ErrorController);
+            }
             return View(viewModel); 
         }
 

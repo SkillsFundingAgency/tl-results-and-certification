@@ -29,14 +29,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationAsync()
         {
-            var requestUri = $"/api/AwardingOrganisation/GetAllTLevels";
+            var requestUri = $"/api/Tlevel/GetAllTLevels";
             var response = await GetAsync<IEnumerable<AwardingOrganisationPathwayStatus>>(requestUri);
             return response;
         }
 
         public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(int id)
         {
-            var requestUri = $"/api/AwardingOrganisation/TlevelDetails/{id}";
+            var requestUri = $"/api/Tlevel/TlevelDetails/{id}";
             var response = await GetAsync<TlevelPathwayDetails>(requestUri);
             return response;
         }
