@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("Tlevel/{id}")]
+        [Route("TlevelDetails/{id}")]
         public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(int id)
         {
             // TODO: Security validation cross-cutting functionality?
