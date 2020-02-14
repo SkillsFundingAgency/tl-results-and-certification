@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
@@ -29,16 +30,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationAsync()
         {
-            var requestUri = $"/api/Tlevel/GetAllTLevels";
-            var response = await GetAsync<IEnumerable<AwardingOrganisationPathwayStatus>>(requestUri);
-            return response;
+            return await GetAsync<IEnumerable<AwardingOrganisationPathwayStatus>>(ApiConstants.GetAllTLevelsUri);
         }
 
         public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(int id)
         {
-            var requestUri = $"/api/Tlevel/TlevelDetails/{id}";
-            var response = await GetAsync<TlevelPathwayDetails>(requestUri);
-            return response;
+            var requestUri = string.Format(ApiConstants.TlevelDetailsUri, id);
+            return await GetAsync<TlevelPathwayDetails>(requestUri);
         }
 
         private void SetBearerToken()
