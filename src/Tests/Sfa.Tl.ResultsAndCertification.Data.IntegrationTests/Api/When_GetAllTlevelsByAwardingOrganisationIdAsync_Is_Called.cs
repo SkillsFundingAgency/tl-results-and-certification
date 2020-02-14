@@ -9,7 +9,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Api
@@ -19,24 +18,43 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Api
         private IMapper _mapper;
         private ILogger<IRepository<TqAwardingOrganisation>> _logger;
         
-        private AwardingOrganisationPathwayStatus _data;
-        private long ukprn = 10009696;
-        
-        private Task<IEnumerable<AwardingOrganisationPathwayStatus>> _result;
+        private readonly long ukprn = 10009696;
+        private IEnumerable<AwardingOrganisationPathwayStatus> _result;
         private AwardingOrganisationService _service;
 
         public override void Given()
         {
             CreateTestData();
-            
-            _mapper = Substitute.For<IMapper>();
+            CreateMapper();
+
             _logger = Substitute.For<ILogger<IRepository<TqAwardingOrganisation>>>();
-
-            _data = new AwardingOrganisationPathwayStatus { PathwayId = 1, PathwayName = "Pathway1", RouteName = "Route1", StatusId = 1 };
-            _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(Arg.Any<List<TqAwardingOrganisation>>())
-                .Returns(new List<AwardingOrganisationPathwayStatus> { _data });
-
             _service = new AwardingOrganisationService(Repository, _mapper, _logger);
+        }
+        
+        public override void When()
+        {
+            _result = _service.GetAllTlevelsByAwardingOrganisationIdAsync(ukprn).Result;
+        }
+
+        [Fact]
+        public void Then_Expected_Results_Returned()
+        {
+            var expectedResult = _result.FirstOrDefault();
+
+            expectedResult.PathwayName.Should().Be("Design, Surveying and Planning");
+            expectedResult.RouteName.Should().Be("Construction");
+            expectedResult.StatusId.Should().Be(1);
+        }
+
+        private void CreateMapper()
+        {
+            _mapper = new MapperConfiguration(cfg =>
+                                cfg.CreateMap<TqAwardingOrganisation, AwardingOrganisationPathwayStatus>()
+                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.TlPathway.Id))
+                .ForMember(d => d.RouteName, opts => opts.MapFrom(s => s.TlRoute.Name))
+                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.TlPathway.Name))
+                .ForMember(d => d.StatusId, opts => opts.MapFrom(s => s.ReviewStatus)))
+                .CreateMapper();
         }
 
         private void CreateTestData()
@@ -49,30 +67,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Api
             DbContext.Add(aoStatus);
             var awardingOrgs = new TlAwardingOrganisationBuilder().Build();
             DbContext.Add(awardingOrgs);
-            
+
             DbContext.SaveChangesAsync();
-        }
-
-        public override void When()
-        {
-            _result = _service.GetAllTlevelsByAwardingOrganisationIdAsync(ukprn);
-        }
-
-        [Fact]
-        public void Then_AutoMapper_Map_Performed()
-        {
-            _mapper.Received().Map<IEnumerable<AwardingOrganisationPathwayStatus>>(Arg.Any<List<TqAwardingOrganisation>>());
-        }
-
-        [Fact]
-        public void Then_Expected_Results_Returned()
-        {
-            var expectedResult = _result.Result.FirstOrDefault();
-
-            expectedResult.PathwayId.Should().Be(_data.PathwayId);
-            expectedResult.PathwayName.Should().Be(_data.PathwayName);
-            expectedResult.RouteName.Should().Be(_data.RouteName);
-            expectedResult.StatusId.Should().Be(_data.StatusId);
         }
     }
 }
