@@ -58,7 +58,7 @@ steps:
   inputs:
     command: publish
     publishWebProjects: false
-    projects: 'src/Sfa.Tl.ResultsAndCertification.Api/Sfa.Tl.ResultsAndCertification.InternalApi.csproj'
+    projects: 'src/Sfa.Tl.ResultsAndCertification.InternalApi/Sfa.Tl.ResultsAndCertification.InternalApi.csproj'
     arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'
 
 - task: DotNetCoreCLI@2
