@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
 {
-    public interface IAwardingOrganisationController
+    public interface ITlevelController
     {
         Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync();
+        Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(int id);
     }
 }

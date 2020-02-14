@@ -12,12 +12,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class AwardingOrganisationController : ControllerBase, IAwardingOrganisationController
+    public class TlevelController : ControllerBase, ITlevelController
     {
         private readonly IAwardingOrganisationService _awardingOrganisationService;
         private readonly IPathwayService _pathwayService;
 
-        public AwardingOrganisationController(IAwardingOrganisationService awardingOrganisationService,
+        public TlevelController(IAwardingOrganisationService awardingOrganisationService,
             IPathwayService pathwayService)
         {
             _awardingOrganisationService = awardingOrganisationService;
@@ -41,9 +41,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
             // TODO: 1. Validate the input id
             var tlevelDetails = await _pathwayService.GetTlevelDetailsByPathwayIdAsync(id);
-
-            // TODO: If no-content - then show respective page.  
-
             return tlevelDetails;
         }
     }
