@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(int id)
         {
-            var requestUri = $"/api/AwardingOrganisation/Tlevel/{id}";
+            var requestUri = $"/api/AwardingOrganisation/TlevelDetails/{id}";
             var response = await GetAsync<TlevelPathwayDetails>(requestUri);
             return response;
         }
