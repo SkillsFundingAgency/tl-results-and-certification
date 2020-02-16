@@ -92,9 +92,9 @@
       ],
       "type": "object"
     },
-	"ResultsAndCertificationInternalApiSettings": {
+    "ResultsAndCertificationInternalApiSettings": {
       "properties": {    
-		    "Uri": {
+	"Uri": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "ResultsAndCertificationInternalApiUri"
@@ -130,7 +130,7 @@
     "SqlConnectionString",
     "BlobStorageConnectionString",
     "DfeSignInSettings",
-	  "ResultsAndCertificationApiSettings"
+    "ResultsAndCertificationApiSettings"
   ],
   "type": "object"
 }
