@@ -92,35 +92,35 @@
       ],
       "type": "object"
     },
-	"ResultsAndCertificationApiSettings": {
+	"ResultsAndCertificationInternalApiSettings": {
       "properties": {    
-		"InternalApiUri": {
+		    "Uri": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "ResultsAndCertificationInternalApiUri"
         },
-        "InternalApiIssuer": {
+        "IdentifierUri": {
           "minLength": 1,
           "type": "string",
-          "environmentVariable": "ResultsAndCertificationInternalApiIssuer"
-        },        
-        "InternalApiSecret": {
-          "minLength": 1,
-          "type": "string",
-          "environmentVariable": "ResultsAndCertificationInternalApiSecret"
+          "environmentVariable": "ResultsAndCertificationInternalApiIdentifierUri"
         },
-        "InternalApiTokenExpiryTime": {
+        "TenantId": {
           "minLength": 1,
           "type": "string",
-          "environmentVariable": "ResultsAndCertificationInternalApiTokenExpiryTime"
+          "environmentVariable": "ResultsAndCertificationInternalApiTenantId"
+        },
+        "ClientId": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "ResultsAndCertificationInternalApiClientId"
         }
       },
       "additionalProperties": false,
       "required": [
-        "InternalApiUri",
-        "InternalApiIssuer",
-        "InternalApiSecret",
-        "InternalApiTokenExpiryTime"        
+        "Uri",
+        "IdentifierUri",
+        "TenantId",
+        "ClientId"        
       ],
       "type": "object"
     }
@@ -130,7 +130,7 @@
     "SqlConnectionString",
     "BlobStorageConnectionString",
     "DfeSignInSettings",
-	"ResultsAndCertificationApiSettings"
+	  "ResultsAndCertificationApiSettings"
   ],
   "type": "object"
 }

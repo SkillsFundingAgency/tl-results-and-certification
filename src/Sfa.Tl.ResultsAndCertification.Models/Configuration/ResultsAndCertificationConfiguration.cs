@@ -32,6 +32,6 @@
         /// <value>
         /// The results and certification API settings.
         /// </value>
-        public ResultsAndCertificationApiSettings ResultsAndCertificationApiSettings { get; set; }
+        public ResultsAndCertificationInternalApiSettings ResultsAndCertificationInternalApiSettings { get; set; }
     }
 }

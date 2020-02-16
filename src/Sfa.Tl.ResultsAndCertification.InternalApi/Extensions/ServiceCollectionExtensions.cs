@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
         public static IServiceCollection AddApiAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration configuration)
         {
             // configure jwt authentication
-            var key = Encoding.ASCII.GetBytes(configuration.ResultsAndCertificationApiSettings.InternalApiSecret);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -21,16 +21,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
             })
             .AddJwtBearer(x =>
             {
-                x.SaveToken = true;
+                x.Authority = "https://login.microsoftonline.com/" + configuration.ResultsAndCertificationInternalApiSettings.TenantId;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = configuration.ResultsAndCertificationApiSettings.InternalApiIssuer,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = true,
-                    ValidateAudience = false,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
+                    ValidAudiences = new List<string>
+                    {
+                        configuration.ResultsAndCertificationInternalApiSettings.IdentifierUri,
+                        configuration.ResultsAndCertificationInternalApiSettings.ClientId
+                    }
                 };
             });
 
