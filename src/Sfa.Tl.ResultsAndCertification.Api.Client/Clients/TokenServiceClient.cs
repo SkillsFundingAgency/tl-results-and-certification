@@ -8,6 +8,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Azure.Services.AppAuthentication;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 {
@@ -22,31 +24,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _config = configuration;
         }
 
-        public string GetToken()
+        public async Task<string> GetToken()
         {
-            var userClaims = _httpContextAccessor.HttpContext.User.Claims;
-
-            var roleClaims = new List<Claim>();
-            if (userClaims != null)
-            {
-                //roleClaims = userClaims.Where(c => c.Type == ClaimTypes.Role).ToList();
-                roleClaims.Add(new Claim(ClaimTypes.Role, "Site Administrator"));
-                roleClaims.Add(new Claim(ClaimTypes.Role, "Tlevels Reviewer"));
-                roleClaims.Add(new Claim(ClaimTypes.Role, "Centres Editor"));
-            }
-
-            // authentication successful so generate jwt token
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_config.ResultsAndCertificationApiSettings.InternalApiSecret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Issuer = _config.ResultsAndCertificationApiSettings.InternalApiIssuer,
-                Subject = new ClaimsIdentity(roleClaims),
-                Expires = DateTime.UtcNow.AddSeconds(_config.ResultsAndCertificationApiSettings.InternalApiTokenExpiryTime),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            var azureServiceTokenProvider = new AzureServiceTokenProvider();
+            string token = await azureServiceTokenProvider.GetAccessTokenAsync(_config.ResultsAndCertificationInternalApiSettings.IdentifierUri);
+            return token;
         }
     }
 
