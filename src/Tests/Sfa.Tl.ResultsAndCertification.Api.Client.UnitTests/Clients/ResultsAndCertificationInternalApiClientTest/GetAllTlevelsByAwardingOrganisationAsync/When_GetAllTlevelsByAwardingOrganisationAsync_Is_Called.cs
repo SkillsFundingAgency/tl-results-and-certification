@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetAllTlev
 
             _tokenServiceClient = Substitute.For<ITokenServiceClient>();
             _configuration = new ResultsAndCertificationConfiguration
-            { ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "https://localhost:5001" } };
+            { ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "https://localhost:5001" } };
 
             _mockHttpResult = new List<AwardingOrganisationPathwayStatus> 
             { 
