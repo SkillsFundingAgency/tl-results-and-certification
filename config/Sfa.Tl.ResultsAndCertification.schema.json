@@ -130,7 +130,7 @@
     "SqlConnectionString",
     "BlobStorageConnectionString",
     "DfeSignInSettings",
-    "ResultsAndCertificationApiSettings"
+    "ResultsAndCertificationInternalApiSettings"
   ],
   "type": "object"
 }
