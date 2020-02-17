@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<TlevelPathwayDetails, YourTLevelDetailsViewModel>()
                .ForMember(d => d.PageTitle, opts => opts.MapFrom(s => "T Level details"))
                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
+               .ForMember(d => d.PathwayStatusId, opts => opts.MapFrom(s => s.PathwayStatusId))
                .ForMember(d => d.RouteName, opts => opts.MapFrom(s => s.RouteName))
                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
                .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms));

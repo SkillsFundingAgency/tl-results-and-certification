@@ -11,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Models
         public string PageTitle { get; set; }
         public string RouteName { get; set; }
         public string PathwayName { get; set; }
+        public int PathwayStatusId { get; set; }
         public IEnumerable<String> Specialisms { get; set; }
     }
 }

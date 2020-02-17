@@ -1,4 +1,5 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.Models.YourTLevelDetailsViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
 
 @{
     ViewData["Title"] = "T Level Details";
@@ -40,11 +41,12 @@
                 </dd>
             </div>
         </dl>
-
-        <p class="govuk-body govuk-!-margin-bottom-9">
-            <a href="/Tlevel/Reportissue">Something is not right</a>
-        </p>
-
+        @if (Model.PathwayStatusId == (int)TlevelReviewStatus.Confirmed)
+        {
+            <p class="govuk-body govuk-!-margin-bottom-9">
+                <a href="/Tlevel/Reportissue">Something is not right</a>
+            </p>
+        }
         <a asp-controller="Tlevel"
            asp-action="Index" class="govuk-button" data-module="govuk-button">Return to your T Levels list</a>
     </div>
