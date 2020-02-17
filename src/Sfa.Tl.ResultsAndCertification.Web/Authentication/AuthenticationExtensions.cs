@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
     {
         public static IServiceCollection AddWebAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration config, IWebHostEnvironment env)
         {
-            double cookieAndSessionTimeout = 2;
+            double cookieAndSessionTimeout = 20;
             var overallSessionTimeout = TimeSpan.FromMinutes(cookieAndSessionTimeout);
             var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
 
@@ -113,7 +113,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                             context.Response.StatusCode = 302;
                             context.Response.Headers["Location"] = "/";
                         }
-
                         return Task.CompletedTask;
                     },
 
@@ -199,11 +198,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                             foreach (var role in userClaims.Roles)
                             {
                                 identity.AddClaim(new Claim(ClaimTypes.Role, role.Name));
-
-                                // Todo: Get below roles form DfE Signin
-                                identity.AddClaim(new Claim(ClaimTypes.Role, "Site Administrator"));
-                                identity.AddClaim(new Claim(ClaimTypes.Role, "Tlevels Reviewer"));
-                                identity.AddClaim(new Claim(ClaimTypes.Role, "Centres Editor"));
                             }
                         }
 

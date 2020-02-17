@@ -29,10 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var roleClaims = new List<Claim>();
             if (userClaims != null)
             {
-                //roleClaims = userClaims.Where(c => c.Type == ClaimTypes.Role).ToList();
-                roleClaims.Add(new Claim(ClaimTypes.Role, "Site Administrator"));
-                roleClaims.Add(new Claim(ClaimTypes.Role, "Tlevels Reviewer"));
-                roleClaims.Add(new Claim(ClaimTypes.Role, "Centres Editor"));
+                roleClaims = userClaims.Where(c => c.Type == ClaimTypes.Role).ToList();
             }
 
             // authentication successful so generate jwt token
