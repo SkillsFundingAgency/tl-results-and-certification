@@ -31,12 +31,9 @@
                     Specialisms
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    @if (Model?.Specialisms != null)
+                    @foreach (var splsm in Model?.Specialisms)
                     {
-                        @foreach (var splsm in Model.Specialisms)
-                        {
-                            <p class="govuk-body">@splsm</p>
-                        }
+                        <p class="govuk-body">@splsm</p>
                     }
                 </dd>
             </div>

@@ -1,33 +1,30 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.Models;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
     public class TlevelController : Controller
     {
-        private readonly IAwardingOrganisationLoader _awardingOrganisationLoader;
+        private readonly ITlevelLoader _tlevelLoader;
         
 
-        public TlevelController(IAwardingOrganisationLoader awardingOrganisationLoader)
+        public TlevelController(ITlevelLoader tlevelLoader)
         {
-            _awardingOrganisationLoader = awardingOrganisationLoader;
+            _tlevelLoader = tlevelLoader;
         }
 
         public async Task<IActionResult> Index()
         {
-            var viewModel = await _awardingOrganisationLoader.GetTlevelsByAwardingOrganisationAsync();
+            var viewModel = await _tlevelLoader.GetAllTlevelsByUkprnAsync(User.GetUkPrn());
             return View(viewModel);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var viewModel = await _awardingOrganisationLoader.GetTlevelDetailsByPathwayIdAsync(id);
+            var viewModel = await _tlevelLoader.GetTlevelDetailsByPathwayIdAsync(HttpContext.User.GetUkPrn(), id);
 
             if(viewModel == null)
             {

@@ -26,10 +26,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync(long id)
+        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByUkprnAsync(long ukprn)
         {
             var tlevels = await _awardingOrganisationRepository
-                .GetManyAsync(x => x.TlAwardingOrganisaton.UkPrn == id,
+                .GetManyAsync(x => x.TlAwardingOrganisaton.UkPrn == ukprn,
                         n => n.TlRoute,
                         n => n.TlPathway,
                         n => n.TlAwardingOrganisaton)

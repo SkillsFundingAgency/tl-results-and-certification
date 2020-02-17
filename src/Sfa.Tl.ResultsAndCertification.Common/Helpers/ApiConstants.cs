@@ -3,6 +3,6 @@
     public static class ApiConstants
     {
         public const string GetAllTLevelsUri = "/api/Tlevel/GetAllTLevels";
-        public const string TlevelDetailsUri = "/api/Tlevel/TlevelDetails/{0}";
+        public const string TlevelDetailsUri = "/api/Tlevel/{0}/TlevelDetails/{1}";
     }
 }

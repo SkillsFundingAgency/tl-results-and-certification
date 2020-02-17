@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Api
         
         public override void When()
         {
-            _result = _service.GetAllTlevelsByAwardingOrganisationIdAsync(ukprn).Result;
+            _result = _service.GetAllTlevelsByUkprnAsync(ukprn).Result;
         }
 
         [Fact]

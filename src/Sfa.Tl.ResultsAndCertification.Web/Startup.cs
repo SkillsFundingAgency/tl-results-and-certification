@@ -102,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
         private void RegisterDependencies(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddTransient<IAwardingOrganisationLoader, AwardingOrganisationLoader>();
+            services.AddTransient<ITlevelLoader, TlevelLoader>();
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetAllTlev
         
         public override void When()
         {
-            Result = _apiClient.GetAllTlevelsByAwardingOrganisationAsync();
+            Result = _apiClient.GetAllTlevelsByUkprnAsync(9);
         }
     }
 }

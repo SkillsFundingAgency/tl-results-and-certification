@@ -7,6 +7,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Models
 {
     public class YourTLevelDetailsViewModel
     {
+
+        public YourTLevelDetailsViewModel()
+        {
+            Specialisms = new List<string>();
+        }
+
         public int PathwayId { get; set; }
         public string PageTitle { get; set; }
         public string RouteName { get; set; }

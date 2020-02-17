@@ -16,18 +16,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
                     new YourTlevelsViewModel { PathId = 1, StatusId = 1, TLevelDescription = "RouteName1: Pathway1" },
                     new YourTlevelsViewModel { PathId = 2, StatusId = 2, TLevelDescription = "RouteName2: Pathway2"}
             };
-            AwardingOrganistionLoader.GetTlevelsByAwardingOrganisationAsync()
+            TlevelLoader.GetAllTlevelsByUkprnAsync(Arg.Any<long>())
                 .Returns(mockresult);
         }
 
         [Fact]
-        public void Then_GetTlevelsByAwardingOrganisationAsync_Is_Called()
+        public void Then_GetTlevelsByUkprnAsync_Is_Called()
         {
-            AwardingOrganistionLoader.Received().GetTlevelsByAwardingOrganisationAsync();
+            TlevelLoader.Received().GetAllTlevelsByUkprnAsync(Arg.Any<long>());
         }
 
         [Fact]
-        public void Then_GetTlevelsByAwardingOrganisationAsync_ViewModel_Return_Two_Rows()
+        public void Then_GetTlevelsByUkprnAsync_ViewModel_Return_Two_Rows()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as IList<YourTlevelsViewModel>;
@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_GetTlevelsByAwardingOrganisationAsync_Index_Returns_Expected_ViewModel()
+        public void Then_GetTlevelsByUkprnAsync_Index_Returns_Expected_ViewModel()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as IList<YourTlevelsViewModel>;

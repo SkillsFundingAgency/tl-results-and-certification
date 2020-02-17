@@ -46,9 +46,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return user.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Upn)?.Value;
         }
 
-        public static string GetUkPrn(this ClaimsPrincipal user)
+        public static long GetUkPrn(this ClaimsPrincipal user)
         {
-            return user.Claims.SingleOrDefault(c => c.Type == CustomClaimTypes.Ukprn)?.Value;
+            var ukprn = user?.Claims?.SingleOrDefault(c => c.Type == CustomClaimTypes.Ukprn)?.Value;
+            return !string.IsNullOrWhiteSpace(ukprn) ? long.Parse(ukprn) : 0;
         }
     }
 }

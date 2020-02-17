@@ -1,19 +1,17 @@
-﻿using NSubstitute;
+﻿using Xunit;
+using NSubstitute;
+using System.Collections.Generic;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AwardingOrganisationLoaderTests
 {
-    public class Then_ApiClient_Mapper_Is_Called : When_Called_Method_GetTlevelsByAwardingOrganisationAsync
+    public class Then_ApiClient_Mapper_Is_Called : When_Called_Method_GetTlevelsByUkprnAsync
     {
         [Fact]
         public void Then_ApiClient_Is_Called()
         {
-            InternalApiClient.Received().GetAllTlevelsByAwardingOrganisationAsync();
+            InternalApiClient.Received().GetAllTlevelsByUkprnAsync(9);
         }
 
         [Fact]

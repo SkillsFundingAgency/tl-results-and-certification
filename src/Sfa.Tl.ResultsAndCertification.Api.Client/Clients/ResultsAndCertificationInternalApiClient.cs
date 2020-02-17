@@ -28,14 +28,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _httpClient.BaseAddress = new Uri(_internalApiUri);
         }
 
-        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationAsync()
+        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByUkprnAsync(long ukprn)
         {
             return await GetAsync<IEnumerable<AwardingOrganisationPathwayStatus>>(ApiConstants.GetAllTLevelsUri);
         }
 
-        public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(int id)
+        public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
         {
-            var requestUri = string.Format(ApiConstants.TlevelDetailsUri, id);
+            var requestUri = string.Format(ApiConstants.TlevelDetailsUri, ukprn, id);
             return await GetAsync<TlevelPathwayDetails>(requestUri);
         }
 

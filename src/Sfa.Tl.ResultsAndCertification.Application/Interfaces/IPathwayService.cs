@@ -5,6 +5,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces
 {
     public interface IPathwayService
     {
-        Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(int id);
+        Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id);
     }
 }

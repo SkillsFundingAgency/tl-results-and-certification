@@ -9,11 +9,11 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AwardingOrganisationLoaderTests
 {
-    public abstract class When_Called_Method_GetTlevelsByAwardingOrganisationAsync : BaseTest<AwardingOrganisationLoader>
+    public abstract class When_Called_Method_GetTlevelsByUkprnAsync : BaseTest<TlevelLoader>
     {
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
         protected IMapper Mapper;
-        protected AwardingOrganisationLoader Loader;
+        protected TlevelLoader Loader;
         private IEnumerable<YourTlevelsViewModel> Result;
 
         public override void Setup()
@@ -21,18 +21,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AwardingOrganisati
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
             Mapper = Substitute.For<IMapper>();
 
-            InternalApiClient.GetAllTlevelsByAwardingOrganisationAsync()
+            InternalApiClient.GetAllTlevelsByUkprnAsync(9)
                 .Returns(new List<AwardingOrganisationPathwayStatus>());
         }
 
         public override void Given()
         {
-            Loader = new AwardingOrganisationLoader(InternalApiClient, Mapper);
+            Loader = new TlevelLoader(InternalApiClient, Mapper);
         }
 
         public override void When()
         {
-            Result = Loader.GetTlevelsByAwardingOrganisationAsync().Result;
+            Result = Loader.GetAllTlevelsByUkprnAsync(9).Result;
         }
     }
 }

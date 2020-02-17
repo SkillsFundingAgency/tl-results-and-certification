@@ -25,22 +25,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllTlevels")]
-        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByAwardingOrganisationIdAsync()
+        [Route("GetAllTlevels/{ukprn}")]
+        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByUkprnAsync(long ukprn)
         {
-            // TODO: following statement to be updated?
-            var id = !string.IsNullOrEmpty(User.GetUkPrn()) ? long.Parse(User.GetUkPrn()) : 10011881;
-            return await _awardingOrganisationService.GetAllTlevelsByAwardingOrganisationIdAsync(id);
+            return await _awardingOrganisationService.GetAllTlevelsByUkprnAsync(ukprn);
         }
 
         [HttpGet]
-        [Route("TlevelDetails/{id}")]
-        public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(int id)
+        [Route("{ukprn}/TlevelDetails/{id}")]
+        public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
         {
-            // TODO: Security validation cross-cutting functionality?
-
-            // TODO: 1. Validate the input id
-            var tlevelDetails = await _pathwayService.GetTlevelDetailsByPathwayIdAsync(id);
+            var tlevelDetails = await _pathwayService.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
             return tlevelDetails;
         }
     }
