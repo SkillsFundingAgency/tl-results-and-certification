@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<TlevelPathwayDetails>(requestUri);
         }
 
-        private async Task<T> SetBearerToken()
+        private async Task SetBearerToken()
         {
             string token = await _tokenServiceClient.GetToken();
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
