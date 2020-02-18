@@ -14,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetTlevelD
 {
     public abstract class When_GetTlevelDetailsByPathwayIdAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        protected HttpClient MockHttpClient;
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
         private readonly long ukprn = 1024;
@@ -29,27 +28,32 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetTlevelD
         protected readonly int Status = 1;
 
         private ResultsAndCertificationInternalApiClient _apiClient;
-        private TlevelPathwayDetails _mockHttpResult; 
-        
+        private TlevelPathwayDetails _mockHttpResult;
+
         public override void Setup()
         {
-            MockHttpClient = Substitute.For<HttpClient>();
-
             _tokenServiceClient = Substitute.For<ITokenServiceClient>();
             _configuration = new ResultsAndCertificationConfiguration
-            { ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "https://localhost:5001" } };
+            {
+                ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "https://localhost:5001" }
+            };
 
             _mockHttpResult = new TlevelPathwayDetails
-            { PathwayName = PathwayName, RouteName = RouteName, Specialisms = Specialisms, PathwayStatusId = Status };
+            {
+                PathwayName = PathwayName,
+                RouteName = RouteName,
+                Specialisms = Specialisms,
+                PathwayStatusId = Status
+            };
             HttpClient = new HttpClient(new MockHttpMessageHandler<TlevelPathwayDetails>(
                 _mockHttpResult, string.Format(ApiConstants.TlevelDetailsUri, ukprn, tlevelId), HttpStatusCode.OK));
         }
 
-        public override void Given() 
+        public override void Given()
         {
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
-        
+
         public override void When()
         {
             Result = _apiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, tlevelId);
