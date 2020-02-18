@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Api
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
 {
     public abstract class BaseTest<T> : IBaseTest<T>  where T : BaseEntity, new()
     {
