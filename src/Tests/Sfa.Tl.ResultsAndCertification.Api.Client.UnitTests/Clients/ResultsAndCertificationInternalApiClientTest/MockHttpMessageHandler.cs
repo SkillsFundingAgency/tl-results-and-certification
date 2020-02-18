@@ -11,28 +11,39 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients
     {
         private readonly T _response;
         private readonly HttpStatusCode _statusCode;
+        private readonly string _requestUrl;
 
         public string Input { get; private set; }
         public int NumberOfCalls { get; private set; }
 
-        public MockHttpMessageHandler(T response, HttpStatusCode statusCode)
+        public MockHttpMessageHandler(T response, string requestUrl, HttpStatusCode statusCode)
         {
             _response = response;
+            _requestUrl = requestUrl;
             _statusCode = statusCode;
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
+            HttpResponseMessage result;
+
             NumberOfCalls++;
             var jsonResponse = JsonConvert.SerializeObject(_response);
 
-            var result = new HttpResponseMessage
+            if (request.RequestUri.AbsolutePath.Equals(_requestUrl))
             {
-                StatusCode = _statusCode,
-                Content = new StringContent(jsonResponse, UnicodeEncoding.UTF8, "application/json")
+                result = new HttpResponseMessage
+                {
+                    StatusCode = _statusCode,
+                    Content = new StringContent(jsonResponse, UnicodeEncoding.UTF8, "application/json")
+                };
+            }
+            else
+            {
+                result = new HttpResponseMessage { StatusCode = HttpStatusCode.NotFound };
+            }
 
-            };
             return await Task.Run(() => result);
         }
     }

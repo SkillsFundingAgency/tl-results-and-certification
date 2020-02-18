@@ -1,32 +1,35 @@
 ﻿using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetAllTlevelsByAwardingOrganisationAsync
+namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetTlevelDetailsByPathwayIdAsync
 {
-    public abstract class When_GetAllTlevelsByAwardingOrganisationAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public abstract class When_GetTlevelDetailsByPathwayIdAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         protected HttpClient MockHttpClient;
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
+        private readonly long ukprn = 1024;
+        private readonly int tlevelId = 99;
 
         public HttpClient HttpClient { get; private set; }
-        protected Task<IEnumerable<AwardingOrganisationPathwayStatus>> Result;
+        protected Task<TlevelPathwayDetails> Result;
 
         protected readonly string RouteName = "Construction";
         protected readonly string PathwayName = "Design";
+        protected readonly List<string> Specialisms = new List<string> { "Civil Engineering", "Assisting teaching" };
         protected readonly int Status = 1;
 
         private ResultsAndCertificationInternalApiClient _apiClient;
-        private IEnumerable<AwardingOrganisationPathwayStatus> _mockHttpResult; 
+        private TlevelPathwayDetails _mockHttpResult; 
         
         public override void Setup()
         {
@@ -36,13 +39,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetAllTlev
             _configuration = new ResultsAndCertificationConfiguration
             { ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "https://localhost:5001" } };
 
-            _mockHttpResult = new List<AwardingOrganisationPathwayStatus> 
-            { 
-                new AwardingOrganisationPathwayStatus { PathwayName = PathwayName, RouteName = RouteName, StatusId = Status }
-            };
-            HttpClient = new HttpClient(new MockHttpMessageHandler<IEnumerable<AwardingOrganisationPathwayStatus>>(_mockHttpResult, HttpStatusCode.OK));
-            
+            _mockHttpResult = new TlevelPathwayDetails
+            { PathwayName = PathwayName, RouteName = RouteName, Specialisms = Specialisms, PathwayStatusId = Status };
+            HttpClient = new HttpClient(new MockHttpMessageHandler<TlevelPathwayDetails>(
+                _mockHttpResult, string.Format(ApiConstants.TlevelDetailsUri, ukprn, tlevelId), HttpStatusCode.OK));
         }
+
         public override void Given() 
         {
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
@@ -50,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetAllTlev
         
         public override void When()
         {
-            Result = _apiClient.GetAllTlevelsByUkprnAsync(9);
+            Result = _apiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, tlevelId);
         }
     }
 }
