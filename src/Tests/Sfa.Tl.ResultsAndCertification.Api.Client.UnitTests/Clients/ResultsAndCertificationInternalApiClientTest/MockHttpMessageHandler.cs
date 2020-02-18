@@ -31,18 +31,24 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients
             NumberOfCalls++;
             var jsonResponse = JsonConvert.SerializeObject(_response);
 
-            if (request.RequestUri.AbsolutePath.Equals(_requestUrl))
+            //if (request.RequestUri.AbsolutePath.Equals(_requestUrl))
+            //{
+            //    result = new HttpResponseMessage
+            //    {
+            //        StatusCode = _statusCode,
+            //        Content = new StringContent(jsonResponse, UnicodeEncoding.UTF8, "application/json")
+            //    };
+            //}
+            //else
+            //{
+            //    result = new HttpResponseMessage { StatusCode = HttpStatusCode.NotFound };
+            //}
+
+            result = new HttpResponseMessage
             {
-                result = new HttpResponseMessage
-                {
-                    StatusCode = _statusCode,
-                    Content = new StringContent(jsonResponse, UnicodeEncoding.UTF8, "application/json")
-                };
-            }
-            else
-            {
-                result = new HttpResponseMessage { StatusCode = HttpStatusCode.NotFound };
-            }
+                StatusCode = _statusCode,
+                Content = new StringContent(jsonResponse, UnicodeEncoding.UTF8, "application/json")
+            };
 
             return await Task.Run(() => result);
         }
