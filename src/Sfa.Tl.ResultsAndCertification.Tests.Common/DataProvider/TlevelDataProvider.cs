@@ -191,9 +191,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tlSpecialism;
         }
 
-        public static IList<TlSpecialism> CreateTlSpecialisms(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, bool addToDbContext = true)
+        public static IList<TlSpecialism> CreateTlSpecialisms(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, TlPathway tlPathway, bool addToDbContext = true)
         {
-            var tlSpecialisms = new TlSpecialismBuilder().BuildList(awardingOrganisation);
+            var tlSpecialisms = new TlSpecialismBuilder().BuildList(awardingOrganisation, tlPathway);
 
             if (addToDbContext && tlSpecialisms != null)
             {

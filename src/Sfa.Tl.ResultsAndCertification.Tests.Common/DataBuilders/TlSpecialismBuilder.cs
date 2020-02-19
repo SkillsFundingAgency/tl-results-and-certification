@@ -128,9 +128,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
         };
 
-        public IList<Domain.Models.TlSpecialism> BuildList(EnumAwardingOrganisation awardingOrganisation, bool addDefaultPathway = true)
+        public IList<Domain.Models.TlSpecialism> BuildList(EnumAwardingOrganisation awardingOrganisation, Domain.Models.TlPathway tlPathway,  bool addDefaultPathway = true)
         {
-            var pathway = addDefaultPathway ? new TlPathwayBuilder().Build(awardingOrganisation) : null;
+            var pathway = (addDefaultPathway && tlPathway == null) ? new TlPathwayBuilder().Build(awardingOrganisation) : tlPathway;
             var results = new List<Domain.Models.TlSpecialism>();
             if (awardingOrganisation == EnumAwardingOrganisation.Ncfe)
             {

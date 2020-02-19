@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Linq;
+using Xunit;
 using FluentAssertions;
 using NSubstitute;
 using Microsoft.Extensions.Logging;
@@ -8,10 +9,8 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServiceTests
 {
-    public class When_GetTlevelDetailsByPathwayIdAsync_IsCalled_With_Valid_Id : PathwayServiceBaseTest
+    public class When_GetTlevelDetailsByPathwayIdAsync_IsCalled_With_Valid_PathwayId : PathwayServiceBaseTest
     {
-        //private readonly long _ukprn = 10011881;
-        //private readonly int _pathwayId = 1;
         public override void Given()
         {
             SeedTlevelTestData();
@@ -37,6 +36,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServic
             expectedResult.PathwayName.Should().Be(_pathway.Name);
             expectedResult.PathwayStatusId.Should().Be(_tqAwardingOrganisation.ReviewStatus);
             expectedResult.RouteName.Should().Be(_route.Name);
+        }
+
+        [Fact]
+        public void Then_Pathway_Specialisms_Is_Not_Null()
+        {
+            _result.Specialisms.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void Then_Pathway_Specialisms_Count_Is_As_Expected()
+        {
+            _result.Specialisms.Count.Should().Be(_specialisms.Count);
+        }
+
+        [Fact]
+        public void Then_Pathway_Specialisms_Data_As_Expected()
+        {
+            var expectedSpecialisms = _specialisms.Select(s => s.Name);
+            _result.Specialisms.Should().Contain(expectedSpecialisms);
         }
     }
 }
