@@ -16,12 +16,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
             // configure jwt authentication
             services.AddAuthentication(x =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                //x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(x =>
             {
-                x.Authority = "https://login.microsoftonline.com/" + configuration.ResultsAndCertificationInternalApiSettings.TenantId;
+                x.Authority = $"https://login.microsoftonline.com/{configuration.ResultsAndCertificationInternalApiSettings.TenantId}";
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidAudiences = new List<string>
