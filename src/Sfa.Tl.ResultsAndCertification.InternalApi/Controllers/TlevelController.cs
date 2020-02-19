@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Application")]
     public class TlevelController : ControllerBase, ITlevelController
     {
         private readonly IAwardingOrganisationService _awardingOrganisationService;
