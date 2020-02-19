@@ -7,7 +7,6 @@
         public const string ConfigurationStorageConnectionStringConfigKey = "ConfigurationStorageConnectionString";
         public const string VersionConfigKey = "Version";
         public const string ServiceNameConfigKey = "ServiceName";
-        public const string ScopeClaimType = "https://schemas.microsoft.com/identity/claims/scope";
 
         // Controller Names
         public const string HomeController = "Home";

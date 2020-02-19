@@ -40,7 +40,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
             {
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
-                    .RequireRole("Application")
                     .Build();
 
                 options.DefaultPolicy = policy;
