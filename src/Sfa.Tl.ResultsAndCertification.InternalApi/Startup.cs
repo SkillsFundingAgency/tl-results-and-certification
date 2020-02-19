@@ -57,7 +57,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             });
 
             RegisterDependencies(services);
-            services.AddApiAuthentication(ResultsAndCertificationConfiguration).AddAuthorization();            
+            services.AddAuthorization(o =>
+            {
+                o.AddPolicy("default", policy =>
+                {
+                    policy.RequireRole("Application");
+                });
+            }).AddApiAuthentication(ResultsAndCertificationConfiguration);            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
