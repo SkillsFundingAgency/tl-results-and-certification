@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
             })
             .AddJwtBearer(x =>
             {
-                x.Authority = "https://login.microsoftonline.com/" + configuration.ResultsAndCertificationInternalApiSettings.TenantId;
+                x.Authority = $"https://login.microsoftonline.com/{configuration.ResultsAndCertificationInternalApiSettings.TenantId}";
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidAudiences = new List<string>
