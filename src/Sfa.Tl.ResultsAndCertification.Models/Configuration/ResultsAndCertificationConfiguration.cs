@@ -1,5 +1,4 @@
-﻿
-namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
 {
     public class ResultsAndCertificationConfiguration
     {
@@ -28,11 +27,11 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public DfeSignInSettings DfeSignInSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the results and certification internal API URI.
+        /// Gets or sets the results and certification API settings.
         /// </summary>
         /// <value>
-        /// The results and certification internal API URI.
+        /// The results and certification API settings.
         /// </value>
-        public string ResultsAndCertificationInternalApiUri { get; set; }
+        public ResultsAndCertificationApiSettings ResultsAndCertificationApiSettings { get; set; }
     }
 }

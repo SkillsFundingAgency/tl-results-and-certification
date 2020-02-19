@@ -1,0 +1,50 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.Models.YourTLevelDetailsViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
+
+@{
+    ViewData["Title"] = "T Level Details";
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">@Model?.PageTitle</h1>
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Route
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model?.RouteName
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Pathway
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @Model?.PathwayName
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Specialisms
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    @foreach (var splsm in Model?.Specialisms)
+                    {
+                        <p class="govuk-body">@splsm</p>
+                    }
+                </dd>
+            </div>
+        </dl>
+        @if (Model.PathwayStatusId == (int)TlevelReviewStatus.Confirmed)
+        {
+            <p class="govuk-body govuk-!-margin-bottom-9">
+                <a href="/Tlevel/Reportissue">Something is not right</a>
+            </p>
+        }
+        <a asp-controller="Tlevel"
+           asp-action="Index" class="govuk-button" data-module="govuk-button">Return to your T Levels list</a>
+    </div>
+</div>

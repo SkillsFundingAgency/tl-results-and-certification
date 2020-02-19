@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 {
@@ -11,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
             TqAwardingOrganisations = new HashSet<TqAwardingOrganisation>();
         }
 
-        public string UkAon { get; set; }
+        public long UkPrn { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
 

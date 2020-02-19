@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
     {
         public static IServiceCollection AddWebAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration config, IWebHostEnvironment env)
         {
-            double cookieAndSessionTimeout = 2;
+            double cookieAndSessionTimeout = 20;
             var overallSessionTimeout = TimeSpan.FromMinutes(cookieAndSessionTimeout);
             var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
 
@@ -113,7 +113,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                             context.Response.StatusCode = 302;
                             context.Response.Headers["Location"] = "/";
                         }
-
                         return Task.CompletedTask;
                     },
 

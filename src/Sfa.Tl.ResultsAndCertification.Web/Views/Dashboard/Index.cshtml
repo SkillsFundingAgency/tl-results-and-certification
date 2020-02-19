@@ -1,19 +1,19 @@
-﻿@{
-    ViewBag.Title = "Mangage TLevels";
+﻿@using Sfa.Tl.ResultsAndCertification.Common.Extensions
+@{
+    ViewData["Title"] = "Manage TLevels";
 }
 
 <main class="govuk-main-wrapper " id="main-content" role="main">
     <!-- MAIN HEADING -->
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-
             <!-- SUBHEADING -->
             <span class="govuk-caption-l">
             </span>
 
             <div class="govuk-form-group">
                 <h1 class="govuk-heading-l">
-                    Manage T Levels
+                    @ViewData["Title"]
                 </h1>
             </div>
         </div>
@@ -28,72 +28,58 @@
                 <p class="govuk-body">
                     <h2 class="govuk-heading-m">
                         <a class="govuk-link--no-visited-state" href="ao-t-levels">
-                            View qualifications you're assessing
+                            Account
                         </a>
                     </h2>
                 </p>
 
                 <p class="govuk-body">
-                    View your T Level titles and let us know whether they're correct or not.
+                    Manage your profile and permissions
                 </p>
             </div>
         </div>
 
-        <!-- BLOCK 2 – Providers -->
-        <div class="govuk-grid-column-one-half">
+        @if (Context.User.HasSiteAdministratorRole() || Context.User.HasTlevelsReviewerRole())
+        {
+            <!-- BLOCK 2 – Providers -->
+            <div class="govuk-grid-column-one-half">
 
-            <div class="govuk-form-group card" name="hub-choice-2">
-                <p class="govuk-body">
-                    <h2 class="govuk-heading-m">
-                        <a class="govuk-link--no-visited-state" href="act-ao-view-providers">
-                            Manage centres running T Levels
-                        </a>
-                    </h2>
-                </p>
+                <div class="govuk-form-group card" name="hub-choice-2">
+                    <p class="govuk-body">
+                        <h2 class="govuk-heading-m">
+                            <a class="govuk-link--no-visited-state" href="Tlevel/Index">
+                                T Levels
+                            </a>
+                        </h2>
+                    </p>
 
-                <p class="govuk-body">
-                    View and make changes to the centres delivering each qualification
-                </p>
+                    <p class="govuk-body">
+                        Review your T Levels and tell us if they are correct
+                    </p>
 
+                </div>
             </div>
-        </div>
+        }
 
-        <!-- FIRST FUNCTION ROW -->
-        <!-- BLOCK 3 Students -->
-        <div class="govuk-grid-column-one-half">
-            <div class="govuk-form-group card" name="hub-choice-3">
-                <p class="govuk-body">
-                    <h2 class="govuk-heading-m">
-                        <a class="govuk-link--no-visited-state" href="action-ao-view-students">
-                            Manage student registrations
-                        </a>
-                    </h2>
-                </p>
+        @if (Context.User.HasSiteAdministratorRole() || Context.User.HasCentresEditorRole())
+        {
+            <!-- FIRST FUNCTION ROW -->
+            <!-- BLOCK 3 Students -->
+            <div class="govuk-grid-column-one-half">
+                <div class="govuk-form-group card" name="hub-choice-3">
+                    <p class="govuk-body">
+                        <h2 class="govuk-heading-m">
+                            <a class="govuk-link--no-visited-state" href="action-ao-view-students">
+                                Centres
+                            </a>
+                        </h2>
+                    </p>
 
-                <p class="govuk-body">
-                    Add new students and make changes to registrations
-                    <br />
-                    &nbsp;
-                </p>
-
+                    <p class="govuk-body">
+                        Tell us which T Levels each centre is offering
+                    </p>
+                </div>
             </div>
-        </div>
-
-        <!-- BLOCK 4 Assessments -->
-        <div class="govuk-grid-column-one-half">
-            <div class="govuk-form-group card" name="hub-choice-4">
-                <p class="govuk-body">
-                    <h2 class="govuk-heading-m">
-                        <a class="govuk-link--no-visited-state" href="action-upload-assessments">
-                            Submit assessment results
-                        </a>
-                    </h2>
-                </p>
-
-                <p class="govuk-body">
-                    Submit grades for an individual student or upload results in bulk
-                </p>
-            </div>
-        </div>
+        }
     </div>
 </main>

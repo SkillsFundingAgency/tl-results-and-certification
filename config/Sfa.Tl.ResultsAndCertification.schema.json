@@ -11,11 +11,7 @@
     "BlobStorageConnectionString": {
       "type": "string",
       "environmentVariable": "BlobStorageConnectionString"
-    },
-    "ResultsAndCertificationInternalApiUri": {
-      "type": "string",
-      "environmentVariable": "ResultsAndCertificationInternalApiUri"
-    },
+    },    
     "DfeSignInSettings": {
       "properties": {
         "MetadataAddress": {
@@ -95,13 +91,46 @@
         "Authority"
       ],
       "type": "object"
+    },
+	"ResultsAndCertificationApiSettings": {
+      "properties": {    
+		"InternalApiUri": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "ResultsAndCertificationInternalApiUri"
+        },
+        "InternalApiIssuer": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "ResultsAndCertificationInternalApiIssuer"
+        },        
+        "InternalApiSecret": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "ResultsAndCertificationInternalApiSecret"
+        },
+        "InternalApiTokenExpiryTime": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "ResultsAndCertificationInternalApiTokenExpiryTime"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "InternalApiUri",
+        "InternalApiIssuer",
+        "InternalApiSecret",
+        "InternalApiTokenExpiryTime"        
+      ],
+      "type": "object"
     }
   },
   "additionalProperties": false,
   "required": [
     "SqlConnectionString",
     "BlobStorageConnectionString",
-    "DfeSignInSettings"
+    "DfeSignInSettings",
+	"ResultsAndCertificationApiSettings"
   ],
   "type": "object"
 }

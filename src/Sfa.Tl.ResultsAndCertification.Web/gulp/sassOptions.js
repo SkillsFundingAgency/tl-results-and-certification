@@ -4,7 +4,8 @@ sassOptions = {
     errLogToConsole: true,
     outputStyle: 'compressed',
     includePaths: [
-        'node_modules/govuk-frontend/govuk'
+        'node_modules/govuk-frontend/govuk',
+        'Frontend/src/sass'
     ]
 };
 

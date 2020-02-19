@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,12 +9,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
+using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Configuration;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.Filters;
+using Sfa.Tl.ResultsAndCertification.Web.Loader;
+using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web
 {
@@ -51,7 +58,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddSingleton(ResultsAndCertificationConfiguration);
             services.AddHttpClient<ITokenRefresher, TokenRefresher>();
             services.AddTransient<CustomCookieAuthenticationEvents>().AddHttpContextAccessor();
-
+            services.AddTransient<ITokenServiceClient, TokenServiceClient>();
+            services.AddHttpClient<IResultsAndCertificationInternalApiClient, ResultsAndCertificationInternalApiClient>();
             services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
@@ -60,7 +68,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(RolesExtensions.RequireTLevelsReviewerAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.TlevelsReviewer));
+            });
+
+            RegisterDependencies(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,6 +101,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             {
                 endpoints.MapDefaultControllerRoute();
             });
+        }
+
+        private void RegisterDependencies(IServiceCollection services)
+        {
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddTransient<ITlevelLoader, TlevelLoader>();
         }
     }
 }

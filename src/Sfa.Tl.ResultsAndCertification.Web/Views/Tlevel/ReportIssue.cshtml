@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "ReportIssue";
+}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            <h1 class="govuk-heading-xl">Query T Level details</h1>
+
+            <form class="form" action="confirmation-finished-queried" method="post">
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="more-detail">
+                        Tell us what’s wrong with this T Level's details:
+                    </label>
+                    <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
+                </div>
+
+                <dl class="govuk-summary-list govuk-!-margin-bottom-7">
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Route
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            Digital
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Pathway
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            Digital: Digital Production, Design and Development
+                        </dd>
+                    </div>
+
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Specialisms
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            <p class="govuk-body">Digital Production and Design</p>
+                        </dd>
+                    </div>
+                </dl>
+
+                <p class="govuk-body">We will investigate your issue and update you within 3 working days.</p>
+
+                <button class="govuk-button" data-module="govuk-button">Submit</button>
+            </form>
+        </div>
+    </div>
