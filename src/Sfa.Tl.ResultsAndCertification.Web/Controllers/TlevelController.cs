@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
@@ -21,6 +23,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var viewModel = await _tlevelLoader.GetAllTlevelsByUkprnAsync(User.GetUkPrn());
+            
+            var anyReviewPending = viewModel.Any(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation);
+            if (anyReviewPending)
+            {
+                return RedirectToAction("SelectReviewTlevels");
+            }
             return View(viewModel);
         }
 
@@ -33,6 +41,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToAction(nameof(ErrorController.PageNotFound), Constants.ErrorController);
             }
             return View(viewModel); 
+        }
+
+        public async Task<IActionResult> SelectReviewTlevels()
+        {
+            var viewModel = await _tlevelLoader.GetTlevelsToReviewByUkprnAsync(User.GetUkPrn());
+            return View(viewModel);
         }
 
         public async Task<IActionResult> ReportIssue()

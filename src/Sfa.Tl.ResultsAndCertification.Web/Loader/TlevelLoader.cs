@@ -4,6 +4,8 @@ using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.Models;
+using System.Linq;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 {
@@ -28,6 +30,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var tLevels = await _internalApiClient.GetAllTlevelsByUkprnAsync(ukprn);
             return _mapper.Map<IEnumerable<YourTlevelsViewModel>>(tLevels);
+        }
+
+        public async Task<IEnumerable<YourTlevelsViewModel>> GetTlevelsToReviewByUkprnAsync(long ukprn)
+        {
+            var tLevels = await GetAllTlevelsByUkprnAsync(ukprn);
+            var tLevelsForReview = tLevels?.Where(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation);
+            return tLevelsForReview;
         }
     }
 }
