@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Clients\ResultsAndCertificationInternalApiClientTest\GetAllTlevelsByUkprnAsync\**" />
+    <EmbeddedResource Remove="Clients\ResultsAndCertificationInternalApiClientTest\GetAllTlevelsByUkprnAsync\**" />
+    <None Remove="Clients\ResultsAndCertificationInternalApiClientTest\GetAllTlevelsByUkprnAsync\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="NSubstitute" Version="4.2.1" />

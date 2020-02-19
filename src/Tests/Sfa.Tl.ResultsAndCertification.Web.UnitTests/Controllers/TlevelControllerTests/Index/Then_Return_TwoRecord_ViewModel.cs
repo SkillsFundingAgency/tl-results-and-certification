@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.Models;
 using System.Collections.Generic;
@@ -9,9 +10,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 {
     public class Then_Return_TwoRecord_ViewModel : When_Index_Action_Called
     {
+        private List<YourTlevelsViewModel> mockresult;
+
         public override void Given()
         {
-            var mockresult = new List<YourTlevelsViewModel>
+            mockresult = new List<YourTlevelsViewModel>
             {
                     new YourTlevelsViewModel { PathId = 1, StatusId = 1, TLevelDescription = "RouteName1: Pathway1" },
                     new YourTlevelsViewModel { PathId = 2, StatusId = 2, TLevelDescription = "RouteName2: Pathway2"}
@@ -40,10 +43,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as IList<YourTlevelsViewModel>;
 
-            var expectedModel = model.FirstOrDefault();
-            Assert.True(expectedModel.PathId == 1);
-            Assert.True(expectedModel.StatusId.Equals(1));
-            Assert.True(expectedModel.TLevelDescription.Equals("RouteName1: Pathway1"));
+            model.Should().NotBeNullOrEmpty();
+            model.Count().Should().Be(2);
+            
+            var expectedFirstModel = model.FirstOrDefault();
+            var actualModel = mockresult.FirstOrDefault();
+            
+            expectedFirstModel.PathId.Should().Be(actualModel.PathId);
+            expectedFirstModel.StatusId.Should().Be(actualModel.StatusId);
+            expectedFirstModel.TLevelDescription.Should().Be(actualModel.TLevelDescription);
         }
     }
 }
