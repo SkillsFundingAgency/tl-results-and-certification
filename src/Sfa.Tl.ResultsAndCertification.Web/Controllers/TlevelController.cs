@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -6,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
+    [Authorize(Policy = RolesExtensions.RequireTLevelsReviewerAccess)]
     public class TlevelController : Controller
     {
         private readonly ITlevelLoader _tlevelLoader;

@@ -5,6 +5,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
     public static class RolesExtensions
     {
+        // Policy Names
+        public const string RequireTLevelsReviewerAccess = "RequireTLevelsReviewerAccess";
+
+        // Roles
         public const string SiteAdministrator = "Site Administrator";
         public const string TlevelsReviewer = "Tlevels Reviewer";
         public const string CentresEditor = "Centres Editor";
