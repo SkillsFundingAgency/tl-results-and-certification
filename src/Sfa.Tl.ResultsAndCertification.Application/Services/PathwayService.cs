@@ -8,7 +8,6 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 
-
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class PathwayService : IPathwayService

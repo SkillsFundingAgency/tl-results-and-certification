@@ -1,7 +1,9 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+﻿using System.Collections.Generic;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 {
@@ -9,9 +11,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
     {
         #region TlAwarding Organisation
 
-        public static TlAwardingOrganisation CreateTlAwardingOrganisation(ResultsAndCertificationDbContext _dbContext, bool addToDbContext = true)
+        public static TlAwardingOrganisation CreateTlAwardingOrganisation(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, bool addToDbContext = true)
         {
-            var tlAwardingOrganisation = new TlAwardingOrganisationBuilder().Build();
+            var tlAwardingOrganisation = new TlAwardingOrganisationBuilder().Build(awardingOrganisation);
 
             if (addToDbContext)
             {
@@ -20,11 +22,11 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tlAwardingOrganisation;
         }
 
-        public static TlAwardingOrganisation CreateTlAwardingOrganisation(ResultsAndCertificationDbContext _dbContext, TlAwardingOrganisation tlAwardingOrganisation, bool addToDbContext = true)
+        public static TlAwardingOrganisation CreateTlAwardingOrganisation(ResultsAndCertificationDbContext _dbContext, TlAwardingOrganisation tlAwardingOrganisation, EnumAwardingOrganisation awardingOrganisation, bool addToDbContext = true)
         {
             if (tlAwardingOrganisation == null)
             {
-                tlAwardingOrganisation = new TlAwardingOrganisationBuilder().Build();
+                tlAwardingOrganisation = new TlAwardingOrganisationBuilder().Build(awardingOrganisation);
             }
 
             if (addToDbContext)
@@ -36,7 +38,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 
         public static TlAwardingOrganisation CreateTlAwardingOrganisation(ResultsAndCertificationDbContext _dbContext, long ukprn, string name, string displayName, bool addToDbContext = true)
         {
-
             var tlAwardingOrganisation = new TlAwardingOrganisation
             {
                 UkPrn = ukprn,
@@ -55,9 +56,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
         
         #region TlRoute
 
-        public static TlRoute CreateTlRoute(ResultsAndCertificationDbContext _dbContext, bool addToDbContext = true)
+        public static TlRoute CreateTlRoute(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, bool addToDbContext = true)
         {
-            var tlRoute = new TlRouteBuilder().Build();
+            var tlRoute = new TlRouteBuilder().Build(awardingOrganisation);
 
             if (addToDbContext)
             {
@@ -93,9 +94,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 
         #region TlPathway
 
-        public static TlPathway CreateTlPathway(ResultsAndCertificationDbContext _dbContext, bool addToDbContext = true)
+        public static TlPathway CreateTlPathway(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, bool addToDbContext = true)
         {
-            var tlPathway = new TlPathwayBuilder().Build();
+            var tlPathway = new TlPathwayBuilder().Build(awardingOrganisation);
 
             if (addToDbContext)
             {
@@ -104,11 +105,11 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tlPathway;
         }
 
-        public static TlPathway CreateTlPathway(ResultsAndCertificationDbContext _dbContext, TlPathway tlPathway, bool addToDbContext = true)
+        public static TlPathway CreateTlPathway(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, TlPathway tlPathway, bool addToDbContext = true)
         {
             if (tlPathway == null)
             {
-                tlPathway = new TlPathwayBuilder().Build();
+                tlPathway = new TlPathwayBuilder().Build(awardingOrganisation);
             }
 
             if (addToDbContext)
@@ -118,11 +119,28 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tlPathway;
         }
 
-        public static TlPathway CreateTlPathway(ResultsAndCertificationDbContext _dbContext, TlRoute tlRoute, string larId, string pathwayName, bool addToDbContext = true)
+        public static TlPathway CreateTlPathway(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, TlRoute tlRoute, bool addToDbContext = true)
         {
             if (tlRoute == null)
             {
-                tlRoute = new TlRouteBuilder().Build();
+                tlRoute = new TlRouteBuilder().Build(awardingOrganisation);
+            }
+
+            var tlPathway = new TlPathwayBuilder().Build(awardingOrganisation, false);
+            tlPathway.TlRoute = tlRoute;
+
+            if (addToDbContext)
+            {
+                _dbContext.Add(tlPathway);
+            }
+            return tlPathway;
+        }
+
+        public static TlPathway CreateTlPathway(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, TlRoute tlRoute, string larId, string pathwayName, bool addToDbContext = true)
+        {
+            if (tlRoute == null)
+            {
+                tlRoute = new TlRouteBuilder().Build(awardingOrganisation);
             }
 
             var tlPathway = new TlPathway
@@ -144,24 +162,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 
         #region TlSpecialism
 
-        public static TlSpecialism CreateTlSpecialism(ResultsAndCertificationDbContext _dbContext, bool addToDbContext = true)
+       public static TlSpecialism CreateTlSpecialism(ResultsAndCertificationDbContext _dbContext, TlSpecialism tlSpecialism, bool addToDbContext = true)
         {
-            var tlSpecialism = new TlSpecialismBuilder().Build();
-
-            if (addToDbContext)
-            {
-                _dbContext.Add(tlSpecialism);
-            }
-            return tlSpecialism;
-        }
-
-        public static TlSpecialism CreateTlSpecialism(ResultsAndCertificationDbContext _dbContext, TlSpecialism tlSpecialism, bool addToDbContext = true)
-        {
-            if(tlSpecialism == null) {
-                tlSpecialism = new TlSpecialismBuilder().Build();
-            }
-
-            if (addToDbContext)
+            if (addToDbContext && tlSpecialism == null)
             {
                 _dbContext.Add(tlSpecialism);
             }
@@ -171,9 +174,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
         public static TlSpecialism CreateTlSpecialism(ResultsAndCertificationDbContext _dbContext, TlPathway tlPathway, string larId, string name, bool addToDbContext = true)
         {
             if (tlPathway == null)
-            {
-                tlPathway = new TlPathwayBuilder().Build();
-            }
+                return null;
 
             var tlSpecialism = new TlSpecialism
             {
@@ -190,15 +191,26 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tlSpecialism;
         }
 
+        public static IList<TlSpecialism> CreateTlSpecialisms(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, bool addToDbContext = true)
+        {
+            var tlSpecialisms = new TlSpecialismBuilder().BuildList(awardingOrganisation);
+
+            if (addToDbContext && tlSpecialisms != null)
+            {
+                _dbContext.AddRange(tlSpecialisms);
+            }
+            return tlSpecialisms;
+        }
+
         #endregion
 
         #region TqAwardingOrganisation
 
-        public static TqAwardingOrganisation CreateTqAwardingOrganisation(ResultsAndCertificationDbContext _dbContext, bool addToDbContext = true)
+        public static TqAwardingOrganisation CreateTqAwardingOrganisation(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, bool addToDbContext = true)
         {
-            var tqAwardingOrganisation = new TqAwardingOrganisationBuilder().Build();
+            var tqAwardingOrganisation = new TqAwardingOrganisationBuilder().Build(awardingOrganisation);
 
-            if (addToDbContext)
+            if (addToDbContext && tqAwardingOrganisation != null)
             {
                 _dbContext.Add(tqAwardingOrganisation);
             }
@@ -207,12 +219,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 
         public static TqAwardingOrganisation CreateTqAwardingOrganisation(ResultsAndCertificationDbContext _dbContext, TqAwardingOrganisation tqAwardingOrganisation, bool addToDbContext = true)
         {
-            if (tqAwardingOrganisation == null)
-            {
-                tqAwardingOrganisation = new TqAwardingOrganisationBuilder().Build();
-            }
-
-            if (addToDbContext)
+            if (addToDbContext && tqAwardingOrganisation == null)
             {
                 _dbContext.Add(tqAwardingOrganisation);
             }
@@ -221,23 +228,26 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 
         public static TqAwardingOrganisation CreateTqAwardingOrganisation(ResultsAndCertificationDbContext _dbContext, TlRoute tlRoute, TlPathway tlPathway, TlAwardingOrganisation tlAwardingOrganisation, TlevelReviewStatus tLevelReviewStatus = TlevelReviewStatus.AwaitingConfirmation, bool addToDbContext = true)
         {
+            if(tlRoute != null && tlPathway != null)
+            {
+                var tqAwardingOrganisation = new TqAwardingOrganisation
+                {
+                    TlAwardingOrganisatonId = tlAwardingOrganisation.Id,
+                    TlRouteId = tlRoute.Id,
+                    TlPathwayId = tlPathway.Id,
+                    TlAwardingOrganisaton = tlAwardingOrganisation,
+                    TlRoute = tlRoute,
+                    TlPathway = tlPathway,
+                    ReviewStatus = (int)tLevelReviewStatus
+                };
 
-            var tqAwardingOrganisation = new TqAwardingOrganisation
-            {
-                TlAwardingOrganisatonId = tlAwardingOrganisation.Id,
-                TlRouteId = tlRoute.Id,
-                TlPathwayId = tlPathway.Id,
-                TlAwardingOrganisaton = tlAwardingOrganisation,
-                TlRoute = tlRoute,
-                TlPathway = tlPathway,
-                ReviewStatus = (int)tLevelReviewStatus
-            };
-            
-            if (addToDbContext)
-            {
-                _dbContext.Add(tqAwardingOrganisation);
+                if (addToDbContext)
+                {
+                    _dbContext.Add(tqAwardingOrganisation);
+                }
+                return tqAwardingOrganisation;
             }
-            return tqAwardingOrganisation;
+            return null;
         }
 
         #endregion

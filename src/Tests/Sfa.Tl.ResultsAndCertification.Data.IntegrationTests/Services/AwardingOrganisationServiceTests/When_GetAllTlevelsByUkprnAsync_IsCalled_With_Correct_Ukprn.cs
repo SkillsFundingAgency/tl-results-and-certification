@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
 {
     public class When_GetAllTlevelsByUkprnAsync_IsCalled_With_Correct_Ukprn : AwardingOrganisaionServiceBaseTest
     {
-        private readonly long _ukprn = 10009696;
+        private readonly long _ukprn = 10011881;
         public override void Given()
         {
             SeedTlevelTestData();
@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
 
         public override void When()
         {
-            _result = _service.GetAllTlevelsByUkprnAsync(_ukprn).Result;
+            _result = _service.GetAllTlevelsByUkprnAsync(_tlAwardingOrganisation.UkPrn).Result;
         }
 
         [Fact]

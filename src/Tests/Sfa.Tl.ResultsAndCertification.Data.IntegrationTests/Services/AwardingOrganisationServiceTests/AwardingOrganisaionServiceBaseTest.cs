@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrganisationServiceTests
 {
@@ -15,7 +16,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
         protected ILogger<IRepository<TqAwardingOrganisation>> _logger;        
         protected AwardingOrganisationService _service;
         protected TlRoute _route;
-        protected TlPathway _pathway;        
+        protected TlPathway _pathway;
+        protected TlAwardingOrganisation _tlAwardingOrganisation;
         protected TqAwardingOrganisation _tqAwardingOrganisation;
         protected IEnumerable<AwardingOrganisationPathwayStatus> _result;
 
@@ -32,10 +34,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
 
         protected virtual void SeedTlevelTestData()
         {
-            TlevelDataProvider.CreateTlAwardingOrganisation(DbContext);
-            _route = TlevelDataProvider.CreateTlRoute(DbContext);
-            _pathway = TlevelDataProvider.CreateTlPathway(DbContext);
-            _tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext);
+            _tlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, EnumAwardingOrganisation.Ncfe);
+            _route = TlevelDataProvider.CreateTlRoute(DbContext, EnumAwardingOrganisation.Ncfe);
+            _pathway = TlevelDataProvider.CreateTlPathway(DbContext, EnumAwardingOrganisation.Ncfe);
+            _tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, EnumAwardingOrganisation.Ncfe);
             DbContext.SaveChangesAsync();
         }
     }
