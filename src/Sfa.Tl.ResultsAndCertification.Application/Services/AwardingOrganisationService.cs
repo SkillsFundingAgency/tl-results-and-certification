@@ -38,5 +38,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var awardOrgPathwayStatus = _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(tlevels);
             return awardOrgPathwayStatus;
         }
+
+        public async Task<IEnumerable<AwardingOrganisationPathwayReviewStatus>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
+        {
+            var tlevels = await _awardingOrganisationRepository
+                .GetManyAsync(x => x.TlAwardingOrganisaton.UkPrn == ukprn && x.ReviewStatus == statusId,
+                        n => n.TlRoute,
+                        n => n.TlPathway,
+                        n => n.TlAwardingOrganisaton)
+                .ToListAsync();
+
+            var awardOrgPathwayStatus = _mapper.Map<IEnumerable<AwardingOrganisationPathwayReviewStatus>>(tlevels);
+            return awardOrgPathwayStatus;
+        }
     }
 }
