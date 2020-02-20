@@ -38,12 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
         {
             services.AddAuthorization(options =>
             {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .RequireRole("Application")
-                    .Build();
-
-                options.DefaultPolicy = policy;
+                options.AddPolicy("ApplicationPolicy", policy => policy.RequireRole("Application"));
             });
             return services;
         }
