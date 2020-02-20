@@ -4,9 +4,9 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 {
-    public class AwardingOrganisationMappingProfile : Profile
+    public class AwardingOrganisationMapper : Profile
     {
-        public AwardingOrganisationMappingProfile()
+        public AwardingOrganisationMapper()
         {
             CreateMap<TqAwardingOrganisation, AwardingOrganisationPathwayStatus>()
                 .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.TlPathway.Id))

@@ -4,9 +4,9 @@ using Sfa.Tl.ResultsAndCertification.Web.Models;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
-    public class AwardingOrganisationMappingProfile : Profile
+    public class TlevelMapper : Profile
     {
-        public AwardingOrganisationMappingProfile()
+        public TlevelMapper()
         {
             CreateMap<AwardingOrganisationPathwayStatus, YourTlevelsViewModel>()
                 .ForMember(d => d.PathId, opts => opts.MapFrom(s => s.PathwayId))
