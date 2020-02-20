@@ -32,11 +32,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<IEnumerable<YourTlevelsViewModel>>(tLevels);
         }
 
-        public async Task<IEnumerable<YourTlevelsViewModel>> GetTlevelsToReviewByUkprnAsync(long ukprn)
+        public async Task<IEnumerable<YourTlevelsViewModel>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
         {
-            var tLevels = await GetAllTlevelsByUkprnAsync(ukprn);
-            var tLevelsForReview = tLevels?.Where(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation);
-            return tLevelsForReview;
+            var tLevels = await _internalApiClient.GetTlevelsByStatusIdAsync(ukprn, statusId);
+            return _mapper.Map<IEnumerable<YourTlevelsViewModel>>(tLevels);
         }
     }
 }
