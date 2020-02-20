@@ -16,7 +16,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
             // configure jwt authentication
             services.AddAuthentication(x =>
             {
-                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                //x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(x =>
             {
