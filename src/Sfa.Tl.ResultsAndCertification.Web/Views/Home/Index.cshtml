@@ -1,79 +1,27 @@
 ﻿@{
-    ViewBag.Title = "T Levels Results And Certification Service";
+    ViewData["Title"] = "Sign in to submit registration and results details for T Levels - GOV.UK";
 }
 
-<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
 
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sign in to submit T Levels registration and results details</h1>
+        <h1 class="govuk-heading-xl">
+            Sign in to manage your T Levels
+        </h1>
 
-            <p class="govuk-body">Awarding Organisations can use this service to:</p>
+        <p class="govuk-body">As an awarding organisation you can use this service to:</p>
 
-            <ul class="govuk-list govuk-list--bullet">
-                <li>register for T Levels they are providing</li>
-                <li>send student registration information</li>
-                <li>send student results for technical qualifications and check for missing results</li>
-            </ul>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>review your T Level details</li>
+            <li>tell us which centres are offering your T Levels</li>
+            <li>send student registrations and results</li>
+        </ul>
 
-            <p class="govuk-body">Providers (schools and colleges) can use this service to:</p>
-
-            <ul class="govuk-list govuk-list--bullet">
-                <li>confirm student industrial placements, maths and English, and any additional mandatory requirements</li>
-                <li>check for missing results</li>
-                <li>request certificates and statements of achievement</li>
-            </ul>
-
-            <div class="govuk-!-margin-top-2">
-                <a href="@Url.Action("SignIn", "Account")" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" data-module="govuk-button">
-                    Start now
-                    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" role="presentation" focusable="false">
-                        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
-                    </svg>
-                </a>
-            </div>
-
-            <h2 class="govuk-heading-m">Before you start</h2>
-            <p class="govuk-body">
-                Read through the detailed guidance for <a class="govuk-link" href="tlevel-results-guidance">submit registration and results details for T Levels</a>.
-            </p>
-            <p class="govuk-body">
-                You must be an approved T Levels Awarding Organisation or Provider (school or college) to use this service. To find out more visit <a class="govuk-link" href="">Introduction of T Levels</a>.
-            </p>
-            <p class="govuk-body">
-                You must have a Department for Education Sign-in account. Visit <a class="govuk-link" href="">create an account</a> if
-                you do not already have an account.
-            </p>
-        </div>
-
-        <div class="govuk-grid-column-one-third">
-
-            <aside class="app-related-items" role="complementary">
-                <h2 class="govuk-heading-m" id="subsection-title">
-                    More about T Levels
-                </h2>
-                <nav role="navigation" aria-labelledby="subsection-title">
-                    <ul class="govuk-list govuk-!-font-size-16">
-                        <li>
-                            <a class="govuk-link" href="tlevels-results-guidance">
-                                Submit registration and results details for T Levels guidance
-                            </a>
-                        </li>
-                        <li>
-                            <a class="govuk-link" href="tlevel-intro">
-                                Introduction of T Levels
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="govuk-link govuk-!-font-weight-bold">
-                                More <span class="govuk-visually-hidden">in Subsection</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </aside>
-
-        </div>
+        <a href="@Url.Action("SignIn", "Account")" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" data-module="govuk-button">
+            Start now
+            <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" role="presentation" focusable="false">
+                <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
+            </svg>
+        </a>
     </div>
-
-</main>
+</div>
