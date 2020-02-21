@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var anyReviewPending = viewModel.Any(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation);
             if (anyReviewPending)
             {
-                return RedirectToAction("SelectReviewTlevels");
+                //return RedirectToAction("SelectReviewTlevels");
             }
             return View(viewModel);
         }
@@ -52,6 +52,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> ReportIssue()
         {
             return await Task.Run(() => View());
+        }
+
+        public async Task<IActionResult> Verify(int id)
+        {
+            var viewModel = await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(HttpContext.User.GetUkPrn(), id);
+
+            if (viewModel == null)
+            {
+                return RedirectToAction(nameof(ErrorController.PageNotFound), Constants.ErrorController);
+            }
+            return View(viewModel);
         }
     }
 }

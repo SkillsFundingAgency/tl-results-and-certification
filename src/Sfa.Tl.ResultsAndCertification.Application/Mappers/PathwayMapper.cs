@@ -5,11 +5,12 @@ using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 {
-    public class PathwayMappingProfile : Profile
+    public class PathwayMapper : Profile
     {
-        public PathwayMappingProfile()
+        public PathwayMapper()
         {
             CreateMap<TlPathway, TlevelPathwayDetails>()
+                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisations.FirstOrDefault(x => x.TlPathwayId == s.Id).Id))
                 .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.Name))
                 .ForMember(d => d.RouteId, opts => opts.MapFrom(s => s.TlRouteId))

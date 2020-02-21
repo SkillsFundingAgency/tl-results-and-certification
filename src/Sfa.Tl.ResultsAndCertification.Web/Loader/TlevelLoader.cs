@@ -38,5 +38,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var tLevelsForReview = tLevels?.Where(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation);
             return tLevelsForReview;
         }
+
+        public async Task<VerifyTlevelViewModel> GetVerifyTlevelDetailsByPathwayIdAsync(long ukprn, int id)
+        {
+            var tLevelPathwayInfo = await _internalApiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
+            return _mapper.Map<VerifyTlevelViewModel>(tLevelPathwayInfo);
+        }
     }
 }

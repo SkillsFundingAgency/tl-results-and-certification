@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServic
 
         public void CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(PathwayMappingProfile).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(PathwayMapper).Assembly));
             _mapper = new Mapper(mapperConfig);            
         }
 
