@@ -33,6 +33,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IEnumerable<AwardingOrganisationPathwayStatus>>(string.Format(ApiConstants.GetAllTLevelsUri, ukprn));
         }
 
+        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
+        {
+            return await GetAsync<IEnumerable<AwardingOrganisationPathwayStatus>>(string.Format(ApiConstants.GetTlevelsByStatus, ukprn, statusId));
+        }
+
         public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
         {
             var requestUri = string.Format(ApiConstants.TlevelDetailsUri, ukprn, id);

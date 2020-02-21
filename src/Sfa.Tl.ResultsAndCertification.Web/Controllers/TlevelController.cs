@@ -22,18 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // TODO: Change below to new endpoint get by status rather all Tlevels status. 
-            var viewModel = await _tlevelLoader.GetAllTlevelsByUkprnAsync(User.GetUkPrn());
-
-            var anyReviewPending = viewModel.Any(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation);
-            if (anyReviewPending)
+            var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
+            if (pendingTlevels.Count() > 0)
             {
                 return RedirectToAction("SelectToReview");
             }
             
             return RedirectToAction("ViewAll");
         }
-
 
         public async Task<IActionResult> ViewAll()
         {

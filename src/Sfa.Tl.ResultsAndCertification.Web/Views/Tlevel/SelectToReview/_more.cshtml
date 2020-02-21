@@ -15,8 +15,8 @@
             @foreach (var tlevel in Model.TlevelsToReview)
             {
                 <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="tlevel-name-1" name="tlevel-name@tlevel.PathId" type="radio" value=@tlevel.PathId>
-                    <label class="govuk-label govuk-radios__label" for="tlevel-name@tlevel.PathId">
+                    <input class="govuk-radios__input" id="tlevel-@tlevel.PathId" name="tlevel-@tlevel.PathId" type="radio" value=@tlevel.PathId>
+                    <label class="govuk-label govuk-radios__label" for="tlevel-@tlevel.PathId">
                         @tlevel.TLevelDescription
                     </label>
                 </div>
