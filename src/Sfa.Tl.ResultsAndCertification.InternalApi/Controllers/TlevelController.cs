@@ -32,13 +32,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("{ukprn}/GetTlevelsByStatus/{statusId}")]
-        public async Task<IEnumerable<AwardingOrganisationPathwayReviewStatus>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
-        {
-            return await _awardingOrganisationService.GetTlevelsByStatusIdAsync(ukprn, statusId);
-        }
-
-        [HttpGet]
         [Route("{ukprn}/TlevelDetails/{id}")]
         public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
         {

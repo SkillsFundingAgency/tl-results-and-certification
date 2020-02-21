@@ -34,8 +34,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<IEnumerable<YourTlevelsViewModel>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
         {
-            var tLevels = await _internalApiClient.GetTlevelsByStatusIdAsync(ukprn, statusId);
-            return _mapper.Map<IEnumerable<YourTlevelsViewModel>>(tLevels);
+            var tLevels = await GetAllTlevelsByUkprnAsync(ukprn);
+            var tLevelsForReview = tLevels?.Where(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation);
+            return tLevelsForReview;
         }
     }
 }
