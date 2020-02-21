@@ -31,4 +31,21 @@
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Models\Sfa.Tl.ResultsAndCertification.Models.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Compile Update="Content\SelectToReview.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SelectToReview.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <EmbeddedResource Update="Content\SelectToReview.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SelectToReview.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

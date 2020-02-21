@@ -1,14 +1,17 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview.SelectToReviewPageViewModel
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content;
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview.SelectToReviewPageViewModel
 
 <div class="govuk-form-group">
     <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
             <h1 class="govuk-fieldset__heading">
-                Select a T Level to review
+                @SelectToReview.Two_Review_Heading
             </h1>
         </legend>
 
-        <p class="govuk-hint govuk-!-padding-bottom-4">You need to confirm the details of each T Level before you can tell us which centres are offering it.</p>
+        <p class="govuk-hint govuk-!-padding-bottom-4">
+            @SelectToReview.Two_Review_Text
+        </p>
 
         <div class="govuk-radios govuk-!-padding-bottom-2">
 

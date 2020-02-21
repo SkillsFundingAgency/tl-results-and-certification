@@ -1,12 +1,15 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview.TlevelToReviewViewModel
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content;
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview.TlevelToReviewViewModel
 
 <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
     <h1 class="govuk-fieldset__heading">
-        You have one T Level to review
+        @SelectToReview.One_Review_Heading
     </h1>
 </legend>
 
-<p class="govuk-hint govuk-!-padding-bottom-4">You need to confirm this T Level's details before you can tell us which providers are offering it.</p>
+<p class="govuk-hint govuk-!-padding-bottom-4"> 
+    @SelectToReview.One_Review_Text 
+</p>
 
 <p class="govuk-body govuk-!-padding-bottom-4"> @Model.TLevelDescription </p>
 
