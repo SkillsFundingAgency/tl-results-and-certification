@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Models
+namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
 {
     public class TLevelDetailsViewModel
     {

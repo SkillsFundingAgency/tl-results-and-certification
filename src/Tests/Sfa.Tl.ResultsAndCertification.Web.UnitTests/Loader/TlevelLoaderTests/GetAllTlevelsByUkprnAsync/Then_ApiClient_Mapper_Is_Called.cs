@@ -2,7 +2,7 @@
 using NSubstitute;
 using System.Collections.Generic;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using Sfa.Tl.ResultsAndCertification.Web.Models;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetAllTlevelsByUkprnAsync
 {

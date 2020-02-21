@@ -1,4 +1,4 @@
-namespace Sfa.Tl.ResultsAndCertification.Web.Models
+namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
 {
     public class ErrorViewModel
     {

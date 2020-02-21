@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
-using Sfa.Tl.ResultsAndCertification.Web.Models;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;

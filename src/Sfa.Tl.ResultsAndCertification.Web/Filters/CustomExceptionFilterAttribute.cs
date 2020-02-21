@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
-using Sfa.Tl.ResultsAndCertification.Web.Models;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Diagnostics;
 using System.Net;
 

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Web.Models;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 {
