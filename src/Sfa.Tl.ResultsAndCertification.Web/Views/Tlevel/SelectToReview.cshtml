@@ -1,0 +1,25 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview.SelectToReviewPageViewModel
+
+@{
+    ViewData["Title"] = "Select a T Level to Review";
+}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            @if (Model.IsOnlyOneTlevelReviewPending)
+            {
+                @Html.Partial("~/Views/Tlevel/SelectToReview/_one.cshtml", Model.TlevelsToReview.FirstOrDefault());
+            }
+            else
+            {
+                @Html.Partial("~/Views/Tlevel/SelectToReview/_more.cshtml", Model);
+            }
+            <button class="govuk-button" data-module="govuk-button">Continue</button>  @*TODO: another story?*@
+            @if (Model.ShowViewReviewedTlevelsLink)
+            {
+                <p class="govuk-body"><a href="ViewAll">View reviewed T levels</a></p>
+            }
+
+        </div>
+    </div>

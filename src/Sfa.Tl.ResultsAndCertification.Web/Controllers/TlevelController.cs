@@ -22,13 +22,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            // TODO: Change below to new endpoint get by status rather all Tlevels status. 
             var viewModel = await _tlevelLoader.GetAllTlevelsByUkprnAsync(User.GetUkPrn());
-            
+
             var anyReviewPending = viewModel.Any(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation);
             if (anyReviewPending)
             {
-                //return RedirectToAction("SelectReviewTlevels");
+                return RedirectToAction("SelectToReview");
             }
+            
+            return RedirectToAction("ViewAll");
+        }
+
+
+        public async Task<IActionResult> ViewAll()
+        {
+            var viewModel = await _tlevelLoader.GetAllTlevelsByUkprnAsync(User.GetUkPrn());
             return View(viewModel);
         }
 
@@ -43,9 +52,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel); 
         }
 
-        public async Task<IActionResult> SelectReviewTlevels()
+        public async Task<IActionResult> SelectToReview()
         {
-            var viewModel = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
+            var viewModel = await _tlevelLoader.GetTlevelsToReviewByUkprnAsync(User.GetUkPrn());
             return View(viewModel);
         }
 

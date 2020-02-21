@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Linq;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 {
@@ -32,11 +33,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<IEnumerable<YourTlevelsViewModel>>(tLevels);
         }
 
-        public async Task<IEnumerable<YourTlevelsViewModel>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
+        public async Task<SelectToReviewPageViewModel> GetTlevelsToReviewByUkprnAsync(long ukprn)
         {
-            var tLevels = await GetAllTlevelsByUkprnAsync(ukprn);
-            var tLevelsForReview = tLevels?.Where(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation);
-            return tLevelsForReview;
+            var tLevels = await _internalApiClient.GetAllTlevelsByUkprnAsync(ukprn);
+            return _mapper.Map<SelectToReviewPageViewModel>(tLevels);
         }
 
         public async Task<VerifyTlevelViewModel> GetVerifyTlevelDetailsByPathwayIdAsync(long ukprn, int id)
