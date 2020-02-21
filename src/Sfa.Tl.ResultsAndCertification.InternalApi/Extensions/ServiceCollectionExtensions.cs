@@ -16,9 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
             // configure jwt authentication
             services.AddAuthentication(x =>
             {
-                //x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(x =>
             {
@@ -40,7 +38,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
         {
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("ApplicationPolicy", policy => policy.RequireRole("Application"));
+                var policy = new AuthorizationPolicyBuilder()
+                   .RequireAuthenticatedUser()
+                   .RequireRole("Application")
+                   .Build();
+
+                options.DefaultPolicy = policy;
             });
             return services;
         }
