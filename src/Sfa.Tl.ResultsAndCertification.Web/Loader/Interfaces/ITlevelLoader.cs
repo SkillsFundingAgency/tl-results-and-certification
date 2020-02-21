@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     public interface ITlevelLoader
     {
         Task<IEnumerable<YourTlevelsViewModel>> GetAllTlevelsByUkprnAsync(long ukprn);
-        Task<YourTLevelDetailsViewModel> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id);
+        Task<TLevelDetailsViewModel> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id);
         Task<IEnumerable<YourTlevelsViewModel>> GetTlevelsByStatusIdAsync(long ukprn, int statusId);
     }
 }

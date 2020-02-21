@@ -1,5 +1,4 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.Models.YourTLevelDetailsViewModel
-@using Sfa.Tl.ResultsAndCertification.Common.Enum
+﻿@model Sfa.Tl.ResultsAndCertification.Web.Models.TLevelDetailsViewModel
 
 @{
     ViewData["Title"] = "T Level Details";
@@ -38,10 +37,10 @@
                 </dd>
             </div>
         </dl>
-        @if (Model.PathwayStatusId == (int)TlevelReviewStatus.Confirmed)
+        @if (Model?.ShowSomethingIsNotRight == true)
         {
             <p class="govuk-body govuk-!-margin-bottom-9">
-                <a href="/Tlevel/Reportissue">Something is not right</a>
+                <a class="govuk-link" href="/tlevel/reportissue">Something is not right</a>
             </p>
         }
         <a asp-controller="Tlevel"

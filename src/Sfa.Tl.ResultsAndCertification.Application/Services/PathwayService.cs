@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var tlevel = await _pathwayRepository.GetFirstOrDefaultAsync(p => p.Id == id && 
                                                                          p.TqAwardingOrganisations.Any(x => x.TlPathwayId == p.Id && x.TlAwardingOrganisaton.UkPrn == ukprn),
-                                                                         navigationPropertyPath: new Expression<Func<TlPathway, object>>[] { r => r.TlRoute, s => s.TlSpecialisms });
+                                                                         navigationPropertyPath: new Expression<Func<TlPathway, object>>[] { r => r.TlRoute, s => s.TlSpecialisms, s => s.TqAwardingOrganisations });
             return _mapper.Map<TlevelPathwayDetails>(tlevel);
         }
     }
