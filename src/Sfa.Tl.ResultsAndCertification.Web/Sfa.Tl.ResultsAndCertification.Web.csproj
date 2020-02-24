@@ -33,18 +33,36 @@
 
 
   <ItemGroup>
+    <Compile Update="Content\Tlevel\Details.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Details.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Tlevel\SelectToReview.Designer.cs">
       <DependentUpon>SelectToReview.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Content\Tlevel\ViewAll.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ViewAll.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 
   <ItemGroup>
+    <EmbeddedResource Update="Content\Tlevel\Details.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Details.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Tlevel\SelectToReview.resx">
       <LastGenOutput>SelectToReview.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Tlevel\ViewAll.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ViewAll.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

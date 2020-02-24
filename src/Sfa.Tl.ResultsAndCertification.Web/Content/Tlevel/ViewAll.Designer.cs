@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SelectToReview {
+    public class ViewAll {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SelectToReview() {
+        internal ViewAll() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel.SelectToReview", typeof(SelectToReview).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel.ViewAll", typeof(ViewAll).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,34 +61,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Continue.
+        ///   Looks up a localized string similar to Confirmed T Levels.
         /// </summary>
-        public static string Continue_Button_Label {
+        public static string ConfirmTlevels_Heading {
             get {
-                return ResourceManager.GetString("Continue_Button_Label", resourceCulture);
+                return ResourceManager.GetString("ConfirmTlevels_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have one T Level to review.
+        ///   Looks up a localized string similar to Home.
         /// </summary>
-        public static string One_Review_Heading {
+        public static string Home_Button_Text {
             get {
-                return ResourceManager.GetString("One_Review_Heading", resourceCulture);
+                return ResourceManager.GetString("Home_Button_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You need to confirm this T Level&apos;s details before you can tell us which providers are offering it..
-        /// </summary>
-        public static string One_Review_Text {
-            get {
-                return ResourceManager.GetString("One_Review_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select a T Level to Review.
+        ///   Looks up a localized string similar to Your T Levels.
         /// </summary>
         public static string Page_Title {
             get {
@@ -97,29 +88,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a T Level to review.
+        ///   Looks up a localized string similar to Your T Levels.
         /// </summary>
-        public static string Two_Review_Heading {
+        public static string Section_Heading {
             get {
-                return ResourceManager.GetString("Two_Review_Heading", resourceCulture);
+                return ResourceManager.GetString("Section_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You need to confirm the details of each T Level before you can tell us which centres are offering it..
+        ///   Looks up a localized string similar to View.
         /// </summary>
-        public static string Two_Review_Text {
+        public static string View_Link_Text {
             get {
-                return ResourceManager.GetString("Two_Review_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View reviewed T levels.
-        /// </summary>
-        public static string ViewReviewedTlevelsLink {
-            get {
-                return ResourceManager.GetString("ViewReviewedTlevelsLink", resourceCulture);
+                return ResourceManager.GetString("View_Link_Text", resourceCulture);
             }
         }
     }

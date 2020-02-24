@@ -117,25 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Continue_Button_Label" xml:space="preserve">
-    <value>Continue</value>
+  <data name="ConfirmTlevels_Heading" xml:space="preserve">
+    <value>Confirmed T Levels</value>
   </data>
-  <data name="One_Review_Heading" xml:space="preserve">
-    <value>You have one T Level to review</value>
-  </data>
-  <data name="One_Review_Text" xml:space="preserve">
-    <value>You need to confirm this T Level's details before you can tell us which providers are offering it.</value>
+  <data name="Home_Button_Text" xml:space="preserve">
+    <value>Home</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Select a T Level to Review</value>
+    <value>Your T Levels</value>
   </data>
-  <data name="Two_Review_Heading" xml:space="preserve">
-    <value>Select a T Level to review</value>
+  <data name="Section_Heading" xml:space="preserve">
+    <value>Your T Levels</value>
   </data>
-  <data name="Two_Review_Text" xml:space="preserve">
-    <value>You need to confirm the details of each T Level before you can tell us which centres are offering it.</value>
-  </data>
-  <data name="ViewReviewedTlevelsLink" xml:space="preserve">
-    <value>View reviewed T levels</value>
+  <data name="View_Link_Text" xml:space="preserve">
+    <value>View</value>
   </data>
 </root>

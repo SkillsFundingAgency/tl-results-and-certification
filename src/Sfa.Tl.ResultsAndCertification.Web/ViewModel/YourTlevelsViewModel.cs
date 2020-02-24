@@ -2,9 +2,9 @@
 {
     public class YourTlevelsViewModel
     {
-        public int PathId { get; set; }
+        public int PathwayId { get; set; }
         public int StatusId { get; set; }
-        public string TLevelDescription { get; set; }
+        public string TlevelTitle { get; set; }
         public string PageTitle { get; set; }
     }
 }
