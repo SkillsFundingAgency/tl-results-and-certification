@@ -10,11 +10,11 @@
 
         @if (Model.IsOnlyOneTlevelReviewPending)
         {
-            @Html.Partial("~/Views/Tlevel/SelectToReview/_one.cshtml", Model.TlevelsToReview.FirstOrDefault());
+            <partial name="~/Views/Tlevel/SelectToReview/_one.cshtml"/>
         }
         else
         {
-            @Html.Partial("~/Views/Tlevel/SelectToReview/_more.cshtml", Model);
+            <partial name="~/Views/Tlevel/SelectToReview/_more.cshtml"/>
         }
         <button class="govuk-button" data-module="govuk-button">@SelectToReview.Continue_Button_Label</button>  @*TODO: another story?*@
         @if (Model.ShowViewReviewedTlevelsLink)
