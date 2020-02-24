@@ -2,7 +2,7 @@
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview.SelectToReviewPageViewModel
 
 @{
-    ViewData["Title"] = "Select a T Level to Review";
+    ViewData["Title"] = @SelectToReview.Page_Title;
 }
 
 <div class="govuk-grid-row">
@@ -16,7 +16,7 @@
         {
             @Html.Partial("~/Views/Tlevel/SelectToReview/_more.cshtml", Model);
         }
-        <button class="govuk-button" data-module="govuk-button">Continue</button>  @*TODO: another story?*@
+        <button class="govuk-button" data-module="govuk-button">@SelectToReview.Continue_Button_Label</button>  @*TODO: another story?*@
         @if (Model.ShowViewReviewedTlevelsLink)
         {
             <p class="govuk-body"><a href="ViewAll">@SelectToReview.ViewReviewedTlevelsLink</a></p>
