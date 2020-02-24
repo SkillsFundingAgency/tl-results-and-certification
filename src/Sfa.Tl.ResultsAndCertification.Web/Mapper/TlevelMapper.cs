@@ -13,8 +13,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
         public TlevelMapper()
         {
             CreateMap<AwardingOrganisationPathwayStatus, YourTlevelsViewModel>()
-                .ForMember(d => d.PathId, opts => opts.MapFrom(s => s.PathwayId))
-                .ForMember(d => d.TLevelDescription, opts => opts.MapFrom(s => $"{s.RouteName}: {s.PathwayName}"))
+                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
+                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => $"{s.RouteName}: {s.PathwayName}"))
                 .ForMember(d => d.StatusId, opts => opts.MapFrom(s => s.StatusId))
                 .ForMember(d => d.PageTitle, opts => opts.MapFrom(s => "Your T Levels"));
 

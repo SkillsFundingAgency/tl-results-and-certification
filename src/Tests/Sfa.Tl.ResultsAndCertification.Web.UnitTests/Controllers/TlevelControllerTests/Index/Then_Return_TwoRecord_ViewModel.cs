@@ -16,8 +16,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         {
             mockresult = new List<YourTlevelsViewModel>
             {
-                    new YourTlevelsViewModel { PathId = 1, StatusId = 1, TLevelDescription = "RouteName1: Pathway1" },
-                    new YourTlevelsViewModel { PathId = 2, StatusId = 2, TLevelDescription = "RouteName2: Pathway2"}
+                    new YourTlevelsViewModel { PathwayId = 1, StatusId = 1, TlevelTitle = "RouteName1: Pathway1" },
+                    new YourTlevelsViewModel { PathwayId = 2, StatusId = 2, TlevelTitle = "RouteName2: Pathway2"}
             };
             TlevelLoader.GetAllTlevelsByUkprnAsync(Arg.Any<long>())
                 .Returns(mockresult);
@@ -49,9 +49,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             var expectedFirstModel = model.FirstOrDefault();
             var actualModel = mockresult.FirstOrDefault();
             
-            expectedFirstModel.PathId.Should().Be(actualModel.PathId);
+            expectedFirstModel.PathwayId.Should().Be(actualModel.PathwayId);
             expectedFirstModel.StatusId.Should().Be(actualModel.StatusId);
-            expectedFirstModel.TLevelDescription.Should().Be(actualModel.TLevelDescription);
+            expectedFirstModel.TlevelTitle.Should().Be(actualModel.TlevelTitle);
         }
     }
 }
