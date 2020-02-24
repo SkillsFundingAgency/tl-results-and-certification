@@ -22,11 +22,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
-            if (pendingTlevels.Count() > 0)
-            {
-                return RedirectToAction("SelectToReview");
-            }
+            //var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
+            //if (pendingTlevels.Count() > 0)
+            //{
+            //    return RedirectToAction("SelectToReview");
+            //}
             
             return RedirectToAction("ViewAll");
         }
