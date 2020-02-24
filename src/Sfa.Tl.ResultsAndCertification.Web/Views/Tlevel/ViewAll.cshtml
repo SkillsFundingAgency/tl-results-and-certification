@@ -1,34 +1,35 @@
-﻿@model IEnumerable<Sfa.Tl.ResultsAndCertification.Web.ViewModel.YourTlevelsViewModel>
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@model IEnumerable<Sfa.Tl.ResultsAndCertification.Web.ViewModel.YourTlevelsViewModel>
 
 @{
-    ViewData["Title"] = "Your T Levels";
+    ViewData["Title"] = @ViewAll.Page_Title;
 }
 
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
 
-            <h1 class="govuk-heading-xl">@ViewData["Title"]</h1>
+        <h1 class="govuk-heading-xl">@ViewAll.Section_Heading</h1>
 
-            <h2 class="govuk-heading-m">Confirmed T Levels</h2>
+        <h2 class="govuk-heading-m">Confirmed T Levels</h2>
 
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
 
-                @foreach (var item in Model)
-                {
-                    <div class="govuk-summary-list__row">
-                        <dd class="govuk-summary-list__value">
-                            @item.TlevelTitle
-                        </dd>
-                        <dd class="govuk-summary-list__actions">
-                            <a class="govuk-link" href="Details/@item.PathwayId">
-                                View<span class="govuk-visually-hidden"> @item.TlevelTitle</span>
-                            </a>
-                        </dd>
-                    </div>
-                }
-                </dl>
+            @foreach (var item in Model)
+            {
+                <div class="govuk-summary-list__row">
+                    <dd class="govuk-summary-list__value">
+                        @item.TlevelTitle
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="Details/@item.PathwayId">
+                            @ViewAll.View_Link_Text<span class="govuk-visually-hidden"> @item.TlevelTitle</span>
+                        </a>
+                    </dd>
+                </div>
+            }
+        </dl>
 
-            <a asp-controller="Dashboard"
-               asp-action="Index" class="govuk-button" data-module="govuk-button">Home</a>
-        </div>
+        <a asp-controller="Dashboard"
+           asp-action="Index" class="govuk-button" data-module="govuk-button">@ViewAll.Home_Button_Text</a>
     </div>
+</div>
