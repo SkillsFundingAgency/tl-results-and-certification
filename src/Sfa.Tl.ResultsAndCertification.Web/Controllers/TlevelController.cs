@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -27,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToAction("SelectToReview");
             }
-            
+
             return RedirectToAction("ViewAll");
         }
 
@@ -68,6 +69,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToAction(nameof(ErrorController.PageNotFound), Constants.ErrorController);
             }
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("confirm-tlevel/{pathwayId}", Name = "ConfirmTlevel")]
+        public async Task<IActionResult> ConfirmTlevel(VerifyTlevelViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                var model = await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(HttpContext.User.GetUkPrn(), viewModel.PathwayId);
+                return View("Verify", model);
+            }
+            await _tlevelLoader.GetAllTlevelsByUkprnAsync(HttpContext.User.GetUkPrn());
+            return RedirectToAction("Details", new { id = viewModel.PathwayId });
         }
     }
 }

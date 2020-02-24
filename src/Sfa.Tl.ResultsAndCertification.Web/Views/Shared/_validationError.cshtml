@@ -1,0 +1,16 @@
+﻿@model ValidationErrorViewModel
+
+@if (!ViewData.ModelState.IsValid)
+{
+    string elementKey = ViewData.ModelState.Keys.FirstOrDefault(k => k == Model.ElementId);
+
+    if (elementKey != null)
+    {
+        foreach (var error in ViewData.ModelState[elementKey].Errors)
+        {
+            <span id="@elementKey.ToLower()-issued-error" class="govuk-error-message">
+                <span class="govuk-visually-hidden">Error:</span> @error.ErrorMessage
+            </span>
+        }
+    }
+}

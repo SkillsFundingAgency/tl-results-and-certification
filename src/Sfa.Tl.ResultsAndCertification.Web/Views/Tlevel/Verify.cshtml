@@ -5,52 +5,58 @@
     ViewData["PageTitle"] = "Are these details correct?";
 }
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">@ViewData["PageTitle"]</h1>
-        <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">These details will be used on T Level certificates.</p>
-        
-        <dl class="govuk-summary-list govuk-!-margin-bottom-7">
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Core
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    @Model?.PathwayName
-                </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Specialisms
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    @foreach (var splsm in Model?.Specialisms)
-                    {
-                        <p class="govuk-body">@splsm</p>
-                    }
-                </dd>
-            </div>
-        </dl>
+<partial name="_ValidationSummary" model="ViewData.ModelState">
 
-        <div class="govuk-form-group govuk-!-margin-bottom-7">
-            <fieldset class="govuk-fieldset">
-                <div class="govuk-radios">
-                    <div class="govuk-radios__item">
-                        <span class="govuk-visually-hidden">@ViewData["PageTitle"]</span>
-                        <input class="govuk-radios__input" id="tl-verify-yes" asp-for="IsEverythingCorrect" type="radio" value="true">
-                        <label class="govuk-label govuk-radios__label" asp-for="IsEverythingCorrect">
-                            Yes, everything is correct
-                        </label>
-                    </div>
-                    <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="tl-verify-no" asp-for="IsEverythingCorrect" type="radio" value="false">
-                        <label class="govuk-label govuk-radios__label" asp-for="IsEverythingCorrect">
-                            No - tell us what's wrong
-                        </label>
-                    </div>
+<form asp-route="ConfirmTlevel" asp-route-pathwayId="@Model.PathwayId">
+    <input type="hidden" asp-for="PathwayId" />
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">@ViewData["PageTitle"]</h1>
+            <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">These details will be used on T Level certificates.</p>
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-7">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Core
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Model?.PathwayName
+                    </dd>
                 </div>
-            </fieldset>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Specialisms
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @foreach (var splsm in Model?.Specialisms)
+                        {
+                            <p class="govuk-body">@splsm</p>
+                        }
+                    </dd>
+                </div>
+            </dl>
+
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <fieldset class="govuk-fieldset">
+                    <div class="govuk-radios">
+                        <partial name="_validationError" model='new ValidationErrorViewModel { ElementId ="IsEverythingCorrect", ModelState=@ViewData.ModelState}'>
+                            <div class="govuk-radios__item">
+                                <span class="govuk-visually-hidden">@ViewData["PageTitle"]</span>
+                                <input class="govuk-radios__input" id="tl-verify-yes" asp-for="IsEverythingCorrect" type="radio" value="true">
+                                <label class="govuk-label govuk-radios__label" asp-for="IsEverythingCorrect">
+                                    Yes, everything is correct
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="tl-verify-no" asp-for="IsEverythingCorrect" type="radio" value="false">
+                                <label class="govuk-label govuk-radios__label" asp-for="IsEverythingCorrect">
+                                    No - tell us what's wrong
+                                </label>
+                            </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="tl-verify-continue" type="submit" class="govuk-button">Continue</button>
         </div>
-        <button id="tl-verify-continue" type="submit" class="govuk-button">Continue</button>
     </div>
-</div>
+</form>
