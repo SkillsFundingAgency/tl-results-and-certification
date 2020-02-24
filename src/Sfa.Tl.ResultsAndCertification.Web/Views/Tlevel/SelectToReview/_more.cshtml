@@ -1,4 +1,4 @@
-﻿@using Sfa.Tl.ResultsAndCertification.Web.Content;
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel;
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview.SelectToReviewPageViewModel
 
 <div class="govuk-form-group">
@@ -18,9 +18,9 @@
             @foreach (var tlevel in Model.TlevelsToReview)
             {
                 <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="tlevel-@tlevel.PathId" name="tlevel-@tlevel.PathId" type="radio" value=@tlevel.PathId>
-                    <label class="govuk-label govuk-radios__label" for="tlevel-@tlevel.PathId">
-                        @tlevel.TLevelDescription
+                    <input class="govuk-radios__input" id="tlevel-@tlevel.PathwayId" name="tlevel-@tlevel.PathwayId" type="radio" value=@tlevel.PathwayId>
+                    <label class="govuk-label govuk-radios__label" for="tlevel-@tlevel.PathwayId">
+                        @tlevel.TlevelTitle
                     </label>
                 </div>
             }

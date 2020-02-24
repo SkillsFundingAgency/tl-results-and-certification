@@ -33,18 +33,18 @@
 
 
   <ItemGroup>
-    <Compile Update="Content\SelectToReview.Designer.cs">
+    <Compile Update="Content\Tlevel\SelectToReview.Designer.cs">
+      <DependentUpon>SelectToReview.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>SelectToReview.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
 
   <ItemGroup>
-    <EmbeddedResource Update="Content\SelectToReview.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+    <EmbeddedResource Update="Content\Tlevel\SelectToReview.resx">
       <LastGenOutput>SelectToReview.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

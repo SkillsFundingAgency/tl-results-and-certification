@@ -2,7 +2,7 @@
 {
     public class TlevelToReviewViewModel
     {
-        public int PathId { get; set; }
-        public string TLevelDescription { get; set; }
+        public int PathwayId { get; set; }
+        public string TlevelTitle { get; set; }
     }
 }

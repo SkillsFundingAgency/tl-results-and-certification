@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.SelectToReview", typeof(SelectToReview).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel.SelectToReview", typeof(SelectToReview).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
