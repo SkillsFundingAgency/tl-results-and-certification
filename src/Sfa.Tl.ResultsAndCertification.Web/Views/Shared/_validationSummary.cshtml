@@ -10,7 +10,7 @@
 
                     foreach (var error in stateItem.Value.Errors)
                     {
-                        <li><a href="#@elementId.ToLower()-error-message" data-focuses="error-message-@elementId">@error.ErrorMessage </a></li>
+                        <li><a href="#@elementId.ToLower()-error-message" data-focuses="@elementId.ToLower()-error-message">@error.ErrorMessage </a></li>
                     }
                 }
             </ul>

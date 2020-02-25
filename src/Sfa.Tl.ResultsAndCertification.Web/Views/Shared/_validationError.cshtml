@@ -8,7 +8,7 @@
     {
         foreach (var error in ViewData.ModelState[elementKey].Errors)
         {
-            <span id="@elementKey.ToLower()-issued-error" class="govuk-error-message">
+            <span id="@elementKey.ToLower()-error-message" class="govuk-error-message">
                 <span class="govuk-visually-hidden">Error:</span> @error.ErrorMessage
             </span>
         }

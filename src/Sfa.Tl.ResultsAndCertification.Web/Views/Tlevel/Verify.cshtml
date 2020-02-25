@@ -5,7 +5,7 @@
     ViewData["PageTitle"] = "Are these details correct?";
 }
 
-<partial name="_ValidationSummary" model="ViewData.ModelState">
+<partial name="_ValidationSummary">
 
 <form asp-route="ConfirmTlevel" asp-route-pathwayId="@Model.PathwayId">
     <input type="hidden" asp-for="PathwayId" />
@@ -36,10 +36,10 @@
                 </div>
             </dl>
 
-            <div class="govuk-form-group govuk-!-margin-bottom-7">
+            <div class="govuk-form-group govuk-!-margin-bottom-7" sfa-validation-for="IsEverythingCorrect" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
                     <div class="govuk-radios">
-                        <partial name="_validationError" model='new ValidationErrorViewModel { ElementId ="IsEverythingCorrect", ModelState=@ViewData.ModelState}'>
+                        <span sfa-validation-for="IsEverythingCorrect"></span>
                             <div class="govuk-radios__item">
                                 <span class="govuk-visually-hidden">@ViewData["PageTitle"]</span>
                                 <input class="govuk-radios__input" id="tl-verify-yes" asp-for="IsEverythingCorrect" type="radio" value="true">
