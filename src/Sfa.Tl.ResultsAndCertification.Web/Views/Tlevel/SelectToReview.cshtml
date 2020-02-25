@@ -7,20 +7,22 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+        <form asp-action="SelectToReview" method="post">
 
-        @if (Model.IsOnlyOneTlevelReviewPending)
-        {
-            <partial name="~/Views/Tlevel/SelectToReview/_one.cshtml"/>
-        }
-        else
-        {
-            <partial name="~/Views/Tlevel/SelectToReview/_more.cshtml"/>
-        }
-        <button class="govuk-button" data-module="govuk-button">@SelectToReview.Continue_Button_Label</button>  @*TODO: another story?*@
-        @if (Model.ShowViewReviewedTlevelsLink)
-        {
-            <p class="govuk-body"><a href="ViewAll">@SelectToReview.ViewReviewedTlevelsLink</a></p>
-        }
+            @if (Model.IsOnlyOneTlevelReviewPending)
+            {
+                <partial name="~/Views/Tlevel/SelectToReview/_one.cshtml" />
+            }
+            else
+            {
+                <partial name="~/Views/Tlevel/SelectToReview/_more.cshtml" />
+            }
+            <button type="submit" class="govuk-button" data-module="govuk-button">@SelectToReview.Continue_Button_Label</button>  @*TODO: another story?*@
+            @if (Model.ShowViewReviewedTlevelsLink)
+            {
+                <p class="govuk-body"><a href="ViewAll">@SelectToReview.ViewReviewedTlevelsLink</a></p>
+            }
+        </form>
 
     </div>
 </div>
