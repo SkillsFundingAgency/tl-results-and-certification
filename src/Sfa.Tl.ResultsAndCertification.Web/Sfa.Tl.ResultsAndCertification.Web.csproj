@@ -43,6 +43,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Content\Tlevel\Verify.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Verify.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Tlevel\ViewAll.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -59,6 +64,10 @@
     <EmbeddedResource Update="Content\Tlevel\SelectToReview.resx">
       <LastGenOutput>SelectToReview.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Tlevel\Verify.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Verify.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Tlevel\ViewAll.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
