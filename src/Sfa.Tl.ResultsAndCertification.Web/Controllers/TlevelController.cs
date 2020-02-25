@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -53,6 +55,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _tlevelLoader.GetTlevelsToReviewByUkprnAsync(User.GetUkPrn());
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SelectToReview(SelectToReviewPageViewModel model)
+        {
+            if (ModelState.IsValid)
+                return await Task.Run(() => RedirectToAction("Verify", new { id = model.SelectedPathwayId } ));
+            else
+                return View(model);
         }
 
         public async Task<IActionResult> ReportIssue()

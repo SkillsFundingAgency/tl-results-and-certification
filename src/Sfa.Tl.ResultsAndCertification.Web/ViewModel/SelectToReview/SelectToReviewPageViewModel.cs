@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview
@@ -14,5 +15,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview
         public bool ShowViewReviewedTlevelsLink { get; set; }
 
         public IEnumerable<TlevelToReviewViewModel> TlevelsToReview { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = "TODO: Please select T level")]
+        public int SelectedPathwayId { get; set; }
     }
 }
