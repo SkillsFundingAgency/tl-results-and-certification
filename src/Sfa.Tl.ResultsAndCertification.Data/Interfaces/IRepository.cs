@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
     {
         Task<int> CreateAsync(T entity);
         Task<int> CreateManyAsync(IList<T> entities);
-        Task UpdateAsync(T entity);
+        Task<int> UpdateAsync(T entity);
         Task<int> DeleteAsync(int id);
         Task DeleteAsync(T entity);
         IQueryable<T> GetManyAsync(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] navigationPropertyPath);

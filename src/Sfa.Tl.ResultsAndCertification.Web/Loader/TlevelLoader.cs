@@ -50,5 +50,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var tLevelPathwayInfo = await _internalApiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
             return _mapper.Map<VerifyTlevelViewModel>(tLevelPathwayInfo);
         }
+
+        public async Task<bool?> ConfirmTlevelAsync(int tqAwardingOrganisationId, int reviewStatus)
+        {
+            return await _internalApiClient.ConfirmTlevelAsync(tqAwardingOrganisationId, reviewStatus);
+            //return _mapper.Map<VerifyTlevelViewModel>(tLevelPathwayInfo);
+        }
     }
 }

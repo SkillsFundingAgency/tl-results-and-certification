@@ -53,13 +53,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
         }
 
-        public virtual async Task UpdateAsync(T entity)
+        public virtual async Task<int> UpdateAsync(T entity)
         {
             _dbContext.Update(entity);
 
             try
             {
-                await _dbContext.SaveChangesAsync();
+                return await _dbContext.SaveChangesAsync();
             }
             catch (DbUpdateException due)
             {

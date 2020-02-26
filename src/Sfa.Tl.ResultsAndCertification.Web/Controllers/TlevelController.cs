@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(HttpContext.User.GetUkPrn(), id);
 
-            if (viewModel == null)
+            if (viewModel == null || viewModel.PathwayStatusId != (int)TlevelReviewStatus.AwaitingConfirmation)
             {
                 return RedirectToAction(nameof(ErrorController.PageNotFound), Constants.ErrorController);
             }
@@ -83,15 +83,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("confirm-tlevel/{pathwayId}", Name = "ConfirmTlevel")]
+        [Route("confirm-tlevel", Name = "ConfirmTlevel")]
         public async Task<IActionResult> ConfirmTlevel(VerifyTlevelViewModel viewModel)
         {
+            if (viewModel == null || viewModel.PathwayStatusId != (int)TlevelReviewStatus.AwaitingConfirmation)
+            {
+                return RedirectToAction(nameof(ErrorController.PageNotFound), Constants.ErrorController);
+            }
+
             if (!ModelState.IsValid)
             {
                 var model = await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(HttpContext.User.GetUkPrn(), viewModel.PathwayId);
                 return View("Verify", model);
             }
-            await _tlevelLoader.GetAllTlevelsByUkprnAsync(HttpContext.User.GetUkPrn());
+            var result = await _tlevelLoader.ConfirmTlevelAsync(viewModel.TqAwardingOrganisationId, (int)TlevelReviewStatus.Confirmed);
+            
             return RedirectToAction("Details", new { id = viewModel.PathwayId });
         }
     }

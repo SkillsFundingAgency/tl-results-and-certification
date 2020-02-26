@@ -30,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                .ForMember(d => d.RouteId, opts => opts.MapFrom(s => s.RouteId))
                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
+               .ForMember(d => d.PathwayStatusId, opts => opts.MapFrom(s => s.PathwayStatusId))
                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
                .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms))
                .ForMember(d => d.IsEverythingCorrect, opts => opts.Ignore());

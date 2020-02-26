@@ -44,6 +44,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<TlevelPathwayDetails>(requestUri);
         }
 
+        public async Task<bool?> ConfirmTlevelAsync(int tqAwardingOrganisationId, int reviewStatus)
+        {
+            var requestUri = string.Format(ApiConstants.ConfirmTlevelUri, tqAwardingOrganisationId, reviewStatus);
+            return await PutAsync<bool?>(requestUri, null);
+        }
+
         private void SetBearerToken()
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenServiceClient.GetToken());
@@ -64,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         private async Task<T> PostAsync<T>(string requestUri, T content)
         {
             var response = await _httpClient.PostAsync(requestUri, CreateHttpContent<T>(content));
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsAsync<T>();
+            return data;
+        }
+
+        private async Task<T> PutAsync<T>(string requestUri, T content)
+        {
+            SetBearerToken();
+            var response = await _httpClient.PutAsync(requestUri, CreateHttpContent<T>(content));
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsAsync<T>();
             return data;
