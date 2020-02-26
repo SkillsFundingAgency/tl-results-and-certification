@@ -26,12 +26,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
-            if (pendingTlevels.Count() > 0)
+            if (pendingTlevels?.Count() > 0)
             {
-                return RedirectToAction("SelectToReview");
+                return RedirectToAction(nameof(SelectToReview));
             }
 
-            return RedirectToAction("ViewAll");
+            return RedirectToAction(nameof(ViewAll));
         }
 
         public async Task<IActionResult> ViewAll()
@@ -48,22 +48,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToAction(nameof(ErrorController.PageNotFound), Constants.ErrorController);
             }
-            return View(viewModel); 
+            return View(viewModel);
         }
 
+        [HttpGet]
         public async Task<IActionResult> SelectToReview()
         {
             var viewModel = await _tlevelLoader.GetTlevelsToReviewByUkprnAsync(User.GetUkPrn());
+            
+            if (viewModel.TlevelsToReview?.Count() == 0)
+                return RedirectToAction(nameof(ErrorController.PageNotFound), Constants.ErrorController);
+
             return View(viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> SelectToReview(SelectToReviewPageViewModel model)
         {
-            if (ModelState.IsValid)
-                return await Task.Run(() => RedirectToAction("Verify", new { id = model.SelectedPathwayId } ));
-            else
+            if (!ModelState.IsValid)
+            {
                 return View(model);
+            }
+                
+            return await Task.Run(() => RedirectToAction(nameof(Verify), new { id = model.SelectedPathwayId }));
         }
 
         public async Task<IActionResult> ReportIssue()
