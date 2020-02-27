@@ -46,11 +46,19 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return tlevelDetails;
         }
 
+        //[HttpPut]
+        //[Route("ConfirmTlevel/{tqAoId}/{reviewStatusId}")]
+        //public async Task<IActionResult> ConfirmTlevel(int tqAoId, int reviewStatusId)
+        //{
+        //    var result = await _awardingOrganisationService.ConfirmTlevelAsync(tqAoId, reviewStatusId);
+        //    return Ok(result);
+        //}
+
         [HttpPut]
-        [Route("ConfirmTlevel/{tqAoId}/{reviewStatusId}")]
-        public async Task<IActionResult> ConfirmTlevel(int tqAoId, int reviewStatusId)
+        [Route("ConfirmTlevel")]
+        public async Task<IActionResult> ConfirmTlevelAsync(ConfirmTlevelDetails model)
         {
-            var result = await _awardingOrganisationService.ConfirmTlevelAsync(tqAoId, reviewStatusId);
+            var result = await _awardingOrganisationService.ConfirmTlevelAsync(model);
             return Ok(result);
         }
     }

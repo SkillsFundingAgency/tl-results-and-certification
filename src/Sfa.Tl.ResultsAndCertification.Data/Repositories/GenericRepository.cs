@@ -68,6 +68,24 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
         }
 
+        public virtual async Task<int> UpdateWithSpecifedColumnsOnlyAsync(T entity, params Expression<Func<T, object>>[] properties)
+        {
+            properties.ToList().ForEach(p =>
+            {
+                _dbContext.Entry(entity).Property(p).IsModified = true;
+            });
+
+            try
+            {
+                return await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException due)
+            {
+                _logger.LogError(due.Message, due.InnerException);
+                throw;
+            }
+        }
+
         public virtual async Task DeleteAsync(T entity)
         {
             _dbContext.Remove(entity);

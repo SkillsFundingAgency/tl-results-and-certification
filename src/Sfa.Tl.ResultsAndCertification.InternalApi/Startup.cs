@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sfa.Tl.ResultsAndCertification.Application.Configuration;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -99,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
         {
             services.AddTransient(typeof(IRepository<TqAwardingOrganisation>), typeof(GenericRepository<TqAwardingOrganisation>));
             services.AddTransient(typeof(IRepository<TlPathway>), typeof(GenericRepository<TlPathway>));
-
+            services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
             services.AddTransient<IPathwayService, PathwayService>();
             services.AddTransient<IDbContextBuilder, DbContextBuilder>();

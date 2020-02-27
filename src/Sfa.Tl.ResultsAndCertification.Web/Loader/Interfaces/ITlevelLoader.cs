@@ -12,6 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<VerifyTlevelViewModel> GetVerifyTlevelDetailsByPathwayIdAsync(long ukprn, int id);
         Task<SelectToReviewPageViewModel> GetTlevelsToReviewByUkprnAsync(long ukprn);
         Task<IEnumerable<YourTlevelsViewModel>> GetTlevelsByStatusIdAsync(long ukprn, int statusId);
-        Task<bool?> ConfirmTlevelAsync(int tqAwardingOrganisationId, int reviewStatus);
+        Task<bool?> ConfirmTlevelAsync(VerifyTlevelViewModel viewModel);
     }
 }

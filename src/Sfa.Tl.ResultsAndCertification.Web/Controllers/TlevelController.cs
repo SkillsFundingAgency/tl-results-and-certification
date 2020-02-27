@@ -96,7 +96,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 var model = await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(HttpContext.User.GetUkPrn(), viewModel.PathwayId);
                 return View("Verify", model);
             }
-            var result = await _tlevelLoader.ConfirmTlevelAsync(viewModel.TqAwardingOrganisationId, (int)TlevelReviewStatus.Confirmed);
+
+            var result = await _tlevelLoader.ConfirmTlevelAsync(viewModel);
             
             return RedirectToAction("Details", new { id = viewModel.PathwayId });
         }

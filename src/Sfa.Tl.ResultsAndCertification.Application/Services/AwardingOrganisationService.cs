@@ -52,17 +52,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return awardOrgPathwayStatus;
         }
 
-        public async Task<bool> ConfirmTlevelAsync(int tqAwardingOrganisationId, int reviewStatus)
+        public async Task<bool> ConfirmTlevelAsync(ConfirmTlevelDetails model)
         {
-            var success = false;
-            var tqAwardingOrganisation = await _awardingOrganisationRepository.GetFirstOrDefaultAsync(x => x.Id == tqAwardingOrganisationId);
+            //var success = false;
+            var tqAwardingOrganisation = _mapper.Map<TqAwardingOrganisation>(model);
+            //var tqAwardingOrganisation = await _awardingOrganisationRepository.GetFirstOrDefaultAsync(x => x.Id == tqAwardingOrganisationId);
 
-            if(tqAwardingOrganisation != null)
-            {
-                tqAwardingOrganisation.ReviewStatus = reviewStatus;
-                success = await _awardingOrganisationRepository.UpdateAsync(tqAwardingOrganisation) > 0;
-            }
-            return success;
+            return await _awardingOrganisationRepository.UpdateWithSpecifedColumnsOnlyAsync(tqAwardingOrganisation, x => x.ReviewStatus, x => x.ModifiedBy, x => x.ModifiedOn) > 0;
+            //if(tqAwardingOrganisation != null)
+            //{
+            //    tqAwardingOrganisation.ReviewStatus = reviewStatus;
+            //    success = await _awardingOrganisationRepository.UpdateAsync(tqAwardingOrganisation) > 0;
+            //}
+            //return success;
         }
     }
 }

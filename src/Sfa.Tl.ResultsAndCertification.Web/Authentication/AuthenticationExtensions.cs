@@ -171,19 +171,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         var userClaims = new DfeClaims()
                         {
                             UserId = Guid.Parse(identity.Claims.Where(c => c.Type == "sub").Select(c => c.Value).SingleOrDefault()),
-                            ServiceId = Guid.Parse(identity.Claims.Where(c => c.Type == "sid").Select(c => c.Value).SingleOrDefault())                            
+                            ServiceId = Guid.Parse(identity.Claims.Where(c => c.Type == "sid").Select(c => c.Value).SingleOrDefault())
                         };
 
                         var client = new HttpClient();
                         client.SetBearerToken(token);
                         var response = await client.GetAsync($"{apiUri}/services/{cliendId}/organisations/{organisation.Id}/users/{userClaims.UserId}");
                         bool hasAccessToService = true;
-                        
+
                         if (response.IsSuccessStatusCode)
                         {
                             var json = response.Content.ReadAsStringAsync().Result;
                             userClaims = JsonConvert.DeserializeObject<DfeClaims>(json);
-                            userClaims.RoleName = userClaims.Roles.Select(r => r.Name).FirstOrDefault(); 
+                            userClaims.RoleName = userClaims.Roles.Select(r => r.Name).FirstOrDefault();
                         }
                         else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                         {

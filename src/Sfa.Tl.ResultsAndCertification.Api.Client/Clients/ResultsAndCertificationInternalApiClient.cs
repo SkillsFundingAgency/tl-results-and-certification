@@ -44,10 +44,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<TlevelPathwayDetails>(requestUri);
         }
 
-        public async Task<bool?> ConfirmTlevelAsync(int tqAwardingOrganisationId, int reviewStatus)
+        public async Task<bool> ConfirmTlevelAsync(ConfirmTlevelDetails model)
         {
-            var requestUri = string.Format(ApiConstants.ConfirmTlevelUri, tqAwardingOrganisationId, reviewStatus);
-            return await PutAsync<bool?>(requestUri, null);
+            //var requestUri = string.Format(ApiConstants.ConfirmTlevelUri, tqAwardingOrganisationId, reviewStatus);
+            //return await PutAsync<bool?>(requestUri, null);
+
+            var requestUri = ApiConstants.ConfirmTlevelUri;
+            return await PutAsync<ConfirmTlevelDetails, bool>(requestUri, model);
         }
 
         private void SetBearerToken()
@@ -75,12 +78,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return data;
         }
 
-        private async Task<T> PutAsync<T>(string requestUri, T content)
+        private async Task<TResponse> PutAsync<TRequest, TResponse>(string requestUri, TRequest content)
         {
             SetBearerToken();
-            var response = await _httpClient.PutAsync(requestUri, CreateHttpContent<T>(content));
+            var response = await _httpClient.PutAsync(requestUri, CreateHttpContent<TRequest>(content));
             response.EnsureSuccessStatusCode();
-            var data = await response.Content.ReadAsAsync<T>();
+            var data = await response.Content.ReadAsAsync<TResponse>();
             return data;
         }
 

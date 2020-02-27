@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Linq;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 {
@@ -51,10 +52,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<VerifyTlevelViewModel>(tLevelPathwayInfo);
         }
 
-        public async Task<bool?> ConfirmTlevelAsync(int tqAwardingOrganisationId, int reviewStatus)
+        public async Task<bool?> ConfirmTlevelAsync(VerifyTlevelViewModel viewModel)
         {
-            return await _internalApiClient.ConfirmTlevelAsync(tqAwardingOrganisationId, reviewStatus);
-            //return _mapper.Map<VerifyTlevelViewModel>(tLevelPathwayInfo);
+            var confirmModel = _mapper.Map<ConfirmTlevelDetails>(viewModel);
+            return await _internalApiClient.ConfirmTlevelAsync(confirmModel);
         }
     }
 }

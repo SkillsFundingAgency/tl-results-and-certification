@@ -1,10 +1,11 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using System.Collections.Generic;
+using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
@@ -42,6 +43,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<IEnumerable<AwardingOrganisationPathwayStatus>, SelectToReviewPageViewModel>()
                 .ForMember(d => d.TlevelsToReview, opts => opts.MapFrom(s => s.Where(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation)))
                 .ForMember(d => d.ShowViewReviewedTlevelsLink, opts => opts.MapFrom(s => s.Any(a => a.StatusId == (int)TlevelReviewStatus.Confirmed)));
+
+            CreateMap<VerifyTlevelViewModel, ConfirmTlevelDetails>()
+                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
+                .ForMember(d => d.PathwayStatusId, opts => opts.MapFrom(s => (int)TlevelReviewStatus.Confirmed))
+                .ForMember(d => d.ModifiedBy, opts => opts.MapFrom<UserNameResolver<VerifyTlevelViewModel, ConfirmTlevelDetails>>());
         }
     }
 }
