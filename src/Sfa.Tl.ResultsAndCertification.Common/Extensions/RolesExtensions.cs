@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 
         public static string GetUserEmail(this ClaimsPrincipal user)
         {
-            return user.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Upn)?.Value;
+            return user.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
         }
 
         public static long GetUkPrn(this ClaimsPrincipal user)

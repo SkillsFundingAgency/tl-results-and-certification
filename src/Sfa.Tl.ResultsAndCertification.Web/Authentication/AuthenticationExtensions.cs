@@ -192,6 +192,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
                         userClaims.UKPRN = organisation.UKPRN.HasValue ? organisation.UKPRN.Value.ToString() : string.Empty;
                         userClaims.UserName = identity.Claims.Where(c => c.Type == "email").Select(c => c.Value).SingleOrDefault();
+                        userClaims.FirstName = identity.Claims.Where(c => c.Type == "given_name").Select(c => c.Value).SingleOrDefault();
+                        userClaims.Surname = identity.Claims.Where(c => c.Type == "family_name").Select(c => c.Value).SingleOrDefault();
 
                         if (userClaims.Roles != null && userClaims.Roles.Any())
                         {
@@ -203,11 +205,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
                         // store both access and refresh token in the claims - hence in the cookie
                         identity.AddClaims(new[]
-                        {
+                        {                            
                                 new Claim(CustomClaimTypes.AccessToken, x.TokenEndpointResponse.AccessToken),
                                 new Claim(CustomClaimTypes.RefreshToken, x.TokenEndpointResponse.RefreshToken),
                                 new Claim(CustomClaimTypes.HasAccessToService, hasAccessToService.ToString()),
                                 new Claim(CustomClaimTypes.UserId, userClaims.UserId.ToString()),
+                                new Claim(ClaimTypes.GivenName, userClaims.FirstName),
+                                new Claim(ClaimTypes.Surname, userClaims.Surname),
+                                new Claim(ClaimTypes.Email, userClaims.UserName),
                                 new Claim(CustomClaimTypes.Ukprn, userClaims.UKPRN),
                                 new Claim(CustomClaimTypes.OrganisationId, organisation.Id.ToString().ToUpper())
                         });
@@ -218,7 +223,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     }
                 };
             });
-
             return services;
         }
     }

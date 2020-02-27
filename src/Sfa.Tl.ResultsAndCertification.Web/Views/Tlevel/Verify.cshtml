@@ -13,7 +13,7 @@
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
                 <h1 class="govuk-heading-xl">@Verify.Section_Heading</h1>
-                <p class="govuk-!-font-size-24 govuk-!-font-weight-bold">@Verify.Verify_Text</p>
+                <p class="govuk-heading-m">@Verify.Verify_Text</p>
 
                 <dl class="govuk-summary-list govuk-!-margin-bottom-7">
                     <div class="govuk-summary-list__row">
@@ -44,13 +44,13 @@
                             <div class="govuk-radios__item">
                                 <span class="govuk-visually-hidden">@Verify.Section_Heading</span>
                                 <input class="govuk-radios__input" id="tl-verify-yes" asp-for="IsEverythingCorrect" type="radio" value="true">
-                                <label class="govuk-label govuk-radios__label" asp-for="IsEverythingCorrect">
+                                <label class="govuk-label govuk-radios__label" for="tl-verify-yes">
                                     @Verify.Yes_Radio_Button_Text
                                 </label>
                             </div>
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="tl-verify-no" asp-for="IsEverythingCorrect" type="radio" value="false">
-                                <label class="govuk-label govuk-radios__label" asp-for="IsEverythingCorrect">
+                                <label class="govuk-label govuk-radios__label" for="tl-verify-no">
                                     @Verify.No_Radio_Button_Text
                                 </label>
                             </div>
