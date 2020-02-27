@@ -43,15 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             var tlevelDetails = await _pathwayService.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
             return tlevelDetails;
-        }
-
-        //[HttpPut]
-        //[Route("ConfirmTlevel/{tqAoId}/{reviewStatusId}")]
-        //public async Task<IActionResult> ConfirmTlevel(int tqAoId, int reviewStatusId)
-        //{
-        //    var result = await _awardingOrganisationService.ConfirmTlevelAsync(tqAoId, reviewStatusId);
-        //    return Ok(result);
-        //}
+        }       
 
         [HttpPut]
         [Route("ConfirmTlevel")]
