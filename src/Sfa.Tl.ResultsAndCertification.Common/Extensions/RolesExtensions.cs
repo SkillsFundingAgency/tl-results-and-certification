@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 
         // Roles
         public const string SiteAdministrator = "Site Administrator";
-        public const string TlevelsReviewer = "Tlevels Reviewer";
+        public const string TlevelsReviewer = "T Levels Reviewer";
         public const string CentresEditor = "Centres Editor";
 
         public static bool HasAccessToService(this ClaimsPrincipal user)

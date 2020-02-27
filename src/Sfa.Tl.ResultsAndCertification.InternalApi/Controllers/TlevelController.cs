@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 

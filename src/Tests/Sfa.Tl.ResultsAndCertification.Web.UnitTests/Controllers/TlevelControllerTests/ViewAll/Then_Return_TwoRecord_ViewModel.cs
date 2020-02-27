@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Index
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ViewAll
 {
-    public class Then_Return_TwoRecord_ViewModel : When_Index_Action_Called
+    public class Then_Return_TwoRecord_ViewModel : When_ViewAll_Action_Called
     {
         private List<YourTlevelsViewModel> mockresult;
 
@@ -23,22 +23,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
                 .Returns(mockresult);
         }
 
-        [Fact(Skip = "TODO: update required as per latest story")]
-        public void Then_GetTlevelsByUkprnAsync_Is_Called()
+        [Fact]
+        public void Then_GetAllTlevelsByUkprnAsync_Is_Called()
         {
             TlevelLoader.Received().GetAllTlevelsByUkprnAsync(Arg.Any<long>());
         }
 
-        [Fact(Skip="TODO: update required as per latest story")]
-        public void Then_GetTlevelsByUkprnAsync_ViewModel_Return_Two_Rows()
+        [Fact]
+        public void Then_GetAllTlevelsByUkprnAsync_ViewModel_Return_Two_Rows()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as IList<YourTlevelsViewModel>;
-            Assert.True(model.Count == 2);
+            model.Count().Should().Be(2);
         }
 
-        [Fact(Skip = "TODO: update required as per latest story")]
-        public void Then_GetTlevelsByUkprnAsync_Index_Returns_Expected_ViewModel()
+        [Fact]
+        public void Then_GetAllTlevelsByUkprnAsync_Index_Returns_Expected_ViewModel()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as IList<YourTlevelsViewModel>;
