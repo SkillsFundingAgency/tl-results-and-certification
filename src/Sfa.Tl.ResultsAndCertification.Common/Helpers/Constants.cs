@@ -14,5 +14,7 @@
         public const string DashboardController = "Dashboard";
         public const string ErrorController = "Error";
         public const string TlevelController = "Tlevel";
+
+        public const string IsRedirect = "IsRedirect";
     }
 }

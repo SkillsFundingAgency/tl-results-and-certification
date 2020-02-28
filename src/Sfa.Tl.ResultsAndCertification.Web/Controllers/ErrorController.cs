@@ -1,12 +1,15 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
     public class ErrorController : Controller
     {
+        [AllowAnonymous]
+        [Route("access-denied", Name = "AccessDenied")]
         public IActionResult AccessDenied()
         {
             return View();
@@ -33,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             switch (statusCode)
             {
                 case 404:
-                    return RedirectToRoute("PageNotFound");
+                    return RedirectToRoute(RouteConstants.PageNotFound);
                 case 500:
                 default:
                     return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

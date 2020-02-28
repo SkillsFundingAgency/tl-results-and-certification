@@ -16,7 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class TlevelController : Controller
     {
         private readonly ITlevelLoader _tlevelLoader;
-        
 
         public TlevelController(ITlevelLoader tlevelLoader)
         {
@@ -70,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
                 
-            return await Task.Run(() => RedirectToAction(nameof(Verify), new { id = model.SelectedPathwayId }));
+            return await Task.Run(() => RedirectToRoute(RouteConstants.VerifyTlevel, new { id = model.SelectedPathwayId }));
         }
 
         public async Task<IActionResult> ReportIssue()
@@ -78,35 +77,64 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return await Task.Run(() => View());
         }
 
-        public async Task<IActionResult> Verify(int id)
+        [HttpGet]
+        [Route("verify-tlevel/{id}", Name = RouteConstants.VerifyTlevel)]
+        public async Task<IActionResult> VerifyAsync(int id)
         {
-            var viewModel = await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(HttpContext.User.GetUkPrn(), id);
+            var viewModel = await GetVerifyTlevelData(id);
 
             if (viewModel == null || viewModel.PathwayStatusId != (int)TlevelReviewStatus.AwaitingConfirmation)
             {
-                return RedirectToAction(nameof(ErrorController.PageNotFound), Constants.ErrorController);
+                return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            return View(viewModel);
+            return View("Verify", viewModel);
+        }
+
+        [HttpGet]
+        [Route("tlevel-confirmation/{id}", Name = RouteConstants.TlevelConfirmation)]
+        public async Task<IActionResult> ConfirmationAsync(int id)
+        {
+            if (id == 0 || TempData[Constants.IsRedirect] == null || !(bool.TryParse(TempData[Constants.IsRedirect].ToString(), out bool isRedirect) && isRedirect))
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var confirmationViewModel = await _tlevelLoader.GetTlevelConfirmationDetailsAsync(User.GetUkPrn(), id);
+            
+            return View("Confirmation", confirmationViewModel);
         }
 
         [HttpPost]
-        [Route("confirm-tlevel", Name = "ConfirmTlevel")]
+        [Route("confirm-tlevel", Name = RouteConstants.ConfirmTlevel)]
         public async Task<IActionResult> ConfirmTlevel(VerifyTlevelViewModel viewModel)
         {
             if (viewModel == null || viewModel.PathwayStatusId != (int)TlevelReviewStatus.AwaitingConfirmation)
             {
-                return RedirectToAction(nameof(ErrorController.PageNotFound), Constants.ErrorController);
+                return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
             if (!ModelState.IsValid)
             {
-                var model = await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(HttpContext.User.GetUkPrn(), viewModel.PathwayId);
+                var model = await GetVerifyTlevelData(viewModel.PathwayId);
                 return View("Verify", model);
             }
 
-            var result = await _tlevelLoader.ConfirmTlevelAsync(viewModel);
+            var isSuccess = await _tlevelLoader.ConfirmTlevelAsync(viewModel);
             
-            return RedirectToAction("Details", new { id = viewModel.PathwayId });
+            if(isSuccess)
+            {
+                TempData["IsRedirect"] = true;
+                return RedirectToRoute(RouteConstants.TlevelConfirmation, new { id = viewModel.PathwayId });
+            }
+            else
+            {
+                return RedirectToRoute("error/500");
+            }
+        }
+
+        private async Task<VerifyTlevelViewModel> GetVerifyTlevelData(int pathwayId)
+        {
+            return await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(HttpContext.User.GetUkPrn(), pathwayId);
         }
     }
 }

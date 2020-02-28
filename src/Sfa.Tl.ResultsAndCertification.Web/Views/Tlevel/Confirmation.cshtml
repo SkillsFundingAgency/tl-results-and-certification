@@ -1,0 +1,28 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TlevelConfirmationViewModel
+
+@{
+    ViewData["Title"] = @Confirmation.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">@Model?.TlevelConfirmationText</h1>
+            <div class="govuk-panel__body">
+                @Model.TlevelTitle
+            </div>
+        </div>
+
+        <p class="govuk-body govuk-!-padding-bottom-4">@(Model.ShowMoreTlevelsToReview ? @Confirmation.More_Tlevels_Text : @Confirmation.Finished_Reviewing_All_Tlevels_Text)</p>
+
+        @if (Model.ShowMoreTlevelsToReview)
+        {
+            <button class="govuk-button" data-module="govuk-button">@Confirmation.Review_Another_Tlevel_Button_Text</button>
+        }
+        else
+        {
+            <button class="govuk-button" data-module="govuk-button">@Confirmation.View_Your_Tlevels_Button_Text</button>
+        }
+    </div>
+</div>

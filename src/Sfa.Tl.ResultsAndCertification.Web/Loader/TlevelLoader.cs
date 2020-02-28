@@ -52,10 +52,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<VerifyTlevelViewModel>(tLevelPathwayInfo);
         }
 
-        public async Task<bool?> ConfirmTlevelAsync(VerifyTlevelViewModel viewModel)
+        public async Task<bool> ConfirmTlevelAsync(VerifyTlevelViewModel viewModel)
         {
             var confirmModel = _mapper.Map<ConfirmTlevelDetails>(viewModel);
             return await _internalApiClient.ConfirmTlevelAsync(confirmModel);
+        }
+
+        public async Task<TlevelConfirmationViewModel> GetTlevelConfirmationDetailsAsync(long ukprn, int pathwayId)
+        {
+            var tLevels = await _internalApiClient.GetAllTlevelsByUkprnAsync(ukprn);
+            return _mapper.Map<TlevelConfirmationViewModel>(tLevels, opt => opt.Items["pathwayId"] = pathwayId);
         }
     }
 }

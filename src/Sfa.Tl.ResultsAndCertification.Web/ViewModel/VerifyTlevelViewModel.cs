@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
         public int PathwayId { get; set; }
         public int PathwayStatusId { get; set; }
         public string PathwayName { get; set; }
-        [Required(ErrorMessage = "Select yes if this T Level’s details are correct")]
+        [Required(ErrorMessage =  "Select yes if this T Level’s details are correct")]
         public bool? IsEverythingCorrect { get; set; }
         public IEnumerable<string> Specialisms { get; set; }
     }

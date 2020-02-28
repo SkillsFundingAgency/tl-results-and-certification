@@ -115,16 +115,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseXfo(xfo => xfo.Deny());
             app.UseCsp(options => options.DefaultSources(s => s.Self()).ScriptSources(s => s.Self()));
             app.UseHttpsRedirection();
-            app.UseCookiePolicy();
+            
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseStatusCodePagesWithRedirects("/Error/{0}");
+            app.UseStatusCodePagesWithRedirects("/Error/{0}");            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
             });
+            app.UseCookiePolicy();
         }
 
         private void RegisterDependencies(IServiceCollection services)
