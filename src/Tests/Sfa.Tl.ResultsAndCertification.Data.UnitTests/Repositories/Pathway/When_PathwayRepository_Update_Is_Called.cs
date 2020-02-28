@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
@@ -9,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
     {
         private TlPathway _result;
         private TlPathway _data;
+        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
 
         private const string PathwayName = "Pathway Updated";
         private const string LarId = "999";
@@ -16,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
 
         public override void Given()
         {
-            _data = new TlPathwayBuilder().Build();
+            _data = new TlPathwayBuilder().Build(_awardingOrganisation);
             DbContext.Add(_data);
             DbContext.SaveChanges();
 

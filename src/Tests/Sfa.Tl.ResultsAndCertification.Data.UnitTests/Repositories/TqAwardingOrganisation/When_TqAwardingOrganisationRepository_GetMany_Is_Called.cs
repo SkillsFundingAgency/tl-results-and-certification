@@ -1,10 +1,10 @@
-﻿
+﻿using System.Linq;
+using System.Collections.Generic;
+using Xunit;
 using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AwardingOrganisation
 {
@@ -12,10 +12,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AwardingOrg
     {
         private IEnumerable<TqAwardingOrganisation> _result;
         private IList<TqAwardingOrganisation> _data;
+        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
 
         public override void Given()
         {
-            _data = new TqAwardingOrganisationBuilder().BuildList();
+            _data = new TqAwardingOrganisationBuilder().BuildList(_awardingOrganisation, true);
             DbContext.AddRange(_data);
             DbContext.SaveChanges();
         }
@@ -35,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AwardingOrg
         [Fact]
         public void Then_The_Expected_Number_Of_Paths_Is_Returned()
         {
-            _result.Count().Should().Be(1);
+            _result.Count().Should().Be(2);
         }
 
         [Fact]

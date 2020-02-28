@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -11,10 +12,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
     {
         private IEnumerable<TlPathway> _result;
         private IEnumerable<TlPathway> _data;
+        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
 
         public override void Given()
         {
-            _data = new TlPathwayBuilder().BuildList();
+            _data = new TlPathwayBuilder().BuildList(_awardingOrganisation);
             DbContext.TlPathway.AddRange(_data);
             DbContext.SaveChanges();
         }
@@ -34,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
         [Fact]
         public void Then_The_Expected_Number_Of_Paths_Is_Returned()
         {
-            _result.Count().Should().Be(3);
+            _result.Count().Should().Be(2);
         }
 
         [Fact]

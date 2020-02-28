@@ -1,5 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
@@ -7,14 +7,15 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
     {
         public Domain.Models.TlPathwaySpecialismCombination Build() => new Domain.Models.TlPathwaySpecialismCombination
         {
-            TlPathway = new TlPathwayBuilder().Build(),
-            TlSpecialism = new TlSpecialismBuilder().Build(),
+            TlPathwayId = 1,
+            TlSpecialismId = 1,
             Group = "G1",
             CreatedBy = Constants.CreatedByUser,
             CreatedOn = Constants.CreatedOn,
             ModifiedBy = Constants.ModifiedByUser,
             ModifiedOn = Constants.ModifiedOn
         };
+
         public IList<Domain.Models.TlPathwaySpecialismCombination> BuildList() => new List<Domain.Models.TlPathwaySpecialismCombination>
         {
             new Domain.Models.TlPathwaySpecialismCombination

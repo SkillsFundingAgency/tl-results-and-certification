@@ -1,31 +1,21 @@
-﻿using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+﻿using System.Collections.Generic;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
-using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
     public class TlPathwayBuilder
     {
-        public Domain.Models.TlPathway Build() => new Domain.Models.TlPathway
-        {
-            Name = "Design, Surveying and Planning",
-            LarId = "10123456",
-            TlRoute = new TlRouteBuilder().Build(),
-            CreatedBy = Constants.CreatedByUser,
-            CreatedOn = Constants.CreatedOn,
-            ModifiedBy = Constants.ModifiedByUser,
-            ModifiedOn = Constants.ModifiedOn
-        };
-
-        public Domain.Models.TlPathway Build(EnumAwardingOrganisation awardingOrganisation, bool addDefaultRoute = true)
+        public TlPathway Build(EnumAwardingOrganisation awardingOrganisation, TlRoute tlRoute = null)
         {
             if (awardingOrganisation == EnumAwardingOrganisation.Pearson)
             {
-                return new Domain.Models.TlPathway
+                return new TlPathway
                 {
                     Name = "Design, Surveying and Planning",
                     LarId = "10123456",
-                    TlRoute = addDefaultRoute ? new TlRouteBuilder().Build() : null,
+                    TlRoute = tlRoute ?? new TlRouteBuilder().Build(awardingOrganisation),
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
                     ModifiedBy = Constants.ModifiedByUser,
@@ -34,11 +24,11 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             }
             else if (awardingOrganisation == EnumAwardingOrganisation.Ncfe)
             {
-                return new Domain.Models.TlPathway
+                return new TlPathway
                 {
                     Name = "Education",
                     LarId = "10123457",
-                    TlRoute = addDefaultRoute ? new TlRouteBuilder().Build() : null,
+                    TlRoute = tlRoute ?? new TlRouteBuilder().Build(awardingOrganisation),
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
                     ModifiedBy = Constants.ModifiedByUser,
@@ -51,17 +41,17 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             }
         }        
 
-        public IList<Domain.Models.TlPathway> BuildList(EnumAwardingOrganisation awardingOrganisation)
+        public IList<TlPathway> BuildList(EnumAwardingOrganisation awardingOrganisation, IList<TlRoute> tlRoutes = null)
         {
-            var results = new List<Domain.Models.TlPathway>();
-            var routes = new TlRouteBuilder().BuildList(awardingOrganisation);
+            var results = new List<TlPathway>();
+            var routes = tlRoutes ?? new TlRouteBuilder().BuildList(awardingOrganisation);
             if (awardingOrganisation == EnumAwardingOrganisation.Pearson)
             {
                 foreach(var route in routes)
                 {
                     if(route.Name == EnumExtensions.GetDisplayName(EnumTlRoute.Construction))
                     {
-                        results.Add(new Domain.Models.TlPathway
+                        results.Add(new TlPathway
                         {
                             Name = "Design, Surveying and Planning",
                             LarId = "10123456",
@@ -74,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     }
                     else if (route.Name == EnumExtensions.GetDisplayName(EnumTlRoute.Digital))
                     {
-                        results.Add(new Domain.Models.TlPathway
+                        results.Add(new TlPathway
                         {
                             Name = "Digital Production, Design and Development",
                             LarId = "10123468",
@@ -94,7 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 {
                     if (route.Name == EnumExtensions.GetDisplayName(EnumTlRoute.EducationAndChildcare))
                     {
-                        results.Add(new Domain.Models.TlPathway
+                        results.Add(new TlPathway
                         {
                             Name = "Education",
                             LarId = "10123457",
@@ -112,40 +102,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 return null;
             }           
-        }
-
-        public IList<Domain.Models.TlPathway> BuildList() => new List<Domain.Models.TlPathway>
-        {
-            new Domain.Models.TlPathway
-            {
-                Name = "Design, Surveying and Planning",
-                LarId = "10123456",
-                TlRoute = new TlRouteBuilder().Build(),
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            },
-            new Domain.Models.TlPathway
-            {
-                Name = "Education",
-                LarId = "10123456",
-                TlRoute = new TlRouteBuilder().Build(),
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            },
-            new Domain.Models.TlPathway
-            {
-                Name = "Digital Production, Design and Development",
-                LarId = "10123456",
-                TlRoute = new TlRouteBuilder().Build(),
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            }
-        };
+        }        
     }
 }

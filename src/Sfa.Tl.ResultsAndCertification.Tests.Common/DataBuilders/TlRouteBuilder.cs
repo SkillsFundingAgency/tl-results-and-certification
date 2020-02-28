@@ -1,21 +1,11 @@
-﻿using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+﻿using System.Collections.Generic;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
-using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
     public class TlRouteBuilder
     {
-        public Domain.Models.TlRoute Build() => new Domain.Models.TlRoute
-        {
-            Name = "Construction",
-            CreatedBy = Constants.CreatedByUser,
-            CreatedOn = Constants.CreatedOn,
-            ModifiedBy = Constants.ModifiedByUser,
-            ModifiedOn = Constants.ModifiedOn
-        };
-
-
         public Domain.Models.TlRoute Build(EnumAwardingOrganisation awardingOrganisation)
         {
             if (awardingOrganisation == EnumAwardingOrganisation.Ncfe)
@@ -45,26 +35,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 return null;
             }
         }
-
-        public IList<Domain.Models.TlRoute> BuildList() => new List<Domain.Models.TlRoute>
-        {
-            new Domain.Models.TlRoute
-            {
-                Name = "Construction",
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            },
-            new Domain.Models.TlRoute
-            {
-                Name = "Digital",
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            }
-        };
 
         public IList<Domain.Models.TlRoute> BuildList(EnumAwardingOrganisation awardingOrganisation)
         {

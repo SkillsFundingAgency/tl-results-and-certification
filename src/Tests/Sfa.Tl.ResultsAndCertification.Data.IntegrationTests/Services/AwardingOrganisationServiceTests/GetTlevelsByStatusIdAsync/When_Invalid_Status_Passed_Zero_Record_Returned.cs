@@ -1,6 +1,9 @@
-﻿using FluentAssertions;
-using Microsoft.Extensions.Logging;
+﻿using System.Linq;
+using System.Collections.Generic;
+using Xunit;
 using NSubstitute;
+using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -8,11 +11,6 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrganisationServiceTests.GetTlevelsByStatusIdAsync
 {
@@ -35,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
             result = _service.GetTlevelsByStatusIdAsync(_tlAwardingOrganisation.UkPrn, statusId).Result;
         }
 
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void Then_Expected_Results_Is_Returned()
         {
             result.Should().NotBeNull();
@@ -44,13 +42,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
 
         protected override void SeedTlevelTestData()
         {
-            // TODO:
             _tlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, EnumAwardingOrganisation.Pearson);
             _route = TlevelDataProvider.CreateTlRoute(DbContext, EnumAwardingOrganisation.Pearson);
-            _pathway = TlevelDataProvider.CreateTlPathway(DbContext, EnumAwardingOrganisation.Pearson);
-            _tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, EnumAwardingOrganisation.Pearson);
+            _pathway = TlevelDataProvider.CreateTlPathway(DbContext, EnumAwardingOrganisation.Pearson, _route);
+            _tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, _route, _pathway, _tlAwardingOrganisation, TlevelReviewStatus.AwaitingConfirmation);
             DbContext.SaveChangesAsync();
         }
-
     }
 }

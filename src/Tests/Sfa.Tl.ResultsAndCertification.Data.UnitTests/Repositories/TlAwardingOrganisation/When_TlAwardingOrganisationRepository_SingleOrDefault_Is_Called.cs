@@ -1,6 +1,7 @@
-﻿using FluentAssertions;
+﻿using Xunit;
+using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
-using Xunit;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingOrganisation
 {
@@ -8,10 +9,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingO
     {
         private Domain.Models.TlAwardingOrganisation _result;
         private Domain.Models.TlAwardingOrganisation _data;
+        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
 
         public override void Given()
         {
-            _data = new TlAwardingOrganisationBuilder().Build();
+            _data = new TlAwardingOrganisationBuilder().Build(_awardingOrganisation);
             DbContext.Add(_data);
             DbContext.SaveChanges();
         }

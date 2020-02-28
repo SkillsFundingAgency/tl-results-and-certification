@@ -1,8 +1,9 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
-using System;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Route
 {
@@ -10,12 +11,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Route
     {
         private TlRoute _result;
         private TlRoute _data;
+        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
         private const string UpdateRouteName = "Route Updated";
         private const string ModifiedUserName = "Route Updated";
 
         public override void Given()
         {
-            _data = new TlRouteBuilder().Build();
+            _data = new TlRouteBuilder().Build(_awardingOrganisation);
             DbContext.Add(_data);
             DbContext.SaveChanges();
 

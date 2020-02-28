@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -11,10 +12,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
     {
         private IList<TlPathway> _data;
         private int _result;
+        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
 
         public override void Given()
         {
-            _data = new TlPathwayBuilder().BuildList();
+            _data = new TlPathwayBuilder().BuildList(_awardingOrganisation);
         }
 
         public override void When()
@@ -26,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
         public void Then_Two_Record_Should_Have_Been_Created()
         {
             var result = Repository.GetManyAsync();
-            result.Count().Should().Be(3);
+            result.Count().Should().Be(2);
         }
     }
 }

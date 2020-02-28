@@ -1,6 +1,9 @@
-﻿using FluentAssertions;
-using Microsoft.Extensions.Logging;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Xunit;
 using NSubstitute;
+using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -8,18 +11,18 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrganisationServiceTests.GetTlevelsByStatusIdAsync
 {
     public class When_ConfirmedStatus_Passed_Two_Records_Returned : AwardingOrganisaionServiceBaseTest
     {
-        private readonly int statusId = (int)TlevelReviewStatus.AwaitingConfirmation;
+        private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
+        private readonly TlevelReviewStatus _tlevelReviewStatus = TlevelReviewStatus.Confirmed;
         private IEnumerable<AwardingOrganisationPathwayStatus> result;
+
+        protected IList<TlRoute> _routes;
+        protected IList<TlPathway> _pathways;
+        protected IList<TqAwardingOrganisation> _tqAwardingOrganisations;
 
         public override void Given()
         {
@@ -32,29 +35,31 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
 
         public override void When()
         {
-            result = _service.GetTlevelsByStatusIdAsync(_tlAwardingOrganisation.UkPrn, statusId).Result;
+            result = _service.GetTlevelsByStatusIdAsync(_tlAwardingOrganisation.UkPrn, (int)_tlevelReviewStatus).Result;
         }
 
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void Then_Expected_Results_Is_Returned()
         {
             result.Should().NotBeNull();
-            result.Count().Should().Be(1);
+            result.Count().Should().Be(2);
 
-            var expectedResult = result.FirstOrDefault();
-            expectedResult.Should().NotBeNull();
-            expectedResult.PathwayName.Should().Be(_pathway.Name);
-            expectedResult.RouteName.Should().Be(_route.Name);
-            expectedResult.StatusId.Should().Be(_tqAwardingOrganisation.ReviewStatus);
+            _tqAwardingOrganisations.ToList().ForEach(tq =>
+            {
+                var expectedResult = result.FirstOrDefault(x => x.PathwayId == tq.TlPathwayId);
+                expectedResult.Should().NotBeNull();
+                expectedResult.PathwayName.Should().Be(tq.TlPathway.Name);
+                expectedResult.RouteName.Should().Be(tq.TlRoute.Name);
+                expectedResult.StatusId.Should().Be(tq.ReviewStatus);
+            });            
         }
 
         protected override void SeedTlevelTestData()
         {
-            // TODO:
-            _tlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, EnumAwardingOrganisation.Pearson);
-            _route = TlevelDataProvider.CreateTlRoute(DbContext, EnumAwardingOrganisation.Pearson);
-            _pathway = TlevelDataProvider.CreateTlPathway(DbContext, EnumAwardingOrganisation.Pearson);
-            _tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, EnumAwardingOrganisation.Pearson);
+            _tlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, _awardingOrganisation);
+            _routes = TlevelDataProvider.CreateTlRoutes(DbContext, _awardingOrganisation);
+            _pathways = TlevelDataProvider.CreateTlPathways(DbContext, _awardingOrganisation, _routes);
+            _tqAwardingOrganisations = TlevelDataProvider.CreateTqAwardingOrganisations(DbContext, _awardingOrganisation, _tlAwardingOrganisation, _pathways, _tlevelReviewStatus);
             DbContext.SaveChangesAsync();
         }
     }

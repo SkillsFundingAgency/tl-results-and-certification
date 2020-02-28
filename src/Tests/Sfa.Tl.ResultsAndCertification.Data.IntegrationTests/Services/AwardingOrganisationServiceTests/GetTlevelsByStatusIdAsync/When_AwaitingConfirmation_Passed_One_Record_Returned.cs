@@ -1,6 +1,9 @@
-﻿using FluentAssertions;
-using Microsoft.Extensions.Logging;
+﻿using System.Linq;
+using System.Collections.Generic;
+using Xunit;
 using NSubstitute;
+using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -8,18 +11,13 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrganisationServiceTests.GetTlevelsByStatusIdAsync
 {
     public class When_AwaitingConfirmation_Passed_One_Record_Returned : AwardingOrganisaionServiceBaseTest
     {
-
-        private readonly int statusId = (int)TlevelReviewStatus.AwaitingConfirmation;
+        private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
+        private readonly TlevelReviewStatus _tlevelReviewStatus = TlevelReviewStatus.AwaitingConfirmation;
         private IEnumerable<AwardingOrganisationPathwayStatus> result;
 
         public override void Given()
@@ -33,10 +31,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
 
         public override void When()
         {
-            result = _service.GetTlevelsByStatusIdAsync(_tlAwardingOrganisation.UkPrn, statusId).Result;
+            result = _service.GetTlevelsByStatusIdAsync(_tlAwardingOrganisation.UkPrn, (int)_tlevelReviewStatus).Result;
         }
 
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void Then_Expected_Results_Is_Returned()
         {
             result.Should().NotBeNull();
@@ -51,11 +49,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
 
         protected override void SeedTlevelTestData()
         {
-            // TODO:
-            _tlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, EnumAwardingOrganisation.Pearson);
-            _route = TlevelDataProvider.CreateTlRoute(DbContext, EnumAwardingOrganisation.Pearson);
-            _pathway = TlevelDataProvider.CreateTlPathway(DbContext, EnumAwardingOrganisation.Pearson);
-            _tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, EnumAwardingOrganisation.Pearson);
+            _tlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, _awardingOrganisation);
+            _route = TlevelDataProvider.CreateTlRoute(DbContext, _awardingOrganisation);
+            _pathway = TlevelDataProvider.CreateTlPathway(DbContext, _awardingOrganisation, _route);
+            _tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, _route, _pathway, _tlAwardingOrganisation, _tlevelReviewStatus);
             DbContext.SaveChangesAsync();
         }
     }
