@@ -5,10 +5,10 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest.GetTlevelDetailsByPathwayIdAsync
 {
-    public class Then_HttpStatusCode_200_Returned : When_GetTlevelDetailsByPathwayIdAsync_Is_Called
+    public class Then_Pathway_Id_HttpStatusCode_200_Returned : When_GetTlevelDetailsByPathwayIdAsync_Is_Called
     {
         [Fact]
-        public void Then_Expected_Result_Returned()
+        public void Then_Pathway_Id_Expected_Result_Returned()
         {
             var expectedResult = Result.Result;
 
