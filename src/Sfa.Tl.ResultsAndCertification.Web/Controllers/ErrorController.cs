@@ -8,7 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
     public class ErrorController : Controller
     {
-        [AllowAnonymous]
         [Route("access-denied", Name = "AccessDenied")]
         public IActionResult AccessDenied()
         {
