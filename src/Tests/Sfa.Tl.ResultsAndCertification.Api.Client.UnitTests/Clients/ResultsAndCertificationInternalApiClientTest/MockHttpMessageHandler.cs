@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients
 {
-    public class MockHttpMessageHandler<T> : HttpMessageHandler
+    public class MockHttpMessageHandler<T> : DelegatingHandler
     {
         private readonly T _response;
         private readonly HttpStatusCode _statusCode;

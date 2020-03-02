@@ -34,21 +34,20 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetAllTlev
             _tokenServiceClient = Substitute.For<ITokenServiceClient>();
             _configuration = new ResultsAndCertificationConfiguration
             {
-                ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "https://localhost:5001" }
+                ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "http://xyz.com" }
             };
 
             _mockHttpResult = new List<AwardingOrganisationPathwayStatus>
             {
                 new AwardingOrganisationPathwayStatus { PathwayName = PathwayName, RouteName = RouteName, StatusId = Status }
-            };
-            HttpClient = new HttpClient(
-                new MockHttpMessageHandler<IEnumerable<AwardingOrganisationPathwayStatus>>(
-                    _mockHttpResult, string.Format(ApiConstants.GetAllTLevelsUri, ukprn), HttpStatusCode.OK));
-
+            };           
         }
         public override void Given()
         {
-            _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
+            var httpClient = new HttpClient(
+                new MockHttpMessageHandler<IEnumerable<AwardingOrganisationPathwayStatus>>(
+                    _mockHttpResult, string.Format(ApiConstants.GetAllTLevelsUri, ukprn), HttpStatusCode.OK));
+            _apiClient = new ResultsAndCertificationInternalApiClient(httpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
