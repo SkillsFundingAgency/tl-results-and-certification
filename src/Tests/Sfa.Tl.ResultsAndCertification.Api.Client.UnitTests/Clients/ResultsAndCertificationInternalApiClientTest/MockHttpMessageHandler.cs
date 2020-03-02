@@ -28,7 +28,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients
         {
             HttpResponseMessage result;
 
-            //var reqResponse = await request.Content?.ReadAsStringAsync();
+            string reqResponse;
+            if (request?.Content != null)
+                reqResponse = await request?.Content.ReadAsStringAsync();
+            //var reqResponse = await request.Content?.ReadAsStringAsync() : null;
 
             //NumberOfCalls++;
             var jsonResponse = JsonConvert.SerializeObject(_response);
@@ -46,8 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients
                 result = new HttpResponseMessage { StatusCode = HttpStatusCode.NotFound };
             }
 
-            //return result;
-            return await Task.Run(() => result);
+            return result;
+            //return await Task.Run(() => result);
         }
     }
 }
