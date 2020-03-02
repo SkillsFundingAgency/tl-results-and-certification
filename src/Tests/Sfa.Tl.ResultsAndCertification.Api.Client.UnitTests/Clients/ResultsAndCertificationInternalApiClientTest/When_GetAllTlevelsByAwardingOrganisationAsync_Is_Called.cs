@@ -1,18 +1,21 @@
-﻿using NSubstitute;
+﻿using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Xunit;
+using NSubstitute;
+using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetAllTlevelsByUkprnAsync
+namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public abstract class When_GetAllTlevelsByAwardingOrganisationAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_GetAllTlevelsByAwardingOrganisationAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
@@ -51,6 +54,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetAllTlev
         public override void When()
         {
             Result = _apiClient.GetAllTlevelsByUkprnAsync(ukprn);
+        }
+
+        [Fact]
+        public void Then_Expected_Result_Returned()
+        {
+            Result.Result.Should().NotBeNullOrEmpty();
+
+            var expectedResult = Result.Result.FirstOrDefault();
+            expectedResult.RouteName.Should().Be(RouteName);
+            expectedResult.PathwayName.Should().Be(PathwayName);
+            expectedResult.StatusId.Should().Be(1);
         }
     }
 }

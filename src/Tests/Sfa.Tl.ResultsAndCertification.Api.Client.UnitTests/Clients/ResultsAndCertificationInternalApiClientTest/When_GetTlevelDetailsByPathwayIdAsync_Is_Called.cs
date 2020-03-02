@@ -1,8 +1,11 @@
 ﻿using System.Net;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Xunit;
 using NSubstitute;
+using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -10,9 +13,9 @@ using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 
-namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetTlevelDetailsByPathwayIdAsync
+namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public abstract class When_GetTlevelDetailsByPathwayIdAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_GetTlevelDetailsByPathwayIdAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
@@ -55,6 +58,21 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetTlevelD
         public override void When()
         {
             Result = _apiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, tlevelId);
+        }
+
+        [Fact]
+        public void Then_Pathway_Id_Expected_Result_Returned()
+        {
+            var expectedResult = Result.Result;
+
+            expectedResult.Should().NotBeNull();
+            expectedResult.RouteName.Should().Be(RouteName);
+            expectedResult.PathwayName.Should().Be(PathwayName);
+            expectedResult.PathwayStatusId.Should().Be(Status);
+
+            expectedResult.Specialisms.Should().NotBeNullOrEmpty();
+            expectedResult.Specialisms.Count().Should().Be(2);
+            expectedResult.Specialisms.First().Should().Be(Specialisms.First());
         }
     }
 }

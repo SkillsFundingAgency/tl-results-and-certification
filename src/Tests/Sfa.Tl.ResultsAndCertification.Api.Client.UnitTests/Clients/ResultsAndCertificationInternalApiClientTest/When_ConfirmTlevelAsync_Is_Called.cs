@@ -1,17 +1,18 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Collections.Generic;
+using Xunit;
 using NSubstitute;
+using FluentAssertions;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using Newtonsoft.Json;
 
-namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest.ConfirmTlevelAsync
+namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
     public class When_ConfirmTlevelAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
@@ -56,6 +57,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         public override void When()
         {
             Result = _apiClient.ConfirmTlevelAsync(_model);
+        }
+
+        [Fact]
+        public void Then_Expected_Result_Returned()
+        {
+            Result.Result.Should().BeTrue();
         }
     }
 }
