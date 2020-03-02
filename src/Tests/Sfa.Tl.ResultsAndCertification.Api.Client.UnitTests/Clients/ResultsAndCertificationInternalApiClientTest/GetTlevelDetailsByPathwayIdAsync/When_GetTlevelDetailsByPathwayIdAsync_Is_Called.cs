@@ -32,31 +32,31 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetTlevelD
 
         public override void Setup()
         {
-            _tokenServiceClient = Substitute.For<ITokenServiceClient>();
-            _configuration = new ResultsAndCertificationConfiguration
-            {
-                ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "http://xtz.com" }
-            };
+            //_tokenServiceClient = Substitute.For<ITokenServiceClient>();
 
-            _mockHttpResult = new TlevelPathwayDetails
-            {
-                PathwayName = PathwayName,
-                RouteName = RouteName,
-                Specialisms = Specialisms,
-                PathwayStatusId = Status
-            };            
+            //_configuration = new ResultsAndCertificationConfiguration
+            //{
+            //    ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "http://xtz.com" }
+            //};
+
+            //_mockHttpResult = new TlevelPathwayDetails
+            //{
+            //    PathwayName = PathwayName,
+            //    RouteName = RouteName,
+            //    Specialisms = Specialisms,
+            //    PathwayStatusId = Status
+            //};            
         }
 
         public override void Given()
         {
-            var httpClient = new HttpClient(new MockHttpMessageHandler<TlevelPathwayDetails>(
-                _mockHttpResult, string.Format(ApiConstants.TlevelDetailsUri, ukprn, tlevelId), HttpStatusCode.OK));
-            _apiClient = new ResultsAndCertificationInternalApiClient(httpClient, _tokenServiceClient, _configuration);
+            //var httpClient = new HttpClient(new MockHttpMessageHandler<TlevelPathwayDetails>(_mockHttpResult, string.Format(ApiConstants.TlevelDetailsUri, ukprn, tlevelId), HttpStatusCode.OK));
+            //_apiClient = new ResultsAndCertificationInternalApiClient(httpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
         {
-            Result = _apiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, tlevelId);
+            //Result = _apiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, tlevelId);
         }
     }
 }
