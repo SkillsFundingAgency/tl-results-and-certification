@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetTlevelD
         private readonly long ukprn = 1024;
         private readonly int tlevelId = 99;
 
-        public HttpClient HttpClient { get; private set; }
+        //public HttpClient HttpClient { get; private set; }
         protected Task<TlevelPathwayDetails> Result;
 
         protected readonly string RouteName = "Construction";
@@ -32,31 +32,31 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetTlevelD
 
         public override void Setup()
         {
-            //_tokenServiceClient = Substitute.For<ITokenServiceClient>();
+            _tokenServiceClient = Substitute.For<ITokenServiceClient>();
 
-            //_configuration = new ResultsAndCertificationConfiguration
-            //{
-            //    ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "http://xtz.com" }
-            //};
+            _configuration = new ResultsAndCertificationConfiguration
+            {
+                ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "http://xtz.com" }
+            };
 
-            //_mockHttpResult = new TlevelPathwayDetails
-            //{
-            //    PathwayName = PathwayName,
-            //    RouteName = RouteName,
-            //    Specialisms = Specialisms,
-            //    PathwayStatusId = Status
-            //};            
+            _mockHttpResult = new TlevelPathwayDetails
+            {
+                PathwayName = PathwayName,
+                RouteName = RouteName,
+                Specialisms = Specialisms,
+                PathwayStatusId = Status
+            };
+            HttpClient = new HttpClient(new MockHttpMessageHandler<TlevelPathwayDetails>(_mockHttpResult, string.Format(ApiConstants.TlevelDetailsUri, ukprn, tlevelId), HttpStatusCode.OK));
         }
 
         public override void Given()
-        {
-            //var httpClient = new HttpClient(new MockHttpMessageHandler<TlevelPathwayDetails>(_mockHttpResult, string.Format(ApiConstants.TlevelDetailsUri, ukprn, tlevelId), HttpStatusCode.OK));
-            //_apiClient = new ResultsAndCertificationInternalApiClient(httpClient, _tokenServiceClient, _configuration);
+        {            
+            _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
         {
-            //Result = _apiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, tlevelId);
+            Result = _apiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, tlevelId);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest
 {
-    public interface IBaseTest<T>
+    public interface IBaseTest<T> : IDisposable
     {
         public void Setup();
         public void Given();

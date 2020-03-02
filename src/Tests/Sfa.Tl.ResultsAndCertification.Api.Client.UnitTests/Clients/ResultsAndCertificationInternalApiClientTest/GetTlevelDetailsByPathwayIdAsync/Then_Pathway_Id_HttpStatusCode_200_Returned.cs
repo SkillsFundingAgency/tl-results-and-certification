@@ -10,16 +10,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         [Fact]
         public void Then_Pathway_Id_Expected_Result_Returned()
         {
-            //var expectedResult = Result.Result;
+            var expectedResult = Result.Result;
 
-            //expectedResult.Should().NotBeNull();
-            //expectedResult.RouteName.Should().Be(RouteName);
-            //expectedResult.PathwayName.Should().Be(PathwayName);
-            //expectedResult.PathwayStatusId.Should().Be(Status);
+            expectedResult.Should().NotBeNull();
+            expectedResult.RouteName.Should().Be(RouteName);
+            expectedResult.PathwayName.Should().Be(PathwayName);
+            expectedResult.PathwayStatusId.Should().Be(Status);
 
-            //expectedResult.Specialisms.Should().NotBeNullOrEmpty();
-            //expectedResult.Specialisms.Count().Should().Be(2);
-            //expectedResult.Specialisms.First().Should().Be(Specialisms.First());
+            expectedResult.Specialisms.Should().NotBeNullOrEmpty();
+            expectedResult.Specialisms.Count().Should().Be(2);
+            expectedResult.Specialisms.First().Should().Be(Specialisms.First());
         }
     }
 }

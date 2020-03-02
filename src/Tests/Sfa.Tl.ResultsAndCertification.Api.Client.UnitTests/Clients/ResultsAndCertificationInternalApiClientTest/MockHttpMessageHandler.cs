@@ -23,34 +23,31 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients
             _statusCode = statusCode;
         }
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+        protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
             HttpResponseMessage result;
 
+            var reqResponse = await request.Content.ReadAsStringAsync();
+
             //NumberOfCalls++;
             var jsonResponse = JsonConvert.SerializeObject(_response);
 
-            //if (request.RequestUri.AbsolutePath.Equals(_requestUrl))
-            //{
-            //    result = new HttpResponseMessage
-            //    {
-            //        StatusCode = _statusCode,
-            //        Content = new StringContent(jsonResponse, UnicodeEncoding.UTF8, "application/json")
-            //    };
-            //}
-            //else
-            //{
-            //    result = new HttpResponseMessage { StatusCode = HttpStatusCode.NotFound };
-            //}
-
-            result = new HttpResponseMessage
+            if (request.RequestUri.AbsolutePath.Equals(_requestUrl))
             {
-                StatusCode = _statusCode,
-                Content = new StringContent(jsonResponse, UnicodeEncoding.UTF8, "application/json")
-            };
+                result = new HttpResponseMessage
+                {
+                    StatusCode = _statusCode,
+                    Content = new StringContent(jsonResponse, UnicodeEncoding.UTF8, "application/json")
+                };
+            }
+            else
+            {
+                result = new HttpResponseMessage { StatusCode = HttpStatusCode.NotFound };
+            }
 
-            return await Task.Run(() => result);
+            return result;
+            //return await Task.Run(() => result);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetAllTlev
         private ResultsAndCertificationConfiguration _configuration;
         private readonly long ukprn = 1024;
 
-        public HttpClient HttpClient { get; private set; }
+        //public HttpClient HttpClient { get; private set; }
         protected Task<IEnumerable<AwardingOrganisationPathwayStatus>> Result;
 
         protected readonly string RouteName = "Construction";
@@ -31,28 +31,29 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetAllTlev
 
         public override void Setup()
         {
-            //_tokenServiceClient = Substitute.For<ITokenServiceClient>();
-            //_configuration = new ResultsAndCertificationConfiguration
-            //{
-            //    ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "http://xyz.com" }
-            //};
+            _tokenServiceClient = Substitute.For<ITokenServiceClient>();
+            _configuration = new ResultsAndCertificationConfiguration
+            {
+                ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "https://test.xyz.com" }
+            };
 
-            //_mockHttpResult = new List<AwardingOrganisationPathwayStatus>
-            //{
-            //    new AwardingOrganisationPathwayStatus { PathwayName = PathwayName, RouteName = RouteName, StatusId = Status }
-            //};           
+            _mockHttpResult = new List<AwardingOrganisationPathwayStatus>
+            {
+                new AwardingOrganisationPathwayStatus { PathwayName = PathwayName, RouteName = RouteName, StatusId = Status }
+            };
+
+            HttpClient = new HttpClient(
+                new MockHttpMessageHandler<IEnumerable<AwardingOrganisationPathwayStatus>>(
+                    _mockHttpResult, string.Format(ApiConstants.GetAllTLevelsUri, ukprn), HttpStatusCode.OK));
         }
         public override void Given()
-        {
-            //var httpClient = new HttpClient(
-            //    new MockHttpMessageHandler<IEnumerable<AwardingOrganisationPathwayStatus>>(
-            //        _mockHttpResult, string.Format(ApiConstants.GetAllTLevelsUri, ukprn), HttpStatusCode.OK));
-            //_apiClient = new ResultsAndCertificationInternalApiClient(httpClient, _tokenServiceClient, _configuration);
+        {            
+            _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
         {
-            //Result = _apiClient.GetAllTlevelsByUkprnAsync(ukprn);
+            Result = _apiClient.GetAllTlevelsByUkprnAsync(ukprn);
         }
     }
 }
