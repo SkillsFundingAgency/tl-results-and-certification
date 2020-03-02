@@ -46,9 +46,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public async Task<bool> ConfirmTlevelAsync(ConfirmTlevelDetails model)
         {
-            //var requestUri = string.Format(ApiConstants.ConfirmTlevelUri, tqAwardingOrganisationId, reviewStatus);
-            //return await PutAsync<bool?>(requestUri, null);
-
             var requestUri = ApiConstants.ConfirmTlevelUri;
             return await PutAsync<ConfirmTlevelDetails, bool>(requestUri, model);
         }

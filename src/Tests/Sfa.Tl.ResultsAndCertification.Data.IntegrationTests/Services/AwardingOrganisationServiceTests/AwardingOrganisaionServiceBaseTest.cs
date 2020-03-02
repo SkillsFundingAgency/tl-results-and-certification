@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
         protected TqAwardingOrganisation _tqAwardingOrganisation;
         protected IEnumerable<AwardingOrganisationPathwayStatus> _result;
 
-        public void CreateMapper()
+        protected virtual void CreateMapper()
         {
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AwardingOrganisationMapper).Assembly));
             _mapper = new Mapper(mapperConfig);

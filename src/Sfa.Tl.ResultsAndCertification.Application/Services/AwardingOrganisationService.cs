@@ -54,8 +54,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> ConfirmTlevelAsync(ConfirmTlevelDetails model)
         {
-            var tqAwardingOrganisation = _mapper.Map<TqAwardingOrganisation>(model);
-            return await _awardingOrganisationRepository.UpdateWithSpecifedColumnsOnlyAsync(tqAwardingOrganisation, x => x.ReviewStatus, x => x.ModifiedBy, x => x.ModifiedOn) > 0;
+            var tqAwardingOrganisation = await _awardingOrganisationRepository.GetSingleOrDefaultAsync(p => p.Id == model.TqAwardingOrganisationId);
+            
+            if (tqAwardingOrganisation == null) return false;
+            
+            tqAwardingOrganisation = _mapper.Map(model, tqAwardingOrganisation);
+            return await _awardingOrganisationRepository.UpdateAsync(tqAwardingOrganisation) > 0;
         }
     }
 }
