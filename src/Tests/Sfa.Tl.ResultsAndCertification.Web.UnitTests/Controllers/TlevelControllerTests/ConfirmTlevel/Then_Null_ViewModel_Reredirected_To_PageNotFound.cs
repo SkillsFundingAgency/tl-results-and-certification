@@ -7,8 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 {
     public class Then_Null_ViewModel_Reredirected_To_PageNotFound : When_ConfirmTlevel_Action_Is_Called
     {
-        public override void Given() { }
-
         [Fact]
         public void Then_Null_ViewModel_Redirected_To_Route_PageNotFound()
         {

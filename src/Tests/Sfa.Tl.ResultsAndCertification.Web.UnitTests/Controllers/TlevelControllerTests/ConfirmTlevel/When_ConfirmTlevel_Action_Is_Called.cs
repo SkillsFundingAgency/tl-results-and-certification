@@ -47,6 +47,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             };
         }
 
+        public override void Given() { }
+
         public override void When()
         {
             Result = Controller.ConfirmTlevel(InputModel);

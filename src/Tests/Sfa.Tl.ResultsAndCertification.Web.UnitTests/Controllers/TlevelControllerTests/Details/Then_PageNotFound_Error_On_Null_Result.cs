@@ -1,10 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Details
@@ -22,7 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_PageNotFound_Is_Returned_OnNull_Result()
         {
-            Assert.Same((Result.Result as RedirectToActionResult).ActionName, nameof(ErrorController.PageNotFound));
+            var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
+            actualRouteName.Should().Be(RouteConstants.PageNotFound);
         }
     }
 }
