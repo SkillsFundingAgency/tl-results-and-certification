@@ -16,8 +16,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients
 
         public MockHttpMessageHandler(T response, string requestUrl, HttpStatusCode statusCode, string requestContent = null)
         {
-            var requestKey = requestUrl + requestContent ?? string.Empty;
-            _httpResponses.Add(requestKey, new HttpResponseMessage { StatusCode = statusCode, Content = new StringContent(JsonConvert.SerializeObject(response), Encoding.UTF8, "application/json") });
+            if (response != null && !string.IsNullOrWhiteSpace(requestUrl))
+            {
+                var requestKey = requestUrl + requestContent ?? string.Empty;
+                _httpResponses.Add(requestKey, new HttpResponseMessage { StatusCode = statusCode, Content = new StringContent(JsonConvert.SerializeObject(response), Encoding.UTF8, "application/json") });
+            }
         }
 
         protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,

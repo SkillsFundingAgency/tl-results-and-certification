@@ -113,7 +113,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseReferrerPolicy(opts => opts.NoReferrer());
             app.UseXXssProtection(opts => opts.EnabledWithBlockMode());
             app.UseXfo(xfo => xfo.Deny());
-            app.UseCsp(options => options.DefaultSources(s => s.Self()).ScriptSources(s => s.Self()));
+            app.UseCsp(options => options.DefaultSources(s => s.Self()).ScriptSources(s => s.Self().UnsafeInline()));
             app.UseHttpsRedirection();
             
             app.UseStaticFiles();
