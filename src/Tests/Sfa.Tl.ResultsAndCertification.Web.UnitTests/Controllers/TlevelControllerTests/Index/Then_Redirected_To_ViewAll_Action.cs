@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
@@ -25,12 +26,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_Redirected_To_Action_ViewAll()
+        public void Then_Redirected_To_Route_ViewAll()
         {
-            var actualActionName = (Result.Result as RedirectToActionResult).ActionName;
-            var expectedActionName = nameof(TlevelController.ViewAll);
-
-            actualActionName.Should().Be(expectedActionName);
+            var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
+            actualRouteName.Should().Be(RouteConstants.ViewAllTlevels);
         }
     }
 }

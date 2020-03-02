@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using System.Linq;
@@ -26,14 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_GetTlevelsToReviewByUkprnAsync_ViewModel_Return_Zero_Rows()
         {
-            // Controller
-            var actualControllerName = (Result.Result as RedirectToActionResult).ControllerName;
-            actualControllerName.Should().Be(Common.Helpers.Constants.ErrorController);
-
-            // Action
-            var actualActionName = (Result.Result as RedirectToActionResult).ActionName;
-            var expectedActionName = nameof(ErrorController.PageNotFound);
-            actualActionName.Should().Be(expectedActionName);
+            var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
+            actualRouteName.Should().Be(RouteConstants.PageNotFound);
         }
     }
 }

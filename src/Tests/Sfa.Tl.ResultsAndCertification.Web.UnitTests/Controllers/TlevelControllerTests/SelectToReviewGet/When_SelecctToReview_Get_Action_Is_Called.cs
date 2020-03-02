@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
         public override void When()
         {
-            Result = Controller.SelectToReview();
+            Result = Controller.SelectToReviewAsync();
         }
     }
 }
