@@ -1,14 +1,14 @@
-﻿using NSubstitute;
+﻿using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetTlevelDetailsByPathwayIdAsync
 {
@@ -18,8 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetTlevelD
         private ResultsAndCertificationConfiguration _configuration;
         private readonly long ukprn = 1024;
         private readonly int tlevelId = 99;
-
-        //public HttpClient HttpClient { get; private set; }
         protected Task<TlevelPathwayDetails> Result;
 
         protected readonly string RouteName = "Construction";

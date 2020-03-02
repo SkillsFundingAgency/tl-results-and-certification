@@ -5,7 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -19,9 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.GetAllTlev
         private ResultsAndCertificationConfiguration _configuration;
         private readonly long ukprn = 1024;
 
-        //public HttpClient HttpClient { get; private set; }
         protected Task<IEnumerable<AwardingOrganisationPathwayStatus>> Result;
-
         protected readonly string RouteName = "Construction";
         protected readonly string PathwayName = "Design";
         protected readonly int Status = 1;

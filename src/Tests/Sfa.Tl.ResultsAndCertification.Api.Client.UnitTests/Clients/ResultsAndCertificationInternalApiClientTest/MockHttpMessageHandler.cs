@@ -1,56 +1,44 @@
-﻿using Newtonsoft.Json;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net;
 using System.Text;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients
 {
     public class MockHttpMessageHandler<T> : DelegatingHandler
     {
-        private readonly T _response;
-        private readonly HttpStatusCode _statusCode;
-        private readonly string _requestUrl;
-
-        public string Input { get; private set; }
         public int NumberOfCalls { get; private set; }
 
-        public MockHttpMessageHandler(T response, string requestUrl, HttpStatusCode statusCode)
+        private readonly Dictionary<string, HttpResponseMessage> _httpResponses = new Dictionary<string, HttpResponseMessage>();
+
+        public MockHttpMessageHandler(T response, string requestUrl, HttpStatusCode statusCode, string requestContent = null)
         {
-            _response = response;
-            _requestUrl = requestUrl;
-            _statusCode = statusCode;
+            var requestKey = requestUrl + requestContent ?? string.Empty;
+            _httpResponses.Add(requestKey, new HttpResponseMessage { StatusCode = statusCode, Content = new StringContent(JsonConvert.SerializeObject(response), Encoding.UTF8, "application/json") });
         }
 
         protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
-            HttpResponseMessage result;
-
-            string reqResponse;
+            string responseContent = string.Empty;
             if (request?.Content != null)
-                reqResponse = await request?.Content.ReadAsStringAsync();
-            //var reqResponse = await request.Content?.ReadAsStringAsync() : null;
+                responseContent = await request?.Content.ReadAsStringAsync();
 
-            //NumberOfCalls++;
-            var jsonResponse = JsonConvert.SerializeObject(_response);
+            NumberOfCalls++;
 
-            if (request.RequestUri.AbsolutePath.Equals(_requestUrl))
+            var requestKey = request.RequestUri.AbsolutePath + responseContent;
+
+            if (_httpResponses.ContainsKey(requestKey))
             {
-                result = new HttpResponseMessage
-                {
-                    StatusCode = _statusCode,
-                    Content = new StringContent(jsonResponse, UnicodeEncoding.UTF8, "application/json")
-                };
+                return _httpResponses[requestKey];
             }
             else
             {
-                result = new HttpResponseMessage { StatusCode = HttpStatusCode.NotFound };
+                return new HttpResponseMessage { StatusCode = HttpStatusCode.NotFound };
             }
-
-            return result;
-            //return await Task.Run(() => result);
         }
     }
 }
