@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\TlevelControllerTests\SelectToReviewPost\" />
-    <Folder Include="Loader\TlevelLoaderTests\GetVerifyTlevelDetailsByPathwayIdAsync\" />
   </ItemGroup>
 
 </Project>
