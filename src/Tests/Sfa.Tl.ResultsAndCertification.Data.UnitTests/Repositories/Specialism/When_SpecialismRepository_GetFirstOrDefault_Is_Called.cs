@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -11,10 +12,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
     {
         private TlSpecialism _result;
         private IEnumerable<TlSpecialism> _data;
+        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Ncfe;
 
         public override void Given()
         {
-            _data = new TlSpecialismBuilder().BuildList();
+            _data = new TlSpecialismBuilder().BuildList(_awardingOrganisation);
             DbContext.AddRange(_data);
             DbContext.SaveChanges();
         }

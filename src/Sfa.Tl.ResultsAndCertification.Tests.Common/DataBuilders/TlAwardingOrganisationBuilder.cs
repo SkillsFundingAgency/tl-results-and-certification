@@ -6,17 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
     public class TlAwardingOrganisationBuilder
     {
-        public Domain.Models.TlAwardingOrganisation Build() => new Domain.Models.TlAwardingOrganisation
-        {
-            UkPrn = 10011881,
-            DisplayName = "Pearson",
-            Name = "Pearson",
-            CreatedBy = Constants.CreatedByUser,
-            CreatedOn = Constants.CreatedOn,
-            ModifiedBy = Constants.ModifiedByUser,
-            ModifiedOn = Constants.ModifiedOn
-        };
-
         public Domain.Models.TlAwardingOrganisation Build(EnumAwardingOrganisation awardingOrganisation)
         {
             if (awardingOrganisation == EnumAwardingOrganisation.Pearson)

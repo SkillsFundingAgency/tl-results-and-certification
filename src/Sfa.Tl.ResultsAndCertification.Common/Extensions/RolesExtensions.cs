@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 
         // Roles
         public const string SiteAdministrator = "Site Administrator";
-        public const string TlevelsReviewer = "Tlevels Reviewer";
+        public const string TlevelsReviewer = "T Levels Reviewer";
         public const string CentresEditor = "Centres Editor";
 
         public static bool HasAccessToService(this ClaimsPrincipal user)
@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 
         public static string GetUserEmail(this ClaimsPrincipal user)
         {
-            return user.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Upn)?.Value;
+            return user.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
         }
 
         public static long GetUkPrn(this ClaimsPrincipal user)

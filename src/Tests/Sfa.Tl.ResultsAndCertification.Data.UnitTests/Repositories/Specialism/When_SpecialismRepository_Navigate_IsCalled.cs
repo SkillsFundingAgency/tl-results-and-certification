@@ -1,11 +1,9 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using Xunit;
+using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Xunit;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
 {
@@ -13,17 +11,19 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
     {
         private TlSpecialism _result;
         private TlSpecialism _data;
+        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Ncfe;
 
         public override void Given()
         {
-            _data = new TlSpecialismBuilder().Build();
-            DbContext.AddRange(_data);
+            var tlSpecialisms = new TlSpecialismBuilder().BuildList(_awardingOrganisation);
+            DbContext.AddRange(tlSpecialisms);
             DbContext.SaveChanges();
+            _data = tlSpecialisms.FirstOrDefault();
         }
 
         public override void When()
         {
-            _result = Repository.GetFirstOrDefaultAsync(x => x.Id == 1).GetAwaiter().GetResult();
+            _result = Repository.GetFirstOrDefaultAsync(x => x.Id == _data.Id).GetAwaiter().GetResult();
         }
 
         [Fact]
@@ -46,20 +46,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
             _result.TlPathway.CreatedOn.Should().Be(expectedResult.CreatedOn);
             _result.TlPathway.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
             _result.TlPathway.ModifiedOn.Should().Be(expectedResult.ModifiedOn);
-        }
-
-        [Fact]
-        public void Then_TlPathwaySpecialismMars_EntityFields_Are_As_Expected()
-        {
-            var expectedResult = _data.TlPathwaySpecialismMars.FirstOrDefault();
-            var actualResult = _result.TlPathwaySpecialismMars.FirstOrDefault();
-
-            actualResult.TlPathwayId.Should().Be(expectedResult.TlPathwayId);
-            actualResult.TlSpecialismId.Should().Be(expectedResult.TlSpecialismId);
-            actualResult.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
-            actualResult.CreatedOn.Should().Be(expectedResult.CreatedOn);
-            actualResult.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
-            actualResult.ModifiedOn.Should().Be(expectedResult.ModifiedOn);
-        }
+        }        
     }
 }

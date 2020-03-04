@@ -33,10 +33,21 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IEnumerable<AwardingOrganisationPathwayStatus>>(string.Format(ApiConstants.GetAllTLevelsUri, ukprn));
         }
 
+        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
+        {
+            return await GetAsync<IEnumerable<AwardingOrganisationPathwayStatus>>(string.Format(ApiConstants.GetTlevelsByStatus, ukprn, statusId));
+        }
+
         public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
         {
             var requestUri = string.Format(ApiConstants.TlevelDetailsUri, ukprn, id);
             return await GetAsync<TlevelPathwayDetails>(requestUri);
+        }
+
+        public async Task<bool> ConfirmTlevelAsync(ConfirmTlevelDetails model)
+        {
+            var requestUri = ApiConstants.ConfirmTlevelUri;
+            return await PutAsync<ConfirmTlevelDetails, bool>(requestUri, model);
         }
 
         private void SetBearerToken()
@@ -64,13 +75,21 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return data;
         }
 
+        private async Task<TResponse> PutAsync<TRequest, TResponse>(string requestUri, TRequest content)
+        {
+            SetBearerToken();
+            var response = await _httpClient.PutAsync(requestUri, CreateHttpContent<TRequest>(content));
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsAsync<TResponse>();
+            return data;
+        }
+
         private HttpContent CreateHttpContent<T>(T content)
         {
             var json = JsonConvert.SerializeObject(content, MicrosoftDateFormatSettings);
             return new StringContent(json, Encoding.UTF8, "application/json");
         }
 
-        
         private static JsonSerializerSettings MicrosoftDateFormatSettings
         {
             get

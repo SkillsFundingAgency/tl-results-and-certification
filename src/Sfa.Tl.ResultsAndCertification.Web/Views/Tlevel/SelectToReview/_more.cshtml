@@ -1,0 +1,30 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel;
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview.SelectToReviewPageViewModel
+
+<div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading">
+                @SelectToReview.Two_Review_Heading
+            </h1>
+        </legend>
+
+        <p class="govuk-hint govuk-!-padding-bottom-4">
+            @SelectToReview.Two_Review_Text
+        </p>
+
+        <div class="govuk-radios govuk-!-padding-bottom-2">
+
+            @foreach (var tlevel in Model.TlevelsToReview)
+            {
+                <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="TlevelToSelect-@tlevel.PathwayId" type="radio" value=@tlevel.PathwayId asp-for="SelectedPathwayId">
+                    <label class="govuk-label govuk-radios__label" for="TlevelToSelect-@tlevel.PathwayId">
+                        @tlevel.TlevelTitle
+                    </label>
+                </div>
+            }
+
+        </div>
+    </fieldset>
+</div>

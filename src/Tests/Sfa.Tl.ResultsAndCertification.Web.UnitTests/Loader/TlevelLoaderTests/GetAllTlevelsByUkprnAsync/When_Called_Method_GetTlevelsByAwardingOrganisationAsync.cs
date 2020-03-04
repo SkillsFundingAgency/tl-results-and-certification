@@ -4,7 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
-using Sfa.Tl.ResultsAndCertification.Web.Models;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetAllTlevelsByUkprnAsync
@@ -21,14 +21,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         protected IEnumerable<YourTlevelsViewModel> ExpectedResult;
 
         protected string PageTitle = "T Level Summary";
-        protected int PathId = 1;
+        protected int PathwayId = 1;
         protected int StatusId = 1;
-        protected string TLevelDescription = "Route: Pathway";
+        protected string TlevelTitle = "Route: Pathway";
 
         public override void Setup()
         {
             ApiClientResponse = new List<AwardingOrganisationPathwayStatus>();
-            ExpectedResult = new List<YourTlevelsViewModel> { new YourTlevelsViewModel { PageTitle = PageTitle, PathId = PathId, StatusId = StatusId, TLevelDescription = TLevelDescription } };
+            ExpectedResult = new List<YourTlevelsViewModel> { new YourTlevelsViewModel { PageTitle = PageTitle, PathwayId = PathwayId, StatusId = StatusId, TlevelTitle = TlevelTitle } };
 
             Mapper = Substitute.For<IMapper>();
             Mapper.Map<IEnumerable<YourTlevelsViewModel>>(ApiClientResponse).Returns(ExpectedResult);

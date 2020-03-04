@@ -1,0 +1,18 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel;
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview.SelectToReviewPageViewModel
+
+<legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+    <h1 class="govuk-fieldset__heading">
+        @SelectToReview.One_Review_Heading
+    </h1>
+</legend>
+
+<p class="govuk-hint govuk-!-padding-bottom-4"> 
+    @SelectToReview.One_Review_Text 
+</p>
+
+@{ var tlevelToReview = Model.TlevelsToReview.FirstOrDefault(); }
+<input type="hidden" value="@tlevelToReview.PathwayId" asp-for="SelectedPathwayId" />
+
+<p class="govuk-body govuk-!-padding-bottom-4"> @tlevelToReview.TlevelTitle </p>
+

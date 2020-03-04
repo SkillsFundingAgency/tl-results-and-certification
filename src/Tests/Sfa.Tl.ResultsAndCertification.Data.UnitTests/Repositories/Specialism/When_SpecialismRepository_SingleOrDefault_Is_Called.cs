@@ -1,7 +1,9 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using Xunit;
+using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
-using Xunit;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
 {
@@ -9,24 +11,26 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
     {
         private TlSpecialism _result;
         private TlSpecialism _data;
+        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Ncfe;
 
         public override void Given()
         {
-            _data = new TlSpecialismBuilder().Build();
-            DbContext.Add(_data);
+            var tlSpecialisms = new TlSpecialismBuilder().BuildList(_awardingOrganisation);
+            DbContext.AddRange(tlSpecialisms);
             DbContext.SaveChanges();
+            _data = tlSpecialisms.FirstOrDefault();
         }
 
         public override void When()
         {
-            _result = Repository.GetSingleOrDefaultAsync(x => x.Id == 1).GetAwaiter().GetResult();
+            _result = Repository.GetSingleOrDefaultAsync(x => x.Id == _data.Id).GetAwaiter().GetResult();
         }
 
         [Fact]
         public void Then_Fields_Are_As_Expected()
         {
             _result.Should().NotBeNull();
-            _result.Id.Should().Be(1);
+            _result.Id.Should().Be(_data.Id);          
             _result.Name.Should().BeEquivalentTo(_data.Name);
             _result.LarId.Should().BeEquivalentTo(_data.LarId);
             _result.TlPathwayId.Should().Be(_data.TlPathwayId);

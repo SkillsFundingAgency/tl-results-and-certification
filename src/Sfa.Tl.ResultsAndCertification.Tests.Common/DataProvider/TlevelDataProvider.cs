@@ -90,6 +90,20 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return route;
         }
 
+        public static IList<TlRoute> CreateTlRoutes(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, bool addToDbContext = true)
+        {
+            var tlRoutes = new TlRouteBuilder().BuildList(awardingOrganisation);
+
+            if (addToDbContext && tlRoutes != null)
+            {
+                foreach(var tlRoute in tlRoutes)
+                {
+                    _dbContext.Add(tlRoute);
+                }                
+            }
+            return tlRoutes;
+        }
+
         #endregion
 
         #region TlPathway
@@ -126,8 +140,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                 tlRoute = new TlRouteBuilder().Build(awardingOrganisation);
             }
 
-            var tlPathway = new TlPathwayBuilder().Build(awardingOrganisation, false);
-            tlPathway.TlRoute = tlRoute;
+            var tlPathway = new TlPathwayBuilder().Build(awardingOrganisation, tlRoute);
 
             if (addToDbContext)
             {
@@ -157,12 +170,27 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             }
             return tlPathway;
         }
-        
+
+        public static IList<TlPathway> CreateTlPathways(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, IList<TlRoute> tlRoutes = null, bool addToDbContext = true)
+        {
+            var routes = tlRoutes ?? new TlRouteBuilder().BuildList(awardingOrganisation);
+            var tlPathways = new TlPathwayBuilder().BuildList(awardingOrganisation, routes);
+
+            if (addToDbContext && tlPathways != null)
+            {
+                foreach (var tlPathway in tlPathways)
+                {
+                    _dbContext.Add(tlPathway);
+                }
+            }
+            return tlPathways;
+        }
+
         #endregion
 
         #region TlSpecialism
 
-       public static TlSpecialism CreateTlSpecialism(ResultsAndCertificationDbContext _dbContext, TlSpecialism tlSpecialism, bool addToDbContext = true)
+        public static TlSpecialism CreateTlSpecialism(ResultsAndCertificationDbContext _dbContext, TlSpecialism tlSpecialism, bool addToDbContext = true)
         {
             if (addToDbContext && tlSpecialism == null)
             {
@@ -191,9 +219,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tlSpecialism;
         }
 
-        public static IList<TlSpecialism> CreateTlSpecialisms(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, bool addToDbContext = true)
+        public static IList<TlSpecialism> CreateTlSpecialisms(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, TlPathway tlPathway, bool addToDbContext = true)
         {
-            var tlSpecialisms = new TlSpecialismBuilder().BuildList(awardingOrganisation);
+            var tlSpecialisms = new TlSpecialismBuilder().BuildList(awardingOrganisation, tlPathway);
 
             if (addToDbContext && tlSpecialisms != null)
             {
@@ -248,6 +276,20 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                 return tqAwardingOrganisation;
             }
             return null;
+        }
+
+        public static IList<TqAwardingOrganisation> CreateTqAwardingOrganisations(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, TlAwardingOrganisation tlAwardingOrganisation, IList<TlPathway> tlPathways, TlevelReviewStatus reviewStatus = TlevelReviewStatus.AwaitingConfirmation, bool addToDbContext = true)
+        {
+            var tqAwardingOrganisations = new TqAwardingOrganisationBuilder().BuildList(awardingOrganisation, tlAwardingOrganisation, tlPathways, reviewStatus);
+
+            if (addToDbContext && tqAwardingOrganisations != null)
+            {
+                foreach (var tqAwardingOrganisation in tqAwardingOrganisations)
+                {
+                    _dbContext.Add(tqAwardingOrganisation);
+                }
+            }
+            return tqAwardingOrganisations;
         }
 
         #endregion

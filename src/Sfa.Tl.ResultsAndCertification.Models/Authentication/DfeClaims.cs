@@ -17,6 +17,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Authentication
         /// <value>The user identifier.</value>
         public Guid UserId { get; set; }
 
+        /// <summary>/// Gets or sets the first name./// </summary>
+        /// <value>/// The first name./// </value>
+        public string FirstName { get; set; }
+
+        /// <summary>/// Gets or sets the surname./// </summary>
+        /// <value>/// The surname./// </value>
+        public string Surname { get; set; }
+
         /// <summary>Gets or sets the name of the user.</summary>
         /// <value>The name of the user.</value>
         public string UserName { get; set; }

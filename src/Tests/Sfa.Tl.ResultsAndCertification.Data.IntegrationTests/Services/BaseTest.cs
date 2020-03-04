@@ -1,9 +1,12 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
 {
@@ -33,6 +36,26 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
         public void Dispose()
         {
             DbContext?.Dispose();
+        }
+
+        public void DetachAll()
+        {
+            EntityEntry[] entityEntries = DbContext.ChangeTracker.Entries().ToArray();
+
+            foreach (EntityEntry entityEntry in entityEntries)
+            {
+                entityEntry.State = EntityState.Detached;
+            }
+        }
+
+        public void DetachEntity<TEntity>() where TEntity : class
+        {
+            EntityEntry[] entityEntries = DbContext.ChangeTracker.Entries<TEntity>().ToArray();
+
+            foreach (EntityEntry entityEntry in entityEntries)
+            {
+                entityEntry.State = EntityState.Detached;
+            }
         }
     }
 }

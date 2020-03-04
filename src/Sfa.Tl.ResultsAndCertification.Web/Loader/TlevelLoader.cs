@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.Models;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 {
@@ -18,16 +20,46 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<YourTLevelDetailsViewModel> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
+        public async Task<TLevelDetailsViewModel> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
         {
             var tLevelPathwayInfo = await _internalApiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
-            return _mapper.Map<YourTLevelDetailsViewModel>(tLevelPathwayInfo);
+            return _mapper.Map<TLevelDetailsViewModel>(tLevelPathwayInfo);
         }
 
         public async Task<IEnumerable<YourTlevelsViewModel>> GetAllTlevelsByUkprnAsync(long ukprn)
         {
             var tLevels = await _internalApiClient.GetAllTlevelsByUkprnAsync(ukprn);
             return _mapper.Map<IEnumerable<YourTlevelsViewModel>>(tLevels);
+        }
+
+        public async Task<IEnumerable<YourTlevelsViewModel>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
+        {
+            var tLevels = await _internalApiClient.GetTlevelsByStatusIdAsync(ukprn, statusId);
+            return _mapper.Map<IEnumerable<YourTlevelsViewModel>>(tLevels);
+        }
+
+        public async Task<SelectToReviewPageViewModel> GetTlevelsToReviewByUkprnAsync(long ukprn)
+        {
+            var tLevels = await _internalApiClient.GetAllTlevelsByUkprnAsync(ukprn);
+            return _mapper.Map<SelectToReviewPageViewModel>(tLevels);
+        }
+
+        public async Task<VerifyTlevelViewModel> GetVerifyTlevelDetailsByPathwayIdAsync(long ukprn, int id)
+        {
+            var tLevelPathwayInfo = await _internalApiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
+            return _mapper.Map<VerifyTlevelViewModel>(tLevelPathwayInfo);
+        }
+
+        public async Task<bool> ConfirmTlevelAsync(VerifyTlevelViewModel viewModel)
+        {
+            var confirmModel = _mapper.Map<ConfirmTlevelDetails>(viewModel);
+            return await _internalApiClient.ConfirmTlevelAsync(confirmModel);
+        }
+
+        public async Task<TlevelConfirmationViewModel> GetTlevelConfirmationDetailsAsync(long ukprn, int pathwayId)
+        {
+            var tLevels = await _internalApiClient.GetAllTlevelsByUkprnAsync(ukprn);
+            return _mapper.Map<TlevelConfirmationViewModel>(tLevels, opt => opt.Items["pathwayId"] = pathwayId);
         }
     }
 }

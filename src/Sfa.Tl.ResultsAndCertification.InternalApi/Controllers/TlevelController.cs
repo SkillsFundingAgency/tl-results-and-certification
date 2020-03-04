@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 
@@ -32,11 +31,26 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
+        [Route("{ukprn}/GetTlevelsByStatus/{statusId}")]
+        public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
+        {
+            return await _awardingOrganisationService.GetTlevelsByStatusIdAsync(ukprn, statusId);
+        }
+
+        [HttpGet]
         [Route("{ukprn}/TlevelDetails/{id}")]
         public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
         {
             var tlevelDetails = await _pathwayService.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
             return tlevelDetails;
+        }       
+
+        [HttpPut]
+        [Route("ConfirmTlevel")]
+        public async Task<IActionResult> ConfirmTlevelAsync(ConfirmTlevelDetails model)
+        {
+            var result = await _awardingOrganisationService.ConfirmTlevelAsync(model);
+            return Ok(result);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Xunit;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Web.Models;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using FluentAssertions;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelDetailsByPathwayIdAsync
@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         [Fact]
         public void Then_Mapper_Is_Called()
         {
-            Mapper.Received().Map<YourTLevelDetailsViewModel>(ApiClientResponse);
+            Mapper.Received().Map<TLevelDetailsViewModel>(ApiClientResponse);
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
             ActualResult.PathwayId.Should().Be(ExpectedResult.PathwayId);
             ActualResult.RouteName.Should().Be(ExpectedResult.RouteName);
             ActualResult.PathwayName.Should().Be(ExpectedResult.PathwayName);
-            ActualResult.PathwayStatusId.Should().Be(ExpectedResult.PathwayStatusId);
+            ActualResult.ShowSomethingIsNotRight.Should().Be(ExpectedResult.ShowSomethingIsNotRight);
         }
     }
 }
