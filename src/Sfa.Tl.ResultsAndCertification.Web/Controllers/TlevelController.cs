@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             _tlevelLoader = tlevelLoader;
         }
 
-        [Route("t-levels", Name = RouteConstants.Tlevels)]
+        [Route("tlevels", Name = RouteConstants.Tlevels)]
         public async Task<IActionResult> IndexAsync()
         {
             var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
@@ -57,12 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("tlevel-select", Name = RouteConstants.TlevelSelect)]
         public async Task<IActionResult> SelectToReviewAsync()
         {
-            var viewModel = await _tlevelLoader.GetTlevelsToReviewByUkprnAsync(User.GetUkPrn());
-            
-            if (viewModel.TlevelsToReview?.Count() == 0)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return View(viewModel);
+            return await GetSelectToReviewByUkprn(User.GetUkPrn());
         }
 
         [HttpPost]
@@ -71,10 +66,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return await GetSelectToReviewByUkprn(User.GetUkPrn());
             }
                 
-            return await Task.Run(() => RedirectToRoute(RouteConstants.VerifyTlevel, new { id = model.SelectedPathwayId }));
+            return RedirectToRoute(RouteConstants.VerifyTlevel, new { id = model.SelectedPathwayId });
         }
 
         public async Task<IActionResult> ReportIssueAsync()
@@ -140,6 +135,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private async Task<VerifyTlevelViewModel> GetVerifyTlevelData(int pathwayId)
         {
             return await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(HttpContext.User.GetUkPrn(), pathwayId);
+        }
+
+        private async Task<IActionResult> GetSelectToReviewByUkprn(long ukPrn)
+        {
+            var viewModel = await _tlevelLoader.GetTlevelsToReviewByUkprnAsync(ukPrn);
+
+            if (viewModel.TlevelsToReview?.Count() == 0)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
         }
     }
 }

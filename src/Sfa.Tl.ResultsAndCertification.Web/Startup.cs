@@ -80,7 +80,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                     Location = ResponseCacheLocation.None
                 });
                 config.Filters.Add<CustomExceptionFilterAttribute>();
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+            .AddRazorRuntimeCompilation();
 
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
             services.AddAuthorization(options =>
