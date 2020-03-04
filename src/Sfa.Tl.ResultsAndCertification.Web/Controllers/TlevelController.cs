@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             _tlevelLoader = tlevelLoader;
         }
 
-        [Route("t-levels", Name = RouteConstants.Tlevels)]
+        [Route("tlevels", Name = RouteConstants.Tlevels)]
         public async Task<IActionResult> IndexAsync()
         {
             var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);

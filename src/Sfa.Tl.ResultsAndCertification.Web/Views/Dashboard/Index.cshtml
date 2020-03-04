@@ -1,85 +1,80 @@
-﻿@using Sfa.Tl.ResultsAndCertification.Common.Extensions
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content
+@using Sfa.Tl.ResultsAndCertification.Common.Extensions
 @{
-    ViewData["Title"] = "Manage T Levels";
+    ViewData["Title"] = Dashboard.Page_Title;
 }
 
-<main class="govuk-main-wrapper " id="main-content" role="main">
-    <!-- MAIN HEADING -->
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <!-- SUBHEADING -->
-            <span class="govuk-caption-l">
-            </span>
+<!-- MAIN HEADING -->
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <!-- SUBHEADING -->
+        <span class="govuk-caption-l">
+        </span>
 
-            <div class="govuk-form-group">
-                <h1 class="govuk-heading-l">
-                    @ViewData["Title"]
-                </h1>
-            </div>
+        <div class="govuk-form-group">
+            <h1 class="govuk-heading-l">
+                @Dashboard.Section_Heading_Text
+            </h1>
         </div>
     </div>
+</div>
 
-    <!-- MAIN ROW -->
-    <div class="govuk-grid-row">
-
-        <!-- BLOCK 1 – T Levels -->
+<!-- MAIN ROW -->
+<div class="govuk-grid-row">
+    <!-- BLOCK 1 – T Levels -->
+    @if (Context.User.HasSiteAdministratorRole() || Context.User.HasTlevelsReviewerRole())
+    {
         <div class="govuk-grid-column-one-half">
-            <div class="govuk-form-group card" name="hub-choice-1">
+            <div class="govuk-form-group card">
                 <p class="govuk-body">
                     <h2 class="govuk-heading-m">
-                        <a class="govuk-link--no-visited-state" href="ao-t-levels">
-                            Account
+                        <a class="govuk-link--no-visited-state" asp-route="ViewTlevels">
+                            @Dashboard.Tlevels_Text
                         </a>
                     </h2>
                 </p>
 
                 <p class="govuk-body">
-                    Manage your profile and permissions
+                    @Dashboard.Tlevels_Description_Text
                 </p>
             </div>
         </div>
+    }
 
-        @if (Context.User.HasSiteAdministratorRole() || Context.User.HasTlevelsReviewerRole())
-        {
-            <!-- BLOCK 2 – Providers -->
-            <div class="govuk-grid-column-one-half">
+    <!-- BLOCK 2 – Providers -->
+    @if (Context.User.HasSiteAdministratorRole() || Context.User.HasCentresEditorRole())
+    {
+        <div class="govuk-grid-column-one-half">
+            <div class="govuk-form-group card">
+                <p class="govuk-body">
+                    <h2 class="govuk-heading-m">
+                        <a class="govuk-link--no-visited-state" href="#">
+                            @Dashboard.Providers_Text
+                        </a>
+                    </h2>
+                </p>
 
-                <div class="govuk-form-group card" name="hub-choice-2">
-                    <p class="govuk-body">
-                        <h2 class="govuk-heading-m">
-                            <a class="govuk-link--no-visited-state" href="t-levels">
-                                T Levels
-                            </a>
-                        </h2>
-                    </p>
-
-                    <p class="govuk-body">
-                        Review your T Levels and tell us if they are correct
-                    </p>
-
-                </div>
+                <p class="govuk-body">
+                    @Dashboard.Providers_Description_Text
+                </p>
             </div>
-        }
+        </div>
+    }
 
-        @if (Context.User.HasSiteAdministratorRole() || Context.User.HasCentresEditorRole())
-        {
-            <!-- FIRST FUNCTION ROW -->
-            <!-- BLOCK 3 Students -->
-            <div class="govuk-grid-column-one-half">
-                <div class="govuk-form-group card" name="hub-choice-3">
-                    <p class="govuk-body">
-                        <h2 class="govuk-heading-m">
-                            <a class="govuk-link--no-visited-state" href="action-ao-view-students">
-                                Centres
-                            </a>
-                        </h2>
-                    </p>
+    <!-- BLOCK 3 Account -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link--no-visited-state" href="#">
+                        @Dashboard.Account_Text
+                    </a>
+                </h2>
+            </p>
 
-                    <p class="govuk-body">
-                        Tell us which T Levels each centre is offering
-                    </p>
-                </div>
-            </div>
-        }
+            <p class="govuk-body">
+                @Dashboard.Account_Description_Text
+            </p>
+        </div>
     </div>
-</main>
+</div>
