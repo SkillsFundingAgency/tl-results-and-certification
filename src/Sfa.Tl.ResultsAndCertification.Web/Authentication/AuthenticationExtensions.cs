@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Authentication;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
@@ -47,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                 options.SlidingExpiration = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(cookieAndSessionTimeout);
                 options.LogoutPath = config.DfeSignInSettings.LogoutPath;
-                options.AccessDeniedPath = "/error/accessdenied";
+                options.AccessDeniedPath = "/access-denied";
                 options.EventsType = typeof(CustomCookieAuthenticationEvents);
             })
             .AddOpenIdConnect(options =>

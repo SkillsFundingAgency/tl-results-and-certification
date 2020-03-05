@@ -34,6 +34,11 @@
 
 
   <ItemGroup>
+    <Compile Update="Content\Dashboard.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dashboard.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Tlevel\Confirmation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -63,6 +68,10 @@
 
 
   <ItemGroup>
+    <EmbeddedResource Update="Content\Dashboard.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Tlevel\Confirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Confirmation.Designer.cs</LastGenOutput>
