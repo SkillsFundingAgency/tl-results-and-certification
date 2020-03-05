@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have finished reviewing all your T Levels&apos; details..
+        ///   Looks up a localized string similar to You have no more T Levels to review..
         /// </summary>
         public static string Finished_Reviewing_All_Tlevels_Text {
             get {

@@ -121,7 +121,7 @@
     <value>confirmed</value>
   </data>
   <data name="Finished_Reviewing_All_Tlevels_Text" xml:space="preserve">
-    <value>You have finished reviewing all your T Levels' details.</value>
+    <value>You have no more T Levels to review.</value>
   </data>
   <data name="More_Tlevels_Text" xml:space="preserve">
     <value>You still have more T Levels to review.</value>
