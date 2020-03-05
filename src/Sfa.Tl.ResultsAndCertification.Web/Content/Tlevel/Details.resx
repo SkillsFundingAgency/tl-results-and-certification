@@ -117,17 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Page_Title" xml:space="preserve">
-    <value>T Level Details</value>
+  <data name="Confirmed_Page_Title" xml:space="preserve">
+    <value>Confirmed T Level Details page</value>
   </data>
-  <data name="Pathway_Field_Label" xml:space="preserve">
-    <value>Pathway</value>
+  <data name="Core_Field_Label" xml:space="preserve">
+    <value>Core</value>
   </data>
   <data name="ReturnToTlevel_Button_Text" xml:space="preserve">
     <value>Return to your T Levels list</value>
   </data>
-  <data name="Route_Field_Label" xml:space="preserve">
-    <value>Route</value>
+  <data name="Section_Heading_Text" xml:space="preserve">
+    <value>T Level details</value>
   </data>
   <data name="SomethingNotRight_Link_Text" xml:space="preserve">
     <value>Something is not right</value>

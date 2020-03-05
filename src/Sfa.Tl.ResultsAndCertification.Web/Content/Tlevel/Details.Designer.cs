@@ -61,20 +61,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level Details.
+        ///   Looks up a localized string similar to Confirmed T Level Details page.
         /// </summary>
-        public static string Page_Title {
+        public static string Confirmed_Page_Title {
             get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
+                return ResourceManager.GetString("Confirmed_Page_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pathway.
+        ///   Looks up a localized string similar to Core.
         /// </summary>
-        public static string Pathway_Field_Label {
+        public static string Core_Field_Label {
             get {
-                return ResourceManager.GetString("Pathway_Field_Label", resourceCulture);
+                return ResourceManager.GetString("Core_Field_Label", resourceCulture);
             }
         }
         
@@ -88,11 +88,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Route.
+        ///   Looks up a localized string similar to T Level details.
         /// </summary>
-        public static string Route_Field_Label {
+        public static string Section_Heading_Text {
             get {
-                return ResourceManager.GetString("Route_Field_Label", resourceCulture);
+                return ResourceManager.GetString("Section_Heading_Text", resourceCulture);
             }
         }
         
