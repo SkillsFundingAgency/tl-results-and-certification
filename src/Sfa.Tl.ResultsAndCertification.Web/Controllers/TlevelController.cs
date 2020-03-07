@@ -72,11 +72,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.VerifyTlevel, new { id = model.SelectedPathwayId });
         }
 
-        public async Task<IActionResult> ReportIssueAsync()
-        {
-            return await Task.Run(() => View());
-        }
-
         [HttpGet]
         [Route("verify-tlevel/{id}", Name = RouteConstants.VerifyTlevel)]
         public async Task<IActionResult> VerifyAsync(int id)
@@ -119,6 +114,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View("Verify", model);
             }
 
+            if (viewModel.IsEverythingCorrect == false)
+                return RedirectToRoute(RouteConstants.ReportTlevelIssue);
+
             var isSuccess = await _tlevelLoader.ConfirmTlevelAsync(viewModel);
             
             if(isSuccess)
@@ -131,6 +129,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute("error/500");
             }
         }
+
+        [HttpGet]
+        [Route("report-tlevel-issue", Name=RouteConstants.ReportTlevelIssue)]
+        public async Task<IActionResult> ReportIssueAsync()
+        {
+            return await Task.Run(() => View());
+        }
+
 
         private async Task<VerifyTlevelViewModel> GetVerifyTlevelData(int pathwayId)
         {
