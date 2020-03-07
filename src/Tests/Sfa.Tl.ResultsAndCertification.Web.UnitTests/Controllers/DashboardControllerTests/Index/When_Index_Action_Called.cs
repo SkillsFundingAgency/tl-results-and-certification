@@ -14,7 +14,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardCont
 
         public override void Setup()
         {
-            HttpContextAccessor = Substitute.For<IHttpContextAccessor>();            
+            HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
+            Controller = new DashboardController();
         }
 
         public override void When()

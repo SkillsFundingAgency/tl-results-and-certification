@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
-using System.Security.Claims;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardControllerTests.Index
@@ -13,21 +12,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardCont
     {
         public override void Given()
         {
-            HttpContextAccessor.HttpContext.Returns(new DefaultHttpContext
-            {
-                User = new ClaimsPrincipal(new ClaimsIdentity(new[]
-                {
-                    new Claim(CustomClaimTypes.HasAccessToService, "true")
-                }))
-            });
+            var httpContext = new ClaimsIdentityBuilder<DashboardController>(Controller)
+                .Add(CustomClaimTypes.HasAccessToService, "true")
+                .Build()
+                .HttpContext;
 
-            Controller = new DashboardController()
-            {
-                ControllerContext = new ControllerContext
-                {
-                    HttpContext = HttpContextAccessor.HttpContext
-                }
-            };
+            HttpContextAccessor.HttpContext.Returns(httpContext);
         }
 
         [Fact]
