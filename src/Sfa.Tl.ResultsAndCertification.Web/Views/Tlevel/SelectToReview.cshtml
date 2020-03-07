@@ -7,7 +7,7 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form asp-action="SelectToReview" method="post">
+        <form asp-route="TlevelSelect">
 
             @if (Model.IsOnlyOneTlevelReviewPending)
             {
@@ -17,7 +17,7 @@
             {
                 <partial name="~/Views/Tlevel/SelectToReview/_more.cshtml" />
             }
-            <button type="submit" class="govuk-button" data-module="govuk-button">@SelectToReview.Continue_Button_Label</button>  @*TODO: another story?*@
+            <button type="submit" class="govuk-button" data-module="govuk-button">@SelectToReview.Continue_Button_Label</button>
             @if (Model.ShowViewReviewedTlevelsLink)
             {
                 <p class="govuk-body"><a href="view-all-tlevels">@SelectToReview.ViewReviewedTlevelsLink</a></p>

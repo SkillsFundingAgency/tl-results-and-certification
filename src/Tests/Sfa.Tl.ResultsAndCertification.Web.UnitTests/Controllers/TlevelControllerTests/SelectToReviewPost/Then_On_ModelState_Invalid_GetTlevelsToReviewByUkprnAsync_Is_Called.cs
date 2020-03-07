@@ -1,9 +1,6 @@
-﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
+﻿using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.SelectToReviewPost

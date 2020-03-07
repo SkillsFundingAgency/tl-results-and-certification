@@ -8,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 {
     public class Then_Redirected_To_TlevelVerify_Route : When_SelecctToReview_Get_Action_Is_Called
     {
-        private int selectedPathwayId = 11;
+        private readonly int selectedPathwayId = 11;
         public override void Given()
         {
             InputModel = new SelectToReviewPageViewModel { SelectedPathwayId = selectedPathwayId };
