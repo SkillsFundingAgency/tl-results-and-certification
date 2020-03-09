@@ -64,8 +64,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<TlevelQueryViewModel> GetQueryTlevelViewModelAsync(long ukprn, int id)
         {
-            // TODO:
-            return await Task.Run(() => new TlevelQueryViewModel { PathwayName = "TODO", Specialisms = new List<string>{ "Dev", "In progress"}, PathwayStatusId = 1  });
+            var tlevelDetails = await _internalApiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
+            return _mapper.Map<TlevelQueryViewModel>(tlevelDetails);
         }
     }
 }
