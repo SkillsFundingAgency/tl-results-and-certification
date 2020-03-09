@@ -2,7 +2,7 @@
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview.SelectToReviewPageViewModel
 
 @{
-    ViewData["Title"] = @SelectToReview.Page_Title;
+    ViewData["Title"] = Model.IsOnlyOneTlevelReviewPending ? @SelectToReview.One_Page_Title : @SelectToReview.More_Page_Title;
 }
 
 <div class="govuk-grid-row">
