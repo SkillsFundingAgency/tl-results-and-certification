@@ -14,5 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<IEnumerable<YourTlevelsViewModel>> GetTlevelsByStatusIdAsync(long ukprn, int statusId);
         Task<bool> ConfirmTlevelAsync(VerifyTlevelViewModel viewModel);
         Task<TlevelConfirmationViewModel> GetTlevelConfirmationDetailsAsync(long ukprn, int pathwayId);
+        Task<TlevelQueryViewModel> GetQueryTlevelViewModelAsync(long ukprn, int id);
     }
 }
