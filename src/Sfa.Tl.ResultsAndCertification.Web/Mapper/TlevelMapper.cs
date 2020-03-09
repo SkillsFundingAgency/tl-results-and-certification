@@ -55,6 +55,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom((src, dest, destMember, context) => $"{src.FirstOrDefault(x => x.PathwayId == (int)context.Items["pathwayId"]).RouteName}: {src.FirstOrDefault(x => x.PathwayId == (int)context.Items["pathwayId"]).PathwayName}"))
                .ForMember(d => d.TlevelConfirmationText, opts => opts.MapFrom((src, dest, destMember, context) => string.Format(Confirmation.Section_Heading,  src.FirstOrDefault(x => x.PathwayId == (int)context.Items["pathwayId"]).StatusId == (int)TlevelReviewStatus.Confirmed ? Confirmation.Confirmed_Text : Confirmation.Queried_Text)))
                .ForMember(d => d.ShowMoreTlevelsToReview, opts => opts.MapFrom(s => s.Any(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation)));
+
+            CreateMap<TlevelPathwayDetails, TlevelQueryViewModel>()
+               .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
+               .ForMember(d => d.PathwayStatusId, opts => opts.MapFrom(s => s.PathwayStatusId))
+               .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
+               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms));
         }
     }
 }

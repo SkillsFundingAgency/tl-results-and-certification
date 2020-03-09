@@ -61,5 +61,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var tLevels = await _internalApiClient.GetAllTlevelsByUkprnAsync(ukprn);
             return _mapper.Map<TlevelConfirmationViewModel>(tLevels, opt => opt.Items["pathwayId"] = pathwayId);
         }
+
+        public async Task<TlevelQueryViewModel> GetQueryTlevelViewModelAsync(long ukprn, int id)
+        {
+            var tlevelDetails = await _internalApiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
+            return _mapper.Map<TlevelQueryViewModel>(tlevelDetails);
+        }
     }
 }
