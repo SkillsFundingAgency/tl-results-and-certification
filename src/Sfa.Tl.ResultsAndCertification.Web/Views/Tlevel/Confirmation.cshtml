@@ -12,6 +12,10 @@
             <div class="govuk-panel__body">@Model?.TlevelTitle</div>
         </div>
 
+        @if (Model.ShowMoreTlevelsToReview)
+        {
+            <p class="govuk-body">@Confirmation.Queried_Info_Text</p>
+        }
         <p class="govuk-body govuk-!-padding-bottom-4">@(Model.ShowMoreTlevelsToReview ? @Confirmation.More_Tlevels_Text : @Confirmation.Finished_Reviewing_All_Tlevels_Text)</p>
 
         @if (Model.ShowMoreTlevelsToReview)

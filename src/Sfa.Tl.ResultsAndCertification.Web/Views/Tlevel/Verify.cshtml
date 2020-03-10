@@ -40,9 +40,9 @@
             <div class="govuk-form-group govuk-!-margin-bottom-7" sfa-validation-for="IsEverythingCorrect" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
                     <div class="govuk-radios">
+                        <span class="govuk-visually-hidden">@Verify.Section_Heading</span>
                         <span sfa-validation-for="IsEverythingCorrect"></span>
                         <div class="govuk-radios__item">
-                            <span class="govuk-visually-hidden">@Verify.Section_Heading</span>
                             <input class="govuk-radios__input" id="iseverythingcorrect" asp-for="IsEverythingCorrect" type="radio" value="true">
                             <label class="govuk-label govuk-radios__label" for="iseverythingcorrect">
                                 @Verify.Yes_Radio_Button_Text

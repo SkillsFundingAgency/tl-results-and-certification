@@ -97,6 +97,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to We will investigate your query and update you within 3 working days..
+        /// </summary>
+        public static string Queried_Info_Text {
+            get {
+                return ResourceManager.GetString("Queried_Info_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to queried.
         /// </summary>
         public static string Queried_Text {

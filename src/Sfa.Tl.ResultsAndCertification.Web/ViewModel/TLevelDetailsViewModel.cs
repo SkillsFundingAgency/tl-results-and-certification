@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
 {
@@ -15,6 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
         public string RouteName { get; set; }
         public string PathwayName { get; set; }
         public bool ShowSomethingIsNotRight { get; set; }
-        public IEnumerable<String> Specialisms { get; set; }
+        public IEnumerable<string> Specialisms { get; set; }
     }
 }
