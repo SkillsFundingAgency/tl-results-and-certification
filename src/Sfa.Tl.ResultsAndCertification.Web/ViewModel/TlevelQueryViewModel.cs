@@ -12,11 +12,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
         }
 
         public int TqAwardingOrganisationId { get; set; }
+        public int PathwayId { get; set; }
         public int PathwayStatusId { get; set; }
         public string PathwayName { get; set; }
         public IEnumerable<string> Specialisms { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.SelectToReview), ErrorMessageResourceName = "Required_Validation_Message")]
+        [Required(ErrorMessageResourceType = typeof(ErrorResource.Query), ErrorMessageResourceName = "Query_Required_Validation_Message")]
         public string Query { get; set; }
     }
 }

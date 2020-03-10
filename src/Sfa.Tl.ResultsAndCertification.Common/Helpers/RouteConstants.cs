@@ -12,7 +12,8 @@
         public const string VerifyTlevel = "VerifyTlevel";
         public const string ConfirmTlevel = "ConfirmTlevel";
         public const string TlevelConfirmation = "TlevelConfirmation";
-        public const string ReportTlevelIssue = "ReportTlevelIssue";
+        public const string ReportTlevelIssue = "ReportTlevelIssue";  // ReportTlevel_Get
+        public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // ReportTlevel_Post
 
         // Error
         public const string PageNotFound = "PageNotFound";

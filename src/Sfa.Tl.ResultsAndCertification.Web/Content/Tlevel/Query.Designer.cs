@@ -88,20 +88,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter what is wrong with this T Level’s details.
+        /// </summary>
+        public static string Query_Required_Validation_Message {
+            get {
+                return ResourceManager.GetString("Query_Required_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tell us what’s wrong with this T Level&apos;s details..
         /// </summary>
         public static string Query_Textbox_Title {
             get {
                 return ResourceManager.GetString("Query_Textbox_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter what is wrong with this T Level’s details.
-        /// </summary>
-        public static string Required_Validation_Message {
-            get {
-                return ResourceManager.GetString("Required_Validation_Message", resourceCulture);
             }
         }
         

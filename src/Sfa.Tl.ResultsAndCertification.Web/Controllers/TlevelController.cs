@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -140,7 +141,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            return View(tlevelDetails);
+            return View(tlevelDetails); ;
+        }
+
+        [HttpPost]
+        [Route("report-tlevel-issue", Name = RouteConstants.SubmitTlevelIssue)]
+        public async Task<ActionResult> ReportIssueAsync(TlevelQueryViewModel viewModel) 
+        {
+            if (!ModelState.IsValid)
+            {
+                var tlevelDetails = await _tlevelLoader.GetQueryTlevelViewModelAsync(User.GetUkPrn(), viewModel.PathwayId);
+                return View(tlevelDetails);
+            }
+
+            // TODO: Below need to be fully implemented and tested in the next story. 
+            TempData["IsRedirect"] = true;
+            return RedirectToRoute(RouteConstants.TlevelConfirmation, new { id = viewModel.PathwayId });
         }
 
         private async Task<VerifyTlevelViewModel> GetVerifyTlevelData(int pathwayId)

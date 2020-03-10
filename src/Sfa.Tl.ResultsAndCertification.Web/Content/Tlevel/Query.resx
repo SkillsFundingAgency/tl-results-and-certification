@@ -126,11 +126,11 @@
   <data name="Pathway_Field_Label" xml:space="preserve">
     <value>Core</value>
   </data>
+  <data name="Query_Required_Validation_Message" xml:space="preserve">
+    <value>Enter what is wrong with this T Level’s details</value>
+  </data>
   <data name="Query_Textbox_Title" xml:space="preserve">
     <value>Tell us what’s wrong with this T Level's details.</value>
-  </data>
-  <data name="Required_Validation_Message" xml:space="preserve">
-    <value>Enter what is wrong with this T Level’s details</value>
   </data>
   <data name="Section_Heading" xml:space="preserve">
     <value>Query T Level details</value>
