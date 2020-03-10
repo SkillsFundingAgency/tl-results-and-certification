@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return awardOrgPathwayStatus;
         }
 
-        public async Task<bool> ConfirmTlevelAsync(ConfirmTlevelDetails model)
+        public async Task<bool> VerifyTlevelAsync(VerifyTlevelDetails model)
         {
             var tqAwardingOrganisation = await _awardingOrganisationRepository.GetSingleOrDefaultAsync(p => p.Id == model.TqAwardingOrganisationId);
             

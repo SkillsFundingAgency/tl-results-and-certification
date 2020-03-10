@@ -102,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("confirm-tlevel", Name = RouteConstants.ConfirmTlevel)]
-        public async Task<IActionResult> ConfirmTlevel(VerifyTlevelViewModel viewModel)
+        public async Task<IActionResult> ConfirmTlevelAsyc(VerifyTlevelViewModel viewModel)
         {
             if (viewModel == null || viewModel.PathwayStatusId != (int)TlevelReviewStatus.AwaitingConfirmation)
             {
@@ -118,7 +118,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel.IsEverythingCorrect == false)
                 return RedirectToRoute(RouteConstants.ReportTlevelIssue, new { id = viewModel.PathwayId });
 
-            var isSuccess = await _tlevelLoader.ConfirmTlevelAsync(viewModel);
+            var isSuccess = await _tlevelLoader.VerifyTlevelAsync(viewModel);
             
             if(isSuccess)
             {

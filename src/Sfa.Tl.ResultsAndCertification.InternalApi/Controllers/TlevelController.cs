@@ -46,10 +46,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }       
 
         [HttpPut]
-        [Route("ConfirmTlevel")]
-        public async Task<IActionResult> ConfirmTlevelAsync(ConfirmTlevelDetails model)
+        [Route("VerifyTlevel")]
+        public async Task<IActionResult> VerifyTlevelAsync(VerifyTlevelDetails model)
         {
-            var result = await _awardingOrganisationService.ConfirmTlevelAsync(model);
+            var result = await _awardingOrganisationService.VerifyTlevelAsync(model);
             return Ok(result);
         }
     }

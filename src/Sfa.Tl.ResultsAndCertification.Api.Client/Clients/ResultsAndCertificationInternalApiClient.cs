@@ -44,10 +44,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<TlevelPathwayDetails>(requestUri);
         }
 
-        public async Task<bool> ConfirmTlevelAsync(ConfirmTlevelDetails model)
+        public async Task<bool> VerifyTlevelAsync(VerifyTlevelDetails model)
         {
-            var requestUri = ApiConstants.ConfirmTlevelUri;
-            return await PutAsync<ConfirmTlevelDetails, bool>(requestUri, model);
+            var requestUri = ApiConstants.VerifyTlevelUri;
+            return await PutAsync<VerifyTlevelDetails, bool>(requestUri, model);
         }
 
         private void SetBearerToken()

@@ -10,6 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByUkprnAsync(long ukprn);
         Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByStatusIdAsync(long ukprn, int statusId);
         Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id);
-        Task<IActionResult> ConfirmTlevelAsync(ConfirmTlevelDetails model);
+        Task<IActionResult> VerifyTlevelAsync(VerifyTlevelDetails model);
     }
 }
