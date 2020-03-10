@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
 {
@@ -15,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
         public string PathwayName { get; set; }
         public IEnumerable<string> Specialisms { get; set; }
 
-        [Required(ErrorMessage = "TODO: Enter a valid")]
+        [Required(ErrorMessageResourceType = typeof(ErrorResource.SelectToReview), ErrorMessageResourceName = "Required_Validation_Message")]
         public string Query { get; set; }
     }
 }

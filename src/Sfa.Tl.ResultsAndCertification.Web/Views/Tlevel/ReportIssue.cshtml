@@ -2,18 +2,18 @@
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TlevelQueryViewModel
 
 @{
-    ViewData["Title"] = "Report T Level issue page";
+    ViewData["Title"] = @Query.Page_Title;
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <h1 class="govuk-heading-xl">Query T Level details</h1>
+        <h1 class="govuk-heading-xl">@Query.Section_Heading</h1>
 
         <form class="form" action="confirmation-finished-queried" method="post">
             <div class="govuk-form-group">
                 <label class="govuk-label" for="more-detail">
-                    Tell us what’s wrong with this T Level's details.
+                    @Query.Query_Textbox_Title
                 </label>
                 <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
             </div>
@@ -21,7 +21,7 @@
             <dl class="govuk-summary-list govuk-!-margin-bottom-7">
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
-                        Core
+                        @Query.Pathway_Field_Label
                     </dt>
                     <dd class="govuk-summary-list__value">
                         @Model.PathwayName
@@ -30,7 +30,7 @@
 
                 <div class="govuk-summary-list__row">
                     <dt class="govuk-summary-list__key">
-                        Specialisms
+                        @Query.Specialisms_Field_Label
                     </dt>
                     <dd class="govuk-summary-list__value">
                         <p class="govuk-body">
@@ -43,9 +43,9 @@
                 </div>
             </dl>
 
-            <p class="govuk-body">We will investigate your query and update you within 3 working days.</p>
+            <p class="govuk-body">@Query.Investigation_Information_Text</p>
 
-            <button class="govuk-button" data-module="govuk-button">Submit</button>
+            <button class="govuk-button" data-module="govuk-button">@Query.Submit_Button_Text</button>
         </form>
     </div>
 </div>
