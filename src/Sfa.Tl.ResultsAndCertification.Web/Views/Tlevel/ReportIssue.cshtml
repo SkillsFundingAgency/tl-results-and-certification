@@ -5,17 +5,18 @@
     ViewData["Title"] = @Query.Page_Title;
 }
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+<form asp-route="SubmitTlevelIssue">
+    <input type="hidden" asp-for="TqAwardingOrganisationId" />
+    <input type="hidden" asp-for="PathwayId" />
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">@Query.Section_Heading</h1>
 
-        <h1 class="govuk-heading-xl">@Query.Section_Heading</h1>
-
-        <form class="form" action="confirmation-finished-queried" method="post">
             <div class="govuk-form-group">
                 <label class="govuk-label" for="more-detail">
                     @Query.Query_Textbox_Title
                 </label>
-                <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
+                <textarea class="govuk-textarea" id="more-detail" rows="5" aria-describedby="more-detail-hint" asp-for="Query"></textarea>
             </div>
 
             <dl class="govuk-summary-list govuk-!-margin-bottom-7">
@@ -33,19 +34,18 @@
                         @Query.Specialisms_Field_Label
                     </dt>
                     <dd class="govuk-summary-list__value">
-                        <p class="govuk-body">
-                            @foreach (var splsm in Model?.Specialisms)
-                            {
+                        @foreach (var splsm in Model?.Specialisms)
+                        {
                             <p class="govuk-body">@splsm</p>
-                            }
-                        </p>
-                        </dd>
+                        }
+                    </dd>
                 </div>
             </dl>
 
             <p class="govuk-body">@Query.Investigation_Information_Text</p>
 
-            <button class="govuk-button" data-module="govuk-button">@Query.Submit_Button_Text</button>
-        </form>
+            <button type="submit"  class="govuk-button" data-module="govuk-button">@Query.Submit_Button_Text</button>
+
+        </div>
     </div>
-</div>
+</form>
