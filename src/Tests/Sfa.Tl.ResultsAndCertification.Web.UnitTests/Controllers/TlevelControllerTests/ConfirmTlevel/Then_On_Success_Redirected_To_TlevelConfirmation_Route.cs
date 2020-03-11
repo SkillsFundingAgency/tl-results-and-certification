@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         {
 
             InputModel = new ConfirmTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.AwaitingConfirmation, PathwayId = pathwayId };
-            TlevelLoader.VerifyTlevelAsync(InputModel).Returns(true);
+            TlevelLoader.ConfirmTlevelAsync(InputModel).Returns(true);
         }
 
         [Fact]
