@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -146,7 +147,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("report-tlevel-issue", Name = RouteConstants.SubmitTlevelIssue)]
-        public async Task<ActionResult> ReportIssueAsync(TlevelQueryViewModel viewModel) 
+        public async Task<IActionResult> ReportIssueAsync(TlevelQueryViewModel viewModel) 
         {
             if (!ModelState.IsValid)
             {

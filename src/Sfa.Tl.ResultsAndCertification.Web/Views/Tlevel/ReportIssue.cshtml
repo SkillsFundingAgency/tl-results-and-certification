@@ -16,10 +16,10 @@
             <input type="hidden" asp-for="TqAwardingOrganisationId" />
 
             <div class="govuk-form-group" sfa-validation-for="Query" sfa-validation-class="govuk-form-group--error">
-                <span sfa-validation-for="Query"></span>
-                <label class="govuk-label" for="Query">
+                <label class="govuk-label" for="query">
                     @Query.Query_Textbox_Title
                 </label>
+                <span sfa-validation-for="Query"></span>
                 <textarea class="govuk-textarea" id="query" asp-for="Query" rows="5"></textarea>
             </div>
 
