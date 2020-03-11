@@ -141,13 +141,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            return View(tlevelDetails); ;
+            return View(tlevelDetails);
         }
 
         [HttpPost]
         [Route("report-tlevel-issue", Name = RouteConstants.SubmitTlevelIssue)]
         public async Task<IActionResult> ReportIssueAsync(TlevelQueryViewModel viewModel) 
         {
+            if (viewModel == null || viewModel.PathwayStatusId != (int)TlevelReviewStatus.AwaitingConfirmation)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
             if (!ModelState.IsValid)
             {
                 var tlevelDetails = await _tlevelLoader.GetQueryTlevelViewModelAsync(User.GetUkPrn(), viewModel.PathwayId);

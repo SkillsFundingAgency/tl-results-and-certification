@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ReportIssueAsyncPost
@@ -17,47 +18,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         protected ITlevelLoader TlevelLoader;
         protected TlevelController Controller;
         protected Task<IActionResult> Result;
-        
-        protected long ukprn;
-        protected int pathwayId;
+        protected TempDataDictionary TempData;
 
-        protected TlevelQueryViewModel inputViewModel;
-        protected TlevelQueryViewModel expectedResult;
+        protected long Ukprn;
+        protected int PathwayId;
+
+        protected TlevelQueryViewModel InputViewModel;
+        protected TlevelQueryViewModel ExpectedResult;
+        protected IHttpContextAccessor HttpContextAccessor;
 
         public override void Setup()
         {
-            var httpContextAccessor = Substitute.For<IHttpContextAccessor>();
-            httpContextAccessor.HttpContext.Returns(new DefaultHttpContext
-            {
-                User = new ClaimsPrincipal(new ClaimsIdentity(new[]
-                {
-                    new Claim(CustomClaimTypes.Ukprn, ukprn.ToString())
-                }))
-            });
-
+            HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             TlevelLoader = Substitute.For<ITlevelLoader>();
-            Controller = new TlevelController(TlevelLoader)
-            {
-                ControllerContext = new ControllerContext
-                {
-                    HttpContext = httpContextAccessor.HttpContext
-                }
-            };
+            Controller = new TlevelController(TlevelLoader);
+            
+            var httpContext = new ClaimsIdentityBuilder<TlevelController>(Controller)
+                .Add(CustomClaimTypes.Ukprn, Ukprn.ToString())
+                .Build()
+                .HttpContext;
 
-            expectedResult = new TlevelQueryViewModel
+            HttpContextAccessor.HttpContext.Returns(httpContext);
+            TempData = new TempDataDictionary(HttpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
+            Controller.TempData = TempData;
+            ExpectedResult = new TlevelQueryViewModel
             {
                 PathwayId = 1,
                 PathwayName = "Test Pathway",
                 PathwayStatusId = 1,
                 Query = "Test query",
                 Specialisms = new List<string> { "Spl1", "Spl2" },
-                TqAwardingOrganisationId = pathwayId
+                TqAwardingOrganisationId = PathwayId
             };
         }
 
         public override void When()
         {
-            Result = Controller.ReportIssueAsync(inputViewModel);
+            Result = Controller.ReportIssueAsync(InputViewModel);
         }
     }
 }
