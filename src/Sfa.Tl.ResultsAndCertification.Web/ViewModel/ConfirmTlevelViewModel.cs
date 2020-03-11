@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
 {
-    public class VerifyTlevelViewModel
+    public class ConfirmTlevelViewModel
     {
-        public VerifyTlevelViewModel()
+        public ConfirmTlevelViewModel()
         {
             Specialisms = new List<string>();
         }

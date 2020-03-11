@@ -11,12 +11,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 {
     public class Then_Expected_ViewModel_Returned : When_VerifyAsync_Get_Action_Is_Called
     {
-        private VerifyTlevelViewModel expectedModel;
+        private ConfirmTlevelViewModel expectedModel;
 
         public override void Given()
         {
             pathwayId = 10;
-            expectedModel = new VerifyTlevelViewModel 
+            expectedModel = new ConfirmTlevelViewModel 
             {
                 TqAwardingOrganisationId = 1,
                 RouteId = 2,
@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public void Then_Expected_ViewModel_Results_Are_Returned()
         {
             var viewResult = Result.Result as ViewResult;
-            var model = viewResult.Model as VerifyTlevelViewModel;
+            var model = viewResult.Model as ConfirmTlevelViewModel;
 
             model.Should().NotBeNull();
             model.TqAwardingOrganisationId.Should().Be(expectedModel.TqAwardingOrganisationId);

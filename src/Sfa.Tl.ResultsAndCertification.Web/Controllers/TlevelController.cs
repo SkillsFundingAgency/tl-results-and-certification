@@ -102,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("confirm-tlevel", Name = RouteConstants.ConfirmTlevel)]
-        public async Task<IActionResult> ConfirmTlevelAsyc(VerifyTlevelViewModel viewModel)
+        public async Task<IActionResult> ConfirmTlevelAsyc(ConfirmTlevelViewModel viewModel)
         {
             if (viewModel == null || viewModel.PathwayStatusId != (int)TlevelReviewStatus.AwaitingConfirmation)
             {
@@ -154,12 +154,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(tlevelDetails);
             }
 
-            // TODO: Below need to be fully implemented and tested in the next story. 
-            TempData["IsRedirect"] = true;
-            return RedirectToRoute(RouteConstants.TlevelConfirmation, new { id = viewModel.PathwayId });
+            var isSuccess = await _tlevelLoader.ReportIssueAsync(viewModel);
+
+            if (isSuccess)
+            {
+                TempData["IsRedirect"] = true;
+                return RedirectToRoute(RouteConstants.TlevelConfirmation, new { id = viewModel.PathwayId });
+            }
+            else
+            {
+                return RedirectToRoute("error/500");
+            }
         }
 
-        private async Task<VerifyTlevelViewModel> GetVerifyTlevelData(int pathwayId)
+        private async Task<ConfirmTlevelViewModel> GetVerifyTlevelData(int pathwayId)
         {
             return await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(HttpContext.User.GetUkPrn(), pathwayId);
         }

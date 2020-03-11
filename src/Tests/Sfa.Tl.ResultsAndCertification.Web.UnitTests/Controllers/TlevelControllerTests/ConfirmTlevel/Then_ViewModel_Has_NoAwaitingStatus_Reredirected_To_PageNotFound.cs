@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
     {
         public override void Given()
         {
-            InputModel = new VerifyTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.Confirmed };
+            InputModel = new ConfirmTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.Confirmed };
         }
 
         [Fact]

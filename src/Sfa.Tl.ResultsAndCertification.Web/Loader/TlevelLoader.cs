@@ -44,16 +44,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<SelectToReviewPageViewModel>(tLevels);
         }
 
-        public async Task<VerifyTlevelViewModel> GetVerifyTlevelDetailsByPathwayIdAsync(long ukprn, int id)
+        public async Task<ConfirmTlevelViewModel> GetVerifyTlevelDetailsByPathwayIdAsync(long ukprn, int id)
         {
             var tLevelPathwayInfo = await _internalApiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
-            return _mapper.Map<VerifyTlevelViewModel>(tLevelPathwayInfo);
+            return _mapper.Map<ConfirmTlevelViewModel>(tLevelPathwayInfo);
         }
 
-        public async Task<bool> VerifyTlevelAsync(VerifyTlevelViewModel viewModel)
+        public async Task<bool> VerifyTlevelAsync(ConfirmTlevelViewModel viewModel)
         {
             var confirmModel = _mapper.Map<VerifyTlevelDetails>(viewModel);
             return await _internalApiClient.VerifyTlevelAsync(confirmModel);
+        }
+        
+        public async Task<bool> ReportIssueAsync(TlevelQueryViewModel viewModel)
+        {
+            var queriedModel = _mapper.Map<VerifyTlevelDetails>(viewModel);
+            return await _internalApiClient.VerifyTlevelAsync(queriedModel);
         }
 
         public async Task<TlevelConfirmationViewModel> GetTlevelConfirmationDetailsAsync(long ukprn, int pathwayId)
