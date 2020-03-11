@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<ConfirmTlevelViewModel>(tLevelPathwayInfo);
         }
 
-        public async Task<bool> VerifyTlevelAsync(ConfirmTlevelViewModel viewModel)
+        public async Task<bool> ConfirmTlevelAsync(ConfirmTlevelViewModel viewModel)
         {
             var confirmModel = _mapper.Map<VerifyTlevelDetails>(viewModel);
             return await _internalApiClient.VerifyTlevelAsync(confirmModel);

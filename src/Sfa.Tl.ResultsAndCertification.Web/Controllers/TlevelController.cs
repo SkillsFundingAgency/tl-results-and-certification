@@ -119,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel.IsEverythingCorrect == false)
                 return RedirectToRoute(RouteConstants.ReportTlevelIssue, new { id = viewModel.PathwayId });
 
-            var isSuccess = await _tlevelLoader.VerifyTlevelAsync(viewModel);
+            var isSuccess = await _tlevelLoader.ConfirmTlevelAsync(viewModel);
             
             if(isSuccess)
             {
