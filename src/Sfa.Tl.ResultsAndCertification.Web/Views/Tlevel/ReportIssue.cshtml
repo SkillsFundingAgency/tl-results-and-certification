@@ -5,18 +5,22 @@
     ViewData["Title"] = @Query.Page_Title;
 }
 
-<form asp-route="SubmitTlevelIssue">
-    <input type="hidden" asp-for="TqAwardingOrganisationId" />
-    <input type="hidden" asp-for="PathwayId" />
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">@Query.Section_Heading</h1>
+<partial name="_ValidationSummary" />
 
-            <div class="govuk-form-group">
-                <label class="govuk-label" for="more-detail">
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">@Query.Section_Heading</h1>
+
+        <form asp-route="SubmitTlevelIssue">
+            <input type="hidden" asp-for="PathwayId" />
+            <input type="hidden" asp-for="TqAwardingOrganisationId" />
+
+            <div class="govuk-form-group" sfa-validation-for="Query" sfa-validation-class="govuk-form-group--error">
+                <label class="govuk-label" for="query">
                     @Query.Query_Textbox_Title
                 </label>
-                <textarea class="govuk-textarea" id="more-detail" rows="5" aria-describedby="more-detail-hint" asp-for="Query"></textarea>
+                <span sfa-validation-for="Query"></span>
+                <textarea class="govuk-textarea" id="query" asp-for="Query" rows="5"></textarea>
             </div>
 
             <dl class="govuk-summary-list govuk-!-margin-bottom-7">
@@ -44,8 +48,7 @@
 
             <p class="govuk-body">@Query.Investigation_Information_Text</p>
 
-            <button type="submit"  class="govuk-button" data-module="govuk-button">@Query.Submit_Button_Text</button>
-
-        </div>
+            <button class="govuk-button" data-module="govuk-button" type="submit">@Query.Submit_Button_Text</button>
+        </form>
     </div>
-</form>
+</div>

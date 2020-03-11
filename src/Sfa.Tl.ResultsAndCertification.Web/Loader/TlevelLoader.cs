@@ -70,6 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<TlevelQueryViewModel> GetQueryTlevelViewModelAsync(long ukprn, int id)
         {
+            // id is mapped to TqAwardingOrganisation.id in DB
             var tlevelDetails = await _internalApiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
             return _mapper.Map<TlevelQueryViewModel>(tlevelDetails);
         }
