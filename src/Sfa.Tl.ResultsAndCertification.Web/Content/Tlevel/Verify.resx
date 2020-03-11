@@ -123,6 +123,9 @@
   <data name="Core_Field_Label" xml:space="preserve">
     <value>Core</value>
   </data>
+  <data name="IsEverythingCorrect_Required_Validation_Message" xml:space="preserve">
+    <value>Select yes if this T Level’s details are correct</value>
+  </data>
   <data name="No_Radio_Button_Text" xml:space="preserve">
     <value>No - tell us what's wrong</value>
   </data>

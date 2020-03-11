@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select yes if this T Level’s details are correct.
+        /// </summary>
+        public static string IsEverythingCorrect_Required_Validation_Message {
+            get {
+                return ResourceManager.GetString("IsEverythingCorrect_Required_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No - tell us what&apos;s wrong.
         /// </summary>
         public static string No_Radio_Button_Text {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
@@ -15,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
         public int PathwayId { get; set; }
         public int PathwayStatusId { get; set; }
         public string PathwayName { get; set; }
-        [Required(ErrorMessage =  "Select yes if this T Level’s details are correct")]
+        [Required(ErrorMessageResourceType = typeof(Verify), ErrorMessageResourceName = "IsEverythingCorrect_Required_Validation_Message")]
         public bool? IsEverythingCorrect { get; set; }
         public IEnumerable<string> Specialisms { get; set; }
     }

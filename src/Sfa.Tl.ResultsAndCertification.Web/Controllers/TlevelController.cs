@@ -84,7 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            return View("Verify", viewModel);
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var confirmationViewModel = await _tlevelLoader.GetTlevelConfirmationDetailsAsync(User.GetUkPrn(), id);
             
-            return View("Confirmation", confirmationViewModel);
+            return View(confirmationViewModel);
         }
 
         [HttpPost]
@@ -141,7 +141,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
             return View(tlevelDetails); ;
         }
 
