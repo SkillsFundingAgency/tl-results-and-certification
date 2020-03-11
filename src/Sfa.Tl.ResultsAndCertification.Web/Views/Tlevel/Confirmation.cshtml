@@ -12,7 +12,7 @@
             <div class="govuk-panel__body">@Model?.TlevelTitle</div>
         </div>
 
-        @if (Model.ShowMoreTlevelsToReview)
+        @if (Model.IsQueried)
         {
             <p class="govuk-body">@Confirmation.Queried_Info_Text</p>
         }
