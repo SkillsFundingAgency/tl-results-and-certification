@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         {
             Id = 1;
             TempData["IsRedirect"] = true;
-            expectedResult = new TlevelConfirmationViewModel { PathwayId = 1, ShowMoreTlevelsToReview = true, TlevelConfirmationText = "Success", TlevelTitle = "Title" };
+            expectedResult = new TlevelConfirmationViewModel { PathwayId = 1, ShowMoreTlevelsToReview = true, TlevelConfirmationText = "Success", TlevelTitle = "Title", IsQueried = true };
 
             TlevelLoader.GetTlevelConfirmationDetailsAsync(ukprn, Id)
                 .Returns(expectedResult);
@@ -35,6 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             model.Should().NotBeNull();
             model.PathwayId.Should().Be(expectedResult.PathwayId);
             model.ShowMoreTlevelsToReview.Should().Be(expectedResult.ShowMoreTlevelsToReview);
+            model.IsQueried.Should().Be(expectedResult.IsQueried);
             model.TlevelConfirmationText.Should().Be(expectedResult.TlevelConfirmationText);
             model.TlevelTitle.Should().Be(expectedResult.TlevelTitle);
         }
