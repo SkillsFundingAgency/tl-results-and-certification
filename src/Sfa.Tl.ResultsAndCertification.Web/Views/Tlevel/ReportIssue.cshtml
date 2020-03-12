@@ -5,10 +5,11 @@
     ViewData["Title"] = @Query.Page_Title;
 }
 
-<partial name="_ValidationSummary" />
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+        <partial name="_ValidationSummary" />
+
         <h1 class="govuk-heading-xl">@Query.Section_Heading</h1>
 
         <form asp-route="SubmitTlevelIssue">

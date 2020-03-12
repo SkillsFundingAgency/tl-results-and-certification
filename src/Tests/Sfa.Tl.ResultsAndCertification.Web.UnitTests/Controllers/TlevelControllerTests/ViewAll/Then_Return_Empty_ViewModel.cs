@@ -13,14 +13,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public override void Given()
         {
             var mockresult = new List<YourTlevelsViewModel>();
-            TlevelLoader.GetAllTlevelsByUkprnAsync(Arg.Any<long>())
+            TlevelLoader.GetYourTlevelsViewModel(Arg.Any<long>())
                 .Returns(mockresult);
         }
 
         [Fact]
         public void Then_GetAllTlevelsByUkprnAsync_Is_Called()
         {
-            TlevelLoader.Received().GetAllTlevelsByUkprnAsync(Arg.Any<long>());
+            TlevelLoader.Received().GetYourTlevelsViewModel(Arg.Any<long>());
         }
 
         [Fact]

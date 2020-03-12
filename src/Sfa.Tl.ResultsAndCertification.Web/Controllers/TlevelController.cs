@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("view-all-tlevels", Name = RouteConstants.ViewAllTlevels)]
         public async Task<IActionResult> ViewAllAsync()
         {
-            var viewModel = await _tlevelLoader.GetAllTlevelsByUkprnAsync(User.GetUkPrn());
+            var viewModel = await _tlevelLoader.GetYourTlevelsViewModel(User.GetUkPrn());
             return View(viewModel);
         }
 

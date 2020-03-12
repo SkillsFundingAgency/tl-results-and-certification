@@ -19,14 +19,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
                     new YourTlevelsViewModel { PathwayId = 1, StatusId = 1, TlevelTitle = "RouteName1: Pathway1" },
                     new YourTlevelsViewModel { PathwayId = 2, StatusId = 2, TlevelTitle = "RouteName2: Pathway2"}
             };
-            TlevelLoader.GetAllTlevelsByUkprnAsync(Arg.Any<long>())
+            TlevelLoader.GetYourTlevelsViewModel(Arg.Any<long>())
                 .Returns(mockresult);
         }
 
         [Fact]
         public void Then_GetAllTlevelsByUkprnAsync_Is_Called()
         {
-            TlevelLoader.Received().GetAllTlevelsByUkprnAsync(Arg.Any<long>());
+            TlevelLoader.Received().GetYourTlevelsViewModel(Arg.Any<long>());
         }
 
         [Fact]

@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
 
         public override void When()
         {
-            ActualResult = Loader.GetAllTlevelsByUkprnAsync(Ukprn).Result;
+            ActualResult = Loader.GetYourTlevelsViewModel(Ukprn).Result;
         }
     }
 }
