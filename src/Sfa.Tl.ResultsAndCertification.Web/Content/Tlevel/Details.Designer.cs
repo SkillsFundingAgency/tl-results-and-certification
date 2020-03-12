@@ -79,6 +79,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to T Level details queried by your organisation.
+        /// </summary>
+        public static string Queried_Info_SubHeading {
+            get {
+                return ResourceManager.GetString("Queried_Info_SubHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We are investigating this query and will update your organisation within 3 working days of it being submitted..
+        /// </summary>
+        public static string Queried_Info_Text {
+            get {
+                return ResourceManager.GetString("Queried_Info_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Return to your T Levels list.
         /// </summary>
         public static string ReturnToTlevel_Button_Text {

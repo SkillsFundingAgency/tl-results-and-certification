@@ -12,12 +12,14 @@
         @if (Model.ShowQueriedInfo)
         {
             <div class="govuk-inset-text">
-                <h2 class="govuk-heading-m">T Level details queried by your organisation</h2>
-                <p>We are investigating this query and will update your organisation within 3 working days of it being submitted.</p>
+                <h2 class="govuk-heading-m">@Details.Queried_Info_SubHeading</h2>
+                <p>@Details.Queried_Info_Text</p>
             </div>
         }
 
-        <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+        @{var marginBottomClassName = Model.ShowQueriedInfo ? "govuk-!-margin-bottom-9" : "govuk-!-margin-bottom-4"; }
+
+        <dl class="govuk-summary-list @marginBottomClassName">
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     @Details.Core_Field_Label
@@ -44,6 +46,6 @@
                 <a class="govuk-link" href="/tlevel/reportissue">@Details.SomethingNotRight_Link_Text</a>
             </p>
         }
-        <a asp-controller="Tlevel" asp-action="Index" class="govuk-button" data-module="govuk-button">@Details.ReturnToTlevel_Button_Text</a>
+        <a asp-route="Tlevel" class="govuk-button" data-module="govuk-button">@Details.ReturnToTlevel_Button_Text</a>
     </div>
 </div>

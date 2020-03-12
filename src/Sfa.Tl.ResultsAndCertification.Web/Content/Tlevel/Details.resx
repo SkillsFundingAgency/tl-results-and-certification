@@ -123,6 +123,12 @@
   <data name="Core_Field_Label" xml:space="preserve">
     <value>Core</value>
   </data>
+  <data name="Queried_Info_SubHeading" xml:space="preserve">
+    <value>T Level details queried by your organisation</value>
+  </data>
+  <data name="Queried_Info_Text" xml:space="preserve">
+    <value>We are investigating this query and will update your organisation within 3 working days of it being submitted.</value>
+  </data>
   <data name="ReturnToTlevel_Button_Text" xml:space="preserve">
     <value>Return to your T Levels list</value>
   </data>
