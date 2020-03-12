@@ -14,6 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
         public string RouteName { get; set; }
         public string PathwayName { get; set; }
         public bool ShowSomethingIsNotRight { get; set; }
+        public bool ShowQueriedInfo { get; set; }
         public IEnumerable<string> Specialisms { get; set; }
     }
 }
