@@ -28,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
             ActualResult.RouteName.Should().Be(ExpectedResult.RouteName);
             ActualResult.PathwayName.Should().Be(ExpectedResult.PathwayName);
             ActualResult.ShowSomethingIsNotRight.Should().Be(ExpectedResult.ShowSomethingIsNotRight);
+            ActualResult.ShowQueriedInfo.Should().Be(ExpectedResult.ShowQueriedInfo);
         }
     }
 }
