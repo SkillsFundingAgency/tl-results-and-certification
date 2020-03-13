@@ -28,18 +28,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<TLevelDetailsViewModel>(tLevelPathwayInfo);
         }
 
-        public async Task<IEnumerable<YourTlevelsViewModel>> GetYourTlevelsViewModel(long ukprn)
+        public async Task<YourTlevelsViewModel> GetYourTlevelsViewModel(long ukprn)
         {
             var tLevels = await _internalApiClient.GetAllTlevelsByUkprnAsync(ukprn);
-            var yourTlevels = tLevels.Where(x => x.StatusId != (int)TlevelReviewStatus.AwaitingConfirmation);
+            return _mapper.Map<YourTlevelsViewModel>(tLevels);
 
-            return _mapper.Map<IEnumerable<YourTlevelsViewModel>>(yourTlevels);
+            //// TODO: validate if check for null reqd.
+            //var viewModel = new YourTlevelsViewModel
+            //{
+            //    IsAnyReviewPending = tLevels.Any(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation),
+            //    ConfirmedTlevels = FilterTlevelsByStatus(tLevels, TlevelReviewStatus.Confirmed).ToList(),
+            //    QueriedTlevels = FilterTlevelsByStatus(tLevels, TlevelReviewStatus.Queried).ToList()
+            //};
+
+            //return viewModel;
         }
 
-        public async Task<IEnumerable<YourTlevelsViewModel>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
+        public async Task<IEnumerable<YourTlevelViewModel>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
         {
             var tLevels = await _internalApiClient.GetTlevelsByStatusIdAsync(ukprn, statusId);
-            return _mapper.Map<IEnumerable<YourTlevelsViewModel>>(tLevels);
+            return _mapper.Map<IEnumerable<YourTlevelViewModel>>(tLevels);
         }
 
         public async Task<SelectToReviewPageViewModel> GetTlevelsToReviewByUkprnAsync(long ukprn)
@@ -77,6 +85,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             // id is mapped to TqAwardingOrganisation.id in DB
             var tlevelDetails = await _internalApiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
             return _mapper.Map<TlevelQueryViewModel>(tlevelDetails);
+        }
+
+        private static IEnumerable<YourTlevelViewModel> FilterTlevelsByStatus(IEnumerable<AwardingOrganisationPathwayStatus> tLevels, TlevelReviewStatus status)
+        {
+            return tLevels?.Where(x => x.StatusId == (int)status)
+                            .Select(x => new YourTlevelViewModel
+                            {
+                                PathwayId = x.PathwayId,
+                                TlevelTitle = $"{x.RouteName}: {x.PathwayName}"
+                            });
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
-@model IEnumerable<Sfa.Tl.ResultsAndCertification.Web.ViewModel.YourTlevelsViewModel>
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.YourTlevelsViewModel
 
 @{
     ViewData["Title"] = @ViewAll.Page_Title;
@@ -10,44 +10,17 @@
 
         <h1 class="govuk-heading-xl">@ViewAll.Section_Heading</h1>
 
-        <h2 class="govuk-heading-m">Confirmed T Levels</h2>
-        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        @if (Model.ConfirmedTlevels.Any())
+        {
+            <h2 class="govuk-heading-m">Confirmed T Levels</h2>
+            <partial name="~/Views/Tlevel/YourTlevels/_tlevels.cshtml" model="Model.ConfirmedTlevels" />
+        }
 
-            @foreach (var item in Model.Where(x => x.StatusId == 2))@*TODO: Revisit*@
-            {
-                <div class="govuk-summary-list__row">
-                    <dd class="govuk-summary-list__value">
-                        @item.TlevelTitle
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="tlevel-details/@item.PathwayId">
-                            @ViewAll.View_Link_Text<span class="govuk-visually-hidden"> @item.TlevelTitle</span>
-                        </a>
-                    </dd>
-                </div>
-            }
-        </dl>
-
-        @*TODO: Write a partial*@
-        <h2 class="govuk-heading-m">Queried T Levels</h2> @*TODO: Content*@
-        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-
-            @foreach (var item in Model.Where(x => x.StatusId == 3))@*TODO: Revisit*@
-            {
-                <div class="govuk-summary-list__row">
-                    <dd class="govuk-summary-list__value">
-                        @item.TlevelTitle
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="tlevel-details/@item.PathwayId">
-                            @ViewAll.View_Link_Text<span class="govuk-visually-hidden"> @item.TlevelTitle</span>
-                        </a>
-                    </dd>
-                </div>
-            }
-        </dl>
-
-
+        @if (Model.QueriedTlevels.Any())
+        {
+            <h2 class="govuk-heading-m">Queried T Levels</h2> @*TODO: Content*@
+            <partial name="~/Views/Tlevel/YourTlevels/_tlevels.cshtml" model="Model.QueriedTlevels" />
+        }
 
         <a asp-controller="Dashboard"
            asp-action="Index" class="govuk-button" data-module="govuk-button">@ViewAll.Home_Button_Text</a>

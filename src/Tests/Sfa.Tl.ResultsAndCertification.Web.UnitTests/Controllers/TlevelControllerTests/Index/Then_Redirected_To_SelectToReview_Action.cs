@@ -14,10 +14,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
     {
         public override void Given()
         {
-            var mockresult = new List<YourTlevelsViewModel>
+            var mockresult = new List<YourTlevelViewModel>
             {
-                    new YourTlevelsViewModel { PathwayId = 1, StatusId = 1, TlevelTitle = "RouteName1: Pathway1" },
-                    new YourTlevelsViewModel { PathwayId = 2, StatusId = 1, TlevelTitle = "RouteName2: Pathway2"}
+                    new YourTlevelViewModel { PathwayId = 1, TlevelTitle = "RouteName1: Pathway1" },
+                    new YourTlevelViewModel { PathwayId = 2, TlevelTitle = "RouteName2: Pathway2"}
             };
             TlevelLoader.GetTlevelsByStatusIdAsync(Arg.Any<long>(), Arg.Any<int>())
                 .Returns(mockresult);
