@@ -93,4 +93,10 @@
     <None Include="Sfa.Tl.ResultsAndCertification.Database.Local.publish.xml" />
     <Build Include="Tables\TlMandatoryAdditionalRequirement.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="environment">
+      <DefaultValue>test</DefaultValue>
+      <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
+  </ItemGroup>
 </Project>
