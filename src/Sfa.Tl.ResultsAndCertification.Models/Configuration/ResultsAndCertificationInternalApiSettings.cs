@@ -1,6 +1,6 @@
 ﻿namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
 {
-    public class ResultsAndCertificationApiSettings
+    public class ResultsAndCertificationInternalApiSettings
     {
         public string InternalApiUri { get; set; }
 

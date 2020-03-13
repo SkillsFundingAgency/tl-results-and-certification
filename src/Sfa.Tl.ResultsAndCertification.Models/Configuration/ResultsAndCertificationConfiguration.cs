@@ -27,11 +27,13 @@
         public DfeSignInSettings DfeSignInSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the results and certification API settings.
+        /// Gets or sets the results and certification Internal API settings.
         /// </summary>
         /// <value>
-        /// The results and certification API settings.
+        /// The results and certification Internal API settings.
         /// </value>
-        public ResultsAndCertificationApiSettings ResultsAndCertificationApiSettings { get; set; }
+        public ResultsAndCertificationInternalApiSettings ResultsAndCertificationInternalApiSettings { get; set; }
+
+        public bool IsDev { get; set; }
     }
 }

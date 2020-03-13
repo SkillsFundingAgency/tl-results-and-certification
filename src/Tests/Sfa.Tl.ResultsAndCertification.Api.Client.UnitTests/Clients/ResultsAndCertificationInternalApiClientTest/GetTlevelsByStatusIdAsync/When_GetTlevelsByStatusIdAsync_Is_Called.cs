@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
             _configuration = new ResultsAndCertificationConfiguration
             {
-                ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "http://tlevel.api.com" }
+                ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { InternalApiUri = "http://tlevel.api.com" }
             };
 
             _mockHttpResult = new List<AwardingOrganisationPathwayStatus>

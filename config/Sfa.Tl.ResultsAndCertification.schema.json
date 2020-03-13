@@ -92,7 +92,7 @@
       ],
       "type": "object"
     },
-	"ResultsAndCertificationApiSettings": {
+	"ResultsAndCertificationInternalApiSettings": {
       "properties": {    
 		"InternalApiUri": {
           "minLength": 1,
@@ -130,7 +130,7 @@
     "SqlConnectionString",
     "BlobStorageConnectionString",
     "DfeSignInSettings",
-	"ResultsAndCertificationApiSettings"
+	"ResultsAndCertificationInternalApiSettings"
   ],
   "type": "object"
 }

@@ -17,14 +17,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         private readonly HttpClient _httpClient;
         private readonly string _internalApiUri;
         private readonly ITokenServiceClient _tokenServiceClient;
+        private readonly bool _isDev;
 
         public ResultsAndCertificationInternalApiClient(HttpClient httpClient, ITokenServiceClient tokenService, ResultsAndCertificationConfiguration configuration)
         {
+            _isDev = configuration.IsDev;
             _tokenServiceClient = tokenService;
             _httpClient = httpClient;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _internalApiUri = configuration.ResultsAndCertificationApiSettings.InternalApiUri.TrimEnd('/');
+            _internalApiUri = configuration.ResultsAndCertificationInternalApiSettings.InternalApiUri.TrimEnd('/');
             _httpClient.BaseAddress = new Uri(_internalApiUri);
         }
 
@@ -52,7 +54,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         private void SetBearerToken()
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenServiceClient.GetToken());
+            if (!_isDev)
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenServiceClient.GetToken());
+            }
         }
 
         private async Task<T> GetAsync<T>(string requestUri)

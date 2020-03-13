@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 {
     public class TokenServiceClient : ITokenServiceClient
     {
-        private IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ResultsAndCertificationConfiguration _config;
 
         public TokenServiceClient(IHttpContextAccessor httpContextAccessor, ResultsAndCertificationConfiguration configuration)
@@ -34,12 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
             // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_config.ResultsAndCertificationApiSettings.InternalApiSecret);
+            var key = Encoding.ASCII.GetBytes(_config.ResultsAndCertificationInternalApiSettings.InternalApiSecret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Issuer = _config.ResultsAndCertificationApiSettings.InternalApiIssuer,
+                Issuer = _config.ResultsAndCertificationInternalApiSettings.InternalApiIssuer,
                 Subject = new ClaimsIdentity(roleClaims),
-                Expires = DateTime.UtcNow.AddSeconds(_config.ResultsAndCertificationApiSettings.InternalApiTokenExpiryTime),
+                Expires = DateTime.UtcNow.AddSeconds(_config.ResultsAndCertificationInternalApiSettings.InternalApiTokenExpiryTime),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

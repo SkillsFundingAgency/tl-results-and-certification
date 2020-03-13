@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _tokenServiceClient = Substitute.For<ITokenServiceClient>();
             _configuration = new ResultsAndCertificationConfiguration
             {
-                ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "https://test.xyz.com" }
+                ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { InternalApiUri = "https://test.xyz.com" }
             };
 
             _mockHttpResult = new List<AwardingOrganisationPathwayStatus>
