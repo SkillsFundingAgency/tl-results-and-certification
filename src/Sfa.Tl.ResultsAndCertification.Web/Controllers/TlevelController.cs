@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +9,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
-using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {

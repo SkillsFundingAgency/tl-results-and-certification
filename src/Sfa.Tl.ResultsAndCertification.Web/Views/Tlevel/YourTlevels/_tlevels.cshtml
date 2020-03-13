@@ -1,0 +1,20 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@model IEnumerable<Sfa.Tl.ResultsAndCertification.Web.ViewModel.YourTlevelViewModel>
+
+<dl class="govuk-summary-list govuk-!-margin-bottom-9">
+
+    @foreach (var tlevel in Model)
+    {
+        <div class="govuk-summary-list__row">
+            <dd class="govuk-summary-list__value">
+                @tlevel.TlevelTitle
+            </dd>
+            <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="tlevel-details/@tlevel.PathwayId">
+                    @ViewAll.View_Link_Text<span class="govuk-visually-hidden"> @tlevel.TlevelTitle</span>
+                </a>
+            </dd>
+        </div>
+    }
+
+</dl>
