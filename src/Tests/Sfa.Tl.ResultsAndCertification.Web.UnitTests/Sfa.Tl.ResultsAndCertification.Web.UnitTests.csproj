@@ -7,21 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\TlevelControllerTests\Index\**" />
-    <Compile Remove="Controllers\TlevelControllerTests\ViewAll\**" />
-    <Compile Remove="Loader\TlevelLoaderTests\GetAllTlevelsByUkprnAsync\**" />
-    <Compile Remove="Loader\TlevelLoaderTests\GetTlevelsByStatusIdAsync\**" />
-    <EmbeddedResource Remove="Controllers\TlevelControllerTests\Index\**" />
-    <EmbeddedResource Remove="Controllers\TlevelControllerTests\ViewAll\**" />
-    <EmbeddedResource Remove="Loader\TlevelLoaderTests\GetAllTlevelsByUkprnAsync\**" />
-    <EmbeddedResource Remove="Loader\TlevelLoaderTests\GetTlevelsByStatusIdAsync\**" />
-    <None Remove="Controllers\TlevelControllerTests\Index\**" />
-    <None Remove="Controllers\TlevelControllerTests\ViewAll\**" />
-    <None Remove="Loader\TlevelLoaderTests\GetAllTlevelsByUkprnAsync\**" />
-    <None Remove="Loader\TlevelLoaderTests\GetTlevelsByStatusIdAsync\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="Moq" Version="4.13.1" />

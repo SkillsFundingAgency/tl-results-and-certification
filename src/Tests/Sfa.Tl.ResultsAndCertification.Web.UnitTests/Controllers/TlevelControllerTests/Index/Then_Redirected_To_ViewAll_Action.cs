@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public override void Given()
         {
             TlevelLoader.GetTlevelsByStatusIdAsync(Arg.Any<long>(), Arg.Any<int>())
-                .Returns(new List<YourTlevelsViewModel>());
+                .Returns(new List<YourTlevelViewModel>());
         }
 
         [Fact]
