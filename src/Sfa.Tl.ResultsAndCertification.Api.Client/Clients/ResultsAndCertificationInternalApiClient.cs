@@ -17,11 +17,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         private readonly HttpClient _httpClient;
         private readonly string _internalApiUri;
         private readonly ITokenServiceClient _tokenServiceClient;
-        private readonly bool _isDev;
+        private readonly bool _isDevevelopment;
 
         public ResultsAndCertificationInternalApiClient(HttpClient httpClient, ITokenServiceClient tokenService, ResultsAndCertificationConfiguration configuration)
         {
-            _isDev = configuration.IsDev;
+            _isDevevelopment = configuration.IsDevevelopment;
             _tokenServiceClient = tokenService;
             _httpClient = httpClient;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         private void SetBearerToken()
         {
-            if (!_isDev)
+            if (!_isDevevelopment)
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenServiceClient.GetToken());
             }

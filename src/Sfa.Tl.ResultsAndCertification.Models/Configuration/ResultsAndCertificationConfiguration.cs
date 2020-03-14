@@ -40,7 +40,7 @@
         /// <value>
         ///   <c>true</c> if this instance is dev; otherwise, <c>false</c>.
         /// </value>
-        public bool IsDev { get; set; }
+        public bool IsDevevelopment { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [enable local authentication].
