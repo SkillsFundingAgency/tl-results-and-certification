@@ -17,9 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<AwardingOrganisationPathwayStatus, YourTlevelViewModel>()
                 .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
                 .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => $"{s.RouteName}: {s.PathwayName}"));
-            //.ForMember(d => d.StatusId, opts => opts.MapFrom(s => s.StatusId))
-            //.ForMember(d => d.PageTitle, opts => opts.MapFrom(s => "Your T Levels"));
-
+            
             CreateMap<IEnumerable<AwardingOrganisationPathwayStatus>, YourTlevelsViewModel>()
                 .ForMember(d => d.IsAnyReviewPending, opts => opts.MapFrom(s => s.Any(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation)))
                 .ForMember(d => d.ConfirmedTlevels, opts => opts.MapFrom(s => s.Where(x => x.StatusId == (int)TlevelReviewStatus.Confirmed)))

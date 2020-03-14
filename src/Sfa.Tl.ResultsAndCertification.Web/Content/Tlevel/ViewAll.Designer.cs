@@ -61,11 +61,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirmed T Levels.
+        ///   Looks up a localized string similar to Continue reviewing T Levels.
         /// </summary>
-        public static string ConfirmTlevels_Heading {
+        public static string Continue_Review_Button_Text {
             get {
-                return ResourceManager.GetString("ConfirmTlevels_Heading", resourceCulture);
+                return ResourceManager.GetString("Continue_Review_Button_Text", resourceCulture);
             }
         }
         
@@ -79,20 +79,65 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your T Levels.
+        ///   Looks up a localized string similar to You have one or more T Levels waiting for review..
         /// </summary>
-        public static string Page_Title {
+        public static string More_Tlevels_To_Review_Text {
             get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
+                return ResourceManager.GetString("More_Tlevels_To_Review_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View all T Levels page.
+        /// </summary>
+        public static string Page_Title_All_Reviewed {
+            get {
+                return ResourceManager.GetString("Page_Title_All_Reviewed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View all T Levels page.
+        /// </summary>
+        public static string Page_Title_Review_Pending {
+            get {
+                return ResourceManager.GetString("Page_Title_Review_Pending", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Your T Levels.
         /// </summary>
-        public static string Section_Heading {
+        public static string Section_Heading_All_Reviewed {
             get {
-                return ResourceManager.GetString("Section_Heading", resourceCulture);
+                return ResourceManager.GetString("Section_Heading_All_Reviewed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your reviewed T Levels.
+        /// </summary>
+        public static string Section_Heading_Review_Pending {
+            get {
+                return ResourceManager.GetString("Section_Heading_Review_Pending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmed T Levels.
+        /// </summary>
+        public static string Tlevels_Heading_Confirmed {
+            get {
+                return ResourceManager.GetString("Tlevels_Heading_Confirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Queried T Levels.
+        /// </summary>
+        public static string Tlevels_Heading_Queried {
+            get {
+                return ResourceManager.GetString("Tlevels_Heading_Queried", resourceCulture);
             }
         }
         

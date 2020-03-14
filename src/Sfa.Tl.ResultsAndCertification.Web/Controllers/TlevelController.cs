@@ -38,6 +38,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> ViewAllAsync()
         {
             var viewModel = await _tlevelLoader.GetYourTlevelsViewModel(User.GetUkPrn());
+            
+            if (viewModel == null || (!viewModel.ConfirmedTlevels.Any() && !viewModel.QueriedTlevels.Any()))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            
             return View(viewModel);
         }
 

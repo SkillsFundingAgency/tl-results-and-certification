@@ -117,17 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfirmTlevels_Heading" xml:space="preserve">
-    <value>Confirmed T Levels</value>
+  <data name="Continue_Review_Button_Text" xml:space="preserve">
+    <value>Continue reviewing T Levels</value>
   </data>
   <data name="Home_Button_Text" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="Page_Title" xml:space="preserve">
+  <data name="More_Tlevels_To_Review_Text" xml:space="preserve">
+    <value>You have one or more T Levels waiting for review.</value>
+  </data>
+  <data name="Page_Title_All_Reviewed" xml:space="preserve">
+    <value>View all T Levels page</value>
+  </data>
+  <data name="Page_Title_Review_Pending" xml:space="preserve">
+    <value>View all T Levels page</value>
+  </data>
+  <data name="Section_Heading_All_Reviewed" xml:space="preserve">
     <value>Your T Levels</value>
   </data>
-  <data name="Section_Heading" xml:space="preserve">
-    <value>Your T Levels</value>
+  <data name="Section_Heading_Review_Pending" xml:space="preserve">
+    <value>Your reviewed T Levels</value>
+  </data>
+  <data name="Tlevels_Heading_Confirmed" xml:space="preserve">
+    <value>Confirmed T Levels</value>
+  </data>
+  <data name="Tlevels_Heading_Queried" xml:space="preserve">
+    <value>Queried T Levels</value>
   </data>
   <data name="View_Link_Text" xml:space="preserve">
     <value>View</value>

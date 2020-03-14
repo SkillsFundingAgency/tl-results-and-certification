@@ -32,16 +32,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var tLevels = await _internalApiClient.GetAllTlevelsByUkprnAsync(ukprn);
             return _mapper.Map<YourTlevelsViewModel>(tLevels);
-
-            //// TODO: validate if check for null reqd.
-            //var viewModel = new YourTlevelsViewModel
-            //{
-            //    IsAnyReviewPending = tLevels.Any(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation),
-            //    ConfirmedTlevels = FilterTlevelsByStatus(tLevels, TlevelReviewStatus.Confirmed).ToList(),
-            //    QueriedTlevels = FilterTlevelsByStatus(tLevels, TlevelReviewStatus.Queried).ToList()
-            //};
-
-            //return viewModel;
         }
 
         public async Task<IEnumerable<YourTlevelViewModel>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
