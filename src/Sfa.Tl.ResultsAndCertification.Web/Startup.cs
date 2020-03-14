@@ -47,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                _config[Constants.ServiceNameConfigKey]);
 
             ResultsAndCertificationConfiguration.IsDev = _env.IsDevelopment();
+            ResultsAndCertificationConfiguration.EnableLocalAuthentication = true;
 
             services.AddApplicationInsightsTelemetry();
 

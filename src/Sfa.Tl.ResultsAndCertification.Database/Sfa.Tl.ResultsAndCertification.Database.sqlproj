@@ -95,7 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="environment">
-      <DefaultValue>test</DefaultValue>
+      <DefaultValue>dev</DefaultValue>
       <Value>$(SqlCmdVar__1)</Value>
     </SqlCmdVariable>
   </ItemGroup>

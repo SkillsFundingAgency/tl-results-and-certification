@@ -1,0 +1,23 @@
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+
+namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Local
+{
+    public class LocalAuthenticationSchemeOptions : AuthenticationSchemeOptions
+    {
+        public virtual ClaimsIdentity Identity { get; set; }
+        public string Ukprn { get; set; }
+        public bool HasAccessToService { get; set; }
+
+        public ClaimsIdentity ClaimsIdentity => new ClaimsIdentity(new[]
+        {
+            new Claim(ClaimTypes.Email, "test@test.com"),
+            new Claim(ClaimTypes.GivenName, "Firstname"),
+            new Claim(ClaimTypes.Surname, "Surname"),
+            new Claim(ClaimTypes.Role, RolesExtensions.SiteAdministrator),
+            new Claim(CustomClaimTypes.HasAccessToService, HasAccessToService.ToString()),            
+            new Claim(CustomClaimTypes.Ukprn, string.IsNullOrWhiteSpace(Ukprn) ? Ukprn : "10009696"),
+        }, "local");
+    }
+}
