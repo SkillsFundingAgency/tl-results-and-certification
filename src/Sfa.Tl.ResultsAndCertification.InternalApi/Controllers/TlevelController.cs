@@ -39,9 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("{ukprn}/TlevelDetails/{id}")]
         public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
         {
-            var tlevelDetails = await _pathwayService.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
-            return tlevelDetails;
-        }       
+            return await _pathwayService.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
+        }
 
         [HttpPut]
         [Route("VerifyTlevel")]

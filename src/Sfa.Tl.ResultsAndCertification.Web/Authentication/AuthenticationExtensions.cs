@@ -71,7 +71,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(cookieAndSessionTimeout);
                     options.LogoutPath = config.DfeSignInSettings.LogoutPath;
                     options.AccessDeniedPath = "/access-denied";
-                    options.EventsType = typeof(CustomCookieAuthenticationEvents);
                 })
                 .AddOpenIdConnect(options =>
                 {
@@ -91,9 +90,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
                     options.Scope.Add("organisation");
                     options.Scope.Add("offline_access");
-
-                    // Prompt=consent is required to be issued with a refresh token
-                    options.Prompt = "consent";
 
                     // When we expire the session, ensure user is prompted to sign in again at DfE Sign In
                     options.MaxAge = overallSessionTimeout;
@@ -229,8 +225,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                             // store both access and refresh token in the claims - hence in the cookie
                             identity.AddClaims(new[]
                             {
-                                new Claim(CustomClaimTypes.AccessToken, x.TokenEndpointResponse.AccessToken),
-                                new Claim(CustomClaimTypes.RefreshToken, x.TokenEndpointResponse.RefreshToken),
                                 new Claim(CustomClaimTypes.HasAccessToService, hasAccessToService.ToString()),
                                 new Claim(CustomClaimTypes.UserId, userClaims.UserId.ToString()),
                                 new Claim(ClaimTypes.GivenName, userClaims.FirstName),
