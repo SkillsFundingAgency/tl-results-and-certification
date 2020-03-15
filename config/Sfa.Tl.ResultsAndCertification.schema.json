@@ -94,25 +94,25 @@
     },
 	"ResultsAndCertificationInternalApiSettings": {
       "properties": {    
-		"InternalApiUri": {
+		"Uri": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "ResultsAndCertificationInternalApiUri"
         },
-        "InternalApiIssuer": {
+        "IdentifierUri": {
           "minLength": 1,
           "type": "string",
-          "environmentVariable": "ResultsAndCertificationInternalApiIssuer"
+          "environmentVariable": "ResultsAndCertificationInternalApiIdentifierUri"
         },        
-        "InternalApiSecret": {
+        "TenantId": {
           "minLength": 1,
           "type": "string",
-          "environmentVariable": "ResultsAndCertificationInternalApiSecret"
+          "environmentVariable": "ResultsAndCertificationInternalApiTenantId"
         },
-        "InternalApiTokenExpiryTime": {
+        "ClientId": {
           "minLength": 1,
           "type": "string",
-          "environmentVariable": "ResultsAndCertificationInternalApiTokenExpiryTime"
+          "environmentVariable": "ResultsAndCertificationInternalApiClientId"
         }
       },
       "additionalProperties": false,
