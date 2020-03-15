@@ -117,10 +117,10 @@
       },
       "additionalProperties": false,
       "required": [
-        "InternalApiUri",
-        "InternalApiIssuer",
-        "InternalApiSecret",
-        "InternalApiTokenExpiryTime"        
+        "Uri",
+        "IdentifierUri",
+        "TenantId",
+        "ClientId"        
       ],
       "type": "object"
     }
