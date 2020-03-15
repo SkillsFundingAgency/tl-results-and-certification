@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _httpClient = httpClient;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _internalApiUri = configuration.ResultsAndCertificationInternalApiSettings.InternalApiUri.TrimEnd('/');
+            _internalApiUri = configuration.ResultsAndCertificationInternalApiSettings.Uri.TrimEnd('/');
             _httpClient.BaseAddress = new Uri(_internalApiUri);
         }
 
@@ -52,17 +52,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PutAsync<VerifyTlevelDetails, bool>(requestUri, model);
         }
 
-        private void SetBearerToken()
+        private async Task SetBearerToken()
         {
             if (!_isDevevelopment)
             {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenServiceClient.GetToken());
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _tokenServiceClient.GetToken());
             }
         }
 
         private async Task<T> GetAsync<T>(string requestUri)
         {
-            SetBearerToken();
+            await SetBearerToken();
             var response = await _httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsAsync<T>();
@@ -82,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         private async Task<TResponse> PutAsync<TRequest, TResponse>(string requestUri, TRequest content)
         {
-            SetBearerToken();
+            await SetBearerToken();
             var response = await _httpClient.PutAsync(requestUri, CreateHttpContent<TRequest>(content));
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsAsync<TResponse>();

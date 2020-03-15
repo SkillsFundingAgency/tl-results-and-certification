@@ -2,12 +2,12 @@
 {
     public class ResultsAndCertificationInternalApiSettings
     {
-        public string InternalApiUri { get; set; }
+        public string Uri { get; set; }
 
-        public string InternalApiIssuer { get; set; }
+        public string IdentifierUri { get; set; }
 
-        public string InternalApiSecret { get; set; }
+        public string TenantId { get; set; }
 
-        public int InternalApiTokenExpiryTime { get; set; }
+        public string ClientId { get; set; }
     }
 }

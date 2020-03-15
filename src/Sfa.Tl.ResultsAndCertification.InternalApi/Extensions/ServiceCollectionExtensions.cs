@@ -1,10 +1,9 @@
-﻿using System;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
 {
@@ -13,27 +12,22 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
         public static IServiceCollection AddApiAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration configuration)
         {
             // configure jwt authentication
-            var key = Encoding.ASCII.GetBytes(configuration.ResultsAndCertificationInternalApiSettings.InternalApiSecret);
             services.AddAuthentication(x =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(x =>
             {
-                x.SaveToken = true;
+                x.Authority = $"https://login.microsoftonline.com/{configuration.ResultsAndCertificationInternalApiSettings.TenantId}";
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = configuration.ResultsAndCertificationInternalApiSettings.InternalApiIssuer,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = true,
-                    ValidateAudience = false,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
+                    ValidAudiences = new List<string>
+                    {
+                        configuration.ResultsAndCertificationInternalApiSettings.IdentifierUri,
+                        configuration.ResultsAndCertificationInternalApiSettings.ClientId
+                    }
                 };
             });
-
             return services;
         }
 
@@ -43,6 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
             {
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
+                    .RequireRole("Application")
                     .Build();
 
                 options.DefaultPolicy = policy;

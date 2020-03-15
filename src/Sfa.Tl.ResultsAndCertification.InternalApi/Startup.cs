@@ -34,7 +34,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             Configuration = configuration;
             _env = env;
         }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -58,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             });
 
             RegisterDependencies(services);
-
+            
             if (!_env.IsDevelopment())
             {
                 services.AddMvc(config =>
