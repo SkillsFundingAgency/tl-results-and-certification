@@ -65,6 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             });
             
             services.AddSingleton(ResultsAndCertificationConfiguration);
+            services.AddTransient<ITokenServiceClient, TokenServiceClient>();
             services.AddHttpClient<IResultsAndCertificationInternalApiClient, ResultsAndCertificationInternalApiClient>();
             
             var builder = services.AddMvc(config =>
