@@ -1,18 +1,24 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ViewAll
 {
-    public class Then_Return_Empty_ViewModel : When_ViewAll_Action_Called
+    public class Then_No_Results_Redirect_To_PageNotFound : When_ViewAll_Action_Called
     {
         public override void Given()
         {
-            var mockresult = new List<YourTlevelsViewModel>();
+            var mockresult = new YourTlevelsViewModel
+            {
+                IsAnyReviewPending = false,
+                ConfirmedTlevels = new List<YourTlevelViewModel>(),
+                QueriedTlevels = new List<YourTlevelViewModel>()
+            };
+
             TlevelLoader.GetYourTlevelsViewModel(Arg.Any<long>())
                 .Returns(mockresult);
         }
@@ -24,11 +30,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_GetAllTlevelsByUkprnAsync_ViewModel_Return_Zero_Rows()
+        public void Then_NoResults_ViewModel_Redirected_To_Route_PageNotFound()
         {
-            var viewResult = Result.Result as ViewResult;
-            var model = viewResult.Model as IList<YourTlevelsViewModel>;
-            model.Count().Should().Be(0);
+            var routeName = (Result.Result as RedirectToRouteResult).RouteName;
+            routeName.Should().Be(RouteConstants.PageNotFound);
         }
     }
 }

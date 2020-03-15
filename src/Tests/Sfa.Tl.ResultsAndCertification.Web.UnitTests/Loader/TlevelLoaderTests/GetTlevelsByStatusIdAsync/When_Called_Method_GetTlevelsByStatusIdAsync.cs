@@ -20,12 +20,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
 
         protected int PathwayId = 1;
         protected int StatusId = 1;
-        protected string ExpectedTLevelTitle = "Route: Pathway";
-        protected string ExpectedPageTitle = "Your T Levels";
-
+        
         protected IEnumerable<AwardingOrganisationPathwayStatus> ApiClientResponse;
-        protected IEnumerable<YourTlevelsViewModel> ActualResult;
+        protected IEnumerable<YourTlevelViewModel> ActualResult;
         protected AwardingOrganisationPathwayStatus ExpectedResult;
+        protected string ExpectedTLevelTitle = "Route: Pathway";
 
         public override void Setup()
         {
