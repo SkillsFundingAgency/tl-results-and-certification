@@ -139,7 +139,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> ReportIssueAsync(int id)
         {
             var tlevelDetails = await _tlevelLoader.GetQueryTlevelViewModelAsync(User.GetUkPrn(), id);
-            if (tlevelDetails == null || tlevelDetails.PathwayStatusId != (int)TlevelReviewStatus.AwaitingConfirmation)
+            if (tlevelDetails == null || (tlevelDetails.PathwayStatusId == (int)TlevelReviewStatus.Queried))
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
