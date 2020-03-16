@@ -2,7 +2,7 @@
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TLevelDetailsViewModel
 
 @{
-    ViewData["Title"] = @Details.Confirmed_Page_Title;
+    ViewData["Title"] = Model.ShowQueriedInfo ? @Details.Queried_Page_Title : @Details.Confirmed_Page_Title;
 }
 
 <div class="govuk-grid-row">

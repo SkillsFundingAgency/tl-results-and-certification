@@ -97,6 +97,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Queried T Level Details page.
+        /// </summary>
+        public static string Queried_Page_Title {
+            get {
+                return ResourceManager.GetString("Queried_Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Return to your T Levels list.
         /// </summary>
         public static string ReturnToTlevel_Button_Text {
