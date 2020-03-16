@@ -150,7 +150,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("report-tlevel-issue", Name = RouteConstants.SubmitTlevelIssue)]
         public async Task<IActionResult> ReportIssueAsync(TlevelQueryViewModel viewModel) 
         {
-            if (viewModel == null || viewModel.PathwayStatusId != (int)TlevelReviewStatus.AwaitingConfirmation)
+            if (viewModel == null || viewModel.PathwayStatusId == (int)TlevelReviewStatus.Queried)
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
