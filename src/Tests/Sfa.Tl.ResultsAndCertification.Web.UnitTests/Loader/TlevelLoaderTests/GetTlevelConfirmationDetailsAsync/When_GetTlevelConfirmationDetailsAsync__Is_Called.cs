@@ -20,13 +20,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         protected IEnumerable<AwardingOrganisationPathwayStatus> ApiClientResponse;
         protected TlevelConfirmationViewModel ActualResult;
         protected int PathwayId = 11;
+        protected int PathwayId2 = 22;
 
         public override void Setup()
         {
             ApiClientResponse = new List<AwardingOrganisationPathwayStatus>
             {
                 new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = PathwayId, PathwayName = "Path11", RouteName = "Route1", StatusId = 2 },
-                new AwardingOrganisationPathwayStatus { Id = 2, PathwayId = 22, PathwayName = "Path22", RouteName = "Route2", StatusId = 1 },
+                new AwardingOrganisationPathwayStatus { Id = 2, PathwayId = PathwayId2, PathwayName = "Path22", RouteName = "Route2", StatusId = 1 },
             };
 
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();

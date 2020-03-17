@@ -22,8 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
 
             actualResult.PathwayId.Should().Be(ExpectedResult.PathwayId);
             actualResult.TlevelTitle.Should().Be(ExpectedTLevelTitle);
-            actualResult.PageTitle.Should().Be(ExpectedPageTitle);
-            actualResult.StatusId.Should().Be(ExpectedResult.StatusId);
         }
     }
 }

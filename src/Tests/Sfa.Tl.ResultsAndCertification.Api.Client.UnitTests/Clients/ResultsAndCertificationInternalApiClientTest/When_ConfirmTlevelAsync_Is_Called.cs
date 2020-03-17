@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         protected ResultsAndCertificationInternalApiClient _apiClient;
         protected bool _mockHttpResult;
 
-        private ConfirmTlevelDetails _model;
+        private VerifyTlevelDetails _model;
 
         public override void Setup()
         {
@@ -36,11 +36,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
             _configuration = new ResultsAndCertificationConfiguration
             {
-                ResultsAndCertificationApiSettings = new ResultsAndCertificationApiSettings { InternalApiUri = "http://tlevel.api.com" }
+                ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
             };
 
             _mockHttpResult = true;
-            _model = new ConfirmTlevelDetails
+            _model = new VerifyTlevelDetails
             {
                 TqAwardingOrganisationId = 1,
                 PathwayStatusId = 2,
@@ -50,13 +50,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.ConfirmTlevelUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.VerifyTlevelUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
         {
-            Result = _apiClient.ConfirmTlevelAsync(_model);
+            Result = _apiClient.VerifyTlevelAsync(_model);
         }
 
         [Fact]

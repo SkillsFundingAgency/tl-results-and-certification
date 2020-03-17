@@ -17,14 +17,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         private readonly HttpClient _httpClient;
         private readonly string _internalApiUri;
         private readonly ITokenServiceClient _tokenServiceClient;
+        private readonly bool _isDevevelopment;
 
         public ResultsAndCertificationInternalApiClient(HttpClient httpClient, ITokenServiceClient tokenService, ResultsAndCertificationConfiguration configuration)
         {
+            _isDevevelopment = configuration.IsDevevelopment;
             _tokenServiceClient = tokenService;
             _httpClient = httpClient;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _internalApiUri = configuration.ResultsAndCertificationApiSettings.InternalApiUri.TrimEnd('/');
+            _internalApiUri = configuration.ResultsAndCertificationInternalApiSettings.Uri.TrimEnd('/');
             _httpClient.BaseAddress = new Uri(_internalApiUri);
         }
 
@@ -44,20 +46,23 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<TlevelPathwayDetails>(requestUri);
         }
 
-        public async Task<bool> ConfirmTlevelAsync(ConfirmTlevelDetails model)
+        public async Task<bool> VerifyTlevelAsync(VerifyTlevelDetails model)
         {
-            var requestUri = ApiConstants.ConfirmTlevelUri;
-            return await PutAsync<ConfirmTlevelDetails, bool>(requestUri, model);
+            var requestUri = ApiConstants.VerifyTlevelUri;
+            return await PutAsync<VerifyTlevelDetails, bool>(requestUri, model);
         }
 
-        private void SetBearerToken()
+        private async Task SetBearerToken()
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _tokenServiceClient.GetToken());
+            if (!_isDevevelopment)
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _tokenServiceClient.GetToken());
+            }
         }
 
         private async Task<T> GetAsync<T>(string requestUri)
         {
-            SetBearerToken();
+            await SetBearerToken();
             var response = await _httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsAsync<T>();
@@ -77,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         private async Task<TResponse> PutAsync<TRequest, TResponse>(string requestUri, TRequest content)
         {
-            SetBearerToken();
+            await SetBearerToken();
             var response = await _httpClient.PutAsync(requestUri, CreateHttpContent<TRequest>(content));
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsAsync<TResponse>();

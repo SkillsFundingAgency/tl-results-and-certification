@@ -121,13 +121,16 @@
     <value>confirmed</value>
   </data>
   <data name="Finished_Reviewing_All_Tlevels_Text" xml:space="preserve">
-    <value>You have finished reviewing all your T Levels' details.</value>
+    <value>You have no more T Levels to review.</value>
   </data>
   <data name="More_Tlevels_Text" xml:space="preserve">
     <value>You still have more T Levels to review.</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>T Level Confirmation page</value>
+  </data>
+  <data name="Queried_Info_Text" xml:space="preserve">
+    <value>We will investigate your query and update you within 3 working days.</value>
   </data>
   <data name="Queried_Text" xml:space="preserve">
     <value>queried</value>

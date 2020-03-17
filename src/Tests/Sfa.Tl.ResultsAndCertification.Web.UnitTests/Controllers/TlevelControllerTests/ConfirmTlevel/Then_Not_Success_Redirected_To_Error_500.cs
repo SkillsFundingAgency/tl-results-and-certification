@@ -14,12 +14,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public override void Given()
         {
 
-            InputModel = new VerifyTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.AwaitingConfirmation, PathwayId = pathwayId };
+            InputModel = new ConfirmTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.AwaitingConfirmation, PathwayId = pathwayId };
             TlevelLoader.ConfirmTlevelAsync(InputModel).Returns(false);
         }
 
         [Fact]
-        public void Then_ModelState_Not_Valid_Redirected_To_Error_500()
+        public void Then_Status_Update_Fail_Redirected_To_Error_500()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be("error/500");

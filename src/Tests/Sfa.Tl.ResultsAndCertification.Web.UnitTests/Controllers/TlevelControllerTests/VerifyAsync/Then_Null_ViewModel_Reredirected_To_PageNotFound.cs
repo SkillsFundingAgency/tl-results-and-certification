@@ -9,12 +9,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 {
     public class Then_Null_ViewModel_Reredirected_To_PageNotFound : When_VerifyAsync_Get_Action_Is_Called
     {
-        private VerifyTlevelViewModel viewModel;
+        private ConfirmTlevelViewModel viewModel = null;
 
         public override void Given()
         {
             pathwayId = 10;
-
+            
             TlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(ukprn, pathwayId)
                 .Returns(viewModel);
         }

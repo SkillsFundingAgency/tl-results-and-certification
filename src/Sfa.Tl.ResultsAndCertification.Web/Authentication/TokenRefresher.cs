@@ -39,8 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                 return TokenRefreshResult.Failed();
             }
 
-            DateTime expiresAtDate;
-            var isExpiresAtDateOk = DateTime.TryParse(expiresAt, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out expiresAtDate);
+            var isExpiresAtDateOk = DateTime.TryParse(expiresAt, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out DateTime expiresAtDate);
 
             if (!isExpiresAtDateOk || expiresAtDate >= GetRefreshThreshold())
             {

@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have finished reviewing all your T Levels&apos; details..
+        ///   Looks up a localized string similar to You have no more T Levels to review..
         /// </summary>
         public static string Finished_Reviewing_All_Tlevels_Text {
             get {
@@ -93,6 +93,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We will investigate your query and update you within 3 working days..
+        /// </summary>
+        public static string Queried_Info_Text {
+            get {
+                return ResourceManager.GetString("Queried_Info_Text", resourceCulture);
             }
         }
         

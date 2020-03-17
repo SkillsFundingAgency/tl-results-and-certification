@@ -4,16 +4,16 @@
     {
         // Route Constants
 
-
         // Tlevel
-        public const string Tlevels = "Tlevels";
+        public const string Tlevels = "Tlevels";        
         public const string ViewAllTlevels = "ViewAllTlevels";
         public const string TlevelDetails = "TlevelDetails";
         public const string TlevelSelect = "TlevelSelect";
-
         public const string VerifyTlevel = "VerifyTlevel";
         public const string ConfirmTlevel = "ConfirmTlevel";
         public const string TlevelConfirmation = "TlevelConfirmation";
+        public const string ReportTlevelIssue = "ReportTlevelIssue";  // ReportTlevel_Get
+        public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // ReportTlevel_Post
 
         // Error
         public const string PageNotFound = "PageNotFound";

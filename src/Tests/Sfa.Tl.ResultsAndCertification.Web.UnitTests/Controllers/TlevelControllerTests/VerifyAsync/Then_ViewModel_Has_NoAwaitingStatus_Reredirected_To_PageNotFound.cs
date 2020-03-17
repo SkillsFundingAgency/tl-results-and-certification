@@ -10,12 +10,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 {
     public class Then_ViewModel_Has_NoAwaitingStatus_Reredirected_To_PageNotFound : When_VerifyAsync_Get_Action_Is_Called
     {
-        private VerifyTlevelViewModel viewModel;
+        private ConfirmTlevelViewModel viewModel;
 
         public override void Given()
         {
             pathwayId = 10;
-            viewModel = new VerifyTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.Confirmed };
+            viewModel = new ConfirmTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.Confirmed };
 
             TlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(ukprn, pathwayId)
                 .Returns(viewModel);

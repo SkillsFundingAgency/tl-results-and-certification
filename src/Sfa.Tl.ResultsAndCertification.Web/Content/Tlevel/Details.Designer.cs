@@ -61,20 +61,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level Details.
+        ///   Looks up a localized string similar to Confirmed T Level Details page.
         /// </summary>
-        public static string Page_Title {
+        public static string Confirmed_Page_Title {
             get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
+                return ResourceManager.GetString("Confirmed_Page_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pathway.
+        ///   Looks up a localized string similar to Core.
         /// </summary>
-        public static string Pathway_Field_Label {
+        public static string Core_Field_Label {
             get {
-                return ResourceManager.GetString("Pathway_Field_Label", resourceCulture);
+                return ResourceManager.GetString("Core_Field_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level details queried by your organisation.
+        /// </summary>
+        public static string Queried_Info_SubHeading {
+            get {
+                return ResourceManager.GetString("Queried_Info_SubHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We are investigating this query and will update your organisation within 3 working days of it being submitted..
+        /// </summary>
+        public static string Queried_Info_Text {
+            get {
+                return ResourceManager.GetString("Queried_Info_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Queried T Level Details page.
+        /// </summary>
+        public static string Queried_Page_Title {
+            get {
+                return ResourceManager.GetString("Queried_Page_Title", resourceCulture);
             }
         }
         
@@ -88,11 +115,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Route.
+        ///   Looks up a localized string similar to T Level details.
         /// </summary>
-        public static string Route_Field_Label {
+        public static string Section_Heading_Text {
             get {
-                return ResourceManager.GetString("Route_Field_Label", resourceCulture);
+                return ResourceManager.GetString("Section_Heading_Text", resourceCulture);
             }
         }
         

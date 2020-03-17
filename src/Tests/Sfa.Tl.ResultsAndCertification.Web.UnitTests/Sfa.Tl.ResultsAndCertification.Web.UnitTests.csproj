@@ -20,8 +20,4 @@
     <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Web\Sfa.Tl.ResultsAndCertification.Web.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\TlevelControllerTests\SelectToReviewPost\" />
-  </ItemGroup>
-
 </Project>

@@ -12,11 +12,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
     public class Then_ModelState_Invalid_Returned_Verify_View : When_ConfirmTlevel_Action_Is_Called
     {
         private readonly int pathwayId = 99;
-        private VerifyTlevelViewModel expectedResult;
+        private ConfirmTlevelViewModel expectedResult;
 
         public override void Given()
         {
-            expectedResult = new VerifyTlevelViewModel
+            expectedResult = new ConfirmTlevelViewModel
             {
                 PathwayId = pathwayId,
                 PathwayName = "PathName",
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             };
 
 
-            InputModel = new VerifyTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.AwaitingConfirmation, PathwayId = pathwayId };
+            InputModel = new ConfirmTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.AwaitingConfirmation, PathwayId = pathwayId };
             TlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(ukprn, pathwayId)
                 .Returns(expectedResult);
 
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_On_ModelState_Not_Valid_Expected_ViewModel_Is_Returned()
         {
-            var actualViewModel = (VerifyTlevelViewModel) (Result.Result as ViewResult).Model;
+            var actualViewModel = (ConfirmTlevelViewModel) (Result.Result as ViewResult).Model;
             
             actualViewModel.PathwayId.Should().Be(expectedResult.PathwayId);
             actualViewModel.PathwayName.Should().Be(expectedResult.PathwayName);

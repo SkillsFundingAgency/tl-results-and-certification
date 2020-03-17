@@ -1,16 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class TlevelController : ControllerBase, ITlevelController
     {
         private readonly IAwardingOrganisationService _awardingOrganisationService;
@@ -41,15 +39,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("{ukprn}/TlevelDetails/{id}")]
         public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
         {
-            var tlevelDetails = await _pathwayService.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
-            return tlevelDetails;
-        }       
+            return await _pathwayService.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
+        }
 
         [HttpPut]
-        [Route("ConfirmTlevel")]
-        public async Task<IActionResult> ConfirmTlevelAsync(ConfirmTlevelDetails model)
+        [Route("VerifyTlevel")]
+        public async Task<IActionResult> VerifyTlevelAsync(VerifyTlevelDetails model)
         {
-            var result = await _awardingOrganisationService.ConfirmTlevelAsync(model);
+            var result = await _awardingOrganisationService.VerifyTlevelAsync(model);
             return Ok(result);
         }
     }

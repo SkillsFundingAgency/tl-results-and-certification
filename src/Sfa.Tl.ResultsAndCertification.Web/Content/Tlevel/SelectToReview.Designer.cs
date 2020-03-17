@@ -70,6 +70,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select T Levels page.
+        /// </summary>
+        public static string More_Page_Title {
+            get {
+                return ResourceManager.GetString("More_Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a T Level to review.
+        /// </summary>
+        public static string More_Review_Heading {
+            get {
+                return ResourceManager.GetString("More_Review_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You need to confirm the details of each T Level before you can tell us which providers are offering it..
+        /// </summary>
+        public static string More_Review_Text {
+            get {
+                return ResourceManager.GetString("More_Review_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a T Level to review.
+        /// </summary>
+        public static string More_SelectTlevel_Validation_Error_Message {
+            get {
+                return ResourceManager.GetString("More_SelectTlevel_Validation_Error_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 T Level to review page.
+        /// </summary>
+        public static string One_Page_Title {
+            get {
+                return ResourceManager.GetString("One_Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You have one T Level to review.
         /// </summary>
         public static string One_Review_Heading {
@@ -84,33 +129,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         public static string One_Review_Text {
             get {
                 return ResourceManager.GetString("One_Review_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select a T Level to Review.
-        /// </summary>
-        public static string Page_Title {
-            get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select a T Level to review.
-        /// </summary>
-        public static string Two_Review_Heading {
-            get {
-                return ResourceManager.GetString("Two_Review_Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You need to confirm the details of each T Level before you can tell us which centres are offering it..
-        /// </summary>
-        public static string Two_Review_Text {
-            get {
-                return ResourceManager.GetString("Two_Review_Text", resourceCulture);
             }
         }
         

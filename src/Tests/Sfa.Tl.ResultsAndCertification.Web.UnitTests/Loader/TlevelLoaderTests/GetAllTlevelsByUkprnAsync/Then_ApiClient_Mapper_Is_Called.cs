@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using NSubstitute;
-using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using FluentAssertions;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetAllTlevelsByUkprnAsync
 {
@@ -14,10 +14,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         }
 
         [Fact]
-        public void Then_Mapper_Is_Called()
+        public void Then_Expected_Results_Are_Returned()
         {
-            Mapper.Received().Map<IEnumerable<YourTlevelsViewModel>>(ApiClientResponse);
-        }
+            ActualResult.Should().NotBeNull();
+            ActualResult.IsAnyReviewPending.Should().BeTrue();
 
+            ActualResult.QueriedTlevels.Should().NotBeNull();
+            ActualResult.QueriedTlevels.Count().Should().Be(1);
+            ActualResult.QueriedTlevels.First().PathwayId.Should().Be(55);
+            ActualResult.QueriedTlevels.First().TlevelTitle.Should().Be("R5: P5");
+
+            ActualResult.ConfirmedTlevels.Should().NotBeNull();
+            ActualResult.ConfirmedTlevels.Count().Should().Be(3);
+            ActualResult.ConfirmedTlevels.First().PathwayId.Should().Be(22);
+            ActualResult.ConfirmedTlevels.First().TlevelTitle.Should().Be("R2: P2");
+        }
     }
 }

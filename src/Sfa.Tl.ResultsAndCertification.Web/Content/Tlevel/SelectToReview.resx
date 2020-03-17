@@ -120,20 +120,26 @@
   <data name="Continue_Button_Label" xml:space="preserve">
     <value>Continue</value>
   </data>
+  <data name="More_Page_Title" xml:space="preserve">
+    <value>Select T Levels page</value>
+  </data>
+  <data name="More_Review_Heading" xml:space="preserve">
+    <value>Select a T Level to review</value>
+  </data>
+  <data name="More_Review_Text" xml:space="preserve">
+    <value>You need to confirm the details of each T Level before you can tell us which providers are offering it.</value>
+  </data>
+  <data name="More_SelectTlevel_Validation_Error_Message" xml:space="preserve">
+    <value>Select a T Level to review</value>
+  </data>
+  <data name="One_Page_Title" xml:space="preserve">
+    <value>1 T Level to review page</value>
+  </data>
   <data name="One_Review_Heading" xml:space="preserve">
     <value>You have one T Level to review</value>
   </data>
   <data name="One_Review_Text" xml:space="preserve">
     <value>You need to confirm this T Level's details before you can tell us which providers are offering it.</value>
-  </data>
-  <data name="Page_Title" xml:space="preserve">
-    <value>Select a T Level to Review</value>
-  </data>
-  <data name="Two_Review_Heading" xml:space="preserve">
-    <value>Select a T Level to review</value>
-  </data>
-  <data name="Two_Review_Text" xml:space="preserve">
-    <value>You need to confirm the details of each T Level before you can tell us which centres are offering it.</value>
   </data>
   <data name="ViewReviewedTlevelsLink" xml:space="preserve">
     <value>View reviewed T levels</value>

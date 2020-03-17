@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -6,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return HttpContext.User.HasAccessToService() ? View() : (IActionResult)RedirectToRoute(RouteConstants.ServiceAccessDenied);
         }
     }
 }

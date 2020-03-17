@@ -1,35 +1,39 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
-@model IEnumerable<Sfa.Tl.ResultsAndCertification.Web.ViewModel.YourTlevelsViewModel>
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.YourTlevelsViewModel
 
 @{
-    ViewData["Title"] = @ViewAll.Page_Title;
+    ViewData["Title"] = Model.IsAnyReviewPending ? @ViewAll.Page_Title_Review_Pending : @ViewAll.Page_Title_All_Reviewed;
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <h1 class="govuk-heading-xl">@ViewAll.Section_Heading</h1>
+        <h1 class="govuk-heading-xl">
+            @(Model.IsAnyReviewPending ? @ViewAll.Section_Heading_Review_Pending : @ViewAll.Section_Heading_All_Reviewed)
+        </h1>
 
-        <h2 class="govuk-heading-m">Confirmed T Levels</h2>
+        @if (Model.ConfirmedTlevels.Any())
+        {
+            <h2 class="govuk-heading-m"> @ViewAll.Tlevels_Heading_Confirmed </h2>
+            <partial name="~/Views/Tlevel/YourTlevels/_tlevels.cshtml" model="Model.ConfirmedTlevels" />
+        }
 
-        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        @if (Model.QueriedTlevels.Any())
+        {
+            <h2 class="govuk-heading-m">@ViewAll.Tlevels_Heading_Queried</h2>
+            <partial name="~/Views/Tlevel/YourTlevels/_tlevels.cshtml" model="Model.QueriedTlevels" />
+        }
 
-            @foreach (var item in Model)
-            {
-                <div class="govuk-summary-list__row">
-                    <dd class="govuk-summary-list__value">
-                        @item.TlevelTitle
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="tlevel-details/@item.PathwayId">
-                            @ViewAll.View_Link_Text<span class="govuk-visually-hidden"> @item.TlevelTitle</span>
-                        </a>
-                    </dd>
-                </div>
-            }
-        </dl>
+        @if (Model.IsAnyReviewPending)
+        {
+            <p class="govuk-body">@ViewAll.More_Tlevels_To_Review_Text</p>
+            <a asp-route="TlevelSelect" class="govuk-button" data-module="govuk-button">@ViewAll.Continue_Review_Button_Text</a>
+        }
+        else
+        {
+            <a asp-controller="Dashboard"
+               asp-action="Index" class="govuk-button" data-module="govuk-button">@ViewAll.Home_Button_Text</a>
+        }
 
-        <a asp-controller="Dashboard"
-           asp-action="Index" class="govuk-button" data-module="govuk-button">@ViewAll.Home_Button_Text</a>
     </div>
 </div>

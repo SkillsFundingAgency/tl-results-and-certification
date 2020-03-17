@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
         private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
         private readonly TlevelReviewStatus _tlevelReviewStatus = TlevelReviewStatus.AwaitingConfirmation;
         private readonly TlevelReviewStatus _updatedTlevelReviewStatus = TlevelReviewStatus.Confirmed;
-        private ConfirmTlevelDetails _confirmTlevelDetailsModel;
+        private VerifyTlevelDetails _verifyTlevelDetailsModel;
         private bool _isSuccess;
 
         public override void Given()
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
             SeedTlevelTestData();
             CreateMapper();
 
-            _confirmTlevelDetailsModel = new ConfirmTlevelDetails
+            _verifyTlevelDetailsModel = new VerifyTlevelDetails
             {
                 TqAwardingOrganisationId = 0,
                 PathwayStatusId = (int)TlevelReviewStatus.Confirmed,
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
 
         public override void When()
         {
-            _isSuccess = _service.ConfirmTlevelAsync(_confirmTlevelDetailsModel).Result;
+            _isSuccess = _service.VerifyTlevelAsync(_verifyTlevelDetailsModel).Result;
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
                 c.AddMaps(typeof(AwardingOrganisationMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("DateTimeResolver") ?
-                                new DateTimeResolver<ConfirmTlevelDetails, TqAwardingOrganisation>(new DateTimeProvider()) :
+                                new DateTimeResolver<VerifyTlevelDetails, TqAwardingOrganisation>(new DateTimeProvider()) :
                                 null);
             });
             _mapper = new Mapper(mapperConfig);

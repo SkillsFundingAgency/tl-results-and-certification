@@ -29,7 +29,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.TagHelpers
             errorBuilder.InnerHtml.Append("Error:");
 
             var tagBuilder = new TagBuilder(context.TagName);
-            tagBuilder.Attributes.Add("id", For.Name.ToLowerInvariant() + "-error-message");
             tagBuilder.Attributes.Add("class", "govuk-error-message");
 
             output.Content.SetHtmlContent(errorBuilder);

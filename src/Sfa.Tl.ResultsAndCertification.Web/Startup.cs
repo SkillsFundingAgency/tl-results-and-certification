@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Configuration;
@@ -18,7 +17,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication;
-using Sfa.Tl.ResultsAndCertification.Web.Authentication.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.Filters;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
@@ -28,7 +26,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web
     public class Startup
     {
         private readonly IConfiguration _config;
-        private readonly ILogger<Startup> _logger;
         private readonly IWebHostEnvironment _env;
 
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
@@ -47,6 +44,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                _config[Constants.VersionConfigKey],
                _config[Constants.ServiceNameConfigKey]);
 
+            ResultsAndCertificationConfiguration.IsDevevelopment = _env.IsDevelopment();
+            ResultsAndCertificationConfiguration.EnableLocalAuthentication = false;
+
             services.AddApplicationInsightsTelemetry();
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -63,13 +63,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.HeaderName = "X-XSRF-TOKEN";
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
-
+            
             services.AddSingleton(ResultsAndCertificationConfiguration);
-            services.AddHttpClient<ITokenRefresher, TokenRefresher>();
-            services.AddTransient<CustomCookieAuthenticationEvents>().AddHttpContextAccessor();
             services.AddTransient<ITokenServiceClient, TokenServiceClient>();
             services.AddHttpClient<IResultsAndCertificationInternalApiClient, ResultsAndCertificationInternalApiClient>();
-            services.AddMvc(config =>
+            
+            var builder = services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
@@ -82,6 +81,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 config.Filters.Add<CustomExceptionFilterAttribute>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
+            if(_env.IsDevelopment())
+            {
+                builder.AddRazorRuntimeCompilation();
+            }
+
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
             services.AddAuthorization(options =>
             {
@@ -92,13 +96,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app)
         {
             var cultureInfo = new CultureInfo("en-GB");
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
-            if (env.IsDevelopment())
+            if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }

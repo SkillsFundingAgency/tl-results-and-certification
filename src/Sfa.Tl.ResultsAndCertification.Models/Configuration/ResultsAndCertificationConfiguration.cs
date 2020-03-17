@@ -27,11 +27,27 @@
         public DfeSignInSettings DfeSignInSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the results and certification API settings.
+        /// Gets or sets the results and certification Internal API settings.
         /// </summary>
         /// <value>
-        /// The results and certification API settings.
+        /// The results and certification Internal API settings.
         /// </value>
-        public ResultsAndCertificationApiSettings ResultsAndCertificationApiSettings { get; set; }
+        public ResultsAndCertificationInternalApiSettings ResultsAndCertificationInternalApiSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is dev.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is dev; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsDevevelopment { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [enable local authentication].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [enable local authentication]; otherwise, <c>false</c>.
+        /// </value>
+        public bool EnableLocalAuthentication { get; set; }
     }
 }
