@@ -71,6 +71,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
+            app.ConfigureExceptionHandlerMiddleware();
+            app.UseHttpsRedirection();
+            app.UseRouting();
+
             if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -80,10 +84,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                 app.UseAuthentication();
                 app.UseAuthorization();
             }
-
-            app.ConfigureExceptionHandlerMiddleware();
-            app.UseHttpsRedirection();
-            app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {

@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 {
     public class Then_PageNotFound_Error_On_Null_Result : When_Details_Action_Called
     {
-        private TLevelDetailsViewModel mockresult;
+        private TLevelDetailsViewModel mockresult = null;
 
         public override void Given()
         {
