@@ -11,6 +11,7 @@ Post-Deployment Script Template
 */
 IF ('$(environment)' <> 'test')
 BEGIN
+:r ".\SeedTlProviders.sql"
 :r ".\SeedTlAwardingOrganisations.sql"
 :r ".\SeedTlRoutes.sql"
 :r ".\SeedTlPathways.sql"
