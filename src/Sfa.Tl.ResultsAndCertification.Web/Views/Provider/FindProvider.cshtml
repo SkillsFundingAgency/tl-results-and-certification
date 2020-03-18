@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Find a provider";
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" action="/1-11/AO/centre-details-new" method="post">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
+                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
+                            Find a provider
+                        </h1>
+                    </legend>
+                    <p class="govuk-body">Tell us which T Levels a provider will offer.</p>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="search">
+                            Enter the provider's name
+                        </label>
+                        <input class="govuk-input" id="search" name="search" type="text" autocomplete="center-name">
+                    </div>
+
+                </fieldset>
+            </div>
+
+            <a class="govuk-button" data-module="govuk-button" asp-route="YourProviders">Continue</a>
+
+        </form>
+
+        
+    </div>
+</div>

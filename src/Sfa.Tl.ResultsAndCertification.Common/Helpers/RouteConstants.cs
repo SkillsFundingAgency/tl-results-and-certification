@@ -15,6 +15,11 @@
         public const string ReportTlevelIssue = "ReportTlevelIssue";  // ReportTlevel_Get
         public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // ReportTlevel_Post
 
+        // Providers
+        public const string Providers = "Providers";
+        public const string YourProviders = "YourProviders";
+        public const string FindProvider = "FindProvider";
+
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";
