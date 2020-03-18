@@ -86,6 +86,7 @@
     <PostDeploy Include="PostDeployment\PostDeploy.sql" />
     <None Include="PostDeployment\SeedTlAwardingOrganisations.sql" />
     <None Include="PostDeployment\SeedTlProviders.sql" />
+    <None Include="PostDeployment\SeedNotificationTemplates.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\PreDeploy.sql" />
