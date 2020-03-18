@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
         public IEnumerable<string> Specialisms { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ErrorResource.Query), ErrorMessageResourceName = "Query_Required_Validation_Message")]
+        [StringLength(10000, ErrorMessageResourceType = typeof(ErrorResource.Query), ErrorMessageResourceName = "Query_CharLimitExceeded_Validation_Message")]
         public string Query { get; set; }
     }
 }
