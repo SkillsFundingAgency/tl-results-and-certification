@@ -19,6 +19,14 @@
         public string SqlConnectionString { get; set; }
 
         /// <summary>
+        /// Gets or sets the gov uk notify API key.
+        /// </summary>
+        /// <value>
+        /// The gov uk notify API key.
+        /// </value>
+        public string GovUkNotifyApiKey { get; set; }
+
+        /// <summary>
         /// Gets or sets the dfe sign in settings.
         /// </summary>
         /// <value>

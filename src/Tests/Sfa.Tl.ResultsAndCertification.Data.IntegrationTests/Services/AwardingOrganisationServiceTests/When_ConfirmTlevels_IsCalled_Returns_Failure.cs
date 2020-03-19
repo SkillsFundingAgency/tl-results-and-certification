@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
             };
 
             _logger = Substitute.For<ILogger<IRepository<TqAwardingOrganisation>>>();
-            _service = new AwardingOrganisationService(Repository, _mapper, _logger);
+            _service = new AwardingOrganisationService(Repository, null, _mapper, _logger);
         }
 
         public override void When()

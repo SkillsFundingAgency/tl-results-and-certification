@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Notify.Client;
+using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Configuration;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
@@ -106,14 +108,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             RegisterApplicationServices(services);
         }
 
-        private static void RegisterApplicationServices(IServiceCollection services)
+        private void RegisterApplicationServices(IServiceCollection services)
         {
-            services.AddTransient(typeof(IRepository<TqAwardingOrganisation>), typeof(GenericRepository<TqAwardingOrganisation>));
-            services.AddTransient(typeof(IRepository<TlPathway>), typeof(GenericRepository<TlPathway>));
+            services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
+            //services.AddTransient(typeof(IRepository<TqAwardingOrganisation>), typeof(GenericRepository<TqAwardingOrganisation>));
+            //services.AddTransient(typeof(IRepository<TlPathway>), typeof(GenericRepository<TlPathway>));
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
             services.AddTransient<IPathwayService, PathwayService>();
             services.AddTransient<IDbContextBuilder, DbContextBuilder>();
+            services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(ResultsAndCertificationConfiguration.GovUkNotifyApiKey));
+            services.AddTransient<INotificationService, NotificationService>();
         }
     }
 }
