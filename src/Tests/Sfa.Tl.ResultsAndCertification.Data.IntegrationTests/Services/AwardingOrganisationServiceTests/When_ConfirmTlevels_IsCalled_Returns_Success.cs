@@ -13,6 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrganisationServiceTests
 {
@@ -35,9 +36,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
                 PathwayStatusId = (int)TlevelReviewStatus.Confirmed,
                 ModifiedBy = "TestUser"
             };
-
+            _resultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
+            {
+                GovUkNotifyApiKey = "GovUkNotifyApiKey"
+            };
             _logger = Substitute.For<ILogger<IRepository<TqAwardingOrganisation>>>();
-            _service = new AwardingOrganisationService(Repository, null, _mapper, _logger);
+            _service = new AwardingOrganisationService(_resultsAndCertificationConfiguration, Repository, null, _mapper, _logger);
         }
 
         public override void When()

@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -21,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
         protected TlAwardingOrganisation _tlAwardingOrganisation;
         protected TqAwardingOrganisation _tqAwardingOrganisation;
         protected IEnumerable<AwardingOrganisationPathwayStatus> _result;
+        protected ResultsAndCertificationConfiguration _resultsAndCertificationConfiguration;
 
         protected virtual void CreateMapper()
         {

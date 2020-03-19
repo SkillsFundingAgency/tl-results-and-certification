@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,17 +17,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class AwardingOrganisationService : IAwardingOrganisationService
     {
+        private readonly ResultsAndCertificationConfiguration _resultsAndCertificationConfiguration;
         private readonly IRepository<TqAwardingOrganisation> _awardingOrganisationRepository;
         private readonly INotificationService _notificationService;
         private readonly IMapper _mapper;
         private readonly ILogger<IRepository<TqAwardingOrganisation>> _logger;
 
         public AwardingOrganisationService(
+            ResultsAndCertificationConfiguration resultsAndCertificationConfiguration,
             IRepository<TqAwardingOrganisation> _repository,
             INotificationService notificationService,
             IMapper mapper,
             ILogger<IRepository<TqAwardingOrganisation>> logger)
         {
+            _resultsAndCertificationConfiguration = resultsAndCertificationConfiguration;
             _awardingOrganisationRepository = _repository;
             _notificationService = notificationService;
             _mapper = mapper;
@@ -82,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     { "sender_email_address", model.QueriedUserEmail }
                 };
 
-                var hasEmailSent = await SendEmailAsync("rajesh.gaddam@digital.education.gov.uk", tokens);
+                var hasEmailSent = await SendEmailAsync(_resultsAndCertificationConfiguration.TlevelQueriedSupportEmailAddress, tokens);
                 if (!hasEmailSent) return false;
             }
             return await _awardingOrganisationRepository.UpdateAsync(tqAwardingOrganisation) > 0;
