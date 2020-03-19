@@ -27,6 +27,14 @@
         public string GovUkNotifyApiKey { get; set; }
 
         /// <summary>
+        /// Gets or sets the tlevel queried support email address.
+        /// </summary>
+        /// <value>
+        /// The tlevel queried support email address.
+        /// </value>
+        public string TlevelQueriedSupportEmailAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets the dfe sign in settings.
         /// </summary>
         /// <value>

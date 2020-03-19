@@ -12,6 +12,14 @@
       "type": "string",
       "environmentVariable": "BlobStorageConnectionString"
     },    
+	"GovUkNotifyApiKey": {
+      "type": "string",
+      "environmentVariable": "GovUkNotifyApiKey"
+    },
+	"TlevelQueriedSupportEmailAddress": {
+      "type": "string",
+      "environmentVariable": "TlevelQueriedSupportEmailAddress"
+    },	
     "DfeSignInSettings": {
       "properties": {
         "MetadataAddress": {
@@ -129,6 +137,8 @@
   "required": [
     "SqlConnectionString",
     "BlobStorageConnectionString",
+	"GovUkNotifyApiKey",
+	"TlevelQueriedSupportEmailAddress",
     "DfeSignInSettings",
 	"ResultsAndCertificationInternalApiSettings"
   ],
