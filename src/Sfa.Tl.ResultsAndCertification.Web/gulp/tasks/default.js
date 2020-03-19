@@ -34,6 +34,21 @@ gulp.task('copy-js', function () {
         .pipe(gulp.dest(paths.dist.defaultJs));
 });
 
+gulp.task('copy-provider-search-js', function () {
+    return src([
+        'node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.js',
+        'Frontend/src/javascripts/provider-search.js'
+    ])
+        .pipe(concat('provider-search.js'))
+        .pipe(minify({
+            noSource: true,
+            ext: {
+                min: '.min.js'
+            }
+        }))
+        .pipe(gulp.dest(paths.dist.defaultJs));
+});
+
 gulp.task('copy-assets', () => {
     return src(paths.src.defaultAssets)
         .pipe(gulp.dest(paths.dist.defaultAssets));
@@ -47,6 +62,7 @@ gulp.task('sass', () => {
 
 gulp.task('merge-css', gulp.series('sass', function () {
     return src([
+        'node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.css',
         "Frontend/src/stylesheets/css/*.css"
     ])
         .pipe(concatCss("main.css"))
