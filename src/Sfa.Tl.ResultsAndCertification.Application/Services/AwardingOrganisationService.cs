@@ -78,7 +78,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (model.PathwayStatusId == (int)TlevelReviewStatus.Queried && !string.IsNullOrWhiteSpace(model.Query))
             {
-                var tokens = new Dictionary<string, dynamic>
+                var hasEmailSent = await SendEmailAsync(model, tqAwardingOrganisation);
+                if (!hasEmailSent) return false;
+            }
+            return await _awardingOrganisationRepository.UpdateAsync(tqAwardingOrganisation) > 0;
+        }
+
+        private async Task<bool> SendEmailAsync(VerifyTlevelDetails model, TqAwardingOrganisation tqAwardingOrganisation)
+        {
+            var tokens = new Dictionary<string, dynamic>
                 {
                     { "tlevel_name", $"{tqAwardingOrganisation.TlRoute.Name} : { tqAwardingOrganisation.TlPathway.Name }" },
                     { "user_comments", model.Query },
@@ -86,15 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     { "sender_email_address", model.QueriedUserEmail }
                 };
 
-                var hasEmailSent = await SendEmailAsync(_resultsAndCertificationConfiguration.TlevelQueriedSupportEmailAddress, tokens);
-                if (!hasEmailSent) return false;
-            }
-            return await _awardingOrganisationRepository.UpdateAsync(tqAwardingOrganisation) > 0;
-        }
-
-        private async Task<bool> SendEmailAsync(string toAddress, IDictionary<string, dynamic> tokens)
-        {
-            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.TlevelDetailsQueried.ToString(), toAddress, tokens);
+            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.TlevelDetailsQueried.ToString(), _resultsAndCertificationConfiguration.TlevelQueriedSupportEmailAddress, tokens);
         }
     }
 }

@@ -3,7 +3,6 @@ using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return hasEmailSent;
             }
 
-            var personalisationTokens = tokens.ToDictionary(t => t.Key, t => t.Value);
-
             try
             {
+                var personalisationTokens = tokens.ToDictionary(t => t.Key, t => t.Value);
                 await _notificationClient.SendEmailAsync(emailAddress: toAddress, templateId: notificationTemplate.TemplateId.ToString(), personalisation: personalisationTokens);
                 hasEmailSent = true;
             }
