@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Notify.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.NotificationServiceTests
 {

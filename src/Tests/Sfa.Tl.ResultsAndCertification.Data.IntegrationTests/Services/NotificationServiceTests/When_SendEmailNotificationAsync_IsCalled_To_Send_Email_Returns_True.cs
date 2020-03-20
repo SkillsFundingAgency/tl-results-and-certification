@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.NotificationServiceTests
 {
-    public class When_SendEmailNotificationAsync_Called_To_Send_Email : NotificationServiceBaseTest
+    public class When_SendEmailNotificationAsync_IsCalled_To_Send_Email_Returns_True : NotificationServiceBaseTest
     {
         public override void Given()
         {
