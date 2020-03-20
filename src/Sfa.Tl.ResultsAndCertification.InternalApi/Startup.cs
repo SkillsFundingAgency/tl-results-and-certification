@@ -115,6 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             //services.AddTransient(typeof(IRepository<TlPathway>), typeof(GenericRepository<TlPathway>));
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
+            services.AddTransient<IProviderService, ProviderService>();
             services.AddTransient<IPathwayService, PathwayService>();
             services.AddTransient<IDbContextBuilder, DbContextBuilder>();
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(ResultsAndCertificationConfiguration.GovUkNotifyApiKey));
