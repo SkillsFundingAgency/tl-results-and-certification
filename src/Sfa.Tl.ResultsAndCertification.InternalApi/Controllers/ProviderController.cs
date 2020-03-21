@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 {
@@ -35,6 +36,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<IEnumerable<object>> GetAllProvidersByAoUkprnAsync(long ukprn)
         {
             return await _providerService.GetAllProvidersByAoUkprnAsync(ukprn);
+        }
+
+        [Route("GetSelectProviderTlevels/{aoUkprn}/{providerId}")]
+        public async Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)
+        {
+            return await _providerService.GetSelectProviderTlevelsAsync(aoUkprn, providerId);
         }
     }
 }
