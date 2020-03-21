@@ -14,7 +14,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_ConfirmTlevelAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_VerifyTlevelAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         protected ITokenServiceClient _tokenServiceClient;
         protected ResultsAndCertificationConfiguration _configuration;
