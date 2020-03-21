@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         }
 
         public Task<IEnumerable<object>> GetAllProvidersByAoUkprnAsync(long ukprn)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)
         {
             throw new NotImplementedException();
         }
