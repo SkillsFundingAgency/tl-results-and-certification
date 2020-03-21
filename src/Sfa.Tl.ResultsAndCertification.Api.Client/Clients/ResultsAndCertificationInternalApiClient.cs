@@ -52,15 +52,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PutAsync<VerifyTlevelDetails, bool>(requestUri, model);
         }
 
-        public async Task<IEnumerable<object>> GetAllProvidersByUkprnAsync(long ukprn)
+        public async Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn)
         {
-            return await Task.Run(() => new List<string>());
+            var requestUri = string.Format(ApiConstants.IsAnyProviderSetupCompletedUri, ukprn);
+            return await GetAsync<bool>(requestUri);
         }
 
-        public async Task<IEnumerable<object>> GetAllProvidersAsync(string filter, bool isExactMatch)
+        public async Task<IEnumerable<string>> FindProviderNameAsync(string name, bool isExactMatch)
         {
-            // TODO:
-            return await Task.Run(() => new List<string>());
+            var requestUri = string.Format(ApiConstants.FindProviderNameAsyncUri, name, isExactMatch);
+            return await GetAsync<IEnumerable<string>>(requestUri);
         }
 
         private async Task SetBearerToken()

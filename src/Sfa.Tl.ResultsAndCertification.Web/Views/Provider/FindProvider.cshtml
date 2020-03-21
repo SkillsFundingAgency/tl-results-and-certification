@@ -1,10 +1,16 @@
-﻿
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.FindProviderViewModel
+
 @{
     ViewData["Title"] = "Find a provider";
 }
 
+@section Scripts {
+    <script src="~/javascripts/provider-search.min.js"></script>
+}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+        <partial name="_ValidationSummary" />
         <form class="form" asp-route="FindProvider">
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
@@ -14,15 +20,16 @@
                         </h1>
                     </legend>
                     <p class="govuk-body">Tell us which T Levels a provider will offer.</p>
-                    <div class="govuk-form-group">
+                    <div class="govuk-form-group" sfa-validation-for="Search" sfa-validation-class="govuk-form-group--error">
                         <label class="govuk-label" for="search">
                             Enter the provider's name
                         </label>
-                        <input class="govuk-input" id="search" name="search" type="text" autocomplete="center-name">
+                        <span sfa-validation-for="Search"></span>
+                        <input class="govuk-input" id="search" name="search" type="text" autocomplete="center-name" asp-for="Search">
                     </div>
-
                 </fieldset>
             </div>
+
             <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
         </form>
     </div>

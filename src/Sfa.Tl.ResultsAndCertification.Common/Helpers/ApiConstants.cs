@@ -1,4 +1,6 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
+﻿using System;
+
+namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
 {
     public static class ApiConstants
     {
@@ -6,5 +8,8 @@
         public const string GetTlevelsByStatus = "/api/Tlevel/{0}/GetTlevelsByStatus/{1}";
         public const string TlevelDetailsUri = "/api/Tlevel/{0}/TlevelDetails/{1}";
         public const string VerifyTlevelUri = "/api/Tlevel/VerifyTlevel";
+
+        public const string IsAnyProviderSetupCompletedUri = "/api/provider/IsAnyProviderSetupCompleted/{0}";
+        public const string FindProviderNameAsyncUri = "/api/provider/FindProviderNameUri/{0}/{1}";  // TODO: can this be a object post rather two params. 
     }
 }

@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -16,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly IProviderLoader _providerLoader;
         private readonly ILogger _logger;
 
-        public ProviderController(IProviderLoader providerLoader, ILogger<AccountController> logger)
+        public ProviderController(IProviderLoader providerLoader, ILogger<ProviderController> logger)
         {
             _providerLoader = providerLoader;
             _logger = logger;
@@ -25,12 +24,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("providers", Name = RouteConstants.Providers)]
         public async Task<IActionResult> IndexAsync()
         {
-            var providers = await _providerLoader.GetAllProvidersByUkprnAsync(User.GetUkPrn());
+            var IsAnyProviderSetupCompleted = await _providerLoader.IsAnyProviderSetupCompletedAsync(User.GetUkPrn());
 
-            if (providers?.Count() > 0)
-            {
+            if (IsAnyProviderSetupCompleted)
                 return RedirectToRoute(RouteConstants.YourProviders); // TODO: redirect to AddProvider.
-            }
 
             return RedirectToRoute(RouteConstants.FindProvider);
         }
@@ -42,31 +39,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [Route("find-provider", Name = RouteConstants.FindProvider)]
-        public async Task<IActionResult> FindProviderAsync()
+        public IActionResult FindProviderAsync()
         {
-            return await Task.Run(() => View());
+            var viewModel = new FindProviderViewModel();
+            return View(viewModel);
         }
 
         [HttpPost]
         [Route("find-provider", Name = RouteConstants.FindProvider)]
-        public async Task<IActionResult> FindProviderAsync(string provider)
+        public async Task<IActionResult> FindProviderAsync(FindProviderViewModel viewModel)
         {
-            // TODO: get by Ukprn or string
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            // TODO: Below is for the next story.
             var result = await Task.Run(() => true);
             return RedirectToRoute(RouteConstants.YourProviders);
         }
 
-        public async Task<JsonResult> GetProviders(string term)
+        [Route("search-provider/{name}", Name = RouteConstants.ProviderNameLookup)]
+        public async Task<JsonResult> FindProviderNameAsync(string name)
         {
-            // TODO: IsExact Match or Contains Match param as well?
-            var providers = await _providerLoader.SearchByTokenAsync(term);
-
-            List<string> students = new List<string>
-            {
-                "test", "Acobat", "bobbili", "Chandra"
-            };
-
-            return Json(students.Where(x => x.Contains(term)));
+            var providerNames = await _providerLoader.FindProviderNameAsync(name, isExactMatch: false);
+            return Json(providerNames);
         }
     }
 }

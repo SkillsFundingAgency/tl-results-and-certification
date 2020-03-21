@@ -14,7 +14,7 @@
 
     @if (User.Identity.IsAuthenticated)
     {
-        <partial name="_govuk_PhaseBanner" />
+    <partial name="_govuk_PhaseBanner" />
     }
 
     <div class="govuk-width-container">
@@ -26,6 +26,7 @@
     <partial name="_govuk_Footer" />
 
     <partial name="_govuk_Scripts" />
+    @RenderSection("Scripts", required: false)
 
 </body>
 </html>

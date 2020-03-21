@@ -19,6 +19,7 @@
         public const string Providers = "Providers";
         public const string YourProviders = "YourProviders";
         public const string FindProvider = "FindProvider";
+        public const string ProviderNameLookup = "ProviderNameLookup";
 
         // Error
         public const string PageNotFound = "PageNotFound";

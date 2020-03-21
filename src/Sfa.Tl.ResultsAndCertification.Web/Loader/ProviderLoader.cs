@@ -2,7 +2,6 @@
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -18,14 +17,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<object>> GetAllProvidersByUkprnAsync(long ukprn)
+        public async Task<IEnumerable<string>> FindProviderNameAsync(string name, bool isExactMatch)
         {
-            return await _internalApiClient.GetAllProvidersByUkprnAsync(ukprn);
+            return await _internalApiClient.FindProviderNameAsync(name, isExactMatch);
         }
 
-        public async Task<IEnumerable<object>> SearchByTokenAsync(string term)
+        public async Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn)
         {
-            return await _internalApiClient.GetAllProvidersAsync(term, true);
+            return await _internalApiClient.IsAnyProviderSetupCompletedAsync(ukprn);
         }
     }
 }

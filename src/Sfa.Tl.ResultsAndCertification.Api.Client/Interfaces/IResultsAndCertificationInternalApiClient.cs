@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<bool> VerifyTlevelAsync(VerifyTlevelDetails model);
 
         // Providers
-        Task<IEnumerable<object>> GetAllProvidersByUkprnAsync(long ukprn);
-        Task<IEnumerable<object>> GetAllProvidersAsync(string filter, bool isExactMatch);
+        Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn);
+        Task<IEnumerable<string>> FindProviderNameAsync(string name, bool isExactMatch);
     }
 }
