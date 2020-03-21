@@ -18,25 +18,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class ProviderService : IProviderService
     {
         private readonly ResultsAndCertificationConfiguration _config;
-        private readonly IRepository<TqProvider> _tlProviderRepository;
+        private readonly IProviderRepository _tqProviderRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger<IRepository<TqAwardingOrganisation>> _logger;
+        private readonly ILogger<IRepository<TqProvider>> _logger;
 
         public ProviderService(
             ResultsAndCertificationConfiguration config,
-            IRepository<TqProvider> repository,
+            IProviderRepository providerRespository,
             IMapper mapper,
-            ILogger<IRepository<TqAwardingOrganisation>> logger)
+            ILogger<IRepository<TqProvider>> logger)
         {
             _config = config;
-            _tlProviderRepository = repository;
+            _tqProviderRepository = providerRespository;
             _mapper = mapper;
             _logger = logger;
         }
 
         public async Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn)
         {
-            var count = await _tlProviderRepository.CountAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn);
+            var count = await _tqProviderRepository.CountAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn);
             return (count > 0);
         }
 
@@ -61,7 +61,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)
         {
-            throw new NotImplementedException();
+            var result = _tqProviderRepository.GetSelectProviderTlevelsAsync(aoUkprn, providerId);
+            return result;
         }
 
         private ResultsAndCertificationDbContext CreateDbContext()

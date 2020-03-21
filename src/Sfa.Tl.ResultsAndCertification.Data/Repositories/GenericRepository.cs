@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
     public class GenericRepository<T> : IRepository<T> where T : BaseEntity, new()
     {
         private readonly ILogger _logger;
-        private readonly ResultsAndCertificationDbContext _dbContext;
+        protected readonly ResultsAndCertificationDbContext _dbContext;
 
         public GenericRepository(ILogger<GenericRepository<T>> logger, ResultsAndCertificationDbContext dbContext)
         {
