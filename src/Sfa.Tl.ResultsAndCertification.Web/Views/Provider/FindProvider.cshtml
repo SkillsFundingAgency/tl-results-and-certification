@@ -7,11 +7,10 @@
 @section Scripts {
     <script src="~/javascripts/provider-search.min.js"></script>
 }
-
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <partial name="_ValidationSummary" />
-        <form class="form" asp-route="FindProvider">
+        <form class="form" id="FindProviderForm" asp-route="FindProvider">
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
@@ -25,8 +24,16 @@
                             Enter the provider's name
                         </label>
                         <span sfa-validation-for="Search"></span>
-                        <input class="govuk-input" id="search" name="search" type="text" autocomplete="center-name" asp-for="Search">
+                        <input class="govuk-input" id="search" type="text" autocomplete="center-name" asp-for="Search">
                     </div>
+
+                    @*TODO: Following need to be fixed to work.*@
+                    <p class="govuk-body">Following is the type a head UI control.</p>
+                    <div class="govuk-form-group">
+                        <label for="search-autocomplete"></label>
+                        <div id="search-autocomplete-container"></div>
+                    </div>
+
                 </fieldset>
             </div>
 

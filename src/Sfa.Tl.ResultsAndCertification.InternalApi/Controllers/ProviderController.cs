@@ -26,10 +26,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return await _providerService.IsAnyProviderSetupCompletedAsync(ukprn);
         }
 
-        [Route("FindProviderNameUri/{name}/{isExactMatch}")]
-        public async Task<IEnumerable<string>> FindProviderNameUriAsync(string name, bool isExactMatch)
+        [Route("FindProviderName/{name}/{isExactMatch}")]
+        public async Task<IEnumerable<string>> FindProviderNameAsync(string name, bool isExactMatch)
         {
-            return await _providerService.FindProviderNameUriAsync(name, isExactMatch);
+            return await _providerService.FindProviderNameAsync(name, isExactMatch);
         }
 
         public async Task<IEnumerable<object>> GetAllProvidersByAoUkprnAsync(long ukprn)

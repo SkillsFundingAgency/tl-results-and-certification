@@ -62,6 +62,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-provider/{name}", Name = RouteConstants.ProviderNameLookup)]
         public async Task<JsonResult> FindProviderNameAsync(string name)
         {
+            if (string.IsNullOrEmpty(name) || name.Length < 3)
+                return Json(string.Empty);
+
             var providerNames = await _providerLoader.FindProviderNameAsync(name, isExactMatch: false);
             return Json(providerNames);
         }

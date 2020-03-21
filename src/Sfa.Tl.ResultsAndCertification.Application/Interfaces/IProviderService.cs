@@ -7,6 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     {
         Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn); 
         Task<IEnumerable<object>> GetAllProvidersByAoUkprnAsync(long ukprn);
-        Task<IEnumerable<string>> FindProviderNameUriAsync(string name, bool isExactMatch);
+        Task<IEnumerable<string>> FindProviderNameAsync(string name, bool isExactMatch);
     }
 }

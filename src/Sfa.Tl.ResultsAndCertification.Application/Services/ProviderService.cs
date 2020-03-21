@@ -39,14 +39,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return (count > 0);
         }
 
-        public async Task<IEnumerable<string>> FindProviderNameUriAsync(string name, bool isExactMatch)
+        public async Task<IEnumerable<string>> FindProviderNameAsync(string name, bool isExactMatch)
         {
             // TODO: check how will fit into our generic repository framework. 
             using (var context = CreateDbContext())
             {
                 var providerNames = await context.TlProvider
                     .Where(x => isExactMatch ? x.DisplayName.ToLower().Equals(name.ToLower())
-                            : x.DisplayName.ToLower().StartsWith(name.ToLower()))
+                            : x.DisplayName.ToLower().Contains(name.ToLower())) // TODO: should be StartWith
                     .Select(x => x.DisplayName).ToListAsync();
 
                 return providerNames;
