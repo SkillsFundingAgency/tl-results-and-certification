@@ -65,5 +65,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var providerNames = await _providerLoader.FindProviderNameAsync(name, isExactMatch: false);
             return Json(providerNames);
         }
+
+        [Route("select-providers-tlevels", Name = RouteConstants.SelectProviderTlevels)]
+        public IActionResult SelectProviderTlevelsAsync()
+        {
+            var viewModel = new SelectProviderTlevelViewModel();
+            return View(viewModel);
+        }
     }
 }
