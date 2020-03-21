@@ -33,11 +33,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return await _providerService.FindProviderNameAsync(name, isExactMatch);
         }
 
-        public async Task<IEnumerable<object>> GetAllProvidersByAoUkprnAsync(long ukprn)
-        {
-            return await _providerService.GetAllProvidersByAoUkprnAsync(ukprn);
-        }
-
         [Route("GetSelectProviderTlevels/{aoUkprn}/{providerId}")]
         public async Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)
         {
