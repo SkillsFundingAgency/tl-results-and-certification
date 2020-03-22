@@ -76,5 +76,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = await _providerLoader.GetSelectProviderTlevelsAsync(User.GetUkPrn(), providerId);
             return View(viewModel);
         }
+
+        [HttpPost]
+        [Route("select-providers-tlevels", Name = RouteConstants.SelectProviderTlevels)]
+        public async Task<IActionResult> SelectProviderTlevelsAsync(SelectProviderTlevelViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                var model = await _providerLoader.GetSelectProviderTlevelsAsync(User.GetUkPrn(), viewModel.TlProviderId);
+                return View(model);
+            }
+            return RedirectToRoute(RouteConstants.PageNotFound);
+        }
     }
 }

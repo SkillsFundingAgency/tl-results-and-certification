@@ -4,10 +4,10 @@
     ViewData["Title"] = "Select provider's T Levels page";
 }
 
-
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form class="form" action="/1-11/AO/confirmation-tlevels-added" method="post">
+        <form asp-route="SelectProviderTlevels">
+            <input type="hidden" asp-for="TlProviderId" />
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
@@ -23,26 +23,21 @@
                         <p class="govuk-body govuk-!-margin-bottom-5">Select and submit the T Levels you have approved this provider to offer.</p>
                     </span>
                     <div class="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="tlevel-choice-1" name="tlevel-choice" type="checkbox" value="t01">
-                            <label class="govuk-label govuk-checkboxes__label" for="tlevel-choice-1">
-                                Construction: Design, Surveying and Planning
-                            </label>
-                        </div>
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="tlevel-choice-2" name="tlevel-choice" type="checkbox" value="t02">
-                            <label class="govuk-label govuk-checkboxes__label" for="tlevel-choice-2">
-                                Digital: Digital Production, Design and Development
-                            </label>
-                        </div>
+                        @foreach (var tlevel in Model.ProviderTlevels.Select((value, i) => (value, i)))
+                        {
+                            var elementId = (tlevel.i > 0) ? "hastlevelselected-" + tlevel.value.TlPathwayId : "hastlevelselected";
+                            <div class="govuk-radios__item">
+                                <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.ProviderTlevels[@tlevel.i].IsSelected">
+                                <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                                    @tlevel.value.TlevelTitle
+                                </label>
+                            </div>
+                        }
                     </div>
                 </fieldset>
             </div>
 
-            <button class="govuk-button" data-module="govuk-button">
-                Submit
-            </button>
-
+            <button class="govuk-button" data-module="govuk-button">Submit</button>
         </form>
     </div>
 </div>

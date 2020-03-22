@@ -9,9 +9,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTl
         public int TlProviderId { get; set; }
         public string ProviderDisplayName { get; set; }
         public long ProviderUkprn { get; set; }
-        public int TqAwardingOrganisationId { get; set; }
+
         [Required(ErrorMessage = "Select at least one T Level")]
-        public bool HasTlevelSelected { get { return ProviderTlevels.Any(x => x.IsSelected); } }
+        public bool? HasTlevelSelected => (ProviderTlevels.Any(x => x.IsSelected) == true) ? true : (bool?)null;
         public IList<ProviderTlevelsViewModel> ProviderTlevels { get; set; }
     }
 }
