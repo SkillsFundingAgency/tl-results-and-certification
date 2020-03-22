@@ -1,5 +1,48 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels.SelectProviderTlevelViewModel
+
 @{
+    ViewData["Title"] = "Select provider's T Levels page";
 }
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" action="/1-11/AO/confirmation-tlevels-added" method="post">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
+                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
+                            Provider's T Levels
+                        </h1>
+                    </legend>
+
+                    <h2 class="govuk-heading-l">
+                        @Model.ProviderDisplayName <span class="govuk-hint"><abbr>UKPRN</abbr>: @Model.ProviderUkprn</span>
+                    </h2>
+                    <span id="tlevel-choice">
+                        <p class="govuk-body govuk-!-margin-bottom-5">Select and submit the T Levels you have approved this provider to offer.</p>
+                    </span>
+                    <div class="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="tlevel-choice-1" name="tlevel-choice" type="checkbox" value="t01">
+                            <label class="govuk-label govuk-checkboxes__label" for="tlevel-choice-1">
+                                Construction: Design, Surveying and Planning
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="tlevel-choice-2" name="tlevel-choice" type="checkbox" value="t02">
+                            <label class="govuk-label govuk-checkboxes__label" for="tlevel-choice-2">
+                                Digital: Digital Production, Design and Development
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <button class="govuk-button" data-module="govuk-button">
+                Submit
+            </button>
+
+        </form>
+    </div>
+</div>

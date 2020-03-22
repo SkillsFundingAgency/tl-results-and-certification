@@ -70,10 +70,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return Json(providerNames);
         }
 
-        [Route("select-providers-tlevels", Name = RouteConstants.SelectProviderTlevels)]
-        public IActionResult SelectProviderTlevelsAsync()
+        [Route("select-providers-tlevels/{providerId}", Name = RouteConstants.SelectProviderTlevels)]
+        public async Task<IActionResult> SelectProviderTlevelsAsync(int providerId)
         {
-            var viewModel = new SelectProviderTlevelViewModel();
+            var viewModel = await _providerLoader.GetSelectProviderTlevelsAsync(User.GetUkPrn(), providerId);
             return View(viewModel);
         }
     }
