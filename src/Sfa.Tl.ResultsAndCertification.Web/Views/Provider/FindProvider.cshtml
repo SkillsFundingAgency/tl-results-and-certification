@@ -1,12 +1,14 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.FindProviderViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Provider
 
 @{
-    ViewData["Title"] = "Find a provider";
+    ViewData["Title"] = @FindProvider.Page_Title;
 }
 
 @section Scripts {
     <script src="~/javascripts/provider-search.min.js"></script>
 }
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <partial name="_ValidationSummary" />
@@ -15,13 +17,13 @@
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
                         <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
-                            Find a provider
+                            @FindProvider.Page_Heading
                         </h1>
                     </legend>
-                    <p class="govuk-body">Tell us which T Levels a provider will offer.</p>
+                    <p class="govuk-body">@FindProvider.Section_Information_Text</p>
                     <div class="govuk-form-group" sfa-validation-for="Search" sfa-validation-class="govuk-form-group--error">
                         <label class="govuk-label" for="search">
-                            Enter the provider's name
+                            @FindProvider.Provider_Input_Field_Label
                         </label>
                         <span sfa-validation-for="Search"></span>
                         <input id="search" name="Search" class="govuk-input" asp-for="Search" />
@@ -29,7 +31,7 @@
                 </fieldset>
             </div>
             <input id="selectedProviderId" type="hidden" />
-            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            <button type="submit" class="govuk-button" data-module="govuk-button">@FindProvider.Continue_Button_Label</button>
         </form>
     </div>
 </div>
