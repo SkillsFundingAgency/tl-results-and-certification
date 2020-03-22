@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
@@ -7,5 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     {
         Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn);
         Task<IEnumerable<string>> FindProviderNameAsync(string name, bool isExactMatch);
+        Task<SelectProviderTlevelViewModel> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId);
     }
 }

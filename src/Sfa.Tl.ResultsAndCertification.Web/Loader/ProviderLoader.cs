@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -25,6 +26,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn)
         {
             return await _internalApiClient.IsAnyProviderSetupCompletedAsync(ukprn);
+        }
+
+        public async Task<SelectProviderTlevelViewModel> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)
+        {
+            var tlevelDetails = await _internalApiClient.GetSelectProviderTlevelsAsync(aoUkprn, providerId);
+            return _mapper.Map<SelectProviderTlevelViewModel>(tlevelDetails);
         }
     }
 }
