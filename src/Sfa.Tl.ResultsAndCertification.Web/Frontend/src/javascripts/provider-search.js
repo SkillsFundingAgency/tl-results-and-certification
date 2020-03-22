@@ -1,12 +1,13 @@
 ﻿$(document).ready(function () {
 
-    var element = document.querySelector('#search-autocomplete-container');
-    var id = 'search-autocomplete';
+    var element = document.querySelector('#search');
 
-    accessibleAutocomplete({
-        element: element,
-        id: id,
+    accessibleAutocomplete.enhanceSelectElement({
+        defaultValue: '',
+        autoSelect: true,
+        selectElement: element,
         minLength: 3,
+        name: "Search",
         source:
             function (query, process) {
                 $.ajax({
@@ -23,7 +24,9 @@
             },
         onConfirm: (val) => {
             console.log('you choose the value:' + val);
-            $('#search').val(val);
+            if (val != null) {
+                $('#selectedProviderId').val(val);
+            }
         }
     });
 

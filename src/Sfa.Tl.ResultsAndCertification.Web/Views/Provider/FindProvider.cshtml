@@ -24,19 +24,11 @@
                             Enter the provider's name
                         </label>
                         <span sfa-validation-for="Search"></span>
-                        <input class="govuk-input" id="search" type="text" autocomplete="center-name" asp-for="Search">
+                        <input id="search" name="Search" class="govuk-input" asp-for="Search" />
                     </div>
-
-                    @*TODO: Following need to be fixed to work.*@
-                    <p class="govuk-body">Following is the type a head UI control.</p>
-                    <div class="govuk-form-group">
-                        <label for="search-autocomplete"></label>
-                        <div id="search-autocomplete-container"></div>
-                    </div>
-
                 </fieldset>
             </div>
-
+            <input id="selectedProviderId" type="hidden" />
             <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
         </form>
     </div>
