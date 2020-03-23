@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,9 +20,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<string>> FindProviderNameAsync(string name)
+        public async Task<IEnumerable<ProviderLookupData>> GetProviderLookupData(string name, bool isExactMatch)
         {
-            return await _internalApiClient.FindProviderNameAsync(name);
+            var providers = await _internalApiClient.FindProviderAsync(name, isExactMatch);
+            return _mapper.Map<IEnumerable<ProviderLookupData>>(providers);
         }
 
         public async Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn)

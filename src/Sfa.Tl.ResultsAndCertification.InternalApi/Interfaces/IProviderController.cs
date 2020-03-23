@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
@@ -6,6 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
     public interface IProviderController
     {
         Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn);
-        Task<IEnumerable<string>> FindProviderNameAsync(string name);
+        Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch);
     }
 }

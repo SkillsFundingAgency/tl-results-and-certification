@@ -129,6 +129,9 @@
   <data name="ProviderName_Char_Limit_Exceed_Validation_Message" xml:space="preserve">
     <value>The character limit exceeded</value>
   </data>
+  <data name="ProviderName_NotValid_Validation_Message" xml:space="preserve">
+    <value>No provider found with that name - enter a valid provider’s name</value>
+  </data>
   <data name="ProviderName_Required_Validation_Message" xml:space="preserve">
     <value>Enter a provider’s name</value>
   </data>

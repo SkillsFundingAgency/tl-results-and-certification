@@ -8,7 +8,7 @@
         public const string VerifyTlevelUri = "/api/Tlevel/VerifyTlevel";
 
         public const string IsAnyProviderSetupCompletedUri = "/api/provider/IsAnyProviderSetupCompleted/{0}";
-        public const string FindProviderNameAsyncUri = "/api/provider/FindProviderName/{0}";
+        public const string FindProviderAsyncUri = "/api/provider/FindProvider/{0}/{1}";
         public const string GetSelectProviderTlevelsUri = "/api/provider/GetSelectProviderTlevels/{0}/{1}";
     }
 }

@@ -14,43 +14,40 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class ProviderService : IProviderService
     {
         private readonly IProviderRepository _tqProviderRepository;
-        private readonly IDbContextBuilder _dbContext;
+        private readonly IRepository<TlProvider> _tlProviderRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<IRepository<TqProvider>> _logger;
 
         public ProviderService(
             IProviderRepository providerRespository,
-            IDbContextBuilder dbContext,
+            IRepository<TlProvider> tlproviderRepository,
             IMapper mapper,
             ILogger<IRepository<TqProvider>> logger)
         {
             _tqProviderRepository = providerRespository;
-            _dbContext = dbContext;
+            _tlProviderRepository = tlproviderRepository;
             _mapper = mapper;
             _logger = logger;
         }
 
         public async Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn)
         {
-            using (var dbContext = _dbContext.Create())
-            {
-                var setupCount = await dbContext.TqProvider
-                    .CountAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn);
-                
-                return setupCount > 0;
-            }
+            var setupCount = await _tqProviderRepository
+                        .CountAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn);
+            return (setupCount > 0);
         }
 
-        public async Task<IEnumerable<string>> FindProviderNameAsync(string name)
+        public async Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch)
         {
-            using (var context = _dbContext.Create())
-            {
-                var providerNames = await context.TlProvider
-                    .Where(x => x.DisplayName.ToLower().Contains(name.ToLower()))
-                    .Select(x => x.DisplayName).ToListAsync();
+            var providerNames = await _tlProviderRepository
+                .GetManyAsync(x => isExactMatch ? 
+                                    x.DisplayName.ToLower().Equals(name.ToLower()) : 
+                                    x.DisplayName.ToLower().StartsWith(name.ToLower()))
+                .OrderBy(o => o.DisplayName)
+                .Select(x => new ProviderMetadata { Id = x.Id, DisplayName = x.DisplayName })
+                .ToListAsync();
 
-                return providerNames;
-            }
+            return providerNames;
         }
 
         public Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)

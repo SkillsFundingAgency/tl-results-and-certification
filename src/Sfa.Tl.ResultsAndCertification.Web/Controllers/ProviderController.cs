@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -51,14 +51,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("find-provider", Name = RouteConstants.FindProvider)]
         public async Task<IActionResult> FindProviderAsync(FindProviderViewModel viewModel)
         {
-            if (!ModelState.IsValid)
+            if (!(await FindProviderViewModelValidated(viewModel)))
             {
                 return View(viewModel);
             }
 
-            // TODO: Below is for the next story.
-            var result = await Task.Run(() => true);
-            return RedirectToRoute(RouteConstants.YourProviders);
+            return RedirectToRoute(RouteConstants.SelectProviderTlevels, new { providerId = viewModel.SelectedProviderId } );
         }
 
         [Route("search-provider/{name}", Name = RouteConstants.ProviderNameLookup)]
@@ -67,15 +65,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (string.IsNullOrEmpty(name) || name.Length < 3)
                 return Json(string.Empty);
 
-            var providerNames = await _providerLoader.FindProviderNameAsync(name);
-
-            // Temp code to test ajax call. 
-            var providers = new List<ProviderLookupViewModel>();
-            var i = 0;
-            foreach (var p in providerNames)
-                providers.Add(new ProviderLookupViewModel { Id = ++i, DisplayName = p }); ;
-
-            return Json(providers);
+            var providersData = await _providerLoader.GetProviderLookupData(name, isExactMatch: false);
+            return Json(providersData);
         }
 
         [Route("select-providers-tlevels/{providerId}", Name = RouteConstants.SelectProviderTlevels)]
@@ -103,6 +94,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
+        }
+
+        private async Task<bool> FindProviderViewModelValidated(FindProviderViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return false;
+
+            if (viewModel.SelectedProviderId == 0)
+            {
+                var providerData = await _providerLoader.GetProviderLookupData(viewModel.Search, isExactMatch: true);
+                if (providerData == null || providerData.Count() == 0)
+                {
+                    ModelState.AddModelError("Search", Web.Content.Provider.FindProvider.ProviderName_NotValid_Validation_Message);
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

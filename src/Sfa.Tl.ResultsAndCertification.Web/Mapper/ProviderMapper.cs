@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
@@ -22,6 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.RouteName, opts => opts.MapFrom(s => s.RouteName))
                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
                .ForMember(d => d.IsSelected, opts => opts.Ignore());
+
+            CreateMap<ProviderMetadata, ProviderLookupData>();
         }
     }
 }

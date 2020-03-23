@@ -106,6 +106,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No provider found with that name - enter a valid provider’s name.
+        /// </summary>
+        public static string ProviderName_NotValid_Validation_Message {
+            get {
+                return ResourceManager.GetString("ProviderName_NotValid_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a provider’s name.
         /// </summary>
         public static string ProviderName_Required_Validation_Message {

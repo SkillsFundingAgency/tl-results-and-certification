@@ -58,10 +58,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<bool>(requestUri);
         }
 
-        public async Task<IEnumerable<string>> FindProviderNameAsync(string name)
+        public async Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch)
         {
-            var requestUri = string.Format(ApiConstants.FindProviderNameAsyncUri, name);
-            return await GetAsync<IEnumerable<string>>(requestUri);
+            var requestUri = string.Format(ApiConstants.FindProviderAsyncUri, name, isExactMatch);
+            return await GetAsync<IEnumerable<ProviderMetadata>>(requestUri);
         }
 
         public async Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)
