@@ -28,10 +28,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.IsAnyProviderSetupCompletedAsync(ukprn);
         }
 
-        public async Task<SelectProviderTlevelViewModel> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)
+        public async Task<ProviderTlevelsViewModel> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)
         {
             var tlevelDetails = await _internalApiClient.GetSelectProviderTlevelsAsync(aoUkprn, providerId);
-            return _mapper.Map<SelectProviderTlevelViewModel>(tlevelDetails);
+            return _mapper.Map<ProviderTlevelsViewModel>(tlevelDetails);
         }
     }
 }
