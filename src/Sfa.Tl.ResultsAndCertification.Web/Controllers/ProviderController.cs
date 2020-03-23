@@ -81,8 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("select-providers-tlevels/{providerId}", Name = RouteConstants.SelectProviderTlevels)]
         public async Task<IActionResult> SelectProviderTlevelsAsync(int providerId)
         {
-            var viewModel = await _providerLoader.GetSelectProviderTlevelsAsync(User.GetUkPrn(), providerId);
-            return View(viewModel);
+            return await GetSelectProviderTlevelsAsync(providerId);
         }
 
         [HttpPost]
@@ -91,10 +90,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var model = await _providerLoader.GetSelectProviderTlevelsAsync(User.GetUkPrn(), viewModel.ProviderId);
-                return View(model);
+                return await GetSelectProviderTlevelsAsync(viewModel.ProviderId);
             }
             return RedirectToRoute(RouteConstants.PageNotFound);
+        }
+
+        private async Task<IActionResult> GetSelectProviderTlevelsAsync(int providerId)
+        {
+            var viewModel = await _providerLoader.GetSelectProviderTlevelsAsync(User.GetUkPrn(), providerId);
+
+            if (viewModel == null || viewModel.Tlevels == null || viewModel.Tlevels.Count == 0)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
         }
     }
 }
