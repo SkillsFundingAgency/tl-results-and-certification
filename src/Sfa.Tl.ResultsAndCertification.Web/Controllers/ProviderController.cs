@@ -68,7 +68,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return Json(string.Empty);
 
             var providerNames = await _providerLoader.FindProviderNameAsync(name);
-            return Json(providerNames);
+
+            // Temp code to test ajax call. 
+            var providers = new List<ProviderLookupViewModel>();
+            var i = 0;
+            foreach (var p in providerNames)
+                providers.Add(new ProviderLookupViewModel { Id = ++i, DisplayName = p }); ;
+
+            return Json(providers);
         }
 
         [Route("select-providers-tlevels/{providerId}", Name = RouteConstants.SelectProviderTlevels)]
