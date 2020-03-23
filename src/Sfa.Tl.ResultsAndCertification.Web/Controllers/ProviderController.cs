@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -66,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (string.IsNullOrEmpty(name) || name.Length < 3)
                 return Json(string.Empty);
 
-            var providerNames = await _providerLoader.FindProviderNameAsync(name, isExactMatch: false);
+            var providerNames = await _providerLoader.FindProviderNameAsync(name);
             return Json(providerNames);
         }
 

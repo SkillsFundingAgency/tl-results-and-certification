@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface IProviderService
     {
         Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn); 
-        Task<IEnumerable<string>> FindProviderNameAsync(string name, bool isExactMatch);
+        Task<IEnumerable<string>> FindProviderNameAsync(string name);
         Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId);
     }
 }

@@ -18,9 +18,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<string>> FindProviderNameAsync(string name, bool isExactMatch)
+        public async Task<IEnumerable<string>> FindProviderNameAsync(string name)
         {
-            return await _internalApiClient.FindProviderNameAsync(name, isExactMatch);
+            return await _internalApiClient.FindProviderNameAsync(name);
         }
 
         public async Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn)

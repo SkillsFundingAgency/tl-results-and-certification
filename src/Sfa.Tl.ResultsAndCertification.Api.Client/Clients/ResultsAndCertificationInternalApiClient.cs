@@ -58,9 +58,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<bool>(requestUri);
         }
 
-        public async Task<IEnumerable<string>> FindProviderNameAsync(string name, bool isExactMatch)
+        public async Task<IEnumerable<string>> FindProviderNameAsync(string name)
         {
-            var requestUri = string.Format(ApiConstants.FindProviderNameAsyncUri, name, isExactMatch);
+            var requestUri = string.Format(ApiConstants.FindProviderNameAsyncUri, name);
             return await GetAsync<IEnumerable<string>>(requestUri);
         }
 

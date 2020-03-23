@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         // Providers
         Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn);
-        Task<IEnumerable<string>> FindProviderNameAsync(string name, bool isExactMatch);
+        Task<IEnumerable<string>> FindProviderNameAsync(string name);
         Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId);
     }
 }
