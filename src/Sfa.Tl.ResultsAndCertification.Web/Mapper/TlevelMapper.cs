@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<TlevelQueryViewModel, VerifyTlevelDetails>()
                 .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                 .ForMember(d => d.PathwayStatusId, opts => opts.MapFrom(s => (int)TlevelReviewStatus.Queried))
-                .ForMember(d => d.Query, opts => opts.MapFrom(s => s.Query))
+                .ForMember(d => d.Query, opts => opts.MapFrom(s => s.Query.Trim()))
                 .ForMember(d => d.QueriedUserEmail, opts => opts.MapFrom<UserEmailResolver<TlevelQueryViewModel, VerifyTlevelDetails>>())
                 .ForMember(d => d.ModifiedBy, opts => opts.MapFrom<UserNameResolver<TlevelQueryViewModel, VerifyTlevelDetails>>());
         }
