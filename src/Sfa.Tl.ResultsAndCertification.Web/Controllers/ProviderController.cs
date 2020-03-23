@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("select-providers-tlevels", Name = RouteConstants.SelectProviderTlevels)]
+        [Route("select-providers-tlevels", Name = RouteConstants.SubmitSelectProviderTlevels)]
         public async Task<IActionResult> SelectProviderTlevelsAsync(SelectProviderTlevelViewModel viewModel)
         {
             if (!ModelState.IsValid)

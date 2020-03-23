@@ -21,6 +21,7 @@
         public const string FindProvider = "FindProvider";
         public const string ProviderNameLookup = "ProviderNameLookup";
         public const string SelectProviderTlevels = "SelectProviderTlevels";
+        public const string SubmitSelectProviderTlevels = "SubmitSelectProviderTlevels";
 
         // Error
         public const string PageNotFound = "PageNotFound";
