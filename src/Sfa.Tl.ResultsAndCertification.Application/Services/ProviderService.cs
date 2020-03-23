@@ -41,13 +41,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
         }
 
-        public async Task<IEnumerable<string>> FindProviderNameAsync(string name, bool isExactMatch)
+        public async Task<IEnumerable<string>> FindProviderNameAsync(string name)
         {
             using (var context = _dbContext.Create())
             {
                 var providerNames = await context.TlProvider
-                    .Where(x => isExactMatch ? x.DisplayName.ToLower().Equals(name.ToLower())
-                            : x.DisplayName.ToLower().Contains(name.ToLower())) // TODO: Change to StartWith after testing.
+                    .Where(x => x.DisplayName.ToLower().Contains(name.ToLower()))
                     .Select(x => x.DisplayName).ToListAsync();
 
                 return providerNames;
