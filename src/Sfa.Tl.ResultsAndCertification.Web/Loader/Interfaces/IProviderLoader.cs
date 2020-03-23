@@ -8,6 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     {
         Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn);
         Task<IEnumerable<string>> FindProviderNameAsync(string name);
-        Task<SelectProviderTlevelViewModel> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId);
+        Task<ProviderTlevelsViewModel> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId);
     }
 }

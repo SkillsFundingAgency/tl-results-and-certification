@@ -1,17 +1,13 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-
-namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels
+﻿namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels
 {
     public class SelectProviderTlevelViewModel
     {
-        public int TlProviderId { get; set; }
-        public string ProviderDisplayName { get; set; }
-        public long ProviderUkprn { get; set; }
-
-        [Required(ErrorMessage = "Select at least one T Level")]
-        public bool? HasTlevelSelected => (ProviderTlevels.Any(x => x.IsSelected) == true) ? true : (bool?)null;
-        public IList<ProviderTlevelsViewModel> ProviderTlevels { get; set; }
+        public int TqAwardingOrganisationId { get; set; }
+        public int ProviderId { get; set; }
+        public int PathwayId { get; set; }
+        public string RouteName { get; set; }
+        public string PathwayName { get; set; }
+        public string TlevelTitle => $"{RouteName}: {PathwayName}";
+        public bool IsSelected { get; set; }
     }
 }
