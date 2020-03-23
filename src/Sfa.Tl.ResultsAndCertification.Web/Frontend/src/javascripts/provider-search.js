@@ -2,6 +2,9 @@
 
     var element = document.querySelector('#search');
 
+    var providerNames = new Array();
+    var providerIds = new Object();
+
     accessibleAutocomplete.enhanceSelectElement({
         defaultValue: '',
         autoSelect: true,
@@ -10,12 +13,19 @@
         name: "Search",
         source:
             function (query, process) {
+                providerNames = [];
+                providerIds = new Object();
                 $.ajax({
                     url: "search-provider/" + query,
                     type: "get",
                     contentType: "json",
                     success: function (data) {
-                        process(data);
+                        $.each(data, function (idx, provider) {
+                            providerNames.push(provider.displayName);
+                            providerIds[provider.displayName] = provider.id;
+                        });
+
+                        process(providerNames);
                     },
                     error: function (err) {
                         console.log(err);
@@ -23,17 +33,11 @@
                 });
             },
         onConfirm: (val) => {
-            console.log('you choose the value:' + val);
             if (val != null) {
-                $('#selectedProviderId').val(val);
+                var id = providerIds[val];
+                $('#SelectedProviderId').val(id);
+                console.log('you choose: ' + val + ' id is: ' + id);
             }
         }
     });
-
-    //$('#FindProviderForm').submit(function () {
-    //    var typeHeadValue = $("input.autocomplete__input").val() 
-    //    console.log(typeHeadValue);
-    //    $('#search').val(typeHeadValue);
-    //    $(this).unbind('submit').submit();
-    //});
 });
