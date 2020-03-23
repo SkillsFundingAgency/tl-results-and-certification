@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var tokens = new Dictionary<string, dynamic>
                 {
-                    { "tlevel_name", $"{tqAwardingOrganisation.TlRoute.Name}: {tqAwardingOrganisation.TlPathway.Name}".ToUpperInvariant() },
+                    { "tlevel_name", $"{tqAwardingOrganisation.TlRoute.Name}: {tqAwardingOrganisation.TlPathway.Name}" },
                     { "user_comments", model.Query },
                     { "sender_name", model.ModifiedBy },
                     { "sender_email_address", model.QueriedUserEmail }
