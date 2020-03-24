@@ -104,11 +104,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel.SelectedProviderId == 0)
             {
                 var providerData = await _providerLoader.GetProviderLookupDataAsync(viewModel.Search, isExactMatch: true);
-                if (providerData == null || providerData.Count() == 0)
+                if (providerData == null || providerData.Count() != 1)
                 {
                     ModelState.AddModelError("Search", Web.Content.Provider.FindProvider.ProviderName_NotValid_Validation_Message);
                     return false;
                 }
+
+                viewModel.SelectedProviderId = providerData.First().Id;
             }
 
             return true;
