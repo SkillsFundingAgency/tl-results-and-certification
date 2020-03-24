@@ -3,17 +3,17 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingOrganisation
+
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlProvider
 {
-    public class When_TlAwardingOrganisationRepository_SingleOrDefault_Is_Called : BaseTest<Domain.Models.TlAwardingOrganisation>
+    public class When_TlProviderRepository_SingleOrDefault_Is_Called : BaseTest<Domain.Models.TlProvider>
     {
-        private Domain.Models.TlAwardingOrganisation _result;
-        private Domain.Models.TlAwardingOrganisation _data;
-        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
+        private Domain.Models.TlProvider _result;
+        private Domain.Models.TlProvider _data;
 
         public override void Given()
         {
-            _data = new TlAwardingOrganisationBuilder().Build(_awardingOrganisation);
+            _data = new TlProviderBuilder().Build();
             DbContext.Add(_data);
             DbContext.SaveChanges();
         }

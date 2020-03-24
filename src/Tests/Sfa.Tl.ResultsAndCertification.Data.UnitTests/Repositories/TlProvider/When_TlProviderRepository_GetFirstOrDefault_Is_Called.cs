@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingOrganisation
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlProvider
 {
-    public class When_TlAwardingOrganisationRepository_GetFirstOrDefault_Is_Called : BaseTest<Domain.Models.TlAwardingOrganisation>
+    public class When_TlProviderRepository_GetFirstOrDefault_Is_Called : BaseTest<Domain.Models.TlProvider>
     {
-        private Domain.Models.TlAwardingOrganisation _result;
-        private IEnumerable<Domain.Models.TlAwardingOrganisation> _data;
+        private Domain.Models.TlProvider _result;
+        private IEnumerable<Domain.Models.TlProvider> _data;
 
         public override void Given()
         {
-            _data = new TlAwardingOrganisationBuilder().BuildList();
+            _data = new TlProviderBuilder().BuildList();
             DbContext.AddRange(_data);
             DbContext.SaveChanges();
         }
