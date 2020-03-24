@@ -60,12 +60,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [Route("search-provider/{name}", Name = RouteConstants.ProviderNameLookup)]
-        public async Task<JsonResult> FindProviderNameAsync(string name)
+        public async Task<JsonResult> GetProviderLookupDataAsync(string name)
         {
             if (string.IsNullOrEmpty(name) || name.Length < 3)
                 return Json(string.Empty);
 
-            var providersData = await _providerLoader.GetProviderLookupData(name, isExactMatch: false);
+            var providersData = await _providerLoader.GetProviderLookupDataAsync(name, isExactMatch: false);
             return Json(providersData);
         }
 
@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel.SelectedProviderId == 0)
             {
-                var providerData = await _providerLoader.GetProviderLookupData(viewModel.Search, isExactMatch: true);
+                var providerData = await _providerLoader.GetProviderLookupDataAsync(viewModel.Search, isExactMatch: true);
                 if (providerData == null || providerData.Count() == 0)
                 {
                     ModelState.AddModelError("Search", Web.Content.Provider.FindProvider.ProviderName_NotValid_Validation_Message);
