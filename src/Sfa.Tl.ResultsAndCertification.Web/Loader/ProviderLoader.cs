@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ProviderLookupData>> GetProviderLookupData(string name, bool isExactMatch)
+        public async Task<IEnumerable<ProviderLookupData>> GetProviderLookupDataAsync(string name, bool isExactMatch)
         {
             var providers = await _internalApiClient.FindProviderAsync(name, isExactMatch);
             return _mapper.Map<IEnumerable<ProviderLookupData>>(providers);
