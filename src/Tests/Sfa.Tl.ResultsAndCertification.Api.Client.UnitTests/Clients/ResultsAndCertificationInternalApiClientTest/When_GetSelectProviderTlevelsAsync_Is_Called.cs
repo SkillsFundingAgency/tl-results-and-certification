@@ -36,13 +36,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
             _mockHttpResult = new ProviderTlevels
             {
-                TlProviderId = 1,
+                ProviderId = 1,
                 DisplayName = "Test1",
                 Ukprn = _ukprn,
                 Tlevels = new List<SelectProviderTlevel>
                     {
-                        new SelectProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, TlPathwayId = 1, RouteName = "Route1", PathwayName = "Pathway1"},
-                        new SelectProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, TlPathwayId = 2, RouteName = "Route2", PathwayName = "Pathway2"}
+                        new SelectProviderTlevel { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 1, RouteName = "Route1", PathwayName = "Pathway1"},
+                        new SelectProviderTlevel { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 2, RouteName = "Route2", PathwayName = "Pathway2"}
                     }
             };
         }
@@ -72,7 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             var actualResult = _result.Result;
 
             actualResult.Should().NotBeNull();
-            actualResult.TlProviderId.Should().Be(_mockHttpResult.TlProviderId);
+            actualResult.ProviderId.Should().Be(_mockHttpResult.ProviderId);
             actualResult.DisplayName.Should().Be(_mockHttpResult.DisplayName);
             actualResult.Ukprn.Should().Be(_mockHttpResult.Ukprn);
             actualResult.Tlevels.Should().NotBeNull();
@@ -82,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             actualProviderTlevelResult.Should().NotBeNull();
 
             actualProviderTlevelResult.TqAwardingOrganisationId.Should().Be(expectedTlevelResult.TqAwardingOrganisationId);
-            actualProviderTlevelResult.TlPathwayId.Should().Be(expectedTlevelResult.TlPathwayId);
+            actualProviderTlevelResult.PathwayId.Should().Be(expectedTlevelResult.PathwayId);
             actualProviderTlevelResult.PathwayName.Should().Be(expectedTlevelResult.PathwayName);
             actualProviderTlevelResult.RouteName.Should().Be(expectedTlevelResult.RouteName);
         }

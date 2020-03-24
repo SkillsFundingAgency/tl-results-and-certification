@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
         {
             var actualResult = _result;
             actualResult.Should().NotBeNull();
-            actualResult.TlProviderId.Should().Be(TlProvider.Id);
+            actualResult.ProviderId.Should().Be(TlProvider.Id);
             actualResult.DisplayName.Should().Be(TlProvider.DisplayName);
             actualResult.Ukprn.Should().Be(TlProvider.UkPrn);
 
