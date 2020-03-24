@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         protected ProviderController Controller;
         protected Task<IActionResult> Result;
         protected IHttpContextAccessor HttpContextAccessor;
-        protected FindProviderViewModel viewModel;
+        protected FindProviderViewModel ViewModel;
 
         // 
         protected string ProviderName = "Lordswood School & Sixth Form Centre";
@@ -34,12 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             Controller = new ProviderController(ProviderLoader, Logger);
 
             // Default value
-            viewModel = new FindProviderViewModel { Search = ProviderName, SelectedProviderId = SelectedProviderId };
+            ViewModel = new FindProviderViewModel { Search = ProviderName, SelectedProviderId = SelectedProviderId };
         }
 
         public override void When()
         {
-            Result = Controller.FindProviderAsync(viewModel);
+            Result = Controller.FindProviderAsync(ViewModel);
         }
     }
 }
