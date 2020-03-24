@@ -26,13 +26,14 @@
                             @FindProvider.Provider_Input_Field_Label
                         </label>
                         <span sfa-validation-for="Search"></span>
-                        <input id="search" name="Search" class="govuk-input" asp-for="Search" />
+                        <select id="search" name="Search" class="govuk-input" asp-for="Search" />
                     </div>
                 </fieldset>
             </div>
 
-            <input type="hidden"asp-for="SelectedProviderId" />
-            <button type="submit" class="govuk-button" data-module="govuk-button">@FindProvider.Continue_Button_Label</button>
+            <input type="hidden" asp-for="SelectedProviderId" />
+            <input id="previousSearch" type="hidden" asp-for="Search" />
+            <button type="submit" class="govuk-button margin--top--30" data-module="govuk-button">@FindProvider.Continue_Button_Label</button>
         </form>
     </div>
 </div>

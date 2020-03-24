@@ -1,46 +1,30 @@
-﻿$(document).ready(function () {
+﻿"use strict";
+$(document).ready(function () {
 
-    var element = document.querySelector('#search');
-
-    var providerNames = new Array();
-    var providerIds = new Object();
-    var searchResults = new Array();
-
-    $('#FindProviderForm').submit(function () {
-        var typeHeadValue = $("input.autocomplete__input").val();
-
-        var isFound = false;
-        $.each(searchResults, function (idx, val) {
-            if (val.displayName == typeHeadValue) {
-                isFound = true;
-                return;
-            }
-        });
-
-        if (!isFound)
-            $('#SelectedProviderId').val(0);
-
-        $(this).unbind('submit').submit();
-    });
+    var providerIds = null;
+    var providerNames = null;
+    var currentGetProviderSearchXhr = null;
 
     accessibleAutocomplete.enhanceSelectElement({
-        defaultValue: '',
+        defaultValue: $("#previousSearch").val(),
         autoSelect: true,
-        selectElement: element,
+        selectElement: document.querySelector('#search'),
         minLength: 3,
         name: "Search",
         source:
             function (query, process) {
-                $.ajax({
-                    url: "search-provider/" + query,
+                if (currentGetProviderSearchXhr != null)
+                    currentGetProviderSearchXhr.abort();
+
+                currentGetProviderSearchXhr = $.ajax({
                     type: "get",
+                    url: "search-provider/" + query,
                     contentType: "json",
+                    timeout: 3000,
                     success: function (data) {
                         // initialise/reset 
                         providerNames = [];
                         providerIds = new Object();
-                        $('#SelectedProviderId').val(0);
-                        searchResults = data;
 
                         $.each(data, function (idx, provider) {
                             providerNames.push(provider.displayName);
@@ -49,19 +33,23 @@
 
                         process(providerNames);
                     },
-                    error: function (err) {
-                        console.log(err);
+                    error: function (xhr, textStatus, errorThrown) {
+                        if (textStatus != "abort")
+                            console.log(xhr + textStatus + errorThrown);
+                    },
+                    complete: function (d) {
+                        currentGetProviderSearchXhr = null;
+                        $('#SelectedProviderId').val(0);
                     }
                 });
             },
         onConfirm: (val) => {
             if (val != null) {
-                var id = providerIds[val];
-                $('#SelectedProviderId').val(id);
-                console.log('you choose: ' + val + ' id is: ' + id);
+                $('#SelectedProviderId').val(providerIds[val]);
             }
-            else
+            else {
                 $('#SelectedProviderId').val(0);
+            }
         }
     });
 });
