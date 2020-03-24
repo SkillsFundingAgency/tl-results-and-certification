@@ -42,7 +42,7 @@
     }
 
     <!-- BLOCK 2 – Providers -->
-    @if (Context.User.HasSiteAdministratorRole() || Context.User.HasCentresEditorRole())
+    @if (Context.User.HasSiteAdministratorRole() || Context.User.HasProvidersEditorRole())
     {
         <div class="govuk-grid-column-one-half">
             <div class="govuk-form-group card">
