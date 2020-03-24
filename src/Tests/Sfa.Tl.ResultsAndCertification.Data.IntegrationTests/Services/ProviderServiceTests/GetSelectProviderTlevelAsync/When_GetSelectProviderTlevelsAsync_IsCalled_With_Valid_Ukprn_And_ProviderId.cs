@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
         {
             var actualResult = _result;
             actualResult.Should().NotBeNull();
-            actualResult.TlProviderId.Should().Be(TlProvider.Id);
+            actualResult.ProviderId.Should().Be(TlProvider.Id);
             actualResult.DisplayName.Should().Be(TlProvider.DisplayName);
             actualResult.Ukprn.Should().Be(TlProvider.UkPrn);            
         }
@@ -58,8 +58,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
         {
             var actualTlevelResult = _result.Tlevels.FirstOrDefault();
             actualTlevelResult.TqAwardingOrganisationId.Should().Be(TqAwardingOrganisation.Id);
-            actualTlevelResult.TlProviderId.Should().Be(TlProvider.Id);
-            actualTlevelResult.TlPathwayId.Should().Be(Pathway.Id);
+            actualTlevelResult.ProviderId.Should().Be(TlProvider.Id);
+            actualTlevelResult.PathwayId.Should().Be(Pathway.Id);
             actualTlevelResult.RouteName.Should().Be(Route.Name);
             actualTlevelResult.PathwayName.Should().Be(Pathway.Name);
         }

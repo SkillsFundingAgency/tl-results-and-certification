@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
     public class SelectProviderTlevel
     {
         public int TqAwardingOrganisationId { get; set; }
-        public int TlProviderId { get; set; }
-        public int TlPathwayId { get; set; }
+        public int ProviderId { get; set; }
+        public int PathwayId { get; set; }
         public string RouteName { get; set; }
         public string PathwayName { get; set; }
     }

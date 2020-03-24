@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
         {
             ApiClientResponse = new ProviderTlevels
             {
-                TlProviderId = 1,
+                ProviderId = 1,
                 DisplayName = "Test1",
                 Ukprn = 12345
             };
@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
         public void Then_No_Provider_Tlevels_Are_Returned()
         {
             ActualResult.Should().NotBeNull();
-            ActualResult.ProviderId.Should().Be(ApiClientResponse.TlProviderId);
+            ActualResult.ProviderId.Should().Be(ApiClientResponse.ProviderId);
             ActualResult.DisplayName.Should().Be(ApiClientResponse.DisplayName);
             ActualResult.Ukprn.Should().Be(ApiClientResponse.Ukprn);
             ActualResult.Tlevels.Should().BeNullOrEmpty();

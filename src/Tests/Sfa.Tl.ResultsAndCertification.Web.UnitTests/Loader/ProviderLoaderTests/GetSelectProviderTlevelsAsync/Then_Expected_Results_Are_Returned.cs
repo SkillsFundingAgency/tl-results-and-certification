@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
         public void Then_Expected_Provider_Tlevels_Are_Returned()
         {            
             ActualResult.Should().NotBeNull();
-            ActualResult.ProviderId.Should().Be(ApiClientResponse.TlProviderId);
+            ActualResult.ProviderId.Should().Be(ApiClientResponse.ProviderId);
             ActualResult.DisplayName.Should().Be(ApiClientResponse.DisplayName);
             ActualResult.Ukprn.Should().Be(ApiClientResponse.Ukprn);
             ActualResult.Tlevels.Should().NotBeNull();
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
             actualProviderTlevelResult.Should().NotBeNull();
 
             actualProviderTlevelResult.TqAwardingOrganisationId.Should().Be(expectedTlevelResult.TqAwardingOrganisationId);
-            actualProviderTlevelResult.PathwayId.Should().Be(expectedTlevelResult.TlPathwayId);
+            actualProviderTlevelResult.PathwayId.Should().Be(expectedTlevelResult.PathwayId);
             actualProviderTlevelResult.PathwayName.Should().Be(expectedTlevelResult.PathwayName);
             actualProviderTlevelResult.RouteName.Should().Be(expectedTlevelResult.RouteName);
             actualProviderTlevelResult.TlevelTitle.Should().Be($"{expectedTlevelResult.RouteName}: {expectedTlevelResult.PathwayName}");

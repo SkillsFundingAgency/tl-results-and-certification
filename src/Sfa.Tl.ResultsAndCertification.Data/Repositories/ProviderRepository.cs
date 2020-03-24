@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 where tlprov.Id == providerId
                                 select new ProviderTlevels
                                 {
-                                    TlProviderId = tlprov.Id,
+                                    ProviderId = tlprov.Id,
                                     DisplayName = tlprov.DisplayName,
                                     Ukprn = tlprov.UkPrn,
                                     Tlevels = (from tqao in _dbContext.TqAwardingOrganisation
@@ -30,8 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                select new SelectProviderTlevel
                                                {
                                                    TqAwardingOrganisationId = tqao.Id,
-                                                   TlProviderId = tlprov.Id,
-                                                   TlPathwayId = tqao.TlPathway.Id,
+                                                   ProviderId = tlprov.Id,
+                                                   PathwayId = tqao.TlPathway.Id,
                                                    RouteName = tqao.TlRoute.Name,
                                                    PathwayName = tqao.TlPathway.Name
                                                }).OrderBy(o => o.RouteName).ThenBy(o => o.PathwayName)

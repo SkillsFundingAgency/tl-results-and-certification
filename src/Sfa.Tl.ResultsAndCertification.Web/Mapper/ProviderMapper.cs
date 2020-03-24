@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
         public ProviderMapper()
         {
             CreateMap<ProviderTlevels, ProviderTlevelsViewModel>()
-               .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.TlProviderId))
+               .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.ProviderId))
                .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => s.DisplayName))
                .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.Ukprn))
                .ForMember(d => d.Tlevels, opts => opts.MapFrom(s => s.Tlevels))
@@ -18,8 +18,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<SelectProviderTlevel, SelectProviderTlevelViewModel>()
                 .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
-               .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.TlProviderId))
-               .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.TlPathwayId))
+               .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.ProviderId))
+               .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
                .ForMember(d => d.RouteName, opts => opts.MapFrom(s => s.RouteName))
                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
                .ForMember(d => d.IsSelected, opts => opts.Ignore());
