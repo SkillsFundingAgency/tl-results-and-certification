@@ -29,8 +29,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
 
             actualProviderTlevelResult.TqAwardingOrganisationId.Should().Be(expectedTlevelResult.TqAwardingOrganisationId);
             actualProviderTlevelResult.PathwayId.Should().Be(expectedTlevelResult.PathwayId);
-            actualProviderTlevelResult.PathwayName.Should().Be(expectedTlevelResult.PathwayName);
-            actualProviderTlevelResult.RouteName.Should().Be(expectedTlevelResult.RouteName);
             actualProviderTlevelResult.TlevelTitle.Should().Be($"{expectedTlevelResult.RouteName}: {expectedTlevelResult.PathwayName}");
         }
     }

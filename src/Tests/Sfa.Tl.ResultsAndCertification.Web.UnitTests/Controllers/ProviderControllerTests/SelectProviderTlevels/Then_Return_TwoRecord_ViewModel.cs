@@ -21,8 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
                 Ukprn = 10000111,
                 Tlevels = new List<ProviderTlevelDetailsViewModel>
                 {
-                    new ProviderTlevelDetailsViewModel { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 1, RouteName = "Route1", PathwayName = "Pathway1"},
-                    new ProviderTlevelDetailsViewModel { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 2, RouteName = "Route2", PathwayName = "Pathway2"}
+                    new ProviderTlevelDetailsViewModel { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 1, TlevelTitle = "Route1: Pathway1" },
+                    new ProviderTlevelDetailsViewModel { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 2, TlevelTitle = "Route1: Pathway1" }
                 }
             };
 
@@ -63,8 +63,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             expectedFirstItemModel.TqAwardingOrganisationId.Should().Be(actualFirstItemModel.TqAwardingOrganisationId);
             expectedFirstItemModel.ProviderId.Should().Be(actualFirstItemModel.ProviderId);
             expectedFirstItemModel.PathwayId.Should().Be(actualFirstItemModel.PathwayId);
-            expectedFirstItemModel.RouteName.Should().Be(actualFirstItemModel.RouteName);
-            expectedFirstItemModel.PathwayName.Should().Be(actualFirstItemModel.PathwayName);
             expectedFirstItemModel.TlevelTitle.Should().Be(actualFirstItemModel.TlevelTitle);
         }
     }

@@ -87,13 +87,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             
             if (isSuccess)
             {
-                TempData["IsRedirect"] = true;
-                return RedirectToRoute(RouteConstants.ProviderTlevelConfirmation, new ProviderTlevelsViewModel { 
+                TempData[Constants.ProviderTlevelsViewModel] = new ProviderTlevelsViewModel
+                {
                     ProviderId = viewModel.ProviderId,
                     DisplayName = viewModel.DisplayName,
                     Ukprn = viewModel.Ukprn,
                     Tlevels = viewModel.Tlevels.Where(x => x.IsSelected).ToList()
-                });
+                };
+                return RedirectToRoute(RouteConstants.ProviderTlevelConfirmation);
             }
             else
             {
@@ -102,16 +103,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [Route("submit-successful", Name = RouteConstants.ProviderTlevelConfirmation)]
-        public IActionResult ConfirmationAsync(ProviderTlevelsViewModel viewModel)
+        public IActionResult ConfirmationAsync()
         {
-            if (viewModel == null || TempData[Constants.IsRedirect] == null || !(bool.TryParse(TempData[Constants.IsRedirect].ToString(), out bool isRedirect) && isRedirect))
+            if (TempData[Constants.ProviderTlevelsViewModel] == null)
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
-            //var confirmationViewModel = await _tlevelLoader.GetTlevelConfirmationDetailsAsync(User.GetUkPrn(), id);
-
-            return View(viewModel);
+            return View();
         }
 
         private async Task<IActionResult> GetSelectProviderTlevelsAsync(int providerId)
