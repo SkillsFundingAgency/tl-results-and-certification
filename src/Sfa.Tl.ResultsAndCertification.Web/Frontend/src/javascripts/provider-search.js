@@ -52,4 +52,6 @@ $(document).ready(function () {
             }
         }
     });
+
+    $("#search").attr('maxlength', '400');
 });
