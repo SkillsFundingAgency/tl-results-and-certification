@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {
+                webBuilder.UseKestrel(c => c.AddServerHeader = false);
                 webBuilder.UseStartup<Startup>();
             });
     }
