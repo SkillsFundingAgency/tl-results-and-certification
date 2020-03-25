@@ -38,5 +38,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _providerService.GetSelectProviderTlevelsAsync(aoUkprn, providerId);
         }
+
+        [HttpPost]
+        [Route("AddProviderTlevels")]
+        public async Task<IActionResult> AddProviderTlevelsAsync(List<SelectProviderTlevel> model)
+        {
+            var result = await _providerService.AddProviderTlevelsAsync(model);
+            return Ok(result);
+        }
+        
     }
 }
