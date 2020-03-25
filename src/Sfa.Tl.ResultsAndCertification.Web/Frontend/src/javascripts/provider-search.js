@@ -5,6 +5,14 @@ $(document).ready(function () {
     var providerNames = null;
     var currentGetProviderSearchXhr = null;
 
+    $("#search").each(function () {
+        var selectElement = $('<select></select>', { html: $(this).html() });
+        $.each(this.attributes, function () {
+            selectElement.attr(this.name, this.value);
+        });
+        $(this).replaceWith(selectElement);
+    });
+
     accessibleAutocomplete.enhanceSelectElement({
         defaultValue: $("#previousSearch").val(),
         autoSelect: true,
