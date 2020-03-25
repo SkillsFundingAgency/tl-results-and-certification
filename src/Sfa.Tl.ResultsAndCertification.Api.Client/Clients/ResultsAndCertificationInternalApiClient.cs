@@ -52,10 +52,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PutAsync<VerifyTlevelDetails, bool>(requestUri, model);
         }
 
-        public async Task<bool> AddProviderTlevelsAsync(List<SelectProviderTlevel> model)
+        public async Task<bool> AddProviderTlevelsAsync(List<ProviderTlevelDetails> model)
         {
             var requestUri = ApiConstants.AddProviderTlevelsUri;
-            return await PostAsync<List<SelectProviderTlevel>, bool>(requestUri, model);
+            return await PostAsync<List<ProviderTlevelDetails>, bool>(requestUri, model);
         }
 
         public async Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn)

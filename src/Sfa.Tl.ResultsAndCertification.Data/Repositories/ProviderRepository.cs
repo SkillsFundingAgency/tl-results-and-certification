@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                from result in tlevels.DefaultIfEmpty()
                                                join tlao in _dbContext.TlAwardingOrganisation on new { a = tqao.TlAwardingOrganisatonId, b = ukprn } equals new { a = tlao.Id, b = tlao.UkPrn }
                                                where result == null
-                                               select new SelectProviderTlevel
+                                               select new ProviderTlevelDetails
                                                {
                                                    TqAwardingOrganisationId = tqao.Id,
                                                    ProviderId = tlprov.Id,

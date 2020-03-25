@@ -14,6 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTl
         [Required(ErrorMessageResourceType = typeof(ErrorResource.SelectProviderTlevels), ErrorMessageResourceName = "Select_Tlevel_Validation_Message")]
         public bool? HasTlevelSelected => (Tlevels.Any(x => x.IsSelected) == true) ? true : (bool?)null;
         public bool HasMoreThanOneTlevel => Tlevels?.Count() > 1;
-        public IList<SelectProviderTlevelViewModel> Tlevels { get; set; }
+        public IList<ProviderTlevelDetailsViewModel> Tlevels { get; set; }
     }
 }

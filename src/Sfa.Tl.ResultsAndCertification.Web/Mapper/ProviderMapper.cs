@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.Tlevels, opts => opts.MapFrom(s => s.Tlevels))
                .ForMember(d => d.HasTlevelSelected, opts => opts.Ignore());
 
-            CreateMap<SelectProviderTlevel, SelectProviderTlevelViewModel>()
+            CreateMap<ProviderTlevelDetails, ProviderTlevelDetailsViewModel>()
                 .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.ProviderId))
                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
                .ForMember(d => d.IsSelected, opts => opts.Ignore());
 
-            CreateMap<SelectProviderTlevelViewModel, SelectProviderTlevel>()
+            CreateMap<ProviderTlevelDetailsViewModel, ProviderTlevelDetails>()
                 .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.ProviderId))
                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId));

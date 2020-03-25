@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return result;
         }
 
-        public async Task<bool> AddProviderTlevelsAsync(List<SelectProviderTlevel> model)
+        public async Task<bool> AddProviderTlevelsAsync(List<ProviderTlevelDetails> model)
         {           
             if (model == null || !model.Any()) return false;
             var newTlevels = _mapper.Map<List<TqProvider>>(model);            

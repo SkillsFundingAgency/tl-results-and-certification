@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpPost]
         [Route("AddProviderTlevels")]
-        public async Task<IActionResult> AddProviderTlevelsAsync(List<SelectProviderTlevel> model)
+        public async Task<IActionResult> AddProviderTlevelsAsync(List<ProviderTlevelDetails> model)
         {
             var result = await _providerService.AddProviderTlevelsAsync(model);
             return Ok(result);
