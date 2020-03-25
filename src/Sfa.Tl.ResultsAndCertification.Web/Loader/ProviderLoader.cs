@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -35,6 +36,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var tlevelDetails = await _internalApiClient.GetSelectProviderTlevelsAsync(aoUkprn, providerId);
             return _mapper.Map<ProviderTlevelsViewModel>(tlevelDetails);
+        }
+
+        public async Task<bool> AddProviderTlevelsAsync(ProviderTlevelsViewModel viewModel)
+        {
+            var addViewModel = _mapper.Map<List<SelectProviderTlevel>>(viewModel.Tlevels.Where(x => x.IsSelected).ToList());
+            return await _internalApiClient.AddProviderTlevelsAsync(addViewModel);
         }
     }
 }

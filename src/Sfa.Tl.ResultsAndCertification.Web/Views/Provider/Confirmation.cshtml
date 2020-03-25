@@ -1,0 +1,24 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels.ProviderTlevelsViewModel
+
+@{
+    ViewData["Title"] = "";
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">T Levels added successfully</h1>
+        </div>
+        <p class="govuk-body govuk-!-padding-top-5">You confirmed @Model.DisplayName (<abbr>UKPRN</abbr>: @Model.Ukprn) will offer:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+            @foreach (var tlevel in Model.Tlevels.Select((value, i) => (value, i)))
+            {
+                <li><p class="govuk-body govuk-!-font-weight-bold">@tlevel.value.TlevelTitle</p></li>
+            }
+        </ul>
+        <p class="govuk-body govuk-!-padding-bottom-5 govuk-!-padding-top-1"><a href="centre-details-existing">Manage provider's T Levels</a></p>
+
+        <p><a class="govuk-button" role="button" href="/1-11/AO/find-centre.html">Find another provider</a></p>
+    </div>
+</div>

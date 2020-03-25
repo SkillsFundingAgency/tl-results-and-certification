@@ -11,5 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn);
         Task<IEnumerable<ProviderLookupData>> GetProviderLookupDataAsync(string name, bool isExactMatch);
         Task<ProviderTlevelsViewModel> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId);
+        Task<bool> AddProviderTlevelsAsync(ProviderTlevelsViewModel viewModel);
     }
 }

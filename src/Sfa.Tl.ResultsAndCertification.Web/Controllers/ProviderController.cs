@@ -83,7 +83,35 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return await GetSelectProviderTlevelsAsync(viewModel.ProviderId);
             }
-            return RedirectToRoute(RouteConstants.PageNotFound);
+            var isSuccess = await _providerLoader.AddProviderTlevelsAsync(viewModel);
+            
+            if (isSuccess)
+            {
+                TempData["IsRedirect"] = true;
+                return RedirectToRoute(RouteConstants.ProviderTlevelConfirmation, new ProviderTlevelsViewModel { 
+                    ProviderId = viewModel.ProviderId,
+                    DisplayName = viewModel.DisplayName,
+                    Ukprn = viewModel.Ukprn,
+                    Tlevels = viewModel.Tlevels.Where(x => x.IsSelected).ToList()
+                });
+            }
+            else
+            {
+                return RedirectToRoute("error/500");
+            }
+        }
+
+        [Route("submit-successful", Name = RouteConstants.ProviderTlevelConfirmation)]
+        public IActionResult ConfirmationAsync(ProviderTlevelsViewModel viewModel)
+        {
+            if (viewModel == null || TempData[Constants.IsRedirect] == null || !(bool.TryParse(TempData[Constants.IsRedirect].ToString(), out bool isRedirect) && isRedirect))
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            //var confirmationViewModel = await _tlevelLoader.GetTlevelConfirmationDetailsAsync(User.GetUkPrn(), id);
+
+            return View(viewModel);
         }
 
         private async Task<IActionResult> GetSelectProviderTlevelsAsync(int providerId)
