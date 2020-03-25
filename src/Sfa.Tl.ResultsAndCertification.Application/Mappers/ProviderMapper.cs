@@ -13,7 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                 .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.ProviderId))
                 .ForMember(d => d.TlPathwayId, opts => opts.MapFrom(s => s.PathwayId))
-                //.ForMember(d => d.ModifiedBy, opts => opts.MapFrom(s => s.ModifiedBy))
                 .ForMember(d => d.ModifiedOn, opts => opts.MapFrom<DateTimeResolver<SelectProviderTlevel, TqProvider>>());
         }
     }
