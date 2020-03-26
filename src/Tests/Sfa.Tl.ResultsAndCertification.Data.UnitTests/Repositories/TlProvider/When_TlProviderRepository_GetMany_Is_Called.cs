@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlProvider
         [Fact]
         public void Then_The_Expected_Number_Of_Paths_Is_Returned()
         {
-            _result.Count().Should().Be(2);
+            _result.Count().Should().Be(4);
         }
 
         [Fact]
