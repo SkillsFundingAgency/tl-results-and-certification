@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 
@@ -17,17 +18,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.HasTlevelSelected, opts => opts.Ignore());
 
             CreateMap<ProviderTlevelDetails, ProviderTlevelDetailsViewModel>()
-                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
+               .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.ProviderId))
                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => $"{s.RouteName}: {s.PathwayName}"))
                .ForMember(d => d.IsSelected, opts => opts.Ignore());
 
             CreateMap<ProviderTlevelDetailsViewModel, ProviderTlevelDetails>()
-                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
+               .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.ProviderId))
-               .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId));
-
+               .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
+               .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<ProviderTlevelDetailsViewModel, ProviderTlevelDetails>>());
+            
             CreateMap<ProviderMetadata, ProviderLookupData>();
         }
     }
