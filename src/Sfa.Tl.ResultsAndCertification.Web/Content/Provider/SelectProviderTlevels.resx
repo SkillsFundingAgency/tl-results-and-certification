@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Select a Provider’s T Levels</value>
+    <value>Select provider’s T Levels</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Select a Provider’s T Levels</value>
+    <value>Select provider’s T Levels</value>
   </data>
   <data name="Section_Information_Plural_Text" xml:space="preserve">
     <value>Select and submit the T Levels you have approved this provider to offer.</value>
