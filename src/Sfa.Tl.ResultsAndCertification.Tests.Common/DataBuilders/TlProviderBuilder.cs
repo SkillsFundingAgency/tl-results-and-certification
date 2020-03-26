@@ -40,6 +40,26 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
+            },
+            new Domain.Models.TlProvider
+            {
+                UkPrn = 10007315,
+                Name = "Walsall College",
+                DisplayName = "Walsall College",
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new Domain.Models.TlProvider
+            {
+                UkPrn = 10042313,
+                Name = "Walsall Studio School",
+                DisplayName = "Walsall Studio School",
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
             }
         };
     }

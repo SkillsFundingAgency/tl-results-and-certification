@@ -1,24 +1,19 @@
-﻿using System.Linq;
-using Xunit;
+﻿using Xunit;
 using FluentAssertions;
 using NSubstitute;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using System.Collections.Generic;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.FindProvider
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.IsAnyProviderSetupCompleted
 {
-    public class When_FindProviderAsync_IsCalled_With_Valid_Ukprn_And_ProviderId : ProviderServiceBaseTest
+    public class When_IsAnyProviderSetupCompletedAsync_IsCalled_With_InValid_Ukprn : ProviderServiceBaseTest
     {
-        private IEnumerable<ProviderMetadata> _result;
-        private string _providerName = "Lordswood Sixthform College";
-        private bool _isExactMatch = true;
+        private bool _result;
 
         public override void Given()
-        {
+        {            
             SeedTestData();
 
             ProviderRepositoryLogger = Substitute.For<ILogger<ProviderRepository>>();
@@ -30,12 +25,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
 
         public override void When()
         {
-            _result = ProviderService.FindProviderAsync(_providerName, _isExactMatch).Result;
+            _result = ProviderService.IsAnyProviderSetupCompletedAsync(1234).Result;
         }
 
         [Fact]
         public void Then_Expected_Results_Is_Returned()
         {
+            _result.Should().BeFalse();
         }
     }
 }

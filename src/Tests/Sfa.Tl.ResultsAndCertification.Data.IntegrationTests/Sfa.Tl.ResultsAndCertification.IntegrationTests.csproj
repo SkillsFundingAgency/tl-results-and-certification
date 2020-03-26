@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Services\ProviderServiceTests\IsAnyProviderSetupCompleted\" />
   </ItemGroup>
 
 </Project>

@@ -19,7 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
         protected TlPathway Pathway;
         protected TlProvider TlProvider;
         protected TlAwardingOrganisation TlAwardingOrganisation;
-        protected TqAwardingOrganisation TqAwardingOrganisation;        
+        protected TqAwardingOrganisation TqAwardingOrganisation;
+        protected TqProvider TqProvider;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected ILogger<GenericRepository<TlProvider>> TlProviderRepositoryLogger;
         protected IRepository<TlProvider> TlproviderRepository;
@@ -34,11 +35,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
 
         protected virtual void SeedTestData()
         {
-            TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, EnumAwardingOrganisation.Pearson);
             Route = TlevelDataProvider.CreateTlRoute(DbContext, EnumAwardingOrganisation.Pearson);
             Pathway = TlevelDataProvider.CreateTlPathway(DbContext, EnumAwardingOrganisation.Pearson, Route);
             TqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Route, Pathway, TlAwardingOrganisation);
+
+            TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
+            TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
             DbContext.SaveChangesAsync();
         }
     }
