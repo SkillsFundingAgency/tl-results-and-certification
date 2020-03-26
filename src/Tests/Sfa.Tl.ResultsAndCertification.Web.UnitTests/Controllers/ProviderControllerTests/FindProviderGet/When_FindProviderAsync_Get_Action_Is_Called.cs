@@ -5,6 +5,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.FindProviderGet
 {
@@ -16,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
         // input, output and other mock variables
         protected ProviderController Controller;
-        protected IActionResult Result;
+        protected Task<IActionResult> Result;
         protected IHttpContextAccessor HttpContextAccessor;
 
         public override void Setup()
@@ -29,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
         public override void When()
         {
-            Result = Controller.FindProviderAsync();
+            Result = Controller.FindProviderAsync() ;
         }
     }
 }

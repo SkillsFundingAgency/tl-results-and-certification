@@ -45,9 +45,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("find-provider", Name = RouteConstants.FindProvider)]
-        public IActionResult FindProviderAsync()
+        public async Task<IActionResult> FindProviderAsync()
         {
-            var viewModel = new FindProviderViewModel();
+            var yourProvidersExists  = await _providerLoader.IsAnyProviderSetupCompletedAsync(User.GetUkPrn());
+            var viewModel = new FindProviderViewModel { ShowViewProvidersLink = yourProvidersExists };
             return View(viewModel);
         }
 

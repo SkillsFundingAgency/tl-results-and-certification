@@ -131,5 +131,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
                 return ResourceManager.GetString("Section_Information_Text", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View providers you have already set up.
+        /// </summary>
+        public static string View_Providers_Link_Text {
+            get {
+                return ResourceManager.GetString("View_Providers_Link_Text", resourceCulture);
+            }
+        }
     }
 }
