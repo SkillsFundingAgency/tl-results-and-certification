@@ -19,12 +19,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         protected ProviderController Controller;
         protected Task<IActionResult> Result;
         protected IHttpContextAccessor HttpContextAccessor;
+        protected long Ukprn = 789;
 
         public override void Setup()
         {
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             ProviderLoader = Substitute.For<IProviderLoader>();
             Logger = Substitute.For<ILogger<ProviderController>>();
+            
             Controller = new ProviderController(ProviderLoader, Logger);
         }
 

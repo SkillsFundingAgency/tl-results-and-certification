@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.IsAnyProviderSetupCompleted
 {
@@ -21,6 +22,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             TlProviderRepositoryLogger = Substitute.For<ILogger<GenericRepository<TlProvider>>>();
             TlproviderRepository = new GenericRepository<TlProvider>(TlProviderRepositoryLogger, DbContext);
             ProviderService = new ProviderService(ProviderRepository, TlproviderRepository, ProviderMapper, Logger);
+        }
+
+        protected override void SeedProviderData()
+        {
+            TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
+            TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
         }
 
         public override void When()

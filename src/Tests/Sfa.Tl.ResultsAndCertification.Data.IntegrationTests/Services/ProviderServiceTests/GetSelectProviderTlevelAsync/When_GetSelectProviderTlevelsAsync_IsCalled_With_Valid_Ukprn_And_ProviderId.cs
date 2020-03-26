@@ -11,7 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.GetSelectProviderTlevelAsync
 {
-    public class When_IsAnyProviderSetupCompletedAsync_IsCalled : ProviderServiceBaseTest
+    public class When_GetSelectProviderTlevelsAsync_IsCalled_With_Valid_Ukprn_And_ProviderId : ProviderServiceBaseTest
     {
         private ProviderTlevels _result;
 

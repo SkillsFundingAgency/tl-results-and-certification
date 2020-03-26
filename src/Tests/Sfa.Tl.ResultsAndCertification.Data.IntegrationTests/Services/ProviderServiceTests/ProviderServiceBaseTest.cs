@@ -40,9 +40,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             Pathway = TlevelDataProvider.CreateTlPathway(DbContext, EnumAwardingOrganisation.Pearson, Route);
             TqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Route, Pathway, TlAwardingOrganisation);
 
-            TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
-            TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
+            SeedProviderData();
             DbContext.SaveChangesAsync();
+        }
+
+        protected virtual void SeedProviderData()
+        {
+            TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
         }
     }
 }
