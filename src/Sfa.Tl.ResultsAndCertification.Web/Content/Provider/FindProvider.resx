@@ -141,4 +141,7 @@
   <data name="Section_Information_Text" xml:space="preserve">
     <value>Tell us which T Levels a provider will offer.</value>
   </data>
+  <data name="View_Providers_Link_Text" xml:space="preserve">
+    <value>View providers you have already set up</value>
+  </data>
 </root>

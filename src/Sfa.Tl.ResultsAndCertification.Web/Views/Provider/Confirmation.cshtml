@@ -23,12 +23,17 @@
                 }
             </ul>
         }
-        else if(Model.Tlevels?.Count == 1)
+        else if (Model.Tlevels?.Count == 1)
         {
             <p class="govuk-body govuk-!-font-weight-bold">@Model.Tlevels[0].TlevelTitle</p>
         }
 
-        <p class="govuk-body govuk-!-padding-bottom-5 govuk-!-padding-top-1"><a href="#">@Confirmation.Mange_Providers_Tlevels_Link_Text</a></p>
-        <p><a class="govuk-button" role="button" href="#">@Confirmation.Find_Another_Provider_Link_Button_Text</a></p>
+        <p class="govuk-body govuk-!-padding-bottom-5 govuk-!-padding-top-1">
+            <a asp-route="YourProviders">@Confirmation.Mange_Providers_Tlevels_Link_Text</a>
+        </p>
+        <p>
+            <a asp-route="FindProvider" class="govuk-button" role="button">@Confirmation.Find_Another_Provider_Link_Button_Text</a>
+        </p>
+        
     </div>
 </div>

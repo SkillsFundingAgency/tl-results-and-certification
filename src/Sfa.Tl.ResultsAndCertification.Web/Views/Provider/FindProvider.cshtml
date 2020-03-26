@@ -32,6 +32,12 @@
                 </fieldset>
             </div>
             <button type="submit" class="govuk-button" data-module="govuk-button">@FindProvider.Continue_Button_Label</button>
+
+            @if (Model.ShowViewProvidersLink)
+            {
+                <p class="govuk-body"><a class="govuk-link" asp-route="YourProviders">@FindProvider.View_Providers_Link_Text</a></p>
+            }
+
             <input type="hidden" asp-for="SelectedProviderId" />
         </form>
     </div>
