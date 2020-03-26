@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
@@ -23,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         [Route("providers", Name = RouteConstants.Providers)]
         public async Task<IActionResult> IndexAsync()
         {
@@ -34,12 +36,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.FindProvider);
         }
 
+        [HttpGet]
         [Route("your-providers", Name = RouteConstants.YourProviders)]
         public async Task<IActionResult> ViewAllAsync()
         {
             return await Task.Run(() => View());
         }
 
+        [HttpGet]
         [Route("find-provider", Name = RouteConstants.FindProvider)]
         public IActionResult FindProviderAsync()
         {
@@ -51,14 +55,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("find-provider", Name = RouteConstants.FindProvider)]
         public async Task<IActionResult> FindProviderAsync(FindProviderViewModel viewModel)
         {
-            if (!(await FindProviderViewModelValidated(viewModel)))
+            if (!await FindProviderViewModelValidated(viewModel))
             {
                 return View(viewModel);
             }
 
-            return RedirectToRoute(RouteConstants.SelectProviderTlevels, new { providerId = viewModel.SelectedProviderId } );
+            return RedirectToRoute(RouteConstants.SelectProviderTlevels, new { providerId = viewModel.SelectedProviderId });
         }
 
+        [HttpGet]
         [Route("search-provider/{name}", Name = RouteConstants.ProviderNameLookup)]
         public async Task<JsonResult> GetProviderLookupDataAsync(string name)
         {
@@ -69,6 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return Json(providersData);
         }
 
+        [HttpGet]
         [Route("select-providers-tlevels/{providerId}", Name = RouteConstants.SelectProviderTlevels)]
         public async Task<IActionResult> SelectProviderTlevelsAsync(int providerId)
         {
@@ -81,19 +87,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return await GetSelectProviderTlevelsAsync(viewModel.ProviderId);
+                return View(viewModel);
             }
+
             var isSuccess = await _providerLoader.AddProviderTlevelsAsync(viewModel);
-            
             if (isSuccess)
             {
-                TempData[Constants.ProviderTlevelsViewModel] = new ProviderTlevelsViewModel
-                {
-                    ProviderId = viewModel.ProviderId,
-                    DisplayName = viewModel.DisplayName,
-                    Ukprn = viewModel.Ukprn,
-                    Tlevels = viewModel.Tlevels.Where(x => x.IsSelected).ToList()
-                };
+                viewModel.Tlevels = viewModel.Tlevels.Where(x => x.IsSelected).ToList();
+                TempData[Constants.ProviderTlevelsViewModel] = JsonConvert.SerializeObject(viewModel);
                 return RedirectToRoute(RouteConstants.ProviderTlevelConfirmation);
             }
             else
@@ -102,6 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
         }
 
+        [HttpGet]
         [Route("submit-successful", Name = RouteConstants.ProviderTlevelConfirmation)]
         public IActionResult ConfirmationAsync()
         {
@@ -109,7 +111,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            return View();
+
+            var viewModel = JsonConvert.DeserializeObject<ProviderTlevelsViewModel>(TempData[Constants.ProviderTlevelsViewModel] as string);
+            return View(viewModel);
         }
 
         private async Task<IActionResult> GetSelectProviderTlevelsAsync(int providerId)

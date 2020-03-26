@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 {
@@ -21,18 +20,21 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         [Route("IsAnyProviderSetupCompleted/{ukprn}")]
         public async Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn)
         {
             return await _providerService.IsAnyProviderSetupCompletedAsync(ukprn);
         }
 
+        [HttpGet]
         [Route("FindProvider/{name}/{isExactMatch}")]
         public async Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch)
         {
             return await _providerService.FindProviderAsync(name, isExactMatch);
         }
 
+        [HttpGet]
         [Route("GetSelectProviderTlevels/{aoUkprn}/{providerId}")]
         public async Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)
         {
