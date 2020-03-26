@@ -85,9 +85,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("select-providers-tlevels", Name = RouteConstants.SubmitSelectProviderTlevels)]
         public async Task<IActionResult> SelectProviderTlevelsAsync(ProviderTlevelsViewModel viewModel)
         {
+            if (viewModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
             if (!ModelState.IsValid)
             {
-                return View(viewModel);
+                return await GetSelectProviderTlevelsAsync(viewModel.ProviderId);
             }
 
             var isSuccess = await _providerLoader.AddProviderTlevelsAsync(viewModel);
