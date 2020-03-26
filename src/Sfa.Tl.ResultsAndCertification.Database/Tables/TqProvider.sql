@@ -11,5 +11,6 @@
 	CONSTRAINT [PK_TqProvider] PRIMARY KEY ([Id]),
 	CONSTRAINT [FK_TqProvider_TqAwardingOrganisation] FOREIGN KEY ([TqAwardingOrganisationId]) REFERENCES [TqAwardingOrganisation]([Id]),
 	CONSTRAINT [FK_TqProvider_TlProvider] FOREIGN KEY ([TlProviderId]) REFERENCES [TlProvider]([Id]),
-	CONSTRAINT [FK_TqProvider_TlPathway] FOREIGN KEY ([TlPathwayId]) REFERENCES [TlPathway]([Id])
+	CONSTRAINT [FK_TqProvider_TlPathway] FOREIGN KEY ([TlPathwayId]) REFERENCES [TlPathway]([Id]),
+	CONSTRAINT Unique_TqProvider_TqAwardingOrganisation_TlProviderId_TlPathwayId UNIQUE ([TqAwardingOrganisationId],[TlProviderId],[TlPathwayId])
 )
