@@ -40,8 +40,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch)
         {
             var providerNames = await _tlProviderRepository
-                .GetManyAsync(x => isExactMatch ? 
-                                    x.DisplayName.ToLower().Equals(name.ToLower()) : 
+                .GetManyAsync(x => isExactMatch ?
+                                    x.DisplayName.ToLower().Equals(name.ToLower()) :
                                     x.DisplayName.ToLower().StartsWith(name.ToLower()))
                 .OrderBy(o => o.DisplayName)
                 .Select(x => new ProviderMetadata { Id = x.Id, DisplayName = x.DisplayName })
@@ -56,10 +56,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         }
 
         public async Task<bool> AddProviderTlevelsAsync(List<ProviderTlevelDetails> model)
-        {           
+        {
             if (model == null || !model.Any()) return false;
-            var newTlevels = _mapper.Map<List<TqProvider>>(model);            
+            var newTlevels = _mapper.Map<List<TqProvider>>(model);
             return await _tqProviderRepository.CreateManyAsync(newTlevels) > 0;
+        }
+
+        public async Task<List<ProviderDetails>> GetAwardingOrganisationProviderDetailsAsync(long aoUkprn)
+        {
+            var tlProviders = await _tqProviderRepository
+                .GetManyAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn,
+                              n => n.TlProvider).ToListAsync();
+
+            return _mapper.Map<List<ProviderDetails>>(tlProviders);
         }
     }
 }

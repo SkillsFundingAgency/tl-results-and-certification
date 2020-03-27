@@ -13,6 +13,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.ProviderId))
                 .ForMember(d => d.TlPathwayId, opts => opts.MapFrom(s => s.PathwayId))
                 .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => s.CreatedBy));
+
+            CreateMap<TqProvider, ProviderDetails>()
+                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.TlProvider.Id))
+                .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => s.TlProvider.DisplayName))
+                .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.TlProvider.UkPrn));
         }
     }
 }
