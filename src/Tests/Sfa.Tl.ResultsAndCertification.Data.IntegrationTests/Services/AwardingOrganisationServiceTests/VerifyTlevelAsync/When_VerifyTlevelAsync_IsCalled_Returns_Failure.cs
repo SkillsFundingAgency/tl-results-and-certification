@@ -1,18 +1,18 @@
-﻿using System.Linq;
-using Xunit;
-using AutoMapper;
-using NSubstitute;
+﻿using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver;
+using System.Linq;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrganisationServiceTests.VerifyTlevelAsync
 {
