@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
@@ -40,11 +41,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch)
         {
             var providerNames = await _tlProviderRepository
-                .GetManyAsync(x => isExactMatch ?
-                                    x.DisplayName.ToLower().Equals(name.ToLower()) :
-                                    x.DisplayName.ToLower().StartsWith(name.ToLower()))
+                .GetManyAsync(p => EF.Functions.Like(p.DisplayName, isExactMatch ? $"{name.ToLower()}" : $"{name.ToLower()}%"))
                 .OrderBy(o => o.DisplayName)
-                .Select(x => new ProviderMetadata { Id = x.Id, DisplayName = x.DisplayName })
+                .ProjectTo<ProviderMetadata>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
             return providerNames;
