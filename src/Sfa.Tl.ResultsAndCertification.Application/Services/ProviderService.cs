@@ -61,13 +61,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqProviderRepository.CreateManyAsync(newTlevels) > 0;
         }
 
-        public async Task<List<ProviderDetails>> GetAwardingOrganisationProviderDetailsAsync(long aoUkprn)
+        public async Task<IList<ProviderDetails>> GetAwardingOrganisationProviderDetailsAsync(long aoUkprn)
         {
             var tlProviders = await _tqProviderRepository
                 .GetManyAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn,
                               n => n.TlProvider).ToListAsync();
 
-            return _mapper.Map<List<ProviderDetails>>(tlProviders);
+            return _mapper.Map<IList<ProviderDetails>>(tlProviders);
         }
     }
 }
