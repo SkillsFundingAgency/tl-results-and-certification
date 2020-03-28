@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+﻿using Microsoft.AspNetCore.Mvc;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 using System.Collections.Generic;
@@ -12,5 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<IEnumerable<ProviderLookupData>> GetProviderLookupDataAsync(string name, bool isExactMatch);
         Task<ProviderTlevelsViewModel> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId);
         Task<bool> AddProviderTlevelsAsync(ProviderTlevelsViewModel viewModel);
+        Task<ProviderTlevelsViewModel> GetViewProviderTlevelViewModelAsync(long aoUkprn, int providerId);
     }
 }
