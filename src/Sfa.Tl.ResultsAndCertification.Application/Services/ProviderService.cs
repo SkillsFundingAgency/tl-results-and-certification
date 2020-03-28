@@ -54,10 +54,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqProviderRepository.GetSelectProviderTlevelsAsync(aoUkprn, providerId);
         }
 
-        public async Task<bool> AddProviderTlevelsAsync(List<ProviderTlevelDetails> model)
+        public async Task<bool> AddProviderTlevelsAsync(IList<ProviderTlevelDetails> model)
         {
             if (model == null || !model.Any()) return false;
-            var newTlevels = _mapper.Map<List<TqProvider>>(model);
+            var newTlevels = _mapper.Map<IList<TqProvider>>(model);
             return await _tqProviderRepository.CreateManyAsync(newTlevels) > 0;
         }
 
