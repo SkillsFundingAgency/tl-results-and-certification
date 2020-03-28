@@ -25,18 +25,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("providers", Name = RouteConstants.Providers)]
-        public async Task<IActionResult> IndexAsync()
-        {
-            var IsAnyProviderSetupCompleted = await _providerLoader.IsAnyProviderSetupCompletedAsync(User.GetUkPrn());
-
-            if (IsAnyProviderSetupCompleted)
-                return RedirectToRoute(RouteConstants.YourProviders); // TODO: redirect to AddProvider.
-
-            return RedirectToRoute(RouteConstants.FindProvider);
-        }
-
-        [HttpGet]
         [Route("your-providers", Name = RouteConstants.YourProviders)]
         public async Task<IActionResult> ViewAllAsync()
         {
@@ -44,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("providers", Name = RouteConstants.Providers)]
         [Route("find-provider", Name = RouteConstants.FindProvider)]
         public async Task<IActionResult> FindProviderAsync()
         {
