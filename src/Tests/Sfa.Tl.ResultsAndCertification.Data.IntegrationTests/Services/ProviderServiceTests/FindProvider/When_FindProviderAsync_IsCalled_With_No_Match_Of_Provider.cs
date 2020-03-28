@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
         public override void Given()
         {
             SeedProviders();
-            
+            CreateMapper();
             ProviderRepositoryLogger = Substitute.For<ILogger<ProviderRepository>>();
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             TlProviderRepositoryLogger = Substitute.For<ILogger<GenericRepository<TlProvider>>>();
