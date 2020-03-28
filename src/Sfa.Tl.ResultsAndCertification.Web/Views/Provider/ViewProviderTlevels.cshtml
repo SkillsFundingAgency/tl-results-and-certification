@@ -1,0 +1,44 @@
+﻿@*TODO: Namespace doesn't look correct*@
+
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels.ProviderTlevelsViewModel
+
+@{
+    ViewData["Title"] = "Provider’s T Levels list";
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
+            Provider's T Levels
+        </h1>
+
+        <h2 class="govuk-heading-l">
+            @Model.DisplayName <span class="govuk-hint"><abbr>UKPRN</abbr>: @Model.Ukprn</span>
+        </h2>
+
+        <p class="govuk-body govuk-!-margin-bottom-5">This provider is offering:</p>
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-3">
+
+            @foreach (var tlevel in Model.Tlevels)
+            {
+                <div class="govuk-summary-list__row">
+                    <dd class="govuk-summary-list__value">
+                        @tlevel.TlevelTitle
+                    </dd>
+
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="#TODO">
+                            Remove <span class="govuk-visually-hidden">@tlevel.TlevelTitle</span>
+                        </a>
+                    </dd>
+                </div>
+            }
+        </dl>
+
+        <p><a class="govuk-button govuk-button--secondary" role="button" href="/1-11/AO/centre-details-existing-add.html">Add another T Level</a></p> @*TODO*@
+        <p><a class="govuk-button" role="button" asp-route="YourProviders">Back to your providers</a></p>
+
+    </div>
+</div>

@@ -17,5 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch);
         Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId);
         Task<bool> AddProviderTlevelsAsync(IList<ProviderTlevelDetails> model);
+        Task<ProviderTlevels> GetProviderTlevelsAsync(long aoUkprn, int providerId);
     }
 }
