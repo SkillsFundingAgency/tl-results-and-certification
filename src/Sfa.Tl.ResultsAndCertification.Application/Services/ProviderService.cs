@@ -49,9 +49,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return providerNames;
         }
 
-        public Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)
+        public async Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)
         {
-            return _tqProviderRepository.GetSelectProviderTlevelsAsync(aoUkprn, providerId);
+            return await _tqProviderRepository.GetSelectProviderTlevelsAsync(aoUkprn, providerId);
         }
 
         public async Task<bool> AddProviderTlevelsAsync(List<ProviderTlevelDetails> model)
