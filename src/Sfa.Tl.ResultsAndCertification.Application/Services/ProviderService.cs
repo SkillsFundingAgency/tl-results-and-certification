@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var setupCount = await _tqProviderRepository
                         .CountAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn);
-            return (setupCount > 0);
+            return setupCount > 0;
         }
 
         public async Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch)
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqProviderRepository.CreateManyAsync(newTlevels) > 0;
         }
 
-        public async Task<IList<ProviderDetails>> GetAwardingOrganisationProviderDetailsAsync(long aoUkprn)
+        public async Task<IList<ProviderDetails>> GetTqAoProviderDetailsAsync(long aoUkprn)
         {
             var tlProviders = await _tqProviderRepository
                 .GetManyAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn,
