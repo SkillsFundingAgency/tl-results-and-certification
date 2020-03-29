@@ -82,6 +82,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<ProviderTlevels>(requestUri);
         }
 
+        public async Task<IList<ProviderDetails>> GetTqAoProviderDetailsAsync(long aoUkprn)
+        {
+            var requestUri = string.Format(ApiConstants.GetTqAoProviderDetailsAsyncUri, aoUkprn);
+            return await GetAsync<IList<ProviderDetails>>(requestUri);
+        }
+
         private async Task SetBearerToken()
         {
             if (!_isDevevelopment)
