@@ -50,6 +50,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(viewModel);
             }
 
+            /* TODO 
+             * Task - check if all tlevels are set, then redirect to providerTlevels
+             */
+            var isAllTlevelsSetupDone = false;
+            if (isAllTlevelsSetupDone)
+            {
+                return RedirectToRoute(RouteConstants.ProviderTlevels, new { providerId = viewModel.SelectedProviderId });
+            }
+
             return RedirectToRoute(RouteConstants.SelectProviderTlevels, new { providerId = viewModel.SelectedProviderId });
         }
 
@@ -115,9 +124,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("provider-tlevels/{providerId}", Name = RouteConstants.ProviderTlevels)]
         public async Task<IActionResult> ViewProviderTlevelsAsync(int providerId)
         {
-            //var viewModel = await _providerLoader.GetViewProviderTlevelViewModelAsync(User.GetUkPrn(), providerId);
-            //return View(viewModel);
+            var viewModel = await _providerLoader.GetViewProviderTlevelViewModelAsync(User.GetUkPrn(), providerId);
+
+            /* TODO:
+             * Task: viewModel should know the if no more tlevelsetup can be done --> show or hide the button 'Add more Tlevels'
+             * Task: viewModel should track the previous page so that correct button at the bottom will be shown. 
+             */
+
+            // Task -> Bookmark or no Tlevels then redirect  (check with Gurmukh this redirection seesmsto be wrong)
+            var tlevelsExists = true;
+            if (!tlevelsExists)
+            {
+                return RedirectToRoute(RouteConstants.YourProviders);
+            }
             
+            //return View(viewModel);
+
             return await GetSelectProviderTlevelsAsync(providerId);
         }
 
