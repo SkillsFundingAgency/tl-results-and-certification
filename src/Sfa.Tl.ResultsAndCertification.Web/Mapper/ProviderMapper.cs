@@ -29,8 +29,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.ProviderId))
                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<ProviderTlevelDetailsViewModel, ProviderTlevelDetails>>());
-            
+
             CreateMap<ProviderMetadata, ProviderLookupData>();
+
+            CreateMap<ProviderDetails, ProviderDetailsViewModel>()
+               .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.Id))
+               .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => s.DisplayName))
+               .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.Ukprn));
         }
     }
 }

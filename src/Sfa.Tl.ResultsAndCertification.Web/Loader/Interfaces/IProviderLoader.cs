@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
+﻿using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,5 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<ProviderTlevelsViewModel> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId);
         Task<bool> AddProviderTlevelsAsync(ProviderTlevelsViewModel viewModel);
         Task<ProviderTlevelsViewModel> GetViewProviderTlevelViewModelAsync(long aoUkprn, int providerId);
+        Task<IList<ProviderDetailsViewModel>> GetTqAoProviderDetailsAsync(long aoUkprn);
     }
 }
