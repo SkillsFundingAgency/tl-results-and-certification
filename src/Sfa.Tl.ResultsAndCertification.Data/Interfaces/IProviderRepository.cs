@@ -8,6 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
     public interface IProviderRepository : IRepository<TqProvider>
     {
         Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long ukprn, int providerId);
-        Task<IEnumerable<TqProvider>> GetAllTqProvidersAsync(long ukprn, int providerId);
+        Task<IList<TqProvider>> GetAllTqProvidersAsync(long ukprn, int providerId);
     }
 }

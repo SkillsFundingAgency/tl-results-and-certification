@@ -73,10 +73,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<ProviderTlevels> GetProviderTlevelsAsync(long aoUkprn, int providerId)
         {
             var tqProviders = await _tqProviderRepository.GetAllTqProvidersAsync(aoUkprn, providerId);
-            var resultToReturn = _mapper.Map<ProviderTlevels>(tqProviders); /*TODO*/
-
-            //TODO: returning temporary information 
-            return await _tqProviderRepository.GetSelectProviderTlevelsAsync(aoUkprn, providerId);
+            
+            return  _mapper.Map<ProviderTlevels>(tqProviders); /*TODO: as required*/
         }
     }
 }

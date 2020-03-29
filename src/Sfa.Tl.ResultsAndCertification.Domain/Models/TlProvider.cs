@@ -9,12 +9,10 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
             TqProviders = new HashSet<TqProvider>();
         }
 
-        public int TlPathwayId { get; set; }
         public long UkPrn { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
 
-        public virtual TlPathway TlPathway { get; set; }
         public virtual ICollection<TqProvider> TqProviders { get; set; }
     }
 }

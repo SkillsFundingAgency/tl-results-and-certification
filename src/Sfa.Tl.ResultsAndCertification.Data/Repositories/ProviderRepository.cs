@@ -13,18 +13,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
     {
         public ProviderRepository(ILogger<ProviderRepository> logger, ResultsAndCertificationDbContext dbContext) : base(logger, dbContext) { }
 
-        public async Task<IEnumerable<TqProvider>> GetAllTqProvidersAsync(long aoUkprn, int providerId)
+        public async Task<IList<TqProvider>> GetAllTqProvidersAsync(long aoUkprn, int providerId)
         {
-            var result = await _dbContext.TqProvider
-                    .Include(x => x.TqAwardingOrganisation)
-                        .ThenInclude(x => x.TlAwardingOrganisaton)
-                    .Include(x => x.TlPathway)
-                        .ThenInclude(x => x.TlRoute)
+            var tqProviders = await _dbContext.TqProvider
                     .Include(x => x.TlProvider)
+                    .Include(x => x.TqAwardingOrganisation)
+                        .ThenInclude(x => x.TlPathway)
+                            .ThenInclude(x => x.TlRoute)
                     .Where(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
-                            x.TlProvider.Id == providerId).ToListAsync();
+                            x.TlProviderId == providerId).ToListAsync();
             
-            return result;
+            return tqProviders;
         }
         
         public async Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long ukprn, int providerId)
