@@ -119,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("provider-tlevels/{providerId}/{navigation:bool?}", Name = RouteConstants.ProviderTlevels)]
-        public async Task<IActionResult> ViewProviderTlevelsAsync(int providerId, bool navigation = false)
+        public async Task<IActionResult> ViewProviderTlevelsAsync(int providerId, bool navigation = true)
         {
             var viewModel = await _providerLoader.GetViewProviderTlevelViewModelAsync(User.GetUkPrn(), providerId);
 
