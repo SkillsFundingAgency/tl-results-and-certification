@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var result = (providerDetails != null &&
                 providerDetails.Tlevels != null &&
                 (providerDetails.Tlevels.ToList().Count > 0) &&
-                 !providerDetails.Tlevels.Any(x => x.TqProviderId == null)); // Checking if any Tlevels not setup
+                 !providerDetails.Tlevels.Any(x => !x.TqProviderId.HasValue)); // should not be anything with null
 
                 return true;
         }

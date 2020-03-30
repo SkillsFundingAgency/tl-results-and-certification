@@ -131,14 +131,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null || viewModel.Tlevels == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            // Task -> Gurmukh
-            if (!viewModel.AnyTlevelSetupCompleted)
-                return RedirectToRoute(RouteConstants.FindProvider);
+            if (!viewModel.AnyTlevelsAvailable)
+                return RedirectToRoute(RouteConstants.SelectProviderTlevels, new { providerId });
 
             /* TODO:
              * Task: viewModel should track the previous page so that correct button at the bottom will be shown. 
              */
-
             return View(viewModel);
         }
 
