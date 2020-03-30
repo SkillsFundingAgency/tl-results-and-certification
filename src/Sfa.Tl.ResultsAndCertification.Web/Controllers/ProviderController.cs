@@ -29,6 +29,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> YourProvidersAsync()
         {
             var providersViewModel = await _providerLoader.GetTqAoProviderDetailsAsync(User.GetUkPrn());
+            // Testing logs
+            _logger.LogInformation("LogInformaiton: Called Your Providers Async method");
+            _logger.LogWarning("LogWarning: Called Your Providers Async method");
+            if (providersViewModel == null || providersViewModel.Count == 0)
+                return RedirectToRoute(RouteConstants.FindProvider);
+
             return View(providersViewModel);
         }
 
