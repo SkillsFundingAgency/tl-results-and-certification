@@ -50,14 +50,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(viewModel);
             }
 
-            /* TODO 
-             * Task - check if all tlevels are set, then redirect to providerTlevels
-             */
-            var isAllTlevelsSetupDone = false;
+            var isAllTlevelsSetupDone = await _providerLoader.IsAllTlevelsSetupCompleted(User.GetUkPrn(), viewModel.SelectedProviderId);
             if (isAllTlevelsSetupDone)
-            {
                 return RedirectToRoute(RouteConstants.ProviderTlevels, new { providerId = viewModel.SelectedProviderId });
-            }
 
             return RedirectToRoute(RouteConstants.SelectProviderTlevels, new { providerId = viewModel.SelectedProviderId });
         }
@@ -126,21 +121,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _providerLoader.GetViewProviderTlevelViewModelAsync(User.GetUkPrn(), providerId);
 
+            if (viewModel == null || viewModel.Tlevels == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            // Task -> Gurmukh
+            if (!viewModel.AnyTlevelSetupCompleted)
+                return RedirectToRoute(RouteConstants.FindProvider);
+
             /* TODO:
-             * Task: viewModel should know the if no more tlevelsetup can be done --> show or hide the button 'Add more Tlevels'
              * Task: viewModel should track the previous page so that correct button at the bottom will be shown. 
              */
 
-            // Task -> Bookmark or no Tlevels then redirect  (check with Gurmukh this redirection seesmsto be wrong)
-            var tlevelsExists = true;
-            if (!tlevelsExists)
-            {
-                return RedirectToRoute(RouteConstants.YourProviders);
-            }
-            
-            //return View(viewModel);
-
-            return await GetSelectProviderTlevelsAsync(providerId);
+            return View(viewModel);
         }
 
         private async Task<IActionResult> GetSelectProviderTlevelsAsync(int providerId)
