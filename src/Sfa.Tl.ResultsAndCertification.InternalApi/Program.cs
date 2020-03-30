@@ -17,8 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             {
                 logging.AddConsole();
                 logging.AddDebug();
-                logging.AddFilter<Microsoft.Extensions.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider>("", LogLevel.Information)
-                       .AddFilter<Microsoft.Extensions.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider>("Microsoft", LogLevel.Error);
+                logging.AddFilter((category, level) => level >= (category == "Microsoft" ? LogLevel.Error : LogLevel.Debug));
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {
