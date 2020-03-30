@@ -26,9 +26,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("your-providers", Name = RouteConstants.YourProviders)]
-        public async Task<IActionResult> ViewAllAsync()
+        public async Task<IActionResult> YourProvidersAsync()
         {
-            return await Task.Run(() => View());
+            var providersViewModel = await _providerLoader.GetTqAoProviderDetailsAsync(User.GetUkPrn());
+            return View(providersViewModel);
         }
 
         [HttpGet]

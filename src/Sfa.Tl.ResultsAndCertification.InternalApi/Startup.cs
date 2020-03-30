@@ -18,7 +18,6 @@ using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Builder;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Extensions;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Infrastructure;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
@@ -102,9 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                                       .EnableRetryOnFailure()), ServiceLifetime.Transient);
 
             services.AddSingleton(ResultsAndCertificationConfiguration);
-
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
             RegisterApplicationServices(services);
         }
 
