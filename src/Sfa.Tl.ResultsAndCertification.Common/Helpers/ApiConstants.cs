@@ -11,7 +11,7 @@
         public const string FindProviderAsyncUri = "/api/provider/FindProvider/{0}/{1}";
         public const string GetSelectProviderTlevelsUri = "/api/provider/GetSelectProviderTlevels/{0}/{1}";
         public const string AddProviderTlevelsUri = "/api/provider/AddProviderTlevels";
-        public const string GeAlltProviderTlevelsAsyncUri = "/api/provider/GetAllProviderTlevels/{0}/{1}";
+        public const string GetAllProviderTlevelsAsyncUri = "/api/provider/GetAllProviderTlevels/{0}/{1}";
         public const string GetTqAoProviderDetailsAsyncUri = "/api/provider/GetTqAoProviderDetails/{0}";
     }
 }

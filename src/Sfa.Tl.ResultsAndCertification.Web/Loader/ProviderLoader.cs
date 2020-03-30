@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         /// <returns></returns>
         public async Task<ProviderViewModel> GetViewProviderTlevelViewModelAsync(long aoUkprn, int providerId)
         {
-            var tlevelDetails = await _internalApiClient.GetProviderTlevelsAsync(aoUkprn, providerId);
+            var tlevelDetails = await _internalApiClient.GetAllProviderTlevelsAsync(aoUkprn, providerId);
             return _mapper.Map<ProviderViewModel>(tlevelDetails);
         }
 

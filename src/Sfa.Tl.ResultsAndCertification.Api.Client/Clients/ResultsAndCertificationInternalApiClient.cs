@@ -76,9 +76,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<ProviderTlevels>(requestUri);
         }
 
-        public async Task<ProviderTlevels> GetProviderTlevelsAsync(long aoUkprn, int providerId)
+        public async Task<ProviderTlevels> GetAllProviderTlevelsAsync(long aoUkprn, int providerId)
         {
-            var requestUri = string.Format(ApiConstants.GeAlltProviderTlevelsAsyncUri, aoUkprn, providerId);
+            var requestUri = string.Format(ApiConstants.GetAllProviderTlevelsAsyncUri, aoUkprn, providerId);
             return await GetAsync<ProviderTlevels>(requestUri);
         }
 
