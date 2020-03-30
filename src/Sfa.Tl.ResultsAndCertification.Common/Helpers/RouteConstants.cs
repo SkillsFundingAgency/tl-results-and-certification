@@ -4,6 +4,9 @@
     {
         // Route Constants
 
+        // Dashboard
+        public const string Dashboard = "Dashboard";
+
         // Tlevel
         public const string Tlevels = "Tlevels";        
         public const string ViewAllTlevels = "ViewAllTlevels";

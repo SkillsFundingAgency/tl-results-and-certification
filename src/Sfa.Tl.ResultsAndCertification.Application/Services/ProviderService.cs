@@ -64,8 +64,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<IList<ProviderDetails>> GetTqAoProviderDetailsAsync(long aoUkprn)
         {
             var tlProviders = await _tqProviderRepository
-                .GetManyAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn,
-                              n => n.TlProvider).ToListAsync();
+                .GetManyAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn, n => n.TlProvider)
+                .Select(p => p.TlProvider).Distinct().OrderBy(p => p.DisplayName).ToListAsync();
 
             return _mapper.Map<IList<ProviderDetails>>(tlProviders);
         }
