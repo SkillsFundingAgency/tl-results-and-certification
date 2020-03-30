@@ -10,16 +10,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.ViewProviderTlev
             Tlevels = new List<TlevelViewModel>();
         }
 
-        //public int ProviderId { get; set; }
+        public int ProviderId { get; set; }
         public string DisplayName { get; set; }
         public long Ukprn { get; set; }
-
-        //public bool? HasTlevelSelected => (Tlevels.Any(x => x.IsSelected) == true) ? true : (bool?)null;
-        //public bool HasMoreThanOneTlevel => Tlevels?.Count() > 1;
-
-        public bool AnyTlevelSetupCompleted { get { return Tlevels.Any(x => x.TqProviderId != null); } }
-        public bool ShowAnotherTlevelButton { get { return Tlevels.Any(x => x.TqProviderId == null); } }
-
+        public bool AnyTlevelsAvailable { get { return Tlevels.Any(x => x.TqProviderId.HasValue); } }
+        public bool ShowAnotherTlevelButton { get { return Tlevels.Any(x => !x.TqProviderId.HasValue); } }
+        public IEnumerable<TlevelViewModel> ProviderTlevels { get { return Tlevels.Where(x => x.TqProviderId.HasValue); } }
         public IList<TlevelViewModel> Tlevels { get; set; }
     }
 }
