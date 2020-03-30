@@ -19,6 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 logging.AddDebug();
                 //logging.AddAzureWebAppDiagnostics();
                 //logging.AddFilter((category, level) => level >= LogLevel.Information);
+                logging.AddFilter<Microsoft.Extensions.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider>("", LogLevel.Warning)
+                       .AddFilter<Microsoft.Extensions.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider>("Microsoft", LogLevel.Error);
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {
