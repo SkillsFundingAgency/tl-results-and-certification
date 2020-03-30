@@ -19,7 +19,6 @@
         public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // ReportTlevel_Post
 
         // Providers
-        public const string Providers = "Providers";
         public const string YourProviders = "YourProviders";
         public const string FindProvider = "FindProvider";
         public const string ProviderNameLookup = "ProviderNameLookup";
@@ -27,6 +26,7 @@
         public const string SubmitSelectProviderTlevels = "SubmitSelectProviderTlevels";
         public const string ProviderTlevelConfirmation = "ProviderTlevelConfirmation";
         public const string ProviderTlevels = "provider-tlevels";
+        public const string ProviderTlevels1 = "provider-tlevels1";
 
         // Error
         public const string PageNotFound = "PageNotFound";

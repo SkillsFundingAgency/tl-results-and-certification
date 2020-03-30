@@ -89,23 +89,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var providerDetails = await _internalApiClient.GetTqAoProviderDetailsAsync(aoUkprn);
             return _mapper.Map<IList<ProviderDetailsViewModel>>(providerDetails);
         }
-
-        /// <summary>
-        /// Gets the boolean information of all Tlevels setup for provider.
-        /// </summary>
-        /// <param name="aoUkprn"></param>
-        /// <param name="providerId"></param>
-        /// <returns></returns>
-        public async Task<bool> IsAllTlevelsSetupCompleted(long aoUkprn, int providerId)
-        {
-            var providerDetails = await _internalApiClient.GetProviderTlevelsAsync(aoUkprn, providerId);
-
-            var result = (providerDetails != null &&
-                providerDetails.Tlevels != null &&
-                (providerDetails.Tlevels.ToList().Count > 0) &&
-                 !providerDetails.Tlevels.Any(x => !x.TqProviderId.HasValue)); // should not be anything with null
-
-                return true;
-        }
     }
 }

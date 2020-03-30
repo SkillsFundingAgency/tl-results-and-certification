@@ -39,7 +39,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("providers", Name = RouteConstants.Providers)]
         [Route("find-provider", Name = RouteConstants.FindProvider)]
         public async Task<IActionResult> FindProviderAsync()
         {
@@ -56,10 +55,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(viewModel);
             }
-
-            var isAllTlevelsSetupDone = await _providerLoader.IsAllTlevelsSetupCompleted(User.GetUkPrn(), viewModel.SelectedProviderId);
-            if (isAllTlevelsSetupDone)
-                return RedirectToRoute(RouteConstants.ProviderTlevels, new { providerId = viewModel.SelectedProviderId });
 
             return RedirectToRoute(RouteConstants.SelectProviderTlevels, new { providerId = viewModel.SelectedProviderId });
         }
@@ -124,7 +119,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("provider-tlevels/{providerId}", Name = RouteConstants.ProviderTlevels)]
-        public async Task<IActionResult> ViewProviderTlevelsAsync(int providerId)
+        [Route("provider-tlevels/{providerId}/{navigation}", Name = RouteConstants.ProviderTlevels1)]
+        public async Task<IActionResult> ViewProviderTlevelsAsync(int providerId, bool navigation = false)
         {
             var viewModel = await _providerLoader.GetViewProviderTlevelViewModelAsync(User.GetUkPrn(), providerId);
 
@@ -134,9 +130,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!viewModel.AnyTlevelsAvailable)
                 return RedirectToRoute(RouteConstants.SelectProviderTlevels, new { providerId });
 
+            viewModel.IsNavigatedFromYourProviders = navigation;
             /* TODO:
              * Task: viewModel should track the previous page so that correct button at the bottom will be shown. 
              */
+
             return View(viewModel);
         }
 
