@@ -1,34 +1,34 @@
 ﻿@model IList<Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.ProviderDetailsViewModel>
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Provider
 
 @{
-    ViewData["Title"] = "Your providers list";
+    ViewData["Title"] = @YourProviders.Page_Title;
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
-            Your providers
+            @YourProviders.Page_Heading
         </h1>
 
-        <p class="govuk-body govuk-!-margin-bottom-5">The T Level providers you have already set up are:</p>
+        <p class="govuk-body govuk-!-margin-bottom-5">@YourProviders.Section_Information_Text</p>
         @foreach (var provider in Model)
         {
             <dl class="govuk-summary-list govuk-!-margin-bottom-3">
                 <div class="govuk-summary-list__row">
                     <dd class="govuk-summary-list__value govuk-heading-m">
-                        @provider.DisplayName <span class="govuk-hint"><abbr>UKPRN</abbr>: @provider.Ukprn</span>
+                        @provider.DisplayName <span class="govuk-hint"><abbr>@YourProviders.Ukprn_Text</abbr>: @provider.Ukprn</span>
                     </dd>
                     <dd class="govuk-summary-list__actions">
                         <a class="govuk-link" href="#">
-                            View <span class="govuk-visually-hidden">@provider.DisplayName</span>
+                            @YourProviders.View_Link_Text <span class="govuk-visually-hidden">@provider.DisplayName</span>
                         </a>
                     </dd>
                 </div>
             </dl>
         }
 
-        <p><a class="govuk-button govuk-button--secondary" role="button" href="#">Add another provider</a></p>
-        <p><a class="govuk-button" role="button" href="#">Home</a></p>
-
+        <p><a class="govuk-button govuk-button--secondary" role="button" href="#">@YourProviders.Add_Another_Provider_Button_Text</a></p>
+        <p><a class="govuk-button" role="button" href="#">@YourProviders.Home_Button_Text</a></p>
     </div>
 </div>

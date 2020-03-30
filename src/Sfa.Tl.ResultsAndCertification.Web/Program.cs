@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 logging.AddConsole();
                 logging.AddDebug();
                 logging.AddFilter<Microsoft.Extensions.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider>((category, level) => level >= (category == "Microsoft" ? LogLevel.Error : LogLevel.Information));
+                
                 //logging.AddFilter<Microsoft.Extensions.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider>("", LogLevel.Information)
                 //       .AddFilter<Microsoft.Extensions.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider>("Microsoft", LogLevel.Error);
             })
