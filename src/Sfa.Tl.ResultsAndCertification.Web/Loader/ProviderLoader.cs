@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.ViewProviderTlevels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -72,10 +73,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         /// <param name="aoUkprn">The ao ukprn.</param>
         /// <param name="providerId">The provider identifier.</param>
         /// <returns></returns>
-        public async Task<ProviderTlevelsViewModel> GetViewProviderTlevelViewModelAsync(long aoUkprn, int providerId)
+        public async Task<ProviderViewModel> GetViewProviderTlevelViewModelAsync(long aoUkprn, int providerId)
         {
             var tlevelDetails = await _internalApiClient.GetProviderTlevelsAsync(aoUkprn, providerId);
-            return _mapper.Map<ProviderTlevelsViewModel>(tlevelDetails);
+            return _mapper.Map<ProviderViewModel>(tlevelDetails);
         }
 
         /// <summary>
@@ -87,6 +88,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var providerDetails = await _internalApiClient.GetTqAoProviderDetailsAsync(aoUkprn);
             return _mapper.Map<IList<ProviderDetailsViewModel>>(providerDetails);
+        }
+
+        /// <summary>
+        /// Gets the boolean information of all Tlevels setup for provider.
+        /// </summary>
+        /// <param name="aoUkprn"></param>
+        /// <param name="providerId"></param>
+        /// <returns></returns>
+        public async Task<bool> IsAllTlevelsSetupCompleted(long aoUkprn, int providerId)
+        {
+            var providerDetails = await _internalApiClient.GetProviderTlevelsAsync(aoUkprn, providerId);
+
+            var result = (providerDetails != null &&
+                providerDetails.Tlevels != null &&
+                (providerDetails.Tlevels.ToList().Count > 0) &&
+                 !providerDetails.Tlevels.Any(x => x.TqProviderId == null)); // Checking if any Tlevels not setup
+
+                return true;
         }
     }
 }

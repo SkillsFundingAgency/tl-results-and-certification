@@ -50,10 +50,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetProviderTlevels/{aoUkprn}/{providerId}")]
-        public async Task<ProviderTlevels> GetProviderTlevelsAsync(long aoUkprn, int providerId)
+        [Route("GetAllProviderTlevels/{aoUkprn}/{providerId}")]
+        public async Task<ProviderTlevels> GetAllProviderTlevelsAsync(long aoUkprn, int providerId)
         {
-            return await _providerService.GetProviderTlevelsAsync(aoUkprn, providerId);
+            return await _providerService.GetAllProviderTlevelsAsync(aoUkprn, providerId);
         }
 
 
