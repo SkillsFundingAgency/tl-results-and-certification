@@ -142,8 +142,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _providerLoader.GetSelectProviderTlevelsAsync(User.GetUkPrn(), providerId);
 
-            if (viewModel == null || viewModel.Tlevels == null || viewModel.Tlevels.Count == 0)
+            if (viewModel == null || viewModel.Tlevels == null)
+            {
                 return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            else if(viewModel.Tlevels.Count == 0)
+            {
+                return RedirectToRoute(RouteConstants.ProviderTlevels, new { providerId });
+            }
 
             return View(viewModel);
         }

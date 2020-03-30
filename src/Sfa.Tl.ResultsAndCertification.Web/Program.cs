@@ -15,7 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             Host.CreateDefaultBuilder(args)
             .ConfigureLogging(logging =>
             {
-                logging.SetMinimumLevel(LogLevel.Information);
                 logging.AddConsole();
                 logging.AddDebug();
                 logging.AddFilter((category, level) => level >= (category == "Microsoft" ? LogLevel.Error : LogLevel.Information));
