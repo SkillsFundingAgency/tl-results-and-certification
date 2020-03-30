@@ -25,8 +25,7 @@
         public const string SelectProviderTlevels = "SelectProviderTlevels";
         public const string SubmitSelectProviderTlevels = "SubmitSelectProviderTlevels";
         public const string ProviderTlevelConfirmation = "ProviderTlevelConfirmation";
-        public const string ProviderTlevels = "provider-tlevels";
-        public const string ProviderTlevels1 = "provider-tlevels1";
+        public const string ProviderTlevels = "ProviderTlevels";
 
         // Error
         public const string PageNotFound = "PageNotFound";
