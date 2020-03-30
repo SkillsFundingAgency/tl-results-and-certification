@@ -17,8 +17,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             {
                 logging.AddConsole();
                 logging.AddDebug();
-                logging.AddAzureWebAppDiagnostics();
-                logging.AddFilter((category, level) => level >= LogLevel.Information);
+                //logging.AddAzureWebAppDiagnostics();
+                //logging.AddFilter((category, level) => level >= LogLevel.Information);
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {
