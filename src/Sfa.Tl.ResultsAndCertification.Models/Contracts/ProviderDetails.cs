@@ -3,6 +3,6 @@
     public class ProviderDetails : BaseModel
     {
         public string DisplayName { get; set; }
-        public string Ukprn { get; set; }
+        public long Ukprn { get; set; }
     }
 }
