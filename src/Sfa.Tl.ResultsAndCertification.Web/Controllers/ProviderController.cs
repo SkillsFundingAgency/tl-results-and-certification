@@ -130,10 +130,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.SelectProviderTlevels, new { providerId });
 
             viewModel.IsNavigatedFromYourProviders = navigation;
-            /* TODO:
-             * Task: viewModel should track the previous page so that correct button at the bottom will be shown. 
-             */
-
             return View(viewModel);
         }
 
@@ -147,7 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else if(viewModel.Tlevels.Count == 0)
             {
-                return RedirectToRoute(RouteConstants.ProviderTlevels, new { providerId });
+                return RedirectToRoute(RouteConstants.ProviderTlevels, new { providerId, navigation = false });
             }
 
             return View(viewModel);
