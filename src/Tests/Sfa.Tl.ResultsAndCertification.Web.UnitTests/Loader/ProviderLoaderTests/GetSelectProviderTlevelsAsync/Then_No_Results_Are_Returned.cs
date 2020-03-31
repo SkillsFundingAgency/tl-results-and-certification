@@ -31,6 +31,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
             ActualResult.Ukprn.Should().Be(ApiClientResponse.Ukprn);
             ActualResult.Tlevels.Should().BeNullOrEmpty();
         }
-
     }
 }
