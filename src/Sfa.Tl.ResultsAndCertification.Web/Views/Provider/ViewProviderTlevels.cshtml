@@ -39,13 +39,13 @@
             <p><a class="govuk-button govuk-button--secondary" role="button" asp-route="SelectProviderTlevels" asp-route-providerId="@Model.ProviderId">Add another T Level</a></p>
         }
 
-        @if (Model.IsNavigatedFromYourProviders)
+        @if (Model.IsNavigatedFromFindProvider)
         {
-            <p><a class="govuk-button" role="button" asp-route="YourProviders">Back to your providers</a></p>
+            <p><a class="govuk-button" role="button" asp-route="FindProvider">Find another provider</a></p>
         }
         else
         {
-            <p><a class="govuk-button" role="button" asp-route="FindProvider">Find another provider</a></p>
+            <p><a class="govuk-button" role="button" asp-route="YourProviders">Back to your providers</a></p>
         }
 
     </div>

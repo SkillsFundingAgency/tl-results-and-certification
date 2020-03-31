@@ -119,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("provider-tlevels/{providerId}/{navigation:bool?}", Name = RouteConstants.ProviderTlevels)]
-        public async Task<IActionResult> ViewProviderTlevelsAsync(int providerId, bool navigation = true)
+        public async Task<IActionResult> ViewProviderTlevelsAsync(int providerId, bool navigation)
         {
             var viewModel = await _providerLoader.GetViewProviderTlevelViewModelAsync(User.GetUkPrn(), providerId);
 
@@ -129,7 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!viewModel.AnyTlevelsAvailable)
                 return RedirectToRoute(RouteConstants.SelectProviderTlevels, new { providerId });
 
-            viewModel.IsNavigatedFromYourProviders = navigation;
+            viewModel.IsNavigatedFromFindProvider = navigation;
             return View(viewModel);
         }
 
@@ -143,7 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else if(viewModel.Tlevels.Count == 0)
             {
-                return RedirectToRoute(RouteConstants.ProviderTlevels, new { providerId, navigation = false });
+                return RedirectToRoute(RouteConstants.ProviderTlevels, new { providerId, navigation = true });
             }
 
             return View(viewModel);
