@@ -1,15 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.Builder
 {
     public class DbContextBuilder : IDbContextBuilder
     {
-        private readonly IConfiguration _config;
-        private const string ConnectionString = "DefaultConnection";
+        private readonly ResultsAndCertificationConfiguration _config;
 
-        public DbContextBuilder(IConfiguration config)
+        public DbContextBuilder(ResultsAndCertificationConfiguration config)
         {
             _config = config;
         }
@@ -17,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Builder
         public ResultsAndCertificationDbContext Create()
         {
             var optionsBuilder = new DbContextOptionsBuilder<ResultsAndCertificationDbContext>();
-            optionsBuilder.UseSqlServer(_config.GetConnectionString(ConnectionString));
+            optionsBuilder.UseSqlServer(_config.SqlConnectionString);
 
             return new ResultsAndCertificationDbContext(optionsBuilder.Options);
         }

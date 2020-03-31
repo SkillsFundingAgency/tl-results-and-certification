@@ -42,13 +42,13 @@
     }
 
     <!-- BLOCK 2 – Providers -->
-    @if (Context.User.HasSiteAdministratorRole() || Context.User.HasCentresEditorRole())
+    @if (Context.User.HasSiteAdministratorRole() || Context.User.HasProvidersEditorRole())
     {
         <div class="govuk-grid-column-one-half">
             <div class="govuk-form-group card">
                 <p class="govuk-body">
                     <h2 class="govuk-heading-m">
-                        <a class="govuk-link--no-visited-state" href="#">
+                        <a class="govuk-link--no-visited-state" asp-route="FindProvider">
                             @Dashboard.Providers_Text
                         </a>
                     </h2>

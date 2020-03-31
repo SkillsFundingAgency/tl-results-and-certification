@@ -1,0 +1,45 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.FindProviderViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Provider
+
+@{
+    ViewData["Title"] = @FindProvider.Page_Title;
+}
+
+@section Scripts {
+    <script src="~/javascripts/provider-search.min.js"></script>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <partial name="_ValidationSummary" />
+        <form class="form" id="FindProviderForm" asp-route="FindProvider">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
+                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
+                            @FindProvider.Page_Heading
+                        </h1>
+                    </legend>
+                    <p class="govuk-body">@FindProvider.Section_Information_Text</p>
+                    <div class="govuk-form-group" sfa-validation-for="Search" sfa-validation-class="govuk-form-group--error">
+                        <label class="govuk-label" for="search">
+                            @FindProvider.Provider_Input_Field_Label
+                        </label>
+                        <span sfa-validation-for="Search"></span>
+                        <input id="search" name="Search" class="govuk-input" asp-for="Search" />
+                        <input id="previousSearch" type="hidden" asp-for="Search" />
+                    </div>
+                </fieldset>
+            </div>
+            <button type="submit" class="govuk-button" data-module="govuk-button">@FindProvider.Continue_Button_Label</button>
+
+            @if (Model.ShowViewProvidersLink)
+            {
+                <p class="govuk-body"><a class="govuk-link" asp-route="YourProviders">@FindProvider.View_Providers_Link_Text</a></p>
+            }
+
+            <input type="hidden" asp-for="SelectedProviderId" />
+            <input type="hidden" asp-for="ShowViewProvidersLink" />
+        </form>
+    </div>
+</div>

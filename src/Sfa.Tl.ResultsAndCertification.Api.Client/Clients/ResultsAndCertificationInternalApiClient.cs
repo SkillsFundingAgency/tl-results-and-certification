@@ -52,6 +52,42 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PutAsync<VerifyTlevelDetails, bool>(requestUri, model);
         }
 
+        public async Task<bool> AddProviderTlevelsAsync(IList<ProviderTlevelDetails> model)
+        {
+            var requestUri = ApiConstants.AddProviderTlevelsUri;
+            return await PostAsync<IList<ProviderTlevelDetails>, bool>(requestUri, model);
+        }
+
+        public async Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn)
+        {
+            var requestUri = string.Format(ApiConstants.IsAnyProviderSetupCompletedUri, ukprn);
+            return await GetAsync<bool>(requestUri);
+        }
+
+        public async Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch)
+        {
+            var requestUri = string.Format(ApiConstants.FindProviderAsyncUri, name, isExactMatch);
+            return await GetAsync<IEnumerable<ProviderMetadata>>(requestUri);
+        }
+
+        public async Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)
+        {
+            var requestUri = string.Format(ApiConstants.GetSelectProviderTlevelsUri, aoUkprn, providerId);
+            return await GetAsync<ProviderTlevels>(requestUri);
+        }
+
+        public async Task<ProviderTlevels> GetAllProviderTlevelsAsync(long aoUkprn, int providerId)
+        {
+            var requestUri = string.Format(ApiConstants.GetAllProviderTlevelsAsyncUri, aoUkprn, providerId);
+            return await GetAsync<ProviderTlevels>(requestUri);
+        }
+
+        public async Task<IList<ProviderDetails>> GetTqAoProviderDetailsAsync(long aoUkprn)
+        {
+            var requestUri = string.Format(ApiConstants.GetTqAoProviderDetailsAsyncUri, aoUkprn);
+            return await GetAsync<IList<ProviderDetails>>(requestUri);
+        }
+
         private async Task SetBearerToken()
         {
             if (!_isDevevelopment)
@@ -72,12 +108,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         /// <summary>
         /// Common method for making POST calls
         /// </summary>
-        private async Task<T> PostAsync<T>(string requestUri, T content)
+        private async Task<TResponse> PostAsync<TRequest, TResponse>(string requestUri, TRequest content)
         {
-            var response = await _httpClient.PostAsync(requestUri, CreateHttpContent<T>(content));
+            await SetBearerToken();
+            var response = await _httpClient.PostAsync(requestUri, CreateHttpContent<TRequest>(content));
             response.EnsureSuccessStatusCode();
-            var data = await response.Content.ReadAsAsync<T>();
-            return data;
+            return await response.Content.ReadAsAsync<TResponse>();
         }
 
         private async Task<TResponse> PutAsync<TRequest, TResponse>(string requestUri, TRequest content)
@@ -85,8 +121,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             await SetBearerToken();
             var response = await _httpClient.PutAsync(requestUri, CreateHttpContent<TRequest>(content));
             response.EnsureSuccessStatusCode();
-            var data = await response.Content.ReadAsAsync<TResponse>();
-            return data;
+            return await response.Content.ReadAsAsync<TResponse>();
         }
 
         private HttpContent CreateHttpContent<T>(T content)

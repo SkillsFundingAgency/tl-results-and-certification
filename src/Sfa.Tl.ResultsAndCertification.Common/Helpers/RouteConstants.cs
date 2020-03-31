@@ -4,6 +4,9 @@
     {
         // Route Constants
 
+        // Dashboard
+        public const string Dashboard = "Dashboard";
+
         // Tlevel
         public const string Tlevels = "Tlevels";        
         public const string ViewAllTlevels = "ViewAllTlevels";
@@ -14,6 +17,15 @@
         public const string TlevelConfirmation = "TlevelConfirmation";
         public const string ReportTlevelIssue = "ReportTlevelIssue";  // ReportTlevel_Get
         public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // ReportTlevel_Post
+
+        // Providers
+        public const string YourProviders = "YourProviders";
+        public const string FindProvider = "FindProvider";
+        public const string ProviderNameLookup = "ProviderNameLookup";
+        public const string SelectProviderTlevels = "SelectProviderTlevels";
+        public const string SubmitSelectProviderTlevels = "SubmitSelectProviderTlevels";
+        public const string ProviderTlevelConfirmation = "ProviderTlevelConfirmation";
+        public const string ProviderTlevels = "ProviderTlevels";
 
         // Error
         public const string PageNotFound = "PageNotFound";

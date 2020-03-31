@@ -126,6 +126,9 @@
   <data name="Pathway_Field_Label" xml:space="preserve">
     <value>Core</value>
   </data>
+  <data name="Query_CharLimitExceeded_Validation_Message" xml:space="preserve">
+    <value>The maximum character limit 10000 exceeded</value>
+  </data>
   <data name="Query_Required_Validation_Message" xml:space="preserve">
     <value>Enter what is wrong with this T Level’s details</value>
   </data>

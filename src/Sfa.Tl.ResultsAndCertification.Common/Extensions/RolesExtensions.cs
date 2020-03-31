@@ -7,6 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
     {
         // Policy Names
         public const string RequireTLevelsReviewerAccess = "RequireTLevelsReviewerAccess";
+        public const string RequireProviderEditorAccess = "RequireProviderEditorAccess";
 
         // Roles
         public const string SiteAdministrator = "Site Administrator";
@@ -35,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return user.IsInRole(TlevelsReviewer);
         }
 
-        public static bool HasCentresEditorRole(this ClaimsPrincipal user)
+        public static bool HasProvidersEditorRole(this ClaimsPrincipal user)
         {
             return user.IsInRole(CentresEditor) || user.IsInRole(ProvidersEditor);
         }

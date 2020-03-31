@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Domain\Sfa.Tl.ResultsAndCertification.Domain.csproj" />
+    <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Models\Sfa.Tl.ResultsAndCertification.Models.csproj" />
   </ItemGroup>
 
 </Project>

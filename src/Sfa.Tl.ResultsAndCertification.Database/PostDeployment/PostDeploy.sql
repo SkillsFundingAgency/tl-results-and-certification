@@ -19,4 +19,6 @@ BEGIN
 :r ".\SeedTlMandatoryAdditionalRequirement.sql"
 :r ".\SeedTlPathwaySpecialismMar.sql"
 :r ".\SeedTqAwardingOrganisations.sql"
+:r ".\SeedNotificationTemplates.sql"
+:r ".\SeedTlProviders.sql"
 END

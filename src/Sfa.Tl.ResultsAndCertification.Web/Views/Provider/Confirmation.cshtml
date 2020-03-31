@@ -1,0 +1,39 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels.ProviderTlevelsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Provider
+
+@{
+    var pageTitle = Model.HasMoreThanOneTlevel ? @Confirmation.Page_Title_Plural : @Confirmation.Page_Title_Singular;
+    ViewData["Title"] = pageTitle;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            @{ var sectionHeading = Model.HasMoreThanOneTlevel ? @Confirmation.Section_Heading_Plural_Text : @Confirmation.Section_Heading_Singular_Text; }
+            <h1 class="govuk-panel__title">@sectionHeading</h1>
+        </div>
+        <p class="govuk-body govuk-!-padding-top-5">@Confirmation.Section_Info_You_Confirmed_Text @Model.DisplayName (<abbr>@Confirmation.Section_Info_Ukprn_Text</abbr>: @Model.Ukprn) @Confirmation.Section_Info_Will_Offer_Text:</p>
+
+        @if (Model.HasMoreThanOneTlevel)
+        {
+            <ul class="govuk-list govuk-list--bullet">
+                @foreach (var tlevel in Model.Tlevels)
+                {
+                    <li><p class="govuk-body govuk-!-font-weight-bold">@tlevel.TlevelTitle</p></li>
+                }
+            </ul>
+        }
+        else if (Model.Tlevels?.Count == 1)
+        {
+            <p class="govuk-body govuk-!-font-weight-bold">@Model.Tlevels[0].TlevelTitle</p>
+        }
+
+        <p class="govuk-body govuk-!-padding-bottom-5 govuk-!-padding-top-1">
+            <a asp-route="ProviderTlevels" asp-route-providerId="@Model.ProviderId" asp-route-navigation="false">@Confirmation.Mange_Providers_Tlevels_Link_Text</a>
+        </p>
+        <p>
+            <a asp-route="FindProvider" class="govuk-button" role="button">@Confirmation.Find_Another_Provider_Link_Button_Text</a>
+        </p>
+        
+    </div>
+</div>

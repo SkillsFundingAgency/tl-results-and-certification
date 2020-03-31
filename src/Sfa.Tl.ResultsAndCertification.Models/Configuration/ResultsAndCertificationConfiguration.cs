@@ -19,6 +19,22 @@
         public string SqlConnectionString { get; set; }
 
         /// <summary>
+        /// Gets or sets the gov uk notify API key.
+        /// </summary>
+        /// <value>
+        /// The gov uk notify API key.
+        /// </value>
+        public string GovUkNotifyApiKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tlevel queried support email address.
+        /// </summary>
+        /// <value>
+        /// The tlevel queried support email address.
+        /// </value>
+        public string TlevelQueriedSupportEmailAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets the dfe sign in settings.
         /// </summary>
         /// <value>

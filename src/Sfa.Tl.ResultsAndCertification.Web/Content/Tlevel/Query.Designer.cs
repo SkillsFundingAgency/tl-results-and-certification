@@ -88,6 +88,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The maximum character limit 10000 exceeded.
+        /// </summary>
+        public static string Query_CharLimitExceeded_Validation_Message {
+            get {
+                return ResourceManager.GetString("Query_CharLimitExceeded_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter what is wrong with this T Level’s details.
         /// </summary>
         public static string Query_Required_Validation_Message {

@@ -39,6 +39,8 @@ steps:
     command: restore
     projects: 'src/Sfa.Tl.ResultsAndCertification.sln'
     noCache: true
+    feedsToUse: config
+    nugetConfigPath: src/NuGet.config
 
 - task: DotNetCoreCLI@2
   displayName: dotnet build
@@ -47,10 +49,17 @@ steps:
     arguments: '--configuration $(buildConfiguration)  --no-restore'
     
 - task: DotNetCoreCLI@2
-  displayName: dotnet test
+  displayName: Unit Tests
   inputs:
     command: test
     projects: '**/*.UnitTests.csproj'
+    arguments: '--configuration $(buildConfiguration) --no-build'
+    
+- task: DotNetCoreCLI@2
+  displayName: Integration Tests
+  inputs:
+    command: test
+    projects: '**/*..IntegrationTests.csproj'
     arguments: '--configuration $(buildConfiguration) --no-build'
 
 - task: DotNetCoreCLI@2

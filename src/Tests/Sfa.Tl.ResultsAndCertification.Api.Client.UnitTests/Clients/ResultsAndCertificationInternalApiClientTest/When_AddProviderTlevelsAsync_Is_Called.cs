@@ -1,34 +1,28 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Xunit;
-using NSubstitute;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Newtonsoft.Json;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_ConfirmTlevelAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_AddProviderTlevelsAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        protected ITokenServiceClient _tokenServiceClient;
-        protected ResultsAndCertificationConfiguration _configuration;
-        protected readonly long ukprn = 1024;
-        protected Task<bool> Result;
-
-        protected readonly string RouteName = "Construction";
-        protected readonly string PathwayName = "Design, Surveying and Planning";
-        protected readonly int StatusId = 1;
-
-        protected ResultsAndCertificationInternalApiClient _apiClient;
+        private Task<bool> _result;
         protected bool _mockHttpResult;
-
-        private VerifyTlevelDetails _model;
+        private ITokenServiceClient _tokenServiceClient;
+        private ResultsAndCertificationConfiguration _configuration;
+        private ResultsAndCertificationInternalApiClient _apiClient;
+        private List<ProviderTlevelDetails> _model;
 
         public override void Setup()
         {
@@ -38,31 +32,29 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             {
                 ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
             };
-
             _mockHttpResult = true;
-            _model = new VerifyTlevelDetails
+            _model = new List<ProviderTlevelDetails>
             {
-                TqAwardingOrganisationId = 1,
-                PathwayStatusId = 2,
-                ModifiedBy = "Test User"
+                new ProviderTlevelDetails { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 1 },
+                new ProviderTlevelDetails { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 2 }
             };
         }
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.VerifyTlevelUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.AddProviderTlevelsUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
         {
-            Result = _apiClient.VerifyTlevelAsync(_model);
+            _result = _apiClient.AddProviderTlevelsAsync(_model);
         }
 
         [Fact]
         public void Then_Expected_Result_Returned()
         {
-            Result.Result.Should().BeTrue();
+            _result.Result.Should().BeTrue();
         }
     }
 }

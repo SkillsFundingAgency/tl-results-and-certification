@@ -7,7 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrganisationServiceTests
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrganisationServiceTests.GetAllTlevelsByUkprnAsync
 {
     public class When_GetAllTlevelsByUkprnAsync_IsCalled_With_Correct_Ukprn : AwardingOrganisaionServiceBaseTest
     {
@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
             CreateMapper();
 
             _logger = Substitute.For<ILogger<IRepository<TqAwardingOrganisation>>>();
-            _service = new AwardingOrganisationService(Repository, _mapper, _logger);
+            _service = new AwardingOrganisationService(_resultsAndCertificationConfiguration, Repository, null, _mapper, _logger);
         }
 
         public override void When()

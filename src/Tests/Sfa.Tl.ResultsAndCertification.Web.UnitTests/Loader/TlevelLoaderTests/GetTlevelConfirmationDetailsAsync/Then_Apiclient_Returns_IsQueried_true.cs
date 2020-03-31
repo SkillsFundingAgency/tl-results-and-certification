@@ -30,8 +30,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         public void Then_Expected_Results_Are_Returned()
         {
             var expectedReponse = ApiClientResponse.FirstOrDefault();
-
-            ;
             var expectedConfirmationText = string.Format(Confirmation.Section_Heading, EnumExtensions.GetEnumValue<TlevelReviewStatus>(expectedReponse.StatusId).ToString().ToLowerInvariant());
             var expectedTlevelTitle = $"{expectedReponse.RouteName}: {expectedReponse.PathwayName}";
 

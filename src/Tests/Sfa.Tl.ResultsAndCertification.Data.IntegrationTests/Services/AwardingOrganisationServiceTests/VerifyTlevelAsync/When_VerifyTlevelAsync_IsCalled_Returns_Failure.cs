@@ -1,22 +1,22 @@
-﻿using System.Linq;
-using Xunit;
-using AutoMapper;
-using NSubstitute;
+﻿using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver;
+using System.Linq;
+using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrganisationServiceTests
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrganisationServiceTests.VerifyTlevelAsync
 {
-    public class When_ConfirmTlevels_IsCalled_Returns_Success : AwardingOrganisaionServiceBaseTest
+    public class When_VerifyTlevelAsync_IsCalled_Returns_Failure : AwardingOrganisaionServiceBaseTest
     {
         private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
         private readonly TlevelReviewStatus _tlevelReviewStatus = TlevelReviewStatus.AwaitingConfirmation;
@@ -31,13 +31,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
 
             _verifyTlevelDetailsModel = new VerifyTlevelDetails
             {
-                TqAwardingOrganisationId = _tqAwardingOrganisation.Id,
+                TqAwardingOrganisationId = 0,
                 PathwayStatusId = (int)TlevelReviewStatus.Confirmed,
                 ModifiedBy = "TestUser"
             };
 
             _logger = Substitute.For<ILogger<IRepository<TqAwardingOrganisation>>>();
-            _service = new AwardingOrganisationService(Repository, _mapper, _logger);
+            _service = new AwardingOrganisationService(_resultsAndCertificationConfiguration, Repository, null, _mapper, _logger);
         }
 
         public override void When()
@@ -46,18 +46,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
         }
 
         [Fact]
-        public void Then_Record_Is_Saved()
+        public void Then_Record_Is_Not_Saved()
         {
-            _isSuccess.Should().BeTrue();
+            _isSuccess.Should().BeFalse();
         }
 
         [Fact]
-        public void Then_Record_Does_Exist()
+        public void Then_Record_Does_Not_Exist()
         {
             var result = _service.GetTlevelsByStatusIdAsync(_tlAwardingOrganisation.UkPrn, (int)_updatedTlevelReviewStatus).Result;
-            result.Should().NotBeNull();
-            result.Count().Should().Be(1);
-        }       
+            result.Count().Should().Be(0);
+        }
 
         protected override void CreateMapper()
         {
