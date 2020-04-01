@@ -1,6 +1,6 @@
 ﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
-    public class ProviderTlevelDetails
+    public class ProviderTlevel
     {
         public int? TqProviderId { get; set; }
         public int TqAwardingOrganisationId { get; set; }

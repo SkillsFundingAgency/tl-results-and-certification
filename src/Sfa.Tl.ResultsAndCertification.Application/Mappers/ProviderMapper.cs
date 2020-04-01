@@ -8,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
     {
         public ProviderMapper()
         {
-            CreateMap<ProviderTlevelDetails, TqProvider>()
+            CreateMap<ProviderTlevel, TqProvider>()
                 .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                 .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.TlProviderId))
                 .ForMember(d => d.TlPathwayId, opts => opts.MapFrom(s => s.PathwayId))

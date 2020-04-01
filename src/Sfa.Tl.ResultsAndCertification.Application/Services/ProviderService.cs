@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqProviderRepository.GetSelectProviderTlevelsAsync(aoUkprn, providerId);
         }
 
-        public async Task<bool> AddProviderTlevelsAsync(IList<ProviderTlevelDetails> model)
+        public async Task<bool> AddProviderTlevelsAsync(IList<ProviderTlevel> model)
         {
             if (model == null || !model.Any()) return false;
             var newTlevels = _mapper.Map<IList<TqProvider>>(model);

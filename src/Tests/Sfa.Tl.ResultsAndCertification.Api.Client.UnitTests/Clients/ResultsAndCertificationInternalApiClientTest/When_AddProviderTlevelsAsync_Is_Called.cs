@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
         private ResultsAndCertificationInternalApiClient _apiClient;
-        private List<ProviderTlevelDetails> _model;
+        private List<ProviderTlevel> _model;
 
         public override void Setup()
         {
@@ -33,10 +33,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
             };
             _mockHttpResult = true;
-            _model = new List<ProviderTlevelDetails>
+            _model = new List<ProviderTlevel>
             {
-                new ProviderTlevelDetails { TqAwardingOrganisationId = 1, TlProviderId = 1, PathwayId = 1 },
-                new ProviderTlevelDetails { TqAwardingOrganisationId = 1, TlProviderId = 1, PathwayId = 2 }
+                new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, PathwayId = 1 },
+                new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, PathwayId = 2 }
             };
         }
 

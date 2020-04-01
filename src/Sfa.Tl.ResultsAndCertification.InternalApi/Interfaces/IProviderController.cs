@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn);
         Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch);
         Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId);
-        Task<IActionResult> AddProviderTlevelsAsync(IList<ProviderTlevelDetails> model);
+        Task<IActionResult> AddProviderTlevelsAsync(IList<ProviderTlevel> model);
         Task<IList<ProviderDetails>> GetTqAoProviderDetailsAsync(long aoUkprn);
     }
 }

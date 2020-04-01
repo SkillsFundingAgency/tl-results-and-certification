@@ -1,6 +1,6 @@
 ﻿namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels
 {
-    public class ProviderTlevelDetailsViewModel
+    public class ProviderTlevelViewModel
     {
         public int? TqProviderId { get; set; }
         public int TqAwardingOrganisationId { get; set; }

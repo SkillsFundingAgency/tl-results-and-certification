@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         /// <returns></returns>
         public async Task<bool> AddProviderTlevelsAsync(ProviderTlevelsViewModel viewModel)
         {
-            var addViewModel = _mapper.Map<IList<ProviderTlevelDetails>>(viewModel.Tlevels.Where(x => x.IsSelected).ToList());
+            var addViewModel = _mapper.Map<IList<ProviderTlevel>>(viewModel.Tlevels.Where(x => x.IsSelected).ToList());
             return await _internalApiClient.AddProviderTlevelsAsync(addViewModel);
         }
 

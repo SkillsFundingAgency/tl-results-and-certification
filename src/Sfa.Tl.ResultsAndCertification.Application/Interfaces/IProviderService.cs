@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn); 
         Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch);
         Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId);
-        Task<bool> AddProviderTlevelsAsync(IList<ProviderTlevelDetails> model);
+        Task<bool> AddProviderTlevelsAsync(IList<ProviderTlevel> model);
         Task<ProviderTlevels> GetAllProviderTlevelsAsync(long aoUkprn, int providerId);
         Task<IList<ProviderDetails>> GetTqAoProviderDetailsAsync(long aoUkprn);
     }

@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
         [Fact]
         public void Then_Mapper_Has_Expected_Results()
         {
-            var result = Mapper.Map<List<ProviderTlevelDetails>>(ProviderTlevelsViewModel.Tlevels);
+            var result = Mapper.Map<List<ProviderTlevel>>(ProviderTlevelsViewModel.Tlevels);
 
             result.Count.Should().Be(2);
 
