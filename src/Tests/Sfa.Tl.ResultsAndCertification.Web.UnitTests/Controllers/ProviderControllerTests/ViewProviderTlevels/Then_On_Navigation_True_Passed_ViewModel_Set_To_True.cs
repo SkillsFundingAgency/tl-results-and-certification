@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             {
                 Tlevels = new List<TlevelViewModel>()
                 {
-                    new TlevelViewModel { TlevelTitle = "Arts" }
+                    new TlevelViewModel { TlevelTitle = "Arts", TqProviderId = 1 }
                 },
             };
 
