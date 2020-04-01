@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
             var resultModel = viewResult.Model as ProviderViewModel;
             resultModel.Should().NotBeNull();
-            resultModel.IsNavigatedFromFindProvider.Should().BeFalse();
+            resultModel.IsNavigatedFromFindProvider.Should().BeTrue();
         }
     }
 }
