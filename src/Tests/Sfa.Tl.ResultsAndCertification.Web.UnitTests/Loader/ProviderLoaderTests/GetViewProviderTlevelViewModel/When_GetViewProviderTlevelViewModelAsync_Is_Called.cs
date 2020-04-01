@@ -26,14 +26,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
         {
             ApiClientResponse = new ProviderTlevels
             {
-                ProviderId = 1,
+                Id = 1,
                 DisplayName = "Test1",
                 Ukprn = 12345,
                 Tlevels = new List<ProviderTlevelDetails>
                     {
-                        new ProviderTlevelDetails { TqAwardingOrganisationId = 1, ProviderId = 7, PathwayId = 1, RouteName = "Route1", PathwayName = "Pathway1", TqProviderId = 10 },
-                        new ProviderTlevelDetails { TqAwardingOrganisationId = 1, ProviderId = 7, PathwayId = 2, RouteName = "Route2", PathwayName = "Pathway2", TqProviderId = 11 },
-                        new ProviderTlevelDetails { TqAwardingOrganisationId = 1, ProviderId = 7, PathwayId = 3, RouteName = "Route3", PathwayName = "Pathway3", TqProviderId = 22 }
+                        new ProviderTlevelDetails { TqAwardingOrganisationId = 1, TlProviderId = 7, PathwayId = 1, RouteName = "Route1", PathwayName = "Pathway1", TqProviderId = 10 },
+                        new ProviderTlevelDetails { TqAwardingOrganisationId = 1, TlProviderId = 7, PathwayId = 2, RouteName = "Route2", PathwayName = "Pathway2", TqProviderId = 11 },
+                        new ProviderTlevelDetails { TqAwardingOrganisationId = 1, TlProviderId = 7, PathwayId = 3, RouteName = "Route3", PathwayName = "Pathway3", TqProviderId = 22 }
                     }
             };
 
