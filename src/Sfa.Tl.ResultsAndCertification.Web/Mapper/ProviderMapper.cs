@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
         public ProviderMapper()
         {
             CreateMap<ProviderTlevels, ProviderTlevelsViewModel>()
-               .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.ProviderId))
+               .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => s.DisplayName))
                .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.Ukprn))
                .ForMember(d => d.Tlevels, opts => opts.MapFrom(s => s.Tlevels))
@@ -20,25 +20,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<ProviderTlevelDetails, ProviderTlevelDetailsViewModel>()
                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
-               .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.ProviderId))
+               .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.TlProviderId))
                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => $"{s.RouteName}: {s.PathwayName}"))
                .ForMember(d => d.IsSelected, opts => opts.Ignore());
 
             CreateMap<ProviderTlevelDetailsViewModel, ProviderTlevelDetails>()
                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
-               .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.ProviderId))
+               .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.TlProviderId))
                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<ProviderTlevelDetailsViewModel, ProviderTlevelDetails>>());
 
             CreateMap<ProviderMetadata, ProviderLookupData>();
 
             CreateMap<ProviderTlevels, ProviderViewModel>()
-               .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.ProviderId))
+               .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => s.DisplayName))
                .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.Ukprn))
                .ForMember(d => d.Tlevels, opts => opts.MapFrom(s => s.Tlevels));
-            //.ForMember(d => d.HasTlevelSelected, opts => opts.Ignore());
 
             CreateMap<ProviderTlevelDetails, TlevelViewModel>()
                //.ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))

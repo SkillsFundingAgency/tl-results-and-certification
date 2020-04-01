@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 where tlprov.Id == providerId
                                 select new ProviderTlevels
                                 {
-                                    ProviderId = tlprov.Id,
+                                    Id = tlprov.Id,
                                     DisplayName = tlprov.DisplayName,
                                     Ukprn = tlprov.UkPrn,
                                     Tlevels = (from tqao in _dbContext.TqAwardingOrganisation
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                select new ProviderTlevelDetails
                                                {
                                                    TqAwardingOrganisationId = tqao.Id,
-                                                   ProviderId = tlprov.Id,
+                                                   TlProviderId = tlprov.Id,
                                                    PathwayId = tqao.TlPathway.Id,
                                                    RouteName = tqao.TlRoute.Name,
                                                    PathwayName = tqao.TlPathway.Name,
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 where tlprov.Id == providerId
                                 select new ProviderTlevels
                                 {
-                                    ProviderId = tlprov.Id,
+                                    Id = tlprov.Id,
                                     DisplayName = tlprov.DisplayName,
                                     Ukprn = tlprov.UkPrn,
                                     Tlevels = (from tqao in _dbContext.TqAwardingOrganisation
@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                select new ProviderTlevelDetails
                                                {
                                                    TqAwardingOrganisationId = tqao.Id,
-                                                   ProviderId = tlprov.Id,
+                                                   TlProviderId = tlprov.Id,
                                                    PathwayId = tqao.TlPathway.Id,
                                                    RouteName = tqao.TlRoute.Name,
                                                    PathwayName = tqao.TlPathway.Name

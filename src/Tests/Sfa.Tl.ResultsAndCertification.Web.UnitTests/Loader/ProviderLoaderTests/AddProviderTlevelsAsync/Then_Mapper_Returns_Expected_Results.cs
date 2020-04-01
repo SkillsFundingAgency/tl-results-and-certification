@@ -16,27 +16,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
             result.Count.Should().Be(2);
 
             result[0].TqAwardingOrganisationId.Should().Be(ProviderTlevelsViewModel.Tlevels[0].TqAwardingOrganisationId);
-            result[0].ProviderId.Should().Be(ProviderTlevelsViewModel.Tlevels[0].ProviderId);
+            result[0].TlProviderId.Should().Be(ProviderTlevelsViewModel.Tlevels[0].TlProviderId);
             result[0].PathwayId.Should().Be(ProviderTlevelsViewModel.Tlevels[0].PathwayId);
             result[0].CreatedBy.Should().Be($"{Givenname} {Surname}");
 
             result[1].TqAwardingOrganisationId.Should().Be(ProviderTlevelsViewModel.Tlevels[1].TqAwardingOrganisationId);
-            result[1].ProviderId.Should().Be(ProviderTlevelsViewModel.Tlevels[1].ProviderId);
+            result[1].TlProviderId.Should().Be(ProviderTlevelsViewModel.Tlevels[1].TlProviderId);
             result[1].PathwayId.Should().Be(ProviderTlevelsViewModel.Tlevels[1].PathwayId);
             result[1].CreatedBy.Should().Be($"{Givenname} {Surname}");
         }
-
-
-        //protected void CreateMapper()
-        //{
-        //    var mapperConfig = new MapperConfiguration(c =>
-        //    {
-        //        c.AddMaps(typeof(ProviderMapper).Assembly);
-        //        c.ConstructServicesUsing(type =>
-        //                    type.Name.Contains("UserNameResolver") ?
-        //                        new UserNameResolver<ProviderTlevelDetailsViewModel, ProviderTlevelDetails>(_httpContextAccessor) : null);
-        //    });
-        //    Mapper = new AutoMapper.Mapper(mapperConfig);
-        //}
     }
 }

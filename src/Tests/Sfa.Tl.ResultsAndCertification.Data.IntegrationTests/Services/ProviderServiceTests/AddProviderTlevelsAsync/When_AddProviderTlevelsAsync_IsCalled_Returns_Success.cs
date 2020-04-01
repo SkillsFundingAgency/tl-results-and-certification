@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
 
             foreach(var tqAo in _tqAwardingOrganisations)
             {
-                _providerTlevelDetails.Add(new ProviderTlevelDetails { TqAwardingOrganisationId = tqAo.Id, ProviderId = TlProvider.Id, PathwayId = tqAo.TlPathwayId, CreatedBy = "test user" });
+                _providerTlevelDetails.Add(new ProviderTlevelDetails { TqAwardingOrganisationId = tqAo.Id, TlProviderId = TlProvider.Id, PathwayId = tqAo.TlPathwayId, CreatedBy = "test user" });
             }
         }
 
