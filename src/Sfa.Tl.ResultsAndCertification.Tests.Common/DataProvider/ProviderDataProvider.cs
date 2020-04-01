@@ -60,10 +60,37 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             }
             return tlProvider;
         }
-        
+
         #endregion
 
         #region TqProvider
+
+        public static TqProvider CreateTqProvider(ResultsAndCertificationDbContext _dbContext, int tqAwardingOrganisationId, int tlProviderId, int pathwayId, bool addToDbContext = true)
+        {
+            var tqProvider = new TqProvider
+            {
+                TqAwardingOrganisationId = tqAwardingOrganisationId,
+                TlProviderId = tlProviderId,
+                TlPathwayId = pathwayId
+            };
+
+            if (addToDbContext)
+            {
+                _dbContext.Add(tqProvider);
+            }
+            return tqProvider;
+        }
+
+        public static TqProvider CreateTqProvider(ResultsAndCertificationDbContext _dbContext, bool addToDbContext = true)
+        {
+            var tqProvider = new TqProviderBuilder().Build();
+
+            if (addToDbContext)
+            {
+                _dbContext.Add(tqProvider);
+            }
+            return tqProvider;
+        }
 
         public static TqProvider CreateTqProvider(ResultsAndCertificationDbContext _dbContext, TqAwardingOrganisation tqAwardingOrganisation, TlProvider tlProvider, bool addToDbContext = true)
         {
@@ -80,6 +107,30 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                     _dbContext.Add(tqProvider);
                 }
                 return tqProvider;
+            }
+            return null;
+        }
+
+        public static IList<TqProvider> CreateTqProviders(ResultsAndCertificationDbContext _dbContext, IList<TqAwardingOrganisation> tqAwardingOrganisations, TlProvider tlProvider, bool addToDbContext = true)
+        {
+            if (tlProvider != null && tqAwardingOrganisations != null && tqAwardingOrganisations.Count > 0)
+            {
+                var tqProviders = new List<TqProvider>();
+                foreach(var tqAwardingOrganisation in tqAwardingOrganisations)
+                {
+                    tqProviders.Add(new TqProvider
+                    {
+                        TlProviderId = tlProvider.Id,
+                        TqAwardingOrganisationId = tqAwardingOrganisation.Id,
+                        TlPathwayId = tqAwardingOrganisation.TlPathwayId
+                    });
+                }
+
+                if (addToDbContext)
+                {
+                    _dbContext.AddRange(tqProviders);
+                }
+                return tqProviders;
             }
             return null;
         }

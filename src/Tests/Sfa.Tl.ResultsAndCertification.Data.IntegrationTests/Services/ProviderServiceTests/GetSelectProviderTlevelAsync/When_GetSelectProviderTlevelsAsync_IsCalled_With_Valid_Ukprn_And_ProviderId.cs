@@ -1,13 +1,12 @@
-﻿using System.Linq;
-using Xunit;
-using FluentAssertions;
-using NSubstitute;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System.Linq;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.GetSelectProviderTlevelAsync
 {
