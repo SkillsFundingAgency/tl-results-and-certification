@@ -21,5 +21,10 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public virtual TlRoute TlRoute { get; set; }
 
         public virtual ICollection<TqProvider> TqProviders { get; set; }
+
+        public int Count()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

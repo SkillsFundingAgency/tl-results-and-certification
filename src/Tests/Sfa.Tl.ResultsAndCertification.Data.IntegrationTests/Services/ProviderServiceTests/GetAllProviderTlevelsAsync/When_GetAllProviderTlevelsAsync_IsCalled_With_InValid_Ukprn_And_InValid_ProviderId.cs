@@ -11,20 +11,21 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.GetTqAoProviderDetailsAsync
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.GetAllProviderTlevelsAsync
 {
-    public class When_GetTqAoProviderDetailsAsync_IsCalled_Returns_In_Correct_Order : ProviderServiceBaseTest
+    public class When_GetAllProviderTlevelsAsync_IsCalled_With_InValid_Ukprn_And_InValid_ProviderId : ProviderServiceBaseTest
     {
-        private IList<ProviderDetails> _result;
         private IList<TlRoute> _routes;
         private IList<TlPathway> _pathways;
         private IList<TqAwardingOrganisation> _tqAwardingOrganisations;
-        private IList<TqProvider> _tqProviders;
 
+        private ProviderTlevels _result;
+        private int _invalidUkprn = 3000;
+        private int _invalidProviderId = 89000;
         public override void Given()
         {
             SeedTestData();
-            CreateMapper();
+
             ProviderRepositoryLogger = Substitute.For<ILogger<ProviderRepository>>();
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             TlProviderRepositoryLogger = Substitute.For<ILogger<GenericRepository<TlProvider>>>();
@@ -34,15 +35,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
 
         public override void When()
         {
-            _result = ProviderService.GetTqAoProviderDetailsAsync(TlAwardingOrganisation.UkPrn).Result;
+            _result = ProviderService.GetAllProviderTlevelsAsync(_invalidUkprn, _invalidProviderId).Result;
         }
 
         [Fact]
-        public void Then_Expected_Provider_Details_Results_Is_Returned_In_Ascending_Order()
+        public void Then_Expected_Results_Is_Returned()
         {
-            _result.Should().NotBeNull();
-            _result.Count.Should().NotBe(0);
-            _result.Should().BeInAscendingOrder(x => x.DisplayName);
+            _result.Should().BeNull();
         }
 
         protected override void SeedTestData()

@@ -1,30 +1,30 @@
-﻿using FluentAssertions;
-using Microsoft.Extensions.Logging;
+﻿using System.Linq;
+using Xunit;
+using FluentAssertions;
 using NSubstitute;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
-using System.Linq;
-using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.GetTqAoProviderDetailsAsync
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.GetAllProviderTlevelsAsync
 {
-    public class When_GetTqAoProviderDetailsAsync_IsCalled_Returns_In_Correct_Order : ProviderServiceBaseTest
+    public class When_GetAllProviderTlevelsAsync_IsCalled_With_Returns_In_Correct_Order : ProviderServiceBaseTest
     {
-        private IList<ProviderDetails> _result;
         private IList<TlRoute> _routes;
         private IList<TlPathway> _pathways;
         private IList<TqAwardingOrganisation> _tqAwardingOrganisations;
-        private IList<TqProvider> _tqProviders;
+
+        private ProviderTlevels _result;
 
         public override void Given()
         {
             SeedTestData();
-            CreateMapper();
+
             ProviderRepositoryLogger = Substitute.For<ILogger<ProviderRepository>>();
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             TlProviderRepositoryLogger = Substitute.For<ILogger<GenericRepository<TlProvider>>>();
@@ -34,15 +34,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
 
         public override void When()
         {
-            _result = ProviderService.GetTqAoProviderDetailsAsync(TlAwardingOrganisation.UkPrn).Result;
+            _result = ProviderService.GetAllProviderTlevelsAsync(TlAwardingOrganisation.UkPrn, TlProvider.Id).Result;
         }
 
         [Fact]
-        public void Then_Expected_Provider_Details_Results_Is_Returned_In_Ascending_Order()
+        public void Then_Expected_Tlevels_Results_Is_Returned_In_Ascending_Order()
         {
-            _result.Should().NotBeNull();
-            _result.Count.Should().NotBe(0);
-            _result.Should().BeInAscendingOrder(x => x.DisplayName);
+            var actualResult = _result;
+            actualResult.Should().NotBeNull();
+            actualResult.Id.Should().Be(TlProvider.Id);
+            actualResult.DisplayName.Should().Be(TlProvider.DisplayName);
+            actualResult.Ukprn.Should().Be(TlProvider.UkPrn);
+
+            actualResult.Tlevels.Should().BeInAscendingOrder(x => x.RouteName);
+            actualResult.Tlevels.Count().Should().Be(2);
         }
 
         protected override void SeedTestData()
