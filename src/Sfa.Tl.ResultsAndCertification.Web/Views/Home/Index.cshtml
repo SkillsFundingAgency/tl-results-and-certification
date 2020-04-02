@@ -6,22 +6,26 @@
     <div class="govuk-grid-column-two-thirds">
 
         <h1 class="govuk-heading-xl">
-            @ViewData["Title"]
+            Sign in to manage your T Level results
         </h1>
 
         <p class="govuk-body">As an awarding organisation you can use this service to:</p>
 
         <ul class="govuk-list govuk-list--bullet">
             <li>review your T Level details</li>
-            <li>tell us which centres are offering your T Levels</li>
-            <li>send student registrations and results</li>
+            <li>tell us which providers are offering your T Levels</li>
+            <li>enter student registrations - from August 2020</li>
+            <li>enter student results - from August 2022</li>
         </ul>
 
-        <a href="@Url.Action("SignIn", "Account")" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" data-module="govuk-button">
+        <p class="govuk-body govuk-!-margin-top-7">You will be signed out if you are inactive for 20 minutes. </p>
+
+        <a href="@Url.Action("SignIn", "Account")" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-6" data-module="govuk-button">
             Start now
             <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" role="presentation" focusable="false">
                 <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
             </svg>
         </a>
+
     </div>
 </div>
