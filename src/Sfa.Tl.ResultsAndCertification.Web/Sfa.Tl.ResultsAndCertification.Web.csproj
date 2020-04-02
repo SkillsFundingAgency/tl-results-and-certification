@@ -39,6 +39,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Dashboard.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Home\StartPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StartPage.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Provider\Confirmation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -101,6 +106,10 @@
     <EmbeddedResource Update="Content\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Home\StartPage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StartPage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Provider\Confirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
