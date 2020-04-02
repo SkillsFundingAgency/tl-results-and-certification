@@ -31,6 +31,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _logger = logger;
         }
 
+        /// <summary>
+        /// Determines whether [is any provider setup completed asynchronous] [the specified ukprn].
+        /// </summary>
+        /// <param name="ukprn">The ukprn.</param>
+        /// <returns></returns>
         public async Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn)
         {
             var setupCount = await _tqProviderRepository
@@ -38,22 +43,37 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return setupCount > 0;
         }
 
+        /// <summary>
+        /// Finds the provider asynchronous.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="isExactMatch">if set to <c>true</c> [is exact match].</param>
+        /// <returns></returns>
         public async Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch)
         {
-            var providerNames = await _tlProviderRepository
+            return await _tlProviderRepository
                 .GetManyAsync(p => EF.Functions.Like(p.DisplayName, isExactMatch ? $"{name.ToLower()}" : $"{name.ToLower()}%"))
                 .OrderBy(o => o.DisplayName)
                 .ProjectTo<ProviderMetadata>(_mapper.ConfigurationProvider)
                 .ToListAsync();
-
-            return providerNames;
         }
 
+        /// <summary>
+        /// Gets the select provider tlevels asynchronous.
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <param name="providerId">The provider identifier.</param>
+        /// <returns></returns>
         public async Task<ProviderTlevels> GetSelectProviderTlevelsAsync(long aoUkprn, int providerId)
         {
             return await _tqProviderRepository.GetSelectProviderTlevelsAsync(aoUkprn, providerId);
         }
 
+        /// <summary>
+        /// Adds the provider tlevels asynchronous.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         public async Task<bool> AddProviderTlevelsAsync(IList<ProviderTlevel> model)
         {
             if (model == null || !model.Any()) return false;
@@ -61,6 +81,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqProviderRepository.CreateManyAsync(newTlevels) > 0;
         }
 
+        /// <summary>
+        /// Gets the tq ao provider details asynchronous.
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <returns></returns>
         public async Task<IList<ProviderDetails>> GetTqAoProviderDetailsAsync(long aoUkprn)
         {
             var tlProviders = await _tqProviderRepository
@@ -70,9 +95,32 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<IList<ProviderDetails>>(tlProviders);
         }
 
+        /// <summary>
+        /// Gets all provider tlevels asynchronous.
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <param name="providerId">The provider identifier.</param>
+        /// <returns></returns>
         public async Task<ProviderTlevels> GetAllProviderTlevelsAsync(long aoUkprn, int providerId)
         {
             return await _tqProviderRepository.GetAllProviderTlevelsAsync(aoUkprn, providerId);
+        }
+
+        /// <summary>
+        /// Gets the tq provider tlevel details asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public async Task<ProviderTlevelDetails> GetTqProviderTlevelDetailsAsync(int id)
+        {
+            var tqProvider = await _tqProviderRepository
+                .GetFirstOrDefaultAsync(x => x.Id == id,
+                                        n => n.TlProvider,
+                                        n => n.TqAwardingOrganisation,
+                                        n => n.TqAwardingOrganisation.TlPathway,
+                                        n => n.TqAwardingOrganisation.TlPathway.TlRoute);
+
+            return _mapper.Map<ProviderTlevelDetails>(tqProvider);
         }
     }
 }
