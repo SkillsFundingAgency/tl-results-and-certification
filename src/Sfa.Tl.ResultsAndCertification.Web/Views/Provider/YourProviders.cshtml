@@ -12,9 +12,9 @@
         </h1>
 
         <p class="govuk-body govuk-!-margin-bottom-5">@YourProviders.Section_Information_Text</p>
-        @foreach (var provider in Model)
-        {
-            <dl class="govuk-summary-list govuk-!-margin-bottom-3">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-3">
+            @foreach (var provider in Model)
+            {
                 <div class="govuk-summary-list__row">
                     <dd class="govuk-summary-list__value govuk-heading-m">
                         @provider.DisplayName <span class="govuk-hint"><abbr>@YourProviders.Ukprn_Text</abbr>: @provider.Ukprn</span>
@@ -25,8 +25,8 @@
                         </a>
                     </dd>
                 </div>
-            </dl>
-        }
+            }
+        </dl>
 
         <p><a class="govuk-button govuk-button--secondary" role="button" asp-route="FindProvider">@YourProviders.Add_Another_Provider_Button_Text</a></p>
         <p><a class="govuk-button" role="button" asp-route="Dashboard">@YourProviders.Home_Button_Text</a></p>
