@@ -4,10 +4,14 @@
     ViewData["Title"] = "Remove T Level";
 }
 
-<form>
+<form asp-route="SubmitRemoveProviderTlevel">
     <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="DisplayName" />
+    <input type="hidden" asp-for="Ukprn" />
+    <input type="hidden" asp-for="TlevelTitle" />
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
+            <partial name="_ValidationSummary" />
             <div class="govuk-form-group govuk-!-margin-bottom-7">
                 <fieldset class="govuk-fieldset" aria-describedby="remove-tlevel-hint">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">

@@ -27,6 +27,7 @@
         public const string ProviderTlevelConfirmation = "ProviderTlevelConfirmation";
         public const string ProviderTlevels = "ProviderTlevels";
         public const string RemoveProviderTlevel = "RemoveProviderTlevel";
+        public const string SubmitRemoveProviderTlevel = "SubmitRemoveProviderTlevel";
 
         // Error
         public const string PageNotFound = "PageNotFound";
