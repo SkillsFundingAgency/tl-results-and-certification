@@ -122,6 +122,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> RemoveProviderTlevelAsync(int id)
         {
             var viewModel = await _providerLoader.GetTqProviderTlevelDetailsAsync(id);
+
+            if(viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
             return View(viewModel);
         }
 
