@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.Provider;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider
 {
@@ -9,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider
         public long Ukprn { get; set; }
         public string TlevelTitle { get; set; }
 
-        [Required(ErrorMessage = "Select yes to remove the T Level")]
+        [Required(ErrorMessageResourceType = typeof(ErrorResource.RemoveProviderTlevel), ErrorMessageResourceName = "Select_RemoveProviderTlevel_Validation_Message")]
         public bool? CanRemoveTlevel { get; set; }
     }
 }

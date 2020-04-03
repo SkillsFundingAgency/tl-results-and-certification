@@ -135,6 +135,9 @@
   <data name="Section_Yes_Remove_Tlevel_Text" xml:space="preserve">
     <value>Yes, remove T Level</value>
   </data>
+  <data name="Select_RemoveProviderTlevel_Validation_Message" xml:space="preserve">
+    <value>Select yes to remove the T Level</value>
+  </data>
   <data name="Submit_Button_Text" xml:space="preserve">
     <value>Submit</value>
   </data>

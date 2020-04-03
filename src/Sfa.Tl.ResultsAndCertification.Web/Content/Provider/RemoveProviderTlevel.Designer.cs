@@ -115,6 +115,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select yes to remove the T Level.
+        /// </summary>
+        public static string Select_RemoveProviderTlevel_Validation_Message {
+            get {
+                return ResourceManager.GetString("Select_RemoveProviderTlevel_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Submit_Button_Text {
