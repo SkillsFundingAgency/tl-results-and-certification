@@ -118,6 +118,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("remove-tlevel/{id}", Name = RouteConstants.RemoveProviderTlevel)]
+        public IActionResult RemoveProviderTlevelAsync(int id)
+        {
+            var viewModel = _providerLoader.GetTqProviderTlevelDetailsAsync(id);
+            return View(viewModel);
+        }
+
+        [HttpGet]
         [Route("provider-tlevels/{providerId}/{navigation:bool?}", Name = RouteConstants.ProviderTlevels)]
         public async Task<IActionResult> ViewProviderTlevelsAsync(int providerId, bool navigation)
         {

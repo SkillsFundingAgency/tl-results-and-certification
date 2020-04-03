@@ -1,0 +1,39 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.ProviderTlevelDetailsViewModel
+
+@{
+    ViewData["Title"] = "Remove T Level";
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form>
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <fieldset class="govuk-fieldset" aria-describedby="remove-tlevel-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading">
+                            Are you sure you want to remove this T Level?
+                        </h1>
+                    </legend>
+                    <span id="remove-tlevel-hint" class="govuk-hint govuk-!-margin-bottom-7">
+                        <strong>@Model.TlevelTitle</strong> from @Model.DisplayName (<abbr>UKPRN</abbr>: @Model.Ukprn).
+                    </span>
+                    <div class="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="tLevel-answer-1" name="tLevel-answer" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="tLevel-answer-1">
+                                Yes, remove T Level
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="tLevel-answer-2" name="tLevel-answer" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="tLevel-answer-2">
+                                No, don't remove it
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button class="govuk-button" data-module="govuk-button">Submit</button>
+        </form>
+    </div>
+</div>
