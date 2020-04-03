@@ -38,7 +38,7 @@
         @if (Model.ShowAnotherTlevelButton)
         {
             <p>
-                <a class="govuk-button govuk-button--secondary" role="button" asp-route="SelectProviderTlevels" asp-route-providerId="@Model.ProviderId">
+                <a class="govuk-button govuk-button--secondary" role="button" asp-route="AddProviderTlevels" asp-route-providerId="@Model.ProviderId">
                     @ViewProviderTlevels.AddAnotherTlevels_Button_Text
                 </a>
             </p>

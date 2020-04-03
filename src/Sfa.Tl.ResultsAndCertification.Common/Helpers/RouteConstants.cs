@@ -23,7 +23,9 @@
         public const string FindProvider = "FindProvider";
         public const string ProviderNameLookup = "ProviderNameLookup";
         public const string SelectProviderTlevels = "SelectProviderTlevels";
+        public const string AddProviderTlevels = "AddProviderTlevels";
         public const string SubmitSelectProviderTlevels = "SubmitSelectProviderTlevels";
+        public const string SubmitAddProviderTlevels = "SubmitAddProviderTlevels";
         public const string ProviderTlevelConfirmation = "ProviderTlevelConfirmation";
         public const string ProviderTlevels = "ProviderTlevels";
         public const string RemoveProviderTlevel = "RemoveProviderTlevel";

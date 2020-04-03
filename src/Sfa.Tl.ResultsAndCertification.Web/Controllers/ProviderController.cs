@@ -74,10 +74,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("select-providers-tlevels/{providerId}", Name = RouteConstants.SelectProviderTlevels)]
         public async Task<IActionResult> SelectProviderTlevelsAsync(int providerId)
         {
-            return await GetSelectProviderTlevelsAsync(providerId);
+            return await GetSelectProviderTlevelsAsync(providerId, isAddTlevel: false);
+        }
+
+        [HttpGet]
+        [Route("add-additional-tlevels/{providerId}", Name = RouteConstants.AddProviderTlevels)]
+        public async Task<IActionResult> AddProviderTlevelsAsync(int providerId)
+        {
+            return await GetSelectProviderTlevelsAsync(providerId, isAddTlevel: true);
         }
 
         [HttpPost]
+        [Route("add-additional-tlevels", Name = RouteConstants.SubmitAddProviderTlevels)]
         [Route("select-providers-tlevels", Name = RouteConstants.SubmitSelectProviderTlevels)]
         public async Task<IActionResult> SelectProviderTlevelsAsync(ProviderTlevelsViewModel viewModel)
         {
@@ -88,7 +96,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                return await GetSelectProviderTlevelsAsync(viewModel.ProviderId);
+                return await GetSelectProviderTlevelsAsync(viewModel.ProviderId, viewModel.IsAddTlevel); 
             }
 
             var isSuccess = await _providerLoader.AddProviderTlevelsAsync(viewModel);
@@ -160,7 +168,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
-        private async Task<IActionResult> GetSelectProviderTlevelsAsync(int providerId)
+        private async Task<IActionResult> GetSelectProviderTlevelsAsync(int providerId, bool isAddTlevel)
         {
             var viewModel = await _providerLoader.GetSelectProviderTlevelsAsync(User.GetUkPrn(), providerId);
 
@@ -173,7 +181,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.ProviderTlevels, new { providerId, navigation = true });
             }
 
-            return View(viewModel);
+            viewModel.IsAddTlevel = isAddTlevel;
+
+            return isAddTlevel ? View("SelectProviderTlevels", viewModel) : View(viewModel);
         }
 
         private async Task<bool> FindProviderViewModelValidated(FindProviderViewModel viewModel)
