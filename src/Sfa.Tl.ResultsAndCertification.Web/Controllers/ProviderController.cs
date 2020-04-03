@@ -183,7 +183,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             viewModel.IsAddTlevel = isAddTlevel;
 
-            return isAddTlevel ? View("SelectProviderTlevels", viewModel) : View(viewModel);
+            return View("SelectProviderTlevels", viewModel);
         }
 
         private async Task<bool> FindProviderViewModelValidated(FindProviderViewModel viewModel)
