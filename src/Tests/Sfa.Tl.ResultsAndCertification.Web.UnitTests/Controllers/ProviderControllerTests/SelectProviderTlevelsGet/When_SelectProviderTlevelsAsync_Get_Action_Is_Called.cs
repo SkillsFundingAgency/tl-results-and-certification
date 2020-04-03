@@ -13,7 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
     {
         protected long Ukprn;
         protected int ProviderId;
-        protected bool IsAddTlevel;
         protected IProviderLoader ProviderLoader;
         protected ProviderController Controller;
         protected Task<IActionResult> Result;
@@ -30,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
         public override void When()
         {
-            Result = Controller.SelectProviderTlevelsAsync(ProviderId, IsAddTlevel);
+            Result = Controller.SelectProviderTlevelsAsync(ProviderId);
         }
     }
 }

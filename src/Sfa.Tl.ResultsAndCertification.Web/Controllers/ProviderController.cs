@@ -71,13 +71,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("select-providers-tlevels/{providerId}/{isAddTlevel:bool?}", Name = RouteConstants.SelectProviderTlevels)]
-        public async Task<IActionResult> SelectProviderTlevelsAsync(int providerId, bool isAddTlevel)
+        [Route("select-providers-tlevels/{providerId}", Name = RouteConstants.SelectProviderTlevels)]
+        public async Task<IActionResult> SelectProviderTlevelsAsync(int providerId)
         {
-            return await GetSelectProviderTlevelsAsync(providerId, isAddTlevel);
+            return await GetSelectProviderTlevelsAsync(providerId, isAddTlevel: false);
+        }
+
+        [HttpGet]
+        [Route("add-additional-tlevels/{providerId}", Name = RouteConstants.AddProviderTlevels)]
+        public async Task<IActionResult> AddProviderTlevelsAsync(int providerId)
+        {
+            return await GetSelectProviderTlevelsAsync(providerId, isAddTlevel: true);
         }
 
         [HttpPost]
+        [Route("add-additional-tlevels", Name = RouteConstants.SubmitAddProviderTlevels)]
         [Route("select-providers-tlevels", Name = RouteConstants.SubmitSelectProviderTlevels)]
         public async Task<IActionResult> SelectProviderTlevelsAsync(ProviderTlevelsViewModel viewModel)
         {
@@ -175,7 +183,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             viewModel.IsAddTlevel = isAddTlevel;
 
-            return View(viewModel);
+            return isAddTlevel ? View("SelectProviderTlevels", viewModel) : View(viewModel);
         }
 
         private async Task<bool> FindProviderViewModelValidated(FindProviderViewModel viewModel)

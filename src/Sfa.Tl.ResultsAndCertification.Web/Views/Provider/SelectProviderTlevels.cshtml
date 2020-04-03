@@ -8,7 +8,10 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <partial name="_ValidationSummary" />
-        <form asp-route="SubmitSelectProviderTlevels">
+        
+        @{ var route = Model.IsAddTlevel ? "SubmitAddProviderTlevels" : "SubmitSelectProviderTlevels"; }
+        
+        <form asp-route=@route>
             <input type="hidden" asp-for="ProviderId" />
             <input type="hidden" asp-for="DisplayName" />
             <input type="hidden" asp-for="Ukprn" />
