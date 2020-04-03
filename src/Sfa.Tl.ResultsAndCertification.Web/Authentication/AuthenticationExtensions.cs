@@ -155,7 +155,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // and validated the identity token
                         OnTokenValidated = async x =>
                         {
-                            var cliendId = config.DfeSignInSettings.ClientId;
+                            var clientId = config.DfeSignInSettings.ClientId;
                             var issuer = config.DfeSignInSettings.Issuer;
                             var audience = config.DfeSignInSettings.Audience;
                             var apiSecret = config.DfeSignInSettings.ApiSecret;
@@ -195,7 +195,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
                             var client = new HttpClient();
                             client.SetBearerToken(token);
-                            var response = await client.GetAsync($"{apiUri}/services/{cliendId}/organisations/{organisation.Id}/users/{userClaims.UserId}");
+                            var response = await client.GetAsync($"{apiUri}/services/{clientId}/organisations/{organisation.Id}/users/{userClaims.UserId}");
                             bool hasAccessToService = true;
 
                             if (response.IsSuccessStatusCode)

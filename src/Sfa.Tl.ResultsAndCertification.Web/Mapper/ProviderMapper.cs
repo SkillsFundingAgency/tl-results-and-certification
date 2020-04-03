@@ -40,18 +40,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.Tlevels, opts => opts.MapFrom(s => s.Tlevels));
 
             CreateMap<ProviderTlevel, TlevelViewModel>()
-               //.ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
-               //.ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.ProviderId))
-               //.ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
                .ForMember(d => d.TqProviderId, opts => opts.MapFrom(s => s.TqProviderId))
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => $"{s.RouteName}: {s.PathwayName}"));
-               //.ForMember(d => d.IsSelected, opts => opts.Ignore());
-
 
             CreateMap<ProviderDetails, ProviderDetailsViewModel>()
                .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => s.DisplayName))
                .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.Ukprn));
+
+            CreateMap<ProviderTlevelDetails, ProviderTlevelDetailsViewModel>()
+               .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+               .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => s.DisplayName))
+               .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.Ukprn))
+               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => $"{s.ProviderTlevel.RouteName}: {s.ProviderTlevel.PathwayName}"));
         }
     }
 }

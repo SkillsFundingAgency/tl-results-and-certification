@@ -89,5 +89,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var providerDetails = await _internalApiClient.GetTqAoProviderDetailsAsync(aoUkprn);
             return _mapper.Map<IList<ProviderDetailsViewModel>>(providerDetails);
         }
+
+        public async Task<ProviderTlevelDetailsViewModel> GetTqProviderTlevelDetailsAsync(int id)
+        {
+            var providerTlevelDetails = await _internalApiClient.GetTqProviderTlevelDetailsAsync(id);
+            return _mapper.Map<ProviderTlevelDetailsViewModel>(providerTlevelDetails);
+        }
     }
 }
