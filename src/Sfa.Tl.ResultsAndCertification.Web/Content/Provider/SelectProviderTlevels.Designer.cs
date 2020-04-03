@@ -61,6 +61,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add T Levels.
+        /// </summary>
+        public static string AddTlevel_Page_Heading {
+            get {
+                return ResourceManager.GetString("AddTlevel_Page_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add T Levels page.
+        /// </summary>
+        public static string AddTlevel_Page_Title {
+            get {
+                return ResourceManager.GetString("AddTlevel_Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select provider’s T Levels.
         /// </summary>
         public static string Page_Heading {

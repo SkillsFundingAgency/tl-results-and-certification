@@ -15,5 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTl
         public bool? HasTlevelSelected => (Tlevels.Any(x => x.IsSelected) == true) ? true : (bool?)null;
         public bool HasMoreThanOneTlevel => Tlevels?.Count() > 1;
         public IList<ProviderTlevelViewModel> Tlevels { get; set; }
+        public bool IsAddTlevel { get; set; }
     }
 }

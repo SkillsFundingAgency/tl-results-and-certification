@@ -2,7 +2,7 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Provider
 
 @{
-    ViewData["Title"] = @SelectProviderTlevels.Page_Title;
+    ViewData["Title"] = Model.IsAddTlevel ? @SelectProviderTlevels.AddTlevel_Page_Title : @SelectProviderTlevels.Page_Title;
 }
 
 <div class="govuk-grid-row">
@@ -12,11 +12,13 @@
             <input type="hidden" asp-for="ProviderId" />
             <input type="hidden" asp-for="DisplayName" />
             <input type="hidden" asp-for="Ukprn" />
+            <input type="hidden" asp-for="IsAddTlevel" />
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
                         <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
-                            @SelectProviderTlevels.Page_Heading
+                            @{ var page_heading = Model.IsAddTlevel ? @SelectProviderTlevels.AddTlevel_Page_Heading : @SelectProviderTlevels.Page_Heading; }
+                            @page_heading
                         </h1>
                     </legend>
 
