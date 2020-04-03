@@ -109,12 +109,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         /// <summary>
         /// Gets the tq provider tlevel details asynchronous.
         /// </summary>
-        /// <param name="id">The identifier.</param>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <param name="tqProviderId">The tq provider identifier.</param>
         /// <returns></returns>
-        public async Task<ProviderTlevelDetails> GetTqProviderTlevelDetailsAsync(int id)
+        public async Task<ProviderTlevelDetails> GetTqProviderTlevelDetailsAsync(long aoUkprn, int tqProviderId)
         {
             var tqProvider = await _tqProviderRepository
-                .GetFirstOrDefaultAsync(x => x.Id == id,
+                .GetFirstOrDefaultAsync(x => x.Id == tqProviderId && x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn,
                                         n => n.TlProvider,
                                         n => n.TqAwardingOrganisation,
                                         n => n.TqAwardingOrganisation.TlPathway,

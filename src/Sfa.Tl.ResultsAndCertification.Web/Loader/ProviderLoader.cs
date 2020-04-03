@@ -90,9 +90,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<IList<ProviderDetailsViewModel>>(providerDetails);
         }
 
-        public async Task<ProviderTlevelDetailsViewModel> GetTqProviderTlevelDetailsAsync(int id)
+        public async Task<ProviderTlevelDetailsViewModel> GetTqProviderTlevelDetailsAsync(long aoUkprn, int tqProviderId)
         {
-            var providerTlevelDetails = await _internalApiClient.GetTqProviderTlevelDetailsAsync(id);
+            var providerTlevelDetails = await _internalApiClient.GetTqProviderTlevelDetailsAsync(aoUkprn, tqProviderId);
             return _mapper.Map<ProviderTlevelDetailsViewModel>(providerTlevelDetails);
         }
     }

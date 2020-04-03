@@ -14,6 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<bool> AddProviderTlevelsAsync(ProviderTlevelsViewModel viewModel);
         Task<ProviderViewModel> GetViewProviderTlevelViewModelAsync(long aoUkprn, int providerId);
         Task<IList<ProviderDetailsViewModel>> GetTqAoProviderDetailsAsync(long aoUkprn);
-        Task<ProviderTlevelDetailsViewModel> GetTqProviderTlevelDetailsAsync(int id);
+        Task<ProviderTlevelDetailsViewModel> GetTqProviderTlevelDetailsAsync(long aoUkprn, int tqProviderId);
     }
 }

@@ -121,7 +121,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("remove-tlevel/{id}", Name = RouteConstants.RemoveProviderTlevel)]
         public async Task<IActionResult> RemoveProviderTlevelAsync(int id)
         {
-            var viewModel = await _providerLoader.GetTqProviderTlevelDetailsAsync(id);
+            var viewModel = await _providerLoader.GetTqProviderTlevelDetailsAsync(User.GetUkPrn(), id);
 
             if(viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
