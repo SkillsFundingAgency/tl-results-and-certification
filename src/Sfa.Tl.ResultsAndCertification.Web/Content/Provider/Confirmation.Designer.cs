@@ -115,6 +115,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The additional T Levels.
+        /// </summary>
+        public static string Section_Info_Additional_Tlevel_Added_Text_Plural {
+            get {
+                return ResourceManager.GetString("Section_Info_Additional_Tlevel_Added_Text_Plural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The additional T Level.
+        /// </summary>
+        public static string Section_Info_Additional_Tlevel_Added_Text_Singular {
+            get {
+                return ResourceManager.GetString("Section_Info_Additional_Tlevel_Added_Text_Singular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UKPRN.
         /// </summary>
         public static string Section_Info_Ukprn_Text {
@@ -129,6 +147,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         public static string Section_Info_Will_Offer_Text {
             get {
                 return ResourceManager.GetString("Section_Info_Will_Offer_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to will offer are:.
+        /// </summary>
+        public static string Section_Info_Will_Offer_Text_AddTlevel_Plural {
+            get {
+                return ResourceManager.GetString("Section_Info_Will_Offer_Text_AddTlevel_Plural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to will offer is:.
+        /// </summary>
+        public static string Section_Info_Will_Offer_Text_AddTlevel_Singular {
+            get {
+                return ResourceManager.GetString("Section_Info_Will_Offer_Text_AddTlevel_Singular", resourceCulture);
             }
         }
         
