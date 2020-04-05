@@ -47,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             actualViewModel.Should().NotBeNull();
             actualViewModel.ProviderId.Should().Be(mockresult.ProviderId);
             actualViewModel.DisplayName.Should().Be(mockresult.DisplayName);
+            actualViewModel.IsAddTlevel.Should().BeFalse();
             actualViewModel.Ukprn.Should().Be(mockresult.Ukprn);
             actualViewModel.Tlevels.Should().NotBeNull();
             actualViewModel.Tlevels.Count().Should().Be(2);

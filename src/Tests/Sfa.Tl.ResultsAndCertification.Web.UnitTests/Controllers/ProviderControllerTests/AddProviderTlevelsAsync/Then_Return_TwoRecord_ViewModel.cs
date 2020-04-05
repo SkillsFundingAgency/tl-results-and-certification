@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.SelectProviderTlevelsGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.AddProviderTlevelsAsync
 {
-    public class Then_Return_TwoRecord_ViewModel : When_SelectProviderTlevelsAsync_Get_Action_Is_Called
+    public class Then_Return_TwoRecord_ViewModel : When_AddProviderTlevelsAsync_Get_Action_Is_Called
     {
         private ProviderTlevelsViewModel mockresult;
 
@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             model.ProviderId.Should().Be(mockresult.ProviderId);
             model.DisplayName.Should().Be(mockresult.DisplayName);
             model.Ukprn.Should().Be(mockresult.Ukprn);
-            model.IsAddTlevel.Should().BeFalse();
+            model.IsAddTlevel.Should().BeTrue();
             model.Tlevels.Should().NotBeNull();
             model.Tlevels.Count().Should().Be(2);
         }
