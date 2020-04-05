@@ -123,5 +123,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             return _mapper.Map<ProviderTlevelDetails>(tqProvider);
         }
+
+        public async Task<bool> RemoveTqProviderTlevelAsync(long aoUkprn, int tqProviderId)
+        {
+            var tqProvider = await _tqProviderRepository
+                .GetFirstOrDefaultAsync(x => x.Id == tqProviderId && x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn);
+
+            if (tqProvider == null) return false;
+
+            return await _tqProviderRepository.DeleteAsync(tqProvider) > 0;
+        }
     }
 }

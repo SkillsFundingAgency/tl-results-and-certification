@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         Task<int> UpdateAsync(T entity);
         Task<int> UpdateWithSpecifedColumnsOnlyAsync(T entity, params Expression<Func<T, object>>[] properties);
         Task<int> DeleteAsync(int id);
-        Task DeleteAsync(T entity);
+        Task<int> DeleteAsync(T entity);
         IQueryable<T> GetManyAsync(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] navigationPropertyPath);
         Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] navigationPropertyPath);
         Task<TDto> GetFirstOrDefaultAsync<TDto>(Expression<Func<T, bool>> predicate, Expression<Func<T, TDto>> selector, Expression<Func<T, object>> orderBy = null, bool asendingorder = true, params Expression<Func<T, object>>[] navigationPropertyPath);
