@@ -139,7 +139,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("remove-tlevel", Name = RouteConstants.SubmitRemoveProviderTlevel)]
-        public IActionResult RemoveProviderTlevelAsync(ProviderTlevelDetailsViewModel viewModel)
+        public async Task<IActionResult> RemoveProviderTlevelAsync(ProviderTlevelDetailsViewModel viewModel)
         {
             if (viewModel == null)
             {
@@ -149,7 +149,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(viewModel);
 
-            return View(viewModel);
+            var isSuccess = await _providerLoader.RemoveTqProviderTlevelAsync(User.GetUkPrn(), viewModel.Id);
+
+            if (isSuccess)
+            {
+                TempData[Constants.ProviderTlevelDetailsViewModel] = JsonConvert.SerializeObject(viewModel);
+                return RedirectToRoute(RouteConstants.ProviderTlevelConfirmation);
+            }
+            else
+            {
+                return RedirectToRoute("error/500");
+            }
         }
 
         [HttpGet]

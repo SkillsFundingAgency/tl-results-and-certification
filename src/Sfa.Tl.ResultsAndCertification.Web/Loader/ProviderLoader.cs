@@ -90,10 +90,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<IList<ProviderDetailsViewModel>>(providerDetails);
         }
 
+        /// <summary>
+        /// Gets the tq provider tlevel details asynchronous.
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <param name="tqProviderId">The tq provider identifier.</param>
+        /// <returns></returns>
         public async Task<ProviderTlevelDetailsViewModel> GetTqProviderTlevelDetailsAsync(long aoUkprn, int tqProviderId)
         {
             var providerTlevelDetails = await _internalApiClient.GetTqProviderTlevelDetailsAsync(aoUkprn, tqProviderId);
             return _mapper.Map<ProviderTlevelDetailsViewModel>(providerTlevelDetails);
+        }
+
+        /// <summary>
+        /// Removes the tq provider tlevel asynchronous.
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <param name="tqProviderId">The tq provider identifier.</param>
+        /// <returns></returns>
+        public async Task<bool> RemoveTqProviderTlevelAsync(long aoUkprn, int tqProviderId)
+        {
+            return await _internalApiClient.RemoveTqProviderTlevelAsync(aoUkprn, tqProviderId);
         }
     }
 }
