@@ -152,6 +152,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(viewModel);
 
+            if(viewModel.CanRemoveTlevel == false)
+                return RedirectToRoute(RouteConstants.ProviderTlevels, new { viewModel.TlProviderId });
+
             var isSuccess = await _providerLoader.RemoveTqProviderTlevelAsync(User.GetUkPrn(), viewModel.Id);
 
             if (isSuccess)
