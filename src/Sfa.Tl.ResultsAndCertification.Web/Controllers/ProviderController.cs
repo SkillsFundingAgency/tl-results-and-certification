@@ -126,13 +126,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("remove-tlevel/{id}", Name = RouteConstants.RemoveProviderTlevel)]
-        public async Task<IActionResult> RemoveProviderTlevelAsync(int id)
+        [Route("remove-tlevel/{id}/{navigation:bool?}", Name = RouteConstants.RemoveProviderTlevel)]
+        public async Task<IActionResult> RemoveProviderTlevelAsync(int id, bool navigation)
         {
             var viewModel = await _providerLoader.GetTqProviderTlevelDetailsAsync(User.GetUkPrn(), id);
 
             if(viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
+
+            viewModel.TlProviderId = id;
+            viewModel.ShowBackToProvidersLink = !navigation;
 
             return View(viewModel);
         }
@@ -153,13 +156,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (isSuccess)
             {
+                if(viewModel.ShowBackToProvidersLink)
+                {
+                    var providersViewModel = await _providerLoader.GetTqAoProviderDetailsAsync(User.GetUkPrn());
+                    viewModel.ShowBackToProvidersLink = providersViewModel != null && providersViewModel.Count > 0;
+                }
                 TempData[Constants.ProviderTlevelDetailsViewModel] = JsonConvert.SerializeObject(viewModel);
-                return RedirectToRoute(RouteConstants.ProviderTlevelConfirmation);
+                return RedirectToRoute(RouteConstants.RemoveProviderTlevelConfirmation);
             }
             else
             {
                 return RedirectToRoute("error/500");
             }
+        }
+
+        [HttpGet]
+        [Route("tlevel-removed-confirmation", Name = RouteConstants.RemoveProviderTlevelConfirmation)]
+        public IActionResult RemoveConfirmationAsync()
+        {
+            if (TempData[Constants.ProviderTlevelDetailsViewModel] == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = JsonConvert.DeserializeObject<ProviderTlevelDetailsViewModel>(TempData[Constants.ProviderTlevelDetailsViewModel] as string);
+            return View(viewModel);
         }
 
         [HttpGet]

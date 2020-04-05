@@ -30,6 +30,7 @@
         public const string ProviderTlevels = "ProviderTlevels";
         public const string RemoveProviderTlevel = "RemoveProviderTlevel";
         public const string SubmitRemoveProviderTlevel = "SubmitRemoveProviderTlevel";
+        public const string RemoveProviderTlevelConfirmation = "RemoveProviderTlevelConfirmation";
 
         // Error
         public const string PageNotFound = "PageNotFound";

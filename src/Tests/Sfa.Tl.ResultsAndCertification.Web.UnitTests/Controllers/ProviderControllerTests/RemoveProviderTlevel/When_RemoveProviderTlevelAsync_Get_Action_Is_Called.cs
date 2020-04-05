@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
         public override void When()
         {
-            Result = Controller.RemoveProviderTlevelAsync(TqProviderId);
+            Result = Controller.RemoveProviderTlevelAsync(TqProviderId, false);
         }
     }
 }
