@@ -13,5 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<IActionResult> AddProviderTlevelsAsync(IList<ProviderTlevel> model);
         Task<IList<ProviderDetails>> GetTqAoProviderDetailsAsync(long aoUkprn);
         Task<ProviderTlevelDetails> GetTqProviderTlevelDetailsAsync(long aoUkprn, int tqProviderId);
+        Task<bool> RemoveTqProviderTlevelAsync(long aoUkprn, int tqProviderId);
     }
 }

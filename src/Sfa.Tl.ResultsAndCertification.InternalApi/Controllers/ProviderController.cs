@@ -69,5 +69,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _providerService.GetTqProviderTlevelDetailsAsync(aoUkprn, tqProviderId);
         }
+
+        [HttpDelete]
+        [Route("RemoveProviderTlevel/{aoUkprn}/{tqProviderId}")]
+        public async Task<bool> RemoveTqProviderTlevelAsync(long aoUkprn, int tqProviderId)
+        {
+            return await _providerService.RemoveTqProviderTlevelAsync(aoUkprn, tqProviderId);
+        }
     }
 }
