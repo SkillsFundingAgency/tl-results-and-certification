@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
     public class ProviderController : ControllerBase, IProviderController
     {
