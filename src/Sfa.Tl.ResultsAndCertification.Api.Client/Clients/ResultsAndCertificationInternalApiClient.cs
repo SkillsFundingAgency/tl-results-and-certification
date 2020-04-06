@@ -124,7 +124,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             await SetBearerToken();
             var response = await _httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsAsync<T>();
+            return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+            //await response.Content.ReadAsAsync<T>();
         }
 
         /// <summary>
@@ -143,7 +144,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await response.Content.ReadAsAsync<TResponse>();
         }
 
-        /// <summary>
+           /// <summary>
         /// Puts the asynchronous.
         /// </summary>
         /// <typeparam name="TRequest">The type of the request.</typeparam>
