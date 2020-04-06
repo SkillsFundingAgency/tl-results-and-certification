@@ -54,6 +54,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>FindProvider.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Provider\RemoveConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RemoveConfirmation.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Provider\RemoveProviderTlevel.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -123,6 +128,10 @@
     <EmbeddedResource Update="Content\Provider\FindProvider.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FindProvider.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Provider\RemoveConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RemoveConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Provider\RemoveProviderTlevel.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

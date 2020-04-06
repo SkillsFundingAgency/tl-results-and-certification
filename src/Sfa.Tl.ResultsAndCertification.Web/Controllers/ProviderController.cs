@@ -134,9 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if(viewModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            viewModel.TlProviderId = id;
             viewModel.ShowBackToProvidersLink = !navigation;
-
             return View(viewModel);
         }
 
@@ -153,7 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(viewModel);
 
             if(viewModel.CanRemoveTlevel == false)
-                return RedirectToRoute(RouteConstants.ProviderTlevels, new { viewModel.TlProviderId });
+                return RedirectToRoute(RouteConstants.ProviderTlevels, new { providerId = viewModel.TlProviderId });
 
             var isSuccess = await _providerLoader.RemoveTqProviderTlevelAsync(User.GetUkPrn(), viewModel.Id);
 

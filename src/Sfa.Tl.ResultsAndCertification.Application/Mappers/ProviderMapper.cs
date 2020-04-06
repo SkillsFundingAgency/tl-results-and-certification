@@ -30,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.ProviderTlevel, opts => opts.MapFrom(s => s));
 
             CreateMap<TqProvider, ProviderTlevel>()
+                .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.TlProviderId))
                 .ForMember(d => d.RouteName, opts => opts.MapFrom(s => s.TqAwardingOrganisation.TlPathway.TlRoute.Name))
                 .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.TqAwardingOrganisation.TlPathway.Name))
                 .ForAllOtherMembers(d => d.Ignore());

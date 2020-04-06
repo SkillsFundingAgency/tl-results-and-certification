@@ -1,32 +1,33 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.ProviderTlevelDetailsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Provider
 
 @{
-    ViewData["Title"] = "T Level removed confirmation";
+    ViewData["Title"] = @RemoveConfirmation.Page_Title;
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <div class="govuk-panel govuk-panel--confirmation">
-            <h1 class="govuk-panel__title">T Level removed successfully</h1>
+            <h1 class="govuk-panel__title">@RemoveConfirmation.Page_Heading</h1>
             <div class="govuk-panel__body">
                 @Model.TlevelTitle
             </div>
         </div>
 
-        <p class="govuk-body govuk-!-padding-bottom-1">You have removed this T Level from @Model.DisplayName (<abbr>UKPRN</abbr>: @Model.Ukprn).</p>
+        <p class="govuk-body govuk-!-padding-bottom-1">@RemoveConfirmation.Section_Text @Model.DisplayName (<abbr>@RemoveConfirmation.Section_Ukprn_Text</abbr>: @Model.Ukprn).</p>
 
         <p class="govuk-body govuk-!-padding-bottom-7">
-            <a class="govuk-link" asp-route="ProviderTlevels" asp-route-providerId="@Model.TlProviderId">Manage provider's T Levels</a>
+            <a class="govuk-link" asp-route="ProviderTlevels" asp-route-providerId="@Model.TlProviderId">@RemoveConfirmation.Mange_Providers_Tlevels_Link_Button_Text</a>
         </p>
 
         <p>
             @if (Model.ShowBackToProvidersLink)
             {
-                <a asp-route="YourProviders" class="govuk-button" role="button">Back to your providers</a>
+                <a asp-route="YourProviders" class="govuk-button" role="button">@RemoveConfirmation.Back_To_Your_Providers_Link_Button_Text</a>
             }
             else
             {
-                <a asp-route="FindProvider" class="govuk-button" role="button">Find another provider</a>
+                <a asp-route="FindProvider" class="govuk-button" role="button">@RemoveConfirmation.Find_Another_Provider_Link_Button_Text</a>
             }
         </p>
     </div>
