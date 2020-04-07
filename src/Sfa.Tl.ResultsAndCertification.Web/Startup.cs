@@ -24,6 +24,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Authentication;
 using Sfa.Tl.ResultsAndCertification.Web.Filters;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Microsoft.Azure.Storage;
 
 namespace Sfa.Tl.ResultsAndCertification.Web
 {
@@ -104,21 +105,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             .GetResult();
 
             var tokenCredential = new TokenCredential(accessToken);
-            var storageCredentials = new StorageCredentials(tokenCredential);            
-            var uri = new Uri(ResultsAndCertificationConfiguration.BlobStorageDataProtectionUri);
-            var blob = new CloudBlockBlob(uri, storageCredentials);
-            var delegationKey = blob.ServiceClient.GetUserDelegationKey(DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddMinutes(15));
+            var storageCredentials = new StorageCredentials(tokenCredential);
+            var cloudBlobClient = new CloudBlobClient(new StorageUri(new Uri($"https://{ResultsAndCertificationConfiguration.BlobStorageAccountName}.blob.core.windows.net")), storageCredentials);
+            var container = cloudBlobClient.GetContainerReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer);
+            var delegationKey = cloudBlobClient.GetUserDelegationKey(DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddMinutes(15));
+            var blobUri = new Uri($"https://{ResultsAndCertificationConfiguration.BlobStorageAccountName}.blob.core.windows.net/{ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer}/{ResultsAndCertificationConfiguration.BlobStorageDataProtectionBlob}");
 
-            var sharedAccessPolicy = new SharedAccessBlobPolicy()
+            var sasToken = container.GetUserDelegationSharedAccessSignature(delegationKey, new SharedAccessBlobPolicy()
             {
                 SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
                 Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
-            };
-
-            var sasToken = blob.GetUserDelegationSharedAccessSignature(delegationKey, sharedAccessPolicy);
+            });            
 
             services.AddDataProtection()
-                .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken));
+                .PersistKeysToAzureBlobStorage(new Uri(blobUri + sasToken));
 
             RegisterDependencies(services);
             }

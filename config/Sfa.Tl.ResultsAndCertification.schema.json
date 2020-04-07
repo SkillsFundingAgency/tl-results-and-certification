@@ -12,9 +12,17 @@
       "type": "string",
       "environmentVariable": "BlobStorageConnectionString"
     },
-    "BlobStorageDataProtectionUri": {
+    "BlobStorageAccountName": {
       "type": "string",
-      "environmentVariable": "BlobStorageDataProtectionUri"
+      "environmentVariable": "BlobStorageAccountName"
+    },
+    "BlobStorageDataProtectionContainer": {
+      "type": "string",
+      "environmentVariable": "BlobStorageDataProtectionContainer"
+    },
+    "BlobStorageDataProtectionBlob": {
+      "type": "string",
+      "environmentVariable": "BlobStorageDataProtectionBlob"
     },
 	"GovUkNotifyApiKey": {
       "type": "string",
@@ -141,7 +149,9 @@
   "required": [
     "SqlConnectionString",
     "BlobStorageConnectionString",
-    "BlobStorageDataProtectionUri",
+    "BlobStorageAccountName",
+    "BlobStorageDataProtectionContainer",
+    "BlobStorageDataProtectionBlob",
 	"GovUkNotifyApiKey",
 	"TlevelQueriedSupportEmailAddress",
     "DfeSignInSettings",

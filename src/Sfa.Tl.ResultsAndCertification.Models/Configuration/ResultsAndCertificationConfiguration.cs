@@ -11,12 +11,28 @@
         public string BlobStorageConnectionString { get; set; }
 
         /// <summary>
-        /// Gets or sets the Blob storage data protection uri storage connection string.
+        /// Gets or sets the Blob storage accout name.
         /// </summary>
         /// <value>
-        /// The BLOB storage data protection uri string.
+        /// The BLOB storage account name.
         /// </value>
-        public string BlobStorageDataProtectionUri { get; set; }
+        public string BlobStorageAccountName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Blob storage data protection uri storage container name.
+        /// </summary>
+        /// <value>
+        /// The BLOB storage data protection container.
+        /// </value>
+        public string BlobStorageDataProtectionContainer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Blob storage data protection blob.
+        /// </summary>
+        /// <value>
+        /// The BLOB storage data protection blob.
+        /// </value>
+        public string BlobStorageDataProtectionBlob { get; set; }
 
         /// <summary>
         /// Gets or sets the SQL connection string.
