@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             await SetBearerToken();
             var response = await _httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsAsync<T>();
+            return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
         }
 
         /// <summary>
@@ -140,10 +140,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             await SetBearerToken();
             var response = await _httpClient.PostAsync(requestUri, CreateHttpContent<TRequest>(content));
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsAsync<TResponse>();
+            return JsonConvert.DeserializeObject<TResponse>(await response.Content.ReadAsStringAsync());
         }
 
-        /// <summary>
+           /// <summary>
         /// Puts the asynchronous.
         /// </summary>
         /// <typeparam name="TRequest">The type of the request.</typeparam>
@@ -156,7 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             await SetBearerToken();
             var response = await _httpClient.PutAsync(requestUri, CreateHttpContent<TRequest>(content));
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsAsync<TResponse>();
+            return JsonConvert.DeserializeObject<TResponse>(await response.Content.ReadAsStringAsync());
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             await SetBearerToken();
             var response = await _httpClient.DeleteAsync(requestUri);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsAsync<TResponse>();
+            return JsonConvert.DeserializeObject<TResponse>(await response.Content.ReadAsStringAsync());
         }
 
         /// <summary>
