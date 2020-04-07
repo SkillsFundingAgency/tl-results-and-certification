@@ -25,6 +25,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Filters;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Microsoft.Azure.Storage;
+using Microsoft.Azure.KeyVault;
 
 namespace Sfa.Tl.ResultsAndCertification.Web
 {
@@ -136,9 +137,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             };
 
             var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
+            var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(_tokenProvider.KeyVaultTokenCallback));
 
             services.AddDataProtection()
-                .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken));
+                .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken))
+                .ProtectKeysWithAzureKeyVault(kvClient, ResultsAndCertificationConfiguration.DataProtectionKeyVaultKeyId);
 
             RegisterDependencies(services);
             }

@@ -41,6 +41,14 @@
         /// The BLOB storage data protection blob.
         /// </value>
         public string BlobStorageDataProtectionBlob { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the data protection keyvault key ID.
+        /// </summary>
+        /// <value>
+        /// The BLOB storage data protection blob.
+        /// </value>
+        public string DataProtectionKeyVaultKeyId { get; set; }
 
         /// <summary>
         /// Gets or sets the SQL connection string.

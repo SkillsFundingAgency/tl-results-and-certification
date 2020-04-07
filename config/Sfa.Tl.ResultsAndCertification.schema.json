@@ -28,6 +28,10 @@
       "type": "string",
       "environmentVariable": "BlobStorageDataProtectionBlob"
     },
+    "DataProtectionKeyVaultKeyId": {
+      "type": "string",
+      "environmentVariable": "DataProtectionKeyVaultKeyId"
+    },
 	"GovUkNotifyApiKey": {
       "type": "string",
       "environmentVariable": "GovUkNotifyApiKey"
@@ -157,6 +161,7 @@
     "BlobStorageAccountKey",
     "BlobStorageDataProtectionContainer",
     "BlobStorageDataProtectionBlob",
+    "DataProtectionKeyVaultKeyId",
 	"GovUkNotifyApiKey",
 	"TlevelQueriedSupportEmailAddress",
     "DfeSignInSettings",

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Auth;
 using Microsoft.Azure.Storage.Blob;
@@ -33,11 +35,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
     {
         private readonly IWebHostEnvironment _env;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
+        private readonly AzureServiceTokenProvider _tokenProvider;
 
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             _env = env;
+            _tokenProvider = new AzureServiceTokenProvider();
         }
         public IConfiguration Configuration { get; }
 
@@ -91,9 +95,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             };
 
             var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
+            var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(_tokenProvider.KeyVaultTokenCallback));
 
             services.AddDataProtection()
-                .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken));
+                .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken))
+                .ProtectKeysWithAzureKeyVault(kvClient, ResultsAndCertificationConfiguration.DataProtectionKeyVaultKeyId);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
