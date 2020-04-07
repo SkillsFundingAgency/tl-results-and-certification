@@ -28,7 +28,8 @@
                     </dd>
 
                     <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" asp-route="RemoveProviderTlevel" asp-route-id="@tlevel.TqProviderId">
+                        @{ var navigationRouteValue = Model.IsNavigatedFromFindProvider ? true : (bool?)null; }
+                        <a class="govuk-link" asp-route="RemoveProviderTlevel" asp-route-id="@tlevel.TqProviderId" asp-route-navigation="@navigationRouteValue">
                             Remove <span class="govuk-visually-hidden">@tlevel.TlevelTitle</span>
                         </a>
                     </dd>
