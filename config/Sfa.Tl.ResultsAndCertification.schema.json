@@ -16,6 +16,10 @@
       "type": "string",
       "environmentVariable": "BlobStorageAccountName"
     },
+    "BlobStorageAccountKey": {
+      "type": "string",
+      "environmentVariable": "BlobStorageAccountKey"
+    },    
     "BlobStorageDataProtectionContainer": {
       "type": "string",
       "environmentVariable": "BlobStorageDataProtectionContainer"
@@ -150,6 +154,7 @@
     "SqlConnectionString",
     "BlobStorageConnectionString",
     "BlobStorageAccountName",
+    "BlobStorageAccountKey",
     "BlobStorageDataProtectionContainer",
     "BlobStorageDataProtectionBlob",
 	"GovUkNotifyApiKey",

@@ -1,8 +1,12 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Auth;
+using Microsoft.Azure.Storage.Blob;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -67,6 +71,29 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                 });
                 services.AddApiAuthentication(ResultsAndCertificationConfiguration).AddApiAuthorization();
             }
+
+            var cloudStorageAccount = new CloudStorageAccount(
+                    new StorageCredentials(
+                        ResultsAndCertificationConfiguration.BlobStorageAccountName,
+                        ResultsAndCertificationConfiguration.BlobStorageAccountKey),
+                    useHttps: true);
+
+            var blobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+            var container = blobClient.GetContainerReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer);
+
+            var blob = container.GetBlockBlobReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionBlob);
+
+            var sharedAccessPolicy = new SharedAccessBlobPolicy()
+            {
+                SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
+                Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
+            };
+
+            var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
+
+            services.AddDataProtection()
+                .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
