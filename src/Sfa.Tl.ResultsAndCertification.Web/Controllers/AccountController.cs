@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {    
     public class AccountController : Controller
     {
         private readonly ILogger _logger;
+        private readonly ResultsAndCertificationConfiguration _configuration;
 
-        public AccountController(ILogger<AccountController> logger)
+        public AccountController(ILogger<AccountController> logger, ResultsAndCertificationConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -53,6 +56,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public IActionResult SignOutComplete()
         {
             return RedirectToAction(nameof(HomeController.Index), Constants.HomeController);
+        }
+
+        [HttpGet]
+        [Route("account-profile", Name=RouteConstants.AccountProfile)]
+        public IActionResult Profile()
+        {
+            if (_configuration == null || 
+                _configuration.DfeSignInSettings == null || 
+                string.IsNullOrEmpty(_configuration.DfeSignInSettings.ProfileUrl))
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return Redirect(_configuration.DfeSignInSettings.ProfileUrl);
         }
     }
 }
