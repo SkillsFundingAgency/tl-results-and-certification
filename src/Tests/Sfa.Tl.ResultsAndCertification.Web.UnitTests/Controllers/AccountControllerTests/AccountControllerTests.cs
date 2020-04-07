@@ -8,6 +8,7 @@ using Xunit;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountControllerTests
 {
@@ -30,8 +31,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
             controllerContext = new ControllerContext();
             controllerContext.HttpContext = mockHttpContext.Object;
 
-            controller = new AccountController(mockLogger.Object);
-            controller.ControllerContext = controllerContext;
+            var config  = new Mock<ResultsAndCertificationConfiguration>();
+            controller = new AccountController(mockLogger.Object, config.Object)
+            {
+                ControllerContext = controllerContext
+            };
         }
 
         [Fact]
