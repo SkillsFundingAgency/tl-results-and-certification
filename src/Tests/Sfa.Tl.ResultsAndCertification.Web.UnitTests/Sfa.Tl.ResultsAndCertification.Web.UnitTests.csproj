@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\AccountControllerTests\PostSignIn\**" />
+    <EmbeddedResource Remove="Controllers\AccountControllerTests\PostSignIn\**" />
+    <None Remove="Controllers\AccountControllerTests\PostSignIn\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="Moq" Version="4.13.1" />
