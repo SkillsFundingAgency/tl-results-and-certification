@@ -3,6 +3,7 @@ using System.Globalization;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,9 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Azure.Storage.Blob;
+using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.Azure.Storage.Auth;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Configuration;
@@ -27,12 +31,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web
     {
         private readonly IConfiguration _config;
         private readonly IWebHostEnvironment _env;
+        private readonly AzureServiceTokenProvider _tokenProvider;
 
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             _config = configuration;
             _env = env;
+            _tokenProvider = new AzureServiceTokenProvider();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -67,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddSingleton(ResultsAndCertificationConfiguration);
             services.AddTransient<ITokenServiceClient, TokenServiceClient>();
             services.AddHttpClient<IResultsAndCertificationInternalApiClient, ResultsAndCertificationInternalApiClient>();
-            
+
             var builder = services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
@@ -93,8 +99,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.AddPolicy(RolesExtensions.RequireProviderEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor, RolesExtensions.CentresEditor));
             });
 
+            string accessToken = new AzureServiceTokenProvider().GetAccessTokenAsync("https://storage.azure.com/")
+            .GetAwaiter()
+            .GetResult();
+
+            var tokenCredential = new TokenCredential(accessToken);
+            var storageCredentials = new StorageCredentials(tokenCredential);            
+            var uri = new Uri(ResultsAndCertificationConfiguration.BlobStorageDataProtectionUri);
+            var blob = new CloudBlockBlob(uri, storageCredentials);
+
+            var sharedAccessPolicy = new SharedAccessBlobPolicy()
+            {
+                SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
+                Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
+            };
+
+            var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
+
+            services.AddDataProtection()
+                .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken));
+
             RegisterDependencies(services);
-        }
+            }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)

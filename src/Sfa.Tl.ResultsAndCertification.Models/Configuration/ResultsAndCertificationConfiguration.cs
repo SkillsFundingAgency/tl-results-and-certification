@@ -11,6 +11,14 @@
         public string BlobStorageConnectionString { get; set; }
 
         /// <summary>
+        /// Gets or sets the Blob storage data protection uri storage connection string.
+        /// </summary>
+        /// <value>
+        /// The BLOB storage data protection uri string.
+        /// </value>
+        public string BlobStorageDataProtectionUri { get; set; }
+
+        /// <summary>
         /// Gets or sets the SQL connection string.
         /// </summary>
         /// <value>
