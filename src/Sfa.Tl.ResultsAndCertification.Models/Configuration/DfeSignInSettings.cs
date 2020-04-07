@@ -27,6 +27,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// <value>/// The logout path./// </value>
         public string LogoutPath { get; set; }
 
+        /// <summary>/// Gets or sets the Profile Url /// </summary>
+        /// <value>/// The Profile Url./// </value>
+        public string ProfileUrl { get; set; }
+
         /// <summary>/// Gets or sets the issuer./// </summary>
         /// <value>/// The issuer./// </value>
         public string Issuer { get; set; }

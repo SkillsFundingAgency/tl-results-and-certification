@@ -4,6 +4,9 @@
     {
         // Route Constants
 
+        // Account
+        public const string AccountProfile = "AccountProfile";
+
         // Dashboard
         public const string Dashboard = "Dashboard";
 
