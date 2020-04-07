@@ -107,6 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             var storageCredentials = new StorageCredentials(tokenCredential);            
             var uri = new Uri(ResultsAndCertificationConfiguration.BlobStorageDataProtectionUri);
             var blob = new CloudBlockBlob(uri, storageCredentials);
+            var delegationKey = blob.ServiceClient.GetUserDelegationKey(DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddMinutes(15));
 
             var sharedAccessPolicy = new SharedAccessBlobPolicy()
             {
@@ -114,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
             };
 
-            var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
+            var sasToken = blob.GetUserDelegationSharedAccessSignature(delegationKey, sharedAccessPolicy);
 
             services.AddDataProtection()
                 .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken));
