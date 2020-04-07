@@ -17,7 +17,8 @@
         <p class="govuk-body govuk-!-padding-bottom-1">@RemoveConfirmation.Section_Text @Model.DisplayName (<abbr>@RemoveConfirmation.Section_Ukprn_Text</abbr>: @Model.Ukprn).</p>
 
         <p class="govuk-body govuk-!-padding-bottom-7">
-            <a class="govuk-link" asp-route="ProviderTlevels" asp-route-providerId="@Model.TlProviderId">@RemoveConfirmation.Mange_Providers_Tlevels_Link_Button_Text</a>
+            @{ var navigationRouteValue = !Model.ShowBackToProvidersLink; }
+            <a class="govuk-link" asp-route="ProviderTlevels" asp-route-providerId="@Model.TlProviderId" asp-route-navigation="@navigationRouteValue">@RemoveConfirmation.Mange_Providers_Tlevels_Link_Button_Text</a>
         </p>
 
         <p>
