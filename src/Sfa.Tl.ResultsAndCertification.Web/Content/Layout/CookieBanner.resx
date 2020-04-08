@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Cookie_Message_Text" xml:space="preserve">
-    <value>This service needs to use cookies to make the site work.</value>
+    <value>This service needs to use cookies to make this site work.</value>
   </data>
   <data name="Hide_Cookie_Message_Button_Text" xml:space="preserve">
     <value>Hide this message</value>

@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This service needs to use cookies to make the site work..
+        ///   Looks up a localized string similar to This service needs to use cookies to make this site work..
         /// </summary>
         public static string Cookie_Message_Text {
             get {
