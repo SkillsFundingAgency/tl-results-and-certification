@@ -17,10 +17,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
         {
             //var httpContext = new ClaimsIdentityBuilder<AccountController>(Controller)
             //    .Add(CustomClaimTypes.HasAccessToService, "true")
+            //    .Add(ClaimTypes.Name, "username")
             //    .Build()
             //    .HttpContext;
 
-           
         }
 
         [Fact]

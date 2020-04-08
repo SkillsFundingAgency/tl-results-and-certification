@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountControllerTests.PostSignIn
@@ -23,22 +24,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
         {
             var identity = Substitute.For<ClaimsIdentity>();
             identity.IsAuthenticated.Returns(true);
+            identity.Name.Returns("AuthUser");
 
-            var claimsPrinciple = Substitute.For<ClaimsPrincipal>();
-            claimsPrinciple.Identity.Returns(identity);
-            claimsPrinciple.HasClaim(CustomClaimTypes.HasAccessToService, Arg.Any<string>()).Returns(true);
+            var claimsPrincipal = Substitute.For<ClaimsPrincipal>();
+            claimsPrincipal.Identity.Returns(identity);
+            claimsPrincipal.Claims.Returns(new List<Claim> { new Claim(CustomClaimTypes.HasAccessToService, "true") });
 
-            var httpContextAccessor = Substitute.For<IHttpContextAccessor>();
-            httpContextAccessor.HttpContext.User.Returns(claimsPrinciple);
+            var httpContext = Substitute.For<HttpContext>();
+            httpContext.User.Returns(claimsPrincipal);
 
-            httpContextAccessor.HttpContext.User.Returns(claimsPrinciple);
-            
             Logger = Substitute.For<ILogger<AccountController>>();
             Controller = new AccountController(Logger, Configuration)
             {
                 ControllerContext = new ControllerContext
                 {
-                    HttpContext = httpContextAccessor.HttpContext
+                    HttpContext = httpContext,
+                    RouteData  = new Microsoft.AspNetCore.Routing.RouteData()
                 }
             };
         }
