@@ -101,42 +101,46 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.AddPolicy(RolesExtensions.RequireProviderEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor, RolesExtensions.CentresEditor));
             });
 
-            //string accessToken = new AzureServiceTokenProvider().GetAccessTokenAsync("https://storage.azure.com/")
-            //.GetAwaiter()
-            //.GetResult();
+            // Managed Identities solution
 
-            //var tokenCredential = new TokenCredential(accessToken);
-            //var storageCredentials = new StorageCredentials(tokenCredential);
-            //var cloudBlobClient = new CloudBlobClient(new StorageUri(new Uri($"https://{ResultsAndCertificationConfiguration.BlobStorageAccountName}.blob.core.windows.net")), storageCredentials);
-            //var container = cloudBlobClient.GetContainerReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer);
-            //var delegationKey = cloudBlobClient.GetUserDelegationKey(DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddMinutes(15));
-            //var blobUri = new Uri($"https://{ResultsAndCertificationConfiguration.BlobStorageAccountName}.blob.core.windows.net/{ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer}/{ResultsAndCertificationConfiguration.BlobStorageDataProtectionBlob}");
+            string accessToken = new AzureServiceTokenProvider().GetAccessTokenAsync("https://storage.azure.com/")
+            .GetAwaiter()
+            .GetResult();
 
-            //var sasToken = container.GetUserDelegationSharedAccessSignature(delegationKey, new SharedAccessBlobPolicy()
-            //{
-            //    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
-            //    Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
-            //});            
-
-            var cloudStorageAccount = new CloudStorageAccount(
-                    new StorageCredentials(
-                        ResultsAndCertificationConfiguration.BlobStorageAccountName,
-                        ResultsAndCertificationConfiguration.BlobStorageAccountKey),
-                    useHttps: true);
-
-            var blobClient = cloudStorageAccount.CreateCloudBlobClient();
-
-            var container = blobClient.GetContainerReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer);
-
+            var tokenCredential = new TokenCredential(accessToken);
+            var storageCredentials = new StorageCredentials(tokenCredential);
+            var cloudBlobClient = new CloudBlobClient(new StorageUri(new Uri($"https://{ResultsAndCertificationConfiguration.BlobStorageAccountName}.blob.core.windows.net")), storageCredentials);
+            var container = cloudBlobClient.GetContainerReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer);
             var blob = container.GetBlockBlobReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionBlob);
+            var delegationKey = blob.ServiceClient.GetUserDelegationKey(DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddMinutes(15));
 
-            var sharedAccessPolicy = new SharedAccessBlobPolicy()
+            var sasToken = container.GetUserDelegationSharedAccessSignature(delegationKey, new SharedAccessBlobPolicy()
             {
                 SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
                 Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
-            };
+            });
 
-            var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
+            //Storage Account Key solution
+
+            //var cloudStorageAccount = new CloudStorageAccount(
+            //        new StorageCredentials(
+            //            ResultsAndCertificationConfiguration.BlobStorageAccountName,
+            //            ResultsAndCertificationConfiguration.BlobStorageAccountKey),
+            //        useHttps: true);
+
+            //var blobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+            //var container = blobClient.GetContainerReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer);
+
+            //var blob = container.GetBlockBlobReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionBlob);
+
+            //var sharedAccessPolicy = new SharedAccessBlobPolicy()
+            //{
+            //    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
+            //    Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
+            //};
+
+            //var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
             var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(_tokenProvider.KeyVaultTokenCallback));
 
             services.AddDataProtection()

@@ -76,28 +76,50 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                 services.AddApiAuthentication(ResultsAndCertificationConfiguration).AddApiAuthorization();
             }
 
-            var cloudStorageAccount = new CloudStorageAccount(
-                    new StorageCredentials(
-                        ResultsAndCertificationConfiguration.BlobStorageAccountName,
-                        ResultsAndCertificationConfiguration.BlobStorageAccountKey),
-                    useHttps: true);
+            // Managed Identities solution
 
-            var blobClient = cloudStorageAccount.CreateCloudBlobClient();
+            string accessToken = new AzureServiceTokenProvider().GetAccessTokenAsync("https://storage.azure.com/")
+            .GetAwaiter()
+            .GetResult();
 
-            var container = blobClient.GetContainerReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer);
-
+            var tokenCredential = new TokenCredential(accessToken);
+            var storageCredentials = new StorageCredentials(tokenCredential);
+            var cloudBlobClient = new CloudBlobClient(new StorageUri(new Uri($"https://{ResultsAndCertificationConfiguration.BlobStorageAccountName}.blob.core.windows.net")), storageCredentials);
+            var container = cloudBlobClient.GetContainerReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer);
             var blob = container.GetBlockBlobReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionBlob);
+            var delegationKey = blob.ServiceClient.GetUserDelegationKey(DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddMinutes(15));
 
-            var sharedAccessPolicy = new SharedAccessBlobPolicy()
+            var sasToken = container.GetUserDelegationSharedAccessSignature(delegationKey, new SharedAccessBlobPolicy()
             {
                 SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
                 Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
-            };
+            });
 
-            var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
+            //Storage Account Key solution
+
+            //var cloudStorageAccount = new CloudStorageAccount(
+            //        new StorageCredentials(
+            //            ResultsAndCertificationConfiguration.BlobStorageAccountName,
+            //            ResultsAndCertificationConfiguration.BlobStorageAccountKey),
+            //        useHttps: true);
+
+            //var blobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+            //var container = blobClient.GetContainerReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer);
+
+            //var blob = container.GetBlockBlobReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionBlob);
+
+            //var sharedAccessPolicy = new SharedAccessBlobPolicy()
+            //{
+            //    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
+            //    Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
+            //};
+
+            //var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
             var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(_tokenProvider.KeyVaultTokenCallback));
 
             services.AddDataProtection()
+                .SetApplicationName("tl-results-and-certification")
                 .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken))
                 .ProtectKeysWithAzureKeyVault(kvClient, ResultsAndCertificationConfiguration.DataProtectionKeyVaultKeyId);
         }
