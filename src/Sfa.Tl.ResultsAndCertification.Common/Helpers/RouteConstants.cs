@@ -38,6 +38,13 @@
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";
-        public const string AccessDenied = "AccessDenied";        
+        public const string AccessDenied = "AccessDenied";
+
+        // Help
+        public const string Cookies = "Cookies";
+        public const string Privacy = "Privacy";
+        public const string TermsAndConditions = "TermsAndConditions";
+        
+
     }
 }
