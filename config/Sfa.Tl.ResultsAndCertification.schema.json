@@ -52,6 +52,11 @@
           "type": "string",
           "environmentVariable": "DfeSignInLogoutPath"
         },
+		    "ProfileUrl": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeProfileUrl"
+        },
         "Issuer": {
           "minLength": 1,
           "type": "string",
@@ -91,6 +96,7 @@
         "CallbackPath",
         "SignedOutCallbackPath",
         "LogoutPath",
+		    "ProfileUrl",
         "Issuer",
         "Audience",
         "ApiSecret",
