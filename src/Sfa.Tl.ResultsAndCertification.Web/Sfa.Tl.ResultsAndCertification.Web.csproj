@@ -39,6 +39,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Dashboard.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Error\PageNotFound.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PageNotFound.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Home\StartPage.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -126,6 +131,10 @@
     <EmbeddedResource Update="Content\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Error\PageNotFound.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PageNotFound.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Home\StartPage.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
