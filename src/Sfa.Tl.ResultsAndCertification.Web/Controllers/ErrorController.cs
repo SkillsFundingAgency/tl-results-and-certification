@@ -2,12 +2,21 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Error;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
     public class ErrorController : Controller
     {
+        private readonly ResultsAndCertificationConfiguration _configuration;
+
+        public ErrorController(ResultsAndCertificationConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         [Route("access-denied", Name = "AccessDenied")]
         public IActionResult AccessDenied()
         {
@@ -25,7 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("page-not-found", Name = "PageNotFound")]
         public IActionResult PageNotFound()
         {
-            return View();
+            var viewmodel = new PageNotFoundViewModel
+            {
+                TechnicalSupportEmailAddress = _configuration.TechnicalSupportEmailAddress
+            };
+
+            return View(viewmodel);
         }
 
         [AllowAnonymous]

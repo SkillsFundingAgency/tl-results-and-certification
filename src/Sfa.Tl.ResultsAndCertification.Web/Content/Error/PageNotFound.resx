@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Contact_Team_Text" xml:space="preserve">
-    <value>If the web address is correct or you selected a link or button, &lt;a href="mailto: Tlevel.resultsandcertification@education.gov.uk" class="govuk-link"&gt;contact the Manage T Levels team&lt;/a&gt; for help with completing your T Level tasks.</value>
+  <data name="Contact_Team_Info_Link_Text" xml:space="preserve">
+    <value>contact the Manage T Level results team</value>
+  </data>
+  <data name="Contact_Team_Info_Text_Part1" xml:space="preserve">
+    <value>If the web address is correct or you selected a link or button,</value>
+  </data>
+  <data name="Contact_Team_Info_Text_Part2" xml:space="preserve">
+    <value>for help with completing your T Level tasks.</value>
+  </data>
+  <data name="Email_Subject" xml:space="preserve">
+    <value>Page not found</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
     <value>Page not found</value>

@@ -35,6 +35,14 @@
         public string TlevelQueriedSupportEmailAddress { get; set; }
 
         /// <summary>
+        /// Gets or sets the technical support email address.
+        /// </summary>
+        /// <value>
+        /// The technical support email address.
+        /// </value>
+        public string TechnicalSupportEmailAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets the dfe sign in settings.
         /// </summary>
         /// <value>

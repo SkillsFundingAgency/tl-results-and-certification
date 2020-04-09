@@ -61,11 +61,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Error {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If the web address is correct or you selected a link or button, &lt;a href=&quot;mailto: Tlevel.resultsandcertification@education.gov.uk&quot; class=&quot;govuk-link&quot;&gt;contact the Manage T Levels team&lt;/a&gt; for help with completing your T Level tasks..
+        ///   Looks up a localized string similar to contact the Manage T Level results team.
         /// </summary>
-        public static string Contact_Team_Text {
+        public static string Contact_Team_Info_Link_Text {
             get {
-                return ResourceManager.GetString("Contact_Team_Text", resourceCulture);
+                return ResourceManager.GetString("Contact_Team_Info_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If the web address is correct or you selected a link or button,.
+        /// </summary>
+        public static string Contact_Team_Info_Text_Part1 {
+            get {
+                return ResourceManager.GetString("Contact_Team_Info_Text_Part1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to for help with completing your T Level tasks..
+        /// </summary>
+        public static string Contact_Team_Info_Text_Part2 {
+            get {
+                return ResourceManager.GetString("Contact_Team_Info_Text_Part2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page not found.
+        /// </summary>
+        public static string Email_Subject {
+            get {
+                return ResourceManager.GetString("Email_Subject", resourceCulture);
             }
         }
         

@@ -1,4 +1,5 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Error
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Error.PageNotFoundViewModel
 
 @{
     ViewData["Title"] = @PageNotFound.Page_Title;
@@ -9,6 +10,10 @@
         <h1 class="govuk-heading-l">@PageNotFound.Page_Heading</h1>
         <p class="govuk-body">@PageNotFound.Verify_Web_Address_Text</p>
         <p class="govuk-body">@PageNotFound.Verify_Address_Pasted_Text</p>
-        <p class="govuk-body">@Html.Raw(@PageNotFound.Contact_Team_Text)</p>
+        <p class="govuk-body">
+            @PageNotFound.Contact_Team_Info_Text_Part1
+            <a href="mailto: @Model.TechnicalSupportEmailAddress?subject=@PageNotFound.Email_Subject" class="govuk-link">@PageNotFound.Contact_Team_Info_Link_Text</a>
+            @PageNotFound.Contact_Team_Info_Text_Part2
+        </p>
     </div>
 </div>
