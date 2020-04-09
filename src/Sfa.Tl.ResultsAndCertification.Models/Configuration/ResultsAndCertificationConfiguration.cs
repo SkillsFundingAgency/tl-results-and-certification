@@ -19,14 +19,6 @@
         public string BlobStorageAccountName { get; set; }
 
         /// <summary>
-        /// Gets or sets the Blob storage accout key.
-        /// </summary>
-        /// <value>
-        /// The BLOB storage account key.
-        /// </value>
-        public string BlobStorageAccountKey { get; set; }
-
-        /// <summary>
         /// Gets or sets the Blob storage data protection uri storage container name.
         /// </summary>
         /// <value>

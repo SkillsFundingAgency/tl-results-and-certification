@@ -101,7 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.AddPolicy(RolesExtensions.RequireProviderEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor, RolesExtensions.CentresEditor));
             });
 
-            // Managed Identities solution
+            // Managed Identities solution - Start
 
             string accessToken = new AzureServiceTokenProvider().GetAccessTokenAsync("https://storage.azure.com/")
             .GetAwaiter()
@@ -120,32 +120,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
             });
 
-            //Storage Account Key solution
-
-            //var cloudStorageAccount = new CloudStorageAccount(
-            //        new StorageCredentials(
-            //            ResultsAndCertificationConfiguration.BlobStorageAccountName,
-            //            ResultsAndCertificationConfiguration.BlobStorageAccountKey),
-            //        useHttps: true);
-
-            //var blobClient = cloudStorageAccount.CreateCloudBlobClient();
-
-            //var container = blobClient.GetContainerReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer);
-
-            //var blob = container.GetBlockBlobReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionBlob);
-
-            //var sharedAccessPolicy = new SharedAccessBlobPolicy()
-            //{
-            //    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
-            //    Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
-            //};
-
-            //var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
             var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(_tokenProvider.KeyVaultTokenCallback));
 
             services.AddDataProtection()
                 .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken))
                 .ProtectKeysWithAzureKeyVault(kvClient, ResultsAndCertificationConfiguration.DataProtectionKeyVaultKeyId);
+
+            // Managed Identities solution - End               
 
             RegisterDependencies(services);
             }

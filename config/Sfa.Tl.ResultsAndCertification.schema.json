@@ -15,11 +15,7 @@
     "BlobStorageAccountName": {
       "type": "string",
       "environmentVariable": "BlobStorageAccountName"
-    },
-    "BlobStorageAccountKey": {
-      "type": "string",
-      "environmentVariable": "BlobStorageAccountKey"
-    },    
+    },  
     "BlobStorageDataProtectionContainer": {
       "type": "string",
       "environmentVariable": "BlobStorageDataProtectionContainer"
