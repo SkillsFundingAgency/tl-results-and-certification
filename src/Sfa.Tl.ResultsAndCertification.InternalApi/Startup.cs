@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
 
             // Managed Identities solution - Start
 
-            string accessToken = new AzureServiceTokenProvider().GetAccessTokenAsync("https://storage.azure.com/")
+            string accessToken = new AzureServiceTokenProvider().GetAccessTokenAsync("https://storage.azure.com/", ResultsAndCertificationConfiguration.ResultsAndCertificationInternalApiSettings.TenantId)
             .GetAwaiter()
             .GetResult();
 
@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
 
             services.AddDataProtection()                
                 .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken))
-                .ProtectKeysWithAzureKeyVault(kvClient, ResultsAndCertificationConfiguration.DataProtectionKeyVaultKeyId);
+                //.ProtectKeysWithAzureKeyVault(kvClient, ResultsAndCertificationConfiguration.DataProtectionKeyVaultKeyId);
 
             // Managed Identities solution - End    
         }
