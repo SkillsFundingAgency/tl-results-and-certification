@@ -154,7 +154,6 @@
     "SqlConnectionString",
     "BlobStorageConnectionString",
     "BlobStorageAccountName",
-    "BlobStorageAccountKey",
     "BlobStorageDataProtectionContainer",
     "BlobStorageDataProtectionBlob",
     "DataProtectionKeyVaultKeyId",
