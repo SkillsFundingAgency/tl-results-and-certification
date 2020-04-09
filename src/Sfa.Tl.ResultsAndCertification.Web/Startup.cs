@@ -123,7 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(_tokenProvider.KeyVaultTokenCallback));
 
             services.AddDataProtection()
-                .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken))
+                .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken));
                 //.ProtectKeysWithAzureKeyVault(kvClient, ResultsAndCertificationConfiguration.DataProtectionKeyVaultKeyId);
 
             // Managed Identities solution - End               
