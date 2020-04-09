@@ -3,12 +3,12 @@
     public class ResultsAndCertificationConfiguration
     {
         /// <summary>
-        /// Gets or sets the BLOB storage connection string.
+        /// Gets or sets the BLOB storage account key.
         /// </summary>
         /// <value>
-        /// The BLOB storage connection string.
+        /// The BLOB storage account key.
         /// </value>
-        public string BlobStorageConnectionString { get; set; }
+        public string BlobStorageAccountKey { get; set; }
 
         /// <summary>
         /// Gets or sets the Blob storage accout name.

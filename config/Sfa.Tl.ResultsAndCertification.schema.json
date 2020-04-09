@@ -8,9 +8,9 @@
       "type": "string",
       "environmentVariable": "SQLServiceAccountConnectionString"
     },
-    "BlobStorageConnectionString": {
+    "BlobStorageAccountKey": {
       "type": "string",
-      "environmentVariable": "BlobStorageConnectionString"
+      "environmentVariable": "BlobStorageAccountKey"
     },
     "BlobStorageAccountName": {
       "type": "string",
@@ -152,7 +152,7 @@
   "additionalProperties": false,
   "required": [
     "SqlConnectionString",
-    "BlobStorageConnectionString",
+    "BlobStorageAccountKey",
     "BlobStorageAccountName",
     "BlobStorageDataProtectionContainer",
     "BlobStorageDataProtectionBlob",

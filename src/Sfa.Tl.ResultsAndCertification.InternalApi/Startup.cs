@@ -76,32 +76,35 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                 services.AddApiAuthentication(ResultsAndCertificationConfiguration).AddApiAuthorization();
             }
 
-            // Managed Identities solution - Start
+            // Storage Account Key solution - Start
 
-            string accessToken = new AzureServiceTokenProvider().GetAccessTokenAsync("https://storage.azure.com/", ResultsAndCertificationConfiguration.ResultsAndCertificationInternalApiSettings.TenantId)
-            .GetAwaiter()
-            .GetResult();
+            var cloudStorageAccount = new CloudStorageAccount(
+                    new StorageCredentials(
+                        ResultsAndCertificationConfiguration.BlobStorageAccountName,
+                        ResultsAndCertificationConfiguration.BlobStorageAccountKey),
+                    useHttps: true);
 
-            var tokenCredential = new TokenCredential(accessToken);
-            var storageCredentials = new StorageCredentials(tokenCredential);
-            var cloudBlobClient = new CloudBlobClient(new StorageUri(new Uri($"https://{ResultsAndCertificationConfiguration.BlobStorageAccountName}.blob.core.windows.net")), storageCredentials);
-            var container = cloudBlobClient.GetContainerReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer);
+            var blobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+            var container = blobClient.GetContainerReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionContainer);
+
             var blob = container.GetBlockBlobReference(ResultsAndCertificationConfiguration.BlobStorageDataProtectionBlob);
-            var delegationKey = blob.ServiceClient.GetUserDelegationKey(DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddMinutes(15));
 
-            var sasToken = container.GetUserDelegationSharedAccessSignature(delegationKey, new SharedAccessBlobPolicy()
+            var sharedAccessPolicy = new SharedAccessBlobPolicy()
             {
                 SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
                 Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
-            });
+            };
+
+            var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
 
             var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(_tokenProvider.KeyVaultTokenCallback));
 
             services.AddDataProtection()
-                .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken));
-                //.ProtectKeysWithAzureKeyVault(kvClient, ResultsAndCertificationConfiguration.DataProtectionKeyVaultKeyId);
+                .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken))
+                .ProtectKeysWithAzureKeyVault(kvClient, ResultsAndCertificationConfiguration.DataProtectionKeyVaultKeyId);
 
-            // Managed Identities solution - End    
+            // Storage Account Key solution - End    
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
