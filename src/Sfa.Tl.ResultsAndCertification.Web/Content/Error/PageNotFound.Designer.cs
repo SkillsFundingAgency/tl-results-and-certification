@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Error {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page not found.
+        ///   Looks up a localized string similar to Page Not Found.
         /// </summary>
         public static string Email_Subject {
             get {

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Error;
 using System.Diagnostics;
 using System.Net;
 
@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Filters
                 }
             };
 
-            result.ViewData.Model = new ErrorViewModel { RequestId = Activity.Current?.Id ?? context.HttpContext.TraceIdentifier };
+            result.ViewData.Model = new ProblemWithServiceViewModel { RequestId = Activity.Current?.Id ?? context.HttpContext.TraceIdentifier };
             result.StatusCode = (int)HttpStatusCode.InternalServerError;
             context.Result = result;
             context.ExceptionHandled = true;

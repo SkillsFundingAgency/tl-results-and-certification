@@ -17,21 +17,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             _configuration = configuration;
         }
 
-        [Route("access-denied", Name = "AccessDenied")]
+        [Route("access-denied", Name = RouteConstants.AccessDenied)]
         public IActionResult AccessDenied()
         {
             return View();
         }
 
         [AllowAnonymous]
-        [Route("no-service-permission", Name = "ServiceAccessDenied")]
+        [Route("no-service-permission", Name = RouteConstants.ServiceAccessDenied)]
         public IActionResult ServiceAccessDenied()
         {
             return View();
         }
 
         [AllowAnonymous]
-        [Route("page-not-found", Name = "PageNotFound")]
+        [Route("page-not-found", Name = RouteConstants.PageNotFound)]
         public IActionResult PageNotFound()
         {
             var viewmodel = new PageNotFoundViewModel
@@ -43,16 +43,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [AllowAnonymous]
+        [Route("problem-with-service", Name = RouteConstants.ProblemWithService)]
+        public IActionResult ProblemWithService()
+        {
+            var viewModel = new ProblemWithServiceViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+                TechnicalSupportEmailAddress = _configuration.TechnicalSupportEmailAddress
+            };
+
+            return View(viewModel);
+        }
+
+        [AllowAnonymous]
         [Route("/error/{statusCode}")]
         public IActionResult HandleErrorCode(int statusCode)
-        {
+        {   
             switch (statusCode)
             {
                 case 404:
                     return RedirectToRoute(RouteConstants.PageNotFound);
                 case 500:
                 default:
-                    return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+                    return RedirectToRoute(RouteConstants.ProblemWithService);
             }
         }
     }

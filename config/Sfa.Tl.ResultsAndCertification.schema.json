@@ -20,6 +20,10 @@
       "type": "string",
       "environmentVariable": "TlevelQueriedSupportEmailAddress"
     },	
+	"TechnicalSupportEmailAddress": {
+      "type": "string",
+      "environmentVariable": "TechnicalSupportEmailAddress"
+    },
     "DfeSignInSettings": {
       "properties": {
         "MetadataAddress": {
@@ -145,6 +149,7 @@
     "BlobStorageConnectionString",
 	"GovUkNotifyApiKey",
 	"TlevelQueriedSupportEmailAddress",
+	"TechnicalSupportEmailAddress",
     "DfeSignInSettings",
 	"ResultsAndCertificationInternalApiSettings"
   ],
