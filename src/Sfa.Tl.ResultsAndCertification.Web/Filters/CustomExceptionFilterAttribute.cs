@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Filters
                 }
             };
 
-            result.ViewData.Model = new ErrorViewModel { RequestId = Activity.Current?.Id ?? context.HttpContext.TraceIdentifier };
+            result.ViewData.Model = new ProblemWithServiceViewModel { RequestId = Activity.Current?.Id ?? context.HttpContext.TraceIdentifier };
             result.StatusCode = (int)HttpStatusCode.InternalServerError;
             context.Result = result;
             context.ExceptionHandled = true;
