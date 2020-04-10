@@ -1,17 +1,18 @@
 ﻿@using Microsoft.AspNetCore.Hosting
 @using Microsoft.Extensions.Hosting;
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Error
 
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Error.ProblemWithServiceViewModel
 @inject IWebHostEnvironment WebHostingEnvironment
 @{
-    ViewData["Title"] = "Problem with service page";
+    ViewData["Title"] = @ProblemWithService.Page_Title;
     var ex = ViewData["Exception"] as Exception;
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-        @if (WebHostingEnvironment.IsDevelopment())
+        <h1 class="govuk-heading-xl">@ProblemWithService.Page_Heading</h1>
+        @if (!WebHostingEnvironment.IsDevelopment())
         {
             <h2 class="govuk-heading-l">An error occurred while processing your request.</h2>
 
@@ -36,11 +37,11 @@
         else
         {
             <h2 class="govuk-heading-l">
-                Try again later.
+                @ProblemWithService.Section_Heading
             </h2>
             <p class="govuk-body">
-                <a href="mailto: @Model.TechnicalSupportEmailAddress?subject=Problem with the service">Contact the Manage T Level results team</a>
-                if you need help with the T Level tasks you need to complete.
+                <a href="mailto: @Model.TechnicalSupportEmailAddress?subject=@ProblemWithService.Email_Subject">@ProblemWithService.Contact_Team_Email_Link_Text</a>
+                @ProblemWithService.Section_Body_Text
             </p>
         }
 
