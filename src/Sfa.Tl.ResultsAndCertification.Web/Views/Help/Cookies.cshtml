@@ -1,60 +1,62 @@
-﻿@{
-    ViewData["Title"] = "Cookies";
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Help
+
+@{
+    ViewData["Title"] = @Cookies.Page_Title;
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">
-            Cookie policy
+            @Cookies.Section_Heading
         </h1>
 
-        <p class="govuk-body">Cookies are files saved on your phone, tablet or computer when you visit a website.</p>
-        <p class="govuk-body">We only use cookies that are essential for you to use this service.</p>
-        <p class="govuk-body">These essential cookies do things like:</p>
+        <p class="govuk-body">@Cookies.Cookies_Are_Files_Text</p>
+        <p class="govuk-body">@Cookies.We_Only_Use_Cookies_Text</p>
+        <p class="govuk-body">@Cookies.These_Essential_Cookies_Text</p>
         <ul class="govuk-list govuk-list--bullet">
-            <li>remember which notifications you have seen so you are not shown them more than once</li>
-            <li>temporarily store the selections you make</li>
-            <li>keep you logged in during your browsing session</li>
+            <li>@Cookies.Remember_Which_Notifications_Text</li>
+            <li>@Cookies.Temporarily_Store_Text</li>
+            <li>@Cookies.Keep_You_Logged_In_Text</li>
         </ul>
-        <p class="govuk-body">They are automatically enabled.</p>
+        <p class="govuk-body">@Cookies.They_Are_Automatically_Enabled_Text</p>
 
         <table class="govuk-table govuk-!-margin-top-7">
-            <caption class="govuk-table__caption govuk-heading-m">Protecting your security</caption>
+            <caption class="govuk-table__caption govuk-heading-m">@Cookies.Protecting_Your_Security_Text</caption>
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">Name</th>
-                    <th scope="col" class="govuk-table__header">Purpose</th>
-                    <th scope="col" class="govuk-table__header">Expires</th>
+                    <th scope="col" class="govuk-table__header">@Cookies.Name_Text</th>
+                    <th scope="col" class="govuk-table__header">@Cookies.Purpose_Text</th>
+                    <th scope="col" class="govuk-table__header">@Cookies.Expires_Text</th>
                 </tr>
             </thead>
             <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
-                    <td scope="row" class="govuk-table__cell">CSRF-TOKEN_</td>
-                    <td class="govuk-table__cell">Used to prevent cross-site scripting attacks</td>
-                    <td class="govuk-table__cell">When the browser is closed</td>
+                    <td scope="row" class="govuk-table__cell">@Cookies.Csrf_Token_Text</td>
+                    <td class="govuk-table__cell">@Cookies.Used_To_Prevent_Css_Attacks_Text</td>
+                    <td class="govuk-table__cell">@Cookies.When_The_Browser_Is_Closed</td>
                 </tr>
                 <tr class="govuk-table__row">
-                    <td scope="row" class="govuk-table__cell">tl-rc-x-csrf</td>
-                    <td class="govuk-table__cell">Used to prevent cross site scripting attacks</td>
-                    <td class="govuk-table__cell">When the browser is closed</td>
+                    <td scope="row" class="govuk-table__cell">@Cookies.Csrf_Cookie_Name_Text</td>
+                    <td class="govuk-table__cell">@Cookies.Used_To_Prevent_Cross_Site_Scripting_Attacks_Text</td>
+                    <td class="govuk-table__cell">@Cookies.When_The_Browser_Is_Closed</td>
                 </tr>
             </tbody>
         </table>
 
         <table class="govuk-table govuk-!-margin-top-7">
-            <caption class="govuk-table__caption govuk-heading-m">Logging in and authentication</caption>
+            <caption class="govuk-table__caption govuk-heading-m">@Cookies.Logging_In_And_Authentication_Text</caption>
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">Name</th>
-                    <th scope="col" class="govuk-table__header">Purpose</th>
-                    <th scope="col" class="govuk-table__header">Expires</th>
+                    <th scope="col" class="govuk-table__header">@Cookies.Name_Text</th>
+                    <th scope="col" class="govuk-table__header">@Cookies.Purpose_Text</th>
+                    <th scope="col" class="govuk-table__header">@Cookies.Expires_Text</th>
                 </tr>
             </thead>
             <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
-                    <td scope="row" class="govuk-table__cell">tl-rc-auth-cookie</td>
-                    <td class="govuk-table__cell">Used to track your current session and keep you logged in when browsing the service</td>
-                    <td class="govuk-table__cell">After 20 minutes of inactivity</td>
+                    <td scope="row" class="govuk-table__cell">@Cookies.Authentication_Cookie_Name_Text</td>
+                    <td class="govuk-table__cell">@Cookies.Used_To_Track_Your_Current_Session_Text</td>
+                    <td class="govuk-table__cell">@Cookies.Inactivity_Text</td>
                 </tr>
             </tbody>
         </table>
