@@ -45,7 +45,6 @@
         public const string Cookies = "Cookies";
         public const string Privacy = "Privacy";
         public const string TermsAndConditions = "TermsAndConditions";
-        
-
+        public const string UserGuide = "UserGuide";
     }
 }
