@@ -12,7 +12,7 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">@ProblemWithService.Page_Heading</h1>
-        @if (!WebHostingEnvironment.IsDevelopment())
+        @if (WebHostingEnvironment.IsDevelopment())
         {
             <h2 class="govuk-heading-l">An error occurred while processing your request.</h2>
 
