@@ -64,6 +64,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CookieBanner.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Layout\Footer.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Footer.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Layout\Header.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -161,6 +166,10 @@
     <EmbeddedResource Update="Content\Layout\CookieBanner.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CookieBanner.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Layout\Footer.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Footer.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Layout\Header.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
