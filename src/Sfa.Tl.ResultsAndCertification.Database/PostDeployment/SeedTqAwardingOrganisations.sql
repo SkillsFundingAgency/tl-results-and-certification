@@ -16,8 +16,7 @@ ON Target.[Id] = Source.[Id]
 WHEN MATCHED 
 	 AND ((Target.[TlAwardingOrganisatonId] <> Source.[TlAwardingOrganisatonId])
 	   OR (Target.[TlRouteId] <> Source.[TlRouteId])
-	   OR (Target.[TlPathwayId] <> Source.[TlPathwayId])
-	   OR (Target.[ReviewStatus] <> Source.[ReviewStatus]))
+	   OR (Target.[TlPathwayId] <> Source.[TlPathwayId]))
 THEN 
 UPDATE SET 
 	[TlAwardingOrganisatonId] = Source.[TlAwardingOrganisatonId],
