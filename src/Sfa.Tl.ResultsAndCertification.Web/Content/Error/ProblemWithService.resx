@@ -118,27 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Contact_Team_Email_Link_Text" xml:space="preserve">
-    <value>contact the Manage T Level results team</value>
-  </data>
-  <data name="Contact_Team_Info_Text_Part1" xml:space="preserve">
-    <value>If the web address is correct or you selected a link or button,</value>
-  </data>
-  <data name="Contact_Team_Info_Text_Part2" xml:space="preserve">
-    <value>for help with completing your T Level tasks.</value>
+    <value>Contact the Manage T Level results team</value>
   </data>
   <data name="Email_Subject" xml:space="preserve">
-    <value>Page Not Found</value>
+    <value>Problem with the service</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Page not found</value>
+    <value>Sorry, there is a problem with the service</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Page not found</value>
+    <value>Problem with service page</value>
   </data>
-  <data name="Verify_Address_Pasted_Text" xml:space="preserve">
-    <value>If you pasted the web address, check you copied the full address.</value>
+  <data name="Section_Body_Text" xml:space="preserve">
+    <value>if you need help with the T Level tasks you need to complete.</value>
   </data>
-  <data name="Verify_Web_Address_Text" xml:space="preserve">
-    <value>If you typed the web address, check it's correct.</value>
+  <data name="Section_Heading" xml:space="preserve">
+    <value>Try again later.</value>
   </data>
 </root>

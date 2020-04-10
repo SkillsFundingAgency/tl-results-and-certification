@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Error {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class PageNotFound {
+    public class ProblemWithService {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal PageNotFound() {
+        internal ProblemWithService() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Error {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Error.PageNotFound", typeof(PageNotFound).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Error.ProblemWithService", typeof(ProblemWithService).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Error {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to contact the Manage T Level results team.
+        ///   Looks up a localized string similar to Contact the Manage T Level results team.
         /// </summary>
         public static string Contact_Team_Email_Link_Text {
             get {
@@ -70,25 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Error {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If the web address is correct or you selected a link or button,.
-        /// </summary>
-        public static string Contact_Team_Info_Text_Part1 {
-            get {
-                return ResourceManager.GetString("Contact_Team_Info_Text_Part1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to for help with completing your T Level tasks..
-        /// </summary>
-        public static string Contact_Team_Info_Text_Part2 {
-            get {
-                return ResourceManager.GetString("Contact_Team_Info_Text_Part2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Page Not Found.
+        ///   Looks up a localized string similar to Problem with the service.
         /// </summary>
         public static string Email_Subject {
             get {
@@ -97,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Error {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page not found.
+        ///   Looks up a localized string similar to Sorry, there is a problem with the service.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -106,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Error {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page not found.
+        ///   Looks up a localized string similar to Problem with service page.
         /// </summary>
         public static string Page_Title {
             get {
@@ -115,20 +97,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Error {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you pasted the web address, check you copied the full address..
+        ///   Looks up a localized string similar to if you need help with the T Level tasks you need to complete..
         /// </summary>
-        public static string Verify_Address_Pasted_Text {
+        public static string Section_Body_Text {
             get {
-                return ResourceManager.GetString("Verify_Address_Pasted_Text", resourceCulture);
+                return ResourceManager.GetString("Section_Body_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you typed the web address, check it&apos;s correct..
+        ///   Looks up a localized string similar to Try again later..
         /// </summary>
-        public static string Verify_Web_Address_Text {
+        public static string Section_Heading {
             get {
-                return ResourceManager.GetString("Verify_Web_Address_Text", resourceCulture);
+                return ResourceManager.GetString("Section_Heading", resourceCulture);
             }
         }
     }
