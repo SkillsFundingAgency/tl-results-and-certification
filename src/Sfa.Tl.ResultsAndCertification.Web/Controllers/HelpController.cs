@@ -26,5 +26,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        [Route("user-guide", Name = RouteConstants.UserGuide)]
+        public IActionResult UserGuide()
+        {
+            return View();
+        }
     }
 }
