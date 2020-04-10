@@ -1,47 +1,48 @@
-﻿@{
-    ViewData["Title"] = "Terms and conditions";
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Help
+
+@{
+    ViewData["Title"] = @TermsAndConditions.Page_Title;
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">
-            Terms and conditions
+            @TermsAndConditions.Section_Heading
         </h1>
-        <p class="govuk-body">By using the Manage T Level results service you agree to these terms and conditions.</p>
+        <p class="govuk-body">@TermsAndConditions.By_Using_The_Mange_TLevels_Text</p>
 
-        <h2 class="govuk-heading-m">Our responsibilities</h2>
+        <h2 class="govuk-heading-m">@TermsAndConditions.Our_Responsibilities_Text</h2>
 
-        <p class="govuk-body">This service is run by the Education and Skills Funding Agency (ESFA), an executive agency of the Department for Education (DfE). We comply with the <a href="http://www.legislation.gov.uk/ukpga/2018/12/contents/enacted">UK Data Protection Act 2018</a> and endeavour to ensure that the service is continuously available, virus free and that the information we provide is accurate and complete.</p>
+        <p class="govuk-body">@TermsAndConditions.This_Service_Is_Run_By_Text <a href="http://www.legislation.gov.uk/ukpga/2018/12/contents/enacted">@TermsAndConditions.Uk_Data_Protection_Act_2018_Text</a> @TermsAndConditions.Endeavour_To_Ensure_Text</p>
 
-        <p class="govuk-body">However, the ESFA accepts no liability for:</p>
+        <p class="govuk-body">@TermsAndConditions.However_Esfa_Accept_No_Liability_For_Text</p>
         <ul class="govuk-list govuk-list--bullet">
-            <li>you being unable to access the service (for example owing to excessive demand or because we've taken the service down for maintenance)</li>
-            <li>loss of any data</li>
-            <li>delay or failure in receiving data</li>
-            <li>loss or damage arising from the use of the service or reliance on its content</li>
-            <li>the content and availability of external websites that link to the service or which are linked from it</li>
+            <li>@TermsAndConditions.You_Being_Unable_To_Access_The_Service_Text</li>
+            <li>@TermsAndConditions.Loss_Of_Any_Data_Text</li>
+            <li>@TermsAndConditions.Delay_Or_Failure_In_Receiving_Data_Text</li>
+            <li>@TermsAndConditions.Loss_Or_Damage_Araising_Text</li>
+            <li>@TermsAndConditions.The_Content_And_Availability_Text</li>
         </ul>
 
-        <h2 class="govuk-heading-m">Your responsibilities</h2>
-        <p class="govuk-body">As a training provider or awarding organisation you must:</p>
+        <h2 class="govuk-heading-m">@TermsAndConditions.Your_Responsibilities_Text</h2>
+        <p class="govuk-body">@TermsAndConditions.As_Training_Provider_Text</p>
         <ul class="govuk-list govuk-list--bullet">
-            <li>ensure users given site administrator roles have delegated authority on behalf of the organisation to confirm T Level details, enter centres offering T Levels, register students, enter student results and request certificates</li>
-            <li>ensure users given reviewer roles have delegated authority on behalf of the organisation to confirm T Level details</li>
-            <li>ensure users given editor roles have delegated authority on behalf of the organisation to enter and remove providers offering T Levels, register students, enter student results and request certificates</li>
-            <li>agree to indemnify the DfE against any losses, expenses, damages or claims we may incur as a result of any failure by you to comply with the obligations set out in these terms</li>
-            <li>agree to comply with any amendments to these Terms and Conditions</li>
-            <li>keep your DfE Sign-in account details confidential and secure</li>
-            <li>accept responsibility for all activities associated with your email and password, and your account</li>
-            <li>comply with the UK Computer Misuse Act 1990</li>
-            <li>contact us if you're aware of any security breach</li>
-            <li>not use Manage T Level results for any unlawful purpose</li>
-            <li>sign in from only one PC at a time</li>
-            <li>sign out of Manage T Levels results using the sign-out function when you have finished your session</li>
-            <li>ensure that any personal data (as defined under the EU General Data Protection Regulation (GDPR) and the Data Protection Act 2018) is protected, used only for the purposes for which it was obtained and disposed of appropriately</li>
+            <li>@TermsAndConditions.Ensure_Users_Given_Site_Administrator_Text</li>
+            <li>@TermsAndConditions.Enuser_Users_Given_Reviewer_Roles_Text</li>
+            <li>@TermsAndConditions.Ensure_Users_Given_Editor_Roles_Text</li>
+            <li>@TermsAndConditions.Agree_To_Indemnify_Text</li>
+            <li>@TermsAndConditions.Agree_To_Comply_Text</li>
+            <li>@TermsAndConditions.Keep_Your_Dfe_Signin_Account_Details_Text</li>
+            <li>@TermsAndConditions.Accept_Responsibility_For_All_Activities_Text</li>
+            <li>@TermsAndConditions.Comply_With_The_Uk_Computer_Text</li>
+            <li>@TermsAndConditions.Contact_Us_If_You_Are_Aware_Text</li>
+            <li>@TermsAndConditions.Not_Use_Manage_TLevel_Results_Text</li>
+            <li>@TermsAndConditions.Sign_In_From_Only_One_PC_Text</li>
+            <li>@TermsAndConditions.Singout_Of_Manage_TLevels_Results_Text</li>
+            <li>@TermsAndConditions.Ensure_That_Any_Personal_Data_Text</li>
         </ul>
 
-        <p class="govuk-body">A user’s rights to use this service may be removed, or amended if you are found to be in breach of these terms and conditions. Our decision in the event of a breach shall be final.</p>
-        <p class="govuk-body">Your information will be used to establish your identity and permissions when using a DfE service.</p>
-
+        <p class="govuk-body">@TermsAndConditions.A_Users_Rights_To_User_This_Service_Text</p>
+        <p class="govuk-body">@TermsAndConditions.Your_Information_Will_Be_Used_Text</p>
     </div>
 </div>
