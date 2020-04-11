@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accessibility statement.
+        /// </summary>
+        public static string Accessibilitystatement_Link_Text {
+            get {
+                return ResourceManager.GetString("Accessibilitystatement_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cookies.
         /// </summary>
         public static string Cookies_Link_Text {
