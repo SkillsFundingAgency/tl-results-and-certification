@@ -171,7 +171,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                                 .Issuer(issuer)
                                 .Audience(audience)
                                 .WithSecret(apiSecret)
-                                .Build();
+                                .Encode();
 
                             //Gather user/org details
                             var identity = (ClaimsIdentity)x.Principal.Identity;
