@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Error;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -11,10 +11,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class ErrorController : Controller
     {
         private readonly ResultsAndCertificationConfiguration _configuration;
+        private readonly ILogger _logger;
 
-        public ErrorController(ResultsAndCertificationConfiguration configuration)
+        public ErrorController(ResultsAndCertificationConfiguration configuration, ILogger<ErrorController> logger)
         {
             _configuration = configuration;
+            _logger = logger;
         }
 
         [Route("access-denied", Name = RouteConstants.AccessDenied)]

@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Microsoft.Extensions.Logging;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -16,10 +17,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class TlevelController : Controller
     {
         private readonly ITlevelLoader _tlevelLoader;
+        private readonly ILogger _logger;
 
-        public TlevelController(ITlevelLoader tlevelLoader)
+        public TlevelController(ITlevelLoader tlevelLoader, ILogger<TlevelController> logger)
         {
             _tlevelLoader = tlevelLoader;
+            _logger = logger;
         }
 
         [Route("tlevels", Name = RouteConstants.Tlevels)]

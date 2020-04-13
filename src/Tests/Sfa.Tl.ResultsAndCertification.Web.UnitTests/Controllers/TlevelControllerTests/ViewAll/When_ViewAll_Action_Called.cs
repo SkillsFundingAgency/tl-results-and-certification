@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
@@ -13,6 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
     public abstract class When_ViewAll_Action_Called : BaseTest<TlevelController>
     {
         protected ITlevelLoader TlevelLoader;
+        protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
         protected Task<IActionResult> Result;
 
@@ -28,7 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             });
 
             TlevelLoader = Substitute.For<ITlevelLoader>();
-            Controller = new TlevelController(TlevelLoader)
+            Logger = Substitute.For<ILogger<TlevelController>>();
+            Controller = new TlevelController(TlevelLoader, Logger)
             {
                 ControllerContext = new ControllerContext
                 {
