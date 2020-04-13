@@ -28,7 +28,11 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Authentication
         /// <summary>Gets or sets the name of the user.</summary>
         /// <value>The name of the user.</value>
         public string UserName { get; set; }
-        
+
+        /// <summary>Gets or sets the email.</summary>
+        /// <value>The email.</value>
+        public string Email { get; set; }
+
         /// <summary>Gets or sets the name of the role.</summary>
         /// <value>The name of the role.</value>
         public string RoleName { get; set; }
@@ -40,5 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Authentication
         /// <summary>Gets or sets the ukprn.</summary>
         /// <value>The ukprn.</value>
         public string UKPRN { get; set; }
+
+        public bool HasAccessToService { get; set; } = true;
     }   
 }
