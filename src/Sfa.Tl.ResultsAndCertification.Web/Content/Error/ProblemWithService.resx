@@ -121,7 +121,7 @@
     <value>Contact the Manage T Level results team</value>
   </data>
   <data name="Email_Subject" xml:space="preserve">
-    <value>Problem with the service</value>
+    <value>Problem with the service request:</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
     <value>Sorry, there is a problem with the service</value>

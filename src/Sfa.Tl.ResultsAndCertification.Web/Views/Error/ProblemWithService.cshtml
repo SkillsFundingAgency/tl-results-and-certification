@@ -40,7 +40,7 @@
                 @ProblemWithService.Section_Heading
             </h2>
             <p class="govuk-body">
-                <a href="mailto: @Model.TechnicalSupportEmailAddress?subject=@ProblemWithService.Email_Subject">@ProblemWithService.Contact_Team_Email_Link_Text</a>
+                <a href="mailto: @Model.TechnicalSupportEmailAddress?subject=@ProblemWithService.Email_Subject @Model.RequestId">@ProblemWithService.Contact_Team_Email_Link_Text</a>
                 @ProblemWithService.Section_Body_Text
             </p>
         }

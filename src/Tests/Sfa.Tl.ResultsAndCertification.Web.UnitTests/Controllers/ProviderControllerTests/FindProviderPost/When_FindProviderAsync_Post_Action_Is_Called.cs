@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
@@ -21,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         protected Task<IActionResult> Result;
         protected IHttpContextAccessor HttpContextAccessor;
         protected FindProviderViewModel ViewModel;
+        protected readonly long Ukprn = 1234;
 
         // 
         protected string ProviderName = "Lordswood School & Sixth Form Centre";
@@ -35,6 +38,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
             // Default value
             ViewModel = new FindProviderViewModel { Search = ProviderName, SelectedProviderId = SelectedProviderId };
+            var httpContext = new ClaimsIdentityBuilder<ProviderController>(Controller)
+               .Add(CustomClaimTypes.Ukprn, Ukprn.ToString())
+               .Build()
+               .HttpContext;
+
+            HttpContextAccessor.HttpContext.Returns(httpContext);
         }
 
         public override void When()
