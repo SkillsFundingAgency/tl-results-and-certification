@@ -66,6 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _configuration.DfeSignInSettings == null || 
                 string.IsNullOrEmpty(_configuration.DfeSignInSettings.ProfileUrl))
             {
+                _logger.LogWarning(LogEvent.ConfigurationMissing, $"Unable to read config: DfeSignInSettings.ProfileUrl, User: {User?.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
