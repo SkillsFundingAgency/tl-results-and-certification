@@ -28,16 +28,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _httpClient.BaseAddress = new Uri(_dfeSignInApiUri);
         }
 
-        public async Task<DfeClaims> GetUserInfo(string organisationId, string userId)
+        public async Task<DfeUserInfo> GetUserInfo(string organisationId, string userId)
         {
-            var userClaims = new DfeClaims();
+            var userClaims = new DfeUserInfo();
             var requestUri = $"/services/{_clientId}/organisations/{organisationId}/users/{userId}";
             var response = await _httpClient.GetAsync(requestUri);
 
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
-                userClaims = JsonConvert.DeserializeObject<DfeClaims>(responseContent);                
+                userClaims = JsonConvert.DeserializeObject<DfeUserInfo>(responseContent);                
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {

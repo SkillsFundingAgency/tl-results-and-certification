@@ -153,11 +153,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                             var userId = ctx.Principal.FindFirst("sub").Value;
                             var ukprn = organisation["ukprn"].ToObject<int?>();
                             var dfeSignInApiClient = ctx.HttpContext.RequestServices.GetService<IDfeSignInApiClient>();
-                            var userClaims = await dfeSignInApiClient.GetUserInfo(organisationId, userId);
+                            var userInfo = await dfeSignInApiClient.GetUserInfo(organisationId, userId);
 
                             var claims = new List<Claim>()
                             {
-                                new Claim(CustomClaimTypes.HasAccessToService, userClaims.HasAccessToService.ToString()),
+                                new Claim(CustomClaimTypes.HasAccessToService, userInfo.HasAccessToService.ToString()),
                                 new Claim(CustomClaimTypes.UserId, userId),
                                 new Claim(ClaimTypes.GivenName, ctx.Principal.FindFirst("given_name").Value),
                                 new Claim(ClaimTypes.Surname, ctx.Principal.FindFirst("family_name").Value),
@@ -166,9 +166,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                                 new Claim(CustomClaimTypes.OrganisationId, organisationId)
                             };
 
-                            if (userClaims.Roles != null && userClaims.Roles.Any())
+                            if (userInfo.Roles != null && userInfo.Roles.Any())
                             {
-                                claims.AddRange(userClaims.Roles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
+                                claims.AddRange(userInfo.Roles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
                             }
 
                             ctx.Principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "DfE-SignIn"));
