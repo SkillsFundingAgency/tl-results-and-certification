@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
 
         public override void When()
         {
-            Controller = new AccountController(Logger, Configuration);
+            Controller = new AccountController(Configuration, Logger);
             Result = Controller.Profile();
         }
     }

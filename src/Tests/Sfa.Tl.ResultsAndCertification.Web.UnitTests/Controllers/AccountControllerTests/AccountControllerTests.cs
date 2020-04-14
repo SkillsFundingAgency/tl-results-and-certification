@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
             controllerContext.HttpContext = mockHttpContext.Object;
 
             var config  = new Mock<ResultsAndCertificationConfiguration>();
-            controller = new AccountController(mockLogger.Object, config.Object)
+            controller = new AccountController(config.Object, mockLogger.Object)
             {
                 ControllerContext = controllerContext
             };

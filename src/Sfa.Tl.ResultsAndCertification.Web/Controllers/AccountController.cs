@@ -16,10 +16,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly ILogger _logger;
         private readonly ResultsAndCertificationConfiguration _configuration;
 
-        public AccountController(ILogger<AccountController> logger, ResultsAndCertificationConfiguration configuration)
+        public AccountController(ResultsAndCertificationConfiguration configuration, ILogger<AccountController> logger)
         {
-            _logger = logger;
             _configuration = configuration;
+            _logger = logger;
         }
 
         [HttpGet]

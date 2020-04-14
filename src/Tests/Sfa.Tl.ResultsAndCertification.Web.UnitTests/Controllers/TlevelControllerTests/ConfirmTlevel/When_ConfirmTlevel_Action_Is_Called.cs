@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
@@ -16,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
     public abstract class When_ConfirmTlevel_Action_Is_Called : BaseTest<TlevelController>
     {
         protected ITlevelLoader TlevelLoader;
+        protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
         protected Task<IActionResult> Result;
         protected long ukprn;
@@ -36,7 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             TempData = new TempDataDictionary(httpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
 
             TlevelLoader = Substitute.For<ITlevelLoader>();
-            Controller = new TlevelController(TlevelLoader)
+            Logger = Substitute.For<ILogger<TlevelController>>();
+            Controller = new TlevelController(TlevelLoader, Logger)
             {
                 ControllerContext = new ControllerContext
                 {
