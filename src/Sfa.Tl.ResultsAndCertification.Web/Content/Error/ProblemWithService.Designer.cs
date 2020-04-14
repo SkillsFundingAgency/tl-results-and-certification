@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Error {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Problem with the service.
+        ///   Looks up a localized string similar to Problem with the service request:.
         /// </summary>
         public static string Email_Subject {
             get {
