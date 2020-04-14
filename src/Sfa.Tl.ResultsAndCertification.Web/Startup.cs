@@ -67,7 +67,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddSingleton(ResultsAndCertificationConfiguration);
             services.AddTransient<ITokenServiceClient, TokenServiceClient>();
             services.AddHttpClient<IResultsAndCertificationInternalApiClient, ResultsAndCertificationInternalApiClient>();
-            
+            services.AddHttpClient<IDfeSignInApiClient, DfeSignInApiClient>();
+
             var builder = services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
