@@ -3,6 +3,7 @@
 	[Id] INT IDENTITY(1,1) NOT NULL,
 	[TlRouteId] INT NOT NULL,
 	[LarId] NVARCHAR(8) NOT NULL,
+	[TlevelTitle] NVARCHAR(255) NOT NULL,
     [Name] NVARCHAR(255) NOT NULL,	
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 
