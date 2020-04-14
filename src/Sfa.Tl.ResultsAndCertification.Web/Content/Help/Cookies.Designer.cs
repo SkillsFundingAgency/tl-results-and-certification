@@ -142,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cookies.
+        ///   Looks up a localized string similar to Our cookie policy page.
         /// </summary>
         public static string Page_Title {
             get {

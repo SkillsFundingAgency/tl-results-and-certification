@@ -42,7 +42,7 @@
         public const string ProblemWithService = "ProblemWithService";
 
         // Help
-        public const string Cookies = "Cookies";
+        public const string CookiePolicy = "CookiePolicy";
         public const string Privacy = "Privacy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string UserGuide = "UserGuide";

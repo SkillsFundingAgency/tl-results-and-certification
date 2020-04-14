@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("cookies", Name = RouteConstants.Cookies)]
+        [Route("cookie-policy", Name = RouteConstants.CookiePolicy)]
         public IActionResult Cookies()
         {
             return View();
