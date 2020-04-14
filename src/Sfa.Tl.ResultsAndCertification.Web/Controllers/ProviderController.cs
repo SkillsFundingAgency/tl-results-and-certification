@@ -29,11 +29,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> YourProvidersAsync()
         {
             var providersViewModel = await _providerLoader.GetTqAoProviderDetailsAsync(User.GetUkPrn());
-            // Testing logs
-            _logger.LogInformation("LogInformaiton: Called Your Providers Async method");
-            _logger.LogWarning("LogWarning: Called Your Providers Async method");
+            
             if (providersViewModel == null || providersViewModel.Count == 0)
+            {
+                _logger.LogInformation(LogEvent.ProviersNotFound, $"No provideproviders found. Method: GetTqAoProviderDetailsAsync(Ukprn: {User.GetUkPrn()}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.FindProvider);
+            }
 
             return View(providersViewModel);
         }
@@ -108,6 +109,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
+                _logger.LogWarning(LogEvent.ProviderTlevelNotAdded, 
+                    $"Unable to add provider T level. Method: AddProviderTlevelsAsync, Ukprn: {User.GetUkPrn()}, Provider: {viewModel.ProviderId}, User: {User.GetUserEmail()}");
                 return RedirectToRoute("error/500");
             }
         }
@@ -118,6 +121,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (TempData[Constants.ProviderTlevelsViewModel] == null)
             {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed,
+                    $"Unable to read provider T level add confirmation page temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
@@ -132,7 +137,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = await _providerLoader.GetTqProviderTlevelDetailsAsync(User.GetUkPrn(), id);
 
             if(viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ProviderTlevelNotFound, $"No provider T level found. Method: GetTqProviderTlevelDetailsAsync({User.GetUkPrn()}, {id}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
+            }
 
             viewModel.ShowBackToProvidersLink = navigation;
             return View(viewModel);
@@ -167,6 +175,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
+                _logger.LogWarning(LogEvent.ProviderTlevelNotRemoved,
+                    $"Unable to remove provider T level. Method: RemoveTqProviderTlevelAsync(Ukprn: {User.GetUkPrn()}, id: {viewModel.Id}), User: {User.GetUserEmail()}");
                 return RedirectToRoute("error/500");
             }
         }
@@ -177,6 +187,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (TempData[Constants.ProviderTlevelDetailsViewModel] == null)
             {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed,
+                    $"Unable to read remove provider T level confirmation page temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
@@ -191,10 +203,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = await _providerLoader.GetViewProviderTlevelViewModelAsync(User.GetUkPrn(), providerId);
 
             if (viewModel == null || viewModel.Tlevels == null)
+            {
+                _logger.LogWarning(LogEvent.ProviersNotFound, 
+                    $"No provider found. Method: GetViewProviderTlevelViewModelAsync(Ukprn: {User.GetUkPrn()}, ProviderId: {providerId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
+            }
 
             if (!viewModel.AnyTlevelsAvailable)
+            {
+                _logger.LogInformation(LogEvent.ProviderTlevelNotFound,
+                    $"No provider T levels found. Method: GetViewProviderTlevelViewModelAsync(Ukprn: {User.GetUkPrn()}, ProviderId: {providerId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.SelectProviderTlevels, new { providerId });
+            }
 
             viewModel.IsNavigatedFromFindProvider = navigation;
             viewModel.IsNavigatedFromYourProvider = !navigation;
@@ -207,10 +227,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel == null || viewModel.Tlevels == null)
             {
+                _logger.LogWarning(LogEvent.ProviersNotFound,
+                    $"No provider found. Method: GetSelectProviderTlevelsAsync(Ukprn: {User.GetUkPrn()}, ProviderId: {providerId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             else if(viewModel.Tlevels.Count == 0)
             {
+                _logger.LogInformation(LogEvent.ProviderTlevelNotFound,
+                    $"No provider T levels found. Method: GetSelectProviderTlevelsAsync(Ukprn: {User.GetUkPrn()}, ProviderId: {providerId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.ProviderTlevels, new { providerId, navigation = true });
             }
 
@@ -229,6 +253,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 var providerData = await _providerLoader.GetProviderLookupDataAsync(viewModel.Search, isExactMatch: true);
                 if (providerData == null || providerData.Count() != 1)
                 {
+                    _logger.LogInformation(LogEvent.ProviersNotFound,
+                    $"No provider found. Method: GetProviderLookupDataAsync(Search: {viewModel.Search}, isExactMatch: {true}), User: {User.GetUserEmail()}");
                     ModelState.AddModelError("Search", Web.Content.Provider.FindProvider.ProviderName_NotValid_Validation_Message);
                     return false;
                 }
