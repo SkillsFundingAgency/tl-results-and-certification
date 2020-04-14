@@ -109,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             if (!_isDevevelopment)
             {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _tokenServiceClient.GetToken());
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _tokenServiceClient.GetInternalApiToken());
             }
         }
 

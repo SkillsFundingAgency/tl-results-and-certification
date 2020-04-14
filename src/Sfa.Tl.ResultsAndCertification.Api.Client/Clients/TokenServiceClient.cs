@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _config = configuration;
         }
 
-        public async Task<string> GetToken()
+        public async Task<string> GetInternalApiToken()
         {
             return await new AzureServiceTokenProvider().GetAccessTokenAsync(_config.ResultsAndCertificationInternalApiSettings.IdentifierUri);
         }
