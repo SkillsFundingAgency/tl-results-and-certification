@@ -24,6 +24,10 @@
       "type": "string",
       "environmentVariable": "TechnicalSupportEmailAddress"
     },
+	"FeedbackEmailAddress": {
+      "type": "string",
+      "environmentVariable": "FeedbackEmailAddress"
+    },
     "DfeSignInSettings": {
       "properties": {
         "MetadataAddress": {
@@ -150,6 +154,7 @@
 	"GovUkNotifyApiKey",
 	"TlevelQueriedSupportEmailAddress",
 	"TechnicalSupportEmailAddress",
+	"FeedbackEmailAddress",
     "DfeSignInSettings",
 	"ResultsAndCertificationInternalApiSettings"
   ],

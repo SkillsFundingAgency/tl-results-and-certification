@@ -43,6 +43,14 @@
         public string TechnicalSupportEmailAddress { get; set; }
 
         /// <summary>
+        /// Gets or sets the technical feedback email address.
+        /// </summary>
+        /// <value>
+        /// The feedback email address.
+        /// </value>
+        public string FeedbackEmailAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets the dfe sign in settings.
         /// </summary>
         /// <value>
