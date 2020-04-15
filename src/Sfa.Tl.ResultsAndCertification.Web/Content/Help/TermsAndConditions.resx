@@ -130,7 +130,7 @@
     <value>As a training provider or awarding organisation you must:</value>
   </data>
   <data name="A_Users_Rights_To_User_This_Service_Text" xml:space="preserve">
-    <value>A user’s rights to use this service may be removed, or amended if you are found to be in breach of these terms and conditions. Our decision in the event of a breach shall be final.</value>
+    <value>A user’s rights to use this service may be removed or amended if you are found to be in breach of these terms and conditions. Our decision in the event of a breach shall be final.</value>
   </data>
   <data name="By_Using_The_Mange_TLevels_Text" xml:space="preserve">
     <value>By using the Manage T Level results service you agree to these terms and conditions.</value>
@@ -154,7 +154,7 @@
     <value>ensure users given editor roles have delegated authority on behalf of the organisation to enter and remove providers offering T Levels, register students, enter student results and request certificates</value>
   </data>
   <data name="Ensure_Users_Given_Site_Administrator_Text" xml:space="preserve">
-    <value>ensure users given site administrator roles have delegated authority on behalf of the organisation to confirm T Level details, enter centres offering T Levels, register students, enter student results and request certificates</value>
+    <value>ensure users given site administrator roles have delegated authority on behalf of the organisation to confirm T Level details, enter providers offering T Levels, register students, enter student results and request certificates</value>
   </data>
   <data name="Enuser_Users_Given_Reviewer_Roles_Text" xml:space="preserve">
     <value>ensure users given reviewer roles have delegated authority on behalf of the organisation to confirm T Level details</value>

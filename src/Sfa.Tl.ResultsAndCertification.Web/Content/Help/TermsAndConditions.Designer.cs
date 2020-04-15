@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A user’s rights to use this service may be removed, or amended if you are found to be in breach of these terms and conditions. Our decision in the event of a breach shall be final..
+        ///   Looks up a localized string similar to A user’s rights to use this service may be removed or amended if you are found to be in breach of these terms and conditions. Our decision in the event of a breach shall be final..
         /// </summary>
         public static string A_Users_Rights_To_User_This_Service_Text {
             get {
@@ -169,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ensure users given site administrator roles have delegated authority on behalf of the organisation to confirm T Level details, enter centres offering T Levels, register students, enter student results and request certificates.
+        ///   Looks up a localized string similar to ensure users given site administrator roles have delegated authority on behalf of the organisation to confirm T Level details, enter providers offering T Levels, register students, enter student results and request certificates.
         /// </summary>
         public static string Ensure_Users_Given_Site_Administrator_Text {
             get {
