@@ -14,6 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 
         public int TlRouteId { get; set; }
         public string LarId { get; set; }
+        public string TlevelTitle { get; set; }
         public string Name { get; set; }
 
         public virtual TlRoute TlRoute { get; set; }
