@@ -1,11 +1,13 @@
-﻿<div class="govuk-width-container">
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Layout
+
+<div class="govuk-width-container">
     <div class="govuk-phase-banner">
         <p class="govuk-phase-banner__content">
             <strong class="govuk-tag govuk-phase-banner__content__tag">
-                Beta
+                @PhaseBanner.Phase_Banner_Tag
             </strong>
             <span class="govuk-phase-banner__text">
-                This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+                @PhaseBanner.Phase_Banner_Text_Part1 <a class="govuk-link" href="mailto: ravi.bob@email.com?subject=@ViewData["Title"]?.ToString()">@PhaseBanner.Feedback_Link_Text</a> @PhaseBanner.Phase_Banner_Text_Part2
             </span>
         </p>
     </div>
