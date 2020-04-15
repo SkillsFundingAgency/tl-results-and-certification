@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System;
@@ -12,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class NotificationService : INotificationService
     {
-        private readonly ILogger<NotificationService> _logger;
+        private readonly ILogger _logger;
         private readonly IAsyncNotificationClient _notificationClient;
         private readonly IRepository<NotificationTemplate> _notificationTemplateRepository;
 
@@ -29,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var notificationTemplate = await _notificationTemplateRepository.GetFirstOrDefaultAsync(t => t.TemplateName == templateName);
             if (notificationTemplate == null)
             {
-                _logger.LogWarning($"Notification email template {templateName} not found");
+                _logger.LogWarning(LogEvent.EmailTemplateNotFound, $"Notification email template {templateName} not found");
                 return hasEmailSent;
             }
 
@@ -41,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, $"Error sending notification email, templateName: {notificationTemplate.TemplateName}, templateId: {notificationTemplate.TemplateId} to {toAddress}");
+                _logger.LogError(LogEvent.EmailSendFailed, ex, $"Error sending notification email, templateName: {notificationTemplate.TemplateName}, templateId: {notificationTemplate.TemplateId} to {toAddress}");
             }
             return hasEmailSent;
         }

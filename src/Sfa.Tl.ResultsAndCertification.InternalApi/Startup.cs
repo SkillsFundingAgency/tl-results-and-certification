@@ -46,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                Configuration[Constants.VersionConfigKey],
                Configuration[Constants.ServiceNameConfigKey]);
 
+            services.AddApplicationInsightsTelemetry();
             services.AddControllers();
 
             services.Configure<ApiBehaviorOptions>(options =>

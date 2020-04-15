@@ -9,6 +9,9 @@
         public const int ServiceAccessDenied = 1004;
         public const int ConfirmationPageFailed = 1020;
         
+        public const int EmailTemplateNotFound = 1030;
+        public const int EmailSendFailed = 1031;
+
         // Tlevel events
         public const int TlevelsNotFound = 2001;
         public const int TlevelsNotConfirmed = 2002;
