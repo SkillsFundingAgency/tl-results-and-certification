@@ -144,6 +144,9 @@
   <data name="Licence_Desc_Link_Text" xml:space="preserve">
     <value>Open Government Licence v3.0</value>
   </data>
+  <data name="Opens_In_New_Window_Or_Tab_Text" xml:space="preserve">
+    <value>opens in a new window or tab</value>
+  </data>
   <data name="Privacy_Link_Text" xml:space="preserve">
     <value>Privacy</value>
   </data>

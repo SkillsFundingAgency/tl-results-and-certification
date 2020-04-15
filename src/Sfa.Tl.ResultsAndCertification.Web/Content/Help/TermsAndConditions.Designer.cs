@@ -232,6 +232,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to opens in a new window or tab.
+        /// </summary>
+        public static string Opens_In_New_Window_Or_Tab_Text {
+            get {
+                return ResourceManager.GetString("Opens_In_New_Window_Or_Tab_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Our responsibilities.
         /// </summary>
         public static string Our_Responsibilities_Text {
