@@ -112,7 +112,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             var confirmationViewModel = await _tlevelLoader.GetTlevelConfirmationDetailsAsync(User.GetUkPrn(), id);
-            
             return View(confirmationViewModel);
         }
 
