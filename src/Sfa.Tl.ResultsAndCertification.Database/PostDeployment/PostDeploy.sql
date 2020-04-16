@@ -9,7 +9,7 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-IF ('$(environment)' <> 'test1')
+IF ('$(environment)' <> 'test')
 BEGIN
 :r ".\SeedTlAwardingOrganisations.sql"
 :r ".\SeedTlRoutes.sql"
