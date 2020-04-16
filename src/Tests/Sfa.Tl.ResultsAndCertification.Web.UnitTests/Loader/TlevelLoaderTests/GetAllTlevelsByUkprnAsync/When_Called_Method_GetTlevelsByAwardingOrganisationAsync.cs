@@ -25,19 +25,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         {
             ApiClientResponse = new List<AwardingOrganisationPathwayStatus>
             {
-                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = 11, PathwayName = "P1", RouteName = "R1", StatusId = 1  },
-                new AwardingOrganisationPathwayStatus { Id = 2, PathwayId = 22, PathwayName = "P2", RouteName = "R2", StatusId = 2  },
-                new AwardingOrganisationPathwayStatus { Id = 3, PathwayId = 33, PathwayName = "P3", RouteName = "R3", StatusId = 2  },
-                new AwardingOrganisationPathwayStatus { Id = 4, PathwayId = 44, PathwayName = "P4", RouteName = "R4", StatusId = 2  },
-                new AwardingOrganisationPathwayStatus { Id = 5, PathwayId = 55, PathwayName = "P5", RouteName = "R5", StatusId = 3  }
+                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = 11, TlevelTitle = "P1", StatusId = 1  },
+                new AwardingOrganisationPathwayStatus { Id = 2, PathwayId = 22, TlevelTitle = "P2", StatusId = 2  },
+                new AwardingOrganisationPathwayStatus { Id = 3, PathwayId = 33, TlevelTitle = "P3", StatusId = 2  },
+                new AwardingOrganisationPathwayStatus { Id = 4, PathwayId = 44, TlevelTitle = "P4", StatusId = 2  },
+                new AwardingOrganisationPathwayStatus { Id = 5, PathwayId = 55, TlevelTitle = "P5", StatusId = 3  }
             };
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(TlevelMapper).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-            InternalApiClient.GetAllTlevelsByUkprnAsync(Ukprn)
-                .Returns(ApiClientResponse);
+            InternalApiClient.GetAllTlevelsByUkprnAsync(Ukprn).Returns(ApiClientResponse);
         }
 
         public override void Given()

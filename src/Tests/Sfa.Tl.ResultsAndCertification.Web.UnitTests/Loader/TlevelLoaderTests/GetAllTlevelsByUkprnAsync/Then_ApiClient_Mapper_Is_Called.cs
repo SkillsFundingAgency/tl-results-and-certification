@@ -22,12 +22,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
             ActualResult.QueriedTlevels.Should().NotBeNull();
             ActualResult.QueriedTlevels.Count().Should().Be(1);
             ActualResult.QueriedTlevels.First().PathwayId.Should().Be(55);
-            ActualResult.QueriedTlevels.First().TlevelTitle.Should().Be("R5: P5");
+            ActualResult.QueriedTlevels.First().TlevelTitle.Should().Be("P5");
 
             ActualResult.ConfirmedTlevels.Should().NotBeNull();
             ActualResult.ConfirmedTlevels.Count().Should().Be(3);
             ActualResult.ConfirmedTlevels.First().PathwayId.Should().Be(22);
-            ActualResult.ConfirmedTlevels.First().TlevelTitle.Should().Be("R2: P2");
+            ActualResult.ConfirmedTlevels.First().TlevelTitle.Should().Be("P2");
         }
     }
 }

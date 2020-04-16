@@ -24,10 +24,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         {
             ApiClientResponse = new List<AwardingOrganisationPathwayStatus>
             {
-                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = 11, PathwayName = "Path11", RouteName = "Route1", StatusId = 2 },
-                new AwardingOrganisationPathwayStatus { Id = 2, PathwayId = 22, PathwayName = "Path22", RouteName = "Route2", StatusId = 2 },
-                new AwardingOrganisationPathwayStatus { Id = 3, PathwayId = 33, PathwayName = "Path33", RouteName = "Route3", StatusId = 1 },
-                new AwardingOrganisationPathwayStatus { Id = 4, PathwayId = 33, PathwayName = "Path44", RouteName = "Route4", StatusId = 1 }
+                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = 11, TlevelTitle = "Tlevel Title11", StatusId = 2 },
+                new AwardingOrganisationPathwayStatus { Id = 2, PathwayId = 22, TlevelTitle = "Tlevel Title22", StatusId = 2 },
+                new AwardingOrganisationPathwayStatus { Id = 3, PathwayId = 33, TlevelTitle = "Tlevel Title33", StatusId = 1 },
+                new AwardingOrganisationPathwayStatus { Id = 4, PathwayId = 33, TlevelTitle = "Tlevel Title44", StatusId = 1 }
             };
 
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();

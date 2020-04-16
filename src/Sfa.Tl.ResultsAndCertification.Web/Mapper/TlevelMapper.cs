@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
         {
             CreateMap<AwardingOrganisationPathwayStatus, YourTlevelViewModel>()
                 .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
-                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => $"{s.RouteName}: {s.PathwayName}"));
+                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle));
             
             CreateMap<IEnumerable<AwardingOrganisationPathwayStatus>, YourTlevelsViewModel>()
                 .ForMember(d => d.IsAnyReviewPending, opts => opts.MapFrom(s => s.Any(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation)))
@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<AwardingOrganisationPathwayStatus, TlevelToReviewViewModel>()
                 .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
-                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => $"{s.RouteName}: {s.PathwayName}"));
+                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle));
 
             CreateMap<IEnumerable<AwardingOrganisationPathwayStatus>, SelectToReviewPageViewModel>()
                 .ForMember(d => d.TlevelsToReview, opts => opts.MapFrom(s => s.Where(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation)))
@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<IEnumerable<AwardingOrganisationPathwayStatus>, TlevelConfirmationViewModel>()
                .ForMember(d => d.PathwayId, opts => opts.MapFrom((src, dest, destMember, context) => (int)context.Items["pathwayId"]))
-               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom((src, dest, destMember, context) => $"{src.FirstOrDefault(x => x.PathwayId == (int)context.Items["pathwayId"]).RouteName}: {src.FirstOrDefault(x => x.PathwayId == (int)context.Items["pathwayId"]).PathwayName}"))
+               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom((src, dest, destMember, context) => src.FirstOrDefault(x => x.PathwayId == (int)context.Items["pathwayId"]).TlevelTitle))
                .ForMember(d => d.TlevelConfirmationText, opts => opts.MapFrom((src, dest, destMember, context) => string.Format(Confirmation.Section_Heading,  src.FirstOrDefault(x => x.PathwayId == (int)context.Items["pathwayId"]).StatusId == (int)TlevelReviewStatus.Confirmed ? Confirmation.Confirmed_Text : Confirmation.Queried_Text)))
                .ForMember(d => d.IsQueried, opts => opts.MapFrom(s => s.Any(x => x.StatusId == (int)TlevelReviewStatus.Queried)))
                .ForMember(d => d.ShowMoreTlevelsToReview, opts => opts.MapFrom(s => s.Any(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation)));

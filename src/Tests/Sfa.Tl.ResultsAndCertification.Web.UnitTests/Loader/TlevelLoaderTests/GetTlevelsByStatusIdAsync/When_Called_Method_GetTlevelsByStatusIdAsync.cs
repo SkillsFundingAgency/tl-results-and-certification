@@ -17,18 +17,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         protected TlevelLoader Loader;
         protected readonly int statusId = 9;
         protected readonly long Ukprn = 1024;
-
         protected int PathwayId = 1;
         protected int StatusId = 1;
         
         protected IEnumerable<AwardingOrganisationPathwayStatus> ApiClientResponse;
         protected IEnumerable<YourTlevelViewModel> ActualResult;
         protected AwardingOrganisationPathwayStatus ExpectedResult;
-        protected string ExpectedTLevelTitle = "Route: Pathway";
+        protected string ExpectedTLevelTitle = "Tlevel Title";
 
         public override void Setup()
         {
-            ExpectedResult = new AwardingOrganisationPathwayStatus { PathwayId = PathwayId, PathwayName = "Pathway", RouteName = "Route", StatusId = 1 };
+            ExpectedResult = new AwardingOrganisationPathwayStatus { PathwayId = PathwayId, TlevelTitle = "Tlevel Title", StatusId = 1 };
             ApiClientResponse = new List<AwardingOrganisationPathwayStatus> { ExpectedResult };
             
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();

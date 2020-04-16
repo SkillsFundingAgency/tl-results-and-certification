@@ -80,11 +80,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         private static IEnumerable<YourTlevelViewModel> FilterTlevelsByStatus(IEnumerable<AwardingOrganisationPathwayStatus> tLevels, TlevelReviewStatus status)
         {
             return tLevels?.Where(x => x.StatusId == (int)status)
-                            .Select(x => new YourTlevelViewModel
-                            {
+                           .Select(x => new YourTlevelViewModel
+                           {
                                 PathwayId = x.PathwayId,
-                                TlevelTitle = $"{x.RouteName}: {x.PathwayName}"
-                            });
+                                TlevelTitle = x.TlevelTitle
+                           });
         }
     }
 }

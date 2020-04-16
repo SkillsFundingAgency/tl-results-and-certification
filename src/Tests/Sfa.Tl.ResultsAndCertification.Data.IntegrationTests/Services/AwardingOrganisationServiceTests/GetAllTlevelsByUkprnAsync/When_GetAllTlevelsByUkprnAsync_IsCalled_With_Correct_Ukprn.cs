@@ -30,8 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
         {
             var expectedResult = _result.FirstOrDefault();
             expectedResult.Should().NotBeNull();
-            expectedResult.PathwayName.Should().Be(_pathway.Name);
-            expectedResult.RouteName.Should().Be(_route.Name);
+            expectedResult.TlevelTitle.Should().Be(_pathway.TlevelTitle);
             expectedResult.StatusId.Should().Be(_tqAwardingOrganisation.ReviewStatus);
         }
     }

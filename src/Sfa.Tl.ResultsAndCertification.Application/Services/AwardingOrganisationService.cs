@@ -41,7 +41,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var tlevels = await _awardingOrganisationRepository
                 .GetManyAsync(x => x.TlAwardingOrganisaton.UkPrn == ukprn,
-                        n => n.TlRoute,
                         n => n.TlPathway,
                         n => n.TlAwardingOrganisaton)
                 .ToListAsync();
