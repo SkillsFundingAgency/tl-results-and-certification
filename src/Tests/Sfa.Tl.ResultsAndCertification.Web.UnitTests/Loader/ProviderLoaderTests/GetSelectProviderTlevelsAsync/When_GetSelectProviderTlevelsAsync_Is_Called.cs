@@ -30,8 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
                 Ukprn = 12345,
                 Tlevels = new List<ProviderTlevel>
                     {
-                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, RouteName = "Route1", PathwayName = "Pathway1"},
-                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, RouteName = "Route2", PathwayName = "Pathway2"}
+                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, TlevelTitle="Tlevel Title1" },
+                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, TlevelTitle="Tlevel Title2" }
                     }
             };
 
