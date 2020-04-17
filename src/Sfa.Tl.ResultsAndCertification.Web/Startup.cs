@@ -20,7 +20,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Authentication;
 using Sfa.Tl.ResultsAndCertification.Web.Filters;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.WebInjectHelper;
+using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper;
 
 namespace Sfa.Tl.ResultsAndCertification.Web
 {
@@ -138,10 +138,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web
         private void RegisterDependencies(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddSingleton<IWebConfigurationService, WebConfigurationService>();
             services.AddTransient<ITlevelLoader, TlevelLoader>();
             services.AddTransient<IProviderLoader, ProviderLoader>();
-
-            services.AddSingleton<IWebInjectHelperService, WebInjectHelperService>();
         }
     }
 }

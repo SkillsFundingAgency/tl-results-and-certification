@@ -1,11 +1,11 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.WebInjectHelper
+namespace Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
 {
-    public class WebInjectHelperService : IWebInjectHelperService
+    public class WebConfigurationService : IWebConfigurationService
     {
         public readonly ResultsAndCertificationConfiguration _configuration;
-        public WebInjectHelperService(ResultsAndCertificationConfiguration configuration)
+        public WebConfigurationService(ResultsAndCertificationConfiguration configuration)
         {
             _configuration = configuration;
         }
