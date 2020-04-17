@@ -9,7 +9,9 @@
                 @PhaseBanner.Phase_Banner_Tag
             </strong>
             <span class="govuk-phase-banner__text">
-                @PhaseBanner.Phase_Banner_Text_Part1 <a class="govuk-link" href="mailto: @ConfigurationService.GetFeedbackEmailAddress()?subject=@ViewData["Title"]?.ToString()">@PhaseBanner.Feedback_Link_Text</a> @PhaseBanner.Phase_Banner_Text_Part2
+                @PhaseBanner.Phase_Banner_Text_Part1 
+                <a class="govuk-link" href="mailto: @ConfigurationService.GetFeedbackEmailAddress()?subject=@String.Format(@PhaseBanner.Email_Subject, @ViewData["Title"]?.ToString())")>@PhaseBanner.Feedback_Link_Text</a> 
+                @PhaseBanner.Phase_Banner_Text_Part2
             </span>
         </p>
     </div>

@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Feedback - ({0}).
+        /// </summary>
+        public static string Email_Subject {
+            get {
+                return ResourceManager.GetString("Email_Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to feedback.
         /// </summary>
         public static string Feedback_Link_Text {
