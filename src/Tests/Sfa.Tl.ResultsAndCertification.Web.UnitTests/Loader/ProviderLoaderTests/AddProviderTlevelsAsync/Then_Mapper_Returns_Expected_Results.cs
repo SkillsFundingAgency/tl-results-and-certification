@@ -17,12 +17,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
 
             result[0].TqAwardingOrganisationId.Should().Be(ProviderTlevelsViewModel.Tlevels[0].TqAwardingOrganisationId);
             result[0].TlProviderId.Should().Be(ProviderTlevelsViewModel.Tlevels[0].TlProviderId);
-            result[0].PathwayId.Should().Be(ProviderTlevelsViewModel.Tlevels[0].PathwayId);
             result[0].CreatedBy.Should().Be($"{Givenname} {Surname}");
 
             result[1].TqAwardingOrganisationId.Should().Be(ProviderTlevelsViewModel.Tlevels[1].TqAwardingOrganisationId);
             result[1].TlProviderId.Should().Be(ProviderTlevelsViewModel.Tlevels[1].TlProviderId);
-            result[1].PathwayId.Should().Be(ProviderTlevelsViewModel.Tlevels[1].PathwayId);
             result[1].CreatedBy.Should().Be($"{Givenname} {Surname}");
         }
     }

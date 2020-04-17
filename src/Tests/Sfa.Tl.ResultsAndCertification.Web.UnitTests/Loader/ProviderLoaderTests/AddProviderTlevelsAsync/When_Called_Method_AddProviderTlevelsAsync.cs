@@ -34,8 +34,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
         {
             ProviderTlevelDetails = new List<ProviderTlevel>
                     {
-                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, PathwayId = 1, CreatedBy = "test user" },
-                        new ProviderTlevel { TqAwardingOrganisationId = 2, TlProviderId = 1, PathwayId = 2, CreatedBy = "test user" }
+                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, CreatedBy = "test user" },
+                        new ProviderTlevel { TqAwardingOrganisationId = 2, TlProviderId = 1, CreatedBy = "test user" }
                     };
 
             ProviderTlevelsViewModel = new ProviderTlevelsViewModel
@@ -45,8 +45,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
                 Ukprn = 12345,
                 Tlevels = new List<ProviderTlevelViewModel>
                     {
-                        new ProviderTlevelViewModel { TqAwardingOrganisationId = 1, TlProviderId = 1, PathwayId = 1, IsSelected = true },
-                        new ProviderTlevelViewModel { TqAwardingOrganisationId = 2, TlProviderId = 1, PathwayId = 2, IsSelected = true }
+                        new ProviderTlevelViewModel { TqAwardingOrganisationId = 1, TlProviderId = 1, IsSelected = true },
+                        new ProviderTlevelViewModel { TqAwardingOrganisationId = 2, TlProviderId = 1, IsSelected = true }
                     }
             };
 

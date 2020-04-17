@@ -35,8 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _mockHttpResult = true;
             _model = new List<ProviderTlevel>
             {
-                new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, PathwayId = 1 },
-                new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, PathwayId = 2 }
+                new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1 },
+                new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1 }
             };
         }
 

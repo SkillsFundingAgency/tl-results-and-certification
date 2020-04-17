@@ -21,14 +21,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<ProviderTlevel, ProviderTlevelViewModel>()
                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.TlProviderId))
-               .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => $"{s.RouteName}: {s.PathwayName}"))
                .ForMember(d => d.IsSelected, opts => opts.Ignore());
 
             CreateMap<ProviderTlevelViewModel, ProviderTlevel>()
                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.TlProviderId))
-               .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<ProviderTlevelViewModel, ProviderTlevel>>());
 
             CreateMap<ProviderMetadata, ProviderLookupData>();

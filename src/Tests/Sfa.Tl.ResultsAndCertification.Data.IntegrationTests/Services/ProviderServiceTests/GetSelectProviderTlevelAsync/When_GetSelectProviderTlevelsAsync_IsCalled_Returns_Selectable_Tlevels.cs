@@ -67,7 +67,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             actualTlevelResult.TlProviderId.Should().Be(TlProvider.Id);
 
             var expectedPathway = _pathways.Last();
-            actualTlevelResult.PathwayId.Should().Be(expectedPathway.Id);
             actualTlevelResult.PathwayName.Should().Be(expectedPathway.Name);
 
             var expectedRoute = _routes.Last();
