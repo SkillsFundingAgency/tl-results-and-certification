@@ -71,7 +71,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             {
                 TqAwardingOrganisationId = tqAwardingOrganisationId,
                 TlProviderId = tlProviderId,
-                TlPathwayId = pathwayId
             };
 
             if (addToDbContext)
@@ -122,7 +121,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                     {
                         TlProviderId = tlProvider.Id,
                         TqAwardingOrganisationId = tqAwardingOrganisation.Id,
-                        TlPathwayId = tqAwardingOrganisation.TlPathwayId
                     });
                 }
 

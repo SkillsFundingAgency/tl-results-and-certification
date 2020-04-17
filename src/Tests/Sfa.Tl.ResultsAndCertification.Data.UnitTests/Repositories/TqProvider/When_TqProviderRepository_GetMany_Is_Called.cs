@@ -38,7 +38,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqProvider
             result.Id.Should().Be(1);
             result.TqAwardingOrganisationId.Should().Be(testData.TqAwardingOrganisationId);
             result.TlProviderId.Should().Be(testData.TlProviderId);
-            result.TlPathwayId.Should().Be(testData.TlPathwayId);
             result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
             result.CreatedOn.Should().Be(Constants.CreatedOn);
             result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);

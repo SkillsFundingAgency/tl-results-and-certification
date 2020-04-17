@@ -19,7 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqProvider
 
             // Update data
             _data.TqAwardingOrganisationId = 2;
-            _data.TlPathwayId = 2;
             _data.TlProviderId = 2;
             _data.ModifiedBy = ModifiedBy;
         }
@@ -37,7 +36,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqProvider
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
             _result.TqAwardingOrganisationId.Should().Be(_data.TqAwardingOrganisationId);
-            _result.TlPathwayId.Should().Be(_data.TlPathwayId);
             _result.TlProviderId.Should().Be(_data.TlProviderId);
             _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);

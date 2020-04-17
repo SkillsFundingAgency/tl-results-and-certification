@@ -11,7 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             CreateMap<ProviderTlevel, TqProvider>()
                 .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                 .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.TlProviderId))
-                .ForMember(d => d.TlPathwayId, opts => opts.MapFrom(s => s.PathwayId))
                 .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => s.CreatedBy));
 
             CreateMap<TlProvider, ProviderDetails>()
