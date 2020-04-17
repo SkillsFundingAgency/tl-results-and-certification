@@ -11,8 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 {
     public class Then_On_Success_Redirected_To_ProviderTlevelConfirmation_Route : When_SelectProviderTlevelsAsync_Post_Action_Is_Called
     {
-        private readonly int pathwayId = 99;
-
         public override void Given()
         {
             InputViewModel = new ProviderTlevelsViewModel

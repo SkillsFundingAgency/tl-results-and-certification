@@ -19,7 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
         private IList<TlRoute> _routes;
         private IList<TlPathway> _pathways;
         private IList<TqAwardingOrganisation> _tqAwardingOrganisations;
-        private IList<TqProvider> _tqProviders;
 
         public override void Given()
         {
