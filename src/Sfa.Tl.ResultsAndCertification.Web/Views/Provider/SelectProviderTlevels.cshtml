@@ -35,7 +35,7 @@
                         <div class="govuk-checkboxes">
                             @foreach (var tlevel in Model.Tlevels.Select((value, i) => (value, i)))
                             {
-                                var elementId = (tlevel.i > 0) ? "hastlevelselected-" + tlevel.value.PathwayId : "hastlevelselected";
+                                var elementId = (tlevel.i > 0) ? "hastlevelselected-" + tlevel.i : "hastlevelselected";
                                 <div class="govuk-radios__item">
                                     <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.Tlevels[@tlevel.i].IsSelected">
                                     <label class="govuk-label govuk-checkboxes__label" for="@elementId">
@@ -44,7 +44,6 @@
                                 </div>
                                 <input type="hidden" asp-for="@Model.Tlevels[@tlevel.i].TqAwardingOrganisationId" />
                                 <input type="hidden" asp-for="@Model.Tlevels[@tlevel.i].TlProviderId" />
-                                <input type="hidden" asp-for="@Model.Tlevels[@tlevel.i].PathwayId" />
                                 <input type="hidden" asp-for="@Model.Tlevels[@tlevel.i].TlevelTitle" />
                             }
                         </div>

@@ -18,8 +18,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
                 Ukprn = 10000111,
                 Tlevels = new List<ProviderTlevelViewModel>
                 {
-                    new ProviderTlevelViewModel { TqAwardingOrganisationId = 1, TlProviderId = 1, PathwayId = 1, TlevelTitle = "Route1: Pathway1", IsSelected = false },
-                    new ProviderTlevelViewModel { TqAwardingOrganisationId = 1, TlProviderId = 1, PathwayId = 2, TlevelTitle = "Route1: Pathway1", IsSelected = false }
+                    new ProviderTlevelViewModel { TqAwardingOrganisationId = 1, TlProviderId = 1, TlevelTitle = "Route1: Pathway1", IsSelected = false },
+                    new ProviderTlevelViewModel { TqAwardingOrganisationId = 1, TlProviderId = 1, TlevelTitle = "Route1: Pathway1", IsSelected = false }
                 }
             };
             ProviderLoader.AddProviderTlevelsAsync(InputViewModel).Returns(false);
