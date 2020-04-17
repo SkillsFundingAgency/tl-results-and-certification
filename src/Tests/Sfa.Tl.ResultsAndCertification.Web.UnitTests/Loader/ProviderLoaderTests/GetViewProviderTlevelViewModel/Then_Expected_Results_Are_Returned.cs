@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
             actualProviderTlevelResult.Should().NotBeNull();
 
             actualProviderTlevelResult.TqProviderId.Should().Be(expectedTlevelResult.TqProviderId);
-            actualProviderTlevelResult.TlevelTitle.Should().Be($"{expectedTlevelResult.RouteName}: {expectedTlevelResult.PathwayName}");
+            actualProviderTlevelResult.TlevelTitle.Should().Be(expectedTlevelResult.TlevelTitle);
         }
     }
 }

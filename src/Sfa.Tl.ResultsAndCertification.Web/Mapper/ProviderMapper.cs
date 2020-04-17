@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<ProviderTlevel, TlevelViewModel>()
                .ForMember(d => d.TqProviderId, opts => opts.MapFrom(s => s.TqProviderId))
-               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => $"{s.RouteName}: {s.PathwayName}"));
+               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle));
 
             CreateMap<ProviderDetails, ProviderDetailsViewModel>()
                .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.Id))
