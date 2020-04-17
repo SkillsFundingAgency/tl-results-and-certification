@@ -57,6 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                {
                                                    TqAwardingOrganisationId = tqao.Id,
                                                    TlProviderId = tlprov.Id,
+                                                   TlevelTitle = tqao.TlPathway.TlevelTitle,
                                                    RouteName = tqao.TlRoute.Name,
                                                    PathwayName = tqao.TlPathway.Name
                                                }).OrderBy(o => o.RouteName).ThenBy(o => o.PathwayName)
