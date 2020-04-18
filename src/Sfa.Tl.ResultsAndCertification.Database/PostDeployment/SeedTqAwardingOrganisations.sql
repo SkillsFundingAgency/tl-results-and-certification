@@ -6,9 +6,16 @@ SET IDENTITY_INSERT [dbo].[TqAwardingOrganisation] ON
 
 MERGE INTO [dbo].[TqAwardingOrganisation] AS Target 
 USING (VALUES 
-  (1, 1, 2, 2, 1),
-  (2, 2, 1, 1, 1),
-  (3, 2, 3, 3, 1)
+	(1, 1, 2, 4, 1),
+	(2, 1, 3, 6, 1),
+	(3, 1, 3, 7, 1),
+	(4, 1, 4, 8, 1),
+	(5, 1, 4, 9, 1),
+	(6, 1, 4, 10, 1),
+	(7, 2, 1, 1, 1),
+	(8, 2, 3, 5, 1),
+	(9, 3, 1, 2, 1),
+	(10, 3, 1, 3, 1)
   )
   AS Source ([Id], [TlAwardingOrganisatonId], [TlRouteId], [TlPathwayId], [ReviewStatus]) 
 ON Target.[Id] = Source.[Id] 
