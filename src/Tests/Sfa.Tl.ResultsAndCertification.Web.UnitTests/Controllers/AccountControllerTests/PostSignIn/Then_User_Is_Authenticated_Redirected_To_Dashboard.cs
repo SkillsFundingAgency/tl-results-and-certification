@@ -28,8 +28,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
         public void Then_Redirected_ToDashboard()
         {
             Result.Should().NotBeNull();
-            Assert.Same((Result as RedirectToActionResult).ActionName, nameof(DashboardController.Index));
-            Assert.Same((Result as RedirectToActionResult).ControllerName, Common.Helpers.Constants.DashboardController);
+
+            var actualControlName = (Result as RedirectToActionResult).ControllerName;
+            var actualActionName = (Result as RedirectToActionResult).ActionName;
+            
+            actualControlName.Should().Be(Common.Helpers.Constants.DashboardController);
+            actualActionName.Should().Be(nameof(DashboardController.Index));
         }
     }
 }

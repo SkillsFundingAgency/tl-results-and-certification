@@ -28,8 +28,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
         public void Then_Redirected_To_ServiceAccessDenied()
         {
             Result.Should().NotBeNull();
-            Assert.Same((Result as RedirectToActionResult).ActionName, nameof(ErrorController.ServiceAccessDenied));
-            Assert.Same((Result as RedirectToActionResult).ControllerName, Common.Helpers.Constants.ErrorController);
+
+            var actualControlName = (Result as RedirectToActionResult).ControllerName;
+            var actualActionName = (Result as RedirectToActionResult).ActionName;
+
+            actualControlName.Should().Be(Common.Helpers.Constants.ErrorController);
+            actualActionName.Should().Be(nameof(ErrorController.ServiceAccessDenied));
         }
     }
 }

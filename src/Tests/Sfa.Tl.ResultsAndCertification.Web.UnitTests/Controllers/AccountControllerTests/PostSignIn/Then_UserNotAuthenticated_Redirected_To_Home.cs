@@ -28,8 +28,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
         public void Then_Redirected_To_Home()
         {
             Result.Should().NotBeNull();
-            Assert.Same((Result as RedirectToActionResult).ActionName, nameof(HomeController.Index));
-            Assert.Same((Result as RedirectToActionResult).ControllerName, Common.Helpers.Constants.HomeController);
+
+            var actualControlName = (Result as RedirectToActionResult).ControllerName;
+            var actualActionName = (Result as RedirectToActionResult).ActionName;
+
+            actualControlName.Should().Be(Common.Helpers.Constants.HomeController);
+            actualActionName.Should().Be(nameof(HomeController.Index));
         }
     }
 }
