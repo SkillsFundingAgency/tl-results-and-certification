@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                    RouteName = tqao.TlRoute.Name,
                                                    PathwayName = tqao.TlPathway.Name,
                                                    TqProviderId = result.Id
-                                               }).OrderBy(o => o.RouteName).ThenBy(o => o.PathwayName)
+                                               }).OrderBy(o => o.TlevelTitle)
                                 }).FirstOrDefaultAsync();
 
             return result;
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                    TlevelTitle = tqao.TlPathway.TlevelTitle,
                                                    RouteName = tqao.TlRoute.Name,
                                                    PathwayName = tqao.TlPathway.Name
-                                               }).OrderBy(o => o.RouteName).ThenBy(o => o.PathwayName)
+                                               }).OrderBy(o => o.TlevelTitle)
                                 }).FirstOrDefaultAsync();
 
             return result;
