@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
+﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
