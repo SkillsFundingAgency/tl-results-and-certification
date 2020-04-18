@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             actualResult.DisplayName.Should().Be(TlProvider.DisplayName);
             actualResult.Ukprn.Should().Be(TlProvider.UkPrn);
 
-            actualResult.Tlevels.Should().BeInAscendingOrder(x => x.RouteName);
+            actualResult.Tlevels.Should().BeInAscendingOrder(x => x.TlevelTitle);
         }
 
         protected override void SeedTestData()
