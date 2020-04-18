@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
-using System.Collections.Generic;
-using System.Security.Claims;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountControllerTests.PostSignIn
 {
@@ -16,32 +15,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
         protected AccountController Controller;
         protected IActionResult Result;
         protected ILogger<AccountController> Logger;
-        protected IHttpContextAccessor HttpContextAccessor;
-
+        protected HttpContext HttpContext;
+        protected IServiceProvider ServiceProvider;
+        
         public ResultsAndCertificationConfiguration Configuration { get; set; }
 
         public override void Setup()
         {
-            var identity = Substitute.For<ClaimsIdentity>();
-            identity.IsAuthenticated.Returns(true);
-            identity.Name.Returns("AuthUser");
-
-            var claimsPrincipal = Substitute.For<ClaimsPrincipal>();
-            claimsPrincipal.Identity.Returns(identity);
-            claimsPrincipal.Claims.Returns(new List<Claim> { new Claim(CustomClaimTypes.HasAccessToService, "true") });
-
-            var httpContext = Substitute.For<HttpContext>();
-            httpContext.User.Returns(claimsPrincipal);
-
+            HttpContext = Substitute.For<HttpContext>();
+            ServiceProvider = Substitute.For<IServiceProvider>();
+            ServiceProvider.GetService(typeof(IUrlHelperFactory)).Returns(new UrlHelperFactory());
+            HttpContext.RequestServices = ServiceProvider;
             Logger = Substitute.For<ILogger<AccountController>>();
-            Controller = new AccountController(Logger, Configuration)
-            {
-                ControllerContext = new ControllerContext
-                {
-                    HttpContext = httpContext,
-                    RouteData  = new Microsoft.AspNetCore.Routing.RouteData()
-                }
-            };
+            Controller = new AccountController(Configuration, Logger);
         }
 
         public override void When()
