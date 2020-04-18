@@ -8,7 +8,6 @@ using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.ViewProviderTlevels;
 using System.Collections.Generic;
 
-
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTests.GetViewProviderTlevelViewModel
 {
     public abstract class When_GetViewProviderTlevelViewModelAsync_Is_Called : BaseTest<ProviderLoader>
@@ -31,9 +30,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
                 Ukprn = 12345,
                 Tlevels = new List<ProviderTlevel>
                     {
-                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 7, TlevelTitle = "Tlevel Title1", RouteName = "Route1", PathwayName = "Pathway1", TqProviderId = 10 },
-                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 7, TlevelTitle = "Tlevel Title2", RouteName = "Route2", PathwayName = "Pathway2", TqProviderId = 11 },
-                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 7, TlevelTitle = "Tlevel Title3", RouteName = "Route3", PathwayName = "Pathway3", TqProviderId = 22 }
+                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 7, TlevelTitle = "Tlevel Title1", TqProviderId = 10 },
+                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 7, TlevelTitle = "Tlevel Title2", TqProviderId = 11 },
+                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 7, TlevelTitle = "Tlevel Title3", TqProviderId = 22 }
                     }
             };
 

@@ -37,8 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             _result.Id.Should().Be(TlProvider.Id);
             _result.DisplayName.Should().Be(TlProvider.DisplayName);
             _result.Ukprn.Should().Be(TlProvider.UkPrn);
-            _result.ProviderTlevel.RouteName.Should().Be(Route.Name);
-            _result.ProviderTlevel.PathwayName.Should().Be(Pathway.Name);
+            _result.ProviderTlevel.TlevelTitle.Should().Be(Pathway.TlevelTitle);
         }
 
         protected override void SeedProviderData()

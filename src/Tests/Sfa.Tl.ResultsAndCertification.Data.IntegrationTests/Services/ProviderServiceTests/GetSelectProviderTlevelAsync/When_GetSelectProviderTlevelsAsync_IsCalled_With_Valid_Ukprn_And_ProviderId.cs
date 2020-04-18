@@ -58,8 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             var actualTlevelResult = _result.Tlevels.FirstOrDefault();
             actualTlevelResult.TqAwardingOrganisationId.Should().Be(TqAwardingOrganisation.Id);
             actualTlevelResult.TlProviderId.Should().Be(TlProvider.Id);
-            actualTlevelResult.RouteName.Should().Be(Route.Name);
-            actualTlevelResult.PathwayName.Should().Be(Pathway.Name);
+            actualTlevelResult.TlevelTitle.Should().Be(Pathway.TlevelTitle);
         }
     }
 }

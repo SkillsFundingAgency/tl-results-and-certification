@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 Id = 1,
                 DisplayName = "Test",
                 Ukprn = 123456,
-                ProviderTlevel = new ProviderTlevel { RouteName = "Route", PathwayName = "Pathway"}
+                ProviderTlevel = new ProviderTlevel { TlevelTitle = "Tlevel Title1" }
             };
         }
 
@@ -62,8 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             actualResult.Id.Should().Be(_mockHttpResult.Id);
             actualResult.DisplayName.Should().Be(_mockHttpResult.DisplayName);
             actualResult.Ukprn.Should().Be(_mockHttpResult.Ukprn);
-            actualResult.ProviderTlevel.RouteName.Should().Be(_mockHttpResult.ProviderTlevel.RouteName);
-            actualResult.ProviderTlevel.PathwayName.Should().Be(_mockHttpResult.ProviderTlevel.PathwayName);
+            actualResult.ProviderTlevel.TlevelTitle.Should().Be(_mockHttpResult.ProviderTlevel.TlevelTitle);
         }
     }
 }

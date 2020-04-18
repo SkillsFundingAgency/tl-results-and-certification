@@ -67,10 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             actualTlevelResult.TlProviderId.Should().Be(TlProvider.Id);
 
             var expectedPathway = _pathways.Last();
-            actualTlevelResult.PathwayName.Should().Be(expectedPathway.Name);
-
-            var expectedRoute = _routes.Last();
-            actualTlevelResult.RouteName.Should().Be(expectedRoute.Name);
+            actualTlevelResult.TlevelTitle.Should().Be(expectedPathway.TlevelTitle);
         }
 
         protected override void SeedTestData()
