@@ -118,8 +118,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 .GetFirstOrDefaultAsync(x => x.Id == tqProviderId && x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn,
                                         n => n.TlProvider,
                                         n => n.TqAwardingOrganisation,
-                                        n => n.TqAwardingOrganisation.TlPathway,
-                                        n => n.TqAwardingOrganisation.TlPathway.TlRoute);
+                                        n => n.TqAwardingOrganisation.TlPathway);
 
             return _mapper.Map<ProviderTlevelDetails>(tqProvider);
         }

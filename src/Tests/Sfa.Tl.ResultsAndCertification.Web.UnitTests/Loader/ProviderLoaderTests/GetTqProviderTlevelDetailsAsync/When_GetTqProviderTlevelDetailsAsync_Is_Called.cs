@@ -29,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
                 Ukprn = 10000113,
                 ProviderTlevel = new ProviderTlevel
                 {
+                    TlevelTitle = "Tlevel Title",
                     RouteName = "Tlevel",
                     PathwayName = "Title"
                 }

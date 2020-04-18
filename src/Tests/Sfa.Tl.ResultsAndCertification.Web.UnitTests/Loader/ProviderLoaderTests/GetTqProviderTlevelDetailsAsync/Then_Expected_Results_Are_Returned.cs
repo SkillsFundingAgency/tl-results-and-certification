@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
             ActualResult.DisplayName.Should().Be(ApiClientResponse.DisplayName);
             ActualResult.Ukprn.Should().Be(ApiClientResponse.Ukprn);
 
-            ActualResult.TlevelTitle.Should().Be($"{ApiClientResponse.ProviderTlevel.RouteName}: {ApiClientResponse.ProviderTlevel.PathwayName}");
+            ActualResult.TlevelTitle.Should().Be(ApiClientResponse.ProviderTlevel.TlevelTitle);
         }
     }
 }
