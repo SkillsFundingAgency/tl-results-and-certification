@@ -28,20 +28,20 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AwardingOrg
         public void Then_Results_Not_Null()
         {
             _result.Should().NotBeNull();
-            _result.TlRoute.Should().NotBeNull();
+            _result.TlPathway.Should().NotBeNull();
         }
 
         [Fact]
         public void Then_EntityFields_Are_As_Expected()
         {
-            var expectedResult = _data.TlRoute;
+            var expectedResult = _data.TlPathway;
             
-            _result.TlRoute.Id.Should().Be(expectedResult.Id);
-            _result.TlRoute.Name.Should().Be(expectedResult.Name);
-            _result.TlRoute.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
-            _result.TlRoute.CreatedOn.Should().Be(expectedResult.CreatedOn);
-            _result.TlRoute.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
-            _result.TlRoute.ModifiedOn.Should().Be(expectedResult.ModifiedOn);
+            _result.TlPathway.Id.Should().Be(expectedResult.Id);
+            _result.TlPathway.Name.Should().Be(expectedResult.Name);
+            _result.TlPathway.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
+            _result.TlPathway.CreatedOn.Should().Be(expectedResult.CreatedOn);
+            _result.TlPathway.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
+            _result.TlPathway.ModifiedOn.Should().Be(expectedResult.ModifiedOn);
 
             var expectedAwardingOrg = _data.TlAwardingOrganisaton;
             _result.TlAwardingOrganisaton.Name.Should().Be(expectedAwardingOrg.Name);

@@ -262,10 +262,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                 var tqAwardingOrganisation = new TqAwardingOrganisation
                 {
                     TlAwardingOrganisatonId = tlAwardingOrganisation.Id,
-                    TlRouteId = tlRoute.Id,
                     TlPathwayId = tlPathway.Id,
                     TlAwardingOrganisaton = tlAwardingOrganisation,
-                    TlRoute = tlRoute,
                     TlPathway = tlPathway,
                     ReviewStatus = (int)tLevelReviewStatus
                 };

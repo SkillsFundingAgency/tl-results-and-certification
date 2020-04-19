@@ -7,13 +7,11 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public TlRoute()
         {
             TlPathways = new HashSet<TlPathway>();
-            TqAwardingOrganisations = new HashSet<TqAwardingOrganisation>();
         }
 
         public string Name { get; set; }
         public bool IsActive { get; set; }
 
         public virtual ICollection<TlPathway> TlPathways { get; set; }
-        public virtual ICollection<TqAwardingOrganisation> TqAwardingOrganisations { get; set; }
     }
 }
