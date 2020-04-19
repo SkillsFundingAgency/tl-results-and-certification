@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
             }
             else
             {
-                double cookieAndSessionTimeout = 20;
+                var cookieAndSessionTimeout = config.DfeSignInSettings.Timeout;
                 var overallSessionTimeout = TimeSpan.FromMinutes(cookieAndSessionTimeout);
 
                 services.AddAntiforgery(options =>
@@ -100,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     options.SecurityTokenValidator = new JwtSecurityTokenHandler
                     {
                         InboundClaimTypeMap = new Dictionary<string, string>(),
-                        TokenLifetimeInMinutes = int.Parse(cookieAndSessionTimeout.ToString()),
+                        TokenLifetimeInMinutes = cookieAndSessionTimeout,
                         SetDefaultTimesOnTokenCreation = true,
                     };
                     options.ProtocolValidator = new OpenIdConnectProtocolValidator

@@ -54,5 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// <summary>/// Gets or sets the authority./// </summary>
         /// <value>/// The authority./// </value>
         public string Authority { get; set; }
+
+        public int Timeout { get; set; }
     }
 }
