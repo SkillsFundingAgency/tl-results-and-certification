@@ -19,13 +19,13 @@
         <div class="govuk-header__content">
             @if (Context.User.Identity.IsAuthenticated)
             {
-                <a href="@Url.Action("Index", "Dashboard")" class="govuk-header__link govuk-header__link--service-name">
+                <a asp-route="Dashboard" class="govuk-header__link govuk-header__link--service-name">
                     @Header.Service_Name_Title
                 </a>
                 <button type="button" role="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">@Header.Menu_Text</button>
                 <ul id="navigation" class="govuk-header__navigation tl-float-right">
                     <li class="govuk-header__navigation-item">
-                        <a class="govuk-header__link" asp-controller="Account" asp-action="SignedOut">@Header.Signout_Link_Text</a>
+                        <a class="govuk-header__link" asp-route="SignOut">@Header.Signout_Link_Text</a>
                     </li>
                 </ul>
             }

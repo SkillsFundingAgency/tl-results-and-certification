@@ -96,7 +96,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     options.SaveTokens = true;
                     options.CallbackPath = new PathString(config.DfeSignInSettings.CallbackPath);
                     options.SignedOutCallbackPath = new PathString(config.DfeSignInSettings.SignedOutCallbackPath);
-                    options.SignedOutRedirectUri = "/account/signoutcomplete";
+                    options.SignedOutRedirectUri = "/signout-complete";
                     options.SecurityTokenValidator = new JwtSecurityTokenHandler
                     {
                         InboundClaimTypeMap = new Dictionary<string, string>(),
