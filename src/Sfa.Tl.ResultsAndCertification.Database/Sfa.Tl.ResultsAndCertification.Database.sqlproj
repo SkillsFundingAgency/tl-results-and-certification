@@ -66,12 +66,7 @@
     <Build Include="Tables\TlPathway.sql" />
     <Build Include="Tables\TlSpecialism.sql" />
     <Build Include="Tables\TqProvider.sql" />
-    <Build Include="Tables\TlPathwaySpecialismCombination.sql" />
-    <Build Include="Tables\TlPathwaySpecialismMar.sql" />
-    <None Include="PostDeployment\SeedTlMandatoryAdditionalRequirement.sql" />
     <None Include="PostDeployment\SeedTlPathways.sql" />
-    <None Include="PostDeployment\SeedTlPathwaySpecialismCombination.sql" />
-    <None Include="PostDeployment\SeedTlPathwaySpecialismMar.sql" />
     <None Include="PostDeployment\SeedTlRoutes.sql" />
     <None Include="PostDeployment\SeedTlSpecialisms.sql" />
     <None Include="PostDeployment\SeedTqAwardingOrganisations.sql" />
@@ -94,7 +89,6 @@
   <ItemGroup>
     <None Include="Sfa.Tl.ResultsAndCertification.Database.publish.xml" />
     <None Include="Sfa.Tl.ResultsAndCertification.Database.Local.publish.xml" />
-    <Build Include="Tables\TlMandatoryAdditionalRequirement.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="environment">
