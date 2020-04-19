@@ -5,6 +5,7 @@
 	[TlRouteId] INT NOT NULL,
 	[TlPathwayId] INT NOT NULL,
     [ReviewStatus] INT NOT NULL DEFAULT 1, -- 1 Awaiting Confirmation, 2 - Confirmed, 3 - Queried 
+	[IsActive] BIT NOT NULL DEFAULT(1),
     [CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 
     [ModifiedOn] DATETIME2 NULL, 
