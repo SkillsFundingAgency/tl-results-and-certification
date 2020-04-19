@@ -20,9 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!HttpContext.User.HasAccessToService())
             {
                 _logger.LogWarning(LogEvent.ServiceAccessDenied, $"Service access denied, User: {User?.GetUserEmail()}");
-                return (IActionResult)RedirectToRoute(RouteConstants.ServiceAccessDenied);
+                return RedirectToRoute(RouteConstants.ServiceAccessDenied);
             }
-
             return View();
         }
     }

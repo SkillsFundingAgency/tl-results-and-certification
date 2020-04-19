@@ -47,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
         
         [HttpGet]
+        [Route("signout", Name = RouteConstants.SignOut)]
         public async Task SignedOut()
         {
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
@@ -55,7 +56,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult SignOutComplete()
+        [Route("signout-complete", Name = RouteConstants.SignOutComplete)]
+        public IActionResult SignoutComplete()
         {
             return RedirectToAction(nameof(HomeController.Index), Constants.HomeController);
         }
