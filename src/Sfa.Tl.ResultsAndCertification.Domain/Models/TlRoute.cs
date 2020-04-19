@@ -11,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         }
 
         public string Name { get; set; }
+        public bool IsActive { get; set; }
 
         public virtual ICollection<TlPathway> TlPathways { get; set; }
         public virtual ICollection<TqAwardingOrganisation> TqAwardingOrganisations { get; set; }
