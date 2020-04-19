@@ -1,25 +1,19 @@
-﻿using IdentityModel.Client;
-using JWT.Algorithms;
-using JWT.Builder;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Models.Authentication;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Local;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -37,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                 {
                     options.Cookie.SecurePolicy = cookieSecurePolicy;
                 });
+
                 services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -59,6 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                 {
                     options.Cookie.SecurePolicy = cookieSecurePolicy;
                 });
+
                 services.AddAuthentication(options =>
                 {
                     options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -70,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     options.Cookie.Name = "tl-rc-auth-cookie";
                     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                     options.SlidingExpiration = true;
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(cookieAndSessionTimeout);
+                    options.ExpireTimeSpan = overallSessionTimeout;
                     options.LogoutPath = config.DfeSignInSettings.LogoutPath;
                     options.AccessDeniedPath = "/access-denied";
                 })
@@ -107,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     {
                         RequireSub = true,
                         RequireStateValidation = false,
-                        NonceLifetime = TimeSpan.FromMinutes(cookieAndSessionTimeout)
+                        NonceLifetime = overallSessionTimeout
                     };
 
                     options.DisableTelemetry = true;

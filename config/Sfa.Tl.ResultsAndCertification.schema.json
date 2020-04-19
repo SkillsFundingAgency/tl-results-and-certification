@@ -1,4 +1,4 @@
-{
+	{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {},
   "id": "http://example.com/example.json",
@@ -59,11 +59,16 @@
           "minLength": 1,
           "type": "string",
           "environmentVariable": "DfeSignInLogoutPath"
-        },
-		    "ProfileUrl": {
+        },		
+		"ProfileUrl": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "DfeProfileUrl"
+        },
+		"Timeout": {
+          "minLength": 1,
+          "type": "int",
+          "environmentVariable": "DfeSignInTimeout"
         },
         "Issuer": {
           "minLength": 1,
@@ -94,7 +99,7 @@
           "minLength": 1,
           "type": "string",
           "environmentVariable": "DfeSignInAuthority"
-        }
+        }		
       },
       "additionalProperties": false,
       "required": [
@@ -104,7 +109,8 @@
         "CallbackPath",
         "SignedOutCallbackPath",
         "LogoutPath",
-		    "ProfileUrl",
+		"ProfileUrl",
+		"Timeout",
         "Issuer",
         "Audience",
         "ApiSecret",
