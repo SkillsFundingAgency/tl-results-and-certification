@@ -22,7 +22,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [HttpGet]
+        [Route("signin", Name = RouteConstants.SignIn)]
         public async Task SignIn()
         {
             var returnUrl = Url.Action(nameof(AccountController.PostSignIn), Constants.AccountController);
@@ -59,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("account-profile", Name=RouteConstants.AccountProfile)]
+        [Route("account-profile", Name = RouteConstants.AccountProfile)]
         public IActionResult Profile()
         {
             if (_configuration == null || 

@@ -5,6 +5,7 @@
         // Route Constants
 
         // Account
+        public const string SignIn = "SignIn";
         public const string AccountProfile = "AccountProfile";
 
         // Dashboard
