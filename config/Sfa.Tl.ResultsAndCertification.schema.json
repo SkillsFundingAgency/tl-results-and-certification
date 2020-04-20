@@ -67,7 +67,7 @@
         },
 		"Timeout": {
           "minLength": 1,
-          "type": "int",
+          "type": "string",
           "environmentVariable": "DfeSignInTimeout"
         },
         "Issuer": {
