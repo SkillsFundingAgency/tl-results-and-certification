@@ -15,10 +15,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
     {
         public static IServiceCollection AddWebDataProtection(this IServiceCollection services, AzureServiceTokenProvider tokenProvider, ResultsAndCertificationConfiguration config, IWebHostEnvironment env)
         {
-            var cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(config.BlobStorageAccountName, config.BlobStorageAccountKey), useHttps: true);
+            var cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(config.BlobStorageSettings.AccountName, config.BlobStorageSettings.AccountKey), useHttps: true);
             var blobClient = cloudStorageAccount.CreateCloudBlobClient();
-            var container = blobClient.GetContainerReference(config.BlobStorageDataProtectionContainer);
-            var blob = container.GetBlockBlobReference(config.BlobStorageDataProtectionBlob);
+            var container = blobClient.GetContainerReference(config.DataProtectionSettings.ContainerName);
+            var blob = container.GetBlockBlobReference(config.DataProtectionSettings.BlobName);
 
             var sharedAccessPolicy = new SharedAccessBlobPolicy()
             {
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
             services.AddDataProtection()
                 .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken))
-                .ProtectKeysWithAzureKeyVault(kvClient, config.DataProtectionKeyVaultKeyId);
+                .ProtectKeysWithAzureKeyVault(kvClient, config.DataProtectionSettings.KeyVaultKeyId);
 
             return services;
         }

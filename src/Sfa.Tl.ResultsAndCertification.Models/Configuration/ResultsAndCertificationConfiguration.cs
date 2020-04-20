@@ -3,44 +3,20 @@
     public class ResultsAndCertificationConfiguration
     {
         /// <summary>
-        /// Gets or sets the BLOB storage account key.
+        /// Gets or sets the BLOB storage settings.
         /// </summary>
         /// <value>
-        /// The BLOB storage account key.
+        /// The BLOB storage settings.
         /// </value>
-        public string BlobStorageAccountKey { get; set; }
+        public BlobStorageSettings BlobStorageSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the Blob storage accout name.
+        /// Gets or sets the data protection settings.
         /// </summary>
         /// <value>
-        /// The BLOB storage account name.
+        /// The data protection settings.
         /// </value>
-        public string BlobStorageAccountName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Blob storage data protection uri storage container name.
-        /// </summary>
-        /// <value>
-        /// The BLOB storage data protection container.
-        /// </value>
-        public string BlobStorageDataProtectionContainer { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Blob storage data protection blob.
-        /// </summary>
-        /// <value>
-        /// The BLOB storage data protection blob.
-        /// </value>
-        public string BlobStorageDataProtectionBlob { get; set; }
-
-        /// <summary>
-        /// Gets or sets the data protection keyvault key ID.
-        /// </summary>
-        /// <value>
-        /// The BLOB storage data protection blob.
-        /// </value>
-        public string DataProtectionKeyVaultKeyId { get; set; }
+        public DataProtectionSettings DataProtectionSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the SQL connection string.
