@@ -43,6 +43,7 @@
         public const string ServiceAccessDenied = "ServiceAccessDenied";
         public const string AccessDenied = "AccessDenied";
         public const string ProblemWithService = "ProblemWithService";
+        public const string Error = "Error";
 
         // Help
         public const string CookiePolicy = "CookiePolicy";

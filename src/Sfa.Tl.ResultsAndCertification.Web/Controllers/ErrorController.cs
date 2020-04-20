@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [AllowAnonymous]
-        [Route("/error/{statusCode}")]
+        [Route("error/{statusCode}", Name = RouteConstants.Error)]
         public IActionResult HandleErrorCode(int statusCode)
         {   
             switch (statusCode)

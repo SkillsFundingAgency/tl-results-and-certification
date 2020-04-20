@@ -111,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 _logger.LogWarning(LogEvent.ProviderTlevelNotAdded, 
                     $"Unable to add provider T level. Method: AddProviderTlevelsAsync, Ukprn: {User.GetUkPrn()}, Provider: {viewModel.ProviderId}, User: {User.GetUserEmail()}");
-                return RedirectToRoute("error/500");
+                return RedirectToRoute("Error", new { StatusCode = 500 });
             }
         }
 
@@ -177,7 +177,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 _logger.LogWarning(LogEvent.ProviderTlevelNotRemoved,
                     $"Unable to remove provider T level. Method: RemoveTqProviderTlevelAsync(Ukprn: {User.GetUkPrn()}, id: {viewModel.Id}), User: {User.GetUserEmail()}");
-                return RedirectToRoute("error/500");
+                return RedirectToRoute("Error", new { StatusCode = 500 });
             }
         }
 

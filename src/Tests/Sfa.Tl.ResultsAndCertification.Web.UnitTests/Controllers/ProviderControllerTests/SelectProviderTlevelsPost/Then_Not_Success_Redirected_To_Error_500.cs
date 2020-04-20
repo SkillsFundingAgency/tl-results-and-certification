@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 using System.Collections.Generic;
 using Xunit;
@@ -29,7 +30,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         public void Then_Status_Update_Fail_Redirected_To_Error_500()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be("error/500");
+            var routeValue = (Result.Result as RedirectToRouteResult).RouteValues["StatusCode"];
+            routeName.Should().Be(RouteConstants.Error);
+            routeValue.Should().Be(500);
         }
     }
 }
