@@ -232,7 +232,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to opens in a new window or tab.
+        ///   Looks up a localized string similar to (opens in a new window or tab).
         /// </summary>
         public static string Opens_In_New_Window_Or_Tab_Text {
             get {
