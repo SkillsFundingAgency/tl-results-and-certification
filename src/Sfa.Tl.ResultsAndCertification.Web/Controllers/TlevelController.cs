@@ -144,7 +144,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 _logger.LogWarning(LogEvent.TlevelsNotConfirmed,
                     $"Unable to confirm T level. Method: ConfirmTlevelAsync, Ukprn: {User.GetUkPrn()}, PathwayId: {viewModel.PathwayId}, User: {User.GetUserEmail()}");
-                return RedirectToRoute("Error", new { StatusCode = 500 });
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
         }
 
@@ -188,7 +188,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 _logger.LogWarning(LogEvent.TlevelReportIssueFailed,
                     $"Unable to report T level issue. Method: ReportIssueAsync, Ukprn: {User.GetUkPrn()}, TqAwardingOrganisationId: {viewModel.TqAwardingOrganisationId}, User: {User.GetUserEmail()}");
-                return RedirectToRoute("Error", new { StatusCode = 500 });
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
         }
 
