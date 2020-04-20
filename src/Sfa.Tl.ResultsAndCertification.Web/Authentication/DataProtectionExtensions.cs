@@ -6,6 +6,7 @@ using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Auth;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 
@@ -13,27 +14,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 {
     public static class DataProtectionExtensions
     {
-        public static IServiceCollection AddWebDataProtection(this IServiceCollection services, AzureServiceTokenProvider tokenProvider, ResultsAndCertificationConfiguration config, IWebHostEnvironment env)
+        public static IServiceCollection AddWebDataProtection(this IServiceCollection services, ResultsAndCertificationConfiguration config, AzureServiceTokenProvider tokenProvider, IWebHostEnvironment env)
         {
-            var cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(config.BlobStorageSettings.AccountName, config.BlobStorageSettings.AccountKey), useHttps: true);
-            var blobClient = cloudStorageAccount.CreateCloudBlobClient();
-            var container = blobClient.GetContainerReference(config.DataProtectionSettings.ContainerName);
-            var blob = container.GetBlockBlobReference(config.DataProtectionSettings.BlobName);
-
-            var sharedAccessPolicy = new SharedAccessBlobPolicy()
+            if (!env.IsDevelopment())
             {
-                SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
-                Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
-            };
+                var cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(config.BlobStorageSettings.AccountName, config.BlobStorageSettings.AccountKey), useHttps: true);
+                var blobClient = cloudStorageAccount.CreateCloudBlobClient();
+                var container = blobClient.GetContainerReference(config.DataProtectionSettings.ContainerName);
+                var blob = container.GetBlockBlobReference(config.DataProtectionSettings.BlobName);
 
-            var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
+                var sharedAccessPolicy = new SharedAccessBlobPolicy()
+                {
+                    SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
+                    Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
+                };
 
-            var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(tokenProvider.KeyVaultTokenCallback));
+                var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
+                var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(tokenProvider.KeyVaultTokenCallback));
 
-            services.AddDataProtection()
-                .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken))
-                .ProtectKeysWithAzureKeyVault(kvClient, config.DataProtectionSettings.KeyVaultKeyId);
-
+                services.AddDataProtection()
+                        .PersistKeysToAzureBlobStorage(new Uri(blob.Uri + sasToken))
+                        .ProtectKeysWithAzureKeyVault(kvClient, config.DataProtectionSettings.KeyVaultKeyId);
+            }
             return services;
         }
     }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,12 +29,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web
     {
         private readonly IConfiguration _config;
         private readonly IWebHostEnvironment _env;
+        private readonly AzureServiceTokenProvider _tokenProvider;
 
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             _config = configuration;
             _env = env;
+            _tokenProvider = new AzureServiceTokenProvider();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -95,6 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.AddPolicy(RolesExtensions.RequireProviderEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor, RolesExtensions.CentresEditor));
             });
 
+            services.AddWebDataProtection(ResultsAndCertificationConfiguration, _tokenProvider, _env);
             RegisterDependencies(services);
         }
 
