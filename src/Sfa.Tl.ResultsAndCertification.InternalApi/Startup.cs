@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,11 +30,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
     {
         private readonly IWebHostEnvironment _env;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
+        private readonly AzureServiceTokenProvider _tokenProvider;
 
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             _env = env;
+            _tokenProvider = new AzureServiceTokenProvider();
         }
         public IConfiguration Configuration { get; }
 
@@ -68,6 +71,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                 });
                 services.AddApiAuthentication(ResultsAndCertificationConfiguration).AddApiAuthorization();
             }
+
+            services.AddApiDataProtection(ResultsAndCertificationConfiguration, _tokenProvider, _env);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
