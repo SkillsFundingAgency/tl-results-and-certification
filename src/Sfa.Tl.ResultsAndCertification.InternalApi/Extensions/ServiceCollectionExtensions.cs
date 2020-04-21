@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
 {
@@ -58,16 +59,21 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
         {
             var dataProtection = services.AddDataProtection();
 
-            if (!env.IsDevelopment())
+            if (env.IsDevelopment())
+            {
+                dataProtection.PersistKeysToFileSystem(new DirectoryInfo(Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "keys")))
+                              .SetApplicationName("ResultsAndCertification");
+            }
+            else
             {
                 var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(tokenProvider.KeyVaultTokenCallback));
-                dataProtection.PersistKeysToAzureBlobStorage(GetDataProtectionBlobToken(config))
+                dataProtection.PersistKeysToAzureBlobStorage(GetDataProtectionBlobTokenUri(config))
                               .ProtectKeysWithAzureKeyVault(kvClient, config.DataProtectionSettings.KeyVaultKeyId);
             }
             return services;
         }
 
-        private static Uri GetDataProtectionBlobToken(ResultsAndCertificationConfiguration config)
+        private static Uri GetDataProtectionBlobTokenUri(ResultsAndCertificationConfiguration config)
         {
             var cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(config.BlobStorageSettings.AccountName, config.BlobStorageSettings.AccountKey), useHttps: true);
             var blobClient = cloudStorageAccount.CreateCloudBlobClient();
@@ -81,7 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Extensions
             };
 
             var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
-            return new Uri(blob.Uri + sasToken);
+            return new Uri($"{blob.Uri}{sasToken}");
         }
     }
 }
