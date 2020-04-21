@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.AddPolicy(RolesExtensions.RequireProviderEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor, RolesExtensions.CentresEditor));
             });
 
-            //services.AddWebDataProtection(ResultsAndCertificationConfiguration, _tokenProvider, _env);
+            services.AddWebDataProtection(ResultsAndCertificationConfiguration, _tokenProvider, _env);
             RegisterDependencies(services);
         }
 
