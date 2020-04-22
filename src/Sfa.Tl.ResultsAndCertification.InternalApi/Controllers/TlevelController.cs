@@ -36,10 +36,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("{ukprn}/TlevelDetails/{id}")]
-        public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
+        [Route("{ukprn}/TlevelDetails/{pathwayId}")]
+        public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int pathwayId)
         {
-            return await _pathwayService.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
+            return await _pathwayService.GetTlevelDetailsByPathwayIdAsync(ukprn, pathwayId);
         }
 
         [HttpPut]

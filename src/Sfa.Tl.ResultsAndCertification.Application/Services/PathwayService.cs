@@ -21,10 +21,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
+        public async Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long aoUkprn, int pathwayId)
         {
-            var tlevel = await _pathwayRepository.GetFirstOrDefaultAsync(p => p.Id == id && 
-                                                                         p.TqAwardingOrganisations.Any(x => x.TlPathwayId == p.Id && x.TlAwardingOrganisaton.UkPrn == ukprn),
+            var tlevel = await _pathwayRepository.GetFirstOrDefaultAsync(p => p.Id == pathwayId && 
+                                                                         p.TqAwardingOrganisations.Any(x => x.TlPathwayId == p.Id && x.TlAwardingOrganisaton.UkPrn == aoUkprn),
                                                                          navigationPropertyPath: new Expression<Func<TlPathway, object>>[] { r => r.TlRoute, s => s.TlSpecialisms, s => s.TqAwardingOrganisations });
             return _mapper.Map<TlevelPathwayDetails>(tlevel);
         }
