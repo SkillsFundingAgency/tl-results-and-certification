@@ -51,7 +51,7 @@ $(document).ready(function () {
                     }
                 });
             },
-        onConfirm: (val) => {
+        onConfirm: function(val) {
             if (val != null) {
                 $('#SelectedProviderId').val(providerIds[val]);
             }
