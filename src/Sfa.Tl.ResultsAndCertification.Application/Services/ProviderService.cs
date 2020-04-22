@@ -34,12 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         /// <summary>
         /// Determines whether [is any provider setup completed asynchronous] [the specified ukprn].
         /// </summary>
-        /// <param name="ukprn">The ukprn.</param>
+        /// <param name="aoUkprn">The awarding organisation ukprn.</param>
         /// <returns></returns>
-        public async Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn)
+        public async Task<bool> IsAnyProviderSetupCompletedAsync(long aoUkprn)
         {
             var setupCount = await _tqProviderRepository
-                        .CountAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn);
+                        .CountAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn);
             return setupCount > 0;
         }
 
