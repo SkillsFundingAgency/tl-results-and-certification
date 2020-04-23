@@ -133,7 +133,7 @@
     <value>Expires</value>
   </data>
   <data name="Inactivity_Text" xml:space="preserve">
-    <value>After 20 minutes of inactivity</value>
+    <value>After 30 minutes of inactivity</value>
   </data>
   <data name="Keep_You_Logged_In_Text" xml:space="preserve">
     <value>keep you logged in during your browsing session</value>

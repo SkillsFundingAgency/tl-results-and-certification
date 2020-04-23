@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         ///            &lt;li&gt;enter student results - from August 2022&lt;/li&gt;
         ///        &lt;/ul&gt;
         ///
-        ///        &lt;p class=&quot;govuk-body govuk-!-margin-top-7&quot;&gt;You will be signed out if you are inactive for 20 m [rest of string was truncated]&quot;;.
+        ///        &lt;p class=&quot;govuk-body govuk-!-margin-top-7&quot;&gt;You will be signed out if you are inactive for 30 m [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Section_Text {
             get {
