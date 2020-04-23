@@ -17,18 +17,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
     {
         public static IServiceCollection AddWebDataProtection(this IServiceCollection services, ResultsAndCertificationConfiguration config, AzureServiceTokenProvider tokenProvider, IWebHostEnvironment env)
         {
-            var dataProtection = services.AddDataProtection();
-
             if (env.IsDevelopment())
             {
-                dataProtection.PersistKeysToFileSystem(new DirectoryInfo(Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "keys")))
-                              .SetApplicationName("ResultsAndCertification");
+                services.AddDataProtection()
+                        .PersistKeysToFileSystem(new DirectoryInfo(Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "keys")))
+                        .SetApplicationName("ResultsAndCertification");
             }
             else
             {
                 var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(tokenProvider.KeyVaultTokenCallback));
-                dataProtection.PersistKeysToAzureBlobStorage(GetDataProtectionBlobTokenUri(config))
-                              .ProtectKeysWithAzureKeyVault(kvClient, config.DataProtectionSettings.KeyVaultKeyId);
+
+                services.AddDataProtection()
+                        .PersistKeysToAzureBlobStorage(GetDataProtectionBlobTokenUri(config))
+                        .ProtectKeysWithAzureKeyVault(kvClient, config.DataProtectionSettings.KeyVaultKeyId);
             }
             return services;
         }
