@@ -1,13 +1,19 @@
-﻿
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Error
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Error.PageNotFoundViewModel
+
 @{
-    ViewData["Title"] = "Page not found";
+    ViewData["Title"] = @PageNotFound.Page_Title;
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
-        <p class="govuk-body">If you typed the web address, check it's correct.</p>
-        <p class="govuk-body">If you pasted the web address, check you copied the full address.</p>
-        <p class="govuk-body">If the web address is correct or you selected a link or button, <a href="#" class="govuk-link">contact the Manage T Levels team</a> to speak to someone about completing your T Levels tasks.</p>        
+        <h1 class="govuk-heading-l">@PageNotFound.Page_Heading</h1>
+        <p class="govuk-body">@PageNotFound.Verify_Web_Address_Text</p>
+        <p class="govuk-body">@PageNotFound.Verify_Address_Pasted_Text</p>
+        <p class="govuk-body">
+            @PageNotFound.Contact_Team_Info_Text_Part1
+            <a href="mailto: @Model.TechnicalSupportEmailAddress?subject=@PageNotFound.Email_Subject" class="govuk-link">@PageNotFound.Contact_Team_Email_Link_Text</a>
+            @PageNotFound.Contact_Team_Info_Text_Part2
+        </p>
     </div>
 </div>

@@ -501,6 +501,10 @@
             "type": "string",
             "value": "[variables('storageAccountName')]"
         },
+		"StorageAccountKey": {
+            "type": "string",
+            "value": "[reference('storage-account').outputs.storageKey.value]"
+        },
         "StorageConnectionString": {
             "type": "string",
             "value": "[reference('storage-account').outputs.storageConnectionString.value]"

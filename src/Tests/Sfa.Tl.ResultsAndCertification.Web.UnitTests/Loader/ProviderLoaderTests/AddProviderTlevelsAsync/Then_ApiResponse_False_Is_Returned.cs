@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
         public override void Given()
         {
             ExpectedResult = false;
-            InternalApiClient.AddProviderTlevelsAsync(Arg.Any<List<ProviderTlevelDetails>>())
+            InternalApiClient.AddProviderTlevelsAsync(Arg.Any<List<ProviderTlevel>>())
                 .Returns(ExpectedResult);
             Loader = new ProviderLoader(InternalApiClient, Mapper);            
         }

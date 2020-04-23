@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
         protected bool ActualResult;
         protected bool ExpectedResult;
         protected ProviderTlevelsViewModel ProviderTlevelsViewModel;
-        protected List<ProviderTlevelDetails> ProviderTlevelDetails;
+        protected List<ProviderTlevel> ProviderTlevelDetails;
 
         protected readonly string Givenname = "test";
         protected readonly string Surname = "user";
@@ -32,10 +32,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
 
         public override void Setup()
         {
-            ProviderTlevelDetails = new List<ProviderTlevelDetails>
+            ProviderTlevelDetails = new List<ProviderTlevel>
                     {
-                        new ProviderTlevelDetails { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 1, CreatedBy = "test user" },
-                        new ProviderTlevelDetails { TqAwardingOrganisationId = 2, ProviderId = 1, PathwayId = 2, CreatedBy = "test user" }
+                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, CreatedBy = "test user" },
+                        new ProviderTlevel { TqAwardingOrganisationId = 2, TlProviderId = 1, CreatedBy = "test user" }
                     };
 
             ProviderTlevelsViewModel = new ProviderTlevelsViewModel
@@ -43,10 +43,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
                 ProviderId = 1,
                 DisplayName = "Test1",
                 Ukprn = 12345,
-                Tlevels = new List<ProviderTlevelDetailsViewModel>
+                Tlevels = new List<ProviderTlevelViewModel>
                     {
-                        new ProviderTlevelDetailsViewModel { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 1, IsSelected = true },
-                        new ProviderTlevelDetailsViewModel { TqAwardingOrganisationId = 2, ProviderId = 1, PathwayId = 2, IsSelected = true }
+                        new ProviderTlevelViewModel { TqAwardingOrganisationId = 1, TlProviderId = 1, IsSelected = true },
+                        new ProviderTlevelViewModel { TqAwardingOrganisationId = 2, TlProviderId = 1, IsSelected = true }
                     }
             };
 
@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
                 c.AddMaps(typeof(ProviderMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<ProviderTlevelDetailsViewModel, ProviderTlevelDetails>(HttpContextAccessor) : null);
+                                new UserNameResolver<ProviderTlevelViewModel, ProviderTlevel>(HttpContextAccessor) : null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
         public override void Given()
         {
             ExpectedResult = true;            
-            InternalApiClient.AddProviderTlevelsAsync(Arg.Any<List<ProviderTlevelDetails>>())
+            InternalApiClient.AddProviderTlevelsAsync(Arg.Any<List<ProviderTlevel>>())
                 .Returns(ExpectedResult);
             Loader = new ProviderLoader(InternalApiClient, Mapper);
         }

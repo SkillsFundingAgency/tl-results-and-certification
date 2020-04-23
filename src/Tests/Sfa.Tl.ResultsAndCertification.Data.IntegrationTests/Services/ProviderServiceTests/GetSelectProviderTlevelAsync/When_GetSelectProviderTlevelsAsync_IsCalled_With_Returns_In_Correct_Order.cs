@@ -1,10 +1,8 @@
-﻿using System.Linq;
-using Xunit;
+﻿using Xunit;
 using FluentAssertions;
 using NSubstitute;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -41,11 +39,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
         {
             var actualResult = _result;
             actualResult.Should().NotBeNull();
-            actualResult.ProviderId.Should().Be(TlProvider.Id);
+            actualResult.Id.Should().Be(TlProvider.Id);
             actualResult.DisplayName.Should().Be(TlProvider.DisplayName);
             actualResult.Ukprn.Should().Be(TlProvider.UkPrn);
 
-            actualResult.Tlevels.Should().BeInAscendingOrder(x => x.RouteName);
+            actualResult.Tlevels.Should().BeInAscendingOrder(x => x.TlevelTitle);
         }
 
         protected override void SeedTestData()

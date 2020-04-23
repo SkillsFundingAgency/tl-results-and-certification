@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
         private bool _isSuccess;
         private IList<TlRoute> _routes;
         private IList<TlPathway> _pathways;
-        private List<ProviderTlevelDetails> _providerTlevelDetails;
+        private List<ProviderTlevel> _providerTlevelDetails;
         private IList<TqAwardingOrganisation> _tqAwardingOrganisations;
         private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
 
@@ -34,11 +34,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             TlproviderRepository = new GenericRepository<TlProvider>(TlProviderRepositoryLogger, DbContext);
             ProviderService = new ProviderService(ProviderRepository, TlproviderRepository, ProviderMapper, Logger);
 
-            _providerTlevelDetails = new List<ProviderTlevelDetails>();
+            _providerTlevelDetails = new List<ProviderTlevel>();
 
             foreach(var tqAo in _tqAwardingOrganisations)
             {
-                _providerTlevelDetails.Add(new ProviderTlevelDetails { TqAwardingOrganisationId = tqAo.Id, ProviderId = TlProvider.Id, PathwayId = tqAo.TlPathwayId, CreatedBy = "test user" });
+                _providerTlevelDetails.Add(new ProviderTlevel { TqAwardingOrganisationId = tqAo.Id, TlProviderId = TlProvider.Id, CreatedBy = "test user" });
             }
         }
 
@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
                 c.AddMaps(typeof(ProviderMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("DateTimeResolver") ?
-                                new DateTimeResolver<ProviderTlevelDetails, TqProvider>(new DateTimeProvider()) :
+                                new DateTimeResolver<ProviderTlevel, TqProvider>(new DateTimeProvider()) :
                                 null);
             });
             ProviderMapper = new Mapper(mapperConfig);

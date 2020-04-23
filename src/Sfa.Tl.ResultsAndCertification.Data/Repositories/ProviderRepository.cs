@@ -19,22 +19,20 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 where tlprov.Id == providerId
                                 select new ProviderTlevels
                                 {
-                                    ProviderId = tlprov.Id,
+                                    Id = tlprov.Id,
                                     DisplayName = tlprov.DisplayName,
                                     Ukprn = tlprov.UkPrn,
                                     Tlevels = (from tqao in _dbContext.TqAwardingOrganisation
                                                join tqprov in _dbContext.TqProvider on new { a = tqao.Id, b = providerId } equals new { a = tqprov.TqAwardingOrganisationId, b = tqprov.TlProviderId } into tlevels
                                                from result in tlevels.DefaultIfEmpty()
                                                join tlao in _dbContext.TlAwardingOrganisation on new { a = tqao.TlAwardingOrganisatonId, b = aoUkprn } equals new { a = tlao.Id, b = tlao.UkPrn }
-                                               select new ProviderTlevelDetails
+                                               select new ProviderTlevel
                                                {
                                                    TqAwardingOrganisationId = tqao.Id,
-                                                   ProviderId = tlprov.Id,
-                                                   PathwayId = tqao.TlPathway.Id,
-                                                   RouteName = tqao.TlRoute.Name,
-                                                   PathwayName = tqao.TlPathway.Name,
+                                                   TlProviderId = tlprov.Id,
+                                                   TlevelTitle = tqao.TlPathway.TlevelTitle,
                                                    TqProviderId = result.Id
-                                               }).OrderBy(o => o.RouteName).ThenBy(o => o.PathwayName)
+                                               }).OrderBy(o => o.TlevelTitle)
                                 }).FirstOrDefaultAsync();
 
             return result;
@@ -46,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 where tlprov.Id == providerId
                                 select new ProviderTlevels
                                 {
-                                    ProviderId = tlprov.Id,
+                                    Id = tlprov.Id,
                                     DisplayName = tlprov.DisplayName,
                                     Ukprn = tlprov.UkPrn,
                                     Tlevels = (from tqao in _dbContext.TqAwardingOrganisation
@@ -54,14 +52,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                from result in tlevels.DefaultIfEmpty()
                                                join tlao in _dbContext.TlAwardingOrganisation on new { a = tqao.TlAwardingOrganisatonId, b = ukprn } equals new { a = tlao.Id, b = tlao.UkPrn }
                                                where result == null
-                                               select new ProviderTlevelDetails
+                                               select new ProviderTlevel
                                                {
                                                    TqAwardingOrganisationId = tqao.Id,
-                                                   ProviderId = tlprov.Id,
-                                                   PathwayId = tqao.TlPathway.Id,
-                                                   RouteName = tqao.TlRoute.Name,
-                                                   PathwayName = tqao.TlPathway.Name
-                                               }).OrderBy(o => o.RouteName).ThenBy(o => o.PathwayName)
+                                                   TlProviderId = tlprov.Id,
+                                                   TlevelTitle = tqao.TlPathway.TlevelTitle
+                                               }).OrderBy(o => o.TlevelTitle)
                                 }).FirstOrDefaultAsync();
 
             return result;

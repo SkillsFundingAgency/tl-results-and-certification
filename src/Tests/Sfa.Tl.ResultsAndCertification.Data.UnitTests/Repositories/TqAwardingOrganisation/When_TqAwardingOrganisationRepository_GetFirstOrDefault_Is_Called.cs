@@ -40,7 +40,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AwardingOrg
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
             _result.TlAwardingOrganisatonId.Should().Be(expectedResult.TlAwardingOrganisatonId);
-            _result.TlRouteId.Should().Be(expectedResult.TlRouteId);
             _result.TlPathwayId.Should().Be(expectedResult.TlPathwayId);
             _result.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
             _result.CreatedOn.Should().Be(expectedResult.CreatedOn);

@@ -1,0 +1,17 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Layout
+
+<div id="tl-cookie-message" class="tl-cookie-banner govuk-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body govuk-!-padding-top-4">
+                @CookieBanner.Cookie_Message_Text
+            </p>
+            <a id="hide-cookie-message" class="tl-hide-cookie-button govuk-button govuk-!-margin-right-4" role="button" tabindex="0">
+                @CookieBanner.Hide_Cookie_Message_Button_Text
+            </a>
+            <a class="govuk-button" role="button" asp-route="CookiePolicy">
+                @CookieBanner.View_Cookie_Policy_Button_Text
+            </a>
+        </div>
+    </div>
+</div>

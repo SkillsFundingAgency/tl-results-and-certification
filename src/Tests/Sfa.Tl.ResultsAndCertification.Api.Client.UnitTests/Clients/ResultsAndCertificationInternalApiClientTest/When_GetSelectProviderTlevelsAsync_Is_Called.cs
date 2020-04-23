@@ -28,7 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         public override void Setup()
         {
             _tokenServiceClient = Substitute.For<ITokenServiceClient>();
-
             _configuration = new ResultsAndCertificationConfiguration
             {
                 ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
@@ -36,13 +35,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
             _mockHttpResult = new ProviderTlevels
             {
-                ProviderId = 1,
+                Id = 1,
                 DisplayName = "Test1",
                 Ukprn = _ukprn,
-                Tlevels = new List<ProviderTlevelDetails>
+                Tlevels = new List<ProviderTlevel>
                     {
-                        new ProviderTlevelDetails { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 1, RouteName = "Route1", PathwayName = "Pathway1"},
-                        new ProviderTlevelDetails { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 2, RouteName = "Route2", PathwayName = "Pathway2"}
+                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, TlevelTitle = "Tlevel Title1" },
+                        new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1, TlevelTitle = "Tlevel Title2" }
                     }
             };
         }
@@ -72,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             var actualResult = _result.Result;
 
             actualResult.Should().NotBeNull();
-            actualResult.ProviderId.Should().Be(_mockHttpResult.ProviderId);
+            actualResult.Id.Should().Be(_mockHttpResult.Id);
             actualResult.DisplayName.Should().Be(_mockHttpResult.DisplayName);
             actualResult.Ukprn.Should().Be(_mockHttpResult.Ukprn);
             actualResult.Tlevels.Should().NotBeNull();
@@ -82,9 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             actualProviderTlevelResult.Should().NotBeNull();
 
             actualProviderTlevelResult.TqAwardingOrganisationId.Should().Be(expectedTlevelResult.TqAwardingOrganisationId);
-            actualProviderTlevelResult.PathwayId.Should().Be(expectedTlevelResult.PathwayId);
-            actualProviderTlevelResult.PathwayName.Should().Be(expectedTlevelResult.PathwayName);
-            actualProviderTlevelResult.RouteName.Should().Be(expectedTlevelResult.RouteName);
+            actualProviderTlevelResult.TlevelTitle.Should().Be(expectedTlevelResult.TlevelTitle);
         }
     }
 }

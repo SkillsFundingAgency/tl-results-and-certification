@@ -1,6 +1,6 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver
 {

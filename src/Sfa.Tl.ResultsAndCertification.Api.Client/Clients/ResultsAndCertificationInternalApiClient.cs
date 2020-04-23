@@ -52,10 +52,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PutAsync<VerifyTlevelDetails, bool>(requestUri, model);
         }
 
-        public async Task<bool> AddProviderTlevelsAsync(IList<ProviderTlevelDetails> model)
+        public async Task<bool> AddProviderTlevelsAsync(IList<ProviderTlevel> model)
         {
             var requestUri = ApiConstants.AddProviderTlevelsUri;
-            return await PostAsync<IList<ProviderTlevelDetails>, bool>(requestUri, model);
+            return await PostAsync<IList<ProviderTlevel>, bool>(requestUri, model);
         }
 
         public async Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn)
@@ -88,48 +88,109 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IList<ProviderDetails>>(requestUri);
         }
 
+        public async Task<ProviderTlevelDetails> GetTqProviderTlevelDetailsAsync(long aoUkprn, int tqProviderId)
+        {
+            var requestUri = string.Format(ApiConstants.GetTqProviderTlevelDetailsAsyncUri, aoUkprn, tqProviderId);
+            return await GetAsync<ProviderTlevelDetails>(requestUri);
+        }
+
+        public async Task<bool> RemoveTqProviderTlevelAsync(long aoUkprn, int tqProviderId)
+        {
+            var requestUri = string.Format(ApiConstants.RemoveTqProviderTlevelAsyncUri, aoUkprn, tqProviderId);
+            return await DeleteAsync<bool>(requestUri);
+        }
+
+        #region Private Methods
+
+        /// <summary>
+        /// Sets the bearer token.
+        /// </summary>
         private async Task SetBearerToken()
         {
             if (!_isDevevelopment)
             {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _tokenServiceClient.GetToken());
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _tokenServiceClient.GetInternalApiToken());
             }
         }
 
+        /// <summary>
+        /// Gets the asynchronous.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="requestUri">The request URI.</param>
+        /// <returns></returns>
         private async Task<T> GetAsync<T>(string requestUri)
         {
             await SetBearerToken();
             var response = await _httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
-            var data = await response.Content.ReadAsAsync<T>();
-            return data;
+            return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
         }
 
         /// <summary>
-        /// Common method for making POST calls
+        /// Posts the asynchronous.
         /// </summary>
+        /// <typeparam name="TRequest">The type of the request.</typeparam>
+        /// <typeparam name="TResponse">The type of the response.</typeparam>
+        /// <param name="requestUri">The request URI.</param>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
         private async Task<TResponse> PostAsync<TRequest, TResponse>(string requestUri, TRequest content)
         {
             await SetBearerToken();
             var response = await _httpClient.PostAsync(requestUri, CreateHttpContent<TRequest>(content));
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsAsync<TResponse>();
+            return JsonConvert.DeserializeObject<TResponse>(await response.Content.ReadAsStringAsync());
         }
 
+           /// <summary>
+        /// Puts the asynchronous.
+        /// </summary>
+        /// <typeparam name="TRequest">The type of the request.</typeparam>
+        /// <typeparam name="TResponse">The type of the response.</typeparam>
+        /// <param name="requestUri">The request URI.</param>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
         private async Task<TResponse> PutAsync<TRequest, TResponse>(string requestUri, TRequest content)
         {
             await SetBearerToken();
             var response = await _httpClient.PutAsync(requestUri, CreateHttpContent<TRequest>(content));
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsAsync<TResponse>();
+            return JsonConvert.DeserializeObject<TResponse>(await response.Content.ReadAsStringAsync());
         }
 
+        /// <summary>
+        /// Deletes the asynchronous.
+        /// </summary>
+        /// <typeparam name="TResponse">The type of the response.</typeparam>
+        /// <param name="requestUri">The request URI.</param>
+        /// <returns></returns>
+        private async Task<TResponse> DeleteAsync<TResponse>(string requestUri)
+        {
+            await SetBearerToken();
+            var response = await _httpClient.DeleteAsync(requestUri);
+            response.EnsureSuccessStatusCode();
+            return JsonConvert.DeserializeObject<TResponse>(await response.Content.ReadAsStringAsync());
+        }
+
+        /// <summary>
+        /// Creates the content of the HTTP.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="content">The content.</param>
+        /// <returns></returns>
         private HttpContent CreateHttpContent<T>(T content)
         {
             var json = JsonConvert.SerializeObject(content, MicrosoftDateFormatSettings);
             return new StringContent(json, Encoding.UTF8, "application/json");
         }
 
+        /// <summary>
+        /// Gets the microsoft date format settings.
+        /// </summary>
+        /// <value>
+        /// The microsoft date format settings.
+        /// </value>
         private static JsonSerializerSettings MicrosoftDateFormatSettings
         {
             get
@@ -140,5 +201,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                 };
             }
         }
+
+        #endregion
     }
 }

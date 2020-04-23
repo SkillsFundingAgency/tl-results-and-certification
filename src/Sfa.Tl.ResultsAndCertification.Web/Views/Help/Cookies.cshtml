@@ -1,179 +1,64 @@
-﻿
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Help
+
 @{
-    ViewData["Title"] = "Cookies";
+    ViewData["Title"] = @Cookies.Page_Title;
 }
 
-<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Cookies</h1>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">
+            @Cookies.Section_Heading
+        </h1>
 
-            <section class="text">
-                <h2 class="govuk-heading-l">Cookies</h2>
-                <p class="govuk-body">
-                    This service puts small files (known as ‘cookies’) on to your computer. Most websites do this. These
-                    cookies are used to:
-                </p>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>help us understand how you use the service, so we can improve it</li>
-                    <li>remember which notifications you’ve seen so you’re not shown them again</li>
-                    <li>temporarily store the information you enter (eg, your postcode)</li>
-                </ul>
-                <p class="govuk-body">
-                    The cookies aren’t used to identify you personally. They’re put on to your computer to make the service
-                    work better for you. You can edit or delete the cookies.
-                </p>
-                <p class="govuk-body">Find out how to <a href="http://www.aboutcookies.org/" rel="external" target="_blank" title="This will open in a new window">edit and delete cookies</a>.</p>
-            </section>
+        <p class="govuk-body">@Cookies.Cookies_Are_Files_Text</p>
+        <p class="govuk-body">@Cookies.We_Only_Use_Cookies_Text</p>
+        <p class="govuk-body">@Cookies.These_Essential_Cookies_Text</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@Cookies.Remember_Which_Notifications_Text</li>
+            <li>@Cookies.Temporarily_Store_Text</li>
+            <li>@Cookies.Keep_You_Logged_In_Text</li>
+        </ul>
+        <p class="govuk-body">@Cookies.They_Are_Automatically_Enabled_Text</p>
 
-            <section class="text">
-                <h2 class="govuk-heading-m">Session cookies</h2>
-                <p class="govuk-body">
-                    We store session cookies on your computer to help keep your information secure while you use the service.
-                </p>
-                <table class="govuk-table" summary="Table of session cookies stored on your computer to help keep your information secure while you use the service">
-                    <caption hidden="hidden">Session cookies stored on your computer</caption>
-                    <colgroup>
-                        <col class="t20">
-                        <col class="t60">
-                        <col class="t20">
-                        <col>
-                    </colgroup>
-                    <thead class="govuk-table__head">
-                        <tr class="govuk-table__row">
-                            <th class="govuk-table__header">
-                                Name
-                            </th>
-                            <th class="govuk-table__header">
-                                Purpose
-                            </th>
-                            <th class="govuk-table__header">
-                                Expires
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="govuk-table__row">
-                            <td class="govuk-table__cell">
-                                User.Auth
-                            </td>
-                            <td class="govuk-table__cell">
-                                Stores encrypted information that is used by the server to identify the signed in user.
-                            </td>
-                            <td class="govuk-table__cell">
-                                2 hours
-                            </td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                            <td class="govuk-table__cell">
-                                User.Context
-                            </td>
-                            <td class="govuk-table__cell">
-                                Stores the email address and full name of a signed in user.
-                            </td>
-                            <td class="govuk-table__cell">
-                                Session
-                            </td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                            <td class="govuk-table__cell">
-                                __RequestVerificationToken
-                            </td>
-                            <td class="govuk-table__cell">
-                                This is an anti-forgery token and is used to prevent cross-site request forgery (CSRF)
-                                attacks.
-                                It prevents others from forging your website links.
+        <table class="govuk-table govuk-!-margin-top-7">
+            <caption class="govuk-table__caption govuk-heading-m">@Cookies.Protecting_Your_Security_Text</caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">@Cookies.Name_Text</th>
+                    <th scope="col" class="govuk-table__header">@Cookies.Purpose_Text</th>
+                    <th scope="col" class="govuk-table__header">@Cookies.Expires_Text</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <td scope="row" class="govuk-table__cell">@Cookies.Csrf_Token_Text</td>
+                    <td class="govuk-table__cell">@Cookies.Used_To_Prevent_Css_Attacks_Text</td>
+                    <td class="govuk-table__cell">@Cookies.When_The_Browser_Is_Closed</td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <td scope="row" class="govuk-table__cell">@Cookies.Csrf_Cookie_Name_Text</td>
+                    <td class="govuk-table__cell">@Cookies.Used_To_Prevent_Cross_Site_Scripting_Attacks_Text</td>
+                    <td class="govuk-table__cell">@Cookies.When_The_Browser_Is_Closed</td>
+                </tr>
+            </tbody>
+        </table>
 
-                            </td>
-                            <td class="govuk-table__cell">
-                                Session
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <section class="text">
-                <h2 class="govuk-heading-m">Our introductory message</h2>
-                <p class="govuk-body">
-                    You may see a pop-up welcome message when you first visit GOV.UK. We’ll store a cookie so that your
-                    computer knows you’ve seen it and knows not to show it again.
-                </p>
-
-                <table class="govuk-table" summary="Cookie message stored on your computer">
-                    <caption hidden="hidden">Cookie message stored on your computer</caption>
-                    <thead class="govuk-table__head">
-                        <tr class="govuk-table__row">
-                            <th class="govuk-table__header">Name</th>
-                            <th class="govuk-table__header">Purpose</th>
-                            <th class="govuk-table__header">Expires</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="govuk-table__row">
-                            <td class="govuk-table__cell">seen_cookie_message</td>
-                            <td class="govuk-table__cell">
-                                Saves a message to let us know that you’ve seen our cookie message
-                            </td>
-                            <td class="govuk-table__cell">1 month</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <section class="text">
-                <h2 class="govuk-heading-l">Google Analytics</h2>
-                <p class="govuk-body">
-                    We use Google Analytics software to collect information about how you use ESFA sites.
-                    We do this to help make sure our sites are meeting the needs of their users and to help
-                    us make improvements.
-                </p>
-
-                <p class="govuk-body">Google Analytics stores information about:</p>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>how you got to our sites</li>
-                    <li>the pages you visit on ESFA sites</li>
-                    <li>how long you spend on each ESFA page</li>
-                    <li>what you click on while you’re visiting our sites</li>
-                </ul>
-                <p class="govuk-body">
-                    We don’t collect or store your personal information (for example your name or address) so this
-                    information can’t be used to identify who you are.
-                </p>
-                <p class="govuk-body">We don’t allow Google to use or share our analytics data.</p>
-                <p class="govuk-body">You can opt out of Google Analytics cookies.</p>
-            </section>
-
-            <section class="text">
-                <h2 class="govuk-heading-l">Universal Analytics</h2>
-                <table class="govuk-table" summary="Universal Analytics">
-                    <caption hidden="hidden">Universal Analytics</caption>
-                    <thead class="govuk-table__head">
-                        <tr class="govuk-table__row">
-                            <th class="govuk-table__header">Name</th>
-                            <th class="govuk-table__header">Purpose</th>
-                            <th class="govuk-table__header">Expires</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="govuk-table__row">
-                            <td class="govuk-table__cell">_ga</td>
-                            <td class="govuk-table__cell">
-                                This helps us count how many people visit ESFA sites by tracking
-                                if you’ve visited before
-                            </td>
-                            <td class="govuk-table__cell">2 years</td>
-                        </tr>
-                        <tr>
-                            <td class="govuk-table__cell">_gat</td>
-                            <td class="govuk-table__cell">Used to manage the rate at which page view requests are made</td>
-                            <td class="govuk-table__cell">10 minutes</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-        </div>
+        <table class="govuk-table govuk-!-margin-top-7">
+            <caption class="govuk-table__caption govuk-heading-m">@Cookies.Logging_In_And_Authentication_Text</caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header">@Cookies.Name_Text</th>
+                    <th scope="col" class="govuk-table__header">@Cookies.Purpose_Text</th>
+                    <th scope="col" class="govuk-table__header">@Cookies.Expires_Text</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <td scope="row" class="govuk-table__cell">@Cookies.Authentication_Cookie_Name_Text</td>
+                    <td class="govuk-table__cell">@Cookies.Used_To_Track_Your_Current_Session_Text</td>
+                    <td class="govuk-table__cell">@Cookies.Inactivity_Text</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</main>
-
+</div>

@@ -1,9 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 using System.Collections.Generic;
 using Xunit;
@@ -13,8 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 {
     public class Then_On_Success_Redirected_To_ProviderTlevelConfirmation_Route : When_SelectProviderTlevelsAsync_Post_Action_Is_Called
     {
-        private readonly int pathwayId = 99;
-
         public override void Given()
         {
             InputViewModel = new ProviderTlevelsViewModel
@@ -22,10 +18,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
                 ProviderId = 1,
                 DisplayName = "Test",
                 Ukprn = 10000111,
-                Tlevels = new List<ProviderTlevelDetailsViewModel>
+                Tlevels = new List<ProviderTlevelViewModel>
                 {
-                    new ProviderTlevelDetailsViewModel { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 1, TlevelTitle = "Route1: Pathway1", IsSelected = true },
-                    new ProviderTlevelDetailsViewModel { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 2, TlevelTitle = "Route1: Pathway1" }
+                    new ProviderTlevelViewModel { TqAwardingOrganisationId = 1, TlProviderId = 1, TlevelTitle = "Route1: Pathway1", IsSelected = true },
+                    new ProviderTlevelViewModel { TqAwardingOrganisationId = 1, TlProviderId = 1, TlevelTitle = "Route1: Pathway1" }
                 }
             };
 

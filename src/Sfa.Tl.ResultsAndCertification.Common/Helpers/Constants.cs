@@ -17,6 +17,6 @@
 
         public const string IsRedirect = "IsRedirect";
         public const string ProviderTlevelsViewModel = "ProviderTlevelsViewModel";
-        
+        public const string ProviderTlevelDetailsViewModel = "ProviderTlevelDetailsViewModel";
     }
 }

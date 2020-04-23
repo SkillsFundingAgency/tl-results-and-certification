@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         {
             ApiClientResponse = new List<AwardingOrganisationPathwayStatus>
             {
-                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = PathwayId2, PathwayName = "Path11", RouteName = "Route1", StatusId = 3 },
+                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = PathwayId2, TlevelTitle = "Tlevel Title", StatusId = 3 },
             };
 
             InternalApiClient.GetAllTlevelsByUkprnAsync(Ukprn).Returns(ApiClientResponse);
@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         {
             var expectedReponse = ApiClientResponse.FirstOrDefault();
             var expectedConfirmationText = string.Format(Confirmation.Section_Heading, EnumExtensions.GetEnumValue<TlevelReviewStatus>(expectedReponse.StatusId).ToString().ToLowerInvariant());
-            var expectedTlevelTitle = $"{expectedReponse.RouteName}: {expectedReponse.PathwayName}";
+            var expectedTlevelTitle = expectedReponse.TlevelTitle;
 
             ActualResult.Should().NotBeNull();
             ActualResult.IsQueried.Should().Be(true);

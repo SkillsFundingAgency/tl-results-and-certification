@@ -1,21 +1,22 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.ViewProviderTlevels.ProviderViewModel
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Provider
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.ViewProviderTlevels.ProviderViewModel
 
 @{
-    ViewData["Title"] = "Provider’s T Levels list";
+    ViewData["Title"] = @ViewProviderTlevels.Page_Title;
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">
-            Provider's T Levels
+            @ViewProviderTlevels.Page_Heading
         </h1>
 
         <h2 class="govuk-heading-l">
-            @Model.DisplayName <span class="govuk-hint"><abbr>UKPRN</abbr>: @Model.Ukprn</span>
+            @Model.DisplayName <span class="govuk-hint"><abbr>@ViewProviderTlevels.Ukprn_Text</abbr>: @Model.Ukprn</span>
         </h2>
 
-        <p class="govuk-body govuk-!-margin-bottom-5">This provider is offering:</p>
+        <p class="govuk-body govuk-!-margin-bottom-5">@ViewProviderTlevels.Section_Information_Text</p>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-3">
 
@@ -27,7 +28,7 @@
                     </dd>
 
                     <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="#TODO">
+                        <a class="govuk-link" asp-route="RemoveProviderTlevel" asp-route-id="@tlevel.TqProviderId" asp-route-navigation="@Model.IsNavigatedFromYourProvider">
                             Remove <span class="govuk-visually-hidden">@tlevel.TlevelTitle</span>
                         </a>
                     </dd>
@@ -36,16 +37,20 @@
         </dl>
         @if (Model.ShowAnotherTlevelButton)
         {
-            <p><a class="govuk-button govuk-button--secondary" role="button" asp-route="SelectProviderTlevels" asp-route-providerId="@Model.ProviderId">Add another T Level</a></p>
+            <p>
+                <a class="govuk-button govuk-button--secondary" role="button" asp-route="AddProviderTlevels" asp-route-providerId="@Model.ProviderId">
+                    @ViewProviderTlevels.AddAnotherTlevels_Button_Text
+                </a>
+            </p>
         }
 
-        @if (Model.IsNavigatedFromYourProviders)
+        @if (Model.IsNavigatedFromFindProvider)
         {
-            <p><a class="govuk-button" role="button" asp-route="YourProviders">Back to your providers</a></p>
+            <p><a class="govuk-button" role="button" asp-route="FindProvider">@ViewProviderTlevels.FindAnotherProvider_Button_Text</a></p>
         }
         else
         {
-            <p><a class="govuk-button" role="button" asp-route="FindProvider">Find another provider</a></p>
+            <p><a class="govuk-button" role="button" asp-route="YourProviders">@ViewProviderTlevels.BackToYourProvider_Button_Text</a></p>
         }
 
     </div>

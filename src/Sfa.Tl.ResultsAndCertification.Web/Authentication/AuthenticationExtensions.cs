@@ -1,23 +1,19 @@
-﻿using IdentityModel.Client;
-using JWT.Algorithms;
-using JWT.Builder;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Models.Authentication;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Local;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -35,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                 {
                     options.Cookie.SecurePolicy = cookieSecurePolicy;
                 });
+
                 services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -50,13 +47,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
             }
             else
             {
-                double cookieAndSessionTimeout = 20;
+                var cookieAndSessionTimeout = config.DfeSignInSettings.Timeout;
                 var overallSessionTimeout = TimeSpan.FromMinutes(cookieAndSessionTimeout);
 
                 services.AddAntiforgery(options =>
                 {
                     options.Cookie.SecurePolicy = cookieSecurePolicy;
                 });
+
                 services.AddAuthentication(options =>
                 {
                     options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -68,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     options.Cookie.Name = "tl-rc-auth-cookie";
                     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                     options.SlidingExpiration = true;
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(cookieAndSessionTimeout);
+                    options.ExpireTimeSpan = overallSessionTimeout;
                     options.LogoutPath = config.DfeSignInSettings.LogoutPath;
                     options.AccessDeniedPath = "/access-denied";
                 })
@@ -77,7 +75,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     options.MetadataAddress = config.DfeSignInSettings.MetadataAddress;
                     options.RequireHttpsMetadata = false;
-
                     options.ClientId = config.DfeSignInSettings.ClientId;
                     options.ClientSecret = config.DfeSignInSettings.ClientSecret;
                     options.ResponseType = OpenIdConnectResponseType.Code;
@@ -87,9 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     options.Scope.Add("openid");
                     options.Scope.Add("email");
                     options.Scope.Add("profile");
-
                     options.Scope.Add("organisation");
-                    options.Scope.Add("offline_access");
 
                     // When we expire the session, ensure user is prompted to sign in again at DfE Sign In
                     options.MaxAge = overallSessionTimeout;
@@ -97,18 +92,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     options.SaveTokens = true;
                     options.CallbackPath = new PathString(config.DfeSignInSettings.CallbackPath);
                     options.SignedOutCallbackPath = new PathString(config.DfeSignInSettings.SignedOutCallbackPath);
-                    options.SignedOutRedirectUri = "/account/signoutcomplete";
+                    options.SignedOutRedirectUri = "/signout-complete";
                     options.SecurityTokenValidator = new JwtSecurityTokenHandler
                     {
                         InboundClaimTypeMap = new Dictionary<string, string>(),
-                        TokenLifetimeInMinutes = int.Parse(cookieAndSessionTimeout.ToString()),
+                        TokenLifetimeInMinutes = cookieAndSessionTimeout,
                         SetDefaultTimesOnTokenCreation = true,
                     };
                     options.ProtocolValidator = new OpenIdConnectProtocolValidator
                     {
                         RequireSub = true,
                         RequireStateValidation = false,
-                        NonceLifetime = TimeSpan.FromMinutes(cookieAndSessionTimeout)
+                        NonceLifetime = overallSessionTimeout
                     };
 
                     options.DisableTelemetry = true;
@@ -129,8 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                                 if (isSpuriousAuthCbRequest)
                                 {
                                     context.HandleResponse();
-                                    context.Response.StatusCode = 302;
-                                    context.Response.Headers["Location"] = "/";
+                                    context.Response.Redirect("/");
                                 }
                                 return Task.CompletedTask;
                             },
@@ -140,103 +134,44 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // In these cases, rather than send user to a 500 page, prompt them to re-authenticate.
                         // This is derived from the recommended approach: https://github.com/aspnet/Security/issues/1165
                         OnRemoteFailure = ctx =>
-                            {
-                                ctx.HandleResponse();
-                                return Task.FromException(ctx.Failure);
-                            },
-
-                        OnRedirectToIdentityProvider = context =>
                         {
-                            return Task.CompletedTask;
+                            ctx.HandleResponse();
+                            return Task.FromException(ctx.Failure);
                         },
 
                         // that event is called after the OIDC middleware received the authorisation code,
                         // redeemed it for an access token and a refresh token,
                         // and validated the identity token
-                        OnTokenValidated = async x =>
+                        OnTokenValidated = async ctx =>
                         {
-                            var cliendId = config.DfeSignInSettings.ClientId;
-                            var issuer = config.DfeSignInSettings.Issuer;
-                            var audience = config.DfeSignInSettings.Audience;
-                            var apiSecret = config.DfeSignInSettings.ApiSecret;
-                            var apiUri = config.DfeSignInSettings.ApiUri;
+                            var organisation = JObject.Parse(ctx.Principal.FindFirst("Organisation").Value);
+                            var organisationId = organisation["id"].ToString();
+                            var userId = ctx.Principal.FindFirst("sub").Value;
+                            var ukprn = organisation["ukprn"].ToObject<int?>();
+                            var dfeSignInApiClient = ctx.HttpContext.RequestServices.GetService<IDfeSignInApiClient>();
+                            var userInfo = await dfeSignInApiClient.GetUserInfo(organisationId, userId);
 
-                            Throw.IfNull(issuer, nameof(issuer));
-                            Throw.IfNull(audience, nameof(audience));
-                            Throw.IfNull(apiSecret, nameof(apiSecret));
-                            Throw.IfNull(apiUri, nameof(apiUri));
-
-                            var token = new JwtBuilder()
-                                .WithAlgorithm(new HMACSHA256Algorithm())
-                                .Issuer(issuer)
-                                .Audience(audience)
-                                .WithSecret(apiSecret)
-                                .Build();
-
-                            //Gather user/org details
-                            var identity = (ClaimsIdentity)x.Principal.Identity;
-                            Organisation organisation;
-                            try
+                            var claims = new List<Claim>()
                             {
-                                organisation = JsonConvert.DeserializeObject<Organisation>(
-                                identity.Claims.Where(c => c.Type == "organisation")
-                                .Select(c => c.Value).FirstOrDefault());
-                            }
-                            catch
-                            {
-                                throw new SystemException("Unable to get organisation details from DFE. Please clear session cookies, or try using private browsing mode.");
-                            }
-
-                            var userClaims = new DfeClaims()
-                            {
-                                UserId = Guid.Parse(identity.Claims.Where(c => c.Type == "sub").Select(c => c.Value).SingleOrDefault()),
-                                ServiceId = Guid.Parse(identity.Claims.Where(c => c.Type == "sid").Select(c => c.Value).SingleOrDefault())
+                                new Claim(CustomClaimTypes.HasAccessToService, userInfo.HasAccessToService.ToString()),
+                                new Claim(CustomClaimTypes.UserId, userId),
+                                new Claim(ClaimTypes.GivenName, ctx.Principal.FindFirst("given_name").Value),
+                                new Claim(ClaimTypes.Surname, ctx.Principal.FindFirst("family_name").Value),
+                                new Claim(ClaimTypes.Email, ctx.Principal.FindFirst("email").Value),
+                                new Claim(CustomClaimTypes.Ukprn, ukprn.HasValue ? ukprn.Value.ToString() : string.Empty),
+                                new Claim(CustomClaimTypes.OrganisationId, organisationId)
                             };
 
-                            var client = new HttpClient();
-                            client.SetBearerToken(token);
-                            var response = await client.GetAsync($"{apiUri}/services/{cliendId}/organisations/{organisation.Id}/users/{userClaims.UserId}");
-                            bool hasAccessToService = true;
-
-                            if (response.IsSuccessStatusCode)
+                            if (userInfo.Roles != null && userInfo.Roles.Any())
                             {
-                                var json = response.Content.ReadAsStringAsync().Result;
-                                userClaims = JsonConvert.DeserializeObject<DfeClaims>(json);
-                                userClaims.RoleName = userClaims.Roles.Select(r => r.Name).FirstOrDefault();
-                            }
-                            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                            {
-                                hasAccessToService = false;
+                                claims.AddRange(userInfo.Roles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
                             }
 
-                            userClaims.UKPRN = organisation.UKPRN.HasValue ? organisation.UKPRN.Value.ToString() : string.Empty;
-                            userClaims.UserName = identity.Claims.Where(c => c.Type == "email").Select(c => c.Value).SingleOrDefault();
-                            userClaims.FirstName = identity.Claims.Where(c => c.Type == "given_name").Select(c => c.Value).SingleOrDefault();
-                            userClaims.Surname = identity.Claims.Where(c => c.Type == "family_name").Select(c => c.Value).SingleOrDefault();
-
-                            if (userClaims.Roles != null && userClaims.Roles.Any())
-                            {
-                                foreach (var role in userClaims.Roles)
-                                {
-                                    identity.AddClaim(new Claim(ClaimTypes.Role, role.Name));
-                                }
-                            }
-
-                            // store both access and refresh token in the claims - hence in the cookie
-                            identity.AddClaims(new[]
-                            {
-                                new Claim(CustomClaimTypes.HasAccessToService, hasAccessToService.ToString()),
-                                new Claim(CustomClaimTypes.UserId, userClaims.UserId.ToString()),
-                                new Claim(ClaimTypes.GivenName, userClaims.FirstName),
-                                new Claim(ClaimTypes.Surname, userClaims.Surname),
-                                new Claim(ClaimTypes.Email, userClaims.UserName),
-                                new Claim(CustomClaimTypes.Ukprn, userClaims.UKPRN),
-                                new Claim(CustomClaimTypes.OrganisationId, organisation.Id.ToString().ToUpper())
-                            });
+                            ctx.Principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "DfE-SignIn"));
 
                             // so that we don't issue a session cookie but one with a fixed expiration
-                            x.Properties.IsPersistent = true;
-                            x.Properties.ExpiresUtc = DateTime.UtcNow.Add(overallSessionTimeout);
+                            ctx.Properties.IsPersistent = true;
+                            ctx.Properties.ExpiresUtc = DateTime.UtcNow.Add(overallSessionTimeout);
                         }
                     };
                 });

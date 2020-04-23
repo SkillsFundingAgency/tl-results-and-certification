@@ -18,7 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 TlAwardingOrganisaton = tlAwardingOrganisation,
                 TlPathway = pathway,
-                TlRoute = route,
                 ReviewStatus = 1,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
@@ -39,7 +38,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 {
                     TlAwardingOrganisaton = tlAwardingOrganisation,
                     TlPathway = pathway,
-                    TlRoute = pathway.TlRoute,
                     ReviewStatus = 1,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
@@ -62,7 +60,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 {
                     TlAwardingOrganisaton = tlAwardingOrg,
                     TlPathway = pathway,
-                    TlRoute = pathway.TlRoute,
                     ReviewStatus = (int)tlevelReviewStatus,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,

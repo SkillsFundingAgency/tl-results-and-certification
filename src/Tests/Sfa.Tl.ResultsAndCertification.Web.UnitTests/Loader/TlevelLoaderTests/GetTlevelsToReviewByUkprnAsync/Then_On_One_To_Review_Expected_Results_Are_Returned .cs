@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         {
             ApiClientResponse = new List<AwardingOrganisationPathwayStatus>
             {
-                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = 11, PathwayName = "Path11", RouteName = "Route1", StatusId = 1 },
+                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = 11, TlevelTitle = "Tlevel Title", StatusId = 1 },
             };
 
             InternalApiClient.GetAllTlevelsByUkprnAsync(Ukprn)

@@ -12,9 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
         }
 
         public bool IsAnyReviewPending { get; set; }
-        //public string PageTitle { get; set; }
-        //public string SectionTitle { get; set; }
-
         public List<YourTlevelViewModel> ConfirmedTlevels { get; set; }
         public List<YourTlevelViewModel> QueriedTlevels { get; set; }
     }

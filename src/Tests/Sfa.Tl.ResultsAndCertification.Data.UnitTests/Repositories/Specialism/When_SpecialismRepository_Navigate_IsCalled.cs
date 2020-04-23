@@ -31,7 +31,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
         {
             _result.Should().NotBeNull();
             _result.TlPathway.Should().NotBeNull();
-            _result.TlPathwaySpecialismMars.Should().NotBeNull();
         }
 
         [Fact]

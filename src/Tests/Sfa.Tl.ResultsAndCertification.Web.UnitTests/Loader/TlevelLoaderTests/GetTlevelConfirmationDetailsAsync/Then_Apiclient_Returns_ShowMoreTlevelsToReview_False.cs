@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         {
             ApiClientResponse = new List<AwardingOrganisationPathwayStatus>
             {
-                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = PathwayId, PathwayName = "Path11", RouteName = "Route1", StatusId = 2 },
+                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = PathwayId, TlevelTitle = "Tlevel Title", StatusId = 2 },
             };
 
             InternalApiClient.GetAllTlevelsByUkprnAsync(Ukprn)
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
 
             ActualResult.PathwayId.Should().Be(PathwayId);
             ActualResult.TlevelConfirmationText.Should().Be("T Level details confirmed");
-            ActualResult.TlevelTitle.Should().Be("Route1: Path11");
+            ActualResult.TlevelTitle.Should().Be("Tlevel Title");
         }
     }
 }

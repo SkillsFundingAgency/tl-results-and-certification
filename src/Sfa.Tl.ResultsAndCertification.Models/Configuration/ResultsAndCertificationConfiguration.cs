@@ -3,12 +3,20 @@
     public class ResultsAndCertificationConfiguration
     {
         /// <summary>
-        /// Gets or sets the BLOB storage connection string.
+        /// Gets or sets the BLOB storage settings.
         /// </summary>
         /// <value>
-        /// The BLOB storage connection string.
+        /// The BLOB storage settings.
         /// </value>
-        public string BlobStorageConnectionString { get; set; }
+        public BlobStorageSettings BlobStorageSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the data protection settings.
+        /// </summary>
+        /// <value>
+        /// The data protection settings.
+        /// </value>
+        public DataProtectionSettings DataProtectionSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the SQL connection string.
@@ -33,6 +41,22 @@
         /// The tlevel queried support email address.
         /// </value>
         public string TlevelQueriedSupportEmailAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the technical support email address.
+        /// </summary>
+        /// <value>
+        /// The technical support email address.
+        /// </value>
+        public string TechnicalSupportEmailAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the technical feedback email address.
+        /// </summary>
+        /// <value>
+        /// The feedback email address.
+        /// </value>
+        public string FeedbackEmailAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the dfe sign in settings.

@@ -19,10 +19,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
                 ProviderId = 1,
                 DisplayName = "Test",
                 Ukprn = 10000111,
-                Tlevels = new List<ProviderTlevelDetailsViewModel>
+                Tlevels = new List<ProviderTlevelViewModel>
                 {
-                    new ProviderTlevelDetailsViewModel { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 1, TlevelTitle = "Route1: Pathway1" },
-                    new ProviderTlevelDetailsViewModel { TqAwardingOrganisationId = 1, ProviderId = 1, PathwayId = 2, TlevelTitle = "Route1: Pathway1" }
+                    new ProviderTlevelViewModel { TqAwardingOrganisationId = 1, TlProviderId = 1, TlevelTitle = "Route1: Pathway1" },
+                    new ProviderTlevelViewModel { TqAwardingOrganisationId = 1, TlProviderId = 1, TlevelTitle = "Route1: Pathway1" }
                 }
             };
 
@@ -44,7 +44,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             model.Should().NotBeNull();
             model.ProviderId.Should().Be(mockresult.ProviderId);
             model.DisplayName.Should().Be(mockresult.DisplayName);
-            model.Ukprn.Should().Be(mockresult.Ukprn);            
+            model.Ukprn.Should().Be(mockresult.Ukprn);
+            model.IsAddTlevel.Should().BeFalse();
             model.Tlevels.Should().NotBeNull();
             model.Tlevels.Count().Should().Be(2);
         }
@@ -61,8 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             var actualFirstItemModel = model.Tlevels.FirstOrDefault();
 
             expectedFirstItemModel.TqAwardingOrganisationId.Should().Be(actualFirstItemModel.TqAwardingOrganisationId);
-            expectedFirstItemModel.ProviderId.Should().Be(actualFirstItemModel.ProviderId);
-            expectedFirstItemModel.PathwayId.Should().Be(actualFirstItemModel.PathwayId);
+            expectedFirstItemModel.TlProviderId.Should().Be(actualFirstItemModel.TlProviderId);
             expectedFirstItemModel.TlevelTitle.Should().Be(actualFirstItemModel.TlevelTitle);
         }
     }

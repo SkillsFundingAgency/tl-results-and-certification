@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
             ActualResult.PathwayId.Should().Be(PathwayId);
             ActualResult.ShowMoreTlevelsToReview.Should().Be(true);
             ActualResult.TlevelConfirmationText.Should().Be("T Level details confirmed");
-            ActualResult.TlevelTitle.Should().Be("Route1: Path11");
+            ActualResult.TlevelTitle.Should().Be("Tlevel Title1");
         }
     }
 }

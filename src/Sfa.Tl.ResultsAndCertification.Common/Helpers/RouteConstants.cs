@@ -4,6 +4,12 @@
     {
         // Route Constants
 
+        // Account
+        public const string SignIn = "SignIn";
+        public const string SignOut = "SignOut";
+        public const string SignOutComplete = "SignOutComplete";
+        public const string AccountProfile = "AccountProfile";
+
         // Dashboard
         public const string Dashboard = "Dashboard";
 
@@ -23,13 +29,26 @@
         public const string FindProvider = "FindProvider";
         public const string ProviderNameLookup = "ProviderNameLookup";
         public const string SelectProviderTlevels = "SelectProviderTlevels";
+        public const string AddProviderTlevels = "AddProviderTlevels";
         public const string SubmitSelectProviderTlevels = "SubmitSelectProviderTlevels";
+        public const string SubmitAddProviderTlevels = "SubmitAddProviderTlevels";
         public const string ProviderTlevelConfirmation = "ProviderTlevelConfirmation";
         public const string ProviderTlevels = "ProviderTlevels";
+        public const string RemoveProviderTlevel = "RemoveProviderTlevel";
+        public const string SubmitRemoveProviderTlevel = "SubmitRemoveProviderTlevel";
+        public const string RemoveProviderTlevelConfirmation = "RemoveProviderTlevelConfirmation";
 
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";
-        public const string AccessDenied = "AccessDenied";        
+        public const string AccessDenied = "AccessDenied";
+        public const string ProblemWithService = "ProblemWithService";
+        public const string Error = "Error";
+
+        // Help
+        public const string CookiePolicy = "CookiePolicy";
+        public const string Privacy = "Privacy";
+        public const string TermsAndConditions = "TermsAndConditions";
+        public const string UserGuide = "UserGuide";
     }
 }

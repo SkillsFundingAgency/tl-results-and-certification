@@ -65,15 +65,15 @@
     if (typeof root.GOVUK === 'undefined') { root.GOVUK = {}; }
 
     GOVUK.addCookieMessage = function () {
-        var message = document.getElementById('global-cookie-message'),
-            hasCookieMessage = (message && GOVUK.cookie('seen_cookie_message') === null);
+        var cookieMessageElement = document.getElementById('tl-cookie-message'),
+            showCookieMessage = (cookieMessageElement && GOVUK.cookie('cookies_preferences_set') === null);
 
-        if (hasCookieMessage) {
-            message.style.display = 'block';
+        if (showCookieMessage) {
+            cookieMessageElement.style.display = 'block';
 
-            $('#global-cookie-message-dismiss').click(function (e) {
-                GOVUK.cookie('seen_cookie_message', 'yes', { days: 28 });
-                message.style.display = 'none';
+            $('#hide-cookie-message').click(function (e) {
+                GOVUK.cookie('cookies_preferences_set', 'true', { days: 365 });
+                cookieMessageElement.style.display = 'none';
                 e.preventDefault();
             });
         }

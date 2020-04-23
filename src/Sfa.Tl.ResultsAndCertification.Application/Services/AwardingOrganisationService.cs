@@ -41,26 +41,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var tlevels = await _awardingOrganisationRepository
                 .GetManyAsync(x => x.TlAwardingOrganisaton.UkPrn == ukprn,
-                        n => n.TlRoute,
                         n => n.TlPathway,
                         n => n.TlAwardingOrganisaton)
                 .ToListAsync();
 
-            var awardOrgPathwayStatus = _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(tlevels);
-            return awardOrgPathwayStatus;
+            return _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(tlevels);
         }
 
         public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
         {
             var tlevels = await _awardingOrganisationRepository
                .GetManyAsync(x => x.TlAwardingOrganisaton.UkPrn == ukprn && statusId == x.ReviewStatus,
-                       n => n.TlRoute,
                        n => n.TlPathway,
                        n => n.TlAwardingOrganisaton)
                .ToListAsync();
 
-            var awardOrgPathwayStatus = _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(tlevels);
-            return awardOrgPathwayStatus;
+            return _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(tlevels);
         }
 
         public async Task<bool> VerifyTlevelAsync(VerifyTlevelDetails model)
@@ -68,8 +64,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var tqAwardingOrganisation = await _awardingOrganisationRepository
                 .GetSingleOrDefaultAsync(p => p.Id == model.TqAwardingOrganisationId,
                         navigationPropertyPath: new Expression<Func<TqAwardingOrganisation, object>>[]
-                        { r => r.TlRoute,
-                          p => p.TlPathway
+                        { 
+                            p => p.TlPathway
                         });
 
             if (tqAwardingOrganisation == null) return false;
@@ -88,7 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var tokens = new Dictionary<string, dynamic>
                 {
-                    { "tlevel_name", $"{tqAwardingOrganisation.TlRoute.Name}: {tqAwardingOrganisation.TlPathway.Name}" },
+                    { "tlevel_name", tqAwardingOrganisation.TlPathway.TlevelTitle },
                     { "user_comments", model.Query },
                     { "sender_name", model.ModifiedBy },
                     { "sender_email_address", model.QueriedUserEmail }

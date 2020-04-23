@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Accept_Responsibility_For_All_Activities_Text" xml:space="preserve">
+    <value>accept responsibility for all activities associated with your email and password, and your account</value>
+  </data>
+  <data name="Agree_To_Comply_Text" xml:space="preserve">
+    <value>agree to comply with any amendments to these Terms and Conditions</value>
+  </data>
+  <data name="Agree_To_Indemnify_Text" xml:space="preserve">
+    <value>agree to indemnify the DfE against any losses, expenses, damages or claims we may incur as a result of any failure by you to comply with the obligations set out in these terms</value>
+  </data>
+  <data name="As_Training_Provider_Text" xml:space="preserve">
+    <value>As a training provider or awarding organisation you must:</value>
+  </data>
+  <data name="A_Users_Rights_To_User_This_Service_Text" xml:space="preserve">
+    <value>A user’s rights to use this service may be removed or amended if you are found to be in breach of these terms and conditions. Our decision in the event of a breach shall be final.</value>
+  </data>
+  <data name="By_Using_The_Mange_TLevels_Text" xml:space="preserve">
+    <value>By using the Manage T Level results service you agree to these terms and conditions.</value>
+  </data>
+  <data name="Comply_With_The_Uk_Computer_Text" xml:space="preserve">
+    <value>comply with the UK Computer Misuse Act 1990</value>
+  </data>
+  <data name="Contact_Us_If_You_Are_Aware_Text" xml:space="preserve">
+    <value>contact us if you're aware of any security breach</value>
+  </data>
+  <data name="Delay_Or_Failure_In_Receiving_Data_Text" xml:space="preserve">
+    <value>delay or failure in receiving data</value>
+  </data>
+  <data name="Endeavour_To_Ensure_Text" xml:space="preserve">
+    <value>and endeavour to ensure that the service is continuously available, virus free and that the information we provide is accurate and complete.</value>
+  </data>
+  <data name="Ensure_That_Any_Personal_Data_Text" xml:space="preserve">
+    <value>ensure that any personal data (as defined under the EU General Data Protection Regulation (GDPR) and the Data Protection Act 2018) is protected, used only for the purposes for which it was obtained and disposed of appropriately</value>
+  </data>
+  <data name="Ensure_Users_Given_Editor_Roles_Text" xml:space="preserve">
+    <value>ensure users given editor roles have delegated authority on behalf of the organisation to enter and remove providers offering T Levels, register students, enter student results and request certificates</value>
+  </data>
+  <data name="Ensure_Users_Given_Site_Administrator_Text" xml:space="preserve">
+    <value>ensure users given site administrator roles have delegated authority on behalf of the organisation to confirm T Level details, enter providers offering T Levels, register students, enter student results and request certificates</value>
+  </data>
+  <data name="Enuser_Users_Given_Reviewer_Roles_Text" xml:space="preserve">
+    <value>ensure users given reviewer roles have delegated authority on behalf of the organisation to confirm T Level details</value>
+  </data>
+  <data name="However_Esfa_Accept_No_Liability_For_Text" xml:space="preserve">
+    <value>However, the ESFA accepts no liability for:</value>
+  </data>
+  <data name="Keep_Your_Dfe_Signin_Account_Details_Text" xml:space="preserve">
+    <value>keep your DfE Sign-in account details confidential and secure</value>
+  </data>
+  <data name="Loss_Of_Any_Data_Text" xml:space="preserve">
+    <value>loss of any data</value>
+  </data>
+  <data name="Loss_Or_Damage_Araising_Text" xml:space="preserve">
+    <value>loss or damage arising from the use of the service or reliance on its content</value>
+  </data>
+  <data name="Not_Use_Manage_TLevel_Results_Text" xml:space="preserve">
+    <value>not use Manage T Level results for any unlawful purpose</value>
+  </data>
+  <data name="Opens_In_New_Window_Or_Tab_Text" xml:space="preserve">
+    <value>(opens in a new window or tab)</value>
+  </data>
+  <data name="Our_Responsibilities_Text" xml:space="preserve">
+    <value>Our responsibilities</value>
+  </data>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Terms and conditions</value>
+  </data>
+  <data name="Section_Heading" xml:space="preserve">
+    <value>Terms and conditions</value>
+  </data>
+  <data name="Sign_In_From_Only_One_PC_Text" xml:space="preserve">
+    <value>sign in from only one PC at a time</value>
+  </data>
+  <data name="Singout_Of_Manage_TLevels_Results_Text" xml:space="preserve">
+    <value>sign out of Manage T Levels results using the sign-out function when you have finished your session</value>
+  </data>
+  <data name="The_Content_And_Availability_Text" xml:space="preserve">
+    <value>the content and availability of external websites that link to the service or which are linked from it</value>
+  </data>
+  <data name="This_Service_Is_Run_By_Text" xml:space="preserve">
+    <value>This service is run by the Education and Skills Funding Agency (ESFA), an executive agency of the Department for Education (DfE). We comply with the</value>
+  </data>
+  <data name="Uk_Data_Protection_Act_2018_Text" xml:space="preserve">
+    <value>UK Data Protection Act 2018</value>
+  </data>
+  <data name="Your_Information_Will_Be_Used_Text" xml:space="preserve">
+    <value>Your information will be used to establish your identity and permissions when using a DfE service.</value>
+  </data>
+  <data name="Your_Responsibilities_Text" xml:space="preserve">
+    <value>Your responsibilities</value>
+  </data>
+  <data name="You_Being_Unable_To_Access_The_Service_Text" xml:space="preserve">
+    <value>you being unable to access the service (for example owing to excessive demand or because we've taken the service down for maintenance)</value>
+  </data>
+</root>

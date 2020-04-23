@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         /// <returns></returns>
         public async Task<bool> AddProviderTlevelsAsync(ProviderTlevelsViewModel viewModel)
         {
-            var addViewModel = _mapper.Map<IList<ProviderTlevelDetails>>(viewModel.Tlevels.Where(x => x.IsSelected).ToList());
+            var addViewModel = _mapper.Map<IList<ProviderTlevel>>(viewModel.Tlevels.Where(x => x.IsSelected).ToList());
             return await _internalApiClient.AddProviderTlevelsAsync(addViewModel);
         }
 
@@ -88,6 +88,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var providerDetails = await _internalApiClient.GetTqAoProviderDetailsAsync(aoUkprn);
             return _mapper.Map<IList<ProviderDetailsViewModel>>(providerDetails);
+        }
+
+        /// <summary>
+        /// Gets the tq provider tlevel details asynchronous.
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <param name="tqProviderId">The tq provider identifier.</param>
+        /// <returns></returns>
+        public async Task<ProviderTlevelDetailsViewModel> GetTqProviderTlevelDetailsAsync(long aoUkprn, int tqProviderId)
+        {
+            var providerTlevelDetails = await _internalApiClient.GetTqProviderTlevelDetailsAsync(aoUkprn, tqProviderId);
+            return _mapper.Map<ProviderTlevelDetailsViewModel>(providerTlevelDetails);
+        }
+
+        /// <summary>
+        /// Removes the tq provider tlevel asynchronous.
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <param name="tqProviderId">The tq provider identifier.</param>
+        /// <returns></returns>
+        public async Task<bool> RemoveTqProviderTlevelAsync(long aoUkprn, int tqProviderId)
+        {
+            return await _internalApiClient.RemoveTqProviderTlevelAsync(aoUkprn, tqProviderId);
         }
     }
 }

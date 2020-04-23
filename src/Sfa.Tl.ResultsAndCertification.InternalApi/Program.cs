@@ -15,9 +15,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             Host.CreateDefaultBuilder(args)
             .ConfigureLogging(logging =>
             {
+                logging.ClearProviders();
                 logging.AddConsole();
                 logging.AddDebug();
-                logging.AddFilter((category, level) => level >= (category == "Microsoft" ? LogLevel.Error : LogLevel.Information));
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {

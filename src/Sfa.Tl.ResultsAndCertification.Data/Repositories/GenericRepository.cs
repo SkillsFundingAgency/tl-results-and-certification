@@ -86,13 +86,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
         }
 
-        public virtual async Task DeleteAsync(T entity)
+        public virtual async Task<int> DeleteAsync(T entity)
         {
             _dbContext.Remove(entity);
 
             try
             {
-                await _dbContext.SaveChangesAsync();
+                return await _dbContext.SaveChangesAsync();
             }
             catch (DbUpdateException due)
             {

@@ -12,8 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             Result.Result.Should().NotBeNullOrEmpty();
 
             var expectedResult = Result.Result.FirstOrDefault();
-            expectedResult.RouteName.Should().Be(RouteName);
-            expectedResult.PathwayName.Should().Be(PathwayName);
+            expectedResult.TlevelTitle.Should().Be(TlevelTitle);
             expectedResult.StatusId.Should().Be(StatusId);
         }
     }

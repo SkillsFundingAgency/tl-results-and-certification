@@ -19,8 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         protected readonly long ukprn = 1024;
         protected Task<IEnumerable<AwardingOrganisationPathwayStatus>> Result;
 
-        protected readonly string RouteName = "Construction";
-        protected readonly string PathwayName = "Design, Surveying and Planning";
+        protected readonly string TlevelTitle = "Construction";
         protected readonly int StatusId = 1;
 
         protected ResultsAndCertificationInternalApiClient _apiClient;
@@ -37,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
             _mockHttpResult = new List<AwardingOrganisationPathwayStatus>
             {
-                new AwardingOrganisationPathwayStatus { PathwayName = PathwayName, RouteName = RouteName, StatusId = StatusId }
+                new AwardingOrganisationPathwayStatus { TlevelTitle = TlevelTitle, StatusId = StatusId }
             };            
             
         }

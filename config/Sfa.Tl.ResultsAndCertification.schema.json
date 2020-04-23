@@ -1,4 +1,4 @@
-{
+	{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {},
   "id": "http://example.com/example.json",
@@ -20,6 +20,60 @@
       "type": "string",
       "environmentVariable": "TlevelQueriedSupportEmailAddress"
     },	
+	"TechnicalSupportEmailAddress": {
+      "type": "string",
+      "environmentVariable": "TechnicalSupportEmailAddress"
+    },
+	"FeedbackEmailAddress": {
+      "type": "string",
+      "environmentVariable": "FeedbackEmailAddress"
+    },
+	"BlobStorageSettings": {
+      "properties": {    
+		"AccountName": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "BlobStorageAccountName"
+        },
+        "AccountKey": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "BlobStorageAccountKey"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "AccountName",
+        "AccountKey"      
+      ],
+      "type": "object"
+    },
+	"DataProtectionSettings": {
+      "properties": {    
+		"ContainerName": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DataProtectionContainerName"
+        },
+        "BlobName": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DataProtectionBlobName"
+        },
+		"KeyVaultKeyId": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DataProtectionKeyVaultKeyId"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "ContainerName",
+        "BlobName",
+		"KeyVaultKeyId"
+      ],
+      "type": "object"
+    },
     "DfeSignInSettings": {
       "properties": {
         "MetadataAddress": {
@@ -51,6 +105,16 @@
           "minLength": 1,
           "type": "string",
           "environmentVariable": "DfeSignInLogoutPath"
+        },		
+		"ProfileUrl": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeProfileUrl"
+        },
+		"Timeout": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignInTimeout"
         },
         "Issuer": {
           "minLength": 1,
@@ -81,7 +145,7 @@
           "minLength": 1,
           "type": "string",
           "environmentVariable": "DfeSignInAuthority"
-        }
+        }		
       },
       "additionalProperties": false,
       "required": [
@@ -91,6 +155,8 @@
         "CallbackPath",
         "SignedOutCallbackPath",
         "LogoutPath",
+		"ProfileUrl",
+		"Timeout",
         "Issuer",
         "Audience",
         "ApiSecret",
@@ -139,6 +205,8 @@
     "BlobStorageConnectionString",
 	"GovUkNotifyApiKey",
 	"TlevelQueriedSupportEmailAddress",
+	"TechnicalSupportEmailAddress",
+	"FeedbackEmailAddress",
     "DfeSignInSettings",
 	"ResultsAndCertificationInternalApiSettings"
   ],

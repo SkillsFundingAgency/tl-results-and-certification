@@ -22,8 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private readonly long ukprn = 1024;
 
         protected Task<IEnumerable<AwardingOrganisationPathwayStatus>> Result;
-        protected readonly string RouteName = "Construction";
-        protected readonly string PathwayName = "Design";
+        protected readonly string TlevelTitle = "Construction";
         protected readonly int Status = 1;
 
         private ResultsAndCertificationInternalApiClient _apiClient;
@@ -39,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
             _mockHttpResult = new List<AwardingOrganisationPathwayStatus>
             {
-                new AwardingOrganisationPathwayStatus { PathwayName = PathwayName, RouteName = RouteName, StatusId = Status }
+                new AwardingOrganisationPathwayStatus { TlevelTitle = TlevelTitle, StatusId = Status }
             };
 
             HttpClient = new HttpClient(
@@ -62,8 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             Result.Result.Should().NotBeNullOrEmpty();
 
             var expectedResult = Result.Result.FirstOrDefault();
-            expectedResult.RouteName.Should().Be(RouteName);
-            expectedResult.PathwayName.Should().Be(PathwayName);
+            expectedResult.TlevelTitle.Should().Be(TlevelTitle);
             expectedResult.StatusId.Should().Be(1);
         }
     }

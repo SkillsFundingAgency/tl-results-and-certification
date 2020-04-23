@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Infrastructure;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Middleware
@@ -11,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Middleware
     public class ExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionHandlerMiddleware> _logger;
+        private readonly ILogger _logger;
 
         public ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
         {
@@ -31,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Middleware
             }
             catch (Exception ex)
             {
-                _logger.LogError(new EventId(999, "GlobalException"), ex, ex.Message);
+                _logger.LogError(LogEvent.UnhandledException, ex, $"{ex.Message}, User: {httpContext?.User?.GetUserEmail()}");
                 await HandleExceptionAsync(httpContext, ex);
             }
         }

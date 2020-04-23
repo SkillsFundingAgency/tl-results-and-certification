@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpPost]
         [Route("AddProviderTlevels")]
-        public async Task<IActionResult> AddProviderTlevelsAsync(IList<ProviderTlevelDetails> model)
+        public async Task<IActionResult> AddProviderTlevelsAsync(IList<ProviderTlevel> model)
         {
             var result = await _providerService.AddProviderTlevelsAsync(model);
             return Ok(result);
@@ -56,12 +56,25 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return await _providerService.GetAllProviderTlevelsAsync(aoUkprn, providerId);
         }
 
-
         [HttpGet]
         [Route("GetTqAoProviderDetails/{aoUkprn}")]
         public async Task<IList<ProviderDetails>> GetTqAoProviderDetailsAsync(long aoUkprn)
         {
             return await _providerService.GetTqAoProviderDetailsAsync(aoUkprn);
+        }
+
+        [HttpGet]
+        [Route("GetTqProviderTlevelDetails/{aoUkprn}/{tqProviderId}")]
+        public async Task<ProviderTlevelDetails> GetTqProviderTlevelDetailsAsync(long aoUkprn, int tqProviderId)
+        {
+            return await _providerService.GetTqProviderTlevelDetailsAsync(aoUkprn, tqProviderId);
+        }
+
+        [HttpDelete]
+        [Route("RemoveProviderTlevel/{aoUkprn}/{tqProviderId}")]
+        public async Task<bool> RemoveTqProviderTlevelAsync(long aoUkprn, int tqProviderId)
+        {
+            return await _providerService.RemoveTqProviderTlevelAsync(aoUkprn, tqProviderId);
         }
     }
 }

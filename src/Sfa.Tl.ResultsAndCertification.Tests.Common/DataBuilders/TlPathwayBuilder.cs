@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
+﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 return new TlPathway
                 {
+                    TlevelTitle = "T Level in Design, Surveying and Planning for Construction",
                     Name = "Design, Surveying and Planning",
                     LarId = "10123456",
                     TlRoute = tlRoute ?? new TlRouteBuilder().Build(awardingOrganisation),
@@ -26,6 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 return new TlPathway
                 {
+                    TlevelTitle = "T Level in Education and Childcare",
                     Name = "Education",
                     LarId = "10123457",
                     TlRoute = tlRoute ?? new TlRouteBuilder().Build(awardingOrganisation),
@@ -53,6 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     {
                         results.Add(new TlPathway
                         {
+                            TlevelTitle = "T Level in Design, Surveying and Planning for Construction",
                             Name = "Design, Surveying and Planning",
                             LarId = "10123456",
                             TlRoute = route,
@@ -66,6 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     {
                         results.Add(new TlPathway
                         {
+                            TlevelTitle = "T Level in Digital Production, Design and Development",
                             Name = "Digital Production, Design and Development",
                             LarId = "10123468",
                             TlRoute = route,
@@ -86,6 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     {
                         results.Add(new TlPathway
                         {
+                            TlevelTitle = "T Level in Education and Childcare",
                             Name = "Education",
                             LarId = "10123457",
                             TlRoute = route,

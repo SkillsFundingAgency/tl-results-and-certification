@@ -7,19 +7,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {    
     public class AccountController : Controller
     {
         private readonly ILogger _logger;
+        private readonly ResultsAndCertificationConfiguration _configuration;
 
-        public AccountController(ILogger<AccountController> logger)
+        public AccountController(ResultsAndCertificationConfiguration configuration, ILogger<AccountController> logger)
         {
+            _configuration = configuration;
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [HttpGet]
+        [Route("signin", Name = RouteConstants.SignIn)]
         public async Task SignIn()
         {
             var returnUrl = Url.Action(nameof(AccountController.PostSignIn), Constants.AccountController);
@@ -42,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
         
         [HttpGet]
+        [Route("signout", Name = RouteConstants.SignOut)]
         public async Task SignedOut()
         {
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
@@ -50,9 +56,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult SignOutComplete()
+        [Route("signout-complete", Name = RouteConstants.SignOutComplete)]
+        public IActionResult SignoutComplete()
         {
             return RedirectToAction(nameof(HomeController.Index), Constants.HomeController);
+        }
+
+        [HttpGet]
+        [Route("account-profile", Name = RouteConstants.AccountProfile)]
+        public IActionResult Profile()
+        {
+            if (_configuration == null || 
+                _configuration.DfeSignInSettings == null || 
+                string.IsNullOrEmpty(_configuration.DfeSignInSettings.ProfileUrl))
+            {
+                _logger.LogWarning(LogEvent.ConfigurationMissing, $"Unable to read config: DfeSignInSettings.ProfileUrl, User: {User?.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return Redirect(_configuration.DfeSignInSettings.ProfileUrl);
         }
     }
 }
