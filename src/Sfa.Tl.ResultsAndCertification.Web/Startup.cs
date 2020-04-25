@@ -92,7 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(RolesExtensions.RequireTLevelsReviewerAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.TlevelsReviewer));
-                options.AddPolicy(RolesExtensions.RequireProviderEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor, RolesExtensions.CentresEditor));
+                options.AddPolicy(RolesExtensions.RequireProviderEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor));
             });
 
             services.AddWebDataProtection(ResultsAndCertificationConfiguration, _env);
