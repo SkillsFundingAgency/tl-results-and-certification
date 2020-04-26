@@ -146,10 +146,15 @@
           "type": "string",
           "environmentVariable": "DfeSignInAuthority"
         },
-		"EnableSignOut": {
+		"SignOutEnabled": {
           "minLength": 1,
           "type": "string",
-          "environmentVariable": "DfeSignInEnableSignOut"
+          "environmentVariable": "DfeSignOutEnabled"
+        },
+		"SignOutRedirectUriEnabled": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "DfeSignOutRedirectUriEnabled"
         },
 		"SignOutRedirectUri": {
           "minLength": 1,
@@ -173,7 +178,8 @@
         "ApiUri",
         "TokenEndpoint",
         "Authority",
-		"EnableSignOut",
+		"SignOutEnabled",
+		"SignOutRedirectUriEnabled"
 		"SignOutRedirectUri"
       ],
       "type": "object"
@@ -219,6 +225,8 @@
 	"TlevelQueriedSupportEmailAddress",
 	"TechnicalSupportEmailAddress",
 	"FeedbackEmailAddress",
+	"BlobStorageSettings",
+	"DataProtectionSettings"
     "DfeSignInSettings",
 	"ResultsAndCertificationInternalApiSettings"
   ],

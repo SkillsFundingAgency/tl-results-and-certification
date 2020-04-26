@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
 
         public string GetSignOutPath()
         {
-            return _configuration.DfeSignInSettings.EnableSignOut ? RouteConstants.SignOutDsi : RouteConstants.SignOut;
+            return _configuration.DfeSignInSettings.SignOutEnabled ? RouteConstants.SignOutDsi : RouteConstants.SignOut;
         }
     }
 }

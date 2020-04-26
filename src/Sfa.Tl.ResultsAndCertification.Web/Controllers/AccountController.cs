@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("signout-complete", Name = RouteConstants.SignOutComplete)]
         public IActionResult SignoutComplete()
         {
-            if (_configuration.DfeSignInSettings.EnableSignOut && !string.IsNullOrWhiteSpace(_configuration.DfeSignInSettings.SignOutRedirectUri))
+            if (_configuration.DfeSignInSettings.SignOutRedirectUriEnabled && !string.IsNullOrWhiteSpace(_configuration.DfeSignInSettings.SignOutRedirectUri))
             {
                 return Redirect(_configuration.DfeSignInSettings.SignOutRedirectUri);
             }
