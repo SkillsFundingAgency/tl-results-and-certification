@@ -179,7 +179,7 @@
         "TokenEndpoint",
         "Authority",
 		"SignOutEnabled",
-		"SignOutRedirectUriEnabled"
+		"SignOutRedirectUriEnabled",
 		"SignOutRedirectUri"
       ],
       "type": "object"
