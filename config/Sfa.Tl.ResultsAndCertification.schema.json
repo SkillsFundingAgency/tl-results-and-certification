@@ -226,7 +226,7 @@
 	"TechnicalSupportEmailAddress",
 	"FeedbackEmailAddress",
 	"BlobStorageSettings",
-	"DataProtectionSettings"
+	"DataProtectionSettings",
     "DfeSignInSettings",
 	"ResultsAndCertificationInternalApiSettings"
   ],
