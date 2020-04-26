@@ -57,5 +57,13 @@
         /// <summary>Gets or sets the authority.</summary>
         /// <value>The authority.</value>
         public string Authority { get; set; }
+
+        /// <summary>Gets or sets the enable sign out.</summary>
+        /// <value>The enable sign out.</value>
+        public bool EnableSignOut { get; set; }
+
+        /// <summary>Gets or sets the sign out redirect URI.</summary>
+        /// <value>The sign out redirect URI.</value>
+        public string SignOutRedirectUri { get; set; }
     }
 }
