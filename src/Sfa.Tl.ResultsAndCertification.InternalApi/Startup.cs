@@ -30,11 +30,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
     {
         private readonly IWebHostEnvironment _env;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
+        private readonly AzureServiceTokenProvider _tokenProvider;
 
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             _env = env;
+            _tokenProvider = new AzureServiceTokenProvider();
         }
         public IConfiguration Configuration { get; }
 
@@ -70,7 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                 services.AddApiAuthentication(ResultsAndCertificationConfiguration).AddApiAuthorization();
             }
 
-            services.AddApiDataProtection(ResultsAndCertificationConfiguration, _env);
+            services.AddApiDataProtection(ResultsAndCertificationConfiguration, _tokenProvider, _env);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

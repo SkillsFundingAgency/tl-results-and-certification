@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Auth;
 using Microsoft.Azure.Storage.Blob;
@@ -13,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 {
     public static class DataProtectionExtensions
     {
-        public static IServiceCollection AddWebDataProtection(this IServiceCollection services, ResultsAndCertificationConfiguration config, IWebHostEnvironment env)
+        public static IServiceCollection AddWebDataProtection(this IServiceCollection services, ResultsAndCertificationConfiguration config, AzureServiceTokenProvider tokenProvider, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -23,8 +25,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
             }
             else
             {
+                var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(tokenProvider.KeyVaultTokenCallback));
+
                 services.AddDataProtection()
-                        .PersistKeysToAzureBlobStorage(GetDataProtectionBlobTokenUri(config));
+                        .PersistKeysToAzureBlobStorage(GetDataProtectionBlobTokenUri(config))
+                        .ProtectKeysWithAzureKeyVault(kvClient, config.DataProtectionSettings.KeyVaultKeyId);
             }
             return services;
         }
