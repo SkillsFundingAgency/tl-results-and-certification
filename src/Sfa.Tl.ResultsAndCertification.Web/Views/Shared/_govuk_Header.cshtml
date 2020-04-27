@@ -1,4 +1,6 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Layout
+@using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
+@inject IWebConfigurationService ConfigurationService
 
 <header class="govuk-header" role="banner" data-module="govuk-header">
     <div class="govuk-header__container govuk-width-container">
@@ -25,7 +27,7 @@
                 <button type="button" role="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">@Header.Menu_Text</button>
                 <ul id="navigation" class="govuk-header__navigation tl-float-right">
                     <li class="govuk-header__navigation-item">
-                        <a class="govuk-header__link" asp-route="SignOut">@Header.Signout_Link_Text</a>
+                        <a class="govuk-header__link" asp-route="@ConfigurationService.GetSignOutPath()">@Header.Signout_Link_Text</a>
                     </li>
                 </ul>
             }

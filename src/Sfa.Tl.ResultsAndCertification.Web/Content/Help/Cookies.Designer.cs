@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to After 20 minutes of inactivity.
+        ///   Looks up a localized string similar to After 30 minutes of inactivity.
         /// </summary>
         public static string Inactivity_Text {
             get {

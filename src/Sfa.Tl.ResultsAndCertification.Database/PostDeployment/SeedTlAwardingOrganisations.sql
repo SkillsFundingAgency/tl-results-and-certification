@@ -7,7 +7,7 @@ SET IDENTITY_INSERT [dbo].[TlAwardingOrganisation] ON
 MERGE INTO [dbo].[TlAwardingOrganisation] AS Target 
 USING (VALUES 
   (1, 10009696, N'Ncfe', N'Ncfe'),
-  (2, 10011881, N'Pearson', N'Pearson'),
+  (2, 10022490, N'Pearson', N'Pearson'),
   (3, 10009931, N'City & Guilds', N'City & Guilds')
   )
   AS Source ([Id], [UkPrn], [Name], [DisplayName]) 

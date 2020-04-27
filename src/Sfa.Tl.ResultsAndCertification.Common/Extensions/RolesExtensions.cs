@@ -12,7 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         // Roles
         public const string SiteAdministrator = "Site Administrator";
         public const string TlevelsReviewer = "T Levels Reviewer";
-        public const string CentresEditor = "Centres Editor";
         public const string ProvidersEditor = "Providers Editor";
 
         public static bool HasAccessToService(this ClaimsPrincipal user)
@@ -38,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 
         public static bool HasProvidersEditorRole(this ClaimsPrincipal user)
         {
-            return user.IsInRole(CentresEditor) || user.IsInRole(ProvidersEditor);
+            return user.IsInRole(ProvidersEditor);
         }
 
         public static string GetUserName(this ClaimsPrincipal user)

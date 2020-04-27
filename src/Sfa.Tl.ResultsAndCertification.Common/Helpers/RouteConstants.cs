@@ -7,6 +7,7 @@
         // Account
         public const string SignIn = "SignIn";
         public const string SignOut = "SignOut";
+        public const string SignOutDsi = "SignOutDsi";
         public const string SignOutComplete = "SignOutComplete";
         public const string AccountProfile = "AccountProfile";
 

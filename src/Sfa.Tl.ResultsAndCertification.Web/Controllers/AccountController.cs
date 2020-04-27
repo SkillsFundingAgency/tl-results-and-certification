@@ -45,13 +45,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToAction(nameof(HomeController.Index), Constants.HomeController);
             }
         }
-        
+
         [HttpGet]
         [Route("signout", Name = RouteConstants.SignOut)]
-        public async Task SignedOut()
+        public async Task SignOut()
         {
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        [HttpGet]
+        [Route("sign-out", Name = RouteConstants.SignOutDsi)]
+        public async Task<IActionResult> SignOutDsi()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect(_configuration.DfeSignInSettings.SignOutRedirectUri);
         }
 
         [AllowAnonymous]
@@ -59,7 +67,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("signout-complete", Name = RouteConstants.SignOutComplete)]
         public IActionResult SignoutComplete()
         {
-            return RedirectToAction(nameof(HomeController.Index), Constants.HomeController);
+            if (_configuration.DfeSignInSettings.SignOutRedirectUriEnabled && !string.IsNullOrWhiteSpace(_configuration.DfeSignInSettings.SignOutRedirectUri))
+            {
+                return Redirect(_configuration.DfeSignInSettings.SignOutRedirectUri);
+            }
+            else
+            {
+                return RedirectToAction(nameof(HomeController.Index), Constants.HomeController);
+            }
         }
 
         [HttpGet]
@@ -73,7 +88,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.ConfigurationMissing, $"Unable to read config: DfeSignInSettings.ProfileUrl, User: {User?.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
             return Redirect(_configuration.DfeSignInSettings.ProfileUrl);
         }
     }

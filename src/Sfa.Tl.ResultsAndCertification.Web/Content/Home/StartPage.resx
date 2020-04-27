@@ -133,7 +133,7 @@
             &lt;li&gt;enter student results - from August 2022&lt;/li&gt;
         &lt;/ul&gt;
 
-        &lt;p class="govuk-body govuk-!-margin-top-7"&gt;You will be signed out if you are inactive for 20 minutes. &lt;/p&gt;</value>
+        &lt;p class="govuk-body govuk-!-margin-top-7"&gt;You will be signed out if you are inactive for 30 minutes. &lt;/p&gt;</value>
   </data>
   <data name="Start_Button_Text" xml:space="preserve">
     <value>Start now</value>
