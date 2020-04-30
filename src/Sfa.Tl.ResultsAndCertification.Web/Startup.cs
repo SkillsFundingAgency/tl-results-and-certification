@@ -96,6 +96,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             });
 
             services.AddWebDataProtection(ResultsAndCertificationConfiguration, _env);
+            
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = "tl-rc.Session";                
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.IdleTimeout = TimeSpan.FromMinutes(ResultsAndCertificationConfiguration.DfeSignInSettings.Timeout);
+            });
+
             RegisterDependencies(services);
         }
 
@@ -125,6 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseHttpsRedirection();
             
             app.UseStaticFiles();
+            app.UseSession();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
