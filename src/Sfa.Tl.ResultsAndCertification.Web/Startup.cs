@@ -18,6 +18,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Authentication;
 using Sfa.Tl.ResultsAndCertification.Web.Filters;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.Session;
 using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper;
 using System;
 using System.Globalization;
@@ -67,6 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             
             services.AddSingleton(ResultsAndCertificationConfiguration);
             services.AddTransient<ITokenServiceClient, TokenServiceClient>();
+            services.AddTransient<ISessionService, SessionService>();
             services.AddHttpClient<IResultsAndCertificationInternalApiClient, ResultsAndCertificationInternalApiClient>();
             services.AddHttpClient<IDfeSignInApiClient, DfeSignInApiClient>();
 
