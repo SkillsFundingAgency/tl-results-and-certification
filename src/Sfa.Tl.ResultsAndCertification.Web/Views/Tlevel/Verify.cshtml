@@ -8,8 +8,6 @@
 
 @section NavigationBar
 {
-    @*<a class="govuk-back-link" asp-route="TlevelSelect">Back</a>*@
-
     @{ var backLinkModel = new BackLinkModel { RouteName = "TlevelSelect" }; }
     <vc:back-link model=@backLinkModel></vc:back-link>
 }

@@ -1,4 +1,5 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TlevelQueryViewModel
 
 @{
@@ -7,16 +8,22 @@
 
 @section NavigationBar
 {
+    @{ 
+        var backLinkModel = new BackLinkModel();
+        backLinkModel.RouteAttributes.Add("id", Model.PathwayId.ToString());
+    }
+
     @if (Model.IsBackToVerifyPage)
     {
-        <a class="govuk-back-link" asp-route=VerifyTlevel asp-route-id="@Model.PathwayId" asp-route-isback="true">Back</a>
+        backLinkModel.RouteName = "VerifyTlevel";
+        backLinkModel.RouteAttributes.Add("isback", "true");
     }
     else
     {
-        <a class="govuk-back-link" asp-route=TlevelDetails asp-route-id="@Model.PathwayId">Back</a>
+        backLinkModel.RouteName = "TlevelDetails";
     }
 
-    @*<vc:back-link model=@backLinkModel></vc:back-link>*@
+    <vc:back-link model=@backLinkModel></vc:back-link>
 }
 
 <div class="govuk-grid-row">

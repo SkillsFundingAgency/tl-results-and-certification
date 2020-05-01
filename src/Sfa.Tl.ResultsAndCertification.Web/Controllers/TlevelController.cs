@@ -39,7 +39,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
             if (pendingTlevels?.Count() > 0)
             {
-                //_logger.LogInformation(LogEvent.TlevelsNotFound, $"No T levels are found. Method: GetTlevelsByStatusIdAsync(Ukprn: {User.GetUkPrn()}, Status: TlevelReviewStatus.AwaitingConfirmation), User: {User.GetUserEmail()}");
                 _sessionService.Remove(TlevelVerifySessionKey);
                 return RedirectToRoute(RouteConstants.TlevelSelect);
             }
