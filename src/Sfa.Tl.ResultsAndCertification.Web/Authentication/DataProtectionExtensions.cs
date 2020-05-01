@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
             
             var sharedAccessPolicy = new SharedAccessBlobPolicy()
             {
-                SharedAccessExpiryTime = DateTime.UtcNow.AddHours(1),
+                SharedAccessExpiryTime = DateTime.UtcNow.AddYears(1),
                 Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
             };
 
