@@ -6,7 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink
     {
         public IViewComponentResult Invoke(BackLinkModel model)
         {            
-            return View("~/ViewComponents/BackLink/Index.cshtml", model);
+            return View(model);
         }
     }
 }

@@ -5,6 +5,19 @@
     ViewData["Title"] = @Query.Page_Title;
 }
 
+@section NavigationBar
+{
+    @if (Model.IsBackToVerifyPage)
+    {
+        <a class="govuk-back-link" asp-route=VerifyTlevel asp-route-id="@Model.PathwayId" asp-route-isback="true">Back</a>
+    }
+    else
+    {
+        <a class="govuk-back-link" asp-route=TlevelDetails asp-route-id="@Model.PathwayId">Back</a>
+    }
+
+    @*<vc:back-link model=@backLinkModel></vc:back-link>*@
+}
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">

@@ -16,6 +16,7 @@
         public const string TlevelController = "Tlevel";
 
         public const string IsRedirect = "IsRedirect";
+        public const string IsBackToVerifyPage = "IsBackToVerifyPage";
         public const string ProviderTlevelsViewModel = "ProviderTlevelsViewModel";
         public const string ProviderTlevelDetailsViewModel = "ProviderTlevelDetailsViewModel";
     }

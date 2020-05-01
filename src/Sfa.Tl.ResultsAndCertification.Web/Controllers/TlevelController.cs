@@ -10,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Web.Session;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -17,11 +18,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class TlevelController : Controller
     {
         private readonly ITlevelLoader _tlevelLoader;
+        private readonly ISessionService _sessionService;
         private readonly ILogger _logger;
 
-        public TlevelController(ITlevelLoader tlevelLoader, ILogger<TlevelController> logger)
+        // TODO: Standard unique-key to be finalised.
+        public string TlevelVerifySessionKey { get { return $"TlevelVerification-{HttpContext.User.GetUserEmail()}"; } }
+
+        public TlevelController(ITlevelLoader tlevelLoader, 
+            ISessionService sessionService,
+            ILogger<TlevelController> logger)
         {
             _tlevelLoader = tlevelLoader;
+            _sessionService = sessionService;
             _logger = logger;
         }
 
@@ -81,13 +89,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return await GetSelectToReviewByUkprn(User.GetUkPrn());
             }
-                
+
+            _sessionService.Set(TlevelVerifySessionKey, model.SelectedPathwayId);
+
             return RedirectToRoute(RouteConstants.VerifyTlevel, new { id = model.SelectedPathwayId });
         }
 
         [HttpGet]
-        [Route("verify-tlevel/{id}", Name = RouteConstants.VerifyTlevel)]
-        public async Task<IActionResult> VerifyAsync(int id)
+        [Route("verify-tlevel/{id}/{isback:bool?}", Name = RouteConstants.VerifyTlevel)]
+        public async Task<IActionResult> VerifyAsync(int id, bool isback)
         {
             var viewModel = await GetVerifyTlevelData(id);
 
@@ -96,6 +106,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.TlevelsNotFound, $"No T level found to verify. Method: GetVerifyTlevelDetailsByPathwayIdAsync(Ukprn: {User.GetUkPrn()}, PathwayId: {id}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
+
+            if (isback)
+                viewModel.IsEverythingCorrect = false;
 
             return View(viewModel);
         }
@@ -131,7 +144,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             if (viewModel.IsEverythingCorrect == false)
+            {
+                TempData[Constants.IsBackToVerifyPage] = true;
                 return RedirectToRoute(RouteConstants.ReportTlevelIssue, new { id = viewModel.PathwayId });
+            }
 
             var isSuccess = await _tlevelLoader.ConfirmTlevelAsync(viewModel);
             
@@ -159,6 +175,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     $"Unable to confirm T level. Method: GetQueryTlevelViewModelAsync(Ukprn: {User.GetUkPrn()}, Id: {id}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
+
+            var isBackToVerifyPage = TempData[Constants.IsBackToVerifyPage] != null &&
+                                    bool.TryParse(TempData[Constants.IsBackToVerifyPage].ToString(), out bool result) && result;
+            tlevelDetails.IsBackToVerifyPage = isBackToVerifyPage;
+
             return View(tlevelDetails);
         }
 
@@ -206,6 +227,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.TlevelsNotFound, $"No T levels found to review. Method: GetTlevelsToReviewByUkprnAsync(Ukprn: {User.GetUkPrn()}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
+            
+            viewModel.SelectedPathwayId = _sessionService.Get<int>(TlevelVerifySessionKey);
 
             return View(viewModel);
         }

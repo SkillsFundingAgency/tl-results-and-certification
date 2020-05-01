@@ -19,6 +19,7 @@
     }
 
     <div class="govuk-width-container">
+        @RenderSection("NavigationBar", required: false)
         <main class="govuk-main-wrapper" id="main-content" role="main">
             @RenderBody()
         </main>

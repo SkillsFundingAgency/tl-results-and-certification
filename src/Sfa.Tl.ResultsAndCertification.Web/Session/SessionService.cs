@@ -5,6 +5,8 @@ using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Session
 {
+    // TODO: this can be moved into Services folder Namespacess: Web.Service
+    // TODO: Can we also WebConfigurationService into same folder?
     public class SessionService : ISessionService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -52,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Session
 
         public bool Exists(string key)
         {
-            return _httpContextAccessor.HttpContext.Session.Keys.Any(k => k == GetFormatedKey(key));
+            return _httpContextAccessor.HttpContext.Session.Keys.Any(k => k == key);
         }
 
         private string GetFormatedKey(string key)
