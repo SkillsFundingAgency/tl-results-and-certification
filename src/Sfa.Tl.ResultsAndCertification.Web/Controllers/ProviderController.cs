@@ -1,14 +1,15 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -45,6 +46,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var yourProvidersExists  = await _providerLoader.IsAnyProviderSetupCompletedAsync(User.GetUkPrn());
             var viewModel = new FindProviderViewModel { ShowViewProvidersLink = yourProvidersExists };
+
+            viewModel.Search = TempData.Get<string>(Constants.FindProviderSearchCriteria);
+
             return View(viewModel);
         }
 
@@ -240,6 +244,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             viewModel.IsAddTlevel = isAddTlevel;
 
+            if(!viewModel.IsAddTlevel)
+            {
+                TempData.Set(Constants.FindProviderSearchCriteria, viewModel.DisplayName);
+            }
             return View("SelectProviderTlevels", viewModel);
         }
 
