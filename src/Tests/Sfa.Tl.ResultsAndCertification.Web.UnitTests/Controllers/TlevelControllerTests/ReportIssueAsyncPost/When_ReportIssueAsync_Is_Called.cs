@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.Session;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
     public abstract class When_ReportIssueAsync_Is_Called : BaseTest<TlevelController>
     {
         protected ITlevelLoader TlevelLoader;
+        protected ISessionService SessionService;
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
         protected Task<IActionResult> Result;
@@ -34,7 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             TlevelLoader = Substitute.For<ITlevelLoader>();
             Logger = Substitute.For<ILogger<TlevelController>>();
-            Controller = new TlevelController(TlevelLoader, Logger);
+            SessionService = Substitute.For<ISessionService>();
+            Controller = new TlevelController(TlevelLoader, SessionService, Logger);
             
             var httpContext = new ClaimsIdentityBuilder<TlevelController>(Controller)
                 .Add(CustomClaimTypes.Ukprn, Ukprn.ToString())

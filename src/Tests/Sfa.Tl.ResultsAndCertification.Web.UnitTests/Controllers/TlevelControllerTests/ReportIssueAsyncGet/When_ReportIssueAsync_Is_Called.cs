@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.Session;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -16,10 +18,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
     public abstract class When_ReportIssueAsync_Is_Called : BaseTest<TlevelController>
     {
         protected ITlevelLoader TlevelLoader;
+        protected ISessionService SessionService;
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
+
+        public TempDataDictionary TempData { get; private set; }
+
         protected Task<IActionResult> Result;
-        
+
         protected long ukprn;
         protected int pathwayId;
 
@@ -37,14 +43,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             });
 
             TlevelLoader = Substitute.For<ITlevelLoader>();
+            SessionService = Substitute.For<ISessionService>();
             Logger = Substitute.For<ILogger<TlevelController>>();
-            Controller = new TlevelController(TlevelLoader, Logger)
+            Controller = new TlevelController(TlevelLoader, SessionService, Logger)
             {
                 ControllerContext = new ControllerContext
                 {
                     HttpContext = httpContextAccessor.HttpContext
                 }
             };
+
+            TempData = new TempDataDictionary(httpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
+            Controller.TempData = TempData;
 
             expectedResult = new TlevelQueryViewModel
             {

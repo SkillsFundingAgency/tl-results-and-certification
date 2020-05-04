@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.Session;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
     public abstract class When_SelecctToReview_Get_Action_Is_Called : BaseTest<TlevelController>
     {
         protected ITlevelLoader TlevelLoader;
+        protected ISessionService SessionService;
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
         protected Task<IActionResult> Result;
@@ -31,8 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             });
 
             TlevelLoader = Substitute.For<ITlevelLoader>();
+            SessionService = Substitute.For<ISessionService>();
             Logger = Substitute.For<ILogger<TlevelController>>();
-            Controller = new TlevelController(TlevelLoader, Logger)
+            Controller = new TlevelController(TlevelLoader, SessionService, Logger)
             {
                 ControllerContext = new ControllerContext
                 {
