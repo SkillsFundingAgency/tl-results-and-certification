@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Web.Session;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -145,7 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel.IsEverythingCorrect == false)
             {
-                TempData[Constants.IsBackToVerifyPage] = true;
+                TempData.Set(Constants.IsBackToVerifyPage, true);
                 return RedirectToRoute(RouteConstants.ReportTlevelIssue, new { id = viewModel.PathwayId });
             }
 
@@ -176,9 +177,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var isBackToVerifyPage = TempData[Constants.IsBackToVerifyPage] != null &&
-                                    bool.TryParse(TempData[Constants.IsBackToVerifyPage].ToString(), out bool result) && result;
-            tlevelDetails.IsBackToVerifyPage = isBackToVerifyPage;
+            tlevelDetails.IsBackToVerifyPage = TempData.Get<bool>(Constants.IsBackToVerifyPage);
 
             return View(tlevelDetails);
         }
