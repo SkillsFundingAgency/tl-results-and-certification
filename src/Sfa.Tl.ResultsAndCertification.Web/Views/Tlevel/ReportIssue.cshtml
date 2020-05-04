@@ -8,22 +8,7 @@
 
 @section NavigationBar
 {
-    @{ 
-        var backLinkModel = new BackLinkModel();
-        backLinkModel.RouteAttributes.Add("id", Model.PathwayId.ToString());
-    }
-
-    @if (Model.IsBackToVerifyPage)
-    {
-        backLinkModel.RouteName = "VerifyTlevel";
-        backLinkModel.RouteAttributes.Add("isback", "true");
-    }
-    else
-    {
-        backLinkModel.RouteName = "TlevelDetails";
-    }
-
-    <vc:back-link model=@backLinkModel></vc:back-link>
+    <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
 <div class="govuk-grid-row">
