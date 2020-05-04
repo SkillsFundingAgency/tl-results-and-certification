@@ -151,6 +151,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ViewAll.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\ViewComponents\BackLink.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BackLink.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 
@@ -246,6 +251,10 @@
     <EmbeddedResource Update="Content\Tlevel\ViewAll.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ViewAll.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ViewComponents\BackLink.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>BackLink.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
