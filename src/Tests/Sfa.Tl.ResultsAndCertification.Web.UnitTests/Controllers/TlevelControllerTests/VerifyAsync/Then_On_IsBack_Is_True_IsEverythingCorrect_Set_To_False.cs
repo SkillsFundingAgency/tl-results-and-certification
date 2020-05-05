@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.VerifyAsync
@@ -30,6 +32,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
             model.Should().NotBeNull();
             model.IsEverythingCorrect.Should().Be(false);
+
+            model.BackLink.Should().NotBeNull();
+            model.BackLink.RouteName.Should().Be(RouteConstants.TlevelSelect);
+            model.BackLink.RouteAttributes.Count().Should().Be(1);
+            model.BackLink.RouteAttributes["id"].Should().Be(model.PathwayId.ToString());
         }
     }
 }
