@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         {
             mockresult = new SelectToReviewPageViewModel 
             { 
-                SelectedPathwayId = 1,
                 TlevelsToReview  = new List<TlevelToReviewViewModel> 
                 {
                     new TlevelToReviewViewModel { PathwayId = 1, TlevelTitle = "Route1: Pathway1"},
@@ -55,6 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             var model = viewResult.Model as SelectToReviewPageViewModel;
 
             model.TlevelsToReview.Should().NotBeNull();
+            model.SelectedPathwayId.Should().Be(0);
             var expectedFirstItemModel = mockresult.TlevelsToReview.FirstOrDefault();
             var actualFirstItemModel = model.TlevelsToReview.FirstOrDefault();
             

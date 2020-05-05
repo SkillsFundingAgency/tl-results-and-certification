@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         protected TlevelController Controller;
         protected Task<IActionResult> Result;
         protected long ukprn;
+        protected int? selectedPathwayId;
 
         public override void Setup()
         {
@@ -46,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
         public override void When()
         {
-            Result = Controller.SelectToReviewAsync();
+            Result = Controller.SelectToReviewAsync(selectedPathwayId);
         }
     }
 }
