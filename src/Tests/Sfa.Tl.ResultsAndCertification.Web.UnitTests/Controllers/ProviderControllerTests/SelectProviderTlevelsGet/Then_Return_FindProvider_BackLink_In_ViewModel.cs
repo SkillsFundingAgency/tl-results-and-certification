@@ -30,13 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             ProviderLoader.GetSelectProviderTlevelsAsync(Arg.Any<long>(), Arg.Any<int>()).Returns(mockresult);
         }
 
-        [Fact]
-        public void Then_GetSelectProviderTlevelsAsync_Is_Called()
-        {
-            ProviderLoader.Received().GetSelectProviderTlevelsAsync(Ukprn, ProviderId);
-        }
-
-        [Fact]
+       [Fact]
         public void Then_Returns_FindProvider_BackLink()
         {
             var viewResult = Result.Result as ViewResult;
