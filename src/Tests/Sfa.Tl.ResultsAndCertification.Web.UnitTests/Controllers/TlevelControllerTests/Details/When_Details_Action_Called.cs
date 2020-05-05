@@ -17,7 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         protected int id = 123;
         protected long ukPrn = 12345;
         protected ITlevelLoader TlevelLoader;
-        protected ISessionService SessionService;
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
         protected Task<IActionResult> Result;
@@ -35,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
             TlevelLoader = Substitute.For<ITlevelLoader>();
             Logger = Substitute.For<ILogger<TlevelController>>();
-            Controller = new TlevelController(TlevelLoader, SessionService, Logger)
+            Controller = new TlevelController(TlevelLoader, Logger)
             {
                 ControllerContext = new ControllerContext
                 {

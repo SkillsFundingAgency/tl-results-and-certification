@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
@@ -10,7 +9,6 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Microsoft.Extensions.Logging;
-using Sfa.Tl.ResultsAndCertification.Web.Session;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -19,18 +17,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class TlevelController : Controller
     {
         private readonly ITlevelLoader _tlevelLoader;
-        private readonly ISessionService _sessionService;
         private readonly ILogger _logger;
 
-        // TODO: Standard unique-key to be finalised.
-        public string TlevelVerifySessionKey { get { return $"TlevelVerification-{HttpContext.User.GetUserEmail()}"; } }
-
         public TlevelController(ITlevelLoader tlevelLoader, 
-            ISessionService sessionService,
             ILogger<TlevelController> logger)
         {
             _tlevelLoader = tlevelLoader;
-            _sessionService = sessionService;
             _logger = logger;
         }
 
@@ -38,11 +30,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
+            
             if (pendingTlevels?.Count() > 0)
-            {
-                _sessionService.Remove(TlevelVerifySessionKey);
                 return RedirectToRoute(RouteConstants.TlevelSelect);
-            }
 
             return RedirectToRoute(RouteConstants.ViewAllTlevels);
         }
@@ -90,8 +80,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return await GetSelectToReviewByUkprn(User.GetUkPrn());
             }
-
-            _sessionService.Set(TlevelVerifySessionKey, model.SelectedPathwayId);
 
             return RedirectToRoute(RouteConstants.VerifyTlevel, new { id = model.SelectedPathwayId });
         }
