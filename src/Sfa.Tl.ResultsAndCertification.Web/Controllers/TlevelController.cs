@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
@@ -10,7 +9,6 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Microsoft.Extensions.Logging;
-using Sfa.Tl.ResultsAndCertification.Web.Session;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -19,18 +17,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class TlevelController : Controller
     {
         private readonly ITlevelLoader _tlevelLoader;
-        private readonly ISessionService _sessionService;
         private readonly ILogger _logger;
 
-        // TODO: Standard unique-key to be finalised.
-        public string TlevelVerifySessionKey { get { return $"TlevelVerification-{HttpContext.User.GetUserEmail()}"; } }
-
         public TlevelController(ITlevelLoader tlevelLoader, 
-            ISessionService sessionService,
             ILogger<TlevelController> logger)
         {
             _tlevelLoader = tlevelLoader;
-            _sessionService = sessionService;
             _logger = logger;
         }
 
@@ -38,11 +30,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
+            
             if (pendingTlevels?.Count() > 0)
-            {
-                _sessionService.Remove(TlevelVerifySessionKey);
                 return RedirectToRoute(RouteConstants.TlevelSelect);
-            }
 
             return RedirectToRoute(RouteConstants.ViewAllTlevels);
         }
@@ -76,22 +66,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("tlevel-select", Name = RouteConstants.TlevelSelect)]
-        public async Task<IActionResult> SelectToReviewAsync()
+        [Route("tlevel-select/{id:int?}", Name = RouteConstants.TlevelSelect)]
+        public async Task<IActionResult> SelectToReviewAsync(int? id)
         {
-            return await GetSelectToReviewByUkprn(User.GetUkPrn());
+            return await GetSelectToReviewByUkprn(User.GetUkPrn(), id);
         }
 
         [HttpPost]
-        [Route("tlevel-select", Name = RouteConstants.TlevelSelect)]
+        [Route("tlevel-select", Name = RouteConstants.TlevelSelectSubmit)]
         public async Task<IActionResult> SelectToReviewAsync(SelectToReviewPageViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return await GetSelectToReviewByUkprn(User.GetUkPrn());
             }
-
-            _sessionService.Set(TlevelVerifySessionKey, model.SelectedPathwayId);
 
             return RedirectToRoute(RouteConstants.VerifyTlevel, new { id = model.SelectedPathwayId });
         }
@@ -217,7 +205,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(User.GetUkPrn(), pathwayId);
         }
 
-        private async Task<IActionResult> GetSelectToReviewByUkprn(long ukPrn)
+        private async Task<IActionResult> GetSelectToReviewByUkprn(long ukPrn, int? selectedPathwayId = null)
         {
             var viewModel = await _tlevelLoader.GetTlevelsToReviewByUkprnAsync(ukPrn);
 
@@ -226,8 +214,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.TlevelsNotFound, $"No T levels found to review. Method: GetTlevelsToReviewByUkprnAsync(Ukprn: {User.GetUkPrn()}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            
-            viewModel.SelectedPathwayId = _sessionService.Get<int>(TlevelVerifySessionKey);
+
+            if (selectedPathwayId.HasValue)
+                viewModel.SelectedPathwayId = selectedPathwayId.Value;
 
             return View(viewModel);
         }

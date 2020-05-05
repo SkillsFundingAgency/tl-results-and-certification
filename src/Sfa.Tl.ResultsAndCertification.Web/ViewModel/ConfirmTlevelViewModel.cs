@@ -22,6 +22,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
         public bool? IsEverythingCorrect { get; set; }
         public IEnumerable<string> Specialisms { get; set; }
         
-        public BackLinkModel BackLink { get { return new BackLinkModel { RouteName = RouteConstants.TlevelSelect }; } }
+        public BackLinkModel BackLink 
+        { 
+            get 
+            { 
+                return new BackLinkModel 
+                { 
+                    RouteName = RouteConstants.TlevelSelect, 
+                    RouteAttributes = new Dictionary<string, string> { {"id", PathwayId.ToString() } } }; 
+            } 
+        }
     }
 }
