@@ -41,19 +41,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("find-provider", Name = RouteConstants.FindProvider)]
-        public async Task<IActionResult> FindProviderAsync()
+        [Route("find-provider/{isback:bool?}", Name = RouteConstants.FindProvider)]
+        public async Task<IActionResult> FindProviderAsync(bool isback = false)
         {
             var yourProvidersExists  = await _providerLoader.IsAnyProviderSetupCompletedAsync(User.GetUkPrn());
             var viewModel = new FindProviderViewModel { ShowViewProvidersLink = yourProvidersExists };
 
-            viewModel.Search = TempData.Get<string>(Constants.FindProviderSearchCriteria);
+
+            viewModel.Search = isback ? TempData.Get<string>(Constants.FindProviderSearchCriteria) : null;
 
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("find-provider", Name = RouteConstants.FindProvider)]
+        [Route("find-provider", Name = RouteConstants.SubmitFindProvider)]
         public async Task<IActionResult> FindProviderAsync(FindProviderViewModel viewModel)
         {
             if (!await FindProviderViewModelValidated(viewModel))

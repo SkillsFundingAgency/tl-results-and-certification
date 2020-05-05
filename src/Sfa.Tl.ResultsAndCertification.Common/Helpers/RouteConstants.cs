@@ -28,6 +28,7 @@
         // Providers
         public const string YourProviders = "YourProviders";
         public const string FindProvider = "FindProvider";
+        public const string SubmitFindProvider = "SubmitFindProvider";
         public const string ProviderNameLookup = "ProviderNameLookup";
         public const string SelectProviderTlevels = "SelectProviderTlevels";
         public const string AddProviderTlevels = "AddProviderTlevels";

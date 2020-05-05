@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         public override void When()
         {
             _selectProviderTlevelResult = Controller.SelectProviderTlevelsAsync(1);
-            Result = Controller.FindProviderAsync();
+            Result = Controller.FindProviderAsync(true);
         }
 
         [Fact]

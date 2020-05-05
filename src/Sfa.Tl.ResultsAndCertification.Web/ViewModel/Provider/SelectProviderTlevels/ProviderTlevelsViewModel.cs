@@ -28,11 +28,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTl
                 if(IsAddTlevel)
                 {
                     model.RouteName = RouteConstants.ProviderTlevels;
-                    model.RouteAttributes.Add("providerId", ProviderId.ToString());
+                    model.RouteAttributes.Add("providerId", ProviderId.ToString());                    
                 }
                 else
                 {
                     model.RouteName = RouteConstants.FindProvider;
+                    model.RouteAttributes.Add("isback", "true");
                 }
                 return model;
             }
