@@ -38,6 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
             model.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.FindProvider);
+            model.BackLink.RouteAttributes["isback"].Should().Be("true");
         }
     }
 }
