@@ -20,8 +20,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
         protected Task<IActionResult> Result;
+        
         protected long ukprn;
         protected int pathwayId;
+        protected bool isBack = false;
 
         public override void Setup()
         {
@@ -50,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
         public override void When()
         {
-            Result = Controller.VerifyAsync(pathwayId, isback: false); // TODO: scenarios.
+            Result = Controller.VerifyAsync(pathwayId, isBack);
         }
     }
 }

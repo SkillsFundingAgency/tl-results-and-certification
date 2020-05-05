@@ -36,6 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             model.Specialisms.Should().NotBeNull();
             model.Specialisms.Count().Should().Be(expectedResult.Specialisms.Count());
             model.Specialisms.First().Should().Be(expectedResult.Specialisms.First());
+
+            model.IsBackToVerifyPage.Should().BeFalse();
         }
     }
 }
