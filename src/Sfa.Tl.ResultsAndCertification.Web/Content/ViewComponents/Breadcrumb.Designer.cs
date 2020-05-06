@@ -70,6 +70,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find a provider.
+        /// </summary>
+        public static string Provider_Find_Provider {
+            get {
+                return ResourceManager.GetString("Provider_Find_Provider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your providers.
+        /// </summary>
+        public static string Provider_Your_Providers {
+            get {
+                return ResourceManager.GetString("Provider_Your_Providers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to T Level details.
         /// </summary>
         public static string Tlevel_Details {

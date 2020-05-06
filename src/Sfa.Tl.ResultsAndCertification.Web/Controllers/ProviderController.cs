@@ -29,15 +29,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("your-providers", Name = RouteConstants.YourProviders)]
         public async Task<IActionResult> YourProvidersAsync()
         {
-            var providersViewModel = await _providerLoader.GetTqAoProviderDetailsAsync(User.GetUkPrn());
+            var viewModel = await _providerLoader.GetYourProvidersAsync(User.GetUkPrn());
             
-            if (providersViewModel == null || providersViewModel.Count == 0)
+            if (viewModel == null || viewModel.Providers == null || viewModel.Providers.Count == 0)
             {
                 _logger.LogInformation(LogEvent.ProviersNotFound, $"No provideproviders found. Method: GetTqAoProviderDetailsAsync(Ukprn: {User.GetUkPrn()}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.FindProvider);
             }
 
-            return View(providersViewModel);
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -47,9 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var yourProvidersExists  = await _providerLoader.IsAnyProviderSetupCompletedAsync(User.GetUkPrn());
             var viewModel = new FindProviderViewModel { ShowViewProvidersLink = yourProvidersExists };
 
-
             viewModel.Search = isback ? TempData.Get<string>(Constants.FindProviderSearchCriteria) : null;
-
             return View(viewModel);
         }
 

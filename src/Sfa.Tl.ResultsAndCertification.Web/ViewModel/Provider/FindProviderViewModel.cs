@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.Provider;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider
 {
@@ -24,15 +25,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider
                 {
                     BreadcrumbItems = new List<BreadcrumbItem>
                     {
-                         new BreadcrumbItem
-                         {
-                            DisplayName = "Home",
-                            RouteName = RouteConstants.Dashboard
-                         },
-                         new BreadcrumbItem
-                         {
-                            DisplayName = "Find a provider"
-                         }
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Dashboard },
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Provider_Find_Provider }
                     }
                 };
             }
