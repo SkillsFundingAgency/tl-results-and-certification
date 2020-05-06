@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.Provider;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider
@@ -12,5 +15,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider
         public bool ShowViewProvidersLink { get; set; }
 
         public int SelectedProviderId { get; set; }
+
+        public BreadcrumbModel Breadcrumb
+        {
+            get
+            {
+                return new BreadcrumbModel
+                {
+                    BreadcrumbItems = new List<BreadcrumbItem>
+                    {
+                         new BreadcrumbItem
+                         {
+                            DisplayName = "Home",
+                            RouteName = RouteConstants.Dashboard
+                         },
+                         new BreadcrumbItem
+                         {
+                            DisplayName = "Find a provider"
+                         }
+                    }
+                };
+            }
+        }
     }
 }

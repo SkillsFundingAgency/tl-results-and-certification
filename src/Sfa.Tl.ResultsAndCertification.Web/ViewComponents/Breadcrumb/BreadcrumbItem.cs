@@ -9,7 +9,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb
             RouteAttributes = new Dictionary<string, string>();
         }
 
-        public bool IsCurrentPage { get; set; }
         public string DisplayName { get; set; }
         public string RouteName { get; set; }
         public Dictionary<string, string> RouteAttributes { get; set; }

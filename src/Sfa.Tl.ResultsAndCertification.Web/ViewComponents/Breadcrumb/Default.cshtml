@@ -8,7 +8,7 @@
             @foreach (var breadcrumb in Model.BreadcrumbItems.Select((value, i) => (value, i)))
             {
                 var breadcrumbId = "breadcrumb" + breadcrumb.i;
-                @if (breadcrumb.value.IsCurrentPage)
+                @if (string.IsNullOrWhiteSpace(breadcrumb.value.RouteName))
                 {
                     <li id="@breadcrumbId" class="govuk-breadcrumbs__list-item" aria-current="page">@breadcrumb.value.DisplayName</li>
                 }
