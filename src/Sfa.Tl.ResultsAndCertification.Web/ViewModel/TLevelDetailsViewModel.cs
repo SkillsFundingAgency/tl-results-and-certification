@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
                     {
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Dashboard },
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Tlevel_ViewAll, RouteName = RouteConstants.ViewAllTlevels },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Tlevel_Details, IsCurrentPage = true }
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Tlevel_Details }
                     }
                 };
             }

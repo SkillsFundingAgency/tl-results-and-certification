@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview
                     BreadcrumbItems = new List<BreadcrumbItem> 
                     { 
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Dashboard },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Tlevel_Verify_Select, IsCurrentPage = true }
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Tlevel_Verify_Select }
                     } 
                 }; 
             } 
