@@ -99,9 +99,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         /// <summary>
         ///   Looks up a localized string similar to Review T Levels.
         /// </summary>
-        public static string Tlevel_Verify_Select {
+        public static string Tlevel_Review_Select {
             get {
-                return ResourceManager.GetString("Tlevel_Verify_Select", resourceCulture);
+                return ResourceManager.GetString("Tlevel_Review_Select", resourceCulture);
             }
         }
         
