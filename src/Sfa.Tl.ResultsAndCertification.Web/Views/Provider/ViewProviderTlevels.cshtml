@@ -5,6 +5,10 @@
     ViewData["Title"] = @ViewProviderTlevels.Page_Title;
 }
 
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 

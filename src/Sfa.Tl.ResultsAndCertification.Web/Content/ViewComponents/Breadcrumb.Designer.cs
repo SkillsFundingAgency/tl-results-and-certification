@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Provider’s T Levels.
+        /// </summary>
+        public static string Provider_Tlevels {
+            get {
+                return ResourceManager.GetString("Provider_Tlevels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your providers.
         /// </summary>
         public static string Provider_Your_Providers {
