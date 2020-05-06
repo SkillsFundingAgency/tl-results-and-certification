@@ -1,0 +1,24 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb.BreadcrumbModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@if (Model != null && Model.BreadcrumbItems.Count > 0)
+{
+    <div class="govuk-breadcrumbs">
+        <ol class="govuk-breadcrumbs__list">
+            @foreach (var breadcrumb in Model.BreadcrumbItems.Select((value, i) => (value, i)))
+            {
+                var breadcrumbId = "breadcrumb" + breadcrumb.i;
+                @if (breadcrumb.value.IsCurrentPage)
+                {
+                    <li id="@breadcrumbId" class="govuk-breadcrumbs__list-item" aria-current="page">@breadcrumb.value.DisplayName</li>
+                }
+                else
+                {
+                    <li class="govuk-breadcrumbs__list-item">
+                        <a id="@breadcrumbId" class="govuk-breadcrumbs__link" asp-route="@breadcrumb.value.RouteName" asp-all-route-data="@breadcrumb.value.RouteAttributes">@breadcrumb.value.DisplayName</a>
+                    </li>
+                }
+            }
+        </ol>
+    </div>
+}
