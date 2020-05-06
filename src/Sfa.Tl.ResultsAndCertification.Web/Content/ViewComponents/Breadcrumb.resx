@@ -123,7 +123,7 @@
   <data name="Tlevel_Details" xml:space="preserve">
     <value>T Level details</value>
   </data>
-  <data name="Tlevel_Verify_Select" xml:space="preserve">
+  <data name="Tlevel_Review_Select" xml:space="preserve">
     <value>Review T Levels</value>
   </data>
   <data name="Tlevel_ViewAll" xml:space="preserve">
