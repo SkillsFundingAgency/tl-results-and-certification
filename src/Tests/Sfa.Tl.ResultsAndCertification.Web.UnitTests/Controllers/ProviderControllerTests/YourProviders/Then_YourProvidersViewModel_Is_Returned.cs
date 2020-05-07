@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.YourProviders
 {
@@ -66,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         public void Then_YourProviders_Returns_Expected_ViewModel()
         {
             var viewResult = Result.Result as ViewResult;
-            var model = viewResult.Model as YourProvidersViewModel; //List<ProviderDetailsViewModel>;
+            var model = viewResult.Model as YourProvidersViewModel;
 
             model.Should().NotBeNull();
             model.Providers.Should().NotBeNull();
@@ -77,6 +79,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             expectedFirstItemModel.ProviderId.Should().Be(actualFirstItemModel.ProviderId);
             expectedFirstItemModel.DisplayName.Should().Be(actualFirstItemModel.DisplayName);
             expectedFirstItemModel.Ukprn.Should().Be(actualFirstItemModel.Ukprn);
+
+            // Breadcrumb
+
+            model.Breadcrumb.Should().NotBeNull();
+            model.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
+            model.Breadcrumb.BreadcrumbItems.Count.Should().Be(2);
+
+            model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Dashboard);
+            model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
+            model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().BeNullOrEmpty();
+            model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Provider_Your_Providers);
         }
     }
 }

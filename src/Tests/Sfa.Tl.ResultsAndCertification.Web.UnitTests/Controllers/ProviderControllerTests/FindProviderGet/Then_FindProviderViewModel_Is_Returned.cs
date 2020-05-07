@@ -63,6 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
             model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Dashboard);
             model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
+            model.Breadcrumb.BreadcrumbItems[1].RouteName.Should().BeNullOrEmpty();
             model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Provider_Find_Provider);
         }
     }
