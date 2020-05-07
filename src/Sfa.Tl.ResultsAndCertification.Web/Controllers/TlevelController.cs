@@ -182,6 +182,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
             {
                 var tlevelDetails = await _tlevelLoader.GetQueryTlevelViewModelAsync(User.GetUkPrn(), viewModel.PathwayId);
+                tlevelDetails.IsBackToVerifyPage = viewModel.IsBackToVerifyPage;
+                
                 return View(tlevelDetails);
             }
 
