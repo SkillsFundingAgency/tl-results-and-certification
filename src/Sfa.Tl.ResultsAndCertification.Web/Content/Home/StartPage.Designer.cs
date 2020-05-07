@@ -84,8 +84,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         ///        &lt;ul class=&quot;govuk-list govuk-list--bullet&quot;&gt;
         ///            &lt;li&gt;review your T Level details&lt;/li&gt;
         ///            &lt;li&gt;tell us which providers are offering your T Levels&lt;/li&gt;
-        ///            &lt;li&gt;enter student registrations - from September 2020&lt;/li&gt;
-        ///            &lt;li&gt;enter student results - from 2021&lt;/li&gt;
+        ///            &lt;li&gt;enter student registrations – from September 2020&lt;/li&gt;
+        ///            &lt;li&gt;enter student results – from 2021&lt;/li&gt;
         ///        &lt;/ul&gt;
         ///
         ///        &lt;p class=&quot;govuk-body govuk-!-margin-top-7&quot;&gt;You will be signed out if you are inactive for 30 minut [rest of string was truncated]&quot;;.
