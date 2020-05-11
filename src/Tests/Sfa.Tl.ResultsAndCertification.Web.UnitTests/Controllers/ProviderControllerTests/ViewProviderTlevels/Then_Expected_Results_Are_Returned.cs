@@ -65,9 +65,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             resultModel.ProviderTlevels.First().TlevelTitle.Should().Be("Childcare");
 
             // Breadcrumb
-
-            // Breadcrumb
-
             resultModel.Breadcrumb.Should().NotBeNull();
             resultModel.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
             resultModel.Breadcrumb.BreadcrumbItems.Count.Should().Be(3);
