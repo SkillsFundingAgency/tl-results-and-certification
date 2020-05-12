@@ -91,6 +91,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         /// <summary>
+        /// Gets your providers asynchronous.
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <returns></returns>
+        public async Task<YourProvidersViewModel> GetYourProvidersAsync(long aoUkprn)
+        {
+            var providerDetails = await GetTqAoProviderDetailsAsync(aoUkprn);
+            return _mapper.Map<YourProvidersViewModel>(providerDetails);
+        }
+
+        /// <summary>
         /// Gets the tq provider tlevel details asynchronous.
         /// </summary>
         /// <param name="aoUkprn">The ao ukprn.</param>

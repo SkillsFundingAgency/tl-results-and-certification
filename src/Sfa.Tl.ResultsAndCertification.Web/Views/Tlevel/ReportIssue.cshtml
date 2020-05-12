@@ -1,10 +1,15 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TlevelQueryViewModel
 
 @{
     ViewData["Title"] = @Query.Page_Title;
 }
 
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -16,6 +21,7 @@
             <input type="hidden" asp-for="PathwayId" />
             <input type="hidden" asp-for="TqAwardingOrganisationId" />
             <input type="hidden" asp-for="PathwayStatusId" />
+            <input type="hidden" asp-for="IsBackToVerifyPage" />
 
             <div class="govuk-form-group" sfa-validation-for="Query" sfa-validation-class="govuk-form-group--error">
                 <label class="govuk-label" for="query">

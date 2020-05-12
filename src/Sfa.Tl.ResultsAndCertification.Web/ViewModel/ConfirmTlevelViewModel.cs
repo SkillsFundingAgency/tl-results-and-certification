@@ -1,4 +1,6 @@
-﻿using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -19,5 +21,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
         [Required(ErrorMessageResourceType = typeof(Verify), ErrorMessageResourceName = "IsEverythingCorrect_Required_Validation_Message")]
         public bool? IsEverythingCorrect { get; set; }
         public IEnumerable<string> Specialisms { get; set; }
+        
+        public BackLinkModel BackLink 
+        { 
+            get 
+            { 
+                return new BackLinkModel 
+                { 
+                    RouteName = RouteConstants.TlevelSelect, 
+                    RouteAttributes = new Dictionary<string, string> { {"id", PathwayId.ToString() } } }; 
+            } 
+        }
     }
 }

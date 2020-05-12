@@ -19,6 +19,7 @@
         public const string ViewAllTlevels = "ViewAllTlevels";
         public const string TlevelDetails = "TlevelDetails";
         public const string TlevelSelect = "TlevelSelect";
+        public const string TlevelSelectSubmit = "TlevelSelectSubmit";
         public const string VerifyTlevel = "VerifyTlevel";
         public const string ConfirmTlevel = "ConfirmTlevel";
         public const string TlevelConfirmation = "TlevelConfirmation";
@@ -28,6 +29,7 @@
         // Providers
         public const string YourProviders = "YourProviders";
         public const string FindProvider = "FindProvider";
+        public const string SubmitFindProvider = "SubmitFindProvider";
         public const string ProviderNameLookup = "ProviderNameLookup";
         public const string SelectProviderTlevels = "SelectProviderTlevels";
         public const string AddProviderTlevels = "AddProviderTlevels";

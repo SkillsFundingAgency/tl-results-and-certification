@@ -1,14 +1,15 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -28,28 +29,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("your-providers", Name = RouteConstants.YourProviders)]
         public async Task<IActionResult> YourProvidersAsync()
         {
-            var providersViewModel = await _providerLoader.GetTqAoProviderDetailsAsync(User.GetUkPrn());
+            var viewModel = await _providerLoader.GetYourProvidersAsync(User.GetUkPrn());
             
-            if (providersViewModel == null || providersViewModel.Count == 0)
+            if (viewModel == null || viewModel.Providers == null || viewModel.Providers.Count == 0)
             {
                 _logger.LogInformation(LogEvent.ProviersNotFound, $"No provideproviders found. Method: GetTqAoProviderDetailsAsync(Ukprn: {User.GetUkPrn()}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.FindProvider);
             }
 
-            return View(providersViewModel);
+            return View(viewModel);
         }
 
         [HttpGet]
-        [Route("find-provider", Name = RouteConstants.FindProvider)]
-        public async Task<IActionResult> FindProviderAsync()
+        [Route("find-provider/{isback:bool?}", Name = RouteConstants.FindProvider)]
+        public async Task<IActionResult> FindProviderAsync(bool isback = false)
         {
             var yourProvidersExists  = await _providerLoader.IsAnyProviderSetupCompletedAsync(User.GetUkPrn());
             var viewModel = new FindProviderViewModel { ShowViewProvidersLink = yourProvidersExists };
+
+            viewModel.Search = isback ? TempData.Get<string>(Constants.FindProviderSearchCriteria) : null;
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("find-provider", Name = RouteConstants.FindProvider)]
+        [Route("find-provider", Name = RouteConstants.SubmitFindProvider)]
         public async Task<IActionResult> FindProviderAsync(FindProviderViewModel viewModel)
         {
             if (!await FindProviderViewModelValidated(viewModel))
@@ -240,6 +243,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             viewModel.IsAddTlevel = isAddTlevel;
 
+            if(!viewModel.IsAddTlevel)
+            {
+                TempData.Set(Constants.FindProviderSearchCriteria, viewModel.DisplayName);
+            }
             return View("SelectProviderTlevels", viewModel);
         }
 

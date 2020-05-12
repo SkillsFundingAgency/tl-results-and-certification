@@ -5,6 +5,11 @@
     ViewData["Title"] = Model.IsAnyReviewPending ? @ViewAll.Page_Title_Review_Pending : @ViewAll.Page_Title_All_Reviewed;
 }
 
+@section NavigationBar
+{
+    <vc:breadcrumb model="Model.BreadCrumb"></vc:breadcrumb>
+}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 

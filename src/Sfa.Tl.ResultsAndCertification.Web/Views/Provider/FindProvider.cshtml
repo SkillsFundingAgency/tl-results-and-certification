@@ -9,10 +9,14 @@
     <script src="~/javascripts/provider-search.min.js"></script>
 }
 
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <partial name="_ValidationSummary" />
-        <form class="form" id="FindProviderForm" asp-route="FindProvider">
+        <form class="form" id="FindProviderForm" asp-route="SubmitFindProvider">
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">

@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.ViewProviderTlevels;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
@@ -45,6 +46,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => s.DisplayName))
                .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.Ukprn));
+
+            CreateMap<IList<ProviderDetailsViewModel>, YourProvidersViewModel>()
+               .ForMember(d => d.Providers, opts => opts.MapFrom(s => s))
+               .ForAllOtherMembers(d => d.Ignore());
 
             CreateMap<ProviderTlevelDetails, ProviderTlevelDetailsViewModel>()
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))

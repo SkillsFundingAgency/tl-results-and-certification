@@ -5,6 +5,11 @@
     ViewData["Title"] = @Verify.Page_Title;
 }
 
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
 <form asp-route="ConfirmTlevel">
     <input type="hidden" asp-for="TqAwardingOrganisationId" />
     <input type="hidden" asp-for="PathwayId" />
