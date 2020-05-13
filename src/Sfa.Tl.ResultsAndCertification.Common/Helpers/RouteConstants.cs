@@ -45,7 +45,7 @@
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";
-        public const string AccessDenied = "AccessDenied";
+        public const string AccessDeniedWrongRole = "AccessDeniedWrongRole";
         public const string ProblemWithService = "ProblemWithService";
         public const string Error = "Error";
 
