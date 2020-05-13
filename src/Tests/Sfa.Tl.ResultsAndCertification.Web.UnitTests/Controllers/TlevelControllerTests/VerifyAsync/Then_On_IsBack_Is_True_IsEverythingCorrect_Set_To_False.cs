@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             model.IsEverythingCorrect.Should().Be(false);
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.TlevelSelect);
+            model.BackLink.RouteName.Should().Be(RouteConstants.SelectTlevel);
             model.BackLink.RouteAttributes.Count().Should().Be(1);
             model.BackLink.RouteAttributes["id"].Should().Be(model.PathwayId.ToString());
         }

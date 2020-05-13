@@ -18,8 +18,8 @@
         public const string Tlevels = "Tlevels";        
         public const string ViewAllTlevels = "ViewAllTlevels";
         public const string TlevelDetails = "TlevelDetails";
-        public const string TlevelSelect = "TlevelSelect";
-        public const string TlevelSelectSubmit = "TlevelSelectSubmit";
+        public const string SelectTlevel = "SelectTlevel";
+        public const string SelectTlevelSubmit = "SelectTlevelSubmit";
         public const string VerifyTlevel = "VerifyTlevel";
         public const string ConfirmTlevel = "ConfirmTlevel";
         public const string TlevelConfirmation = "TlevelConfirmation";

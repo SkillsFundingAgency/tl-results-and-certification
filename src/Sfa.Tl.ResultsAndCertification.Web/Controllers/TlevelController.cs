@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
             
             if (pendingTlevels?.Count() > 0)
-                return RedirectToRoute(RouteConstants.TlevelSelect);
+                return RedirectToRoute(RouteConstants.SelectTlevel);
 
             return RedirectToRoute(RouteConstants.ViewAllTlevels);
         }
@@ -66,14 +66,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("tlevel-select/{id:int?}", Name = RouteConstants.TlevelSelect)]
+        [Route("select-tlevel/{id:int?}", Name = RouteConstants.SelectTlevel)]
         public async Task<IActionResult> SelectToReviewAsync(int? id)
         {
             return await GetSelectToReviewByUkprn(User.GetUkPrn(), id);
         }
 
         [HttpPost]
-        [Route("tlevel-select", Name = RouteConstants.TlevelSelectSubmit)]
+        [Route("select-tlevel", Name = RouteConstants.SelectTlevelSubmit)]
         public async Task<IActionResult> SelectToReviewAsync(SelectToReviewPageViewModel model)
         {
             if (!ModelState.IsValid)
