@@ -117,34 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Confirmed_Text" xml:space="preserve">
-    <value>confirmed</value>
+  <data name="Role_Based_Access_Denied_Page_Title" xml:space="preserve">
+    <value>Access denied due to wrong role page</value>
   </data>
-  <data name="Finished_Reviewing_All_Tlevels_Text" xml:space="preserve">
-    <value>You have no more T Levels to review.</value>
+  <data name="Role_Based_Access_Denied_Section_Heading" xml:space="preserve">
+    <value>Access denied</value>
   </data>
-  <data name="More_Tlevels_Text" xml:space="preserve">
-    <value>You still have more T Levels to review.</value>
+  <data name="Role_Based_Access_Denied_Section_Text" xml:space="preserve">
+    <value>You do not have access to that part of the Manage T Level results service. If you think you should have access, please contact the person who set up your DfE Sign-in account.</value>
   </data>
-  <data name="Page_Title" xml:space="preserve">
-    <value>T Level details confirmed page</value>
+  <data name="Service_Access_Denied_Page_Title" xml:space="preserve">
+    <value>Service access denied page</value>
   </data>
-  <data name="Queried_Info_Text" xml:space="preserve">
-    <value>We will investigate your query and update you within 3 working days.</value>
+  <data name="Service_Access_Denied_Section_Heading" xml:space="preserve">
+    <value>Access denied</value>
   </data>
-  <data name="Queried_Page_Title" xml:space="preserve">
-    <value>T Level details queried confirmation page</value>
-  </data>
-  <data name="Queried_Text" xml:space="preserve">
-    <value>queried</value>
-  </data>
-  <data name="Review_Another_Tlevel_Button_Text" xml:space="preserve">
-    <value>Review another T Level</value>
-  </data>
-  <data name="Section_Heading" xml:space="preserve">
-    <value>T Level details {0}</value>
-  </data>
-  <data name="View_Your_Tlevels_Button_Text" xml:space="preserve">
-    <value>View your T Levels</value>
+  <data name="Service_Access_Denied_Section_Text" xml:space="preserve">
+    <value>You do not have access to the Manage T Level results service. If you think you should have access, please contact the person who set up your DfE Sign-in account.</value>
   </data>
 </root>

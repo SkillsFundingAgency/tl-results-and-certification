@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Report T Level issue page.
+        ///   Looks up a localized string similar to Query T Level details page.
         /// </summary>
         public static string Page_Title {
             get {

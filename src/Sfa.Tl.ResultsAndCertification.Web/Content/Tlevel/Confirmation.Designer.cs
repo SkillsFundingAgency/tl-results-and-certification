@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level Confirmation page.
+        ///   Looks up a localized string similar to T Level details confirmed page.
         /// </summary>
         public static string Page_Title {
             get {
@@ -102,6 +102,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         public static string Queried_Info_Text {
             get {
                 return ResourceManager.GetString("Queried_Info_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level details queried confirmation page.
+        /// </summary>
+        public static string Queried_Page_Title {
+            get {
+                return ResourceManager.GetString("Queried_Page_Title", resourceCulture);
             }
         }
         

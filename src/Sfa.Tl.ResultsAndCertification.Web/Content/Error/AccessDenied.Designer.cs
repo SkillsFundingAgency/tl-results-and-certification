@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.Error {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ViewAll {
+    public class AccessDenied {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ViewAll() {
+        internal AccessDenied() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel.ViewAll", typeof(ViewAll).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Error.AccessDenied", typeof(AccessDenied).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,92 +61,56 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Continue reviewing T Levels.
+        ///   Looks up a localized string similar to Access denied due to wrong role page.
         /// </summary>
-        public static string Continue_Review_Button_Text {
+        public static string Role_Based_Access_Denied_Page_Title {
             get {
-                return ResourceManager.GetString("Continue_Review_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Role_Based_Access_Denied_Page_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Home.
+        ///   Looks up a localized string similar to Access denied.
         /// </summary>
-        public static string Home_Button_Text {
+        public static string Role_Based_Access_Denied_Section_Heading {
             get {
-                return ResourceManager.GetString("Home_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Role_Based_Access_Denied_Section_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have one or more T Levels waiting for review..
+        ///   Looks up a localized string similar to You do not have access to that part of the Manage T Level results service. If you think you should have access, please contact the person who set up your DfE Sign-in account..
         /// </summary>
-        public static string More_Tlevels_To_Review_Text {
+        public static string Role_Based_Access_Denied_Section_Text {
             get {
-                return ResourceManager.GetString("More_Tlevels_To_Review_Text", resourceCulture);
+                return ResourceManager.GetString("Role_Based_Access_Denied_Section_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your T Levels page.
+        ///   Looks up a localized string similar to Service access denied page.
         /// </summary>
-        public static string Page_Title_All_Reviewed {
+        public static string Service_Access_Denied_Page_Title {
             get {
-                return ResourceManager.GetString("Page_Title_All_Reviewed", resourceCulture);
+                return ResourceManager.GetString("Service_Access_Denied_Page_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your reviewed T Levels page.
+        ///   Looks up a localized string similar to Access denied.
         /// </summary>
-        public static string Page_Title_Review_Pending {
+        public static string Service_Access_Denied_Section_Heading {
             get {
-                return ResourceManager.GetString("Page_Title_Review_Pending", resourceCulture);
+                return ResourceManager.GetString("Service_Access_Denied_Section_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your T Levels.
+        ///   Looks up a localized string similar to You do not have access to the Manage T Level results service. If you think you should have access, please contact the person who set up your DfE Sign-in account..
         /// </summary>
-        public static string Section_Heading_All_Reviewed {
+        public static string Service_Access_Denied_Section_Text {
             get {
-                return ResourceManager.GetString("Section_Heading_All_Reviewed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your reviewed T Levels.
-        /// </summary>
-        public static string Section_Heading_Review_Pending {
-            get {
-                return ResourceManager.GetString("Section_Heading_Review_Pending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Confirmed T Levels.
-        /// </summary>
-        public static string Tlevels_Heading_Confirmed {
-            get {
-                return ResourceManager.GetString("Tlevels_Heading_Confirmed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Queried T Levels.
-        /// </summary>
-        public static string Tlevels_Heading_Queried {
-            get {
-                return ResourceManager.GetString("Tlevels_Heading_Queried", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View.
-        /// </summary>
-        public static string View_Link_Text {
-            get {
-                return ResourceManager.GetString("View_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Service_Access_Denied_Section_Text", resourceCulture);
             }
         }
     }

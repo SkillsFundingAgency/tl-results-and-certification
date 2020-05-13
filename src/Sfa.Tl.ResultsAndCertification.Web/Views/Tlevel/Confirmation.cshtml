@@ -2,7 +2,7 @@
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TlevelConfirmationViewModel
 
 @{
-    ViewData["Title"] = @Confirmation.Page_Title;
+    ViewData["Title"] = Model.IsQueried ? Confirmation.Queried_Page_Title : @Confirmation.Page_Title;
 }
 
 <div class="govuk-grid-row">
