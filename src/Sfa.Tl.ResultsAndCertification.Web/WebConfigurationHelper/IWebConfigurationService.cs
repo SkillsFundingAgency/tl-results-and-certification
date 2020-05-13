@@ -3,7 +3,7 @@
     public interface IWebConfigurationService
     {
         string GetFeedbackEmailAddress();
-
         string GetSignOutPath();
+        string FormatPageTitle(string pageTitle);
     }
 }
