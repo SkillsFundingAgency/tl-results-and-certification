@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             model.BreadCrumb.Should().NotBeNull();
             model.BreadCrumb.BreadcrumbItems.Count().Should().Be(2);
             model.BreadCrumb.BreadcrumbItems.ElementAt(0).DisplayName.Should().Be(BreadcrumbContent.Home);
-            model.BreadCrumb.BreadcrumbItems.ElementAt(0).RouteName.Should().Be(RouteConstants.Dashboard);
+            model.BreadCrumb.BreadcrumbItems.ElementAt(0).RouteName.Should().Be(RouteConstants.Home);
             model.BreadCrumb.BreadcrumbItems.ElementAt(1).DisplayName.Should().Be(BreadcrumbContent.Tlevel_ViewAll);
             model.BreadCrumb.BreadcrumbItems.ElementAt(1).RouteName.Should().BeNull();
         }

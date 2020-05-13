@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.ViewProviderTlev
                 {
                     BreadcrumbItems = new List<BreadcrumbItem>
                     {
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Dashboard },
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Provider_Your_Providers, RouteName = RouteConstants.YourProviders },
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Provider_Tlevels }
                     }
