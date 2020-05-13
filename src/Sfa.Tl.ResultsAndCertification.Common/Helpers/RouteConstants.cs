@@ -23,7 +23,7 @@
         public const string AreDetailsCorrect = "AreDetailsCorrect";
         public const string ConfirmTlevel = "ConfirmTlevel";
         public const string TlevelConfirmation = "TlevelConfirmation";
-        public const string ReportTlevelIssue = "ReportTlevelIssue";  // ReportTlevel_Get
+        public const string QueryTlevelDetails = "QueryTlevelDetails";  // ReportTlevel_Get
         public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // ReportTlevel_Post
 
         // Providers

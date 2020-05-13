@@ -135,7 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel.IsEverythingCorrect == false)
             {
                 TempData.Set(Constants.IsBackToVerifyPage, true);
-                return RedirectToRoute(RouteConstants.ReportTlevelIssue, new { id = viewModel.PathwayId });
+                return RedirectToRoute(RouteConstants.QueryTlevelDetails, new { id = viewModel.PathwayId });
             }
 
             var isSuccess = await _tlevelLoader.ConfirmTlevelAsync(viewModel);
@@ -154,7 +154,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("report-tlevel-issue/{id}", Name=RouteConstants.ReportTlevelIssue)]
+        [Route("query-tlevel-details/{id}", Name=RouteConstants.QueryTlevelDetails)]
         public async Task<IActionResult> ReportIssueAsync(int id)
         {
             var tlevelDetails = await _tlevelLoader.GetQueryTlevelViewModelAsync(User.GetUkPrn(), id);

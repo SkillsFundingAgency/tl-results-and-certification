@@ -48,7 +48,7 @@
         @if (Model?.ShowSomethingIsNotRight == true)
         {
             <p class="govuk-body govuk-!-margin-bottom-9">
-                <a class="govuk-link" asp-route="ReportTlevelIssue" asp-route-id="@Model.PathwayId">@Details.SomethingNotRight_Link_Text</a>
+                <a class="govuk-link" asp-route="QueryTlevelDetails" asp-route-id="@Model.PathwayId">@Details.SomethingNotRight_Link_Text</a>
             </p>
         }
         <a asp-route="ViewAllTlevels" class="govuk-button" data-module="govuk-button">@Details.ReturnToTlevel_Button_Text</a>
