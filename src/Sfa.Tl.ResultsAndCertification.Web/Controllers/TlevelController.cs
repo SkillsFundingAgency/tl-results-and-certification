@@ -34,10 +34,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (pendingTlevels?.Count() > 0)
                 return RedirectToRoute(RouteConstants.SelectTlevel);
 
-            return RedirectToRoute(RouteConstants.ViewAllTlevels);
+            return RedirectToRoute(RouteConstants.YourTlevels);
         }
 
-        [Route("view-all-tlevels", Name = RouteConstants.ViewAllTlevels)]
+        [Route("your-tlevels", Name = RouteConstants.YourTlevels)]
         public async Task<IActionResult> ViewAllAsync()
         {
             var viewModel = await _tlevelLoader.GetYourTlevelsViewModel(User.GetUkPrn());

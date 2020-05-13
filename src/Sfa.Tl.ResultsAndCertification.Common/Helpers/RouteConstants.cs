@@ -16,7 +16,7 @@
 
         // Tlevel
         public const string Tlevels = "Tlevels";        
-        public const string ViewAllTlevels = "ViewAllTlevels";
+        public const string YourTlevels = "YourTlevels";
         public const string TlevelDetails = "TlevelDetails";
         public const string SelectTlevel = "SelectTlevel";
         public const string SelectTlevelSubmit = "SelectTlevelSubmit";
