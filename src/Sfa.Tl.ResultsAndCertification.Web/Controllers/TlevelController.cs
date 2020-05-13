@@ -81,11 +81,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return await GetSelectToReviewByUkprn(User.GetUkPrn());
             }
 
-            return RedirectToRoute(RouteConstants.VerifyTlevel, new { id = model.SelectedPathwayId });
+            return RedirectToRoute(RouteConstants.AreDetailsCorrect, new { id = model.SelectedPathwayId });
         }
 
         [HttpGet]
-        [Route("verify-tlevel/{id}/{isback:bool?}", Name = RouteConstants.VerifyTlevel)]
+        [Route("are-details-correct/{id}/{isback:bool?}", Name = RouteConstants.AreDetailsCorrect)]
         public async Task<IActionResult> VerifyAsync(int id, bool isback)
         {
             var viewModel = await GetVerifyTlevelData(id);
