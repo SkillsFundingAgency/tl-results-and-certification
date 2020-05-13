@@ -22,9 +22,10 @@
         public const string SelectTlevelSubmit = "SelectTlevelSubmit";
         public const string AreDetailsCorrect = "AreDetailsCorrect";
         public const string ConfirmTlevel = "ConfirmTlevel";
-        public const string TlevelConfirmation = "TlevelConfirmation";
-        public const string QueryTlevelDetails = "QueryTlevelDetails";  // ReportTlevel_Get
-        public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // ReportTlevel_Post
+        public const string TlevelDetailsConfirmed = "TlevelDetailsConfirmed";
+        public const string TlevelDetailsQueriedConfirmation = "TlevelDetailsQueriedConfirmation";
+        public const string QueryTlevelDetails = "QueryTlevelDetails";  // QueryTlevelDetails_Get
+        public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // QueryTlevelDetails_Post
 
         // Providers
         public const string YourProviders = "YourProviders";

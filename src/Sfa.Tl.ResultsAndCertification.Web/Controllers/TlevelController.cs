@@ -102,8 +102,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        [Route("tlevel-confirmation/{id}", Name = RouteConstants.TlevelConfirmation)]
+        [HttpGet]        
+        [Route("tlevel-details-queried-confirmation/{id}", Name = RouteConstants.TlevelDetailsQueriedConfirmation)]
+        [Route("tlevel-details-confirmed/{id}", Name = RouteConstants.TlevelDetailsConfirmed)]
         public async Task<IActionResult> ConfirmationAsync(int id)
         {
             if (id == 0 || TempData[Constants.IsRedirect] == null || !(bool.TryParse(TempData[Constants.IsRedirect].ToString(), out bool isRedirect) && isRedirect))
@@ -143,7 +144,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if(isSuccess)
             {
                 TempData["IsRedirect"] = true;
-                return RedirectToRoute(RouteConstants.TlevelConfirmation, new { id = viewModel.PathwayId });
+                return RedirectToRoute(RouteConstants.TlevelDetailsConfirmed, new { id = viewModel.PathwayId });
             }
             else
             {
@@ -171,7 +172,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("report-tlevel-issue", Name = RouteConstants.SubmitTlevelIssue)]
+        [Route("query-tlevel-details", Name = RouteConstants.SubmitTlevelIssue)]
         public async Task<IActionResult> ReportIssueAsync(TlevelQueryViewModel viewModel) 
         {
             if (viewModel == null || viewModel.PathwayStatusId == (int)TlevelReviewStatus.Queried)
@@ -192,7 +193,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (isSuccess)
             {
                 TempData["IsRedirect"] = true;
-                return RedirectToRoute(RouteConstants.TlevelConfirmation, new { id = viewModel.PathwayId });
+                return RedirectToRoute(RouteConstants.TlevelDetailsQueriedConfirmation, new { id = viewModel.PathwayId });
             }
             else
             {

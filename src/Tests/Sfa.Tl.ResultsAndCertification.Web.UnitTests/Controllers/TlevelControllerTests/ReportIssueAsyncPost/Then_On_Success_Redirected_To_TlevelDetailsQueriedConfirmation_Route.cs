@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ReportIssueAsyncPost
 {
-    public class Then_On_Success_Redirected_To_TlevelConfirmation_Route : When_ReportIssueAsync_Is_Called
+    public class Then_On_Success_Redirected_To_TlevelDetailsQueriedConfirmation_Route : When_ReportIssueAsync_Is_Called
     {
         public override void Given()
         {
@@ -18,10 +18,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_ModelState_Valid_Redirected_To_TlevelConfirmation()
+        public void Then_ModelState_Valid_Redirected_To_TlevelDetailsQueriedConfirmation()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.TlevelConfirmation);
+            routeName.Should().Be(RouteConstants.TlevelDetailsQueriedConfirmation);
         }
     }
 }
