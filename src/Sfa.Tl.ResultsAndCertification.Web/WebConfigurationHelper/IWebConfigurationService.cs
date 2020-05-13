@@ -4,6 +4,6 @@
     {
         string GetFeedbackEmailAddress();
         string GetSignOutPath();
-        string FormatPageTitle(string pageTitle);
+        string GetFormattedTitle(string pageTitle, bool isModelValid);
     }
 }

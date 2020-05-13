@@ -22,14 +22,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
             return _configuration.DfeSignInSettings.SignOutEnabled ? RouteConstants.SignOutDsi : RouteConstants.SignOut;
         }
 
-        public string FormatPageTitle(string pageTitle)
+        public string GetFormattedTitle(string title, bool isModelValid)
         {
             var titleSuffix = $"{HeaderContent.Service_Name_Title} – {HeaderContent.Logo_Text}";
-
-            if (string.IsNullOrWhiteSpace(pageTitle))
-                return titleSuffix;
-
-            return $"{pageTitle} – {titleSuffix}";
+            var formattedTitle = string.IsNullOrWhiteSpace(title) ? titleSuffix : $"{title} – {titleSuffix}";
+            return isModelValid ? formattedTitle : $"{HeaderContent.Error_Text} {formattedTitle}";
         }
     }
 }
