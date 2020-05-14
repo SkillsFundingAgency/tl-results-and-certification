@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Something is not right.
+        ///   Looks up a localized string similar to Query T Level details.
         /// </summary>
         public static string SomethingNotRight_Link_Text {
             get {
