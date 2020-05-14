@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Error {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You do not have access to that part of the Manage T Level results service. If you think you should have access, please contact the person who set up your DfE Sign-in account..
+        ///   Looks up a localized string similar to You do not have access to that part of the Manage T Level results service. If you think you should have access, please contact the person in your organisation who set up your DfE Sign-in account..
         /// </summary>
         public static string Role_Based_Access_Denied_Section_Text {
             get {
@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Error {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You do not have access to the Manage T Level results service. If you think you should have access, please contact the person who set up your DfE Sign-in account..
+        ///   Looks up a localized string similar to You do not have access to the Manage T Level results service. If you think you should have access, please contact the person in your organisation who set up your DfE Sign-in account..
         /// </summary>
         public static string Service_Access_Denied_Section_Text {
             get {

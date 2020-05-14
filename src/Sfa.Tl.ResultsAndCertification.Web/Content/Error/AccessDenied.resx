@@ -124,7 +124,7 @@
     <value>Access denied</value>
   </data>
   <data name="Role_Based_Access_Denied_Section_Text" xml:space="preserve">
-    <value>You do not have access to that part of the Manage T Level results service. If you think you should have access, please contact the person who set up your DfE Sign-in account.</value>
+    <value>You do not have access to that part of the Manage T Level results service. If you think you should have access, please contact the person in your organisation who set up your DfE Sign-in account.</value>
   </data>
   <data name="Service_Access_Denied_Page_Title" xml:space="preserve">
     <value>Service access denied page</value>
@@ -133,6 +133,6 @@
     <value>Access denied</value>
   </data>
   <data name="Service_Access_Denied_Section_Text" xml:space="preserve">
-    <value>You do not have access to the Manage T Level results service. If you think you should have access, please contact the person who set up your DfE Sign-in account.</value>
+    <value>You do not have access to the Manage T Level results service. If you think you should have access, please contact the person in your organisation who set up your DfE Sign-in account.</value>
   </data>
 </root>
