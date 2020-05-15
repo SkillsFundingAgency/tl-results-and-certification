@@ -60,7 +60,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(viewModel);
             }
 
-            return RedirectToRoute(RouteConstants.SelectProviderTlevels, new { providerId = viewModel.SelectedProviderId });
+            var hasAnyTlevelSetup = await _providerLoader.HasAnyTlevelSetupForProviderAsync(User.GetUkPrn(), viewModel.SelectedProviderId);
+            return RedirectToRoute( hasAnyTlevelSetup ? RouteConstants.ProviderTlevels : RouteConstants.SelectProviderTlevels, new { providerId = viewModel.SelectedProviderId });
         }
 
         [HttpGet]
