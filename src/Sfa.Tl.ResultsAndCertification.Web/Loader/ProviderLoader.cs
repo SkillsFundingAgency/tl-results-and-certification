@@ -123,5 +123,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             return await _internalApiClient.RemoveTqProviderTlevelAsync(aoUkprn, tqProviderId);
         }
+
+        /// <summary>
+        /// Determines whether [has any tlevel setup for provider asynchronous] [the specified ao ukprn].
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <param name="tlProviderId">The tl provider identifier.</param>
+        /// <returns>
+        ///   <c>true</c> if [has any tlevel setup for provider asynchronous] [the specified ao ukprn]; otherwise, <c>false</c>.
+        /// </returns>
+        public async Task<bool> HasAnyTlevelSetupForProviderAsync(long aoUkprn, int tlProviderId)
+        {
+            return await _internalApiClient.HasAnyTlevelSetupForProviderAsync(aoUkprn, tlProviderId);
+        }
     }
 }
