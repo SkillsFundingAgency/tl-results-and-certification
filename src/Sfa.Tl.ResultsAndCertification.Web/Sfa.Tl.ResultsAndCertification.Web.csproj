@@ -141,6 +141,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Query.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Tlevel\QueryServiceProblem.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>QueryServiceProblem.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Tlevel\SelectToReview.Designer.cs">
       <DependentUpon>SelectToReview.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -253,6 +258,10 @@
     <EmbeddedResource Update="Content\Tlevel\Query.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Query.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Tlevel\QueryServiceProblem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>QueryServiceProblem.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Tlevel\SelectToReview.resx">
       <LastGenOutput>SelectToReview.Designer.cs</LastGenOutput>
