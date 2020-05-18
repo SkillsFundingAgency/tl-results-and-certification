@@ -26,6 +26,7 @@
         public const string TlevelDetailsQueriedConfirmation = "TlevelDetailsQueriedConfirmation";
         public const string QueryTlevelDetails = "QueryTlevelDetails";  // QueryTlevelDetails_Get
         public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // QueryTlevelDetails_Post
+        public const string QueryServiceProblem = "QueryServiceProblem";
 
         // Providers
         public const string YourProviders = "YourProviders";

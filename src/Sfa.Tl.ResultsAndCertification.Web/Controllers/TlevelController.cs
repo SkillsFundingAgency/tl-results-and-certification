@@ -199,8 +199,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 _logger.LogWarning(LogEvent.TlevelReportIssueFailed,
                     $"Unable to report T level issue. Method: ReportIssueAsync, Ukprn: {User.GetUkPrn()}, TqAwardingOrganisationId: {viewModel.TqAwardingOrganisationId}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+                return RedirectToRoute(RouteConstants.QueryServiceProblem);
             }
+        }
+
+        [HttpGet]
+        [Route("query-service-problem", Name = RouteConstants.QueryServiceProblem)]
+        public IActionResult QueryServiceProblem()
+        {
+            return View();
         }
 
         private async Task<ConfirmTlevelViewModel> GetVerifyTlevelData(int pathwayId)
