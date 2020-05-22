@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are You Sure You want to Remove This T Level page.
+        ///   Looks up a localized string similar to Are you sure you want to remove this T Level page.
         /// </summary>
         public static string Page_Title {
             get {
