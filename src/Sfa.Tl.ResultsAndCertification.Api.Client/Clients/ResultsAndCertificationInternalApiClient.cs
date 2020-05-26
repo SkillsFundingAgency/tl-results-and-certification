@@ -100,6 +100,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await DeleteAsync<bool>(requestUri);
         }
 
+        public async Task<bool> HasAnyTlevelSetupForProviderAsync(long aoUkprn, int tlProviderId)
+        {
+            var requestUri = string.Format(ApiConstants.HasAnyTlevelSetupForProviderAsyncUri, aoUkprn, tlProviderId);
+            return await GetAsync<bool>(requestUri);
+        }
+
         #region Private Methods
 
         /// <summary>

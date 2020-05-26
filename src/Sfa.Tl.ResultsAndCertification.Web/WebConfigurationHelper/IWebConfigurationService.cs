@@ -3,7 +3,7 @@
     public interface IWebConfigurationService
     {
         string GetFeedbackEmailAddress();
-
         string GetSignOutPath();
+        string GetFormattedTitle(string pageTitle, bool isModelValid);
     }
 }

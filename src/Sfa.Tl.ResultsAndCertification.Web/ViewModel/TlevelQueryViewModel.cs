@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
                 if (IsBackToVerifyPage)
                     return new BackLinkModel
                     {
-                        RouteName = RouteConstants.VerifyTlevel,
+                        RouteName = RouteConstants.AreDetailsCorrect,
                         RouteAttributes = new Dictionary<string, string> { { "id", PathwayId.ToString() }, { "isback", "true" } }
                     };
 

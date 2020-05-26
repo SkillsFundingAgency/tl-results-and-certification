@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             model.IsBackToVerifyPage.Should().BeTrue();
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.VerifyTlevel);
+            model.BackLink.RouteName.Should().Be(RouteConstants.AreDetailsCorrect);
             model.BackLink.RouteAttributes.Count().Should().Be(2);
             model.BackLink.RouteAttributes["id"].Should().Be(model.PathwayId.ToString());
             model.BackLink.RouteAttributes["isback"].Should().Be("true");

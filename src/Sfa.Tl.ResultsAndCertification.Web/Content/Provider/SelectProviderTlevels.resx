@@ -121,13 +121,13 @@
     <value>Add T Levels</value>
   </data>
   <data name="AddTlevel_Page_Title" xml:space="preserve">
-    <value>Add additional T Levels</value>
+    <value>Add T Levels page</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
     <value>Select provider’s T Levels</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Select provider’s T Levels</value>
+    <value>Select provider’s T Levels page</value>
   </data>
   <data name="Section_Information_Plural_Text" xml:space="preserve">
     <value>Select and submit the T Levels you have approved this provider to offer.</value>

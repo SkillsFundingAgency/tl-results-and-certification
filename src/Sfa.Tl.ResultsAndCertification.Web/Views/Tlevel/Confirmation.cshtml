@@ -2,7 +2,7 @@
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TlevelConfirmationViewModel
 
 @{
-    ViewData["Title"] = @Confirmation.Page_Title;
+    ViewData["Title"] = Model.IsQueried ? Confirmation.Queried_Page_Title : @Confirmation.Page_Title;
 }
 
 <div class="govuk-grid-row">
@@ -20,11 +20,11 @@
 
         @if (Model.ShowMoreTlevelsToReview)
         {
-            <a class="govuk-button" asp-route="TlevelSelect">@Confirmation.Review_Another_Tlevel_Button_Text</a>
+            <a class="govuk-button" asp-route="SelectTlevel">@Confirmation.Review_Another_Tlevel_Button_Text</a>
         }
         else
         {
-            <a class="govuk-button" asp-route="ViewAllTlevels">@Confirmation.View_Your_Tlevels_Button_Text</a>
+            <a class="govuk-button" asp-route="YourTlevels">@Confirmation.View_Your_Tlevels_Button_Text</a>
         }
     </div>
 </div>

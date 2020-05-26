@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add additional T Levels.
+        ///   Looks up a localized string similar to Add T Levels page.
         /// </summary>
         public static string AddTlevel_Page_Title {
             get {
@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select provider’s T Levels.
+        ///   Looks up a localized string similar to Select provider’s T Levels page.
         /// </summary>
         public static string Page_Title {
             get {

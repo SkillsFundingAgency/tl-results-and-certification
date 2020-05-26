@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level removed confirmation.
+        ///   Looks up a localized string similar to T Level removed successfully confirmation page.
         /// </summary>
         public static string Page_Title {
             get {

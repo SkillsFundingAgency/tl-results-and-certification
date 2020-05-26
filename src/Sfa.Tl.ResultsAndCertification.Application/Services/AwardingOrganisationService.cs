@@ -10,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -43,6 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 .GetManyAsync(x => x.TlAwardingOrganisaton.UkPrn == ukprn,
                         n => n.TlPathway,
                         n => n.TlAwardingOrganisaton)
+                .OrderBy(x => x.TlPathway.TlevelTitle)
                 .ToListAsync();
 
             return _mapper.Map<IEnumerable<AwardingOrganisationPathwayStatus>>(tlevels);

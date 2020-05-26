@@ -19,14 +19,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             _logger = logger;
         }
 
-        [Route("access-denied", Name = RouteConstants.AccessDenied)]
+        [Route("access-denied-wrong-role", Name = RouteConstants.AccessDeniedWrongRole)]
         public IActionResult AccessDenied()
         {
             return View();
         }
 
         [AllowAnonymous]
-        [Route("no-service-permission", Name = RouteConstants.ServiceAccessDenied)]
+        [Route("service-access-denied", Name = RouteConstants.ServiceAccessDenied)]
         public IActionResult ServiceAccessDenied()
         {
             return View();
@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 case 404:
                     return RedirectToRoute(RouteConstants.PageNotFound);
                 case 405:
-                    return RedirectToRoute(RouteConstants.Dashboard);
+                    return RedirectToRoute(RouteConstants.Home);
                 case 500:
                 default:
                     return RedirectToRoute(RouteConstants.ProblemWithService);

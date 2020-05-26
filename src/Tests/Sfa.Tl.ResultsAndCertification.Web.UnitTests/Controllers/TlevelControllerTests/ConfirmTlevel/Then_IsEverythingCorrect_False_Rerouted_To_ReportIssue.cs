@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public void Then_IsEveryThingCorrect_False_Is_Redirected_To_ReportIssue()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.ReportTlevelIssue);
+            routeName.Should().Be(RouteConstants.QueryTlevelDetails);
         }
     }
 }

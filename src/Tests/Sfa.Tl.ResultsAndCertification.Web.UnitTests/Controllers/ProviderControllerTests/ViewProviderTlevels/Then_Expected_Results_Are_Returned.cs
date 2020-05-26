@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             resultModel.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
             resultModel.Breadcrumb.BreadcrumbItems.Count.Should().Be(3);
 
-            resultModel.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Dashboard);
+            resultModel.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
             resultModel.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
             resultModel.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.YourProviders);
             resultModel.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Provider_Your_Providers);

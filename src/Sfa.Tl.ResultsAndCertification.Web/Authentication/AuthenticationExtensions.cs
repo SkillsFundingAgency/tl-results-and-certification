@@ -68,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     options.SlidingExpiration = true;
                     options.ExpireTimeSpan = overallSessionTimeout;
                     options.LogoutPath = config.DfeSignInSettings.LogoutPath;
-                    options.AccessDeniedPath = "/access-denied";
+                    options.AccessDeniedPath = "/access-denied-wrong-role";
                 })
                 .AddOpenIdConnect(options =>
                 {

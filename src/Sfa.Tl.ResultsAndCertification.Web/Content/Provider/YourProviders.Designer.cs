@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your providers list.
+        ///   Looks up a localized string similar to Your providers list page.
         /// </summary>
         public static string Page_Title {
             get {

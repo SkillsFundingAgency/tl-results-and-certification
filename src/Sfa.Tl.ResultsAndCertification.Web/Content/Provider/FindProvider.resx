@@ -124,7 +124,7 @@
     <value>Find a provider</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Find provider page</value>
+    <value>Find a provider page</value>
   </data>
   <data name="ProviderName_Char_Limit_Exceed_Validation_Message" xml:space="preserve">
     <value>The character limit exceeded</value>
