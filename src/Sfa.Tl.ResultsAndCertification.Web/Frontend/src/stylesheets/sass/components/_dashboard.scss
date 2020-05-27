@@ -9,4 +9,7 @@
     margin-bottom: 10px;
 }
 
-
+.registration-card {
+    @extend .card;
+    margin-bottom: 30px;
+}
