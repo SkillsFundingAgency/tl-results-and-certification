@@ -1,5 +1,4 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content
-@using Sfa.Tl.ResultsAndCertification.Common.Extensions
 
 @{
     ViewData["Title"] = Dashboard.Page_Title;
@@ -19,44 +18,38 @@
 <!-- MAIN ROW -->
 <div class="govuk-grid-row">
     <!-- BLOCK 1 – T Levels -->
-    @if (Context.User.HasSiteAdministratorRole() || Context.User.HasTlevelsReviewerRole())
-    {
-        <div class="govuk-grid-column-one-half">
-            <div class="govuk-form-group card">
-                <p class="govuk-body">
-                    <h2 class="govuk-heading-m">
-                        <a class="govuk-link" asp-route="Tlevels">
-                            @Dashboard.Tlevels_Text
-                        </a>
-                    </h2>
-                </p>
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="Tlevels">
+                        @Dashboard.Tlevels_Text
+                    </a>
+                </h2>
+            </p>
 
-                <p class="govuk-body">
-                    @Dashboard.Tlevels_Description_Text
-                </p>
-            </div>
+            <p class="govuk-body">
+                @Dashboard.Tlevels_Description_Text
+            </p>
         </div>
-    }
+    </div>
 
     <!-- BLOCK 2 – Providers -->
-    @if (Context.User.HasSiteAdministratorRole() || Context.User.HasProvidersEditorRole())
-    {
-        <div class="govuk-grid-column-one-half">
-            <div class="govuk-form-group card">
-                <p class="govuk-body">
-                    <h2 class="govuk-heading-m">
-                        <a class="govuk-link" asp-route="FindProvider">
-                            @Dashboard.Providers_Text
-                        </a>
-                    </h2>
-                </p>
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="FindProvider">
+                        @Dashboard.Providers_Text
+                    </a>
+                </h2>
+            </p>
 
-                <p class="govuk-body">
-                    @Dashboard.Providers_Description_Text
-                </p>
-            </div>
+            <p class="govuk-body">
+                @Dashboard.Providers_Description_Text
+            </p>
         </div>
-    }
+    </div>
 
     <!-- BLOCK 3 – Registrations -->
     <div class="govuk-grid-column-one-half">
