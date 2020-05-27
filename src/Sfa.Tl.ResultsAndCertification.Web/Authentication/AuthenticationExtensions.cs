@@ -144,27 +144,36 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // and validated the identity token
                         OnTokenValidated = async ctx =>
                         {
+                            var claims = new List<Claim>();
                             var organisation = JObject.Parse(ctx.Principal.FindFirst("Organisation").Value);
-                            var organisationId = organisation["id"].ToString();
-                            var userId = ctx.Principal.FindFirst("sub").Value;
-                            var ukprn = organisation["ukprn"].ToObject<int?>();
-                            var dfeSignInApiClient = ctx.HttpContext.RequestServices.GetService<IDfeSignInApiClient>();
-                            var userInfo = await dfeSignInApiClient.GetUserInfo(organisationId, userId);
-
-                            var claims = new List<Claim>()
+                            
+                            if (organisation.HasValues)
                             {
-                                new Claim(CustomClaimTypes.HasAccessToService, userInfo.HasAccessToService.ToString()),
-                                new Claim(CustomClaimTypes.UserId, userId),
-                                new Claim(ClaimTypes.GivenName, ctx.Principal.FindFirst("given_name").Value),
-                                new Claim(ClaimTypes.Surname, ctx.Principal.FindFirst("family_name").Value),
-                                new Claim(ClaimTypes.Email, ctx.Principal.FindFirst("email").Value),
-                                new Claim(CustomClaimTypes.Ukprn, ukprn.HasValue ? ukprn.Value.ToString() : string.Empty),
-                                new Claim(CustomClaimTypes.OrganisationId, organisationId)
-                            };
+                                var organisationId = organisation["id"].ToString();
+                                var userId = ctx.Principal.FindFirst("sub").Value;
+                                var ukprn = organisation["ukprn"].ToObject<int?>();
+                                var dfeSignInApiClient = ctx.HttpContext.RequestServices.GetService<IDfeSignInApiClient>();
+                                var userInfo = await dfeSignInApiClient.GetUserInfo(organisationId, userId);
 
-                            if (userInfo.Roles != null && userInfo.Roles.Any())
+                                claims.AddRange(new List<Claim>
+                                {
+                                    new Claim(CustomClaimTypes.HasAccessToService, ukprn.HasValue ? userInfo.HasAccessToService.ToString() : "false"),
+                                    new Claim(CustomClaimTypes.UserId, userId),
+                                    new Claim(ClaimTypes.GivenName, ctx.Principal.FindFirst("given_name").Value),
+                                    new Claim(ClaimTypes.Surname, ctx.Principal.FindFirst("family_name").Value),
+                                    new Claim(ClaimTypes.Email, ctx.Principal.FindFirst("email").Value),
+                                    new Claim(CustomClaimTypes.Ukprn, ukprn.HasValue ? ukprn.Value.ToString() : string.Empty),
+                                    new Claim(CustomClaimTypes.OrganisationId, organisationId)
+                                });
+
+                                if (userInfo.Roles != null && userInfo.Roles.Any())
+                                {
+                                    claims.AddRange(userInfo.Roles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
+                                }
+                            }
+                            else
                             {
-                                claims.AddRange(userInfo.Roles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
+                                claims.Add(new Claim(CustomClaimTypes.HasAccessToService, "false"));
                             }
 
                             ctx.Principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "DfE-SignIn"));
