@@ -8,11 +8,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         // Policy Names
         public const string RequireTLevelsReviewerAccess = "RequireTLevelsReviewerAccess";
         public const string RequireProviderEditorAccess = "RequireProviderEditorAccess";
+        public const string RequireRegistrationsEditorAccess = "RequireRegistrationsEditorAccess";
 
         // Roles
         public const string SiteAdministrator = "Site Administrator";
         public const string TlevelsReviewer = "T Levels Reviewer";
         public const string ProvidersEditor = "Providers Editor";
+        public const string RegistrationsEditor = "Registrations Editor";
 
         public static bool HasAccessToService(this ClaimsPrincipal user)
         {
