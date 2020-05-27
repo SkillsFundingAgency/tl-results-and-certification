@@ -144,6 +144,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddSingleton<IWebConfigurationService, WebConfigurationService>();
             services.AddTransient<ITlevelLoader, TlevelLoader>();
             services.AddTransient<IProviderLoader, ProviderLoader>();
+            services.AddTransient<IRegistrationLoader, RegistrationLoader>();
         }
     }
 }
