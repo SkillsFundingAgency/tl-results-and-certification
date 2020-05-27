@@ -1,10 +1,12 @@
-﻿@{
-    ViewData["Title"] = "Access denied";
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Error
+
+@{
+    ViewData["Title"] = @AccessDenied.Service_Access_Denied_Page_Title;
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
-        <p class="govuk-body">You do not have access to the Manage T Level results service. If you think you should have access, please contact the person who set up your DfE Sign-in account.</p>
+        <h1 class="govuk-heading-l">@AccessDenied.Service_Access_Denied_Section_Heading</h1>
+        <p class="govuk-body">@AccessDenied.Service_Access_Denied_Section_Text</p>
     </div>
 </div>

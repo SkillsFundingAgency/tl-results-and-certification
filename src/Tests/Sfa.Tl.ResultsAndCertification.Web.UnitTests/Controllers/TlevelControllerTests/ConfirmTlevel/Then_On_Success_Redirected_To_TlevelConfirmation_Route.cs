@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public void Then_ModelState_Valid_Redirected_To_TlevelConfirmation()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.TlevelConfirmation);
+            routeName.Should().Be(RouteConstants.TlevelDetailsConfirmed);
         }
     }
 }

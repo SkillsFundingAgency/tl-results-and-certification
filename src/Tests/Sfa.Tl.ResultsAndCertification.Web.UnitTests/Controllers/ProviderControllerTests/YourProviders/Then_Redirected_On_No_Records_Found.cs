@@ -23,15 +23,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
 
-            var mockresult = new List<ProviderDetailsViewModel>();
-            ProviderLoader.GetTqAoProviderDetailsAsync(Ukprn)
+            var mockresult = new YourProvidersViewModel();
+            ProviderLoader.GetYourProvidersAsync(Ukprn)
                 .Returns(mockresult);
         }
 
         [Fact]
         public void Then_GetTqAoProviderDetailsAsync_Is_Called()
         {
-            ProviderLoader.Received().GetTqAoProviderDetailsAsync(Ukprn);
+            ProviderLoader.Received().GetYourProvidersAsync(Ukprn);
         }
 
         [Fact]

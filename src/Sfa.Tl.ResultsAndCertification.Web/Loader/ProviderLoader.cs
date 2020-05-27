@@ -91,6 +91,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         /// <summary>
+        /// Gets your providers asynchronous.
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <returns></returns>
+        public async Task<YourProvidersViewModel> GetYourProvidersAsync(long aoUkprn)
+        {
+            var providerDetails = await GetTqAoProviderDetailsAsync(aoUkprn);
+            return _mapper.Map<YourProvidersViewModel>(providerDetails);
+        }
+
+        /// <summary>
         /// Gets the tq provider tlevel details asynchronous.
         /// </summary>
         /// <param name="aoUkprn">The ao ukprn.</param>
@@ -111,6 +122,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<bool> RemoveTqProviderTlevelAsync(long aoUkprn, int tqProviderId)
         {
             return await _internalApiClient.RemoveTqProviderTlevelAsync(aoUkprn, tqProviderId);
+        }
+
+        /// <summary>
+        /// Determines whether [has any tlevel setup for provider asynchronous] [the specified ao ukprn].
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <param name="tlProviderId">The tl provider identifier.</param>
+        /// <returns>
+        ///   <c>true</c> if [has any tlevel setup for provider asynchronous] [the specified ao ukprn]; otherwise, <c>false</c>.
+        /// </returns>
+        public async Task<bool> HasAnyTlevelSetupForProviderAsync(long aoUkprn, int tlProviderId)
+        {
+            return await _internalApiClient.HasAnyTlevelSetupForProviderAsync(aoUkprn, tlProviderId);
         }
     }
 }

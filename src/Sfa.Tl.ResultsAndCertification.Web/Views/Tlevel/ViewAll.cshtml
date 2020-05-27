@@ -5,6 +5,11 @@
     ViewData["Title"] = Model.IsAnyReviewPending ? @ViewAll.Page_Title_Review_Pending : @ViewAll.Page_Title_All_Reviewed;
 }
 
+@section NavigationBar
+{
+    <vc:breadcrumb model="Model.BreadCrumb"></vc:breadcrumb>
+}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
@@ -27,12 +32,11 @@
         @if (Model.IsAnyReviewPending)
         {
             <p class="govuk-body">@ViewAll.More_Tlevels_To_Review_Text</p>
-            <a asp-route="TlevelSelect" class="govuk-button" data-module="govuk-button">@ViewAll.Continue_Review_Button_Text</a>
+            <a asp-route="SelectTlevel" class="govuk-button" data-module="govuk-button">@ViewAll.Continue_Review_Button_Text</a>
         }
         else
         {
-            <a asp-controller="Dashboard"
-               asp-action="Index" class="govuk-button" data-module="govuk-button">@ViewAll.Home_Button_Text</a>
+            <a asp-route="Home" class="govuk-button" data-module="govuk-button">@ViewAll.Home_Button_Text</a>
         }
 
     </div>

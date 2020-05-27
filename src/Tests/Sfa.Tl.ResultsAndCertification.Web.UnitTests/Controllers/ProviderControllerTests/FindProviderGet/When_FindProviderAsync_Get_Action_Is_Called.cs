@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
@@ -19,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         protected ProviderController Controller;
         protected Task<IActionResult> Result;
         protected IHttpContextAccessor HttpContextAccessor;
+        protected TempDataDictionary TempData;
         protected long Ukprn = 789;
 
         public override void Setup()
@@ -28,6 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             Logger = Substitute.For<ILogger<ProviderController>>();
             
             Controller = new ProviderController(ProviderLoader, Logger);
+            TempData = new TempDataDictionary(HttpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
+            Controller.TempData = TempData;
         }
 
         public override void When()

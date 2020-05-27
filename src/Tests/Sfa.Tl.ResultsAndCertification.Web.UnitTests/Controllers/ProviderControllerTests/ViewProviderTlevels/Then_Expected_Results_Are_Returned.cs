@@ -1,10 +1,12 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.ViewProviderTlevels;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.ViewProviderTlevels
 {
@@ -61,6 +63,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             resultModel.ProviderTlevels.Count().Should().Be(2);
             resultModel.ProviderTlevels.First().TqProviderId.Should().Be(99);
             resultModel.ProviderTlevels.First().TlevelTitle.Should().Be("Childcare");
+
+            // Breadcrumb
+            resultModel.Breadcrumb.Should().NotBeNull();
+            resultModel.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
+            resultModel.Breadcrumb.BreadcrumbItems.Count.Should().Be(3);
+
+            resultModel.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
+            resultModel.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
+            resultModel.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.YourProviders);
+            resultModel.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Provider_Your_Providers);
+            resultModel.Breadcrumb.BreadcrumbItems[2].RouteName.Should().BeNullOrEmpty();
+            resultModel.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Provider_Tlevels);
         }
     }
 }

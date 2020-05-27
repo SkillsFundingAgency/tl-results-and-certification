@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View all T Levels page.
+        ///   Looks up a localized string similar to Your T Levels page.
         /// </summary>
         public static string Page_Title_All_Reviewed {
             get {
@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View all T Levels page.
+        ///   Looks up a localized string similar to Your reviewed T Levels page.
         /// </summary>
         public static string Page_Title_Review_Pending {
             get {

@@ -123,6 +123,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<ProviderTlevelDetails>(tqProvider);
         }
 
+        /// <summary>
+        /// Removes the tq provider tlevel asynchronous.
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <param name="tqProviderId">The tq provider identifier.</param>
+        /// <returns></returns>
         public async Task<bool> RemoveTqProviderTlevelAsync(long aoUkprn, int tqProviderId)
         {
             var tqProvider = await _tqProviderRepository
@@ -131,6 +137,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (tqProvider == null) return false;
 
             return await _tqProviderRepository.DeleteAsync(tqProvider) > 0;
+        }
+
+
+        /// <summary>
+        /// Determines whether [has any tlevel setup for provider asynchronous] [the specified ao ukprn].
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <param name="tlProviderId">The tl provider identifier.</param>
+        /// <returns>
+        ///   <c>true</c> if [has any tlevel setup for provider asynchronous] [the specified ao ukprn]; otherwise, <c>false</c>.
+        /// </returns>
+        public async Task<bool> HasAnyTlevelSetupForProviderAsync(long aoUkprn, int tlProviderId)
+        {
+            return await _tqProviderRepository.CountAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && x.TlProviderId == tlProviderId) > 0;
         }
     }
 }

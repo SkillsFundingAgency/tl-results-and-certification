@@ -12,22 +12,26 @@
         public const string AccountProfile = "AccountProfile";
 
         // Dashboard
-        public const string Dashboard = "Dashboard";
+        public const string Home = "Home";
 
         // Tlevel
         public const string Tlevels = "Tlevels";        
-        public const string ViewAllTlevels = "ViewAllTlevels";
+        public const string YourTlevels = "YourTlevels";
         public const string TlevelDetails = "TlevelDetails";
-        public const string TlevelSelect = "TlevelSelect";
-        public const string VerifyTlevel = "VerifyTlevel";
+        public const string SelectTlevel = "SelectTlevel";
+        public const string SelectTlevelSubmit = "SelectTlevelSubmit";
+        public const string AreDetailsCorrect = "AreDetailsCorrect";
         public const string ConfirmTlevel = "ConfirmTlevel";
-        public const string TlevelConfirmation = "TlevelConfirmation";
-        public const string ReportTlevelIssue = "ReportTlevelIssue";  // ReportTlevel_Get
-        public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // ReportTlevel_Post
+        public const string TlevelDetailsConfirmed = "TlevelDetailsConfirmed";
+        public const string TlevelDetailsQueriedConfirmation = "TlevelDetailsQueriedConfirmation";
+        public const string QueryTlevelDetails = "QueryTlevelDetails";  // QueryTlevelDetails_Get
+        public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // QueryTlevelDetails_Post
+        public const string QueryServiceProblem = "QueryServiceProblem";
 
         // Providers
         public const string YourProviders = "YourProviders";
         public const string FindProvider = "FindProvider";
+        public const string SubmitFindProvider = "SubmitFindProvider";
         public const string ProviderNameLookup = "ProviderNameLookup";
         public const string SelectProviderTlevels = "SelectProviderTlevels";
         public const string AddProviderTlevels = "AddProviderTlevels";
@@ -42,7 +46,7 @@
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";
-        public const string AccessDenied = "AccessDenied";
+        public const string AccessDeniedWrongRole = "AccessDeniedWrongRole";
         public const string ProblemWithService = "ProblemWithService";
         public const string Error = "Error";
 

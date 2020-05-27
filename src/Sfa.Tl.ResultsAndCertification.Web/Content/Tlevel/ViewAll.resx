@@ -127,10 +127,10 @@
     <value>You have one or more T Levels waiting for review.</value>
   </data>
   <data name="Page_Title_All_Reviewed" xml:space="preserve">
-    <value>View all T Levels page</value>
+    <value>Your T Levels page</value>
   </data>
   <data name="Page_Title_Review_Pending" xml:space="preserve">
-    <value>View all T Levels page</value>
+    <value>Your reviewed T Levels page</value>
   </data>
   <data name="Section_Heading_All_Reviewed" xml:space="preserve">
     <value>Your T Levels</value>

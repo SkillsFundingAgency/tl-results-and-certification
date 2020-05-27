@@ -121,7 +121,7 @@
     <value>Continue</value>
   </data>
   <data name="More_Page_Title" xml:space="preserve">
-    <value>Select T Levels page</value>
+    <value>Select a T Level to review page</value>
   </data>
   <data name="More_Review_Heading" xml:space="preserve">
     <value>Select a T Level to review</value>
@@ -133,7 +133,7 @@
     <value>Select a T Level to review</value>
   </data>
   <data name="One_Page_Title" xml:space="preserve">
-    <value>1 T Level to review page</value>
+    <value>You have a T Level to review page</value>
   </data>
   <data name="One_Review_Heading" xml:space="preserve">
     <value>You have one T Level to review</value>

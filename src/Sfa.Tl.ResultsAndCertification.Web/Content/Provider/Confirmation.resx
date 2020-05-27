@@ -124,10 +124,10 @@
     <value>Manage provider's T Levels</value>
   </data>
   <data name="Page_Title_Plural" xml:space="preserve">
-    <value>T Levels added successfully</value>
+    <value>T Levels added successfully page</value>
   </data>
   <data name="Page_Title_Singular" xml:space="preserve">
-    <value>T Level added successfully</value>
+    <value>T Level added successfully page</value>
   </data>
   <data name="Section_Heading_Plural_Text" xml:space="preserve">
     <value>T Levels added successfully</value>

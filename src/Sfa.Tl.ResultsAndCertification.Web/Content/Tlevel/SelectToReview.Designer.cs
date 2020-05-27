@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select T Levels page.
+        ///   Looks up a localized string similar to Select a T Level to review page.
         /// </summary>
         public static string More_Page_Title {
             get {
@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1 T Level to review page.
+        ///   Looks up a localized string similar to You have a T Level to review page.
         /// </summary>
         public static string One_Page_Title {
             get {

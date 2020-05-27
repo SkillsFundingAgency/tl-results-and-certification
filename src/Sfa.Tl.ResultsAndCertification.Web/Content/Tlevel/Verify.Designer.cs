@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Verify T Levels page.
+        ///   Looks up a localized string similar to Are these details correct page.
         /// </summary>
         public static string Page_Title {
             get {

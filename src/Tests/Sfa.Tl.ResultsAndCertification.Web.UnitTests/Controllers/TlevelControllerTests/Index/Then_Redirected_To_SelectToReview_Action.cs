@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public void Then_GetTlevelsByStatusIdAsync_ViewModel_Return_Zero_Rows()
         {
             var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
-            actualRouteName.Should().Be(RouteConstants.TlevelSelect);
+            actualRouteName.Should().Be(RouteConstants.SelectTlevel);
         }
     }
 }

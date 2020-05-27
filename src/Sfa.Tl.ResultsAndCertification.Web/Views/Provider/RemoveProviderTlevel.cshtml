@@ -5,45 +5,50 @@
     ViewData["Title"] = @RemoveProviderTlevel.Page_Title;
 }
 
-    <form asp-route="SubmitRemoveProviderTlevel">
-        <input type="hidden" asp-for="Id" />
-        <input type="hidden" asp-for="TlProviderId" />
-        <input type="hidden" asp-for="DisplayName" />
-        <input type="hidden" asp-for="Ukprn" />
-        <input type="hidden" asp-for="TlevelTitle" />
-        <input type="hidden" asp-for="ShowBackToProvidersLink" />
-        
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
-                <partial name="_ValidationSummary" />
-                <div class="govuk-form-group govuk-!-margin-bottom-7">
-                    <fieldset class="govuk-fieldset" aria-describedby="remove-tlevel-hint">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-                            <h1 class="govuk-fieldset__heading">
-                                @RemoveProviderTlevel.Page_Heading
-                            </h1>
-                        </legend>
-                        <span id="remove-tlevel-hint" class="govuk-hint govuk-!-margin-bottom-7">
-                            <strong>@Model.TlevelTitle</strong> @RemoveProviderTlevel.Section_From_Text @Model.DisplayName (<abbr>@RemoveProviderTlevel.Section_Ukprn_Text</abbr>: @Model.Ukprn).
-                        </span>
-                        <div class="govuk-radios" sfa-validation-for="CanRemoveTlevel" sfa-validation-class="govuk-form-group--error">
-                            <span sfa-validation-for="CanRemoveTlevel"></span>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="canremovetlevel" asp-for="CanRemoveTlevel" type="radio" value="true">
-                                <label class="govuk-label govuk-radios__label" for="canremovetlevel">
-                                    @RemoveProviderTlevel.Section_Yes_Remove_Tlevel_Text
-                                </label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="tl-remove-no" asp-for="CanRemoveTlevel" type="radio" value="false">
-                                <label class="govuk-label govuk-radios__label" for="tl-remove-no">
-                                    @RemoveProviderTlevel.Section_No_Remove_Tlevel_Text
-                                </label>
-                            </div>
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<form asp-route="SubmitRemoveProviderTlevel">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="TlProviderId" />
+    <input type="hidden" asp-for="DisplayName" />
+    <input type="hidden" asp-for="Ukprn" />
+    <input type="hidden" asp-for="TlevelTitle" />
+    <input type="hidden" asp-for="ShowBackToProvidersLink" />
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <partial name="_ValidationSummary" />
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <fieldset class="govuk-fieldset" aria-describedby="remove-tlevel-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading">
+                            @RemoveProviderTlevel.Page_Heading
+                        </h1>
+                    </legend>
+                    <span id="remove-tlevel-hint" class="govuk-hint govuk-!-margin-bottom-7">
+                        <strong>@Model.TlevelTitle</strong> @RemoveProviderTlevel.Section_From_Text @Model.DisplayName (<abbr>@RemoveProviderTlevel.Section_Ukprn_Text</abbr>: @Model.Ukprn).
+                    </span>
+                    <div class="govuk-radios" sfa-validation-for="CanRemoveTlevel" sfa-validation-class="govuk-form-group--error">
+                        <span sfa-validation-for="CanRemoveTlevel"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="canremovetlevel" asp-for="CanRemoveTlevel" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="canremovetlevel">
+                                @RemoveProviderTlevel.Section_Yes_Remove_Tlevel_Text
+                            </label>
                         </div>
-                    </fieldset>
-                </div>
-                <button class="govuk-button" data-module="govuk-button">@RemoveProviderTlevel.Submit_Button_Text</button>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="tl-remove-no" asp-for="CanRemoveTlevel" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="tl-remove-no">
+                                @RemoveProviderTlevel.Section_No_Remove_Tlevel_Text
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
             </div>
+            <button class="govuk-button" data-module="govuk-button">@RemoveProviderTlevel.Submit_Button_Text</button>
         </div>
-    </form>
+    </div>
+</form>

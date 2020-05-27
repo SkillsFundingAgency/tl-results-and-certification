@@ -1,0 +1,8 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents;
+@model Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink.BackLinkModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@if (Model != null && !string.IsNullOrWhiteSpace(Model.RouteName))
+{
+    <a id="backLink" asp-route="@Model.RouteName" asp-all-route-data="@Model.RouteAttributes" class="govuk-back-link">@BackLink.BackLinkText</a>
+}

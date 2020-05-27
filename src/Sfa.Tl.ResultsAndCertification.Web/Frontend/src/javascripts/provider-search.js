@@ -26,7 +26,7 @@ $(document).ready(function () {
 
                 currentGetProviderSearchXhr = $.ajax({
                     type: "get",
-                    url: "search-provider/" + query,
+                    url: "/search-provider/" + query,
                     contentType: "json",
                     timeout: 3000,
                     success: function (data) {

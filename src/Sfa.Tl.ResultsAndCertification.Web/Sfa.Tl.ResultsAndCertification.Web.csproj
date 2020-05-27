@@ -41,6 +41,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Dashboard.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Error\AccessDenied.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AccessDenied.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Error\PageNotFound.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -136,6 +141,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Query.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Tlevel\QueryServiceProblem.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>QueryServiceProblem.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Tlevel\SelectToReview.Designer.cs">
       <DependentUpon>SelectToReview.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -151,6 +161,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ViewAll.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\ViewComponents\BackLink.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BackLink.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\ViewComponents\Breadcrumb.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Breadcrumb.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 
@@ -158,6 +178,10 @@
     <EmbeddedResource Update="Content\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Error\AccessDenied.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccessDenied.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Error\PageNotFound.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -235,6 +259,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Query.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Content\Tlevel\QueryServiceProblem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>QueryServiceProblem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Tlevel\SelectToReview.resx">
       <LastGenOutput>SelectToReview.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -246,6 +274,14 @@
     <EmbeddedResource Update="Content\Tlevel\ViewAll.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ViewAll.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ViewComponents\BackLink.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>BackLink.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ViewComponents\Breadcrumb.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Breadcrumb.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

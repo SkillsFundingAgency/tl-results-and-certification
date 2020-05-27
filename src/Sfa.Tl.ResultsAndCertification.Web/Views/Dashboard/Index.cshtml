@@ -1,5 +1,6 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content
 @using Sfa.Tl.ResultsAndCertification.Common.Extensions
+
 @{
     ViewData["Title"] = Dashboard.Page_Title;
 }
@@ -7,10 +8,6 @@
 <!-- MAIN HEADING -->
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-        <!-- SUBHEADING -->
-        <span class="govuk-caption-l">
-        </span>
-
         <div class="govuk-form-group">
             <h1 class="govuk-heading-l">
                 @Dashboard.Section_Heading_Text
@@ -28,7 +25,7 @@
             <div class="govuk-form-group card">
                 <p class="govuk-body">
                     <h2 class="govuk-heading-m">
-                        <a class="govuk-link--no-visited-state" asp-route="Tlevels">
+                        <a class="govuk-link" asp-route="Tlevels">
                             @Dashboard.Tlevels_Text
                         </a>
                     </h2>
@@ -48,7 +45,7 @@
             <div class="govuk-form-group card">
                 <p class="govuk-body">
                     <h2 class="govuk-heading-m">
-                        <a class="govuk-link--no-visited-state" asp-route="FindProvider">
+                        <a class="govuk-link" asp-route="FindProvider">
                             @Dashboard.Providers_Text
                         </a>
                     </h2>
@@ -66,7 +63,7 @@
         <div class="govuk-form-group card">
             <p class="govuk-body">
                 <h2 class="govuk-heading-m">
-                    <a class="govuk-link--no-visited-state" asp-route="AccountProfile">
+                    <a class="govuk-link" asp-route="AccountProfile">
                         @Dashboard.Account_Text
                     </a>
                 </h2>

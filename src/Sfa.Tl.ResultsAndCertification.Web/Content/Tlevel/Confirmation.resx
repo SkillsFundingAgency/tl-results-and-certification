@@ -127,10 +127,13 @@
     <value>You still have more T Levels to review.</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>T Level Confirmation page</value>
+    <value>T Level details confirmed page</value>
   </data>
   <data name="Queried_Info_Text" xml:space="preserve">
     <value>We will investigate your query and update you within 3 working days.</value>
+  </data>
+  <data name="Queried_Page_Title" xml:space="preserve">
+    <value>T Level details queried confirmation page</value>
   </data>
   <data name="Queried_Text" xml:space="preserve">
     <value>queried</value>

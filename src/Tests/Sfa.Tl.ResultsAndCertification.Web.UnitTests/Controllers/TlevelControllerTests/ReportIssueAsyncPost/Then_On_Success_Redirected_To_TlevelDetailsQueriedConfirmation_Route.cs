@@ -8,22 +8,20 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ReportIssueAsyncPost
 {
-    public class Then_Not_Success_Redirected_To_Error_500 : When_ReportIssueAsync_Is_Called
+    public class Then_On_Success_Redirected_To_TlevelDetailsQueriedConfirmation_Route : When_ReportIssueAsync_Is_Called
     {
         public override void Given()
         {
             PathwayId = 99;
             InputViewModel = new TlevelQueryViewModel { PathwayStatusId = (int)TlevelReviewStatus.AwaitingConfirmation, PathwayId = PathwayId };
-            TlevelLoader.ReportIssueAsync(InputViewModel).Returns(false);
+            TlevelLoader.ReportIssueAsync(InputViewModel).Returns(true);
         }
 
         [Fact]
-        public void Then_Status_Update_Fail_Redirected_To_Error_500()
+        public void Then_ModelState_Valid_Redirected_To_TlevelDetailsQueriedConfirmation()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
-            var routeValue = (Result.Result as RedirectToRouteResult).RouteValues["StatusCode"];
-            routeName.Should().Be(RouteConstants.Error);
-            routeValue.Should().Be(500);
+            routeName.Should().Be(RouteConstants.TlevelDetailsQueriedConfirmation);
         }
     }
 }

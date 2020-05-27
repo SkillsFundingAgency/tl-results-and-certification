@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage T Levels results dashboard.
+        ///   Looks up a localized string similar to Home page.
         /// </summary>
         public static string Page_Title {
             get {

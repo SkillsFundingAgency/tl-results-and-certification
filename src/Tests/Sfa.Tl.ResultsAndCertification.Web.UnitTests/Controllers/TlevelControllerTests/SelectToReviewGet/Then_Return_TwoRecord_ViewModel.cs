@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.SelectToReviewGet
 {
@@ -17,7 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         {
             mockresult = new SelectToReviewPageViewModel 
             { 
-                SelectedPathwayId = 1,
                 TlevelsToReview  = new List<TlevelToReviewViewModel> 
                 {
                     new TlevelToReviewViewModel { PathwayId = 1, TlevelTitle = "Route1: Pathway1"},
@@ -55,11 +55,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             var model = viewResult.Model as SelectToReviewPageViewModel;
 
             model.TlevelsToReview.Should().NotBeNull();
+            model.SelectedPathwayId.Should().Be(0);
+
             var expectedFirstItemModel = mockresult.TlevelsToReview.FirstOrDefault();
             var actualFirstItemModel = model.TlevelsToReview.FirstOrDefault();
             
             expectedFirstItemModel.PathwayId.Should().Be(actualFirstItemModel.PathwayId);
             expectedFirstItemModel.TlevelTitle.Should().Be(actualFirstItemModel.TlevelTitle);
+
+            // Breadcrumb
+            model.BreadCrumb.Should().NotBeNull();
+            model.BreadCrumb.BreadcrumbItems.Count().Should().Be(2);
+            model.BreadCrumb.BreadcrumbItems.First().DisplayName.Should().Be(BreadcrumbContent.Home);
+            model.BreadCrumb.BreadcrumbItems.First().RouteName.Should().Be(RouteConstants.Home);
+            model.BreadCrumb.BreadcrumbItems.Last().DisplayName.Should().Be(BreadcrumbContent.Tlevel_Review_Select);
+            model.BreadCrumb.BreadcrumbItems.Last().RouteName.Should().BeNull();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("dashboard", Name = RouteConstants.Dashboard)]
+        [Route("home", Name = RouteConstants.Home)]
         public IActionResult Index()
         {
             if (!HttpContext.User.HasAccessToService())

@@ -5,6 +5,11 @@
     ViewData["Title"] = Model.ShowQueriedInfo ? @Details.Queried_Page_Title : @Details.Confirmed_Page_Title;
 }
 
+@section NavigationBar
+{
+    <vc:breadcrumb model="Model.BreadCrumb"></vc:breadcrumb>
+}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">@Model?.PageTitle</h1>
@@ -43,9 +48,9 @@
         @if (Model?.ShowSomethingIsNotRight == true)
         {
             <p class="govuk-body govuk-!-margin-bottom-9">
-                <a class="govuk-link" asp-route="ReportTlevelIssue" asp-route-id="@Model.PathwayId">@Details.SomethingNotRight_Link_Text</a>
+                <a class="govuk-link" asp-route="QueryTlevelDetails" asp-route-id="@Model.PathwayId">@Details.SomethingNotRight_Link_Text</a>
             </p>
         }
-        <a asp-route="ViewAllTlevels" class="govuk-button" data-module="govuk-button">@Details.ReturnToTlevel_Button_Text</a>
+        <a asp-route="YourTlevels" class="govuk-button" data-module="govuk-button">@Details.ReturnToTlevel_Button_Text</a>
     </div>
 </div>

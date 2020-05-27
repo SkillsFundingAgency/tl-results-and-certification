@@ -1,8 +1,12 @@
-﻿@model IList<Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.ProviderDetailsViewModel>
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.YourProvidersViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Provider
 
 @{
     ViewData["Title"] = @YourProviders.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
 <div class="govuk-grid-row">
@@ -13,7 +17,7 @@
 
         <p class="govuk-body govuk-!-margin-bottom-5">@YourProviders.Section_Information_Text</p>
         <dl class="govuk-summary-list govuk-!-margin-bottom-3">
-            @foreach (var provider in Model)
+            @foreach (var provider in Model.Providers)
             {
                 <div class="govuk-summary-list__row">
                     <dd class="govuk-summary-list__value govuk-heading-m">
@@ -29,6 +33,6 @@
         </dl>
 
         <p><a class="govuk-button govuk-button--secondary" role="button" asp-route="FindProvider">@YourProviders.Add_Another_Provider_Button_Text</a></p>
-        <p><a class="govuk-button" role="button" asp-route="Dashboard">@YourProviders.Home_Button_Text</a></p>
+        <p><a class="govuk-button" role="button" asp-route="Home">@YourProviders.Home_Button_Text</a></p>
     </div>
 </div>
