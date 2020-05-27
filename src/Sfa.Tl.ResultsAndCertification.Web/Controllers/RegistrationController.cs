@@ -16,13 +16,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             _logger = logger;
         }
 
-
         [HttpGet]
         [Route("student-registrations", Name = RouteConstants.RegistrationDashboard)]
         public IActionResult Index()
         {
             return View();
         }
+
+        [HttpGet]
+        [Route("upload-registrations-file", Name = RouteConstants.UploadRegistrationsFile)]
+        public IActionResult UploadRegistrationsFile()
+        {
+            return View();
+        }       
     }
-    
 }

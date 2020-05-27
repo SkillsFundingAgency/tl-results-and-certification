@@ -45,7 +45,8 @@
 
         // Registrations
         public const string RegistrationDashboard = "RegistrationDashboard";
-
+        public const string UploadRegistrationsFile = "UploadRegistrationsFile";
+        
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";
