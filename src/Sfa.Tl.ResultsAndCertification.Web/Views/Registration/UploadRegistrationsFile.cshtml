@@ -1,6 +1,9 @@
-﻿<!-- MAIN HEADING -->
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registrations.UploadRegistrationsFileViewModel
+
+<!-- MAIN HEADING -->
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
+        <partial name="_ValidationSummary" />
         <div class="govuk-form-group">
             <h1 class="govuk-heading-xl">
                 Upload registrations file
@@ -19,13 +22,15 @@
             <li>include all mandatory fields</li>
             <li>contain between one and 10,000 registrations</li>
         </ul>
-        <div class="govuk-form-group">
-            <label class="govuk-label govuk-!-font-size-19 govuk-!-padding-top-5 govuk-!-font-weight-bold" for="uploadregistrationfile">
-                Select the file to upload
-            </label>
-            <input class="govuk-file-upload" id="uploadregistrationfile" name="uploadregistrationfile" type="file">
-        </div>
-
-        <button class="govuk-button" data-module="govuk-button" type="submit">Upload file</button>
+        <form class="form" asp-route="SubmitUploadRegistrationsFile" enctype="multipart/form-data">
+            <div class="govuk-form-group" sfa-validation-for="File" sfa-validation-class="govuk-form-group--error">
+                <label for="file" class="govuk-label govuk-!-font-size-19 govuk-!-padding-top-5 govuk-!-font-weight-bold">
+                    Select the file to upload
+                </label>
+                <span sfa-validation-for="File"></span>
+                <input class="govuk-file-upload" id="file" asp-for="File" type="file" accept=".csv">
+            </div>
+            <button class="govuk-button" data-module="govuk-button" type="submit">Upload file</button>
+        </form>
     </div>
 </div>

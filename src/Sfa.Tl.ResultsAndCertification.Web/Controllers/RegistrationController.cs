@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registrations;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -28,6 +29,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public IActionResult UploadRegistrationsFile()
         {
             return View();
-        }       
+        }
+
+        [HttpPost]
+        [Route("upload-registrations-file", Name = RouteConstants.SubmitUploadRegistrationsFile)]
+        public IActionResult UploadRegistrationsFile(UploadRegistrationsFileViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+            return View();
+        }
     }
 }
