@@ -8,7 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
-    [Authorize(Policy = RolesExtensions.RequireProviderEditorAccess)]
+    [Authorize(Policy = RolesExtensions.RequireRegistrationsEditorAccess)]
     public class RegistrationController : Controller
     {
         private readonly IRegistrationLoader _registrationLoader;
