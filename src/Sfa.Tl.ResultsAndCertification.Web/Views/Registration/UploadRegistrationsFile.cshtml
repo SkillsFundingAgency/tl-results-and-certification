@@ -1,29 +1,30 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.UploadRegistrationsFileViewModel
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.UploadRegistrationsFileViewModel
 
 @{
-    ViewData["Title"] = "Upload registrations file page";
+    ViewData["Title"] = @Upload.Page_Title;
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <partial name="_ValidationSummary" />
-        <h1 class="govuk-heading-xl">Upload registrations file</h1>
-        <p class="govuk-body">You can <strong>add</strong> new registrations and <strong>amend</strong> existing registrations by uploading them in the same file or separate files.</p>
-        <p class="govuk-body">We can only accept files that:</p>
+        <h1 class="govuk-heading-xl">@Upload.Page_Heading</h1>
+        <p class="govuk-body">@Upload.You_Can_Add_New_Registrations_Text</p>
+        <p class="govuk-body">@Upload.We_Can_Only_Accept_Files_Text</p>
         <ul class="govuk-list govuk-list--bullet">
-            <li>are in CSV format</li>
-            <li>include all mandatory fields</li>
-            <li>contain between one and 10,000 registrations</li>
+            <li>@Upload.Are_In_Csv_Format_Text</li>
+            <li>@Upload.Include_All_Mandatory_Fields_Text</li>
+            <li>@Upload.No_Of_Registrations_To_Upload_Text</li>
         </ul>
         <form class="form" asp-route="SubmitUploadRegistrationsFile" enctype="multipart/form-data">
             <div class="govuk-form-group" sfa-validation-for="File" sfa-validation-class="govuk-form-group--error">
                 <label for="file" class="govuk-label govuk-!-font-size-19 govuk-!-padding-top-5 govuk-!-font-weight-bold">
-                    Select the file to upload
+                    @Upload.Select_The_File_To_Upload_Text
                 </label>
                 <span sfa-validation-for="File"></span>
                 <input class="govuk-file-upload" id="file" asp-for="File" type="file" accept=".csv">
             </div>
-            <button class="govuk-button" data-module="govuk-button" type="submit">Upload file</button>
+            <button class="govuk-button" data-module="govuk-button" type="submit">@Upload.Upload_File_Button_Text</button>
         </form>
     </div>
 </div>

@@ -131,6 +131,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Dashboard.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\Upload.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Upload.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Tlevel\Confirmation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -255,6 +260,10 @@
     <EmbeddedResource Update="Content\Registration\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\Upload.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Upload.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Tlevel\Confirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
