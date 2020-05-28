@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The selected file must be a CSV.
+        /// </summary>
+        public static string Must_Be_Csv_Validation_Message {
+            get {
+                return ResourceManager.GetString("Must_Be_Csv_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to contain between one and 10,000 registrations.
         /// </summary>
         public static string No_Of_Registrations_To_Upload_Text {
@@ -106,11 +115,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the file to upload.
+        ///   Looks up a localized string similar to Select a file to upload.
         /// </summary>
-        public static string Select_The_File_To_Upload_Text {
+        public static string Select_File_To_Upload_Required_Validation_Message {
             get {
-                return ResourceManager.GetString("Select_The_File_To_Upload_Text", resourceCulture);
+                return ResourceManager.GetString("Select_File_To_Upload_Required_Validation_Message", resourceCulture);
             }
         }
         
@@ -120,6 +129,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Upload_File_Button_Text {
             get {
                 return ResourceManager.GetString("Upload_File_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload a file.
+        /// </summary>
+        public static string Upload_File_Text {
+            get {
+                return ResourceManager.GetString("Upload_File_Text", resourceCulture);
             }
         }
         
