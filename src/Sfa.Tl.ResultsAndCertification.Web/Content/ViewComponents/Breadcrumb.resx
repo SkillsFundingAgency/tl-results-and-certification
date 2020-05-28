@@ -129,6 +129,9 @@
   <data name="Provider_Your_Providers" xml:space="preserve">
     <value>Your providers</value>
   </data>
+  <data name="Registration_Dashboard" xml:space="preserve">
+    <value>Registrations</value>
+  </data>
   <data name="Tlevel_Details" xml:space="preserve">
     <value>T Level details</value>
   </data>

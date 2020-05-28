@@ -97,6 +97,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registrations.
+        /// </summary>
+        public static string Registration_Dashboard {
+            get {
+                return ResourceManager.GetString("Registration_Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to T Level details.
         /// </summary>
         public static string Tlevel_Details {

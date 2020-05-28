@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrations page - Manage T Level results - GOV.UK.
+        ///   Looks up a localized string similar to Registrations page.
         /// </summary>
         public static string Page_Title {
             get {
