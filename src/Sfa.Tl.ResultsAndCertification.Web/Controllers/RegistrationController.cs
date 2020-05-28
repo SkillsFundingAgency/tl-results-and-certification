@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("upload-registrations-file", Name = RouteConstants.UploadRegistrationsFile)]
         public IActionResult UploadRegistrationsFile()
         {
-            return View();
+            return View(new UploadRegistrationsFileViewModel());
         }
 
         [HttpPost]

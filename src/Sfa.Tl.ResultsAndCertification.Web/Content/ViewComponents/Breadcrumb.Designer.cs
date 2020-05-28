@@ -131,5 +131,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
                 return ResourceManager.GetString("Tlevel_ViewAll", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload registrations file.
+        /// </summary>
+        public static string Upload_Registrations_File {
+            get {
+                return ResourceManager.GetString("Upload_Registrations_File", resourceCulture);
+            }
+        }
     }
 }

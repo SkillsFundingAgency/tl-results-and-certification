@@ -141,4 +141,7 @@
   <data name="Tlevel_ViewAll" xml:space="preserve">
     <value>Your T Levels</value>
   </data>
+  <data name="Upload_Registrations_File" xml:space="preserve">
+    <value>Upload registrations file</value>
+  </data>
 </root>
