@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registrations;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {

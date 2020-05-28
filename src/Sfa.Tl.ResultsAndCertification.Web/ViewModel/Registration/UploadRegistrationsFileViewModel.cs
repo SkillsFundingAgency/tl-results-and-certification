@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registrations
+namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration
 {
     public class UploadRegistrationsFileViewModel
     {
