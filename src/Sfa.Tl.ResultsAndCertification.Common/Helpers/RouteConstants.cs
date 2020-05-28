@@ -45,6 +45,8 @@
 
         // Registrations
         public const string RegistrationDashboard = "RegistrationDashboard";
+        public const string UploadRegistrationsFile = "UploadRegistrationsFile";
+        public const string SubmitUploadRegistrationsFile = "SubmitUploadRegistrationsFile";
 
         // Error
         public const string PageNotFound = "PageNotFound";
