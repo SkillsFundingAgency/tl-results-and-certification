@@ -10,8 +10,8 @@ resources:
       name: DFE-Digital/operations-devops-pipeline-templates
     - repository: infrastructureTemplates
       type: github
-      endpoint: DfE-Digital
-      name: DFE-Digital/tl-shared-infrastructure
+      endpoint: SkillsFundingAgency
+      name: SkillsFundingAgency/tl-shared-infrastructure
 
 
 trigger:
