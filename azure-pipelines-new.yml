@@ -61,7 +61,10 @@ stages:
         inputs:
           projects: 'src/**/*.csproj'
           arguments: '--configuration $(buildConfiguration)  --no-restore'
-          
+  
+  - job: UnitTest
+    dependsOn: build
+    steps:
       - task: DotNetCoreCLI@2
         displayName: Unit Tests
         inputs:
@@ -69,13 +72,10 @@ stages:
           projects: '**/*.UnitTests.csproj'
           arguments: '--configuration $(buildConfiguration) --no-build'
           
-      - task: DotNetCoreCLI@2
-        displayName: Integration Tests
-        inputs:
-          command: test
-          projects: '**/*.IntegrationTests.csproj'
-          arguments: '--configuration $(buildConfiguration) --no-build'
-
+      
+  - job: Publish
+    dependsOn: build
+    steps:
       - task: DotNetCoreCLI@2
         displayName: 'Publish Internal API'
         inputs:
@@ -91,7 +91,10 @@ stages:
           publishWebProjects: false
           projects: 'src/Sfa.Tl.ResultsAndCertification.Web/Sfa.Tl.ResultsAndCertification.Web.csproj'
           arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'   
-
+  
+  - job: buildDacPac
+    dependsOn: Publish
+    steps:
       - task: VSBuild@1
         displayName: 'Build DACPAC'
         inputs:
