@@ -46,7 +46,7 @@ stages:
     parameters:
       applicationName: $(applicationName)
       webPublish: false
-      nugetConfigPath: src/NuGet.config
+      nugetConfigPath: src/Nuget.config
 
 # pr: none
 # workspace:
