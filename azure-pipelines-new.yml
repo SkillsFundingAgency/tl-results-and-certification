@@ -8,6 +8,10 @@ resources:
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/operations-devops-pipeline-templates
+    - repository: infrastructureTemplates
+      type: github
+      endpoint: DfE-Digital
+      name: DFE-Digital/tl-shared-infrastructure
 
 
 trigger:
@@ -23,10 +27,11 @@ variables:
   agentImage: vs2017-win2016
 
 stages:
+
 - stage: build
   displayName: Build
   jobs:
-  - job:
+  - job: build
     steps: 
       - task: gittools.gitversion.gitversion-task.GitVersion@5
         displayName: GitVersion
@@ -42,11 +47,81 @@ stages:
         inputs:
           gulpFile: src/Sfa.Tl.ResultsAndCertification.Web/gulpfile.js
 
-  - template: /Application/dotnet/jobs/build-application.yml@devopsTemplates
-    parameters:
-      applicationName: $(applicationName)
-      webPublish: false
-      nugetConfigPath: src/Nuget.config
+      - task: DotNetCoreCLI@2
+        displayName: dot restore
+        inputs:
+          command: restore
+          projects: 'src/Sfa.Tl.ResultsAndCertification.sln'
+          noCache: true
+          feedsToUse: config
+          nugetConfigPath: src/NuGet.config
+
+      - task: DotNetCoreCLI@2
+        displayName: dotnet build
+        inputs:
+          projects: 'src/**/*.csproj'
+          arguments: '--configuration $(buildConfiguration)  --no-restore'
+          
+      - task: DotNetCoreCLI@2
+        displayName: Unit Tests
+        inputs:
+          command: test
+          projects: '**/*.UnitTests.csproj'
+          arguments: '--configuration $(buildConfiguration) --no-build'
+          
+      - task: DotNetCoreCLI@2
+        displayName: Integration Tests
+        inputs:
+          command: test
+          projects: '**/*.IntegrationTests.csproj'
+          arguments: '--configuration $(buildConfiguration) --no-build'
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Publish Internal API'
+        inputs:
+          command: publish
+          publishWebProjects: false
+          projects: 'src/Sfa.Tl.ResultsAndCertification.InternalApi/Sfa.Tl.ResultsAndCertification.InternalApi.csproj'
+          arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Publish Web App'
+        inputs:
+          command: publish
+          publishWebProjects: false
+          projects: 'src/Sfa.Tl.ResultsAndCertification.Web/Sfa.Tl.ResultsAndCertification.Web.csproj'
+          arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'   
+
+      - task: VSBuild@1
+        displayName: 'Build DACPAC'
+        inputs:
+          solution: 'src/Sfa.Tl.ResultsAndCertification.Database/Sfa.Tl.ResultsAndCertification.Database.sqlproj'
+          platform: '$(buildPlatform)'
+          configuration: '$(buildConfiguration)'
+          msbuildArgs: '/p:PackageLocation="$(build.artifactstagingdirectory)/publish"'
+
+      - task: CopyFiles@2
+        displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+        inputs:
+          Contents: |
+            azure\**
+            config\**
+            src\**\*.dacpac
+            TargetFolder: '$(build.artifactstagingdirectory)/'
+            OverWrite: true
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact'
+        inputs:
+          PathtoPublish: '$(build.artifactstagingdirectory)/'
+
+
+
+  # - template: /Application/dotnet/steps/build-dotnet.yml@devopsTemplates
+  #   parameters:
+  #     applicationName: $(applicationName)
+  #     webPublish: false
+  #     nugetConfigPath: src/Nuget.config
 
 # pr: none
 # workspace:
