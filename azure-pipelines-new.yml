@@ -21,6 +21,7 @@ trigger:
 variables:
   buildConfiguration: 'release'
   buildPlatform: 'anycpu'
+  applicationName: randc
 
 stages:
 - stage: build
@@ -28,6 +29,7 @@ stages:
   jobs:
   - template: /Application/dotnet/jobs/build-application.yml@devopsTemplates
     parameters:
+      applicationName: $(applicationName)
       webPublish: false
 
 # pr: none
