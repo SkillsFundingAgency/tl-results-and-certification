@@ -54,7 +54,7 @@ stages:
           projects: 'src/Sfa.Tl.ResultsAndCertification.sln'
           noCache: true
           feedsToUse: config
-          nugetConfigPath: src/NuGet.config
+          nugetConfigPath: src/Nuget.config
 
       - task: DotNetCoreCLI@2
         displayName: dotnet build
