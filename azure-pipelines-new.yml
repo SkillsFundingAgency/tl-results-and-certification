@@ -15,8 +15,6 @@ trigger:
   branches:
     include:
       - feature/newbuildprocess
-    exclude:
-      - "*"
 
 variables:
   buildConfiguration: 'release'
