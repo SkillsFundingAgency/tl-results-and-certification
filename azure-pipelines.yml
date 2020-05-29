@@ -1,4 +1,4 @@
-name: tl-results-and-certification
+name: $(BuildDefinitionName)_tag-$(BuildID)_at-$(Date:yyyyMMdd)$(Rev:.r)
 trigger:
   batch: true
   branches:
