@@ -22,6 +22,7 @@ variables:
   buildConfiguration: 'release'
   buildPlatform: 'anycpu'
   applicationName: randc
+  agentImage: vs2017-win2016
 
 stages:
 - stage: build
