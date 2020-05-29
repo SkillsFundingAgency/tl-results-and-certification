@@ -26,6 +26,22 @@ stages:
 - stage: build
   displayName: Build
   jobs:
+  - job:
+    steps: 
+      - task: gittools.gitversion.gitversion-task.GitVersion@5
+        displayName: GitVersion
+
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs: 
+          workingDir: src/Sfa.Tl.ResultsAndCertification.Web
+          verbose: false
+
+      - task: Gulp@0
+        displayName: 'gulp'
+        inputs:
+          gulpFile: src/Sfa.Tl.ResultsAndCertification.Web/gulpfile.js
+                  
   - template: /Application/dotnet/jobs/build-application.yml@devopsTemplates
     parameters:
       applicationName: $(applicationName)
