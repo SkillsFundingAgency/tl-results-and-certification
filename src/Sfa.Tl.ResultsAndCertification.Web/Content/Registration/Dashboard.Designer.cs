@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload to add and amended registrations.
+        ///   Looks up a localized string similar to Upload to add and amend registrations.
         /// </summary>
         public static string Card_Heading_Upload_Registration_File {
             get {
