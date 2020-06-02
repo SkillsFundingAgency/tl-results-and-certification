@@ -16,7 +16,9 @@ param (
     [string]
     $NewUserName
 )
-.'.\Powershell\powershellFunctions.ps1'
+Set-Location $PSScriptRoot
+
+.'.\powershellFunctions.ps1'
 $newPassword = Generate-Password
 $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($newPassword)
 $ResacSQLServiceAccountPasswordPlain = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
