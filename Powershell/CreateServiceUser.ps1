@@ -21,7 +21,9 @@ param (
 )
 .'.\Powershell\powershellFunctions.ps1'
 $newPassword = Generate-Password
-$secret = Set-AzKeyVaultSecret -VaultName $vaultName -Name $NewUserName -SecretValue $newPassword
+$BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($newPassword)
+$ResacSQLServiceAccountPasswordPlain = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
+Write-Host "##vso[task.setvariable variable=ResacSQLServiceAccountPassword;issecret=true;]$ResacSQLServiceAccountPasswordPlain"
 
 $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($adminPassword)
 $sqlServerAdminLoginPasswordPlain = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
