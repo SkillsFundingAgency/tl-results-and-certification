@@ -13,3 +13,9 @@
     @extend .card;
     margin-bottom: 30px;
 }
+ 
+@media screen and (max-width: 980px) and (min-width: 640px) {
+    .card {
+        min-height: 140px;
+    }
+}
