@@ -14,10 +14,7 @@ param (
     $adminPassword,
     [Parameter(Mandatory = $true)]
     [string]
-    $NewUserName,
-    [Parameter(Mandatory = $true)]
-    [string]
-    $keyVaultName
+    $NewUserName
 )
 .'.\Powershell\powershellFunctions.ps1'
 $newPassword = Generate-Password
