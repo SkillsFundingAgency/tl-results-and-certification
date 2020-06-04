@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload file.
+        ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Upload_File_Button_Text {
             get {

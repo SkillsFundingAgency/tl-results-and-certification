@@ -139,7 +139,7 @@
     <value>Select a file to upload</value>
   </data>
   <data name="Upload_File_Button_Text" xml:space="preserve">
-    <value>Upload file</value>
+    <value>Submit</value>
   </data>
   <data name="Upload_File_Text" xml:space="preserve">
     <value>Upload a file</value>
