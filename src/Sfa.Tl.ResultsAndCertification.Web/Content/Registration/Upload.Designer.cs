@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Dashboard {
+    public class Upload {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Dashboard() {
+        internal Upload() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard", typeof(Dashboard).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.Upload", typeof(Upload).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,25 +61,52 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage your profile and permissions.
+        ///   Looks up a localized string similar to are in CSV format.
         /// </summary>
-        public static string Account_Description_Text {
+        public static string Are_In_Csv_Format_Text {
             get {
-                return ResourceManager.GetString("Account_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Are_In_Csv_Format_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account.
+        ///   Looks up a localized string similar to include all mandatory fields.
         /// </summary>
-        public static string Account_Text {
+        public static string Include_All_Mandatory_Fields_Text {
             get {
-                return ResourceManager.GetString("Account_Text", resourceCulture);
+                return ResourceManager.GetString("Include_All_Mandatory_Fields_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Home page.
+        ///   Looks up a localized string similar to The selected file must be a CSV.
+        /// </summary>
+        public static string Must_Be_Csv_Validation_Message {
+            get {
+                return ResourceManager.GetString("Must_Be_Csv_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to contain between one and 10,000 registrations.
+        /// </summary>
+        public static string No_Of_Registrations_To_Upload_Text {
+            get {
+                return ResourceManager.GetString("No_Of_Registrations_To_Upload_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload registrations file.
+        /// </summary>
+        public static string Page_Heading {
+            get {
+                return ResourceManager.GetString("Page_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload registrations file page.
         /// </summary>
         public static string Page_Title {
             get {
@@ -88,65 +115,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us which T Levels each provider is offering.
+        ///   Looks up a localized string similar to Select a file to upload.
         /// </summary>
-        public static string Providers_Description_Text {
+        public static string Select_File_To_Upload_Required_Validation_Message {
             get {
-                return ResourceManager.GetString("Providers_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Select_File_To_Upload_Required_Validation_Message", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Providers.
+        ///   Looks up a localized string similar to Submit.
         /// </summary>
-        public static string Providers_Text {
+        public static string Upload_File_Button_Text {
             get {
-                return ResourceManager.GetString("Providers_Text", resourceCulture);
+                return ResourceManager.GetString("Upload_File_Button_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add and amend registrations.
+        ///   Looks up a localized string similar to Upload a file.
         /// </summary>
-        public static string Registrations_Description_Text {
+        public static string Upload_File_Text {
             get {
-                return ResourceManager.GetString("Registrations_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Upload_File_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrations.
+        ///   Looks up a localized string similar to We can only accept files that:.
         /// </summary>
-        public static string Registrations_Text {
+        public static string We_Can_Only_Accept_Files_Text {
             get {
-                return ResourceManager.GetString("Registrations_Text", resourceCulture);
+                return ResourceManager.GetString("We_Can_Only_Accept_Files_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage T Level results.
+        ///   Looks up a localized string similar to You can &lt;strong&gt;add&lt;/strong&gt; new registrations and &lt;strong&gt;amend&lt;/strong&gt; existing registrations by uploading them in the same file or separate files..
         /// </summary>
-        public static string Section_Heading_Text {
+        public static string You_Can_Add_New_Registrations_Text {
             get {
-                return ResourceManager.GetString("Section_Heading_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Review T Level details and tell us if they are correct.
-        /// </summary>
-        public static string Tlevels_Description_Text {
-            get {
-                return ResourceManager.GetString("Tlevels_Description_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to T Levels.
-        /// </summary>
-        public static string Tlevels_Text {
-            get {
-                return ResourceManager.GetString("Tlevels_Text", resourceCulture);
+                return ResourceManager.GetString("You_Can_Add_New_Registrations_Text", resourceCulture);
             }
         }
     }

@@ -129,6 +129,9 @@
   <data name="Provider_Your_Providers" xml:space="preserve">
     <value>Your providers</value>
   </data>
+  <data name="Registration_Dashboard" xml:space="preserve">
+    <value>Registrations</value>
+  </data>
   <data name="Tlevel_Details" xml:space="preserve">
     <value>T Level details</value>
   </data>
@@ -137,5 +140,8 @@
   </data>
   <data name="Tlevel_ViewAll" xml:space="preserve">
     <value>Your T Levels</value>
+  </data>
+  <data name="Upload_Registrations_File" xml:space="preserve">
+    <value>Upload registrations file</value>
   </data>
 </root>

@@ -95,6 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             {
                 options.AddPolicy(RolesExtensions.RequireTLevelsReviewerAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.TlevelsReviewer));
                 options.AddPolicy(RolesExtensions.RequireProviderEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor));
+                options.AddPolicy(RolesExtensions.RequireRegistrationsEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.RegistrationsEditor));
             });
 
             services.AddWebDataProtection(ResultsAndCertificationConfiguration, _env);
@@ -144,6 +145,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddSingleton<IWebConfigurationService, WebConfigurationService>();
             services.AddTransient<ITlevelLoader, TlevelLoader>();
             services.AddTransient<IProviderLoader, ProviderLoader>();
+            services.AddTransient<IRegistrationLoader, RegistrationLoader>();
         }
     }
 }

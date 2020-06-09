@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Dashboard {
+    public class Confirmation {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Dashboard() {
+        internal Confirmation() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard", typeof(Dashboard).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.Confirmation", typeof(Confirmation).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,25 +61,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage your profile and permissions.
+        ///   Looks up a localized string similar to Back to registrations.
         /// </summary>
-        public static string Account_Description_Text {
+        public static string Back_To_Registrations_Button_Text {
             get {
-                return ResourceManager.GetString("Account_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Back_To_Registrations_Button_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account.
-        /// </summary>
-        public static string Account_Text {
-            get {
-                return ResourceManager.GetString("Account_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Home page.
+        ///   Looks up a localized string similar to Registrations upload successful page.
         /// </summary>
         public static string Page_Title {
             get {
@@ -88,65 +79,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us which T Levels each provider is offering.
+        ///   Looks up a localized string similar to Registrations upload successful.
         /// </summary>
-        public static string Providers_Description_Text {
+        public static string Section_Heading {
             get {
-                return ResourceManager.GetString("Providers_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Section_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Providers.
+        ///   Looks up a localized string similar to You successfully sent 230 registrations..
         /// </summary>
-        public static string Providers_Text {
+        public static string Section_Info_Text {
             get {
-                return ResourceManager.GetString("Providers_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add and amend registrations.
-        /// </summary>
-        public static string Registrations_Description_Text {
-            get {
-                return ResourceManager.GetString("Registrations_Description_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Registrations.
-        /// </summary>
-        public static string Registrations_Text {
-            get {
-                return ResourceManager.GetString("Registrations_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Manage T Level results.
-        /// </summary>
-        public static string Section_Heading_Text {
-            get {
-                return ResourceManager.GetString("Section_Heading_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Review T Level details and tell us if they are correct.
-        /// </summary>
-        public static string Tlevels_Description_Text {
-            get {
-                return ResourceManager.GetString("Tlevels_Description_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to T Levels.
-        /// </summary>
-        public static string Tlevels_Text {
-            get {
-                return ResourceManager.GetString("Tlevels_Text", resourceCulture);
+                return ResourceManager.GetString("Section_Info_Text", resourceCulture);
             }
         }
     }

@@ -117,34 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account_Description_Text" xml:space="preserve">
-    <value>Manage your profile and permissions</value>
-  </data>
-  <data name="Account_Text" xml:space="preserve">
-    <value>Account</value>
+  <data name="Back_To_Registrations_Button_Text" xml:space="preserve">
+    <value>Back to registrations</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Home page</value>
+    <value>Registrations upload successful page</value>
   </data>
-  <data name="Providers_Description_Text" xml:space="preserve">
-    <value>Tell us which T Levels each provider is offering</value>
+  <data name="Section_Heading" xml:space="preserve">
+    <value>Registrations upload successful</value>
   </data>
-  <data name="Providers_Text" xml:space="preserve">
-    <value>Providers</value>
-  </data>
-  <data name="Registrations_Description_Text" xml:space="preserve">
-    <value>Add and amend registrations</value>
-  </data>
-  <data name="Registrations_Text" xml:space="preserve">
-    <value>Registrations</value>
-  </data>
-  <data name="Section_Heading_Text" xml:space="preserve">
-    <value>Manage T Level results</value>
-  </data>
-  <data name="Tlevels_Description_Text" xml:space="preserve">
-    <value>Review T Level details and tell us if they are correct</value>
-  </data>
-  <data name="Tlevels_Text" xml:space="preserve">
-    <value>T Levels</value>
+  <data name="Section_Info_Text" xml:space="preserve">
+    <value>You successfully sent 230 registrations.</value>
   </data>
 </root>

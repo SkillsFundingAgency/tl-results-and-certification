@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard", typeof(Dashboard).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.Dashboard", typeof(Dashboard).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,92 +61,74 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage your profile and permissions.
+        ///   Looks up a localized string similar to Add one new registration.
         /// </summary>
-        public static string Account_Description_Text {
+        public static string Card_Heading_Add_One_Registration {
             get {
-                return ResourceManager.GetString("Account_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Add_One_Registration", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account.
+        ///   Looks up a localized string similar to Manage existing registrations.
         /// </summary>
-        public static string Account_Text {
+        public static string Card_Heading_Search_Registration {
             get {
-                return ResourceManager.GetString("Account_Text", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Search_Registration", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Home page.
+        ///   Looks up a localized string similar to Upload to add and amend registrations.
         /// </summary>
-        public static string Page_Title {
+        public static string Card_Heading_Upload_Registration_File {
             get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Upload_Registration_File", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us which T Levels each provider is offering.
+        ///   Looks up a localized string similar to Add a new registration.
         /// </summary>
-        public static string Providers_Description_Text {
+        public static string Card_Link_Add_One_Registration {
             get {
-                return ResourceManager.GetString("Providers_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Card_Link_Add_One_Registration", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Providers.
+        ///   Looks up a localized string similar to Search for a registration.
         /// </summary>
-        public static string Providers_Text {
+        public static string Card_Link_Search_Registration {
             get {
-                return ResourceManager.GetString("Providers_Text", resourceCulture);
+                return ResourceManager.GetString("Card_Link_Search_Registration", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add and amend registrations.
+        ///   Looks up a localized string similar to Upload registrations file.
         /// </summary>
-        public static string Registrations_Description_Text {
+        public static string Card_Link_Upload_Registration_File {
             get {
-                return ResourceManager.GetString("Registrations_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Card_Link_Upload_Registration_File", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Registrations.
         /// </summary>
-        public static string Registrations_Text {
+        public static string Page_Heading {
             get {
-                return ResourceManager.GetString("Registrations_Text", resourceCulture);
+                return ResourceManager.GetString("Page_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage T Level results.
+        ///   Looks up a localized string similar to Registrations page.
         /// </summary>
-        public static string Section_Heading_Text {
+        public static string Page_Title {
             get {
-                return ResourceManager.GetString("Section_Heading_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Review T Level details and tell us if they are correct.
-        /// </summary>
-        public static string Tlevels_Description_Text {
-            get {
-                return ResourceManager.GetString("Tlevels_Description_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to T Levels.
-        /// </summary>
-        public static string Tlevels_Text {
-            get {
-                return ResourceManager.GetString("Tlevels_Text", resourceCulture);
+                return ResourceManager.GetString("Page_Title", resourceCulture);
             }
         }
     }

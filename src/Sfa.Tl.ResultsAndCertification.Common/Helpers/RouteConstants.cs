@@ -43,6 +43,12 @@
         public const string SubmitRemoveProviderTlevel = "SubmitRemoveProviderTlevel";
         public const string RemoveProviderTlevelConfirmation = "RemoveProviderTlevelConfirmation";
 
+        // Registrations
+        public const string RegistrationDashboard = "RegistrationDashboard";
+        public const string UploadRegistrationsFile = "UploadRegistrationsFile";
+        public const string SubmitUploadRegistrationsFile = "SubmitUploadRegistrationsFile";
+        public const string RegistrationsUploadConfirmation = "RegistrationsUploadConfirmation";
+
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";
