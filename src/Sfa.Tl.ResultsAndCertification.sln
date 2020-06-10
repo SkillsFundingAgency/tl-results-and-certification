@@ -38,6 +38,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{BFACF837
 		Nuget.config = Nuget.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfa.Tl.ResultsAndCertification.Common.Services", "Sfa.Tl.ResultsAndCertification.Common.Services\Sfa.Tl.ResultsAndCertification.Common.Services.csproj", "{0F338528-DE83-4D4D-95C3-6FCA1A435B2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +104,10 @@ Global
 		{18FDF69D-CBBA-4876-8042-48936052771A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18FDF69D-CBBA-4876-8042-48936052771A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18FDF69D-CBBA-4876-8042-48936052771A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F338528-DE83-4D4D-95C3-6FCA1A435B2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F338528-DE83-4D4D-95C3-6FCA1A435B2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F338528-DE83-4D4D-95C3-6FCA1A435B2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F338528-DE83-4D4D-95C3-6FCA1A435B2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
