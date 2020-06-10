@@ -29,12 +29,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
                 var fileName = Path.GetFileNameWithoutExtension(file?.FileName);
                 if (fileName.Length > MaxFileNameLength)
                 {
-                    return new ValidationResult("File name must have no more than 256 characters");
+                    return new ValidationResult(string.Format(ErrorResource.Upload.File_Name_Length_Validation_Message, MaxFileNameLength));
                 }
 
                 if (file.Length > MaxFileSize)
                 {
-                    return new ValidationResult($"File size too large – must be no more than {MaxFileSizeInMb}MB");
+                    return new ValidationResult(string.Format(ErrorResource.Upload.File_Size_Too_Large_Validation_Message, MaxFileSizeInMb));
                 }
 
                 var recordCount = 0;
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
                 while (reader.ReadLine() != null)
                 {
                     if (recordCount++ > MaxRecordCount)
-                        return new ValidationResult("File must contain between one and 10,000 registrations");
+                        return new ValidationResult(string.Format(ErrorResource.Upload.File_Max_Record_Count_Validation_Message, MaxRecordCount.ToString("N0")));
                 }
             }
 

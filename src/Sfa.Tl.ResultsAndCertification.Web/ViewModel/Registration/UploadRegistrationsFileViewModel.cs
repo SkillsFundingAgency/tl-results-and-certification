@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration
     {
         [DataType(DataType.Upload)]
         [Required(ErrorMessageResourceType = typeof(ErrorResource.Upload), ErrorMessageResourceName = "Select_File_To_Upload_Required_Validation_Message")]
-        [FileValidation(AllowedExtensions = ".csv", MaxFileSizeInMb = 5, MaxRecordCount = 10)]
+        [FileValidation(AllowedExtensions = ".csv", MaxFileNameLength = 156, MaxFileSizeInMb = 5, MaxRecordCount = 1000)]
         public IFormFile File { get; set; }
 
         public BreadcrumbModel Breadcrumb
