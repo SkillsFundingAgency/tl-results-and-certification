@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(viewModel);
             }
-            return RedirectToRoute(RouteConstants.RegistrationsUploadSuccessful);
+            return RedirectToRoute(RouteConstants.RegistrationsUploadUnsuccessful);
         }
 
         [HttpGet]
@@ -57,7 +57,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("registrations-upload-unsuccessful", Name = RouteConstants.RegistrationsUploadUnsuccessful)]
         public IActionResult UploadUnsuccessful()
         {
-            return View();
+            var viewmodel = new UploadUnsuccessfulViewModel { FileSize = 3, FileType = "CSV" };
+            return View(viewmodel);
         }
     }
 }
