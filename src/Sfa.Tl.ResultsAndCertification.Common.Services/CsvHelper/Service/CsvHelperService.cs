@@ -3,7 +3,6 @@ using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
 using FluentValidation;
 using FluentValidation.Results;
-using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Parser.Interfaces;
@@ -23,13 +22,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
     {
         private readonly IValidator<TImportModel> _validator;
         private readonly IDataParser<TResponseModel> _dataParser;
-        private readonly ILogger _logger;
 
-        public CsvHelperService(IValidator<TImportModel> validator, IDataParser<TResponseModel> dataParser, ILogger logger)
+        public CsvHelperService(IValidator<TImportModel> validator, IDataParser<TResponseModel> dataParser)
         {
             _validator = validator;
             _dataParser = dataParser;
-            _logger = logger;
         }
 
         public async Task<IList<TResponseModel>> ReadAndParseFileAsync(TImportModel importModel)
@@ -65,25 +62,17 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
 
                     // parse row into model
                     if (!validationResult.IsValid) 
-                    {
-                        importModel.AddErrors(rownum, "Uln-Todo", validationResult: validationResult);
-                        row = _dataParser.ParseErrors(importModel.ValidationErrors);
-                        //row = _dataParser.ParseErrorObject(rownum, importModel, validationResult);
-                    }
+                        row = _dataParser.ParseErrorObject(rownum, importModel, validationResult);
                     else
                         row = _dataParser.ParseRow(importModel, rownum);
-                        
+
                     if (row == null)
                         throw new Exception(ValidationMessages.UnableToParse);
                     
                     response.Add(row);
-
-                    // Note: As we are using same object validationerrors need to be clear. 
-                    importModel.ValidationErrors.Clear();
                 }
 
-                if(rownum < 2) // Todo: may violate the generic rule?
-                    importModel.AddError(rownum, "Uln-Todo", ValidationMessages.NoRegistrationsFound);
+                // Todo: at-leaset two records should be available.
             }
             // Todo: check if reporting any csv related error into the file ok?
             catch (UnauthorizedAccessException e)

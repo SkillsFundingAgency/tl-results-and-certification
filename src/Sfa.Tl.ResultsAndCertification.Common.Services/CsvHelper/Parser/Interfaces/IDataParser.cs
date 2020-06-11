@@ -7,7 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Parser.Interf
     public interface IDataParser<out T> where T : class
     {
         T ParseRow(FileBaseModel model, int rownum);
-        T ParseErrors(IList<ValidationError> validationResult);
-        T ParseErrorObject<TImportModel>(int rownum, FileBaseModel importModel, ValidationResult validationResult);
-    }
+        T ParseErrorObject(int rownum, FileBaseModel importModel, ValidationResult validationResult);
 }
+    }

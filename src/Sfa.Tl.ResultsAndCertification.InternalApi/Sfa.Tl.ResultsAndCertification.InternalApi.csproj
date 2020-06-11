@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Application\Sfa.Tl.ResultsAndCertification.Application.csproj" />
+    <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Common.Services\Sfa.Tl.ResultsAndCertification.Common.Services.csproj" />
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Common\Sfa.Tl.ResultsAndCertification.Common.csproj" />
   </ItemGroup>
 

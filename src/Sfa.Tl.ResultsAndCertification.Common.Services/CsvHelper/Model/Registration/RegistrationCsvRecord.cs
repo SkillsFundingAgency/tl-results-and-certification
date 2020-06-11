@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registr
         [Name(Header.Specialisms)]
         public string Specialisms { get; set; }
 
-        [Ignore]
-        public int RowNum { get; set; }
+        //[Ignore]
+        //public int RowNum { get; set; }
     }
 }

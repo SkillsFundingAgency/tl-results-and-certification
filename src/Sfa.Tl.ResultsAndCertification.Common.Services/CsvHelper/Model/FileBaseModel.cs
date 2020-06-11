@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model
 {
-    public class FileBaseModel : ValidationState
+    public class FileBaseModel
     {
         [Ignore]
         public virtual Stream FileStream { get; set; }

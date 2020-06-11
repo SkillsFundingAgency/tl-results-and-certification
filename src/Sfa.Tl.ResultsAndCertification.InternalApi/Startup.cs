@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,12 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Parser;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Parser.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Validators;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Builder;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -62,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             });
 
             RegisterDependencies(services);
-            
+
             if (!_env.IsDevelopment())
             {
                 services.AddMvc(config =>
@@ -117,10 +124,15 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
             services.AddTransient<IProviderService, ProviderService>();
             services.AddTransient<IPathwayService, PathwayService>();
-            services.AddTransient<IRegistrationDataValidator, RegistrationDataValidator>();
             services.AddTransient<IDbContextBuilder, DbContextBuilder>();
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(ResultsAndCertificationConfiguration.GovUkNotifyApiKey));
             services.AddTransient<INotificationService, NotificationService>();
+
+            services.AddTransient<IDataParser<Registration>, RegistrationDataParser>();
+            services.AddTransient<IValidator<RegistrationCsvRecord>, RegistrationValidator>();
+            services.AddTransient<ICsvHelperService<RegistrationCsvRecord, Registration>, CsvHelperService<RegistrationCsvRecord, Registration>>();
+            services.AddTransient<IRegistrationDataValidator, RegistrationDataValidator>();
+            services.AddTransient<IRegistrationService, RegistrationService>();
         }
     }
 }

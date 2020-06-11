@@ -17,9 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Parser
             if (!(model is RegistrationCsvRecord reg))
                 return null;
 
-            if (!reg.IsValid)
-                return ParseErrors(reg.ValidationErrors);
-
             DateTime.TryParseExact(reg.DateOfBirth.Trim(), "ddMMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dob);
             DateTime.TryParseExact(reg.StartDate.Trim(), "ddMMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime startDate);
 
@@ -33,29 +30,28 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Parser
                 StartDate = startDate,
                 Core = reg.Core.Trim(),
                 Specialisms = reg.Specialisms.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())),
-                RowNum = rownum,
+                //RowNum = rownum,
 
-                ValidationErrors = new List<ValidationError>(reg.ValidationErrors)
+                //ValidationErrors = new List<ValidationError>(reg.ValidationErrors)
+                 ValidationErrors = new List<ValidationError>()
             };
         }
 
-        public Registration ParseErrors(IList<ValidationError> validationErrors)
+        public Registration ParseErrorObject(int rownum, FileBaseModel model, ValidationResult validationResult)
         {
-            return new Registration { ValidationErrors = validationErrors.ToList() };
-        }
+            if (!(model is RegistrationCsvRecord reg))
+                return null;
 
-        public Registration ParseErrorObject<TImportModel>(int rownum, FileBaseModel model, ValidationResult validationResult)
-        {
             return new Registration
             {
-                RowNum = rownum,
-                ValidationErrors = ParseValidationErrors(rownum, "", validationResult)
+                ValidationErrors = BuildValidationError(rownum, reg.Uln, validationResult)
             };
         }
 
-        private IList<ValidationError> ParseValidationErrors(int rownum, string uln, ValidationResult validationResult = null)
+        private IList<ValidationError> BuildValidationError(int rownum, string uln, ValidationResult validationResult)
         {
             var validationErrors = new List<ValidationError>();
+            
             foreach (var err in validationResult.Errors)
             {
                 validationErrors.Add(new ValidationError

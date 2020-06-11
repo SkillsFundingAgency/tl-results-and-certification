@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sfa.Tl.ResultsAndCertification.InternalApi.Loader;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 
@@ -20,24 +15,16 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         public RegistrationController(IRegistrationDataValidator csvDataValidator, ILogger<ProviderController> logger)
         {
+
+            _csvDataValidator = csvDataValidator; 
             _logger = logger;
-            _csvDataValidator = csvDataValidator;
         }
 
         [HttpPost]
         [Route("bulk-upload")]
         public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request)
         {
-            var response = new BulkRegistrationResponse();
-
-            // Step: Read file from the blob.
-
-            // Step: CsvService 
-            //await _csvDataValidator.ValidateAsync(request)
-
-            // Step: Update database.
-
-            return response;
+            return await _csvDataValidator.ProcessBulkRegistrationsAsync(request);
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration
 {
@@ -28,8 +26,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registr
         public string Core { get; set; }
 
         public IEnumerable<string> Specialisms { get; set; }
-
-        public int RowNum { get; set; }
 
         // Below properties are used for later stage i.e. Db process.
         public int TqProviderId { get; set; }
