@@ -126,20 +126,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>YourProviders.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\Registration\Successful.Designer.cs">
+    <Compile Update="Content\Registration\UploadSuccessful.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Successful.resx</DependentUpon>
+      <DependentUpon>UploadSuccessful.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Registration\Dashboard.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Dashboard.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\Registration\Unsuccessful.Designer.cs">
+    <Compile Update="Content\Registration\UploadUnsuccessful.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Unsuccessful.resx</DependentUpon>
+      <DependentUpon>UploadUnsuccessful.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Registration\Upload.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -267,17 +267,17 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>YourProviders.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\Registration\Successful.resx">
+    <EmbeddedResource Update="Content\Registration\UploadSuccessful.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Successful.Designer.cs</LastGenOutput>
+      <LastGenOutput>UploadSuccessful.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\Registration\Unsuccessful.resx">
+    <EmbeddedResource Update="Content\Registration\UploadUnsuccessful.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Unsuccessful.Designer.cs</LastGenOutput>
+      <LastGenOutput>UploadUnsuccessful.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\Upload.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -48,14 +48,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("registrations-upload-successful", Name = RouteConstants.RegistrationsUploadSuccessful)]
-        public IActionResult Successful()
+        public IActionResult UploadSuccessful()
         {
             return View();
         }
 
         [HttpGet]
         [Route("registrations-upload-unsuccessful", Name = RouteConstants.RegistrationsUploadUnsuccessful)]
-        public IActionResult Unsuccessful()
+        public IActionResult UploadUnsuccessful()
         {
             return View();
         }
