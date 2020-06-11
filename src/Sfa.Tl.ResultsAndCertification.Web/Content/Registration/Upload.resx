@@ -120,6 +120,15 @@
   <data name="Are_In_Csv_Format_Text" xml:space="preserve">
     <value>are in CSV format</value>
   </data>
+  <data name="File_Max_Record_Count_Validation_Message" xml:space="preserve">
+    <value>File must contain between one and {0} registrations</value>
+  </data>
+  <data name="File_Name_Length_Validation_Message" xml:space="preserve">
+    <value>File name must have no more than {0} characters</value>
+  </data>
+  <data name="File_Size_Too_Large_Validation_Message" xml:space="preserve">
+    <value>File size too large – must be no more than {0}MB</value>
+  </data>
   <data name="Include_All_Mandatory_Fields_Text" xml:space="preserve">
     <value>include all mandatory fields</value>
   </data>
