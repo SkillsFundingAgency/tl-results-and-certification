@@ -49,6 +49,7 @@
         public const string SubmitUploadRegistrationsFile = "SubmitUploadRegistrationsFile";
         public const string RegistrationsUploadSuccessful = "RegistrationsUploadSuccessful";
         public const string RegistrationsUploadUnsuccessful = "RegistrationsUploadUnsuccessful";
+        public const string DownloadRegistrationErrors = "DownloadRegistrationErrors";
 
         // Error
         public const string PageNotFound = "PageNotFound";

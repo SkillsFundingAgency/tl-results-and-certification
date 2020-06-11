@@ -5,6 +5,8 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
+using System.IO;
+using System.Text;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -59,6 +61,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewmodel = new UploadUnsuccessfulViewModel { FileSize = 3, FileType = "CSV" };
             return View(viewmodel);
+        }
+
+        [HttpGet]
+        [Route("download-registration-errors", Name = RouteConstants.DownloadRegistrationErrors)]
+        public IActionResult DownloadRegistrationErrors()
+        {
+            var stream = new MemoryStream(Encoding.ASCII.GetBytes("Test File"));
+            return new FileStreamResult(stream, "text/csv")
+            {
+                FileDownloadName = "UploadErrors.csv"
+            };
         }
     }
 }
