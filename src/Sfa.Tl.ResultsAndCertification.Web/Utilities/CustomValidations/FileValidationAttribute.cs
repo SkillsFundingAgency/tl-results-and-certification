@@ -13,8 +13,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
         public int MaxFileSizeInMb { get; set; }
         public int MaxRecordCount { get; set; }
 
-        private int MaxFileSize { get { return MaxFileSizeInMb * 1024 * 1024; } }
-        private string[] Extensions { get { return AllowedExtensions?.Split(","); } }
+        private int MaxFileSize => MaxFileSizeInMb * 1024 * 1024;
+        private string[] Extensions => AllowedExtensions?.Split(",");
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
