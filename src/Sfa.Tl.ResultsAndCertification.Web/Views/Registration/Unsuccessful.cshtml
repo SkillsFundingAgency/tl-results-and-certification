@@ -1,15 +1,13 @@
-﻿@{
-    ViewData["Title"] = "Registrations upload unsuccessful page";
-}
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
 
+@{
+    ViewData["Title"] = @Unsuccessful.Page_Title;
+}
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-
-        <h1 class="govuk-heading-xl">
-            Registrations upload unsuccessful
-        </h1>
-        <p class="govuk-body govuk-inset-text">The file could not be uploaded as it contains errors. Download the error report to find out why some registrations were unsuccessful.</p>
+        <h1 class="govuk-heading-xl">@Unsuccessful.Section_Heading</h1>
+        <p class="govuk-body govuk-inset-text">@Unsuccessful.Section_Info_Text</p>
 
         <section>
             <div class="gem-c-attachment__thumbnail">
@@ -19,16 +17,13 @@
                     </svg>
                 </a>
             </div>
-            <div>
-                <h2 class="govuk-!-font-size-27 govuk-!-font-weight-regular">
-                    <a class="govuk-link" target="_self" href="#">Download error report</a>
-                </h2>
-                <p class="govuk-body-s">CSV, 19.5 KB</p>
-            </div>
+            <h2 class="govuk-!-font-size-27 govuk-!-font-weight-regular">
+                <a class="govuk-link" target="_self" href="#">@Unsuccessful.Download_Error_Report_Text</a>
+            </h2>
+            <p class="govuk-body-s">CSV, 19.5 KB</p>
         </section>
     </div>
-
     <div class="govuk-grid-column-two-thirds">
-        <p class="govuk-!-margin-top-5"><a class="govuk-button" role="button" href="/1-13/AO/upload-file.html">Back to upload file</a></p>
+        <p class="govuk-body govuk-!-margin-top-5"><a class="govuk-button" role="button" asp-route="UploadRegistrationsFile">@Unsuccessful.Back_To_Upload_File_Button_Text</a></p>
     </div>
 </div>
