@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(viewModel);
             }
-            return RedirectToRoute(RouteConstants.RegistrationsUploadUnsuccessful);
+            return RedirectToRoute(RouteConstants.RegistrationsUploadSuccessful);
         }
 
         [HttpGet]
