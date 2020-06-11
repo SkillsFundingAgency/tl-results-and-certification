@@ -51,6 +51,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public IActionResult Confirmation()
         {
             return View();
-        }        
+        }
+
+        [HttpGet]
+        [Route("registrations-upload-unsuccessful", Name = RouteConstants.RegistrationsUploadUnsuccessful)]
+        public IActionResult Unsuccessful()
+        {
+            return View();
+        }
     }
 }
