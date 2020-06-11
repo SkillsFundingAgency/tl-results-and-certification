@@ -43,12 +43,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(viewModel);
             }
-            return RedirectToRoute(RouteConstants.RegistrationsUploadUnsuccessful);
+            return RedirectToRoute(RouteConstants.RegistrationsUploadSuccessful);
         }
 
         [HttpGet]
-        [Route("registrations-upload-successful", Name = RouteConstants.RegistrationsUploadConfirmation)]
-        public IActionResult Confirmation()
+        [Route("registrations-upload-successful", Name = RouteConstants.RegistrationsUploadSuccessful)]
+        public IActionResult Successful()
         {
             return View();
         }

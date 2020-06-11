@@ -47,7 +47,7 @@
         public const string RegistrationDashboard = "RegistrationDashboard";
         public const string UploadRegistrationsFile = "UploadRegistrationsFile";
         public const string SubmitUploadRegistrationsFile = "SubmitUploadRegistrationsFile";
-        public const string RegistrationsUploadConfirmation = "RegistrationsUploadConfirmation";
+        public const string RegistrationsUploadSuccessful = "RegistrationsUploadSuccessful";
         public const string RegistrationsUploadUnsuccessful = "RegistrationsUploadUnsuccessful";
 
         // Error
