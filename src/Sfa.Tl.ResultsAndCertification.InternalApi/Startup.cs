@@ -21,6 +21,8 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Extensions;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Infrastructure;
+using Sfa.Tl.ResultsAndCertification.InternalApi.Loader;
+using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 
@@ -115,6 +117,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
             services.AddTransient<IProviderService, ProviderService>();
             services.AddTransient<IPathwayService, PathwayService>();
+            services.AddTransient<IRegistrationDataValidator, RegistrationDataValidator>();
             services.AddTransient<IDbContextBuilder, DbContextBuilder>();
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(ResultsAndCertificationConfiguration.GovUkNotifyApiKey));
             services.AddTransient<INotificationService, NotificationService>();
