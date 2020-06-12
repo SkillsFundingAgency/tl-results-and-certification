@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpPost]
-        [Route("bulk-upload")]
+        [Route("ProcessBulkRegistrations")]
         public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request)
         {
             return await _csvDataValidator.ProcessBulkRegistrationsAsync(request);

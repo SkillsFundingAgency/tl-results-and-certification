@@ -34,17 +34,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("upload-registrations-file", Name = RouteConstants.UploadRegistrationsFile)]
         public IActionResult UploadRegistrationsFile()
         {
-            return View(new UploadRegistrationsFileViewModel());
+            return View(new UploadRegistrationsRequestViewModel());
         }
 
         [HttpPost]
         [Route("upload-registrations-file", Name = RouteConstants.SubmitUploadRegistrationsFile)]
-        public IActionResult UploadRegistrationsFile(UploadRegistrationsFileViewModel viewModel)
+        public IActionResult UploadRegistrationsFile(UploadRegistrationsRequestViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View(viewModel);
             }
+
+            //_registrationLoader.ProcessBulkRegistrationsAsync(viewModel);
+
+            // loader call - common response
             return RedirectToRoute(RouteConstants.RegistrationsUploadSuccessful);
         }
 

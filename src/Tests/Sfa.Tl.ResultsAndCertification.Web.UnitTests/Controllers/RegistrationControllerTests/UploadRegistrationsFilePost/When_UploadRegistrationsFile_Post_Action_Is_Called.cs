@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         protected IRegistrationLoader RegistrationLoader;
         protected ILogger<RegistrationController> Logger;
         protected RegistrationController Controller;
-        protected UploadRegistrationsFileViewModel ViewModel;
+        protected UploadRegistrationsRequestViewModel ViewModel;
         protected IFormFile FormFile;
         public IActionResult Result { get; private set; }
 
@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             RegistrationLoader = Substitute.For<IRegistrationLoader>();
             Logger = Substitute.For<ILogger<RegistrationController>>();
             Controller = new RegistrationController(RegistrationLoader, Logger);
-            ViewModel = new UploadRegistrationsFileViewModel();
+            ViewModel = new UploadRegistrationsRequestViewModel();
         }
 
         public override void When()

@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             Result.Should().NotBeNull();
             (Result as ViewResult).Model.Should().NotBeNull();
 
-            var model = (Result as ViewResult).Model as UploadRegistrationsFileViewModel;
+            var model = (Result as ViewResult).Model as UploadRegistrationsRequestViewModel;
 
             model.Should().NotBeNull();
             model.Breadcrumb.Should().NotBeNull();

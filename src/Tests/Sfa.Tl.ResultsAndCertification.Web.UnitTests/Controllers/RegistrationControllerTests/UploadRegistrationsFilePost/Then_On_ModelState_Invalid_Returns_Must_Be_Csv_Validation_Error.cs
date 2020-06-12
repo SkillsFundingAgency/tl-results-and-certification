@@ -23,12 +23,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             Result.Should().BeOfType(typeof(ViewResult));
 
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(UploadRegistrationsFileViewModel));
+            viewResult.Model.Should().BeOfType(typeof(UploadRegistrationsRequestViewModel));
 
             Controller.ViewData.ModelState.Should().ContainSingle();
-            Controller.ViewData.ModelState.ContainsKey(nameof(UploadRegistrationsFileViewModel.File)).Should().BeTrue();
+            Controller.ViewData.ModelState.ContainsKey(nameof(UploadRegistrationsRequestViewModel.File)).Should().BeTrue();
 
-            var modelState = Controller.ViewData.ModelState[nameof(UploadRegistrationsFileViewModel.File)];
+            var modelState = Controller.ViewData.ModelState[nameof(UploadRegistrationsRequestViewModel.File)];
             modelState.Errors[0].ErrorMessage.Should().Be(UploadContent.Must_Be_Csv_Validation_Message);
         }
     }
