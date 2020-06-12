@@ -20,7 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<UploadRegistrationsResponseViewModel> ProcessBulkRegistrationsAsync(UploadRegistrationsRequestViewModel viewModel)
         {
-            var bulkRegistrationResponse = await _internalApiClient.ProcessBulkRegistrationsAsync(new BulkRegistrationRequest());
+            var bulkRegistrationRequest = _mapper.Map<BulkRegistrationRequest>(viewModel);
+            var bulkRegistrationResponse = await _internalApiClient.ProcessBulkRegistrationsAsync(bulkRegistrationRequest);
             return _mapper.Map<UploadRegistrationsResponseViewModel>(bulkRegistrationResponse);
         }        
     }

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration
+﻿namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration
 {
     public class UploadRegistrationsResponseViewModel
     {
+        public bool IsSuccess { get; set; }
+        public string BlobErrorFileName { get; set; }
+        public long ErrorFileSize { get; set; }
+        public StatsViewModel Stats { get; set; }
     }
 }
