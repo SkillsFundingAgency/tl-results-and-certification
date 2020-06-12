@@ -20,7 +20,6 @@
         public const string UnableToReadCsvData = "Unable to interpret content.";
         public const string UnexpectedError = "Unexpected error while reading file content.";
 
-        // Todo:
-        public const string NoRegistrationsFound = "There are no registrations found."; // Todo: specific
+        public const string NoRecordsFound = "There are no registrations found."; // Todo: specific
     }
 }
