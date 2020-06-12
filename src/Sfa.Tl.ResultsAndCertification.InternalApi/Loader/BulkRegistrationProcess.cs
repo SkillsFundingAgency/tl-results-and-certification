@@ -5,6 +5,8 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registratio
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,19 +34,21 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             // Step: Todo - Read file from Blob
 
             // Stage 2 validation
-            var registrations = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = null });
-            var isFileDirty = false;
-            if (isFileDirty)
+            var csvResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = null });
+            if (csvResponse.IsDirty)
             {
                 // Todo: Blob operations
+                var errorFile = await _csvService.WriteErrorFile(new List<ValidationError> { new ValidationError { ErrorMessage = csvResponse.ErrorMessage } });
                 return response;
             }
 
             // Stage 3 valiation. 
-            await _registrationService.ValidateRegistrationTlevelsAsync(null);
-            if (registrations.Rows.Any(x => !x.IsValid))
+            await _registrationService.ValidateRegistrationTlevelsAsync(csvResponse.Rows.Where(x => x.IsValid));
+            if (csvResponse.Rows.Any(x => !x.IsValid))
             {
                 // Todo: blob operation
+                var validationErrors = FilterValidationErrors(csvResponse.Rows);
+                var errorFile = await _csvService.WriteErrorFile<ValidationError>(validationErrors);
                 return response;
             }
 
@@ -55,6 +59,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             var result = await _registrationService.CompareAndProcessRegistrations();
 
             return response;
+        }
+
+        private List<ValidationError> FilterValidationErrors(IList<RegistrationCsvRecordResponse> registrations)
+        {
+            var result = new List<ValidationError>();
+            var invalidReg = registrations.Where(x => !x.IsValid).ToList();
+            invalidReg.ForEach(x => { result.AddRange(x.ValidationErrors); });
+            return result;
         }
     }
 }
