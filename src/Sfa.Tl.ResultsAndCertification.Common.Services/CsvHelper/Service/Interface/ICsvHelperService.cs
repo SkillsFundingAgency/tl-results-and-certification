@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface
 {
-    public interface ICsvHelperService<in TImportModel, TResponseModel> where TResponseModel : class, new() where TImportModel : FileBaseModel
+    public interface ICsvHelperService<in TImportModel, TResponseModel, TModel> where TModel : class, new() where TResponseModel : CsvResponseBaseModel, new() where TImportModel : FileBaseModel
     {
-        Task<IList<TResponseModel>> ReadAndParseFileAsync(TImportModel importModel);
+        //Task<IList<TResponseModel>> ReadAndParseFileAsync(TImportModel importModel);
+        Task<TResponseModel> ReadAndParseFileAsync(TImportModel importModel);
     }
 }

@@ -32,6 +32,7 @@ using Sfa.Tl.ResultsAndCertification.InternalApi.Loader;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi
 {
@@ -130,7 +131,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
 
             services.AddTransient<IDataParser<RegistrationCsvRecordResponse>, RegistrationParser>();
             services.AddTransient<IValidator<RegistrationCsvRecordRequest>, RegistrationValidator>();
-            services.AddTransient<ICsvHelperService<RegistrationCsvRecordRequest, RegistrationCsvRecordResponse>, CsvHelperService<RegistrationCsvRecordRequest, RegistrationCsvRecordResponse>>();
+            services.AddTransient<ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>, CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>>();
             services.AddTransient<IBulkRegistrationProcess, BulkRegistrationProcess>();
             services.AddTransient<IRegistrationService, RegistrationService>();
         }

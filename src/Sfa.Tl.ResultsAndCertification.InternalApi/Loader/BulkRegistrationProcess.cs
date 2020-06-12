@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
@@ -11,11 +12,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 {
     public class BulkRegistrationProcess : IBulkRegistrationProcess
     {
-        private readonly ICsvHelperService<RegistrationCsvRecordRequest, RegistrationCsvRecordResponse> _csvService;
+        private readonly ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> _csvService;
         private readonly IRegistrationService _registrationService;
         private readonly ILogger<BulkRegistrationProcess> _logger;
 
-        public BulkRegistrationProcess(ICsvHelperService<RegistrationCsvRecordRequest, RegistrationCsvRecordResponse> csvService,
+        public BulkRegistrationProcess(ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> csvService,
             IRegistrationService registrationService,
             ILogger<BulkRegistrationProcess> logger)
         {
@@ -41,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             // Stage 3 valiation. 
             await _registrationService.ValidateRegistrationTlevelsAsync(null);
-            if (registrations.Any(x => !x.IsValid))
+            if (registrations.Rows.Any(x => !x.IsValid))
             {
                 // Todo: blob operation
                 return response;

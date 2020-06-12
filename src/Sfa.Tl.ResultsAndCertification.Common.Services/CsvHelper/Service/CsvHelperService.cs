@@ -17,21 +17,21 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
 {
-    public class CsvHelperService<TImportModel, TResponseModel> : ICsvHelperService<TImportModel, TResponseModel> where TResponseModel : class, new() where TImportModel : FileBaseModel
+    public class CsvHelperService<TImportModel, TResponseModel, TModel> : ICsvHelperService<TImportModel, TResponseModel, TModel> where TModel : class, new() where TResponseModel : CsvResponseBaseModel, new() where TImportModel : FileBaseModel
     {
         private readonly IValidator<TImportModel> _validator;
-        private readonly IDataParser<TResponseModel> _dataParser;
+        private readonly IDataParser<TModel> _dataParser;
 
-        public CsvHelperService(IValidator<TImportModel> validator, IDataParser<TResponseModel> dataParser)
+        public CsvHelperService(IValidator<TImportModel> validator, IDataParser<TModel> dataParser)
         {
             _validator = validator;
             _dataParser = dataParser;
         }
 
-        public async Task<CsvResponseModel<TResponseModel>> ReadAndParseFileAsync_Test(TImportModel importModel)
+        public async Task<TResponseModel> ReadAndParseFileAsync(TImportModel importModel)
         {
-            var response = new CsvResponseModel<TResponseModel>();
-
+            var response = new TResponseModel();
+            var rowsModelList = new List<TModel>();
             var config = BuildCsvConfiguration();
 
             importModel.FileStream.Position = 0;
@@ -47,6 +47,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 return response;
             }
 
+            var rowsProperty = response.GetType().GetProperties()
+                .FirstOrDefault(p => p.PropertyType.IsGenericType 
+                                && p.PropertyType.GetGenericTypeDefinition() == typeof(IList<>)
+                                && p.PropertyType.GenericTypeArguments.First() == typeof(TModel));
+
             var properties = importModel.GetType().GetProperties()
                 .Where(pr => pr.GetCustomAttribute<NameAttribute>(false) != null)
                 .ToList();
@@ -60,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 ReadRow(csv, importModel, properties);
 
                 // validate row
-                TResponseModel row;
+                TModel row;
                 var validationResult = await ValidateRowAsync(importModel);
 
                 // parse row into model
@@ -72,7 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 if (row == null)
                     throw new Exception(ValidationMessages.UnableToParse);
 
-                response.Rows.Add(row);
+                rowsModelList.Add(row);
             }
 
             if (rownum == 1)
@@ -80,63 +85,67 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 response.IsDirty = true;
                 response.ErrorMessage = ValidationMessages.NoRecordsFound;
             }
-
-            return response;
-        }
-
-        public async Task<IList<TResponseModel>> ReadAndParseFileAsync(TImportModel importModel)
-        {
-            var response = new List<TResponseModel>();
-
-            var config = BuildCsvConfiguration();
-
-            importModel.FileStream.Position = 0;
-            using var reader = new StreamReader(importModel.FileStream);
-            using var csv = new CsvReader(reader, config);
-
-            // validate header
-            var isValidHeader = ValidateHeader(csv);
-            if (!isValidHeader)
+            else
             {
-                //Todo: Set Dirty flag and return.
-                return response;
-            }
-
-            var properties = importModel.GetType().GetProperties()
-                .Where(pr => pr.GetCustomAttribute<NameAttribute>(false) != null)
-                .ToList();
-
-            var rownum = 1;
-            while (await csv.ReadAsync())
-            {
-                rownum++;
-
-                // read a row
-                ReadRow(csv, importModel, properties);
-
-                // validate row
-                TResponseModel row;
-                var validationResult = await ValidateRowAsync(importModel);
-
-                // parse row into model
-                if (!validationResult.IsValid)
-                    row = _dataParser.ParseErrorObject(rownum, importModel, validationResult);
-                else
-                    row = _dataParser.ParseRow(importModel, rownum);
-
-                if (row == null)
-                    throw new Exception(ValidationMessages.UnableToParse);
-
-                response.Add(row);
-            }
-
-            if (rownum == 1)
-            {
-                // Todo: set dirty flag. 
+                rowsProperty?.SetValue(rowsModelList, response);
             }
 
             return response;
         }
+
+        //public async Task<IList<TResponseModel>> ReadAndParseFileAsync_Test(TImportModel importModel)
+        //{
+        //    var response = new List<TResponseModel>();
+
+        //    var config = BuildCsvConfiguration();
+
+        //    importModel.FileStream.Position = 0;
+        //    using var reader = new StreamReader(importModel.FileStream);
+        //    using var csv = new CsvReader(reader, config);
+
+        //    // validate header
+        //    var isValidHeader = ValidateHeader(csv);
+        //    if (!isValidHeader)
+        //    {
+        //        //Todo: Set Dirty flag and return.
+        //        return response;
+        //    }
+
+        //    var properties = importModel.GetType().GetProperties()
+        //        .Where(pr => pr.GetCustomAttribute<NameAttribute>(false) != null)
+        //        .ToList();
+
+        //    var rownum = 1;
+        //    while (await csv.ReadAsync())
+        //    {
+        //        rownum++;
+
+        //        // read a row
+        //        ReadRow(csv, importModel, properties);
+
+        //        // validate row
+        //        TResponseModel row;
+        //        var validationResult = await ValidateRowAsync(importModel);
+
+        //        // parse row into model
+        //        if (!validationResult.IsValid)
+        //            row = _dataParser.ParseErrorObject(rownum, importModel, validationResult);
+        //        else
+        //            row = _dataParser.ParseRow(importModel, rownum);
+
+        //        if (row == null)
+        //            throw new Exception(ValidationMessages.UnableToParse);
+
+        //        response.Add(row);
+        //    }
+
+        //    if (rownum == 1)
+        //    {
+        //        // Todo: set dirty flag. 
+        //    }
+
+        //    return response;
+        //}
 
         private async Task<ValidationResult> ValidateRowAsync(TImportModel importModel)
         {
@@ -152,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             {
                 var nameAttr = prop.GetCustomAttribute<NameAttribute>();
                 var cellValue = csv.GetField(nameAttr.Names[0]);
-                
+
                 prop.SetValue(importModel, cellValue);
             }
         }
@@ -181,7 +190,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 csv.Read();
                 csv.ReadHeader();
                 csv.ValidateHeader<TImportModel>();
-                
+
                 return true;
             }
             catch (Exception ex)

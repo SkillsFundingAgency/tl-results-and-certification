@@ -2,15 +2,12 @@
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model
 {
-    public class CsvResponseModel<TModel>
+    public class CsvResponseModel<TModel> : CsvResponseBaseModel where TModel : class, new()
     {
         public CsvResponseModel()
         {
             Rows = new List<TModel>();
         }
-
-        public bool IsDirty { get; set; }
-        public string ErrorMessage { get; set; }
 
         public IList<TModel> Rows { get; set; }
     }
