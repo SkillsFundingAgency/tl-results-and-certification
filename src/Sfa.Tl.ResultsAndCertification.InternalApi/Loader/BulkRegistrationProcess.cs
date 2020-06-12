@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             if (csvResponse.IsDirty)
             {
                 // Todo: Blob operations
-                var errorFile = await _csvService.WriteErrorFile(new List<ValidationError> { new ValidationError { ErrorMessage = csvResponse.ErrorMessage } });
+                var errorFile = await _csvService.WriteFileAsync(new List<ValidationError> { new ValidationError { ErrorMessage = csvResponse.ErrorMessage } });
                 return response;
             }
 
@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             {
                 // Todo: blob operation
                 var validationErrors = FilterValidationErrors(csvResponse.Rows);
-                var errorFile = await _csvService.WriteErrorFile<ValidationError>(validationErrors);
+                var errorFile = await _csvService.WriteFileAsync<ValidationError>(validationErrors);
                 return response;
             }
 
