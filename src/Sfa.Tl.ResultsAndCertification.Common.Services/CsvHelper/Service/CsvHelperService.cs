@@ -5,7 +5,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Parser.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
@@ -29,63 +28,111 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             _dataParser = dataParser;
         }
 
+        public async Task<CsvResponseModel<TResponseModel>> ReadAndParseFileAsync_Test(TImportModel importModel)
+        {
+            var response = new CsvResponseModel<TResponseModel>();
+
+            var config = BuildCsvConfiguration();
+
+            importModel.FileStream.Position = 0;
+            using var reader = new StreamReader(importModel.FileStream);
+            using var csv = new CsvReader(reader, config);
+
+            // validate header
+            var isValidHeader = ValidateHeader(csv);
+            if (!isValidHeader)
+            {
+                response.IsDirty = true;
+                response.ErrorMessage = ValidationMessages.FileHeaderNotFound;
+                return response;
+            }
+
+            var properties = importModel.GetType().GetProperties()
+                .Where(pr => pr.GetCustomAttribute<NameAttribute>(false) != null)
+                .ToList();
+
+            var rownum = 1;
+            while (await csv.ReadAsync())
+            {
+                rownum++;
+
+                // read a row
+                ReadRow(csv, importModel, properties);
+
+                // validate row
+                TResponseModel row;
+                var validationResult = await ValidateRowAsync(importModel);
+
+                // parse row into model
+                if (!validationResult.IsValid)
+                    row = _dataParser.ParseErrorObject(rownum, importModel, validationResult);
+                else
+                    row = _dataParser.ParseRow(importModel, rownum);
+
+                if (row == null)
+                    throw new Exception(ValidationMessages.UnableToParse);
+
+                response.Rows.Add(row);
+            }
+
+            if (rownum == 1)
+            {
+                response.IsDirty = true;
+                response.ErrorMessage = ValidationMessages.NoRecordsFound;
+            }
+
+            return response;
+        }
+
         public async Task<IList<TResponseModel>> ReadAndParseFileAsync(TImportModel importModel)
         {
             var response = new List<TResponseModel>();
 
-            try
+            var config = BuildCsvConfiguration();
+
+            importModel.FileStream.Position = 0;
+            using var reader = new StreamReader(importModel.FileStream);
+            using var csv = new CsvReader(reader, config);
+
+            // validate header
+            var isValidHeader = ValidateHeader(csv);
+            if (!isValidHeader)
             {
-                var config = BuildCsvConfiguration();
-                
-                importModel.FileStream.Position = 0;
-                using var reader = new StreamReader(importModel.FileStream);
-                using var csv = new CsvReader(reader, config);
-
-                // validate header
-                ValidateHeader(csv);
-
-                var columns = importModel.GetType().GetProperties()
-                    .Where(pr => pr.GetCustomAttribute<NameAttribute>(false) != null)
-                    .ToList();
-                
-                var rownum = 1;
-                while (await csv.ReadAsync())
-                {
-                    rownum++;
-
-                    // read a row
-                    ReadRow(csv, importModel, columns);
-
-                    // validate row
-                    TResponseModel row;
-                    var validationResult = await ValidateRowAsync(importModel);
-
-                    // parse row into model
-                    if (!validationResult.IsValid) 
-                        row = _dataParser.ParseErrorObject(rownum, importModel, validationResult);
-                    else
-                        row = _dataParser.ParseRow(importModel, rownum);
-
-                    if (row == null)
-                        throw new Exception(ValidationMessages.UnableToParse);
-                    
-                    response.Add(row);
-                }
-
-                // Todo: at-leaset two records should be available.
+                //Todo: Set Dirty flag and return.
+                return response;
             }
-            // Todo: check if reporting any csv related error into the file ok?
-            catch (UnauthorizedAccessException e)
+
+            var properties = importModel.GetType().GetProperties()
+                .Where(pr => pr.GetCustomAttribute<NameAttribute>(false) != null)
+                .ToList();
+
+            var rownum = 1;
+            while (await csv.ReadAsync())
             {
-                CreateAndLogErrorObject(response, e, ValidationMessages.UnAuthorizedFileAccess);
+                rownum++;
+
+                // read a row
+                ReadRow(csv, importModel, properties);
+
+                // validate row
+                TResponseModel row;
+                var validationResult = await ValidateRowAsync(importModel);
+
+                // parse row into model
+                if (!validationResult.IsValid)
+                    row = _dataParser.ParseErrorObject(rownum, importModel, validationResult);
+                else
+                    row = _dataParser.ParseRow(importModel, rownum);
+
+                if (row == null)
+                    throw new Exception(ValidationMessages.UnableToParse);
+
+                response.Add(row);
             }
-            catch (CsvHelperException e)
+
+            if (rownum == 1)
             {
-                CreateAndLogErrorObject(response, e, ValidationMessages.UnableToReadCsvData);
-            }
-            catch (Exception e)
-            {
-                CreateAndLogErrorObject(response, e, ValidationMessages.UnexpectedError);
+                // Todo: set dirty flag. 
             }
 
             return response;
@@ -99,14 +146,14 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             return validationResult;
         }
 
-        private static void ReadRow(CsvReader csv, TImportModel importModel, List<PropertyInfo> columns)
+        private static void ReadRow(CsvReader csv, TImportModel importModel, List<PropertyInfo> properties)
         {
-            foreach (var column in columns)
+            foreach (var prop in properties)
             {
-                var nameAttr = column.GetCustomAttribute<NameAttribute>();
+                var nameAttr = prop.GetCustomAttribute<NameAttribute>();
                 var cellValue = csv.GetField(nameAttr.Names[0]);
                 
-                column.SetValue(importModel, cellValue);
+                prop.SetValue(importModel, cellValue);
             }
         }
 
@@ -119,29 +166,27 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             };
         }
 
-        private void CreateAndLogErrorObject(List<TResponseModel> returnModel, Exception ex, string customErrorMessage)
+        private void CreateAndLogErrorObject(CsvResponseModel<TResponseModel> returnModel, Exception ex, string customErrorMessage)
         {
             // Todo: Log the the full error details.
-            //var reg = _dataParser.ParseError(customErrorMessage);
-            //returnModel.Add(reg);
 
-            // Todo: top-level add error at the wrapper level.
+            returnModel.IsDirty = true;
+            returnModel.ErrorMessage = customErrorMessage;
         }
 
-        private static void ValidateHeader(CsvReader csv)
+        private static bool ValidateHeader(CsvReader csv)
         {
             try
             {
                 csv.Read();
                 csv.ReadHeader();
                 csv.ValidateHeader<TImportModel>();
+                
+                return true;
             }
             catch (Exception ex)
             {
-                // Todo: Log actual exception.
-                
-                // create a new ex
-                throw new Exception(ValidationMessages.FileHeaderNotFound);
+                return false;
             }
         }
     }

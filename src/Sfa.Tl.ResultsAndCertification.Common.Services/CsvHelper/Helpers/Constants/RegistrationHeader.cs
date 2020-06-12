@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants
+﻿namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants
 {
-    // Todo: validate headers against to tech spec. 
+    // Todo: validate headers against to tech spec.
     public class RegistrationHeader
     {
         public const string Uln = "uln";
@@ -17,3 +13,4 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Const
         public const string Specialisms = "specialisms";
     }
 }
+    

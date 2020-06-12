@@ -16,12 +16,12 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Parser;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Parser.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Validators;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidators;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Builder;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -128,10 +128,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(ResultsAndCertificationConfiguration.GovUkNotifyApiKey));
             services.AddTransient<INotificationService, NotificationService>();
 
-            services.AddTransient<IDataParser<Registration>, RegistrationDataParser>();
-            services.AddTransient<IValidator<RegistrationCsvRecord>, RegistrationValidator>();
-            services.AddTransient<ICsvHelperService<RegistrationCsvRecord, Registration>, CsvHelperService<RegistrationCsvRecord, Registration>>();
-            services.AddTransient<IRegistrationDataValidator, RegistrationDataValidator>();
+            services.AddTransient<IDataParser<RegistrationCsvRecordResponse>, RegistrationParser>();
+            services.AddTransient<IValidator<RegistrationCsvRecordRequest>, RegistrationValidator>();
+            services.AddTransient<ICsvHelperService<RegistrationCsvRecordRequest, RegistrationCsvRecordResponse>, CsvHelperService<RegistrationCsvRecordRequest, RegistrationCsvRecordResponse>>();
+            services.AddTransient<IBulkRegistrationProcess, BulkRegistrationProcess>();
             services.AddTransient<IRegistrationService, RegistrationService>();
         }
     }

@@ -2,7 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
 using System.Collections.Generic;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Parser.Interfaces
+namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces
 {
     public interface IDataParser<out T> where T : class
     {

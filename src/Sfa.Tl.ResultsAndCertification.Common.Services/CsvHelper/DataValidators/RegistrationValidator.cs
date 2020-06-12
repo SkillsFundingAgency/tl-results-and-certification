@@ -3,9 +3,9 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extension
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
 using System.Linq;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Validators
+namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidators
 {
-    public class RegistrationValidator : AbstractValidator<RegistrationCsvRecord>
+    public class RegistrationValidator : AbstractValidator<RegistrationCsvRecordRequest>
     {
         public RegistrationValidator()
         {
