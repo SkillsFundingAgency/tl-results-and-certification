@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration
 {
-    public class Registration : ValidationState
+    // Todo: rename valid name RegistrationCsvRecordResponse
+    public class RegistrationCsvRecordResponse : ValidationState
     {
-        public Registration()
+        public RegistrationCsvRecordResponse()
         {
             Specialisms = new List<string>();
             TlSpecialismLarIds = new List<KeyValuePair<int, string>>();

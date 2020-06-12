@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants
 {
-    // Todo: validate headers against to tech spec. 
+    // Todo: validate headers against to tech spec.
+    // Todo: change to enum
     public class RegistrationHeader
     {
         public const string Uln = "uln";
@@ -17,3 +18,4 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Const
         public const string Specialisms = "specialisms";
     }
 }
+    

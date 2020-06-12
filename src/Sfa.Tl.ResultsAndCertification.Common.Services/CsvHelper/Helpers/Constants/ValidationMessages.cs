@@ -2,6 +2,7 @@
 {
     public class ValidationMessages
     {
+        // Todo: can this move to resource file? assess. 
         // Property validation messages
         public const string Required = "{0} is required.";
         public const string MustBeNumberWithLength = "{0} must be a number with {1} digits.";
@@ -16,7 +17,7 @@
         
         // Generic or unexpected behaviour messages
         public const string UnableToParse = "Unable to parse the row.";
-        public const string UnableToReadCsvData = "Unable to interpret content.";  // Todo: validate these.
+        public const string UnableToReadCsvData = "Unable to interpret content.";
         public const string UnexpectedError = "Unexpected error while reading file content.";
 
         // Todo:

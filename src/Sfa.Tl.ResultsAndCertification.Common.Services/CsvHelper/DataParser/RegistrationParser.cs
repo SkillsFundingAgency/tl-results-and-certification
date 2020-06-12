@@ -2,25 +2,26 @@
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Parser.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Parser
+namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 {
-    public class RegistrationDataParser : IDataParser<Registration>
+    public class RegistrationParser : IDataParser<RegistrationCsvRecordResponse>
     {
-        public Registration ParseRow(FileBaseModel model, int rownum)
+        public RegistrationCsvRecordResponse ParseRow(FileBaseModel model, int rownum)
         {
-            if (!(model is RegistrationCsvRecord reg))
+            if (!(model is RegistrationCsvRecordRequest reg))
                 return null;
 
+            // Todo: use extensions
             DateTime.TryParseExact(reg.DateOfBirth.Trim(), "ddMMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dob);
             DateTime.TryParseExact(reg.StartDate.Trim(), "ddMMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime startDate);
 
-            return new Registration
+            return new RegistrationCsvRecordResponse
             {
                 Uln = int.Parse(reg.Uln.Trim()),
                 FirstName = reg.FirstName.Trim(),
@@ -37,12 +38,12 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Parser
             };
         }
 
-        public Registration ParseErrorObject(int rownum, FileBaseModel model, ValidationResult validationResult)
+        public RegistrationCsvRecordResponse ParseErrorObject(int rownum, FileBaseModel model, ValidationResult validationResult)
         {
-            if (!(model is RegistrationCsvRecord reg))
+            if (!(model is RegistrationCsvRecordRequest reg))
                 return null;
 
-            return new Registration
+            return new RegistrationCsvRecordResponse
             {
                 ValidationErrors = BuildValidationError(rownum, reg.Uln, validationResult)
             };

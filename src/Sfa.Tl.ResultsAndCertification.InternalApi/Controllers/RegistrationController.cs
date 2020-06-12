@@ -10,13 +10,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     [ApiController]
     public class RegistrationController : ControllerBase
     {
-        private readonly IRegistrationDataValidator _csvDataValidator;
+        private readonly IBulkRegistrationProcess _csvDataProcess;
         private readonly ILogger<ProviderController> _logger;
 
-        public RegistrationController(IRegistrationDataValidator csvDataValidator, ILogger<ProviderController> logger)
+        public RegistrationController(IBulkRegistrationProcess csvDataValidator, ILogger<ProviderController> logger)
         {
 
-            _csvDataValidator = csvDataValidator; 
+            _csvDataProcess = csvDataValidator; 
             _logger = logger;
         }
 
@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("bulk-upload")]
         public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request)
         {
-            return await _csvDataValidator.ProcessBulkRegistrationsAsync(request);
+            return await _csvDataProcess.ProcessBulkRegistrationsAsync(request);
         }
     }
 }

@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 {
-    public class RegistrationDataValidator : IRegistrationDataValidator
+    public class BulkRegistrationProcess : IBulkRegistrationProcess
     {
-        private readonly ICsvHelperService<RegistrationCsvRecord, Registration> _csvService;
+        private readonly ICsvHelperService<RegistrationCsvRecordRequest, RegistrationCsvRecordResponse> _csvService;
         private readonly IRegistrationService _registrationService;
-        private readonly ILogger<RegistrationDataValidator> _logger;
+        private readonly ILogger<BulkRegistrationProcess> _logger;
 
-        public RegistrationDataValidator(ICsvHelperService<RegistrationCsvRecord, Registration> csvService,
+        public BulkRegistrationProcess(ICsvHelperService<RegistrationCsvRecordRequest, RegistrationCsvRecordResponse> csvService,
             IRegistrationService registrationService,
-            ILogger<RegistrationDataValidator> logger)
+            ILogger<BulkRegistrationProcess> logger)
         {
             _csvService = csvService;
             _registrationService = registrationService;
@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             // Step: Todo - Read file from Blob
 
             // Stage 2 validation
-            var registrations = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecord { FileStream = null });
+            var registrations = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = null });
             var isFileDirty = false;
             if (isFileDirty)
             {

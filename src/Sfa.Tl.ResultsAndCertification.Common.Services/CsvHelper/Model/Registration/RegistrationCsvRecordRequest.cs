@@ -4,7 +4,7 @@ using Header = Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration
 {
-    public class RegistrationCsvRecord : FileBaseModel
+    public class RegistrationCsvRecordRequest : FileBaseModel
     {
         [Required]
         [Name(Header.Uln)]
