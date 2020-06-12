@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants
+﻿namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants
 {
     // Todo: validate headers against to tech spec.
-    // Todo: change to enum
     public class RegistrationHeader
     {
         public const string Uln = "uln";
