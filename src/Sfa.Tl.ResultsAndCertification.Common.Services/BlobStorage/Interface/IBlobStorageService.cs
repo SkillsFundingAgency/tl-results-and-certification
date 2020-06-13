@@ -8,6 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface
     {
         Task UploadFileAsync(BlobStorageData blobStorageData);
         Task<Stream> DownloadFileAsync(BlobStorageData blobStorageData);
-        Task<bool> MoveFileAsync(BlobStorageData blobStorageData, string sourceFilePath, string destinationFilePath);
+        Task<bool> MoveFileAsync(BlobStorageData blobStorageData);
     }
 }

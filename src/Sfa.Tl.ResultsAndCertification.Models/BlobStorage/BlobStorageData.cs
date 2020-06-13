@@ -8,7 +8,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.BlobStorage
 
         public string FileName { get; set; }
 
-        public string FilePath { get; set; }
+        public string SourceFilePath { get; set; }
+
+        public string DestinationFilePath { get; set; }
 
         public string UserName { get; set; }
 
