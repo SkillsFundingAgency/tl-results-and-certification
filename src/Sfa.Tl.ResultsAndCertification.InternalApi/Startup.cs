@@ -4,24 +4,24 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Notify.Client;
 using Notify.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Application.Configuration;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Configuration;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidators;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidators;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Builder;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -31,8 +31,9 @@ using Sfa.Tl.ResultsAndCertification.InternalApi.Infrastructure;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using System;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi
 {
@@ -113,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                                       .EnableRetryOnFailure()), ServiceLifetime.Transient);
 
             services.AddSingleton(ResultsAndCertificationConfiguration);
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(Startup).Assembly.GetReferencedAssemblies().Where(a => a.FullName.Contains("Sfa.Tl.ResultsAndCertification.Application")).Select(Assembly.Load));
             RegisterApplicationServices(services);
         }
 
