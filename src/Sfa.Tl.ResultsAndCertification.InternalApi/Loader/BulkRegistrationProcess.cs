@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Azure.Documents.SystemFunctions;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
@@ -58,10 +59,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 csvResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = fileStream });
             }
 
-            if (csvResponse.IsDirty)
+            if (csvResponse.IsDirty || csvResponse.Rows.Any(x => !x.IsValid))
             {
+                byte[] errorFile = await CreateErrorFileAsync(csvResponse);
+
                 // Todo: Blob operations
-                var errorFile = await _csvService.WriteFileAsync(new List<ValidationError> { new ValidationError { ErrorMessage = csvResponse.ErrorMessage } });
                 return response;
             }
 
@@ -69,9 +71,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             await _registrationService.ValidateRegistrationTlevelsAsync(csvResponse.Rows.Where(x => x.IsValid));
             if (csvResponse.Rows.Any(x => !x.IsValid))
             {
+                byte[] errorFile = await CreateErrorFileAsync(csvResponse);
                 // Todo: blob operation
-                var validationErrors = FilterValidationErrors(csvResponse.Rows);
-                var errorFile = await _csvService.WriteFileAsync<ValidationError>(validationErrors);
                 return response;
             }
 
@@ -84,10 +85,20 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private List<ValidationError> FilterValidationErrors(IList<RegistrationCsvRecordResponse> registrations)
+        private async Task<byte[]> CreateErrorFileAsync(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
         {
+            var validationErrors = ExtractAllValidationErrors(csvResponse);
+            var errorFile = await _csvService.WriteFileAsync(validationErrors);
+            return errorFile;
+        }
+
+        private List<ValidationError> ExtractAllValidationErrors(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
+        {
+            if (csvResponse.IsDirty)
+                return new List<ValidationError> { new ValidationError { ErrorMessage = csvResponse.ErrorMessage } };
+
             var result = new List<ValidationError>();
-            var invalidReg = registrations.Where(x => !x.IsValid).ToList();
+            var invalidReg = csvResponse.Rows?.Where(x => !x.IsValid).ToList();
             invalidReg.ForEach(x => { result.AddRange(x.ValidationErrors); });
             return result;
         }
