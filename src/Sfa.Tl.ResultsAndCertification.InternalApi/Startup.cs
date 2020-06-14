@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Azure.Documents;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -132,6 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IDbContextBuilder, DbContextBuilder>();
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(ResultsAndCertificationConfiguration.GovUkNotifyApiKey));
             services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient<IDocumentUploadHistoryService, DocumentUploadHistoryService>();
 
             services.AddTransient<IDataParser<RegistrationCsvRecordResponse>, RegistrationParser>();
             services.AddTransient<IValidator<RegistrationCsvRecordRequest>, RegistrationValidator>();

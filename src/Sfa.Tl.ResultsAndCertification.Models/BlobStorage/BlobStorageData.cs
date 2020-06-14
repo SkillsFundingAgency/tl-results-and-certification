@@ -15,5 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.BlobStorage
         public string UserName { get; set; }
 
         public Stream FileStream { get; set; }
+
+        public byte[] FileData { get; set; }
     }
 }
