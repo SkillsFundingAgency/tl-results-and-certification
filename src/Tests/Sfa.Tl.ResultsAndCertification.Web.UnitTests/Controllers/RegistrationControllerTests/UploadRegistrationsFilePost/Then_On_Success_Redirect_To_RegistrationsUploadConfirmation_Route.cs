@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         [Fact]
         public void Then_If_Success_Redirected_To_RegistrationsUploadConfirmation()
         {
-            var routeName = (Result as RedirectToRouteResult).RouteName;
+            var routeName = (Result.Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.RegistrationsUploadSuccessful);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
@@ -13,7 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration
     {
         public int AoUkprn { get; set; }
         public string BlobFileName { get; set; }
-        
+        public FileType FileType { get; set; }
+        public DocumentType DocumentType { get; set; }
+         
         [DataType(DataType.Upload)]
         [Required(ErrorMessageResourceType = typeof(ErrorResource.Upload), ErrorMessageResourceName = "Select_File_To_Upload_Required_Validation_Message")]
         [FileValidation(AllowedExtensions = ".csv", MaxFileNameLength = 256, MaxFileSizeInMb = 5, MaxRecordCount = 10000)]

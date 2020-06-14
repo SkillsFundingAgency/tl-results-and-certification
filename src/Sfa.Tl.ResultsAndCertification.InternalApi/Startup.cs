@@ -14,6 +14,8 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Configuration;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
@@ -120,6 +122,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
 
         private void RegisterApplicationServices(IServiceCollection services)
         {
+            services.AddTransient<IBlobStorageService, BlobStorageService>();
             services.AddTransient<IProviderRepository, ProviderRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();

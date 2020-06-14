@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.UploadRegistrationsFilePost
 {
@@ -16,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         protected RegistrationController Controller;
         protected UploadRegistrationsRequestViewModel ViewModel;
         protected IFormFile FormFile;
-        public IActionResult Result { get; private set; }
+        public Task<IActionResult> Result { get; private set; }
 
         public override void Setup()
         {

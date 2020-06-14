@@ -19,13 +19,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
 
         public async Task UploadFileAsync(BlobStorageData blobStorageData)
         {
-            var blobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.FileName);
+            var blobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
             await blobReference.UploadFromStreamAsync(blobStorageData.FileStream);
         }
 
         public async Task<Stream> DownloadFileAsync(BlobStorageData blobStorageData)
         {
-            var blobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.FileName);
+            var blobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
 
             if (await blobReference.ExistsAsync())
             {
@@ -41,8 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
 
         public async Task<bool> MoveFileAsync(BlobStorageData blobStorageData)
         {
-            var sourceBlobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.FileName);
-            var destinationBlobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.DestinationFilePath, blobStorageData.FileName);
+            var sourceBlobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
+            var destinationBlobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.DestinationFilePath, blobStorageData.BlobFileName);
 
             await destinationBlobReference.StartCopyAsync(sourceBlobReference);
             return await sourceBlobReference.DeleteIfExistsAsync();
@@ -52,13 +52,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
         {
             var blobContainer = await GetContainerReferenceAsync(containerName);
             var blobFileReference = !string.IsNullOrWhiteSpace(filePath) ? $"{filePath}/{fileName}" : fileName;
-            return blobContainer.GetBlockBlobReference(blobFileReference);
+            return blobContainer.GetBlockBlobReference(blobFileReference?.ToLowerInvariant());
         }
 
         private async Task<CloudBlobContainer> GetContainerReferenceAsync(string containerName)
         {
             var storageAccount = CloudStorageAccount.Parse(_configuration.BlobStorageConnectionString);
-            var containerReference = storageAccount.CreateCloudBlobClient().GetContainerReference(containerName);
+            var containerReference = storageAccount.CreateCloudBlobClient().GetContainerReference(containerName?.ToLowerInvariant());
             await containerReference.CreateIfNotExistsAsync();
             return containerReference;
         }

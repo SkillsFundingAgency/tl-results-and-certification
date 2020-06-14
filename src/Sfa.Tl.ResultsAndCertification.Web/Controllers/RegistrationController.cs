@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
+using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -39,14 +42,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("upload-registrations-file", Name = RouteConstants.SubmitUploadRegistrationsFile)]
-        public IActionResult UploadRegistrationsFile(UploadRegistrationsRequestViewModel viewModel)
+        public async Task<IActionResult> UploadRegistrationsFile(UploadRegistrationsRequestViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View(viewModel);
             }
 
-            //_registrationLoader.ProcessBulkRegistrationsAsync(viewModel);
+            viewModel.BlobFileName = $"{DateTime.Now.Ticks}.{FileType.Csv}";
+            viewModel.AoUkprn = (int)User.GetUkPrn();
+            var response = await _registrationLoader.ProcessBulkRegistrationsAsync(viewModel);
 
             // loader call - common response
             return RedirectToRoute(RouteConstants.RegistrationsUploadSuccessful);

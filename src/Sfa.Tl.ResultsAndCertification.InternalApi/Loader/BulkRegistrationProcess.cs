@@ -1,9 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,14 +19,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
     {
         private readonly ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> _csvService;
         private readonly IRegistrationService _registrationService;
+        private readonly IBlobStorageService _blobStorageService;
         private readonly ILogger<BulkRegistrationProcess> _logger;
 
-        public BulkRegistrationProcess(ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> csvService,
-            IRegistrationService registrationService,
+        public BulkRegistrationProcess(ICsvHelperService<RegistrationCsvRecordRequest,
+            CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> csvService,
+            IRegistrationService registrationService, IBlobStorageService blobStorageService,
             ILogger<BulkRegistrationProcess> logger)
         {
             _csvService = csvService;
             _registrationService = registrationService;
+            _blobStorageService = blobStorageService;
             _logger = logger;
         }
 
@@ -31,10 +37,27 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         {
             var response = new BulkRegistrationResponse();
 
-            // Step: Todo - Read file from Blob
+            CsvResponseModel<RegistrationCsvRecordResponse> csvResponse = null;
 
-            // Stage 2 validation
-            var csvResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = null });
+            // Step: 1 Read file from Blob
+            using (var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+            {
+                ContainerName = request.DocumentType.ToString(),
+                BlobFileName = request.BlobFileName,
+                SourceFilePath = $"{request.AoUkprn}/{Constants.Processing}",
+                UserName = request.PerformedBy
+            }))
+            {
+                if (fileStream == null)
+                {
+                    //TODO: Log error
+                    return response; // need to handle response when null
+                }
+
+                // Stage 2 validation
+                csvResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = fileStream });
+            }
+
             if (csvResponse.IsDirty)
             {
                 // Todo: Blob operations

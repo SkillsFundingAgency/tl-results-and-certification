@@ -17,9 +17,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         [Fact]
         public void Then_Expected_Required_Error_Message_Is_Returned()
         {
-            Result.Should().BeOfType(typeof(ViewResult));
+            Result.Result.Should().BeOfType(typeof(ViewResult));
 
-            var viewResult = Result as ViewResult;
+            var viewResult = Result.Result as ViewResult;
             viewResult.Model.Should().BeOfType(typeof(UploadRegistrationsRequestViewModel));
 
             Controller.ViewData.ModelState.Should().ContainSingle();

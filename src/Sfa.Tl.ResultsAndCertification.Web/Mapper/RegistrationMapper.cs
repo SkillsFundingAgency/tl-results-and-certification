@@ -13,6 +13,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<UploadRegistrationsRequestViewModel, BulkRegistrationRequest>()
                .ForMember(d => d.AoUkprn, opts => opts.MapFrom(s => s.AoUkprn))
                .ForMember(d => d.BlobFileName, opts => opts.MapFrom(s => s.BlobFileName))
+               .ForMember(d => d.FileType, opts => opts.MapFrom(s => s.FileType))
+               .ForMember(d => d.DocumentType, opts => opts.MapFrom(s => s.DocumentType))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<UploadRegistrationsRequestViewModel, BulkRegistrationRequest>>());
 
             CreateMap<BulkRegistrationResponse, UploadRegistrationsResponseViewModel>()
