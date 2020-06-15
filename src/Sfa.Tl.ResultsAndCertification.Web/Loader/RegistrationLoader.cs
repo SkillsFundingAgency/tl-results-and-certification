@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
@@ -33,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 {
                     ContainerName = viewModel.DocumentType.ToString(),
                     BlobFileName = viewModel.BlobFileName,
-                    SourceFilePath = $"{viewModel.AoUkprn}/{Constants.Processing}",
+                    SourceFilePath = $"{viewModel.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
                     FileStream = fileStream,
                     UserName = bulkRegistrationRequest.PerformedBy
                 });

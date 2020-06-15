@@ -21,11 +21,5 @@
         public const string FindProviderSearchCriteria = "FindProviderSearchCriteria";
         public const string ProviderTlevelsViewModel = "ProviderTlevelsViewModel";
         public const string ProviderTlevelDetailsViewModel = "ProviderTlevelDetailsViewModel";
-
-        // Bulk Registrations Storage Folder Constants
-        public const string Processing = "Processing";
-        public const string Processed = "Processed";
-        public const string Failed = "Failed";
-        public const string ValidationErrors = "ValidationErrors";
     }
 }
