@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KB.
+        /// </summary>
+        public static string File_Size_Kb_Text {
+            get {
+                return ResourceManager.GetString("File_Size_Kb_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registrations upload unsuccessful page.
         /// </summary>
         public static string Page_Title {

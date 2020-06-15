@@ -21,7 +21,7 @@
             <h2 class="govuk-!-font-size-27 govuk-!-font-weight-regular">
                 <a class="govuk-link" target="_self" asp-route="DownloadRegistrationErrors" asp-route-id="@Model.BlobUniqueReference">@UploadUnsuccessful.Download_Error_Report_Text</a>
             </h2>
-            <p class="govuk-body-s">@Model.FileType, @Model.FileSize KB</p>
+            <p class="govuk-body-s">@Model.FileType, @Model.FileSize @UploadUnsuccessful.File_Size_Kb_Text</p>
         </section>
     </div>
     <div class="govuk-grid-column-two-thirds">

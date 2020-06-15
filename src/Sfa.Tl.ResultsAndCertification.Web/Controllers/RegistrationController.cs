@@ -8,8 +8,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using System;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -52,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             viewModel.BlobFileName = $"{DateTime.Now.ToFileTimeUtc()}.{FileType.Csv}";
             viewModel.BlobUniqueReference = Guid.NewGuid();
-            viewModel.AoUkprn = (int)User.GetUkPrn();
+            viewModel.AoUkprn = User.GetUkPrn();
             var response = await _registrationLoader.ProcessBulkRegistrationsAsync(viewModel);
 
             if (response.IsSuccess)
@@ -85,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var viewModel = JsonConvert.DeserializeObject<UploadRegistrationsResponseViewModel>(TempData[Constants.UploadUnsuccessfulViewModel] as string);
+            var viewModel = JsonConvert.DeserializeObject<UploadUnsuccessfulViewModel>(TempData[Constants.UploadUnsuccessfulViewModel] as string);
             return View(viewModel);
         }
 
@@ -95,19 +93,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (id.IsGuid())
             {
-                using (var fileStream = await _registrationLoader.GetRegistrationValidationErrorsFileAsync(User.GetUkPrn(), id.ToGuid()))
+                var fileStream = await _registrationLoader.GetRegistrationValidationErrorsFileAsync(User.GetUkPrn(), id.ToGuid());
+                if (fileStream == null)
                 {
-                    fileStream.Position = 0;
-                    return new FileStreamResult(fileStream, "text/csv")
-                    {
-                        FileDownloadName = "Registrations error report.csv"
-                    };
+                    var blobReadError = $"No FileStream found to download registration validation errors. Method: GetRegistrationValidationErrorsFileAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})";
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+                    return RedirectToRoute(RouteConstants.PageNotFound);
                 }
+
+                fileStream.Position = 0;
+                return new FileStreamResult(fileStream, "text/csv")
+                {
+                    FileDownloadName = "Registrations error report.csv"
+                };
             }
             else
             {
                 _logger.LogWarning(LogEvent.DownloadRegistrationErrorsFailed,
-                    $"Not valid guid to read file. Id = {id}, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                    $"Not a valid guid to read file. Method: DownloadRegistrationErrors(Id = {id}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
         }

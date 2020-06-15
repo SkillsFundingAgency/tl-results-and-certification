@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -17,10 +19,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         private readonly IResultsAndCertificationInternalApiClient _internalApiClient;
         private readonly IBlobStorageService _blobStorageService;
         private readonly IMapper _mapper;
+        private readonly ILogger<RegistrationLoader> _logger;
 
-        public RegistrationLoader(IMapper mapper, IResultsAndCertificationInternalApiClient internalApiClient, IBlobStorageService blobStorageService)
+        public RegistrationLoader(IMapper mapper, ILogger<RegistrationLoader> logger, IResultsAndCertificationInternalApiClient internalApiClient, IBlobStorageService blobStorageService)
         {
             _mapper = mapper;
+            _logger = logger;
             _internalApiClient = internalApiClient;
             _blobStorageService = blobStorageService;
         }
@@ -51,14 +55,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             if (tlevelDetails != null && tlevelDetails.Status == (int)DocumentUploadStatus.Failed)
             {
-                return await _blobStorageService.DownloadFileAsync(new BlobStorageData
+                var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
                 {
                     ContainerName = DocumentType.Registrations.ToString(),
                     BlobFileName = tlevelDetails.BlobFileName,
                     SourceFilePath = $"{aoUkprn}/{BulkRegistrationProcessStatus.ValidationErrors}"
                 });
+
+                if(fileStream == null)
+                {
+                    var blobReadError = $"No FileStream found to download registration validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.Registrations}, BlobFileName = {tlevelDetails.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkRegistrationProcessStatus.ValidationErrors})";
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+                }
+
+                return fileStream;
             }
-            return null;
+            else
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No DocumentUploadHistoryDetails found or the request is not valid. Method: GetDocumentUploadHistoryDetailsAsync(AoUkprn: {aoUkprn}, BlobUniqueReference = {blobUniqueReference})");
+                return null;
+            }            
         }      
     }
 }

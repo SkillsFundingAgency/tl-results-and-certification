@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration
 {
     public class UploadRegistrationsRequestViewModel
     {
-        public int AoUkprn { get; set; }
+        public long AoUkprn { get; set; }
         public string BlobFileName { get; set; }
         public Guid BlobUniqueReference { get; set; }
         public FileType FileType { get; set; }
