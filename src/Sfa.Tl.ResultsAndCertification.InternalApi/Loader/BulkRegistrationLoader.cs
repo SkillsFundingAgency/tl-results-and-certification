@@ -72,7 +72,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 response.IsSuccess = false;
                 response.BlobErrorFileName = request.BlobFileName;
                 response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
-                
                 return response;
             }
 
@@ -123,6 +122,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             {
                 AoUkprn = request.AoUkprn,
                 BlobFileName = request.BlobFileName,
+                BlobUniqueReference = request.BlobUniqueReference,
                 DocumentType = (int)request.DocumentType,
                 FileType = (int)request.FileType,
                 Status = (int)status,

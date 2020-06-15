@@ -50,12 +50,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(viewModel);
             }
 
-            viewModel.BlobFileName = $"{DateTime.Now.Ticks}.{FileType.Csv}";
+            viewModel.BlobFileName = $"{DateTime.Now.ToFileTimeUtc()}.{FileType.Csv}";
+            viewModel.BlobUniqueReference = Guid.NewGuid();
             viewModel.AoUkprn = (int)User.GetUkPrn();
             var response = await _registrationLoader.ProcessBulkRegistrationsAsync(viewModel);
 
-            if(response.IsSuccess)
-            {                
+            if (response.IsSuccess)
+            {
                 return RedirectToRoute(RouteConstants.RegistrationsUploadSuccessful);
             }
             else
@@ -90,12 +91,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("download-registration-errors", Name = RouteConstants.DownloadRegistrationErrors)]
-        public IActionResult DownloadRegistrationErrors()
+        public IActionResult DownloadRegistrationErrors(string id)
         {
             var stream = new MemoryStream(Encoding.ASCII.GetBytes("Test File"));
             return new FileStreamResult(stream, "text/csv")
             {
-                FileDownloadName = "UploadErrors.csv"
+                FileDownloadName = "Registrations error report.csv"
             };
         }
     }

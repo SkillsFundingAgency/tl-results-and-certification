@@ -22,5 +22,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         {
             return long.Parse(value);
         }
+
+        public static bool IsGuid(this string value)
+        {
+            return Guid.TryParse(value, out _);
+        }
     }
 }
