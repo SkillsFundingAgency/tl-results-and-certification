@@ -113,7 +113,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             var model = new DocumentUploadHistoryDetails
             {
-                TlAwardingOrganisationId = 1, // TODO: Get TlAwardingOrganisationId
+                AoUkprn = request.AoUkprn,
                 BlobFileName = request.BlobFileName,
                 DocumentType = (int)request.DocumentType,
                 FileType = (int)request.FileType,

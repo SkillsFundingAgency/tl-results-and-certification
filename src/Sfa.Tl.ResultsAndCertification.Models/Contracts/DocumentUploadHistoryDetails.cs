@@ -3,6 +3,7 @@
     public class DocumentUploadHistoryDetails
     {
         public int TlAwardingOrganisationId { get; set; }
+        public long AoUkprn { get; set; }
         public string BlobFileName { get; set; }
         public int DocumentType { get; set; }
         public int FileType { get; set; }
