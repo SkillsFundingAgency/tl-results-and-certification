@@ -112,6 +112,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<BulkRegistrationRequest, BulkRegistrationResponse>(requestUri, model);
         }
 
+        public async Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            var requestUri = string.Format(ApiConstants.GetDocumentUploadHistoryDetailsAsyncUri, aoUkprn, blobUniqueReference);
+            return await GetAsync<DocumentUploadHistoryDetails>(requestUri);
+        }
+
         #region Private Methods
 
         /// <summary>

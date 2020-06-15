@@ -5,6 +5,8 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -41,6 +43,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return await _documentUploadHistoryRepository.CreateAsync(entityModel) > 0;
             }
             return false;
+        }
+
+        public async Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetails(long aoUkprn, Guid blobUniqueReference)
+        {
+            var model = await _documentUploadHistoryRepository
+                .GetFirstOrDefaultAsync(x => x.BlobUniqueReference == blobUniqueReference && x.TlAwardingOrganisation.UkPrn == aoUkprn);
+
+            return _mapper.Map<DocumentUploadHistoryDetails>(model);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<BulkRegistrationResponse, UploadRegistrationsResponseViewModel>()
                .ForMember(d => d.IsSuccess, opts => opts.MapFrom(s => s.IsSuccess))
-               .ForMember(d => d.BlobErrorFileName, opts => opts.MapFrom(s => s.BlobErrorFileName))
+               .ForMember(d => d.BlobUniqueReference, opts => opts.MapFrom(s => s.BlobUniqueReference))
                .ForMember(d => d.Stats, opts => opts.MapFrom(s => s.Stats));
 
             CreateMap<Stats, StatsViewModel>()

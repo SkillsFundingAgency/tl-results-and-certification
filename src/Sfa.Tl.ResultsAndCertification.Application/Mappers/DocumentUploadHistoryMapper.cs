@@ -15,7 +15,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.DocumentType, opts => opts.MapFrom(s => s.DocumentType))
                 .ForMember(d => d.FileType, opts => opts.MapFrom(s => s.FileType))
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status))
-                .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => s.CreatedBy));
+                .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => s.CreatedBy))
+                .ReverseMap();
         }
     }
 }

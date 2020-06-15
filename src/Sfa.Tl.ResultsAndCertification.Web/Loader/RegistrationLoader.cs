@@ -6,6 +6,8 @@ using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -41,6 +43,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             var bulkRegistrationResponse = await _internalApiClient.ProcessBulkRegistrationsAsync(bulkRegistrationRequest);
             return _mapper.Map<UploadRegistrationsResponseViewModel>(bulkRegistrationResponse);
-        }        
+        }
+
+        public async Task<Stream> GetRegistrationValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            var tlevelDetails = await _internalApiClient.GetDocumentUploadHistoryDetailsAsync(aoUkprn, blobUniqueReference);
+
+            if (tlevelDetails != null && tlevelDetails.Status == (int)DocumentUploadStatus.Failed)
+            {
+                return await _blobStorageService.DownloadFileAsync(new BlobStorageData
+                {
+                    ContainerName = DocumentType.Registrations.ToString(),
+                    BlobFileName = tlevelDetails.BlobFileName,
+                    SourceFilePath = $"{aoUkprn}/{BulkRegistrationProcessStatus.ValidationErrors}"
+                });
+            }
+            return null;
+        }      
     }
 }

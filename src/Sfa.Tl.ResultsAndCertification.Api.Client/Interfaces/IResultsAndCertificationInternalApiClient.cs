@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -25,5 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         //Registrations
         Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest model);
+
+        // DocumentUploadHistory
+        Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);
     }
 }

@@ -1,9 +1,11 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
+﻿using System;
+
+namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
     public class BulkRegistrationResponse
     {
         public bool IsSuccess { get; set; }
-        public string BlobErrorFileName { get; set; }
+        public Guid BlobUniqueReference { get; set; }
         public double ErrorFileSize { get; set; }
         public Stats Stats { get; set; }
     }

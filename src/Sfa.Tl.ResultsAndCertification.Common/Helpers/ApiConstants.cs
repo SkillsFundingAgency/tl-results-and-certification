@@ -22,5 +22,8 @@
         // Registrations Related Uri's
         public const string ProcessBulkRegistrationsUri = "/api/registration/ProcessBulkRegistrations";
 
+
+        // DocumentUploadHistory Related Uri's
+        public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";
     }
 }

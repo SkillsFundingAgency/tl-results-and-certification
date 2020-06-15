@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
 
                 response.IsSuccess = false;
-                response.BlobErrorFileName = request.BlobFileName;
+                response.BlobUniqueReference = request.BlobUniqueReference;
                 response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
                 return response;
             }
@@ -83,6 +83,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 await UploadErrorsFileToBlobStorage(request, errorFile);
                 await MoveFileFromProcessingToFailedAsync(request);
                 await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
+                response.IsSuccess = false;
+                response.BlobUniqueReference = request.BlobUniqueReference;
+                response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
                 return response;
             }
 

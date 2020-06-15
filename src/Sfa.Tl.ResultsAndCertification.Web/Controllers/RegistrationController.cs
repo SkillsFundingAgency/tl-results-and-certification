@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                var unsuccessfulViewModel = new UploadUnsuccessfulViewModel { FileSize = response.ErrorFileSize, FileType = FileType.Csv.ToString().ToUpperInvariant() };
+                var unsuccessfulViewModel = new UploadUnsuccessfulViewModel { BlobUniqueReference = response.BlobUniqueReference, FileSize = response.ErrorFileSize, FileType = FileType.Csv.ToString().ToUpperInvariant() };
                 TempData[Constants.UploadUnsuccessfulViewModel] = JsonConvert.SerializeObject(unsuccessfulViewModel);
                 return RedirectToRoute(RouteConstants.RegistrationsUploadUnsuccessful);
             }
@@ -91,13 +91,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("download-registration-errors", Name = RouteConstants.DownloadRegistrationErrors)]
-        public IActionResult DownloadRegistrationErrors(string id)
+        public async Task<IActionResult> DownloadRegistrationErrors(string id)
         {
-            var stream = new MemoryStream(Encoding.ASCII.GetBytes("Test File"));
-            return new FileStreamResult(stream, "text/csv")
+            if (id.IsGuid())
             {
-                FileDownloadName = "Registrations error report.csv"
-            };
+                using (var fileStream = await _registrationLoader.GetRegistrationValidationErrorsFileAsync(User.GetUkPrn(), id.ToGuid()))
+                {
+                    fileStream.Position = 0;
+                    return new FileStreamResult(fileStream, "text/csv")
+                    {
+                        FileDownloadName = "Registrations error report.csv"
+                    };
+                }
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.DownloadRegistrationErrorsFailed,
+                    $"Not valid guid to read file. Id = {id}, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
         }
     }
 }
