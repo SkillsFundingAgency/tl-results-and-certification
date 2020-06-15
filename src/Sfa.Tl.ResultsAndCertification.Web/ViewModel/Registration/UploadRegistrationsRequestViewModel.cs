@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
@@ -14,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration
     {
         public int AoUkprn { get; set; }
         public string BlobFileName { get; set; }
+        public Guid BlobUniqueReference { get; set; }
         public FileType FileType { get; set; }
         public DocumentType DocumentType { get; set; }
          
