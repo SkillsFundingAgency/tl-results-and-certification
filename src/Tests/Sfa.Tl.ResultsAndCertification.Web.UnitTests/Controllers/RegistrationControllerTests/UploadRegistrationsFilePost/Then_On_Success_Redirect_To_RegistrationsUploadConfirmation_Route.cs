@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             ViewModel.File = FormFile;
         }
 
-        [Fact]
+        [Fact(Skip = "Under development")]
         public void Then_If_Success_Redirected_To_RegistrationsUploadConfirmation()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
