@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model
 {
-    public class ValidationState
+    public class ValidationState<T>
     {
         public ValidationState()
         {
-            ValidationErrors = new List<ValidationError>();
+            ValidationErrors = new List<T>();
         }
 
-        public IList<ValidationError> ValidationErrors { get; set; }
+        public IList<T> ValidationErrors { get; set; }
 
         public bool IsValid { get { return ValidationErrors.Count() == 0; } }
     }

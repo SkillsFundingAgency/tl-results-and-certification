@@ -103,12 +103,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return errorFile;
         }
 
-        private List<ValidationError> ExtractAllValidationErrors(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
+        private List<RegistrationValidationError> ExtractAllValidationErrors(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
         {
             if (csvResponse.IsDirty)
-                return new List<ValidationError> { new ValidationError { ErrorMessage = csvResponse.ErrorMessage } };
+                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = csvResponse.ErrorMessage } };
 
-            var errors = new List<ValidationError>();
+            var errors = new List<RegistrationValidationError>();
             var invalidReg = csvResponse.Rows?.Where(x => !x.IsValid).ToList();
             invalidReg.ForEach(x => { errors.AddRange(x.ValidationErrors); });
             
