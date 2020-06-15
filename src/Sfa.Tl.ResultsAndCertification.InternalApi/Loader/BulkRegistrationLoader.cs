@@ -60,6 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
                 // Stage 2 validation
                 csvResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = fileStream });
+                CheckUlnDuplicates(csvResponse.Rows);
             }
 
             if (csvResponse.IsDirty || csvResponse.Rows.Any(x => !x.IsValid))
@@ -96,6 +97,21 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             var result = await _registrationService.CompareAndProcessRegistrations();
 
             return response;
+        }
+
+        private static void CheckUlnDuplicates(IList<RegistrationCsvRecordResponse> registrations)
+        {
+            var duplicateRegistrations = registrations
+                                .GroupBy(x => x.Uln)
+                               .Where(g => g.Count() > 1)
+                               .Select(y => y)
+                               .ToList();
+
+            duplicateRegistrations.ForEach(x =>
+            {
+                // Todo: 
+                x.ToList().ForEach(s => s.ValidationErrors.Add(new RegistrationValidationError { RowNum = "Todo", Uln = s.Uln.ToString(), ErrorMessage = "Duplicate ULN found" }));
+            });
         }
 
         private async Task<byte[]> CreateErrorFileAsync(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)

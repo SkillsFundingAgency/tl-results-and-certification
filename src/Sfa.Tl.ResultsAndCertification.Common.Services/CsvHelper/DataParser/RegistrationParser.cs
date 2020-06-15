@@ -40,8 +40,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
             if (!(model is RegistrationCsvRecordRequest reg))
                 return null;
 
+            var ulnFound = int.TryParse(reg.Uln.Trim(), out int uln);
             return new RegistrationCsvRecordResponse
             {
+                Uln = ulnFound ? uln : 0,
                 ValidationErrors = BuildValidationError(rownum, reg.Uln, validationResult)
             };
         }
