@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
                 response.IsSuccess = false;
                 response.BlobErrorFileName = request.BlobFileName;
-                response.ErrorFileSize = errorFile.Length / 1024; // Todo: need in decimal
+                response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
                 
                 return response;
             }
@@ -137,8 +137,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
             {
                 ContainerName = request.DocumentType.ToString(),
-                BlobFileName = request.BlobFileName,
                 SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.ValidationErrors}",
+                BlobFileName = request.BlobFileName,
                 UserName = request.PerformedBy,
                 FileData = errorFile
             });
@@ -166,8 +166,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             await _blobStorageService.MoveFileAsync(new BlobStorageData
             {
                 ContainerName = request.DocumentType.ToString(),
-                BlobFileName = request.BlobFileName,
                 SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
+                BlobFileName = request.BlobFileName,
                 DestinationFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Failed}"
             });
             return true;
