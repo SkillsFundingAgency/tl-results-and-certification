@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             if (csvResponse.IsDirty || csvResponse.Rows.Any(x => !x.IsValid))
             {
-                var errorFile = await CreateErrorFileStreamAsync(csvResponse);
+                var errorFile = await CreateErrorFileAsync(csvResponse);
                 await UploadErrorsFileToBlobStorage(request, errorFile);
                 await MoveFileFromProcessingToFailedAsync(request);
                 await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
@@ -74,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             await _registrationService.ValidateRegistrationTlevelsAsync(csvResponse.Rows.Where(x => x.IsValid));
             if (csvResponse.Rows.Any(x => !x.IsValid))
             {
-                var errorFile = await CreateErrorFileStreamAsync(csvResponse);
+                var errorFile = await CreateErrorFileAsync(csvResponse);
                 // Todo: blob operation
                 return response;
             }
@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private async Task<Stream> CreateErrorFileStreamAsync(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
+        private async Task<byte[]> CreateErrorFileAsync(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
         {
             var validationErrors = ExtractAllValidationErrors(csvResponse);
             var errorFile = await _csvService.WriteFileAsync(validationErrors);
@@ -122,7 +122,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return await _documentUploadHistoryService.CreateDocumentUploadHistory(model);
         }
 
-        private async Task<bool> UploadErrorsFileToBlobStorage(BulkRegistrationRequest request, Stream errorFile)
+        private async Task<bool> UploadErrorsFileToBlobStorage(BulkRegistrationRequest request, byte[] errorFile)
         {
             if (errorFile == null || errorFile.Length == 0) return false;
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
@@ -131,7 +131,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 BlobFileName = request.BlobFileName,
                 SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.ValidationErrors}",
                 UserName = request.PerformedBy,
-                FileStream = errorFile
+                FileData = errorFile
             });
             return true;
         }
