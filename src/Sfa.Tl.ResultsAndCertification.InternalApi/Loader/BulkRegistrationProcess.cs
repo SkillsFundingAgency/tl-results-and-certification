@@ -75,7 +75,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             if (csvResponse.Rows.Any(x => !x.IsValid))
             {
                 var errorFile = await CreateErrorFileStreamAsync(csvResponse);
-                // Todo: blob operation
+                await UploadErrorsFileToBlobStorage(request, errorFile);
+                await MoveFileFromProcessingToFailedAsync(request);
+                await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
                 return response;
             }
 
