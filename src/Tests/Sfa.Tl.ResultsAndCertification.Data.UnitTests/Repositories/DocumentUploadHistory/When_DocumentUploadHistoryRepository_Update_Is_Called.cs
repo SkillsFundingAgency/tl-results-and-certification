@@ -1,24 +1,25 @@
 ﻿using FluentAssertions;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.NotificationTemplate
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.DocumentUploadHistory
 {
-    public class When_NotificationTemplateRepository_Update_Is_Called : BaseTest<Domain.Models.NotificationTemplate>
+    public class When_DocumentUploadHistoryRepository_Update_Is_Called : BaseTest<Domain.Models.DocumentUploadHistory>
     {
-        private Domain.Models.NotificationTemplate _result;
-        private Domain.Models.NotificationTemplate _data;
-        private const string UpdateTemplateName = "Template Name Updated";
+        private Domain.Models.DocumentUploadHistory _result;
+        private Domain.Models.DocumentUploadHistory _data;
+        private const BulkRegistrationProcessStatus UpdateStatus = BulkRegistrationProcessStatus.Failed;
         private const string ModifiedUserName = "Modified User";
 
         public override void Given()
         {
-            _data = new NotificationTemplateBuilder().Build();
+            _data = new DocumentUploadHistoryBuilder().Build();
             DbContext.Add(_data);
             DbContext.SaveChanges();
 
-            _data.TemplateName = UpdateTemplateName;
+            _data.Status = (int)UpdateStatus;
             _data.ModifiedOn = DateTime.UtcNow;
             _data.ModifiedBy = ModifiedUserName;
         }
@@ -36,8 +37,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Notificatio
             _data.Should().NotBeNull();
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
-            _result.TemplateId.Should().Be(_data.TemplateId);
-            _result.TemplateName.Should().BeEquivalentTo(_data.TemplateName);
+            _result.TlAwardingOrganisationId.Should().Be(_data.TlAwardingOrganisationId);
+            _result.BlobFileName.Should().BeEquivalentTo(_data.BlobFileName);
+            _result.BlobUniqueReference.Should().Be(_data.BlobUniqueReference);
+            _result.DocumentType.Should().Be(_data.DocumentType);
+            _result.FileType.Should().Be(_data.FileType);
+            _result.Status.Should().Be(_data.Status);
             _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);

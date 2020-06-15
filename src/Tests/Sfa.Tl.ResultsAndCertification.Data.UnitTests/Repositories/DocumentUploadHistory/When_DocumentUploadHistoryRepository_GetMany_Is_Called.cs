@@ -5,16 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.NotificationTemplate
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.DocumentUploadHistory
 {
-    public class When_NotificationTemplateRepository_GetMany_Is_Called : BaseTest<Domain.Models.NotificationTemplate>
+    public class When_DocumentUploadHistoryRepository_GetMany_Is_Called : BaseTest<Domain.Models.DocumentUploadHistory>
     {
-        private IEnumerable<Domain.Models.NotificationTemplate> _result;
-        private IList<Domain.Models.NotificationTemplate> _data;
+        private IEnumerable<Domain.Models.DocumentUploadHistory> _result;
+        private IList<Domain.Models.DocumentUploadHistory> _data;
 
         public override void Given()
         {
-            _data = new NotificationTemplateBuilder().BuildList();
+            _data = new DocumentUploadHistoryBuilder().BuildList();
             DbContext.AddRange(_data);
             DbContext.SaveChanges();
         }
@@ -36,8 +36,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Notificatio
             testData.Should().NotBeNull();
             result.Should().NotBeNull();
             result.Id.Should().Be(1);
-            result.TemplateId.Should().Be(testData.TemplateId);
-            result.TemplateName.Should().BeEquivalentTo(testData.TemplateName);
+            result.TlAwardingOrganisationId.Should().Be(testData.TlAwardingOrganisationId);
+            result.BlobFileName.Should().BeEquivalentTo(testData.BlobFileName);
+            result.BlobUniqueReference.Should().Be(testData.BlobUniqueReference);
+            result.DocumentType.Should().Be(testData.DocumentType);
+            result.FileType.Should().Be(testData.FileType);
+            result.Status.Should().Be(testData.Status);
             result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
             result.CreatedOn.Should().Be(Constants.CreatedOn);
             result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);
