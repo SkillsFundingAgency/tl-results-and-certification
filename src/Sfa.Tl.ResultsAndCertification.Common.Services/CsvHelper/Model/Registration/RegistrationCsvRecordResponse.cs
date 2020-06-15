@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration
 {
-    // Todo: rename valid name RegistrationCsvRecordResponse
-    public class RegistrationCsvRecordResponse : ValidationState
+    public class RegistrationCsvRecordResponse : ValidationState<RegistrationValidationError>
     {
         public RegistrationCsvRecordResponse()
         {

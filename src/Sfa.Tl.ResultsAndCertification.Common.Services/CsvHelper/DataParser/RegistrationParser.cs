@@ -17,7 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
             if (!(model is RegistrationCsvRecordRequest reg))
                 return null;
 
-            // Todo: use extensions
             DateTime.TryParseExact(reg.DateOfBirth.Trim(), "ddMMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dob);
             DateTime.TryParseExact(reg.StartDate.Trim(), "ddMMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime startDate);
 
@@ -31,10 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 StartDate = startDate,
                 Core = reg.Core.Trim(),
                 Specialisms = reg.Specialisms.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())),
-                //RowNum = rownum,
 
-                //ValidationErrors = new List<ValidationError>(reg.ValidationErrors)
-                 ValidationErrors = new List<ValidationError>()
+                 ValidationErrors = new List<RegistrationValidationError>()
             };
         }
 
@@ -49,16 +46,16 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
             };
         }
 
-        private IList<ValidationError> BuildValidationError(int rownum, string uln, ValidationResult validationResult)
+        private IList<RegistrationValidationError> BuildValidationError(int rownum, string uln, ValidationResult validationResult)
         {
-            var validationErrors = new List<ValidationError>();
+            var validationErrors = new List<RegistrationValidationError>();
             
             foreach (var err in validationResult.Errors)
             {
-                validationErrors.Add(new ValidationError
+                validationErrors.Add(new RegistrationValidationError
                 {
-                    RowNum = rownum,
-                    RowRef = uln,
+                    RowNum = rownum != 0 ? rownum.ToString() : string.Empty,
+                    Uln = uln,
                     ErrorMessage = err.ErrorMessage
                 });
             }
