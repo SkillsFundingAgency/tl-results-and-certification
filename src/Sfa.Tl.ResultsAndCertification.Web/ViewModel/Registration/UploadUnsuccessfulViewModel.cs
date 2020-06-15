@@ -3,6 +3,6 @@
     public class UploadUnsuccessfulViewModel
     {
         public string FileType { get; set; }
-        public int FileSize {get;set;}
+        public double FileSize {get;set;}
     }
 }

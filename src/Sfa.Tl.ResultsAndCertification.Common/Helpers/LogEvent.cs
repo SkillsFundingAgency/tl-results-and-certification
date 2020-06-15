@@ -10,6 +10,8 @@
         public const int FileStreamNotFound = 1005;
 
         public const int ConfirmationPageFailed = 1020;
+        public const int UploadSuccessfulPageFailed = 1021;
+        public const int UploadUnsuccessfulPageFailed = 1022;
         public const int EmailTemplateNotFound = 1030;
         public const int EmailSendFailed = 1031;
 

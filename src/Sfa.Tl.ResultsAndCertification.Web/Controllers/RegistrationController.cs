@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -53,8 +54,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             viewModel.AoUkprn = (int)User.GetUkPrn();
             var response = await _registrationLoader.ProcessBulkRegistrationsAsync(viewModel);
 
-            // loader call - common response
-            return RedirectToRoute(RouteConstants.RegistrationsUploadSuccessful);
+            if(response.IsSuccess)
+            {                
+                return RedirectToRoute(RouteConstants.RegistrationsUploadSuccessful);
+            }
+            else
+            {
+                var unsuccessfulViewModel = new UploadUnsuccessfulViewModel { FileSize = response.ErrorFileSize, FileType = FileType.Csv.ToString().ToUpperInvariant() };
+                TempData[Constants.UploadUnsuccessfulViewModel] = JsonConvert.SerializeObject(unsuccessfulViewModel);
+                return RedirectToRoute(RouteConstants.RegistrationsUploadUnsuccessful);
+            }
         }
 
         [HttpGet]
@@ -68,8 +77,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("registrations-upload-unsuccessful", Name = RouteConstants.RegistrationsUploadUnsuccessful)]
         public IActionResult UploadUnsuccessful()
         {
-            var viewmodel = new UploadUnsuccessfulViewModel { FileSize = 3, FileType = "CSV" };
-            return View(viewmodel);
+            if (TempData[Constants.UploadUnsuccessfulViewModel] == null)
+            {
+                _logger.LogWarning(LogEvent.UploadUnsuccessfulPageFailed,
+                    $"Unable to read upload registration response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = JsonConvert.DeserializeObject<UploadRegistrationsResponseViewModel>(TempData[Constants.UploadUnsuccessfulViewModel] as string);
+            return View(viewModel);
         }
 
         [HttpGet]
