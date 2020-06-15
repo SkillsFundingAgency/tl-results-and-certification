@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -17,11 +16,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         private readonly IBlobStorageService _blobStorageService;
         private readonly IMapper _mapper;
 
-        public RegistrationLoader(IResultsAndCertificationInternalApiClient internalApiClient, IBlobStorageService blobStorageService, IMapper mapper)
+        public RegistrationLoader(IMapper mapper, IResultsAndCertificationInternalApiClient internalApiClient, IBlobStorageService blobStorageService)
         {
+            _mapper = mapper;
             _internalApiClient = internalApiClient;
             _blobStorageService = blobStorageService;
-            _mapper = mapper;
         }
 
         public async Task<UploadRegistrationsResponseViewModel> ProcessBulkRegistrationsAsync(UploadRegistrationsRequestViewModel viewModel)

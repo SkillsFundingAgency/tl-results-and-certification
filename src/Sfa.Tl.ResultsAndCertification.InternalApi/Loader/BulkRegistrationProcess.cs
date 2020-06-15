@@ -75,7 +75,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             if (csvResponse.Rows.Any(x => !x.IsValid))
             {
                 var errorFile = await CreateErrorFileAsync(csvResponse);
-                // Todo: blob operation
+                await UploadErrorsFileToBlobStorage(request, errorFile);
+                await MoveFileFromProcessingToFailedAsync(request);
+                await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
                 return response;
             }
 
@@ -112,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             var model = new DocumentUploadHistoryDetails
             {
-                TlAwardingOrganisationId = 1, // TODO: Get TlAwardingOrganisationId
+                AoUkprn = request.AoUkprn,
                 BlobFileName = request.BlobFileName,
                 DocumentType = (int)request.DocumentType,
                 FileType = (int)request.FileType,
