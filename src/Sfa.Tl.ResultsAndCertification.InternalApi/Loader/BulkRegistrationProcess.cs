@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -61,7 +62,16 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             if (csvResponse.IsDirty || csvResponse.Rows.Any(x => !x.IsValid))
             {
-                byte[] errorFile = await CreateErrorFileAsync(csvResponse);
+                var errorFile = await CreateErrorFileStreamAsync(csvResponse);
+
+                await _blobStorageService.UploadFileAsync(new BlobStorageData
+                {
+                    ContainerName = request.DocumentType.ToString(),
+                    SourceFilePath = $"{request.AoUkprn}/{Constants.ValidationErrors}",
+                    BlobFileName = request.BlobFileName,
+                    FileStream = errorFile,
+                    UserName = request.PerformedBy
+                });
 
                 // Todo: Blob operations
                 return response;
@@ -71,7 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             await _registrationService.ValidateRegistrationTlevelsAsync(csvResponse.Rows.Where(x => x.IsValid));
             if (csvResponse.Rows.Any(x => !x.IsValid))
             {
-                byte[] errorFile = await CreateErrorFileAsync(csvResponse);
+                var errorFile = await CreateErrorFileStreamAsync(csvResponse);
                 // Todo: blob operation
                 return response;
             }
@@ -85,7 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private async Task<byte[]> CreateErrorFileAsync(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
+        private async Task<Stream> CreateErrorFileStreamAsync(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
         {
             var validationErrors = ExtractAllValidationErrors(csvResponse);
             var errorFile = await _csvService.WriteFileAsync(validationErrors);
