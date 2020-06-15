@@ -21,6 +21,12 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
                 .WithMessage(string.Format(ValidationMessages.MustBeNumberWithLength, "{PropertyName}", length));
         }
 
+        public static IRuleBuilderOptions<T, string> MustBeStringWithLength<T>(this IRuleBuilder<T, string> ruleBuilder, int length)
+        {
+            return ruleBuilder
+                .Must(r => r.Length == length)
+                .WithMessage(string.Format(ValidationMessages.MustBeStringWithLength, "{PropertyName}", length));
+        }
         public static IRuleBuilderOptions<T, string> MaxStringLength<T>(this IRuleBuilder<T, string> ruleBuilder, int max)
         {
             return ruleBuilder

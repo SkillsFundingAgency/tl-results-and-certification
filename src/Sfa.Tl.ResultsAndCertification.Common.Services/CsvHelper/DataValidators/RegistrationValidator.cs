@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
 using System.Linq;
@@ -43,12 +44,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             // Core
             RuleFor(r => r.Core)
                 .Required()
-                .MaxStringLength(8);
+                .MustBeStringWithLength(8);
 
             // Specialisms
             RuleFor(r => r.Specialisms)
                 .Required()
-                .Must(x => x.Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())).All(a => a.Trim().Length == 8))
+                .Must(x => x.Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())).All(a =>  a.Trim().Length == 8))
+                .WithMessage(string.Format(ValidationMessages.MustBeStringWithLength, "{PropertyName}", 8))
                 .When(r => !string.IsNullOrWhiteSpace(r.Specialisms));
         }
     }
