@@ -23,6 +23,12 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
             await blobReference.UploadFromStreamAsync(blobStorageData.FileStream);
         }
 
+        public async Task UploadFromByteArrayAsync(BlobStorageData blobStorageData)
+        {
+            var blobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
+            await blobReference.UploadFromByteArrayAsync(blobStorageData.FileData, 0, blobStorageData.FileData.Length);
+        }
+
         public async Task<Stream> DownloadFileAsync(BlobStorageData blobStorageData)
         {
             var blobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);

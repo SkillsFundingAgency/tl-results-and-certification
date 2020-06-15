@@ -7,6 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface
     public interface IBlobStorageService
     {
         Task UploadFileAsync(BlobStorageData blobStorageData);
+        Task UploadFromByteArrayAsync(BlobStorageData blobStorageData);
         Task<Stream> DownloadFileAsync(BlobStorageData blobStorageData);
         Task<bool> MoveFileAsync(BlobStorageData blobStorageData);
     }
