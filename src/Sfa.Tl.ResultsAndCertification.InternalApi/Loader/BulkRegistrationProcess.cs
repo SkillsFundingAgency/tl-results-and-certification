@@ -10,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -62,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             if (csvResponse.IsDirty || csvResponse.Rows.Any(x => !x.IsValid))
             {
-                byte[] errorFile = await CreateErrorFileAsync(csvResponse);
+                var errorFile = await CreateErrorFileStreamAsync(csvResponse);
                 await UploadErrorsFileToBlobStorage(request, errorFile);
                 await MoveFileFromProcessingToFailedAsync(request);
                 await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
@@ -73,10 +74,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             await _registrationService.ValidateRegistrationTlevelsAsync(csvResponse.Rows.Where(x => x.IsValid));
             if (csvResponse.Rows.Any(x => !x.IsValid))
             {
-                byte[] errorFile = await CreateErrorFileAsync(csvResponse);
-                await UploadErrorsFileToBlobStorage(request, errorFile);
-                await MoveFileFromProcessingToFailedAsync(request);
-                await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
+                var errorFile = await CreateErrorFileStreamAsync(csvResponse);
+                // Todo: blob operation
                 return response;
             }
 
@@ -89,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private async Task<byte[]> CreateErrorFileAsync(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
+        private async Task<Stream> CreateErrorFileStreamAsync(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
         {
             var validationErrors = ExtractAllValidationErrors(csvResponse);
             var errorFile = await _csvService.WriteFileAsync(validationErrors);
@@ -101,10 +100,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             if (csvResponse.IsDirty)
                 return new List<ValidationError> { new ValidationError { ErrorMessage = csvResponse.ErrorMessage } };
 
-            var result = new List<ValidationError>();
+            var errors = new List<ValidationError>();
             var invalidReg = csvResponse.Rows?.Where(x => !x.IsValid).ToList();
-            invalidReg.ForEach(x => { result.AddRange(x.ValidationErrors); });
-            return result;
+            invalidReg.ForEach(x => { errors.AddRange(x.ValidationErrors); });
+            return errors;
         }
 
         private async Task<bool> CreateDocumentUploadHistory(BulkRegistrationRequest request, DocumentUploadStatus status = DocumentUploadStatus.Processed)
@@ -123,7 +122,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return await _documentUploadHistoryService.CreateDocumentUploadHistory(model);
         }
 
-        private async Task<bool> UploadErrorsFileToBlobStorage(BulkRegistrationRequest request, byte[] errorFile)
+        private async Task<bool> UploadErrorsFileToBlobStorage(BulkRegistrationRequest request, Stream errorFile)
         {
             if (errorFile == null || errorFile.Length == 0) return false;
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
@@ -132,7 +131,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 BlobFileName = request.BlobFileName,
                 SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.ValidationErrors}",
                 UserName = request.PerformedBy,
-                FileData = errorFile
+                FileStream = errorFile
             });
             return true;
         }

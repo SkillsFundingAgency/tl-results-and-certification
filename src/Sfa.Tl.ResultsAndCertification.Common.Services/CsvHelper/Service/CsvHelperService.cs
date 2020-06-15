@@ -93,13 +93,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             return response;
         }
 
-        public async Task<byte[]> WriteFileAsync<T>(IList<T> data)
+        public async Task<Stream> WriteFileAsync<T>(IList<T> data)
         {
             using var ms = new MemoryStream();
             using var sw = new StreamWriter(ms);
             using var cw = new CsvWriter(sw, CultureInfo.InvariantCulture);
             await cw.WriteRecordsAsync<T>(data);
-            return ms.ToArray();
+            return ms;
         }
 
         private async Task<ValidationResult> ValidateRowAsync(TImportModel importModel)
