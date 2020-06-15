@@ -138,7 +138,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IDataParser<RegistrationCsvRecordResponse>, RegistrationParser>();
             services.AddTransient<IValidator<RegistrationCsvRecordRequest>, RegistrationValidator>();
             services.AddTransient<ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>, CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>>();
-            services.AddTransient<IBulkRegistrationProcess, BulkRegistrationProcess>();
+            services.AddTransient<IBulkRegistrationLoader, BulkRegistrationLoader>();
             services.AddTransient<IRegistrationService, RegistrationService>();
         }
     }

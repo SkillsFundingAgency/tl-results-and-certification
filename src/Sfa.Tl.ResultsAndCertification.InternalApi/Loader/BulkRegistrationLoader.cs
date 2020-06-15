@@ -9,25 +9,25 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 {
-    public class BulkRegistrationProcess : IBulkRegistrationProcess
+    public class BulkRegistrationLoader : IBulkRegistrationLoader
     {
         private readonly ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> _csvService;
         private readonly IRegistrationService _registrationService;
         private readonly IBlobStorageService _blobStorageService;
         private readonly IDocumentUploadHistoryService _documentUploadHistoryService;
-        private readonly ILogger<BulkRegistrationProcess> _logger;
+        private readonly ILogger<BulkRegistrationLoader> _logger;
 
-        public BulkRegistrationProcess(ICsvHelperService<RegistrationCsvRecordRequest,
+        public BulkRegistrationLoader(ICsvHelperService<RegistrationCsvRecordRequest,
             CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> csvService,
             IRegistrationService registrationService, IBlobStorageService blobStorageService,
-            IDocumentUploadHistoryService documentUploadHistoryService, ILogger<BulkRegistrationProcess> logger)
+            IDocumentUploadHistoryService documentUploadHistoryService, ILogger<BulkRegistrationLoader> logger)
         {
             _csvService = csvService;
             _registrationService = registrationService;
@@ -53,8 +53,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             {
                 if (fileStream == null)
                 {
-                    _logger.LogInformation(LogEvent.FileStreamNotFound, $"No FileStream found to process bluk registrations. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}");
-                    return response; // need to handle response when null
+                    var blobReadError = $"No FileStream found to process bluk registrations. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}";
+                    _logger.LogInformation(LogEvent.FileStreamNotFound, blobReadError);
+                    throw new Exception(blobReadError);
                 }
 
                 // Stage 2 validation
@@ -67,6 +68,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 await UploadErrorsFileToBlobStorage(request, errorFile);
                 await MoveFileFromProcessingToFailedAsync(request);
                 await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
+
+                response.IsSuccess = false;
+                response.BlobErrorFileName = request.BlobFileName;
+                response.ErrorFileSize = errorFile.Length / 1024; // Todo: need in decimal
+                
                 return response;
             }
 
@@ -105,6 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             var errors = new List<ValidationError>();
             var invalidReg = csvResponse.Rows?.Where(x => !x.IsValid).ToList();
             invalidReg.ForEach(x => { errors.AddRange(x.ValidationErrors); });
+            
             return errors;
         }
 

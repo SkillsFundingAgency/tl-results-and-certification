@@ -10,10 +10,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     [ApiController]
     public class RegistrationController : ControllerBase
     {
-        private readonly IBulkRegistrationProcess _bulkRegistrationProcess;
+        private readonly IBulkRegistrationLoader _bulkRegistrationProcess;
         private readonly ILogger<ProviderController> _logger;
 
-        public RegistrationController(IBulkRegistrationProcess bulkRegistrationProcess, ILogger<ProviderController> logger)
+        public RegistrationController(IBulkRegistrationLoader bulkRegistrationProcess, ILogger<ProviderController> logger)
         {
             _bulkRegistrationProcess = bulkRegistrationProcess; 
             _logger = logger;

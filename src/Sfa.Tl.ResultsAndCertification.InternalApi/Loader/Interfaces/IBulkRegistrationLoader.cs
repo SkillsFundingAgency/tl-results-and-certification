@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces
 {
-    public interface IBulkRegistrationProcess
+    public interface IBulkRegistrationLoader
     {
         Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request);
     }
