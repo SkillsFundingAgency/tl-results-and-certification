@@ -37,9 +37,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             {
                 await _blobStorageService.UploadFileAsync(new BlobStorageData
                 {
-                    ContainerName = viewModel.DocumentType.ToString(),
-                    BlobFileName = viewModel.BlobFileName,
-                    SourceFilePath = $"{viewModel.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
+                    ContainerName = bulkRegistrationRequest.DocumentType.ToString(),
+                    BlobFileName = bulkRegistrationRequest.BlobFileName,
+                    SourceFilePath = $"{bulkRegistrationRequest.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
                     FileStream = fileStream,
                     UserName = bulkRegistrationRequest.PerformedBy
                 });
@@ -67,7 +67,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                     var blobReadError = $"No FileStream found to download registration validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.Registrations}, BlobFileName = {tlevelDetails.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkRegistrationProcessStatus.ValidationErrors})";
                     _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
                 }
-
                 return fileStream;
             }
             else
