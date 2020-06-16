@@ -17,21 +17,18 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
             if (!(model is RegistrationCsvRecordRequest reg))
                 return null;
 
-            DateTime.TryParseExact(reg.DateOfBirth.Trim(), "ddMMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dob);
-            DateTime.TryParseExact(reg.StartDate.Trim(), "ddMMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime startDate);
-
             return new RegistrationCsvRecordResponse
             {
                 Uln = int.Parse(reg.Uln.Trim()),
                 FirstName = reg.FirstName.Trim(),
                 LastName = reg.LastName.Trim(),
-                DateOfBirth = dob,
+                DateOfBirth = reg.DateOfBirth.Trim().ParseStringToDateTime(),
                 Ukprn = reg.Ukprn.Trim().ToLong(),
-                StartDate = startDate,
+                StartDate = reg.StartDate.Trim().ParseStringToDateTime(),
                 Core = reg.Core.Trim(),
                 Specialisms = reg.Specialisms.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())),
-
-                 ValidationErrors = new List<RegistrationValidationError>()
+                RowNum = rownum,
+                ValidationErrors = new List<RegistrationValidationError>()
             };
         }
 
@@ -43,7 +40,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
             var ulnFound = int.TryParse(reg.Uln.Trim(), out int uln);
             return new RegistrationCsvRecordResponse
             {
+                // Note: Uln mapped here to use when checking Duplicate Uln and RowNum required at Stage-3 as well.
                 Uln = ulnFound ? uln : 0,
+                RowNum = rownum,
+
                 ValidationErrors = BuildValidationError(rownum, reg.Uln, validationResult)
             };
         }

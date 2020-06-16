@@ -12,8 +12,9 @@
         public const string DateNotinFuture = "{0} must be in the past";
 
         // File based validation messages
-        public const string FileHeaderNotFound = "File header is not valid.";
-        public const string NoRecordsFound = "There are no registrations found.";
+        public const string FileHeaderNotFound = "File header is not valid";
+        public const string NoRecordsFound = "No registration data received";
+        public const string DuplicateRecord = "Duplicate ULN found";
 
         // Generic or unexpected behaviour messages
         public const string UnableToParse = "Unable to parse the row.";

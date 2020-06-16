@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
@@ -60,41 +61,39 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
                 // Stage 2 validation
                 csvResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = fileStream });
-                CheckUlnDuplicates(csvResponse.Rows);
+
+                if (!csvResponse.IsDirty)
+                    CheckUlnDuplicates(csvResponse.Rows);
             }
 
             if (csvResponse.IsDirty || csvResponse.Rows.Any(x => !x.IsValid))
-            {
-                var errorFile = await CreateErrorFileAsync(csvResponse);
-                await UploadErrorsFileToBlobStorage(request, errorFile);
-                await MoveFileFromProcessingToFailedAsync(request);
-                await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
-
-                response.IsSuccess = false;
-                response.BlobUniqueReference = request.BlobUniqueReference;
-                response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
-                return response;
-            }
+                return await SaveErrorsAndUpdateResponse(request, response, csvResponse);
 
             // Stage 3 valiation. 
             await _registrationService.ValidateRegistrationTlevelsAsync(csvResponse.Rows.Where(x => x.IsValid));
             if (csvResponse.Rows.Any(x => !x.IsValid))
-            {
-                var errorFile = await CreateErrorFileAsync(csvResponse);
-                await UploadErrorsFileToBlobStorage(request, errorFile);
-                await MoveFileFromProcessingToFailedAsync(request);
-                await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
-                response.IsSuccess = false;
-                response.BlobUniqueReference = request.BlobUniqueReference;
-                response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
-                return response;
-            }
+                return await SaveErrorsAndUpdateResponse(request, response, csvResponse);
 
             // Step: Map data to DB model type.
             var tqRegistrations = _registrationService.TransformRegistrationModel();
 
             // Step: Process DB operation
             var result = await _registrationService.CompareAndProcessRegistrations();
+
+            response.IsSuccess = true;
+            return response;
+        }
+
+        private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
+        {
+            var errorFile = await CreateErrorFileAsync(csvResponse);
+            await UploadErrorsFileToBlobStorage(request, errorFile);
+            await MoveFileFromProcessingToFailedAsync(request);
+            await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
+
+            response.IsSuccess = false;
+            response.BlobUniqueReference = request.BlobUniqueReference;
+            response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
 
             return response;
         }
@@ -109,8 +108,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             duplicateRegistrations.ForEach(x =>
             {
-                // Todo: 
-                x.ToList().ForEach(s => s.ValidationErrors.Add(new RegistrationValidationError { RowNum = "Todo", Uln = s.Uln.ToString(), ErrorMessage = "Duplicate ULN found" }));
+                x.ToList().ForEach(s => s.ValidationErrors.Add(new RegistrationValidationError
+                {
+                    RowNum = s.RowNum.ToString(),
+                    Uln = s.Uln != 0 ? s.Uln.ToString() : string.Empty,
+                    ErrorMessage = ValidationMessages.DuplicateRecord
+                }));
             });
         }
 
@@ -129,7 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             var errors = new List<RegistrationValidationError>();
             var invalidReg = csvResponse.Rows?.Where(x => !x.IsValid).ToList();
             invalidReg.ForEach(x => { errors.AddRange(x.ValidationErrors); });
-            
+
             return errors;
         }
 

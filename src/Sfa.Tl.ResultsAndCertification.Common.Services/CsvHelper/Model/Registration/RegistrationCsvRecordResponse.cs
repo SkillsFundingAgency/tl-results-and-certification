@@ -28,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registr
         public IEnumerable<string> Specialisms { get; set; }
 
         // Below properties are used for later stage i.e. Db process.
+        public int RowNum { get; set; }
         public int TqProviderId { get; set; }
         public int TlProviderId { get; set; }
         public int TqAwardingOrganisationId { get; set; }
