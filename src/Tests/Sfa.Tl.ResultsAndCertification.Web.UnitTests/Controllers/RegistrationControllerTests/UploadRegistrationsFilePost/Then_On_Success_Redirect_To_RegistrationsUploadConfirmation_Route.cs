@@ -25,6 +25,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         }
 
         [Fact]
+        public void Then_ProcessBulkRegistrationsAsync_Method_Is_Called()
+        {
+            RegistrationLoader.Received(1).ProcessBulkRegistrationsAsync(ViewModel);
+        }
+
+        [Fact]
         public void Then_If_Success_Redirected_To_RegistrationsUploadSuccessful()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;

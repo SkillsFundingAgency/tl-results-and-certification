@@ -10,24 +10,26 @@ using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using System;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.UploadUnsuccessful
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.DownloadRegistrationErrors
 {
-    public abstract class When_UploadUnsuccessful_Is_Called : BaseTest<RegistrationController>
+    public abstract class When_DownloadRegistrationErrors_Is_Called : BaseTest<RegistrationController>
     {
         protected long Ukprn;
         protected IRegistrationLoader RegistrationLoader;
         protected ILogger<RegistrationController> Logger;
         protected RegistrationController Controller;
-        protected UploadUnsuccessfulViewModel UploadUnsuccessfulViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
-        protected TempDataDictionary TempData;
-        public IActionResult Result { get; private set; }
+        public Task<IActionResult> Result { get; private set; }
         protected Guid BlobUniqueReference;
+        protected string Id;
 
         public override void Setup()
         {
-            Ukprn = 12345;            
+            Ukprn = 123456789;
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             Logger = Substitute.For<ILogger<RegistrationController>>();
             RegistrationLoader = Substitute.For<IRegistrationLoader>();
@@ -39,13 +41,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
-            TempData = new TempDataDictionary(HttpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
-            Controller.TempData = TempData;
+            RegistrationLoader.GetRegistrationValidationErrorsFileAsync(Ukprn, BlobUniqueReference).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File for validation errors")));
         }
 
         public override void When()
         {
-            Result = Controller.UploadUnsuccessful();
+            Result = Controller.DownloadRegistrationErrors(Id);
         }
     }
 }
