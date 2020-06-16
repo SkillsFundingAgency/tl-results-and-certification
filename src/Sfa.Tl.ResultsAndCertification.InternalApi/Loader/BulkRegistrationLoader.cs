@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
@@ -109,8 +110,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             duplicateRegistrations.ForEach(x =>
             {
-                // Todo: 
-                x.ToList().ForEach(s => s.ValidationErrors.Add(new RegistrationValidationError { RowNum = "Todo", Uln = s.Uln.ToString(), ErrorMessage = "Duplicate ULN found" }));
+                x.ToList().ForEach(s => s.ValidationErrors.Add(new RegistrationValidationError 
+                { 
+                    RowNum = s.RowNum.ToString(), 
+                    Uln = s.Uln != 0 ? s.Uln.ToString() : string.Empty,
+                    ErrorMessage = ValidationMessages.DuplicateRecord
+                }));
             });
         }
 

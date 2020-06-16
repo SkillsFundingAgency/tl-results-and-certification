@@ -7,40 +7,33 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registr
     public class RegistrationCsvRecordRequest : FileBaseModel
     {
         [Name(CsvHeader.Uln)]
-        [Display(Name = "ULN")]
+        [Display(Name = CsvHeader.Uln)]
         public string Uln { get; set; }
 
-        [Required]
         [Name(CsvHeader.FirstName)]
-        [Display(Name="First name")]
+        [Display(Name = CsvHeader.FirstName)]
         public string FirstName { get; set; }
 
-        [Required]
         [Name(CsvHeader.LastName)]
-        [Display(Name = "Last name")]
+        [Display(Name = CsvHeader.LastName)]
         public string LastName { get; set; }
 
-        [Required]
         [Name(CsvHeader.DateOfBirth)]
-        [Display(Name = "Date of birth")]
+        [Display(Name = CsvHeader.DateOfBirth)]
         public string DateOfBirth { get; set; }
 
-        [Required]
         [Name(CsvHeader.Ukprn)]
-        [Display(Name = "UKPRN")]
+        [Display(Name = CsvHeader.Ukprn)]
         public string Ukprn { get; set; }
 
-        [Required]
         [Name(CsvHeader.StartDate)]
-        [Display(Name = "Start date")]
+        [Display(Name = CsvHeader.StartDate)]
         public string StartDate { get; set; }
 
-        [Required]
         [Name(CsvHeader.Core)]
         [Display(Name = "Core code")]
         public string Core { get; set; }
 
-        [Required]
         [Name(CsvHeader.Specialisms)]
         [Display(Name = "Specialism")]
         public string Specialisms { get; set; }
