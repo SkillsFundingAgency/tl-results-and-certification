@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
 {
@@ -21,11 +22,15 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
     {
         private readonly IValidator<TImportModel> _validator;
         private readonly IDataParser<TModel> _dataParser;
+        private readonly ILogger<CsvHelperService<TImportModel, TResponseModel, TModel>> _logger;
 
-        public CsvHelperService(IValidator<TImportModel> validator, IDataParser<TModel> dataParser)
+        public CsvHelperService(IValidator<TImportModel> validator, 
+            IDataParser<TModel> dataParser, 
+            ILogger<CsvHelperService<TImportModel, TResponseModel, TModel>> logger)
         {
             _validator = validator;
             _dataParser = dataParser;
+            _logger = logger;
         }
 
         public async Task<TResponseModel> ReadAndParseFileAsync(TImportModel importModel)
