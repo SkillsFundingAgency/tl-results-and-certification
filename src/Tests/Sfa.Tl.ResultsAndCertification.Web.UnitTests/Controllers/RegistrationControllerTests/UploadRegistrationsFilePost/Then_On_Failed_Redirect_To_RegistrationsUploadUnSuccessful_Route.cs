@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.UploadRegistrationsFilePost
 {
-    public class Then_On_Success_Redirect_To_RegistrationsUploadConfirmation_Route : When_UploadRegistrationsFile_Post_Action_Is_Called
+    public class Then_On_Failed_Redirect_To_RegistrationsUploadUnSuccessful_Route : When_UploadRegistrationsFile_Post_Action_Is_Called
     {
         public override void Given()
         {
@@ -18,17 +18,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
             ResponseViewModel = new UploadRegistrationsResponseViewModel
             {
-                IsSuccess = true
+                IsSuccess = false,
+                BlobUniqueReference = BlobUniqueReference,
+                ErrorFileSize = 1.5
             };
 
             RegistrationLoader.ProcessBulkRegistrationsAsync(ViewModel).Returns(ResponseViewModel);
         }
 
         [Fact]
-        public void Then_If_Success_Redirected_To_RegistrationsUploadSuccessful()
+        public void Then_If_Failed_Redirected_To_RegistrationsUploadUnsuccessful()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.RegistrationsUploadSuccessful);
+            routeName.Should().Be(RouteConstants.RegistrationsUploadUnsuccessful);
         }
     }
 }

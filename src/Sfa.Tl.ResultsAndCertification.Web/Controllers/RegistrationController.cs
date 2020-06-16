@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("upload-registrations-file", Name = RouteConstants.SubmitUploadRegistrationsFile)]
-        public async Task<IActionResult> UploadRegistrationsFile(UploadRegistrationsRequestViewModel viewModel)
+        public async Task<IActionResult> UploadRegistrationsFileAsync(UploadRegistrationsRequestViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
