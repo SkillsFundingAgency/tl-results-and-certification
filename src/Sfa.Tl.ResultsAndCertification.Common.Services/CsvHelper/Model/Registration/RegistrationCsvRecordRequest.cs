@@ -31,11 +31,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registr
         public string StartDate { get; set; }
 
         [Name(CsvHeader.Core)]
-        [Display(Name = "Core code")]
+        [Display(Name = CsvHeader.Core)]
         public string Core { get; set; }
 
         [Name(CsvHeader.Specialisms)]
-        [Display(Name = "Specialism")]
+        [Display(Name = "Specialism code")]
         public string Specialisms { get; set; }
     }
 }

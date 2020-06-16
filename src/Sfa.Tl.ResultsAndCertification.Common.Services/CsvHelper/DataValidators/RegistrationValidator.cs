@@ -18,12 +18,12 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             // Firstname
             RuleFor(r => r.FirstName)
                 .Required()
-                .MaxStringLength(256);
+                .MaxStringLength(100);
 
             // Lastname
             RuleFor(r => r.LastName)
                 .Required()
-                .MaxStringLength(256);
+                .MaxStringLength(100);
 
             // DateofBirth
             RuleFor(r => r.DateOfBirth)
@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
 
             // Specialisms
             RuleFor(r => r.Specialisms)
-                .Required()
+                //.Required()
                 .Must(x => x.Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())).All(a =>  a.Trim().Length == 8))
                 .WithMessage(string.Format(ValidationMessages.MustBeStringWithLength, "{PropertyName}", 8))
                 .When(r => !string.IsNullOrWhiteSpace(r.Specialisms));
