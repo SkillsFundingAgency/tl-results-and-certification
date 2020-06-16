@@ -16,12 +16,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public object TransformRegistrationModel()
         {
-            throw new NotImplementedException();
+            return new object();
         }
 
-        public Task ValidateRegistrationTlevelsAsync(object p)
+        public async Task ValidateRegistrationTlevelsAsync(object p)
         {
-            throw new NotImplementedException();
         }
     }
 }

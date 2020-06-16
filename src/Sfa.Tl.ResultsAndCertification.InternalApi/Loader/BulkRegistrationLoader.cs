@@ -61,35 +61,18 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
                 // Stage 2 validation
                 csvResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = fileStream });
-                CheckUlnDuplicates(csvResponse.Rows);
+                
+                if (!csvResponse.IsDirty)
+                    CheckUlnDuplicates(csvResponse.Rows);
             }
 
             if (csvResponse.IsDirty || csvResponse.Rows.Any(x => !x.IsValid))
-            {
-                var errorFile = await CreateErrorFileAsync(csvResponse);
-                await UploadErrorsFileToBlobStorage(request, errorFile);
-                await MoveFileFromProcessingToFailedAsync(request);
-                await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
-
-                response.IsSuccess = false;
-                response.BlobUniqueReference = request.BlobUniqueReference;
-                response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
-                return response;
-            }
+                return await SaveErrorsAndUpdateResponse(request, response, csvResponse);
 
             // Stage 3 valiation. 
             await _registrationService.ValidateRegistrationTlevelsAsync(csvResponse.Rows.Where(x => x.IsValid));
             if (csvResponse.Rows.Any(x => !x.IsValid))
-            {
-                var errorFile = await CreateErrorFileAsync(csvResponse);
-                await UploadErrorsFileToBlobStorage(request, errorFile);
-                await MoveFileFromProcessingToFailedAsync(request);
-                await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
-                response.IsSuccess = false;
-                response.BlobUniqueReference = request.BlobUniqueReference;
-                response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
-                return response;
-            }
+                return await SaveErrorsAndUpdateResponse(request, response, csvResponse);
 
             // Step: Map data to DB model type.
             var tqRegistrations = _registrationService.TransformRegistrationModel();
@@ -97,6 +80,20 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             // Step: Process DB operation
             var result = await _registrationService.CompareAndProcessRegistrations();
 
+            return response;
+        }
+
+        private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
+        {
+            var errorFile = await CreateErrorFileAsync(csvResponse);
+            await UploadErrorsFileToBlobStorage(request, errorFile);
+            await MoveFileFromProcessingToFailedAsync(request);
+            await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
+
+            response.IsSuccess = false;
+            response.BlobUniqueReference = request.BlobUniqueReference;
+            response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
+            
             return response;
         }
 
