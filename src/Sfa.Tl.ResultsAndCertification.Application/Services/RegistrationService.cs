@@ -9,9 +9,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public RegistrationService()
         { }
 
-        public Task<object> CompareAndProcessRegistrations()
+        public async Task<object> CompareAndProcessRegistrations()
         {
-            throw new NotImplementedException();
+            return await Task.Run(() => new object());
         }
 
         public object TransformRegistrationModel()
@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task ValidateRegistrationTlevelsAsync(object p)
         {
+            await Task.Run(() => true);
         }
     }
 }

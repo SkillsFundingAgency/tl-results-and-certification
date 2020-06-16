@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
                 // Stage 2 validation
                 csvResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = fileStream });
-                
+
                 if (!csvResponse.IsDirty)
                     CheckUlnDuplicates(csvResponse.Rows);
             }
@@ -80,6 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             // Step: Process DB operation
             var result = await _registrationService.CompareAndProcessRegistrations();
 
+            response.IsSuccess = true;
             return response;
         }
 
@@ -93,7 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             response.IsSuccess = false;
             response.BlobUniqueReference = request.BlobUniqueReference;
             response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
-            
+
             return response;
         }
 
@@ -107,9 +108,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             duplicateRegistrations.ForEach(x =>
             {
-                x.ToList().ForEach(s => s.ValidationErrors.Add(new RegistrationValidationError 
-                { 
-                    RowNum = s.RowNum.ToString(), 
+                x.ToList().ForEach(s => s.ValidationErrors.Add(new RegistrationValidationError
+                {
+                    RowNum = s.RowNum.ToString(),
                     Uln = s.Uln != 0 ? s.Uln.ToString() : string.Empty,
                     ErrorMessage = ValidationMessages.DuplicateRecord
                 }));
@@ -131,7 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             var errors = new List<RegistrationValidationError>();
             var invalidReg = csvResponse.Rows?.Where(x => !x.IsValid).ToList();
             invalidReg.ForEach(x => { errors.AddRange(x.ValidationErrors); });
-            
+
             return errors;
         }
 
