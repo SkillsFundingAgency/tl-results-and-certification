@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.DownloadRegistrationErrors
 {
-    public class Then_Invalid_Id_ReRouted_To_PageNotFound : When_DownloadRegistrationErrors_Is_Called
+    public class Then_Invalid_Id_ReRouted_To_Error_Page : When_DownloadRegistrationErrors_Is_Called
     {
         public override void Given()
         {
@@ -13,10 +13,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         }
 
         [Fact]
-        public void Then_On_Invalid_Id_Redirected_To_PageNotFound()
+        public void Then_On_Invalid_Id_Redirected_To_Error_Page()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.PageNotFound);
+            routeName.Should().Be(RouteConstants.Error);
         }
     }
 }

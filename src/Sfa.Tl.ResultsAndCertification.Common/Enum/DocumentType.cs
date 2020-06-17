@@ -2,6 +2,6 @@
 {
     public enum DocumentType
     {
-        Registrations
+        Registrations = 1
     }
 }
