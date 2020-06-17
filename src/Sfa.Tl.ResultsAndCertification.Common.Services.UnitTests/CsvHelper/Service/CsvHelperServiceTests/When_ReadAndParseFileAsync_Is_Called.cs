@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         
         public override void When()
         {
-            Response = Service.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = ms });
+            Response = Service.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = InputStream });
         }
     }
 }
