@@ -134,7 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             return new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 HasHeaderRecord = true,
-                PrepareHeaderForMatch = (string header, int index) => header.ToLower()
+                PrepareHeaderForMatch = (string header, int index) => header.Trim().ToLower()
             };
         }
 
