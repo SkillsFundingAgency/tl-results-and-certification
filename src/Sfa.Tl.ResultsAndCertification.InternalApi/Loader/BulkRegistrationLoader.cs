@@ -100,6 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
         private static void CheckUlnDuplicates(IList<RegistrationCsvRecordResponse> registrations)
         {
+            // check if this expression simplified?
             var duplicateRegistrations = registrations
                 .Where(x => x.Uln != 0)
                 .GroupBy(x => x.Uln)
