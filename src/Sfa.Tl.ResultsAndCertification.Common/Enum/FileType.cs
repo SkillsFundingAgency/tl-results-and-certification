@@ -2,6 +2,6 @@
 {
     public enum FileType
     {
-        Csv
+        Csv = 1
     }
 }
