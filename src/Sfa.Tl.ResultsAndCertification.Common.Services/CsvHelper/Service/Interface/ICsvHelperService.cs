@@ -1,6 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface

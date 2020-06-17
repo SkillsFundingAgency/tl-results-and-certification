@@ -101,10 +101,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         private static void CheckUlnDuplicates(IList<RegistrationCsvRecordResponse> registrations)
         {
             var duplicateRegistrations = registrations
-                                .GroupBy(x => x.Uln)
-                               .Where(g => g.Count() > 1)
-                               .Select(y => y)
-                               .ToList();
+                .Where(x => x.Uln != 0)
+                .GroupBy(x => x.Uln)
+                .Where(g => g.Count() > 1)
+                .Select(y => y)
+                .ToList();
 
             duplicateRegistrations.ForEach(x =>
             {
