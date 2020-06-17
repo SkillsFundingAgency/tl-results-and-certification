@@ -29,12 +29,28 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Application\Sfa.Tl.ResultsAndCertification.Application.csproj" />
+    <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Common.Services\Sfa.Tl.ResultsAndCertification.Common.Services.csproj" />
     <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Data\Sfa.Tl.ResultsAndCertification.Data.csproj" />
     <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Header_Validation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_NoRecordsFound_Validation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Records_With_Empty_Data_Validation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Validation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
