@@ -18,6 +18,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return result;
         }
 
+        public static int ToInt(this string value)
+        {
+            return int.Parse(value);
+        }
+
         public static long ToLong(this string value)
         {
             return long.Parse(value);

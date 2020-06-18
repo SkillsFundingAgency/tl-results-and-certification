@@ -97,6 +97,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registrations_error_report.csv.
+        /// </summary>
+        public static string Registrations_Error_Report_File_Name_Text {
+            get {
+                return ResourceManager.GetString("Registrations_Error_Report_File_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registrations upload unsuccessful.
         /// </summary>
         public static string Section_Heading {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Xunit;
+using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.DownloadRegistrationErrors
 {
@@ -24,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         {
             var viewResult = Result.Result as FileStreamResult;
             viewResult.Should().NotBeNull();
-            viewResult.FileDownloadName.Should().NotBeNullOrEmpty();
+            viewResult.FileDownloadName.Should().Be(RegistrationContent.UploadUnsuccessful.Registrations_Error_Report_File_Name_Text);
             viewResult.ContentType.Should().Be("text/csv");
             viewResult.FileStream.Should().NotBeNull();
         }

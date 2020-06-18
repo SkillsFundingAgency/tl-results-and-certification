@@ -129,6 +129,9 @@
   <data name="Page_Title" xml:space="preserve">
     <value>Registrations upload unsuccessful page</value>
   </data>
+  <data name="Registrations_Error_Report_File_Name_Text" xml:space="preserve">
+    <value>Registrations_error_report.csv</value>
+  </data>
   <data name="Section_Heading" xml:space="preserve">
     <value>Registrations upload unsuccessful</value>
   </data>
