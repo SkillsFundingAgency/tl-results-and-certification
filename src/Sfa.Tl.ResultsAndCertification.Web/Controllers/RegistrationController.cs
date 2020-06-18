@@ -7,8 +7,8 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
-using System;
 using System.Threading.Tasks;
+using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -101,7 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 fileStream.Position = 0;
                 return new FileStreamResult(fileStream, "text/csv")
                 {
-                    FileDownloadName = "Registrations error report.csv"
+                    FileDownloadName = RegistrationContent.UploadUnsuccessful.Registrations_Error_Report_File_Name_Text
                 };
             }
             else

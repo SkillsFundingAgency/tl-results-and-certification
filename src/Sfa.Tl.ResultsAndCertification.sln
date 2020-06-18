@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertificat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Common", "Sfa.Tl.ResultsAndCertification.Common\Sfa.Tl.ResultsAndCertification.Common.csproj", "{93F8946B-D8F0-45F0-BB3F-A712948982F1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.IntegrationTests", "Tests\Sfa.Tl.ResultsAndCertification.Data.IntegrationTests\Sfa.Tl.ResultsAndCertification.IntegrationTests.csproj", "{53D41D57-3DE6-42FE-B1D1-EF2154C04732}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.IntegrationTests", "Tests\Sfa.Tl.ResultsAndCertification.IntegrationTests\Sfa.Tl.ResultsAndCertification.IntegrationTests.csproj", "{53D41D57-3DE6-42FE-B1D1-EF2154C04732}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Tests.Common", "Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj", "{FC6E0F25-FCC0-4908-A883-E792600092EB}"
 EndProject

@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 
             return new RegistrationCsvRecordResponse
             {
-                Uln = int.Parse(reg.Uln.Trim()),
+                Uln = reg.Uln.Trim().ToInt(),
                 FirstName = reg.FirstName.Trim(),
                 LastName = reg.LastName.Trim(),
                 DateOfBirth = reg.DateOfBirth.Trim().ParseStringToDateTime(),
