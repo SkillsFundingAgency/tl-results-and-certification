@@ -1,13 +1,12 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
-using System.IO;
 using System.Linq;
 using System.Text;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Service.CsvHelperServiceTests
 {
-    public class Then_Invalid_Header_Return_IsDirty_Validation_Error : When_ReadAndParseFileAsync_Is_Called
+    public class Then_No_Registrations_Return_No_Data_Validation_Error : When_ReadAndParseFileAsync_Is_Called
     {
         public override void Given()
         {
@@ -20,14 +19,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
             var actualResult = Response.Result;
             actualResult.IsDirty.Should().BeTrue();
             actualResult.Rows.Count().Should().Be(0);
-            actualResult.ErrorMessage.Should().Be(ValidationMessages.FileHeaderNotFound);
+            actualResult.ErrorMessage.Should().Be(ValidationMessages.NoRecordsFound);
         }
 
         private StringBuilder GetInputFilecontent()
         {
             StringBuilder csvData = new StringBuilder();
-            csvData.AppendLine("Test,Invalid Name,Last Name,Date of Birth,UKPRN,Start Date,Core code,Specialism codes");
-            csvData.AppendLine("1111111111,First 1,Last 1,10012006,10000080,22092020,10423456,27234567");
+            csvData.AppendLine("ULN,First Name,Last Name,Date of Birth,UKPRN,Start Date,Core code,Specialism codes");
             return csvData;
         }
     }

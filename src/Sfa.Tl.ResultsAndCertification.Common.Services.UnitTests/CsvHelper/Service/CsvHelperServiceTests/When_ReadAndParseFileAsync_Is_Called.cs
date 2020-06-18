@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registratio
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Service.CsvHelperServiceTests
@@ -18,9 +19,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         protected ILogger<CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>> Logger;
         
         protected CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> Service { get; private set; }
-        protected virtual MemoryStream InputStream { get; set; }
-
         protected Task<CsvResponseModel<RegistrationCsvRecordResponse>> Response;
+        
+        public StringBuilder InputFileContent;
 
         public override void Setup()
         {
@@ -33,7 +34,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         
         public override void When()
         {
-            Response = Service.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = InputStream });
+            Response = Service.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = GetInputFileStream() });
+        }
+
+        private Stream GetInputFileStream()
+        {
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(InputFileContent.ToString()));
+            return stream;
         }
     }
 }
