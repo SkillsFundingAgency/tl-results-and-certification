@@ -39,7 +39,7 @@
     <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Common\Sfa.Tl.ResultsAndCertification.Common.csproj" />
     <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Data\Sfa.Tl.ResultsAndCertification.Data.csproj" />
     <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Domain\Sfa.Tl.ResultsAndCertification.Domain.csproj" />
-    <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj" />
+    <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj" />
   </ItemGroup>
 
 </Project>
