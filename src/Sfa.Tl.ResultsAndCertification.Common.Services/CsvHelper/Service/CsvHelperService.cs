@@ -24,7 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
         private readonly IValidator<TImportModel> _validator;
         private readonly IDataParser<TModel> _dataParser;
         private readonly ILogger<CsvHelperService<TImportModel, TResponseModel, TModel>> _logger;
-        private static int _entityHeaderColumnCount;
 
         public CsvHelperService(IValidator<TImportModel> validator, 
             IDataParser<TModel> dataParser, 
@@ -93,7 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 catch (BadDataException)
                 {
                     rownum++;
-                    TModel row = _dataParser.ParseErrorObject(rownum, importModel, null, string.Format(ValidationMessages.InvalidColumnFound, _entityHeaderColumnCount));
+                    TModel row = _dataParser.ParseErrorObject(rownum, importModel, null, string.Format(ValidationMessages.InvalidColumnFound, properties.Count));
                     rowsModelList.Add(row);
                 }
             }
@@ -169,9 +168,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 var csvFileHeaderColumns = csv.Context.HeaderRecord.Select(x => x.Trim());
                 var entityHeaderColumns = properties.Select(x => x.GetCustomAttribute<ColumnAttribute>(false).Name);
 
-                _entityHeaderColumnCount = entityHeaderColumns.Count();
-
-                if (_entityHeaderColumnCount != csvFileHeaderColumns.Count()) return false;
+                if (entityHeaderColumns.Count() != csvFileHeaderColumns.Count()) return false;
 
                 var hasAnyAdditionalHeaders = csvFileHeaderColumns.Except(entityHeaderColumns, StringComparer.OrdinalIgnoreCase).Any();
                 return !hasAnyAdditionalHeaders;
