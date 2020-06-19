@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 return await SaveErrorsAndUpdateResponse(request, response, csvResponse);
 
             // Stage 3 valiation. 
-            await _registrationService.ValidateRegistrationTlevelsAsync(csvResponse.Rows.Where(x => x.IsValid));
+            var registrationRecordStage3Response = await _registrationService.ValidateRegistrationTlevelsAsync(request.AoUkprn, csvResponse.Rows.Where(x => x.IsValid).ToList());
             if (csvResponse.Rows.Any(x => !x.IsValid))
                 return await SaveErrorsAndUpdateResponse(request, response, csvResponse);
 

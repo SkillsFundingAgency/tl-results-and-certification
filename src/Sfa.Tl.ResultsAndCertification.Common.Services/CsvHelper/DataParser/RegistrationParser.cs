@@ -21,10 +21,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 FirstName = reg.FirstName.Trim(),
                 LastName = reg.LastName.Trim(),
                 DateOfBirth = reg.DateOfBirth.Trim().ParseStringToDateTime(),
-                Ukprn = reg.Ukprn.Trim().ToLong(),
+                ProviderUkprn = reg.Ukprn.Trim().ToLong(),
                 StartDate = reg.StartDate.Trim().ParseStringToDateTime(),
-                Core = reg.Core.Trim(),
-                Specialisms = reg.Specialisms.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())),
+                CoreCode = reg.Core.Trim(),
+                SpecialismCodes = reg.Specialisms.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())),
                 RowNum = rownum,
                 ValidationErrors = new List<RegistrationValidationError>()
             };

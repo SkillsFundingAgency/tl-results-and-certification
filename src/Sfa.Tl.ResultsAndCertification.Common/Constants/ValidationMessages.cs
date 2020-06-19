@@ -1,4 +1,4 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants
+﻿namespace Sfa.Tl.ResultsAndCertification.Common.Constants
 {
     public class ValidationMessages
     {
@@ -21,5 +21,10 @@
         public const string UnableToParse = "Unable to parse the row.";
         public const string UnableToReadCsvData = "Unable to interpret content.";
         public const string UnexpectedError = "Unexpected error while reading file content.";
+
+        // Bulk Registration Stage3 Validation Messages
+        public const string ProviderNotRegisteredWithAo = "Provider not registered with awarding organisation";
+        public const string CoreNotRegisteredWithProvider = "Core not registered with provider";
+        public const string SpecialismNotValidWithCore = "Specialism not valid with core";
     }
 }

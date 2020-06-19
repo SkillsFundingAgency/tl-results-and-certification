@@ -8,9 +8,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
     {
         public RegistrationCsvRecordResponse()
         {
-            Specialisms = new List<string>();
-            TlSpecialismLarIds = new List<KeyValuePair<int, string>>();
+            SpecialismCodes = new List<string>();
         }
+
+        public int RowNum { get; set; }
 
         public int Uln { get; set; }
 
@@ -20,21 +21,12 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
 
         public DateTime DateOfBirth { get; set; }
 
-        public long Ukprn { get; set; }
+        public long ProviderUkprn { get; set; }
 
         public DateTime StartDate { get; set; }
 
-        public string Core { get; set; }
+        public string CoreCode { get; set; }
 
-        public IEnumerable<string> Specialisms { get; set; }
-
-        // Below properties are used for later stage i.e. Db process.
-        public int RowNum { get; set; }
-        public int TqProviderId { get; set; }
-        public int TlProviderId { get; set; }
-        public int TqAwardingOrganisationId { get; set; }
-        public int TlAwardingOrganisatonId { get; set; }
-        public int TlPathwayId { get; set; }
-        public IEnumerable<KeyValuePair<int, string>> TlSpecialismLarIds { get; set; }
+        public IEnumerable<string> SpecialismCodes { get; set; }        
     }
 }

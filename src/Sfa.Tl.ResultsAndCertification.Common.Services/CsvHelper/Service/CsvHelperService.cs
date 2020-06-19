@@ -4,7 +4,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using System;
@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
 
                     rowsModelList.Add(row);
                 }
-                catch (BadDataException ex)
+                catch (BadDataException)
                 {
                     rownum++;
                     TModel row = _dataParser.ParseErrorObject(rownum, importModel, null, string.Format(ValidationMessages.InvalidColumnFound, properties.Count));
@@ -178,6 +178,5 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 return false;
             }
         }
-
     }
 }
