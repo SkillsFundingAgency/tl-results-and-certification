@@ -1,41 +1,41 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration
+namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
 {
     public class RegistrationCsvRecordRequest : FileBaseModel
-    { 
+    {
         [Column(RegistrationHeader.Uln, Order = 0)]
-        [Display(Name = RegistrationHeader.Uln)]
+        [Display(Name = RegistrationFluentHeader.Uln)]
         public string Uln { get; set; }
 
         [Column(RegistrationHeader.FirstName, Order = 1)]
-        [Display(Name = RegistrationHeader.FirstName)]
+        [Display(Name = RegistrationFluentHeader.FirstName)]
         public string FirstName { get; set; }
 
         [Column(RegistrationHeader.LastName, Order = 2)]
-        [Display(Name = RegistrationHeader.LastName)]
+        [Display(Name = RegistrationFluentHeader.LastName)]
         public string LastName { get; set; }
 
         [Column(RegistrationHeader.DateOfBirth, Order = 3)]
-        [Display(Name = RegistrationHeader.DateOfBirth)]
+        [Display(Name = RegistrationFluentHeader.DateOfBirth)]
         public string DateOfBirth { get; set; }
 
         [Column(RegistrationHeader.Ukprn, Order = 4)]
-        [Display(Name = RegistrationHeader.Ukprn)]
+        [Display(Name = RegistrationFluentHeader.Ukprn)]
         public string Ukprn { get; set; }
 
         [Column(RegistrationHeader.StartDate, Order = 5)]
-        [Display(Name = RegistrationHeader.StartDate)]
+        [Display(Name = RegistrationFluentHeader.StartDate)]
         public string StartDate { get; set; }
 
         [Column(RegistrationHeader.Core, Order = 6)]
-        [Display(Name = RegistrationHeader.Core)]
+        [Display(Name = RegistrationFluentHeader.Core)]
         public string Core { get; set; }
 
         [Column(RegistrationHeader.Specialisms, Order = 7)]
-        [Display(Name = "Specialism code")]
+        [Display(Name = RegistrationFluentHeader.Specialism)]
         public string Specialisms { get; set; }
     }
 }

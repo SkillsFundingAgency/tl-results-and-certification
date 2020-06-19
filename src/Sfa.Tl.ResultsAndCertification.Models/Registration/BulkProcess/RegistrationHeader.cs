@@ -1,4 +1,4 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
 {
     public class RegistrationHeader
     {

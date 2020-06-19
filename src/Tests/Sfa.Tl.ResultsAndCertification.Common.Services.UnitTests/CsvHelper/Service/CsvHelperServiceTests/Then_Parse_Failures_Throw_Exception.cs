@@ -3,7 +3,7 @@ using FluentValidation.Results;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NSubstitute.ReturnsExtensions;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
+using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.Collections.Generic;
 using System.Text;

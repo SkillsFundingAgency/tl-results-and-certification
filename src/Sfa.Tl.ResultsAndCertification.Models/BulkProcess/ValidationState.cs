@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model
+namespace Sfa.Tl.ResultsAndCertification.Models.BulkProcess
 {
     public class ValidationState<T>
     {

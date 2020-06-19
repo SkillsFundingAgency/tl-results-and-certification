@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
+using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;

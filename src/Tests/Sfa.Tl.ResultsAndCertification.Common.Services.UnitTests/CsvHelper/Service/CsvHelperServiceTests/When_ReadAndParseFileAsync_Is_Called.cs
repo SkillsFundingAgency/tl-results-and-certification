@@ -2,9 +2,9 @@
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service;
+using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System.IO;
 using System.Text;

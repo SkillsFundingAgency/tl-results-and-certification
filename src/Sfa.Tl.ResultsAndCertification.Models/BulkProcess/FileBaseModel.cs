@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model
+namespace Sfa.Tl.ResultsAndCertification.Models.BulkProcess
 {
     public class FileBaseModel
     {

@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
+using System;
 using System.Collections.Generic;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration
+namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
 {
     public class RegistrationCsvRecordResponse : ValidationState<RegistrationValidationError>
     {

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extensions;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
+using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidators

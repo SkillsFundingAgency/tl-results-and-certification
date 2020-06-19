@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model
+namespace Sfa.Tl.ResultsAndCertification.Models.BulkProcess
 {
     public class CsvResponseModel<TModel> : CsvResponseBaseModel where TModel : class, new()
     {

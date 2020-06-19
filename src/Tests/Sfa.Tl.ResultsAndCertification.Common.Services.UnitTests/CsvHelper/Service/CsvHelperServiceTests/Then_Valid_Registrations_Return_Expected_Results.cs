@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using FluentValidation.Results;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration;
+using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
