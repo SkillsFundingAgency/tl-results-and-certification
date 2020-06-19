@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 return await SaveErrorsAndUpdateResponse(request, response, csvResponse);
 
             // Stage 3 valiation. 
-            await _registrationService.ValidateRegistrationTlevelsAsync(request.AoUkprn, csvResponse.Rows.Where(x => x.IsValid).ToList());
+            var registrationRecordStage3Response = await _registrationService.ValidateRegistrationTlevelsAsync(request.AoUkprn, csvResponse.Rows.Where(x => x.IsValid).ToList());
             if (csvResponse.Rows.Any(x => !x.IsValid))
                 return await SaveErrorsAndUpdateResponse(request, response, csvResponse);
 
