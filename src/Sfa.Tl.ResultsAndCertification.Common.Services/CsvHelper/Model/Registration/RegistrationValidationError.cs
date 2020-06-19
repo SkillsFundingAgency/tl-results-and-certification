@@ -1,14 +1,16 @@
-﻿using CsvHelper.Configuration.Attributes;
+﻿using System.ComponentModel;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model
 {
     public class RegistrationValidationError
     {
-        [Name("Line")] 
+        [DisplayName("Line")]
         public string RowNum { get; set; }
-        [Name("ULN")] 
+        
+        [DisplayName("ULN")]
         public string Uln { get; set; }
-        [Name("Error")] 
+        
+        [DisplayName("Error")]
         public string ErrorMessage { get; set; }
     }
 }

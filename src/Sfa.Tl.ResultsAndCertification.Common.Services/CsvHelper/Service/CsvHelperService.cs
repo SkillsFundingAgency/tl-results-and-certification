@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.IO;
@@ -100,10 +101,21 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
 
         public async Task<byte[]> WriteFileAsync<T>(IList<T> data)
         {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false
+            };
+
             using var ms = new MemoryStream();
             using (var sw = new StreamWriter(ms))
-            using (var cw = new CsvWriter(sw, CultureInfo.InvariantCulture))
+            using (var cw = new CsvWriter(sw, config))
             {
+                var headerNames = typeof(T).GetProperties().Select(pr => pr.GetCustomAttribute<DisplayNameAttribute>(false).DisplayName).ToList();
+                headerNames.ForEach(headerName =>
+                {
+                    cw.WriteField(headerName);
+                });
+                cw.NextRecord();
                 await cw.WriteRecordsAsync<T>(data);
             }
             return ms.ToArray();
