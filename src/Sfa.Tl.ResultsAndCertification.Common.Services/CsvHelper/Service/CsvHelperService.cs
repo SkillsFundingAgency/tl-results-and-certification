@@ -90,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
 
                     rowsModelList.Add(row);
                 }
-                catch (BadDataException ex)
+                catch (BadDataException)
                 {
                     rownum++;
                     TModel row = _dataParser.ParseErrorObject(rownum, importModel, null, string.Format(ValidationMessages.InvalidColumnFound, _entityHeaderColumnCount));
@@ -181,6 +181,5 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 return false;
             }
         }
-
     }
 }
