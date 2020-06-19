@@ -35,10 +35,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
             if (!(model is RegistrationCsvRecordRequest reg))
                 return null;
 
-
             int ulnValue = 0;
             if (errorMessage == null)
-                _ = int.TryParse(reg.Uln.Trim(), out ulnValue);
+                ulnValue = reg.Uln.Trim().ToInt();
 
             return new RegistrationCsvRecordResponse
             {
