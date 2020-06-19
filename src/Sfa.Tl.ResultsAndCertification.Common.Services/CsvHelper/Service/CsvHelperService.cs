@@ -4,7 +4,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using System;

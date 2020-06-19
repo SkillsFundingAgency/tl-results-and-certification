@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extensions

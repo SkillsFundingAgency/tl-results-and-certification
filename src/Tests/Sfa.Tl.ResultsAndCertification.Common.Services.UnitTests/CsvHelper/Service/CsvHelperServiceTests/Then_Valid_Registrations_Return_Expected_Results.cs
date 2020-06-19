@@ -26,10 +26,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
                 FirstName = "F name",
                 LastName = "L name",
                 DateOfBirth = new DateTime(2000, 1, 1),
-                Ukprn = 1234,
-                Core = "989",
+                ProviderUkprn = 1234,
+                CoreCode = "989",
                 StartDate = new DateTime(2000, 1, 1),
-                Specialisms = new List<string> { "spl1" }
+                SpecialismCodes = new List<string> { "spl1" }
             };
             var regCsvResponse = new ValidationResult(failures);
             RegValidator.ValidateAsync(Arg.Any<RegistrationCsvRecordRequest>()).Returns(regCsvResponse);
@@ -45,10 +45,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
             actualData.FirstName.Should().Be(expectedRow.FirstName);
             actualData.LastName.Should().Be(expectedRow.LastName);
             actualData.DateOfBirth.Should().Be(expectedRow.DateOfBirth);
-            actualData.Core.Should().Be(expectedRow.Core);
+            actualData.CoreCode.Should().Be(expectedRow.CoreCode);
             actualData.StartDate.Should().Be(expectedRow.StartDate);
-            actualData.Specialisms.Count().Should().Be(expectedRow.Specialisms.Count());
-            actualData.Specialisms.First().Should().Be(expectedRow.Specialisms.First());
+            actualData.SpecialismCodes.Count().Should().Be(expectedRow.SpecialismCodes.Count());
+            actualData.SpecialismCodes.First().Should().Be(expectedRow.SpecialismCodes.First());
 
             actualData.ValidationErrors.Count().Should().Be(0);
         }

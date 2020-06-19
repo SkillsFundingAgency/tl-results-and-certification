@@ -20,13 +20,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
 
             var expectedWriteFileRequest = new List<RegistrationCsvRecordResponse>
                 {
-                    new RegistrationCsvRecordResponse { RowNum = 1, Ukprn = 11 },
-                    new RegistrationCsvRecordResponse { RowNum = 2, Ukprn = 22, ValidationErrors = new List<RegistrationValidationError>
+                    new RegistrationCsvRecordResponse { RowNum = 1, ProviderUkprn = 11 },
+                    new RegistrationCsvRecordResponse { RowNum = 2, ProviderUkprn = 22, ValidationErrors = new List<RegistrationValidationError>
                     {
                         new RegistrationValidationError { RowNum = "1", Uln = "11", ErrorMessage = "First name required" },
                         new RegistrationValidationError { RowNum = "1", Uln = "11", ErrorMessage = "Core code required" }
                     } },
-                    new RegistrationCsvRecordResponse { RowNum = 3, Ukprn = 33, ValidationErrors = new List<RegistrationValidationError>
+                    new RegistrationCsvRecordResponse { RowNum = 3, ProviderUkprn = 33, ValidationErrors = new List<RegistrationValidationError>
                     {
                         new RegistrationValidationError { RowNum = "3", Uln = "33", ErrorMessage = "Invalid Date"}
                     } },

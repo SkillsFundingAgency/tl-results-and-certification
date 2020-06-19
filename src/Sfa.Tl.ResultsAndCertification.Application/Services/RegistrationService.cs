@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             validRegistrationsData.ToList().ForEach(registrationData =>
             {
                 // Validation: AO not registered for the T level. 
-                var isProviderRegisteredWithAwardingOrganisation = aoProviderTlevels.Any(t => t.ProviderUkprn == registrationData.Ukprn);
+                var isProviderRegisteredWithAwardingOrganisation = aoProviderTlevels.Any(t => t.ProviderUkprn == registrationData.ProviderUkprn);
                 if (!isProviderRegisteredWithAwardingOrganisation)
                 {
                     AddStage3ValidationError(registrationData, "Provider not registered for AO.");
@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // Validation: Provider not registered for the T level
-                var technicalQualification = aoProviderTlevels.FirstOrDefault(tq => tq.ProviderUkprn == registrationData.Ukprn && tq.PathwayLarId == registrationData.Core);
+                var technicalQualification = aoProviderTlevels.FirstOrDefault(tq => tq.ProviderUkprn == registrationData.ProviderUkprn && tq.PathwayLarId == registrationData.CoreCode);
 
                 if (technicalQualification == null)
                 {
@@ -52,10 +52,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     return;
                 }
                 
-                if (registrationData.Specialisms.Count() > 0)
+                if (registrationData.SpecialismCodes.Count() > 0)
                 {
                     var specialismCodes = technicalQualification.TlSpecialismLarIds.Select(x => x.Value);
-                    var invalidSpecialismCodes = registrationData.Specialisms.Except(specialismCodes, StringComparer.InvariantCultureIgnoreCase);
+                    var invalidSpecialismCodes = registrationData.SpecialismCodes.Except(specialismCodes, StringComparer.InvariantCultureIgnoreCase);
 
                     if (invalidSpecialismCodes.Any())
                     {
@@ -64,11 +64,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
 
-                registrationData.TqProviderId = technicalQualification.TqProviderId;
-                registrationData.TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId;
-                registrationData.TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds;
-                registrationData.TlAwardingOrganisatonId = technicalQualification.TlAwardingOrganisatonId;
-                registrationData.TlProviderId = technicalQualification.TlProviderId;
+                //registrationData.TqProviderId = technicalQualification.TqProviderId;
+                //registrationData.TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId;
+                //registrationData.TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds;
+                //registrationData.TlAwardingOrganisatonId = technicalQualification.TlAwardingOrganisatonId;
+                //registrationData.TlProviderId = technicalQualification.TlProviderId;
             });
 
             return validRegistrationsData;
