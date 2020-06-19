@@ -15,6 +15,7 @@
         public const string FileHeaderNotFound = "File header is not valid";
         public const string NoRecordsFound = "No registration data received";
         public const string DuplicateRecord = "Duplicate ULN found";
+        public const string InvalidColumnFound = "Data in more than the required {0} columns";
 
         // Generic or unexpected behaviour messages
         public const string UnableToParse = "Unable to parse the row.";

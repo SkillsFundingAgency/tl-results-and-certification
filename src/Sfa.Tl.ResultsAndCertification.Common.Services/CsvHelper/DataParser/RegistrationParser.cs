@@ -1,9 +1,7 @@
 ﻿using FluentValidation.Results;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
@@ -32,33 +30,39 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
             };
         }
 
-        public RegistrationCsvRecordResponse ParseErrorObject(int rownum, FileBaseModel model, ValidationResult validationResult)
+        public RegistrationCsvRecordResponse ParseErrorObject(int rownum, FileBaseModel model, ValidationResult validationResult, string errorMessage = null)
         {
             if (!(model is RegistrationCsvRecordRequest reg))
                 return null;
 
-            var ulnFound = int.TryParse(reg.Uln.Trim(), out int uln);
+
+            int ulnValue = 0;
+            if (errorMessage == null)
+                _ = int.TryParse(reg.Uln.Trim(), out ulnValue);
+
             return new RegistrationCsvRecordResponse
             {
                 // Note: Uln mapped here to use when checking Duplicate Uln and RowNum required at Stage-3 as well.
-                Uln = ulnFound ? uln : 0,
+                Uln = ulnValue,
                 RowNum = rownum,
 
-                ValidationErrors = BuildValidationError(rownum, reg.Uln, validationResult)
+                ValidationErrors = BuildValidationError(rownum, ulnValue, validationResult, errorMessage)
             };
         }
 
-        private IList<RegistrationValidationError> BuildValidationError(int rownum, string uln, ValidationResult validationResult)
+        private IList<RegistrationValidationError> BuildValidationError(int rownum, int uln, ValidationResult validationResult, string errorMessage)
         {
             var validationErrors = new List<RegistrationValidationError>();
-            
-            foreach (var err in validationResult.Errors)
+
+            var errors = validationResult?.Errors?.Select(x => x.ErrorMessage) ?? new List<string> { errorMessage };
+
+            foreach (var err in errors)
             {
                 validationErrors.Add(new RegistrationValidationError
                 {
                     RowNum = rownum != 0 ? rownum.ToString() : string.Empty,
-                    Uln = uln,
-                    ErrorMessage = err.ErrorMessage
+                    Uln = uln != 0 ? uln.ToString() : string.Empty,
+                    ErrorMessage = err
                 });
             }
             return validationErrors;
