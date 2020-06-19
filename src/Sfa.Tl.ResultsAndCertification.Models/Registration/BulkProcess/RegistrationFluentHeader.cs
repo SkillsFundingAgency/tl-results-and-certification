@@ -9,6 +9,6 @@
         public const string Ukprn = "UKPRN";
         public const string StartDate = "Start date";
         public const string Core = "Core code";
-        public const string Specialism = "Specialism";
+        public const string Specialism = "Specialism code";
     }
 }
