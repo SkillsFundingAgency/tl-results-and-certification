@@ -1,40 +1,40 @@
-﻿using CsvHelper.Configuration.Attributes;
-using System.ComponentModel.DataAnnotations;
-using CsvHeader = Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants.RegistrationHeader;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model.Registration
 {
     public class RegistrationCsvRecordRequest : FileBaseModel
-    {
-        [Name(CsvHeader.Uln)]
-        [Display(Name = CsvHeader.Uln)]
+    { 
+        [Column(RegistrationHeader.Uln, Order = 0)]
+        [Display(Name = RegistrationHeader.Uln)]
         public string Uln { get; set; }
 
-        [Name(CsvHeader.FirstName)]
-        [Display(Name = CsvHeader.FirstName)]
+        [Column(RegistrationHeader.FirstName, Order = 1)]
+        [Display(Name = RegistrationHeader.FirstName)]
         public string FirstName { get; set; }
 
-        [Name(CsvHeader.LastName)]
-        [Display(Name = CsvHeader.LastName)]
+        [Column(RegistrationHeader.LastName, Order = 2)]
+        [Display(Name = RegistrationHeader.LastName)]
         public string LastName { get; set; }
 
-        [Name(CsvHeader.DateOfBirth)]
-        [Display(Name = CsvHeader.DateOfBirth)]
+        [Column(RegistrationHeader.DateOfBirth, Order = 3)]
+        [Display(Name = RegistrationHeader.DateOfBirth)]
         public string DateOfBirth { get; set; }
 
-        [Name(CsvHeader.Ukprn)]
-        [Display(Name = CsvHeader.Ukprn)]
+        [Column(RegistrationHeader.Ukprn, Order = 4)]
+        [Display(Name = RegistrationHeader.Ukprn)]
         public string Ukprn { get; set; }
 
-        [Name(CsvHeader.StartDate)]
-        [Display(Name = CsvHeader.StartDate)]
+        [Column(RegistrationHeader.StartDate, Order = 5)]
+        [Display(Name = RegistrationHeader.StartDate)]
         public string StartDate { get; set; }
 
-        [Name(CsvHeader.Core)]
-        [Display(Name = CsvHeader.Core)]
+        [Column(RegistrationHeader.Core, Order = 6)]
+        [Display(Name = RegistrationHeader.Core)]
         public string Core { get; set; }
 
-        [Name(CsvHeader.Specialisms)]
+        [Column(RegistrationHeader.Specialisms, Order = 7)]
         [Display(Name = "Specialism code")]
         public string Specialisms { get; set; }
     }

@@ -1,20 +1,20 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using CsvHelper.Configuration.Attributes;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Model;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
 {
@@ -39,12 +39,16 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             var rowsModelList = new List<TModel>();
             var config = BuildCsvConfiguration();
 
+            var properties = importModel.GetType().GetProperties()
+                .Where(pr => pr.GetCustomAttribute<ColumnAttribute>(false) != null)
+                .ToList();
+
             importModel.FileStream.Position = 0;
             using var reader = new StreamReader(importModel.FileStream);
             using var csv = new CsvReader(reader, config);
 
             // validate header
-            var isValidHeader = ValidateHeader(csv);
+            var isValidHeader = ValidateHeader(csv, properties);
             if (!isValidHeader)
             {
                 response.IsDirty = true;
@@ -56,10 +60,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 .FirstOrDefault(p => p.PropertyType.IsGenericType 
                                 && p.PropertyType.GetGenericTypeDefinition() == typeof(IList<>)
                                 && p.PropertyType.GenericTypeArguments.First() == typeof(TModel));
-
-            var properties = importModel.GetType().GetProperties()
-                .Where(pr => pr.GetCustomAttribute<NameAttribute>(false) != null)
-                .ToList();
 
             var rownum = 1;
             while (await csv.ReadAsync())
@@ -106,7 +106,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             {
                 await cw.WriteRecordsAsync<T>(data);
             }
-
             return ms.ToArray();
         }
 
@@ -120,13 +119,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
 
         private static void ReadRow(CsvReader csv, TImportModel importModel, List<PropertyInfo> properties)
         {
-            foreach (var prop in properties)
+            properties.ForEach(prop =>
             {
-                var nameAttr = prop.GetCustomAttribute<NameAttribute>();
-                var cellValue = csv.GetField(nameAttr.Names[0]);
-
-                prop.SetValue(importModel, cellValue);
-            }
+                prop.SetValue(importModel, csv.GetField(prop.GetCustomAttribute<ColumnAttribute>(false).Name));
+            });
         }
 
         private static CsvConfiguration BuildCsvConfiguration()
@@ -134,21 +130,27 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             return new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 HasHeaderRecord = true,
-                PrepareHeaderForMatch = (string header, int index) => header.Trim().ToLower()
+                PrepareHeaderForMatch = (string header, int index) => header.Trim().ToLower(),
+                DetectColumnCountChanges = true
             };
         }
 
-        private static bool ValidateHeader(CsvReader csv)
+        private static bool ValidateHeader(CsvReader csv, List<PropertyInfo> properties)
         {
             try
             {
                 csv.Read();
                 csv.ReadHeader();
-                csv.ValidateHeader<TImportModel>();
 
-                return true;
+                var csvFileHeaderRecords = csv.Context.HeaderRecord.ToList();
+                var entityHeaderRecords = properties.Select(x => x.GetCustomAttribute<ColumnAttribute>(false).Name).ToList();
+
+                if (entityHeaderRecords.Count() != csvFileHeaderRecords.Count()) return false;
+
+                var hasAnyAdditionalHeaders = csvFileHeaderRecords.Except(entityHeaderRecords, StringComparer.OrdinalIgnoreCase).Any();
+                return !hasAnyAdditionalHeaders;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
