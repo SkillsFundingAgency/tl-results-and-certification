@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         {
             var response = new BulkRegistrationResponse();
 
-            CsvResponseModel<RegistrationCsvRecordResponse> csvResponse = null;
+            CsvResponseModel<RegistrationCsvRecordResponse> stage2RegistrationsResponse = null;
 
             // Step: 1 Read file from Blob
             using (var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
@@ -60,19 +61,26 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 }
 
                 // Stage 2 validation
-                csvResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = fileStream });
+                stage2RegistrationsResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = fileStream });
 
-                if (!csvResponse.IsDirty)
-                    CheckUlnDuplicates(csvResponse.Rows);
+                if (!stage2RegistrationsResponse.IsDirty)
+                    CheckUlnDuplicates(stage2RegistrationsResponse.Rows);
             }
 
-            if (csvResponse.IsDirty || csvResponse.Rows.Any(x => !x.IsValid))
-                return await SaveErrorsAndUpdateResponse(request, response, csvResponse);
+            if (stage2RegistrationsResponse.IsDirty || !stage2RegistrationsResponse.Rows.Any(x => x.IsValid))
+            {
+                var validationErrors = ExtractAllValidationErrors(stage2RegistrationsResponse);
+                return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
+            }
 
             // Stage 3 valiation. 
-            var registrationRecordStage3Response = await _registrationService.ValidateRegistrationTlevelsAsync(request.AoUkprn, csvResponse.Rows.Where(x => x.IsValid).ToList());
-            if (csvResponse.Rows.Any(x => !x.IsValid))
-                return await SaveErrorsAndUpdateResponse(request, response, csvResponse);
+            var stage3RegistrationsResponse = await _registrationService.ValidateRegistrationTlevelsAsync(request.AoUkprn, stage2RegistrationsResponse.Rows.Where(x => x.IsValid));
+            
+            if (stage2RegistrationsResponse.Rows.Any(x => !x.IsValid) || stage3RegistrationsResponse.Any(x => !x.IsValid))
+            {
+                var validationErrors = ExtractAllValidationErrors(stage2RegistrationsResponse, stage3RegistrationsResponse);
+                return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
+            }
 
             // Step: Map data to DB model type.
             var tqRegistrations = _registrationService.TransformRegistrationModel();
@@ -84,9 +92,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
+        private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, IList<RegistrationValidationError> registrationValidationErrors)
         {
-            var errorFile = await CreateErrorFileAsync(csvResponse);
+            var errorFile = await CreateErrorFileAsync(registrationValidationErrors);
             await UploadErrorsFileToBlobStorage(request, errorFile);
             await MoveFileFromProcessingToFailedAsync(request);
             await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
@@ -100,40 +108,46 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
         private static void CheckUlnDuplicates(IList<RegistrationCsvRecordResponse> registrations)
         {
-            // check if this expression simplified?
-            var duplicateRegistrations = registrations
-                .Where(x => x.Uln != 0)
-                .GroupBy(x => x.Uln)
-                .Where(g => g.Count() > 1)
-                .Select(y => y)
-                .ToList();
-
-            duplicateRegistrations.ForEach(x =>
+            var duplicateRegistrations = registrations.Where(r => r.Uln != 0).GroupBy(r => r.Uln).Where(g => g.Count() > 1).Select(x => x);
+            
+            foreach (var record in duplicateRegistrations.SelectMany(duplicateRegistration => duplicateRegistration))
             {
-                x.ToList().ForEach(s => s.ValidationErrors.Add(new RegistrationValidationError
+                record.ValidationErrors.Add(new RegistrationValidationError
                 {
-                    RowNum = s.RowNum.ToString(),
-                    Uln = s.Uln != 0 ? s.Uln.ToString() : string.Empty,
+                    RowNum = record.RowNum.ToString(),
+                    Uln = record.Uln != 0 ? record.Uln.ToString() : string.Empty,
                     ErrorMessage = ValidationMessages.DuplicateRecord
-                }));
-            });
+                });
+            }
         }
 
-        private async Task<byte[]> CreateErrorFileAsync(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
+        private async Task<byte[]> CreateErrorFileAsync(IList<RegistrationValidationError> validationErrors)
         {
-            var validationErrors = ExtractAllValidationErrors(csvResponse);
-            var errorFile = await _csvService.WriteFileAsync(validationErrors);
-            return errorFile;
+            return await _csvService.WriteFileAsync(validationErrors);
         }
 
-        private List<RegistrationValidationError> ExtractAllValidationErrors(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
+        private IList<RegistrationValidationError> ExtractAllValidationErrors(CsvResponseModel<RegistrationCsvRecordResponse> stage2RegistrationsResponse = null, IList<RegistrationRecordResponse> stage3RegistrationsResponse = null)
         {
-            if (csvResponse.IsDirty)
-                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = csvResponse.ErrorMessage } };
+            if (stage2RegistrationsResponse != null && stage2RegistrationsResponse.IsDirty)
+                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = stage2RegistrationsResponse.ErrorMessage } };
 
             var errors = new List<RegistrationValidationError>();
-            var invalidReg = csvResponse.Rows?.Where(x => !x.IsValid).ToList();
-            invalidReg.ForEach(x => { errors.AddRange(x.ValidationErrors); });
+
+            if (stage2RegistrationsResponse != null)
+            {
+                foreach (var invalidRegistration in stage2RegistrationsResponse.Rows?.Where(x => !x.IsValid))
+                {
+                    errors.AddRange(invalidRegistration.ValidationErrors);
+                }
+            }
+
+            if(stage3RegistrationsResponse != null)
+            {
+                foreach (var invalidRegistration in stage3RegistrationsResponse.Where(x => !x.IsValid))
+                {
+                    errors.AddRange(invalidRegistration.ValidationErrors);
+                }
+            }
 
             return errors;
         }

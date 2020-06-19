@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -30,28 +29,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return new object();
         }
 
-        public async Task<IList<RegistrationRecordResponse>> ValidateRegistrationTlevelsAsync(long aoUkprn, IList<RegistrationCsvRecordResponse> validRegistrationsData)
+        public async Task<IList<RegistrationRecordResponse>> ValidateRegistrationTlevelsAsync(long aoUkprn, IEnumerable<RegistrationCsvRecordResponse> validRegistrationsData)
         {
-            var result = new List<RegistrationRecordResponse>();
+            var response = new List<RegistrationRecordResponse>();
             var aoProviderTlevels = await GetAllTLevelsByAoUkprnAsync(aoUkprn);
 
-            // Below are other than duplicated
-            validRegistrationsData.ToList().ForEach(registrationData =>
+            foreach(var registrationData in validRegistrationsData)
             {                
-                // Validation: AO not registered for the T level. 
                 var isProviderRegisteredWithAwardingOrganisation = aoProviderTlevels.Any(t => t.ProviderUkprn == registrationData.ProviderUkprn);
                 if (!isProviderRegisteredWithAwardingOrganisation)
                 {
-                    result.Add(AddStage3ValidationError(registrationData, ValidationMessages.ProviderNotRegisteredWithAo));
-                    return;
+                    response.Add(AddStage3ValidationError(registrationData, ValidationMessages.ProviderNotRegisteredWithAo));
+                    continue;
                 }
 
-                // Validation: Provider not registered for the T level
                 var technicalQualification = aoProviderTlevels.FirstOrDefault(tq => tq.ProviderUkprn == registrationData.ProviderUkprn && tq.PathwayLarId == registrationData.CoreCode);
                 if (technicalQualification == null)
                 {
-                    result.Add(AddStage3ValidationError(registrationData, ValidationMessages.CoreNotRegisteredWithProvider));
-                    return;
+                    response.Add(AddStage3ValidationError(registrationData, ValidationMessages.CoreNotRegisteredWithProvider));
+                    continue;
                 }
                 
                 if (registrationData.SpecialismCodes.Count() > 0)
@@ -61,12 +57,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                     if (invalidSpecialismCodes.Any())
                     {
-                        result.Add(AddStage3ValidationError(registrationData, ValidationMessages.SpecialismNotValidWithCore));
-                        return;
+                        response.Add(AddStage3ValidationError(registrationData, ValidationMessages.SpecialismNotValidWithCore));
+                        continue;
                     }
                 }
 
-                result.Add(new RegistrationRecordResponse
+                response.Add(new RegistrationRecordResponse
                 {
                     TqProviderId = technicalQualification.TqProviderId,
                     TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
@@ -74,9 +70,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     TlAwardingOrganisatonId = technicalQualification.TlAwardingOrganisatonId,
                     TlProviderId = technicalQualification.TlProviderId
                 });
-            });
+            };
 
-            return result;
+            return response;
         }
 
         private static RegistrationRecordResponse AddStage3ValidationError(RegistrationCsvRecordResponse registrationCsvRecordResponse, string errorMessage)
@@ -93,14 +89,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
             };
-
-           
-            //x.ValidationErrors.Add(new RegistrationValidationError
-            //{
-            //    RowNum = registrationCsvRecordResponse.RowNum.ToString(),
-            //    Uln = registrationCsvRecordResponse.Uln.ToString(),
-            //    ErrorMessage = errorMessage
-            //});
         }
 
         private async Task<IList<TechnicalQualificationDetails>> GetAllTLevelsByAoUkprnAsync(long ukprn)
@@ -116,8 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     TlProviderId = t.TlProviderId,
                     TqAwardingOrganisationId = t.TqAwardingOrganisationId,
                     TlAwardingOrganisatonId = t.TqAwardingOrganisation.TlAwardingOrganisatonId,
-                    TlSpecialisms = t.TqAwardingOrganisation.TlPathway.TlSpecialisms.Select(s => s.Id).ToList(),
-                    TlSpecialismLarIds = t.TqAwardingOrganisation.TlPathway.TlSpecialisms.Select(s => new KeyValuePair<int, string>(s.Id, s.LarId)).ToList()
+                    TlSpecialismLarIds = t.TqAwardingOrganisation.TlPathway.TlSpecialisms.Select(s => new KeyValuePair<int, string>(s.Id, s.LarId))
                 }).ToListAsync();
 
             return result;
