@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -41,54 +42,62 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request)
         {
             var response = new BulkRegistrationResponse();
-
-            CsvResponseModel<RegistrationCsvRecordResponse> stage2RegistrationsResponse = null;
-
-            // Step: 1 Read file from Blob
-            using (var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+            try
             {
-                ContainerName = request.DocumentType.ToString(),
-                BlobFileName = request.BlobFileName,
-                SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
-                UserName = request.PerformedBy
-            }))
-            {
-                if (fileStream == null)
+                CsvResponseModel<RegistrationCsvRecordResponse> stage2RegistrationsResponse = null;
+
+                // Step: 1 Read file from Blob
+                using (var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
                 {
-                    var blobReadError = $"No FileStream found to process bluk registrations. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}";
-                    _logger.LogInformation(LogEvent.FileStreamNotFound, blobReadError);
-                    throw new Exception(blobReadError);
+                    ContainerName = request.DocumentType.ToString(),
+                    BlobFileName = request.BlobFileName,
+                    SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
+                    UserName = request.PerformedBy
+                }))
+                {
+                    if (fileStream == null)
+                    {
+                        var blobReadError = $"No FileStream found to process bluk registrations. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}";
+                        _logger.LogInformation(LogEvent.FileStreamNotFound, blobReadError);
+                        throw new Exception(blobReadError);
+                    }
+
+                    // Stage 2 validation
+                    stage2RegistrationsResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = fileStream });
+
+                    if (!stage2RegistrationsResponse.IsDirty)
+                        CheckUlnDuplicates(stage2RegistrationsResponse.Rows);
                 }
 
-                // Stage 2 validation
-                stage2RegistrationsResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = fileStream });
+                if (stage2RegistrationsResponse.IsDirty || !stage2RegistrationsResponse.Rows.Any(x => x.IsValid))
+                {
+                    var validationErrors = ExtractAllValidationErrors(stage2RegistrationsResponse);
+                    return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
+                }
 
-                if (!stage2RegistrationsResponse.IsDirty)
-                    CheckUlnDuplicates(stage2RegistrationsResponse.Rows);
+                // Stage 3 valiation. 
+                var stage3RegistrationsResponse = await _registrationService.ValidateRegistrationTlevelsAsync(request.AoUkprn, stage2RegistrationsResponse.Rows.Where(x => x.IsValid));
+
+                if (stage2RegistrationsResponse.Rows.Any(x => !x.IsValid) || stage3RegistrationsResponse.Any(x => !x.IsValid))
+                {
+                    var validationErrors = ExtractAllValidationErrors(stage2RegistrationsResponse, stage3RegistrationsResponse);
+                    return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
+                }
+
+                // Step: Map data to DB model type.
+                var tqRegistrations = _registrationService.TransformRegistrationModel();
+
+                // Step: Process DB operation
+                var result = await _registrationService.CompareAndProcessRegistrations();
+
+                response.IsSuccess = true;
             }
-
-            if (stage2RegistrationsResponse.IsDirty || !stage2RegistrationsResponse.Rows.Any(x => x.IsValid))
+            catch(Exception ex)
             {
-                var validationErrors = ExtractAllValidationErrors(stage2RegistrationsResponse);
-                return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
+                var errorMessage = $"Something went wrong while processing bluk registrations. Method: ProcessBulkRegistrationsAsync(BulkRegistrationRequest : {JsonConvert.SerializeObject(request)}), User: {request.PerformedBy}";
+                _logger.LogError(LogEvent.BulkRegistrationProcessFailed, ex, errorMessage);
+                await DeleteFileFromProcessingFolderAsync(request);
             }
-
-            // Stage 3 valiation. 
-            var stage3RegistrationsResponse = await _registrationService.ValidateRegistrationTlevelsAsync(request.AoUkprn, stage2RegistrationsResponse.Rows.Where(x => x.IsValid));
-            
-            if (stage2RegistrationsResponse.Rows.Any(x => !x.IsValid) || stage3RegistrationsResponse.Any(x => !x.IsValid))
-            {
-                var validationErrors = ExtractAllValidationErrors(stage2RegistrationsResponse, stage3RegistrationsResponse);
-                return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
-            }
-
-            // Step: Map data to DB model type.
-            var tqRegistrations = _registrationService.TransformRegistrationModel();
-
-            // Step: Process DB operation
-            var result = await _registrationService.CompareAndProcessRegistrations();
-
-            response.IsSuccess = true;
             return response;
         }
 
@@ -207,6 +216,19 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
                 BlobFileName = request.BlobFileName,
                 DestinationFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Failed}"
+            });
+            return true;
+        }
+
+        private async Task<bool> DeleteFileFromProcessingFolderAsync(BulkRegistrationRequest request)
+        {
+            if (request == null) return false;
+
+            await _blobStorageService.DeleteFileAsync(new BlobStorageData
+            {
+                ContainerName = request.DocumentType.ToString(),
+                SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
+                BlobFileName = request.BlobFileName
             });
             return true;
         }

@@ -52,7 +52,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
 
             await destinationBlobReference.StartCopyAsync(sourceBlobReference);
             return await sourceBlobReference.DeleteIfExistsAsync();
-        }        
+        }   
+
+        public async Task<bool> DeleteFileAsync(BlobStorageData blobStorageData)
+        {
+            var blobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
+            return await blobReference.DeleteIfExistsAsync();
+        }
 
         private async Task<CloudBlockBlob> GetBlockBlobReference(string containerName, string filePath, string fileName)
         {

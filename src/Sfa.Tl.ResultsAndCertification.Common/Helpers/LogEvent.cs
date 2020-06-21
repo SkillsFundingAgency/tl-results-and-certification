@@ -26,5 +26,8 @@
         public const int ProviderTlevelNotAdded = 3002;
         public const int ProviderTlevelNotRemoved = 3003;
         public const int ProviderTlevelNotFound = 3004;
+
+        // Registration events
+        public const int BulkRegistrationProcessFailed = 4001;
     }
 }
