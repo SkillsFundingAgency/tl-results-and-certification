@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     new Domain.Models.TlSpecialism
                     {
                         Name = "Civil Engineering",
-                        LarId = "10123456",
+                        LarId = "10123457",
                         TlPathway = pathway,
                         CreatedBy = Constants.CreatedByUser,
                         CreatedOn = Constants.CreatedOn,
@@ -73,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     new Domain.Models.TlSpecialism
                     {
                         Name = "Building services design",
-                        LarId = "10123456",
+                        LarId = "10123458",
                         TlPathway = pathway,
                         CreatedBy = Constants.CreatedByUser,
                         CreatedOn = Constants.CreatedOn,
@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     new Domain.Models.TlSpecialism
                     {
                         Name = "Hazardous materials analysis and surveying",
-                        LarId = "10123456",
+                        LarId = "10123459",
                         TlPathway = pathway,
                         CreatedBy = Constants.CreatedByUser,
                         CreatedOn = Constants.CreatedOn,

@@ -18,6 +18,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return result;
         }
 
+        public static bool IsInt(this string value)
+        {
+            return int.TryParse(value, out _);
+        }
+
         public static int ToInt(this string value)
         {
             return int.Parse(value);

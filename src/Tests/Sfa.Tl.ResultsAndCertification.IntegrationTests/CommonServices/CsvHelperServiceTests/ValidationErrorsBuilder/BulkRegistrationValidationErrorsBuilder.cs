@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Constants;
+using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelperServiceTests.ValidationErrorsBuilder
@@ -100,6 +101,28 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
                 RowNum = "2",
                 Uln = "111111111",
                 ErrorMessage = "Specialism code must have 8 characters only"
+            }
+        };
+
+        public IList<RegistrationValidationError> BuildStage3ValidationErrorsList() => new List<RegistrationValidationError>
+        {
+            new RegistrationValidationError
+            {
+                RowNum = "2",
+                Uln = "111111111",
+                ErrorMessage = ValidationMessages.ProviderNotRegisteredWithAo
+            },
+            new RegistrationValidationError
+            {
+                RowNum = "3",
+                Uln = "111111112",
+                ErrorMessage = ValidationMessages.CoreNotRegisteredWithProvider
+            },
+            new RegistrationValidationError
+            {
+                RowNum = "4",
+                Uln = "111111113",
+                ErrorMessage = ValidationMessages.SpecialismNotValidWithCore
             }
         };
     }

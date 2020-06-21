@@ -64,6 +64,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 response.Add(new RegistrationRecordResponse
                 {
+                    Uln = registrationData.Uln,
+                    FirstName = registrationData.FirstName,
+                    LastName = registrationData.LastName,
+                    DateOfBirth = registrationData.DateOfBirth,
+                    StartDate = registrationData.StartDate,
                     TqProviderId = technicalQualification.TqProviderId,
                     TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
                     TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds,
