@@ -2,7 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System.Collections.Generic;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelperServiceTests.ValidationErrorsBuilder
+namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrations.ValidationErrorsBuilder
 {
     public class BulkRegistrationValidationErrorsBuilder
     {

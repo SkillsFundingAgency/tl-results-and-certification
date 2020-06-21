@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidators;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service;
-using Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelperServiceTests.ValidationErrorsBuilder;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrations.ValidationErrorsBuilder;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System.Collections.Generic;
