@@ -33,6 +33,16 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return long.Parse(value);
         }
 
+        public static bool IsDateTime(this string value)
+        {
+            return DateTime.TryParse(value, out _);
+        }
+
+        public static DateTime ToDateTime(this string value)
+        {
+            return DateTime.Parse(value);
+        }
+
         public static Guid ToGuid(this string value)
         {
             return Guid.Parse(value);

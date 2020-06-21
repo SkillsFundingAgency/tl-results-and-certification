@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
     public abstract class When_ProcessBulkRegistrationsAsync_Is_Called : BaseTest<BulkRegistrationLoader>
     {
         protected ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> CsvService;
-        private IRegistrationService RegistrationService;
+        protected IRegistrationService RegistrationService;
         protected IBlobStorageService BlobService;
         protected IDocumentUploadHistoryService DocumentUploadHistoryService;
         protected ILogger<BulkRegistrationLoader> Logger;
@@ -28,8 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
 
         protected BulkRegistrationRequest Request;
         protected Task<BulkRegistrationResponse> Response { get; private set; }
-        
 
+        protected long AoUkprn = 1234567891;
         protected Guid BlobUniqueRef;
 
         public override void Setup()
@@ -38,15 +38,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
             RegistrationService = Substitute.For<IRegistrationService>();
             BlobService = Substitute.For<IBlobStorageService>();
             Logger = Substitute.For<ILogger<BulkRegistrationLoader>>();
-
             DocumentUploadHistoryService = Substitute.For<IDocumentUploadHistoryService>();
-
 
             BlobUniqueRef = Guid.NewGuid();
 
             Request = new BulkRegistrationRequest
             {
-                AoUkprn = 1234,
+                AoUkprn = 1234567891,
                 BlobFileName = "registrations.csv",
                 BlobUniqueReference = BlobUniqueRef,
                 DocumentType = DocumentType.Registrations,
