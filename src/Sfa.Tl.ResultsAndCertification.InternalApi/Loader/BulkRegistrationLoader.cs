@@ -85,7 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 }
 
                 // Step: Map data to DB model type.
-                var tqRegistrations = _registrationService.TransformRegistrationModel();
+                var tqRegistrationProfiles = _registrationService.TransformRegistrationModel(stage3RegistrationsResponse, request.PerformedBy);
 
                 // Step: Process DB operation
                 var result = await _registrationService.CompareAndProcessRegistrations();

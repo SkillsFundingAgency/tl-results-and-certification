@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
@@ -24,9 +26,48 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await Task.Run(() => new object());
         }
 
-        public object TransformRegistrationModel()
+        public IList<TqRegistrationProfile> TransformRegistrationModel(IList<RegistrationRecordResponse> registrationsData, string performedBy)
         {
-            return new object();
+            var registrationProfiles = new List<TqRegistrationProfile>();
+
+            foreach (var registration in registrationsData)
+            {
+                registrationProfiles.Add(new TqRegistrationProfile
+                {
+                    UniqueLearnerNumber = registration.Uln,
+                    Firstname = registration.FirstName,
+                    Lastname = registration.LastName,
+                    DateofBirth = registration.DateOfBirth,
+                    CreatedBy = performedBy,
+                    CreatedOn = DateTime.UtcNow,
+
+                    TqRegistrationPathways = new List<TqRegistrationPathway>
+                    {
+                        new TqRegistrationPathway
+                        {
+                            TqProviderId = registration.TqProviderId,
+                            AcademicYear = 1234,
+                            StartDate = registration.StartDate,
+                            CourseStatus = (int)RegistrationPathwayStatus.Active,
+                            IsBulkUpload = true,
+                            TqRegistrationSpecialisms = MapSpecialisms(registration, performedBy),
+                            TqProvider = new TqProvider
+                            {
+                                TqAwardingOrganisationId = registration.TqAwardingOrganisationId,
+                                TlProviderId = registration.TlProviderId,
+                                TqAwardingOrganisation = new TqAwardingOrganisation
+                                {
+                                    TlAwardingOrganisatonId = registration.TlAwardingOrganisatonId,
+                                    TlPathwayId = registration.TlPathwayId,
+                                }
+                            },
+                            CreatedBy = performedBy,
+                            CreatedOn = DateTime.UtcNow
+                        }
+                    }
+                });
+            }
+            return registrationProfiles;
         }
 
         public async Task<IList<RegistrationRecordResponse>> ValidateRegistrationTlevelsAsync(long aoUkprn, IEnumerable<RegistrationCsvRecordResponse> validRegistrationsData)
@@ -34,8 +75,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var response = new List<RegistrationRecordResponse>();
             var aoProviderTlevels = await GetAllTLevelsByAoUkprnAsync(aoUkprn);
 
-            foreach(var registrationData in validRegistrationsData)
-            {                
+            foreach (var registrationData in validRegistrationsData)
+            {
                 var isProviderRegisteredWithAwardingOrganisation = aoProviderTlevels.Any(t => t.ProviderUkprn == registrationData.ProviderUkprn);
                 if (!isProviderRegisteredWithAwardingOrganisation)
                 {
@@ -49,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     response.Add(AddStage3ValidationError(registrationData, ValidationMessages.CoreNotRegisteredWithProvider));
                     continue;
                 }
-                
+
                 if (registrationData.SpecialismCodes.Count() > 0)
                 {
                     var specialismCodes = technicalQualification.TlSpecialismLarIds.Select(x => x.Value);
@@ -113,6 +154,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }).ToListAsync();
 
             return result;
+        }
+
+        private static IList<TqRegistrationSpecialism> MapSpecialisms(RegistrationRecordResponse registration, string performedBy)
+        {
+            return registration.TlSpecialismLarIds.Select(x => new TqRegistrationSpecialism
+            {
+                TlSpecialismId = x.Key,
+                StartDate = DateTime.UtcNow,
+                Status = (int)RegistrationSpecialismStatus.Active,
+                IsBulkUpload = true,
+                CreatedBy = performedBy,
+                CreatedOn = DateTime.UtcNow,
+            }).ToList();
         }
     }
 }
