@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 
             return new RegistrationCsvRecordResponse
             {
-                Uln = reg.Uln.Trim().ToInt(),
+                Uln = reg.Uln.Trim().ToLong(),
                 FirstName = reg.FirstName.Trim(),
                 LastName = reg.LastName.Trim(),
                 DateOfBirth = reg.DateOfBirth.Trim().ParseStringToDateTime(),
@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
             if (!(model is RegistrationCsvRecordRequest reg))
                 return null;
 
-            var ulnValue = reg.Uln.IsInt() ? reg.Uln.ToInt() : 0;
+            var ulnValue = reg.Uln.IsLong() ? reg.Uln.ToLong() : 0;
 
             return new RegistrationCsvRecordResponse
             {
@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
             };
         }
 
-        private IList<RegistrationValidationError> BuildValidationError(int rownum, int uln, ValidationResult validationResult, string errorMessage)
+        private IList<RegistrationValidationError> BuildValidationError(int rownum, long uln, ValidationResult validationResult, string errorMessage)
         {
             var validationErrors = new List<RegistrationValidationError>();
 

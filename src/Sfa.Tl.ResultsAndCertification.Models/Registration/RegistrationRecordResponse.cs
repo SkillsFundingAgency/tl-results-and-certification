@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration
             TlSpecialismLarIds = new List<KeyValuePair<int, string>>();
         }
 
-        public int Uln { get; set; }
+        public long Uln { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }

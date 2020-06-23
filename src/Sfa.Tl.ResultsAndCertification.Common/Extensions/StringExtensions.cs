@@ -28,6 +28,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return int.Parse(value);
         }
 
+        public static bool IsLong(this string value)
+        {
+            return long.TryParse(value, out _);
+        }
+
         public static long ToLong(this string value)
         {
             return long.Parse(value);
