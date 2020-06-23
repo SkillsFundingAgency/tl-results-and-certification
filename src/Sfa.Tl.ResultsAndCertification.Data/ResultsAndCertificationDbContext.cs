@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<TqAwardingOrganisation> TqAwardingOrganisation { get; set; }
         public virtual DbSet<TqProvider> TqProvider { get; set; }
         public virtual DbSet<NotificationTemplate> NotificationTemplate { get; set; }
+        public virtual DbSet<DocumentUploadHistory> DocumentUploadHistory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

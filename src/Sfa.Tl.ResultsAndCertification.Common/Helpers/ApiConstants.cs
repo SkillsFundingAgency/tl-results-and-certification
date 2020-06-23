@@ -18,5 +18,12 @@
         public const string GetTqProviderTlevelDetailsAsyncUri = "/api/provider/GetTqProviderTlevelDetails/{0}/{1}";
         public const string RemoveTqProviderTlevelAsyncUri = "/api/provider/RemoveProviderTlevel/{0}/{1}";
         public const string HasAnyTlevelSetupForProviderAsyncUri = "/api/provider/HasAnyTlevelSetupForProvider/{0}/{1}";
+
+        // Registrations Related Uri's
+        public const string ProcessBulkRegistrationsUri = "/api/registration/ProcessBulkRegistrations";
+
+
+        // DocumentUploadHistory Related Uri's
+        public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";
     }
 }

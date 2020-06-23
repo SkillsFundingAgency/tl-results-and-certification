@@ -70,6 +70,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File must contain between one and {0} registrations.
+        /// </summary>
+        public static string File_Max_Record_Count_Validation_Message {
+            get {
+                return ResourceManager.GetString("File_Max_Record_Count_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File name must have no more than {0} characters.
+        /// </summary>
+        public static string File_Name_Length_Validation_Message {
+            get {
+                return ResourceManager.GetString("File_Name_Length_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File size too large – must be no more than {0}MB.
+        /// </summary>
+        public static string File_Size_Too_Large_Validation_Message {
+            get {
+                return ResourceManager.GetString("File_Size_Too_Large_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to include all mandatory fields.
         /// </summary>
         public static string Include_All_Mandatory_Fields_Text {

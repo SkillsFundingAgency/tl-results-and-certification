@@ -106,6 +106,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<bool>(requestUri);
         }
 
+        public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest model)
+        {
+            var requestUri = ApiConstants.ProcessBulkRegistrationsUri;
+            return await PostAsync<BulkRegistrationRequest, BulkRegistrationResponse>(requestUri, model);
+        }
+
+        public async Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            var requestUri = string.Format(ApiConstants.GetDocumentUploadHistoryDetailsAsyncUri, aoUkprn, blobUniqueReference);
+            return await GetAsync<DocumentUploadHistoryDetails>(requestUri);
+        }
+
         #region Private Methods
 
         /// <summary>

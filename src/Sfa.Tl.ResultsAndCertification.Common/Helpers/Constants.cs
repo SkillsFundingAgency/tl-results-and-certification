@@ -21,5 +21,7 @@
         public const string FindProviderSearchCriteria = "FindProviderSearchCriteria";
         public const string ProviderTlevelsViewModel = "ProviderTlevelsViewModel";
         public const string ProviderTlevelDetailsViewModel = "ProviderTlevelDetailsViewModel";
+
+        public const string UploadUnsuccessfulViewModel = "UploadUnsuccessfulViewModel";
     }
 }

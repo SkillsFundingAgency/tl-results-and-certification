@@ -73,6 +73,7 @@
     <Build Include="Tables\TlAwardingOrganisation.sql" />
     <Build Include="Tables\TlProvider.sql" />
     <Build Include="Tables\NotificationTemplate.sql" />
+    <Build Include="Tables\DocumentUploadHistory.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />

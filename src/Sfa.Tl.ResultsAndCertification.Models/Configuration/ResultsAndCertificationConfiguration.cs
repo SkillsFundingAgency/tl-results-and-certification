@@ -27,6 +27,14 @@
         public string SqlConnectionString { get; set; }
 
         /// <summary>
+        /// Gets or sets the BLOB storage connection string.
+        /// </summary>
+        /// <value>
+        /// The BLOB storage connection string.
+        /// </value>
+        public string BlobStorageConnectionString { get; set; }
+
+        /// <summary>
         /// Gets or sets the gov uk notify API key.
         /// </summary>
         /// <value>
