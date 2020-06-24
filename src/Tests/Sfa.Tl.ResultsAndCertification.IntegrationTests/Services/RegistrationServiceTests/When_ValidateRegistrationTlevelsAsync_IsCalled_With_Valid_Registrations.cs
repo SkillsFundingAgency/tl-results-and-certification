@@ -22,8 +22,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         {
             SeedTestData();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
+            RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository);
+            RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository);
             _stage3RegistrationsData = new RegistrationsStage3Builder().BuildValidList();
         }
 

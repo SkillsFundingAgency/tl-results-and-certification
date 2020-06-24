@@ -24,7 +24,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected TqProvider TqProvider;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IProviderRepository ProviderRepository;
+        protected IRegistrationRepository RegistrationRepository;
         protected ILogger<ProviderRepository> ProviderRepositoryLogger;
+        protected ILogger<RegistrationRepository> RegistrationRepositoryLogger;
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson)
         {

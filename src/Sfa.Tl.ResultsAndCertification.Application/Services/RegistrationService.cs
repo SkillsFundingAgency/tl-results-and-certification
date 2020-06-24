@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
@@ -16,14 +17,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class RegistrationService : IRegistrationService
     {
         private readonly IProviderRepository _tqProviderRepository;
-        public RegistrationService(IProviderRepository providerRespository)
+        private readonly IRegistrationRepository _tqRegistrationRepository;
+        public RegistrationService(IProviderRepository providerRespository, IRegistrationRepository tqRegistrationRepository)
         {
             _tqProviderRepository = providerRespository;
+            _tqRegistrationRepository = tqRegistrationRepository;
         }
 
-        public async Task<object> CompareAndProcessRegistrations()
+        public async Task<BulkUploadResponse> CompareAndProcessRegistrations(IList<TqRegistrationProfile> registrationsModel)
         {
-            return await Task.Run(() => new object());
+            var result = new BulkUploadResponse();
+
+            var registrations = await _tqRegistrationRepository.GetRegistrationProfilesAsync(registrationsModel);
+
+
+            return new BulkUploadResponse();
         }
 
         public IList<TqRegistrationProfile> TransformRegistrationModel(IList<RegistrationRecordResponse> registrationsData, string performedBy)
