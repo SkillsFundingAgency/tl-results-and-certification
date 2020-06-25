@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
                     hashCode = (hashCode * 397) ^ registrationPathway.TqProviderId.GetHashCode();
                     hashCode = (hashCode * 397) ^ registrationPathway.StartDate.GetHashCode();
                     hashCode = (hashCode * 397) ^ (registrationPathway.EndDate != null ? registrationPathway.EndDate.GetHashCode() : 0);
-                    hashCode = (hashCode * 397) ^ registrationPathway.CourseStatus.GetHashCode();
+                    hashCode = (hashCode * 397) ^ registrationPathway.Status.GetHashCode();
 
                     foreach (var registrationSpecialism in registrationPathway.TqRegistrationSpecialisms)
                     {
@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
                     x.TqProviderId == y.TqProviderId
                     && Equals(x.StartDate, y.StartDate)
                     && Equals(x.EndDate, y.EndDate)
-                    && x.CourseStatus == y.CourseStatus;
+                    && x.Status == y.Status;
                 return retVal;
             }
         }

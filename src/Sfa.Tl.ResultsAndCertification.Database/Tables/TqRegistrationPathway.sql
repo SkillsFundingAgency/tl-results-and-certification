@@ -6,7 +6,7 @@
 	[AcademicYear] INT NOT NULL,
 	[StartDate] DATETIME NOT NULL,	
 	[EndDate] DATETIME NULL,
-	[CourseStatus] INT NOT NULL,
+	[Status] INT NOT NULL,
 	[IsBulkUpload] BIT NOT NULL DEFAULT 0,
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 

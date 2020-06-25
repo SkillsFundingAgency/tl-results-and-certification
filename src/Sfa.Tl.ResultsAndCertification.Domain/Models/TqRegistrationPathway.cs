@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public int AcademicYear { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public int CourseStatus { get; set; }
+        public int Status { get; set; }
         public bool IsBulkUpload { get; set; }
 
         public virtual TqProvider TqProvider { get; set; }
