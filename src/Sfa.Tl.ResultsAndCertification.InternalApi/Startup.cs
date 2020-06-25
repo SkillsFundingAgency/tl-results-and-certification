@@ -125,6 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
         {
             services.AddTransient<IBlobStorageService, BlobStorageService>();
             services.AddTransient<IProviderRepository, ProviderRepository>();
+            services.AddTransient<IRegistrationRepository, RegistrationRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
