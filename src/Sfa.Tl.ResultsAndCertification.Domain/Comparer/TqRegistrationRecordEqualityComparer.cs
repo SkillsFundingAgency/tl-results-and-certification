@@ -38,8 +38,9 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
                 foreach (var registrationPathway in reg.TqRegistrationPathways)
                 {
                     hashCode = (hashCode * 397) ^ registrationPathway.TqProviderId.GetHashCode();
-                    hashCode = (hashCode * 397) ^ registrationPathway.StartDate.GetHashCode();
-                    hashCode = (hashCode * 397) ^ (registrationPathway.EndDate != null ? registrationPathway.EndDate.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ registrationPathway.RegistrationDate.GetHashCode();
+                    //hashCode = (hashCode * 397) ^ registrationPathway.StartDate.GetHashCode();
+                    //hashCode = (hashCode * 397) ^ (registrationPathway.EndDate != null ? registrationPathway.EndDate.GetHashCode() : 0);
                     hashCode = (hashCode * 397) ^ registrationPathway.Status.GetHashCode();
 
                     foreach (var registrationSpecialism in registrationPathway.TqRegistrationSpecialisms)
@@ -104,8 +105,9 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
             {
                 var retVal =
                     x.TqProviderId == y.TqProviderId
-                    && Equals(x.StartDate, y.StartDate)
-                    && Equals(x.EndDate, y.EndDate)
+                    && Equals(x.RegistrationDate, y.RegistrationDate)
+                    //&& Equals(x.StartDate, y.StartDate)
+                    //&& Equals(x.EndDate, y.EndDate)
                     && x.Status == y.Status;
                 return retVal;
             }

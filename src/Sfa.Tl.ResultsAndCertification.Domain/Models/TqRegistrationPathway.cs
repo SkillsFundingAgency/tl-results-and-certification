@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public int TqRegistrationProfileId { get; set; }
         public int TqProviderId { get; set; }
         public int AcademicYear { get; set; }
+        public DateTime RegistrationDate { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public int Status { get; set; }

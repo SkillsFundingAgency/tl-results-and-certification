@@ -1,12 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
@@ -94,7 +92,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         {
                             TqProviderId = registration.TqProviderId,
                             AcademicYear = 1234,
-                            StartDate = registration.StartDate,
+                            RegistrationDate = registration.StartDate,
+                            StartDate = DateTime.UtcNow,
                             Status = (int)RegistrationPathwayStatus.Active,
                             IsBulkUpload = true,
                             TqRegistrationSpecialisms = MapSpecialisms(registration, performedBy),

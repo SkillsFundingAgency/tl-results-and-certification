@@ -15,7 +15,8 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
                 return false;
             else
             {
-                var retVal = x.UniqueLearnerNumber == y.UniqueLearnerNumber && string.Equals(x.Firstname, y.Firstname)
+                var retVal = x.UniqueLearnerNumber == y.UniqueLearnerNumber 
+                    && string.Equals(x.Firstname, y.Firstname)
                     && Equals(x.Lastname, y.Lastname)
                     && Equals(x.DateofBirth, y.DateofBirth);
                 return retVal;
