@@ -26,5 +26,9 @@
         public const string ProviderNotRegisteredWithAo = "Provider not registered with awarding organisation";
         public const string CoreNotRegisteredWithProvider = "Core not registered with provider";
         public const string SpecialismNotValidWithCore = "Specialism not valid with core";
+
+        // Bulk Registration Stage4 Validation Messages
+        public const string ActiveUlnWithDifferentAo = "Active ULN with a different awarding organisation";
+        public const string CoreForUlnCannotBeChangedYet = "Core for ULN cannot be changed yet";
     }
 }

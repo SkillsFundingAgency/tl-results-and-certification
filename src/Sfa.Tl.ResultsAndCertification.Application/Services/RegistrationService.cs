@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
@@ -24,15 +26,52 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _tqRegistrationRepository = tqRegistrationRepository;
         }
 
-        public async Task<BulkUploadResponse> CompareAndProcessRegistrations(IList<TqRegistrationProfile> registrationsModel)
+        public async Task<RegistrationProcessResponse> CompareAndProcessRegistrations(IList<TqRegistrationProfile> registrationsToProcess)
         {
-            var result = new BulkUploadResponse();
+            var response = new RegistrationProcessResponse();
+            var ulnComparer = new TqRegistrationUlnEqualityComparer();
+            var comparer = new TqRegistrationRecordEqualityComparer();
 
-            var registrations = await _tqRegistrationRepository.GetRegistrationProfilesAsync(registrationsModel);
+            var modifiedRegistrations = new List<TqRegistrationProfile>();
+            var existingRegistrationsFromDb = await _tqRegistrationRepository.GetRegistrationProfilesAsync(registrationsToProcess);
 
+            var newRegistrations = registrationsToProcess.Except(existingRegistrationsFromDb, ulnComparer);
+            var matchedRegistrations = registrationsToProcess.Intersect(existingRegistrationsFromDb, ulnComparer).ToList();
+            var sameOrDuplicateRegistrations = matchedRegistrations.Intersect(existingRegistrationsFromDb, comparer).ToList();
 
-            return new BulkUploadResponse();
-        }
+            if (matchedRegistrations.Count != sameOrDuplicateRegistrations.Count)
+            {
+                var tqRegistrationProfileComparer = new TqRegistrationProfileEqualityComparer();
+
+                modifiedRegistrations = matchedRegistrations.Except(sameOrDuplicateRegistrations, comparer).ToList();
+
+                modifiedRegistrations.ForEach(modifiedRegistration =>
+                {
+                    var existingRegistration = existingRegistrationsFromDb.FirstOrDefault(existingRegistration => existingRegistration.UniqueLearnerNumber == modifiedRegistration.UniqueLearnerNumber);
+
+                    if (existingRegistration != null)
+                    {
+                        var activePathwayRegistrationsInDb = existingRegistration.TqRegistrationPathways.Where(p => p.CourseStatus == (int)RegistrationPathwayStatus.Active);
+                        var pathwaysToAdd = modifiedRegistration.TqRegistrationPathways.Where(mp => !activePathwayRegistrationsInDb.Any(ap => ap.TqProviderId == mp.TqProviderId || ap.StartDate.Date == mp.StartDate.Date));
+                        var pathwaysToUpdate = (pathwaysToAdd.Any() ? activePathwayRegistrationsInDb : activePathwayRegistrationsInDb.Where(s => modifiedRegistration.TqRegistrationPathways.Any(r => r.TqProviderId == s.TqProviderId))).ToList();
+
+                        if (pathwaysToUpdate.Any())
+                        {
+                            var hasPathwayChanged = !pathwaysToUpdate.Any(x => modifiedRegistration.TqRegistrationPathways.Any(r => r.TqProvider.TqAwardingOrganisation.TlPathwayId == x.TqProvider.TqAwardingOrganisation.TlPathwayId));
+
+                            // check if there is an active registration for another AO, if so show error message and reject the file
+                            var hasAoChanged = !pathwaysToUpdate.Any(x => modifiedRegistration.TqRegistrationPathways.Any(r => r.TqProvider.TqAwardingOrganisation.TlAwardingOrganisatonId == x.TqProvider.TqAwardingOrganisation.TlAwardingOrganisatonId));
+
+                            if (hasAoChanged || hasPathwayChanged)
+                            {
+                                response.ValidationErrors.Add(GetRegistrationValidationError(modifiedRegistration.UniqueLearnerNumber, hasAoChanged ? ValidationMessages.ActiveUlnWithDifferentAo : ValidationMessages.CoreForUlnCannotBeChangedYet));
+                            }
+                        }
+                    }
+                });
+            }
+            return response;
+        }        
 
         public IList<TqRegistrationProfile> TransformRegistrationModel(IList<RegistrationRecordResponse> registrationsData, string performedBy)
         {
@@ -175,6 +214,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 CreatedBy = performedBy,
                 CreatedOn = DateTime.UtcNow,
             }).ToList();
+        }
+
+        private static RegistrationValidationError GetRegistrationValidationError(long uln, string errorMessage)
+        {
+            return new RegistrationValidationError
+            {
+                Uln = uln.ToString(),
+                ErrorMessage = errorMessage
+            };
         }
     }
 }

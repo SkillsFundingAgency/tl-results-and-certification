@@ -3,6 +3,7 @@
     public enum RegistrationPathwayStatus
     {
         Active = 1,
-        Transfered = 2
+        InActive = 2,
+        Transfered = 3
     }
 }

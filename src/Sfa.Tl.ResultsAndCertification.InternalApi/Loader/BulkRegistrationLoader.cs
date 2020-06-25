@@ -88,7 +88,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 var tqRegistrationProfiles = _registrationService.TransformRegistrationModel(stage3RegistrationsResponse, request.PerformedBy);
 
                 // Step: Process DB operation
-                //var result = await _registrationService.CompareAndProcessRegistrations(tqRegistrationProfiles);
+                var result = await _registrationService.CompareAndProcessRegistrations(tqRegistrationProfiles);
+
+                if(!result.IsValid)
+                {
+                    return await SaveErrorsAndUpdateResponse(request, response, result.ValidationErrors);
+                }
 
                 response.IsSuccess = true;
             }
