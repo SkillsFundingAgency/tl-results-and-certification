@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                     if (existingRegistration != null)
                     {
-                        var activePathwayRegistrationsInDb = existingRegistration.TqRegistrationPathways.Where(p => p.Status == (int)RegistrationPathwayStatus.Active);
+                        var activePathwayRegistrationsInDb = existingRegistration.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active);
                         var pathwaysToAdd = modifiedRegistration.TqRegistrationPathways.Where(mp => !activePathwayRegistrationsInDb.Any(ap => ap.TqProviderId == mp.TqProviderId || ap.StartDate.Date == mp.StartDate.Date));
                         var pathwaysToUpdate = (pathwaysToAdd.Any() ? activePathwayRegistrationsInDb : activePathwayRegistrationsInDb.Where(s => modifiedRegistration.TqRegistrationPathways.Any(r => r.TqProviderId == s.TqProviderId))).ToList();
 
@@ -94,7 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             AcademicYear = 1234,
                             RegistrationDate = registration.StartDate,
                             StartDate = DateTime.UtcNow,
-                            Status = (int)RegistrationPathwayStatus.Active,
+                            Status = RegistrationPathwayStatus.Active,
                             IsBulkUpload = true,
                             TqRegistrationSpecialisms = MapSpecialisms(registration, performedBy),
                             TqProvider = new TqProvider
@@ -208,7 +208,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 TlSpecialismId = x.Key,
                 StartDate = DateTime.UtcNow,
-                Status = (int)RegistrationSpecialismStatus.Active,
+                Status = RegistrationSpecialismStatus.Active,
                 IsBulkUpload = true,
                 CreatedBy = performedBy,
                 CreatedOn = DateTime.UtcNow,

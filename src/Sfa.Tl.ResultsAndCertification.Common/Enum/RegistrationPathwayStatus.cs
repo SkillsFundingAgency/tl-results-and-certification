@@ -4,6 +4,6 @@
     {
         Active = 1,
         InActive = 2,
-        Transfered = 3
+        Transferred = 3
     }
 }
