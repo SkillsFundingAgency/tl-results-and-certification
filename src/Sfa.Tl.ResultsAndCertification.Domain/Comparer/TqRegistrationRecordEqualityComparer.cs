@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,14 +36,15 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
                 hashCode = (hashCode * 397) ^ (reg.Lastname != null ? reg.Lastname.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (reg.DateofBirth != null ? reg.DateofBirth.GetHashCode() : 0);
 
-                foreach (var registrationPathway in reg.TqRegistrationPathways)
+                foreach (var registrationPathway in reg.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active))
                 {
                     hashCode = (hashCode * 397) ^ registrationPathway.TqProviderId.GetHashCode();
-                    hashCode = (hashCode * 397) ^ registrationPathway.StartDate.GetHashCode();
-                    hashCode = (hashCode * 397) ^ (registrationPathway.EndDate != null ? registrationPathway.EndDate.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ registrationPathway.RegistrationDate.GetHashCode();
+                    //hashCode = (hashCode * 397) ^ registrationPathway.StartDate.GetHashCode();
+                    //hashCode = (hashCode * 397) ^ (registrationPathway.EndDate != null ? registrationPathway.EndDate.GetHashCode() : 0);
                     hashCode = (hashCode * 397) ^ registrationPathway.Status.GetHashCode();
 
-                    foreach (var registrationSpecialism in registrationPathway.TqRegistrationSpecialisms)
+                    foreach (var registrationSpecialism in registrationPathway.TqRegistrationSpecialisms.Where(p => p.Status == RegistrationSpecialismStatus.Active))
                     {
                         hashCode = (hashCode * 397) ^ registrationSpecialism.TlSpecialismId.GetHashCode();
                         hashCode = (hashCode * 397) ^ registrationSpecialism.Status.GetHashCode();
@@ -54,12 +56,16 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
 
         private bool ArePathwaysAndSpecialismsEqual(TqRegistrationProfile x, TqRegistrationProfile y)
         {
-            bool isPathwayEqual = (x.TqRegistrationPathways.Count == y.TqRegistrationPathways.Count);
+            var xPathways = x.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active);
+            var yPathways = y.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active);
+            
+            bool isPathwayEqual = (xPathways.Count() == yPathways.Count());
+
             if (isPathwayEqual)
             {
-                foreach (var xpathway in x.TqRegistrationPathways)
+                foreach (var xpathway in xPathways)
                 {
-                    var ypathway = y.TqRegistrationPathways.FirstOrDefault(p => p.TqProviderId == xpathway.TqProviderId);
+                    var ypathway = yPathways.FirstOrDefault(p => p.TqProviderId == xpathway.TqProviderId);
                     isPathwayEqual = EqualsTqRegistrationPathway(xpathway, ypathway);
 
                     if (!isPathwayEqual) break;
@@ -78,12 +84,15 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
 
         private bool AreSpecialismsEqual(TqRegistrationPathway xpathway, TqRegistrationPathway ypathway)
         {
-            var isSpecialismEqual = (xpathway.TqRegistrationSpecialisms.Count == ypathway.TqRegistrationSpecialisms.Count);
+            var xSpecialisms = xpathway.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active);
+            var ySpecialisms = ypathway.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active);
+
+            var isSpecialismEqual = (xSpecialisms.Count() == ySpecialisms.Count());
             if (isSpecialismEqual)
             {
-                foreach (var xspecialism in xpathway.TqRegistrationSpecialisms)
+                foreach (var xspecialism in xSpecialisms)
                 {
-                    var yspecialism = ypathway.TqRegistrationSpecialisms.FirstOrDefault(s => s.TlSpecialismId == xspecialism.TlSpecialismId);
+                    var yspecialism = ySpecialisms.FirstOrDefault(s => s.TlSpecialismId == xspecialism.TlSpecialismId);
                     isSpecialismEqual = EqualsTqRegistrationSpecialism(xspecialism, yspecialism);
 
                     if (!isSpecialismEqual) break;
@@ -104,8 +113,9 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
             {
                 var retVal =
                     x.TqProviderId == y.TqProviderId
-                    && Equals(x.StartDate, y.StartDate)
-                    && Equals(x.EndDate, y.EndDate)
+                    && Equals(x.RegistrationDate, y.RegistrationDate)
+                    //&& Equals(x.StartDate, y.StartDate)
+                    //&& Equals(x.EndDate, y.EndDate)
                     && x.Status == y.Status;
                 return retVal;
             }

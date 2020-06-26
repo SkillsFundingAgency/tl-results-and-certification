@@ -14,5 +14,5 @@
 	CONSTRAINT [PK_TqRegistrationSpecialism] PRIMARY KEY ([Id]),
 	CONSTRAINT [FK_TqRegistrationSpecialism_TqRegistrationPathway] FOREIGN KEY ([TqRegistrationPathwayId]) REFERENCES [TqRegistrationPathway]([Id]),
 	CONSTRAINT [FK_TqRegistrationSpecialism_TlSpecialism] FOREIGN KEY ([TlSpecialismId]) REFERENCES [TlSpecialism]([Id]),
-	INDEX IX_TqRegistrationSpecialism_All NONCLUSTERED (TqRegistrationPathwayId) 
+	INDEX IX_TqRegistrationSpecialism_TqRegistrationPathwayId NONCLUSTERED (TqRegistrationPathwayId) 
 )
