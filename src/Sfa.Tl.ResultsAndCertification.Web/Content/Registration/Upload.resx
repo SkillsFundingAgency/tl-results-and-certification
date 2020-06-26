@@ -132,6 +132,12 @@
   <data name="Include_All_Mandatory_Fields_Text" xml:space="preserve">
     <value>include all mandatory fields</value>
   </data>
+  <data name="Js_Disabled_Upload_File_Button_Text" xml:space="preserve">
+    <value>Submit (only click once)</value>
+  </data>
+  <data name="Js_Disabled_Upload_File_Help_Text" xml:space="preserve">
+    <value>Javascript disabled: When you press the Submit button you will not see any progress indicator. Expect the processing to take up to 10 seconds depending on the file size.</value>
+  </data>
   <data name="Must_Be_Csv_Validation_Message" xml:space="preserve">
     <value>The selected file must be a CSV</value>
   </data>

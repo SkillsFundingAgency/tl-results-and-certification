@@ -106,6 +106,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Submit (only click once).
+        /// </summary>
+        public static string Js_Disabled_Upload_File_Button_Text {
+            get {
+                return ResourceManager.GetString("Js_Disabled_Upload_File_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Javascript disabled: When you press the Submit button you will not see any progress indicator. Expect the processing to take up to 10 seconds depending on the file size..
+        /// </summary>
+        public static string Js_Disabled_Upload_File_Help_Text {
+            get {
+                return ResourceManager.GetString("Js_Disabled_Upload_File_Help_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The selected file must be a CSV.
         /// </summary>
         public static string Must_Be_Csv_Validation_Message {
