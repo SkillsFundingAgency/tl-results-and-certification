@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
@@ -25,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.BlobUniqueReference, opts => opts.MapFrom(s => s.BlobUniqueReference))
                .ForMember(d => d.Stats, opts => opts.MapFrom(s => s.Stats));
 
-            CreateMap<Stats, StatsViewModel>()
+            CreateMap<BulkUploadStats, StatsViewModel>()
                .ForMember(d => d.NewRecordsCount, opts => opts.MapFrom(s => s.NewRecordsCount))
                .ForMember(d => d.UpdatedRecordsCount, opts => opts.MapFrom(s => s.UpdatedRecordsCount))
                .ForMember(d => d.DuplicateRecordsCount, opts => opts.MapFrom(s => s.DuplicateRecordsCount));

@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<bool> BulkInsertOrUpdateTqRegistrations(List<TqRegistrationProfile> profileEntities, List<TqRegistrationPathway> pathwayEntities, List<TqRegistrationSpecialism> specialismEntities)
         {
-            var result = false;
+            var result = true;
             if ((profileEntities != null && profileEntities.Count > 0) || (pathwayEntities != null && pathwayEntities.Count > 0) || (specialismEntities != null && specialismEntities.Count > 0))
             {
                 var strategy = _dbContext.Database.CreateExecutionStrategy();
@@ -83,13 +83,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             }
 
                             transaction.Commit();
-                            result = true;
                         }
                         catch (Exception ex)
                         {
                             _logger.LogError(ex.Message, ex.InnerException);
                             transaction.Rollback();
-                            throw;
+                            result = false;
                         }
                     }
                 });

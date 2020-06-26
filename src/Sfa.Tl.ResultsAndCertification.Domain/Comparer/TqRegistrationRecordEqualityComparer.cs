@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 
