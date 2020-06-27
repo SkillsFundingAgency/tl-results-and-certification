@@ -136,7 +136,7 @@
     <value>Submit (only click once)</value>
   </data>
   <data name="Js_Disabled_Upload_File_Help_Text" xml:space="preserve">
-    <value>Javascript disabled: When you press the Submit button you will not see any progress indicator. Expect the processing to take up to 10 seconds depending on the file size.</value>
+    <value>JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size.</value>
   </data>
   <data name="Must_Be_Csv_Validation_Message" xml:space="preserve">
     <value>The selected file must be a CSV</value>
@@ -158,6 +158,9 @@
   </data>
   <data name="Upload_File_Text" xml:space="preserve">
     <value>Upload a file</value>
+  </data>
+  <data name="Upload_Processing_Spinner_Text" xml:space="preserve">
+    <value>Processing, please wait. This could take up to 10 seconds. Do not refresh.</value>
   </data>
   <data name="We_Can_Only_Accept_Files_Text" xml:space="preserve">
     <value>We can only accept files that:</value>

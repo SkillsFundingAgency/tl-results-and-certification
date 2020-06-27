@@ -34,10 +34,7 @@
                     <input class="govuk-file-upload" id="file" asp-for="File" type="file" accept=".csv">
                 </div>
                 <button id="uploadRegistrationsButton" class="govuk-button tl-show-on-js-only" data-module="govuk-button" type="submit">@Upload.Upload_File_Button_Text</button>
-                <noscript>
-                    <div class="govuk-body"> <strong> (i) @Upload.Js_Disabled_Upload_File_Help_Text </strong> </div>
-                    <button id="uploadRegistrationsButton" class="govuk-button" data-module="govuk-button" type="submit">@Upload.Js_Disabled_Upload_File_Button_Text</button>
-                </noscript>
+                <partial name="~/Views/Registration/Partials/_uploadRegistrationNoScriptSubmit.cshtml" />
             </form>
         </div>
     </div>

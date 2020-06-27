@@ -115,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Javascript disabled: When you press the Submit button you will not see any progress indicator. Expect the processing to take up to 10 seconds depending on the file size..
+        ///   Looks up a localized string similar to JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size..
         /// </summary>
         public static string Js_Disabled_Upload_File_Help_Text {
             get {
@@ -183,6 +183,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Upload_File_Text {
             get {
                 return ResourceManager.GetString("Upload_File_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing, please wait. This could take up to 10 seconds. Do not refresh..
+        /// </summary>
+        public static string Upload_Processing_Spinner_Text {
+            get {
+                return ResourceManager.GetString("Upload_Processing_Spinner_Text", resourceCulture);
             }
         }
         
