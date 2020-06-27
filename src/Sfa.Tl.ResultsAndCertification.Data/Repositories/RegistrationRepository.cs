@@ -13,11 +13,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
     public class RegistrationRepository : GenericRepository<TqRegistrationProfile>, IRegistrationRepository
     {
         private ILogger<RegistrationRepository> _logger;
-        public RegistrationRepository(ILogger<RegistrationRepository> logger, ResultsAndCertificationDbContext dbContext) : base(logger, dbContext) 
+        
+        public RegistrationRepository(ILogger<RegistrationRepository> logger, ResultsAndCertificationDbContext dbContext) : base(logger, dbContext)
         {
             _logger = logger;
         }
-        
+
         public async Task<IList<TqRegistrationProfile>> GetRegistrationProfilesAsync(IList<TqRegistrationProfile> registrations)
         {
             var ulns = new HashSet<long>();
@@ -49,13 +50,22 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                             if (profileEntities != null && profileEntities.Count > 0)
                             {
+                                // please do not remove below ordering line. It is important as we are doing BulkInsertOrUpdate in one go, we would like to have update
+                                // records at the top and newley added records at the bootom of the list, so that PreserveInsertOrder and SetOutputIdentiy
+                                // will work as expected. If you remove below line then Id values will be interchanged.
+                                // please do not remove below line
+                                profileEntities = SortUpdateAndInsertOrder(profileEntities, x => x.Id);
+
                                 await _dbContext.BulkInsertOrUpdateAsync(profileEntities, bulkConfig);
 
                                 profileEntities.ToList().ForEach(profile =>
                                 {
                                     profile.TqRegistrationPathways.ToList().ForEach(pathway =>
                                     {
-                                        pathway.TqRegistrationProfileId = profile.Id;
+                                        if (pathway.TqRegistrationProfileId == 0)
+                                        {
+                                            pathway.TqRegistrationProfileId = profile.Id;
+                                        }
                                         pathwayRegistrations.Add(pathway);
                                     });
                                 });
@@ -65,13 +75,22 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                             if (pathwayRegistrations.Count > 0)
                             {
+                                // below ordering line is important as we are doing BulkInsertOrUpdate in one go, we would like to have update 
+                                // records at the top and newley added records at the bootom of the list, so that PreserveInsertOrder and SetOutputIdentiy
+                                // will work as expected. If you remove below line then Id values will be interchanged.
+                                // please do not remove below line
+                                pathwayRegistrations = SortUpdateAndInsertOrder(pathwayRegistrations, x => x.Id);
+
                                 await _dbContext.BulkInsertOrUpdateAsync(pathwayRegistrations, bulkConfig);
 
                                 pathwayRegistrations.ForEach(pathway =>
                                 {
                                     pathway.TqRegistrationSpecialisms.ToList().ForEach(specialism =>
                                     {
-                                        specialism.TqRegistrationPathwayId = pathway.Id;
+                                        if (specialism.TqRegistrationPathwayId == 0)
+                                        {
+                                            specialism.TqRegistrationPathwayId = pathway.Id;
+                                        }
                                         specialismRegistrations.Add(specialism);
                                     });
                                 });
@@ -79,7 +98,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                             if (specialismRegistrations.Count > 0)
                             {
-                                await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 4000; });
+                                // below ordering line is important as we are doing BulkInsertOrUpdate in one go, we would like to have update 
+                                // records at the top and newley added records at the bootom of the list, so that PreserveInsertOrder and SetOutputIdentiy
+                                // will work as expected. If you remove below line then Id values will be interchanged.
+                                // please do not remove below line
+                                specialismRegistrations = SortUpdateAndInsertOrder(specialismRegistrations, x => x.Id);
+                                await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.PreserveInsertOrder = true; bulkConfig.SetOutputIdentity = true; bulkConfig.BatchSize = 4000; });
                             }
 
                             transaction.Commit();
@@ -94,6 +118,21 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 });
             }
             return result;
+        }
+
+        private List<T> SortUpdateAndInsertOrder<T>(List<T> entities, Func<T, int> selector) where T : class
+        {
+            var returnResult = new List<T>();
+
+            if (entities != null && selector != null)
+            {
+                var listToUpdate = entities.Where(x => selector(x) > 0).OrderBy(x => selector);
+                var listToAdd = entities.Where(x => selector(x) <= 0).OrderBy(x => selector);
+
+                returnResult.AddRange(listToUpdate);
+                returnResult.AddRange(listToAdd);
+            }
+            return returnResult;
         }
     }
 }

@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -19,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     {
         private readonly IProviderRepository _tqProviderRepository;
         private readonly IRegistrationRepository _tqRegistrationRepository;
+        
         public RegistrationService(IProviderRepository providerRespository, IRegistrationRepository tqRegistrationRepository)
         {
             _tqProviderRepository = providerRespository;
@@ -58,8 +60,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         var hasOnlySpecialismsRecordChanged = false;
                         var hasTqRegistrationProfileRecordChanged = !tqRegistrationProfileComparer.Equals(modifiedRegistration, existingRegistration);
 
-                        var activePathwayRegistrationsInDb = existingRegistration.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active);
-                        var pathwaysToAdd = modifiedRegistration.TqRegistrationPathways.Where(mp => !activePathwayRegistrationsInDb.Any(ap => ap.TqProviderId == mp.TqProviderId || ap.RegistrationDate == mp.RegistrationDate));
+                        modifiedRegistration.Id = existingRegistration.Id;
+                        modifiedRegistration.TqRegistrationPathways.ToList().ForEach(p => p.TqRegistrationProfileId = existingRegistration.Id);
+
+                        var activePathwayRegistrationsInDb = existingRegistration.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active)
+                        .Select(x =>
+                        {
+                            x.TqRegistrationSpecialisms = x.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList();
+                            return x;
+                        });
+
+                        var pathwaysToAdd = modifiedRegistration.TqRegistrationPathways.Where(mp => !activePathwayRegistrationsInDb.Any(ap => ap.TqProviderId == mp.TqProviderId));
                         var pathwaysToUpdate = (pathwaysToAdd.Any() ? activePathwayRegistrationsInDb : activePathwayRegistrationsInDb.Where(s => modifiedRegistration.TqRegistrationPathways.Any(r => r.TqProviderId == s.TqProviderId))).ToList();
 
                         if (pathwaysToUpdate.Any())
@@ -148,8 +159,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                         if (response.IsValid)
                         {
-                            modifiedRegistration.Id = existingRegistration.Id;
-                            modifiedRegistration.TqRegistrationPathways.ToList().ForEach(p => p.TqRegistrationProfileId = existingRegistration.Id);
+                            if (hasTqRegistrationProfileRecordChanged)
+                            {
+                                modifiedRegistration.ModifiedBy = modifiedRegistration.CreatedBy;
+                                modifiedRegistration.ModifiedOn = DateTime.UtcNow;
+                            }
 
                             if (hasTqRegistrationProfileRecordChanged && hasBothPathwayAndSpecialismsRecordsChanged)
                             {
@@ -202,11 +216,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public IList<TqRegistrationProfile> TransformRegistrationModel(IList<RegistrationRecordResponse> registrationsData, string performedBy)
         {
             var registrationProfiles = new List<TqRegistrationProfile>();
+            int registrationSpecialismStartIndex = Constants.RegistrationSpecialismsStartIndex;
 
-            foreach (var registration in registrationsData)
+            foreach (var (registration, index) in registrationsData.Select((value, i) => (value, i)))
             {
                 registrationProfiles.Add(new TqRegistrationProfile
                 {
+                    Id = index - Constants.RegistrationProfileStartIndex,
                     UniqueLearnerNumber = registration.Uln,
                     Firstname = registration.FirstName,
                     Lastname = registration.LastName,
@@ -218,13 +234,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         new TqRegistrationPathway
                         {
+                            Id = index - Constants.RegistrationPathwayStartIndex,
                             TqProviderId = registration.TqProviderId,
                             AcademicYear = registration.StartDate.Year, // TODO: Need to calcualate based on the requirements
                             RegistrationDate = registration.StartDate,
                             StartDate = DateTime.UtcNow,
                             Status = RegistrationPathwayStatus.Active,
                             IsBulkUpload = true,
-                            TqRegistrationSpecialisms = MapSpecialisms(registration, performedBy),
+                            TqRegistrationSpecialisms = MapSpecialisms(registration, performedBy, registrationSpecialismStartIndex),
                             TqProvider = new TqProvider
                             {
                                 TqAwardingOrganisationId = registration.TqAwardingOrganisationId,
@@ -240,6 +257,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         }
                     }
                 });
+                registrationSpecialismStartIndex -= registration.TlSpecialismLarIds.Count();
             }
             return registrationProfiles;
         }
@@ -331,10 +349,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return result;
         }
 
-        private static IList<TqRegistrationSpecialism> MapSpecialisms(RegistrationRecordResponse registration, string performedBy)
+        private static IList<TqRegistrationSpecialism> MapSpecialisms(RegistrationRecordResponse registration, string performedBy, int specialismStartIndex)
         {
-            return registration.TlSpecialismLarIds.Select(x => new TqRegistrationSpecialism
+            return registration.TlSpecialismLarIds.Select((x, index) => new TqRegistrationSpecialism
             {
+                Id =  index - specialismStartIndex,
                 TlSpecialismId = x.Key,
                 StartDate = DateTime.UtcNow,
                 Status = RegistrationSpecialismStatus.Active,
