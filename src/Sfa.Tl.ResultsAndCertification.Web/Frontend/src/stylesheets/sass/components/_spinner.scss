@@ -1,0 +1,58 @@
+$grey-color: #f8f8f8;
+$focus-select-color: #ffd800;
+$spinner-border-color: #c7c6c3;
+$spinner-rotate-border-color: #0b0c0c;
+/*TODO: maintain a common file for all colors */
+
+.tl-box-container {
+    position: relative;
+    margin: 1em 0;
+    padding: 2em;
+    background: $grey-color;
+}
+
+.tl-spinner-container {
+    position: relative;
+    text-align: center;
+    line-height: 0;
+
+    &:focus {
+        outline: 3px solid $focus-select-color;
+    }
+
+    .tl-spinner-control {
+        position: relative;
+        height: 125px;
+
+        .tl-spinner {
+            position: absolute;
+            top: 50%;
+            left: calc(50% - 19px);
+            border: 8px solid $spinner-border-color;
+            border-radius: 50%;
+            border-top: 8px solid $spinner-rotate-border-color;
+            width: 38px;
+            height: 38px;
+            -webkit-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    }
+
+    .tl-spinner-label {
+        line-height: 1em;
+        margin-top: 12px;
+        padding-bottom: 0.5em;
+        text-align: center;
+        margin-bottom: 0px;
+    }
+}
