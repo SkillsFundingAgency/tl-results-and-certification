@@ -207,8 +207,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 TotalRecordsCount = registrationsToProcess.Count,
                 NewRecordsCount = newRegistrations.Count,
-                UpdatedRecordsCount = modifiedRegistrations.Count,
-                DuplicateRecordsCount = sameOrDuplicateRegistrations.Count
+                AmendedRecordsCount = modifiedRegistrations.Count,
+                UnchangedRecordsCount = sameOrDuplicateRegistrations.Count
             };
             return response;
         }

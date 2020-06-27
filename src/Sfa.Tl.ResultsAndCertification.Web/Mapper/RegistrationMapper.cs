@@ -26,10 +26,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.BlobUniqueReference, opts => opts.MapFrom(s => s.BlobUniqueReference))
                .ForMember(d => d.Stats, opts => opts.MapFrom(s => s.Stats));
 
-            CreateMap<BulkUploadStats, StatsViewModel>()
+            CreateMap<BulkUploadStats, BulkUploadStatsViewModel>()
                .ForMember(d => d.NewRecordsCount, opts => opts.MapFrom(s => s.NewRecordsCount))
-               .ForMember(d => d.UpdatedRecordsCount, opts => opts.MapFrom(s => s.UpdatedRecordsCount))
-               .ForMember(d => d.DuplicateRecordsCount, opts => opts.MapFrom(s => s.DuplicateRecordsCount));
+               .ForMember(d => d.AmendedRecordsCount, opts => opts.MapFrom(s => s.AmendedRecordsCount))
+               .ForMember(d => d.UnchangedRecordsCount, opts => opts.MapFrom(s => s.UnchangedRecordsCount));
         }
     }
 }

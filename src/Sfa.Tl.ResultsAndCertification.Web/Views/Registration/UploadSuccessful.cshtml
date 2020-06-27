@@ -20,11 +20,11 @@
                 }
                 @if (Model.HasAmendedRegistrations)
                 {
-                    <li>@string.Format(@UploadSuccessful.Amended_Registrations_Text, Model.Stats.UpdatedRecordsCount)</li>
+                    <li>@string.Format(@UploadSuccessful.Amended_Registrations_Text, Model.Stats.AmendedRecordsCount)</li>
                 }
                 @if (Model.HasUnchangedRegistrations)
                 {
-                    <li>@string.Format(@UploadSuccessful.Unchanged_Registrations_Text, Model.Stats.DuplicateRecordsCount)</li>
+                    <li>@string.Format(@UploadSuccessful.Unchanged_Registrations_Text, Model.Stats.UnchangedRecordsCount)</li>
                 }
             </ul>
         }
