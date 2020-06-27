@@ -53,6 +53,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (response.IsSuccess)
             {
+                var successfulViewModel = new UploadSuccessfulViewModel { Stats = response.Stats };
+                TempData[Constants.UploadSuccessfulViewModel] = JsonConvert.SerializeObject(successfulViewModel);
                 return RedirectToRoute(RouteConstants.RegistrationsUploadSuccessful);
             }
             else
@@ -67,7 +69,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("registrations-upload-successful", Name = RouteConstants.RegistrationsUploadSuccessful)]
         public IActionResult UploadSuccessful()
         {
-            return View();
+            if (TempData[Constants.UploadSuccessfulViewModel] == null)
+            {
+                _logger.LogWarning(LogEvent.UploadSuccessfulPageFailed,
+                    $"Unable to read upload successful registration response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = JsonConvert.DeserializeObject<UploadSuccessfulViewModel>(TempData[Constants.UploadSuccessfulViewModel] as string);
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -77,7 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (TempData[Constants.UploadUnsuccessfulViewModel] == null)
             {
                 _logger.LogWarning(LogEvent.UploadUnsuccessfulPageFailed,
-                    $"Unable to read upload registration response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                    $"Unable to read upload unsuccessful registration response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

@@ -23,7 +23,7 @@
         public const string ProviderTlevelDetailsViewModel = "ProviderTlevelDetailsViewModel";
 
         public const string UploadUnsuccessfulViewModel = "UploadUnsuccessfulViewModel";
-
+        public const string UploadSuccessfulViewModel = "UploadSuccessfulViewModel";
 
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 20000;

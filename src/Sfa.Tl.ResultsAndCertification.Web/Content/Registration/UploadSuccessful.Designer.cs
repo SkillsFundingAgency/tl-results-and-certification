@@ -61,11 +61,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} amended registrations.
+        /// </summary>
+        public static string Amended_Registrations_Text {
+            get {
+                return ResourceManager.GetString("Amended_Registrations_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back to registrations.
         /// </summary>
         public static string Back_To_Registrations_Button_Text {
             get {
                 return ResourceManager.GetString("Back_To_Registrations_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} new registrations.
+        /// </summary>
+        public static string New_Registrations_Text {
+            get {
+                return ResourceManager.GetString("New_Registrations_Text", resourceCulture);
             }
         }
         
@@ -88,11 +106,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You successfully sent 230 registrations..
+        ///   Looks up a localized string similar to You successfully sent {0} amended registrations.
         /// </summary>
-        public static string Section_Info_Text {
+        public static string Successfully_Sent_Amended_Registrations_Text {
             get {
-                return ResourceManager.GetString("Section_Info_Text", resourceCulture);
+                return ResourceManager.GetString("Successfully_Sent_Amended_Registrations_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You successfully sent {0} new registrations.
+        /// </summary>
+        public static string Successfully_Sent_New_Registrations_Text {
+            get {
+                return ResourceManager.GetString("Successfully_Sent_New_Registrations_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You successfully sent {0} registrations. This included:.
+        /// </summary>
+        public static string Successfully_Sent_Total_Registrations_Text {
+            get {
+                return ResourceManager.GetString("Successfully_Sent_Total_Registrations_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You successfully sent {0} unchanged registrations.
+        /// </summary>
+        public static string Successfully_Sent_Unchanged_Registrations_Text {
+            get {
+                return ResourceManager.GetString("Successfully_Sent_Unchanged_Registrations_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} unchanged registrations.
+        /// </summary>
+        public static string Unchanged_Registrations_Text {
+            get {
+                return ResourceManager.GetString("Unchanged_Registrations_Text", resourceCulture);
             }
         }
     }
