@@ -20,15 +20,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration
             {
                 if (Stats?.TotalRecordsCount == Stats?.NewRecordsCount)
                 {
-                    return string.Format(UploadSuccessful.Successfully_Sent_New_Registrations_Text, Stats.NewRecordsCount);
+                    return string.Format(UploadSuccessful.Successfully_Sent_New_Registrations_Text, Stats?.NewRecordsCount);
                 }
                 else if (Stats?.TotalRecordsCount == Stats?.AmendedRecordsCount)
                 {
-                    return string.Format(UploadSuccessful.Successfully_Sent_Amended_Registrations_Text, Stats.AmendedRecordsCount);
+                    return string.Format(UploadSuccessful.Successfully_Sent_Amended_Registrations_Text, Stats?.AmendedRecordsCount);
                 }
                 else if (Stats?.TotalRecordsCount == Stats?.UnchangedRecordsCount)
                 {
-                    return string.Format(UploadSuccessful.Successfully_Sent_Unchanged_Registrations_Text, Stats.UnchangedRecordsCount);
+                    return string.Format(UploadSuccessful.Successfully_Sent_Unchanged_Registrations_Text, Stats?.UnchangedRecordsCount);
                 }
                 else
                 {

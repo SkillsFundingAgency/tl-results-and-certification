@@ -64,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualRegistration.TqAwardingOrganisationId.Should().Be(TqProvider.TqAwardingOrganisationId);
                 actualRegistration.TlAwardingOrganisatonId.Should().Be(TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.Id);
                 actualRegistration.TlProviderId.Should().Be(TqProvider.TlProviderId);
-                actualRegistration.TlSpecialismLarIds.Should().BeEquivalentTo(TqProvider.TqAwardingOrganisation.TlPathway.TlSpecialisms.Select(s => new KeyValuePair<int, string>(s.Id, s.LarId)));
+                actualRegistration.TlSpecialismLarIds.Should().BeEquivalentTo(TqProvider.TqAwardingOrganisation.TlPathway.TlSpecialisms.Select(s => new KeyValuePair<int, string>(s.Id, s.LarId)).Where(s => expectedRegistration.SpecialismCodes.Contains(s.Value)));
             }
         }
     }
