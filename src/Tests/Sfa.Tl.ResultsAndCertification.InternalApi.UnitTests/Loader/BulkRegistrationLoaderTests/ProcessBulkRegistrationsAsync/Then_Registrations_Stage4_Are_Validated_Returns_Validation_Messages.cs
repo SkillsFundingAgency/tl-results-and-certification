@@ -59,8 +59,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
                             {
                                 Id = 1000,
                                 TqProviderId = 1,
-                                AcademicYear = "15/07/2020".ToDateTime().Year, // TODO: Need to calcualate based on the requirements
-                                RegistrationDate = "15/07/2020".ToDateTime(),
+                                AcademicYear = "01/07/2020".ToDateTime().Year, // TODO: Need to calcualate based on the requirements
+                                RegistrationDate = "01/07/2020".ToDateTime(),
                                 StartDate = DateTime.UtcNow,
                                 Status = RegistrationPathwayStatus.Active,
                                 IsBulkUpload = true,
