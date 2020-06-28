@@ -9,9 +9,9 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
     {
         public bool Equals(TqRegistrationProfile x, TqRegistrationProfile y)
         {
-            if (x == null && x == null)
+            if (x == null && y == null)
                 return true;
-            else if (x == null || x == null)
+            else if (x == null || y == null)
                 return false;
             else if (x.GetType() != y.GetType())
                 return false;
@@ -36,15 +36,13 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
                 hashCode = (hashCode * 397) ^ (reg.Lastname != null ? reg.Lastname.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (reg.DateofBirth != null ? reg.DateofBirth.GetHashCode() : 0);
 
-                foreach (var registrationPathway in reg.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active))
+                foreach (var registrationPathway in reg.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active).OrderBy(p => p.TqProviderId))
                 {
                     hashCode = (hashCode * 397) ^ registrationPathway.TqProviderId.GetHashCode();
                     hashCode = (hashCode * 397) ^ registrationPathway.RegistrationDate.GetHashCode();
-                    //hashCode = (hashCode * 397) ^ registrationPathway.StartDate.GetHashCode();
-                    //hashCode = (hashCode * 397) ^ (registrationPathway.EndDate != null ? registrationPathway.EndDate.GetHashCode() : 0);
                     hashCode = (hashCode * 397) ^ registrationPathway.Status.GetHashCode();
 
-                    foreach (var registrationSpecialism in registrationPathway.TqRegistrationSpecialisms.Where(p => p.Status == RegistrationSpecialismStatus.Active))
+                    foreach (var registrationSpecialism in registrationPathway.TqRegistrationSpecialisms.Where(p => p.Status == RegistrationSpecialismStatus.Active).OrderBy(p => p.TlSpecialismId))
                     {
                         hashCode = (hashCode * 397) ^ registrationSpecialism.TlSpecialismId.GetHashCode();
                         hashCode = (hashCode * 397) ^ registrationSpecialism.Status.GetHashCode();
@@ -103,36 +101,29 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
 
         private bool EqualsTqRegistrationPathway(TqRegistrationPathway x, TqRegistrationPathway y)
         {
-            if (x == null && x == null)
+            if (x == null && y == null)
                 return true;
-            else if (x == null || x == null)
+            else if (x == null || y == null)
                 return false;
             else if (x.GetType() != y.GetType())
                 return false;
             else
             {
-                var retVal =
-                    x.TqProviderId == y.TqProviderId
-                    && Equals(x.RegistrationDate, y.RegistrationDate)
-                    //&& Equals(x.StartDate, y.StartDate)
-                    //&& Equals(x.EndDate, y.EndDate)
-                    && x.Status == y.Status;
-                return retVal;
+                return x.TqProviderId == y.TqProviderId && Equals(x.RegistrationDate, y.RegistrationDate) && x.Status == y.Status;
             }
         }
 
         private bool EqualsTqRegistrationSpecialism(TqRegistrationSpecialism x, TqRegistrationSpecialism y)
         {
-            if (x == null && x == null)
+            if (x == null && y == null)
                 return true;
-            else if (x == null || x == null)
+            else if (x == null || y == null)
                 return false;
             else if (x.GetType() != y.GetType())
                 return false;
             else
             {
-                var retVal = x.TlSpecialismId == y.TlSpecialismId && x.Status == y.Status;
-                return retVal;
+                return x.TlSpecialismId == y.TlSpecialismId && x.Status == y.Status;
             }
         }
     }

@@ -7,9 +7,9 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
     {
         public bool Equals(TqRegistrationProfile x, TqRegistrationProfile y)
         {
-            if (x == null && x == null)
+            if (x == null && y == null)
                 return true;
-            else if (x == null || x == null)
+            else if (x == null || y == null)
                 return false;
             else if (x.GetType() != y.GetType())
                 return false;

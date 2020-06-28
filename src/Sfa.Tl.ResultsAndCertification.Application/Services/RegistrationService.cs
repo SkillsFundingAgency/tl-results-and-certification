@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 var tqRegistrationProfileComparer = new TqRegistrationProfileEqualityComparer();
 
-                modifiedRegistrations = matchedRegistrations.Except(sameOrDuplicateRegistrations, comparer).ToList();
+                modifiedRegistrations = matchedRegistrations.Except(sameOrDuplicateRegistrations, ulnComparer).ToList();
 
                 modifiedRegistrations.ForEach(modifiedRegistration =>
                 {
