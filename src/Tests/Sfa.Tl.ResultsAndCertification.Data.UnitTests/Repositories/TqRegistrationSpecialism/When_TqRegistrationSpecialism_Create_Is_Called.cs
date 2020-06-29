@@ -2,16 +2,16 @@
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrationPathway
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrationSpecialism
 {
-    public class When_TqRegistrationPathway_Create_Is_Called : BaseTest<Domain.Models.TqRegistrationPathway>
+    public class When_TqRegistrationSpecialism_Create_Is_Called : BaseTest<Domain.Models.TqRegistrationSpecialism>
     {
         private int _result;
-        private Domain.Models.TqRegistrationPathway _data;
+        private Domain.Models.TqRegistrationSpecialism _data;
 
         public override void Given()
         {
-            _data = new TqRegistrationPathwayBuilder().Build();
+            _data = new TqRegistrationSpecialismBuilder().Build();
 
         }
         public override void When()
