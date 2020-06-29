@@ -3,16 +3,16 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrationProfile
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrationPathway
 {
-    public class When_TqRegistrationProfile_CreateMany_Is_Called : BaseTest<Domain.Models.TqRegistrationProfile>
+    public class When_TqRegistrationPathway_CreateMany_Is_Called : BaseTest<Domain.Models.TqRegistrationPathway>
     {
         private int _result;
-        private IList<Domain.Models.TqRegistrationProfile> _data;
+        private IList<Domain.Models.TqRegistrationPathway> _data;
 
         public override void Given()
         {
-            _data = new TqRegistrationProfileBuilder().BuildList();
+            _data = new TqRegistrationPathwayBuilder().BuildList();
         }
 
         public override void When()
