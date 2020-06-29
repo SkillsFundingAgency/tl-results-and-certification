@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
         public static IRuleBuilderOptions<T, string> MustBeNumberWithLength<T>(this IRuleBuilder<T, string> ruleBuilder, int length)
         {
             return ruleBuilder
-                .Must(r => r.Length == length && int.TryParse(r, out int result))
+                .Must(r => r.Length == length && r.IsLong())
                 .WithMessage(string.Format(ValidationMessages.MustBeNumberWithLength, "{PropertyName}", length));
         }
 
