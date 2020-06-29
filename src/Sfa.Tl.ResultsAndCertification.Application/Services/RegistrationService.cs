@@ -161,6 +161,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         {
                             if (hasTqRegistrationProfileRecordChanged)
                             {
+                                amendedRegistration.CreatedBy = existingRegistration.CreatedBy;
+                                amendedRegistration.CreatedOn = existingRegistration.CreatedOn;
                                 amendedRegistration.ModifiedBy = amendedRegistration.CreatedBy;
                                 amendedRegistration.ModifiedOn = DateTime.UtcNow;
                             }
