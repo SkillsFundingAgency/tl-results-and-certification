@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         }
 
         [Fact]
-        public void Then_Expectected_Response_Is_Returned()
+        public void Then_Expected_Response_Is_Returned()
         {
             _result.Should().NotBeNull();
             _result.Count.Should().Be(_stage3RegistrationsData.Count);
