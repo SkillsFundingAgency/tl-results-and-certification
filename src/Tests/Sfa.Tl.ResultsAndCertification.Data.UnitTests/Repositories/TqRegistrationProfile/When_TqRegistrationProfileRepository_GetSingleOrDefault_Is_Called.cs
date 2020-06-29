@@ -3,16 +3,16 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqProvider
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrationProfile
 {
-    public class When_TqProviderRepository_GetSingleOrDefault_Is_Called : BaseTest<Domain.Models.TqProvider>
+    public class When_TqRegistrationProfileRepository_GetSingleOrDefault_Is_Called : BaseTest<Domain.Models.TqRegistrationProfile>
     {
-        private Domain.Models.TqProvider _result;
-        private Domain.Models.TqProvider _data;
+        private Domain.Models.TqRegistrationProfile _result;
+        private Domain.Models.TqRegistrationProfile _data;
 
         public override void Given()
         {
-            _data = new TqProviderBuilder().Build();
+            _data = new TqRegistrationProfileBuilder().Build();
             DbContext.AddRange(_data);
             DbContext.SaveChanges();
         }
@@ -27,8 +27,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqProvider
             _data.Should().NotBeNull();
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
-            _result.TqAwardingOrganisationId.Should().Be(_data.TqAwardingOrganisationId);
-            _result.TlProviderId.Should().Be(_data.TlProviderId);
+            _result.UniqueLearnerNumber.Should().Be(_data.UniqueLearnerNumber);
+            _result.Firstname.Should().Be(_data.Firstname);
+            _result.Lastname.Should().Be(_data.Lastname);
+            _result.DateofBirth.Should().Be(_data.DateofBirth);
             _result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
             _result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);
