@@ -112,7 +112,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
             CsvService.ReadAndParseFileAsync(Arg.Any<RegistrationCsvRecordRequest>()).Returns(csvResponse);
             RegistrationService.ValidateRegistrationTlevelsAsync(AoUkprn, Arg.Any<IEnumerable<RegistrationCsvRecordResponse>>()).Returns(expectedStage3Response);
             RegistrationService.TransformRegistrationModel(Arg.Any<IList<RegistrationRecordResponse>>(), Arg.Any<string>()).Returns(tqRegistrationProfiles);
-            RegistrationService.CompareAndProcessRegistrations(Arg.Any<IList<TqRegistrationProfile>>()).Returns(expectedStage4Response);
+            RegistrationService.CompareAndProcessRegistrationsAsync(Arg.Any<IList<TqRegistrationProfile>>()).Returns(expectedStage4Response);
             CsvService.WriteFileAsync(Arg.Any<List<RegistrationValidationError>>()).Returns(expectedWriteFileBytes);
         }
 
@@ -123,7 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
             CsvService.Received(1).ReadAndParseFileAsync(Arg.Any<RegistrationCsvRecordRequest>());
             RegistrationService.Received(1).ValidateRegistrationTlevelsAsync(AoUkprn, Arg.Any<IEnumerable<RegistrationCsvRecordResponse>>());
             RegistrationService.Received(1).TransformRegistrationModel(Arg.Any<IList<RegistrationRecordResponse>>(), Arg.Any<string>());
-            RegistrationService.Received(1).CompareAndProcessRegistrations(Arg.Any<IList<TqRegistrationProfile>>());
+            RegistrationService.Received(1).CompareAndProcessRegistrationsAsync(Arg.Any<IList<TqRegistrationProfile>>());
 
             CsvService.Received(1).WriteFileAsync(Arg.Any<List<RegistrationValidationError>>());
             BlobService.Received(1).UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());

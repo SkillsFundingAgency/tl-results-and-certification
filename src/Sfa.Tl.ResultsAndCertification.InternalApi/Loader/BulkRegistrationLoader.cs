@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 var tqRegistrationProfiles = _registrationService.TransformRegistrationModel(stage3RegistrationsResponse, request.PerformedBy);
 
                 // Step: Process Stage 4 validation and DB operation                
-                var registrationProcessResult = await _registrationService.CompareAndProcessRegistrations(tqRegistrationProfiles);
+                var registrationProcessResult = await _registrationService.CompareAndProcessRegistrationsAsync(tqRegistrationProfiles);
 
                 return registrationProcessResult.IsValid ? 
                     await ProcessRegistrationResponse(request, response, registrationProcessResult) : 

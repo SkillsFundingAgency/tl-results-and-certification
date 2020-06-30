@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _tqRegistrationRepository = tqRegistrationRepository;
         }
 
-        public async Task<RegistrationProcessResponse> CompareAndProcessRegistrations(IList<TqRegistrationProfile> registrationsToProcess)
+        public async Task<RegistrationProcessResponse> CompareAndProcessRegistrationsAsync(IList<TqRegistrationProfile> registrationsToProcess)
         {
             var response = new RegistrationProcessResponse();
             var ulnComparer = new TqRegistrationUlnEqualityComparer();
