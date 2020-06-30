@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using System;
 using System.Collections.Generic;
@@ -7,24 +8,13 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
     public class TqRegistrationSpecialismBuilder
     {
-        public Domain.Models.TqRegistrationSpecialism Build() => new Domain.Models.TqRegistrationSpecialism
+        public TqRegistrationSpecialism Build(TqRegistrationPathway tqRegistrationPathway = null)
         {
-            TqRegistrationPathwayId = 1,
-            TlSpecialismId = 1,
-            StartDate = DateTime.UtcNow,
-            Status = RegistrationSpecialismStatus.Active,
-            IsBulkUpload = true,
-            CreatedBy = Constants.CreatedByUser,
-            CreatedOn = Constants.CreatedOn,
-            ModifiedBy = Constants.ModifiedByUser,
-            ModifiedOn = Constants.ModifiedOn
-        };
-
-        public IList<Domain.Models.TqRegistrationSpecialism> BuildList() => new List<Domain.Models.TqRegistrationSpecialism>
-        {
-            new Domain.Models.TqRegistrationSpecialism
+            tqRegistrationPathway ??= new TqRegistrationPathwayBuilder().Build();
+            return new TqRegistrationSpecialism
             {
-                TqRegistrationPathwayId = 1,
+                TqRegistrationPathwayId = tqRegistrationPathway.Id,
+                TqRegistrationPathway = tqRegistrationPathway,
                 TlSpecialismId = 1,
                 StartDate = DateTime.UtcNow,
                 Status = RegistrationSpecialismStatus.Active,
@@ -33,19 +23,42 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
-            },
-            new Domain.Models.TqRegistrationSpecialism
+            };
+        }
+
+        public IList<TqRegistrationSpecialism> BuildList(TqRegistrationPathway tqRegistrationPathway = null)
+        {
+            tqRegistrationPathway ??= new TqRegistrationPathwayBuilder().Build();
+            var tqRegistrationSpecialisms = new List<TqRegistrationSpecialism> 
             {
-                TqRegistrationPathwayId = 1,
-                TlSpecialismId = 2,
-                StartDate = DateTime.UtcNow,
-                Status = RegistrationSpecialismStatus.Active,
-                IsBulkUpload = true,
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            }
-        };
+                new TqRegistrationSpecialism
+                {
+                    TqRegistrationPathwayId = tqRegistrationPathway.Id,
+                    TqRegistrationPathway = tqRegistrationPathway,
+                    TlSpecialismId = 1,
+                    StartDate = DateTime.UtcNow,
+                    Status = RegistrationSpecialismStatus.Active,
+                    IsBulkUpload = true,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
+                },
+                new TqRegistrationSpecialism
+                {
+                    TqRegistrationPathwayId = tqRegistrationPathway.Id,
+                    TqRegistrationPathway = tqRegistrationPathway,
+                    TlSpecialismId = 2,
+                    StartDate = DateTime.UtcNow,
+                    Status = RegistrationSpecialismStatus.Active,
+                    IsBulkUpload = true,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
+                }
+            };
+            return tqRegistrationSpecialisms;
+        }
     }
 }
