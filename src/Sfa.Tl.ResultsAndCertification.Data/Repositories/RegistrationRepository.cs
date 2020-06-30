@@ -45,7 +45,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     {
                         try
                         {
-                            var bulkConfig = new BulkConfig() { UseTempDB = true, PreserveInsertOrder = true, SetOutputIdentity = true, BatchSize = 4000 };
+                            var bulkConfig = new BulkConfig() { UseTempDB = true, SetOutputIdentity = true, BatchSize = 4000 };
+
+                            var orignialProfileEntitites = new List<TqRegistrationProfile>(profileEntities);
+
                             var pathwayRegistrations = pathwayEntities ?? new List<TqRegistrationPathway>();
 
                             if (profileEntities != null && profileEntities.Count > 0)
@@ -58,13 +61,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                                 await _dbContext.BulkInsertOrUpdateAsync(profileEntities, bulkConfig);
 
-                                profileEntities.ToList().ForEach(profile =>
+                                orignialProfileEntitites.ForEach(profile =>
                                 {
+                                    var profileEntity = profileEntities.FirstOrDefault(x => x.UniqueLearnerNumber == profile.UniqueLearnerNumber);
                                     profile.TqRegistrationPathways.ToList().ForEach(pathway =>
                                     {
                                         if (pathway.TqRegistrationProfileId == 0)
                                         {
-                                            pathway.TqRegistrationProfileId = profile.Id;
+                                            pathway.TqRegistrationProfileId = profileEntity.Id;
                                         }
                                         pathwayRegistrations.Add(pathway);
                                     });
@@ -72,6 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             }
 
                             var specialismRegistrations = specialismEntities ?? new List<TqRegistrationSpecialism>();
+                            var orignialPathwayEntitites = new List<TqRegistrationPathway>(pathwayRegistrations);
 
                             if (pathwayRegistrations.Count > 0)
                             {
@@ -83,13 +88,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                                 await _dbContext.BulkInsertOrUpdateAsync(pathwayRegistrations, bulkConfig);
 
-                                pathwayRegistrations.ForEach(pathway =>
+                                orignialPathwayEntitites.ForEach(pathway =>
                                 {
+                                    var pathwayEntity = pathwayRegistrations.FirstOrDefault(p => p.TqRegistrationProfileId == pathway.TqRegistrationProfileId && p.TqProviderId == pathway.TqProviderId && p.Status == Common.Enum.RegistrationPathwayStatus.Active);
                                     pathway.TqRegistrationSpecialisms.ToList().ForEach(specialism =>
                                     {
                                         if (specialism.TqRegistrationPathwayId == 0)
                                         {
-                                            specialism.TqRegistrationPathwayId = pathway.Id;
+                                            specialism.TqRegistrationPathwayId = pathwayEntity.Id;
                                         }
                                         specialismRegistrations.Add(specialism);
                                     });
@@ -103,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 // will work as expected. If you remove below line then Id values will be interchanged.
                                 // please do not remove below line
                                 specialismRegistrations = SortUpdateAndInsertOrder(specialismRegistrations, x => x.Id);
-                                await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.PreserveInsertOrder = true; bulkConfig.SetOutputIdentity = true; bulkConfig.BatchSize = 4000; });
+                                await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 4000; });
                             }
 
                             transaction.Commit();

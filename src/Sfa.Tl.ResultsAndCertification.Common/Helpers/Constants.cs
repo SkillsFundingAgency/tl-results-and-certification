@@ -26,8 +26,8 @@
         public const string UploadSuccessfulViewModel = "UploadSuccessfulViewModel";
 
         // Registration Data Index Constants
-        public const int RegistrationProfileStartIndex = 20000;
-        public const int RegistrationPathwayStartIndex = 40000;
-        public const int RegistrationSpecialismsStartIndex = 90000;
+        public const int RegistrationProfileStartIndex = 100000;
+        public const int RegistrationPathwayStartIndex = 200000;
+        public const int RegistrationSpecialismsStartIndex = 300000;
     }
 }

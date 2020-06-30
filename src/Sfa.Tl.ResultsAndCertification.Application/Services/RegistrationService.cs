@@ -58,11 +58,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         var hasBothPathwayAndSpecialismsRecordsChanged = false;
                         var hasOnlySpecialismsRecordChanged = false;
+
                         var hasTqRegistrationProfileRecordChanged = !tqRegistrationProfileComparer.Equals(amendedRegistration, existingRegistration);
 
-                        amendedRegistration.Id = existingRegistration.Id;
-                        amendedRegistration.TqRegistrationPathways.ToList().ForEach(p => p.TqRegistrationProfileId = existingRegistration.Id);
+                        amendedRegistration.Id = existingRegistration.Id; // assign existing registrionprofile table Id to amendedRegistration Id
+                        amendedRegistration.TqRegistrationPathways.ToList().ForEach(p => p.TqRegistrationProfileId = existingRegistration.Id); // updating profile fk
 
+                        // below step returns only Active Pathway and associated acitve specialisms
                         var activePathwayRegistrationsInDb = existingRegistration.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active)
                         .Select(x =>
                         {
@@ -173,6 +175,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             }
                             else if (hasTqRegistrationProfileRecordChanged && !hasBothPathwayAndSpecialismsRecordsChanged && hasOnlySpecialismsRecordChanged)
                             {
+                                // profile changed and specialisms modified/added
                                 pathwaysToUpdate.ForEach(p => { amendedSpecialismRecords.AddRange(p.TqRegistrationSpecialisms); });
                                 amendedRegistration.TqRegistrationPathways.Clear();
                             }
@@ -201,8 +204,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (response.IsValid)
             {
-                var registrationsToSendToDB = newRegistrations.Concat(amendedRegistrations.Except(amendedRegistrationsToIgnore, ulnComparer)).ToList();
-                response.IsSuccess = await _tqRegistrationRepository.BulkInsertOrUpdateTqRegistrations(registrationsToSendToDB, amendedPathwayRecords, amendedSpecialismRecords);
+                var registrationProfilesToSendToDB = newRegistrations.Concat(amendedRegistrations.Except(amendedRegistrationsToIgnore, ulnComparer)).ToList();
+                response.IsSuccess = await _tqRegistrationRepository.BulkInsertOrUpdateTqRegistrations(registrationProfilesToSendToDB, amendedPathwayRecords, amendedSpecialismRecords);
             }
 
             response.BulkUploadStats = new BulkUploadStats
