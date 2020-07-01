@@ -100,6 +100,33 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                             ModifiedOn = Constants.ModifiedOn
                         });
                     }
+                    else if (route.Name == EnumExtensions.GetDisplayName(EnumTlRoute.Digital))
+                    {
+                        results.Add(new TlPathway
+                        {
+                            TlevelTitle = "T Level in Digital Support and Services",
+                            Name = "Digital Support Services",
+                            LarId = "10623456",
+                            TlRoute = route,
+                            CreatedBy = Constants.CreatedByUser,
+                            CreatedOn = Constants.CreatedOn,
+                            ModifiedBy = Constants.ModifiedByUser,
+                            ModifiedOn = Constants.ModifiedOn
+                        });
+
+                        results.Add(new TlPathway
+                        {
+                            TlevelTitle = "T Level in Digital Business Services",
+                            Name = "Digital Business Services",
+                            LarId = "10723456",
+                            TlRoute = route,
+                            CreatedBy = Constants.CreatedByUser,
+                            CreatedOn = Constants.CreatedOn,
+                            ModifiedBy = Constants.ModifiedByUser,
+                            ModifiedOn = Constants.ModifiedOn
+                        });
+
+                    }
                 }
                 return results;
             }

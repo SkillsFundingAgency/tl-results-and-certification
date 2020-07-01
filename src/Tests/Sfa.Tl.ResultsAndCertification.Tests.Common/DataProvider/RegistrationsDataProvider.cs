@@ -112,6 +112,28 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tqRegistrationPathway;
         }
 
+        public static TqRegistrationPathway CreateTqRegistrationPathway(ResultsAndCertificationDbContext _dbContext, TqRegistrationProfile tqRegistrationProfile, TqProvider tqProvider, bool addToDbContext = true)
+        {
+            if (tqRegistrationProfile == null)
+            {
+                tqRegistrationProfile = new TqRegistrationProfileBuilder().Build();
+            }
+
+            var tqRegistrationPathway = new TqRegistrationPathwayBuilder().Build(tqRegistrationProfile);
+
+            if(tqProvider != null)
+            {
+                tqRegistrationPathway.TqProviderId = tqProvider.Id;
+                tqRegistrationPathway.TqProvider = tqProvider;
+            }
+
+            if (addToDbContext)
+            {
+                _dbContext.Add(tqRegistrationPathway);
+            }
+            return tqRegistrationPathway;
+        }
+
         public static TqRegistrationPathway CreateTqRegistrationPathway(ResultsAndCertificationDbContext _dbContext, TqRegistrationProfile tqRegistrationProfile, int tqProviderId, DateTime registrationDate, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active, bool addToDbContext = true)
         {
             if (tqRegistrationProfile == null)
@@ -141,7 +163,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 
         #region TqRegistrationSpecialism
 
-        public static TqRegistrationSpecialism CreateTqRegistrationSpecialism(ResultsAndCertificationDbContext _dbContext, TqRegistrationSpecialism tqRegistrationSpecialism, bool addToDbContext = true)
+        public static TqRegistrationSpecialism CreateTqRegistrationSpecialism(ResultsAndCertificationDbContext _dbContext, TqRegistrationSpecialism tqRegistrationSpecialism = null, bool addToDbContext = true)
         {
             if (addToDbContext && tqRegistrationSpecialism == null)
             {
@@ -150,16 +172,17 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tqRegistrationSpecialism;
         }
 
-        public static TqRegistrationSpecialism CreateTqRegistrationSpecialism(ResultsAndCertificationDbContext _dbContext, TqRegistrationPathway tqRegistrationPathway, int tlSpecialismId, RegistrationSpecialismStatus registrationSpecialismStatus, bool addToDbContext = true)
+        public static TqRegistrationSpecialism CreateTqRegistrationSpecialism(ResultsAndCertificationDbContext _dbContext, TqRegistrationPathway tqRegistrationPathway, TlSpecialism tlSpecialism, RegistrationSpecialismStatus registrationSpecialismStatus = RegistrationSpecialismStatus.Active, bool addToDbContext = true)
         {
-            if (tqRegistrationPathway == null)
+            if (tqRegistrationPathway == null && tlSpecialism == null)
                 return null;
 
             var tqRegistrationSpecialism = new TqRegistrationSpecialism
             {
                 TqRegistrationPathwayId = tqRegistrationPathway.Id,
                 TqRegistrationPathway = tqRegistrationPathway,
-                TlSpecialismId = tlSpecialismId,
+                TlSpecialismId = tlSpecialism.Id,
+                TlSpecialism = tlSpecialism,
                 StartDate = DateTime.UtcNow,
                 Status = registrationSpecialismStatus,
                 IsBulkUpload = true
@@ -172,7 +195,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tqRegistrationSpecialism;
         }
 
-        public static IList<TqRegistrationSpecialism> CreateTqRegistrationSpecialism(ResultsAndCertificationDbContext _dbContext, TqRegistrationPathway tqRegistrationPathway, bool addToDbContext = true)
+        public static IList<TqRegistrationSpecialism> CreateTqRegistrationSpecialisms(ResultsAndCertificationDbContext _dbContext, TqRegistrationPathway tqRegistrationPathway, bool addToDbContext = true)
         {
             var tqRegistrationSpecialisms = new TqRegistrationSpecialismBuilder().BuildList(tqRegistrationPathway);
 

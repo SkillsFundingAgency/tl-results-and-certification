@@ -52,5 +52,23 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 TlSpecialismLarIds = new List<KeyValuePair<int, string>> { new KeyValuePair<int, string>(1, "10123456") }
             }
         };
+
+        public IList<RegistrationRecordResponse> BuildActiveUlnWithDifferentAoList() => new List<RegistrationRecordResponse>
+        {
+            new RegistrationRecordResponse
+            {
+                Uln = 111111112,
+                FirstName = "First 2",
+                LastName = "Last 2",
+                DateOfBirth = DateTime.Parse("12/01/1985"),
+                StartDate = DateTime.Now,
+                TqProviderId = 2, // Assign different TqProviderId to show ActiveUlnWithDifferentAo validation error
+                TlProviderId = 1,
+                TqAwardingOrganisationId = 1,
+                TlAwardingOrganisatonId = 1,
+                TlPathwayId = 1,
+                TlSpecialismLarIds = new List<KeyValuePair<int, string>> { new KeyValuePair<int, string>(1, "10123456")}
+            }
+        };
     }
 }

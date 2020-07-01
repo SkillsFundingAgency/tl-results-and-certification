@@ -10,10 +10,10 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
     {
         public TqRegistrationPathway Build(TqRegistrationProfile tqRegistrationProfile = null)
         {
-            _ = tqRegistrationProfile ?? new TqRegistrationProfileBuilder().Build();
+            tqRegistrationProfile ??= new TqRegistrationProfileBuilder().Build();
             return new TqRegistrationPathway
             {
-                //TqRegistrationProfileId = tqRegistrationProfile.Id,
+                TqRegistrationProfileId = tqRegistrationProfile.Id,
                 TqRegistrationProfile = tqRegistrationProfile,
                 TqProviderId = 1,
                 AcademicYear = 2020,
@@ -30,13 +30,13 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 
         public IList<TqRegistrationPathway> BuildList(TqRegistrationProfile tqRegistrationProfile = null)
         {
-            //tqRegistrationProfile ??= new TqRegistrationProfileBuilder().Build();
+            tqRegistrationProfile ??= new TqRegistrationProfileBuilder().Build();
             var tqRegistrationPathways = new List<TqRegistrationPathway> {
                 new TqRegistrationPathway
                 {
-                    //TqRegistrationProfileId = tqRegistrationProfile.Id,
-                    TqRegistrationProfile = new TqRegistrationProfileBuilder().Build(),
-                    //TqProviderId = 1,
+                    TqRegistrationProfileId = tqRegistrationProfile.Id,
+                    TqRegistrationProfile = tqRegistrationProfile,
+                    TqProviderId = 1,
                     AcademicYear = 2020,
                     RegistrationDate = "07/05/2020".ToDateTime(),
                     StartDate = DateTime.UtcNow,
@@ -49,9 +49,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 },
                 new TqRegistrationPathway
                 {
-                    //TqRegistrationProfileId = tqRegistrationProfile.Id,
-                    TqRegistrationProfile = new TqRegistrationProfileBuilder().Build(),
-                    //TqProviderId = 1,
+                    TqRegistrationProfileId = tqRegistrationProfile.Id,
+                    TqRegistrationProfile = tqRegistrationProfile,
+                    TqProviderId = 1,
                     AcademicYear = 2020,
                     RegistrationDate = "10/06/2020".ToDateTime(),
                     StartDate = DateTime.UtcNow,
@@ -64,9 +64,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 },
                 new TqRegistrationPathway
                 {
-                    //TqRegistrationProfileId = tqRegistrationProfile.Id,
-                    TqRegistrationProfile = new TqRegistrationProfileBuilder().Build(),
-                    //TqProviderId = 1,
+                    TqRegistrationProfileId = tqRegistrationProfile.Id,
+                    TqRegistrationProfile = tqRegistrationProfile,
+                    TqProviderId = 1,
                     AcademicYear = 2020,
                     RegistrationDate = "11/06/2020".ToDateTime(),
                     StartDate = DateTime.UtcNow,

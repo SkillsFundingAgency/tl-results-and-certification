@@ -49,6 +49,14 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                         CreatedOn = Constants.CreatedOn,
                         ModifiedBy = Constants.ModifiedByUser,
                         ModifiedOn = Constants.ModifiedOn
+                    },
+                    new Domain.Models.TlRoute
+                    {
+                        Name = "Digital",
+                        CreatedBy = Constants.CreatedByUser,
+                        CreatedOn = Constants.CreatedOn,
+                        ModifiedBy = Constants.ModifiedByUser,
+                        ModifiedOn = Constants.ModifiedOn
                     }
                 };                
             }

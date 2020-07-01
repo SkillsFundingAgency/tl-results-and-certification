@@ -22,19 +22,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected TlAwardingOrganisation TlAwardingOrganisation;
         protected TqAwardingOrganisation TqAwardingOrganisation;
         protected TqProvider TqProvider;
+        protected IList<TlProvider> TlProviders;
+        protected IList<TqProvider> TqProviders;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IProviderRepository ProviderRepository;
         protected IRegistrationRepository RegistrationRepository;
         protected ILogger<ProviderRepository> ProviderRepositoryLogger;
         protected ILogger<RegistrationRepository> RegistrationRepositoryLogger;
 
-        protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson)
+        protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
             TlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
             Route = TlevelDataProvider.CreateTlRoute(DbContext, awardingOrganisation);
             Pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, Route);
             Specialisms = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, Pathway);
-            TqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Route, Pathway, TlAwardingOrganisation);
+            TqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Pathway, TlAwardingOrganisation);
             TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
             DbContext.SaveChangesAsync();
