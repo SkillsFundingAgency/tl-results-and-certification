@@ -76,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
             _tlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, _awardingOrganisation);
             _route = TlevelDataProvider.CreateTlRoute(DbContext, _awardingOrganisation);
             _pathway = TlevelDataProvider.CreateTlPathway(DbContext, _awardingOrganisation, _route);
-            _tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, _route, _pathway, _tlAwardingOrganisation, _tlevelReviewStatus);
+            _tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, _pathway, _tlAwardingOrganisation, _tlevelReviewStatus);
             DbContext.SaveChangesAsync();
             DetachEntity<TqAwardingOrganisation>();
         }

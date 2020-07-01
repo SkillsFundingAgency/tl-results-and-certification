@@ -255,9 +255,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tqAwardingOrganisation;
         }
 
-        public static TqAwardingOrganisation CreateTqAwardingOrganisation(ResultsAndCertificationDbContext _dbContext, TlRoute tlRoute, TlPathway tlPathway, TlAwardingOrganisation tlAwardingOrganisation, TlevelReviewStatus tLevelReviewStatus = TlevelReviewStatus.AwaitingConfirmation, bool addToDbContext = true)
+        public static TqAwardingOrganisation CreateTqAwardingOrganisation(ResultsAndCertificationDbContext _dbContext, TlPathway tlPathway, TlAwardingOrganisation tlAwardingOrganisation, TlevelReviewStatus tLevelReviewStatus = TlevelReviewStatus.AwaitingConfirmation, bool addToDbContext = true)
         {
-            if(tlRoute != null && tlPathway != null)
+            if(tlPathway != null)
             {
                 var tqAwardingOrganisation = new TqAwardingOrganisation
                 {

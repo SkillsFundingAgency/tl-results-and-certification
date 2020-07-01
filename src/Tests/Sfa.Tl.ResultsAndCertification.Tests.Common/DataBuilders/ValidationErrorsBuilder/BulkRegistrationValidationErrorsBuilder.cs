@@ -125,5 +125,19 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 ErrorMessage = ValidationMessages.SpecialismNotValidWithCore
             }
         };
+
+        public IList<RegistrationValidationError> BuildStage4ValidationErrorsList() => new List<RegistrationValidationError>
+        {
+            new RegistrationValidationError
+            {
+                Uln = "1111111111",
+                ErrorMessage = ValidationMessages.ActiveUlnWithDifferentAo
+            },
+            new RegistrationValidationError
+            {
+                Uln = "1111111112",
+                ErrorMessage = ValidationMessages.CoreForUlnCannotBeChangedYet
+            }
+        };
     }
 }
