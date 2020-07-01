@@ -48,12 +48,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             var bulkConfig = new BulkConfig() { UseTempDB = true, SetOutputIdentity = true, BatchSize = 4000 };
 
                             var pathwayRegistrations = pathwayEntities ?? new List<TqRegistrationPathway>();
-                            
-                            await ProcessProfileEntities(profileEntities, bulkConfig, pathwayRegistrations);
+
+                            pathwayRegistrations = await ProcessProfileEntities(bulkConfig, profileEntities, pathwayRegistrations);
 
                             var specialismRegistrations = specialismEntities ?? new List<TqRegistrationSpecialism>();
 
-                            await ProcessRegistrationPathwayEntities(bulkConfig, pathwayRegistrations, specialismRegistrations);
+                            specialismRegistrations = await ProcessRegistrationPathwayEntities(bulkConfig, pathwayRegistrations, specialismRegistrations);
                            
                             await ProcessRegistrationSpecialismEntities(specialismRegistrations);
 
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         }
                         catch (Exception ex)
                         {
-                            _logger.LogError(ex.Message, ex.InnerException);
+                            _logger.LogError(ex.Message, ex.InnerException);    
                             transaction.Rollback();
                             result = false;
                         }
@@ -71,20 +71,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return result;
         }
 
-        private async Task ProcessProfileEntities(List<TqRegistrationProfile> profileEntities, BulkConfig bulkConfig, List<TqRegistrationPathway> pathwayRegistrations)
+        private async Task<List<TqRegistrationPathway>> ProcessProfileEntities(BulkConfig bulkConfig, List<TqRegistrationProfile> profileEntities, List<TqRegistrationPathway> pathwayRegistrations)
         {
             if (profileEntities != null && profileEntities.Count > 0)
             {
-                var orignialProfileEntitites = new List<TqRegistrationProfile>(profileEntities);
+                var orignialProfileEntititesCopy = new List<TqRegistrationProfile>(profileEntities);
 
-                // please do not remove below ordering line. It is important as we are doing BulkInsertOrUpdate in one go, we would like to have update
-                // records at the top and newley added records at the bootom of the list, so that SetOutputIdentiy
-                // will work as expected. If you remove below line then Id values will be interchanged. please do not remove below line
                 profileEntities = SortUpdateAndInsertOrder(profileEntities, x => x.Id);
 
                 await _dbContext.BulkInsertOrUpdateAsync(profileEntities, bulkConfig);
 
-                orignialProfileEntitites.ForEach(profile =>
+                orignialProfileEntititesCopy.ForEach(profile =>
                 {
                     var profileEntity = profileEntities.FirstOrDefault(x => x.UniqueLearnerNumber == profile.UniqueLearnerNumber);
 
@@ -99,22 +96,20 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     }
                 });
             }
+            return pathwayRegistrations;
         }
 
-        private async Task ProcessRegistrationPathwayEntities(BulkConfig bulkConfig, List<TqRegistrationPathway> pathwayRegistrations, List<TqRegistrationSpecialism> specialismRegistrations)
+        private async Task<List<TqRegistrationSpecialism>> ProcessRegistrationPathwayEntities(BulkConfig bulkConfig, List<TqRegistrationPathway> pathwayRegistrations, List<TqRegistrationSpecialism> specialismRegistrations)
         {
             if (pathwayRegistrations.Count > 0)
             {
-                var orignialPathwayEntitites = new List<TqRegistrationPathway>(pathwayRegistrations);
+                var orignialPathwayEntititesCopy = new List<TqRegistrationPathway>(pathwayRegistrations);
 
-                // please do not remove below ordering line. It is important as we are doing BulkInsertOrUpdate in one go, we would like to have update
-                // records at the top and newley added records at the bootom of the list, so that SetOutputIdentiy
-                // will work as expected. If you remove below line then Id values will be interchanged. please do not remove below line
                 pathwayRegistrations = SortUpdateAndInsertOrder(pathwayRegistrations, x => x.Id);
 
                 await _dbContext.BulkInsertOrUpdateAsync(pathwayRegistrations, bulkConfig);
 
-                orignialPathwayEntitites.ForEach(pathway =>
+                orignialPathwayEntititesCopy.ForEach(pathway =>
                 {
                     var pathwayEntity = pathwayRegistrations.FirstOrDefault(p => p.TqRegistrationProfileId == pathway.TqRegistrationProfileId
                                                                             && p.TqProviderId == pathway.TqProviderId
@@ -123,7 +118,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     foreach (var specialism in pathway.TqRegistrationSpecialisms)
                     {
                         // update fk relationship id for newely added records
-                        if (specialism.TqRegistrationPathwayId == 0)
+                        if (specialism.TqRegistrationPathwayId == 0 && pathwayEntity != null)
                         {
                             specialism.TqRegistrationPathwayId = pathwayEntity.Id;
                         }
@@ -131,15 +126,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     }
                 });
             }
+            return specialismRegistrations;
         }
 
         private async Task ProcessRegistrationSpecialismEntities(List<TqRegistrationSpecialism> specialismRegistrations)
         {
             if (specialismRegistrations.Count > 0)
             {
-                // please do not remove below ordering line. It is important as we are doing BulkInsertOrUpdate in one go, we would like to have update
-                // records at the top and newley added records at the bootom of the list, so that SetOutputIdentiy
-                // will work as expected. If you remove below line then Id values will be interchanged. please do not remove below line
                 specialismRegistrations = SortUpdateAndInsertOrder(specialismRegistrations, x => x.Id);
                 await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 4000; });
             }

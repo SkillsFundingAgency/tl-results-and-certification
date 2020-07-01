@@ -30,9 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<RegistrationProcessResponse> CompareAndProcessRegistrationsAsync(IList<TqRegistrationProfile> registrationsToProcess)
         {
             var response = new RegistrationProcessResponse();
+            
             var ulnComparer = new TqRegistrationUlnEqualityComparer();
-            var comparer = new TqRegistrationRecordEqualityComparer();
-
             var amendedRegistrations = new List<TqRegistrationProfile>();
             var amendedRegistrationsToIgnore = new List<TqRegistrationProfile>();
             var amendedPathwayRecords = new List<TqRegistrationPathway>();
@@ -42,9 +41,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var newRegistrations = registrationsToProcess.Except(existingRegistrationsFromDb, ulnComparer).ToList();
             var matchedRegistrations = registrationsToProcess.Intersect(existingRegistrationsFromDb, ulnComparer).ToList();
-            var unchangedRegistrations = matchedRegistrations.Intersect(existingRegistrationsFromDb, comparer).ToList();
-
-            if (matchedRegistrations.Count != unchangedRegistrations.Count)
+            var unchangedRegistrations = matchedRegistrations.Intersect(existingRegistrationsFromDb, new TqRegistrationRecordEqualityComparer()).ToList();
+            var hasAnyMatchedRegistrationsToProcess = matchedRegistrations.Count != unchangedRegistrations.Count;
+            
+            if (hasAnyMatchedRegistrationsToProcess)
             {
                 var tqRegistrationProfileComparer = new TqRegistrationProfileEqualityComparer();
 
@@ -58,109 +58,33 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         var hasBothPathwayAndSpecialismsRecordsChanged = false;
                         var hasOnlySpecialismsRecordChanged = false;
-
                         var hasTqRegistrationProfileRecordChanged = !tqRegistrationProfileComparer.Equals(amendedRegistration, existingRegistration);
 
                         amendedRegistration.Id = existingRegistration.Id; // assign existing registrionprofile table Id to amendedRegistration Id
                         amendedRegistration.TqRegistrationPathways.ToList().ForEach(p => p.TqRegistrationProfileId = existingRegistration.Id); // updating profile fk
 
                         // below step returns only Active Pathway and associated acitve specialisms
-                        var activePathwayRegistrationsInDb = existingRegistration.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active)
-                        .Select(x =>
-                        {
-                            x.TqRegistrationSpecialisms = x.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList();
-                            return x;
-                        });
+                        var activePathwayRegistrationsInDb = GetActivePathwayAndSpecialism(existingRegistration);
 
                         var pathwaysToAdd = amendedRegistration.TqRegistrationPathways.Where(mp => !activePathwayRegistrationsInDb.Any(ap => ap.TqProviderId == mp.TqProviderId));
                         var pathwaysToUpdate = (pathwaysToAdd.Any() ? activePathwayRegistrationsInDb : activePathwayRegistrationsInDb.Where(s => amendedRegistration.TqRegistrationPathways.Any(r => r.TqProviderId == s.TqProviderId))).ToList();
 
                         if (pathwaysToUpdate.Any())
                         {
-                            var hasProviderChanged = !pathwaysToUpdate.Any(x => amendedRegistration.TqRegistrationPathways.Any(r => r.TqProvider.TlProviderId == x.TqProvider.TlProviderId));
-                            var hasPathwayChanged = !pathwaysToUpdate.Any(x => amendedRegistration.TqRegistrationPathways.Any(r => r.TqProvider.TqAwardingOrganisation.TlPathwayId == x.TqProvider.TqAwardingOrganisation.TlPathwayId));
-                            var hasRegistrationDateChanged = !pathwaysToUpdate.Any(x => amendedRegistration.TqRegistrationPathways.Any(r => r.RegistrationDate == x.RegistrationDate));
-
-                            // check if there is an active registration for another AO, if so show error message and reject the file
-                            var hasAoChanged = !pathwaysToUpdate.Any(x => amendedRegistration.TqRegistrationPathways.Any(r => r.TqProvider.TqAwardingOrganisation.TlAwardingOrganisatonId == x.TqProvider.TqAwardingOrganisation.TlAwardingOrganisatonId));
-
-                            if (hasAoChanged || hasPathwayChanged)
-                            {
-                                response.ValidationErrors.Add(GetRegistrationValidationError(amendedRegistration.UniqueLearnerNumber, hasAoChanged ? ValidationMessages.ActiveUlnWithDifferentAo : ValidationMessages.CoreForUlnCannotBeChangedYet));
-                            }
+                            response = ValidateStage4Rules(amendedRegistration, pathwaysToUpdate, response);
 
                             if (response.IsValid)
                             {
-                                // change existing TqRegistrationPathway record status and related TqRegistrationSpecialism records status to "Changed"
-                                if (hasProviderChanged || hasRegistrationDateChanged)
-                                {
-                                    pathwaysToUpdate.ForEach(pathwayToUpdate =>
-                                    {
-                                        pathwayToUpdate.Status = hasProviderChanged ? RegistrationPathwayStatus.Transferred : RegistrationPathwayStatus.InActive;
-                                        pathwayToUpdate.EndDate = DateTime.UtcNow;
-                                        pathwayToUpdate.ModifiedBy = amendedRegistration.CreatedBy;
-                                        pathwayToUpdate.ModifiedOn = DateTime.UtcNow;
-
-                                        pathwayToUpdate.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList().ForEach(specialismToUpdate =>
-                                        {
-                                            specialismToUpdate.Status = RegistrationSpecialismStatus.InActive;
-                                            specialismToUpdate.EndDate = DateTime.UtcNow;
-                                            specialismToUpdate.ModifiedBy = amendedRegistration.CreatedBy;
-                                            specialismToUpdate.ModifiedOn = DateTime.UtcNow;
-                                        });
-                                    });
-                                    hasBothPathwayAndSpecialismsRecordsChanged = true;
-                                }
-                                else
-                                {
-                                    foreach (var importPathwayRecord in amendedRegistration.TqRegistrationPathways)
-                                    {
-                                        var existingPathwayRecordInDb = pathwaysToUpdate.FirstOrDefault(p => p.TqProviderId == importPathwayRecord.TqProviderId);
-
-                                        if (existingPathwayRecordInDb == null) continue;
-
-                                        if (existingPathwayRecordInDb.TqRegistrationSpecialisms.Any())
-                                        {
-                                            var existingSpecialismsInDb = existingPathwayRecordInDb.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active);
-                                            var specialismsToAdd = importPathwayRecord.TqRegistrationSpecialisms.Where(s => !existingSpecialismsInDb.Any(r => r.TlSpecialismId == s.TlSpecialismId)).ToList();
-                                            var specialismsToUpdate = existingSpecialismsInDb.Where(s => !importPathwayRecord.TqRegistrationSpecialisms.Any(r => r.TlSpecialismId == s.TlSpecialismId)).ToList();
-
-                                            specialismsToUpdate.ForEach(s =>
-                                            {
-                                                s.Status = RegistrationSpecialismStatus.InActive;
-                                                s.EndDate = DateTime.UtcNow;
-                                                s.ModifiedBy = amendedRegistration.CreatedBy;
-                                                s.ModifiedOn = DateTime.UtcNow;
-                                            });
-
-                                            specialismsToAdd.ForEach(s =>
-                                            {
-                                                s.TqRegistrationPathwayId = existingPathwayRecordInDb.Id;
-                                            });
-
-                                            if (specialismsToAdd.Count > 0 || specialismsToUpdate.Count > 0)
-                                            {
-                                                hasOnlySpecialismsRecordChanged = true;
-                                                existingPathwayRecordInDb.TqRegistrationSpecialisms.Clear();
-                                                existingPathwayRecordInDb.TqRegistrationSpecialisms = specialismsToAdd.Concat(specialismsToUpdate).ToList();
-                                            }
-                                        }
-                                        else if (importPathwayRecord.TqRegistrationSpecialisms.Any())
-                                        {
-                                            importPathwayRecord.TqRegistrationSpecialisms.ToList().ForEach(specialism =>
-                                            {
-                                                specialism.TqRegistrationPathwayId = existingPathwayRecordInDb.Id;
-                                                existingPathwayRecordInDb.TqRegistrationSpecialisms.Add(specialism);
-                                            });
-                                            hasOnlySpecialismsRecordChanged = true;
-                                        }
-                                    }
-                                }
+                                var entitiesChangeStatus = PrepareAmendedPathwayAndSpecialisms(amendedRegistration, pathwaysToUpdate);
+                                hasBothPathwayAndSpecialismsRecordsChanged = entitiesChangeStatus.Item1;
+                                hasOnlySpecialismsRecordChanged = entitiesChangeStatus.Item2;
                             }
                         }
 
                         if (response.IsValid)
                         {
+                            // Consolidate Amended Registration
+
                             if (hasTqRegistrationProfileRecordChanged)
                             {
                                 amendedRegistration.CreatedBy = existingRegistration.CreatedBy;
@@ -193,7 +117,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                 pathwaysToUpdate.ForEach(p => { amendedSpecialismRecords.AddRange(p.TqRegistrationSpecialisms); });
                                 amendedRegistrationsToIgnore.Add(amendedRegistration);
                             }
-                            else if(!hasTqRegistrationProfileRecordChanged && !hasBothPathwayAndSpecialismsRecordsChanged && !hasOnlySpecialismsRecordChanged)
+                            else if (!hasTqRegistrationProfileRecordChanged && !hasBothPathwayAndSpecialismsRecordsChanged && !hasOnlySpecialismsRecordChanged)
                             {
                                 amendedRegistrationsToIgnore.Add(amendedRegistration);
                             }
@@ -206,16 +130,115 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 var registrationProfilesToSendToDB = newRegistrations.Concat(amendedRegistrations.Except(amendedRegistrationsToIgnore, ulnComparer)).ToList();
                 response.IsSuccess = await _tqRegistrationRepository.BulkInsertOrUpdateTqRegistrations(registrationProfilesToSendToDB, amendedPathwayRecords, amendedSpecialismRecords);
-            }
-
-            response.BulkUploadStats = new BulkUploadStats
-            {
-                TotalRecordsCount = registrationsToProcess.Count,
-                NewRecordsCount = newRegistrations.Count,
-                AmendedRecordsCount = amendedRegistrations.Count,
-                UnchangedRecordsCount = unchangedRegistrations.Count
-            };
+                response.BulkUploadStats = new BulkUploadStats
+                {
+                    TotalRecordsCount = registrationsToProcess.Count,
+                    NewRecordsCount = newRegistrations.Count,
+                    AmendedRecordsCount = amendedRegistrations.Count,
+                    UnchangedRecordsCount = unchangedRegistrations.Count
+                };
+            }            
             return response;
+        }
+
+        private static RegistrationProcessResponse ValidateStage4Rules(TqRegistrationProfile amendedRegistration, List<TqRegistrationPathway> pathwaysToUpdate, RegistrationProcessResponse response)
+        {
+            var hasPathwayChanged = !pathwaysToUpdate.Any(x => amendedRegistration.TqRegistrationPathways.Any(r => r.TqProvider.TqAwardingOrganisation.TlPathwayId == x.TqProvider.TqAwardingOrganisation.TlPathwayId));
+
+            // check if there is an active registration for another AO, if so show error message and reject the file
+            var hasAoChanged = !pathwaysToUpdate.Any(x => amendedRegistration.TqRegistrationPathways.Any(r => r.TqProvider.TqAwardingOrganisation.TlAwardingOrganisatonId == x.TqProvider.TqAwardingOrganisation.TlAwardingOrganisatonId));
+
+            if (hasAoChanged || hasPathwayChanged)
+            {
+                response.ValidationErrors.Add(GetRegistrationValidationError(amendedRegistration.UniqueLearnerNumber, hasAoChanged ? ValidationMessages.ActiveUlnWithDifferentAo : ValidationMessages.CoreForUlnCannotBeChangedYet));
+            }
+            return response;
+        }
+
+        private static Tuple<bool, bool> PrepareAmendedPathwayAndSpecialisms(TqRegistrationProfile amendedRegistration, List<TqRegistrationPathway> pathwaysToUpdate)
+        {
+            var hasBothPathwayAndSpecialismsRecordsChanged = false;
+            var hasOnlySpecialismsRecordChanged = false;
+
+            var hasProviderChanged = !pathwaysToUpdate.Any(x => amendedRegistration.TqRegistrationPathways.Any(r => r.TqProvider.TlProviderId == x.TqProvider.TlProviderId));
+            var hasRegistrationDateChanged = !pathwaysToUpdate.Any(x => amendedRegistration.TqRegistrationPathways.Any(r => r.RegistrationDate == x.RegistrationDate));
+
+            // change existing TqRegistrationPathway record status and related TqRegistrationSpecialism records status to "Changed"
+            if (hasProviderChanged || hasRegistrationDateChanged)
+            {
+                pathwaysToUpdate.ForEach(pathwayToUpdate =>
+                {
+                    pathwayToUpdate.Status = hasProviderChanged ? RegistrationPathwayStatus.Transferred : RegistrationPathwayStatus.InActive;
+                    pathwayToUpdate.EndDate = DateTime.UtcNow;
+                    pathwayToUpdate.ModifiedBy = amendedRegistration.CreatedBy;
+                    pathwayToUpdate.ModifiedOn = DateTime.UtcNow;
+
+                    pathwayToUpdate.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList().ForEach(specialismToUpdate =>
+                    {
+                        specialismToUpdate.Status = RegistrationSpecialismStatus.InActive;
+                        specialismToUpdate.EndDate = DateTime.UtcNow;
+                        specialismToUpdate.ModifiedBy = amendedRegistration.CreatedBy;
+                        specialismToUpdate.ModifiedOn = DateTime.UtcNow;
+                    });
+                });
+                hasBothPathwayAndSpecialismsRecordsChanged = true;
+            }
+            else
+            {
+                foreach (var importPathwayRecord in amendedRegistration.TqRegistrationPathways)
+                {
+                    var existingPathwayRecordInDb = pathwaysToUpdate.FirstOrDefault(p => p.TqProviderId == importPathwayRecord.TqProviderId);
+
+                    if (existingPathwayRecordInDb == null) continue;
+
+                    if (existingPathwayRecordInDb.TqRegistrationSpecialisms.Any())
+                    {
+                        var existingSpecialismsInDb = existingPathwayRecordInDb.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active);
+                        var specialismsToAdd = importPathwayRecord.TqRegistrationSpecialisms.Where(s => !existingSpecialismsInDb.Any(r => r.TlSpecialismId == s.TlSpecialismId)).ToList();
+                        var specialismsToUpdate = existingSpecialismsInDb.Where(s => !importPathwayRecord.TqRegistrationSpecialisms.Any(r => r.TlSpecialismId == s.TlSpecialismId)).ToList();
+
+                        specialismsToUpdate.ForEach(s =>
+                        {
+                            s.Status = RegistrationSpecialismStatus.InActive;
+                            s.EndDate = DateTime.UtcNow;
+                            s.ModifiedBy = amendedRegistration.CreatedBy;
+                            s.ModifiedOn = DateTime.UtcNow;
+                        });
+
+                        specialismsToAdd.ForEach(s =>
+                        {
+                            s.TqRegistrationPathwayId = existingPathwayRecordInDb.Id;
+                        });
+
+                        if (specialismsToAdd.Count > 0 || specialismsToUpdate.Count > 0)
+                        {
+                            hasOnlySpecialismsRecordChanged = true;
+                            existingPathwayRecordInDb.TqRegistrationSpecialisms.Clear();
+                            existingPathwayRecordInDb.TqRegistrationSpecialisms = specialismsToAdd.Concat(specialismsToUpdate).ToList();
+                        }
+                    }
+                    else if (importPathwayRecord.TqRegistrationSpecialisms.Any())
+                    {
+                        importPathwayRecord.TqRegistrationSpecialisms.ToList().ForEach(specialism =>
+                        {
+                            specialism.TqRegistrationPathwayId = existingPathwayRecordInDb.Id;
+                            existingPathwayRecordInDb.TqRegistrationSpecialisms.Add(specialism);
+                        });
+                        hasOnlySpecialismsRecordChanged = true;
+                    }
+                }
+            }
+            return new Tuple<bool, bool>(hasBothPathwayAndSpecialismsRecordsChanged, hasOnlySpecialismsRecordChanged);
+        }
+
+        private static IEnumerable<TqRegistrationPathway> GetActivePathwayAndSpecialism(TqRegistrationProfile existingRegistration)
+        {
+            return existingRegistration.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active)
+                                    .Select(x =>
+                                    {
+                                        x.TqRegistrationSpecialisms = x.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList();
+                                        return x;
+                                    });
         }
 
         public IList<TqRegistrationProfile> TransformRegistrationModel(IList<RegistrationRecordResponse> registrationsData, string performedBy)
