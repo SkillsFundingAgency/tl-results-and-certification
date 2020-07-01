@@ -27,6 +27,107 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _tqRegistrationRepository = tqRegistrationRepository;
         }
 
+        public async Task<IList<RegistrationRecordResponse>> ValidateRegistrationTlevelsAsync(long aoUkprn, IEnumerable<RegistrationCsvRecordResponse> validRegistrationsData)
+        {
+            var response = new List<RegistrationRecordResponse>();
+            var aoProviderTlevels = await GetAllTLevelsByAoUkprnAsync(aoUkprn);
+
+            foreach (var registrationData in validRegistrationsData)
+            {
+                var isProviderRegisteredWithAwardingOrganisation = aoProviderTlevels.Any(t => t.ProviderUkprn == registrationData.ProviderUkprn);
+                if (!isProviderRegisteredWithAwardingOrganisation)
+                {
+                    response.Add(AddStage3ValidationError(registrationData, ValidationMessages.ProviderNotRegisteredWithAo));
+                    continue;
+                }
+
+                var technicalQualification = aoProviderTlevels.FirstOrDefault(tq => tq.ProviderUkprn == registrationData.ProviderUkprn && tq.PathwayLarId == registrationData.CoreCode);
+                if (technicalQualification == null)
+                {
+                    response.Add(AddStage3ValidationError(registrationData, ValidationMessages.CoreNotRegisteredWithProvider));
+                    continue;
+                }
+
+                if (registrationData.SpecialismCodes.Count() > 0)
+                {
+                    var specialismCodes = technicalQualification.TlSpecialismLarIds.Select(x => x.Value);
+                    var invalidSpecialismCodes = registrationData.SpecialismCodes.Except(specialismCodes, StringComparer.InvariantCultureIgnoreCase);
+
+                    if (invalidSpecialismCodes.Any())
+                    {
+                        response.Add(AddStage3ValidationError(registrationData, ValidationMessages.SpecialismNotValidWithCore));
+                        continue;
+                    }
+                }
+
+                response.Add(new RegistrationRecordResponse
+                {
+                    Uln = registrationData.Uln,
+                    FirstName = registrationData.FirstName,
+                    LastName = registrationData.LastName,
+                    DateOfBirth = registrationData.DateOfBirth,
+                    StartDate = registrationData.StartDate,
+                    TqProviderId = technicalQualification.TqProviderId,
+                    TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
+                    TlPathwayId = technicalQualification.TlPathwayId,
+                    TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds.Where(s => registrationData.SpecialismCodes.Contains(s.Value)),
+                    TlAwardingOrganisatonId = technicalQualification.TlAwardingOrganisatonId,
+                    TlProviderId = technicalQualification.TlProviderId
+                });
+            };
+
+            return response;
+        }
+
+        public IList<TqRegistrationProfile> TransformRegistrationModel(IList<RegistrationRecordResponse> registrationsData, string performedBy)
+        {
+            var registrationProfiles = new List<TqRegistrationProfile>();
+            int registrationSpecialismStartIndex = Constants.RegistrationSpecialismsStartIndex;
+
+            foreach (var (registration, index) in registrationsData.Select((value, i) => (value, i)))
+            {
+                registrationProfiles.Add(new TqRegistrationProfile
+                {
+                    Id = index - Constants.RegistrationProfileStartIndex,
+                    UniqueLearnerNumber = registration.Uln,
+                    Firstname = registration.FirstName,
+                    Lastname = registration.LastName,
+                    DateofBirth = registration.DateOfBirth,
+                    CreatedBy = performedBy,
+                    CreatedOn = DateTime.UtcNow,
+
+                    TqRegistrationPathways = new List<TqRegistrationPathway>
+                    {
+                        new TqRegistrationPathway
+                        {
+                            Id = index - Constants.RegistrationPathwayStartIndex,
+                            TqProviderId = registration.TqProviderId,
+                            AcademicYear = registration.StartDate.Year, // TODO: Need to calcualate based on the requirements
+                            RegistrationDate = registration.StartDate,
+                            StartDate = DateTime.UtcNow,
+                            Status = RegistrationPathwayStatus.Active,
+                            IsBulkUpload = true,
+                            TqRegistrationSpecialisms = MapSpecialisms(registration, performedBy, registrationSpecialismStartIndex),
+                            TqProvider = new TqProvider
+                            {
+                                TqAwardingOrganisationId = registration.TqAwardingOrganisationId,
+                                TlProviderId = registration.TlProviderId,
+                                TqAwardingOrganisation = new TqAwardingOrganisation
+                                {
+                                    TlAwardingOrganisatonId = registration.TlAwardingOrganisatonId,
+                                    TlPathwayId = registration.TlPathwayId,
+                                }
+                            },
+                            CreatedBy = performedBy,
+                            CreatedOn = DateTime.UtcNow
+                        }
+                    }
+                });
+                registrationSpecialismStartIndex -= registration.TlSpecialismLarIds.Count();
+            }
+            return registrationProfiles;
+        }
+
         public async Task<RegistrationProcessResponse> CompareAndProcessRegistrationsAsync(IList<TqRegistrationProfile> registrationsToProcess)
         {
             var response = new RegistrationProcessResponse();
@@ -141,7 +242,66 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
-        private static RegistrationProcessResponse ValidateStage4Rules(TqRegistrationProfile amendedRegistration, List<TqRegistrationPathway> pathwaysToUpdate, RegistrationProcessResponse response)
+        private RegistrationRecordResponse AddStage3ValidationError(RegistrationCsvRecordResponse registrationCsvRecordResponse, string errorMessage)
+        {
+            return new RegistrationRecordResponse()
+            {
+                ValidationErrors = new List<RegistrationValidationError>()
+                {
+                    new RegistrationValidationError
+                    {
+                        RowNum = registrationCsvRecordResponse.RowNum.ToString(),
+                        Uln = registrationCsvRecordResponse.Uln.ToString(),
+                        ErrorMessage = errorMessage
+                    }
+                }
+            };
+        }
+
+        private async Task<IList<TechnicalQualificationDetails>> GetAllTLevelsByAoUkprnAsync(long ukprn)
+        {
+            var result = await _tqProviderRepository.GetManyAsync(p => p.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn,
+                p => p.TlProvider, p => p.TqAwardingOrganisation, p => p.TqAwardingOrganisation.TlAwardingOrganisaton,
+                p => p.TqAwardingOrganisation.TlPathway, p => p.TqAwardingOrganisation.TlPathway.TlSpecialisms).Select(t => new TechnicalQualificationDetails
+                {
+                    ProviderUkprn = t.TlProvider.UkPrn,
+                    TlPathwayId = t.TqAwardingOrganisation.TlPathway.Id,
+                    PathwayLarId = t.TqAwardingOrganisation.TlPathway.LarId,
+                    TqProviderId = t.Id,
+                    TlProviderId = t.TlProviderId,
+                    TqAwardingOrganisationId = t.TqAwardingOrganisationId,
+                    TlAwardingOrganisatonId = t.TqAwardingOrganisation.TlAwardingOrganisatonId,
+                    TlSpecialismLarIds = t.TqAwardingOrganisation.TlPathway.TlSpecialisms.Select(s => new KeyValuePair<int, string>(s.Id, s.LarId))
+                }).ToListAsync();
+
+            return result;
+        }
+
+        private IList<TqRegistrationSpecialism> MapSpecialisms(RegistrationRecordResponse registration, string performedBy, int specialismStartIndex)
+        {
+            return registration.TlSpecialismLarIds.Select((x, index) => new TqRegistrationSpecialism
+            {
+                Id =  index - specialismStartIndex,
+                TlSpecialismId = x.Key,
+                StartDate = DateTime.UtcNow,
+                Status = RegistrationSpecialismStatus.Active,
+                IsBulkUpload = true,
+                CreatedBy = performedBy,
+                CreatedOn = DateTime.UtcNow,
+            }).ToList();
+        }
+
+        private IEnumerable<TqRegistrationPathway> GetActivePathwayAndSpecialism(TqRegistrationProfile existingRegistration)
+        {
+            return existingRegistration.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active)
+                                    .Select(x =>
+                                    {
+                                        x.TqRegistrationSpecialisms = x.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList();
+                                        return x;
+                                    });
+        }
+
+        private RegistrationProcessResponse ValidateStage4Rules(TqRegistrationProfile amendedRegistration, List<TqRegistrationPathway> pathwaysToUpdate, RegistrationProcessResponse response)
         {
             var hasPathwayChanged = !pathwaysToUpdate.Any(x => amendedRegistration.TqRegistrationPathways.Any(r => r.TqProvider.TqAwardingOrganisation.TlPathwayId == x.TqProvider.TqAwardingOrganisation.TlPathwayId));
 
@@ -155,7 +315,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
-        private static Tuple<bool, bool> PrepareAmendedPathwayAndSpecialisms(TqRegistrationProfile amendedRegistration, List<TqRegistrationPathway> pathwaysToUpdate)
+        private Tuple<bool, bool> PrepareAmendedPathwayAndSpecialisms(TqRegistrationProfile amendedRegistration, List<TqRegistrationPathway> pathwaysToUpdate)
         {
             var hasBothPathwayAndSpecialismsRecordsChanged = false;
             var hasOnlySpecialismsRecordChanged = false;
@@ -231,167 +391,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return new Tuple<bool, bool>(hasBothPathwayAndSpecialismsRecordsChanged, hasOnlySpecialismsRecordChanged);
         }
 
-        private static IEnumerable<TqRegistrationPathway> GetActivePathwayAndSpecialism(TqRegistrationProfile existingRegistration)
-        {
-            return existingRegistration.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active)
-                                    .Select(x =>
-                                    {
-                                        x.TqRegistrationSpecialisms = x.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList();
-                                        return x;
-                                    });
-        }
-
-        public IList<TqRegistrationProfile> TransformRegistrationModel(IList<RegistrationRecordResponse> registrationsData, string performedBy)
-        {
-            var registrationProfiles = new List<TqRegistrationProfile>();
-            int registrationSpecialismStartIndex = Constants.RegistrationSpecialismsStartIndex;
-
-            foreach (var (registration, index) in registrationsData.Select((value, i) => (value, i)))
-            {
-                registrationProfiles.Add(new TqRegistrationProfile
-                {
-                    Id = index - Constants.RegistrationProfileStartIndex,
-                    UniqueLearnerNumber = registration.Uln,
-                    Firstname = registration.FirstName,
-                    Lastname = registration.LastName,
-                    DateofBirth = registration.DateOfBirth,
-                    CreatedBy = performedBy,
-                    CreatedOn = DateTime.UtcNow,
-
-                    TqRegistrationPathways = new List<TqRegistrationPathway>
-                    {
-                        new TqRegistrationPathway
-                        {
-                            Id = index - Constants.RegistrationPathwayStartIndex,
-                            TqProviderId = registration.TqProviderId,
-                            AcademicYear = registration.StartDate.Year, // TODO: Need to calcualate based on the requirements
-                            RegistrationDate = registration.StartDate,
-                            StartDate = DateTime.UtcNow,
-                            Status = RegistrationPathwayStatus.Active,
-                            IsBulkUpload = true,
-                            TqRegistrationSpecialisms = MapSpecialisms(registration, performedBy, registrationSpecialismStartIndex),
-                            TqProvider = new TqProvider
-                            {
-                                TqAwardingOrganisationId = registration.TqAwardingOrganisationId,
-                                TlProviderId = registration.TlProviderId,
-                                TqAwardingOrganisation = new TqAwardingOrganisation
-                                {
-                                    TlAwardingOrganisatonId = registration.TlAwardingOrganisatonId,
-                                    TlPathwayId = registration.TlPathwayId,
-                                }
-                            },
-                            CreatedBy = performedBy,
-                            CreatedOn = DateTime.UtcNow
-                        }
-                    }
-                });
-                registrationSpecialismStartIndex -= registration.TlSpecialismLarIds.Count();
-            }
-            return registrationProfiles;
-        }
-
-        public async Task<IList<RegistrationRecordResponse>> ValidateRegistrationTlevelsAsync(long aoUkprn, IEnumerable<RegistrationCsvRecordResponse> validRegistrationsData)
-        {
-            var response = new List<RegistrationRecordResponse>();
-            var aoProviderTlevels = await GetAllTLevelsByAoUkprnAsync(aoUkprn);
-
-            foreach (var registrationData in validRegistrationsData)
-            {
-                var isProviderRegisteredWithAwardingOrganisation = aoProviderTlevels.Any(t => t.ProviderUkprn == registrationData.ProviderUkprn);
-                if (!isProviderRegisteredWithAwardingOrganisation)
-                {
-                    response.Add(AddStage3ValidationError(registrationData, ValidationMessages.ProviderNotRegisteredWithAo));
-                    continue;
-                }
-
-                var technicalQualification = aoProviderTlevels.FirstOrDefault(tq => tq.ProviderUkprn == registrationData.ProviderUkprn && tq.PathwayLarId == registrationData.CoreCode);
-                if (technicalQualification == null)
-                {
-                    response.Add(AddStage3ValidationError(registrationData, ValidationMessages.CoreNotRegisteredWithProvider));
-                    continue;
-                }
-
-                if (registrationData.SpecialismCodes.Count() > 0)
-                {
-                    var specialismCodes = technicalQualification.TlSpecialismLarIds.Select(x => x.Value);
-                    var invalidSpecialismCodes = registrationData.SpecialismCodes.Except(specialismCodes, StringComparer.InvariantCultureIgnoreCase);
-
-                    if (invalidSpecialismCodes.Any())
-                    {
-                        response.Add(AddStage3ValidationError(registrationData, ValidationMessages.SpecialismNotValidWithCore));
-                        continue;
-                    }
-                }
-
-                response.Add(new RegistrationRecordResponse
-                {
-                    Uln = registrationData.Uln,
-                    FirstName = registrationData.FirstName,
-                    LastName = registrationData.LastName,
-                    DateOfBirth = registrationData.DateOfBirth,
-                    StartDate = registrationData.StartDate,
-                    TqProviderId = technicalQualification.TqProviderId,
-                    TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
-                    TlPathwayId = technicalQualification.TlPathwayId,
-                    TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds.Where(s => registrationData.SpecialismCodes.Contains(s.Value)),
-                    TlAwardingOrganisatonId = technicalQualification.TlAwardingOrganisatonId,
-                    TlProviderId = technicalQualification.TlProviderId
-                });
-            };
-
-            return response;
-        }
-
-        private static RegistrationRecordResponse AddStage3ValidationError(RegistrationCsvRecordResponse registrationCsvRecordResponse, string errorMessage)
-        {
-            return new RegistrationRecordResponse()
-            {
-                ValidationErrors = new List<RegistrationValidationError>()
-                {
-                    new RegistrationValidationError
-                    {
-                        RowNum = registrationCsvRecordResponse.RowNum.ToString(),
-                        Uln = registrationCsvRecordResponse.Uln.ToString(),
-                        ErrorMessage = errorMessage
-                    }
-                }
-            };
-        }
-
-        private async Task<IList<TechnicalQualificationDetails>> GetAllTLevelsByAoUkprnAsync(long ukprn)
-        {
-            var result = await _tqProviderRepository.GetManyAsync(p => p.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn,
-                p => p.TlProvider, p => p.TqAwardingOrganisation, p => p.TqAwardingOrganisation.TlAwardingOrganisaton,
-                p => p.TqAwardingOrganisation.TlPathway, p => p.TqAwardingOrganisation.TlPathway.TlSpecialisms).Select(t => new TechnicalQualificationDetails
-                {
-                    ProviderUkprn = t.TlProvider.UkPrn,
-                    TlPathwayId = t.TqAwardingOrganisation.TlPathway.Id,
-                    PathwayLarId = t.TqAwardingOrganisation.TlPathway.LarId,
-                    TqProviderId = t.Id,
-                    TlProviderId = t.TlProviderId,
-                    TqAwardingOrganisationId = t.TqAwardingOrganisationId,
-                    TlAwardingOrganisatonId = t.TqAwardingOrganisation.TlAwardingOrganisatonId,
-                    TlSpecialismLarIds = t.TqAwardingOrganisation.TlPathway.TlSpecialisms.Select(s => new KeyValuePair<int, string>(s.Id, s.LarId))
-                }).ToListAsync();
-
-            return result;
-        }
-
-        private static IList<TqRegistrationSpecialism> MapSpecialisms(RegistrationRecordResponse registration, string performedBy, int specialismStartIndex)
-        {
-            return registration.TlSpecialismLarIds.Select((x, index) => new TqRegistrationSpecialism
-            {
-                Id =  index - specialismStartIndex,
-                TlSpecialismId = x.Key,
-                StartDate = DateTime.UtcNow,
-                Status = RegistrationSpecialismStatus.Active,
-                IsBulkUpload = true,
-                CreatedBy = performedBy,
-                CreatedOn = DateTime.UtcNow,
-            }).ToList();
-        }
-
-        private static RegistrationValidationError GetRegistrationValidationError(long uln, string errorMessage)
+        private RegistrationValidationError GetRegistrationValidationError(long uln, string errorMessage)
         {
             return new RegistrationValidationError
             {
