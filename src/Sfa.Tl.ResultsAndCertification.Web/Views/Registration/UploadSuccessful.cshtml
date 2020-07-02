@@ -16,15 +16,15 @@
             <ul class="govuk-list govuk-list--bullet">
                 @if (Model.HasNewRegistrations)
                 {
-                    <li>@string.Format(@UploadSuccessful.New_Registrations_Text, Model.Stats.NewRecordsCount)</li>
+                    <li>@Model.NewRegistrationsText</li>
                 }
                 @if (Model.HasAmendedRegistrations)
                 {
-                    <li>@string.Format(@UploadSuccessful.Amended_Registrations_Text, Model.Stats.AmendedRecordsCount)</li>
+                    <li>@Model.AmendedRegistrationsText</li>
                 }
                 @if (Model.HasUnchangedRegistrations)
                 {
-                    <li>@string.Format(@UploadSuccessful.Unchanged_Registrations_Text, Model.Stats.UnchangedRecordsCount)</li>
+                    <li>@Model.UnchangedRegistrationsText</li>
                 }
             </ul>
         }

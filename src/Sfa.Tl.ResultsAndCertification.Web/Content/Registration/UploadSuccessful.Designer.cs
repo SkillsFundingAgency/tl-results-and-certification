@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} amended registration.
+        /// </summary>
+        public static string Amended_Registrations_Singular_Text {
+            get {
+                return ResourceManager.GetString("Amended_Registrations_Singular_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} amended registrations.
         /// </summary>
         public static string Amended_Registrations_Text {
@@ -75,6 +84,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Back_To_Registrations_Button_Text {
             get {
                 return ResourceManager.GetString("Back_To_Registrations_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} new registration.
+        /// </summary>
+        public static string New_Registrations_Singular_Text {
+            get {
+                return ResourceManager.GetString("New_Registrations_Singular_Text", resourceCulture);
             }
         }
         
@@ -106,11 +124,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You successfully sent {0} amended registration.
+        /// </summary>
+        public static string Successfully_Sent_Amended_Registrations_Singular_Text {
+            get {
+                return ResourceManager.GetString("Successfully_Sent_Amended_Registrations_Singular_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You successfully sent {0} amended registrations.
         /// </summary>
         public static string Successfully_Sent_Amended_Registrations_Text {
             get {
                 return ResourceManager.GetString("Successfully_Sent_Amended_Registrations_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You successfully sent {0} new registration.
+        /// </summary>
+        public static string Successfully_Sent_New_Registrations_Singular_Text {
+            get {
+                return ResourceManager.GetString("Successfully_Sent_New_Registrations_Singular_Text", resourceCulture);
             }
         }
         
@@ -133,11 +169,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You successfully sent {0} unchanged registration.
+        /// </summary>
+        public static string Successfully_Sent_Unchanged_Registrations_Singular_Text {
+            get {
+                return ResourceManager.GetString("Successfully_Sent_Unchanged_Registrations_Singular_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You successfully sent {0} unchanged registrations.
         /// </summary>
         public static string Successfully_Sent_Unchanged_Registrations_Text {
             get {
                 return ResourceManager.GetString("Successfully_Sent_Unchanged_Registrations_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} unchanged registration.
+        /// </summary>
+        public static string Unchanged_Registrations_Singular_Text {
+            get {
+                return ResourceManager.GetString("Unchanged_Registrations_Singular_Text", resourceCulture);
             }
         }
         

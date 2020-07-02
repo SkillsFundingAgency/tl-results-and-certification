@@ -9,12 +9,12 @@ using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registrat
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.UploadSuccessful
 {
-    public class Then_If_TempData_Exists_Expected_Results_Returned : When_UploadSuccessful_Is_Called
+    public class Then_Expected_Singular_Text_Results_Returned : When_UploadSuccessful_Is_Called
     {
         public override void Given()
         {
             BlobUniqueReference = Guid.NewGuid();
-            UploadSuccessfulViewModel = new UploadSuccessfulViewModel { Stats = new ViewModel.BulkUploadStatsViewModel { TotalRecordsCount = 10, NewRecordsCount = 5, AmendedRecordsCount = 3, UnchangedRecordsCount = 2 } };
+            UploadSuccessfulViewModel = new UploadSuccessfulViewModel { Stats = new ViewModel.BulkUploadStatsViewModel { TotalRecordsCount = 3, NewRecordsCount = 1, AmendedRecordsCount = 1, UnchangedRecordsCount = 1 } };
             TempData[Constants.UploadSuccessfulViewModel] = JsonConvert.SerializeObject(UploadSuccessfulViewModel);
         }
 
@@ -33,9 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.Stats.UnchangedRecordsCount.Should().Be(UploadSuccessfulViewModel.Stats.UnchangedRecordsCount);
             model.HasMoreThanOneStatsToShow.Should().BeTrue();
             model.SuccessfulRegistrationText.Should().Be(string.Format(RegistrationContent.UploadSuccessful.Successfully_Sent_Total_Registrations_Text, UploadSuccessfulViewModel.Stats.TotalRecordsCount));
-            model.NewRegistrationsText.Should().Be(string.Format(RegistrationContent.UploadSuccessful.New_Registrations_Text, UploadSuccessfulViewModel.Stats.NewRecordsCount));
-            model.AmendedRegistrationsText.Should().Be(string.Format(RegistrationContent.UploadSuccessful.Amended_Registrations_Text, UploadSuccessfulViewModel.Stats.AmendedRecordsCount));
-            model.UnchangedRegistrationsText.Should().Be(string.Format(RegistrationContent.UploadSuccessful.Unchanged_Registrations_Text, UploadSuccessfulViewModel.Stats.UnchangedRecordsCount));
+            model.NewRegistrationsText.Should().Be(string.Format(RegistrationContent.UploadSuccessful.New_Registrations_Singular_Text, UploadSuccessfulViewModel.Stats.NewRecordsCount));
+            model.AmendedRegistrationsText.Should().Be(string.Format(RegistrationContent.UploadSuccessful.Amended_Registrations_Singular_Text, UploadSuccessfulViewModel.Stats.AmendedRecordsCount));
+            model.UnchangedRegistrationsText.Should().Be(string.Format(RegistrationContent.UploadSuccessful.Unchanged_Registrations_Singular_Text, UploadSuccessfulViewModel.Stats.UnchangedRecordsCount));
         }
     }
 }
