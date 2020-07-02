@@ -82,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             {
                 RowNum = "2",
                 Uln = "111111111",
-                ErrorMessage = "UKPRN must be a 8 digit number"
+                ErrorMessage = "UKPRN must be an 8 digit number"
             },
             new RegistrationValidationError
             {

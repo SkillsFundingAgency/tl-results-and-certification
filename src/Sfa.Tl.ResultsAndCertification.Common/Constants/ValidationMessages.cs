@@ -6,6 +6,7 @@
         // Property validation messages
         public const string Required = "{0} required";
         public const string MustBeNumberWithLength = "{0} must be a {1} digit number";
+        public const string MustBeAnNumberWithLength = "{0} must be an {1} digit number";
         public const string StringLength = "{0} cannot have more than {1} characters";
         public const string MustBeStringWithLength = "{0} must have {1} characters only";
         public const string MustBeValidDate = "{0} must be a valid date in DDMMYYYY format";

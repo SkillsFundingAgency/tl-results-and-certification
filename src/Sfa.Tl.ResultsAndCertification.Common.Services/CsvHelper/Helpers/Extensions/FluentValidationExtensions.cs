@@ -14,11 +14,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
                 .WithMessage(string.Format(ValidationMessages.Required, "{PropertyName}"));
         }
 
-        public static IRuleBuilderOptions<T, string> MustBeNumberWithLength<T>(this IRuleBuilder<T, string> ruleBuilder, int length)
+        public static IRuleBuilderOptions<T, string> MustBeNumberWithLength<T>(this IRuleBuilder<T, string> ruleBuilder, int length, string message = null)
         {
             return ruleBuilder
                 .Must(r => r.Length == length && r.IsLong())
-                .WithMessage(string.Format(ValidationMessages.MustBeNumberWithLength, "{PropertyName}", length));
+                .WithMessage(string.Format(!string.IsNullOrWhiteSpace(message) ? message : ValidationMessages.MustBeNumberWithLength, "{PropertyName}", length));
         }
 
         public static IRuleBuilderOptions<T, string> MustBeStringWithLength<T>(this IRuleBuilder<T, string> ruleBuilder, int length)
