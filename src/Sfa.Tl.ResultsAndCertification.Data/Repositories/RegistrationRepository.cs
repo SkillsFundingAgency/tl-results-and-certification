@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     {
                         try
                         {
-                            var bulkConfig = new BulkConfig() { UseTempDB = true, SetOutputIdentity = true, BatchSize = 4000 };
+                            var bulkConfig = new BulkConfig() { UseTempDB = true, SetOutputIdentity = true, BatchSize = 5000, BulkCopyTimeout = 60 };
 
                             var pathwayRegistrations = pathwayEntities ?? new List<TqRegistrationPathway>();
 
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             var specialismRegistrations = specialismEntities ?? new List<TqRegistrationSpecialism>();
 
                             specialismRegistrations = await ProcessRegistrationPathwayEntities(bulkConfig, pathwayRegistrations, specialismRegistrations);
-                           
+
                             await ProcessRegistrationSpecialismEntities(specialismRegistrations);
 
                             transaction.Commit();
@@ -76,14 +76,18 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (profileEntities != null && profileEntities.Count > 0)
             {
                 var orignialProfileEntititesCopy = new List<TqRegistrationProfile>(profileEntities);
-
+                
                 profileEntities = SortUpdateAndInsertOrder(profileEntities, x => x.Id);
 
                 await _dbContext.BulkInsertOrUpdateAsync(profileEntities, bulkConfig);
 
                 orignialProfileEntititesCopy.ForEach(profile =>
                 {
-                    var profileEntity = profileEntities.FirstOrDefault(x => x.UniqueLearnerNumber == profile.UniqueLearnerNumber);
+                    TqRegistrationProfile profileEntity = null;
+
+                    if (profile.Id <= 0) {
+                        profileEntity = profileEntities.FirstOrDefault(x => x.UniqueLearnerNumber == profile.UniqueLearnerNumber);
+                    }
 
                     foreach (var pathway in profile.TqRegistrationPathways)
                     {
@@ -111,14 +115,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                 orignialPathwayEntititesCopy.ForEach(pathway =>
                 {
-                    var pathwayEntity = pathwayRegistrations.FirstOrDefault(p => p.TqRegistrationProfileId == pathway.TqRegistrationProfileId
-                                                                            && p.TqProviderId == pathway.TqProviderId
-                                                                            && p.Status == Common.Enum.RegistrationPathwayStatus.Active);
+                    TqRegistrationPathway pathwayEntity = null;
+                    if (pathway.Id <= 0) {
+                        pathwayEntity = pathwayRegistrations.FirstOrDefault(p => p.TqRegistrationProfileId == pathway.TqRegistrationProfileId
+                                                                                && p.TqProviderId == pathway.TqProviderId
+                                                                                && p.Status == Common.Enum.RegistrationPathwayStatus.Active);
+                    }
 
                     foreach (var specialism in pathway.TqRegistrationSpecialisms)
                     {
                         // update fk relationship id for newely added records
-                        if (specialism.TqRegistrationPathwayId == 0 && pathwayEntity != null)
+                        if (specialism.TqRegistrationPathwayId == 0)
                         {
                             specialism.TqRegistrationPathwayId = pathwayEntity.Id;
                         }
@@ -134,7 +141,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (specialismRegistrations.Count > 0)
             {
                 specialismRegistrations = SortUpdateAndInsertOrder(specialismRegistrations, x => x.Id);
-                await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 4000; });
+                await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60;  });
             }
         }
 
@@ -149,11 +156,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             if (entities != null && selector != null)
             {
-                var listToUpdate = entities.Where(x => selector(x) > 0).OrderBy(x => selector);
-                var listToAdd = entities.Where(x => selector(x) <= 0).OrderBy(x => selector);
-
-                returnResult.AddRange(listToUpdate);
-                returnResult.AddRange(listToAdd);
+                returnResult.AddRange(entities.Where(x => selector(x) > 0).OrderBy(x => selector)); // listToUpdate
+                returnResult.AddRange(entities.Where(x => selector(x) <= 0).OrderBy(x => selector)); // listToAdd
             }
             return returnResult;
         }
