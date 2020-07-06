@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     {
                         Name = "Early years education and childcare",
                         LarId = "10123456",
+                        TlPathwayId = pathway.Id,
                         TlPathway = pathway,
                         CreatedBy = Constants.CreatedByUser,
                         CreatedOn = Constants.CreatedOn,
@@ -28,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     {
                         Name = "Assisting teaching",
                         LarId = "10123456",
+                        TlPathwayId = pathway.Id,
                         TlPathway = pathway,
                         CreatedBy = Constants.CreatedByUser,
                         CreatedOn = Constants.CreatedOn,
@@ -38,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     {
                         Name = "Supporting and mentoring students in further and higher education",
                         LarId = "10123456",
+                        TlPathwayId = pathway.Id,
                         TlPathway = pathway,
                         CreatedBy = Constants.CreatedByUser,
                         CreatedOn = Constants.CreatedOn,
@@ -54,6 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     {
                         Name = "Surveying and design for construction and the built environment",
                         LarId = "10123456",
+                        TlPathwayId = pathway.Id,
                         TlPathway = pathway,
                         CreatedBy = Constants.CreatedByUser,
                         CreatedOn = Constants.CreatedOn,
@@ -64,6 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     {
                         Name = "Civil Engineering",
                         LarId = "10123457",
+                        TlPathwayId = pathway.Id,
                         TlPathway = pathway,
                         CreatedBy = Constants.CreatedByUser,
                         CreatedOn = Constants.CreatedOn,
@@ -74,6 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     {
                         Name = "Building services design",
                         LarId = "10123458",
+                        TlPathwayId = pathway.Id,
                         TlPathway = pathway,
                         CreatedBy = Constants.CreatedByUser,
                         CreatedOn = Constants.CreatedOn,
@@ -84,6 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     {
                         Name = "Hazardous materials analysis and surveying",
                         LarId = "10123459",
+                        TlPathwayId = pathway.Id,
                         TlPathway = pathway,
                         CreatedBy = Constants.CreatedByUser,
                         CreatedOn = Constants.CreatedOn,

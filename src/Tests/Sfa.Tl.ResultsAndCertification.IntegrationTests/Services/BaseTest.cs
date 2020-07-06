@@ -2,22 +2,26 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Respawn;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration;
 using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
 {
-    public abstract class BaseTest<T> : IBaseTest<T>  where T : BaseEntity, new()
+    public abstract class BaseTest<T> : IBaseTest<T> where T : BaseEntity, new()
     {
         protected GenericRepository<T> Repository;
         protected ILogger<GenericRepository<T>> Logger;
-        protected ResultsAndCertificationDbContext DbContext;
+        public ResultsAndCertificationDbContext DbContext;
+        public Checkpoint DbCheckpoint;
+        private bool _isRelationalDb;
 
-        public BaseTest()
+        public BaseTest(bool isRelationalDb = false)
         {
+            _isRelationalDb = isRelationalDb;
             Setup();
             Given();
             When();
@@ -26,8 +30,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
         public void Setup()
         {
             Logger = Substitute.For<ILogger<GenericRepository<T>>>();
-            DbContext = InMemoryDbContext.Create();
+            DbContext = _isRelationalDb ? TestDatabaseConfiguration.CreateRelationalDbContext() : TestDatabaseConfiguration.CreateInMemoryDbContext();
             Repository = new GenericRepository<T>(Logger, DbContext);
+            DbCheckpoint = _isRelationalDb ? new Checkpoint { WithReseed = true } : null;
         }
 
         public abstract void Given();
@@ -35,6 +40,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
 
         public void Dispose()
         {
+            if (_isRelationalDb)
+            {
+                DbCheckpoint?.Reset(TestDatabaseConfiguration.GetConnectionString()).GetAwaiter().GetResult();
+            }
             DbContext?.Dispose();
         }
 
@@ -56,6 +65,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
             {
                 entityEntry.State = EntityState.Detached;
             }
-        }
+        }        
     }
 }
