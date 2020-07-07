@@ -1,4 +1,5 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.UploadSuccessfulViewModel
 
 @{
     ViewData["Title"] = @UploadSuccessful.Page_Title;
@@ -9,7 +10,24 @@
         <div class="govuk-panel govuk-panel--confirmation">
             <h1 class="govuk-panel__title">@UploadSuccessful.Section_Heading</h1>
         </div>
-        <p class="govuk-body govuk-!-padding-top-3">@UploadSuccessful.Section_Info_Text</p>
+        <p class="govuk-body govuk-!-padding-top-3">@Model.SuccessfulRegistrationText</p>
+        @if (Model.HasMoreThanOneStatsToShow)
+        {
+            <ul class="govuk-list govuk-list--bullet">
+                @if (Model.HasNewRegistrations)
+                {
+                    <li>@Model.NewRegistrationsText</li>
+                }
+                @if (Model.HasAmendedRegistrations)
+                {
+                    <li>@Model.AmendedRegistrationsText</li>
+                }
+                @if (Model.HasUnchangedRegistrations)
+                {
+                    <li>@Model.UnchangedRegistrationsText</li>
+                }
+            </ul>
+        }
         <p class="govuk-!-margin-top-8"><a asp-route="RegistrationDashboard" class="govuk-button" role="button">@UploadSuccessful.Back_To_Registrations_Button_Text</a></p>
     </div>
 </div>

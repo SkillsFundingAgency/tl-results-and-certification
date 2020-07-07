@@ -82,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             {
                 RowNum = "2",
                 Uln = "111111111",
-                ErrorMessage = "UKPRN must be a 8 digit number"
+                ErrorMessage = "UKPRN must be an 8 digit number"
             },
             new RegistrationValidationError
             {
@@ -123,6 +123,20 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 RowNum = "4",
                 Uln = "111111113",
                 ErrorMessage = ValidationMessages.SpecialismNotValidWithCore
+            }
+        };
+
+        public IList<RegistrationValidationError> BuildStage4ValidationErrorsList() => new List<RegistrationValidationError>
+        {
+            new RegistrationValidationError
+            {
+                Uln = "1111111111",
+                ErrorMessage = ValidationMessages.ActiveUlnWithDifferentAo
+            },
+            new RegistrationValidationError
+            {
+                Uln = "1111111112",
+                ErrorMessage = ValidationMessages.CoreForUlnCannotBeChangedYet
             }
         };
     }

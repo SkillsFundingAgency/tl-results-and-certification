@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
 
         public int RowNum { get; set; }
 
-        public int Uln { get; set; }
+        public long Uln { get; set; }
 
         public string FirstName { get; set; }
 

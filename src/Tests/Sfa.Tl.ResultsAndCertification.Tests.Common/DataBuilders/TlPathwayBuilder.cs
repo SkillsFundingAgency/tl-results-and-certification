@@ -58,6 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                             TlevelTitle = "T Level in Design, Surveying and Planning for Construction",
                             Name = "Design, Surveying and Planning",
                             LarId = "10123456",
+                            TlRouteId = route.Id,
                             TlRoute = route,
                             CreatedBy = Constants.CreatedByUser,
                             CreatedOn = Constants.CreatedOn,
@@ -72,6 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                             TlevelTitle = "T Level in Digital Production, Design and Development",
                             Name = "Digital Production, Design and Development",
                             LarId = "10123468",
+                            TlRouteId = route.Id,
                             TlRoute = route,
                             CreatedBy = Constants.CreatedByUser,
                             CreatedOn = Constants.CreatedOn,
@@ -93,12 +95,42 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                             TlevelTitle = "T Level in Education and Childcare",
                             Name = "Education",
                             LarId = "10123457",
+                            TlRouteId = route.Id,
                             TlRoute = route,
                             CreatedBy = Constants.CreatedByUser,
                             CreatedOn = Constants.CreatedOn,
                             ModifiedBy = Constants.ModifiedByUser,
                             ModifiedOn = Constants.ModifiedOn
                         });
+                    }
+                    else if (route.Name == EnumExtensions.GetDisplayName(EnumTlRoute.Digital))
+                    {
+                        results.Add(new TlPathway
+                        {
+                            TlevelTitle = "T Level in Digital Support and Services",
+                            Name = "Digital Support Services",
+                            LarId = "10623456",
+                            TlRouteId = route.Id,
+                            TlRoute = route,
+                            CreatedBy = Constants.CreatedByUser,
+                            CreatedOn = Constants.CreatedOn,
+                            ModifiedBy = Constants.ModifiedByUser,
+                            ModifiedOn = Constants.ModifiedOn
+                        });
+
+                        results.Add(new TlPathway
+                        {
+                            TlevelTitle = "T Level in Digital Business Services",
+                            Name = "Digital Business Services",
+                            LarId = "10723456",
+                            TlRouteId = route.Id,
+                            TlRoute = route,
+                            CreatedBy = Constants.CreatedByUser,
+                            CreatedOn = Constants.CreatedOn,
+                            ModifiedBy = Constants.ModifiedByUser,
+                            ModifiedOn = Constants.ModifiedOn
+                        });
+
                     }
                 }
                 return results;

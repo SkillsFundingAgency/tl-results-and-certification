@@ -92,7 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 catch (BadDataException)
                 {
                     rownum++;
-                    TModel row = _dataParser.ParseErrorObject(rownum, importModel, null, string.Format(ValidationMessages.InvalidColumnFound, properties.Count));
+                    TModel row = _dataParser.ParseErrorObject(rownum, null, null, string.Format(ValidationMessages.InvalidColumnFound, properties.Count));
                     rowsModelList.Add(row);
                 }
             }

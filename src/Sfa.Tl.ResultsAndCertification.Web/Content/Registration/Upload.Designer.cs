@@ -106,6 +106,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Submit (only click once).
+        /// </summary>
+        public static string Js_Disabled_Upload_File_Button_Text {
+            get {
+                return ResourceManager.GetString("Js_Disabled_Upload_File_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size..
+        /// </summary>
+        public static string Js_Disabled_Upload_File_Help_Text {
+            get {
+                return ResourceManager.GetString("Js_Disabled_Upload_File_Help_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The selected file must be a CSV.
         /// </summary>
         public static string Must_Be_Csv_Validation_Message {
@@ -165,6 +183,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Upload_File_Text {
             get {
                 return ResourceManager.GetString("Upload_File_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing, please wait. This could take up to 10 seconds. Do not refresh..
+        /// </summary>
+        public static string Upload_Processing_Spinner_Text {
+            get {
+                return ResourceManager.GetString("Upload_Processing_Spinner_Text", resourceCulture);
             }
         }
         

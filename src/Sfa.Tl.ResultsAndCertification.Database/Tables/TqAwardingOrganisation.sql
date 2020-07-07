@@ -11,5 +11,6 @@
     [ModifiedBy] NVARCHAR(50) NULL,
 	CONSTRAINT [PK_TqAwardingOrganisation] PRIMARY KEY ([Id]),
 	CONSTRAINT [FK_TqAwardingOrganisation_TlAwardingOrganisation] FOREIGN KEY ([TlAwardingOrganisatonId]) REFERENCES [TlAwardingOrganisation]([Id]),
-	CONSTRAINT [FK_TqAwardingOrganisation_TlPathway] FOREIGN KEY ([TlPathwayId]) REFERENCES [TlPathway]([Id])
+	CONSTRAINT [FK_TqAwardingOrganisation_TlPathway] FOREIGN KEY ([TlPathwayId]) REFERENCES [TlPathway]([Id]),
+	CONSTRAINT IX_Unique_TqAwardingOrganisation_TlAwardingOrganisatonId_TlPathwayId UNIQUE ([TlAwardingOrganisatonId],[TlPathwayId])
 )

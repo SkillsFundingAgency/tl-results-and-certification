@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Amended_Registrations_Singular_Text" xml:space="preserve">
+    <value>{0} amended registration</value>
+  </data>
+  <data name="Amended_Registrations_Text" xml:space="preserve">
+    <value>{0} amended registrations</value>
+  </data>
   <data name="Back_To_Registrations_Button_Text" xml:space="preserve">
     <value>Back to registrations</value>
+  </data>
+  <data name="New_Registrations_Singular_Text" xml:space="preserve">
+    <value>{0} new registration</value>
+  </data>
+  <data name="New_Registrations_Text" xml:space="preserve">
+    <value>{0} new registrations</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Registrations upload successful page</value>
@@ -126,7 +138,31 @@
   <data name="Section_Heading" xml:space="preserve">
     <value>Registrations upload successful</value>
   </data>
-  <data name="Section_Info_Text" xml:space="preserve">
-    <value>You successfully sent 230 registrations.</value>
+  <data name="Successfully_Sent_Amended_Registrations_Singular_Text" xml:space="preserve">
+    <value>You successfully sent {0} amended registration</value>
+  </data>
+  <data name="Successfully_Sent_Amended_Registrations_Text" xml:space="preserve">
+    <value>You successfully sent {0} amended registrations</value>
+  </data>
+  <data name="Successfully_Sent_New_Registrations_Singular_Text" xml:space="preserve">
+    <value>You successfully sent {0} new registration</value>
+  </data>
+  <data name="Successfully_Sent_New_Registrations_Text" xml:space="preserve">
+    <value>You successfully sent {0} new registrations</value>
+  </data>
+  <data name="Successfully_Sent_Total_Registrations_Text" xml:space="preserve">
+    <value>You successfully sent {0} registrations. This included:</value>
+  </data>
+  <data name="Successfully_Sent_Unchanged_Registrations_Singular_Text" xml:space="preserve">
+    <value>You successfully sent {0} unchanged registration</value>
+  </data>
+  <data name="Successfully_Sent_Unchanged_Registrations_Text" xml:space="preserve">
+    <value>You successfully sent {0} unchanged registrations</value>
+  </data>
+  <data name="Unchanged_Registrations_Singular_Text" xml:space="preserve">
+    <value>{0} unchanged registration</value>
+  </data>
+  <data name="Unchanged_Registrations_Text" xml:space="preserve">
+    <value>{0} unchanged registrations</value>
   </data>
 </root>

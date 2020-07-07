@@ -22,8 +22,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         {
             SeedTestData();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
+            RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository);
+            RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository);
             _stage3RegistrationsData = new RegistrationsStage3Builder().BuildValidList();
         }
 
@@ -43,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         }
 
         [Fact]
-        public void Then_Expectected_Response_Is_Returned()
+        public void Then_Expected_Response_Is_Returned()
         {
             _result.Should().NotBeNull();
             _result.Count.Should().Be(_stage3RegistrationsData.Count);
@@ -62,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualRegistration.TqAwardingOrganisationId.Should().Be(TqProvider.TqAwardingOrganisationId);
                 actualRegistration.TlAwardingOrganisatonId.Should().Be(TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.Id);
                 actualRegistration.TlProviderId.Should().Be(TqProvider.TlProviderId);
-                actualRegistration.TlSpecialismLarIds.Should().BeEquivalentTo(TqProvider.TqAwardingOrganisation.TlPathway.TlSpecialisms.Select(s => new KeyValuePair<int, string>(s.Id, s.LarId)));
+                actualRegistration.TlSpecialismLarIds.Should().BeEquivalentTo(TqProvider.TqAwardingOrganisation.TlPathway.TlSpecialisms.Select(s => new KeyValuePair<int, string>(s.Id, s.LarId)).Where(s => expectedRegistration.SpecialismCodes.Contains(s.Value)));
             }
         }
     }

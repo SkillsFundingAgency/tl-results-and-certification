@@ -85,20 +85,37 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 }
 
                 // Step: Map data to DB model type.
-                var tqRegistrations = _registrationService.TransformRegistrationModel();
+                var tqRegistrationProfiles = _registrationService.TransformRegistrationModel(stage3RegistrationsResponse, request.PerformedBy);
 
-                // Step: Process DB operation
-                var result = await _registrationService.CompareAndProcessRegistrations();
+                // Step: Process Stage 4 validation and DB operation                
+                var registrationProcessResult = await _registrationService.CompareAndProcessRegistrationsAsync(tqRegistrationProfiles);
 
-                response.IsSuccess = true;
+                return registrationProcessResult.IsValid ? 
+                    await ProcessRegistrationResponse(request, response, registrationProcessResult) : 
+                    await SaveErrorsAndUpdateResponse(request, response, registrationProcessResult.ValidationErrors);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var errorMessage = $"Something went wrong while processing bluk registrations. Method: ProcessBulkRegistrationsAsync(BulkRegistrationRequest : {JsonConvert.SerializeObject(request)}), User: {request.PerformedBy}";
                 _logger.LogError(LogEvent.BulkRegistrationProcessFailed, ex, errorMessage);
                 await DeleteFileFromProcessingFolderAsync(request);
             }
             return response;
+        }
+
+        private async Task<BulkRegistrationResponse> ProcessRegistrationResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, RegistrationProcessResponse registrationProcessResult)
+        {
+            _ = registrationProcessResult.IsSuccess ? await MoveFileFromProcessingToProcessedAsync(request) : await MoveFileFromProcessingToFailedAsync(request);
+            await CreateDocumentUploadHistory(request, registrationProcessResult.IsSuccess ? DocumentUploadStatus.Processed : DocumentUploadStatus.Failed);
+            response.IsSuccess = registrationProcessResult.IsSuccess;
+            response.Stats = registrationProcessResult.BulkUploadStats;
+            return response;
+        }
+
+        private async Task SaveDocumentHistoryAndMoveFileToProcessed(BulkRegistrationRequest request)
+        {
+            await MoveFileFromProcessingToProcessedAsync(request);
+            await CreateDocumentUploadHistory(request, DocumentUploadStatus.Processed);
         }
 
         private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, IList<RegistrationValidationError> registrationValidationErrors)
@@ -118,7 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         private static void CheckUlnDuplicates(IList<RegistrationCsvRecordResponse> registrations)
         {
             var duplicateRegistrations = registrations.Where(r => r.Uln != 0).GroupBy(r => r.Uln).Where(g => g.Count() > 1).Select(x => x);
-            
+
             foreach (var record in duplicateRegistrations.SelectMany(duplicateRegistration => duplicateRegistration))
             {
                 record.ValidationErrors.Add(new RegistrationValidationError
@@ -150,7 +167,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 }
             }
 
-            if(stage3RegistrationsResponse != null)
+            if (stage3RegistrationsResponse != null)
             {
                 foreach (var invalidRegistration in stage3RegistrationsResponse.Where(x => !x.IsValid))
                 {

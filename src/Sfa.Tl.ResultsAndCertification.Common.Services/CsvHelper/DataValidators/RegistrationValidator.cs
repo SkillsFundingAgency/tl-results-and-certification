@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             // Ukprn
             RuleFor(r => r.Ukprn)
                 .Required()
-                .MustBeNumberWithLength(8);
+                .MustBeNumberWithLength(8, ValidationMessages.MustBeAnNumberWithLength);
 
             // Startdate
             RuleFor(r => r.StartDate)

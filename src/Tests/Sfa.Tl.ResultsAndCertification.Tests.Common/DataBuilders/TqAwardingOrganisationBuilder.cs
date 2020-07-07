@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -16,7 +17,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 
             return new TqAwardingOrganisation
             {
+                TlAwardingOrganisatonId = tlAwardingOrganisation.Id,
                 TlAwardingOrganisaton = tlAwardingOrganisation,
+                TlPathwayId = pathway.Id,
                 TlPathway = pathway,
                 ReviewStatus = 1,
                 CreatedBy = Constants.CreatedByUser,
@@ -36,7 +39,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 results.Add(new TqAwardingOrganisation
                 {
+                    TlAwardingOrganisatonId = tlAwardingOrganisation.Id,
                     TlAwardingOrganisaton = tlAwardingOrganisation,
+                    TlPathwayId = pathway.Id,
                     TlPathway = pathway,
                     ReviewStatus = 1,
                     CreatedBy = Constants.CreatedByUser,
@@ -58,7 +63,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 results.Add(new TqAwardingOrganisation
                 {
+                    TlAwardingOrganisatonId = tlAwardingOrg.Id,
                     TlAwardingOrganisaton = tlAwardingOrg,
+                    TlPathwayId = pathway.Id,
                     TlPathway = pathway,
                     ReviewStatus = (int)tlevelReviewStatus,
                     CreatedBy = Constants.CreatedByUser,

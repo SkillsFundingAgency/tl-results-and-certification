@@ -61,11 +61,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to upload file.
+        ///   Looks up a localized string similar to Back to registrations.
         /// </summary>
-        public static string Back_To_Upload_File_Button_Text {
+        public static string Back_To_Registrations_Button_Text {
             get {
-                return ResourceManager.GetString("Back_To_Upload_File_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Back_To_Registrations_Button_Text", resourceCulture);
             }
         }
         
@@ -75,6 +75,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Download_Error_Report_Text {
             get {
                 return ResourceManager.GetString("Download_Error_Report_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you leave this page you will not be able to access the error report..
+        /// </summary>
+        public static string Errors_Not_Accessible_On_Page_Exit_Text {
+            get {
+                return ResourceManager.GetString("Errors_Not_Accessible_On_Page_Exit_Text", resourceCulture);
             }
         }
         
@@ -115,11 +124,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The file could not be uploaded as it contains errors. Download the error report to find out why some registrations were unsuccessful..
+        ///   Looks up a localized string similar to The file could not be uploaded as it contains errors..
         /// </summary>
         public static string Section_Info_Text {
             get {
                 return ResourceManager.GetString("Section_Info_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download this error report and send it to your organisation’s technical team..
+        /// </summary>
+        public static string Send_Errors_TechTeam_Para_Text {
+            get {
+                return ResourceManager.GetString("Send_Errors_TechTeam_Para_Text", resourceCulture);
             }
         }
     }

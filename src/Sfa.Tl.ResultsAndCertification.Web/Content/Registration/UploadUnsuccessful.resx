@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Back_To_Upload_File_Button_Text" xml:space="preserve">
-    <value>Back to upload file</value>
+  <data name="Back_To_Registrations_Button_Text" xml:space="preserve">
+    <value>Back to registrations</value>
   </data>
   <data name="Download_Error_Report_Text" xml:space="preserve">
     <value>Download error report</value>
+  </data>
+  <data name="Errors_Not_Accessible_On_Page_Exit_Text" xml:space="preserve">
+    <value>If you leave this page you will not be able to access the error report.</value>
   </data>
   <data name="File_Size_Kb_Text" xml:space="preserve">
     <value>KB</value>
@@ -136,6 +139,9 @@
     <value>Registrations upload unsuccessful</value>
   </data>
   <data name="Section_Info_Text" xml:space="preserve">
-    <value>The file could not be uploaded as it contains errors. Download the error report to find out why some registrations were unsuccessful.</value>
+    <value>The file could not be uploaded as it contains errors.</value>
+  </data>
+  <data name="Send_Errors_TechTeam_Para_Text" xml:space="preserve">
+    <value>Download this error report and send it to your organisation’s technical team.</value>
   </data>
 </root>

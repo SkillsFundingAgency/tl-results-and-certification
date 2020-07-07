@@ -8,13 +8,9 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.Mapper;
-using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessBulkRegistrationsAsync
 {
@@ -38,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         protected readonly string Givenname = "test";
         protected readonly string Surname = "user";
         protected readonly string Email = "test.user@test.com";
-        private Guid _blobUniqueReference;
+        protected Guid BlobUniqueReference;
         public override void Setup()
         {
             Mapper = Substitute.For<IMapper>();
@@ -46,17 +42,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
             BlobStorageService = Substitute.For<IBlobStorageService>();
             FormFile = Substitute.For<IFormFile>();
+            BlobUniqueReference = Guid.NewGuid();
+            BulkRegistrationRequest = new BulkRegistrationRequest { AoUkprn = Ukprn };
         }
 
         public override void Given()
-        {
-            _blobUniqueReference = Guid.NewGuid();
-            BulkRegistrationRequest = new BulkRegistrationRequest { AoUkprn = Ukprn };
-
+        {          
             BulkRegistrationResponse = new BulkRegistrationResponse
             {
                 IsSuccess = false,
-                BlobUniqueReference = _blobUniqueReference,
+                BlobUniqueReference = BlobUniqueReference,
                 ErrorFileSize = 1.5
             };
 
@@ -65,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             UploadRegistrationsResponseViewModel = new UploadRegistrationsResponseViewModel
             {
                 IsSuccess = false,
-                BlobUniqueReference = _blobUniqueReference,
+                BlobUniqueReference = BlobUniqueReference,
                 ErrorFileSize = 1.5
             };
 
