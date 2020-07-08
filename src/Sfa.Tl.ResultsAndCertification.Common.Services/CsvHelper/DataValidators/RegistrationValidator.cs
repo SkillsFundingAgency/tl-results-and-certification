@@ -48,10 +48,20 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
 
             // Specialisms
             RuleFor(r => r.Specialisms)
-                //.Required()
                 .Must(x => x.Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())).All(a =>  a.Trim().Length == 8))
                 .WithMessage(string.Format(ValidationMessages.MustBeStringWithLength, "{PropertyName}", 8))
                 .When(r => !string.IsNullOrWhiteSpace(r.Specialisms));
+
+            RuleFor(r => r.Specialisms)
+                .Must(spl => !IsDuplicate(spl))
+                .WithMessage(ValidationMessages.DuplicateSpecialism)
+                .When(r => !string.IsNullOrWhiteSpace(r.Specialisms) && r.Specialisms.Split(',').Count() > 1);
+        }
+
+        private bool IsDuplicate(string commaSeparatedString)
+        {
+            return
+                commaSeparatedString.Split(',').GroupBy(spl => spl.Trim()).Any(c => c.Count() > 1);
         }
     }
 }
