@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
 
         public long ProviderUkprn { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime RegistrationDate { get; set; }
 
         public string CoreCode { get; set; }
 

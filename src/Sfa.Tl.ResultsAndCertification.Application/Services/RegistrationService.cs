@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     FirstName = registrationData.FirstName,
                     LastName = registrationData.LastName,
                     DateOfBirth = registrationData.DateOfBirth,
-                    StartDate = registrationData.StartDate,
+                    RegistrationDate = registrationData.RegistrationDate,
                     TqProviderId = technicalQualification.TqProviderId,
                     TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
                     TlPathwayId = technicalQualification.TlPathwayId,
@@ -102,8 +102,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         {
                             Id = index - Constants.RegistrationPathwayStartIndex,
                             TqProviderId = registration.TqProviderId,
-                            AcademicYear = registration.StartDate.Year, // TODO: Need to calcualate based on the requirements
-                            RegistrationDate = registration.StartDate,
+                            AcademicYear = registration.RegistrationDate.Year, // TODO: Need to calcualate based on the requirements
+                            RegistrationDate = registration.RegistrationDate,
                             StartDate = DateTime.UtcNow,
                             Status = RegistrationPathwayStatus.Active,
                             IsBulkUpload = true,

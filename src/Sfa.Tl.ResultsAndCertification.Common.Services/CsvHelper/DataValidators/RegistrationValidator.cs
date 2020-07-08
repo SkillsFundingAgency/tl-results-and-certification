@@ -36,8 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .Required()
                 .MustBeNumberWithLength(8, ValidationMessages.MustBeAnNumberWithLength);
 
-            // Startdate
-            RuleFor(r => r.StartDate)
+            // RegistrationDate
+            RuleFor(r => r.RegistrationDate)
                 .Required()
                 .ValidDate();
 

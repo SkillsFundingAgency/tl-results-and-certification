@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 FirstName = "First 1",
                 LastName = "Last 1",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
-                StartDate = DateTime.Now,
+                RegistrationDate = DateTime.Now,
                 TqProviderId = 1, // valid provider
                 TlProviderId = 1,
                 TqAwardingOrganisationId = 1,
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 FirstName = "First 2",
                 LastName = "Last 2",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
-                StartDate = DateTime.Now,
+                RegistrationDate = DateTime.Now,
                 TqProviderId = 1, // valid provider
                 TlProviderId = 1,
                 TqAwardingOrganisationId = 1,
@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 FirstName = "First 3",
                 LastName = "Last 3",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
-                StartDate = DateTime.Now,
+                RegistrationDate = DateTime.Now,
                 TqProviderId = 1, // valid provider
                 TlProviderId = 1,
                 TqAwardingOrganisationId = 1,
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 FirstName = "First 2",
                 LastName = "Last 2",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
-                StartDate = DateTime.Now,
+                RegistrationDate = DateTime.Now,
                 TqProviderId = 2, // Assign different TqProviderId to show ActiveUlnWithDifferentAo validation error
                 TlProviderId = 1,
                 TqAwardingOrganisationId = 1,
