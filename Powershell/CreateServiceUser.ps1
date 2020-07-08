@@ -17,6 +17,8 @@ param (
     $NewUserName
 )
 Set-Location $PSScriptRoot
+Write-Host $PSScriptRoot
+
 
 .'.\powershellFunctions.ps1'
 $newPassword = Generate-Password
