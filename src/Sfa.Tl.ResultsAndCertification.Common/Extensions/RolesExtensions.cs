@@ -53,6 +53,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return user.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
         }
 
+        public static string GetUserId(this ClaimsPrincipal user)
+        {
+            return user.Claims.SingleOrDefault(c => c.Type == CustomClaimTypes.UserId)?.Value;
+        }
+
         public static long GetUkPrn(this ClaimsPrincipal user)
         {
             var ukprn = user?.Claims?.SingleOrDefault(c => c.Type == CustomClaimTypes.Ukprn)?.Value;
