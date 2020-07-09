@@ -39,6 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Duplicate_Specialisms.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Header_Validation.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

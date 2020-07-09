@@ -23,6 +23,9 @@
         public const string UnableToReadCsvData = "Unable to interpret content.";
         public const string UnexpectedError = "Unexpected error while reading file content.";
 
+        // Bulk Registration Stage2 Validation Messages
+        public const string DuplicateSpecialism = "Cannot have duplicate specialism codes for one registration";
+
         // Bulk Registration Stage3 Validation Messages
         public const string ProviderNotRegisteredWithAo = "Provider not registered with awarding organisation";
         public const string CoreNotRegisteredWithProvider = "Core not registered with provider";
