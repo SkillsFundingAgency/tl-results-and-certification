@@ -59,9 +59,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                var unsuccessfulViewModel = new UploadUnsuccessfulViewModel { BlobUniqueReference = response.BlobUniqueReference, FileSize = response.ErrorFileSize, FileType = FileType.Csv.ToString().ToUpperInvariant() };
-                TempData[Constants.UploadUnsuccessfulViewModel] = JsonConvert.SerializeObject(unsuccessfulViewModel);
-                return RedirectToRoute(RouteConstants.RegistrationsUploadUnsuccessful);
+                if (response.ShowProblemWithServicePage)
+                {
+                    return RedirectToRoute(RouteConstants.RegistrationsProblemWithService);
+                }
+                else
+                {
+                    var unsuccessfulViewModel = new UploadUnsuccessfulViewModel { BlobUniqueReference = response.BlobUniqueReference, FileSize = response.ErrorFileSize, FileType = FileType.Csv.ToString().ToUpperInvariant() };
+                    TempData[Constants.UploadUnsuccessfulViewModel] = JsonConvert.SerializeObject(unsuccessfulViewModel);
+                    return RedirectToRoute(RouteConstants.RegistrationsUploadUnsuccessful);
+                }
             }
         }
 
@@ -93,6 +100,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var viewModel = JsonConvert.DeserializeObject<UploadUnsuccessfulViewModel>(TempData[Constants.UploadUnsuccessfulViewModel] as string);
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("registration-problem-with-service", Name = RouteConstants.RegistrationsProblemWithService)]
+        public IActionResult ProblemWithService()
+        {
+            return View();
         }
 
         [HttpGet]

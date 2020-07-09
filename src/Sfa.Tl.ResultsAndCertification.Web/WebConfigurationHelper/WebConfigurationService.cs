@@ -17,6 +17,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
             return _configuration.FeedbackEmailAddress;
         }
 
+        public string GetTechnicalSupportEmailAddress()
+        {
+            return _configuration.TechnicalSupportEmailAddress;
+        }
+
         public string GetSignOutPath()
         {
             return _configuration.DfeSignInSettings.SignOutEnabled ? RouteConstants.SignOutDsi : RouteConstants.SignOut;

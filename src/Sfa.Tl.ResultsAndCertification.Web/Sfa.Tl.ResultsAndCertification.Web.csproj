@@ -126,6 +126,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>YourProviders.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\ProblemWithService.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProblemWithService.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\UploadSuccessful.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -266,6 +271,10 @@
     <EmbeddedResource Update="Content\Provider\YourProviders.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>YourProviders.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\ProblemWithService.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProblemWithService.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\UploadSuccessful.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
