@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Threading.Tasks;
 using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
 
@@ -119,6 +120,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.DownloadRegistrationErrorsFailed, $"Not a valid guid to read file.Method: DownloadRegistrationErrors(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
+        }
+
+        [HttpGet]
+        [Route("add-registration-unique-learner-number", Name = RouteConstants.AddRegistrationUln)]
+        public IActionResult AddRegistrationUln()
+        {
+            var model = new AddRegistrationUlnViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("add-registration-unique-learner-number", Name = RouteConstants.AddRegistrationUln)]
+        public IActionResult AddRegistrationUln(AddRegistrationUlnViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            return RedirectToRoute(RouteConstants.AddRegistrationName);
+        }
+
+        [HttpGet]
+        [Route("add-registration-learners-name", Name = RouteConstants.AddRegistrationName)]
+        public IActionResult AddRegistrationName()
+        {
+            return View();
         }
     }
 }

@@ -51,6 +51,10 @@
         public const string RegistrationsUploadUnsuccessful = "RegistrationsUploadUnsuccessful";
         public const string DownloadRegistrationErrors = "DownloadRegistrationErrors";
 
+        // Add Registration
+        public const string AddRegistrationUln = "AddRegistrationUln";
+        public const string AddRegistrationName = "AddRegistrationName";
+
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";
