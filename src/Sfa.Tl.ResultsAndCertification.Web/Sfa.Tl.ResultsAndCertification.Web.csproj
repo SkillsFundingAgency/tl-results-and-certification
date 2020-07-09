@@ -126,6 +126,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>YourProviders.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\AddRegistrationUln.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddRegistrationUln.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\ProblemWithService.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -271,6 +276,10 @@
     <EmbeddedResource Update="Content\Provider\YourProviders.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>YourProviders.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\AddRegistrationUln.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddRegistrationUln.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\ProblemWithService.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
