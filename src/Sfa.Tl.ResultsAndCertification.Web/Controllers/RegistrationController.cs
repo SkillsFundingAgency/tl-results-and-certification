@@ -146,6 +146,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("add-registration-unique-learner", Name= RouteConstants.AddRegistration)]
+        public async Task<IActionResult> AddRegistrationAsync()
+        {
+            await _cacheService.RemoveAsync<RegistrationViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AddRegistrationUln);
+        }
+
+        [HttpGet]
         [Route("add-registration-unique-learner-number", Name = RouteConstants.AddRegistrationUln)]
         public async Task<IActionResult> AddRegistrationUln()
         {
