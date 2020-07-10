@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.Cache
 {
-    public interface IDistributedCache
+    public interface ICacheService
     {
         Task<T> GetAsync<T>(string key);
 

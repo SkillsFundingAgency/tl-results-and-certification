@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.Cache
 {
-    public class InMemoryCache : IDistributedCache
+    public class InMemoryCacheService : ICacheService
     {
         private static readonly Lazy<MemoryCache> _cache = new Lazy<MemoryCache>(() => new MemoryCache(new MemoryCacheOptions()));
         

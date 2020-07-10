@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.Cache
 {
-    public class RedisCache : IDistributedCache
+    public class RedisCacheService : ICacheService
     {
         private readonly IConnectionMultiplexer _connectionMultiplexer;
 
-        public RedisCache(IConnectionMultiplexer connectionMultiplexer)
+        public RedisCacheService(IConnectionMultiplexer connectionMultiplexer)
         {
             _connectionMultiplexer = connectionMultiplexer;
         }

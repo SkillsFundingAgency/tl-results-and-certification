@@ -96,7 +96,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             }
 
             services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(_env.IsDevelopment() ? "localhost" : ResultsAndCertificationConfiguration.RedisSettings.CacheConnection));
-            services.AddSingleton<IDistributedCache, RedisCache>();
+            services.AddSingleton<ICacheService, RedisCacheService>();
 
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
             services.AddAuthorization(options =>
