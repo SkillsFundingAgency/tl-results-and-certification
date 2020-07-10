@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter the learner&apos;s name.
+        /// </summary>
+        public static string Enter_Learners_Name_Text {
+            get {
+                return ResourceManager.GetString("Enter_Learners_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First name.
         /// </summary>
         public static string FirstName_Field_Text {
@@ -93,15 +102,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Page_Caption_Text {
             get {
                 return ResourceManager.GetString("Page_Caption_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter the learner&apos;s name.
-        /// </summary>
-        public static string Page_Header_Text {
-            get {
-                return ResourceManager.GetString("Page_Header_Text", resourceCulture);
             }
         }
         
