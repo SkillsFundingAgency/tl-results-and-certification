@@ -153,14 +153,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            return RedirectToRoute(RouteConstants.AddRegistrationName);
+            return RedirectToRoute(RouteConstants.AddRegistrationLearnersName);
         }
 
         [HttpGet]
-        [Route("add-registration-learners-name", Name = RouteConstants.AddRegistrationName)]
-        public IActionResult AddRegistrationName()
+        [Route("add-registration-learners-name", Name = RouteConstants.AddRegistrationLearnersName)]
+        public IActionResult AddRegistrationLearnersName()
         {
-            return View();
+            var model = new LearnersNameViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("add-registration-learners-name", Name = RouteConstants.SubmitRegistrationLearnersName)]
+        public IActionResult AddRegistrationLearnersName(LearnersNameViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            return RedirectToRoute(RouteConstants.AddRegistrationLearnersName);
         }
     }
 }

@@ -54,7 +54,8 @@
 
         // Add Registration
         public const string AddRegistrationUln = "AddRegistrationUln";
-        public const string AddRegistrationName = "AddRegistrationName";
+        public const string AddRegistrationLearnersName = "AddRegistrationLearnersName";
+        public const string SubmitRegistrationLearnersName = "SubmitRegistrationLearnersName";
 
         // Error
         public const string PageNotFound = "PageNotFound";

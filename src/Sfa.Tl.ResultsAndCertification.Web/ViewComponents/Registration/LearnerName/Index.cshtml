@@ -1,0 +1,25 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.LearnersNameViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Sfa.Tl.ResultsAndCertification.Web
+
+<fieldset class="govuk-fieldset" role="group">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+            Enter the learner's name
+        </h1>
+    </legend>
+    <div class="govuk-form-group" sfa-validation-for="Firstname" sfa-validation-class="govuk-form-group--error">
+        <label class="govuk-label" for="Firstname">
+            First name
+        </label>
+        <span sfa-validation-for="Firstname"></span>
+        <input class="govuk-input govuk-!-width-one-half" id="firstname" asp-for="Firstname" maxlength="101">
+    </div>
+    <div class="govuk-form-group" sfa-validation-for="Lastname" sfa-validation-class="govuk-form-group--error">
+        <label class="govuk-label" for="Lastname">
+            Last name
+        </label>
+        <span sfa-validation-for="Lastname"></span>
+        <input class="govuk-input govuk-!-width-one-half" id="lastname" asp-for="Lastname" maxlength="101">
+    </div>
+</fieldset>
