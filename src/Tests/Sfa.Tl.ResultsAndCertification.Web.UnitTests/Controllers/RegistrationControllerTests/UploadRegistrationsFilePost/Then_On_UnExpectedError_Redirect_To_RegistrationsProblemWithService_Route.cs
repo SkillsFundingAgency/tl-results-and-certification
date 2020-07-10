@@ -33,10 +33,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         }
 
         [Fact]
-        public void Then_If_UnExpectedError_Redirected_To_RegistrationsProblemWithService()
+        public void Then_If_UnExpectedError_Redirected_To_ProblemWithRegistrationsUpload_Route()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.RegistrationsProblemWithService);
+            routeName.Should().Be(RouteConstants.ProblemWithRegistrationsUpload);
         }
     }
 }
