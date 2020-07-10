@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
@@ -17,11 +18,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class RegistrationController : Controller
     {
         private readonly IRegistrationLoader _registrationLoader;
+        private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
 
-        public RegistrationController(IRegistrationLoader registrationLoader, ILogger<RegistrationController> logger)
+        public RegistrationController(IRegistrationLoader registrationLoader, ICacheService cacheService, ILogger<RegistrationController> logger)
         {
             _registrationLoader = registrationLoader;
+            _cacheService = cacheService;
             _logger = logger;
         }
 
