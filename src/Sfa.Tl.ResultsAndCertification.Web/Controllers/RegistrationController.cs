@@ -143,13 +143,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-registration-unique-learner-number", Name = RouteConstants.AddRegistrationUln)]
         public IActionResult AddRegistrationUln()
         {
-            var model = new AddRegistrationUlnViewModel();
+            var model = new UlnViewModel();
             return View(model);
         }
 
         [HttpPost]
         [Route("add-registration-unique-learner-number", Name = RouteConstants.AddRegistrationUln)]
-        public IActionResult AddRegistrationUln(AddRegistrationUlnViewModel model)
+        public IActionResult AddRegistrationUln(UlnViewModel model)
         {
             if (!ModelState.IsValid)
             {

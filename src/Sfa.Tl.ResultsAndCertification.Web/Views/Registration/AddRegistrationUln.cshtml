@@ -1,8 +1,8 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.AddRegistrationUlnViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.UlnViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
 
 @{
-    ViewData["Title"] = @Model.IsEditMode ?  
+    ViewData["Title"] = @Model.IsChangeMode ?
         @AddRegistrationUln.Page_Title_Change_Registration : @AddRegistrationUln.Page_Title_Add_Registration;
 }
 
@@ -14,33 +14,18 @@
     <div class="govuk-grid-column-two-thirds">
         <form class="form" asp-route="AddRegistrationUln">
             <partial name="_ValidationSummary" />
-            <input type="hidden" value="@Model.IsEditMode" />
-
-            <div class="govuk-form-group">
-                <span class="govuk-caption-xl">@AddRegistrationUln.Page_Caption_Text</span>
-                <div sfa-validation-for="Uln" sfa-validation-class="govuk-form-group--error">
-                    <h1 class="govuk-label-wrapper">
-                        <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6" for="ULN">
-                            @AddRegistrationUln.Uln_Field_Label
-                        </label>
-                    </h1>
-                    <span id="uln-number-hint" class="govuk-hint">
-                        @AddRegistrationUln.Uln_Field_Hint
-                    </span>
-                    <span sfa-validation-for="Uln"></span>
-                    <input class="govuk-input govuk-input--width-10" asp-for="Uln" id="uln" inputmode="numeric" maxlength="100">
-                </div>
-            </div>
-
+            <input type="hidden" value="@Model.IsChangeMode" />
+            <vc:uln model="Model"></vc:uln>
             <p>
-                @if (!@Model.IsEditMode) {
+                @if (!@Model.IsChangeMode)
+                {
                     <button type="submit" class="govuk-button" data-module="govuk-button">@AddRegistrationUln.Continue_Button_Label</button>
                 }
-                else {
+                else
+                {
                     <button type="submit" class="govuk-button" data-module="govuk-button">@AddRegistrationUln.Change_Button_Label</button>
                 }
             </p>
-
         </form>
 
     </div>

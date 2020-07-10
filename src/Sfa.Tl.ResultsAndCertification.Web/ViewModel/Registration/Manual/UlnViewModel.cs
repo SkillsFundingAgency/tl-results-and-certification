@@ -5,13 +5,13 @@ using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
-    public class AddRegistrationUlnViewModel
+    public class UlnViewModel
     {
         [Required(ErrorMessageResourceType = typeof(ErrorResource.AddRegistrationUln), ErrorMessageResourceName = "Validation_Uln_Required")]
         [RegularExpression("^((?!(0))[0-9]{10})$", ErrorMessageResourceType = typeof(ErrorResource.AddRegistrationUln), ErrorMessageResourceName = "Validation_Uln_Must_Be_Digits")]
         public string Uln { get; set; }
 
-        public bool IsEditMode { get; set; }
+        public bool IsChangeMode { get; set; }
 
         public BackLinkModel BackLink
         {
