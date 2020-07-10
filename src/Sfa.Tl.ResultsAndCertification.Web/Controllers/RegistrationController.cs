@@ -191,20 +191,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("add-registration-learners-name", Name = RouteConstants.AddRegistrationLearnersName)]
-        public IActionResult AddRegistrationLearnersName()
+        public async Task<IActionResult> AddRegistrationLearnersNameAsync()
         {
-            var model = new LearnersNameViewModel();
-            return View(model);
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            
+            if(cacheModel?.Uln == null)
+                return RedirectToAction(RouteConstants.PageNotFound);
+
+            return View(cacheModel?.LearnersName == null ? new LearnersNameViewModel() : cacheModel.LearnersName);
         }
 
         [HttpPost]
         [Route("add-registration-learners-name", Name = RouteConstants.SubmitRegistrationLearnersName)]
-        public IActionResult AddRegistrationLearnersName(LearnersNameViewModel model)
+        public async Task<IActionResult> AddRegistrationLearnersNameAsync(LearnersNameViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
+
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToAction(RouteConstants.PageNotFound);
+
+            cacheModel.LearnersName = model;            
+            await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return RedirectToRoute(RouteConstants.AddRegistrationLearnersName);
         }
