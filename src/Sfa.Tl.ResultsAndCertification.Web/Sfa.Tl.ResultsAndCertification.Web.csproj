@@ -131,10 +131,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AddRegistrationUln.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\Registration\ProblemWithService.Designer.cs">
+    <Compile Update="Content\Registration\ProblemWithRegistrationsUpload.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ProblemWithService.resx</DependentUpon>
+      <DependentUpon>ProblemWithRegistrationsUpload.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Registration\LearnersName.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -286,9 +286,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AddRegistrationUln.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\Registration\ProblemWithService.resx">
+    <EmbeddedResource Update="Content\Registration\ProblemWithRegistrationsUpload.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ProblemWithService.Designer.cs</LastGenOutput>
+      <LastGenOutput>ProblemWithRegistrationsUpload.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\LearnersName.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

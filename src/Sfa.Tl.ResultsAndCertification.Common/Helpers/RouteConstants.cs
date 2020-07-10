@@ -49,7 +49,7 @@
         public const string SubmitUploadRegistrationsFile = "SubmitUploadRegistrationsFile";
         public const string RegistrationsUploadSuccessful = "RegistrationsUploadSuccessful";
         public const string RegistrationsUploadUnsuccessful = "RegistrationsUploadUnsuccessful";
-        public const string RegistrationsProblemWithService = "RegistrationsProblemWithService";
+        public const string ProblemWithRegistrationsUpload = "ProblemWithRegistrationsUpload";
         public const string DownloadRegistrationErrors = "DownloadRegistrationErrors";
 
         // Add Registration

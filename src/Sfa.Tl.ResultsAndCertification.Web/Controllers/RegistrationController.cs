@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 if (response.ShowProblemWithServicePage)
                 {
-                    return RedirectToRoute(RouteConstants.RegistrationsProblemWithService);
+                    return RedirectToRoute(RouteConstants.ProblemWithRegistrationsUpload);
                 }
                 else
                 {
@@ -107,8 +107,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("registration-problem-with-service", Name = RouteConstants.RegistrationsProblemWithService)]
-        public IActionResult ProblemWithService()
+        [Route("problem-with-registrations-upload", Name = RouteConstants.ProblemWithRegistrationsUpload)]
+        public IActionResult ProblemWithRegistrationsUpload()
         {
             return View();
         }

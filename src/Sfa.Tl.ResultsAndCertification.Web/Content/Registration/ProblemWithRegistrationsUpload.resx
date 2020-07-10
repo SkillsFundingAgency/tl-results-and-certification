@@ -130,7 +130,7 @@
     <value>Sorry, there is a problem with the service</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Registrations upload unsuccessful page</value>
+    <value>Problem with registrations upload page</value>
   </data>
   <data name="Submit_Your_File_Again_Text" xml:space="preserve">
     <value>Submit your file again. If you keep getting this message</value>
