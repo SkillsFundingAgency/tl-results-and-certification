@@ -196,7 +196,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
             
             if(cacheModel?.Uln == null)
-                return RedirectToAction(RouteConstants.PageNotFound);
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(cacheModel?.LearnersName == null ? new LearnersNameViewModel() : cacheModel.LearnersName);
         }
@@ -212,7 +212,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
             if (cacheModel == null)
-                return RedirectToAction(RouteConstants.PageNotFound);
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
             cacheModel.LearnersName = model;            
             await _cacheService.SetAsync(CacheKey, cacheModel);

@@ -36,6 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Cache
 
         private async Task SetCustomValueAsync<T>(string key, T customType, TimeSpan cacheTime)
         {
+            if (customType == null) return;
             key = GenerateCacheKey<T>(key);
             IDatabase database = GetDatabase();
             await database.StringSetAsync(key, JsonConvert.SerializeObject(customType), cacheTime);
