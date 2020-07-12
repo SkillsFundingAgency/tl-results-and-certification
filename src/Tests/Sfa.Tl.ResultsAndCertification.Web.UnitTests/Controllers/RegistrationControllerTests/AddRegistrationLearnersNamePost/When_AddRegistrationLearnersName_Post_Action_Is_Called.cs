@@ -13,9 +13,9 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationLearnersNameGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationLearnersNamePost
 {
-    public abstract class When_AddRegistrationLearnersName_Get_Action_Is_Called : BaseTest<RegistrationController>
+    public abstract class When_AddRegistrationLearnersName_Post_Action_Is_Called : BaseTest<RegistrationController>
     {
         protected Guid UserId;
         protected string CacheKey;
@@ -24,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         protected ILogger<RegistrationController> Logger;
         protected RegistrationController Controller;
         protected RegistrationViewModel ViewModel;
+        protected LearnersNameViewModel LearnersNameViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; private set; }
 
@@ -46,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override void When()
         {
-            Result = Controller.AddRegistrationLearnersNameAsync().Result;
+            Result = Controller.AddRegistrationLearnersNameAsync(LearnersNameViewModel).Result;
         }
     }
 }
