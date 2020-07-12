@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
@@ -39,6 +40,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.Should().NotBeNull();
             model.Firstname.Should().Be(_learnersNameViewModel.Firstname);
             model.Lastname.Should().Be(_learnersNameViewModel.Lastname);
+
+            model.BackLink.Should().NotBeNull();
+            model.BackLink.RouteName.Should().Be(RouteConstants.AddRegistrationUln);
         }
     }
 }
