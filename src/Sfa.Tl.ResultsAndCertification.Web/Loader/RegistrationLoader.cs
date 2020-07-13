@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -74,6 +75,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 _logger.LogWarning(LogEvent.NoDataFound, $"No DocumentUploadHistoryDetails found or the request is not valid. Method: GetDocumentUploadHistoryDetailsAsync(AoUkprn: {aoUkprn}, BlobUniqueReference = {blobUniqueReference})");
                 return null;
             }            
-        }      
+        }
+
+        public async Task<SelectProviderViewModel> GetRegistrationTqAoProviderDetailsAsync(long aoUkprn)
+        {
+            var providerDetails = await _internalApiClient.GetTqAoProviderDetailsAsync(aoUkprn);
+            return _mapper.Map<SelectProviderViewModel>(providerDetails);
+        }
     }
 }

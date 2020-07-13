@@ -237,7 +237,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.DateofBirth = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            return RedirectToRoute(RouteConstants.AddRegistrationDateofBirth);
+            return RedirectToRoute(RouteConstants.AddRegistrationProvider);
+        }
+
+        [HttpGet]
+        [Route("add-registration-provider", Name = RouteConstants.AddRegistrationProvider)]
+        public async Task<IActionResult> AddRegistrationProviderAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel?.DateofBirth == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var registeredProviders = await GetAoRegisteredProviders();
+            var viewModel = cacheModel?.SelectProvider == null ? new SelectProviderViewModel() : cacheModel.SelectProvider;
+            viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
+            return View(viewModel);
+        }        
+
+        [HttpPost]
+        [Route("add-registration-provider", Name = RouteConstants.SubmitRegistrationProvider)]
+        public async Task<IActionResult> AddRegistrationProviderAsync(SelectProviderViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model = await GetAoRegisteredProviders();
+                return View(model);
+            }
+
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.SelectProvider = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return RedirectToRoute(RouteConstants.AddRegistrationProvider);
+        }
+        
+        private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
+        {
+            return await _registrationLoader.GetRegistrationTqAoProviderDetailsAsync(User.GetUkPrn());
         }
 
         private async Task SyncCacheUln(UlnViewModel model)
