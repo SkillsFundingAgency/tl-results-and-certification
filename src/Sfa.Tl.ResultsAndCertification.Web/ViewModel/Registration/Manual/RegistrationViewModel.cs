@@ -4,5 +4,6 @@
     {
         public UlnViewModel Uln { get; set; }
         public LearnersNameViewModel LearnersName { get; set; }
+        public DateofBirthViewModel DateofBirth { get; set; }
     }
 }

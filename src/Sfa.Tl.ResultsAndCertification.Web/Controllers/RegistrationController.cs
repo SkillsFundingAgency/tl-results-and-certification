@@ -217,7 +217,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.LearnersName = model;            
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            return RedirectToRoute(RouteConstants.AddRegistrationLearnersName);
+            return RedirectToRoute(RouteConstants.AddRegistrationDateofBirth);
+        }
+
+        [HttpGet]
+        [Route("add-registration-date-of-birth", Name = RouteConstants.AddRegistrationDateofBirth)]
+        public async Task<IActionResult> AddRegistrationDateofBirthAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel?.LearnersName == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(cacheModel?.DateofBirth == null ? new DateofBirthViewModel() : cacheModel.DateofBirth);
+        }
+
+        [HttpGet]
+        [Route("add-registration-date-of-birth", Name = RouteConstants.SubmitRegistrationDateofBirth)]
+        public async Task<IActionResult> AddRegistrationDateofBirthAsync(DateofBirthViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.DateofBirth = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return RedirectToRoute(RouteConstants.AddRegistrationDateofBirth);
         }
     }
 }
