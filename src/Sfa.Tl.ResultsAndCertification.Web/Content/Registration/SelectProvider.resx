@@ -132,6 +132,9 @@
   <data name="Page_Title_Add_Registration_Select_Provider" xml:space="preserve">
     <value>Add a new registration - Select the provider page</value>
   </data>
+  <data name="Select_One_Option_Text" xml:space="preserve">
+    <value>Select one</value>
+  </data>
   <data name="Select_The_Provider_Label_Text" xml:space="preserve">
     <value>Select the provider</value>
   </data>

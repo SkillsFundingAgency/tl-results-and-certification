@@ -106,6 +106,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select one.
+        /// </summary>
+        public static string Select_One_Option_Text {
+            get {
+                return ResourceManager.GetString("Select_One_Option_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select the provider.
         /// </summary>
         public static string Select_The_Provider_Label_Text {
