@@ -277,7 +277,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
-            return await _registrationLoader.GetRegistrationTqAoProviderDetailsAsync(User.GetUkPrn());
+            return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
         }
 
         private async Task SyncCacheUln(UlnViewModel model)

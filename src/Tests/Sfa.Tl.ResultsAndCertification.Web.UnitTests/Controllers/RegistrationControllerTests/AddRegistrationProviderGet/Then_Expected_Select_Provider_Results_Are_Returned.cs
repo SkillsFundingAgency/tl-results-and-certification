@@ -27,14 +27,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 DateofBirth = _dateOfBirthViewModel
             };
 
-            RegistrationLoader.GetRegistrationTqAoProviderDetailsAsync(Ukprn).Returns(_selectProviderViewModel);
+            RegistrationLoader.GetRegisteredTqAoProviderDetailsAsync(Ukprn).Returns(_selectProviderViewModel);
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
         }
 
         [Fact]
         public void Then_GetRegistrationTqAoProviderDetailsAsync_Method_Is_Called()
         {
-            RegistrationLoader.Received(1).GetRegistrationTqAoProviderDetailsAsync(Ukprn);
+            RegistrationLoader.Received(1).GetRegisteredTqAoProviderDetailsAsync(Ukprn);
         }
 
         [Fact]
