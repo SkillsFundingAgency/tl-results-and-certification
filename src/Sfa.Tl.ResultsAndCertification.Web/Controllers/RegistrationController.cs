@@ -274,7 +274,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return RedirectToRoute(RouteConstants.AddRegistrationProvider);
         }
-        
+
+        [HttpGet]
+        [Route("add-registration-core", Name = RouteConstants.AddRegistrationCore)]
+        public async Task<IActionResult> AddRegistrationCoreAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            //if (cacheModel?.SelectProvider == null)
+            //    return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = cacheModel?.SelectProvider == null ? new SelectCoreViewModel() : cacheModel.SelectCore;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-registration-core", Name = RouteConstants.SubmitRegistrationCore)]
+        public async Task<IActionResult> AddRegistrationCoreAsync(SelectCoreViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return RedirectToRoute(RouteConstants.AddRegistrationCore);
+        }
+
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());

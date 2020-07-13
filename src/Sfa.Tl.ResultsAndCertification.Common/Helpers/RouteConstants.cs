@@ -61,6 +61,8 @@
         public const string SubmitRegistrationDateofBirth = "SubmitRegistrationDateofBirth";
         public const string AddRegistrationProvider = "AddRegistrationProvider";
         public const string SubmitRegistrationProvider = "SubmitRegistrationProvider";
+        public const string AddRegistrationCore = "AddRegistrationCore";
+        public const string SubmitRegistrationCore = "SubmitRegistrationCore";
 
         // Error
         public const string PageNotFound = "PageNotFound";
