@@ -4,27 +4,14 @@
 @addTagHelper *, Sfa.Tl.ResultsAndCertification.Web
 
 
-<h1 class="govuk-label-wrapper">
-    <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6" for="provider">
-        @SelectProvider.Select_The_Provider_Label_Text
-    </label>
-</h1>
-
-<select class="govuk-select" id="provider" name="provider">
-    <option value="published">Select one</option>
-    <option value="updated">Barnsley College (12345678)</option>
-    <option value="updated">City of Stoke-on-Trent sixth Form College (34567812)</option>
-    <option value="views">New City College (99345678)</option>
-    <option value="comments">Scarborough Sixth Form College (77345678)</option>
-</select>
-
-<details class="govuk-details govuk-!-margin-top-6" closed>
-    <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-            @SelectProvider.Cannot_Find_One_Of_Your_Providers_Text
-        </span>
-    </summary>
-    <div class="govuk-details__text">
-        <p class="govuk-body govuk-!-margin-bottom-0">@SelectProvider.Cannot_Find_One_Of_Your_Providers_Details_Text</p>
-    </div>
-</details>
+<div sfa-validation-for="SelectedProviderId" sfa-validation-class="govuk-form-group--error">
+    <h1 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6" for="provider">
+            @SelectProvider.Select_The_Provider_Label_Text
+        </label>
+    </h1>
+    <span sfa-validation-for="SelectedProviderId"></span>
+    <select class="govuk-select" id="selectedproviderid" asp-for="SelectedProviderId" asp-items="Model.ProvidersSelectList">
+        <option value="">Select one</option>
+    </select>
+</div>

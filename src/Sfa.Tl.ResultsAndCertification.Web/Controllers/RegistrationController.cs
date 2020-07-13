@@ -257,11 +257,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
-            //if (cacheModel?.DateofBirth == null)
-            //    return RedirectToRoute(RouteConstants.PageNotFound);
+            if (cacheModel?.DateofBirth == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
-            return View(cacheModel?.SelectProvider == null ? new SelectProviderViewModel() : cacheModel.SelectProvider);
-        }
+            var registeredProviders = await GetAoRegisteredProviders();
+            var viewModel = cacheModel?.SelectProvider == null ? new SelectProviderViewModel() : cacheModel.SelectProvider;
+            viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
+            return View(viewModel);
+        }        
 
         [HttpPost]
         [Route("add-registration-provider", Name = RouteConstants.SubmitRegistrationProvider)]
@@ -269,6 +272,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model = await GetAoRegisteredProviders();
                 return View(model);
             }
 
@@ -280,6 +284,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return RedirectToRoute(RouteConstants.AddRegistrationProvider);
+        }
+        
+        private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
+        {
+            return await _registrationLoader.GetRegistrationTqAoProviderDetailsAsync(User.GetUkPrn());
         }
     }
 }
