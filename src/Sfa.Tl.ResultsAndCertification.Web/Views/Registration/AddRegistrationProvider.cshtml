@@ -5,6 +5,10 @@
     ViewData["Title"] = @SelectProvider.Page_Title_Add_Registration_Select_Provider;
 }
 
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form class="form" asp-route="SubmitRegistrationProvider">
