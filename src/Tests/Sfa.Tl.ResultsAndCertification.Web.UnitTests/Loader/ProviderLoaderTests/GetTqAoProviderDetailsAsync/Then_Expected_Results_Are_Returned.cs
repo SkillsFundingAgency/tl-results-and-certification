@@ -24,7 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
 
             actualProviderDetailsResult.ProviderId.Should().Be(expectedProviderDetailsResult.Id);
             actualProviderDetailsResult.DisplayName.Should().Be(expectedProviderDetailsResult.DisplayName);
-            actualProviderDetailsResult.DisplayNameWithUkprn.Should().Be($"{expectedProviderDetailsResult.DisplayName} ({expectedProviderDetailsResult.Ukprn})");
             actualProviderDetailsResult.Ukprn.Should().Be(expectedProviderDetailsResult.Ukprn);
         }
     }

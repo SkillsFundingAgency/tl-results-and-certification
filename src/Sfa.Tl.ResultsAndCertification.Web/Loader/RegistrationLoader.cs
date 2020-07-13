@@ -7,11 +7,9 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 

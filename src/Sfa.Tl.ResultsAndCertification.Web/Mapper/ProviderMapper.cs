@@ -45,7 +45,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<ProviderDetails, ProviderDetailsViewModel>()
                .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => s.DisplayName))
-               .ForMember(d => d.DisplayNameWithUkprn, opts => opts.MapFrom(s => $"{s.DisplayName} ({s.Ukprn})"))
                .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.Ukprn));
 
             CreateMap<IList<ProviderDetailsViewModel>, YourProvidersViewModel>()

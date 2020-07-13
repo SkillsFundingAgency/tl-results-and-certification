@@ -4,7 +4,6 @@
     {
         public int ProviderId { get; set; }
         public string DisplayName { get; set; }
-        public string DisplayNameWithUkprn { get; set; }
         public long Ukprn { get; set; }       
     }
 }
