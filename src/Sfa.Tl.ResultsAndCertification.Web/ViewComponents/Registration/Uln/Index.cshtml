@@ -4,15 +4,15 @@
 @addTagHelper *, Sfa.Tl.ResultsAndCertification.Web
 
 <div class="govuk-form-group">
-    <span class="govuk-caption-xl">@AddRegistrationUln.Page_Caption_Text</span>
+    <span class="govuk-caption-xl">@UlnRegistration.Page_Caption_Text</span>
     <div sfa-validation-for="Uln" sfa-validation-class="govuk-form-group--error">
         <h1 class="govuk-label-wrapper">
             <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6" for="ULN">
-                @AddRegistrationUln.Uln_Field_Label
+                @UlnRegistration.Uln_Field_Label
             </label>
         </h1>
         <span id="uln-number-hint" class="govuk-hint">
-            @AddRegistrationUln.Uln_Field_Hint
+            @UlnRegistration.Uln_Field_Hint
         </span>
         <span sfa-validation-for="Uln"></span>
         <input class="govuk-input govuk-input--width-10" asp-for="Uln" id="uln" inputmode="numeric" maxlength="100">

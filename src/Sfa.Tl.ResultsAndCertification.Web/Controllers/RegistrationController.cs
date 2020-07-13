@@ -155,15 +155,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("add-registration-unique-learner-number", Name = RouteConstants.AddRegistrationUln)]
-        public async Task<IActionResult> AddRegistrationUln()
+        public async Task<IActionResult> AddRegistrationUlnAsync()
         {
-            var model = new UlnViewModel();
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-
             if (cacheModel?.Uln != null)
-                // Todo: update navigation links. 
                 return View(cacheModel.Uln);
 
+            var model = new UlnViewModel();
             return View(model);
         }
 
@@ -175,17 +173,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(model);
             }
-            
-            // Todo: write a generic helper required to reduce loc.
-            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel?.Uln != null)
-                cacheModel.Uln = model;
-            else
-                // note: new obj created if uln not present. 
-                cacheModel = new RegistrationViewModel { Uln = model };
 
-            await _cacheService.SetAsync(CacheKey, cacheModel);
-
+            await SyncCacheUln(model);
             return RedirectToRoute(RouteConstants.AddRegistrationLearnersName);
         }
 
@@ -289,6 +278,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegistrationTqAoProviderDetailsAsync(User.GetUkPrn());
+        }
+
+        private async Task SyncCacheUln(UlnViewModel model)
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel?.Uln != null)
+                cacheModel.Uln = model;
+            else
+                cacheModel = new RegistrationViewModel { Uln = model };
+
+            await _cacheService.SetAsync(CacheKey, cacheModel);
         }
     }
 }
