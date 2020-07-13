@@ -59,6 +59,8 @@
         public const string SubmitRegistrationLearnersName = "SubmitRegistrationLearnersName";
         public const string AddRegistrationDateofBirth = "AddRegistrationDateofBirth";
         public const string SubmitRegistrationDateofBirth = "SubmitRegistrationDateofBirth";
+        public const string AddRegistrationProvider = "AddRegistrationProvider";
+        public const string SubmitRegistrationProvider = "SubmitRegistrationProvider";
 
         // Error
         public const string PageNotFound = "PageNotFound";

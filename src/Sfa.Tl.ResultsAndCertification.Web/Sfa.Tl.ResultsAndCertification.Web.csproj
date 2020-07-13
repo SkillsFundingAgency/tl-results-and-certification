@@ -141,6 +141,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>LearnersName.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\SelectProvider.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SelectProvider.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\UploadSuccessful.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -293,6 +298,10 @@
     <EmbeddedResource Update="Content\Registration\LearnersName.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LearnersName.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\SelectProvider.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SelectProvider.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\UploadSuccessful.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

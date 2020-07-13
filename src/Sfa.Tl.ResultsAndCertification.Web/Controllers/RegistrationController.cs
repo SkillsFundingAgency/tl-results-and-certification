@@ -248,7 +248,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.DateofBirth = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            return RedirectToRoute(RouteConstants.AddRegistrationDateofBirth);
+            return RedirectToRoute(RouteConstants.AddRegistrationProvider);
+        }
+
+        [HttpGet]
+        [Route("add-registration-provider", Name = RouteConstants.AddRegistrationProvider)]
+        public async Task<IActionResult> AddRegistrationProviderAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            //if (cacheModel?.DateofBirth == null)
+            //    return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(cacheModel?.SelectProvider == null ? new SelectProviderViewModel() : cacheModel.SelectProvider);
+        }
+
+        [HttpPost]
+        [Route("add-registration-provider", Name = RouteConstants.SubmitRegistrationProvider)]
+        public async Task<IActionResult> AddRegistrationProviderAsync(SelectProviderViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.SelectProvider = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return RedirectToRoute(RouteConstants.AddRegistrationProvider);
         }
     }
 }
