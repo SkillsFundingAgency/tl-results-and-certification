@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = @Model.IsChangeMode ?
-        @AddRegistrationUln.Page_Title_Change_Registration : @AddRegistrationUln.Page_Title_Add_Registration;
+        @UlnRegistration.Page_Title_Change_Registration : @UlnRegistration.Page_Title_Add_Registration;
 }
 
 @section NavigationBar {
@@ -19,11 +19,11 @@
             <p>
                 @if (!@Model.IsChangeMode)
                 {
-                    <button type="submit" class="govuk-button" data-module="govuk-button">@AddRegistrationUln.Continue_Button_Label</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">@UlnRegistration.Continue_Button_Label</button>
                 }
                 else
                 {
-                    <button type="submit" class="govuk-button" data-module="govuk-button">@AddRegistrationUln.Change_Button_Label</button>
+            <button type="submit" class="govuk-button" data-module="govuk-button">@UlnRegistration.Change_Button_Label</button>
                 }
             </p>
         </form>
