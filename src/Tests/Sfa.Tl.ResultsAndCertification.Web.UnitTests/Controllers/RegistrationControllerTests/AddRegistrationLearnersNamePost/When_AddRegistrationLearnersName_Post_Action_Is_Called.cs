@@ -24,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         protected ILogger<RegistrationController> Logger;
         protected RegistrationController Controller;
         protected RegistrationViewModel ViewModel;
+        protected UlnViewModel UlnViewModel;
         protected LearnersNameViewModel LearnersNameViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; private set; }
