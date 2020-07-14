@@ -1,13 +1,67 @@
-﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.DateofBirthViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
 
 @{
-    ViewData["Title"] = "Add a new registration - Enter the learner’s date of birth page";
+    ViewData["Title"] = "TODO";
+    //@Model.IsChangeMode ? @UlnRegistration.Page_Title_Change_Registration : @UlnRegistration.Page_Title_Add_Registration;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-       Development in progress
+        <form class="form" asp-route="SubmitRegistrationDateofBirth">
+            <partial name="_ValidationSummary" />
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">Add a new registration</span>
+                <fieldset class="govuk-fieldset" role="group">
+                    <div sfa-validation-for="Day" sfa-validation-class="govuk-form-group--error">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading">
+                                Enter the learner's date of birth
+                            </h1>
+                        </legend>
+                        <span id="dob-hint" class="govuk-hint">
+                            For example, 23&nbsp;&nbsp;9&nbsp;&nbsp;2001
+                        </span>
+                        <div class="govuk-form-group">
+
+                            <div class="govuk-date-input" id="dob">
+                                <span sfa-validation-for="Day"></span>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="dob-day">
+                                            Day
+                                        </label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" asp-for="Day">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="dob-month">
+                                            Month
+                                        </label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dob-month" name="dob-month" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="dob-year">
+                                            Year
+                                        </label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dob-year" name="dob-year" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <p>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </p>
+        </form>
     </div>
 </div>
-
-
