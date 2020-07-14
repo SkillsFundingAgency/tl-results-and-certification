@@ -339,7 +339,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.SpecialismQuestion = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion);
+            return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ? RouteConstants.AddRegistrationSpecialism : RouteConstants.AddRegistrationAcademicYear);
+        }
+
+        [HttpGet]
+        [Route("add-registration-specialism", Name = RouteConstants.AddRegistrationSpecialism)]
+        public async Task<IActionResult> AddRegistrationSpecialismAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View();
+        }
+
+        [HttpGet]
+        [Route("add-registration-academic-year", Name = RouteConstants.AddRegistrationAcademicYear)]
+        public async Task<IActionResult> AddRegistrationAcademicYearAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            return View();
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

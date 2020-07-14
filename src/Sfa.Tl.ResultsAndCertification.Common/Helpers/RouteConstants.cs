@@ -65,6 +65,8 @@
         public const string SubmitRegistrationCore = "SubmitRegistrationCore";
         public const string AddRegistrationSpecialismQuestion = "AddRegistrationSpecialismQuestion";
         public const string SubmitRegistrationSpecialismQuestion = "SubmitRegistrationSpecialismQuestion";
+        public const string AddRegistrationSpecialism = "AddRegistrationSpecialism";
+        public const string AddRegistrationAcademicYear = "AddRegistrationAcademicYear";
 
         // Error
         public const string PageNotFound = "PageNotFound";
