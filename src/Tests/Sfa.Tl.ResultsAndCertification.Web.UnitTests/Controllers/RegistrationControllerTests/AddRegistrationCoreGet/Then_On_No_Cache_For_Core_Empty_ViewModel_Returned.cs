@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationCoreGet
 {
-    public class Then_On_No_Cache_For_Provider_Empy_ViewModel_Returned : When_AddRegistrationCoreAsync_Action_Is_Called
+    public class Then_On_No_Cache_For_Core_Empty_ViewModel_Returned : When_AddRegistrationCoreAsync_Action_Is_Called
     {
         private RegistrationViewModel cacheResult;
         private DateofBirthViewModel _dateOfBirthViewModel;
