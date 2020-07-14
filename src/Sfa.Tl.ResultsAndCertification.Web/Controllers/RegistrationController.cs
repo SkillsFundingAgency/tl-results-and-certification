@@ -10,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using System;
 using System.Threading.Tasks;
 using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
 
@@ -221,14 +222,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(cacheModel?.DateofBirth == null ? new DateofBirthViewModel() : cacheModel.DateofBirth);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("add-registration-date-of-birth", Name = RouteConstants.SubmitRegistrationDateofBirth)]
         public async Task<IActionResult> AddRegistrationDateofBirthAsync(DateofBirthViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!IsValidDateOfBirth(model))
             {
                 return View(model);
             }
+
+            model.DateofBirth = DateTime.UtcNow;
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
             if (cacheModel == null)
@@ -326,6 +329,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel = new RegistrationViewModel { Uln = model };
 
             await _cacheService.SetAsync(CacheKey, cacheModel);
+        }
+
+        private bool IsValidDateOfBirth(DateofBirthViewModel model)
+        {
+            // TODO:
+            return true;
         }
     }
 }
