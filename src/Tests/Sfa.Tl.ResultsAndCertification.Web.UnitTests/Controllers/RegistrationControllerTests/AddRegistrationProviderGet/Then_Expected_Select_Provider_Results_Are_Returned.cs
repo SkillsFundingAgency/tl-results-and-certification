@@ -18,8 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override void Given()
         {
-            
-            _dateOfBirthViewModel = new DateofBirthViewModel { DateofBirth = DateTime.Now };
+            _dateOfBirthViewModel = new DateofBirthViewModel();
             _selectProviderViewModel = new SelectProviderViewModel { ProvidersSelectList = new List<SelectListItem> { new SelectListItem { Text ="Hello", Value = "1" } } };
 
             cacheResult = new RegistrationViewModel

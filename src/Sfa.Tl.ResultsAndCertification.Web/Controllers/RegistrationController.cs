@@ -231,8 +231,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            model.DateofBirth = DateTime.UtcNow;
-
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -384,7 +382,114 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         private bool IsValidDateOfBirth(DateofBirthViewModel model)
         {
-            // TODO:
+            // All empty
+            if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Month) && string.IsNullOrWhiteSpace(model.Year))
+            {
+                ModelState.AddModelError("Day", "Enter your date of birth");
+                return false;
+            }
+
+            // Day and Month empty
+            if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Month))
+            {
+                ModelState.AddModelError("Day", "Date of birth must include a day and month");
+                return false;
+            }
+
+            // Day and Year empty
+            if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Year))
+            {
+                ModelState.AddModelError("Day", "Date of birth must include a day and year");
+                return false;
+            }
+
+            // Month and Year empty
+            if (string.IsNullOrWhiteSpace(model.Month) && string.IsNullOrWhiteSpace(model.Year))
+            {
+                ModelState.AddModelError("Month", "Date of birth must include a month and year");
+                return false;
+            }
+
+            // Day empty
+            if (string.IsNullOrWhiteSpace(model.Day))
+            {
+                ModelState.AddModelError("Day", "Date of birth must include a day");
+                return false;
+            }
+
+            // Month empty
+            if (string.IsNullOrWhiteSpace(model.Month))
+            {
+                ModelState.AddModelError("Month", "Date of birth must include a month");
+                return false;
+            }
+
+            // Year empty
+            if (string.IsNullOrWhiteSpace(model.Year))
+            {
+                ModelState.AddModelError("Year", "Date of birth must include a year");
+                return false;
+            }
+
+            model.Day = model.Day.PadLeft(2, '0');
+            model.Month = model.Month.PadLeft(2, '0');
+
+            // Invalid Day/Month/Year
+            var isYearValid = (model.Year.Length == 4) && string.Concat("01", "01", model.Year).IsDateTimeWithFormat();
+            var isMonthValid = string.Concat("01", model.Month, 2020).IsDateTimeWithFormat();
+
+            bool isDayValid;
+            if (isMonthValid && isYearValid)
+                isDayValid = string.Concat(model.Day, model.Month, model.Year).IsDateTimeWithFormat();
+            else
+                isDayValid = string.Concat(model.Day, "01", 2020).IsDateTimeWithFormat();
+            
+            // Day only invalid
+            if (isMonthValid && isYearValid && !isDayValid)
+            {
+                ModelState.AddModelError("Day", "Date of birth must be a real date");
+                return false;
+            }
+
+            // Month only invalid
+            if (isDayValid && isYearValid && !isMonthValid)
+            {
+                ModelState.AddModelError("Month", "Date of birth must be a real date");
+                return false;
+            }
+
+            // Year only invalid
+            if (isDayValid && isMonthValid && !isYearValid)
+            {
+                ModelState.AddModelError("Year", "Date of birth must be a real date");
+                return false;
+            }
+
+            if (!string.Concat(model.Day, model.Month, model.Year).IsDateTimeWithFormat())
+            {
+                ModelState.AddModelError("Day", "Date of birth must be a real date");
+                return false;
+            }
+
+            if (!string.Concat(model.Day, model.Month, model.Year).IsDateTimeWithFormat())
+            {
+                ModelState.AddModelError("Day", "Date of birth must be a real date");
+                return false;
+            }
+
+            var date = string.Concat(model.Day, model.Month, model.Year).ParseStringToDateTime();
+            if (date < DateTime.MinValue || date > DateTime.MaxValue)
+            { 
+                ModelState.AddModelError("Day", "Date of birth must be a real date");
+                return false;
+            }
+
+            if (date > DateTime.UtcNow)
+            {
+                ModelState.AddModelError("Day", "Date of birth must be in the past");
+                return false;
+            }
+
             return true;
         }
     }
