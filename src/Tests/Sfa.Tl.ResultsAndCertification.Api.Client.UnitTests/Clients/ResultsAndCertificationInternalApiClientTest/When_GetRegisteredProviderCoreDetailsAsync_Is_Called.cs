@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<IList<CoreDetails>>(_mockHttpResult, string.Format(ApiConstants.GetRegisteredProviderCoreDetailsAsyncUri, _ukprn), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<IList<CoreDetails>>(_mockHttpResult, string.Format(ApiConstants.GetRegisteredProviderCoreDetailsAsyncUri, _ukprn, _providerUkprn), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
