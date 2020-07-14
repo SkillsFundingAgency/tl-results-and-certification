@@ -12,9 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         
         public string Year { get; set; }
 
-        //public DateTime DateofBirth { get { return string.Concat(Day, Month, Year).ParseStringToDateTime(); } }
-        public DateTime DateofBirth { get; set; }
-
         public BackLinkModel BackLink
         {
             get
