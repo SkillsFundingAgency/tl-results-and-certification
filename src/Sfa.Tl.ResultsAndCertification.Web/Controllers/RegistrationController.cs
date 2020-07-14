@@ -271,8 +271,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.SelectProvider = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-
-            return RedirectToRoute(RouteConstants.AddRegistrationProvider);
+            return RedirectToRoute(RouteConstants.AddRegistrationCore);
         }
 
         [HttpGet]
@@ -281,10 +280,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
-            //if (cacheModel?.SelectProvider == null)
-            //    return RedirectToRoute(RouteConstants.PageNotFound);
+            if (cacheModel?.SelectProvider == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = cacheModel?.SelectProvider == null ? new SelectCoreViewModel() : cacheModel.SelectCore;
+            var providerCores = await GetRegisteredProviderCores(cacheModel.SelectProvider.SelectedProviderId.ToLong());
+            var viewModel = cacheModel?.SelectCore == null ? new SelectCoreViewModel() : cacheModel.SelectCore;
+            viewModel.CoreSelectList = providerCores.CoreSelectList;
             return View(viewModel);
         }
 
@@ -292,23 +293,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-registration-core", Name = RouteConstants.SubmitRegistrationCore)]
         public async Task<IActionResult> AddRegistrationCoreAsync(SelectCoreViewModel model)
         {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel == null || cacheModel?.SelectProvider == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
             if (!ModelState.IsValid)
             {
+                model = await GetRegisteredProviderCores(cacheModel.SelectProvider.SelectedProviderId.ToLong());
                 return View(model);
             }
 
-            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
+            cacheModel.SelectCore = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-
             return RedirectToRoute(RouteConstants.AddRegistrationCore);
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
+        }
+        private async Task<SelectCoreViewModel> GetRegisteredProviderCores(long providerUkprn)
+        {
+            return await _registrationLoader.GetRegisteredProviderCoreDetailsAsync(User.GetUkPrn(), providerUkprn);
         }
 
         private async Task SyncCacheUln(UlnViewModel model)

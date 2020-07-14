@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -7,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
@@ -20,11 +22,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     {
         private readonly IProviderRepository _tqProviderRepository;
         private readonly IRegistrationRepository _tqRegistrationRepository;
-        
-        public RegistrationService(IProviderRepository providerRespository, IRegistrationRepository tqRegistrationRepository)
+        private readonly IMapper _mapper;
+
+        public RegistrationService(IProviderRepository providerRespository, IRegistrationRepository tqRegistrationRepository, IMapper mapper)
         {
             _tqProviderRepository = providerRespository;
             _tqRegistrationRepository = tqRegistrationRepository;
+            _mapper = mapper;
         }
 
         public async Task<IList<RegistrationRecordResponse>> ValidateRegistrationTlevelsAsync(long aoUkprn, IEnumerable<RegistrationCsvRecordResponse> validRegistrationsData)
@@ -129,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         }
 
         public async Task<RegistrationProcessResponse> CompareAndProcessRegistrationsAsync(IList<TqRegistrationProfile> registrationsToProcess)
-        {
+        {            
             var response = new RegistrationProcessResponse();
             
             var ulnComparer = new TqRegistrationUlnEqualityComparer();
@@ -240,6 +244,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 };
             }            
             return response;
+        }
+
+        public async Task<IList<CoreDetails>> GetRegisteredProviderCoreDetails(long aoUkprn, long providerUkprn)
+        {
+            var providerCores = await _tqProviderRepository.GetManyAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
+                                                                           && x.TlProvider.UkPrn == providerUkprn)
+                                                           .Select(p => p.TqAwardingOrganisation.TlPathway).OrderBy(p => p.Name).ToListAsync();
+            return _mapper.Map<IList<CoreDetails>>(providerCores);
         }
 
         private RegistrationRecordResponse AddStage3ValidationError(RegistrationCsvRecordResponse registrationCsvRecordResponse, string errorMessage)
@@ -398,6 +410,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Uln = uln.ToString(),
                 ErrorMessage = errorMessage
             };
-        }
+        }        
     }
 }

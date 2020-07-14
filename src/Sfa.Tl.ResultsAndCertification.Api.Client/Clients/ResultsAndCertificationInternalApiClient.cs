@@ -118,6 +118,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<DocumentUploadHistoryDetails>(requestUri);
         }
 
+        public async Task<IList<CoreDetails>> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn)
+        {
+            var requestUri = string.Format(ApiConstants.GetRegisteredProviderCoreDetailsAsyncUri, aoUkprn, providerUkprn);
+            return await GetAsync<IList<CoreDetails>>(requestUri);
+        }
+
         #region Private Methods
 
         /// <summary>
