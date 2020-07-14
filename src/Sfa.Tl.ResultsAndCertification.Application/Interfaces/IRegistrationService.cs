@@ -13,6 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<IList<RegistrationRecordResponse>> ValidateRegistrationTlevelsAsync(long aoUkprn, IEnumerable<RegistrationCsvRecordResponse> registrationsData);
         IList<TqRegistrationProfile> TransformRegistrationModel(IList<RegistrationRecordResponse> registrationsData, string performedBy);
         Task<RegistrationProcessResponse> CompareAndProcessRegistrationsAsync(IList<TqRegistrationProfile> registrations);
-        Task<IList<CoreDetails>> GetRegisteredProviderCoreDetails(long aoUkprn, long providerUkprn);
+        Task<IList<CoreDetails>> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn);
     }
 }

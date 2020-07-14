@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         public override void When()
         {
-            _result = RegistrationService.GetRegisteredProviderCoreDetails(TlAwardingOrganisation.UkPrn, TlProvider.UkPrn).Result;
+            _result = RegistrationService.GetRegisteredProviderCoreDetailsAsync(TlAwardingOrganisation.UkPrn, TlProvider.UkPrn).Result;
         }
 
         [Fact]
