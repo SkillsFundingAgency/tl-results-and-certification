@@ -317,7 +317,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
-            if (cacheModel?.SelectProvider == null)
+            if (cacheModel?.SelectCore == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.SpecialismQuestion == null ? new SpecialismQuestionViewModel() : cacheModel.SpecialismQuestion;
@@ -334,7 +334,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel == null || cacheModel?.SelectProvider == null)
+            if (cacheModel == null || cacheModel?.SelectCore == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             cacheModel.SpecialismQuestion = model;
