@@ -308,7 +308,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.SelectCore = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.AddRegistrationCore);
+            return RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion);
+        }
+
+        [HttpGet]
+        [Route("add-registration-learner-decided-specialism-question", Name = RouteConstants.AddRegistrationSpecialismQuestion)]
+        public async Task<IActionResult> AddRegistrationSpecialismQuestionAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel?.SelectProvider == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = cacheModel?.SpecialismQuestion == null ? new SpecialismQuestionViewModel() : cacheModel.SpecialismQuestion;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-registration-learner-decided-specialism-question", Name = RouteConstants.SubmitRegistrationSpecialismQuestion)]
+        public async Task<IActionResult> AddRegistrationSpecialismQuestionAsync(SpecialismQuestionViewModel model)
+        {   
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel == null || cacheModel?.SelectProvider == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.SpecialismQuestion = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            return RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion);
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

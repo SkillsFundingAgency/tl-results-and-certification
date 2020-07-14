@@ -63,6 +63,8 @@
         public const string SubmitRegistrationProvider = "SubmitRegistrationProvider";
         public const string AddRegistrationCore = "AddRegistrationCore";
         public const string SubmitRegistrationCore = "SubmitRegistrationCore";
+        public const string AddRegistrationSpecialismQuestion = "AddRegistrationSpecialismQuestion";
+        public const string SubmitRegistrationSpecialismQuestion = "SubmitRegistrationSpecialismQuestion";
 
         // Error
         public const string PageNotFound = "PageNotFound";

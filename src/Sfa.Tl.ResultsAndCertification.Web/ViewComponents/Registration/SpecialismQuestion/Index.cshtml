@@ -1,0 +1,26 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.SpecialismQuestionViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Sfa.Tl.ResultsAndCertification.Web
+
+<fieldset class="govuk-fieldset">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+            @SpecialismQuestion.Has_Learner_Decided_On_Specialism_Label_Text
+        </h1>
+    </legend>
+    <div class="govuk-radios">
+        <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="haslearnerdecidedspecialism" asp-for="HasLearnerDecidedSpecialism" type="radio" value="true">
+            <label class="govuk-label govuk-radios__label" for="haslearnerdecidedspecialism">
+                @SpecialismQuestion.Yes_Radio_Label_Text
+            </label>
+        </div>
+        <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="specialismdecided-no" asp-for="HasLearnerDecidedSpecialism" type="radio" value="false">
+            <label class="govuk-label govuk-radios__label" for="specialismdecided-no">
+                @SpecialismQuestion.No_Radio_Label_Text
+            </label>
+        </div>
+    </div>
+</fieldset>
