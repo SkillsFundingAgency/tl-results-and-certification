@@ -29,6 +29,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected IRegistrationRepository RegistrationRepository;
         protected ILogger<ProviderRepository> ProviderRepositoryLogger;
         protected ILogger<RegistrationRepository> RegistrationRepositoryLogger;
+        protected IMapper RegistrationMapper;
+
+        protected virtual void CreateMapper()
+        {
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly));
+            RegistrationMapper = new Mapper(mapperConfig);
+        }
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {

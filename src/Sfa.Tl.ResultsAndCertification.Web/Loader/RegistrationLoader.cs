@@ -77,10 +77,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             }            
         }
 
-        public async Task<SelectProviderViewModel> GetRegistrationTqAoProviderDetailsAsync(long aoUkprn)
+        public async Task<SelectProviderViewModel> GetRegisteredTqAoProviderDetailsAsync(long aoUkprn)
         {
             var providerDetails = await _internalApiClient.GetTqAoProviderDetailsAsync(aoUkprn);
             return _mapper.Map<SelectProviderViewModel>(providerDetails);
+        }
+
+        public async Task<SelectCoreViewModel> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn)
+        {
+            var providerDetails = await _internalApiClient.GetRegisteredProviderCoreDetailsAsync(aoUkprn, providerUkprn);
+            return _mapper.Map<SelectCoreViewModel>(providerDetails);
         }
     }
 }

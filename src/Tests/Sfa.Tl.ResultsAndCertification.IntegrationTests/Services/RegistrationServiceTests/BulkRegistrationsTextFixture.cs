@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Respawn;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -32,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected ILogger<RegistrationRepository> RegistrationRepositoryLogger;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         public IRegistrationRepository RegistrationRepository;
-
+        protected IMapper RegistrationMapper;
         public RegistrationProcessResponse Result;
         public IList<TqRegistrationProfile> TqRegistrationProfilesData;
         public Checkpoint DbCheckpoint;
@@ -48,11 +50,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         public void Initialize()
         {
+            CreateMapper();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper);
+        }
+
+        protected void CreateMapper()
+        {
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly));
+            RegistrationMapper = new Mapper(mapperConfig);
         }
 
         public async Task WhenAsync()

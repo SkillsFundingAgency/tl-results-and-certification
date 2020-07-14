@@ -21,11 +21,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         public override void Given()
         {
             SeedTestData();
+            CreateMapper();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper);
             _stage3RegistrationsData = new RegistrationsStage3Builder().BuildValidList();
         }
 

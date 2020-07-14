@@ -117,11 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cannot_Find_One_Of_Your_Providers_Details_Text" xml:space="preserve">
-    <value>If you cannot find one of your providers in the list above, ask your Providers Editor to add it in the Providers section of this service.</value>
+  <data name="Cannot_Find_Core_Details_Text" xml:space="preserve">
+    <value>If you cannot find the core you are looking for in the list above, ask your Providers Editor to add this core to the provider in the Providers section of this service.</value>
   </data>
-  <data name="Cannot_Find_One_Of_Your_Providers_Text" xml:space="preserve">
-    <value>Cannot find one of your providers?</value>
+  <data name="Cannot_Find_Core_Text" xml:space="preserve">
+    <value>Cannot find a core?</value>
   </data>
   <data name="Continue_Button_Text" xml:space="preserve">
     <value>Continue</value>
@@ -129,16 +129,16 @@
   <data name="Page_Caption_Text" xml:space="preserve">
     <value>Add a new registration</value>
   </data>
-  <data name="Page_Title_Add_Registration_Select_Provider" xml:space="preserve">
-    <value>Add a new registration - Select the provider page</value>
+  <data name="Page_Title_Add_Registration_Select_Core" xml:space="preserve">
+    <value>Add a new registration - Select the core page</value>
   </data>
   <data name="Select_One_Option_Text" xml:space="preserve">
     <value>Select one</value>
   </data>
-  <data name="Select_The_Provider_Label_Text" xml:space="preserve">
-    <value>Select the provider</value>
+  <data name="Select_The_Core_Label_Text" xml:space="preserve">
+    <value>Select the core</value>
   </data>
-  <data name="Validation_Select_Provider_Required" xml:space="preserve">
-    <value>Select a provider</value>
+  <data name="Validation_Select_Core_Required" xml:space="preserve">
+    <value>Select a core</value>
   </data>
 </root>

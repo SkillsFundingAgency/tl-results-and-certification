@@ -36,12 +36,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<ProviderDetails, SelectListItem>()
                 .ForMember(m => m.Text, o => o.MapFrom(s => $"{s.DisplayName} ({s.Ukprn})"))
-                .ForMember(m => m.Value, o => o.MapFrom(s => s.Id.ToString()))
+                .ForMember(m => m.Value, o => o.MapFrom(s => s.Ukprn.ToString()))
                 .ForAllOtherMembers(s => s.Ignore());
 
             CreateMap<IList<ProviderDetails>, SelectProviderViewModel>()
                .ForMember(d => d.ProvidersSelectList, opts => opts.MapFrom(s => s))
-               .ForAllOtherMembers(d => d.Ignore());            
+               .ForAllOtherMembers(d => d.Ignore());
+
+            CreateMap<CoreDetails, SelectListItem>()
+                .ForMember(m => m.Text, o => o.MapFrom(s => $"{s.CoreName} ({s.CoreCode})"))
+                .ForMember(m => m.Value, o => o.MapFrom(s => s.Id.ToString()))
+                .ForAllOtherMembers(s => s.Ignore());
+
+            CreateMap<IList<CoreDetails>, SelectCoreViewModel>()
+               .ForMember(d => d.CoreSelectList, opts => opts.MapFrom(s => s))
+               .ForAllOtherMembers(d => d.Ignore());
         }
     }
 }

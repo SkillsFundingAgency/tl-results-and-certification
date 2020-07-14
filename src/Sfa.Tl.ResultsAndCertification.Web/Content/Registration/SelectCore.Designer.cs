@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SelectProvider {
+    public class SelectCore {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SelectProvider() {
+        internal SelectCore() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.SelectProvider", typeof(SelectProvider).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.SelectCore", typeof(SelectCore).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,20 +61,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you cannot find one of your providers in the list above, ask your Providers Editor to add it in the Providers section of this service..
+        ///   Looks up a localized string similar to If you cannot find the core you are looking for in the list above, ask your Providers Editor to add this core to the provider in the Providers section of this service..
         /// </summary>
-        public static string Cannot_Find_One_Of_Your_Providers_Details_Text {
+        public static string Cannot_Find_Core_Details_Text {
             get {
-                return ResourceManager.GetString("Cannot_Find_One_Of_Your_Providers_Details_Text", resourceCulture);
+                return ResourceManager.GetString("Cannot_Find_Core_Details_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot find one of your providers?.
+        ///   Looks up a localized string similar to Cannot find a core?.
         /// </summary>
-        public static string Cannot_Find_One_Of_Your_Providers_Text {
+        public static string Cannot_Find_Core_Text {
             get {
-                return ResourceManager.GetString("Cannot_Find_One_Of_Your_Providers_Text", resourceCulture);
+                return ResourceManager.GetString("Cannot_Find_Core_Text", resourceCulture);
             }
         }
         
@@ -97,11 +97,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new registration - Select the provider page.
+        ///   Looks up a localized string similar to Add a new registration - Select the core page.
         /// </summary>
-        public static string Page_Title_Add_Registration_Select_Provider {
+        public static string Page_Title_Add_Registration_Select_Core {
             get {
-                return ResourceManager.GetString("Page_Title_Add_Registration_Select_Provider", resourceCulture);
+                return ResourceManager.GetString("Page_Title_Add_Registration_Select_Core", resourceCulture);
             }
         }
         
@@ -115,20 +115,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the provider.
+        ///   Looks up a localized string similar to Select the core.
         /// </summary>
-        public static string Select_The_Provider_Label_Text {
+        public static string Select_The_Core_Label_Text {
             get {
-                return ResourceManager.GetString("Select_The_Provider_Label_Text", resourceCulture);
+                return ResourceManager.GetString("Select_The_Core_Label_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a provider.
+        ///   Looks up a localized string similar to Select a core.
         /// </summary>
-        public static string Validation_Select_Provider_Required {
+        public static string Validation_Select_Core_Required {
             get {
-                return ResourceManager.GetString("Validation_Select_Provider_Required", resourceCulture);
+                return ResourceManager.GetString("Validation_Select_Core_Required", resourceCulture);
             }
         }
     }
