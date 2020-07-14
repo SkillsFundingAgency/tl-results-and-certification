@@ -246,7 +246,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
-        public async Task<IList<CoreDetails>> GetRegisteredProviderCoreDetails(long aoUkprn, long providerUkprn)
+        public async Task<IList<CoreDetails>> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn)
         {
             var providerCores = await _tqProviderRepository.GetManyAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
                                                                            && x.TlProvider.UkPrn == providerUkprn)

@@ -306,7 +306,58 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.SelectCore = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.AddRegistrationCore);
+            return RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion);
+        }
+
+        [HttpGet]
+        [Route("add-registration-learner-decided-specialism-question", Name = RouteConstants.AddRegistrationSpecialismQuestion)]
+        public async Task<IActionResult> AddRegistrationSpecialismQuestionAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel?.SelectCore == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = cacheModel?.SpecialismQuestion == null ? new SpecialismQuestionViewModel() : cacheModel.SpecialismQuestion;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-registration-learner-decided-specialism-question", Name = RouteConstants.SubmitRegistrationSpecialismQuestion)]
+        public async Task<IActionResult> AddRegistrationSpecialismQuestionAsync(SpecialismQuestionViewModel model)
+        {   
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel == null || cacheModel?.SelectCore == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.SpecialismQuestion = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ? RouteConstants.AddRegistrationSpecialism : RouteConstants.AddRegistrationAcademicYear);
+        }
+
+        [HttpGet]
+        [Route("add-registration-specialism", Name = RouteConstants.AddRegistrationSpecialism)]
+        public async Task<IActionResult> AddRegistrationSpecialismAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View();
+        }
+
+        [HttpGet]
+        [Route("add-registration-academic-year", Name = RouteConstants.AddRegistrationAcademicYear)]
+        public async Task<IActionResult> AddRegistrationAcademicYearAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            return View();
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

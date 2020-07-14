@@ -7,5 +7,6 @@
         public DateofBirthViewModel DateofBirth { get; set; }
         public SelectProviderViewModel SelectProvider { get; set; }
         public SelectCoreViewModel SelectCore { get; set; }
+        public SpecialismQuestionViewModel SpecialismQuestion { get; set; }
     }
 }
