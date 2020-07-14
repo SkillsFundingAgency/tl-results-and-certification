@@ -11,7 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 {
     public class Then_On_ModelState_Invalid_Returns_Core_Required_Validation_Error : When_AddRegistrationCoreAsync_Action_Is_Called
     {
-        private RegistrationViewModel cacheResult;
         private SelectProviderViewModel _selectProviderViewModel;
         private SelectCoreViewModel _selectCoreViewModel;
         private long _providerUkprn = 987654321;
