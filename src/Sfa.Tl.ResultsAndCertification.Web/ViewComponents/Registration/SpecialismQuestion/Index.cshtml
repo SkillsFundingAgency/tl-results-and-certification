@@ -9,8 +9,9 @@
             <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
                 @SpecialismQuestion.Has_Learner_Decided_On_Specialism_Label_Text
             </h1>
-        </legend>
+        </legend>        
         <div class="govuk-radios">
+            <span sfa-validation-for="HasLearnerDecidedSpecialism"></span>
             <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="haslearnerdecidedspecialism" asp-for="HasLearnerDecidedSpecialism" type="radio" value="true">
                 <label class="govuk-label govuk-radios__label" for="haslearnerdecidedspecialism">
