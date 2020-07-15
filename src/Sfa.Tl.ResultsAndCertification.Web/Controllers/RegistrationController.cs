@@ -233,7 +233,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel == null)
+            if (cacheModel?.LearnersName == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             cacheModel.DateofBirth = model;
@@ -268,7 +268,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel == null)
+            if (cacheModel?.DateofBirth == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             cacheModel.SelectProvider = model;
@@ -296,7 +296,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddRegistrationCoreAsync(SelectCoreViewModel model)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel == null || cacheModel?.SelectProvider == null)
+            if (cacheModel?.SelectProvider == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (!ModelState.IsValid)
@@ -333,9 +333,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel == null || cacheModel?.SelectCore == null)
+            if (cacheModel?.SelectCore == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            if(!model.HasLearnerDecidedSpecialism.Value)
+            {
+                cacheModel.SelectSpecialism = null;
+            }
             cacheModel.SpecialismQuestion = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
             return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ? RouteConstants.AddRegistrationSpecialism : RouteConstants.AddRegistrationAcademicYear);
@@ -350,8 +354,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = cacheModel?.SelectSpecialism == null ? new SelectSpecialismViewModel() : cacheModel.SelectSpecialism;
-            viewModel.PathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.SelectCore.SelectedCoreId);
+            var viewModel = cacheModel?.SelectSpecialism == null ? new SelectSpecialismViewModel { PathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.SelectCore.SelectedCoreId) } : cacheModel.SelectSpecialism;
             return View(viewModel);
         }
 
