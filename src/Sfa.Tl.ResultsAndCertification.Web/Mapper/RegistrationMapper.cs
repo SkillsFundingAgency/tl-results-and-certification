@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<CoreDetails, SelectListItem>()
                 .ForMember(m => m.Text, o => o.MapFrom(s => $"{s.CoreName} ({s.CoreCode})"))
-                .ForMember(m => m.Value, o => o.MapFrom(s => s.Id.ToString()))
+                .ForMember(m => m.Value, o => o.MapFrom(s => s.CoreCode.ToString()))
                 .ForAllOtherMembers(s => s.Ignore());
 
             CreateMap<IList<CoreDetails>, SelectCoreViewModel>()

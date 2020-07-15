@@ -3,10 +3,11 @@
     public static class ApiConstants
     {
         // Verify T Level Related Uri's
-        public const string GetAllTLevelsUri = "/api/Tlevel/GetAllTLevels/{0}";
-        public const string GetTlevelsByStatus = "/api/Tlevel/{0}/GetTlevelsByStatus/{1}";
-        public const string TlevelDetailsUri = "/api/Tlevel/{0}/TlevelDetails/{1}";
-        public const string VerifyTlevelUri = "/api/Tlevel/VerifyTlevel";
+        public const string GetAllTLevelsUri = "/api/tlevel/GetAllTLevels/{0}";
+        public const string GetTlevelsByStatus = "/api/tlevel/{0}/GetTlevelsByStatus/{1}";
+        public const string TlevelDetailsUri = "/api/tlevel/{0}/TlevelDetails/{1}";
+        public const string VerifyTlevelUri = "/api/tlevel/VerifyTlevel";
+        public const string GetPathwaySpecialismsByPathwayLarIdAsyncUri = "/api/tlevel/{0}/GetPathwaySpecialisms/{1}";
 
         // Provider Related Uri's
         public const string IsAnyProviderSetupCompletedUri = "/api/provider/IsAnyProviderSetupCompleted/{0}";
@@ -21,8 +22,7 @@
 
         // Registrations Related Uri's
         public const string ProcessBulkRegistrationsUri = "/api/registration/ProcessBulkRegistrations";
-        public const string GetRegisteredProviderCoreDetailsAsyncUri = "/api/registration/GetRegisteredProviderCoreDetails/{0}/{1}";
-
+        public const string GetRegisteredProviderCoreDetailsAsyncUri = "/api/registration/GetRegisteredProviderCoreDetails/{0}/{1}";        
 
         // DocumentUploadHistory Related Uri's
         public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";

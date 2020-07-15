@@ -7,9 +7,11 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -87,6 +89,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var providerDetails = await _internalApiClient.GetRegisteredProviderCoreDetailsAsync(aoUkprn, providerUkprn);
             return _mapper.Map<SelectCoreViewModel>(providerDetails);
+        }
+
+        public async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId)
+        {
+            var pathwaySpecialisms = await _internalApiClient.GetPathwaySpecialismsByPathwayLarIdAsync(aoUkprn, pathwayLarId);
+            return _mapper.Map<PathwaySpecialismsViewModel>(pathwaySpecialisms);
         }
     }
 }

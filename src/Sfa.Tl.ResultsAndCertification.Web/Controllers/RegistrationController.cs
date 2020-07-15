@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
@@ -346,10 +347,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
-            if (cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
+            if (cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            return View();
+            var viewModel = cacheModel?.SelectSpecialism == null ? new SelectSpecialismViewModel() : cacheModel.SelectSpecialism;
+            viewModel.PathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.SelectCore.SelectedCoreId);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-registration-specialism", Name = RouteConstants.SubmitRegistrationSpecialism)]
+        public async Task<IActionResult> AddRegistrationSpecialismAsync(SelectSpecialismViewModel model)
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (!ModelState.IsValid)
+            {
+                model.PathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.SelectCore.SelectedCoreId);
+                return View(model);
+            }
+
+            cacheModel.SelectSpecialism = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            return RedirectToRoute(RouteConstants.AddRegistrationAcademicYear);
         }
 
         [HttpGet]
@@ -367,6 +389,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private async Task<SelectCoreViewModel> GetRegisteredProviderCores(long providerUkprn)
         {
             return await _registrationLoader.GetRegisteredProviderCoreDetailsAsync(User.GetUkPrn(), providerUkprn);
+        }
+
+        private async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByCoreCode(string coreCode)
+        {
+            return await _registrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(User.GetUkPrn(), coreCode);
         }
 
         private async Task SyncCacheUln(UlnViewModel model)

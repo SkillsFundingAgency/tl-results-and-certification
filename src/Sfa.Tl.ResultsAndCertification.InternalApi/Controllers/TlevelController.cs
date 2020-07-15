@@ -49,5 +49,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             var result = await _awardingOrganisationService.VerifyTlevelAsync(model);
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("{aoUkprn}/GetPathwaySpecialisms/{pathwayLarId}")]
+        public async Task<PathwaySpecialisms> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId)
+        {
+            return await _pathwayService.GetPathwaySpecialismsByPathwayLarIdAsync(aoUkprn, pathwayLarId);
+        }
     }
 }
