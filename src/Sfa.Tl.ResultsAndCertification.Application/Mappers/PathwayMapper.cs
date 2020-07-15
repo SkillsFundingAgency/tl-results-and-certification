@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.Name))
                 .ForMember(d => d.PathwayCode, opts => opts.MapFrom(s => s.LarId))
-                .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.TlSpecialisms));
+                .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.TlSpecialisms.OrderBy(s => s.Name)));
 
             CreateMap<TlSpecialism, SpecialismDetails>()
                 .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
