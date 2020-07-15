@@ -386,6 +386,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Month) && string.IsNullOrWhiteSpace(model.Year))
             {
                 ModelState.AddModelError("Day", "Enter your date of birth");
+                ModelState.AddModelError("Month", string.Empty);
+                ModelState.AddModelError("Year", string.Empty);
                 return false;
             }
 
@@ -393,6 +395,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Month))
             {
                 ModelState.AddModelError("Day", "Date of birth must include a day and month");
+                ModelState.AddModelError("Month", string.Empty);
                 return false;
             }
 
@@ -400,6 +403,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Year))
             {
                 ModelState.AddModelError("Day", "Date of birth must include a day and year");
+                ModelState.AddModelError("Year", string.Empty);
                 return false;
             }
 
@@ -407,6 +411,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (string.IsNullOrWhiteSpace(model.Month) && string.IsNullOrWhiteSpace(model.Year))
             {
                 ModelState.AddModelError("Month", "Date of birth must include a month and year");
+                ModelState.AddModelError("Year", string.Empty);
                 return false;
             }
 
@@ -465,25 +470,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return false;
             }
 
+            // Invalid date
             if (!string.Concat(model.Day, model.Month, model.Year).IsDateTimeWithFormat())
             {
                 ModelState.AddModelError("Day", "Date of birth must be a real date");
                 return false;
             }
 
-            if (!string.Concat(model.Day, model.Month, model.Year).IsDateTimeWithFormat())
-            {
-                ModelState.AddModelError("Day", "Date of birth must be a real date");
-                return false;
-            }
-
+            // Future date
             var date = string.Concat(model.Day, model.Month, model.Year).ParseStringToDateTime();
-            if (date < DateTime.MinValue || date > DateTime.MaxValue)
-            { 
-                ModelState.AddModelError("Day", "Date of birth must be a real date");
-                return false;
-            }
-
             if (date > DateTime.UtcNow)
             {
                 ModelState.AddModelError("Day", "Date of birth must be in the past");

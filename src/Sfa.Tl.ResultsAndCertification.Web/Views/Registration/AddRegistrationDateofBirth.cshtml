@@ -13,56 +13,54 @@
     <div class="govuk-grid-column-two-thirds">
         <form class="form" asp-route="SubmitRegistrationDateofBirth">
             <partial name="_ValidationSummary" />
-            
+
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">Add a new registration</span>
                 <fieldset class="govuk-fieldset" role="group">
-                    <div sfa-validation-for="Day" sfa-validation-class="govuk-form-group--error">
-                        <div sfa-validation-for="Month" sfa-validation-class="govuk-form-group--error">
-                            <div sfa-validation-for="Year" sfa-validation-class="govuk-form-group--error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading">
-                                        Enter the learner's date of birth
-                                    </h1>
-                                </legend>
-                                <span id="dob-hint" class="govuk-hint">
-                                    For example, 23&nbsp;&nbsp;9&nbsp;&nbsp;2001
-                                </span>
-                                <div class="govuk-form-group">
+                    <div sfa-group-error-line-class="govuk-form-group--error">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading">
+                                Enter the learner's date of birth
+                            </h1>
+                        </legend>
+                        <span id="dob-hint" class="govuk-hint">
+                            For example, 23&nbsp;&nbsp;9&nbsp;&nbsp;2001
+                        </span>
+                        <div class="govuk-form-group">
 
-                                    <div class="govuk-date-input" id="dob">
-                                        <span sfa-validation-for="Day"></span>
-                                        <span sfa-validation-for="Month"></span>
-                                        <span sfa-validation-for="Year"></span>
-                                        <div class="govuk-date-input__item">
-                                            <div class="govuk-form-group">
-                                                <label class="govuk-label govuk-date-input__label" for="day">
-                                                    Day
-                                                </label>
-                                                <input asp-for="Day" class="govuk-input govuk-date-input__input govuk-input--width-2" id="day">
-                                            </div>
-                                        </div>
-                                        <div class="govuk-date-input__item">
-                                            <div class="govuk-form-group">
-                                                <label class="govuk-label govuk-date-input__label" for="month">
-                                                    Month
-                                                </label>
-                                                <input asp-for="Month" class="govuk-input govuk-date-input__input govuk-input--width-2" id="month">
-                                            </div>
-                                        </div>
-                                        <div class="govuk-date-input__item">
-                                            <div class="govuk-form-group">
-                                                <label class="govuk-label govuk-date-input__label" for="year">
-                                                    Year
-                                                </label>
-                                                <input asp-for="Year" class="govuk-input govuk-date-input__input govuk-input--width-4" id="year">
-                                            </div>
-                                        </div>
+                            <div class="govuk-date-input" id="dob">
+                                <span sfa-validation-for="Day"></span>
+                                <span sfa-validation-for="Month"></span>
+                                <span sfa-validation-for="Year"></span>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="day">
+                                            Day
+                                        </label>
+                                        <input id="day" asp-for="Day" sfa-input-validation-for="Day" class="govuk-input govuk-date-input__input govuk-input--width-2">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="month">
+                                            Month
+                                        </label>
+                                        <input id="month" asp-for="Month" sfa-input-validation-for="Month" class="govuk-input govuk-date-input__input govuk-input--width-2">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="year">
+                                            Year
+                                        </label>
+                                        <input id="year" asp-for="Year" sfa-input-validation-for="Year" class="govuk-input govuk-date-input__input govuk-input--width-4">
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
+
                 </fieldset>
             </div>
             <p>
