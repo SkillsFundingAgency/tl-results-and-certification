@@ -15,15 +15,18 @@
         <form class="form" asp-route="AddRegistrationUln">
             <partial name="_ValidationSummary" />
             <input type="hidden" value="@Model.IsChangeMode" />
-            <vc:uln model="Model"></vc:uln>
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">@UlnRegistration.Page_Caption_Text</span>
+                <vc:uln model="Model"></vc:uln>
+            </div>
             <p>
                 @if (!@Model.IsChangeMode)
                 {
-                <button type="submit" class="govuk-button" data-module="govuk-button">@UlnRegistration.Continue_Button_Label</button>
+                    <button type="submit" class="govuk-button" data-module="govuk-button">@UlnRegistration.Continue_Button_Label</button>
                 }
                 else
                 {
-            <button type="submit" class="govuk-button" data-module="govuk-button">@UlnRegistration.Change_Button_Label</button>
+                    <button type="submit" class="govuk-button" data-module="govuk-button">@UlnRegistration.Change_Button_Label</button>
                 }
             </p>
         </form>

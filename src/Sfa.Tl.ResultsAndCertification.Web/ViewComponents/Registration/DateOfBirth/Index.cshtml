@@ -1,0 +1,36 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.DateofBirthViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Sfa.Tl.ResultsAndCertification.Web
+
+<div class="govuk-form-group">
+    <div class="govuk-date-input" id="dob">
+        <span sfa-validation-for="Day"></span>
+        <span sfa-validation-for="Month"></span>
+        <span sfa-validation-for="Year"></span>
+        <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="day">
+                    @DateofBirth.Day_Field_Label
+                </label>
+                <input id="day" asp-for="Day" sfa-input-validation-for="Day" class="govuk-input govuk-date-input__input govuk-input--width-2">
+            </div>
+        </div>
+        <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="month">
+                    @DateofBirth.Month_Field_Label
+                </label>
+                <input id="month" asp-for="Month" sfa-input-validation-for="Month" class="govuk-input govuk-date-input__input govuk-input--width-2">
+            </div>
+        </div>
+        <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="year">
+                    @DateofBirth.Year_Field_Label
+                </label>
+                <input id="year" asp-for="Year" sfa-input-validation-for="Year" class="govuk-input govuk-date-input__input govuk-input--width-4">
+            </div>
+        </div>
+    </div>
+</div>
