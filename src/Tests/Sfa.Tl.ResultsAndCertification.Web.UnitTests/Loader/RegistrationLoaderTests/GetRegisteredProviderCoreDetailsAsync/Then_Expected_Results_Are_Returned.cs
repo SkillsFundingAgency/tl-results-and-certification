@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             var actualCoreDetailsResult = ActualResult.CoreSelectList.FirstOrDefault();
             actualCoreDetailsResult.Should().NotBeNull();
 
-            actualCoreDetailsResult.Value.Should().Be(expectedCoreResult.Id.ToString());
+            actualCoreDetailsResult.Value.Should().Be(expectedCoreResult.CoreCode.ToString());
             actualCoreDetailsResult.Text.Should().Be($"{expectedCoreResult.CoreName} ({expectedCoreResult.CoreCode})");
         }
     }

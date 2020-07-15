@@ -12,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id);
         Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByStatusIdAsync(long ukprn, int statusId);
         Task<bool> VerifyTlevelAsync(VerifyTlevelDetails model);
+        Task<PathwaySpecialisms> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId);
 
         // Providers
         Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn);
@@ -26,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         //Registrations
         Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest model);
-        Task<IList<CoreDetails>> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn);
+        Task<IList<CoreDetails>> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn);        
 
         // DocumentUploadHistory
         Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);

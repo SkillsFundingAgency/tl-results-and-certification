@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
@@ -27,6 +27,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                                          p.TqAwardingOrganisations.Any(x => x.TlPathwayId == p.Id && x.TlAwardingOrganisaton.UkPrn == aoUkprn),
                                                                          navigationPropertyPath: new Expression<Func<TlPathway, object>>[] { r => r.TlRoute, s => s.TlSpecialisms, s => s.TqAwardingOrganisations });
             return _mapper.Map<TlevelPathwayDetails>(tlevel);
+        }
+
+        public async Task<PathwaySpecialisms> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId)
+        {
+            var pathway = await _pathwayRepository.GetFirstOrDefaultAsync(p => p.LarId == pathwayLarId  &&
+                                                                         p.TqAwardingOrganisations.Any(x => x.TlPathwayId == p.Id && x.TlAwardingOrganisaton.UkPrn == aoUkprn),
+                                                                         navigationPropertyPath: new Expression<Func<TlPathway, object>>[] { s => s.TlSpecialisms });
+            return _mapper.Map<PathwaySpecialisms>(pathway);
         }
     }
 }

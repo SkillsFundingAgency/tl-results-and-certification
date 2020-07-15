@@ -79,11 +79,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the specialisms for.
+        ///   Looks up a localized string similar to Add a new registration - Select the specialism page.
         /// </summary>
         public static string Page_Title_Add_Registration_Select_Specialism {
             get {
                 return ResourceManager.GetString("Page_Title_Add_Registration_Select_Specialism", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the specialisms for {0}.
+        /// </summary>
+        public static string Select_The_Specialism_Label_Text {
+            get {
+                return ResourceManager.GetString("Select_The_Specialism_Label_Text", resourceCulture);
             }
         }
         

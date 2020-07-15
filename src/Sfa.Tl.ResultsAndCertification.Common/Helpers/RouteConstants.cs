@@ -66,6 +66,7 @@
         public const string AddRegistrationSpecialismQuestion = "AddRegistrationSpecialismQuestion";
         public const string SubmitRegistrationSpecialismQuestion = "SubmitRegistrationSpecialismQuestion";
         public const string AddRegistrationSpecialism = "AddRegistrationSpecialism";
+        public const string SubmitRegistrationSpecialism = "SubmitRegistrationSpecialism";
         public const string AddRegistrationAcademicYear = "AddRegistrationAcademicYear";
 
         // Error

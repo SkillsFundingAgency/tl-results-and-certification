@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
+﻿using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.IO;
@@ -12,5 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<Stream> GetRegistrationValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference);
         Task<SelectProviderViewModel> GetRegisteredTqAoProviderDetailsAsync(long aoUkprn);
         Task<SelectCoreViewModel> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn);
+        Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId);
     }
 }
