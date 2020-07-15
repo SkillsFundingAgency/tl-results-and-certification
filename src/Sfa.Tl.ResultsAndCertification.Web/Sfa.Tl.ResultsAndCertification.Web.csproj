@@ -126,6 +126,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>YourProviders.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\DateofBirth.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DateofBirth.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\SelectCore.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -301,6 +306,10 @@
     <EmbeddedResource Update="Content\Provider\YourProviders.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>YourProviders.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\DateofBirth.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DateofBirth.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\SelectCore.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
