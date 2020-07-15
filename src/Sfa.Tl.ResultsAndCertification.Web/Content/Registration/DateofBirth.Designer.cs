@@ -124,6 +124,114 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter your date of birth.
+        /// </summary>
+        public static string Validation_Message_All_Required {
+            get {
+                return ResourceManager.GetString("Validation_Message_All_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth must include a day and month.
+        /// </summary>
+        public static string Validation_Message_Day_Month_Required {
+            get {
+                return ResourceManager.GetString("Validation_Message_Day_Month_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth must include a day.
+        /// </summary>
+        public static string Validation_Message_Day_Required {
+            get {
+                return ResourceManager.GetString("Validation_Message_Day_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth must include a day and year.
+        /// </summary>
+        public static string Validation_Message_Day_Year_Required {
+            get {
+                return ResourceManager.GetString("Validation_Message_Day_Year_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth must be a real date.
+        /// </summary>
+        public static string Validation_Message_Invalid_Date {
+            get {
+                return ResourceManager.GetString("Validation_Message_Invalid_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth must be a real date.
+        /// </summary>
+        public static string Validation_Message_Invalid_Day {
+            get {
+                return ResourceManager.GetString("Validation_Message_Invalid_Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth must be a real date.
+        /// </summary>
+        public static string Validation_Message_Invalid_Month {
+            get {
+                return ResourceManager.GetString("Validation_Message_Invalid_Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth must be a real date.
+        /// </summary>
+        public static string Validation_Message_Invalid_Year {
+            get {
+                return ResourceManager.GetString("Validation_Message_Invalid_Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth must include a month.
+        /// </summary>
+        public static string Validation_Message_Month_Required {
+            get {
+                return ResourceManager.GetString("Validation_Message_Month_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth must include a month and year.
+        /// </summary>
+        public static string Validation_Message_Month_Year_Required {
+            get {
+                return ResourceManager.GetString("Validation_Message_Month_Year_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth must be in the past.
+        /// </summary>
+        public static string Validation_Message_Must_Not_Future_Date {
+            get {
+                return ResourceManager.GetString("Validation_Message_Must_Not_Future_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth must include a year.
+        /// </summary>
+        public static string Validation_Message_Year_Required {
+            get {
+                return ResourceManager.GetString("Validation_Message_Year_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Year.
         /// </summary>
         public static string Year_Field_Label {

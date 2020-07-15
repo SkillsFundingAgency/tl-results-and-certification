@@ -385,7 +385,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             // All empty
             if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Month) && string.IsNullOrWhiteSpace(model.Year))
             {
-                ModelState.AddModelError("Day", "Enter your date of birth");
+                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_All_Required);
                 ModelState.AddModelError("Month", string.Empty);
                 ModelState.AddModelError("Year", string.Empty);
                 return false;
@@ -394,7 +394,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             // Day and Month empty
             if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Month))
             {
-                ModelState.AddModelError("Day", "Date of birth must include a day and month");
+                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_Day_Month_Required);
                 ModelState.AddModelError("Month", string.Empty);
                 return false;
             }
@@ -402,7 +402,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             // Day and Year empty
             if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Year))
             {
-                ModelState.AddModelError("Day", "Date of birth must include a day and year");
+                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_Day_Year_Required);
                 ModelState.AddModelError("Year", string.Empty);
                 return false;
             }
@@ -410,7 +410,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             // Month and Year empty
             if (string.IsNullOrWhiteSpace(model.Month) && string.IsNullOrWhiteSpace(model.Year))
             {
-                ModelState.AddModelError("Month", "Date of birth must include a month and year");
+                ModelState.AddModelError("Month", RegistrationContent.DateofBirth.Validation_Message_Month_Year_Required);
                 ModelState.AddModelError("Year", string.Empty);
                 return false;
             }
@@ -418,21 +418,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             // Day empty
             if (string.IsNullOrWhiteSpace(model.Day))
             {
-                ModelState.AddModelError("Day", "Date of birth must include a day");
+                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_Day_Required);
                 return false;
             }
 
             // Month empty
             if (string.IsNullOrWhiteSpace(model.Month))
             {
-                ModelState.AddModelError("Month", "Date of birth must include a month");
+                ModelState.AddModelError("Month", RegistrationContent.DateofBirth.Validation_Message_Month_Required);
                 return false;
             }
 
             // Year empty
             if (string.IsNullOrWhiteSpace(model.Year))
             {
-                ModelState.AddModelError("Year", "Date of birth must include a year");
+                ModelState.AddModelError("Year", RegistrationContent.DateofBirth.Validation_Message_Year_Required);
                 return false;
             }
 
@@ -452,28 +452,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             // Day only invalid
             if (isMonthValid && isYearValid && !isDayValid)
             {
-                ModelState.AddModelError("Day", "Date of birth must be a real date");
+                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_Invalid_Day);
                 return false;
             }
 
             // Month only invalid
             if (isDayValid && isYearValid && !isMonthValid)
             {
-                ModelState.AddModelError("Month", "Date of birth must be a real date");
+                ModelState.AddModelError("Month", RegistrationContent.DateofBirth.Validation_Message_Invalid_Month);
                 return false;
             }
 
             // Year only invalid
             if (isDayValid && isMonthValid && !isYearValid)
             {
-                ModelState.AddModelError("Year", "Date of birth must be a real date");
+                ModelState.AddModelError("Year", RegistrationContent.DateofBirth.Validation_Message_Invalid_Year);
                 return false;
             }
 
             // Invalid date
             if (!string.Concat(model.Day, model.Month, model.Year).IsDateTimeWithFormat())
             {
-                ModelState.AddModelError("Day", "Date of birth must be a real date");
+                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_Invalid_Date);
                 return false;
             }
 
@@ -481,7 +481,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var date = string.Concat(model.Day, model.Month, model.Year).ParseStringToDateTime();
             if (date > DateTime.UtcNow)
             {
-                ModelState.AddModelError("Day", "Date of birth must be in the past");
+                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_Must_Not_Future_Date);
                 return false;
             }
 

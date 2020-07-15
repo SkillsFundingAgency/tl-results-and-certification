@@ -138,6 +138,42 @@
   <data name="Page_Title_Add_DateofBirth" xml:space="preserve">
     <value>Add a new registration - Enter Unique Learner Number page</value>
   </data>
+  <data name="Validation_Message_All_Required" xml:space="preserve">
+    <value>Enter your date of birth</value>
+  </data>
+  <data name="Validation_Message_Day_Month_Required" xml:space="preserve">
+    <value>Date of birth must include a day and month</value>
+  </data>
+  <data name="Validation_Message_Day_Required" xml:space="preserve">
+    <value>Date of birth must include a day</value>
+  </data>
+  <data name="Validation_Message_Day_Year_Required" xml:space="preserve">
+    <value>Date of birth must include a day and year</value>
+  </data>
+  <data name="Validation_Message_Invalid_Date" xml:space="preserve">
+    <value>Date of birth must be a real date</value>
+  </data>
+  <data name="Validation_Message_Invalid_Day" xml:space="preserve">
+    <value>Date of birth must be a real date</value>
+  </data>
+  <data name="Validation_Message_Invalid_Month" xml:space="preserve">
+    <value>Date of birth must be a real date</value>
+  </data>
+  <data name="Validation_Message_Invalid_Year" xml:space="preserve">
+    <value>Date of birth must be a real date</value>
+  </data>
+  <data name="Validation_Message_Month_Required" xml:space="preserve">
+    <value>Date of birth must include a month</value>
+  </data>
+  <data name="Validation_Message_Month_Year_Required" xml:space="preserve">
+    <value>Date of birth must include a month and year</value>
+  </data>
+  <data name="Validation_Message_Must_Not_Future_Date" xml:space="preserve">
+    <value>Date of birth must be in the past</value>
+  </data>
+  <data name="Validation_Message_Year_Required" xml:space="preserve">
+    <value>Date of birth must include a year</value>
+  </data>
   <data name="Year_Field_Label" xml:space="preserve">
     <value>Year</value>
   </data>
