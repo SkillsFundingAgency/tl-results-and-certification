@@ -18,6 +18,9 @@
 
                     foreach (var error in stateItem.Value.Errors)
                     {
+                        @if (string.IsNullOrWhiteSpace(error.ErrorMessage))
+                            continue;
+
                         <li><a href="#@elementId.ToLower()">@error.ErrorMessage </a></li>
                     }
                 }
