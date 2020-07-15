@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using System;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationProviderPost
@@ -16,7 +17,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             var cacheResult = new RegistrationViewModel
             {
                 Uln = new UlnViewModel { Uln = "1234567890" },
-                LearnersName = new LearnersNameViewModel { Firstname = "First", Lastname = "Last" }
+                LearnersName = new LearnersNameViewModel { Firstname = "First", Lastname = "Last" },
+                DateofBirth = new DateofBirthViewModel { Day = DateTime.Now.Day.ToString(), Month = DateTime.Now.Month.ToString(), Year = DateTime.Now.Year.ToString() }
             };
 
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
