@@ -131,6 +131,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SelectCore.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\SelectSpecialism.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SelectSpecialism.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\SpecialismQuestion.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -300,6 +305,10 @@
     <EmbeddedResource Update="Content\Registration\SelectCore.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SelectCore.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\SelectSpecialism.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SelectSpecialism.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\SpecialismQuestion.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

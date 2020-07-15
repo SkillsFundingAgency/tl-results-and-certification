@@ -8,5 +8,6 @@
         public SelectProviderViewModel SelectProvider { get; set; }
         public SelectCoreViewModel SelectCore { get; set; }
         public SpecialismQuestionViewModel SpecialismQuestion { get; set; }
+        public SelectSpecialismViewModel SelectSpecialism { get; set; }
     }
 }
