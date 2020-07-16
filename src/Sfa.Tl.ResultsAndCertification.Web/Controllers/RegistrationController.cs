@@ -419,57 +419,61 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         private bool IsValidDateOfBirth(DateofBirthViewModel model)
         {
+            const string DayProperty = "Day";
+            const string MonthProperty = "Month";
+            const string YearProperty = "Year";
+
             // All empty
             if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Month) && string.IsNullOrWhiteSpace(model.Year))
             {
-                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_All_Required);
-                ModelState.AddModelError("Month", string.Empty);
-                ModelState.AddModelError("Year", string.Empty);
+                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_All_Required);
+                ModelState.AddModelError(MonthProperty, string.Empty);
+                ModelState.AddModelError(YearProperty, string.Empty);
                 return false;
             }
 
             // Day and Month empty
             if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Month))
             {
-                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_Day_Month_Required);
-                ModelState.AddModelError("Month", string.Empty);
+                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_Day_Month_Required);
+                ModelState.AddModelError(MonthProperty, string.Empty);
                 return false;
             }
 
             // Day and Year empty
             if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Year))
             {
-                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_Day_Year_Required);
-                ModelState.AddModelError("Year", string.Empty);
+                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_Day_Year_Required);
+                ModelState.AddModelError(MonthProperty, string.Empty);
                 return false;
             }
 
             // Month and Year empty
             if (string.IsNullOrWhiteSpace(model.Month) && string.IsNullOrWhiteSpace(model.Year))
             {
-                ModelState.AddModelError("Month", RegistrationContent.DateofBirth.Validation_Message_Month_Year_Required);
-                ModelState.AddModelError("Year", string.Empty);
+                ModelState.AddModelError(MonthProperty, RegistrationContent.DateofBirth.Validation_Message_Month_Year_Required);
+                ModelState.AddModelError(YearProperty, string.Empty);
                 return false;
             }
 
             // Day empty
             if (string.IsNullOrWhiteSpace(model.Day))
             {
-                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_Day_Required);
+                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_Day_Required);
                 return false;
             }
 
             // Month empty
             if (string.IsNullOrWhiteSpace(model.Month))
             {
-                ModelState.AddModelError("Month", RegistrationContent.DateofBirth.Validation_Message_Month_Required);
+                ModelState.AddModelError(MonthProperty, RegistrationContent.DateofBirth.Validation_Message_Month_Required);
                 return false;
             }
 
             // Year empty
             if (string.IsNullOrWhiteSpace(model.Year))
             {
-                ModelState.AddModelError("Year", RegistrationContent.DateofBirth.Validation_Message_Year_Required);
+                ModelState.AddModelError(YearProperty, RegistrationContent.DateofBirth.Validation_Message_Year_Required);
                 return false;
             }
 
@@ -489,28 +493,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             // Day only invalid
             if (isMonthValid && isYearValid && !isDayValid)
             {
-                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_Invalid_Day);
+                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_Invalid_Day);
                 return false;
             }
 
             // Month only invalid
             if (isDayValid && isYearValid && !isMonthValid)
             {
-                ModelState.AddModelError("Month", RegistrationContent.DateofBirth.Validation_Message_Invalid_Month);
+                ModelState.AddModelError(MonthProperty, RegistrationContent.DateofBirth.Validation_Message_Invalid_Month);
                 return false;
             }
 
             // Year only invalid
             if (isDayValid && isMonthValid && !isYearValid)
             {
-                ModelState.AddModelError("Year", RegistrationContent.DateofBirth.Validation_Message_Invalid_Year);
+                ModelState.AddModelError(YearProperty, RegistrationContent.DateofBirth.Validation_Message_Invalid_Year);
                 return false;
             }
 
             // Invalid date
             if (!string.Concat(model.Day, model.Month, model.Year).IsDateTimeWithFormat())
             {
-                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_Invalid_Date);
+                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_Invalid_Date);
                 return false;
             }
 
@@ -518,7 +522,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var date = string.Concat(model.Day, model.Month, model.Year).ParseStringToDateTime();
             if (date > DateTime.UtcNow)
             {
-                ModelState.AddModelError("Day", RegistrationContent.DateofBirth.Validation_Message_Must_Not_Future_Date);
+                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_Must_Not_Future_Date);
                 return false;
             }
 
