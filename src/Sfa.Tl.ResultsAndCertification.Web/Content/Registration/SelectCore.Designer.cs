@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you cannot find the core you are looking for in the list above, ask your Providers Editor to add this core to the provider in the Providers section of this service..
+        ///   Looks up a localized string similar to If you cannot find the core you are looking for in the list above, ask your Providers Editor to add the relevant T Level to the provider in the &apos;providers’ section of this service..
         /// </summary>
         public static string Cannot_Find_Core_Details_Text {
             get {
