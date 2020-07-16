@@ -115,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new registration - Enter Unique Learner Number page.
+        ///   Looks up a localized string similar to Add a new registration - Enter the learner’s date of birth.
         /// </summary>
         public static string Page_Title_Add_DateofBirth {
             get {

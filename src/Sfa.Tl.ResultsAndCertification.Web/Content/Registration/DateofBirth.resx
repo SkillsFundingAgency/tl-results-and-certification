@@ -136,7 +136,7 @@
     <value>Month</value>
   </data>
   <data name="Page_Title_Add_DateofBirth" xml:space="preserve">
-    <value>Add a new registration - Enter Unique Learner Number page</value>
+    <value>Add a new registration - Enter the learner’s date of birth</value>
   </data>
   <data name="Validation_Message_All_Required" xml:space="preserve">
     <value>Enter your date of birth</value>
