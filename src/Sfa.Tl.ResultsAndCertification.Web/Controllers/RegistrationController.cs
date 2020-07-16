@@ -148,7 +148,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-registration-unique-learner", Name= RouteConstants.AddRegistration)]
+        [Route("add-registration-unique-learner", Name = RouteConstants.AddRegistration)]
         public async Task<IActionResult> AddRegistrationAsync()
         {
             await _cacheService.RemoveAsync<RegistrationViewModel>(CacheKey);
@@ -185,8 +185,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddRegistrationLearnersNameAsync()
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            
-            if(cacheModel?.Uln == null)
+
+            if (cacheModel?.Uln == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(cacheModel?.LearnersName == null ? new LearnersNameViewModel() : cacheModel.LearnersName);
@@ -197,15 +197,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddRegistrationLearnersNameAsync(LearnersNameViewModel model)
         {
             if (!ModelState.IsValid)
-            {
                 return View(model);
-            }
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            cacheModel.LearnersName = model;            
+            cacheModel.LearnersName = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return RedirectToRoute(RouteConstants.AddRegistrationDateofBirth);
@@ -255,7 +253,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = cacheModel?.SelectProvider == null ? new SelectProviderViewModel() : cacheModel.SelectProvider;
             viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
             return View(viewModel);
-        }        
+        }
 
         [HttpPost]
         [Route("add-registration-provider", Name = RouteConstants.SubmitRegistrationProvider)]
@@ -270,6 +268,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
             if (cacheModel?.DateofBirth == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (cacheModel?.SelectProvider?.SelectedProviderId != model.SelectedProviderId)
+            {
+                cacheModel.SelectCore = null;
+                cacheModel.SpecialismQuestion = null;
+                cacheModel.SelectSpecialism = null;
+            }
 
             cacheModel.SelectProvider = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
@@ -305,6 +310,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
+            if (cacheModel?.SelectCore?.SelectedCoreId != model.SelectedCoreId)
+            {
+                cacheModel.SpecialismQuestion = null;
+                cacheModel.SelectSpecialism = null;
+            }
+
             cacheModel.SelectCore = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
             return RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion);
@@ -326,20 +337,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [HttpPost]
         [Route("add-registration-learner-decided-specialism-question", Name = RouteConstants.SubmitRegistrationSpecialismQuestion)]
         public async Task<IActionResult> AddRegistrationSpecialismQuestionAsync(SpecialismQuestionViewModel model)
-        {   
+        {
             if (!ModelState.IsValid)
-            {
                 return View(model);
-            }
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
             if (cacheModel?.SelectCore == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            if(!model.HasLearnerDecidedSpecialism.Value)
+            if (!model.HasLearnerDecidedSpecialism.Value)
             {
                 cacheModel.SelectSpecialism = null;
             }
+
             cacheModel.SpecialismQuestion = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
             return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ? RouteConstants.AddRegistrationSpecialism : RouteConstants.AddRegistrationAcademicYear);
@@ -362,15 +372,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-registration-specialism", Name = RouteConstants.SubmitRegistrationSpecialism)]
         public async Task<IActionResult> AddRegistrationSpecialismAsync(SelectSpecialismViewModel model)
         {
+            if (!ModelState.IsValid)
+                return View(model);
+
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
             if (cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-
-            if (!ModelState.IsValid)
-            {
-                model.PathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.SelectCore.SelectedCoreId);
-                return View(model);
-            }
 
             cacheModel.SelectSpecialism = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
@@ -478,7 +485,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 isDayValid = string.Concat(model.Day, model.Month, model.Year).IsDateTimeWithFormat();
             else
                 isDayValid = string.Concat(model.Day, "01", 2020).IsDateTimeWithFormat();
-            
+
             // Day only invalid
             if (isMonthValid && isYearValid && !isDayValid)
             {
