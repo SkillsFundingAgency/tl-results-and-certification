@@ -56,6 +56,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ProblemWithService.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Helpers\Date.Designer.cs">
+      <DependentUpon>Date.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Content\Help\Cookies.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -250,6 +255,10 @@
     <EmbeddedResource Update="Content\Error\ProblemWithService.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProblemWithService.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Helpers\Date.resx">
+      <LastGenOutput>Date.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Help\Cookies.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

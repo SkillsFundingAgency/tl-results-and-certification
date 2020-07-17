@@ -7,11 +7,11 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
-using System;
 using System.Threading.Tasks;
 using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
 
@@ -225,7 +225,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-registration-date-of-birth", Name = RouteConstants.SubmitRegistrationDateofBirth)]
         public async Task<IActionResult> AddRegistrationDateofBirthAsync(DateofBirthViewModel model)
         {
-            if (!IsValidDateOfBirth(model))
+            if (!IsValidDateofBirth(model))
             {
                 return View(model);
             }
@@ -417,116 +417,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, cacheModel);
         }
 
-        private bool IsValidDateOfBirth(DateofBirthViewModel model)
+        private bool IsValidDateofBirth(DateofBirthViewModel model)
         {
-            const string DayProperty = "Day";
-            const string MonthProperty = "Month";
-            const string YearProperty = "Year";
+            var dateofBirth = string.Concat(model.Day, "/", model.Month, "/", model.Year);
+            var validationerrors = dateofBirth.Validate("Date of birth");
 
-            // All empty
-            if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Month) && string.IsNullOrWhiteSpace(model.Year))
-            {
-                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_All_Required);
-                ModelState.AddModelError(MonthProperty, string.Empty);
-                ModelState.AddModelError(YearProperty, string.Empty);
-                return false;
-            }
+            if (validationerrors?.Count == 0)
+                return true;
 
-            // Day and Month empty
-            if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Month))
-            {
-                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_Day_Month_Required);
-                ModelState.AddModelError(MonthProperty, string.Empty);
-                return false;
-            }
+            foreach (var error in validationerrors)
+                ModelState.AddModelError(error.Key, error.Value);
 
-            // Day and Year empty
-            if (string.IsNullOrWhiteSpace(model.Day) && string.IsNullOrWhiteSpace(model.Year))
-            {
-                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_Day_Year_Required);
-                ModelState.AddModelError(MonthProperty, string.Empty);
-                return false;
-            }
-
-            // Month and Year empty
-            if (string.IsNullOrWhiteSpace(model.Month) && string.IsNullOrWhiteSpace(model.Year))
-            {
-                ModelState.AddModelError(MonthProperty, RegistrationContent.DateofBirth.Validation_Message_Month_Year_Required);
-                ModelState.AddModelError(YearProperty, string.Empty);
-                return false;
-            }
-
-            // Day empty
-            if (string.IsNullOrWhiteSpace(model.Day))
-            {
-                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_Day_Required);
-                return false;
-            }
-
-            // Month empty
-            if (string.IsNullOrWhiteSpace(model.Month))
-            {
-                ModelState.AddModelError(MonthProperty, RegistrationContent.DateofBirth.Validation_Message_Month_Required);
-                return false;
-            }
-
-            // Year empty
-            if (string.IsNullOrWhiteSpace(model.Year))
-            {
-                ModelState.AddModelError(YearProperty, RegistrationContent.DateofBirth.Validation_Message_Year_Required);
-                return false;
-            }
-
-            model.Day = model.Day.PadLeft(2, '0');
-            model.Month = model.Month.PadLeft(2, '0');
-
-            // Invalid Day/Month/Year
-            var isYearValid = (model.Year.Length == 4) && string.Concat("01", "01", model.Year).IsDateTimeWithFormat();
-            var isMonthValid = string.Concat("01", model.Month, 2020).IsDateTimeWithFormat();
-
-            bool isDayValid;
-            if (isMonthValid && isYearValid)
-                isDayValid = string.Concat(model.Day, model.Month, model.Year).IsDateTimeWithFormat();
-            else
-                isDayValid = string.Concat(model.Day, "01", 2020).IsDateTimeWithFormat();
-
-            // Day only invalid
-            if (isMonthValid && isYearValid && !isDayValid)
-            {
-                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_Invalid_Day);
-                return false;
-            }
-
-            // Month only invalid
-            if (isDayValid && isYearValid && !isMonthValid)
-            {
-                ModelState.AddModelError(MonthProperty, RegistrationContent.DateofBirth.Validation_Message_Invalid_Month);
-                return false;
-            }
-
-            // Year only invalid
-            if (isDayValid && isMonthValid && !isYearValid)
-            {
-                ModelState.AddModelError(YearProperty, RegistrationContent.DateofBirth.Validation_Message_Invalid_Year);
-                return false;
-            }
-
-            // Invalid date
-            if (!string.Concat(model.Day, model.Month, model.Year).IsDateTimeWithFormat())
-            {
-                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_Invalid_Date);
-                return false;
-            }
-
-            // Future date
-            var date = string.Concat(model.Day, model.Month, model.Year).ParseStringToDateTime();
-            if (date > DateTime.UtcNow)
-            {
-                ModelState.AddModelError(DayProperty, RegistrationContent.DateofBirth.Validation_Message_Must_Not_Future_Date);
-                return false;
-            }
-
-            return true;
+            return false;
         }
     }
 }
