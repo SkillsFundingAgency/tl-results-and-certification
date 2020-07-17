@@ -60,6 +60,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.ProviderTlevel.TlevelTitle))
                .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.ProviderTlevel.TlProviderId));
 
+            CreateMap<ProviderDetails, SelectListItem>()
+                .ForMember(m => m.Text, o => o.MapFrom(s => $"{s.DisplayName} ({s.Ukprn})"))
+                .ForMember(m => m.Value, o => o.MapFrom(s => s.Ukprn.ToString()))
+                .ForAllOtherMembers(s => s.Ignore());
+
+            CreateMap<IList<ProviderDetails>, SelectProviderViewModel>()
+               .ForMember(d => d.ProvidersSelectList, opts => opts.MapFrom(s => s))
+               .ForAllOtherMembers(d => d.Ignore());
+
             CreateMap<PathwayDetails, SelectListItem>()
                 .ForMember(m => m.Text, o => o.MapFrom(s => $"{s.Name} ({s.Code})"))
                 .ForMember(m => m.Value, o => o.MapFrom(s => s.Code.ToString()))

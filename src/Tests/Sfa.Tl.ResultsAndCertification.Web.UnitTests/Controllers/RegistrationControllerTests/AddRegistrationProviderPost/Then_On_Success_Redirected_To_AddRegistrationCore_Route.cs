@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         public override void Given()
         {
-            SelectProviderViewModel = new SelectProviderViewModel { SelectedProviderId = "1234567890" };
+            SelectProviderViewModel = new SelectProviderViewModel { SelectedProviderUkprn = "1234567890" };
 
             var cacheResult = new RegistrationViewModel
             {
