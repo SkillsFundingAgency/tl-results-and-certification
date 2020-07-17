@@ -8,11 +8,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
     {
         public RegistrationMapper()
         {
-            CreateMap<TlPathway, CoreDetails>()
+            CreateMap<TlPathway, PathwayDetails>()
                 .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
-                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.LarId))
-                .ForMember(d => d.CoreName, opts => opts.MapFrom(s => s.Name))
-                .ForMember(d => d.CoreTitle, opts => opts.MapFrom(s => s.TlevelTitle));
+                .ForMember(d => d.Code, opts => opts.MapFrom(s => s.LarId))
+                .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
+                .ForMember(d => d.Title, opts => opts.MapFrom(s => s.TlevelTitle));
         }
     }
 }

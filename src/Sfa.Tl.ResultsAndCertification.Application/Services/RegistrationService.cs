@@ -246,12 +246,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
-        public async Task<IList<CoreDetails>> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn)
+        public async Task<IList<PathwayDetails>> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn)
         {
             var providerCores = await _tqProviderRepository.GetManyAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
                                                                            && x.TlProvider.UkPrn == providerUkprn)
                                                            .Select(p => p.TqAwardingOrganisation.TlPathway).OrderBy(p => p.Name).ToListAsync();
-            return _mapper.Map<IList<CoreDetails>>(providerCores);
+            return _mapper.Map<IList<PathwayDetails>>(providerCores);
         }
 
         private RegistrationRecordResponse AddStage3ValidationError(RegistrationCsvRecordResponse registrationCsvRecordResponse, string errorMessage)

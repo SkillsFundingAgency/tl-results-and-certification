@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 {
     public class When_GetRegisteredProviderCoreDetailsAsync_IsCalled_With_Valid_Ukprn : RegistrationServiceBaseTest
     {
-        private IList<CoreDetails> _result;
+        private IList<PathwayDetails> _result;
 
         public override void Given()
         {
@@ -41,8 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             var actualResult = _result.FirstOrDefault();
             actualResult.Id.Should().Be(Pathway.Id);
-            actualResult.CoreCode.Should().Be(Pathway.LarId);
-            actualResult.CoreName.Should().Be(Pathway.Name);
+            actualResult.Code.Should().Be(Pathway.LarId);
+            actualResult.Name.Should().Be(Pathway.Name);
         }
 
         [Fact]

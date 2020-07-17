@@ -21,24 +21,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         protected ILogger<RegistrationLoader> Logger;
         protected RegistrationLoader Loader;
         protected IBlobStorageService BlobStorageService;
-        protected IList<CoreDetails> ApiClientResponse;
+        protected IList<PathwayDetails> ApiClientResponse;
         protected SelectCoreViewModel ActualResult;
 
         public override void Setup()
         {
-            ApiClientResponse = new List<CoreDetails>
+            ApiClientResponse = new List<PathwayDetails>
             {
-                new CoreDetails
+                new PathwayDetails
                 {
                     Id = 1,
-                    CoreName = "Test",
-                    CoreCode = "10000111"
+                    Name = "Test",
+                    Code = "10000111"
                 },
-                new CoreDetails
+                new PathwayDetails
                 {
                     Id = 2,
-                    CoreName = "Display",
-                    CoreCode = "10000112"
+                    Name = "Display",
+                    Code = "10000112"
                 }
             };
 

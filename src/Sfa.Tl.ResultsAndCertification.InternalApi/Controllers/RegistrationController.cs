@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpGet]
         [Route("GetRegisteredProviderCoreDetails/{aoUkprn}/{providerUkprn}")]
-        public async Task<IList<CoreDetails>> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn)
+        public async Task<IList<PathwayDetails>> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn)
         {
             return await _registrationService.GetRegisteredProviderCoreDetailsAsync(aoUkprn, providerUkprn);
         }
