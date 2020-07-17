@@ -152,5 +152,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return await _tqProviderRepository.CountAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && x.TlProviderId == tlProviderId) > 0;
         }
+
+        /// <summary>
+        /// Gets the registered provider pathway details asynchronous.
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <param name="providerUkprn">The provider ukprn.</param>
+        /// <returns></returns>
+        public async Task<IList<PathwayDetails>> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn)
+        {
+            var providerPathways = await _tqProviderRepository.GetManyAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
+                                                                           && x.TlProvider.UkPrn == providerUkprn)
+                                                           .Select(p => p.TqAwardingOrganisation.TlPathway).OrderBy(p => p.Name).ToListAsync();
+            return _mapper.Map<IList<PathwayDetails>>(providerPathways);
+        }
     }
 }

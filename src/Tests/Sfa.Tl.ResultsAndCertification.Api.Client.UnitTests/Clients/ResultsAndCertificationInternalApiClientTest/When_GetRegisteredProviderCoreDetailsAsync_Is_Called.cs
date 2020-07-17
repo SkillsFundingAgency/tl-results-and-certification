@@ -53,13 +53,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<IList<PathwayDetails>>(_mockHttpResult, string.Format(ApiConstants.GetRegisteredProviderCoreDetailsAsyncUri, _ukprn, _providerUkprn), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<IList<PathwayDetails>>(_mockHttpResult, string.Format(ApiConstants.GetRegisteredProviderPathwayDetailsAsyncUri, _ukprn, _providerUkprn), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
         {
-            _result = _apiClient.GetRegisteredProviderCoreDetailsAsync(_ukprn, _providerUkprn);
+            _result = _apiClient.GetRegisteredProviderPathwayDetailsAsync(_ukprn, _providerUkprn);
         }
 
         [Fact]

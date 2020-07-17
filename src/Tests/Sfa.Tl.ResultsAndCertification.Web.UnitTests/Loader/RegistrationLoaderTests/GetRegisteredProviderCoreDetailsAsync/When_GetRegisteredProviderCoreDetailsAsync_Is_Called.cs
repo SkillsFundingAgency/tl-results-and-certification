@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             Logger = Substitute.For<ILogger<RegistrationLoader>>();
             BlobStorageService = Substitute.For<IBlobStorageService>();
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-            InternalApiClient.GetRegisteredProviderCoreDetailsAsync(Ukprn, ProviderUkprn).Returns(ApiClientResponse);
+            InternalApiClient.GetRegisteredProviderPathwayDetailsAsync(Ukprn, ProviderUkprn).Returns(ApiClientResponse);
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ProviderMapper).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 
         public override void When()
         {
-            ActualResult = Loader.GetRegisteredProviderCoreDetailsAsync(Ukprn, ProviderUkprn).Result;
+            ActualResult = Loader.GetRegisteredProviderPathwayDetailsAsync(Ukprn, ProviderUkprn).Result;
         }
     }
 }

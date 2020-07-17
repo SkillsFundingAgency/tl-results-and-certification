@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             SpecialismQuestionViewModel = new SpecialismQuestionViewModel();
             Controller.ModelState.AddModelError("HasLearnerDecidedSpecialism", SpecialismQuestionContent.Validation_Select_Yes_Required_Message);
 
-            _selectCoreViewModel = new SelectCoreViewModel { SelectedCoreId = "123", CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = "123" } } };
+            _selectCoreViewModel = new SelectCoreViewModel { SelectedCoreCode = "123", CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = "123" } } };
 
             cacheResult = new RegistrationViewModel
             {

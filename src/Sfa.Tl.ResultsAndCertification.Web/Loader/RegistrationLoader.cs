@@ -85,10 +85,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<SelectProviderViewModel>(providerDetails);
         }
 
-        public async Task<SelectCoreViewModel> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn)
+        public async Task<SelectCoreViewModel> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn)
         {
-            var providerDetails = await _internalApiClient.GetRegisteredProviderCoreDetailsAsync(aoUkprn, providerUkprn);
-            return _mapper.Map<SelectCoreViewModel>(providerDetails);
+            var providerPathways = await _internalApiClient.GetRegisteredProviderPathwayDetailsAsync(aoUkprn, providerUkprn);
+            return _mapper.Map<SelectCoreViewModel>(providerPathways);
         }
 
         public async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId)

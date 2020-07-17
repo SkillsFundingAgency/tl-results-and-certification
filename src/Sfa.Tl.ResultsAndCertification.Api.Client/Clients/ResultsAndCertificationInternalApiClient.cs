@@ -118,9 +118,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<DocumentUploadHistoryDetails>(requestUri);
         }
 
-        public async Task<IList<PathwayDetails>> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn)
+        public async Task<IList<PathwayDetails>> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn)
         {
-            var requestUri = string.Format(ApiConstants.GetRegisteredProviderCoreDetailsAsyncUri, aoUkprn, providerUkprn);
+            var requestUri = string.Format(ApiConstants.GetRegisteredProviderPathwayDetailsAsyncUri, aoUkprn, providerUkprn);
             return await GetAsync<IList<PathwayDetails>>(requestUri);
         }
 

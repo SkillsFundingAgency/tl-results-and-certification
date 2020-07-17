@@ -19,21 +19,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public override void Given()
         {
             _selectProviderViewModel = new SelectProviderViewModel { SelectedProviderId = _providerUkprn.ToString(), ProvidersSelectList = new List<SelectListItem> { new SelectListItem { Text = "Hello", Value = "1" } } };
-            _selectCoreViewModel = new SelectCoreViewModel { SelectedCoreId = "123", CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = "123" } } };
+            _selectCoreViewModel = new SelectCoreViewModel { SelectedCoreCode = "123", CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = "123" } } };
             cacheResult = new RegistrationViewModel
             {
                 SelectProvider = _selectProviderViewModel,
                 SelectCore = _selectCoreViewModel
             };
 
-            RegistrationLoader.GetRegisteredProviderCoreDetailsAsync(Ukprn, _providerUkprn).Returns(_selectCoreViewModel);
+            RegistrationLoader.GetRegisteredProviderPathwayDetailsAsync(Ukprn, _providerUkprn).Returns(_selectCoreViewModel);
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
         }
 
         [Fact]
         public void Then_GetRegisteredProviderCoreDetailsAsync_Method_Is_Called()
         {
-            RegistrationLoader.Received(1).GetRegisteredProviderCoreDetailsAsync(Ukprn, _providerUkprn);
+            RegistrationLoader.Received(1).GetRegisteredProviderPathwayDetailsAsync(Ukprn, _providerUkprn);
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             var model = viewResult.Model as SelectCoreViewModel;
             model.Should().NotBeNull();
 
-            model.SelectedCoreId.Should().Be(_selectCoreViewModel.SelectedCoreId);
+            model.SelectedCoreCode.Should().Be(_selectCoreViewModel.SelectedCoreCode);
             model.CoreSelectList.Should().NotBeNull();
             model.CoreSelectList.Count.Should().Be(_selectCoreViewModel.CoreSelectList.Count);
 

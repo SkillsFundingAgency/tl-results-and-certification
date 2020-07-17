@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
     public class SelectCoreViewModel
     {
         [Required(ErrorMessageResourceType = typeof(ErrorResource.SelectCore), ErrorMessageResourceName = "Validation_Select_Core_Required")]
-        public string SelectedCoreId { get; set; }
+        public string SelectedCoreCode { get; set; }
 
         public IList<SelectListItem> CoreSelectList { get; set; }
 

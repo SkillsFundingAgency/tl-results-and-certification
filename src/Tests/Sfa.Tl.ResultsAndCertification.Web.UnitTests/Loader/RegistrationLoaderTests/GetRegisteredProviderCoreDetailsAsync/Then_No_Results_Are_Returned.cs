@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         public override void Given()
         {
             ApiClientResponse = null;
-            InternalApiClient.GetRegisteredProviderCoreDetailsAsync(Ukprn, ProviderUkprn).Returns(ApiClientResponse);
+            InternalApiClient.GetRegisteredProviderPathwayDetailsAsync(Ukprn, ProviderUkprn).Returns(ApiClientResponse);
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
         }
 

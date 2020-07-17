@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override void Given()
         {
-            SelectCoreViewModel = new SelectCoreViewModel { SelectedCoreId = "10000057" };
+            SelectCoreViewModel = new SelectCoreViewModel { SelectedCoreCode = "10000057" };
 
             _selectProviderViewModel = new SelectProviderViewModel { SelectedProviderId = _providerUkprn.ToString(), ProvidersSelectList = new List<SelectListItem> { new SelectListItem { Text = "Test Provider", Value = _providerUkprn.ToString() } } };
 
