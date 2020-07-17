@@ -13,7 +13,7 @@
                 <label class="govuk-label govuk-date-input__label" for="day">
                     @DateofBirth.Day_Field_Label
                 </label>
-                <input id="day" asp-for="Day" sfa-input-validation-for="Day" class="govuk-input govuk-date-input__input govuk-input--width-2">
+                <input id="day" asp-for="Day" sfa-validation-for="Day" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-2">
             </div>
         </div>
         <div class="govuk-date-input__item">
@@ -21,7 +21,7 @@
                 <label class="govuk-label govuk-date-input__label" for="month">
                     @DateofBirth.Month_Field_Label
                 </label>
-                <input id="month" asp-for="Month" sfa-input-validation-for="Month" class="govuk-input govuk-date-input__input govuk-input--width-2">
+                <input id="month" asp-for="Month" sfa-validation-for="Month" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-2">
             </div>
         </div>
         <div class="govuk-date-input__item">
@@ -29,7 +29,7 @@
                 <label class="govuk-label govuk-date-input__label" for="year">
                     @DateofBirth.Year_Field_Label
                 </label>
-                <input id="year" asp-for="Year" sfa-input-validation-for="Year" class="govuk-input govuk-date-input__input govuk-input--width-4">
+                <input id="year" asp-for="Year" sfa-validation-for="Year" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-4">
             </div>
         </div>
     </div>
