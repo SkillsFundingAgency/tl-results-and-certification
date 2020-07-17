@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For example, 23&amp;nbsp;&amp;nbsp;9&amp;nbsp;&amp;nbsp;2001.
+        ///   Looks up a localized string similar to For example, 23 9 2001.
         /// </summary>
         public static string Example_Hint_Text {
             get {
@@ -115,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new registration - Enter the learner’s date of birth.
+        ///   Looks up a localized string similar to Add a new registration - Enter the learner’s date of birth page.
         /// </summary>
         public static string Page_Title_Add_DateofBirth {
             get {

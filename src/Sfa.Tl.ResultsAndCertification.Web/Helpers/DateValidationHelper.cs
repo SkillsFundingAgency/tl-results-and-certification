@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
             // Validate input parameters
             var dateTokens = value.Split("/");
             if (dateTokens.Count() != 3)
-                throw new Exception($"Invalid usage of DateTimeValiationHelper. Parameters Value: {value}, PropertyName {propertyName}");
+                throw new Exception($"Invalid usage of DateValidationHelper. Parameters Value: {value}, PropertyName {propertyName}");
 
             var day = dateTokens[0];
             var month = dateTokens[1];

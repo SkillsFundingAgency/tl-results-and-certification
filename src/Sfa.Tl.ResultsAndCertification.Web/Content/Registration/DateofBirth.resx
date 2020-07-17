@@ -130,13 +130,13 @@
     <value>Day</value>
   </data>
   <data name="Example_Hint_Text" xml:space="preserve">
-    <value>For example, 23&amp;nbsp;&amp;nbsp;9&amp;nbsp;&amp;nbsp;2001</value>
+    <value>For example, 23 9 2001</value>
   </data>
   <data name="Month_Field_Label" xml:space="preserve">
     <value>Month</value>
   </data>
   <data name="Page_Title_Add_DateofBirth" xml:space="preserve">
-    <value>Add a new registration - Enter the learner’s date of birth</value>
+    <value>Add a new registration - Enter the learner’s date of birth page</value>
   </data>
   <data name="Year_Field_Label" xml:space="preserve">
     <value>Year</value>
