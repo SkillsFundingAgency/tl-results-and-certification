@@ -32,6 +32,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.TlProviderId))
                 .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TqAwardingOrganisation.TlPathway.TlevelTitle))
                 .ForAllOtherMembers(d => d.Ignore());
+
+            CreateMap<TlPathway, PathwayDetails>()
+                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+                .ForMember(d => d.Code, opts => opts.MapFrom(s => s.LarId))
+                .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
+                .ForMember(d => d.Title, opts => opts.MapFrom(s => s.TlevelTitle));
         }
     }
 }

@@ -18,10 +18,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public override void Given()
         {
             SelectCoreViewModel = new SelectCoreViewModel();
-            Controller.ModelState.AddModelError("SelectedCoreId", SelectCoreContent.Validation_Select_Core_Required);
+            Controller.ModelState.AddModelError("SelectedCoreCode", SelectCoreContent.Validation_Select_Core_Required);
 
-            _selectProviderViewModel = new SelectProviderViewModel { SelectedProviderId = _providerUkprn.ToString(), ProvidersSelectList = new List<SelectListItem> { new SelectListItem { Text = "Test Provider", Value = _providerUkprn.ToString() } } };
-            _selectCoreViewModel = new SelectCoreViewModel { SelectedCoreId = "123", CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = "123" } } };
+            _selectProviderViewModel = new SelectProviderViewModel { SelectedProviderUkprn = _providerUkprn.ToString(), ProvidersSelectList = new List<SelectListItem> { new SelectListItem { Text = "Test Provider", Value = _providerUkprn.ToString() } } };
+            _selectCoreViewModel = new SelectCoreViewModel { SelectedCoreCode = "123", CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = "123" } } };
 
             var cacheResult = new RegistrationViewModel
             {
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             };
 
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
-            RegistrationLoader.GetRegisteredProviderCoreDetailsAsync(Ukprn, _providerUkprn).Returns(_selectCoreViewModel);
+            RegistrationLoader.GetRegisteredProviderPathwayDetailsAsync(Ukprn, _providerUkprn).Returns(_selectCoreViewModel);
         }
 
         [Fact]
@@ -41,9 +41,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             var viewResult = Result as ViewResult;
             viewResult.Model.Should().BeOfType(typeof(SelectCoreViewModel));
 
-            Controller.ViewData.ModelState.ContainsKey(nameof(SelectCoreViewModel.SelectedCoreId)).Should().BeTrue();
+            Controller.ViewData.ModelState.ContainsKey(nameof(SelectCoreViewModel.SelectedCoreCode)).Should().BeTrue();
 
-            var modelState = Controller.ViewData.ModelState[nameof(SelectCoreViewModel.SelectedCoreId)];
+            var modelState = Controller.ViewData.ModelState[nameof(SelectCoreViewModel.SelectedCoreCode)];
             modelState.Errors[0].ErrorMessage.Should().Be(SelectCoreContent.Validation_Select_Core_Required);
         }
     }

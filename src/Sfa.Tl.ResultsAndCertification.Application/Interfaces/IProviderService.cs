@@ -15,5 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<ProviderTlevelDetails> GetTqProviderTlevelDetailsAsync(long aoUkprn, int tqProviderId);
         Task<bool> RemoveTqProviderTlevelAsync(long aoUkprn, int tqProviderId);
         Task<bool> HasAnyTlevelSetupForProviderAsync(long aoUkprn, int tlProviderId);
+        Task<IList<PathwayDetails>> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn);
     }
 }

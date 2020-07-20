@@ -8,7 +8,6 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
@@ -244,14 +243,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 };
             }            
             return response;
-        }
-
-        public async Task<IList<CoreDetails>> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn)
-        {
-            var providerCores = await _tqProviderRepository.GetManyAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
-                                                                           && x.TlProvider.UkPrn == providerUkprn)
-                                                           .Select(p => p.TqAwardingOrganisation.TlPathway).OrderBy(p => p.Name).ToListAsync();
-            return _mapper.Map<IList<CoreDetails>>(providerCores);
         }
 
         private RegistrationRecordResponse AddStage3ValidationError(RegistrationCsvRecordResponse registrationCsvRecordResponse, string errorMessage)

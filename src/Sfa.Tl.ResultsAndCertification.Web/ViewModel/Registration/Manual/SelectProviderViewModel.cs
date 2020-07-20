@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
     public class SelectProviderViewModel
     {
         [Required(ErrorMessageResourceType = typeof(ErrorResource.SelectProvider), ErrorMessageResourceName = "Validation_Select_Provider_Required")]
-        public string SelectedProviderId { get; set; }
+        public string SelectedProviderUkprn { get; set; }
 
         public IList<SelectListItem> ProvidersSelectList { get; set; }
 

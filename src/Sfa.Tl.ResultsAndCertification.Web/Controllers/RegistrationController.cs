@@ -269,7 +269,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.DateofBirth == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            if (cacheModel?.SelectProvider?.SelectedProviderId != model.SelectedProviderId)
+            if (cacheModel?.SelectProvider?.SelectedProviderUkprn != model.SelectedProviderUkprn)
             {
                 cacheModel.SelectCore = null;
                 cacheModel.SpecialismQuestion = null;
@@ -290,7 +290,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.SelectProvider == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var providerCores = await GetRegisteredProviderCores(cacheModel.SelectProvider.SelectedProviderId.ToLong());
+            var providerCores = await GetRegisteredProviderCores(cacheModel.SelectProvider.SelectedProviderUkprn.ToLong());
             var viewModel = cacheModel?.SelectCore == null ? new SelectCoreViewModel() : cacheModel.SelectCore;
             viewModel.CoreSelectList = providerCores.CoreSelectList;
             return View(viewModel);
@@ -306,11 +306,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                model = await GetRegisteredProviderCores(cacheModel.SelectProvider.SelectedProviderId.ToLong());
+                model = await GetRegisteredProviderCores(cacheModel.SelectProvider.SelectedProviderUkprn.ToLong());
                 return View(model);
             }
 
-            if (cacheModel?.SelectCore?.SelectedCoreId != model.SelectedCoreId)
+            if (cacheModel?.SelectCore?.SelectedCoreCode != model.SelectedCoreCode)
             {
                 cacheModel.SpecialismQuestion = null;
                 cacheModel.SelectSpecialism = null;
@@ -364,7 +364,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = cacheModel?.SelectSpecialism == null ? new SelectSpecialismViewModel { PathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.SelectCore.SelectedCoreId) } : cacheModel.SelectSpecialism;
+            var viewModel = cacheModel?.SelectSpecialism == null ? new SelectSpecialismViewModel { PathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.SelectCore.SelectedCoreCode) } : cacheModel.SelectSpecialism;
             return View(viewModel);
         }
 
@@ -396,9 +396,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
         }
+
         private async Task<SelectCoreViewModel> GetRegisteredProviderCores(long providerUkprn)
         {
-            return await _registrationLoader.GetRegisteredProviderCoreDetailsAsync(User.GetUkPrn(), providerUkprn);
+            return await _registrationLoader.GetRegisteredProviderPathwayDetailsAsync(User.GetUkPrn(), providerUkprn);
         }
 
         private async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByCoreCode(string coreCode)

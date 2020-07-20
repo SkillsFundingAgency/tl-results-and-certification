@@ -21,31 +21,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         protected ILogger<RegistrationLoader> Logger;
         protected RegistrationLoader Loader;
         protected IBlobStorageService BlobStorageService;
-        protected IList<CoreDetails> ApiClientResponse;
+        protected IList<PathwayDetails> ApiClientResponse;
         protected SelectCoreViewModel ActualResult;
 
         public override void Setup()
         {
-            ApiClientResponse = new List<CoreDetails>
+            ApiClientResponse = new List<PathwayDetails>
             {
-                new CoreDetails
+                new PathwayDetails
                 {
                     Id = 1,
-                    CoreName = "Test",
-                    CoreCode = "10000111"
+                    Name = "Test",
+                    Code = "10000111"
                 },
-                new CoreDetails
+                new PathwayDetails
                 {
                     Id = 2,
-                    CoreName = "Display",
-                    CoreCode = "10000112"
+                    Name = "Display",
+                    Code = "10000112"
                 }
             };
 
             Logger = Substitute.For<ILogger<RegistrationLoader>>();
             BlobStorageService = Substitute.For<IBlobStorageService>();
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-            InternalApiClient.GetRegisteredProviderCoreDetailsAsync(Ukprn, ProviderUkprn).Returns(ApiClientResponse);
+            InternalApiClient.GetRegisteredProviderPathwayDetailsAsync(Ukprn, ProviderUkprn).Returns(ApiClientResponse);
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ProviderMapper).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 
         public override void When()
         {
-            ActualResult = Loader.GetRegisteredProviderCoreDetailsAsync(Ukprn, ProviderUkprn).Result;
+            ActualResult = Loader.GetRegisteredProviderPathwayDetailsAsync(Ukprn, ProviderUkprn).Result;
         }
     }
 }

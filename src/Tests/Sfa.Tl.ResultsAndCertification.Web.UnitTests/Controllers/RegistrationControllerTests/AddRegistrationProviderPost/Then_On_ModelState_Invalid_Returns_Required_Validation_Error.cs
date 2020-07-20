@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         {
             SelectProviderViewModel = new SelectProviderViewModel();
 
-            Controller.ModelState.AddModelError("SelectedProviderId", SelectProviderContent.Validation_Select_Provider_Required);
+            Controller.ModelState.AddModelError("SelectedProviderUkprn", SelectProviderContent.Validation_Select_Provider_Required);
 
             _selectProviderViewModel = new SelectProviderViewModel { ProvidersSelectList = new List<SelectListItem> { new SelectListItem { Text = "Hello", Value = "1" } } };
            
@@ -31,9 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             var viewResult = Result as ViewResult;
             viewResult.Model.Should().BeOfType(typeof(SelectProviderViewModel));
 
-            Controller.ViewData.ModelState.ContainsKey(nameof(SelectProviderViewModel.SelectedProviderId)).Should().BeTrue();
+            Controller.ViewData.ModelState.ContainsKey(nameof(SelectProviderViewModel.SelectedProviderUkprn)).Should().BeTrue();
 
-            var modelState = Controller.ViewData.ModelState[nameof(SelectProviderViewModel.SelectedProviderId)];
+            var modelState = Controller.ViewData.ModelState[nameof(SelectProviderViewModel.SelectedProviderUkprn)];
             modelState.Errors[0].ErrorMessage.Should().Be(SelectProviderContent.Validation_Select_Provider_Required);
         }
     }

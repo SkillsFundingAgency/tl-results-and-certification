@@ -30,12 +30,5 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _bulkRegistrationProcess.ProcessBulkRegistrationsAsync(request);
         }
-
-        [HttpGet]
-        [Route("GetRegisteredProviderCoreDetails/{aoUkprn}/{providerUkprn}")]
-        public async Task<IList<CoreDetails>> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn)
-        {
-            return await _registrationService.GetRegisteredProviderCoreDetailsAsync(aoUkprn, providerUkprn);
-        }
     }
 }

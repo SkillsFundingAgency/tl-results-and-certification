@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<UploadRegistrationsResponseViewModel> ProcessBulkRegistrationsAsync(UploadRegistrationsRequestViewModel viewModel);
         Task<Stream> GetRegistrationValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference);
         Task<SelectProviderViewModel> GetRegisteredTqAoProviderDetailsAsync(long aoUkprn);
-        Task<SelectCoreViewModel> GetRegisteredProviderCoreDetailsAsync(long aoUkprn, long providerUkprn);
+        Task<SelectCoreViewModel> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn);
         Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId);
     }
 }

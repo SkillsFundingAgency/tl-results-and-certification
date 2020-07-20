@@ -17,10 +17,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 {
     public class When_GetRegisteredProviderCoreDetailsAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        private Task<IList<CoreDetails>> _result;
+        private Task<IList<PathwayDetails>> _result;
         private readonly long _ukprn = 12345678;
         private readonly long _providerUkprn = 987654321;
-        protected IList<CoreDetails> _mockHttpResult;
+        protected IList<PathwayDetails> _mockHttpResult;
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
         private ResultsAndCertificationInternalApiClient _apiClient;
@@ -34,32 +34,32 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
             };
 
-            _mockHttpResult = new List<CoreDetails>
+            _mockHttpResult = new List<PathwayDetails>
             {
-                new CoreDetails
+                new PathwayDetails
                 {
                     Id = 1,
-                    CoreName = "Test",
-                    CoreCode = "10000111"
+                    Name = "Test",
+                    Code = "10000111"
                 },
-                new CoreDetails
+                new PathwayDetails
                 {
                     Id = 2,
-                    CoreName = "Display",
-                    CoreCode = "10000112"
+                    Name = "Display",
+                    Code = "10000112"
                 }
             };
         }
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<IList<CoreDetails>>(_mockHttpResult, string.Format(ApiConstants.GetRegisteredProviderCoreDetailsAsyncUri, _ukprn, _providerUkprn), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<IList<PathwayDetails>>(_mockHttpResult, string.Format(ApiConstants.GetRegisteredProviderPathwayDetailsAsyncUri, _ukprn, _providerUkprn), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
         {
-            _result = _apiClient.GetRegisteredProviderCoreDetailsAsync(_ukprn, _providerUkprn);
+            _result = _apiClient.GetRegisteredProviderPathwayDetailsAsync(_ukprn, _providerUkprn);
         }
 
         [Fact]
@@ -81,8 +81,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             actualCoreDetailsResult.Should().NotBeNull();
 
             actualCoreDetailsResult.Id.Should().Be(expectedCoreDetailsResult.Id);
-            actualCoreDetailsResult.CoreName.Should().Be(expectedCoreDetailsResult.CoreName);
-            actualCoreDetailsResult.CoreCode.Should().Be(expectedCoreDetailsResult.CoreCode);
+            actualCoreDetailsResult.Name.Should().Be(expectedCoreDetailsResult.Name);
+            actualCoreDetailsResult.Code.Should().Be(expectedCoreDetailsResult.Code);
         }
     }
 }
