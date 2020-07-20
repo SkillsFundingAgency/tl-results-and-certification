@@ -1,33 +1,16 @@
-﻿using FluentAssertions;
-using Sfa.Tl.ResultsAndCertification.Web.Helpers;
-using System.Collections.Generic;
-using Xunit;
+﻿using System.Collections.Generic;
 using DateContent = Sfa.Tl.ResultsAndCertification.Web.Content.Helpers.Date;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers.DateValidationHelperTests
 {
-    public class When_Validate_Is_Called
-    {
-        private const string PropertyName = "Date of birth";
-        
+    public abstract class When_ValidateDate_Is_Called
+    {        
         private const string DayProperty = "Day";
         private const string MonthProperty = "Month";
         private const string YearProperty = "Year";
 
-        [Theory]
-        [MemberData(nameof(Data))]
-        public void When_DateValidation_Is_Called_Then_Expected_Results_Returned(string InputDate, Dictionary<string, string> expectedErrors)
-        {
-            var validationerrors = InputDate.ValidateDate(PropertyName);
-            
-            validationerrors.Count.Should().Be(expectedErrors.Count);
-
-            foreach (var error in validationerrors)
-            {
-                error.Value.Should().Be(expectedErrors[error.Key]);
-            }
-        }
-
+        protected const string PropertyName = "Date of birth";
+        
         public static IEnumerable<object[]> Data
         {
             get

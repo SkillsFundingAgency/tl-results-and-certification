@@ -93,10 +93,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
             else
                 isDayValid = string.Concat(day, "01", 2020).IsDateTimeWithFormat();
 
-            //var intDay = int.Parse(day);
-            //var intMonth = int.Parse(month);
-            //var intYear = int.Parse(year);
-
             // Month and Year invalid
             if (!isMonthValid && !isYearValid && int.TryParse(day, out int intDay) && (intDay >= 1 && intDay <= 31))
             {
