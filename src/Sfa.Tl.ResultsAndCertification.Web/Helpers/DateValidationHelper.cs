@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
         private const string MonthProperty = "Month";
         private const string YearProperty = "Year";
 
-        public static IDictionary<string, string> Validate(this string value, string propertyName)
+        public static IDictionary<string, string> ValidateDate(this string value, string propertyName)
         {
             // Validate input parameters
             var dateTokens = value.Split("/");
@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
             if (string.IsNullOrWhiteSpace(day) && string.IsNullOrWhiteSpace(year))
             {
                 validationResults.Add(DayProperty, string.Format(DateContent.Validation_Message_Day_Year_Required, propertyName));
-                validationResults.Add(MonthProperty, string.Empty);
+                validationResults.Add(YearProperty, string.Empty);
                 return validationResults;
             }
 
@@ -92,6 +92,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
                 isDayValid = string.Concat(day, month, year).IsDateTimeWithFormat();
             else
                 isDayValid = string.Concat(day, "01", 2020).IsDateTimeWithFormat();
+
+            var intDay = int.Parse(day);
+            var intMonth = int.Parse(month);
+            var intYear = int.Parse(year);
+
+            // Only Day is valid
+            if (!isMonthValid && !isYearValid && (intDay >= 1 && intDay <= 31))
+            {
+                validationResults.Add(MonthProperty, string.Format(DateContent.Validation_Message_Invalid_Year, propertyName));
+                validationResults.Add(YearProperty, string.Empty);
+                return validationResults;
+            }
+
+            // Only Month is valid
+            if (!isDayValid && !isYearValid && (intMonth >= 1 && intMonth <= 12))
+            {
+                validationResults.Add(DayProperty, string.Format(DateContent.Validation_Message_Invalid_Year, propertyName));
+                validationResults.Add(YearProperty, string.Empty);
+                return validationResults;
+            }
+
+            // Only Year is valid
+            if (!isDayValid && !isMonthValid && (intYear >= 1000 && intYear <= 9999))
+            {
+                validationResults.Add(DayProperty, string.Format(DateContent.Validation_Message_Invalid_Year, propertyName));
+                validationResults.Add(MonthProperty, string.Empty);
+                return validationResults;
+            }
 
             // Day only invalid
             if (isMonthValid && isYearValid && !isDayValid)

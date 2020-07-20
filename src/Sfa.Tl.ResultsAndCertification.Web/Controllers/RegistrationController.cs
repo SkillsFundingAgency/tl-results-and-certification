@@ -420,7 +420,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private bool IsValidDateofBirth(DateofBirthViewModel model)
         {
             var dateofBirth = string.Concat(model.Day, "/", model.Month, "/", model.Year);
-            var validationerrors = dateofBirth.Validate("Date of birth");
+            var validationerrors = dateofBirth.ValidateDate("Date of birth");
 
             if (validationerrors?.Count == 0)
                 return true;
