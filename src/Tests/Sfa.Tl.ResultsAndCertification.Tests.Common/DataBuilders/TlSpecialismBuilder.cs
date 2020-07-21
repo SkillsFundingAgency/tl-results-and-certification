@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     new Domain.Models.TlSpecialism
                     {
                         Name = "Assisting teaching",
-                        LarId = "10123456",
+                        LarId = "10123457",
                         TlPathwayId = pathway.Id,
                         TlPathway = pathway,
                         CreatedBy = Constants.CreatedByUser,
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     new Domain.Models.TlSpecialism
                     {
                         Name = "Supporting and mentoring students in further and higher education",
-                        LarId = "10123456",
+                        LarId = "10123458",
                         TlPathwayId = pathway.Id,
                         TlPathway = pathway,
                         CreatedBy = Constants.CreatedByUser,

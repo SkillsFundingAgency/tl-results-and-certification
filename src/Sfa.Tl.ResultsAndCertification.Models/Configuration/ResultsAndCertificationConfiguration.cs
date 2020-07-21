@@ -3,6 +3,14 @@
     public class ResultsAndCertificationConfiguration
     {
         /// <summary>
+        /// Gets or sets the redis settings.
+        /// </summary>
+        /// <value>
+        /// The redis settings.
+        /// </value>
+        public RedisSettings RedisSettings { get; set; }
+
+        /// <summary>
         /// Gets or sets the BLOB storage settings.
         /// </summary>
         /// <value>

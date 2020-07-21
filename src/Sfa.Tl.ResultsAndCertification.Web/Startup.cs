@@ -14,6 +14,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication;
@@ -22,6 +23,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.Session;
 using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper;
+using StackExchange.Redis;
 using System;
 using System.Globalization;
 
@@ -89,8 +91,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web
 
             if(_env.IsDevelopment())
             {
+                //services.AddSingleton<IDistributedCache, InMemoryCache>();
                 builder.AddRazorRuntimeCompilation();
             }
+
+            services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(_env.IsDevelopment() ? "localhost" : ResultsAndCertificationConfiguration.RedisSettings.CacheConnection));
+            services.AddSingleton<ICacheService, RedisCacheService>();
 
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
             services.AddAuthorization(options =>

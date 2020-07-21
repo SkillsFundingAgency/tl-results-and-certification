@@ -21,11 +21,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         public override void Given()
         {
             SeedTestData();
+            CreateMapper();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper);
             _stage3RegistrationsData = new RegistrationsStage3Builder().BuildValidList();
         }
 
@@ -59,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualRegistration.FirstName.Should().Be(expectedRegistration.FirstName);
                 actualRegistration.LastName.Should().Be(expectedRegistration.LastName);
                 actualRegistration.DateOfBirth.Should().Be(expectedRegistration.DateOfBirth);
-                actualRegistration.StartDate.Should().Be(expectedRegistration.StartDate);
+                actualRegistration.RegistrationDate.Should().Be(expectedRegistration.RegistrationDate);
                 actualRegistration.TqProviderId.Should().Be(TqProvider.Id);
                 actualRegistration.TqAwardingOrganisationId.Should().Be(TqProvider.TqAwardingOrganisationId);
                 actualRegistration.TlAwardingOrganisatonId.Should().Be(TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.Id);

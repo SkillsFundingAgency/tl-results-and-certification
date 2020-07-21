@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 LastName = reg.LastName.Trim(),
                 DateOfBirth = reg.DateOfBirth.Trim().ParseStringToDateTime(),
                 ProviderUkprn = reg.Ukprn.Trim().ToLong(),
-                StartDate = reg.StartDate.Trim().ParseStringToDateTime(),
+                RegistrationDate = reg.RegistrationDate.Trim().ParseStringToDateTime(),
                 CoreCode = reg.Core.Trim(),
                 SpecialismCodes = reg.Specialisms.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())),
                 RowNum = rownum,

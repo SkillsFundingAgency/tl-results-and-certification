@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {
+    [Collection("BulkRegistration")]
     public class When_CompareAndProcessRegistrationsAsync_Is_Called_With_Valid_Registrations : IClassFixture<BulkRegistrationsTextFixture>
     {
         private RegistrationProcessResponse _result;
@@ -15,24 +17,36 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         public When_CompareAndProcessRegistrationsAsync_Is_Called_With_Valid_Registrations(BulkRegistrationsTextFixture bulkRegistrationTestFixture)
         {
+            // Given
             _bulkRegistrationTestFixture = bulkRegistrationTestFixture;
-            _bulkRegistrationTestFixture.DbCheckpoint.TablesToInclude = new string[] { "TqRegistrationProfile", "TqRegistrationPathway", "TqRegistrationSpecialism" };
             _bulkRegistrationTestFixture.Uln = 1111111111;
-            _bulkRegistrationTestFixture.SeedTestData(EnumAwardingOrganisation.Pearson, true);            
+            _bulkRegistrationTestFixture.SeedTestData(EnumAwardingOrganisation.Pearson);            
             _bulkRegistrationTestFixture.TqRegistrationProfilesData = _bulkRegistrationTestFixture.GetRegistrationsDataToProcess(new List<long> { _bulkRegistrationTestFixture.Uln });
         }
 
-        [Fact(Skip = "Still in progress")]
-        public async Task Then_Expected_ValidationResults_Are_Returned()
+        [Fact(Skip ="Waiting for Infrastructure to setup integration tests")]
+        public async Task Then_Expected_Registrations_Are_Created()
         {
+            // when
             await _bulkRegistrationTestFixture.WhenAsync();
+
+            // then
             _result = _bulkRegistrationTestFixture.Result;
             _result.Should().NotBeNull();
             _result.IsSuccess.Should().BeTrue();
+            _result.BulkUploadStats.Should().NotBeNull();
+            _result.BulkUploadStats.TotalRecordsCount.Should().Be(_bulkRegistrationTestFixture.TqRegistrationProfilesData.Count);
+            _result.BulkUploadStats.NewRecordsCount.Should().Be(1);
+            _result.BulkUploadStats.AmendedRecordsCount.Should().Be(0);
+            _result.BulkUploadStats.UnchangedRecordsCount.Should().Be(0);
             _result.ValidationErrors.Should().BeNullOrEmpty();
 
             var expectedRegistrationProfile = _bulkRegistrationTestFixture.TqRegistrationProfilesData.FirstOrDefault(p => p.UniqueLearnerNumber == _bulkRegistrationTestFixture.Uln);
-            var actualRegistrationProfile = _bulkRegistrationTestFixture.RegistrationRepository.GetFirstOrDefaultAsync(p => p.UniqueLearnerNumber == _bulkRegistrationTestFixture.Uln).Result;
+
+            var actualRegistrationProfile = await _bulkRegistrationTestFixture.DbContext.TqRegistrationProfile.Where(x => x.UniqueLearnerNumber == _bulkRegistrationTestFixture.Uln)
+                                                                                                              .Include(x => x.TqRegistrationPathways)
+                                                                                                                  .ThenInclude(x => x.TqRegistrationSpecialisms)
+                                                                                                              .Include(x => x.TqRegistrationPathways).FirstOrDefaultAsync();
 
             // assert registration profile data
             actualRegistrationProfile.Should().NotBeNull();
@@ -68,6 +82,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                     actualSpecialism.IsBulkUpload.Should().Be(expectedSpecialism.IsBulkUpload);
                 }
             }
-        }
+        }     
     }
 }

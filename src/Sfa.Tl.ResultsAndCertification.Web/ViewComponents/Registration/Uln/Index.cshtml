@@ -1,0 +1,17 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.UlnViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Sfa.Tl.ResultsAndCertification.Web
+
+<div sfa-validation-for="Uln" sfa-validation-class="govuk-form-group--error">
+    <h1 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6" for="uln">
+            @UlnRegistration.Uln_Field_Label
+        </label>
+    </h1>
+    <span id="uln-number-hint" class="govuk-hint">
+        @UlnRegistration.Uln_Field_Hint
+    </span>
+    <span sfa-validation-for="Uln"></span>
+    <input class="govuk-input govuk-input--width-10" asp-for="Uln" id="uln" inputmode="numeric" maxlength="100">
+</div>

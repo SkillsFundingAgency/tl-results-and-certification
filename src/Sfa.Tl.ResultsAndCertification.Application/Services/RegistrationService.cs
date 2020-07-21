@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -20,11 +21,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     {
         private readonly IProviderRepository _tqProviderRepository;
         private readonly IRegistrationRepository _tqRegistrationRepository;
-        
-        public RegistrationService(IProviderRepository providerRespository, IRegistrationRepository tqRegistrationRepository)
+        private readonly IMapper _mapper;
+
+        public RegistrationService(IProviderRepository providerRespository, IRegistrationRepository tqRegistrationRepository, IMapper mapper)
         {
             _tqProviderRepository = providerRespository;
             _tqRegistrationRepository = tqRegistrationRepository;
+            _mapper = mapper;
         }
 
         public async Task<IList<RegistrationRecordResponse>> ValidateRegistrationTlevelsAsync(long aoUkprn, IEnumerable<RegistrationCsvRecordResponse> validRegistrationsData)
@@ -66,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     FirstName = registrationData.FirstName,
                     LastName = registrationData.LastName,
                     DateOfBirth = registrationData.DateOfBirth,
-                    StartDate = registrationData.StartDate,
+                    RegistrationDate = registrationData.RegistrationDate,
                     TqProviderId = technicalQualification.TqProviderId,
                     TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
                     TlPathwayId = technicalQualification.TlPathwayId,
@@ -102,8 +105,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         {
                             Id = index - Constants.RegistrationPathwayStartIndex,
                             TqProviderId = registration.TqProviderId,
-                            AcademicYear = registration.StartDate.Year, // TODO: Need to calcualate based on the requirements
-                            RegistrationDate = registration.StartDate,
+                            AcademicYear = registration.RegistrationDate.Year, // TODO: Need to calcualate based on the requirements
+                            RegistrationDate = registration.RegistrationDate,
                             StartDate = DateTime.UtcNow,
                             Status = RegistrationPathwayStatus.Active,
                             IsBulkUpload = true,
@@ -129,7 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         }
 
         public async Task<RegistrationProcessResponse> CompareAndProcessRegistrationsAsync(IList<TqRegistrationProfile> registrationsToProcess)
-        {
+        {            
             var response = new RegistrationProcessResponse();
             
             var ulnComparer = new TqRegistrationUlnEqualityComparer();
@@ -398,6 +401,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Uln = uln.ToString(),
                 ErrorMessage = errorMessage
             };
-        }
+        }        
     }
 }

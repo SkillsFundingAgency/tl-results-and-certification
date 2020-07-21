@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using System;
 using System.IO;
 using System.Text;
@@ -20,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         protected long Ukprn;
         protected IRegistrationLoader RegistrationLoader;
+        protected ICacheService CacheService;
         protected ILogger<RegistrationController> Logger;
         protected RegistrationController Controller;
         protected IHttpContextAccessor HttpContextAccessor;
@@ -33,7 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             Logger = Substitute.For<ILogger<RegistrationController>>();
             RegistrationLoader = Substitute.For<IRegistrationLoader>();
-            Controller = new RegistrationController(RegistrationLoader, Logger);
+            CacheService = Substitute.For<ICacheService>();
+
+            Controller = new RegistrationController(RegistrationLoader, CacheService, Logger);
 
             var httpContext = new ClaimsIdentityBuilder<RegistrationController>(Controller)
                .Add(CustomClaimTypes.Ukprn, Ukprn.ToString())

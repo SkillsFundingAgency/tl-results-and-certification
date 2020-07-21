@@ -26,9 +26,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
         [Display(Name = RegistrationFluentHeader.Ukprn)]
         public string Ukprn { get; set; }
 
-        [Column(RegistrationHeader.StartDate, Order = 5)]
+        [Column(RegistrationHeader.RegistrationDate, Order = 5)]
         [Display(Name = RegistrationFluentHeader.StartDate)]
-        public string StartDate { get; set; }
+        public string RegistrationDate { get; set; }
 
         [Column(RegistrationHeader.Core, Order = 6)]
         [Display(Name = RegistrationFluentHeader.Core)]

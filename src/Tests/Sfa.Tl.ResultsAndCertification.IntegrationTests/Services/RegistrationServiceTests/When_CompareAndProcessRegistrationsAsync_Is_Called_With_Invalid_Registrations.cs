@@ -24,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         public override void Given()
         {
+            CreateMapper();
             // Seed Tlevel data for pearson
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             SeedRegistrationData(1111111111);
@@ -36,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper);
 
             _tqRegistrationProfilesData = GetRegistrationsDataToProcess(new List<long> { 1111111111, 1111111112 });
             _expectedValidationErrors = new BulkRegistrationValidationErrorsBuilder().BuildStage4ValidationErrorsList();

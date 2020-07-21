@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
@@ -10,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     public abstract class When_Index_Method_Is_Called : BaseTest<RegistrationController>
     {
         protected IRegistrationLoader RegistrationLoader;
+        protected ICacheService CacheService;
         protected ILogger<RegistrationController> Logger;
         protected RegistrationController Controller;
         public IActionResult Result { get; private set; }
@@ -17,8 +19,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public override void Setup()
         {
             RegistrationLoader = Substitute.For<IRegistrationLoader>();
+            CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<RegistrationController>>();
-            Controller = new RegistrationController(RegistrationLoader, Logger);
+            Controller = new RegistrationController(RegistrationLoader, CacheService, Logger);
         }
 
         public override void When()

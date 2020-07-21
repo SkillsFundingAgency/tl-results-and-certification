@@ -2,11 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Threading.Tasks;
 using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
 
@@ -16,11 +21,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class RegistrationController : Controller
     {
         private readonly IRegistrationLoader _registrationLoader;
+        private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
 
-        public RegistrationController(IRegistrationLoader registrationLoader, ILogger<RegistrationController> logger)
+        private string CacheKey
+        {
+            get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.RegistrationCacheKey); }
+        }
+
+        public RegistrationController(IRegistrationLoader registrationLoader, ICacheService cacheService, ILogger<RegistrationController> logger)
         {
             _registrationLoader = registrationLoader;
+            _cacheService = cacheService;
             _logger = logger;
         }
 
@@ -59,9 +71,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                var unsuccessfulViewModel = new UploadUnsuccessfulViewModel { BlobUniqueReference = response.BlobUniqueReference, FileSize = response.ErrorFileSize, FileType = FileType.Csv.ToString().ToUpperInvariant() };
-                TempData[Constants.UploadUnsuccessfulViewModel] = JsonConvert.SerializeObject(unsuccessfulViewModel);
-                return RedirectToRoute(RouteConstants.RegistrationsUploadUnsuccessful);
+                if (response.ShowProblemWithServicePage)
+                {
+                    return RedirectToRoute(RouteConstants.ProblemWithRegistrationsUpload);
+                }
+                else
+                {
+                    var unsuccessfulViewModel = new UploadUnsuccessfulViewModel { BlobUniqueReference = response.BlobUniqueReference, FileSize = response.ErrorFileSize, FileType = FileType.Csv.ToString().ToUpperInvariant() };
+                    TempData[Constants.UploadUnsuccessfulViewModel] = JsonConvert.SerializeObject(unsuccessfulViewModel);
+                    return RedirectToRoute(RouteConstants.RegistrationsUploadUnsuccessful);
+                }
             }
         }
 
@@ -96,6 +115,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("problem-with-registrations-upload", Name = RouteConstants.ProblemWithRegistrationsUpload)]
+        public IActionResult ProblemWithRegistrationsUpload()
+        {
+            return View();
+        }
+
+        [HttpGet]
         [Route("download-registration-errors", Name = RouteConstants.DownloadRegistrationErrors)]
         public async Task<IActionResult> DownloadRegistrationErrors(string id)
         {
@@ -119,6 +145,291 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.DownloadRegistrationErrorsFailed, $"Not a valid guid to read file.Method: DownloadRegistrationErrors(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
+        }
+
+        [HttpGet]
+        [Route("add-registration-unique-learner", Name = RouteConstants.AddRegistration)]
+        public async Task<IActionResult> AddRegistrationAsync()
+        {
+            await _cacheService.RemoveAsync<RegistrationViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AddRegistrationUln);
+        }
+
+        [HttpGet]
+        [Route("add-registration-unique-learner-number", Name = RouteConstants.AddRegistrationUln)]
+        public async Task<IActionResult> AddRegistrationUlnAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel?.Uln != null)
+                return View(cacheModel.Uln);
+
+            var model = new UlnViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("add-registration-unique-learner-number", Name = RouteConstants.AddRegistrationUln)]
+        public async Task<IActionResult> AddRegistrationUlnAsync(UlnViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await SyncCacheUln(model);
+            return RedirectToRoute(RouteConstants.AddRegistrationLearnersName);
+        }
+
+        [HttpGet]
+        [Route("add-registration-learners-name", Name = RouteConstants.AddRegistrationLearnersName)]
+        public async Task<IActionResult> AddRegistrationLearnersNameAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel?.Uln == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(cacheModel?.LearnersName == null ? new LearnersNameViewModel() : cacheModel.LearnersName);
+        }
+
+        [HttpPost]
+        [Route("add-registration-learners-name", Name = RouteConstants.SubmitRegistrationLearnersName)]
+        public async Task<IActionResult> AddRegistrationLearnersNameAsync(LearnersNameViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.LearnersName = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return RedirectToRoute(RouteConstants.AddRegistrationDateofBirth);
+        }
+
+        [HttpGet]
+        [Route("add-registration-date-of-birth", Name = RouteConstants.AddRegistrationDateofBirth)]
+        public async Task<IActionResult> AddRegistrationDateofBirthAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel?.LearnersName == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(cacheModel?.DateofBirth == null ? new DateofBirthViewModel() : cacheModel.DateofBirth);
+        }
+
+        [HttpPost]
+        [Route("add-registration-date-of-birth", Name = RouteConstants.SubmitRegistrationDateofBirth)]
+        public async Task<IActionResult> AddRegistrationDateofBirthAsync(DateofBirthViewModel model)
+        {
+            if (!IsValidDateofBirth(model))
+            {
+                return View(model);
+            }
+
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel?.LearnersName == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.DateofBirth = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return RedirectToRoute(RouteConstants.AddRegistrationProvider);
+        }
+
+        [HttpGet]
+        [Route("add-registration-provider", Name = RouteConstants.AddRegistrationProvider)]
+        public async Task<IActionResult> AddRegistrationProviderAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel?.DateofBirth == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var registeredProviders = await GetAoRegisteredProviders();
+            var viewModel = cacheModel?.SelectProvider == null ? new SelectProviderViewModel() : cacheModel.SelectProvider;
+            viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-registration-provider", Name = RouteConstants.SubmitRegistrationProvider)]
+        public async Task<IActionResult> AddRegistrationProviderAsync(SelectProviderViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model = await GetAoRegisteredProviders();
+                return View(model);
+            }
+
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel?.DateofBirth == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (cacheModel?.SelectProvider?.SelectedProviderUkprn != model.SelectedProviderUkprn)
+            {
+                cacheModel.SelectCore = null;
+                cacheModel.SpecialismQuestion = null;
+                cacheModel.SelectSpecialism = null;
+            }
+
+            cacheModel.SelectProvider = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            return RedirectToRoute(RouteConstants.AddRegistrationCore);
+        }
+
+        [HttpGet]
+        [Route("add-registration-core", Name = RouteConstants.AddRegistrationCore)]
+        public async Task<IActionResult> AddRegistrationCoreAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel?.SelectProvider == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var providerCores = await GetRegisteredProviderCores(cacheModel.SelectProvider.SelectedProviderUkprn.ToLong());
+            var viewModel = cacheModel?.SelectCore == null ? new SelectCoreViewModel() : cacheModel.SelectCore;
+            viewModel.CoreSelectList = providerCores.CoreSelectList;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-registration-core", Name = RouteConstants.SubmitRegistrationCore)]
+        public async Task<IActionResult> AddRegistrationCoreAsync(SelectCoreViewModel model)
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel?.SelectProvider == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (!ModelState.IsValid)
+            {
+                model = await GetRegisteredProviderCores(cacheModel.SelectProvider.SelectedProviderUkprn.ToLong());
+                return View(model);
+            }
+
+            if (cacheModel?.SelectCore?.SelectedCoreCode != model.SelectedCoreCode)
+            {
+                cacheModel.SpecialismQuestion = null;
+                cacheModel.SelectSpecialism = null;
+            }
+
+            cacheModel.SelectCore = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            return RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion);
+        }
+
+        [HttpGet]
+        [Route("add-registration-learner-decided-specialism-question", Name = RouteConstants.AddRegistrationSpecialismQuestion)]
+        public async Task<IActionResult> AddRegistrationSpecialismQuestionAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel?.SelectCore == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = cacheModel?.SpecialismQuestion == null ? new SpecialismQuestionViewModel() : cacheModel.SpecialismQuestion;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-registration-learner-decided-specialism-question", Name = RouteConstants.SubmitRegistrationSpecialismQuestion)]
+        public async Task<IActionResult> AddRegistrationSpecialismQuestionAsync(SpecialismQuestionViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel?.SelectCore == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (!model.HasLearnerDecidedSpecialism.Value)
+            {
+                cacheModel.SelectSpecialism = null;
+            }
+
+            cacheModel.SpecialismQuestion = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ? RouteConstants.AddRegistrationSpecialism : RouteConstants.AddRegistrationAcademicYear);
+        }
+
+        [HttpGet]
+        [Route("add-registration-specialism", Name = RouteConstants.AddRegistrationSpecialism)]
+        public async Task<IActionResult> AddRegistrationSpecialismAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = cacheModel?.SelectSpecialism == null ? new SelectSpecialismViewModel { PathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.SelectCore.SelectedCoreCode) } : cacheModel.SelectSpecialism;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-registration-specialism", Name = RouteConstants.SubmitRegistrationSpecialism)]
+        public async Task<IActionResult> AddRegistrationSpecialismAsync(SelectSpecialismViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.SelectSpecialism = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            return RedirectToRoute(RouteConstants.AddRegistrationAcademicYear);
+        }
+
+        [HttpGet]
+        [Route("add-registration-academic-year", Name = RouteConstants.AddRegistrationAcademicYear)]
+        public async Task<IActionResult> AddRegistrationAcademicYearAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            return View();
+        }
+
+        private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
+        {
+            return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
+        }
+
+        private async Task<SelectCoreViewModel> GetRegisteredProviderCores(long providerUkprn)
+        {
+            return await _registrationLoader.GetRegisteredProviderPathwayDetailsAsync(User.GetUkPrn(), providerUkprn);
+        }
+
+        private async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByCoreCode(string coreCode)
+        {
+            return await _registrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(User.GetUkPrn(), coreCode);
+        }
+
+        private async Task SyncCacheUln(UlnViewModel model)
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            if (cacheModel?.Uln != null)
+                cacheModel.Uln = model;
+            else
+                cacheModel = new RegistrationViewModel { Uln = model };
+
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+        }
+
+        private bool IsValidDateofBirth(DateofBirthViewModel model)
+        {
+            var dateofBirth = string.Concat(model.Day, "/", model.Month, "/", model.Year);
+            var validationerrors = dateofBirth.ValidateDate("Date of birth");
+
+            if (validationerrors?.Count == 0)
+                return true;
+
+            foreach (var error in validationerrors)
+                ModelState.AddModelError(error.Key, error.Value);
+
+            return false;
         }
     }
 }

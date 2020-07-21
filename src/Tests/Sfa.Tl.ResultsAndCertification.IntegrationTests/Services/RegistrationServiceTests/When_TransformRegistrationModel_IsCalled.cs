@@ -21,12 +21,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         public override void Given()
         {
+            CreateMapper();
             SeedTestData(EnumAwardingOrganisation.Pearson);
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper);
             _stage4RegistrationsData = new RegistrationsStage4Builder().BuildValidList();
         }
 

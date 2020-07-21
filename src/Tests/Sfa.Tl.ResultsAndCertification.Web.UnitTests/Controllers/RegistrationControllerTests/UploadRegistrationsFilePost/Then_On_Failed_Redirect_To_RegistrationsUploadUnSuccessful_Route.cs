@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
+using System;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.UploadRegistrationsFilePost
@@ -15,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             FormFile = Substitute.For<IFormFile>();
             FormFile.FileName.Returns("test.csv");
             ViewModel.File = FormFile;
+            BlobUniqueReference = Guid.NewGuid();
 
             ResponseViewModel = new UploadRegistrationsResponseViewModel
             {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.TagHelpers
 {
+    [HtmlTargetElement("div", Attributes = ValidationClassName)]
     [HtmlTargetElement("div", Attributes = ValidationForAttributeName + "," + ValidationClassName)]
     [HtmlTargetElement("input", Attributes = ValidationForAttributeName + "," + ValidationClassName)]
     [HtmlTargetElement("fieldset", Attributes = ValidationForAttributeName + "," + ValidationClassName)]
@@ -26,10 +27,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.TagHelpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            ViewContext.ViewData.ModelState.TryGetValue(For.Name, out var entry);
+            if (ViewContext.ViewData.ModelState.IsValid)
+                return;
 
-            if (entry == null || !entry.Errors.Any()) return;
+            if (For != null)
+            {
+                ViewContext.ViewData.ModelState.TryGetValue(For.Name, out var entry);
 
+                if (entry == null || !entry.Errors.Any()) return;
+            }
+            
             var tagBuilder = new TagBuilder(context.TagName);
             tagBuilder.AddCssClass(ValidationErrorClass);
             output.MergeAttributes(tagBuilder);

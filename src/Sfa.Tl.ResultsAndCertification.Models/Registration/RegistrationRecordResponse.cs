@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime RegistrationDate { get; set; }
         public int TqProviderId { get; set; }
         public int TlProviderId { get; set; }
         public int TqAwardingOrganisationId { get; set; }

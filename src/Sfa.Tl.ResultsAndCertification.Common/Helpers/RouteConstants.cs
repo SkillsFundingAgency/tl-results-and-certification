@@ -49,7 +49,25 @@
         public const string SubmitUploadRegistrationsFile = "SubmitUploadRegistrationsFile";
         public const string RegistrationsUploadSuccessful = "RegistrationsUploadSuccessful";
         public const string RegistrationsUploadUnsuccessful = "RegistrationsUploadUnsuccessful";
+        public const string ProblemWithRegistrationsUpload = "ProblemWithRegistrationsUpload";
         public const string DownloadRegistrationErrors = "DownloadRegistrationErrors";
+
+        // Add Registration
+        public const string AddRegistration = "AddRegistration";
+        public const string AddRegistrationUln = "AddRegistrationUln";
+        public const string AddRegistrationLearnersName = "AddRegistrationLearnersName";
+        public const string SubmitRegistrationLearnersName = "SubmitRegistrationLearnersName";
+        public const string AddRegistrationDateofBirth = "AddRegistrationDateofBirth";
+        public const string SubmitRegistrationDateofBirth = "SubmitRegistrationDateofBirth";
+        public const string AddRegistrationProvider = "AddRegistrationProvider";
+        public const string SubmitRegistrationProvider = "SubmitRegistrationProvider";
+        public const string AddRegistrationCore = "AddRegistrationCore";
+        public const string SubmitRegistrationCore = "SubmitRegistrationCore";
+        public const string AddRegistrationSpecialismQuestion = "AddRegistrationSpecialismQuestion";
+        public const string SubmitRegistrationSpecialismQuestion = "SubmitRegistrationSpecialismQuestion";
+        public const string AddRegistrationSpecialism = "AddRegistrationSpecialism";
+        public const string SubmitRegistrationSpecialism = "SubmitRegistrationSpecialism";
+        public const string AddRegistrationAcademicYear = "AddRegistrationAcademicYear";
 
         // Error
         public const string PageNotFound = "PageNotFound";
