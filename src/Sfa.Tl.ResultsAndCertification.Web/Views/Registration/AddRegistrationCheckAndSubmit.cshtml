@@ -1,28 +1,33 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.RegistrationViewModel
-@using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryComponent
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.CheckAndSubmitViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
 @{
-    ViewData["Title"] = "Add a new registration - Check and submit page";
+    ViewData["Title"] = @CheckAndSubmit.Page_Title_Add_Registration_Check_And_Submit;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form class="form" asp-route="SubmitRegistrationAcademicYear">
-            <span class="govuk-caption-xl">Add a new registration</span>
+        <form class="form">
+            <span class="govuk-caption-xl">@CheckAndSubmit.Page_Caption_Text</span>
 
-            <h1 class="govuk-heading-l">Check and submit</h1>
-            <p class="govuk-body govuk-!-margin-top-3">Check the information is correct before submitting.</p>
+            <h1 class="govuk-heading-l">@CheckAndSubmit.Check_And_Submit_Heading_Text</h1>
+            <p class="govuk-body govuk-!-margin-top-3">@CheckAndSubmit.Check_And_Submit_Info_Text</p>
 
             <dl class="govuk-summary-list govuk-!-margin-bottom-3">
-                <vc:summary-component model="@(new SummaryComponentViewModel { Id="uln", Title = "ULN", Value = Model.Uln.Uln, RouteName = Sfa.Tl.ResultsAndCertification.Common.Helpers.RouteConstants.AddRegistrationUln })"></vc:summary-component>
-                <vc:summary-component model="@(new SummaryComponentViewModel { Id="name", Title = "Name", Value = Model.LearnersName.Firstname, RouteName = Sfa.Tl.ResultsAndCertification.Common.Helpers.RouteConstants.AddRegistrationLearnersName })"></vc:summary-component>
-                <vc:summary-component model="@(new SummaryComponentViewModel { Id="dateofbirth", Title = "Date of birth", Value = $"{Model.DateofBirth.Day}/{Model.DateofBirth.Month}/{Model.DateofBirth.Year}", RouteName = Sfa.Tl.ResultsAndCertification.Common.Helpers.RouteConstants.AddRegistrationDateofBirth })"></vc:summary-component>
-                <vc:summary-component model="@(new SummaryComponentViewModel { Id="provider", Title = "Provider (UKPRN)", Value = Model.SelectProvider.SelectedProviderDisplayName, RouteName = Sfa.Tl.ResultsAndCertification.Common.Helpers.RouteConstants.AddRegistrationProvider })"></vc:summary-component>
-                <vc:summary-component model="@(new SummaryComponentViewModel { Id="core", Title = "Core (code)", Value = Model.SelectCore.SelectedCoreDisplayName, RouteName = Sfa.Tl.ResultsAndCertification.Common.Helpers.RouteConstants.AddRegistrationCore })"></vc:summary-component>
-                <vc:summary-component model="@(new SummaryComponentViewModel { Id="specialism", Title = "Specialism (code)", Value ="", RouteName = Sfa.Tl.ResultsAndCertification.Common.Helpers.RouteConstants.AddRegistrationSpecialism })"></vc:summary-component>
-                <vc:summary-component model="@(new SummaryComponentViewModel { Id="academicyear", Title = "Academic year", Value = Model.AcademicYear.AcademicYear.ToString(), RouteName = Sfa.Tl.ResultsAndCertification.Common.Helpers.RouteConstants.AddRegistrationAcademicYear })"></vc:summary-component>
+                <vc:summary-component model=Model.SummaryUln></vc:summary-component>
+                <vc:summary-component model=Model.SummaryLearnerName></vc:summary-component>
+                <vc:summary-component model=Model.SummaryDateofBirth></vc:summary-component>
+                <vc:summary-component model=Model.SummaryProvider></vc:summary-component>
+                <vc:summary-component model=Model.SummaryCore></vc:summary-component>
+                <vc:summary-component model=Model.SummarySpecialisms></vc:summary-component>
+                <vc:summary-component model=Model.SummaryAcademicYear></vc:summary-component>
             </dl>
             <p>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">@CheckAndSubmit.Submit_Button_Text</button>
             </p>
         </form>
     </div>

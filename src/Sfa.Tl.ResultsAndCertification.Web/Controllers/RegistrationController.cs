@@ -410,7 +410,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddRegistrationCheckAndSubmitAsync()
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            return View(cacheModel);
+
+            var viewModel = new CheckAndSubmitViewModel { RegistrationModel = cacheModel };
+
+            if(!viewModel.IsCheckAndSubmitPageValid)
+            return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
         }
         
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
