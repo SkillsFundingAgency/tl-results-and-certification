@@ -4,7 +4,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryCompo
 {
     public class SummaryComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(SummaryComponentViewModel model)
+        public IViewComponentResult Invoke(SummaryComponentModel model)
         {
             return View("~/ViewComponents/Summary/SummaryComponent/Index.cshtml", model);
         }
