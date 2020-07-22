@@ -12,6 +12,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         [Required(ErrorMessageResourceType = typeof(ErrorResource.SelectProvider), ErrorMessageResourceName = "Validation_Select_Provider_Required")]
         public string SelectedProviderUkprn { get; set; }
 
+        public string SelectedProviderDisplayName { get; set; }
+
         public IList<SelectListItem> ProvidersSelectList { get; set; }
 
         public BackLinkModel BackLink
