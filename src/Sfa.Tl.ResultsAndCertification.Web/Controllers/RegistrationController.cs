@@ -12,6 +12,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using System.Linq;
 using System.Threading.Tasks;
 using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
 
@@ -280,15 +281,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-registration-provider", Name = RouteConstants.SubmitRegistrationProvider)]
         public async Task<IActionResult> AddRegistrationProviderAsync(SelectProviderViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                model = await GetAoRegisteredProviders();
-                return View(model);
-            }
-
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
             if (cacheModel?.DateofBirth == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var registeredProviderViewModel = await GetAoRegisteredProviders();
+
+            if (!ModelState.IsValid)
+                return View(registeredProviderViewModel);
 
             if (cacheModel?.SelectProvider?.SelectedProviderUkprn != model.SelectedProviderUkprn)
             {
@@ -296,7 +296,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.SpecialismQuestion = null;
                 cacheModel.SelectSpecialism = null;
             }
-
+            
+            model.SelectedProviderDisplayName = registeredProviderViewModel?.ProvidersSelectList?.FirstOrDefault(p => p.Value == model.SelectedProviderUkprn)?.Text;
             cacheModel.SelectProvider = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
             return RedirectToRoute(RouteConstants.AddRegistrationCore);
@@ -325,11 +326,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.SelectProvider == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            var coreViewModel = await GetRegisteredProviderCores(cacheModel.SelectProvider.SelectedProviderUkprn.ToLong());
             if (!ModelState.IsValid)
-            {
-                model = await GetRegisteredProviderCores(cacheModel.SelectProvider.SelectedProviderUkprn.ToLong());
-                return View(model);
-            }
+                return View(coreViewModel);
 
             if (cacheModel?.SelectCore?.SelectedCoreCode != model.SelectedCoreCode)
             {
@@ -337,6 +336,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.SelectSpecialism = null;
             }
 
+            model.SelectedCoreDisplayName = coreViewModel?.CoreSelectList?.FirstOrDefault(p => p.Value == model.SelectedCoreCode)?.Text;
             cacheModel.SelectCore = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
             return RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion);
@@ -413,6 +413,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        [Route("add-registration-academic-year", Name = RouteConstants.SubmitRegistrationAcademicYear)]
+        public async Task<IActionResult> AddRegistrationAcademicYearAsync(AcademicYearViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            cacheModel.AcademicYear = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            return RedirectToRoute(RouteConstants.AddRegistrationCheckAndSubmit);
+        }
+
+        [HttpGet]
+        [Route("add-registration-check-and-submit", Name = RouteConstants.AddRegistrationCheckAndSubmit)]
+        public async Task<IActionResult> AddRegistrationCheckAndSubmitAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            var viewModel = new CheckAndSubmitViewModel { RegistrationModel = cacheModel };
+
+            if(!viewModel.IsCheckAndSubmitPageValid)
+            return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+        
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());

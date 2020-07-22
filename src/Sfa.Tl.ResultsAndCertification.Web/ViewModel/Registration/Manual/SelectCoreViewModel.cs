@@ -11,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
     {
         [Required(ErrorMessageResourceType = typeof(ErrorResource.SelectCore), ErrorMessageResourceName = "Validation_Select_Core_Required")]
         public string SelectedCoreCode { get; set; }
+        public string SelectedCoreDisplayName { get; set; }
 
         public IList<SelectListItem> CoreSelectList { get; set; }
 
