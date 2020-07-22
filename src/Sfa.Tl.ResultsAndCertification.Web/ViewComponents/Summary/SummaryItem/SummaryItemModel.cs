@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryComponent
+namespace Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem
 {
-    public class SummaryComponentModel
+    public class SummaryItemModel
     {
         public string Id { get; set; }
         public string Title { get; set; }
