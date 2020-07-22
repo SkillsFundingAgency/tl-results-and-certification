@@ -177,7 +177,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             await SyncCacheUln(model);
+
+            var cannotBeRegistered = await _registrationLoader.IsUlnRegisteredAsync(User.GetUkPrn(), model.Uln);
+            if (cannotBeRegistered != null && cannotBeRegistered.IsUlnRegisteredAlready)
+            {
+                TempData[Constants.UlnCanNotBeRegisteredViewModel] = JsonConvert.SerializeObject(cannotBeRegistered);
+                return RedirectToRoute(RouteConstants.UlnCanNotBeRegistered);
+            }
+
             return RedirectToRoute(RouteConstants.AddRegistrationLearnersName);
+        }
+
+        [HttpGet]
+        [Route("ULN-cannot-be-registered", Name = RouteConstants.UlnCanNotBeRegistered)]
+        public IActionResult UlnCannotBeRegistered()
+        {
+            if (TempData[Constants.UlnCanNotBeRegisteredViewModel] == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var model = JsonConvert.DeserializeObject<UlnCannotBeRegisteredViewModel>(TempData[Constants.UlnCanNotBeRegisteredViewModel] as string);
+            return View(model);
         }
 
         [HttpGet]

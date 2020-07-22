@@ -151,6 +151,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SpecialismQuestion.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\UlnRegisteredByOtherAo.Designer.cs">
+      <DependentUpon>UlnRegisteredByOtherAo.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Content\Registration\UlnAlreadyRegisteredByYou.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UlnAlreadyRegisteredByYou.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\UlnRegistration.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -331,6 +341,14 @@
     <EmbeddedResource Update="Content\Registration\SpecialismQuestion.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SpecialismQuestion.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\UlnRegisteredByOtherAo.resx">
+      <LastGenOutput>UlnRegisteredByOtherAo.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\UlnAlreadyRegisteredByYou.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UlnAlreadyRegisteredByYou.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\UlnRegistration.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

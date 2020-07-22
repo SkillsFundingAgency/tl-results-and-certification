@@ -68,6 +68,7 @@
         public const string AddRegistrationSpecialism = "AddRegistrationSpecialism";
         public const string SubmitRegistrationSpecialism = "SubmitRegistrationSpecialism";
         public const string AddRegistrationAcademicYear = "AddRegistrationAcademicYear";
+        public const string UlnCanNotBeRegistered = "UlnCanNotBeRegistered";
 
         // Error
         public const string PageNotFound = "PageNotFound";

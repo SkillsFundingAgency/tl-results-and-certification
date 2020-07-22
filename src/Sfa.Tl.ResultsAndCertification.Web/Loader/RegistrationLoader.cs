@@ -96,5 +96,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var pathwaySpecialisms = await _internalApiClient.GetPathwaySpecialismsByPathwayLarIdAsync(aoUkprn, pathwayLarId);
             return _mapper.Map<PathwaySpecialismsViewModel>(pathwaySpecialisms);
         }
+
+        public async Task<UlnCannotBeRegisteredViewModel> IsUlnRegisteredAsync(long aoUkprn, string Uln)
+        {
+            var model = new UlnCannotBeRegisteredViewModel();
+            
+            if (1 == 1)
+            {
+                model.IsRegisteredWithOtherAo = true;
+                model.RegistrationProfileId = 1;
+                model.TechnicalSupportEmailAddress = "TODO@email.com";
+            }
+
+           return await Task.Run(() => model);
+        }
     }
 }
