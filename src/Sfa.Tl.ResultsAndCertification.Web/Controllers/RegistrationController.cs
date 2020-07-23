@@ -179,26 +179,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             await SyncCacheUln(model);
 
-            var cannotBeRegistered = await _registrationLoader.IsUlnRegisteredAsync(User.GetUkPrn(), model.Uln);
-            if (cannotBeRegistered != null && cannotBeRegistered.IsUlnRegisteredAlready)
+            var uln = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.Uln.ToLong());
+            if (uln != null && uln.IsUlnRegisteredAlready)
             {
-                TempData[Constants.UlnCanNotBeRegisteredViewModel] = JsonConvert.SerializeObject(cannotBeRegistered);
-                return RedirectToRoute(RouteConstants.UlnCanNotBeRegistered);
+                TempData[Constants.UlnCannotBeRegisteredViewModel] = JsonConvert.SerializeObject(uln);
+                return RedirectToRoute(RouteConstants.UlnCannotBeRegistered);
             }
 
             return RedirectToRoute(RouteConstants.AddRegistrationLearnersName);
         }
 
         [HttpGet]
-        [Route("ULN-cannot-be-registered", Name = RouteConstants.UlnCanNotBeRegistered)]
+        [Route("ULN-cannot-be-registered", Name = RouteConstants.UlnCannotBeRegistered)]
         public IActionResult UlnCannotBeRegistered()
         {
-            if (TempData[Constants.UlnCanNotBeRegisteredViewModel] == null)
+            if (TempData[Constants.UlnCannotBeRegisteredViewModel] == null)
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var model = JsonConvert.DeserializeObject<UlnCannotBeRegisteredViewModel>(TempData[Constants.UlnCanNotBeRegisteredViewModel] as string);
+            var model = JsonConvert.DeserializeObject<UlnCannotBeRegisteredViewModel>(TempData[Constants.UlnCannotBeRegisteredViewModel] as string);
             return View(model);
         }
 

@@ -128,7 +128,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = string.Format(ApiConstants.GetPathwaySpecialismsByPathwayLarIdAsyncUri, aoUkprn, pathwayLarId);
             return await GetAsync<PathwaySpecialisms>(requestUri);
-        }        
+        }
+
+        public async Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln)
+        {
+            var requestUri = string.Format(ApiConstants.FindUlnUri, aoUkprn, uln);
+            return await GetAsync<FindUlnResponse>(requestUri);
+        }
 
         #region Private Methods
 

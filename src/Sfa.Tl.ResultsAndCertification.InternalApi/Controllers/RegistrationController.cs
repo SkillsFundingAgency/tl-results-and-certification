@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
@@ -29,6 +28,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request)
         {
             return await _bulkRegistrationProcess.ProcessBulkRegistrationsAsync(request);
+        }
+
+        [HttpGet]
+        [Route("FindUln/{aoUkprn}/{uln}")]
+        public async Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln)
+        {
+            return await _registrationService.FindUlnAsync(aoUkprn, uln);
         }
     }
 }

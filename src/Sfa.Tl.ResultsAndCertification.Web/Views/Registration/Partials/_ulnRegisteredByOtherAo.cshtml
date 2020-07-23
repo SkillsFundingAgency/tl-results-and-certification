@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.UlnCannotBeRegisteredViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+@inject Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper.IWebConfigurationService ConfigurationService
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -11,7 +12,7 @@
             </h1>
             <p class="govuk-body">
                 @string.Format(UlnRegisteredByOtherAo.Information_Text_Part1, Model.Uln)
-                <a class="govuk-link" href="mailto: @Model.TechnicalSupportEmailAddress?subject=@UlnRegisteredByOtherAo.Email_Subject">@UlnRegisteredByOtherAo.Contact_Tlevel_Team_Link</a>
+                <a class="govuk-link" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@UlnRegisteredByOtherAo.Email_Subject">@UlnRegisteredByOtherAo.Contact_Tlevel_Team_Link</a>
                 @UlnRegisteredByOtherAo.Information_Text_Part2
             </p>
         </div>

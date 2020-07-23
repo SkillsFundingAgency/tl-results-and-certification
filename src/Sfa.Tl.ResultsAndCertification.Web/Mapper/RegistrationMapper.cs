@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -8,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
-using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
@@ -32,7 +30,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<BulkUploadStats, BulkUploadStatsViewModel>()
                .ForMember(d => d.NewRecordsCount, opts => opts.MapFrom(s => s.NewRecordsCount))
                .ForMember(d => d.AmendedRecordsCount, opts => opts.MapFrom(s => s.AmendedRecordsCount))
-               .ForMember(d => d.UnchangedRecordsCount, opts => opts.MapFrom(s => s.UnchangedRecordsCount));             
+               .ForMember(d => d.UnchangedRecordsCount, opts => opts.MapFrom(s => s.UnchangedRecordsCount));
+
+            CreateMap<FindUlnResponse, UlnCannotBeRegisteredViewModel>();
         }
     }
 }

@@ -27,7 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         //Registrations
         Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest model);
-        Task<IList<PathwayDetails>> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn);        
+        Task<IList<PathwayDetails>> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn);
+        Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln);
 
         // DocumentUploadHistory
         Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);

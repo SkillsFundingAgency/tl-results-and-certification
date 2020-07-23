@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
@@ -132,9 +133,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         }
 
         public async Task<RegistrationProcessResponse> CompareAndProcessRegistrationsAsync(IList<TqRegistrationProfile> registrationsToProcess)
-        {            
+        {
             var response = new RegistrationProcessResponse();
-            
+
             var ulnComparer = new TqRegistrationUlnEqualityComparer();
             var amendedRegistrations = new List<TqRegistrationProfile>();
             var amendedRegistrationsToIgnore = new List<TqRegistrationProfile>();
@@ -147,7 +148,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var matchedRegistrations = registrationsToProcess.Intersect(existingRegistrationsFromDb, ulnComparer).ToList();
             var unchangedRegistrations = matchedRegistrations.Intersect(existingRegistrationsFromDb, new TqRegistrationRecordEqualityComparer()).ToList();
             var hasAnyMatchedRegistrationsToProcess = matchedRegistrations.Count != unchangedRegistrations.Count;
-            
+
             if (hasAnyMatchedRegistrationsToProcess)
             {
                 var tqRegistrationProfileComparer = new TqRegistrationProfileEqualityComparer();
@@ -241,8 +242,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     AmendedRecordsCount = amendedRegistrations.Count,
                     UnchangedRecordsCount = unchangedRegistrations.Count
                 };
-            }            
+            }
             return response;
+        }
+
+        public async Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln)
+        {
+            // TODO: query review required.
+            // any business rules when to day Uln found (eg: what if Uln present in DB with no active pathways)
+            return await _tqRegistrationRepository.GetManyAsync(p => p.UniqueLearnerNumber == uln)
+                .Select(r => new FindUlnResponse
+                {
+                    Uln = r.UniqueLearnerNumber,
+                    RegistrationProfileId = r.Id,
+                    IsRegisteredWithOtherAo = r.TqRegistrationPathways.FirstOrDefault().TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
+                }).FirstAsync();
         }
 
         private RegistrationRecordResponse AddStage3ValidationError(RegistrationCsvRecordResponse registrationCsvRecordResponse, string errorMessage)
@@ -284,7 +298,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return registration.TlSpecialismLarIds.Select((x, index) => new TqRegistrationSpecialism
             {
-                Id =  index - specialismStartIndex,
+                Id = index - specialismStartIndex,
                 TlSpecialismId = x.Key,
                 StartDate = DateTime.UtcNow,
                 Status = RegistrationSpecialismStatus.Active,
@@ -401,6 +415,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Uln = uln.ToString(),
                 ErrorMessage = errorMessage
             };
-        }        
+        }
     }
 }
