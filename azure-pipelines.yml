@@ -63,8 +63,8 @@ stages:
           - task: DotNetCoreCLI@2
             displayName: dotnet build
             inputs:
-              projects: 'src/**/*.csproj'
-              arguments: '--configuration $(buildConfiguration)  --no-restore'
+              projects: 'src/Sfa.Tl.ResultsAndCertification.sln'
+              arguments: '--configuration $(buildConfiguration) --no-restore'
               
           - task: DotNetCoreCLI@2
             displayName: Unit Tests
@@ -95,7 +95,6 @@ stages:
               Contents: |
                 azure\**
                 config\**
-                src\**\*.dacpac
                 powershell\**
               TargetFolder: '$(build.artifactstagingdirectory)/'
               OverWrite: true
@@ -121,6 +120,13 @@ stages:
               platform: '$(buildPlatform)'
               configuration: '$(buildConfiguration)'
               msbuildArgs: '/p:PackageLocation="$(build.artifactstagingdirectory)/publish"'
+          - task: CopyFiles@2
+            displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+            inputs:
+              Contents: |
+                src\**\*.dacpac
+              TargetFolder: '$(build.artifactstagingdirectory)/'
+              OverWrite: true
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact'
             inputs:
@@ -146,11 +152,14 @@ stages:
               downloadType: 'single'
               artifactName: 'appdrop'
               downloadPath: '$(System.ArtifactsDirectory)'
-          - task: DotNetCoreCLI@2
-            displayName: Integration Tests
-            inputs:
-              command: publish
-              publishWebProjects: false
-              projects: '**/*.IntegrationTests.csproj'
-              arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
+          - pwsh: |
+              Set-Location $(System.ArtifactsDirectory)
+              Get-ChildItem -r
+          # - task: DotNetCoreCLI@2
+          #   displayName: Integration Tests
+          #   inputs:
+          #     command: publish
+          #     publishWebProjects: false
+          #     projects: '$(System.ArtifactsDirectory)/*.IntegrationTests.csproj'
+          #     arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
 
