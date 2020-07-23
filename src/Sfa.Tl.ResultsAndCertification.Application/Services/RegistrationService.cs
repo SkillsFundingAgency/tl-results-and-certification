@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var isProviderRegisteredWithAwardingOrganisation = aoProviderTlevels.Any(t => t.ProviderUkprn == registrationData.ProviderUkprn);
                 if (!isProviderRegisteredWithAwardingOrganisation)
                 {
-                    response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln,  ValidationMessages.ProviderNotRegisteredWithAo));
+                    response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln, ValidationMessages.ProviderNotRegisteredWithAo));
                     continue;
                 }
 
@@ -317,6 +317,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Manual Registration failed to process due to validation errors = {errorMessage}. Method: AddRegistrationAsync()");
                 return false;
             }
+        }
+
+        public async Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln)
+        {
+            // TODO: review required on business
+            var result =  await _tqRegistrationRepository.GetManyAsync(x => x.UniqueLearnerNumber == uln)
+                        .Select(x => new FindUlnResponse 
+                        {
+                            Uln = x.UniqueLearnerNumber,
+                            RegistrationProfileId = x.Id, 
+                            IsRegisteredWithOtherAo = x.TqRegistrationPathways.FirstOrDefault().TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn
+                        })
+                        .FirstOrDefaultAsync();
+
+            return result;
         }
 
         private TqRegistrationProfile TransformManualRegistrationModel(RegistrationRequest model, RegistrationRecordResponse registrationRecord)

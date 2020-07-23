@@ -8,14 +8,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public string Uln { get; set; }
         public int RegistrationProfileId { get; set; }
         public bool IsRegisteredWithOtherAo { get; set; }
-        public string TechnicalSupportEmailAddress { get; set; }
-        
+
         public bool IsUlnRegisteredAlready
         {
             get
             {
                 return false;
-                //return RegistrationProfileId > 0;
+                // return RegistrationProfileId > 0;
             }
         }
 

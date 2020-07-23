@@ -96,18 +96,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<PathwaySpecialismsViewModel>(pathwaySpecialisms);
         }
 
-        public async Task<UlnCannotBeRegisteredViewModel> IsUlnRegisteredAsync(long aoUkprn, string Uln)
+        public async Task<UlnCannotBeRegisteredViewModel> FindUlnAsync(long aoUkprn, long Uln)
         {
-            var model = new UlnCannotBeRegisteredViewModel();
-            
-            if (1 == 1)
-            {
-                model.IsRegisteredWithOtherAo = true;
-                model.RegistrationProfileId = 1;
-                model.TechnicalSupportEmailAddress = "TODO@email.com";
-            }
-
-           return await Task.Run(() => model);
+            var response = await _internalApiClient.FindUlnAsync(aoUkprn, Uln);
+            return _mapper.Map<UlnCannotBeRegisteredViewModel>(response);
         }
 
         public async Task<bool> AddRegistrationAsync(long aoUkprn, RegistrationViewModel model)

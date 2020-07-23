@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
@@ -47,6 +46,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.SelectSpecialism != null ? s.SelectSpecialism.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code) : new List<string>()))
                .ForMember(d => d.RegistrationDate, opts => opts.MapFrom(s => DateTime.UtcNow))
                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<RegistrationViewModel, RegistrationRequest>>());
+
+            CreateMap<FindUlnResponse, UlnCannotBeRegisteredViewModel>();
         }
     }
 }

@@ -68,7 +68,7 @@
         public const string AddRegistrationSpecialism = "AddRegistrationSpecialism";
         public const string SubmitRegistrationSpecialism = "SubmitRegistrationSpecialism";
         public const string AddRegistrationAcademicYear = "AddRegistrationAcademicYear";
-        public const string UlnCanNotBeRegistered = "UlnCanNotBeRegistered";
+        public const string UlnCannotBeRegistered = "UlnCannotBeRegistered";
         public const string SubmitRegistrationAcademicYear = "SubmitRegistrationAcademicYear";
         public const string AddRegistrationCheckAndSubmit = "AddRegistrationCheckAndSubmit";
         public const string SubmitRegistrationCheckAndSubmit = "SubmitRegistrationCheckAndSubmit";
