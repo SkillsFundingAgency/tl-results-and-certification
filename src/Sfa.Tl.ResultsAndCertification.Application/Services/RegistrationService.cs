@@ -314,7 +314,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             else
             {
                 var errorMessage = string.Join(",", validateStage3Response.ValidationErrors.Select(e => e.ErrorMessage));
-                _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Manual Registration failded to process due to validation errors = {errorMessage}. Method: AddRegistrationAsync()");
+                _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Manual Registration failed to process due to validation errors = {errorMessage}. Method: AddRegistrationAsync()");
                 return false;
             }
         }

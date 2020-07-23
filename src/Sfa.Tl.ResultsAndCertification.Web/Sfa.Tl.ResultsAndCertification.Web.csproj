@@ -141,6 +141,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DateofBirth.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\RegistrationConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RegistrationConfirmation.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\SelectCore.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -338,6 +343,10 @@
     <EmbeddedResource Update="Content\Registration\DateofBirth.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DateofBirth.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\RegistrationConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegistrationConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\SelectCore.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

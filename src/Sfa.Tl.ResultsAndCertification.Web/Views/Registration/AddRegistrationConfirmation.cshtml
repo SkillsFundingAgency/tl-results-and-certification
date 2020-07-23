@@ -1,0 +1,20 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.RegistrationConfirmationViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @RegistrationConfirmation.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">@RegistrationConfirmation.Registration_Successful_Text</h1>
+            <div class="govuk-panel__body">
+                @RegistrationConfirmation.Uln_Text: @Model.UniqueLearnerNumber
+            </div>
+        </div>
+        <p class="govuk-body govuk-!-padding-top-3">@RegistrationConfirmation.You_Syuccessfuly_Added_Registration_Confirmation_Text</p>
+        <p class="govuk-!-margin-top-8"><a class="govuk-button" role="button" asp-route="RegistrationDashboard">@RegistrationConfirmation.Back_To_Registration_Button_Text</a></p>
+
+    </div>
+</div>
