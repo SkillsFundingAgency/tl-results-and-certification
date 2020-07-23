@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -23,12 +24,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IProviderRepository _tqProviderRepository;
         private readonly IRegistrationRepository _tqRegistrationRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<IRegistrationRepository> _logger;
 
-        public RegistrationService(IProviderRepository providerRespository, IRegistrationRepository tqRegistrationRepository, IMapper mapper)
+        public RegistrationService(IProviderRepository providerRespository, IRegistrationRepository tqRegistrationRepository, IMapper mapper, ILogger<IRegistrationRepository> logger)
         {
             _tqProviderRepository = providerRespository;
             _tqRegistrationRepository = tqRegistrationRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<IList<RegistrationRecordResponse>> ValidateRegistrationTlevelsAsync(long aoUkprn, IEnumerable<RegistrationCsvRecordResponse> validRegistrationsData)
@@ -300,7 +303,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 if (hasRegistrationAlreadyExists)
                 {
-                    //TODO Log and return false
+                    _logger.LogWarning(LogEvent.RecordExists, $"Registration already exists for UniqueLearnerNumber = {model.Uln}. Method: AddRegistrationAsync()");
                     return false;
                 }
                 else
@@ -310,7 +313,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
             else
             {
-                // TODO: log errors
+                var errorMessage = string.Join(",", validateStage3Response.ValidationErrors.Select(e => e.ErrorMessage));
+                _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Manual Registration failded to process due to validation errors = {errorMessage}. Method: AddRegistrationAsync()");
                 return false;
             }
         }
@@ -342,22 +346,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
             };
             return toAddRegistration;
-        }
-
-        private RegistrationRecordResponse AddStage3ValidationError(RegistrationCsvRecordResponse registrationCsvRecordResponse, string errorMessage)
-        {
-            return new RegistrationRecordResponse()
-            {
-                ValidationErrors = new List<RegistrationValidationError>()
-                {
-                    new RegistrationValidationError
-                    {
-                        RowNum = registrationCsvRecordResponse.RowNum.ToString(),
-                        Uln = registrationCsvRecordResponse.Uln.ToString(),
-                        ErrorMessage = errorMessage
-                    }
-                }
-            };
         }
 
         private RegistrationRecordResponse AddStage3ValidationError(int rowNum, long uln, string errorMessage)
