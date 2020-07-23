@@ -126,6 +126,8 @@ stages:
   
   - stage: IntegrationTest
     displayName: Integration tests
+    dependsOn:
+      buildstage
     jobs:
       - job: runIntegrationtest
         displayName: Run integrationtest
