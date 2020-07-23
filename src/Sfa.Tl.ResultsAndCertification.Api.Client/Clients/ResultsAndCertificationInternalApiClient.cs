@@ -106,6 +106,36 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<bool>(requestUri);
         }
 
+        public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest model)
+        {
+            var requestUri = ApiConstants.ProcessBulkRegistrationsUri;
+            return await PostAsync<BulkRegistrationRequest, BulkRegistrationResponse>(requestUri, model);
+        }
+
+        public async Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            var requestUri = string.Format(ApiConstants.GetDocumentUploadHistoryDetailsAsyncUri, aoUkprn, blobUniqueReference);
+            return await GetAsync<DocumentUploadHistoryDetails>(requestUri);
+        }
+
+        public async Task<IList<PathwayDetails>> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn)
+        {
+            var requestUri = string.Format(ApiConstants.GetRegisteredProviderPathwayDetailsAsyncUri, aoUkprn, providerUkprn);
+            return await GetAsync<IList<PathwayDetails>>(requestUri);
+        }
+
+        public async Task<PathwaySpecialisms> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId)
+        {
+            var requestUri = string.Format(ApiConstants.GetPathwaySpecialismsByPathwayLarIdAsyncUri, aoUkprn, pathwayLarId);
+            return await GetAsync<PathwaySpecialisms>(requestUri);
+        }
+        
+        public async Task<bool> AddRegistrationAsync(RegistrationRequest model)
+        {
+            var requestUri = ApiConstants.AddRegistrationUri;
+            return await PostAsync<RegistrationRequest, bool>(requestUri, model);
+        }
+
         #region Private Methods
 
         /// <summary>
@@ -187,7 +217,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         /// <returns></returns>
         private HttpContent CreateHttpContent<T>(T content)
         {
-            var json = JsonConvert.SerializeObject(content, MicrosoftDateFormatSettings);
+            var json = JsonConvert.SerializeObject(content, IsoDateFormatSettings);
             return new StringContent(json, Encoding.UTF8, "application/json");
         }
 
@@ -204,6 +234,23 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                 return new JsonSerializerSettings
                 {
                     DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
+                };
+            }
+        }
+
+        /// <summary>
+        /// Gets the microsoft date format settings.
+        /// </summary>
+        /// <value>
+        /// The microsoft date format settings.
+        /// </value>
+        private static JsonSerializerSettings IsoDateFormatSettings
+        {
+            get
+            {
+                return new JsonSerializerSettings
+                {
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat
                 };
             }
         }

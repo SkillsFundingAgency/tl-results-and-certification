@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "Add a new registration - Select the academic year page";
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="SubmitRegistrationAcademicYear">
+            <partial name="_ValidationSummary" />
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">Select the academic year</span>
+            </div>
+            <p>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </p>
+        </form>
+    </div>
+</div>

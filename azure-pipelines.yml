@@ -60,9 +60,10 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: Integration Tests
   inputs:
-    command: test
+    command: publish
+    publishWebProjects: false
     projects: '**/*.IntegrationTests.csproj'
-    arguments: '--configuration $(buildConfiguration) --no-build'
+    arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish Internal API'

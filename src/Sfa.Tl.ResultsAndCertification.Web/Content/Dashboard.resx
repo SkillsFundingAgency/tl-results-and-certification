@@ -132,6 +132,12 @@
   <data name="Providers_Text" xml:space="preserve">
     <value>Providers</value>
   </data>
+  <data name="Registrations_Description_Text" xml:space="preserve">
+    <value>Add and amend registrations</value>
+  </data>
+  <data name="Registrations_Text" xml:space="preserve">
+    <value>Registrations</value>
+  </data>
   <data name="Section_Heading_Text" xml:space="preserve">
     <value>Manage T Level results</value>
   </data>

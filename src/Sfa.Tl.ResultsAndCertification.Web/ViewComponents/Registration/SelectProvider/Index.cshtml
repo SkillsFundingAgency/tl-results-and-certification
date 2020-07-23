@@ -1,0 +1,16 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.SelectProviderViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Sfa.Tl.ResultsAndCertification.Web
+
+<div sfa-validation-for="SelectedProviderUkprn" sfa-validation-class="govuk-form-group--error">
+    <h1 class="govuk-label-wrapper">
+        <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6" for="selectedproviderukprn">
+            @SelectProvider.Select_The_Provider_Label_Text
+        </label>
+    </h1>
+    <span sfa-validation-for="SelectedProviderUkprn"></span>
+    <select class="govuk-select" id="selectedproviderukprn" asp-for="SelectedProviderUkprn" asp-items="Model.ProvidersSelectList">
+        <option value="">@SelectProvider.Select_One_Option_Text</option>
+    </select>
+</div>

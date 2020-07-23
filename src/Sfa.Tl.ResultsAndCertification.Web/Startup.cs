@@ -10,9 +10,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Application.Configuration;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication;
 using Sfa.Tl.ResultsAndCertification.Web.Filters;
@@ -20,6 +23,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.Session;
 using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper;
+using StackExchange.Redis;
 using System;
 using System.Globalization;
 
@@ -87,14 +91,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web
 
             if(_env.IsDevelopment())
             {
+                //services.AddSingleton<IDistributedCache, InMemoryCache>();
                 builder.AddRazorRuntimeCompilation();
             }
+
+            services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(_env.IsDevelopment() ? "localhost" : ResultsAndCertificationConfiguration.RedisSettings.CacheConnection));
+            services.AddSingleton<ICacheService, RedisCacheService>();
 
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(RolesExtensions.RequireTLevelsReviewerAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.TlevelsReviewer));
                 options.AddPolicy(RolesExtensions.RequireProviderEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor));
+                options.AddPolicy(RolesExtensions.RequireRegistrationsEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.RegistrationsEditor));
             });
 
             services.AddWebDataProtection(ResultsAndCertificationConfiguration, _env);
@@ -142,8 +151,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IWebConfigurationService, WebConfigurationService>();
+            services.AddTransient<IBlobStorageService, BlobStorageService>();
             services.AddTransient<ITlevelLoader, TlevelLoader>();
             services.AddTransient<IProviderLoader, ProviderLoader>();
+            services.AddTransient<IRegistrationLoader, RegistrationLoader>();
         }
     }
 }

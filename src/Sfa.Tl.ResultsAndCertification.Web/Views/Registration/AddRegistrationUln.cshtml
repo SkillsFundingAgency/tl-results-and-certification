@@ -1,0 +1,35 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.UlnViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @Model.IsChangeMode ?
+        @UlnRegistration.Page_Title_Change_Registration : @UlnRegistration.Page_Title_Add_Registration;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="AddRegistrationUln">
+            <partial name="_ValidationSummary" />
+            <input type="hidden" value="@Model.IsChangeMode" />
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">@UlnRegistration.Page_Caption_Text</span>
+                <vc:uln model="Model"></vc:uln>
+            </div>
+            <p>
+                @if (!@Model.IsChangeMode)
+                {
+                    <button type="submit" class="govuk-button" data-module="govuk-button">@UlnRegistration.Continue_Button_Label</button>
+                }
+                else
+                {
+                    <button type="submit" class="govuk-button" data-module="govuk-button">@UlnRegistration.Change_Button_Label</button>
+                }
+            </p>
+        </form>
+
+    </div>
+</div>

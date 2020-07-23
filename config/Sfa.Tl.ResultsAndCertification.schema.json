@@ -28,6 +28,20 @@
       "type": "string",
       "environmentVariable": "FeedbackEmailAddress"
     },
+	"RedisSettings": {
+      "properties": {    
+		"CacheConnection": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "RedisCacheConnection"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "CacheConnection"
+      ],
+      "type": "object"
+    },
 	"BlobStorageSettings": {
       "properties": {    
 		"AccountName": {
@@ -225,6 +239,7 @@
 	"TlevelQueriedSupportEmailAddress",
 	"TechnicalSupportEmailAddress",
 	"FeedbackEmailAddress",
+	"RedisSettings",
 	"BlobStorageSettings",
 	"DataProtectionSettings",
     "DfeSignInSettings",
