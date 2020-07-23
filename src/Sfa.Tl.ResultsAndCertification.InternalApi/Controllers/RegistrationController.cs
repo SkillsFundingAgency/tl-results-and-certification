@@ -30,5 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _bulkRegistrationProcess.ProcessBulkRegistrationsAsync(request);
         }
+
+        [HttpPost]
+        [Route("AddRegistration")]
+        public async Task<bool> AddRegistrationAsync(RegistrationRequest model)
+        {
+            return await _registrationService.AddRegistrationAsync(model);
+        }
     }
 }

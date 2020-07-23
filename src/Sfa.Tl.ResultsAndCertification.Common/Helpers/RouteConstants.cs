@@ -70,6 +70,7 @@
         public const string AddRegistrationAcademicYear = "AddRegistrationAcademicYear";
         public const string SubmitRegistrationAcademicYear = "SubmitRegistrationAcademicYear";
         public const string AddRegistrationCheckAndSubmit = "AddRegistrationCheckAndSubmit";
+        public const string SubmitRegistrationCheckAndSubmit = "SubmitRegistrationCheckAndSubmit";
 
         // Error
         public const string PageNotFound = "PageNotFound";

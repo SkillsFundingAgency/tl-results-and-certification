@@ -22,7 +22,8 @@
         public const string GetRegisteredProviderPathwayDetailsAsyncUri = "/api/provider/GetRegisteredProviderPathwayDetails/{0}/{1}";
 
         // Registrations Related Uri's
-        public const string ProcessBulkRegistrationsUri = "/api/registration/ProcessBulkRegistrations";               
+        public const string ProcessBulkRegistrationsUri = "/api/registration/ProcessBulkRegistrations";
+        public const string AddRegistrationUri = "/api/registration/AddRegistration";
 
         // DocumentUploadHistory Related Uri's
         public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";

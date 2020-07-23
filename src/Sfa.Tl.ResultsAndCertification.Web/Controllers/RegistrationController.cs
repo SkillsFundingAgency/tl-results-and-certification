@@ -418,7 +418,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(viewModel);
         }
-        
+
+        [HttpPost]
+        [Route("add-registration-check-and-submit", Name = RouteConstants.SubmitRegistrationCheckAndSubmit)]
+        public async Task<IActionResult> SubmitRegistrationCheckAndSubmitAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var isSuccess = await _registrationLoader.AddRegistrationAsync(User.GetUkPrn(), cacheModel);
+
+            return RedirectToRoute(RouteConstants.PageNotFound);
+        }
+
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
