@@ -40,9 +40,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{BFACF837
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Common.Services", "Sfa.Tl.ResultsAndCertification.Common.Services\Sfa.Tl.ResultsAndCertification.Common.Services.csproj", "{0F338528-DE83-4D4D-95C3-6FCA1A435B2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests\Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.csproj", "{564E8E93-820F-448D-8381-82914D0CA733}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests\Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.csproj", "{564E8E93-820F-448D-8381-82914D0CA733}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests\Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.csproj", "{CC1DFCF3-6B56-48F1-B066-F5CAFFDBB3E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests\Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.csproj", "{CC1DFCF3-6B56-48F1-B066-F5CAFFDBB3E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,8 +54,6 @@ Global
 		{2714B171-03E8-4D0E-8C57-F240DB3D49BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2714B171-03E8-4D0E-8C57-F240DB3D49BE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{2714B171-03E8-4D0E-8C57-F240DB3D49BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2714B171-03E8-4D0E-8C57-F240DB3D49BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2714B171-03E8-4D0E-8C57-F240DB3D49BE}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{DFDD3645-BDA3-40EA-920C-31AAC7DA1FC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DFDD3645-BDA3-40EA-920C-31AAC7DA1FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFDD3645-BDA3-40EA-920C-31AAC7DA1FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
