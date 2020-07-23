@@ -13,8 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         {
             get
             {
-                return false;
-                // return RegistrationProfileId > 0;
+                return RegistrationProfileId > 0;
             }
         }
 
