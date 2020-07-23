@@ -121,8 +121,13 @@ stages:
               platform: '$(buildPlatform)'
               configuration: '$(buildConfiguration)'
               msbuildArgs: '/p:PackageLocation="$(build.artifactstagingdirectory)/publish"'
-
-          
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact'
+            inputs:
+              PathtoPublish: '$(build.artifactstagingdirectory)/'
+              ArtifactName: 'sqldrop'
+              publishLocation: 'Container'
+        
   
   - stage: IntegrationTest
     displayName: Integration tests
@@ -139,7 +144,7 @@ stages:
             inputs:
               buildType: 'current'
               downloadType: 'single'
-              artifactName: 'sqldrop'
+              artifactName: 'appdrop'
               downloadPath: '$(System.ArtifactsDirectory)'
           - task: DotNetCoreCLI@2
             displayName: Integration Tests
