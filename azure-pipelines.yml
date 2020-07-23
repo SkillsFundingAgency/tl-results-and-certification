@@ -13,7 +13,6 @@ resources:
       endpoint: DfE-Digital
       name: SkillsFundingAgency/tl-shared-infrastructure
 
-
 trigger:
   batch: true
   branches:
@@ -110,10 +109,10 @@ stages:
             displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
             inputs:
               Contents: |
-              azure\**
-              config\**
-              src\**\*.dacpac
-              powershell\**
+                azure\**
+                config\**
+                src\**\*.dacpac
+                powershell\**
               TargetFolder: '$(build.artifactstagingdirectory)/'
               OverWrite: true
 
