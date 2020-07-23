@@ -136,8 +136,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<RegistrationRequest, bool>(requestUri, model);
         }
 
-        }
-
         public async Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln)
         {
             var requestUri = string.Format(ApiConstants.FindUlnUri, aoUkprn, uln);
