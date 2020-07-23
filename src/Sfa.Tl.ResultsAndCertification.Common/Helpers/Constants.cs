@@ -24,6 +24,7 @@
 
         public const string UploadUnsuccessfulViewModel = "UploadUnsuccessfulViewModel";
         public const string UploadSuccessfulViewModel = "UploadSuccessfulViewModel";
+        public const string UlnCanNotBeRegisteredViewModel = "UlnCanNotBeRegisteredViewModel";
 
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 100000;
