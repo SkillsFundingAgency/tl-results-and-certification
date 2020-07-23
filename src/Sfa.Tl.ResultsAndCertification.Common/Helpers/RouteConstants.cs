@@ -71,6 +71,8 @@
         public const string UlnCannotBeRegistered = "UlnCannotBeRegistered";
         public const string SubmitRegistrationAcademicYear = "SubmitRegistrationAcademicYear";
         public const string AddRegistrationCheckAndSubmit = "AddRegistrationCheckAndSubmit";
+        public const string SubmitRegistrationCheckAndSubmit = "SubmitRegistrationCheckAndSubmit";
+        public const string AddRegistrationConfirmation = "AddRegistrationConfirmation";
 
         // Error
         public const string PageNotFound = "PageNotFound";

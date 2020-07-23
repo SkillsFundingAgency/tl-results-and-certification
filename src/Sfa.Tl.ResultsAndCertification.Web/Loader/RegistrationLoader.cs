@@ -11,7 +11,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -101,6 +100,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var response = await _internalApiClient.FindUlnAsync(aoUkprn, Uln);
             return _mapper.Map<UlnCannotBeRegisteredViewModel>(response);
+        }
+
+        public async Task<bool> AddRegistrationAsync(long aoUkprn, RegistrationViewModel model)
+        {
+            var registrationModel = _mapper.Map<RegistrationRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.AddRegistrationAsync(registrationModel);
         }
     }
 }

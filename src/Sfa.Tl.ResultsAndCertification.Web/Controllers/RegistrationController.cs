@@ -439,7 +439,45 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(viewModel);
         }
-        
+
+        [HttpPost]
+        [Route("add-registration-check-and-submit", Name = RouteConstants.SubmitRegistrationCheckAndSubmit)]
+        public async Task<IActionResult> SubmitRegistrationCheckAndSubmitAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var isSuccess = await _registrationLoader.AddRegistrationAsync(User.GetUkPrn(), cacheModel);
+
+            if(isSuccess)
+            {
+                await _cacheService.RemoveAsync<RegistrationViewModel>(CacheKey);
+                TempData[Constants.RegistrationConfirmationViewModel] = JsonConvert.SerializeObject(new RegistrationConfirmationViewModel { UniqueLearnerNumber = cacheModel.Uln.Uln });
+                return RedirectToRoute(RouteConstants.AddRegistrationConfirmation);
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Unable to add registration for UniqueLearnerNumber = {cacheModel.Uln}. Method: SubmitRegistrationCheckAndSubmitAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+        }
+
+        [HttpGet]
+        [Route("add-registration-confirmation", Name = RouteConstants.AddRegistrationConfirmation)]
+        public IActionResult AddRegistrationConfirmationAsync()
+        {
+            if (TempData[Constants.RegistrationConfirmationViewModel] == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read RegistrationConfirmationViewModel from temp data in add registration confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = JsonConvert.DeserializeObject<RegistrationConfirmationViewModel>(TempData[Constants.RegistrationConfirmationViewModel] as string);
+            return View(viewModel);
+        }        
+
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -23,12 +24,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IProviderRepository _tqProviderRepository;
         private readonly IRegistrationRepository _tqRegistrationRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<IRegistrationRepository> _logger;
 
-        public RegistrationService(IProviderRepository providerRespository, IRegistrationRepository tqRegistrationRepository, IMapper mapper)
+        public RegistrationService(IProviderRepository providerRespository, IRegistrationRepository tqRegistrationRepository, IMapper mapper, ILogger<IRegistrationRepository> logger)
         {
             _tqProviderRepository = providerRespository;
             _tqRegistrationRepository = tqRegistrationRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<IList<RegistrationRecordResponse>> ValidateRegistrationTlevelsAsync(long aoUkprn, IEnumerable<RegistrationCsvRecordResponse> validRegistrationsData)
@@ -41,14 +44,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var isProviderRegisteredWithAwardingOrganisation = aoProviderTlevels.Any(t => t.ProviderUkprn == registrationData.ProviderUkprn);
                 if (!isProviderRegisteredWithAwardingOrganisation)
                 {
-                    response.Add(AddStage3ValidationError(registrationData, ValidationMessages.ProviderNotRegisteredWithAo));
+                    response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln,  ValidationMessages.ProviderNotRegisteredWithAo));
                     continue;
                 }
 
                 var technicalQualification = aoProviderTlevels.FirstOrDefault(tq => tq.ProviderUkprn == registrationData.ProviderUkprn && tq.PathwayLarId == registrationData.CoreCode);
                 if (technicalQualification == null)
                 {
-                    response.Add(AddStage3ValidationError(registrationData, ValidationMessages.CoreNotRegisteredWithProvider));
+                    response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln, ValidationMessages.CoreNotRegisteredWithProvider));
                     continue;
                 }
 
@@ -59,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                     if (invalidSpecialismCodes.Any())
                     {
-                        response.Add(AddStage3ValidationError(registrationData, ValidationMessages.SpecialismNotValidWithCore));
+                        response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln, ValidationMessages.SpecialismNotValidWithCore));
                         continue;
                     }
                 }
@@ -81,6 +84,49 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
 
             return response;
+        }
+
+        public async Task<RegistrationRecordResponse> ValidateManualRegistrationTlevelsAsync(RegistrationRequest registrationData)
+        {
+            var aoProviderTlevels = await GetAllTLevelsByAoUkprnAsync(registrationData.AoUkprn);
+
+            var isProviderRegisteredWithAwardingOrganisation = aoProviderTlevels.Any(t => t.ProviderUkprn == registrationData.ProviderUkprn);
+            if (!isProviderRegisteredWithAwardingOrganisation)
+            {
+                return AddStage3ValidationError(0, registrationData.Uln, ValidationMessages.ProviderNotRegisteredWithAo);
+            }
+
+            var technicalQualification = aoProviderTlevels.FirstOrDefault(tq => tq.ProviderUkprn == registrationData.ProviderUkprn && tq.PathwayLarId == registrationData.CoreCode);
+            if (technicalQualification == null)
+            {
+                return AddStage3ValidationError(0, registrationData.Uln, ValidationMessages.CoreNotRegisteredWithProvider);
+            }
+
+            if (registrationData.SpecialismCodes.Count() > 0)
+            {
+                var specialismCodes = technicalQualification.TlSpecialismLarIds.Select(x => x.Value);
+                var invalidSpecialismCodes = registrationData.SpecialismCodes.Except(specialismCodes, StringComparer.InvariantCultureIgnoreCase);
+
+                if (invalidSpecialismCodes.Any())
+                {
+                    return AddStage3ValidationError(0, registrationData.Uln, ValidationMessages.SpecialismNotValidWithCore);
+                }
+            }
+
+            return new RegistrationRecordResponse
+            {
+                Uln = registrationData.Uln,
+                FirstName = registrationData.FirstName,
+                LastName = registrationData.LastName,
+                DateOfBirth = registrationData.DateOfBirth,
+                RegistrationDate = registrationData.RegistrationDate,
+                TqProviderId = technicalQualification.TqProviderId,
+                TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
+                TlPathwayId = technicalQualification.TlPathwayId,
+                TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds.Where(s => registrationData.SpecialismCodes.Contains(s.Value)),
+                TlAwardingOrganisatonId = technicalQualification.TlAwardingOrganisatonId,
+                TlProviderId = technicalQualification.TlProviderId
+            };
         }
 
         public IList<TqRegistrationProfile> TransformRegistrationModel(IList<RegistrationRecordResponse> registrationsData, string performedBy)
@@ -246,20 +292,63 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
-        public async Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln)
+        public async Task<bool> AddRegistrationAsync(RegistrationRequest model)
         {
-            // TODO: query review required.
-            // any business rules when to day Uln found (eg: what if Uln present in DB with no active pathways)
-            return await _tqRegistrationRepository.GetManyAsync(p => p.UniqueLearnerNumber == uln)
-                .Select(r => new FindUlnResponse
+            var validateStage3Response = await ValidateManualRegistrationTlevelsAsync(model);
+
+            if (validateStage3Response.IsValid)
+            {
+                var toAddRegistration = TransformManualRegistrationModel(model, validateStage3Response);
+                var hasRegistrationAlreadyExists = await _tqRegistrationRepository.GetFirstOrDefaultAsync(p => p.UniqueLearnerNumber == model.Uln) != null;
+
+                if (hasRegistrationAlreadyExists)
                 {
-                    Uln = r.UniqueLearnerNumber,
-                    RegistrationProfileId = r.Id,
-                    IsRegisteredWithOtherAo = r.TqRegistrationPathways.FirstOrDefault().TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
-                }).FirstAsync();
+                    _logger.LogWarning(LogEvent.RecordExists, $"Registration already exists for UniqueLearnerNumber = {model.Uln}. Method: AddRegistrationAsync()");
+                    return false;
+                }
+                else
+                {
+                    return await _tqRegistrationRepository.CreateAsync(toAddRegistration) > 0;
+                }
+            }
+            else
+            {
+                var errorMessage = string.Join(",", validateStage3Response.ValidationErrors.Select(e => e.ErrorMessage));
+                _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Manual Registration failed to process due to validation errors = {errorMessage}. Method: AddRegistrationAsync()");
+                return false;
+            }
         }
 
-        private RegistrationRecordResponse AddStage3ValidationError(RegistrationCsvRecordResponse registrationCsvRecordResponse, string errorMessage)
+        private TqRegistrationProfile TransformManualRegistrationModel(RegistrationRequest model, RegistrationRecordResponse registrationRecord)
+        {
+            var toAddRegistration = new TqRegistrationProfile
+            {
+                UniqueLearnerNumber = registrationRecord.Uln,
+                Firstname = registrationRecord.FirstName,
+                Lastname = registrationRecord.LastName,
+                DateofBirth = registrationRecord.DateOfBirth,
+                CreatedBy = model.CreatedBy,
+                CreatedOn = DateTime.UtcNow,
+                TqRegistrationPathways = new List<TqRegistrationPathway>
+                {
+                    new TqRegistrationPathway
+                    {
+                        TqProviderId = registrationRecord.TqProviderId,
+                        AcademicYear = registrationRecord.RegistrationDate.Year, // TODO: Need to calcualate based on the requirements
+                        RegistrationDate = registrationRecord.RegistrationDate,
+                        StartDate = DateTime.UtcNow,
+                        Status = RegistrationPathwayStatus.Active,
+                        IsBulkUpload = false,
+                        TqRegistrationSpecialisms = MapSpecialisms(registrationRecord, model.CreatedBy, 0, false),
+                        CreatedBy = model.CreatedBy,
+                        CreatedOn = DateTime.UtcNow
+                    }
+                }
+            };
+            return toAddRegistration;
+        }
+
+        private RegistrationRecordResponse AddStage3ValidationError(int rowNum, long uln, string errorMessage)
         {
             return new RegistrationRecordResponse()
             {
@@ -267,8 +356,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     new RegistrationValidationError
                     {
-                        RowNum = registrationCsvRecordResponse.RowNum.ToString(),
-                        Uln = registrationCsvRecordResponse.Uln.ToString(),
+                        RowNum = rowNum.ToString(),
+                        Uln = uln.ToString(),
                         ErrorMessage = errorMessage
                     }
                 }
@@ -294,15 +383,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return result;
         }
 
-        private IList<TqRegistrationSpecialism> MapSpecialisms(RegistrationRecordResponse registration, string performedBy, int specialismStartIndex)
+        private IList<TqRegistrationSpecialism> MapSpecialisms(RegistrationRecordResponse registration, string performedBy, int specialismStartIndex, bool isBulkUpload = true)
         {
             return registration.TlSpecialismLarIds.Select((x, index) => new TqRegistrationSpecialism
             {
-                Id = index - specialismStartIndex,
+                Id = isBulkUpload ? index - specialismStartIndex : 0,
                 TlSpecialismId = x.Key,
                 StartDate = DateTime.UtcNow,
                 Status = RegistrationSpecialismStatus.Active,
-                IsBulkUpload = true,
+                IsBulkUpload = isBulkUpload,
                 CreatedBy = performedBy,
                 CreatedOn = DateTime.UtcNow,
             }).ToList();
