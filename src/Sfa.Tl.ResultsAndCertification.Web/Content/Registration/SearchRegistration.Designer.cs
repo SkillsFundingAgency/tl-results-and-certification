@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Breadcrumb {
+    public class SearchRegistration {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Breadcrumb() {
+        internal SearchRegistration() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb", typeof(Breadcrumb).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.SearchRegistration", typeof(SearchRegistration).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,92 +61,74 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Home.
+        ///   Looks up a localized string similar to Enter the Unique Learner Number (ULN).
         /// </summary>
-        public static string Home {
+        public static string Enter_Uln_Field_Text {
             get {
-                return ResourceManager.GetString("Home", resourceCulture);
+                return ResourceManager.GetString("Enter_Uln_Field_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Find a provider.
+        ///   Looks up a localized string similar to Search for a registration page.
         /// </summary>
-        public static string Provider_Find_Provider {
+        public static string Page_Title {
             get {
-                return ResourceManager.GetString("Provider_Find_Provider", resourceCulture);
+                return ResourceManager.GetString("Page_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provider’s T Levels.
+        ///   Looks up a localized string similar to Search.
         /// </summary>
-        public static string Provider_Tlevels {
+        public static string Search_Button_Text {
             get {
-                return ResourceManager.GetString("Provider_Tlevels", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your providers.
-        /// </summary>
-        public static string Provider_Your_Providers {
-            get {
-                return ResourceManager.GetString("Provider_Your_Providers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Registrations.
-        /// </summary>
-        public static string Registration_Dashboard {
-            get {
-                return ResourceManager.GetString("Registration_Dashboard", resourceCulture);
+                return ResourceManager.GetString("Search_Button_Text", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Search for a registration.
         /// </summary>
-        public static string Search_For_Registration {
+        public static string Search_For_Registration_Heading_Text {
             get {
-                return ResourceManager.GetString("Search_For_Registration", resourceCulture);
+                return ResourceManager.GetString("Search_For_Registration_Heading_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level details.
+        ///   Looks up a localized string similar to You can view and cancel a student’s registration..
         /// </summary>
-        public static string Tlevel_Details {
+        public static string Search_Info_Text {
             get {
-                return ResourceManager.GetString("Tlevel_Details", resourceCulture);
+                return ResourceManager.GetString("Search_Info_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Review T Levels.
+        ///   Looks up a localized string similar to ULN must be 10 digits long.
         /// </summary>
-        public static string Tlevel_Review_Select {
+        public static string Uln_Hint_Text {
             get {
-                return ResourceManager.GetString("Tlevel_Review_Select", resourceCulture);
+                return ResourceManager.GetString("Uln_Hint_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your T Levels.
+        ///   Looks up a localized string similar to Enter a valid ULN.
         /// </summary>
-        public static string Tlevel_ViewAll {
+        public static string Uln_Not_Valid_Validation_Message {
             get {
-                return ResourceManager.GetString("Tlevel_ViewAll", resourceCulture);
+                return ResourceManager.GetString("Uln_Not_Valid_Validation_Message", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload registrations file.
+        ///   Looks up a localized string similar to Enter a ULN.
         /// </summary>
-        public static string Upload_Registrations_File {
+        public static string Uln_Required_Validation_Message {
             get {
-                return ResourceManager.GetString("Upload_Registrations_File", resourceCulture);
+                return ResourceManager.GetString("Uln_Required_Validation_Message", resourceCulture);
             }
         }
     }
