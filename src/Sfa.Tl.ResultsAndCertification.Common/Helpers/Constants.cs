@@ -24,7 +24,7 @@
 
         public const string UploadUnsuccessfulViewModel = "UploadUnsuccessfulViewModel";
         public const string UploadSuccessfulViewModel = "UploadSuccessfulViewModel";
-        public const string UlnCannotBeRegisteredViewModel = "UlnCannotBeRegisteredViewModel";
+        public const string UlnNotFoundViewModel = "UlnNotFoundViewModel";
 
         public const string RegistrationConfirmationViewModel = "RegistrationConfirmationViewModel";
 

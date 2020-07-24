@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.RegistrationDate, opts => opts.MapFrom(s => DateTime.UtcNow))
                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<RegistrationViewModel, RegistrationRequest>>());
 
-            CreateMap<FindUlnResponse, UlnCannotBeRegisteredViewModel>();
+            CreateMap<FindUlnResponse, UlnNotFoundViewModel>();
         }
     }
 }

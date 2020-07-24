@@ -9,18 +9,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 {
     public class Then_On_TempData_Exist_View_Returned : When_UlnCannotBeRegistered_Action_Is_Called
     {
-        private UlnCannotBeRegisteredViewModel expectedViewModel;
+        private UlnNotFoundViewModel expectedViewModel;
         public override void Given() 
         {
-            expectedViewModel = new UlnCannotBeRegisteredViewModel();
-            TempData[Constants.UlnCannotBeRegisteredViewModel] = JsonConvert.SerializeObject(expectedViewModel);
+            expectedViewModel = new UlnNotFoundViewModel();
+            TempData[Constants.UlnNotFoundViewModel] = JsonConvert.SerializeObject(expectedViewModel);
         }
 
         [Fact]
         public void Then_Expected_Results_Are_Returned()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as UlnCannotBeRegisteredViewModel;
+            var model = viewResult.Model as UlnNotFoundViewModel;
 
             model.Should().NotBeNull();
             model.RegistrationProfileId.Should().Be(expectedViewModel.RegistrationProfileId);

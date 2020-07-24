@@ -3,7 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
-    public class UlnCannotBeRegisteredViewModel
+    public class UlnNotFoundViewModel
     {
         public string Uln { get; set; }
         public int RegistrationProfileId { get; set; }

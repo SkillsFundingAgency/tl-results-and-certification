@@ -182,7 +182,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var findUln = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.Uln.ToLong());
             if (findUln != null && findUln.IsUlnRegisteredAlready)
             {
-                TempData[Constants.UlnCannotBeRegisteredViewModel] = JsonConvert.SerializeObject(findUln);
+                TempData[Constants.UlnNotFoundViewModel] = JsonConvert.SerializeObject(findUln);
                 return RedirectToRoute(RouteConstants.UlnCannotBeRegistered);
             }
 
@@ -193,12 +193,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("ULN-cannot-be-registered", Name = RouteConstants.UlnCannotBeRegistered)]
         public IActionResult UlnCannotBeRegistered()
         {
-            if (TempData[Constants.UlnCannotBeRegisteredViewModel] == null)
+            if (TempData[Constants.UlnNotFoundViewModel] == null)
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var model = JsonConvert.DeserializeObject<UlnCannotBeRegisteredViewModel>(TempData[Constants.UlnCannotBeRegisteredViewModel] as string);
+            var model = JsonConvert.DeserializeObject<UlnNotFoundViewModel>(TempData[Constants.UlnNotFoundViewModel] as string);
             return View(model);
         }
 
