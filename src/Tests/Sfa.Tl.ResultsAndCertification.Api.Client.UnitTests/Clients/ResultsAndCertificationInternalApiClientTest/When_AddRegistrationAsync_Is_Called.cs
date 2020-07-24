@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 AoUkprn = 1234567890,
                 FirstName = "First",
                 LastName = "Last",
-                DateOfBirth = "13/01/1987".ToDateTime(),
+                DateOfBirth = "07/01/1987".ToDateTime(),
                 ProviderUkprn = 98765432,
                 RegistrationDate = DateTime.UtcNow,
                 CoreCode = "7654321",
