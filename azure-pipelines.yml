@@ -22,6 +22,8 @@ trigger:
 pr: none
 
 variables:
+  Group:
+    Common Shared Resources
   buildConfiguration: 'release'
   buildPlatform: 'anycpu'
 
@@ -142,6 +144,8 @@ stages:
       buildstage
     
     variables:
+      Group:
+        Dev Shared Resources
       ResourceGroupName: '$(ResourceIdentifier)$(ResourceEnvironmentName)-$(ServiceName)-rg'
       ServiceName: 'resac'
       AspSize: '1'
