@@ -22,10 +22,11 @@ trigger:
 pr: none
 
 variables:
-  Group:
-    Common Shared Resources
-  buildConfiguration: 'release'
-  buildPlatform: 'anycpu'
+  - group: Common Shared Resources
+  - name: buildConfiguration
+    value: 'release'
+  - name: buildPlatform
+    value: 'anycpu'
 
 stages:
   - stage: buildStage
@@ -144,15 +145,21 @@ stages:
       buildstage
     
     variables:
-      Group:
-        Dev Shared Resources
-      ResourceGroupName: '$(ResourceIdentifier)$(ResourceEnvironmentName)-$(ServiceName)-rg'
-      ServiceName: 'resac'
-      AspSize: '1'
-      AspInstances: '1'
-      UICustomHostName: 'dev.manage-tlevel-results.tlevels.gov.uk'
-      UICertificateName: 'dev-manage-tlevel-results-tlevels-gov-uk'
-      DatabaseTier: 'Standard'
+      - group: Dev Shared Resources
+      - name: ResourceGroupName
+        value: '$[variables.ResourceIdentifier]$[variables.ResourceEnvironmentName]-$(ServiceName)-rg'
+      - name: ServiceName
+        value: 'resac'
+      - name: AspSize
+        value: '1'
+      - name: AspInstances
+        value: '1'
+      - name: UICustomHostName
+        value: 'dev.manage-tlevel-results.tlevels.gov.uk'
+      - name: UICertificateName
+        value: 'dev-manage-tlevel-results-tlevels-gov-uk'
+      - name: DatabaseTier
+        value: 'Standard'
 
     jobs:
       - job: createInfrastructure
