@@ -135,15 +135,38 @@ stages:
               PathtoPublish: '$(build.artifactstagingdirectory)/'
               ArtifactName: 'sqldrop'
               publishLocation: 'Container'
-        
-  
-  - stage: IntegrationTest
-    displayName: Integration tests
+    
+  - stage: Dev
+    displayName: Dev
     dependsOn:
       buildstage
+    
+    variables:
+      ResourceGroupName: '$(ResourceIdentifier)$(ResourceEnvironmentName)-$(ServiceName)-rg'
+      ServiceName: 'resac'
+      AspSize: '1'
+      AspInstances: '1'
+      UICustomHostName: 'dev.manage-tlevel-results.tlevels.gov.uk'
+      UICertificateName: 'dev-manage-tlevel-results-tlevels-gov-uk'
+      DatabaseTier: 'Standard'
+
     jobs:
+      - job: createInfrastructure
+        displayName: Create Infrastructure
+        steps:
+          - task: AzureResourceGroupDeployment@2
+            displayName: 'Azure Deployment:Create Or Update Resource Group action on $(ResourceGroupName)'
+            inputs:
+              azureSubscription: 'S126-TL-Dev-Service-Connection'
+              resourceGroupName: '$(ResourceGroupName)'
+              location: 'West Europe'
+              csmFile: '$(System.DefaultWorkingDirectory)/tl-results-and-certification/drop/azure/template.json'
+              overrideParameters: '-resourceEnvironmentName "$(ResourceEnvironmentName)" -environmentName "$(EnvironmentName)" -serviceName "$(ServiceName)" -resourceIdentifier "$(ResourceIdentifier)" -aspSize "$(AspSize)" -aspInstances $(AspInstances) -uiCustomHostname "$(UICustomHostName)" -uiCertificateName "$(UICertificateName)" -apiCustomHostname "" -apiCertificateName -internalApiCustomHostname "" -internalApiCertificateName -keyVaultResourceGroupName "$(SharedResourceGroupName)" -keyVaultName "$(SharedKeyVaultName)" -sharedSqlResourceGroup "$(SharedResourceGroupName)" -sharedSqlServerName "$(SharedSqlServerName)" -databaseSkuName "$(DatabaseSKUName)" -databaseTier "$(DatabaseTier)" -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"'
+              deploymentOutputs: DeploymentOutputs
+
       - job: runIntegrationtest
         displayName: Run integrationtest
+        dependsOn: createInfrastructure
         pool:
           name: 'Azure Pipelines'
           vmImage: 'windows-2019'
