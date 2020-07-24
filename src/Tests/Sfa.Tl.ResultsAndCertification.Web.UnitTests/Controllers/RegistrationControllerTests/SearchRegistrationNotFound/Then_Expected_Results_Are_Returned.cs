@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         public override void Given()
         {
-            TempData.Set(Constants.SearchRegistrationUlnNotFound, new UlnNotFoundViewModel { Uln = Uln });
+            TempData.Set(Constants.SearchRegistrationUlnNotFound, new UlnNotFoundViewModel { Uln = Uln, BackLinkRouteName = RouteConstants.SearchRegistration });
         }
 
         [Fact]
