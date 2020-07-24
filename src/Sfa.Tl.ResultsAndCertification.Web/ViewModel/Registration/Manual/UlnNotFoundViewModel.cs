@@ -25,5 +25,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
                 return new BackLinkModel { RouteName = RouteConstants.AddRegistrationUln };
             }
         }
+
+        public BackLinkModel SearchBackLink
+        {
+            get
+            {
+                return new BackLinkModel { RouteName = RouteConstants.SearchRegistration };
+            }
+        }
     }
 }

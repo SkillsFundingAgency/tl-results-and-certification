@@ -482,7 +482,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-for-registration", Name = RouteConstants.SearchRegistration)]
         public IActionResult SearchRegistrationAsync()
         {
-            var viewModel = new SearchRegistrationViewModel();
+            var viewModel = new SearchRegistrationViewModel { Search = TempData.Get<string>(Constants.RegistrationSearchCriteria) };
             return View(viewModel);
         }
 
@@ -493,7 +493,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var searchResult = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.Search.Value);
+            var searchResult = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.Search.ToLong());
 
             if (searchResult?.IsActive == true)
             {
@@ -501,8 +501,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                return RedirectToRoute("");
+                TempData.Set(Constants.RegistrationSearchCriteria, model.Search);
+                TempData[Constants.SearchRegistrationUlnNotFound] = JsonConvert.SerializeObject(new UlnNotFoundViewModel { Uln = model.Search.ToString() });
+                return RedirectToRoute(RouteConstants.SearchRegistrationNotFound);
             }
+        }
+
+        [HttpGet]
+        [Route("search-for-registration-ULN-not-found", Name = RouteConstants.SearchRegistrationNotFound)]
+        public IActionResult SearchRegistrationNotFound()
+        {
+            if (TempData[Constants.SearchRegistrationUlnNotFound] == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchRegistrationUlnNotFound from temp data in search registration not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = JsonConvert.DeserializeObject<UlnNotFoundViewModel>(TempData[Constants.SearchRegistrationUlnNotFound] as string);
+            return View(viewModel);
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
