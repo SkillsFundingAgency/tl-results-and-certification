@@ -8,12 +8,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public string Uln { get; set; }
         public int RegistrationProfileId { get; set; }
         public bool IsRegisteredWithOtherAo { get; set; }
+        public bool IsActive { get; set; }
 
         public bool IsUlnRegisteredAlready
         {
             get
             {
-                return RegistrationProfileId > 0;
+                return IsActive || IsRegisteredWithOtherAo;
             }
         }
 

@@ -179,10 +179,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             await SyncCacheUln(model);
 
-            var uln = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.Uln.ToLong());
-            if (uln != null && uln.IsUlnRegisteredAlready)
+            var findUln = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.Uln.ToLong());
+            if (findUln != null && findUln.IsUlnRegisteredAlready)
             {
-                TempData[Constants.UlnCannotBeRegisteredViewModel] = JsonConvert.SerializeObject(uln);
+                TempData[Constants.UlnCannotBeRegisteredViewModel] = JsonConvert.SerializeObject(findUln);
                 return RedirectToRoute(RouteConstants.UlnCannotBeRegistered);
             }
 
