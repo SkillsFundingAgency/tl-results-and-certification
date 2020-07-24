@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
 
             InternalApiClient.GetTqAoProviderDetailsAsync(Ukprn).Returns(ApiClientResponse);
 
-            Loader = new ProviderLoader(InternalApiClient, Mapper);
+            //Loader = new ProviderLoader(InternalApiClient, Mapper);
         }
 
         [Fact]
