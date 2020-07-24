@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (response.IsSuccess)
             {
                 var successfulViewModel = new UploadSuccessfulViewModel { Stats = response.Stats };
-                TempData[Constants.UploadSuccessfulViewModel] = JsonConvert.SerializeObject(successfulViewModel);
+                TempData.Set(Constants.UploadSuccessfulViewModel, successfulViewModel);
                 return RedirectToRoute(RouteConstants.RegistrationsUploadSuccessful);
             }
             else
@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 else
                 {
                     var unsuccessfulViewModel = new UploadUnsuccessfulViewModel { BlobUniqueReference = response.BlobUniqueReference, FileSize = response.ErrorFileSize, FileType = FileType.Csv.ToString().ToUpperInvariant() };
-                    TempData[Constants.UploadUnsuccessfulViewModel] = JsonConvert.SerializeObject(unsuccessfulViewModel);
+                    TempData.Set(Constants.UploadUnsuccessfulViewModel, unsuccessfulViewModel);
                     return RedirectToRoute(RouteConstants.RegistrationsUploadUnsuccessful);
                 }
             }
@@ -89,14 +89,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("registrations-upload-successful", Name = RouteConstants.RegistrationsUploadSuccessful)]
         public IActionResult UploadSuccessful()
         {
-            if (TempData[Constants.UploadSuccessfulViewModel] == null)
+            var viewModel = TempData.Get<UploadSuccessfulViewModel>(Constants.UploadSuccessfulViewModel);
+            if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.UploadSuccessfulPageFailed,
                     $"Unable to read upload successful registration response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
-            var viewModel = JsonConvert.DeserializeObject<UploadSuccessfulViewModel>(TempData[Constants.UploadSuccessfulViewModel] as string);
             return View(viewModel);
         }
 
@@ -104,14 +103,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("registrations-upload-unsuccessful", Name = RouteConstants.RegistrationsUploadUnsuccessful)]
         public IActionResult UploadUnsuccessful()
         {
-            if (TempData[Constants.UploadUnsuccessfulViewModel] == null)
+            var viewModel = TempData.Get<UploadUnsuccessfulViewModel>(Constants.UploadUnsuccessfulViewModel);
+            if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.UploadUnsuccessfulPageFailed,
                     $"Unable to read upload unsuccessful registration response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
-            var viewModel = JsonConvert.DeserializeObject<UploadUnsuccessfulViewModel>(TempData[Constants.UploadUnsuccessfulViewModel] as string);
             return View(viewModel);
         }
 
@@ -182,7 +180,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var findUln = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.Uln.ToLong());
             if (findUln != null && findUln.IsUlnRegisteredAlready)
             {
-                TempData[Constants.UlnNotFoundViewModel] = JsonConvert.SerializeObject(findUln);
+                TempData.Set(Constants.UlnNotFoundViewModel, findUln);
                 return RedirectToRoute(RouteConstants.UlnCannotBeRegistered);
             }
 
@@ -193,13 +191,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("ULN-cannot-be-registered", Name = RouteConstants.UlnCannotBeRegistered)]
         public IActionResult UlnCannotBeRegistered()
         {
-            if (TempData[Constants.UlnNotFoundViewModel] == null)
+            var viewModel = TempData.Get<UlnNotFoundViewModel>(Constants.UlnNotFoundViewModel);
+            if (viewModel == null)
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
-            var model = JsonConvert.DeserializeObject<UlnNotFoundViewModel>(TempData[Constants.UlnNotFoundViewModel] as string);
-            return View(model);
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -481,7 +478,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-for-registration", Name = RouteConstants.SearchRegistration)]
         public IActionResult SearchRegistrationAsync()
         {
-            var viewModel = new SearchRegistrationViewModel { Search = TempData.Get<string>(Constants.RegistrationSearchCriteria) };
+            var viewModel = new SearchRegistrationViewModel { SearchUln = TempData.Get<string>(Constants.RegistrationSearchCriteria) };
             return View(viewModel);
         }
 
@@ -492,7 +489,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var searchResult = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.Search.ToLong());
+            var searchResult = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.SearchUln.ToLong());
 
             if (searchResult?.IsActive == true)
             {
@@ -500,8 +497,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                TempData.Set(Constants.RegistrationSearchCriteria, model.Search);
-                TempData.Set(Constants.SearchRegistrationUlnNotFound, new UlnNotFoundViewModel { Uln = model.Search.ToString() });
+                TempData.Set(Constants.RegistrationSearchCriteria, model.SearchUln);
+                TempData.Set(Constants.SearchRegistrationUlnNotFound, new UlnNotFoundViewModel { Uln = model.SearchUln.ToString(), BackLinkRouteName = RouteConstants.SearchRegistration });
                 return RedirectToRoute(RouteConstants.SearchRegistrationNotFound);
             }
         }
