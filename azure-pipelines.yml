@@ -90,76 +90,77 @@ stages:
               arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'
           - pwsh: |
               Get-ChildItem -r
-  #         - task: CopyFiles@2
-  #           displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-  #           inputs:
-  #             Contents: |
-  #               azure\**
-  #               config\**
-  #               powershell\**
-  #             TargetFolder: '$(build.artifactstagingdirectory)/'
-  #             OverWrite: true
+          - task: CopyFiles@2
+            displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+            inputs:
+              Contents: |
+                azure\**
+                config\**
+                powershell\**
+                src\Tests\*.IntegrationTests
+              TargetFolder: '$(build.artifactstagingdirectory)/'
+              OverWrite: true
 
-  #         - task: PublishBuildArtifacts@1
-  #           displayName: 'Publish Artifact'
-  #           inputs:
-  #             PathtoPublish: '$(build.artifactstagingdirectory)/'
-  #             ArtifactName: 'appdrop'
-  #             publishLocation: 'Container'
-  #     - job: buildSqlDb
-  #       displayName: Build SQL Job
-  #       pool:
-  #         name: 'Azure Pipelines'
-  #         vmImage: 'windows-2019'
-  #       workspace:
-  #         clean: all
-  #       steps:
-  #         - task: VSBuild@1
-  #           displayName: 'Build DACPAC'
-  #           inputs:
-  #             solution: 'src/Sfa.Tl.ResultsAndCertification.Database/Sfa.Tl.ResultsAndCertification.Database.sqlproj'
-  #             platform: '$(buildPlatform)'
-  #             configuration: '$(buildConfiguration)'
-  #             msbuildArgs: '/p:PackageLocation="$(build.artifactstagingdirectory)/publish"'
-  #         - task: CopyFiles@2
-  #           displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-  #           inputs:
-  #             Contents: |
-  #               src\**\*.dacpac
-  #             TargetFolder: '$(build.artifactstagingdirectory)/'
-  #             OverWrite: true
-  #         - task: PublishBuildArtifacts@1
-  #           displayName: 'Publish Artifact'
-  #           inputs:
-  #             PathtoPublish: '$(build.artifactstagingdirectory)/'
-  #             ArtifactName: 'sqldrop'
-  #             publishLocation: 'Container'
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact'
+            inputs:
+              PathtoPublish: '$(build.artifactstagingdirectory)/'
+              ArtifactName: 'appdrop'
+              publishLocation: 'Container'
+      - job: buildSqlDb
+        displayName: Build SQL Job
+        pool:
+          name: 'Azure Pipelines'
+          vmImage: 'windows-2019'
+        workspace:
+          clean: all
+        steps:
+          - task: VSBuild@1
+            displayName: 'Build DACPAC'
+            inputs:
+              solution: 'src/Sfa.Tl.ResultsAndCertification.Database/Sfa.Tl.ResultsAndCertification.Database.sqlproj'
+              platform: '$(buildPlatform)'
+              configuration: '$(buildConfiguration)'
+              msbuildArgs: '/p:PackageLocation="$(build.artifactstagingdirectory)/publish"'
+          - task: CopyFiles@2
+            displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+            inputs:
+              Contents: |
+                src\**\*.dacpac
+              TargetFolder: '$(build.artifactstagingdirectory)/'
+              OverWrite: true
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact'
+            inputs:
+              PathtoPublish: '$(build.artifactstagingdirectory)/'
+              ArtifactName: 'sqldrop'
+              publishLocation: 'Container'
         
   
-  # - stage: IntegrationTest
-  #   displayName: Integration tests
-  #   dependsOn:
-  #     buildstage
-  #   jobs:
-  #     - job: runIntegrationtest
-  #       displayName: Run integrationtest
-  #       pool:
-  #         name: 'Azure Pipelines'
-  #         vmImage: 'windows-2019'
-  #       steps:
-  #         - task: DownloadBuildArtifacts@0
-  #           inputs:
-  #             buildType: 'current'
-  #             downloadType: 'single'
-  #             artifactName: 'appdrop'
-  #             downloadPath: '$(System.ArtifactsDirectory)'
-  #         - pwsh: |
-  #             Get-ChildItem -r
-  #         - task: DotNetCoreCLI@2
-  #           displayName: Integration Tests
-  #           inputs:
-  #             command: publish
-  #             publishWebProjects: false
-  #             projects: '**/*.IntegrationTests.csproj'
-  #             arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
+  - stage: IntegrationTest
+    displayName: Integration tests
+    dependsOn:
+      buildstage
+    jobs:
+      - job: runIntegrationtest
+        displayName: Run integrationtest
+        pool:
+          name: 'Azure Pipelines'
+          vmImage: 'windows-2019'
+        steps:
+          - task: DownloadBuildArtifacts@0
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'appdrop'
+              downloadPath: '$(System.ArtifactsDirectory)'
+          - pwsh: |
+              Get-ChildItem -r
+          - task: DotNetCoreCLI@2
+            displayName: Integration Tests
+            inputs:
+              command: publish
+              publishWebProjects: false
+              projects: '$(System.ArtifactsDirectory)\*.IntegrationTests.csproj'
+              arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
 
