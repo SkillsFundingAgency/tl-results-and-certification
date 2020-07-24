@@ -454,7 +454,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if(isSuccess)
             {
                 await _cacheService.RemoveAsync<RegistrationViewModel>(CacheKey);
-                TempData[Constants.RegistrationConfirmationViewModel] = JsonConvert.SerializeObject(new RegistrationConfirmationViewModel { UniqueLearnerNumber = cacheModel.Uln.Uln });
+                TempData.Set(Constants.RegistrationConfirmationViewModel, new RegistrationConfirmationViewModel { UniqueLearnerNumber = cacheModel.Uln.Uln });
                 return RedirectToRoute(RouteConstants.AddRegistrationConfirmation);
             }
             else
@@ -468,13 +468,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-registration-confirmation", Name = RouteConstants.AddRegistrationConfirmation)]
         public IActionResult AddRegistrationConfirmationAsync()
         {
-            if (TempData[Constants.RegistrationConfirmationViewModel] == null)
+            var viewModel = TempData.Get<RegistrationConfirmationViewModel>(Constants.RegistrationConfirmationViewModel);
+            if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read RegistrationConfirmationViewModel from temp data in add registration confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
-            var viewModel = JsonConvert.DeserializeObject<RegistrationConfirmationViewModel>(TempData[Constants.RegistrationConfirmationViewModel] as string);
             return View(viewModel);
         }
 
@@ -502,7 +501,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             else
             {
                 TempData.Set(Constants.RegistrationSearchCriteria, model.Search);
-                TempData[Constants.SearchRegistrationUlnNotFound] = JsonConvert.SerializeObject(new UlnNotFoundViewModel { Uln = model.Search.ToString() });
+                TempData.Set(Constants.SearchRegistrationUlnNotFound, new UlnNotFoundViewModel { Uln = model.Search.ToString() });
                 return RedirectToRoute(RouteConstants.SearchRegistrationNotFound);
             }
         }
@@ -511,13 +510,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-for-registration-ULN-not-found", Name = RouteConstants.SearchRegistrationNotFound)]
         public IActionResult SearchRegistrationNotFound()
         {
-            if (TempData[Constants.SearchRegistrationUlnNotFound] == null)
+            var viewModel = TempData.Get<UlnNotFoundViewModel>(Constants.SearchRegistrationUlnNotFound);
+            if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchRegistrationUlnNotFound from temp data in search registration not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
-            var viewModel = JsonConvert.DeserializeObject<UlnNotFoundViewModel>(TempData[Constants.SearchRegistrationUlnNotFound] as string);
             return View(viewModel);
         }
 
