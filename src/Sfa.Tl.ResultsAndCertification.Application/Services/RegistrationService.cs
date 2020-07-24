@@ -86,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
-        public async Task<RegistrationRecordResponse> ValidateManualRegistrationTlevelsAsync(RegistrationRequest registrationData)
+        private async Task<RegistrationRecordResponse> ValidateManualRegistrationTlevelsAsync(RegistrationRequest registrationData)
         {
             var aoProviderTlevels = await GetAllTLevelsByAoUkprnAsync(registrationData.AoUkprn);
 
