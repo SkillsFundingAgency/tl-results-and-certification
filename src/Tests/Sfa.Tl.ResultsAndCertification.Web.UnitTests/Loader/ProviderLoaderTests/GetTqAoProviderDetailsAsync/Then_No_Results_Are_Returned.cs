@@ -12,10 +12,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
         public override void Given()
         {
             ApiClientResponse = new List<ProviderDetails>();
-
             InternalApiClient.GetTqAoProviderDetailsAsync(Ukprn).Returns(ApiClientResponse);
-
-            //Loader = new ProviderLoader(InternalApiClient, Mapper);
+            Loader = new ProviderLoader(InternalApiClient, Mapper);
         }
 
         [Fact]

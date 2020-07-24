@@ -476,7 +476,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("search-for-registration", Name = RouteConstants.SearchRegistration)]
-        public IActionResult SearchRegistrationAsync()
+        public IActionResult SearchRegistration()
         {
             var viewModel = new SearchRegistrationViewModel { SearchUln = TempData.Get<string>(Constants.RegistrationSearchCriteria) };
             return View(viewModel);
