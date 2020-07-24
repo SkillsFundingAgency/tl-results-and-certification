@@ -97,7 +97,7 @@ stages:
                 azure\**
                 config\**
                 powershell\**
-                src\Tests\*.IntegrationTests
+                src\**\*.IntegrationTests
               TargetFolder: '$(build.artifactstagingdirectory)/'
               OverWrite: true
 
