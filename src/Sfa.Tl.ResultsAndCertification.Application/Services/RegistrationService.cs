@@ -321,13 +321,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln)
         {
-            // TODO: review required on business
-            var result =  await _tqRegistrationRepository.GetManyAsync(x => x.UniqueLearnerNumber == uln)
-                        .Select(x => new FindUlnResponse 
+            var result = await _tqRegistrationRepository.GetManyAsync(x => x.UniqueLearnerNumber == uln)
+                        .Select(x => new FindUlnResponse
                         {
                             Uln = x.UniqueLearnerNumber,
-                            RegistrationProfileId = x.Id, 
-                            IsRegisteredWithOtherAo = x.TqRegistrationPathways.FirstOrDefault().TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn
+                            RegistrationProfileId = x.Id,
+                            IsActive = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active &&
+                                                                    pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn),
+                            IsRegisteredWithOtherAo = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active &&
+                                                                    pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn)
                         })
                         .FirstOrDefaultAsync();
 
