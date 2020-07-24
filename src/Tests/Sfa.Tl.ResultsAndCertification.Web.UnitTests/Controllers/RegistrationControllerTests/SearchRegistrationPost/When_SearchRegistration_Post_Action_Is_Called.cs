@@ -12,11 +12,12 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.SearchRegistrationGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.SearchRegistrationPost
 {
-    public abstract class When_SearchRegistration_Get_Action_Is_Called : BaseTest<RegistrationController>
+    public abstract class When_SearchRegistration_Post_Action_Is_Called : BaseTest<RegistrationController>
     {
         protected int Ukprn;
+        protected string SearchUln;
         protected Guid UserId;
         protected string CacheKey;
         protected IRegistrationLoader RegistrationLoader;
@@ -26,6 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         protected RegistrationViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
         protected TempDataDictionary TempData;
+        protected SearchRegistrationViewModel SearchRegistrationViewModel;
         public IActionResult Result { get; private set; }
 
         public override void Setup()
@@ -36,6 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             Logger = Substitute.For<ILogger<RegistrationController>>();
             Controller = new RegistrationController(RegistrationLoader, CacheService, Logger);
 
+            SearchUln = "1234567890";
             Ukprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<RegistrationController>(Controller)
                .Add(CustomClaimTypes.Ukprn, Ukprn.ToString())
@@ -46,11 +49,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             HttpContextAccessor.HttpContext.Returns(httpContext);
             TempData = new TempDataDictionary(HttpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
             Controller.TempData = TempData;
+
+            var ulnNotFoundViewModel = new UlnNotFoundViewModel { Uln = SearchUln, IsActive = false };
+            RegistrationLoader.FindUlnAsync(Ukprn, SearchUln.ToLong()).Returns(ulnNotFoundViewModel);
         }
 
         public override void When()
         {
-            Result = Controller.SearchRegistration();
+            Result = Controller.SearchRegistrationAsync(SearchRegistrationViewModel).Result;
         }
     }
 }
