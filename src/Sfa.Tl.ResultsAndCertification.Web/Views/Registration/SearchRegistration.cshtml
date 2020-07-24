@@ -21,11 +21,11 @@
                         </h1>
                     </legend>
                     <p class="govuk-body">@SearchRegistration.Search_Info_Text</p>
-                    <div class="govuk-form-group" sfa-validation-for="Search" sfa-validation-class="govuk-form-group--error">
+                    <div class="govuk-form-group" sfa-validation-for="SearchUln" sfa-validation-class="govuk-form-group--error">
                         <label class="govuk-label" for="search">@SearchRegistration.Enter_Uln_Field_Text</label>
                         <span class="govuk-hint">@SearchRegistration.Uln_Hint_Text</span>
-                        <span sfa-validation-for="Search"></span>
-                        <input class="govuk-input govuk-input--width-20" id="search" asp-for="Search">
+                        <span sfa-validation-for="SearchUln"></span>
+                        <input class="govuk-input govuk-input--width-20" id="search" asp-for="SearchUln" maxlength="10">
                     </div>
                 </fieldset>
             </div>

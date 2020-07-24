@@ -27,6 +27,8 @@
         public const string UlnNotFoundViewModel = "UlnNotFoundViewModel";
 
         public const string RegistrationConfirmationViewModel = "RegistrationConfirmationViewModel";
+        public const string SearchRegistrationUlnNotFound = "SearchRegistrationUlnNotFound";
+        public const string RegistrationSearchCriteria = "RegistrationSearchCriteria";
 
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 100000;

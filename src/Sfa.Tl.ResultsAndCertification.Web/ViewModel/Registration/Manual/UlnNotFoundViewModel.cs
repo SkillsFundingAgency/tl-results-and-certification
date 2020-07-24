@@ -10,6 +10,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public bool IsRegisteredWithOtherAo { get; set; }
         public bool IsActive { get; set; }
 
+        public string BackLinkRouteName { get; set; }
+
         public bool IsUlnRegisteredAlready
         {
             get
@@ -22,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         {
             get
             {
-                return new BackLinkModel { RouteName = RouteConstants.AddRegistrationUln };
+                return new BackLinkModel { RouteName = !string.IsNullOrWhiteSpace(BackLinkRouteName) ? BackLinkRouteName : RouteConstants.AddRegistrationUln };
             }
         }
     }
