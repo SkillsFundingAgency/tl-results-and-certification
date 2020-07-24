@@ -476,7 +476,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var viewModel = JsonConvert.DeserializeObject<RegistrationConfirmationViewModel>(TempData[Constants.RegistrationConfirmationViewModel] as string);
             return View(viewModel);
-        }        
+        }
+
+        [HttpGet]
+        [Route("search-for-registration", Name = RouteConstants.SearchRegistration)]
+        public IActionResult SearchRegistrationAsync()
+        {
+            var viewModel = new SearchRegistrationViewModel();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("search-for-registration", Name = RouteConstants.SubmitSearchRegistration)]
+        public async Task<IActionResult> SearchRegistrationAsync(SearchRegistrationViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var searchResult = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.Search.Value);
+
+            if (searchResult?.IsActive == true)
+            {
+                return RedirectToRoute("");
+            }
+            else
+            {
+                return RedirectToRoute("");
+            }
+        }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {

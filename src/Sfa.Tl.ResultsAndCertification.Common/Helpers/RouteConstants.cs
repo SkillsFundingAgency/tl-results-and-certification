@@ -74,6 +74,10 @@
         public const string SubmitRegistrationCheckAndSubmit = "SubmitRegistrationCheckAndSubmit";
         public const string AddRegistrationConfirmation = "AddRegistrationConfirmation";
 
+        // Search Registration
+        public const string SearchRegistration = "SearchRegistration";
+        public const string SubmitSearchRegistration = "SubmitSearchRegistration";
+
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";
