@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
@@ -26,6 +27,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.AddRegistrationLearnersName);
+        }
+
+        [Fact]
+        public void Then_FindUlnAsync_Method_Is_Called()
+        {
+            RegistrationLoader.Received(1).FindUlnAsync(Arg.Any<long>(), UlnViewModel.Uln.ToLong());
         }
     }
 }

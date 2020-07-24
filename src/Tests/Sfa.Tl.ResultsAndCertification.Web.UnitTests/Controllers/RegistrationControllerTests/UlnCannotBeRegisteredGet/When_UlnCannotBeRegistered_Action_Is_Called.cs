@@ -14,9 +14,9 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationUlnPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.UlnCannotBeRegisteredGet
 {
-    public abstract class When_AddRegistrationUln_Action_Is_Called : BaseTest<RegistrationController>
+    public abstract class When_UlnCannotBeRegistered_Action_Is_Called : BaseTest<RegistrationController>
     {
         protected Guid UserId;
         protected string CacheKey;
@@ -25,10 +25,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         protected ILogger<RegistrationController> Logger;
         protected RegistrationController Controller;
         protected RegistrationViewModel ViewModel;
-        protected UlnViewModel UlnViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; private set; }
-
         protected TempDataDictionary TempData;
 
         public override void Setup()
@@ -38,21 +36,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<RegistrationController>>();
             Controller = new RegistrationController(RegistrationLoader, CacheService, Logger);
-            
+
             var httpContext = new ClaimsIdentityBuilder<RegistrationController>(Controller)
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
                .Build()
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
+            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey);
             TempData = new TempDataDictionary(HttpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
             Controller.TempData = TempData;
-            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey);
         }
 
         public override void When()
         {
-            Result = Controller.AddRegistrationUlnAsync(UlnViewModel).Result;
+            Result = Controller.UlnCannotBeRegistered();
         }
     }
 }
