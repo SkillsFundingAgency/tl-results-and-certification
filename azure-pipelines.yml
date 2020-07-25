@@ -141,8 +141,8 @@ stages:
     
   - stage: Dev
     displayName: Dev
-    dependsOn:
-      buildstage
+    # dependsOn:
+    #   buildstage
     
     variables:
       - group: Common Shared Resources
