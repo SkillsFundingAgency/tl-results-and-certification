@@ -148,8 +148,8 @@ stages:
       - group: Common Shared Resources
       - group: Dev Shared Resources
       - name: ResourceGroupName
-        value: $[variables.ResourceIdentifier]
-        # + $[variables.ResourceEnvironmentName] + '-$(ServiceName)-rg'
+        value: $[variables.ResourceIdentifier] $[variables.ResourceEnvironmentName]
+        # + '-$(ServiceName)-rg'
       - name: ServiceName
         value: 'resac'
       - name: AspSize
