@@ -148,7 +148,8 @@ stages:
       - group: Common Shared Resources
       - group: Dev Shared Resources
       - name: ResourceGroupName
-        value: $[variables.ResourceIdentifier] + $[variables.ResourceEnvironmentName] + '-$(ServiceName)-rg'
+        value: $[variables.ResourceIdentifier]
+        # + $[variables.ResourceEnvironmentName] + '-$(ServiceName)-rg'
       - name: ServiceName
         value: 'resac'
       - name: AspSize
@@ -167,7 +168,7 @@ stages:
         pool:
           vmImage: 'ubuntu-16.04'
         steps:
-          - bash: echo $[variables.ResourceIdentifier]
+          - bash: echo ResourceGroupName
 
       # - job: createInfrastructure
       #   displayName: Create Infrastructure
