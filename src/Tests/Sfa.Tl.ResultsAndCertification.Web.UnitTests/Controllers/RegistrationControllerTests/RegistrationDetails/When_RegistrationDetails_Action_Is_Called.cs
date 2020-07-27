@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
@@ -12,12 +13,12 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.SearchRegistrationPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.RegistrationDetails
 {
-    public abstract class When_SearchRegistration_Post_Action_Is_Called : BaseTest<RegistrationController>
+    public abstract class When_RegistrationDetails_Action_Is_Called : BaseTest<RegistrationController>
     {
         protected int AoUkprn;
-        protected string SearchUln;
+        protected int ProfileId;
         protected Guid UserId;
         protected string CacheKey;
         protected IRegistrationLoader RegistrationLoader;
@@ -26,8 +27,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         protected RegistrationController Controller;
         protected RegistrationViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
-        protected TempDataDictionary TempData;
-        protected SearchRegistrationViewModel SearchRegistrationViewModel;
         public IActionResult Result { get; private set; }
 
         public override void Setup()
@@ -38,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             Logger = Substitute.For<ILogger<RegistrationController>>();
             Controller = new RegistrationController(RegistrationLoader, CacheService, Logger);
 
-            SearchUln = "1234567890";
+            ProfileId = 1;
             AoUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<RegistrationController>(Controller)
                .Add(CustomClaimTypes.Ukprn, AoUkprn.ToString())
@@ -47,16 +46,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
-            TempData = new TempDataDictionary(HttpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
-            Controller.TempData = TempData;
-
-            var ulnNotFoundViewModel = new UlnNotFoundViewModel { Uln = SearchUln, IsActive = false };
-            RegistrationLoader.FindUlnAsync(AoUkprn, SearchUln.ToLong()).Returns(ulnNotFoundViewModel);
+            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey);
         }
 
         public override void When()
         {
-            Result = Controller.SearchRegistrationAsync(SearchRegistrationViewModel).Result;
+            Result = Controller.RegistrationDetailsAsync(ProfileId).Result;
         }
     }
 }
