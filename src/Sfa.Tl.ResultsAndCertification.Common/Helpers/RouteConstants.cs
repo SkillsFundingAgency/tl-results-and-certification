@@ -83,6 +83,7 @@
         
         // Cancel Registration
         public const string CancelRegistration = "CancelRegistration";
+        public const string SubmitCancelRegistration = "SubmitCancelRegistration";
         public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
 
         // Error

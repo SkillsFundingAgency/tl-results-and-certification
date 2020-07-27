@@ -24,7 +24,7 @@
             <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
         </dl>
         <p class="govuk-body">@RegistrationDetails.You_can_Amend_These_Details_By_Text <a class="govuk-link" asp-route="UploadRegistrationsFile">@RegistrationDetails.Uploading_A_Csv_File_Text</a>.</p>
-        <p><a class="govuk-button govuk-button--secondary " role="button">@RegistrationDetails.Cancel_This_Registration_Button_Text</a></p>
+        <p><a class="govuk-button govuk-button--secondary " role="button" asp-route="CancelRegistration" asp-route-profileId="@Model.ProfileId">@RegistrationDetails.Cancel_This_Registration_Button_Text</a></p>
         <p><a class="govuk-button" role="button" asp-route="SearchRegistration">@RegistrationDetails.Search_Again_Button_Text</a></p>
     </div>
 </div>

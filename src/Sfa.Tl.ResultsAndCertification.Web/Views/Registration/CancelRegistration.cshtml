@@ -2,7 +2,7 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
 
 @{
-    ViewData["Title"] = "Cancel registration page";
+    ViewData["Title"] = CancelRegistration.Page_Title;
 }
 
 @section NavigationBar
@@ -10,7 +10,10 @@
     <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
-<form asp-route="CancelRegistration">
+<form asp-route="SubmitCancelRegistration">
+
+    <input type="hidden" asp-for="ProfileId" />
+    <input type="hidden" asp-for="Uln" />
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -19,30 +22,30 @@
                 <fieldset class="govuk-fieldset" aria-describedby="remove-tlevel-hint">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
                         <h1 class="govuk-fieldset__heading">
-                            Are you sure you want to cancel this registration?
+                            @CancelRegistration.Page_Heading
                         </h1>
                     </legend>
                     <span id="remove-tlevel-hint" class="govuk-hint govuk-!-margin-bottom-7">
-                        <strong>ULN:</strong> @Model.Uln
+                        <strong>@CancelRegistration.Uln_Hint</strong> @Model.Uln
                     </span>
                     <div class="govuk-radios" sfa-validation-for="CancelRegistration" sfa-validation-class="govuk-form-group--error">
                         <span sfa-validation-for="CancelRegistration"></span>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="cancelregistration" asp-for="CancelRegistration" type="radio" value="true">
                             <label class="govuk-label govuk-radios__label" for="reg-answer-1">
-                                Yes, cancel registration
+                                @CancelRegistration.Cancel_Registration_Yes
                             </label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="cancelregistration" asp-for="CancelRegistration" type="radio" value="false">
                             <label class="govuk-label govuk-radios__label" for="reg-answer-2">
-                                No, do not cancel it
+                                @CancelRegistration.Cancel_Registration_No
                             </label>
                         </div>
                     </div>
                 </fieldset>
             </div>
-            <button class="govuk-button" data-module="govuk-button">Submit</button>
+            <button class="govuk-button" data-module="govuk-button">@CancelRegistration.Submit_Button_Text</button>
         </div>
     </div>
 </form>
