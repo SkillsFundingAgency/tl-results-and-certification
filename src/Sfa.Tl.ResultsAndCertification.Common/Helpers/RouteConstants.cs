@@ -78,6 +78,8 @@
         public const string SearchRegistration = "SearchRegistration";
         public const string SubmitSearchRegistration = "SubmitSearchRegistration";
         public const string SearchRegistrationNotFound = "SearchRegistrationNotFound";
+        public const string RegistrationDetails = "RegistrationDetails";
+
         
         // Cancel Registration
         public const string CancelRegistration = "CancelRegistration";

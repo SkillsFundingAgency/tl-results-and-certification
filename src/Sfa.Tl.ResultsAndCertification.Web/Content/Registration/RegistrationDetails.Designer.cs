@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Breadcrumb {
+    public class RegistrationDetails {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Breadcrumb() {
+        internal RegistrationDetails() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb", typeof(Breadcrumb).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.RegistrationDetails", typeof(RegistrationDetails).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,101 +61,119 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Home.
+        ///   Looks up a localized string similar to Cancel this registration.
         /// </summary>
-        public static string Home {
+        public static string Cancel_This_Registration_Button_Text {
             get {
-                return ResourceManager.GetString("Home", resourceCulture);
+                return ResourceManager.GetString("Cancel_This_Registration_Button_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Find a provider.
+        ///   Looks up a localized string similar to Search for a registration - Registration details page.
         /// </summary>
-        public static string Provider_Find_Provider {
+        public static string Page_Title {
             get {
-                return ResourceManager.GetString("Provider_Find_Provider", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Provider’s T Levels.
-        /// </summary>
-        public static string Provider_Tlevels {
-            get {
-                return ResourceManager.GetString("Provider_Tlevels", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your providers.
-        /// </summary>
-        public static string Provider_Your_Providers {
-            get {
-                return ResourceManager.GetString("Provider_Your_Providers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Registrations.
-        /// </summary>
-        public static string Registration_Dashboard {
-            get {
-                return ResourceManager.GetString("Registration_Dashboard", resourceCulture);
+                return ResourceManager.GetString("Page_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Registration details.
         /// </summary>
-        public static string Registration_Details {
+        public static string Registration_Details_Heading_Text {
             get {
-                return ResourceManager.GetString("Registration_Details", resourceCulture);
+                return ResourceManager.GetString("Registration_Details_Heading_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a registration.
+        ///   Looks up a localized string similar to Search again.
         /// </summary>
-        public static string Search_For_Registration {
+        public static string Search_Again_Button_Text {
             get {
-                return ResourceManager.GetString("Search_For_Registration", resourceCulture);
+                return ResourceManager.GetString("Search_Again_Button_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level details.
+        ///   Looks up a localized string similar to Academic year.
         /// </summary>
-        public static string Tlevel_Details {
+        public static string Title_AcademicYear_Text {
             get {
-                return ResourceManager.GetString("Tlevel_Details", resourceCulture);
+                return ResourceManager.GetString("Title_AcademicYear_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Review T Levels.
+        ///   Looks up a localized string similar to Core (code).
         /// </summary>
-        public static string Tlevel_Review_Select {
+        public static string Title_Core_Text {
             get {
-                return ResourceManager.GetString("Tlevel_Review_Select", resourceCulture);
+                return ResourceManager.GetString("Title_Core_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your T Levels.
+        ///   Looks up a localized string similar to Date of birth.
         /// </summary>
-        public static string Tlevel_ViewAll {
+        public static string Title_DateofBirth_Text {
             get {
-                return ResourceManager.GetString("Tlevel_ViewAll", resourceCulture);
+                return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload registrations file.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
-        public static string Upload_Registrations_File {
+        public static string Title_Name_Text {
             get {
-                return ResourceManager.GetString("Upload_Registrations_File", resourceCulture);
+                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider (UKPRN).
+        /// </summary>
+        public static string Title_Provider_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specialism (code).
+        /// </summary>
+        public static string Title_Specialism_Text {
+            get {
+                return ResourceManager.GetString("Title_Specialism_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ULN: {0}.
+        /// </summary>
+        public static string Uln_Heading_Text {
+            get {
+                return ResourceManager.GetString("Uln_Heading_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to uploading a csv file.
+        /// </summary>
+        public static string Uploading_A_Csv_File_Text {
+            get {
+                return ResourceManager.GetString("Uploading_A_Csv_File_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can amend these details by.
+        /// </summary>
+        public static string You_can_Amend_These_Details_By_Text {
+            get {
+                return ResourceManager.GetString("You_can_Amend_These_Details_By_Text", resourceCulture);
             }
         }
     }
