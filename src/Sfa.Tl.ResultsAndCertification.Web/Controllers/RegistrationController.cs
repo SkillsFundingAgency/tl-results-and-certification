@@ -493,7 +493,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (searchResult?.IsActive == true)
             {
-                return RedirectToRoute("");
+                return RedirectToRoute(RouteConstants.SearchRegistrationDetails, new { profileId = searchResult.RegistrationProfileId }); ;
             }
             else
             {
@@ -516,6 +516,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [Route("search-for-registration-registration-details/{profileId}", Name = RouteConstants.SearchRegistrationDetails)]
+        public async Task<IActionResult> RegistrationDetailsAsync(int profileId)
+        {
+            var viewModel = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: GetRegistrationDetailsByProfileIdAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+        
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
