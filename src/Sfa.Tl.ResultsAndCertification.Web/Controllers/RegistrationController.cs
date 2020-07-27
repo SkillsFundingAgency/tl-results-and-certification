@@ -493,7 +493,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (searchResult?.IsActive == true)
             {
-                return RedirectToRoute(RouteConstants.SearchRegistrationDetails, new { profileId = searchResult.RegistrationProfileId }); ;
+                return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = searchResult.RegistrationProfileId });
             }
             else
             {
@@ -517,7 +517,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("search-for-registration-registration-details/{profileId}", Name = RouteConstants.SearchRegistrationDetails)]
+        [Route("search-for-registration-registration-details/{profileId}", Name = RouteConstants.RegistrationDetails)]
         public async Task<IActionResult> RegistrationDetailsAsync(int profileId)
         {
             var viewModel = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
