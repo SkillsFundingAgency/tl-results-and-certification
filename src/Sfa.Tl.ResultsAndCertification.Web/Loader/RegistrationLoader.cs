@@ -107,5 +107,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var registrationModel = _mapper.Map<RegistrationRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.AddRegistrationAsync(registrationModel);
         }
+
+        public async Task<RegistrationDetailsViewModel> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
+        {
+            var response = await _internalApiClient.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
+            return _mapper.Map<RegistrationDetailsViewModel>(response);
+        }
     }
 }

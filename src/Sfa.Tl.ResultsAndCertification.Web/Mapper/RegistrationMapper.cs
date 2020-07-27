@@ -48,6 +48,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<RegistrationViewModel, RegistrationRequest>>());
 
             CreateMap<FindUlnResponse, UlnNotFoundViewModel>();
+
+            CreateMap<RegistrationDetails, RegistrationDetailsViewModel>();               
         }
     }
 }
