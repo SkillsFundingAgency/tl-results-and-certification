@@ -80,6 +80,11 @@
         public const string SearchRegistrationNotFound = "SearchRegistrationNotFound";
         public const string SearchRegistrationDetails = "SearchRegistrationDetails";
 
+        
+        // Cancel Registration
+        public const string CancelRegistration = "CancelRegistration";
+        public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
+
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";

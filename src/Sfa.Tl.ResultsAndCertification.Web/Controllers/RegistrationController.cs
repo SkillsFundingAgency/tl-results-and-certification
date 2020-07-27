@@ -531,6 +531,36 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
         
+        [HttpGet]
+        [Route("cancel-registration", Name = RouteConstants.CancelRegistration)]
+        public IActionResult CancelRegistration()
+        {
+            var model = new CancelRegistrationViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("cancel-registration", Name = RouteConstants.CancelRegistration)]
+        public IActionResult CancelRegistration(CancelRegistrationViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            if (!viewModel.CancelRegistration.Value)
+                return RedirectToRoute(RouteConstants.RegistrationDashboard);  // TODO: check with the story. 
+
+            return RedirectToRoute(RouteConstants.RegistrationCancelledConfirmation);
+        }
+
+        [HttpGet]
+        [Route("registration-cancelled-confirmation", Name = RouteConstants.RegistrationCancelledConfirmation)]
+        public IActionResult RegistrationCancelledConfirmation()
+        {
+            return View();
+        }
+
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
