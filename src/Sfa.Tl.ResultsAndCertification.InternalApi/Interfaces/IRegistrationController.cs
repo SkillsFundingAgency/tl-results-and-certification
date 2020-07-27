@@ -7,5 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
     {
         Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request);
         Task<bool> AddRegistrationAsync(RegistrationRequest model);
+        Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId);
     }
 }

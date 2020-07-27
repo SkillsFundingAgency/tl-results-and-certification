@@ -14,5 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<RegistrationProcessResponse> CompareAndProcessRegistrationsAsync(IList<TqRegistrationProfile> registrations);
         Task<bool> AddRegistrationAsync(RegistrationRequest model);
         Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln);
+        Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId);
     }
 }

@@ -322,18 +322,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln)
         {
             var result = await _tqRegistrationRepository.GetManyAsync(x => x.UniqueLearnerNumber == uln)
-                        .Select(x => new FindUlnResponse
-                        {
-                            Uln = x.UniqueLearnerNumber,
-                            RegistrationProfileId = x.Id,
-                            IsActive = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active &&
-                                                                    pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn),
-                            IsRegisteredWithOtherAo = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active &&
-                                                                    pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn)
-                        })
-                        .FirstOrDefaultAsync();
+                .Select(x => new FindUlnResponse
+                {
+                    Uln = x.UniqueLearnerNumber,
+                    RegistrationProfileId = x.Id,
+                    IsActive = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active &&
+                                                            pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn),
+                    IsRegisteredWithOtherAo = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active &&
+                                                            pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn)
+                })
+                .FirstOrDefaultAsync();
 
             return result;
+        }
+
+        public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
+        {
+            return await _tqRegistrationRepository.GetRegistrationDetailsByProfileId(aoUkprn, profileId);
         }
 
         private TqRegistrationProfile TransformManualRegistrationModel(RegistrationRequest model, RegistrationRecordResponse registrationRecord)
@@ -521,6 +526,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Uln = uln.ToString(),
                 ErrorMessage = errorMessage
             };
-        }
+        }        
     }
 }

@@ -1,8 +1,10 @@
 ﻿using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +15,29 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
     public class RegistrationRepository : GenericRepository<TqRegistrationProfile>, IRegistrationRepository
     {
         private ILogger<RegistrationRepository> _logger;
-        
+
         public RegistrationRepository(ILogger<RegistrationRepository> logger, ResultsAndCertificationDbContext dbContext) : base(logger, dbContext)
         {
             _logger = logger;
+        }
+
+        public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
+        {
+            var registrationDetails = await _dbContext.TqRegistrationPathway
+                .Where(p => p.Status == RegistrationPathwayStatus.Active && p.TqRegistrationProfile.Id == profileId && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn)
+                .Select(p => new RegistrationDetails
+                {
+                    ProfileId = p.TqRegistrationProfileId,
+                    Uln = p.TqRegistrationProfile.UniqueLearnerNumber,
+                    Name = $"{p.TqRegistrationProfile.Firstname} {p.TqRegistrationProfile.Lastname}",
+                    DateofBirth = p.TqRegistrationProfile.DateofBirth,
+                    ProviderDisplayName = $"{p.TqProvider.TlProvider.Name} ({p.TqProvider.TlProvider.UkPrn})",
+                    PathwayDisplayName = $"{p.TqProvider.TqAwardingOrganisation.TlPathway.Name} ({p.TqProvider.TqAwardingOrganisation.TlPathway.LarId})",
+                    SpecialismsDisplayName = p.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).OrderBy(s => s.TlSpecialism.Name).Select(s => $"{s.TlSpecialism.Name} ({s.TlSpecialism.LarId})"),
+                    AcademicYear = p.AcademicYear
+                }).FirstOrDefaultAsync();
+
+            return registrationDetails;
         }
 
         public async Task<IList<TqRegistrationProfile>> GetRegistrationProfilesAsync(IList<TqRegistrationProfile> registrations)
@@ -61,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         }
                         catch (Exception ex)
                         {
-                            _logger.LogError(ex.Message, ex.InnerException);    
+                            _logger.LogError(ex.Message, ex.InnerException);
                             transaction.Rollback();
                             result = false;
                         }
@@ -76,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (profileEntities != null && profileEntities.Count > 0)
             {
                 var orignialProfileEntititesCopy = new List<TqRegistrationProfile>(profileEntities);
-                
+
                 profileEntities = SortUpdateAndInsertOrder(profileEntities, x => x.Id);
 
                 await _dbContext.BulkInsertOrUpdateAsync(profileEntities, bulkConfig);
@@ -85,7 +106,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 {
                     TqRegistrationProfile profileEntity = null;
 
-                    if (profile.Id <= 0) {
+                    if (profile.Id <= 0)
+                    {
                         profileEntity = profileEntities.FirstOrDefault(x => x.UniqueLearnerNumber == profile.UniqueLearnerNumber);
                     }
 
@@ -116,7 +138,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 orignialPathwayEntititesCopy.ForEach(pathway =>
                 {
                     TqRegistrationPathway pathwayEntity = null;
-                    if (pathway.Id <= 0) {
+                    if (pathway.Id <= 0)
+                    {
                         pathwayEntity = pathwayRegistrations.FirstOrDefault(p => p.TqRegistrationProfileId == pathway.TqRegistrationProfileId
                                                                                 && p.TqProviderId == pathway.TqProviderId
                                                                                 && p.Status == Common.Enum.RegistrationPathwayStatus.Active);
@@ -141,7 +164,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (specialismRegistrations.Count > 0)
             {
                 specialismRegistrations = SortUpdateAndInsertOrder(specialismRegistrations, x => x.Id);
-                await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60;  });
+                await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
             }
         }
 
