@@ -338,7 +338,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
         {
-            return await _tqRegistrationRepository.GetRegistrationDetailsByProfileId(aoUkprn, profileId);
+            return await _tqRegistrationRepository.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
         }
 
         private TqRegistrationProfile TransformManualRegistrationModel(RegistrationRequest model, RegistrationRecordResponse registrationRecord)
