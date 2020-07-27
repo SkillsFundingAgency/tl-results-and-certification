@@ -113,5 +113,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
                 return ResourceManager.GetString("Uln_Hint", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select yes if you want to cancel this registration.
+        /// </summary>
+        public static string Validation_Message {
+            get {
+                return ResourceManager.GetString("Validation_Message", resourceCulture);
+            }
+        }
     }
 }

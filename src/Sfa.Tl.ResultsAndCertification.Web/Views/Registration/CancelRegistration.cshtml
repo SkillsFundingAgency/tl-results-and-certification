@@ -10,9 +10,10 @@
     <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
-<form asp-route="CancelRegistration">
-    
-    <input type="hidden" asp-for="TqRegistrationProfileId" />
+<form asp-route="SubmitCancelRegistration">
+
+    <input type="hidden" asp-for="ProfileId" />
+    <input type="hidden" asp-for="Uln" />
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

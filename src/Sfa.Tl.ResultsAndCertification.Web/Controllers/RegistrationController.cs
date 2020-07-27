@@ -532,15 +532,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
         
         [HttpGet]
-        [Route("cancel-registration", Name = RouteConstants.CancelRegistration)]
-        public IActionResult CancelRegistration()
+        [Route("cancel-registration/{profileId}", Name = RouteConstants.CancelRegistration)]
+        public async Task<IActionResult> CancelRegistration(int profileId)
         {
-            var model = new CancelRegistrationViewModel();
-            return View(model);
+            var ulnDetails = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
+            if (ulnDetails == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = new CancelRegistrationViewModel { ProfileId = ulnDetails.ProfileId, Uln = ulnDetails.Uln };
+            return View(viewModel);
         }
 
         [HttpPost]
-        [Route("cancel-registration", Name = RouteConstants.CancelRegistration)]
+        [Route("cancel-registration", Name = RouteConstants.SubmitCancelRegistration)]
         public IActionResult CancelRegistration(CancelRegistrationViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -549,7 +553,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             if (!viewModel.CancelRegistration.Value)
-                return RedirectToRoute(RouteConstants.RegistrationDashboard);  // TODO: check with the story. 
+                return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = viewModel.ProfileId });
 
             return RedirectToRoute(RouteConstants.RegistrationCancelledConfirmation);
         }

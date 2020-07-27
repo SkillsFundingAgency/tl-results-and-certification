@@ -1,6 +1,8 @@
-﻿using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
@@ -8,20 +10,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
     {
         public long Uln { get; set; }
 
-        public int TqRegistrationProfileId { get; set; }
+        public int ProfileId { get; set; }
         
-        [Required(ErrorMessage = "Select yes if you want to cancel this registration")]
+        [Required(ErrorMessageResourceType = typeof(ErrorResource.CancelRegistration), ErrorMessageResourceName = "Validation_Message")]
         public bool? CancelRegistration { get; set; }
         
         public BackLinkModel BackLink
         {
             get
             {
-                // TODO: Check the links. 
                 return new BackLinkModel
                 {
-                    RouteName = "Search-for-registration-registration-details",
-                    RouteAttributes = new Dictionary<string, string> { { "TqRegistrationProfileId", TqRegistrationProfileId.ToString() } }
+                    RouteName = RouteConstants.RegistrationDetails,
+                    RouteAttributes = new Dictionary<string, string> { { "profileId", ProfileId.ToString() } }
                 };
             }
         }
