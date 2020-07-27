@@ -78,6 +78,10 @@
         public const string SearchRegistration = "SearchRegistration";
         public const string SubmitSearchRegistration = "SubmitSearchRegistration";
         public const string SearchRegistrationNotFound = "SearchRegistrationNotFound";
+        
+        // Cancel Registration
+        public const string CancelRegistration = "CancelRegistration";
+        public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
 
         // Error
         public const string PageNotFound = "PageNotFound";
