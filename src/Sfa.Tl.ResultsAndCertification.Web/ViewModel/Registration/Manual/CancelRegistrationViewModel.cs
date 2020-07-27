@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
                 return new BackLinkModel
                 {
                     RouteName = "Search-for-registration-registration-details",
-                    RouteAttributes = new Dictionary<string, string> { { "tqRegistrationProfileId", TqRegistrationProfileId.ToString() } }
+                    RouteAttributes = new Dictionary<string, string> { { "TqRegistrationProfileId", TqRegistrationProfileId.ToString() } }
                 };
             }
         }
