@@ -149,7 +149,7 @@ stages:
       - group: Dev Shared Resources
 
       - name: ResourceGroupName
-        value: $[ format({0){1}, variables.ResourceIdentifier, variables.ResourceEnvironmentName) ]
+        value: ${{ format('{0) {1}', variables.ResourceIdentifier, variables.ResourceEnvironmentName) }}
 
 
         # + '-$(ServiceName)-rg'
