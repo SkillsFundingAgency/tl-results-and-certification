@@ -21,6 +21,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _logger = logger;
         }
 
+        public async Task<TqRegistrationProfile> GetRegistrationProfileByProfileIdAsync(long aoUkprn, int profileId)
+        {
+            var profile = await _dbContext.TqRegistrationProfile
+                .Where(x => x.Id == profileId && x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active && pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn))
+                .Include(x => x.TqRegistrationPathways)
+                    .ThenInclude(x => x.TqRegistrationSpecialisms)
+                .FirstOrDefaultAsync();
+
+            return profile;
+        }
+
         public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
         {
             var registrationDetails = await _dbContext.TqRegistrationPathway

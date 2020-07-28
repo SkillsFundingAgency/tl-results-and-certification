@@ -341,6 +341,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqRegistrationRepository.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
         }
 
+        public async Task<bool> DeleteRegistrationByProfileId(long aoUkprn, int profileId)
+        {
+            var registrationProfile = await _tqRegistrationRepository.GetRegistrationProfileByProfileIdAsync(aoUkprn, profileId);
+
+            if(registrationProfile == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to delete registration as registration does not exists for ProfileId = {profileId}. Method: DeleteRegistrationByProfileId({aoUkprn}, {profileId})");
+                return false;
+            }
+
+            return await _tqRegistrationRepository.DeleteAsync(registrationProfile) > 0;
+        }
+
+        #region Private Methods
+
         private TqRegistrationProfile TransformManualRegistrationModel(RegistrationRequest model, RegistrationRecordResponse registrationRecord)
         {
             var toAddRegistration = new TqRegistrationProfile
@@ -526,6 +541,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Uln = uln.ToString(),
                 ErrorMessage = errorMessage
             };
-        }        
+        }
+
+        #endregion
     }
 }
