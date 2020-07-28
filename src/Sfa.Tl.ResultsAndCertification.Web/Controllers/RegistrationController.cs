@@ -533,7 +533,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         
         [HttpGet]
         [Route("cancel-registration/{profileId}", Name = RouteConstants.CancelRegistration)]
-        public async Task<IActionResult> CancelRegistration(int profileId)
+        public async Task<IActionResult> CancelRegistrationAsync(int profileId)
         {
             var ulnDetails = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
             if (ulnDetails == null)
