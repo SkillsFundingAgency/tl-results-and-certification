@@ -149,7 +149,7 @@ stages:
       - group: Dev Shared Resources
 
       - name: ResourceGroupName
-        value: $[ join(variables.ResourceIdentifier, variables.ResourceEnvironmentName) ]
+        value: $[ concat(variables.ResourceIdentifier, variables.ResourceEnvironmentName) ]
 
 
         # + '-$(ServiceName)-rg'
