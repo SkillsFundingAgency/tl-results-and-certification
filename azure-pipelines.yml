@@ -150,9 +150,9 @@ stages:
 
       - name: ServiceName
         value: 'resac'
-        
+
       - name: ResourceGroupName
-        value: $[ format('{0}{1}-{2}-rg', variables.ResourceIdentifier, variables.ResourceEnvironmentName), $(ServiceName) ]
+        value: $[ format('{0}{1}-{2}-rg', variables.ResourceIdentifier, variables.ResourceEnvironmentName), variables.ServiceName ]
 
         # + '-$(ServiceName)-rg'
       
