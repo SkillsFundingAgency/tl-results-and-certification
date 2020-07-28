@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override void When()
         {
-            Result = Controller.CancelRegistration(ViewModel);
+            Result = Controller.CancelRegistrationAsync(ViewModel).Result;
         }
     }
 }

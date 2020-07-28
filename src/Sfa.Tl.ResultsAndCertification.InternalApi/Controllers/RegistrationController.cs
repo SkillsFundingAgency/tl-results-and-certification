@@ -53,9 +53,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpDelete]
         [Route("DeleteRegistration/{aoUkprn}/{profileId}")]
-        public async Task<bool> DeleteRegistrationByProfileIdAsync(long aoUkprn, int profileId)
+        public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)
         {
-            return await _registrationService.DeleteRegistrationByProfileId(aoUkprn, profileId);
+            return await _registrationService.DeleteRegistrationAsync(aoUkprn, profileId);
         }
     }
 }

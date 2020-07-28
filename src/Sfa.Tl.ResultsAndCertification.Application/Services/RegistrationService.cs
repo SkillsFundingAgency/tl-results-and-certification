@@ -341,9 +341,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqRegistrationRepository.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
         }
 
-        public async Task<bool> DeleteRegistrationByProfileId(long aoUkprn, int profileId)
+        public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)
         {
-            var registrationProfile = await _tqRegistrationRepository.GetRegistrationProfileByProfileIdAsync(aoUkprn, profileId);
+            var registrationProfile = await _tqRegistrationRepository.GetRegistrationProfileAsync(aoUkprn, profileId);
 
             if(registrationProfile == null)
             {

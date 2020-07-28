@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _logger = logger;
         }
 
-        public async Task<TqRegistrationProfile> GetRegistrationProfileByProfileIdAsync(long aoUkprn, int profileId)
+        public async Task<TqRegistrationProfile> GetRegistrationProfileAsync(long aoUkprn, int profileId)
         {
             var profile = await _dbContext.TqRegistrationProfile
                 .Where(x => x.Id == profileId && x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active && pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn))

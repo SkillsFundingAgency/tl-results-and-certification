@@ -545,17 +545,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("cancel-registration", Name = RouteConstants.SubmitCancelRegistration)]
-        public IActionResult CancelRegistration(CancelRegistrationViewModel viewModel)
+        public async Task<IActionResult> CancelRegistrationAsync(CancelRegistrationViewModel viewModel)
         {
             if (!ModelState.IsValid)
-            {
                 return View(viewModel);
-            }
 
             if (!viewModel.CancelRegistration.Value)
                 return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = viewModel.ProfileId });
 
-            return RedirectToRoute(RouteConstants.RegistrationCancelledConfirmation);
+            var isSuccess = await _registrationLoader.DeleteRegistrationAsync(User.GetUkPrn(), viewModel.ProfileId);
+
+            if (isSuccess)
+            {
+                return RedirectToRoute(RouteConstants.RegistrationCancelledConfirmation);
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.RegistrationNotDeleted, $"Unable to delete registration. Method: DeleteRegistrationAsync(Ukprn: {User.GetUkPrn()}, id: {viewModel.ProfileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
         }
 
         [HttpGet]

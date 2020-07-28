@@ -113,5 +113,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
             return _mapper.Map<RegistrationDetailsViewModel>(response);
         }
+
+        public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)
+        {
+            return await _internalApiClient.DeleteRegistrationAsync(aoUkprn, profileId);
+        }
     }
 }
