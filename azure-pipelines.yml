@@ -29,120 +29,120 @@ variables:
     value: 'anycpu'
 
 stages:
-  # - stage: buildStage
-  #   displayName: Build Stage
-  #   jobs:
-  #     - job: buildAppJob
-  #       displayName: Build App Job
-  #       pool:
-  #         name: 'Azure Pipelines'
-  #         vmImage: 'windows-2019'
-  #       workspace:
-  #         clean: all
-  #       steps:
-  #         - task: gittools.gitversion.gitversion-task.GitVersion@5
-  #           displayName: GitVersion
+  - stage: buildStage
+    displayName: Build Stage
+    jobs:
+      - job: buildAppJob
+        displayName: Build App Job
+        pool:
+          name: 'Azure Pipelines'
+          vmImage: 'windows-2019'
+        workspace:
+          clean: all
+        steps:
+          - task: gittools.gitversion.gitversion-task.GitVersion@5
+            displayName: GitVersion
 
-  #         - task: Npm@1
-  #           displayName: 'npm install'
-  #           inputs: 
-  #             workingDir: src/Sfa.Tl.ResultsAndCertification.Web
-  #             verbose: false
+          - task: Npm@1
+            displayName: 'npm install'
+            inputs: 
+              workingDir: src/Sfa.Tl.ResultsAndCertification.Web
+              verbose: false
 
-  #         - task: Gulp@0
-  #           displayName: 'gulp'
-  #           inputs:
-  #             gulpFile: src/Sfa.Tl.ResultsAndCertification.Web/gulpfile.js
+          - task: Gulp@0
+            displayName: 'gulp'
+            inputs:
+              gulpFile: src/Sfa.Tl.ResultsAndCertification.Web/gulpfile.js
 
-  #         - task: DotNetCoreCLI@2
-  #           displayName: dot restore
-  #           inputs:
-  #             command: restore
-  #             projects: 'src/Sfa.Tl.ResultsAndCertification.sln'
-  #             noCache: true
-  #             feedsToUse: config
-  #             nugetConfigPath: src/NuGet.config
+          - task: DotNetCoreCLI@2
+            displayName: dot restore
+            inputs:
+              command: restore
+              projects: 'src/Sfa.Tl.ResultsAndCertification.sln'
+              noCache: true
+              feedsToUse: config
+              nugetConfigPath: src/NuGet.config
 
-  #         - task: DotNetCoreCLI@2
-  #           displayName: dotnet build
-  #           inputs:
-  #             projects: 'src/Sfa.Tl.ResultsAndCertification.sln'
-  #             arguments: '--configuration $(buildConfiguration) --no-restore'
+          - task: DotNetCoreCLI@2
+            displayName: dotnet build
+            inputs:
+              projects: 'src/Sfa.Tl.ResultsAndCertification.sln'
+              arguments: '--configuration $(buildConfiguration) --no-restore'
               
-  #         - task: DotNetCoreCLI@2
-  #           displayName: Unit Tests
-  #           inputs:
-  #             command: test
-  #             projects: '**/*.UnitTests.csproj'
-  #             arguments: '--configuration $(buildConfiguration) --no-build'
+          - task: DotNetCoreCLI@2
+            displayName: Unit Tests
+            inputs:
+              command: test
+              projects: '**/*.UnitTests.csproj'
+              arguments: '--configuration $(buildConfiguration) --no-build'
               
-  #         - task: DotNetCoreCLI@2
-  #           displayName: 'Publish Internal API'
-  #           inputs:
-  #             command: publish
-  #             publishWebProjects: false
-  #             projects: 'src/Sfa.Tl.ResultsAndCertification.InternalApi/Sfa.Tl.ResultsAndCertification.InternalApi.csproj'
-  #             arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'
+          - task: DotNetCoreCLI@2
+            displayName: 'Publish Internal API'
+            inputs:
+              command: publish
+              publishWebProjects: false
+              projects: 'src/Sfa.Tl.ResultsAndCertification.InternalApi/Sfa.Tl.ResultsAndCertification.InternalApi.csproj'
+              arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'
 
-  #         - task: DotNetCoreCLI@2
-  #           displayName: 'Publish Web App'
-  #           inputs:
-  #             command: publish
-  #             publishWebProjects: false
-  #             projects: 'src/Sfa.Tl.ResultsAndCertification.Web/Sfa.Tl.ResultsAndCertification.Web.csproj'
-  #             arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'
-  #         - pwsh: |
-  #             Get-ChildItem -r
-  #         - task: CopyFiles@2
-  #           displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-  #           inputs:
-  #             Contents: |
-  #               azure\**
-  #               config\**
-  #               powershell\**
-  #               src\**\*.IntegrationTests
-  #             TargetFolder: '$(build.artifactstagingdirectory)/'
-  #             OverWrite: true
+          - task: DotNetCoreCLI@2
+            displayName: 'Publish Web App'
+            inputs:
+              command: publish
+              publishWebProjects: false
+              projects: 'src/Sfa.Tl.ResultsAndCertification.Web/Sfa.Tl.ResultsAndCertification.Web.csproj'
+              arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'
+          - pwsh: |
+              Get-ChildItem -r
+          - task: CopyFiles@2
+            displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+            inputs:
+              Contents: |
+                azure\**
+                config\**
+                powershell\**
+                src\**\*.IntegrationTests
+              TargetFolder: '$(build.artifactstagingdirectory)/'
+              OverWrite: true
 
-  #         - task: PublishBuildArtifacts@1
-  #           displayName: 'Publish Artifact'
-  #           inputs:
-  #             PathtoPublish: '$(build.artifactstagingdirectory)/'
-  #             ArtifactName: 'appdrop'
-  #             publishLocation: 'Container'
-  #     - job: buildSqlDb
-  #       displayName: Build SQL Job
-  #       pool:
-  #         name: 'Azure Pipelines'
-  #         vmImage: 'windows-2019'
-  #       workspace:
-  #         clean: all
-  #       steps:
-  #         - task: VSBuild@1
-  #           displayName: 'Build DACPAC'
-  #           inputs:
-  #             solution: 'src/Sfa.Tl.ResultsAndCertification.Database/Sfa.Tl.ResultsAndCertification.Database.sqlproj'
-  #             platform: '$(buildPlatform)'
-  #             configuration: '$(buildConfiguration)'
-  #             msbuildArgs: '/p:PackageLocation="$(build.artifactstagingdirectory)/publish"'
-  #         - task: CopyFiles@2
-  #           displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-  #           inputs:
-  #             Contents: |
-  #               src\**\*.dacpac
-  #             TargetFolder: '$(build.artifactstagingdirectory)/'
-  #             OverWrite: true
-  #         - task: PublishBuildArtifacts@1
-  #           displayName: 'Publish Artifact'
-  #           inputs:
-  #             PathtoPublish: '$(build.artifactstagingdirectory)/'
-  #             ArtifactName: 'sqldrop'
-  #             publishLocation: 'Container'
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact'
+            inputs:
+              PathtoPublish: '$(build.artifactstagingdirectory)/'
+              ArtifactName: 'appdrop'
+              publishLocation: 'Container'
+      - job: buildSqlDb
+        displayName: Build SQL Job
+        pool:
+          name: 'Azure Pipelines'
+          vmImage: 'windows-2019'
+        workspace:
+          clean: all
+        steps:
+          - task: VSBuild@1
+            displayName: 'Build DACPAC'
+            inputs:
+              solution: 'src/Sfa.Tl.ResultsAndCertification.Database/Sfa.Tl.ResultsAndCertification.Database.sqlproj'
+              platform: '$(buildPlatform)'
+              configuration: '$(buildConfiguration)'
+              msbuildArgs: '/p:PackageLocation="$(build.artifactstagingdirectory)/publish"'
+          - task: CopyFiles@2
+            displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+            inputs:
+              Contents: |
+                src\**\*.dacpac
+              TargetFolder: '$(build.artifactstagingdirectory)/'
+              OverWrite: true
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact'
+            inputs:
+              PathtoPublish: '$(build.artifactstagingdirectory)/'
+              ArtifactName: 'sqldrop'
+              publishLocation: 'Container'
     
   - stage: Dev
     displayName: Dev
-    # dependsOn:
-    #   buildstage
+    dependsOn:
+      buildstage
     
     variables:
       - group: Common Shared Resources      
@@ -153,8 +153,6 @@ stages:
 
       - name: ResourceGroupName
         value: $[ format('{0}{1}-{2}-rg', variables.ResourceIdentifier, variables.ResourceEnvironmentName, variables.ServiceName) ]
-
-        # + '-$(ServiceName)-rg'
       
       - name: AspSize
         value: '1'
@@ -174,39 +172,39 @@ stages:
         steps:
           - bash: echo $(ResourceGroupName)
 
-      # - job: createInfrastructure
-      #   displayName: Create Infrastructure
-      #   steps:
-      #     - task: AzureResourceGroupDeployment@2
-      #       displayName: 'Azure Deployment:Create Or Update Resource Group action on $(ResourceGroupName)'
-      #       inputs:
-      #         azureSubscription: 'S126-TL-Dev-Service-Connection'
-      #         resourceGroupName: '$(ResourceGroupName)'
-      #         location: 'West Europe'
-      #         csmFile: '$(System.DefaultWorkingDirectory)/tl-results-and-certification/drop/azure/template.json'
-      #         overrideParameters: '-resourceEnvironmentName "$(ResourceEnvironmentName)" -environmentName "$(EnvironmentName)" -serviceName "$(ServiceName)" -resourceIdentifier "$(ResourceIdentifier)" -aspSize "$(AspSize)" -aspInstances $(AspInstances) -uiCustomHostname "$(UICustomHostName)" -uiCertificateName "$(UICertificateName)" -apiCustomHostname "" -apiCertificateName -internalApiCustomHostname "" -internalApiCertificateName -keyVaultResourceGroupName "$(SharedResourceGroupName)" -keyVaultName "$(SharedKeyVaultName)" -sharedSqlResourceGroup "$(SharedResourceGroupName)" -sharedSqlServerName "$(SharedSqlServerName)" -databaseSkuName "$(DatabaseSKUName)" -databaseTier "$(DatabaseTier)" -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"'
-      #         deploymentOutputs: DeploymentOutputs
+      - job: createInfrastructure
+        displayName: Create Infrastructure
+        steps:
+          - task: AzureResourceGroupDeployment@2
+            displayName: 'Azure Deployment:Create Or Update Resource Group action on $(ResourceGroupName)'
+            inputs:
+              azureSubscription: 'S126-TL-Dev-Service-Connection'
+              resourceGroupName: '$(ResourceGroupName)'
+              location: 'West Europe'
+              csmFile: '$(System.DefaultWorkingDirectory)/tl-results-and-certification/drop/azure/template.json'
+              overrideParameters: '-resourceEnvironmentName "$(ResourceEnvironmentName)" -environmentName "$(EnvironmentName)" -serviceName "$(ServiceName)" -resourceIdentifier "$(ResourceIdentifier)" -aspSize "$(AspSize)" -aspInstances $(AspInstances) -uiCustomHostname "$(UICustomHostName)" -uiCertificateName "$(UICertificateName)" -apiCustomHostname "" -apiCertificateName -internalApiCustomHostname "" -internalApiCertificateName -keyVaultResourceGroupName "$(SharedResourceGroupName)" -keyVaultName "$(SharedKeyVaultName)" -sharedSqlResourceGroup "$(SharedResourceGroupName)" -sharedSqlServerName "$(SharedSqlServerName)" -databaseSkuName "$(DatabaseSKUName)" -databaseTier "$(DatabaseTier)" -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"'
+              deploymentOutputs: DeploymentOutputs
 
-      # - job: runIntegrationtest
-      #   displayName: Run integrationtest
-      #   dependsOn: createInfrastructure
-      #   pool:
-      #     name: 'Azure Pipelines'
-      #     vmImage: 'windows-2019'
-      #   steps:
-      #     - task: DownloadBuildArtifacts@0
-      #       inputs:
-      #         buildType: 'current'
-      #         downloadType: 'single'
-      #         artifactName: 'appdrop'
-      #         downloadPath: '$(System.ArtifactsDirectory)'
-      #     - pwsh: |
-      #         Get-ChildItem -r
-      #     - task: DotNetCoreCLI@2
-      #       displayName: Integration Tests
-      #       inputs:
-      #         command: publish
-      #         publishWebProjects: false
-      #         projects: '$(System.ArtifactsDirectory)\*.IntegrationTests.csproj'
-      #         arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
+      - job: runIntegrationtest
+        displayName: Run integrationtest
+        dependsOn: createInfrastructure
+        pool:
+          name: 'Azure Pipelines'
+          vmImage: 'windows-2019'
+        steps:
+          - task: DownloadBuildArtifacts@0
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'appdrop'
+              downloadPath: '$(System.ArtifactsDirectory)'
+          - pwsh: |
+              Get-ChildItem -r
+          - task: DotNetCoreCLI@2
+            displayName: Integration Tests
+            inputs:
+              command: publish
+              publishWebProjects: false
+              projects: '$(System.ArtifactsDirectory)\*.IntegrationTests.csproj'
+              arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
 
