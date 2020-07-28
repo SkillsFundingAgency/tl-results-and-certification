@@ -148,12 +148,14 @@ stages:
       - group: Common Shared Resources      
       - group: Dev Shared Resources
 
+      - name: ServiceName
+        value: 'resac'
+        
       - name: ResourceGroupName
         value: $[ format('{0}{1}-{2}-rg', variables.ResourceIdentifier, variables.ResourceEnvironmentName), $(ServiceName) ]
 
         # + '-$(ServiceName)-rg'
-      - name: ServiceName
-        value: 'resac'
+      
       - name: AspSize
         value: '1'
       - name: AspInstances
