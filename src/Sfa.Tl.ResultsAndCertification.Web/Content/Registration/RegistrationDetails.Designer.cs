@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to none selected.
+        ///   Looks up a localized string similar to None selected.
         /// </summary>
         public static string Specialism_None_Selected_Text {
             get {
