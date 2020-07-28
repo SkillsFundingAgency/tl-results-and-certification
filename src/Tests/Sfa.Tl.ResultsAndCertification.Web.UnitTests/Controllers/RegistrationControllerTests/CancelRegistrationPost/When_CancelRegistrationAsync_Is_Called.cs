@@ -15,6 +15,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 {
     public abstract class When_CancelRegistrationAsync_Is_Called : BaseTest<RegistrationController>
     {
+        protected long AoUkprn;
+        protected int ProfileId;
         protected Guid UserId;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
@@ -26,6 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override void Setup()
         {
+            AoUkprn = 12345678;
+            ProfileId = 99;
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             RegistrationLoader = Substitute.For<IRegistrationLoader>();
             CacheService = Substitute.For<ICacheService>();
@@ -33,13 +37,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             Controller = new RegistrationController(RegistrationLoader, CacheService, Logger);
 
             var httpContext = new ClaimsIdentityBuilder<RegistrationController>(Controller)
+               .Add(CustomClaimTypes.Ukprn, AoUkprn.ToString())
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
                .Build()
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
 
-            ViewModel = new CancelRegistrationViewModel { Uln = 1234567890, ProfileId = 99 };
+            ViewModel = new CancelRegistrationViewModel { Uln = 1234567890, ProfileId = ProfileId };
         }
 
         public override void When()

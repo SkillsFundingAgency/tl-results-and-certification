@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Xunit;
 
@@ -10,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public override void Given()
         {
             ViewModel.CancelRegistration = true;
+            RegistrationLoader.DeleteRegistrationAsync(AoUkprn, ProfileId).Returns(true);
         }
 
         [Fact]
