@@ -557,6 +557,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (isSuccess)
             {
+                await _cacheService.SetAsync(CacheKey, new RegistrationCancelledConfirmationViewModel { Uln = viewModel.Uln }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.RegistrationCancelledConfirmation);
             }
             else
@@ -568,9 +569,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("registration-cancelled-confirmation", Name = RouteConstants.RegistrationCancelledConfirmation)]
-        public IActionResult RegistrationCancelledConfirmation()
+        public async Task<IActionResult> RegistrationCancelledConfirmationAsync()
         {
-            return View();
+            var viewModel = await _cacheService.GetAndRemoveAsync<RegistrationCancelledConfirmationViewModel>(CacheKey);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed,
+                    $"Unable to read cancel registration confirmation viewmodel from cache. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

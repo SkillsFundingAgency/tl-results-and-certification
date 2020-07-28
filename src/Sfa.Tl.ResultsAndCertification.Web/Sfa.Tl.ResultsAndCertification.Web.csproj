@@ -131,6 +131,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>YourProviders.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\CancelledConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CancelledConfirmation.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\CancelRegistration.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -355,6 +360,10 @@
     <EmbeddedResource Update="Content\Provider\YourProviders.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>YourProviders.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\CancelledConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CancelledConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\CancelRegistration.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
