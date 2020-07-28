@@ -10,5 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryList
         public string RouteName { get; set; }
         public Dictionary<string, string> RouteAttributes { get; set; }
         public string ActionText { get; set; }
+        public string HiddenText { get; set; }
     }
 }

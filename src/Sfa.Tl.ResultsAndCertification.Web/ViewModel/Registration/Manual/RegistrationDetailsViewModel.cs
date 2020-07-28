@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using RegistrationDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration.RegistrationDetails;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
@@ -26,6 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public SummaryItemModel SummaryCore => new SummaryItemModel { Id = "core", Title = RegistrationDetailsContent.Title_Core_Text, Value = PathwayDisplayName, RouteName = RouteConstants.AddRegistrationCore };
         public SummaryListModel SummarySpecialisms => new SummaryListModel { Id = "specialisms", Title = RegistrationDetailsContent.Title_Specialism_Text, Value = SpecialismsDisplayName, RouteName = RouteConstants.AddRegistrationSpecialism };
         public SummaryItemModel SummaryAcademicYear => new SummaryItemModel { Id = "academicyear", Title = RegistrationDetailsContent.Title_AcademicYear_Text, Value = AcademicYear.ToString(), RouteName = RouteConstants.AddRegistrationAcademicYear };
+
+        public string GetSpecialismHiddenText => (SpecialismsDisplayName == null || !SpecialismsDisplayName.Any()) ? RegistrationDetailsContent.Specialism_None_Selected_Text : null;
 
         public BreadcrumbModel Breadcrumb
         {

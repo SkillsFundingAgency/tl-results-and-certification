@@ -129,6 +129,9 @@
   <data name="Search_Again_Button_Text" xml:space="preserve">
     <value>Search again</value>
   </data>
+  <data name="Specialism_None_Selected_Text" xml:space="preserve">
+    <value>none selected</value>
+  </data>
   <data name="Title_AcademicYear_Text" xml:space="preserve">
     <value>Academic year</value>
   </data>
