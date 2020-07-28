@@ -7,9 +7,16 @@
     </dt>
     <dd class="govuk-summary-list__value">
         @{
-            foreach (var val in Model?.Value)
+            if ((Model?.Value == null || Model?.Value?.Count() == 0) && !string.IsNullOrWhiteSpace(Model?.HiddenText))
             {
-                <p class="govuk-body">@val</p>
+                <span class="govuk-visually-hidden">@Model.HiddenText</span>
+            }
+            else
+            {
+                foreach (var val in Model?.Value)
+                {
+                    <p class="govuk-body">@val</p>
+                }
             }
         }
     </dd>

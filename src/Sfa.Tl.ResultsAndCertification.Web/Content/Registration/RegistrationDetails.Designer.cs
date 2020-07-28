@@ -97,6 +97,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to None selected.
+        /// </summary>
+        public static string Specialism_None_Selected_Text {
+            get {
+                return ResourceManager.GetString("Specialism_None_Selected_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Academic year.
         /// </summary>
         public static string Title_AcademicYear_Text {

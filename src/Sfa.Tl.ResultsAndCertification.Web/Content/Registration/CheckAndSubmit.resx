@@ -133,7 +133,7 @@
     <value>Add a new registration - Check and submit page</value>
   </data>
   <data name="Specialism_None_Selected_Text" xml:space="preserve">
-    <value>none selected</value>
+    <value>None selected</value>
   </data>
   <data name="Submit_Button_Text" xml:space="preserve">
     <value>Submit</value>
