@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Cache
         IDatabase GetDatabase()
         {
             return _connectionMultiplexer.GetDatabase();
-        }        
+        }
 
         public async Task<T> GetAsync<T>(string key)
         {
@@ -55,7 +55,17 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Cache
             var database = GetDatabase();
             await database.KeyDeleteAsync(key, CommandFlags.FireAndForget);
         }
-        
+
+        public async Task<T> GetAndRemoveAsync<T>(string key)
+        {
+            key = GenerateCacheKey<T>(key);
+
+            IDatabase database = GetDatabase();
+            var cachedValue = await database.StringGetAsync(key);
+            await database.KeyDeleteAsync(key, CommandFlags.FireAndForget);
+            return cachedValue.HasValue ? JsonConvert.DeserializeObject<T>(cachedValue) : default(T);
+        }
+
         static string GenerateCacheKey<T>(string key)
         {
             return GenerateCacheKey(typeof(T), key);
