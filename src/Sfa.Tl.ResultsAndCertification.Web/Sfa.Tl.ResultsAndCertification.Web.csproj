@@ -171,6 +171,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SearchRegistrationNotFound.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\SelectAcademicYear.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SelectAcademicYear.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\SelectCore.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -392,6 +397,10 @@
     <EmbeddedResource Update="Content\Registration\SearchRegistrationNotFound.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SearchRegistrationNotFound.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\SelectAcademicYear.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SelectAcademicYear.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\SelectCore.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

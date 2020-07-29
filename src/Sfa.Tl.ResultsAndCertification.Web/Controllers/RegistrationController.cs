@@ -407,18 +407,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddRegistrationAcademicYearAsync()
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            return View();
+
+            if (cacheModel?.SpecialismQuestion == null || (cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == true && cacheModel?.SelectSpecialism == null))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+
+            var hasSpecialismsSelected = cacheModel?.SelectSpecialism != null;
+
+            SelectAcademicYearViewModel viewModel;
+
+            if (cacheModel?.SelectAcademicYear == null)
+            {
+                viewModel = new SelectAcademicYearViewModel { HasSpecialismsSelected = hasSpecialismsSelected };
+            }
+            else
+            {
+                cacheModel.SelectAcademicYear.HasSpecialismsSelected = hasSpecialismsSelected;
+                viewModel = cacheModel?.SelectAcademicYear;
+            }
+            return View(viewModel);
         }
 
         [HttpPost]
         [Route("add-registration-academic-year", Name = RouteConstants.SubmitRegistrationAcademicYear)]
-        public async Task<IActionResult> AddRegistrationAcademicYearAsync(AcademicYearViewModel model)
+        public async Task<IActionResult> AddRegistrationAcademicYearAsync(SelectAcademicYearViewModel model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            if (model == null || !model.IsValidAcademicYear)
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            cacheModel.AcademicYear = model;
+
+            model.HasSpecialismsSelected = cacheModel?.SelectSpecialism != null;
+            cacheModel.SelectAcademicYear = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
             return RedirectToRoute(RouteConstants.AddRegistrationCheckAndSubmit);
         }

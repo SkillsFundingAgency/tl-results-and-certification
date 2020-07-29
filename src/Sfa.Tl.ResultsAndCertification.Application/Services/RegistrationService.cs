@@ -119,6 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 FirstName = registrationData.FirstName,
                 LastName = registrationData.LastName,
                 DateOfBirth = registrationData.DateOfBirth,
+                AcademicYear = registrationData.AcademicYear,
                 RegistrationDate = registrationData.RegistrationDate,
                 TqProviderId = technicalQualification.TqProviderId,
                 TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
@@ -371,7 +372,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     new TqRegistrationPathway
                     {
                         TqProviderId = registrationRecord.TqProviderId,
-                        AcademicYear = registrationRecord.RegistrationDate.Year, // TODO: Need to calcualate based on the requirements
+                        AcademicYear = registrationRecord.AcademicYear,
                         RegistrationDate = registrationRecord.RegistrationDate,
                         StartDate = DateTime.UtcNow,
                         Status = RegistrationPathwayStatus.Active,

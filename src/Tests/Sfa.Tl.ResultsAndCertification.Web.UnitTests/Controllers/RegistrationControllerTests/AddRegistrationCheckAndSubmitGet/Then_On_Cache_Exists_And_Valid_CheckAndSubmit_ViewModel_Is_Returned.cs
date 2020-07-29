@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private SpecialismQuestionViewModel _specialismQuestionViewModel;
         private SelectSpecialismViewModel _selectSpecialismViewModel;
         private PathwaySpecialismsViewModel _pathwaySpecialismsViewModel;
-        private AcademicYearViewModel _academicYearViewModel;
+        private SelectAcademicYearViewModel _academicYearViewModel;
         private string _coreCode = "12345678";
 
         public override void Given()
@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             _specialismQuestionViewModel = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true };
             _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayCode = _coreCode, PathwayName = "Education", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Code = "7654321", Name = "Test Education", DisplayName = "Test Education (7654321)", IsSelected = true } } };
             _selectSpecialismViewModel = new SelectSpecialismViewModel { PathwaySpecialisms = _pathwaySpecialismsViewModel };
-            _academicYearViewModel = new AcademicYearViewModel { AcademicYear = 2020 };
+            _academicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = "2020" };
             
             cacheResult = new RegistrationViewModel
             {
@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 SelectCore = _selectCoreViewModel,
                 SpecialismQuestion = _specialismQuestionViewModel,
                 SelectSpecialism = _selectSpecialismViewModel,
-                AcademicYear = _academicYearViewModel
+                SelectAcademicYear = _academicYearViewModel
             };
 
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
@@ -110,7 +110,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             // Summary Academic Year
             model.SummaryAcademicYear.Should().NotBeNull();
             model.SummaryAcademicYear.Title.Should().Be(CheckAndSubmitContent.Title_AcademicYear_Text);
-            model.SummaryAcademicYear.Value.Should().Be(_academicYearViewModel.AcademicYear.ToString());
+            model.SummaryAcademicYear.Value.Should().Be(_academicYearViewModel.SelectedAcademicYear.ToString());
             model.SummaryAcademicYear.RouteName.Should().Be(RouteConstants.AddRegistrationAcademicYear);
             model.SummaryAcademicYear.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
 
