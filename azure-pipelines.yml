@@ -172,6 +172,7 @@ stages:
         steps:
           - bash: echo $(ResourceGroupName)
 
+
       - job: createInfrastructure
         displayName: Create Infrastructure
         steps:
@@ -182,29 +183,29 @@ stages:
               resourceGroupName: '$(ResourceGroupName)'
               location: 'West Europe'
               csmFile: '$(System.DefaultWorkingDirectory)/tl-results-and-certification/drop/azure/template.json'
-              overrideParameters: '-resourceEnvironmentName "$(ResourceEnvironmentName)" -environmentName "$(EnvironmentName)" -serviceName "$(ServiceName)" -resourceIdentifier "$(ResourceIdentifier)" -aspSize "$(AspSize)" -aspInstances $(AspInstances) -uiCustomHostname "$(UICustomHostName)" -uiCertificateName "$(UICertificateName)" -apiCustomHostname "" -apiCertificateName -internalApiCustomHostname "" -internalApiCertificateName -keyVaultResourceGroupName "$(SharedResourceGroupName)" -keyVaultName "$(SharedKeyVaultName)" -sharedSqlResourceGroup "$(SharedResourceGroupName)" -sharedSqlServerName "$(SharedSqlServerName)" -databaseSkuName "$(DatabaseSKUName)" -databaseTier "$(DatabaseTier)" -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"'
+              overrideParameters: '-resourceEnvironmentName "$(variables.ResourceEnvironmentName)" -environmentName "$(variables.EnvironmentName)" -serviceName "$(variables.ServiceName)" -resourceIdentifier "$(variables.ResourceIdentifier)" -aspSize "$(variables.AspSize)" -aspInstances $(variables.AspInstances) -uiCustomHostname "$(variables.UICustomHostName)" -uiCertificateName "$(variables.UICertificateName)" -apiCustomHostname "" -apiCertificateName -internalApiCustomHostname "" -internalApiCertificateName -keyVaultResourceGroupName "$(variables.SharedResourceGroupName)" -keyVaultName "$(variables.SharedKeyVaultName)" -sharedSqlResourceGroup "$(variables.SharedResourceGroupName)" -sharedSqlServerName "$(variables.SharedSqlServerName)" -databaseSkuName "$(variables.DatabaseSKUName)" -databaseTier "$(variables.DatabaseTier)" -configurationStorageConnectionString "$(variables.ConfigurationStorageConnectionString)"'
               deploymentOutputs: DeploymentOutputs
 
-      - job: runIntegrationtest
-        displayName: Run integrationtest
-        dependsOn: createInfrastructure
-        pool:
-          name: 'Azure Pipelines'
-          vmImage: 'windows-2019'
-        steps:
-          - task: DownloadBuildArtifacts@0
-            inputs:
-              buildType: 'current'
-              downloadType: 'single'
-              artifactName: 'appdrop'
-              downloadPath: '$(System.ArtifactsDirectory)'
-          - pwsh: |
-              Get-ChildItem -r
-          - task: DotNetCoreCLI@2
-            displayName: Integration Tests
-            inputs:
-              command: publish
-              publishWebProjects: false
-              projects: '$(System.ArtifactsDirectory)\*.IntegrationTests.csproj'
-              arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
+      # - job: runIntegrationtest
+      #   displayName: Run integrationtest
+      #   dependsOn: createInfrastructure
+      #   pool:
+      #     name: 'Azure Pipelines'
+      #     vmImage: 'windows-2019'
+      #   steps:
+      #     - task: DownloadBuildArtifacts@0
+      #       inputs:
+      #         buildType: 'current'
+      #         downloadType: 'single'
+      #         artifactName: 'appdrop'
+      #         downloadPath: '$(System.ArtifactsDirectory)'
+      #     - pwsh: |
+      #         Get-ChildItem -r
+      #     - task: DotNetCoreCLI@2
+      #       displayName: Integration Tests
+      #       inputs:
+      #         command: publish
+      #         publishWebProjects: false
+      #         projects: '$(System.ArtifactsDirectory)\*.IntegrationTests.csproj'
+      #         arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
 
