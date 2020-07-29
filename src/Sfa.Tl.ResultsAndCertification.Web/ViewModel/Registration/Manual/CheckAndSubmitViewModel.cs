@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 
         public List<string> GetSelectedSpecialisms => RegistrationModel.SelectSpecialism != null ? RegistrationModel.SelectSpecialism.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).OrderBy(s => s.DisplayName).Select(s => s.DisplayName).ToList() : null;
         public string GetSpecialismHiddenText => (RegistrationModel.SelectSpecialism == null || !RegistrationModel.SelectSpecialism.PathwaySpecialisms.Specialisms.Any(x => x.IsSelected)) ? CheckAndSubmitContent.Specialism_None_Selected_Text : null;
-        //public string GetAcademicYearDisplayText => EnumExtensions.IsValidValue<AcademicYear>(RegistrationModel.SelectAcademicYear.SelectedAcademicYear) ? ((AcademicYear)RegistrationModel.SelectAcademicYear.SelectedAcademicYear.ToInt()).GetDisplayName() : null;
+        
         public BackLinkModel BackLink
         {
             get
