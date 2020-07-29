@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 
         public IList<SelectListItem> AcademicYearSelectList => EnumExtensions.GetList<AcademicYear>()?.Select(e => new SelectListItem { Text = e.GetDisplayName(), Value = ((int)e).ToString() }).ToList();
 
-        public bool IsValidAcademicYear => SelectedAcademicYear.IsInt() ? Enum.IsDefined(typeof(AcademicYear), SelectedAcademicYear.ToInt()) : false;
+        public bool IsValidAcademicYear => EnumExtensions.IsValidValue<AcademicYear>(SelectedAcademicYear);
 
         public bool HasSpecialismsSelected { get; set; }
 

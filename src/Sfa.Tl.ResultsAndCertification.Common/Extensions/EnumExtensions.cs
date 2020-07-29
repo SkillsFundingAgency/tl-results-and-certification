@@ -16,14 +16,19 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
                             ?.GetName() ?? enumValue.ToString();
         }
 
+        public static string GetDisplayName<T>(object value) where T : System.Enum
+        {
+            return IsValidValue<T>(value) ? ((T)(value.ToString().IsInt() ? value.ToString().ToInt() : value)).GetDisplayName() : null;
+        }
+
         public static List<T> GetList<T>() where T : System.Enum
         {
             return System.Enum.GetValues(typeof(T)).Cast<T>().ToList();
         }
 
-        public static bool IsValidValue<T>(int value) where T : System.Enum
+        public static bool IsValidValue<T>(object value) where T : System.Enum
         {
-            return System.Enum.IsDefined(typeof(T), value);
+            return value != null ? System.Enum.IsDefined(typeof(T), value.ToString().IsInt() ? value.ToString().ToInt() : value) : false;
         }
     }
 }
