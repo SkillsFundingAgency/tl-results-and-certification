@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -13,27 +14,26 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.CancelRegistrationPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.RegistrationCancelledConfirmationGet
 {
-    public abstract class When_CancelRegistrationAsync_Is_Called : BaseTest<RegistrationController>
+    public abstract class When_RegistrationCancelledConfirmationAsync_Is_Called : BaseTest<RegistrationController>
     {
-        protected long Uln;
         protected long AoUkprn;
-        protected int ProfileId;
         protected Guid UserId;
         protected string CacheKey;
-        protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
+        protected IRegistrationLoader RegistrationLoader;
         protected ILogger<RegistrationController> Logger;
         protected RegistrationController Controller;
-        protected CancelRegistrationViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
+        protected TempDataDictionary TempData;
+        protected RegistrationCancelledConfirmationViewModel RegistrationCancelledConfirmationViewModel;
         public IActionResult Result { get; private set; }
 
         public override void Setup()
         {
-            AoUkprn = 12345678;
-            ProfileId = 99;
+            AoUkprn = 1234567890;
+            UserId = Guid.NewGuid();
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             RegistrationLoader = Substitute.For<IRegistrationLoader>();
             CacheService = Substitute.For<ICacheService>();
@@ -42,18 +42,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
             var httpContext = new ClaimsIdentityBuilder<RegistrationController>(Controller)
                .Add(CustomClaimTypes.Ukprn, AoUkprn.ToString())
-               .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
+               .Add(CustomClaimTypes.UserId, UserId.ToString())
                .Build()
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey);
-            ViewModel = new CancelRegistrationViewModel { Uln = 1234567890, ProfileId = ProfileId };
+            //TempData = new TempDataDictionary(HttpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
+            //Controller.TempData = TempData;
         }
 
         public override void When()
         {
-            Result = Controller.CancelRegistrationAsync(ViewModel).Result;
+            Result = Controller.RegistrationCancelledConfirmationAsync().Result;
         }
     }
 }
