@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to contact the Manage T Levels results team.
+        ///   Looks up a localized string similar to contact the Manage T Level results team.
         /// </summary>
         public static string Contact_Manage_TLevels_Results_Team_Text {
             get {
