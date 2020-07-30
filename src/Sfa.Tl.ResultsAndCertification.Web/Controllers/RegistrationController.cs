@@ -432,10 +432,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-registration-academic-year", Name = RouteConstants.SubmitRegistrationAcademicYear)]
         public async Task<IActionResult> AddRegistrationAcademicYearAsync(SelectAcademicYearViewModel model)
         {
-            if (model == null || !model.IsValidAcademicYear)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+
+            if (model == null || !model.IsValidAcademicYear || cacheModel?.SpecialismQuestion == null || (cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == true && cacheModel?.SelectSpecialism == null))
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
             model.HasSpecialismsSelected = cacheModel?.SelectSpecialism != null;
             cacheModel.SelectAcademicYear = model;

@@ -2,14 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationAcademicYearGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationAcademicYearPost
 {
-    public class Then_On_Cache_Exists_For_SelectAcademicYear_ViewModel_Returned : When_AddRegistrationAcademicYear_Action_Is_Called
+    public class Then_On_Success_Redirected_To_AddRegistrationCheckAndSubmit_Route : When_AddRegistrationAcademicYear_Action_Is_Called
     {
         private RegistrationViewModel cacheResult;
         private SpecialismQuestionViewModel _specialismQuestionViewModel;
@@ -26,26 +25,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 SpecialismQuestion = _specialismQuestionViewModel,
                 SelectAcademicYear = _selectAcademicYearViewModel
             };
+            SelectAcademicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = _selectedAcademicYear };
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
         }
 
         [Fact]
-        public void Then_Expected_SelectAcademicYear_ViewModel_Returned()
+        public void Then_On_Success_Redirected_To_AddRegistration_CheckAndSubmit_Route()
         {
-            Result.Should().NotBeNull();
-            Result.Should().BeOfType(typeof(ViewResult));
-
-            var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(SelectAcademicYearViewModel));
-
-            var model = viewResult.Model as SelectAcademicYearViewModel;
-            model.Should().NotBeNull();
-
-            model.SelectedAcademicYear.Should().Be(_selectedAcademicYear);
-            model.IsValidAcademicYear.Should().BeTrue();
-
-            model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialismQuestion);
+            var routeName = (Result as RedirectToRouteResult).RouteName;
+            routeName.Should().Be(RouteConstants.AddRegistrationCheckAndSubmit);
         }
     }
 }
