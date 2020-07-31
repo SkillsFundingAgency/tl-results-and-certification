@@ -27,6 +27,8 @@ variables:
     value: 'release'
   - name: buildPlatform
     value: 'anycpu'
+  - name: system.debug
+    value: true
 
 stages:
   - stage: buildStage
@@ -168,23 +170,34 @@ stages:
     jobs:
       - job: testvariable
         pool:
-          vmImage: 'ubuntu-16.04'
+          name: 'Azure Pipelines'
+          vmImage: 'windows-2019'
         steps:
-          - bash: echo $(ResourceGroupName)
-
-
-      - job: createInfrastructure
-        displayName: Create Infrastructure
-        steps:
-          - task: AzureResourceGroupDeployment@2
-            displayName: 'Azure Deployment:Create Or Update Resource Group action on $(ResourceGroupName)'
+                    
+          - task: PowerShell@2
             inputs:
-              azureSubscription: 'S126-TL-Dev-Service-Connection'
-              resourceGroupName: '$(ResourceGroupName)'
-              location: 'West Europe'
-              csmFile: '$(System.DefaultWorkingDirectory)/tl-results-and-certification/drop/azure/template.json'
-              overrideParameters: '-resourceEnvironmentName "$(variables.ResourceEnvironmentName)" -environmentName "$(variables.EnvironmentName)" -serviceName "$(variables.ServiceName)" -resourceIdentifier "$(variables.ResourceIdentifier)" -aspSize "$(variables.AspSize)" -aspInstances $(variables.AspInstances) -uiCustomHostname "$(variables.UICustomHostName)" -uiCertificateName "$(variables.UICertificateName)" -apiCustomHostname "" -apiCertificateName -internalApiCustomHostname "" -internalApiCertificateName -keyVaultResourceGroupName "$(variables.SharedResourceGroupName)" -keyVaultName "$(variables.SharedKeyVaultName)" -sharedSqlResourceGroup "$(variables.SharedResourceGroupName)" -sharedSqlServerName "$(variables.SharedSqlServerName)" -databaseSkuName "$(variables.DatabaseSKUName)" -databaseTier "$(variables.DatabaseTier)" -configurationStorageConnectionString "$(variables.ConfigurationStorageConnectionString)"'
-              deploymentOutputs: DeploymentOutputs
+              targetType: 'inline'
+              script: 'Get-ChildItem -r'
+
+      # - job: createInfrastructure
+      #   displayName: Create Infrastructure
+      #   steps:
+      #     - task: DownloadBuildArtifacts@0
+      #       inputs:
+      #         buildType: 'current'
+      #         downloadType: 'single'
+      #         artifactName: 'sqldrop'
+      #         downloadPath: '$(System.ArtifactsDirectory)'
+
+      #     - task: AzureResourceGroupDeployment@2
+      #       displayName: 'Azure Deployment:Create Or Update Resource Group action on $(ResourceGroupName)'
+      #       inputs:
+      #         azureSubscription: 'S126-TL-Dev-Service-Connection'
+      #         resourceGroupName: '$(ResourceGroupName)'
+      #         location: 'West Europe'
+      #         csmFile: '$(System.DefaultWorkingDirectory)/tl-results-and-certification/drop/azure/template.json'
+      #         overrideParameters: '-resourceEnvironmentName "$(variables.ResourceEnvironmentName)" -environmentName "$(variables.EnvironmentName)" -serviceName "$(variables.ServiceName)" -resourceIdentifier "$(variables.ResourceIdentifier)" -aspSize "$(variables.AspSize)" -aspInstances $(variables.AspInstances) -uiCustomHostname "$(variables.UICustomHostName)" -uiCertificateName "$(variables.UICertificateName)" -apiCustomHostname "" -apiCertificateName -internalApiCustomHostname "" -internalApiCertificateName -keyVaultResourceGroupName "$(variables.SharedResourceGroupName)" -keyVaultName "$(variables.SharedKeyVaultName)" -sharedSqlResourceGroup "$(variables.SharedResourceGroupName)" -sharedSqlServerName "$(variables.SharedSqlServerName)" -databaseSkuName "$(variables.DatabaseSKUName)" -databaseTier "$(variables.DatabaseTier)" -configurationStorageConnectionString "$(variables.ConfigurationStorageConnectionString)"'
+      #         deploymentOutputs: DeploymentOutputs
 
       # - job: runIntegrationtest
       #   displayName: Run integrationtest
