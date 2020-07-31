@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ProblemWithRegistrationsUpload {
+    public class SelectAcademicYear {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ProblemWithRegistrationsUpload() {
+        internal SelectAcademicYear() {
         }
         
         /// <summary>
@@ -39,8 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.ProblemWithRegistrationsU" +
-                            "pload", typeof(ProblemWithRegistrationsUpload).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.SelectAcademicYear", typeof(SelectAcademicYear).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,65 +61,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to registrations.
+        ///   Looks up a localized string similar to Continue.
         /// </summary>
-        public static string Back_To_Registrations_Button_Text {
+        public static string Continue_Button_Text {
             get {
-                return ResourceManager.GetString("Back_To_Registrations_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Continue_Button_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to contact the Manage T Level results team.
+        ///   Looks up a localized string similar to Add a new registration.
         /// </summary>
-        public static string Contact_Manage_TLevels_Results_Team_Text {
+        public static string Page_Caption_Text {
             get {
-                return ResourceManager.GetString("Contact_Manage_TLevels_Results_Team_Text", resourceCulture);
+                return ResourceManager.GetString("Page_Caption_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrations file upload failed.
+        ///   Looks up a localized string similar to Add a new registration - Select the academic year page.
         /// </summary>
-        public static string Email_Subject {
+        public static string Page_Title_Add_Registration_Select_AcademicYear {
             get {
-                return ResourceManager.GetString("Email_Subject", resourceCulture);
+                return ResourceManager.GetString("Page_Title_Add_Registration_Select_AcademicYear", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sorry, there is a problem with the service.
+        ///   Looks up a localized string similar to Select the academic year.
         /// </summary>
-        public static string Page_Heading {
+        public static string Select_The_AcademicYear_Label_Text {
             get {
-                return ResourceManager.GetString("Page_Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Problem with registrations upload page.
-        /// </summary>
-        public static string Page_Title {
-            get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Submit your file again. If you keep getting this message.
-        /// </summary>
-        public static string Submit_Your_File_Again_Text {
-            get {
-                return ResourceManager.GetString("Submit_Your_File_Again_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Back to upload file.
-        /// </summary>
-        public static string Upload_File_Again_Button_Text {
-            get {
-                return ResourceManager.GetString("Upload_File_Again_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Select_The_AcademicYear_Label_Text", resourceCulture);
             }
         }
     }

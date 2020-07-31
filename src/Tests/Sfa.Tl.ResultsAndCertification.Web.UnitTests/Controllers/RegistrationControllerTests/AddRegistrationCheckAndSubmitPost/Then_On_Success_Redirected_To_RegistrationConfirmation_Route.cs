@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private SpecialismQuestionViewModel _specialismQuestionViewModel;
         private SelectSpecialismViewModel _selectSpecialismViewModel;
         private PathwaySpecialismsViewModel _pathwaySpecialismsViewModel;
-        private AcademicYearViewModel _academicYearViewModel;
+        private SelectAcademicYearViewModel _academicYearViewModel;
         private string _coreCode = "12345678";
 
         public override void Given()
@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             _specialismQuestionViewModel = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true };
             _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayCode = _coreCode, PathwayName = "Education", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Code = "7654321", Name = "Test Education", DisplayName = "Test Education (7654321)", IsSelected = true } } };
             _selectSpecialismViewModel = new SelectSpecialismViewModel { PathwaySpecialisms = _pathwaySpecialismsViewModel };
-            _academicYearViewModel = new AcademicYearViewModel { AcademicYear = 2020 };
+            _academicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = "2020" };
 
             registrationModel = new RegistrationViewModel
             {
@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 SelectCore = _selectCoreViewModel,
                 SpecialismQuestion = _specialismQuestionViewModel,
                 SelectSpecialism = _selectSpecialismViewModel,
-                AcademicYear = _academicYearViewModel
+                SelectAcademicYear = _academicYearViewModel
             };
 
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(registrationModel);

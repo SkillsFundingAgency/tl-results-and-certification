@@ -1,0 +1,12 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.SelectAcademicYearViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Sfa.Tl.ResultsAndCertification.Web
+
+<h1 class="govuk-label-wrapper">
+    <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6" for="selectedacademicyear">
+        @SelectAcademicYear.Select_The_AcademicYear_Label_Text
+    </label>
+</h1>
+<select class="govuk-select" id="selectedacademicyear" asp-for="SelectedAcademicYear" asp-items="Model.AcademicYearSelectList">
+</select>

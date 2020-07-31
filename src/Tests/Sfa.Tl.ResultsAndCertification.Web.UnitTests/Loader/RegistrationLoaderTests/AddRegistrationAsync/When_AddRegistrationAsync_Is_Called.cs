@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 SelectCore = new SelectCoreViewModel { SelectedCoreCode = _coreCode, SelectedCoreDisplayName = $"Education ({_coreCode})", CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = _coreCode } } },
                 SpecialismQuestion = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true },
                 SelectSpecialism = new SelectSpecialismViewModel { PathwaySpecialisms = new PathwaySpecialismsViewModel { PathwayCode = _coreCode, PathwayName = "Education", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Code = "7654321", Name = "Test Education", DisplayName = "Test Education (7654321)", IsSelected = true } } } },
-                AcademicYear = new AcademicYearViewModel { AcademicYear = 2020 }
+                SelectAcademicYear = new SelectAcademicYearViewModel { SelectedAcademicYear = "2020" }
             };
 
             Logger = Substitute.For<ILogger<RegistrationLoader>>();

@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using Xunit;
 using RegistrationDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration.RegistrationDetails;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.RegistrationDetails
 {
@@ -85,7 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             // Summary Academic Year
             model.SummaryAcademicYear.Should().NotBeNull();
             model.SummaryAcademicYear.Title.Should().Be(RegistrationDetailsContent.Title_AcademicYear_Text);
-            model.SummaryAcademicYear.Value.Should().Be(mockresult.AcademicYear.ToString());
+            model.SummaryAcademicYear.Value.Should().Be(EnumExtensions.GetDisplayName<AcademicYear>(mockresult.AcademicYear));
 
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Should().NotBeNull();

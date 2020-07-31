@@ -9,6 +9,6 @@
         public SelectCoreViewModel SelectCore { get; set; }
         public SpecialismQuestionViewModel SpecialismQuestion { get; set; }
         public SelectSpecialismViewModel SelectSpecialism { get; set; }
-        public AcademicYearViewModel AcademicYear { get; set; }
+        public SelectAcademicYearViewModel SelectAcademicYear { get; set; }
     }
 }

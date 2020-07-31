@@ -28,6 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 
         public IEnumerable<string> SpecialismCodes { get; set; }
 
+        public int AcademicYear { get; set; }
+
         public string CreatedBy { get; set; }
     }
 }

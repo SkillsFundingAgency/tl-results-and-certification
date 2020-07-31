@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to it is no longer active.
+        ///   Looks up a localized string similar to is no longer active.
         /// </summary>
         public static string It_Is_No_Longer_Active_Text {
             get {
