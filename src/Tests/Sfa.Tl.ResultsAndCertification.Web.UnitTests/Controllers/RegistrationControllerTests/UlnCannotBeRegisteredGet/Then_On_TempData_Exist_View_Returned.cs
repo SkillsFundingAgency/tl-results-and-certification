@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public override void Given() 
         {
             expectedViewModel = new UlnNotFoundViewModel();
-            CacheService.GetAsync<UlnNotFoundViewModel>(Arg.Any<string>()).Returns(expectedViewModel);
+            CacheService.GetAndRemoveAsync<UlnNotFoundViewModel>(Arg.Any<string>()).Returns(expectedViewModel);
         }
 
         [Fact]

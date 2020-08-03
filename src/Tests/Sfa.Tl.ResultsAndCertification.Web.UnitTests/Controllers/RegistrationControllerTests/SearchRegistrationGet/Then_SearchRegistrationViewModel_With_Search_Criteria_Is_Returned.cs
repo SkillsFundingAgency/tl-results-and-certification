@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private string _searchUln = "1234567890";
         public override void Given()
         {
-            CacheService.GetAsync<string>(Arg.Any<string>()).Returns(_searchUln);
+            CacheService.GetAndRemoveAsync<string>(Arg.Any<string>()).Returns(_searchUln);
         }
 
         [Fact]

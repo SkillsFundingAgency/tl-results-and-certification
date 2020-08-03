@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("registrations-upload-successful", Name = RouteConstants.RegistrationsUploadSuccessful)]
         public async Task<IActionResult> UploadSuccessful()
         {
-            var viewModel = await _cacheService.GetAsync<UploadSuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadSuccessfulViewModel));
+            var viewModel = await _cacheService.GetAndRemoveAsync<UploadSuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadSuccessfulViewModel));
 
             if (viewModel == null)
             {
@@ -104,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("registrations-upload-unsuccessful", Name = RouteConstants.RegistrationsUploadUnsuccessful)]
         public async Task<IActionResult> UploadUnsuccessful()
         {
-            var viewModel = await _cacheService.GetAsync<UploadUnsuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel));
+            var viewModel = await _cacheService.GetAndRemoveAsync<UploadUnsuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel));
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.UploadUnsuccessfulPageFailed,
@@ -192,7 +192,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("ULN-cannot-be-registered", Name = RouteConstants.UlnCannotBeRegistered)]
         public async Task<IActionResult> UlnCannotBeRegistered()
         {
-            var viewModel = await _cacheService.GetAsync<UlnNotFoundViewModel>(string.Concat(CacheKey, Constants.UlnNotFoundViewModel));
+            var viewModel = await _cacheService.GetAndRemoveAsync<UlnNotFoundViewModel>(string.Concat(CacheKey, Constants.UlnNotFoundViewModel));
 
             if (viewModel == null)
             {
@@ -500,7 +500,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-for-registration", Name = RouteConstants.SearchRegistration)]
         public async Task<IActionResult> SearchRegistration()
         {
-            var defaultValue = await _cacheService.GetAsync<string>(Constants.RegistrationSearchCriteria);
+            var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.RegistrationSearchCriteria);
             var viewModel = new SearchRegistrationViewModel { SearchUln = defaultValue };
             return View(viewModel);
         }
@@ -533,7 +533,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-for-registration-ULN-not-found", Name = RouteConstants.SearchRegistrationNotFound)]
         public async Task<IActionResult> SearchRegistrationNotFound()
         {
-            var viewModel = await _cacheService.GetAsync<UlnNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchRegistrationUlnNotFound));
+            var viewModel = await _cacheService.GetAndRemoveAsync<UlnNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchRegistrationUlnNotFound));
 
             if (viewModel == null)
             {

@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         {
             BlobUniqueReference = Guid.NewGuid();
             UploadUnsuccessfulViewModel = new UploadUnsuccessfulViewModel { BlobUniqueReference = BlobUniqueReference, FileSize = 1.7, FileType = FileType.Csv.ToString().ToUpperInvariant() };
-            CacheService.GetAsync<UploadUnsuccessfulViewModel>(Arg.Any<string>()).Returns(UploadUnsuccessfulViewModel);
+            CacheService.GetAndRemoveAsync<UploadUnsuccessfulViewModel>(Arg.Any<string>()).Returns(UploadUnsuccessfulViewModel);
         }
 
         [Fact]

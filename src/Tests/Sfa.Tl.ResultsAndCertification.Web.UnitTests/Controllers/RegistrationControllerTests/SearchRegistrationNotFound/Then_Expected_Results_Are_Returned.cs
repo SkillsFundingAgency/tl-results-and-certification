@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         public override void Given()
         {
-            CacheService.GetAsync<UlnNotFoundViewModel>(Arg.Any<string>())
+            CacheService.GetAndRemoveAsync<UlnNotFoundViewModel>(Arg.Any<string>())
                 .Returns(new UlnNotFoundViewModel { Uln = Uln, BackLinkRouteName = RouteConstants.SearchRegistration });
         }
 
