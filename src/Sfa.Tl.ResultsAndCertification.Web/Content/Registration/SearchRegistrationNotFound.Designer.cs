@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you think that the ULN should exist it may be that:.
+        ///   Looks up a localized string similar to If you think that the ULN should exist it may be that it:.
         /// </summary>
         public static string If_you_Think_That_The_Uln_Should_Exists_Text {
             get {
