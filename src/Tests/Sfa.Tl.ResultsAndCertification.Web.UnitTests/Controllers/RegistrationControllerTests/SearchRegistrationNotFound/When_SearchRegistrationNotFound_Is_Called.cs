@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override void When()
         {
-            Result = Controller.SearchRegistrationNotFound();
+            Result = Controller.SearchRegistrationNotFound().Result;
         }
     }
 }

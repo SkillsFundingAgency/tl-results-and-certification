@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
@@ -11,7 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         public override void Given()
         {
-            TempData.Set(Constants.SearchRegistrationUlnNotFound, new UlnNotFoundViewModel { Uln = Uln, BackLinkRouteName = RouteConstants.SearchRegistration });
+            CacheService.GetAsync<UlnNotFoundViewModel>(Arg.Any<string>())
+                .Returns(new UlnNotFoundViewModel { Uln = Uln, BackLinkRouteName = RouteConstants.SearchRegistration });
         }
 
         [Fact]

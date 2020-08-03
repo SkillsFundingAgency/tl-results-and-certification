@@ -181,7 +181,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var findUln = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.Uln.ToLong());
             if (findUln != null && findUln.IsUlnRegisteredAlready)
             {
-                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UlnNotFoundViewModel), findUln);
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UlnNotFoundViewModel), findUln, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.UlnCannotBeRegistered);
             }
 
@@ -498,9 +498,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("search-for-registration", Name = RouteConstants.SearchRegistration)]
-        public IActionResult SearchRegistration()
+        public async Task<IActionResult> SearchRegistration()
         {
-            var viewModel = new SearchRegistrationViewModel { SearchUln = TempData.Get<string>(Constants.RegistrationSearchCriteria) };
+            var defaultValue = await _cacheService.GetAsync<string>(Constants.RegistrationSearchCriteria);
+            var viewModel = new SearchRegistrationViewModel { SearchUln = defaultValue };
             return View(viewModel);
         }
 
@@ -519,17 +520,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                TempData.Set(Constants.RegistrationSearchCriteria, model.SearchUln);
-                TempData.Set(Constants.SearchRegistrationUlnNotFound, new UlnNotFoundViewModel { Uln = model.SearchUln.ToString(), BackLinkRouteName = RouteConstants.SearchRegistration });
+                await _cacheService.SetAsync(Constants.RegistrationSearchCriteria, model.SearchUln);
+
+                var ulnNotfoundModel = new UlnNotFoundViewModel { Uln = model.SearchUln.ToString(), BackLinkRouteName = RouteConstants.SearchRegistration };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.SearchRegistrationUlnNotFound), ulnNotfoundModel, CacheExpiryTime.XSmall);
+                
                 return RedirectToRoute(RouteConstants.SearchRegistrationNotFound);
             }
         }
 
         [HttpGet]
         [Route("search-for-registration-ULN-not-found", Name = RouteConstants.SearchRegistrationNotFound)]
-        public IActionResult SearchRegistrationNotFound()
+        public async Task<IActionResult> SearchRegistrationNotFound()
         {
-            var viewModel = TempData.Get<UlnNotFoundViewModel>(Constants.SearchRegistrationUlnNotFound);
+            var viewModel = await _cacheService.GetAsync<UlnNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchRegistrationUlnNotFound));
+
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchRegistrationUlnNotFound from temp data in search registration not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");

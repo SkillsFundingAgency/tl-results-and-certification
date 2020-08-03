@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private string _searchUln = "1234567890";
         public override void Given()
         {
-            TempData.Set(Constants.RegistrationSearchCriteria, _searchUln);
+            CacheService.GetAsync<string>(Arg.Any<string>()).Returns(_searchUln);
         }
 
         [Fact]
