@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public override void Given() 
         {
             expectedViewModel = new UlnNotFoundViewModel();
-            TempData[Constants.UlnNotFoundViewModel] = JsonConvert.SerializeObject(expectedViewModel);
+            CacheService.GetAsync<UlnNotFoundViewModel>(Arg.Any<string>()).Returns(expectedViewModel);
         }
 
         [Fact]

@@ -181,7 +181,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var findUln = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.Uln.ToLong());
             if (findUln != null && findUln.IsUlnRegisteredAlready)
             {
-                TempData.Set(Constants.UlnNotFoundViewModel, findUln);
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UlnNotFoundViewModel), findUln);
                 return RedirectToRoute(RouteConstants.UlnCannotBeRegistered);
             }
 
@@ -190,9 +190,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("ULN-cannot-be-registered", Name = RouteConstants.UlnCannotBeRegistered)]
-        public IActionResult UlnCannotBeRegistered()
+        public async Task<IActionResult> UlnCannotBeRegistered()
         {
-            var viewModel = TempData.Get<UlnNotFoundViewModel>(Constants.UlnNotFoundViewModel);
+            var viewModel = await _cacheService.GetAsync<UlnNotFoundViewModel>(string.Concat(CacheKey, Constants.UlnNotFoundViewModel));
+
             if (viewModel == null)
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
