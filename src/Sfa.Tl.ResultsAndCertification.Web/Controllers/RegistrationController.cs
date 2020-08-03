@@ -473,7 +473,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if(isSuccess)
             {
                 await _cacheService.RemoveAsync<RegistrationViewModel>(CacheKey);
-                TempData.Set(Constants.RegistrationConfirmationViewModel, new RegistrationConfirmationViewModel { UniqueLearnerNumber = cacheModel.Uln.Uln });
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RegistrationConfirmationViewModel), new RegistrationConfirmationViewModel { UniqueLearnerNumber = cacheModel.Uln.Uln }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.AddRegistrationConfirmation);
             }
             else
@@ -485,9 +485,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("add-registration-confirmation", Name = RouteConstants.AddRegistrationConfirmation)]
-        public IActionResult AddRegistrationConfirmationAsync()
+        public async Task<IActionResult> AddRegistrationConfirmationAsync()
         {
-            var viewModel = TempData.Get<RegistrationConfirmationViewModel>(Constants.RegistrationConfirmationViewModel);
+            var viewModel = await _cacheService.GetAndRemoveAsync<RegistrationConfirmationViewModel>(string.Concat(CacheKey, Constants.RegistrationConfirmationViewModel));
+
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read RegistrationConfirmationViewModel from temp data in add registration confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");

@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
@@ -12,7 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public override void Given()
         {
             RegistrationConfirmationViewModel = new RegistrationConfirmationViewModel { UniqueLearnerNumber = "987654321" };
-            TempData[Constants.RegistrationConfirmationViewModel] = JsonConvert.SerializeObject(RegistrationConfirmationViewModel);
+            CacheService.GetAndRemoveAsync<RegistrationConfirmationViewModel>(Arg.Any<string>())
+                .Returns(RegistrationConfirmationViewModel);
         }
 
         [Fact]

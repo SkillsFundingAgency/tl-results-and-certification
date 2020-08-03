@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override void When()
         {
-            Result = Controller.AddRegistrationConfirmationAsync();
+            Result = Controller.AddRegistrationConfirmationAsync().Result;
         }
     }
 }
