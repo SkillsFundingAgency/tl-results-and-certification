@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
@@ -67,7 +66,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (response.IsSuccess)
             {
                 var successfulViewModel = new UploadSuccessfulViewModel { Stats = response.Stats };
-                TempData.Set(Constants.UploadSuccessfulViewModel, successfulViewModel);
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UploadSuccessfulViewModel), successfulViewModel, CacheExpiryTime.XSmall);
+
                 return RedirectToRoute(RouteConstants.RegistrationsUploadSuccessful);
             }
             else
@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 else
                 {
                     var unsuccessfulViewModel = new UploadUnsuccessfulViewModel { BlobUniqueReference = response.BlobUniqueReference, FileSize = response.ErrorFileSize, FileType = FileType.Csv.ToString().ToUpperInvariant() };
-                    TempData.Set(Constants.UploadUnsuccessfulViewModel, unsuccessfulViewModel);
+                    await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel), unsuccessfulViewModel, CacheExpiryTime.XSmall);
                     return RedirectToRoute(RouteConstants.RegistrationsUploadUnsuccessful);
                 }
             }
@@ -87,9 +87,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("registrations-upload-successful", Name = RouteConstants.RegistrationsUploadSuccessful)]
-        public IActionResult UploadSuccessful()
+        public async Task<IActionResult> UploadSuccessful()
         {
-            var viewModel = TempData.Get<UploadSuccessfulViewModel>(Constants.UploadSuccessfulViewModel);
+            var viewModel = await _cacheService.GetAsync<UploadSuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadSuccessfulViewModel));
+
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.UploadSuccessfulPageFailed,
@@ -101,9 +102,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("registrations-upload-unsuccessful", Name = RouteConstants.RegistrationsUploadUnsuccessful)]
-        public IActionResult UploadUnsuccessful()
+        public async Task<IActionResult> UploadUnsuccessful()
         {
-            var viewModel = TempData.Get<UploadUnsuccessfulViewModel>(Constants.UploadUnsuccessfulViewModel);
+            var viewModel = await _cacheService.GetAsync<UploadUnsuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel));
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.UploadUnsuccessfulPageFailed,

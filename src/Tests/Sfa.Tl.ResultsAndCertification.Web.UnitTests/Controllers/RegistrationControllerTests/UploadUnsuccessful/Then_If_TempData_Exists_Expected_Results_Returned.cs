@@ -1,8 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using System;
 using Xunit;
@@ -15,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         {
             BlobUniqueReference = Guid.NewGuid();
             UploadUnsuccessfulViewModel = new UploadUnsuccessfulViewModel { BlobUniqueReference = BlobUniqueReference, FileSize = 1.7, FileType = FileType.Csv.ToString().ToUpperInvariant() };
-            TempData[Constants.UploadUnsuccessfulViewModel] = JsonConvert.SerializeObject(UploadUnsuccessfulViewModel);
+            CacheService.GetAsync<UploadUnsuccessfulViewModel>(Arg.Any<string>()).Returns(UploadUnsuccessfulViewModel);
         }
 
         [Fact]

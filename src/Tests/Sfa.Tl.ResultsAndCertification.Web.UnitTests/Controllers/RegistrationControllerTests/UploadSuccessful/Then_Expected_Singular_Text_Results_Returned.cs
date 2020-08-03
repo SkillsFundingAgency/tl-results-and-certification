@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using System;
 using Xunit;
@@ -15,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         {
             BlobUniqueReference = Guid.NewGuid();
             UploadSuccessfulViewModel = new UploadSuccessfulViewModel { Stats = new ViewModel.BulkUploadStatsViewModel { TotalRecordsCount = 3, NewRecordsCount = 1, AmendedRecordsCount = 1, UnchangedRecordsCount = 1 } };
-            TempData[Constants.UploadSuccessfulViewModel] = JsonConvert.SerializeObject(UploadSuccessfulViewModel);
+            CacheService.GetAsync<UploadSuccessfulViewModel>(Arg.Any<string>()).Returns(UploadSuccessfulViewModel);
         }
 
         [Fact]
