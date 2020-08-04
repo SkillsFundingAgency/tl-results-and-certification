@@ -2,6 +2,7 @@
 {
     public enum DocumentType
     {
-        Registrations = 1
+        Registrations = 1,
+        Documents = 2
     }
 }

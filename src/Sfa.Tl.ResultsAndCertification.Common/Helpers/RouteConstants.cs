@@ -79,8 +79,7 @@
         public const string SubmitSearchRegistration = "SubmitSearchRegistration";
         public const string SearchRegistrationNotFound = "SearchRegistrationNotFound";
         public const string RegistrationDetails = "RegistrationDetails";
-
-        
+                
         // Cancel Registration
         public const string CancelRegistration = "CancelRegistration";
         public const string SubmitCancelRegistration = "SubmitCancelRegistration";
@@ -98,5 +97,9 @@
         public const string Privacy = "Privacy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string UserGuide = "UserGuide";
+
+        // Document
+        public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
+        public const string DownloadRegistrationDataFormatAndRulesGuide = "DownloadRegistrationDataFormatAndRulesGuide";
     }
 }
