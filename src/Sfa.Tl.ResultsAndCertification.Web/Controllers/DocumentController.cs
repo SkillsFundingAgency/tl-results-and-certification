@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -9,6 +10,7 @@ using DocumentResource = Sfa.Tl.ResultsAndCertification.Web.Content.Document;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
+    [AllowAnonymous]
     public class DocumentController : Controller
     {
         private readonly IDocumentLoader _documentLoader;

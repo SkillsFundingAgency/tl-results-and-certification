@@ -30,7 +30,7 @@
             <h2 class="govuk-!-font-size-27 govuk-!-font-weight-regular">
                 <a class="govuk-link" target="_self" asp-route="DownloadRegistrationDataFormatAndRulesGuide">@RegistrationDataFormatAndRulesGuide.Download_Registration_DataFormat_And_Rules_Guide_Text</a>
             </h2>
-            <p class="govuk-body-s"><span><abbr title="Microsoft Excel">@Model.FileType</abbr></span>, @Model.FileSize @RegistrationDataFormatAndRulesGuide.File_Size_Kb_Text, @Model.Version, @Model.PublishedDate</p>
+            <p class="govuk-body-s">@Model.FileType, @Model.FileSize@RegistrationDataFormatAndRulesGuide.File_Size_Kb_Text, @Model.Version, @Model.PublishedDate</p>
         </section>
     </div>
 </div>
