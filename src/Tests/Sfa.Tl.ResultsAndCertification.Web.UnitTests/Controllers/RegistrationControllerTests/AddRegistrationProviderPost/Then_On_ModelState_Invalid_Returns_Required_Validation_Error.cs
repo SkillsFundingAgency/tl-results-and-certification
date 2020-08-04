@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using System;
 using System.Collections.Generic;
 using Xunit;
 using SelectProviderContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration.SelectProvider;
@@ -17,6 +18,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             SelectProviderViewModel = new SelectProviderViewModel();
 
             Controller.ModelState.AddModelError("SelectedProviderUkprn", SelectProviderContent.Validation_Select_Provider_Required);
+
+            var cacheResult = new RegistrationViewModel
+            {
+                Uln = new UlnViewModel { Uln = "1234567890" },
+                LearnersName = new LearnersNameViewModel { Firstname = "First", Lastname = "Last" },
+                DateofBirth = new DateofBirthViewModel { Day = DateTime.Now.Day.ToString(), Month = DateTime.Now.Month.ToString(), Year = DateTime.Now.Year.ToString() }
+            };
+
+            CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
 
             _selectProviderViewModel = new SelectProviderViewModel { ProvidersSelectList = new List<SelectListItem> { new SelectListItem { Text = "Hello", Value = "1" } } };
            

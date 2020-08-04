@@ -11,7 +11,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -95,6 +94,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var pathwaySpecialisms = await _internalApiClient.GetPathwaySpecialismsByPathwayLarIdAsync(aoUkprn, pathwayLarId);
             return _mapper.Map<PathwaySpecialismsViewModel>(pathwaySpecialisms);
+        }
+
+        public async Task<UlnNotFoundViewModel> FindUlnAsync(long aoUkprn, long Uln)
+        {
+            var response = await _internalApiClient.FindUlnAsync(aoUkprn, Uln);
+            return _mapper.Map<UlnNotFoundViewModel>(response);
+        }
+
+        public async Task<bool> AddRegistrationAsync(long aoUkprn, RegistrationViewModel model)
+        {
+            var registrationModel = _mapper.Map<RegistrationRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.AddRegistrationAsync(registrationModel);
+        }
+
+        public async Task<RegistrationDetailsViewModel> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
+        {
+            var response = await _internalApiClient.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
+            return _mapper.Map<RegistrationDetailsViewModel>(response);
+        }
+
+        public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)
+        {
+            return await _internalApiClient.DeleteRegistrationAsync(aoUkprn, profileId);
         }
     }
 }

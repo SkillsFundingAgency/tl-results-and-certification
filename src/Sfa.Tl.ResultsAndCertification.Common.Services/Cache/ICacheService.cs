@@ -11,6 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Cache
 
         Task RemoveAsync<T>(string key);
 
+        Task<T> GetAndRemoveAsync<T>(string key);
+
         Task<bool> KeyExistsAsync<T>(string key);
     }
 }

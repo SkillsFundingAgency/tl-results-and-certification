@@ -1,0 +1,20 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.RegistrationCancelledConfirmationViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @CancelledConfirmation.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">@CancelledConfirmation.Page_Heading</h1>
+            <div class="govuk-panel__body">
+                @CancelledConfirmation.Uln_Text: @Model.Uln
+            </div>
+        </div>
+
+        <p class="govuk-!-margin-top-8"><a class="govuk-button" role="button" asp-route="SearchRegistration">@CancelledConfirmation.Search_For_Another_Registration_Button_Text</a></p>
+        <p><a class="govuk-button govuk-button--secondary" role="button" asp-route="RegistrationDashboard">@CancelledConfirmation.Back_To_Registrations_Button_Text</a></p>
+    </div>
+</div>

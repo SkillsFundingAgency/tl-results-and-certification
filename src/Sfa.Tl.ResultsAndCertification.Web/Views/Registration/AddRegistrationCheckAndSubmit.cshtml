@@ -1,0 +1,34 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.CheckAndSubmitViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @CheckAndSubmit.Page_Title_Add_Registration_Check_And_Submit;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="SubmitRegistrationCheckAndSubmit">
+            <span class="govuk-caption-xl">@CheckAndSubmit.Page_Caption_Text</span>
+
+            <h1 class="govuk-heading-l">@CheckAndSubmit.Check_And_Submit_Heading_Text</h1>
+            <p class="govuk-body govuk-!-margin-top-3">@CheckAndSubmit.Check_And_Submit_Info_Text</p>
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-3">
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCore></vc:summary-item>
+                <vc:summary-list model=Model.SummarySpecialisms></vc:summary-list>
+                <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
+            </dl>
+            <p>
+                <button type="submit" class="govuk-button" data-module="govuk-button">@CheckAndSubmit.Submit_Button_Text</button>
+            </p>
+        </form>
+    </div>
+</div>

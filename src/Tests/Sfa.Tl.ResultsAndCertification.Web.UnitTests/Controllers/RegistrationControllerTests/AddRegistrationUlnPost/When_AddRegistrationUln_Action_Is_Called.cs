@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -28,6 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; private set; }
 
+        protected TempDataDictionary TempData;
+
         public override void Setup()
         {
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
@@ -35,13 +38,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<RegistrationController>>();
             Controller = new RegistrationController(RegistrationLoader, CacheService, Logger);
-
+            
             var httpContext = new ClaimsIdentityBuilder<RegistrationController>(Controller)
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
                .Build()
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
+            TempData = new TempDataDictionary(HttpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
+            Controller.TempData = TempData;
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey);
         }
 

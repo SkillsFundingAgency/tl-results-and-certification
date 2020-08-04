@@ -132,6 +132,12 @@
   <data name="Registration_Dashboard" xml:space="preserve">
     <value>Registrations</value>
   </data>
+  <data name="Registration_Details" xml:space="preserve">
+    <value>Registration details</value>
+  </data>
+  <data name="Search_For_Registration" xml:space="preserve">
+    <value>Search for a registration</value>
+  </data>
   <data name="Tlevel_Details" xml:space="preserve">
     <value>T Level details</value>
   </data>

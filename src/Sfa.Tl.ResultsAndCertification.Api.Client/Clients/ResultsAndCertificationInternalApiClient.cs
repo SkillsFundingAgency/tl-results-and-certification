@@ -128,7 +128,31 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = string.Format(ApiConstants.GetPathwaySpecialismsByPathwayLarIdAsyncUri, aoUkprn, pathwayLarId);
             return await GetAsync<PathwaySpecialisms>(requestUri);
-        }        
+        }
+        
+        public async Task<bool> AddRegistrationAsync(RegistrationRequest model)
+        {
+            var requestUri = ApiConstants.AddRegistrationUri;
+            return await PostAsync<RegistrationRequest, bool>(requestUri, model);
+        }
+
+        public async Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln)
+        {
+            var requestUri = string.Format(ApiConstants.FindUlnUri, aoUkprn, uln);
+            return await GetAsync<FindUlnResponse>(requestUri);
+        }
+
+        public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
+        {
+            var requestUri = string.Format(ApiConstants.GetRegistrationDetailsUri, aoUkprn, profileId);
+            return await GetAsync<RegistrationDetails>(requestUri);
+        }
+
+        public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)
+        {
+            var requestUri = string.Format(ApiConstants.DeleteRegistrationUri, aoUkprn, profileId);
+            return await DeleteAsync<bool>(requestUri);
+        }
 
         #region Private Methods
 
@@ -211,7 +235,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         /// <returns></returns>
         private HttpContent CreateHttpContent<T>(T content)
         {
-            var json = JsonConvert.SerializeObject(content, MicrosoftDateFormatSettings);
+            var json = JsonConvert.SerializeObject(content, IsoDateFormatSettings);
             return new StringContent(json, Encoding.UTF8, "application/json");
         }
 
@@ -228,6 +252,23 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                 return new JsonSerializerSettings
                 {
                     DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
+                };
+            }
+        }
+
+        /// <summary>
+        /// Gets the microsoft date format settings.
+        /// </summary>
+        /// <value>
+        /// The microsoft date format settings.
+        /// </value>
+        private static JsonSerializerSettings IsoDateFormatSettings
+        {
+            get
+            {
+                return new JsonSerializerSettings
+                {
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat
                 };
             }
         }

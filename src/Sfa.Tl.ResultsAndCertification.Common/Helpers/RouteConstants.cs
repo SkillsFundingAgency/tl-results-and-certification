@@ -68,6 +68,23 @@
         public const string AddRegistrationSpecialism = "AddRegistrationSpecialism";
         public const string SubmitRegistrationSpecialism = "SubmitRegistrationSpecialism";
         public const string AddRegistrationAcademicYear = "AddRegistrationAcademicYear";
+        public const string UlnCannotBeRegistered = "UlnCannotBeRegistered";
+        public const string SubmitRegistrationAcademicYear = "SubmitRegistrationAcademicYear";
+        public const string AddRegistrationCheckAndSubmit = "AddRegistrationCheckAndSubmit";
+        public const string SubmitRegistrationCheckAndSubmit = "SubmitRegistrationCheckAndSubmit";
+        public const string AddRegistrationConfirmation = "AddRegistrationConfirmation";
+
+        // Search Registration
+        public const string SearchRegistration = "SearchRegistration";
+        public const string SubmitSearchRegistration = "SubmitSearchRegistration";
+        public const string SearchRegistrationNotFound = "SearchRegistrationNotFound";
+        public const string RegistrationDetails = "RegistrationDetails";
+
+        
+        // Cancel Registration
+        public const string CancelRegistration = "CancelRegistration";
+        public const string SubmitCancelRegistration = "SubmitCancelRegistration";
+        public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
 
         // Error
         public const string PageNotFound = "PageNotFound";

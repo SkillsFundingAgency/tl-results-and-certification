@@ -22,10 +22,13 @@
         public const string GetRegisteredProviderPathwayDetailsAsyncUri = "/api/provider/GetRegisteredProviderPathwayDetails/{0}/{1}";
 
         // Registrations Related Uri's
-        public const string ProcessBulkRegistrationsUri = "/api/registration/ProcessBulkRegistrations";               
+        public const string ProcessBulkRegistrationsUri = "/api/registration/ProcessBulkRegistrations";
+        public const string AddRegistrationUri = "/api/registration/AddRegistration";
+        public const string FindUlnUri = "/api/registration/FindUln/{0}/{1}";
+        public const string GetRegistrationDetailsUri = "/api/registration/GetRegistrationDetails/{0}/{1}";
+        public const string DeleteRegistrationUri = "/api/registration/DeleteRegistration/{0}/{1}";
 
         // DocumentUploadHistory Related Uri's
         public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";
-
     }
 }

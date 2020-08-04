@@ -8,6 +8,7 @@
         public const int ConfigurationMissing = 1003;
         public const int ServiceAccessDenied = 1004;
         public const int FileStreamNotFound = 1005;
+        public const int RecordExists = 1006;
 
         public const int ConfirmationPageFailed = 1020;
         public const int UploadSuccessfulPageFailed = 1021;
@@ -29,5 +30,7 @@
 
         // Registration events
         public const int BulkRegistrationProcessFailed = 4001;
+        public const int ManualRegistrationProcessFailed = 4002;
+        public const int RegistrationNotDeleted = 4003;
     }
 }

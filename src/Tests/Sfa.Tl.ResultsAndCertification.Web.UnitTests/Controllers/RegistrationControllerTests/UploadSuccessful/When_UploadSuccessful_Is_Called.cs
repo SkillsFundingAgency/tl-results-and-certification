@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override void When()
         {
-            Result = Controller.UploadSuccessful();
+            Result = Controller.UploadSuccessful().Result;
         }
     }
 }

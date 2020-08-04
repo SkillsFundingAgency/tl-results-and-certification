@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 {
@@ -29,6 +28,34 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request)
         {
             return await _bulkRegistrationProcess.ProcessBulkRegistrationsAsync(request);
+        }
+
+        [HttpPost]
+        [Route("AddRegistration")]
+        public async Task<bool> AddRegistrationAsync(RegistrationRequest model)
+        {
+            return await _registrationService.AddRegistrationAsync(model);
+        }
+
+        [HttpGet]
+        [Route("FindUln/{aoUkprn}/{uln}")]
+        public async Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln)
+        {
+            return await _registrationService.FindUlnAsync(aoUkprn, uln);
+        }
+
+        [HttpGet]
+        [Route("GetRegistrationDetails/{aoUkprn}/{profileId}")]
+        public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
+        {
+            return await _registrationService.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
+        }
+
+        [HttpDelete]
+        [Route("DeleteRegistration/{aoUkprn}/{profileId}")]
+        public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)
+        {
+            return await _registrationService.DeleteRegistrationAsync(aoUkprn, profileId);
         }
     }
 }

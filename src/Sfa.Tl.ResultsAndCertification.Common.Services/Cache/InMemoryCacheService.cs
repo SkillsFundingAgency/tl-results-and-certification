@@ -29,6 +29,14 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Cache
             await Task.CompletedTask;
         }
 
+        public async Task<T> GetAndRemoveAsync<T>(string key)
+        {
+            key = GenerateCacheKey<T>(key);
+            var cacheValue = _cache.Value.Get<string>(key);
+            _cache.Value.Remove(key);
+            return await Task.FromResult(JsonConvert.DeserializeObject<T>(cacheValue));
+        }
+
         public async Task SetAsync<T>(string key, T item, CacheExpiryTime cacheExpiryTime = CacheExpiryTime.Small)
         {
             key = GenerateCacheKey<T>(key);
@@ -44,6 +52,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Cache
         static string GenerateCacheKey(Type objectType, string key)
         {
             return $"{key}:{objectType.Name}".ToLower();
-        }
+        }        
     }
 }

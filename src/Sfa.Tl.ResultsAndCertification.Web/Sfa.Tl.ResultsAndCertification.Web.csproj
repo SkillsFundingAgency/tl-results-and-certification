@@ -131,10 +131,50 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>YourProviders.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\CancelledConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CancelledConfirmation.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Registration\CancelRegistration.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CancelRegistration.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Registration\CheckAndSubmit.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CheckAndSubmit.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\DateofBirth.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DateofBirth.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Registration\RegistrationConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RegistrationConfirmation.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Registration\RegistrationDetails.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RegistrationDetails.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Registration\SearchRegistration.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SearchRegistration.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Registration\SearchRegistrationNotFound.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SearchRegistrationNotFound.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Registration\SelectAcademicYear.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SelectAcademicYear.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Registration\SelectCore.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -150,6 +190,16 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SpecialismQuestion.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Registration\UlnRegisteredByOtherAo.Designer.cs">
+      <DependentUpon>UlnRegisteredByOtherAo.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Content\Registration\UlnAlreadyRegisteredByYou.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UlnAlreadyRegisteredByYou.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Registration\UlnRegistration.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -316,9 +366,41 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>YourProviders.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\CancelledConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CancelledConfirmation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\CancelRegistration.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CancelRegistration.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\CheckAndSubmit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CheckAndSubmit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\DateofBirth.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DateofBirth.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\RegistrationConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegistrationConfirmation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\RegistrationDetails.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegistrationDetails.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\SearchRegistration.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SearchRegistration.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\SearchRegistrationNotFound.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SearchRegistrationNotFound.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\SelectAcademicYear.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SelectAcademicYear.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\SelectCore.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -331,6 +413,14 @@
     <EmbeddedResource Update="Content\Registration\SpecialismQuestion.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SpecialismQuestion.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\UlnRegisteredByOtherAo.resx">
+      <LastGenOutput>UlnRegisteredByOtherAo.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\UlnAlreadyRegisteredByYou.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UlnAlreadyRegisteredByYou.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\UlnRegistration.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
