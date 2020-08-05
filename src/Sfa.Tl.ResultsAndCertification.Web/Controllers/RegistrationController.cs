@@ -156,34 +156,36 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-registration-unique-learner-number/{isChanged:bool?}", Name = RouteConstants.AddRegistrationUln)]
-        public async Task<IActionResult> AddRegistrationUlnAsync(bool isChanged = false)
+        [Route("add-registration-unique-learner-number", Name = RouteConstants.AddRegistrationUln)]
+        public async Task<IActionResult> AddRegistrationUlnAsync()
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            var viewModel = cacheModel?.Uln != null ? cacheModel.Uln : new UlnViewModel();
+            if (cacheModel?.Uln != null)
+                return View(cacheModel.Uln);
 
-            viewModel.IsChangeMode = isChanged && (cacheModel?.IsValidToAllowChangeMode == true);
-            return View(viewModel);
+            var model = new UlnViewModel();
+            return View(model);
         }
 
         [HttpPost]
-        [Route("add-registration-unique-learner-number", Name = RouteConstants.SubmitRegistrationUln)]
+        [Route("add-registration-unique-learner-number", Name = RouteConstants.AddRegistrationUln)]
         public async Task<IActionResult> AddRegistrationUlnAsync(UlnViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return View(model);
+            }
 
             await SyncCacheUln(model);
 
             var findUln = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.Uln.ToLong());
             if (findUln != null && findUln.IsUlnRegisteredAlready)
             {
-                findUln.IsChangeMode = model.IsChangeMode;
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UlnNotFoundViewModel), findUln, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.UlnCannotBeRegistered);
             }
 
-            return model.IsChangeMode ? RedirectToRoute(RouteConstants.AddRegistrationCheckAndSubmit) : RedirectToRoute(RouteConstants.AddRegistrationLearnersName);
+            return RedirectToRoute(RouteConstants.AddRegistrationLearnersName);
         }
 
         [HttpGet]
@@ -293,7 +295,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.SpecialismQuestion = null;
                 cacheModel.SelectSpecialism = null;
             }
-            
+
             model.SelectedProviderDisplayName = registeredProviderViewModel?.ProvidersSelectList?.FirstOrDefault(p => p.Value == model.SelectedProviderUkprn)?.Text;
             cacheModel.SelectProvider = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
@@ -451,8 +453,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var viewModel = new CheckAndSubmitViewModel { RegistrationModel = cacheModel };
 
-            if(!viewModel.IsCheckAndSubmitPageValid)
-            return RedirectToRoute(RouteConstants.PageNotFound);
+            if (!viewModel.IsCheckAndSubmitPageValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
         }
@@ -468,7 +470,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var isSuccess = await _registrationLoader.AddRegistrationAsync(User.GetUkPrn(), cacheModel);
 
-            if(isSuccess)
+            if (isSuccess)
             {
                 await _cacheService.RemoveAsync<RegistrationViewModel>(CacheKey);
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RegistrationConfirmationViewModel), new RegistrationConfirmationViewModel { UniqueLearnerNumber = cacheModel.Uln.Uln }, CacheExpiryTime.XSmall);
@@ -523,7 +525,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
                 var ulnNotfoundModel = new UlnNotFoundViewModel { Uln = model.SearchUln.ToString(), BackLinkRouteName = RouteConstants.SearchRegistration };
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.SearchRegistrationUlnNotFound), ulnNotfoundModel, CacheExpiryTime.XSmall);
-                
+
                 return RedirectToRoute(RouteConstants.SearchRegistrationNotFound);
             }
         }
@@ -556,7 +558,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(viewModel);
         }
-        
+
         [HttpGet]
         [Route("cancel-registration/{profileId}", Name = RouteConstants.CancelRegistration)]
         public async Task<IActionResult> CancelRegistrationAsync(int profileId)
