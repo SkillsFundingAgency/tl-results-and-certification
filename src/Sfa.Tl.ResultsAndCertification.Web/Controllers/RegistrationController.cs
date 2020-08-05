@@ -403,14 +403,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-registration-academic-year", Name = RouteConstants.AddRegistrationAcademicYear)]
-        public async Task<IActionResult> AddRegistrationAcademicYearAsync()
+        [Route("add-registration-academic-year/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationAcademicYear)]
+        public async Task<IActionResult> AddRegistrationAcademicYearAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
             if (cacheModel?.SpecialismQuestion == null || (cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == true && cacheModel?.SelectSpecialism == null))
                 return RedirectToRoute(RouteConstants.PageNotFound);
-
 
             var hasSpecialismsSelected = cacheModel?.SelectSpecialism != null;
 
@@ -425,6 +424,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.SelectAcademicYear.HasSpecialismsSelected = hasSpecialismsSelected;
                 viewModel = cacheModel?.SelectAcademicYear;
             }
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowed;
             return View(viewModel);
         }
 

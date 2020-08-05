@@ -3,7 +3,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,15 +18,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 
         public bool HasSpecialismsSelected { get; set; }
 
-        public BackLinkModel BackLink
-        {
-            get
-            {
-                return new BackLinkModel
-                {
-                    RouteName = HasSpecialismsSelected ? RouteConstants.AddRegistrationSpecialism : RouteConstants.AddRegistrationSpecialismQuestion,
-                };
-            }
-        }
+        public bool IsChangeMode { get; set; }
+
+        public BackLinkModel BackLink => new BackLinkModel { RouteName = IsChangeMode ? RouteConstants.AddRegistrationCheckAndSubmit : HasSpecialismsSelected ? RouteConstants.AddRegistrationSpecialism : RouteConstants.AddRegistrationSpecialismQuestion };
     }
 }
