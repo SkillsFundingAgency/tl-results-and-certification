@@ -226,15 +226,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-registration-date-of-birth", Name = RouteConstants.AddRegistrationDateofBirth)]
-        public async Task<IActionResult> AddRegistrationDateofBirthAsync()
+        [Route("add-registration-date-of-birth/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationDateofBirth)]
+        public async Task<IActionResult> AddRegistrationDateofBirthAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
             if (cacheModel?.LearnersName == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            return View(cacheModel?.DateofBirth == null ? new DateofBirthViewModel() : cacheModel.DateofBirth);
+            var viewModel = cacheModel?.DateofBirth == null ? new DateofBirthViewModel() : cacheModel.DateofBirth;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowed;
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -242,9 +244,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddRegistrationDateofBirthAsync(DateofBirthViewModel model)
         {
             if (!IsValidDateofBirth(model))
-            {
                 return View(model);
-            }
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
             if (cacheModel?.LearnersName == null)
@@ -253,7 +253,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.DateofBirth = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            return RedirectToRoute(RouteConstants.AddRegistrationProvider);
+            return model.IsChangeMode ? RedirectToRoute(RouteConstants.AddRegistrationCheckAndSubmit) : RedirectToRoute(RouteConstants.AddRegistrationProvider);
         }
 
         [HttpGet]
