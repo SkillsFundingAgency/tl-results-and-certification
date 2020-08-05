@@ -7,19 +7,26 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationUlnGet
 {
-    public class Then_On_Cache_Exist_Cache_Uln_Returned : When_AddRegistrationUln_Action_Is_Called
+    public class Then_On_ChangeMode_NotAllowed_Expected_Results_Returned : When_AddRegistrationUln_Action_Is_Called
     {
+        private RegistrationViewModel cacheResult;
         private UlnViewModel _ulnViewModel;
-
+       
         public override void Given()
         {
+            IsChangeMode = true;
             _ulnViewModel = new UlnViewModel { Uln = "1234567890" };
-            RegistrationViewModel cacheModel = new RegistrationViewModel { Uln = _ulnViewModel };
-            CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheModel);
+
+            cacheResult = new RegistrationViewModel
+            {
+                Uln = _ulnViewModel
+            };
+
+            CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
         }
 
         [Fact]
-        public void Then_ViewModel_Returns_Cached_UlnViewModel()
+        public void Then_Expected_Results_Are_Returned()
         {
             Result.Should().NotBeNull();
             Result.Should().BeOfType(typeof(ViewResult));
