@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("download-registration-data-format-and-rules-guide-file", Name = RouteConstants.DownloadRegistrationDataFormatAndRulesGuide)]
         public async Task<IActionResult> DownloadRegistrationDataFormatAndRulesGuideAsync()
         {
-            var fileName = DocumentResource.RegistrationDataFormatAndRulesGuide.Registrations_Data_And_Format_Rules_Guide_File_Name_Text;
+            var fileName = DocumentResource.RegistrationDataFormatAndRulesGuide.Registrations_Data_Format_And_Rules_Guide_File_Name_Text;
             var fileStream = await _documentLoader.GetBulkUploadRegistrationsTechSpecFileAsync(fileName);
             if (fileStream == null)
             {
