@@ -156,36 +156,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-registration-unique-learner-number", Name = RouteConstants.AddRegistrationUln)]
-        public async Task<IActionResult> AddRegistrationUlnAsync()
+        [Route("add-registration-unique-learner-number/{isChanged:bool?}", Name = RouteConstants.AddRegistrationUln)]
+        public async Task<IActionResult> AddRegistrationUlnAsync(bool isChanged = false)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel?.Uln != null)
-                return View(cacheModel.Uln);
+            var viewModel = cacheModel?.Uln != null ? cacheModel.Uln : new UlnViewModel();
 
-            var model = new UlnViewModel();
-            return View(model);
+            viewModel.IsChangeMode = isChanged && (cacheModel?.IsValidToAllowChangeMode == true);
+            return View(viewModel);
         }
 
         [HttpPost]
-        [Route("add-registration-unique-learner-number", Name = RouteConstants.AddRegistrationUln)]
+        [Route("add-registration-unique-learner-number", Name = RouteConstants.SubmitRegistrationUln)]
         public async Task<IActionResult> AddRegistrationUlnAsync(UlnViewModel model)
         {
             if (!ModelState.IsValid)
-            {
                 return View(model);
-            }
 
             await SyncCacheUln(model);
 
             var findUln = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.Uln.ToLong());
             if (findUln != null && findUln.IsUlnRegisteredAlready)
             {
+                findUln.IsChangeMode = model.IsChangeMode;
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UlnNotFoundViewModel), findUln, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.UlnCannotBeRegistered);
             }
 
-            return RedirectToRoute(RouteConstants.AddRegistrationLearnersName);
+            return model.IsChangeMode ? RedirectToRoute(RouteConstants.AddRegistrationCheckAndSubmit) : RedirectToRoute(RouteConstants.AddRegistrationLearnersName);
         }
 
         [HttpGet]

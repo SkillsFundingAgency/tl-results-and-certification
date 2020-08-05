@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly IDocumentLoader _documentLoader;
         private readonly ILogger _logger;
 
-        public DocumentController(IDocumentLoader documentLoader, ILogger<RegistrationController> logger)
+        public DocumentController(IDocumentLoader documentLoader, ILogger<DocumentController> logger)
         {
             _documentLoader = documentLoader;
             _logger = logger;
@@ -37,8 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("download-registration-data-format-and-rules-guide_file", Name = RouteConstants.DownloadRegistrationDataFormatAndRulesGuide)]
-        public async Task<IActionResult> DownloadRegistrationDataFormatAndRulesGuide()
+        [Route("download-registration-data-format-and-rules-guide-file", Name = RouteConstants.DownloadRegistrationDataFormatAndRulesGuide)]
+        public async Task<IActionResult> DownloadRegistrationDataFormatAndRulesGuideAsync()
         {
             var fileName = DocumentResource.RegistrationDataFormatAndRulesGuide.Registrations_Data_And_Format_Rules_Guide_File_Name_Text;
             var fileStream = await _documentLoader.GetBulkUploadRegistrationsTechSpecFileAsync(fileName);
