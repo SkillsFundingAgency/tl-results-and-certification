@@ -295,12 +295,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             model.SelectedProviderDisplayName = registeredProviderViewModel?.ProvidersSelectList?.FirstOrDefault(p => p.Value == model.SelectedProviderUkprn)?.Text;
             cacheModel.SelectProvider = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.AddRegistrationCore);
+            return model.IsChangeMode ? RedirectToRoute(RouteConstants.AddRegistrationCore, new { isChangeMode = true }) : RedirectToRoute(RouteConstants.AddRegistrationCore);
         }
 
         [HttpGet]
-        [Route("add-registration-core", Name = RouteConstants.AddRegistrationCore)]
-        public async Task<IActionResult> AddRegistrationCoreAsync()
+        [Route("add-registration-core/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationCore)]
+        public async Task<IActionResult> AddRegistrationCoreAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
@@ -310,6 +310,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var providerCores = await GetRegisteredProviderCores(cacheModel.SelectProvider.SelectedProviderUkprn.ToLong());
             var viewModel = cacheModel?.SelectCore == null ? new SelectCoreViewModel() : cacheModel.SelectCore;
             viewModel.CoreSelectList = providerCores.CoreSelectList;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForCore;
+            viewModel.IsChangeModeFromProvider = cacheModel.SelectProvider.IsChangeMode;
             return View(viewModel);
         }
 
