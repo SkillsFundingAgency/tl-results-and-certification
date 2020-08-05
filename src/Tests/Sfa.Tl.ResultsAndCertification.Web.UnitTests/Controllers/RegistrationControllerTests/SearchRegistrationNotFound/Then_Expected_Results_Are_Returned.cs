@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.SearchRegistration);
-            model.BackLink.RouteAttributes.Should().BeEmpty();
+            model.BackLink.RouteAttributes.Should().BeNull();
         }
     }
 }

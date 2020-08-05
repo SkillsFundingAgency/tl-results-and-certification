@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
@@ -9,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public int RegistrationProfileId { get; set; }
         public bool IsRegisteredWithOtherAo { get; set; }
         public bool IsActive { get; set; }
-
+        public bool IsChangeMode { get; set; }
         public string BackLinkRouteName { get; set; }
 
         public bool IsUlnRegisteredAlready
@@ -20,12 +21,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
             }
         }
 
-        public BackLinkModel BackLink
-        {
-            get
-            {
-                return new BackLinkModel { RouteName = !string.IsNullOrWhiteSpace(BackLinkRouteName) ? BackLinkRouteName : RouteConstants.AddRegistrationUln };
-            }
-        }
+        public BackLinkModel BackLink => new BackLinkModel { RouteName = !string.IsNullOrWhiteSpace(BackLinkRouteName) ? BackLinkRouteName : RouteConstants.AddRegistrationUln, RouteAttributes = IsChangeMode ? new Dictionary<string, string> { { Constants.IsChangeMode, "true" } } : null };
     }
 }

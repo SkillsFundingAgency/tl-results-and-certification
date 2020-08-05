@@ -55,6 +55,7 @@
         // Add Registration
         public const string AddRegistration = "AddRegistration";
         public const string AddRegistrationUln = "AddRegistrationUln";
+        public const string SubmitRegistrationUln = "SubmitRegistrationUln";
         public const string AddRegistrationLearnersName = "AddRegistrationLearnersName";
         public const string SubmitRegistrationLearnersName = "SubmitRegistrationLearnersName";
         public const string AddRegistrationDateofBirth = "AddRegistrationDateofBirth";

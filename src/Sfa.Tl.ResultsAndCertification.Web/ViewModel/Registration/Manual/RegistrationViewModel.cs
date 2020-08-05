@@ -10,5 +10,9 @@
         public SpecialismQuestionViewModel SpecialismQuestion { get; set; }
         public SelectSpecialismViewModel SelectSpecialism { get; set; }
         public SelectAcademicYearViewModel SelectAcademicYear { get; set; }
+
+        public bool IsChangeModeAllowed => Uln != null && LearnersName != null && DateofBirth != null && SelectProvider != null && SelectCore != null 
+            && SpecialismQuestion != null && ((SpecialismQuestion.HasLearnerDecidedSpecialism == true && SelectSpecialism != null)
+           || (SpecialismQuestion.HasLearnerDecidedSpecialism == false && SelectSpecialism == null)) && SelectAcademicYear != null;
     }
 }
