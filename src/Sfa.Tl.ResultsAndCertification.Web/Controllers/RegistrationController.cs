@@ -257,8 +257,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-registration-provider", Name = RouteConstants.AddRegistrationProvider)]
-        public async Task<IActionResult> AddRegistrationProviderAsync()
+        [Route("add-registration-provider/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationProvider)]
+        public async Task<IActionResult> AddRegistrationProviderAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
@@ -268,6 +268,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var registeredProviders = await GetAoRegisteredProviders();
             var viewModel = cacheModel?.SelectProvider == null ? new SelectProviderViewModel() : cacheModel.SelectProvider;
             viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForProvider;
             return View(viewModel);
         }
 

@@ -14,5 +14,7 @@
         public bool IsChangeModeAllowed => Uln != null && LearnersName != null && DateofBirth != null && SelectProvider != null && SelectCore != null 
             && SpecialismQuestion != null && ((SpecialismQuestion.HasLearnerDecidedSpecialism == true && SelectSpecialism != null)
            || (SpecialismQuestion.HasLearnerDecidedSpecialism == false && SelectSpecialism == null)) && SelectAcademicYear != null;
+
+        public bool IsChangeModeAllowedForProvider => Uln != null && LearnersName != null && DateofBirth != null && SelectProvider != null && SelectAcademicYear != null;
     }
 }
