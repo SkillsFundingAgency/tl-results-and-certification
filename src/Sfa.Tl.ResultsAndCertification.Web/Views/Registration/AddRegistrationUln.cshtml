@@ -19,16 +19,9 @@
                 <vc:uln model="Model"></vc:uln>
             </div>
             <p>
-                @if (@Model.IsChangeMode)
-                {
-                    <button type="submit" class="govuk-button" data-module="govuk-button">@UlnRegistration.Change_Button_Label</button>
-                }
-                else
-                {
-                    <button type="submit" class="govuk-button" data-module="govuk-button">@UlnRegistration.Continue_Button_Label</button>
-                }
+                @{ var buttonText = Model.IsChangeMode ? @UlnRegistration.Change_Button_Label : @UlnRegistration.Continue_Button_Label; }
+                <button type="submit" class="govuk-button" data-module="govuk-button">@buttonText</button>
             </p>
         </form>
-
     </div>
 </div>

@@ -191,24 +191,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> UlnCannotBeRegistered()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<UlnNotFoundViewModel>(string.Concat(CacheKey, Constants.UlnNotFoundViewModel));
-
-            if (viewModel == null)
-            {
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            return View(viewModel);
+            return viewModel == null ? RedirectToRoute(RouteConstants.PageNotFound) : (IActionResult)View(viewModel);
         }
 
         [HttpGet]
-        [Route("add-registration-learners-name", Name = RouteConstants.AddRegistrationLearnersName)]
-        public async Task<IActionResult> AddRegistrationLearnersNameAsync()
+        [Route("add-registration-learners-name/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationLearnersName)]
+        public async Task<IActionResult> AddRegistrationLearnersNameAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
             if (cacheModel?.Uln == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            return View(cacheModel?.LearnersName == null ? new LearnersNameViewModel() : cacheModel.LearnersName);
+            var viewModel = cacheModel?.LearnersName == null ? new LearnersNameViewModel() : cacheModel.LearnersName;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowed;
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -219,13 +216,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel == null)
+            if (cacheModel?.Uln == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             cacheModel.LearnersName = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            return RedirectToRoute(RouteConstants.AddRegistrationDateofBirth);
+            return model.IsChangeMode ? RedirectToRoute(RouteConstants.AddRegistrationCheckAndSubmit) : RedirectToRoute(RouteConstants.AddRegistrationDateofBirth);
         }
 
         [HttpGet]
