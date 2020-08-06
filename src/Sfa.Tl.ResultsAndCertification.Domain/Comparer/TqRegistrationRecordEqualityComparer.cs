@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
                 foreach (var registrationPathway in reg.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active).OrderBy(p => p.TqProviderId))
                 {
                     hashCode = (hashCode * 397) ^ registrationPathway.TqProviderId.GetHashCode();
-                    hashCode = (hashCode * 397) ^ registrationPathway.RegistrationDate.GetHashCode();
+                    hashCode = (hashCode * 397) ^ registrationPathway.AcademicYear.GetHashCode();
                     hashCode = (hashCode * 397) ^ registrationPathway.Status.GetHashCode();
 
                     foreach (var registrationSpecialism in registrationPathway.TqRegistrationSpecialisms.Where(p => p.Status == RegistrationSpecialismStatus.Active).OrderBy(p => p.TlSpecialismId))
@@ -109,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
                 return false;
             else
             {
-                return x.TqProviderId == y.TqProviderId && Equals(x.RegistrationDate, y.RegistrationDate) && x.Status == y.Status;
+                return x.TqProviderId == y.TqProviderId && Equals(x.AcademicYear, y.AcademicYear) && x.Status == y.Status;
             }
         }
 

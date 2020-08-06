@@ -7,7 +7,7 @@
         public const string LastName = "Last name";
         public const string DateOfBirth = "Date of birth";
         public const string Ukprn = "UKPRN";
-        public const string StartDate = "Registration date";
+        public const string AcademicYear = "Academic year";
         public const string Core = "Core code";
         public const string Specialism = "Specialism code";
     }

@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 LastName = "Last",
                 DateOfBirth = "13/01/1987".ToDateTime(),
                 ProviderUkprn = TlProvider.UkPrn,
-                RegistrationDate = DateTime.UtcNow,
+                AcademicYear = DateTime.UtcNow.Year,
                 CoreCode = Pathway.LarId,
                 SpecialismCodes = Specialisms.Select(s => s.LarId),
                 CreatedBy = "Test User"

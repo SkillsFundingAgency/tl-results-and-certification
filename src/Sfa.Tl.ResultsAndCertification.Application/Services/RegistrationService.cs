@@ -73,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     FirstName = registrationData.FirstName,
                     LastName = registrationData.LastName,
                     DateOfBirth = registrationData.DateOfBirth,
-                    RegistrationDate = registrationData.RegistrationDate,
+                    AcademicYear = registrationData.AcademicYear,
                     TqProviderId = technicalQualification.TqProviderId,
                     TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
                     TlPathwayId = technicalQualification.TlPathwayId,
@@ -120,7 +120,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 LastName = registrationData.LastName,
                 DateOfBirth = registrationData.DateOfBirth,
                 AcademicYear = registrationData.AcademicYear,
-                RegistrationDate = registrationData.RegistrationDate,
                 TqProviderId = technicalQualification.TqProviderId,
                 TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
                 TlPathwayId = technicalQualification.TlPathwayId,
@@ -153,8 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         {
                             Id = index - Constants.RegistrationPathwayStartIndex,
                             TqProviderId = registration.TqProviderId,
-                            AcademicYear = registration.RegistrationDate.Year, // TODO: Need to calcualate based on the requirements
-                            RegistrationDate = registration.RegistrationDate,
+                            AcademicYear = registration.AcademicYear,
                             StartDate = DateTime.UtcNow,
                             Status = RegistrationPathwayStatus.Active,
                             IsBulkUpload = true,
@@ -373,7 +371,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         TqProviderId = registrationRecord.TqProviderId,
                         AcademicYear = registrationRecord.AcademicYear,
-                        RegistrationDate = registrationRecord.RegistrationDate,
                         StartDate = DateTime.UtcNow,
                         Status = RegistrationPathwayStatus.Active,
                         IsBulkUpload = false,
@@ -465,10 +462,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var hasOnlySpecialismsRecordChanged = false;
 
             var hasProviderChanged = !pathwaysToUpdate.Any(x => amendedRegistration.TqRegistrationPathways.Any(r => r.TqProvider.TlProviderId == x.TqProvider.TlProviderId));
-            var hasRegistrationDateChanged = !pathwaysToUpdate.Any(x => amendedRegistration.TqRegistrationPathways.Any(r => r.RegistrationDate == x.RegistrationDate));
 
             // change existing TqRegistrationPathway record status and related TqRegistrationSpecialism records status to "Changed"
-            if (hasProviderChanged || hasRegistrationDateChanged)
+            if (hasProviderChanged)
             {
                 pathwaysToUpdate.ForEach(pathwayToUpdate =>
                 {

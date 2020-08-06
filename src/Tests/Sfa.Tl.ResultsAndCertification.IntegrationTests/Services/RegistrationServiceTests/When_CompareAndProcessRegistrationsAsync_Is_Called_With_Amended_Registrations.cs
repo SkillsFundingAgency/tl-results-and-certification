@@ -87,7 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         {
             actualPathway.Should().NotBeNull();
             actualPathway.TqProviderId.Should().Be(expectedPathway.TqProviderId);
-            actualPathway.RegistrationDate.Should().Be(expectedPathway.RegistrationDate);
+            actualPathway.AcademicYear.Should().Be(expectedPathway.AcademicYear);
             actualPathway.Status.Should().Be(expectedPathway.Status);
             actualPathway.IsBulkUpload.Should().Be(expectedPathway.IsBulkUpload);
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 {
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 LastName = reg.LastName.Trim(),
                 DateOfBirth = reg.DateOfBirth.Trim().ParseStringToDateTime(),
                 ProviderUkprn = reg.Ukprn.Trim().ToLong(),
-                RegistrationDate = reg.RegistrationDate.Trim().ParseStringToDateTime(),
+                AcademicYear = (int)EnumExtensions.GetEnumByDisplayName<AcademicYear>(reg.AcademicYear.Trim()),
                 CoreCode = reg.Core.Trim(),
                 SpecialismCodes = reg.Specialisms.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())),
                 RowNum = rownum,

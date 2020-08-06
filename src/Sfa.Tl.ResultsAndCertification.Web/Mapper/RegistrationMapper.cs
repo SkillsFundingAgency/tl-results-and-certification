@@ -45,7 +45,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.SelectCore.SelectedCoreCode))
                .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.SelectSpecialism != null ? s.SelectSpecialism.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code) : new List<string>()))
                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.SelectAcademicYear.SelectedAcademicYear))
-               .ForMember(d => d.RegistrationDate, opts => opts.MapFrom(s => DateTime.UtcNow))
                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<RegistrationViewModel, RegistrationRequest>>());
 
             CreateMap<FindUlnResponse, UlnNotFoundViewModel>();

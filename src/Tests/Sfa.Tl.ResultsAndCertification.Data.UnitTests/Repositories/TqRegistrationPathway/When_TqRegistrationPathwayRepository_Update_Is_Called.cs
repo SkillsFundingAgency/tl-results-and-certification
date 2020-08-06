@@ -37,7 +37,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
             _result.TqRegistrationProfileId.Should().Be(_data.TqRegistrationProfileId);
             _result.TqProviderId.Should().Be(_data.TqProviderId);
             _result.AcademicYear.Should().Be(_data.AcademicYear);
-            _result.RegistrationDate.Should().Be(_data.RegistrationDate);
             _result.StartDate.Should().Be(_data.StartDate);
             _result.Status.Should().Be(_data.Status);
             _result.IsBulkUpload.Should().Be(_data.IsBulkUpload);

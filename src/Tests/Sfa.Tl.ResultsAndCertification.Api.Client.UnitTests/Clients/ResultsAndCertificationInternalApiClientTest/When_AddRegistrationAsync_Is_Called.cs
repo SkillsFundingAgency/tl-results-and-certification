@@ -43,7 +43,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 LastName = "Last",
                 DateOfBirth = "07/01/1987".ToDateTime(),
                 ProviderUkprn = 98765432,
-                RegistrationDate = DateTime.UtcNow,
                 CoreCode = "7654321",
                 SpecialismCodes = new List<string> { "23456789", "7654321" },
                 CreatedBy = "Test User"

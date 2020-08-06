@@ -3,7 +3,6 @@
 	[Id] INT IDENTITY(1,1) NOT NULL, 
 	[TqRegistrationProfileId] INT NOT NULL,
 	[TqProviderId] INT NOT NULL,
-	[RegistrationDate] DATE NOT NULL,
 	[AcademicYear] INT NOT NULL,
 	[StartDate] DATETIME NOT NULL,	
 	[EndDate] DATETIME NULL,
