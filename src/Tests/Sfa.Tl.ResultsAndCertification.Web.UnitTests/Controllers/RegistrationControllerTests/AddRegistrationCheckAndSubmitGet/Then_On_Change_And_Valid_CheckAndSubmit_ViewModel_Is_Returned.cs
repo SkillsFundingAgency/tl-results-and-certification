@@ -14,7 +14,7 @@ using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registr
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationCheckAndSubmitGet
 {
-    public class Then_On_Cache_Exists_And_Valid_CheckAndSubmit_ViewModel_Is_Returned : When_AddRegistrationCheckAndSubmit_Action_Is_Called
+    public class Then_On_Change_And_Valid_CheckAndSubmit_ViewModel_Is_Returned : When_AddRegistrationCheckAndSubmit_Action_Is_Called
     {
         private RegistrationViewModel cacheResult;
         private UlnViewModel _ulnViewModel;
@@ -23,8 +23,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private SelectProviderViewModel _selectProviderViewModel;
         private SelectCoreViewModel _selectCoreViewModel;
         private SpecialismQuestionViewModel _specialismQuestionViewModel;
-        private SelectSpecialismViewModel _selectSpecialismViewModel;
-        private PathwaySpecialismsViewModel _pathwaySpecialismsViewModel;
         private SelectAcademicYearViewModel _academicYearViewModel;
         private string _coreCode = "12345678";
         private Dictionary<string, string> _routeAttributes;
@@ -32,16 +30,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public override void Given()
         {
             _routeAttributes = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
-            _ulnViewModel =  new UlnViewModel { Uln = "1234567890" };
+            _ulnViewModel = new UlnViewModel { Uln = "1234567890" };
             _learnersNameViewModel = new LearnersNameViewModel { Firstname = "First", Lastname = "Last" };
             _dateofBirthViewModel = new DateofBirthViewModel { Day = "01", Month = "01", Year = "2020" };
             _selectProviderViewModel = new SelectProviderViewModel { SelectedProviderUkprn = "98765432", SelectedProviderDisplayName = "Barnsley College (98765432)" };
             _selectCoreViewModel = new SelectCoreViewModel { SelectedCoreCode = _coreCode, SelectedCoreDisplayName = $"Education ({_coreCode})", CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = _coreCode } } };
-            _specialismQuestionViewModel = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true };
-            _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayCode = _coreCode, PathwayName = "Education", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Code = "7654321", Name = "Test Education", DisplayName = "Test Education (7654321)", IsSelected = true } } };
-            _selectSpecialismViewModel = new SelectSpecialismViewModel { PathwaySpecialisms = _pathwaySpecialismsViewModel };
+            _specialismQuestionViewModel = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = false };
             _academicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = "2020" };
-            
+
             cacheResult = new RegistrationViewModel
             {
                 Uln = _ulnViewModel,
@@ -50,7 +46,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 SelectProvider = _selectProviderViewModel,
                 SelectCore = _selectCoreViewModel,
                 SpecialismQuestion = _specialismQuestionViewModel,
-                SelectSpecialism = _selectSpecialismViewModel,
                 SelectAcademicYear = _academicYearViewModel
             };
 
@@ -112,8 +107,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             // Summary Specialisms
             model.SummarySpecialisms.Should().NotBeNull();
             model.SummarySpecialisms.Title.Should().Be(CheckAndSubmitContent.Title_Specialism_Text);
-            model.SummarySpecialisms.Value.Should().BeEquivalentTo(_selectSpecialismViewModel.PathwaySpecialisms.Specialisms.Where(s => s.IsSelected).Select(s => s.DisplayName));
-            model.SummarySpecialisms.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialismQuestion);
+            model.SummarySpecialisms.Value.Should().BeNullOrEmpty();
+            model.SummarySpecialisms.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialism);
             model.SummarySpecialisms.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
             model.SummaryUln.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
