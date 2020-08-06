@@ -13,7 +13,7 @@
     <div class="govuk-grid-column-two-thirds">
         <form class="form" asp-route="SubmitRegistrationDateofBirth">
             <partial name="_ValidationSummary" />
-            <input type="hidden" asp-for="IsChangeMode" />
+            <input type="hidden" asp-for="IsChangeMode" value="@Model.IsChangeMode.ToString()" />
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@DateofBirth.DateofBirth_Field_Caption</span>
                 <fieldset class="govuk-fieldset" role="group">

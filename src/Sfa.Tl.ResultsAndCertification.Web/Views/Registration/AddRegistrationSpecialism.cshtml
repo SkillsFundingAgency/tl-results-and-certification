@@ -13,8 +13,8 @@
     <div class="govuk-grid-column-two-thirds">
         <form class="form" asp-route="SubmitRegistrationSpecialism">
             <partial name="_ValidationSummary" />
-            <input type="hidden" asp-for="IsChangeMode" />
-            <input type="hidden" asp-for="IsChangeModeFromSpecialismQuestion" />            
+            <input type="hidden" asp-for="IsChangeMode" value="@Model.IsChangeMode.ToString()" />
+            <input type="hidden" asp-for="IsChangeModeFromSpecialismQuestion" value="@Model.IsChangeModeFromSpecialismQuestion.ToString()" />
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@SelectSpecialism.Page_Caption_Text</span>
                 <vc:select-specialism model=Model></vc:select-specialism>
