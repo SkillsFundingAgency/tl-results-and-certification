@@ -161,11 +161,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrations data and format rules guide.xlsx.
+        ///   Looks up a localized string similar to Registrations_data_format_and_rules_guide.xlsx.
         /// </summary>
-        public static string Registrations_Data_And_Format_Rules_Guide_File_Name_Text {
+        public static string Registrations_Data_Format_And_Rules_Guide_File_Name_Text {
             get {
-                return ResourceManager.GetString("Registrations_Data_And_Format_Rules_Guide_File_Name_Text", resourceCulture);
+                return ResourceManager.GetString("Registrations_Data_Format_And_Rules_Guide_File_Name_Text", resourceCulture);
             }
         }
         

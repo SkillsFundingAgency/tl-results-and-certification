@@ -11,19 +11,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
     {
         [Required(ErrorMessageResourceType = typeof(ErrorResource.SelectCore), ErrorMessageResourceName = "Validation_Select_Core_Required")]
         public string SelectedCoreCode { get; set; }
+        
         public string SelectedCoreDisplayName { get; set; }
 
         public IList<SelectListItem> CoreSelectList { get; set; }
 
-        public BackLinkModel BackLink
-        {
-            get
-            {
-                return new BackLinkModel
-                {
-                    RouteName = RouteConstants.AddRegistrationProvider,
-                };
-            }
-        }
+        public bool IsChangeMode { get; set; }
+
+        public bool IsChangeModeFromProvider { get; set; }
+
+        public BackLinkModel BackLink => new BackLinkModel { RouteName = (IsChangeMode && !IsChangeModeFromProvider) ? RouteConstants.AddRegistrationCheckAndSubmit : RouteConstants.AddRegistrationProvider, RouteAttributes = (IsChangeMode && IsChangeModeFromProvider) ? new Dictionary<string, string> { { Constants.IsChangeMode, "true" } } : null };
     }
 }

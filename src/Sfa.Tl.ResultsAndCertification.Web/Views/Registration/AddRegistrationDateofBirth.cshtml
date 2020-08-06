@@ -13,7 +13,7 @@
     <div class="govuk-grid-column-two-thirds">
         <form class="form" asp-route="SubmitRegistrationDateofBirth">
             <partial name="_ValidationSummary" />
-
+            <input type="hidden" asp-for="IsChangeMode" />
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@DateofBirth.DateofBirth_Field_Caption</span>
                 <fieldset class="govuk-fieldset" role="group">
@@ -30,7 +30,8 @@
                 </fieldset>
             </div>
             <p>
-                <button type="submit" class="govuk-button" data-module="govuk-button">@DateofBirth.Continue_Button_Text</button>
+                @{ var buttonText = Model.IsChangeMode ? @DateofBirth.Change_Button_Text : @DateofBirth.Continue_Button_Text; }
+                <button type="submit" class="govuk-button" data-module="govuk-button">@buttonText</button>
             </p>
         </form>
     </div>

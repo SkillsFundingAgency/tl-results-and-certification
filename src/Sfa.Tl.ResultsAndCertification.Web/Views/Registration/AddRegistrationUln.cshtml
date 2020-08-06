@@ -2,8 +2,7 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
 
 @{
-    ViewData["Title"] = @Model.IsChangeMode ?
-        @UlnRegistration.Page_Title_Change_Registration : @UlnRegistration.Page_Title_Add_Registration;
+    ViewData["Title"] = @UlnRegistration.Page_Title_Add_Registration;
 }
 
 @section NavigationBar {
@@ -12,24 +11,17 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form class="form" asp-route="AddRegistrationUln">
+        <form class="form" asp-route="SubmitRegistrationUln">
             <partial name="_ValidationSummary" />
-            <input type="hidden" value="@Model.IsChangeMode" />
+            <input type="hidden" asp-for="IsChangeMode" />
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@UlnRegistration.Page_Caption_Text</span>
                 <vc:uln model="Model"></vc:uln>
             </div>
             <p>
-                @if (!@Model.IsChangeMode)
-                {
-                    <button type="submit" class="govuk-button" data-module="govuk-button">@UlnRegistration.Continue_Button_Label</button>
-                }
-                else
-                {
-                    <button type="submit" class="govuk-button" data-module="govuk-button">@UlnRegistration.Change_Button_Label</button>
-                }
+                @{ var buttonText = Model.IsChangeMode ? @UlnRegistration.Change_Button_Label : @UlnRegistration.Continue_Button_Label; }
+                <button type="submit" class="govuk-button" data-module="govuk-button">@buttonText</button>
             </p>
         </form>
-
     </div>
 </div>

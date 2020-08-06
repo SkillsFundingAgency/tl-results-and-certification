@@ -15,8 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         {
             _ulnViewModel = new UlnViewModel { Uln = "1234567890" };
             RegistrationViewModel cacheModel = new RegistrationViewModel { Uln = _ulnViewModel };
-            CacheService.GetAsync<RegistrationViewModel>(CacheKey)
-                .Returns(cacheModel);
+            CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheModel);
         }
 
         [Fact]
@@ -31,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             var model = viewResult.Model as UlnViewModel;
             model.Should().NotBeNull();
             model.Uln.Should().Be(_ulnViewModel.Uln);
+            model.IsChangeMode.Should().BeFalse();
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.RegistrationDashboard);

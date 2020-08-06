@@ -23,6 +23,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<Stream> GetBulkUploadRegistrationsTechSpecFileAsync(string fileName)
         {
+            if (string.IsNullOrWhiteSpace(fileName))
+                return null;
+
             var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
             {
                 ContainerName = DocumentType.Documents.ToString(),

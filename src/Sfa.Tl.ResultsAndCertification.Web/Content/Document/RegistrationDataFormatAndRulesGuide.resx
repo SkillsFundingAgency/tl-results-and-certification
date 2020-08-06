@@ -150,8 +150,8 @@
   <data name="Published_Text" xml:space="preserve">
     <value>published</value>
   </data>
-  <data name="Registrations_Data_And_Format_Rules_Guide_File_Name_Text" xml:space="preserve">
-    <value>Registrations data and format rules guide.xlsx</value>
+  <data name="Registrations_Data_Format_And_Rules_Guide_File_Name_Text" xml:space="preserve">
+    <value>Registrations_data_format_and_rules_guide.xlsx</value>
   </data>
   <data name="Section_Heading" xml:space="preserve">
     <value>T Levels registration data: format and rules guide</value>
