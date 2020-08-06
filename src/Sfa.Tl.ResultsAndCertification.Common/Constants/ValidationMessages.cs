@@ -12,6 +12,9 @@
         public const string MustBeValidDate = "{0} must be a valid date in DDMMYYYY format";
         public const string DateNotinFuture = "{0} must be in the past";
 
+        public const string MustBeInFormat = "{0} must be in the format {1}";
+        public const string MustBeCurrentOne = "{0} must be the current one";
+
         // File based validation messages
         public const string FileHeaderNotFound = "File header is not valid";
         public const string NoRecordsFound = "No registration data received";

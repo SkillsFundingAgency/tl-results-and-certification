@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             {
                 RowNum = "2",
                 Uln = "",
-                ErrorMessage = "Registration date required"
+                ErrorMessage = "Academic year required"
             },            
             new RegistrationValidationError
             {
@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             {
                 RowNum = "2",
                 Uln = "111111111",
-                ErrorMessage = "Registration date must be a valid date in DDMMYYYY format"
+                ErrorMessage = "Academic year must be the current one"
             },
             new RegistrationValidationError
             {

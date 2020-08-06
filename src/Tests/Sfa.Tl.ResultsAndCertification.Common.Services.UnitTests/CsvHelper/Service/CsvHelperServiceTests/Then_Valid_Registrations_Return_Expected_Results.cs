@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
                 DateOfBirth = new DateTime(2000, 1, 1),
                 ProviderUkprn = 1234,
                 CoreCode = "989",
-                RegistrationDate = new DateTime(2000, 1, 1),
+                AcademicYear = 2020,
                 SpecialismCodes = new List<string> { "spl1" }
             };
             var regCsvResponse = new ValidationResult(failures);
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
             actualData.LastName.Should().Be(expectedRow.LastName);
             actualData.DateOfBirth.Should().Be(expectedRow.DateOfBirth);
             actualData.CoreCode.Should().Be(expectedRow.CoreCode);
-            actualData.RegistrationDate.Should().Be(expectedRow.RegistrationDate);
+            actualData.AcademicYear.Should().Be(expectedRow.AcademicYear);
             actualData.SpecialismCodes.Count().Should().Be(expectedRow.SpecialismCodes.Count());
             actualData.SpecialismCodes.First().Should().Be(expectedRow.SpecialismCodes.First());
 
@@ -56,8 +56,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         private StringBuilder GetInputFilecontent()
         {
             StringBuilder csvData = new StringBuilder();
-            csvData.AppendLine("ULN,First Name,Last Name,Date of Birth,UKPRN,Registration Date,Core code,Specialism codes");
-            csvData.AppendLine("1111111111,First 1,Last 1,10012006,10000080,22092020,10423456,27234567");
+            csvData.AppendLine("ULN,First Name,Last Name,Date of Birth,UKPRN,Academic year,Core code,Specialism codes");
+            csvData.AppendLine("1111111111,First 1,Last 1,10012006,10000080,2020,10423456,27234567");
             return csvData;
         }
     }

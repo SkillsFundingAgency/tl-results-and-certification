@@ -19,17 +19,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
         {
             var expectedStage2Response = new List<RegistrationCsvRecordResponse>
                 {
-                    new RegistrationCsvRecordResponse { RowNum = 1, Uln = 1111111111, FirstName = "", LastName = "Last3", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 33333333, RegistrationDate = "10/06/2020".ToDateTime(), CoreCode ="12333333", SpecialismCodes = new List<string> {"234567819"}, ValidationErrors = new List<RegistrationValidationError>
+                    new RegistrationCsvRecordResponse { RowNum = 1, Uln = 1111111111, FirstName = "", LastName = "Last3", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 33333333, AcademicYear = 2020, CoreCode ="12333333", SpecialismCodes = new List<string> {"234567819"}, ValidationErrors = new List<RegistrationValidationError>
                     {
                         new RegistrationValidationError { RowNum = "1", Uln = "1111111111", ErrorMessage = "First name required" }
                     } },
-                    new RegistrationCsvRecordResponse { RowNum = 2, Uln = 1111111112, FirstName = "First2", LastName = "", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 33333333, RegistrationDate = "10/06/2020".ToDateTime(), CoreCode ="12333333", SpecialismCodes = new List<string> {"234567819"}, ValidationErrors = new List<RegistrationValidationError>
+                    new RegistrationCsvRecordResponse { RowNum = 2, Uln = 1111111112, FirstName = "First2", LastName = "", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 33333333, AcademicYear = 2020, CoreCode ="12333333", SpecialismCodes = new List<string> {"234567819"}, ValidationErrors = new List<RegistrationValidationError>
                     {
                         new RegistrationValidationError { RowNum = "2", Uln = "1111111112", ErrorMessage = "Last name required" }
                     } },
-                    new RegistrationCsvRecordResponse { RowNum = 3, Uln = 1111111113, FirstName = "First3", LastName = "Last3", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 00000000, RegistrationDate = "10/06/2020".ToDateTime(), CoreCode ="12333333", SpecialismCodes = new List<string> {"234567819"} },
-                    new RegistrationCsvRecordResponse { RowNum = 4, Uln = 1111111114, FirstName = "First4", LastName = "Last4", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 33333333, RegistrationDate = "10/06/2020".ToDateTime(), CoreCode ="00000000", SpecialismCodes = new List<string> {"234567819"} },
-                    new RegistrationCsvRecordResponse { RowNum = 5, Uln = 1111111115, FirstName = "First5", LastName = "Last5", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 33333333, RegistrationDate = "10/06/2020".ToDateTime(), CoreCode ="12333333", SpecialismCodes = new List<string> {"000000000"} },
+                    new RegistrationCsvRecordResponse { RowNum = 3, Uln = 1111111113, FirstName = "First3", LastName = "Last3", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 00000000, AcademicYear = 2020, CoreCode ="12333333", SpecialismCodes = new List<string> {"234567819"} },
+                    new RegistrationCsvRecordResponse { RowNum = 4, Uln = 1111111114, FirstName = "First4", LastName = "Last4", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 33333333, AcademicYear = 2020, CoreCode ="00000000", SpecialismCodes = new List<string> {"234567819"} },
+                    new RegistrationCsvRecordResponse { RowNum = 5, Uln = 1111111115, FirstName = "First5", LastName = "Last5", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 33333333, AcademicYear = 2020, CoreCode ="12333333", SpecialismCodes = new List<string> {"000000000"} },
                 };
 
             var expectedStage3Response = new List<RegistrationRecordResponse>
