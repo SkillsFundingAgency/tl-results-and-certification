@@ -157,7 +157,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("add-registration-unique-learner-number/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationUln)]
-        public async Task<IActionResult> AddRegistrationUlnAsync(bool isChangeMode = false)
+        public async Task<IActionResult> AddRegistrationUlnAsync(bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
             var viewModel = cacheModel?.Uln != null ? cacheModel.Uln : new UlnViewModel();
@@ -170,6 +170,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-registration-unique-learner-number", Name = RouteConstants.SubmitRegistrationUln)]
         public async Task<IActionResult> AddRegistrationUlnAsync(UlnViewModel model)
         {
+            if (model == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
             if (!ModelState.IsValid)
                 return View(model);
 
@@ -196,7 +199,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("add-registration-learners-name/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationLearnersName)]
-        public async Task<IActionResult> AddRegistrationLearnersNameAsync(bool isChangeMode = false)
+        public async Task<IActionResult> AddRegistrationLearnersNameAsync(bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
@@ -216,7 +219,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel?.Uln == null)
+            if (model == null || cacheModel?.Uln == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             cacheModel.LearnersName = model;
@@ -227,7 +230,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("add-registration-date-of-birth/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationDateofBirth)]
-        public async Task<IActionResult> AddRegistrationDateofBirthAsync(bool isChangeMode = false)
+        public async Task<IActionResult> AddRegistrationDateofBirthAsync(bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
@@ -247,7 +250,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel?.LearnersName == null)
+            if (model == null || cacheModel?.LearnersName == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             cacheModel.DateofBirth = model;
@@ -258,7 +261,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("add-registration-provider/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationProvider)]
-        public async Task<IActionResult> AddRegistrationProviderAsync(bool isChangeMode = false)
+        public async Task<IActionResult> AddRegistrationProviderAsync(bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
@@ -277,7 +280,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddRegistrationProviderAsync(SelectProviderViewModel model)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel?.DateofBirth == null)
+            if (model == null || cacheModel?.DateofBirth == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var registeredProviderViewModel = await GetAoRegisteredProviders();
@@ -303,7 +306,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("add-registration-core/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationCore)]
-        public async Task<IActionResult> AddRegistrationCoreAsync(bool isChangeMode = false)
+        public async Task<IActionResult> AddRegistrationCoreAsync(bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
@@ -323,7 +326,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddRegistrationCoreAsync(SelectCoreViewModel model)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel?.SelectProvider == null)
+            if (model == null || cacheModel?.SelectProvider == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var coreViewModel = await GetRegisteredProviderCores(cacheModel.SelectProvider.SelectedProviderUkprn.ToLong());
@@ -347,7 +350,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("add-registration-learner-decided-specialism-question/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationSpecialismQuestion)]
-        public async Task<IActionResult> AddRegistrationSpecialismQuestionAsync(bool isChangeMode = false)
+        public async Task<IActionResult> AddRegistrationSpecialismQuestionAsync(bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
@@ -368,7 +371,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel?.SelectCore == null)
+            if (model == null || cacheModel?.SelectCore == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (!model.HasLearnerDecidedSpecialism.Value)
@@ -391,7 +394,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("add-registration-specialism/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationSpecialism)]
-        public async Task<IActionResult> AddRegistrationSpecialismAsync(bool isChangeMode = false)
+        public async Task<IActionResult> AddRegistrationSpecialismAsync(bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
@@ -412,7 +415,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || (!model.IsChangeMode && cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false))
+            if (model == null || cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || (!model.IsChangeMode && cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if(model.IsChangeMode && cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism.Value == false)
@@ -427,7 +430,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("add-registration-academic-year/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationAcademicYear)]
-        public async Task<IActionResult> AddRegistrationAcademicYearAsync(bool isChangeMode = false)
+        public async Task<IActionResult> AddRegistrationAcademicYearAsync(bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
