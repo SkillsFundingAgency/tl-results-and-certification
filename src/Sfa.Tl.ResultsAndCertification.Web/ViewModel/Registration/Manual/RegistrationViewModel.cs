@@ -24,6 +24,11 @@
 
         public bool IsChangeModeAllowedForProvider => Uln != null && LearnersName != null && DateofBirth != null && SelectProvider != null && SelectAcademicYear != null;
 
-        public bool IsChangeModeAllowedForCore => Uln != null && LearnersName != null && DateofBirth != null && SelectProvider != null && SelectCore != null && SelectAcademicYear != null;
+        public bool IsChangeModeAllowedForCore => Uln != null && LearnersName != null && DateofBirth != null && SelectProvider != null && SelectAcademicYear != null;
+
+        public bool IsChangeModeAllowedForSpecialismQuestion => Uln != null && LearnersName != null && DateofBirth != null && SelectProvider != null && SelectCore != null && SelectAcademicYear != null;
+
+        public bool IsChangeModeAllowedForSelectSpecialism => Uln != null && LearnersName != null && DateofBirth != null && SelectProvider != null && SelectCore != null
+            && SpecialismQuestion != null && SelectAcademicYear != null;
     }
 }

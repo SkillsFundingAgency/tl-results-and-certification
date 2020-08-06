@@ -14,6 +14,7 @@
         <form class="form" asp-route="SubmitRegistrationCore">
             <partial name="_ValidationSummary" />
             <input type="hidden" asp-for="IsChangeMode" />
+            <input type="hidden" asp-for="IsChangeModeFromProvider" />            
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@SelectProvider.Page_Caption_Text</span>
                 <vc:select-core model=Model></vc:select-core>

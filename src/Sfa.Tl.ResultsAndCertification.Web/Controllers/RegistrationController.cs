@@ -283,7 +283,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var registeredProviderViewModel = await GetAoRegisteredProviders();
 
             if (!ModelState.IsValid)
-                return View(registeredProviderViewModel);
+            {
+                model.ProvidersSelectList = registeredProviderViewModel.ProvidersSelectList;
+                return View(model);
+            }
 
             if (cacheModel?.SelectProvider?.SelectedProviderUkprn != model.SelectedProviderUkprn)
             {
@@ -325,7 +328,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var coreViewModel = await GetRegisteredProviderCores(cacheModel.SelectProvider.SelectedProviderUkprn.ToLong());
             if (!ModelState.IsValid)
-                return View(coreViewModel);
+            {
+                model.CoreSelectList = coreViewModel.CoreSelectList;
+                return View(model);
+            }
 
             if (cacheModel?.SelectCore?.SelectedCoreCode != model.SelectedCoreCode)
             {
@@ -336,12 +342,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             model.SelectedCoreDisplayName = coreViewModel?.CoreSelectList?.FirstOrDefault(p => p.Value == model.SelectedCoreCode)?.Text;
             cacheModel.SelectCore = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion);
+            return model.IsChangeMode ? RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion, new { isChangeMode = true }) : RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion);
         }
 
         [HttpGet]
-        [Route("add-registration-learner-decided-specialism-question", Name = RouteConstants.AddRegistrationSpecialismQuestion)]
-        public async Task<IActionResult> AddRegistrationSpecialismQuestionAsync()
+        [Route("add-registration-learner-decided-specialism-question/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationSpecialismQuestion)]
+        public async Task<IActionResult> AddRegistrationSpecialismQuestionAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
@@ -349,6 +355,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.SpecialismQuestion == null ? new SpecialismQuestionViewModel() : cacheModel.SpecialismQuestion;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForSpecialismQuestion;
+            viewModel.IsChangeModeFromCore = cacheModel.SelectCore.IsChangeMode;
             return View(viewModel);
         }
 
@@ -370,19 +378,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.SpecialismQuestion = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-            return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ? RouteConstants.AddRegistrationSpecialism : RouteConstants.AddRegistrationAcademicYear);
+
+            if(model.IsChangeMode)
+            {
+                return model.HasLearnerDecidedSpecialism.Value ? RedirectToRoute(RouteConstants.AddRegistrationSpecialism, new { isChangeMode = true }) : RedirectToRoute(RouteConstants.AddRegistrationCheckAndSubmit);
+            }
+            else
+            {
+                return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ? RouteConstants.AddRegistrationSpecialism : RouteConstants.AddRegistrationAcademicYear);
+            }
         }
 
         [HttpGet]
-        [Route("add-registration-specialism", Name = RouteConstants.AddRegistrationSpecialism)]
-        public async Task<IActionResult> AddRegistrationSpecialismAsync()
+        [Route("add-registration-specialism/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationSpecialism)]
+        public async Task<IActionResult> AddRegistrationSpecialismAsync(bool isChangeMode = false)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
-            if (cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
+            if (cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || (!isChangeMode && cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.SelectSpecialism == null ? new SelectSpecialismViewModel { PathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.SelectCore.SelectedCoreCode) } : cacheModel.SelectSpecialism;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForSelectSpecialism;
+            viewModel.IsChangeModeFromSpecialismQuestion = cacheModel.SpecialismQuestion.IsChangeMode;
             return View(viewModel);
         }
 
@@ -394,12 +412,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
-            if (cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
+            if (cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || (!model.IsChangeMode && cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false))
                 return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if(model.IsChangeMode && cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism.Value == false)
+            {
+                cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism = true;
+            }
 
             cacheModel.SelectSpecialism = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.AddRegistrationAcademicYear);
+            return RedirectToRoute(model.IsChangeMode ? RouteConstants.AddRegistrationCheckAndSubmit : RouteConstants.AddRegistrationAcademicYear);
         }
 
         [HttpGet]
@@ -454,6 +477,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!viewModel.IsCheckAndSubmitPageValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            await _cacheService.SetAsync(CacheKey, viewModel.ResetChangeMode());
             return View(viewModel);
         }
 

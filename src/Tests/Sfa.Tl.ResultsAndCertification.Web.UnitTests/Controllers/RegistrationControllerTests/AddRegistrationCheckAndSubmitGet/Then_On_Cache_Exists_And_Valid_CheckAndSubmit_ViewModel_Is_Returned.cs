@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummarySpecialisms.Should().NotBeNull();
             model.SummarySpecialisms.Title.Should().Be(CheckAndSubmitContent.Title_Specialism_Text);
             model.SummarySpecialisms.Value.Should().BeEquivalentTo(_selectSpecialismViewModel.PathwaySpecialisms.Specialisms.Where(s => s.IsSelected).Select(s => s.DisplayName));
-            model.SummarySpecialisms.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialism);
+            model.SummarySpecialisms.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialismQuestion);
             model.SummarySpecialisms.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
 
             // Summary Academic Year

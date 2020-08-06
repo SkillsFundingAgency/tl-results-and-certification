@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
@@ -13,15 +14,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 
         public PathwaySpecialismsViewModel PathwaySpecialisms { get; set; }
 
-        public BackLinkModel BackLink
-        {
-            get
-            {
-                return new BackLinkModel
-                {
-                    RouteName = RouteConstants.AddRegistrationSpecialismQuestion
-                };
-            }
-        }
+        public bool IsChangeMode { get; set; }
+
+        public bool IsChangeModeFromSpecialismQuestion { get; set; }
+
+        public BackLinkModel BackLink => new BackLinkModel { RouteName = (IsChangeMode && !IsChangeModeFromSpecialismQuestion) ? RouteConstants.AddRegistrationCheckAndSubmit : RouteConstants.AddRegistrationSpecialismQuestion, RouteAttributes = (IsChangeMode && IsChangeModeFromSpecialismQuestion) ? new Dictionary<string, string> { { Constants.IsChangeMode, "true" } } : null };
     }
 }

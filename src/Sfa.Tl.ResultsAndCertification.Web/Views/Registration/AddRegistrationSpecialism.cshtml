@@ -13,12 +13,15 @@
     <div class="govuk-grid-column-two-thirds">
         <form class="form" asp-route="SubmitRegistrationSpecialism">
             <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="IsChangeMode" />
+            <input type="hidden" asp-for="IsChangeModeFromSpecialismQuestion" />            
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@SelectSpecialism.Page_Caption_Text</span>
                 <vc:select-specialism model=Model></vc:select-specialism>
             </div>
             <p>
-                <button type="submit" class="govuk-button" data-module="govuk-button">@SelectCore.Continue_Button_Text</button>
+                @{ var buttonText = Model.IsChangeMode ? @SelectSpecialism.Change_Button_Text : @SelectSpecialism.Continue_Button_Text; }
+                <button type="submit" class="govuk-button" data-module="govuk-button">@buttonText</button>
             </p>
         </form>
     </div>
