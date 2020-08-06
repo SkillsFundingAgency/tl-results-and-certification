@@ -9,9 +9,9 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationSpecialismQuestionPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationSpecialismGet
 {
-    public class Then_On_ChangeMode_Redirected_To_CheckAndSubmit_Route : When_AddRegistrationSpecialismQuestionAsync_Action_Is_Called
+    public class Then_On_ChangeMode_Expected_Results_Returned : When_AddRegistrationSpecialism_Action_Is_Called
     {
         private RegistrationViewModel cacheResult;
         private UlnViewModel _ulnViewModel;
@@ -20,12 +20,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private SelectProviderViewModel _selectProviderViewModel;
         private SelectCoreViewModel _selectCoreViewModel;
         private SpecialismQuestionViewModel _specialismQuestionViewModel;
+        private SelectSpecialismViewModel _selectSpecialismViewModel;
+        private PathwaySpecialismsViewModel _pathwaySpecialismsViewModel;
         private SelectAcademicYearViewModel _academicYearViewModel;
         private string _coreCode = "12345678";
         private string _selectedAcademicYear;
-
         public override void Given()
         {
+            IsChangeMode = true;
             _selectedAcademicYear = ((int)AcademicYear.Year2020).ToString();
             _ulnViewModel = new UlnViewModel { Uln = "1234567890" };
             _learnersNameViewModel = new LearnersNameViewModel { Firstname = "First", Lastname = "Last" };
@@ -33,6 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             _selectProviderViewModel = new SelectProviderViewModel { SelectedProviderUkprn = "98765432", SelectedProviderDisplayName = "Barnsley College (98765432)" };
             _selectCoreViewModel = new SelectCoreViewModel { SelectedCoreCode = _coreCode, SelectedCoreDisplayName = $"Education ({_coreCode})", CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = _coreCode } } };
             _specialismQuestionViewModel = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true };
+            _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayCode = _coreCode, PathwayName = "Education", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Code = "7654321", Name = "Test Education", DisplayName = "Test Education (7654321)", IsSelected = true } } };
+            _selectSpecialismViewModel = new SelectSpecialismViewModel { PathwaySpecialisms = _pathwaySpecialismsViewModel };
             _academicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = _selectedAcademicYear.ToString() };
 
             cacheResult = new RegistrationViewModel
@@ -43,18 +47,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 SelectProvider = _selectProviderViewModel,
                 SelectCore = _selectCoreViewModel,
                 SpecialismQuestion = _specialismQuestionViewModel,
+                //SelectSpecialism = _selectSpecialismViewModel,
                 SelectAcademicYear = _academicYearViewModel
             };
 
-            SpecialismQuestionViewModel = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = false, IsChangeMode = true };
+            _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayName = "Test Pathway", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Id = 1, Code = "345678", Name = "Test Specialism", DisplayName = "Test Specialism (345678)", IsSelected = true } } };
+            RegistrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(Ukprn, _coreCode).Returns(_pathwaySpecialismsViewModel);
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
         }
 
         [Fact]
-        public void Then_Redirected_To_AddRegistrationCheckAndSubmit_Route()
+        public void Then_Expected_Results_Are_Returned()
         {
-            var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.AddRegistrationCheckAndSubmit);
+            Result.Should().NotBeNull();
+            Result.Should().BeOfType(typeof(ViewResult));
+
+            var viewResult = Result as ViewResult;
+            viewResult.Model.Should().BeOfType(typeof(SelectSpecialismViewModel));
+
+            var model = viewResult.Model as SelectSpecialismViewModel;
+            model.Should().NotBeNull();
+
+            model.HasSpecialismSelected.Should().NotBeNull();
+            model.PathwaySpecialisms.Specialisms.Should().NotBeNull();
+            model.PathwaySpecialisms.Specialisms.Count.Should().Be(_pathwaySpecialismsViewModel.Specialisms.Count);
+            model.IsChangeMode.Should().Be(IsChangeMode);
+
+            model.BackLink.Should().NotBeNull();
+            model.BackLink.RouteName.Should().Be(RouteConstants.AddRegistrationCheckAndSubmit);
         }
     }
 }
