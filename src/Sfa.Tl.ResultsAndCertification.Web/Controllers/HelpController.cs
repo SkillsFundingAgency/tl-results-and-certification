@@ -24,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("privacy-policy", Name = RouteConstants.PrivacyPolicy)]
         public IActionResult Privacy()
         {
             return View();

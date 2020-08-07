@@ -71,6 +71,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Cookies.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Help\Privacy.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Privacy.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Help\TermsAndConditions.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -322,6 +327,10 @@
     <EmbeddedResource Update="Content\Help\Cookies.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Cookies.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Help\Privacy.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Privacy.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Help\TermsAndConditions.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
