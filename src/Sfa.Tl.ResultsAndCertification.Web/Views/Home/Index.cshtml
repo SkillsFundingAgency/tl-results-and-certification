@@ -6,11 +6,8 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">@StartPage.Page_Heading</h1>
 
-        <h1 class="govuk-heading-xl">
-            @StartPage.Page_Heading
-        </h1>
-        
         @Html.Raw(@StartPage.Section_Text)
 
         <a asp-route="SignIn" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-6" data-module="govuk-button">
@@ -20,5 +17,12 @@
             </svg>
         </a>
 
+        <h2 class="govuk-heading-m govuk-!-margin-top-4">@StartPage.Before_You_Start_Text</h2>
+        <p class="govuk-body">
+            @StartPage.You_Need_DfE_SignIn_Account_To_Use_This_Service_Text
+        </p>
+        <p class="govuk-body">
+            @StartPage.Read_The_Text <a class="govuk-link" asp-route="UserGuide">@StartPage.Manage_Tlevel_Results_User_Guide_Text</a>.
+        </p>
     </div>
 </div>

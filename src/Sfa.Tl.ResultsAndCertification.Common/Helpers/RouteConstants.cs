@@ -95,7 +95,7 @@
 
         // Help
         public const string CookiePolicy = "CookiePolicy";
-        public const string Privacy = "Privacy";
+        public const string PrivacyPolicy = "PrivacyPolicy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string UserGuide = "UserGuide";
 

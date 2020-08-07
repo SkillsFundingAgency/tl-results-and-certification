@@ -61,6 +61,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Before you start.
+        /// </summary>
+        public static string Before_You_Start_Text {
+            get {
+                return ResourceManager.GetString("Before_You_Start_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage T Level results user guide.
+        /// </summary>
+        public static string Manage_Tlevel_Results_User_Guide_Text {
+            get {
+                return ResourceManager.GetString("Manage_Tlevel_Results_User_Guide_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sign in to manage your T Level results.
         /// </summary>
         public static string Page_Heading {
@@ -75,6 +93,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read the.
+        /// </summary>
+        public static string Read_The_Text {
+            get {
+                return ResourceManager.GetString("Read_The_Text", resourceCulture);
             }
         }
         
@@ -102,6 +129,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         public static string Start_Button_Text {
             get {
                 return ResourceManager.GetString("Start_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You need a DfE Sign-in account to use this service..
+        /// </summary>
+        public static string You_Need_DfE_SignIn_Account_To_Use_This_Service_Text {
+            get {
+                return ResourceManager.GetString("You_Need_DfE_SignIn_Account_To_Use_This_Service_Text", resourceCulture);
             }
         }
     }
