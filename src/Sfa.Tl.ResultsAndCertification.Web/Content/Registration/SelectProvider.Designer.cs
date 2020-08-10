@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you cannot find one of your providers in the list above, ask your Providers Editor to add it in the Providers section of this service..
+        ///   Looks up a localized string similar to If you cannot find one of your providers in the list above, ask your Providers Editor to add it in the &apos;Providers&apos; section of this service..
         /// </summary>
         public static string Cannot_Find_One_Of_Your_Providers_Details_Text {
             get {
