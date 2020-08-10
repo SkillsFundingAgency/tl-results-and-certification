@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 SelectProvider = _selectProviderViewModel,
                 SelectCore = _selectCoreViewModel,
                 SpecialismQuestion = _specialismQuestionViewModel,
-                SelectSpecialism = _selectSpecialismViewModel
+                SelectSpecialisms = _selectSpecialismViewModel
             };
 
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.IsChangeMode.Should().BeFalse();
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialism);
+            model.BackLink.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialisms);
         }
     }
 }

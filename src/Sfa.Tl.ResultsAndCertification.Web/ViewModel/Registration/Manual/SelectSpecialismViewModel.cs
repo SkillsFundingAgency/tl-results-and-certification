@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
     public class SelectSpecialismViewModel
     {
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.SelectSpecialism), ErrorMessageResourceName = "Validation_Select_Specialism_Required_Message")]
+        [Required(ErrorMessageResourceType = typeof(ErrorResource.SelectSpecialisms), ErrorMessageResourceName = "Validation_Select_Specialism_Required_Message")]
         public bool? HasSpecialismSelected => (PathwaySpecialisms?.Specialisms.Any(x => x.IsSelected) == true) ? true : (bool?)null;
 
         public PathwaySpecialismsViewModel PathwaySpecialisms { get; set; }

@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             cacheResult = new RegistrationViewModel
             {
                 SpecialismQuestion = _specialismQuestionViewModel,
-                SelectSpecialism = _selectSpecialismViewModel
+                SelectSpecialisms = _selectSpecialismViewModel
             };
 
             SelectAcademicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = _selectedAcademicYear };
