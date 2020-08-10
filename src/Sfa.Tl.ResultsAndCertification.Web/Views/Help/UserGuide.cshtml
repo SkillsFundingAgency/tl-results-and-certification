@@ -1,8 +1,10 @@
 ﻿@inject Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper.IWebConfigurationService ConfigurationService
 
 @{
-    ViewData["Title"] = "User guide page";
+    ViewData["Title"] = "User guide page - Manage T Level results - GOV.UK";
 }
+
+@*<link href="~/stylesheets/StyleSheet.css" rel="stylesheet" />*@
 
 <div class="govuk-grid-row" id="content">
     <div class="govuk-grid-column-two-thirds">
@@ -43,7 +45,7 @@
         <div id="contents" class="app-c-contents-list-with-body" data-module="sticky-element-container">
             <div class="responsive-bottom-margin">
                 <nav class="gem-c-contents-list  gem-c-contents-list--no-underline " role="navigation">
-                    <h2 class="govuk-!-font-size-19 govuk-!-font-weight-regular">Contents</h2>
+                    <h2 class="gem-c-contents-list__title">Contents</h2>
                     <ol class="gem-c-contents-list__list">
                         <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
                             <a class="gem-c-contents-list__link govuk-link" href="#signing-in">Signing in</a>
