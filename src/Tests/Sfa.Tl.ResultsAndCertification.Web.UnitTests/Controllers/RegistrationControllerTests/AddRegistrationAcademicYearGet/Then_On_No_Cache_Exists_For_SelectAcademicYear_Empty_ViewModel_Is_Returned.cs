@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             cacheResult = new RegistrationViewModel
             {
                 SpecialismQuestion = _specialismQuestionViewModel,
-                SelectSpecialism = _selectSpecialismViewModel
+                SelectSpecialisms = _selectSpecialismViewModel
             };
             
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.IsValidAcademicYear.Should().BeFalse();
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialism);
+            model.BackLink.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialisms);
         }
     }
 }

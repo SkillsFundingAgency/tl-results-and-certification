@@ -5,7 +5,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Collections.Generic;
 using Xunit;
-using SelectSpecialismContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration.SelectSpecialism;
+using SelectSpecialismContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration.SelectSpecialisms;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationSpecialismPost
 {

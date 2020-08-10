@@ -108,7 +108,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummarySpecialisms.Should().NotBeNull();
             model.SummarySpecialisms.Title.Should().Be(CheckAndSubmitContent.Title_Specialism_Text);
             model.SummarySpecialisms.Value.Should().BeNullOrEmpty();
-            model.SummarySpecialisms.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialism);
+            model.SummarySpecialisms.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialisms);
             model.SummarySpecialisms.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
             model.SummaryUln.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 

@@ -66,8 +66,8 @@
         public const string SubmitRegistrationCore = "SubmitRegistrationCore";
         public const string AddRegistrationSpecialismQuestion = "AddRegistrationSpecialismQuestion";
         public const string SubmitRegistrationSpecialismQuestion = "SubmitRegistrationSpecialismQuestion";
-        public const string AddRegistrationSpecialism = "AddRegistrationSpecialism";
-        public const string SubmitRegistrationSpecialism = "SubmitRegistrationSpecialism";
+        public const string AddRegistrationSpecialisms = "AddRegistrationSpecialisms";
+        public const string SubmitRegistrationSpecialisms = "SubmitRegistrationSpecialisms";
         public const string AddRegistrationAcademicYear = "AddRegistrationAcademicYear";
         public const string UlnCannotBeRegistered = "UlnCannotBeRegistered";
         public const string SubmitRegistrationAcademicYear = "SubmitRegistrationAcademicYear";

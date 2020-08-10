@@ -16,8 +16,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public bool IsCheckAndSubmitPageValid => RegistrationModel != null && RegistrationModel.Uln != null
             && RegistrationModel.LearnersName != null && RegistrationModel.DateofBirth != null && RegistrationModel.SelectProvider != null
             && RegistrationModel.SelectCore != null && RegistrationModel.SpecialismQuestion != null
-            && ((RegistrationModel.SpecialismQuestion.HasLearnerDecidedSpecialism == true && RegistrationModel.SelectSpecialism != null)
-            || (RegistrationModel.SpecialismQuestion.HasLearnerDecidedSpecialism == false && RegistrationModel.SelectSpecialism == null))
+            && ((RegistrationModel.SpecialismQuestion.HasLearnerDecidedSpecialism == true && RegistrationModel.SelectSpecialisms != null)
+            || (RegistrationModel.SpecialismQuestion.HasLearnerDecidedSpecialism == false && RegistrationModel.SelectSpecialisms == null))
             && RegistrationModel.SelectAcademicYear != null;
 
         public SummaryItemModel SummaryUln => new SummaryItemModel { Id = "uln", Title = CheckAndSubmitContent.Title_Uln_Text, Value = RegistrationModel.Uln.Uln, RouteName = RouteConstants.AddRegistrationUln, ActionText = CheckAndSubmitContent.Change_Action_Link_Text, RouteAttributes = ChangeLinkRouteAttributes };
@@ -28,9 +28,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public SummaryListModel SummarySpecialisms => new SummaryListModel { Id = "specialisms", Title = CheckAndSubmitContent.Title_Specialism_Text, Value = GetSelectedSpecialisms, RouteName = GetSpecialismRouteName, ActionText = CheckAndSubmitContent.Change_Action_Link_Text, HiddenText = GetSpecialismHiddenText, RouteAttributes = ChangeLinkRouteAttributes };
         public SummaryItemModel SummaryAcademicYear => new SummaryItemModel { Id = "academicyear", Title = CheckAndSubmitContent.Title_AcademicYear_Text, Value = EnumExtensions.GetDisplayName<AcademicYear>(RegistrationModel.SelectAcademicYear.SelectedAcademicYear), RouteName = RouteConstants.AddRegistrationAcademicYear, ActionText = CheckAndSubmitContent.Change_Action_Link_Text, RouteAttributes = ChangeLinkRouteAttributes };
 
-        public List<string> GetSelectedSpecialisms => RegistrationModel.SelectSpecialism != null ? RegistrationModel.SelectSpecialism.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).OrderBy(s => s.DisplayName).Select(s => s.DisplayName).ToList() : null;
-        public string GetSpecialismHiddenText => (RegistrationModel.SelectSpecialism == null || !RegistrationModel.SelectSpecialism.PathwaySpecialisms.Specialisms.Any(x => x.IsSelected)) ? CheckAndSubmitContent.Specialism_None_Selected_Text : null;
-        public string GetSpecialismRouteName => RegistrationModel.SelectSpecialism == null ? RouteConstants.AddRegistrationSpecialism : RouteConstants.AddRegistrationSpecialismQuestion;
+        public List<string> GetSelectedSpecialisms => RegistrationModel.SelectSpecialisms != null ? RegistrationModel.SelectSpecialisms.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).OrderBy(s => s.DisplayName).Select(s => s.DisplayName).ToList() : null;
+        public string GetSpecialismHiddenText => (RegistrationModel.SelectSpecialisms == null || !RegistrationModel.SelectSpecialisms.PathwaySpecialisms.Specialisms.Any(x => x.IsSelected)) ? CheckAndSubmitContent.Specialism_None_Selected_Text : null;
+        public string GetSpecialismRouteName => RegistrationModel.SelectSpecialisms == null ? RouteConstants.AddRegistrationSpecialisms : RouteConstants.AddRegistrationSpecialismQuestion;
         public Dictionary<string, string> ChangeLinkRouteAttributes => new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
         public BackLinkModel BackLink => new BackLinkModel { RouteName = RouteConstants.AddRegistrationAcademicYear };
 
@@ -43,9 +43,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
             RegistrationModel.SelectCore.IsChangeMode = false;
             RegistrationModel.SpecialismQuestion.IsChangeMode = false;
 
-            if (RegistrationModel.SelectSpecialism != null)
+            if (RegistrationModel.SelectSpecialisms != null)
             {
-                RegistrationModel.SelectSpecialism.IsChangeMode = false;
+                RegistrationModel.SelectSpecialisms.IsChangeMode = false;
             }
             return RegistrationModel;
         }

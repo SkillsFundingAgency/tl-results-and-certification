@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             result.DateOfBirth.Should().Be($"{RegistrationViewModel.DateofBirth.Day}/{RegistrationViewModel.DateofBirth.Month}/{RegistrationViewModel.DateofBirth.Year}".ToDateTime());
             result.ProviderUkprn.Should().Be(RegistrationViewModel.SelectProvider.SelectedProviderUkprn.ToLong());
             result.CoreCode.Should().Be(RegistrationViewModel.SelectCore.SelectedCoreCode);
-            result.SpecialismCodes.Should().BeEquivalentTo(RegistrationViewModel.SelectSpecialism.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code));
+            result.SpecialismCodes.Should().BeEquivalentTo(RegistrationViewModel.SelectSpecialisms.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code));
             result.CreatedBy.Should().Be($"{Givenname} {Surname}");
         }
     }
