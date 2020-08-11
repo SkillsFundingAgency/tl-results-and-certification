@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Include="Frontend\src\javascripts\user-guide.js" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <Folder Include="Frontend\src\stylesheets\css\" />

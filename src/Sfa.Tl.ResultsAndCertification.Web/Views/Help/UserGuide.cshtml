@@ -4,7 +4,9 @@
     ViewData["Title"] = "User guide page - Manage T Level results - GOV.UK";
 }
 
-@*<link href="~/stylesheets/StyleSheet.css" rel="stylesheet" />*@
+@section scripts {
+    <script src="~/javascripts/user-guide.min.js"></script>
+}
 
 <div class="govuk-grid-row" id="content">
     <div class="govuk-grid-column-two-thirds">
@@ -42,6 +44,7 @@
                 <dd class="app-c-important-metadata__definition">England</dd>
             </dl>
         </div>
+        <div id="stickyref1"></div>
         <div id="contents" class="app-c-contents-list-with-body" data-module="sticky-element-container">
             <div class="responsive-bottom-margin">
                 <nav class="gem-c-contents-list  gem-c-contents-list--no-underline " role="navigation">
@@ -171,9 +174,10 @@
                 <p class="govuk-body-s govuk-!-margin-top-3 govuk-!-margin-bottom-5">
                     Published 5 August 2020
                     <br>Last updated 5 August 2020
-                    <a href="#full-history" class="app-c-published-dates__toggle govuk-link" data-controls="full-history" data-expanded="false" data-toggled-text="- hide all updates" role="button" aria-controls="full-history" aria-expanded="false">+ show all updates</a>
+
+                    <a href="#full-history" class="app-c-published-dates__toggle govuk-link" role="button" id="show-hide-history">+ show all updates</a>
                 </p>
-                <div class="js-hidden" id="full-history" aria-live="polite" role="region">
+                <div id="full-history" aria-live="polite" role="region">
                     <ol class="govuk-list">
                         <li>
                             <p class="govuk-body-s">
@@ -190,8 +194,8 @@
                     </ol>
                 </div>
             </div>
-
-            <div data-sticky-element="" class="app-c-contents-list-with-body__link-wrapper govuk-sticky-element--enabled govuk-sticky-element--stuck-to-window govuk-sticky-element--hidden">
+            <div id="stickyref2"></div>
+            <div data-sticky-element="" class="app-c-contents-list-with-body__link-wrapper">
                 <div class="app-c-contents-list-with-body__link-container">
                     <a class="govuk-link app-c-back-to-top dont-print" href="#contents">
                         <svg class="app-c-back-to-top__icon" xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17">
@@ -201,6 +205,7 @@
                     </a>
                 </div>
             </div>
+
         </div>
     </div>
 

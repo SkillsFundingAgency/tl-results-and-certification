@@ -65,6 +65,21 @@ gulp.task('copy-registration-upload-js', function () {
 });
 
 
+gulp.task('copy-user-guide-js', function () {
+    return src([
+        'node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.js',
+        'Frontend/src/javascripts/user-guide.js'
+    ])
+        .pipe(concat('user-guide.js'))
+        .pipe(minify({
+            noSource: true,
+            ext: {
+                min: '.min.js'
+            }
+        }))
+        .pipe(gulp.dest(paths.dist.defaultJs));
+});
+
 gulp.task('copy-assets', () => {
     return src(paths.src.defaultAssets)
         .pipe(gulp.dest(paths.dist.defaultAssets));
