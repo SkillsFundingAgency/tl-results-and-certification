@@ -290,6 +290,10 @@
     border-top: 2px solid #1d70b8;
 }
 
+.responsive-bottom-margin {
+    margin-bottom: 15px
+}
+
 @media (min-width: 40.0625em) {
     .app-c-publisher-metadata {
         margin-bottom: 50px;
@@ -330,6 +334,10 @@
 
     .gem-c-contents-list__list-item {
         padding-top: 7.5px;
+    }
+
+    .responsive-bottom-margin {
+        margin-bottom: 50px
     }
 }
 
