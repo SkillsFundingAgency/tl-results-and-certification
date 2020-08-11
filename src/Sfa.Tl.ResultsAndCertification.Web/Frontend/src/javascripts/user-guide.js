@@ -23,20 +23,20 @@ $(document).ready(function () {
 
     $(window).scroll(function () {
 
-        var bottom_of_screen = $(window).scrollTop() + $(window).innerHeight();
-        var top_of_screen = $(window).scrollTop();
+        var screen_top = $(window).scrollTop();
+        var screen_bottom = $(window).scrollTop() + $(window).innerHeight();
 
-        var ele = $('#stickyref1')
-        var bottom_of_element = ele.offset().top + ele.outerHeight();
+        var sticky_ele1 = $('#stickyref1');
+        var first_ele_bottom = sticky_ele1.offset().top + sticky_ele1.outerHeight();
 
-        var ele2 = $('#stickyref2')
-        var top_of_element2 = ele2.offset().top;
-        var bottom_of_element2 = ele2.offset().top + ele2.outerHeight();
+        var sticky_ele2 = $('#stickyref2');
+        var last_ele_top = sticky_ele2.offset().top;
+        var last_ele_bottom = sticky_ele2.offset().top + sticky_ele2.outerHeight();
 
         var stickyElement = $('.app-c-contents-list-with-body__link-wrapper');
 
-        if (((top_of_screen < bottom_of_element)) ||
-            ((bottom_of_screen > top_of_element2) && (top_of_screen < bottom_of_element2))) {
+        if (((first_ele_bottom > screen_top)) ||
+            ((last_ele_top < screen_bottom) && (last_ele_bottom > screen_top))) {
             stickyElement.removeClass('govuk-sticky-element--stuck-to-window');
         } else {
             stickyElement.addClass('govuk-sticky-element--stuck-to-window');
