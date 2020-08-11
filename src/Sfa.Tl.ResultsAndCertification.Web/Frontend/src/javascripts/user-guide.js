@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     var showhidelink = $("#show-hide-history");
     showhidelink.on('click', ShowHideHistory);
-    showhidelink.click();
+    $("#full-history").addClass('tl-hide');
 
     $(window).scroll(function () {
 
