@@ -1,7 +1,7 @@
 ﻿/* custom styles for cookie banner*/
 
-/*hide cookie button if javascript is disabled*/
-.tl-hide-cookie-button {
+/*hide cookie button and cookie confirmation if javascript is disabled*/
+.tl-accept-all-cookie-button, .tl-cookie-confirmation {
     display: none;
 }
 
@@ -9,7 +9,11 @@
 .js-enabled .tl-cookie-banner {
     display: none;
 
-    .tl-hide-cookie-button {
+    .tl-cookie-confirmation {
+        display: none;
+    }
+
+    .tl-accept-all-cookie-button {
         display: inline-block;
     }
 }

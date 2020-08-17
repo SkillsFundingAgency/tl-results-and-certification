@@ -117,13 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cookie_Message_Text" xml:space="preserve">
-    <value>This service needs to use cookies to make this site work.</value>
+  <data name="About_How_To_Use_This_Service_Text" xml:space="preserve">
+    <value>about how you use this service. We use this information to make the site work as well as possible and improve this service.</value>
   </data>
-  <data name="Hide_Cookie_Message_Button_Text" xml:space="preserve">
+  <data name="Accept_All_Cookies_Button_Text" xml:space="preserve">
+    <value>Accept all cookies</value>
+  </data>
+  <data name="At_Any_Time_Text" xml:space="preserve">
+    <value>at any time.</value>
+  </data>
+  <data name="Change_Your_Cookie_Setting_Text" xml:space="preserve">
+    <value>change your cookie settings</value>
+  </data>
+  <data name="Cookies_To_Collect_Information_Text" xml:space="preserve">
+    <value>cookies to collect information</value>
+  </data>
+  <data name="Hide_This_Message_Button_Text" xml:space="preserve">
     <value>Hide this message</value>
   </data>
-  <data name="View_Cookie_Policy_Button_Text" xml:space="preserve">
-    <value>View cookie policy</value>
+  <data name="Set_Cookie_Preferences_Button_Text" xml:space="preserve">
+    <value>Set cookie preferences</value>
+  </data>
+  <data name="Tell_Us_Wheather_You_Accept_Cookies_Text" xml:space="preserve">
+    <value>Tell us whether you accept cookies</value>
+  </data>
+  <data name="We_Use_Text" xml:space="preserve">
+    <value>We use</value>
+  </data>
+  <data name="You_Have_Accepted_All_Cookies_Text" xml:space="preserve">
+    <value>You’ve accepted all cookies. You can</value>
   </data>
 </root>
