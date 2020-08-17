@@ -94,7 +94,8 @@
         public const string Error = "Error";
 
         // Help
-        public const string CookiePolicy = "CookiePolicy";
+        public const string Cookies = "Cookies";
+        public const string CookieDetails = "CookieDetails";
         public const string PrivacyPolicy = "PrivacyPolicy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string UserGuide = "UserGuide";

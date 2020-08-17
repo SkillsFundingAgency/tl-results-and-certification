@@ -1,4 +1,6 @@
-﻿/* custom styles for cookie banner*/
+﻿$border-color-blue: #1d70b8;
+
+/* custom styles for cookie banner*/
 
 /*hide cookie button if javascript is disabled*/
 .tl-hide-cookie-button {
@@ -14,4 +16,9 @@
     }
 }
 
-
+.save-notice {
+    padding: 15px;
+    clear: both;
+    margin-bottom: 30px;
+    border: 5px solid $border-color-blue;
+}
