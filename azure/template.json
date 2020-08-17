@@ -30,6 +30,16 @@
             "type": "string",
             "defaultValue": "1"
         },
+        "nonASETier": {
+            "type": "string",
+            "allowedValues": [
+                "Basic",
+                "Standard",
+                "Premium",
+                "PremiumV2"
+            ],
+            "defaultValue": "Standard"
+        },
         "aspInstances": {
             "type": "int",
             "defaultValue": 1
@@ -126,7 +136,7 @@
                         "value": "[parameters('aspInstances')]"
                     },
                     "nonASETier": {
-                        "value": "Standard"
+                        "value": "[parameters('nonASETier')]"
                     }
                 }
             }
@@ -435,7 +445,7 @@
                         ]
                     },
                     "appServiceConnectionStrings": {
-                        "value": [                            
+                        "value": [
                         ]
                     },
                     "customHostName": {
@@ -501,7 +511,7 @@
             "type": "string",
             "value": "[variables('storageAccountName')]"
         },
-		"StorageAccountKey": {
+        "StorageAccountKey": {
             "type": "string",
             "value": "[reference('storage-account').outputs.storageKey.value]"
         },
