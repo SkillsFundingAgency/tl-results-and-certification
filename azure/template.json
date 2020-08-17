@@ -85,6 +85,10 @@
         },
         "configurationStorageConnectionString": {
             "type": "string"
+        },
+        "serverlessAutoPauseDelay": {
+            "type": "string",
+            "defaultValue": "-1"
         }
     },
     "variables": {
@@ -485,6 +489,9 @@
                     },
                     "databaseTier": {
                         "value": "[parameters('databaseTier')]"
+                    },
+                    "serverlessAutoPauseDelay": {
+                        "value": "[parameters('serverlessAutoPauseDelay')]"
                     }
                 }
             }
