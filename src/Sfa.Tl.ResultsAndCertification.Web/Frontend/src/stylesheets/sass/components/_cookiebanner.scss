@@ -2,20 +2,30 @@
 
 /* custom styles for cookie banner*/
 
-/*hide cookie button and cookie confirmation if javascript is disabled*/
-.tl-accept-all-cookie-button, .tl-cookie-confirmation {
+/*hide cookie button, cookie confirmation and cookie preferences section if javascript is disabled*/
+.tl-accept-all-cookie-button, .tl-cookie-confirmation, .cookie-preferences {
     display: none;
 }
 
 /* if javascript is enabled hide cookie banner if not show cookie banner*/
-.js-enabled .tl-cookie-banner {
-    display: none;
+.js-enabled {
+    .tl-cookie-banner {
+        display: none;
 
-    .tl-cookie-confirmation {
+        .tl-cookie-confirmation {
+            display: none;
+        }
+
+        .tl-accept-all-cookie-button {
+            display: inline-block;
+        }
+    }
+
+    .cookie-preferences__no-js {
         display: none;
     }
 
-    .tl-accept-all-cookie-button {
+    .cookie-preferences {
         display: inline-block;
     }
 }
