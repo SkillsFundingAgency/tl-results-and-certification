@@ -1,62 +1,62 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Help
 
 @{
-    ViewData["Title"] = @Cookies.Page_Title;
+    ViewData["Title"] = @CookieDetails.Page_Title;
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">
-            @Cookies.Section_Heading
+            @CookieDetails.Section_Heading
         </h1>
 
-        <p class="govuk-body">@Cookies.Cookies_Are_Files_Text</p>
-        <p class="govuk-body">@Cookies.We_Only_Use_Cookies_Text</p>
-        <p class="govuk-body">@Cookies.These_Essential_Cookies_Text</p>
+        <p class="govuk-body">@CookieDetails.Cookies_Are_Files_Text</p>
+        <p class="govuk-body">@CookieDetails.We_Only_Use_Cookies_Text</p>
+        <p class="govuk-body">@CookieDetails.These_Essential_Cookies_Text</p>
         <ul class="govuk-list govuk-list--bullet">
-            <li>@Cookies.Remember_Which_Notifications_Text</li>
-            <li>@Cookies.Temporarily_Store_Text</li>
-            <li>@Cookies.Keep_You_Logged_In_Text</li>
+            <li>@CookieDetails.Remember_Which_Notifications_Text</li>
+            <li>@CookieDetails.Temporarily_Store_Text</li>
+            <li>@CookieDetails.Keep_You_Logged_In_Text</li>
         </ul>
-        <p class="govuk-body">@Cookies.They_Are_Automatically_Enabled_Text</p>
+        <p class="govuk-body">@CookieDetails.They_Are_Automatically_Enabled_Text</p>
 
         <table class="govuk-table govuk-!-margin-top-7">
-            <caption class="govuk-table__caption govuk-heading-m">@Cookies.Protecting_Your_Security_Text</caption>
+            <caption class="govuk-table__caption govuk-heading-m">@CookieDetails.Protecting_Your_Security_Text</caption>
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">@Cookies.Name_Text</th>
-                    <th scope="col" class="govuk-table__header">@Cookies.Purpose_Text</th>
-                    <th scope="col" class="govuk-table__header">@Cookies.Expires_Text</th>
+                    <th scope="col" class="govuk-table__header">@CookieDetails.Name_Text</th>
+                    <th scope="col" class="govuk-table__header">@CookieDetails.Purpose_Text</th>
+                    <th scope="col" class="govuk-table__header">@CookieDetails.Expires_Text</th>
                 </tr>
             </thead>
             <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
-                    <td scope="row" class="govuk-table__cell">@Cookies.Csrf_Token_Text</td>
-                    <td class="govuk-table__cell">@Cookies.Used_To_Prevent_Css_Attacks_Text</td>
-                    <td class="govuk-table__cell">@Cookies.When_The_Browser_Is_Closed</td>
+                    <td scope="row" class="govuk-table__cell">@CookieDetails.Csrf_Token_Text</td>
+                    <td class="govuk-table__cell">@CookieDetails.Used_To_Prevent_Css_Attacks_Text</td>
+                    <td class="govuk-table__cell">@CookieDetails.When_The_Browser_Is_Closed</td>
                 </tr>
                 <tr class="govuk-table__row">
-                    <td scope="row" class="govuk-table__cell">@Cookies.Csrf_Cookie_Name_Text</td>
-                    <td class="govuk-table__cell">@Cookies.Used_To_Prevent_Cross_Site_Scripting_Attacks_Text</td>
-                    <td class="govuk-table__cell">@Cookies.When_The_Browser_Is_Closed</td>
+                    <td scope="row" class="govuk-table__cell">@CookieDetails.Csrf_Cookie_Name_Text</td>
+                    <td class="govuk-table__cell">@CookieDetails.Used_To_Prevent_Cross_Site_Scripting_Attacks_Text</td>
+                    <td class="govuk-table__cell">@CookieDetails.When_The_Browser_Is_Closed</td>
                 </tr>
             </tbody>
         </table>
 
         <table class="govuk-table govuk-!-margin-top-7">
-            <caption class="govuk-table__caption govuk-heading-m">@Cookies.Logging_In_And_Authentication_Text</caption>
+            <caption class="govuk-table__caption govuk-heading-m">@CookieDetails.Logging_In_And_Authentication_Text</caption>
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">@Cookies.Name_Text</th>
-                    <th scope="col" class="govuk-table__header">@Cookies.Purpose_Text</th>
-                    <th scope="col" class="govuk-table__header">@Cookies.Expires_Text</th>
+                    <th scope="col" class="govuk-table__header">@CookieDetails.Name_Text</th>
+                    <th scope="col" class="govuk-table__header">@CookieDetails.Purpose_Text</th>
+                    <th scope="col" class="govuk-table__header">@CookieDetails.Expires_Text</th>
                 </tr>
             </thead>
             <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
-                    <td scope="row" class="govuk-table__cell">@Cookies.Authentication_Cookie_Name_Text</td>
-                    <td class="govuk-table__cell">@Cookies.Used_To_Track_Your_Current_Session_Text</td>
-                    <td class="govuk-table__cell">@Cookies.Inactivity_Text</td>
+                    <td scope="row" class="govuk-table__cell">@CookieDetails.Authentication_Cookie_Name_Text</td>
+                    <td class="govuk-table__cell">@CookieDetails.Used_To_Track_Your_Current_Session_Text</td>
+                    <td class="govuk-table__cell">@CookieDetails.Inactivity_Text</td>
                 </tr>
             </tbody>
         </table>
