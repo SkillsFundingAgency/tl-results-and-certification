@@ -51,7 +51,6 @@ gulp.task('copy-provider-search-js', function () {
 
 gulp.task('copy-registration-upload-js', function () {
     return src([
-        'node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.js',
         'Frontend/src/javascripts/registration-upload.js'
     ])
         .pipe(concat('registration-upload.js'))
@@ -64,10 +63,8 @@ gulp.task('copy-registration-upload-js', function () {
         .pipe(gulp.dest(paths.dist.defaultJs));
 });
 
-
 gulp.task('copy-user-guide-js', function () {
     return src([
-        'node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.js',
         'Frontend/src/javascripts/user-guide.js'
     ])
         .pipe(concat('user-guide.js'))
@@ -82,7 +79,6 @@ gulp.task('copy-user-guide-js', function () {
 
 gulp.task('copy-cookies-js', function () {
     return src([
-        'node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.js',
         'Frontend/src/javascripts/cookies.js'
     ])
         .pipe(concat('cookies.js'))

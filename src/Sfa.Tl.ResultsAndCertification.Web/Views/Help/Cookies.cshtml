@@ -1,91 +1,90 @@
-﻿@{
-    ViewData["Title"] = "Cookies on Manage T Level results page";
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Help
+
+@{
+    ViewData["Title"] = Cookies.Page_Title;
 }
 
 @section scripts{
     <script src="~/javascripts/cookies.min.js"></script>
 }
+
 <div id="tl-cookie-preferences" class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
         <div id="ConfirmationBox" class="tl-hide">
             <section class="save-notice govuk-!-margin-bottom-8" aria-label="Notice" aria-live="polite" role="region">
                 <h2 class="govuk-heading-m">
-                    Your cookie settings were saved
+                    @Cookies.Heading_Settings_Were_Saved
                 </h2>
-                <p class="govuk-body">You can review and change your cookie preferences at any time.</p>
+                <p class="govuk-body">@Cookies.Para_You_Can_Review_Anytime</p>
             </section>
         </div>
 
-        <h1 class="govuk-heading-xl">
-            Cookies on Manage T Level results
-        </h1>
+        <h1 class="govuk-heading-xl">@Cookies.Page_Heading</h1>
 
-        <p class="govuk-body">Cookies are files saved on your phone, tablet or computer when you visit a website.</p>
-        <p class="govuk-body">We use cookies to store information about how you use this service, such as the pages you visit.</p>
+        <p class="govuk-body">@Cookies.Para_Saved_On_Your_Device</p>
+        <p class="govuk-body">@Cookies.Para_We_Use_Such_As_Page_Visit</p>
 
-        <h2 class="govuk-heading-l">
-            Cookies settings
-        </h2>
+        <h2 class="govuk-heading-l">@Cookies.Heading_Cookies_Settings</h2>
 
         <div class="cookie-preferences__no-js">
-            <p class="govuk-body">We use Javascript to set most of our cookies. Unfortunately Javascript is not running on your browser, so you cannot change your settings. You can try:</p>
+            <p class="govuk-body">@Cookies.Para_No_Js_We_Usse_Cookies </p>
             <ul class="govuk-list govuk-list--bullet">
-                <li>reloading the page</li>
-                <li>turning on Javascript in your browser</li>
+                <li>@Cookies.List_No_Js_Reloading_Page</li>
+                <li>@Cookies.List_No_Js_Turning_On_Js</li>
             </ul>
         </div>
 
         <div class="cookie-preferences">
-            <p class="govuk-body">We use 2 types of cookie. You can choose which cookies you’re happy for us to use. </p>
+            <p class="govuk-body">@Cookies.Para_We_Use_2types </p>
 
             <div class="govuk-form-group govuk-!-margin-bottom-7">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                         <h3 class=" govuk-heading-m govuk-!-margin-bottom-3">
-                            Cookies that measure website usage
+                            @Cookies.Heading_Cookie_Measure_Website
                         </h3>
                     </legend>
-                    <p class="govuk-hint">We use Google Analytics to measure how you use the service so we can improve it based on user needs. We do not allow Google to use or share the data about how you use this service.</p>
+                    <p class="govuk-hint">@Cookies.Para_We_Use_Google_Analytics</p>
 
-                    <p class="govuk-hint">Google Analytics sets cookies that store anonymised information about:</p>
+                    <p class="govuk-hint">@Cookies.Para_GA_Store_Anonymised</p>
                     <ul class="govuk-list govuk-hint govuk-list--bullet">
-                        <li>how you got to the service</li>
-                        <li>the pages you visit on this service, and how long you spend on each page</li>
-                        <li>what you click on while you're visiting the service</li>
+                        <li>@Cookies.List_How_You_Got_Service</li>
+                        <li>@Cookies.List_How_Long_Spend</li>
+                        <li>@Cookies.List_What_You_Click</li>
                     </ul>
-                    <p class="govuk-hint">If you have an account with other services provided by the Education and Skills Funding Agency, the information collected using analytics cookies will be linked to your account. This will help us make the service work better for you.</p>
+                    <p class="govuk-hint">@Cookies.Para_If_You_Have_An_Account</p>
 
                     <div class="govuk-radios">
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="use-cookie" name="cookie-answer" type="radio" value="true">
                             <label class="govuk-label govuk-radios__label" for="use-cookie">
-                                Use cookies that measure my service use
+                                @Cookies.Option_Use_Cookies
                             </label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="do-not-use-cookie" name="cookie-answer" type="radio" value="false">
                             <label class="govuk-label govuk-radios__label" for="do-not-use-cookie">
-                                Do not use cookies that measure my service use
+                                @Cookies.Option_Dont_Use_Cookies
                             </label>
                         </div>
                     </div>
                 </fieldset>
             </div>
-            <button class="govuk-button" data-module="govuk-button" id="SaveChanges">Save changes</button>
+            <button class="govuk-button" data-module="govuk-button" id="SaveChanges">@Cookies.Button_Text_Save</button>
 
             <h3 class="govuk-heading-m">
-                Strictly necessary cookies
+                @Cookies.Heading_Strictly_Necessary
             </h3>
-            <p class="govuk-hint">These essential cookies do things like:</p>
+            <p class="govuk-hint">@Cookies.List_Caption_These_Essential</p>
             <ul class="govuk-list govuk-hint govuk-list--bullet">
-                <li>remember which notifications you have seen so you are only shown them once</li>
-                <li>temporarily store the selections you make</li>
-                <li>keep you logged in during your browsing session</li>
+                <li>@Cookies.List_Remember_Which_Notification</li>
+                <li>@Cookies.List_Temporary_Store_Selection</li>
+                <li>@Cookies.List_Keep_You_Logged</li>
             </ul>
-            <p class="govuk-hint">They are automatically enabled. </p>
+            <p class="govuk-hint">@Cookies.Para_They_Are_Automatically_Enabled </p>
 
-            <p class="govuk-hint"><a class="govuk-link" href="cookie-details">Find out more about cookies on Manage T Level results</a></p>
+            <p class="govuk-hint"><a class="govuk-link" href="cookie-details">@Cookies.Link_Text_Cookie_Details </a></p>
         </div>
     </div>
 </div>
