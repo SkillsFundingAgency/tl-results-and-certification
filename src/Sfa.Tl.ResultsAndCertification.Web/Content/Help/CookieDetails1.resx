@@ -117,112 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dot" xml:space="preserve">
-    <value>.</value>
-  </data>
-  <data name="Heading_Change_Your_Settings" xml:space="preserve">
-    <value>Change your settings</value>
-  </data>
-  <data name="Heading_Cookies_That_Measure_Website" xml:space="preserve">
-    <value>Cookies that measure website usage</value>
-  </data>
-  <data name="Heading_Logging_Authentication" xml:space="preserve">
-    <value>Logging in and authentication</value>
-  </data>
-  <data name="Heading_Protecting_Your_Security" xml:space="preserve">
-    <value>Protecting your security</value>
-  </data>
-  <data name="Heading_Strictly_Necessary" xml:space="preserve">
-    <value>Strictly necessary cookies</value>
-  </data>
-  <data name="Link_Text" xml:space="preserve">
-    <value>change which cookies you’re happy for us to use</value>
-  </data>
-  <data name="List_How_You_Get_To_Site" xml:space="preserve">
-    <value>how you got to the site</value>
-  </data>
-  <data name="List_The_Pages_You_Visit" xml:space="preserve">
-    <value>the pages you visit on this service and how long you spend on them</value>
-  </data>
-  <data name="List_What_You_Click" xml:space="preserve">
-    <value>what you click on while you are visiting the site</value>
-  </data>
-  <data name="Page_Heading" xml:space="preserve">
-    <value>Details about cookies on Manage T Level results</value>
-  </data>
-  <data name="Page_Title" xml:space="preserve">
-    <value>Details about cookies on Manage T Level results</value>
-  </data>
-  <data name="Para_Service_Puts_Small_Files" xml:space="preserve">
-    <value>This service puts small files (known as 'cookies') onto your computer to collect information about how you use the service. Find out more about the cookies we use, what they’re for and when they expire.</value>
-  </data>
-  <data name="Para_We_Use_GA_Software" xml:space="preserve">
-    <value>We use Google Analytics software (Universal Analytics) to collect anonymised information about how you use the service. We do this to help make sure the site is meeting the needs of its users and to help us make improvements. We do not allow Google to use or share the data about how you use this site. Google Analytics stores information about:</value>
-  </data>
-  <data name="Table_Ga_Expire_Row1" xml:space="preserve">
-    <value>1 year</value>
-  </data>
-  <data name="Table_Ga_Name_Row1" xml:space="preserve">
-    <value>analytics_consent</value>
-  </data>
-  <data name="Table_Ga_Purpose_Row1" xml:space="preserve">
-    <value>This tracks user behaviour on the site so we can monitor how users are using it</value>
-  </data>
-  <data name="Table_Heading_GA_Expires" xml:space="preserve">
-    <value>Expires</value>
-  </data>
-  <data name="Table_Heading_GA_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Table_Heading_GA_Purpose" xml:space="preserve">
-    <value>Purpose</value>
-  </data>
-  <data name="Table_Heading_Protecting_Expires" xml:space="preserve">
-    <value>Expires</value>
-  </data>
-  <data name="Table_Heading_Protecting_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Table_Heading_Protecting_Purpose" xml:space="preserve">
-    <value>Purpose</value>
-  </data>
-  <data name="Table_Logging_Expire" xml:space="preserve">
-    <value>Expires</value>
-  </data>
-  <data name="Table_Logging_Expires_Row1" xml:space="preserve">
-    <value>After 30 minutes of inactivity</value>
-  </data>
-  <data name="Table_Logging_Heading_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Table_Logging_Heading_Purpose" xml:space="preserve">
-    <value>Purpose</value>
-  </data>
-  <data name="Table_Logging_Name_Row1" xml:space="preserve">
+  <data name="Authentication_Cookie_Name_Text" xml:space="preserve">
     <value>tl-rc-auth-cookie</value>
   </data>
-  <data name="Table_Logging_Purpose_Row1" xml:space="preserve">
-    <value>Used to track your current session and keep you logged in when browsing the service</value>
+  <data name="Cookies_Are_Files_Text" xml:space="preserve">
+    <value>Cookies are files saved on your phone, tablet or computer when you visit a website.</value>
   </data>
-  <data name="Table_Protecting_Expire_Row1" xml:space="preserve">
-    <value>When the browser is closed</value>
-  </data>
-  <data name="Table_Protecting_Expire_Row2" xml:space="preserve">
-    <value>When the browser is closed</value>
-  </data>
-  <data name="Table_Protecting_Name_Row1" xml:space="preserve">
-    <value>CSRF-TOKEN_</value>
-  </data>
-  <data name="Table_Protecting_Name_Row2" xml:space="preserve">
+  <data name="Csrf_Cookie_Name_Text" xml:space="preserve">
     <value>tl-rc-x-csrf</value>
   </data>
-  <data name="Table_Protecting_Purpose_Row1" xml:space="preserve">
-    <value>Used to prevent cross-site scripting attacks</value>
+  <data name="Csrf_Token_Text" xml:space="preserve">
+    <value>CSRF-TOKEN_</value>
   </data>
-  <data name="Table_Protecting_Purpose_Row2" xml:space="preserve">
+  <data name="Expires_Text" xml:space="preserve">
+    <value>Expires</value>
+  </data>
+  <data name="Inactivity_Text" xml:space="preserve">
+    <value>After 30 minutes of inactivity</value>
+  </data>
+  <data name="Keep_You_Logged_In_Text" xml:space="preserve">
+    <value>keep you logged in during your browsing session</value>
+  </data>
+  <data name="Logging_In_And_Authentication_Text" xml:space="preserve">
+    <value>Logging in and authentication</value>
+  </data>
+  <data name="Name_Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Our cookie policy page</value>
+  </data>
+  <data name="Protecting_Your_Security_Text" xml:space="preserve">
+    <value>Protecting your security</value>
+  </data>
+  <data name="Purpose_Text" xml:space="preserve">
+    <value>Purpose</value>
+  </data>
+  <data name="Remember_Which_Notifications_Text" xml:space="preserve">
+    <value>remember which notifications you have seen so you are not shown them more than once</value>
+  </data>
+  <data name="Section_Heading" xml:space="preserve">
+    <value>Cookie policy</value>
+  </data>
+  <data name="Temporarily_Store_Text" xml:space="preserve">
+    <value>temporarily store the selections you make</value>
+  </data>
+  <data name="These_Essential_Cookies_Text" xml:space="preserve">
+    <value>These essential cookies do things like:</value>
+  </data>
+  <data name="They_Are_Automatically_Enabled_Text" xml:space="preserve">
+    <value>They are automatically enabled.</value>
+  </data>
+  <data name="Used_To_Prevent_Cross_Site_Scripting_Attacks_Text" xml:space="preserve">
     <value>Used to prevent cross site scripting attacks</value>
   </data>
-  <data name="Text_You_Can" xml:space="preserve">
-    <value>You can </value>
+  <data name="Used_To_Prevent_Css_Attacks_Text" xml:space="preserve">
+    <value>Used to prevent cross-site scripting attacks</value>
+  </data>
+  <data name="Used_To_Track_Your_Current_Session_Text" xml:space="preserve">
+    <value>Used to track your current session and keep you logged in when browsing the service</value>
+  </data>
+  <data name="We_Only_Use_Cookies_Text" xml:space="preserve">
+    <value>We only use cookies that are essential for you to use this service.</value>
+  </data>
+  <data name="When_The_Browser_Is_Closed" xml:space="preserve">
+    <value>When the browser is closed</value>
   </data>
 </root>

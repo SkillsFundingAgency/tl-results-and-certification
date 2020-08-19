@@ -4,61 +4,91 @@
     ViewData["Title"] = @CookieDetails.Page_Title;
 }
 
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">
-            @CookieDetails.Section_Heading
-        </h1>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">
+                @CookieDetails.Page_Heading
+            </h1>
 
-        <p class="govuk-body">@CookieDetails.Cookies_Are_Files_Text</p>
-        <p class="govuk-body">@CookieDetails.We_Only_Use_Cookies_Text</p>
-        <p class="govuk-body">@CookieDetails.These_Essential_Cookies_Text</p>
-        <ul class="govuk-list govuk-list--bullet">
-            <li>@CookieDetails.Remember_Which_Notifications_Text</li>
-            <li>@CookieDetails.Temporarily_Store_Text</li>
-            <li>@CookieDetails.Keep_You_Logged_In_Text</li>
-        </ul>
-        <p class="govuk-body">@CookieDetails.They_Are_Automatically_Enabled_Text</p>
+            <p class="govuk-body">@CookieDetails.Para_Service_Puts_Small_Files </p>
 
-        <table class="govuk-table govuk-!-margin-top-7">
-            <caption class="govuk-table__caption govuk-heading-m">@CookieDetails.Protecting_Your_Security_Text</caption>
-            <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">@CookieDetails.Name_Text</th>
-                    <th scope="col" class="govuk-table__header">@CookieDetails.Purpose_Text</th>
-                    <th scope="col" class="govuk-table__header">@CookieDetails.Expires_Text</th>
-                </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                    <td scope="row" class="govuk-table__cell">@CookieDetails.Csrf_Token_Text</td>
-                    <td class="govuk-table__cell">@CookieDetails.Used_To_Prevent_Css_Attacks_Text</td>
-                    <td class="govuk-table__cell">@CookieDetails.When_The_Browser_Is_Closed</td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <td scope="row" class="govuk-table__cell">@CookieDetails.Csrf_Cookie_Name_Text</td>
-                    <td class="govuk-table__cell">@CookieDetails.Used_To_Prevent_Cross_Site_Scripting_Attacks_Text</td>
-                    <td class="govuk-table__cell">@CookieDetails.When_The_Browser_Is_Closed</td>
-                </tr>
-            </tbody>
-        </table>
+            <h2 class="govuk-heading-l">
+                @CookieDetails.Heading_Cookies_That_Measure_Website
+            </h2>
+            <p class="govuk-body">@CookieDetails.Para_We_Use_GA_Software </p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@CookieDetails.List_How_You_Get_To_Site</li>
+                <li>@CookieDetails.List_The_Pages_You_Visit</li>
+                <li>@CookieDetails.List_What_You_Click</li>
+            </ul>
 
-        <table class="govuk-table govuk-!-margin-top-7">
-            <caption class="govuk-table__caption govuk-heading-m">@CookieDetails.Logging_In_And_Authentication_Text</caption>
-            <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">@CookieDetails.Name_Text</th>
-                    <th scope="col" class="govuk-table__header">@CookieDetails.Purpose_Text</th>
-                    <th scope="col" class="govuk-table__header">@CookieDetails.Expires_Text</th>
-                </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                    <td scope="row" class="govuk-table__cell">@CookieDetails.Authentication_Cookie_Name_Text</td>
-                    <td class="govuk-table__cell">@CookieDetails.Used_To_Track_Your_Current_Session_Text</td>
-                    <td class="govuk-table__cell">@CookieDetails.Inactivity_Text</td>
-                </tr>
-            </tbody>
-        </table>
+            <table class="govuk-table govuk-!-margin-top-7">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">@CookieDetails.Table_Heading_GA_Name</th>
+                        <th scope="col" class="govuk-table__header">@CookieDetails.Table_Heading_GA_Purpose</th>
+                        <th scope="col" class="govuk-table__header">@CookieDetails.Table_Heading_GA_Expires</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td scope="row" class="govuk-table__cell">@CookieDetails.Table_Ga_Name_Row1</td>
+                        <td class="govuk-table__cell">@CookieDetails.Table_Ga_Purpose_Row1</td>
+                        <td class="govuk-table__cell">@CookieDetails.Table_Ga_Expire_Row1</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="govuk-heading-l govuk-!-margin-top-9">
+                @CookieDetails.Heading_Strictly_Necessary
+            </h2>
+
+            <table class="govuk-table govuk-!-margin-top-7">
+                <caption class="govuk-table__caption govuk-body-l govuk-!-font-weight-bold">@CookieDetails.Heading_Protecting_Your_Security</caption>
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">@CookieDetails.Table_Heading_Protecting_Name</th>
+                        <th scope="col" class="govuk-table__header">@CookieDetails.Table_Heading_Protecting_Purpose</th>
+                        <th scope="col" class="govuk-table__header">@CookieDetails.Table_Heading_Protecting_Expires</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td scope="row" class="govuk-table__cell">@CookieDetails.Table_Protecting_Name_Row1</td>
+                        <td class="govuk-table__cell">@CookieDetails.Table_Protecting_Purpose_Row1</td>
+                        <td class="govuk-table__cell">@CookieDetails.Table_Protecting_Expire_Row1</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td scope="row" class="govuk-table__cell">@CookieDetails.Table_Protecting_Name_Row2</td>
+                        <td class="govuk-table__cell">@CookieDetails.Table_Protecting_Purpose_Row2</td>
+                        <td class="govuk-table__cell">@CookieDetails.Table_Protecting_Expire_Row2</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="govuk-table govuk-!-margin-top-7">
+                <caption class="govuk-table__caption  govuk-body-l govuk-!-font-weight-bold">@CookieDetails.Heading_Logging_Authentication</caption>
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">@CookieDetails.Table_Logging_Heading_Name</th>
+                        <th scope="col" class="govuk-table__header">@CookieDetails.Table_Logging_Heading_Purpose</th>
+                        <th scope="col" class="govuk-table__header">@CookieDetails.Table_Logging_Expire</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td scope="row" class="govuk-table__cell">@CookieDetails.Table_Logging_Name_Row1</td>
+                        <td class="govuk-table__cell">@CookieDetails.Table_Logging_Purpose_Row1</td>
+                        <td class="govuk-table__cell">@CookieDetails.Table_Logging_Expires_Row1</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="govuk-heading-l govuk-!-margin-top-9">
+                @CookieDetails.Heading_Change_Your_Settings
+            </h2>
+
+            <p class="govuk-body">@CookieDetails.Text_You_Can <a class="govuk-link" href="cookies">@CookieDetails.Link_Text</a>@CookieDetails.Dot</p>
+
+        </div>
     </div>
-</div>

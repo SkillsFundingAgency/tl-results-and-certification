@@ -61,88 +61,106 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tl-rc-auth-cookie.
+        ///   Looks up a localized string similar to ..
         /// </summary>
-        public static string Authentication_Cookie_Name_Text {
+        public static string Dot {
             get {
-                return ResourceManager.GetString("Authentication_Cookie_Name_Text", resourceCulture);
+                return ResourceManager.GetString("Dot", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cookies are files saved on your phone, tablet or computer when you visit a website..
+        ///   Looks up a localized string similar to Change your settings.
         /// </summary>
-        public static string Cookies_Are_Files_Text {
+        public static string Heading_Change_Your_Settings {
             get {
-                return ResourceManager.GetString("Cookies_Are_Files_Text", resourceCulture);
+                return ResourceManager.GetString("Heading_Change_Your_Settings", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tl-rc-x-csrf.
+        ///   Looks up a localized string similar to Cookies that measure website usage.
         /// </summary>
-        public static string Csrf_Cookie_Name_Text {
+        public static string Heading_Cookies_That_Measure_Website {
             get {
-                return ResourceManager.GetString("Csrf_Cookie_Name_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to CSRF-TOKEN_.
-        /// </summary>
-        public static string Csrf_Token_Text {
-            get {
-                return ResourceManager.GetString("Csrf_Token_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Expires.
-        /// </summary>
-        public static string Expires_Text {
-            get {
-                return ResourceManager.GetString("Expires_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to After 30 minutes of inactivity.
-        /// </summary>
-        public static string Inactivity_Text {
-            get {
-                return ResourceManager.GetString("Inactivity_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to keep you logged in during your browsing session.
-        /// </summary>
-        public static string Keep_You_Logged_In_Text {
-            get {
-                return ResourceManager.GetString("Keep_You_Logged_In_Text", resourceCulture);
+                return ResourceManager.GetString("Heading_Cookies_That_Measure_Website", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Logging in and authentication.
         /// </summary>
-        public static string Logging_In_And_Authentication_Text {
+        public static string Heading_Logging_Authentication {
             get {
-                return ResourceManager.GetString("Logging_In_And_Authentication_Text", resourceCulture);
+                return ResourceManager.GetString("Heading_Logging_Authentication", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Protecting your security.
         /// </summary>
-        public static string Name_Text {
+        public static string Heading_Protecting_Your_Security {
             get {
-                return ResourceManager.GetString("Name_Text", resourceCulture);
+                return ResourceManager.GetString("Heading_Protecting_Your_Security", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Our cookie policy page.
+        ///   Looks up a localized string similar to Strictly necessary cookies.
+        /// </summary>
+        public static string Heading_Strictly_Necessary {
+            get {
+                return ResourceManager.GetString("Heading_Strictly_Necessary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to change which cookies you’re happy for us to use.
+        /// </summary>
+        public static string Link_Text {
+            get {
+                return ResourceManager.GetString("Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to how you got to the site.
+        /// </summary>
+        public static string List_How_You_Get_To_Site {
+            get {
+                return ResourceManager.GetString("List_How_You_Get_To_Site", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the pages you visit on this service and how long you spend on them.
+        /// </summary>
+        public static string List_The_Pages_You_Visit {
+            get {
+                return ResourceManager.GetString("List_The_Pages_You_Visit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to what you click on while you are visiting the site.
+        /// </summary>
+        public static string List_What_You_Click {
+            get {
+                return ResourceManager.GetString("List_What_You_Click", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details about cookies on Manage T Level results.
+        /// </summary>
+        public static string Page_Heading {
+            get {
+                return ResourceManager.GetString("Page_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details about cookies on Manage T Level results.
         /// </summary>
         public static string Page_Title {
             get {
@@ -151,110 +169,218 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Protecting your security.
+        ///   Looks up a localized string similar to This service puts small files (known as &apos;cookies&apos;) onto your computer to collect information about how you use the service. Find out more about the cookies we use, what they’re for and when they expire..
         /// </summary>
-        public static string Protecting_Your_Security_Text {
+        public static string Para_Service_Puts_Small_Files {
             get {
-                return ResourceManager.GetString("Protecting_Your_Security_Text", resourceCulture);
+                return ResourceManager.GetString("Para_Service_Puts_Small_Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We use Google Analytics software (Universal Analytics) to collect anonymised information about how you use the service. We do this to help make sure the site is meeting the needs of its users and to help us make improvements. We do not allow Google to use or share the data about how you use this site. Google Analytics stores information about:.
+        /// </summary>
+        public static string Para_We_Use_GA_Software {
+            get {
+                return ResourceManager.GetString("Para_We_Use_GA_Software", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 year.
+        /// </summary>
+        public static string Table_Ga_Expire_Row1 {
+            get {
+                return ResourceManager.GetString("Table_Ga_Expire_Row1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to analytics_consent.
+        /// </summary>
+        public static string Table_Ga_Name_Row1 {
+            get {
+                return ResourceManager.GetString("Table_Ga_Name_Row1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This tracks user behaviour on the site so we can monitor how users are using it.
+        /// </summary>
+        public static string Table_Ga_Purpose_Row1 {
+            get {
+                return ResourceManager.GetString("Table_Ga_Purpose_Row1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expires.
+        /// </summary>
+        public static string Table_Heading_GA_Expires {
+            get {
+                return ResourceManager.GetString("Table_Heading_GA_Expires", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Table_Heading_GA_Name {
+            get {
+                return ResourceManager.GetString("Table_Heading_GA_Name", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Purpose.
         /// </summary>
-        public static string Purpose_Text {
+        public static string Table_Heading_GA_Purpose {
             get {
-                return ResourceManager.GetString("Purpose_Text", resourceCulture);
+                return ResourceManager.GetString("Table_Heading_GA_Purpose", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to remember which notifications you have seen so you are not shown them more than once.
+        ///   Looks up a localized string similar to Expires.
         /// </summary>
-        public static string Remember_Which_Notifications_Text {
+        public static string Table_Heading_Protecting_Expires {
             get {
-                return ResourceManager.GetString("Remember_Which_Notifications_Text", resourceCulture);
+                return ResourceManager.GetString("Table_Heading_Protecting_Expires", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cookie policy.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
-        public static string Section_Heading {
+        public static string Table_Heading_Protecting_Name {
             get {
-                return ResourceManager.GetString("Section_Heading", resourceCulture);
+                return ResourceManager.GetString("Table_Heading_Protecting_Name", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to temporarily store the selections you make.
+        ///   Looks up a localized string similar to Purpose.
         /// </summary>
-        public static string Temporarily_Store_Text {
+        public static string Table_Heading_Protecting_Purpose {
             get {
-                return ResourceManager.GetString("Temporarily_Store_Text", resourceCulture);
+                return ResourceManager.GetString("Table_Heading_Protecting_Purpose", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to These essential cookies do things like:.
+        ///   Looks up a localized string similar to Expires.
         /// </summary>
-        public static string These_Essential_Cookies_Text {
+        public static string Table_Logging_Expire {
             get {
-                return ResourceManager.GetString("These_Essential_Cookies_Text", resourceCulture);
+                return ResourceManager.GetString("Table_Logging_Expire", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to They are automatically enabled..
+        ///   Looks up a localized string similar to After 30 minutes of inactivity.
         /// </summary>
-        public static string They_Are_Automatically_Enabled_Text {
+        public static string Table_Logging_Expires_Row1 {
             get {
-                return ResourceManager.GetString("They_Are_Automatically_Enabled_Text", resourceCulture);
+                return ResourceManager.GetString("Table_Logging_Expires_Row1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Used to prevent cross site scripting attacks.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
-        public static string Used_To_Prevent_Cross_Site_Scripting_Attacks_Text {
+        public static string Table_Logging_Heading_Name {
             get {
-                return ResourceManager.GetString("Used_To_Prevent_Cross_Site_Scripting_Attacks_Text", resourceCulture);
+                return ResourceManager.GetString("Table_Logging_Heading_Name", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Used to prevent cross-site scripting attacks.
+        ///   Looks up a localized string similar to Purpose.
         /// </summary>
-        public static string Used_To_Prevent_Css_Attacks_Text {
+        public static string Table_Logging_Heading_Purpose {
             get {
-                return ResourceManager.GetString("Used_To_Prevent_Css_Attacks_Text", resourceCulture);
+                return ResourceManager.GetString("Table_Logging_Heading_Purpose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tl-rc-auth-cookie.
+        /// </summary>
+        public static string Table_Logging_Name_Row1 {
+            get {
+                return ResourceManager.GetString("Table_Logging_Name_Row1", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Used to track your current session and keep you logged in when browsing the service.
         /// </summary>
-        public static string Used_To_Track_Your_Current_Session_Text {
+        public static string Table_Logging_Purpose_Row1 {
             get {
-                return ResourceManager.GetString("Used_To_Track_Your_Current_Session_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to We only use cookies that are essential for you to use this service..
-        /// </summary>
-        public static string We_Only_Use_Cookies_Text {
-            get {
-                return ResourceManager.GetString("We_Only_Use_Cookies_Text", resourceCulture);
+                return ResourceManager.GetString("Table_Logging_Purpose_Row1", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to When the browser is closed.
         /// </summary>
-        public static string When_The_Browser_Is_Closed {
+        public static string Table_Protecting_Expire_Row1 {
             get {
-                return ResourceManager.GetString("When_The_Browser_Is_Closed", resourceCulture);
+                return ResourceManager.GetString("Table_Protecting_Expire_Row1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When the browser is closed.
+        /// </summary>
+        public static string Table_Protecting_Expire_Row2 {
+            get {
+                return ResourceManager.GetString("Table_Protecting_Expire_Row2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CSRF-TOKEN_.
+        /// </summary>
+        public static string Table_Protecting_Name_Row1 {
+            get {
+                return ResourceManager.GetString("Table_Protecting_Name_Row1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tl-rc-x-csrf.
+        /// </summary>
+        public static string Table_Protecting_Name_Row2 {
+            get {
+                return ResourceManager.GetString("Table_Protecting_Name_Row2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used to prevent cross-site scripting attacks.
+        /// </summary>
+        public static string Table_Protecting_Purpose_Row1 {
+            get {
+                return ResourceManager.GetString("Table_Protecting_Purpose_Row1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used to prevent cross site scripting attacks.
+        /// </summary>
+        public static string Table_Protecting_Purpose_Row2 {
+            get {
+                return ResourceManager.GetString("Table_Protecting_Purpose_Row2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can .
+        /// </summary>
+        public static string Text_You_Can {
+            get {
+                return ResourceManager.GetString("Text_You_Can", resourceCulture);
             }
         }
     }

@@ -22,6 +22,7 @@
             // show confirmation message on top
             confirmation.removeClass('tl-hide');
             window.scrollTo(0, 0);
+            $(this).
         }
     });
 });
