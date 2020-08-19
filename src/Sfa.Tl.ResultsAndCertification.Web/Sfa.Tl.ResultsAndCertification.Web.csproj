@@ -70,11 +70,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Content\Help\CookieDetails1 - Copy.Designer.cs">
-      <DependentUpon>CookieDetails1.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Update="Content\Help\CookieDetails.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -339,10 +334,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Help\CookieDetails.resx">
-      <LastGenOutput>CookieDetails.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\Help\CookieDetails1.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CookieDetails.Designer.cs</LastGenOutput>
     </EmbeddedResource>
