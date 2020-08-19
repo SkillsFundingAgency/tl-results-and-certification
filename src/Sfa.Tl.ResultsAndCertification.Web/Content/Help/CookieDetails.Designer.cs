@@ -61,15 +61,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ..
-        /// </summary>
-        public static string Dot {
-            get {
-                return ResourceManager.GetString("Dot", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Change your settings.
         /// </summary>
         public static string Heading_Change_Your_Settings {
@@ -115,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to change which cookies you’re happy for us to use.
+        ///   Looks up a localized string similar to change which cookies you’re happy for us to use..
         /// </summary>
         public static string Link_Text {
             get {
