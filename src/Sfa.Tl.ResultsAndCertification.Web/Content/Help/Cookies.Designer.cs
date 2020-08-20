@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cookies settings.
+        ///   Looks up a localized string similar to Cookie settings.
         /// </summary>
         public static string Heading_Cookies_Settings {
             get {
@@ -160,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to on Javascript in your browser.
+        ///   Looks up a localized string similar to turning on Javascript in your browser.
         /// </summary>
         public static string List_No_Js_Turning_On_Js {
             get {
@@ -250,7 +250,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We use Javascript to set most of our cookies. Unfortunately Javascript is not running on your browser, so you cannot change your settings. You can try:.
+        ///   Looks up a localized string similar to We use Javascript to set most of our cookies. Unfortunately, Javascript is not running on your browser, so you cannot change your settings. You can try:.
         /// </summary>
         public static string Para_No_Js_We_Usse_Cookies {
             get {

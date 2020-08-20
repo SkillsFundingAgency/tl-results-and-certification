@@ -121,7 +121,7 @@
     <value>Save changes</value>
   </data>
   <data name="Heading_Cookies_Settings" xml:space="preserve">
-    <value>Cookies settings</value>
+    <value>Cookie settings</value>
   </data>
   <data name="Heading_Cookie_Measure_Website" xml:space="preserve">
     <value>Cookies that measure website usage</value>
@@ -151,7 +151,7 @@
     <value>reloading the page</value>
   </data>
   <data name="List_No_Js_Turning_On_Js" xml:space="preserve">
-    <value>on Javascript in your browser</value>
+    <value>turning on Javascript in your browser</value>
   </data>
   <data name="List_Remember_Which_Notification" xml:space="preserve">
     <value>remember which notifications you have seen so you are only shown them once</value>
@@ -181,7 +181,7 @@
     <value>If you have an account with other services provided by the Education and Skills Funding Agency, the information collected using analytics cookies will be linked to your account. This will help us make the service work better for you.</value>
   </data>
   <data name="Para_No_Js_We_Usse_Cookies" xml:space="preserve">
-    <value>We use Javascript to set most of our cookies. Unfortunately Javascript is not running on your browser, so you cannot change your settings. You can try:</value>
+    <value>We use Javascript to set most of our cookies. Unfortunately, Javascript is not running on your browser, so you cannot change your settings. You can try:</value>
   </data>
   <data name="Para_Saved_On_Your_Device" xml:space="preserve">
     <value>Cookies are files saved on your phone, tablet or computer when you visit a website.</value>
