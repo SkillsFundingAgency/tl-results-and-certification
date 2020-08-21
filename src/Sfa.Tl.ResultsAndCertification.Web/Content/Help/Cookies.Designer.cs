@@ -115,15 +115,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to These essential cookies do things like:.
-        /// </summary>
-        public static string List_Caption_These_Essential {
-            get {
-                return ResourceManager.GetString("List_Caption_These_Essential", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to the pages you visit on this service, and how long you spend on each page.
         /// </summary>
         public static string List_How_Long_Spend {
@@ -142,15 +133,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to keep you logged in during your browsing session.
-        /// </summary>
-        public static string List_Keep_You_Logged {
-            get {
-                return ResourceManager.GetString("List_Keep_You_Logged", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to reloading the page.
         /// </summary>
         public static string List_No_Js_Reloading_Page {
@@ -165,24 +147,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         public static string List_No_Js_Turning_On_Js {
             get {
                 return ResourceManager.GetString("List_No_Js_Turning_On_Js", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to remember which notifications you have seen so you are only shown them once.
-        /// </summary>
-        public static string List_Remember_Which_Notification {
-            get {
-                return ResourceManager.GetString("List_Remember_Which_Notification", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to temporarily store the selections you make.
-        /// </summary>
-        public static string List_Temporary_Store_Selection {
-            get {
-                return ResourceManager.GetString("List_Temporary_Store_Selection", resourceCulture);
             }
         }
         
@@ -268,11 +232,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to They are automatically enabled..
+        ///   Looks up a localized string similar to They always need to be on..
         /// </summary>
-        public static string Para_They_Are_Automatically_Enabled {
+        public static string Para_They_Always_Need_To_Be_On {
             get {
-                return ResourceManager.GetString("Para_They_Are_Automatically_Enabled", resourceCulture);
+                return ResourceManager.GetString("Para_They_Always_Need_To_Be_On", resourceCulture);
             }
         }
         
@@ -309,6 +273,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         public static string Para_You_Can_Review_Anytime {
             get {
                 return ResourceManager.GetString("Para_You_Can_Review_Anytime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These essential cookies do things like keep you logged in and remember your progress through a form..
+        /// </summary>
+        public static string These_Essential_Cookies_Do_Things_Like {
+            get {
+                return ResourceManager.GetString("These_Essential_Cookies_Do_Things_Like", resourceCulture);
             }
         }
     }

@@ -135,29 +135,17 @@
   <data name="Link_Text_Cookie_Details" xml:space="preserve">
     <value>Find out more about cookies on Manage T Level results</value>
   </data>
-  <data name="List_Caption_These_Essential" xml:space="preserve">
-    <value>These essential cookies do things like:</value>
-  </data>
   <data name="List_How_Long_Spend" xml:space="preserve">
     <value>the pages you visit on this service, and how long you spend on each page</value>
   </data>
   <data name="List_How_You_Got_Service" xml:space="preserve">
     <value>how you got to the service</value>
   </data>
-  <data name="List_Keep_You_Logged" xml:space="preserve">
-    <value>keep you logged in during your browsing session</value>
-  </data>
   <data name="List_No_Js_Reloading_Page" xml:space="preserve">
     <value>reloading the page</value>
   </data>
   <data name="List_No_Js_Turning_On_Js" xml:space="preserve">
     <value>turning on Javascript in your browser</value>
-  </data>
-  <data name="List_Remember_Which_Notification" xml:space="preserve">
-    <value>remember which notifications you have seen so you are only shown them once</value>
-  </data>
-  <data name="List_Temporary_Store_Selection" xml:space="preserve">
-    <value>temporarily store the selections you make</value>
   </data>
   <data name="List_What_You_Click" xml:space="preserve">
     <value>what you click on while you're visiting the service</value>
@@ -186,8 +174,8 @@
   <data name="Para_Saved_On_Your_Device" xml:space="preserve">
     <value>Cookies are files saved on your phone, tablet or computer when you visit a website.</value>
   </data>
-  <data name="Para_They_Are_Automatically_Enabled" xml:space="preserve">
-    <value>They are automatically enabled.</value>
+  <data name="Para_They_Always_Need_To_Be_On" xml:space="preserve">
+    <value>They always need to be on.</value>
   </data>
   <data name="Para_We_Use_2types" xml:space="preserve">
     <value>We use 2 types of cookie. You can choose which cookies you’re happy for us to use.</value>
@@ -200,5 +188,8 @@
   </data>
   <data name="Para_You_Can_Review_Anytime" xml:space="preserve">
     <value>You can review and change your cookie preferences at any time.</value>
+  </data>
+  <data name="These_Essential_Cookies_Do_Things_Like" xml:space="preserve">
+    <value>These essential cookies do things like keep you logged in and remember your progress through a form.</value>
   </data>
 </root>

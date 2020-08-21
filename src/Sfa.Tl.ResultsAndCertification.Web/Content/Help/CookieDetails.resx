@@ -129,6 +129,9 @@
   <data name="Heading_Protecting_Your_Security" xml:space="preserve">
     <value>Protecting your security</value>
   </data>
+  <data name="Heading_Saving_Your_Consent" xml:space="preserve">
+    <value>Saving your consent</value>
+  </data>
   <data name="Heading_Strictly_Necessary" xml:space="preserve">
     <value>Strictly necessary cookies</value>
   </data>
@@ -157,13 +160,22 @@
     <value>We use Google Analytics software (Universal Analytics) to collect anonymised information about how you use the service. We do this to help make sure the site is meeting the needs of its users and to help us make improvements. We do not allow Google to use or share the data about how you use this site. Google Analytics stores information about:</value>
   </data>
   <data name="Table_Ga_Expire_Row1" xml:space="preserve">
-    <value>1 year</value>
+    <value>When the browser is closed</value>
+  </data>
+  <data name="Table_Ga_Expire_Row2" xml:space="preserve">
+    <value>24 hours</value>
   </data>
   <data name="Table_Ga_Name_Row1" xml:space="preserve">
-    <value>analytics_consent</value>
+    <value>_ga</value>
+  </data>
+  <data name="Table_Ga_Name_Row2" xml:space="preserve">
+    <value>_gid</value>
   </data>
   <data name="Table_Ga_Purpose_Row1" xml:space="preserve">
-    <value>This tracks user behaviour on the site so we can monitor how users are using it</value>
+    <value>These help us count how many people visit Manage T Level results by tracking if you’ve visited before</value>
+  </data>
+  <data name="Table_Ga_Purpose_Row2" xml:space="preserve">
+    <value>Stores and updates a unique value for each page you've visited to help us improve your experience</value>
   </data>
   <data name="Table_Heading_GA_Expires" xml:space="preserve">
     <value>Expires</value>
@@ -181,6 +193,15 @@
     <value>Name</value>
   </data>
   <data name="Table_Heading_Protecting_Purpose" xml:space="preserve">
+    <value>Purpose</value>
+  </data>
+  <data name="Table_Heading_Saving_Consent_Expires" xml:space="preserve">
+    <value>Expires</value>
+  </data>
+  <data name="Table_Heading_Saving_Consent_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Table_Heading_Saving_Consent_Purpose" xml:space="preserve">
     <value>Purpose</value>
   </data>
   <data name="Table_Logging_Expire" xml:space="preserve">
@@ -218,6 +239,24 @@
   </data>
   <data name="Table_Protecting_Purpose_Row2" xml:space="preserve">
     <value>Used to prevent cross site scripting attacks</value>
+  </data>
+  <data name="Table_Saving_Consent_Expire_Row1" xml:space="preserve">
+    <value>1 year</value>
+  </data>
+  <data name="Table_Saving_Consent_Expire_Row2" xml:space="preserve">
+    <value>1 year</value>
+  </data>
+  <data name="Table_Saving_Consent_Name_Row1" xml:space="preserve">
+    <value>analytics_consent</value>
+  </data>
+  <data name="Table_Saving_Consent_Name_Row2" xml:space="preserve">
+    <value>cookies_preferences_set</value>
+  </data>
+  <data name="Table_Saving_Consent_Purpose_Row1" xml:space="preserve">
+    <value>This tracks user behaviour on the site so we can monitor how users are using it</value>
+  </data>
+  <data name="Table_Saving_Consent_Purpose_Row2" xml:space="preserve">
+    <value>Lets us know that you’ve saved your cookie consent settings</value>
   </data>
   <data name="Text_You_Can" xml:space="preserve">
     <value>You can </value>

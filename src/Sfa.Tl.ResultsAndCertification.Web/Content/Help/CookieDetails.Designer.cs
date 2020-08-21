@@ -97,6 +97,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saving your consent.
+        /// </summary>
+        public static string Heading_Saving_Your_Consent {
+            get {
+                return ResourceManager.GetString("Heading_Saving_Your_Consent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Strictly necessary cookies.
         /// </summary>
         public static string Heading_Strictly_Necessary {
@@ -178,7 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1 year.
+        ///   Looks up a localized string similar to When the browser is closed.
         /// </summary>
         public static string Table_Ga_Expire_Row1 {
             get {
@@ -187,7 +196,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to analytics_consent.
+        ///   Looks up a localized string similar to 24 hours.
+        /// </summary>
+        public static string Table_Ga_Expire_Row2 {
+            get {
+                return ResourceManager.GetString("Table_Ga_Expire_Row2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _ga.
         /// </summary>
         public static string Table_Ga_Name_Row1 {
             get {
@@ -196,11 +214,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This tracks user behaviour on the site so we can monitor how users are using it.
+        ///   Looks up a localized string similar to _gid.
+        /// </summary>
+        public static string Table_Ga_Name_Row2 {
+            get {
+                return ResourceManager.GetString("Table_Ga_Name_Row2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These help us count how many people visit Manage T Level results by tracking if you’ve visited before.
         /// </summary>
         public static string Table_Ga_Purpose_Row1 {
             get {
                 return ResourceManager.GetString("Table_Ga_Purpose_Row1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stores and updates a unique value for each page you&apos;ve visited to help us improve your experience.
+        /// </summary>
+        public static string Table_Ga_Purpose_Row2 {
+            get {
+                return ResourceManager.GetString("Table_Ga_Purpose_Row2", resourceCulture);
             }
         }
         
@@ -255,6 +291,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         public static string Table_Heading_Protecting_Purpose {
             get {
                 return ResourceManager.GetString("Table_Heading_Protecting_Purpose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expires.
+        /// </summary>
+        public static string Table_Heading_Saving_Consent_Expires {
+            get {
+                return ResourceManager.GetString("Table_Heading_Saving_Consent_Expires", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Table_Heading_Saving_Consent_Name {
+            get {
+                return ResourceManager.GetString("Table_Heading_Saving_Consent_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purpose.
+        /// </summary>
+        public static string Table_Heading_Saving_Consent_Purpose {
+            get {
+                return ResourceManager.GetString("Table_Heading_Saving_Consent_Purpose", resourceCulture);
             }
         }
         
@@ -363,6 +426,60 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         public static string Table_Protecting_Purpose_Row2 {
             get {
                 return ResourceManager.GetString("Table_Protecting_Purpose_Row2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 year.
+        /// </summary>
+        public static string Table_Saving_Consent_Expire_Row1 {
+            get {
+                return ResourceManager.GetString("Table_Saving_Consent_Expire_Row1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 year.
+        /// </summary>
+        public static string Table_Saving_Consent_Expire_Row2 {
+            get {
+                return ResourceManager.GetString("Table_Saving_Consent_Expire_Row2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to analytics_consent.
+        /// </summary>
+        public static string Table_Saving_Consent_Name_Row1 {
+            get {
+                return ResourceManager.GetString("Table_Saving_Consent_Name_Row1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cookies_preferences_set.
+        /// </summary>
+        public static string Table_Saving_Consent_Name_Row2 {
+            get {
+                return ResourceManager.GetString("Table_Saving_Consent_Name_Row2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This tracks user behaviour on the site so we can monitor how users are using it.
+        /// </summary>
+        public static string Table_Saving_Consent_Purpose_Row1 {
+            get {
+                return ResourceManager.GetString("Table_Saving_Consent_Purpose_Row1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lets us know that you’ve saved your cookie consent settings.
+        /// </summary>
+        public static string Table_Saving_Consent_Purpose_Row2 {
+            get {
+                return ResourceManager.GetString("Table_Saving_Consent_Purpose_Row2", resourceCulture);
             }
         }
         
