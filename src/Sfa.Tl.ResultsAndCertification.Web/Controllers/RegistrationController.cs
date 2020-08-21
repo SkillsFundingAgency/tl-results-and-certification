@@ -301,7 +301,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             model.SelectedProviderDisplayName = registeredProviderViewModel?.ProvidersSelectList?.FirstOrDefault(p => p.Value == model.SelectedProviderUkprn)?.Text;
             cacheModel.SelectProvider = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-            return model.IsChangeMode ? RedirectToRoute(RouteConstants.AddRegistrationCore, new { isChangeMode = true }) : RedirectToRoute(RouteConstants.AddRegistrationCore);
+            return model.IsChangeMode ? RedirectToRoute(RouteConstants.AddRegistrationCore, new { isChangeMode = "true" }) : RedirectToRoute(RouteConstants.AddRegistrationCore);
         }
 
         [HttpGet]
@@ -345,7 +345,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             model.SelectedCoreDisplayName = coreViewModel?.CoreSelectList?.FirstOrDefault(p => p.Value == model.SelectedCoreCode)?.Text;
             cacheModel.SelectCore = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-            return model.IsChangeMode ? RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion, new { isChangeMode = true }) : RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion);
+            return model.IsChangeMode ? RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion, new { isChangeMode = "true" }) : RedirectToRoute(RouteConstants.AddRegistrationSpecialismQuestion);
         }
 
         [HttpGet]
@@ -384,7 +384,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if(model.IsChangeMode)
             {
-                return model.HasLearnerDecidedSpecialism.Value ? RedirectToRoute(RouteConstants.AddRegistrationSpecialisms, new { isChangeMode = true }) : RedirectToRoute(RouteConstants.AddRegistrationCheckAndSubmit);
+                return model.HasLearnerDecidedSpecialism.Value ? RedirectToRoute(RouteConstants.AddRegistrationSpecialisms, new { isChangeMode = "true" }) : RedirectToRoute(RouteConstants.AddRegistrationCheckAndSubmit);
             }
             else
             {

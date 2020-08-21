@@ -82,11 +82,14 @@
             $('#accept-all-cookies').click(function (e) {
                 GOVUK.acceptAllCookies(true);
                 cookieMessageContainerElement.style.display = 'none';
-                cookieConfirmationContainerElement.style.display = 'inline-block';
+                cookieConfirmationContainerElement.style.display = 'block';
+                cookieConfirmationContainerElement.setAttribute("role", "alert");
                 e.preventDefault();
             });
 
             $('#hide-cookie-confirmation').click(function (e) {
+                cookieConfirmationContainerElement.removeAttribute("role");
+                cookieConfirmationContainerElement.style.display = 'none';
                 cookieBannerContainerElement.style.display = 'none';
                 e.preventDefault();
             });

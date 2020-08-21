@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.HeaderName = "X-XSRF-TOKEN";
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
-            
+
             services.AddSingleton(ResultsAndCertificationConfiguration);
             services.AddTransient<ITokenServiceClient, TokenServiceClient>();
             services.AddTransient<ISessionService, SessionService>();
@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 config.Filters.Add<CustomExceptionFilterAttribute>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            if(_env.IsDevelopment())
+            if (_env.IsDevelopment())
             {
                 //services.AddSingleton<IDistributedCache, InMemoryCache>();
                 builder.AddRazorRuntimeCompilation();
@@ -132,14 +132,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseReferrerPolicy(opts => opts.NoReferrer());
             app.UseXXssProtection(opts => opts.EnabledWithBlockMode());
             app.UseXfo(xfo => xfo.Deny());
-            app.UseCsp(options => options.DefaultSources(s => s.Self()).ScriptSources(s => s.Self().UnsafeInline()));
+            app.UseCsp(options => options.ScriptSources(s => s.Self()
+                                         .CustomSources("https://www.google-analytics.com/analytics.js",
+                                                        "https://www.googletagmanager.com/",
+                                                        "https://tagmanager.google.com/")
+                                         .UnsafeInline()));
             app.UseHttpsRedirection();
-            
+
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseStatusCodePagesWithRedirects("/Error/{0}");            
+            app.UseStatusCodePagesWithRedirects("/Error/{0}");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
