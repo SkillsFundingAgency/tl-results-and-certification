@@ -21,7 +21,6 @@
 
             // show confirmation message on top
             confirmation.removeClass('tl-hide');
-            confirmation.attr('role', 'alert');
             window.scrollTo(0, 0);
         }
     });
