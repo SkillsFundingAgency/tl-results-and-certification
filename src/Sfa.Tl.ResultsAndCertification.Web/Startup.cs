@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            
             services.AddAntiforgery(options =>
             {
                 options.Cookie.Name = "tl-rc-x-csrf";
@@ -124,8 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             else
             {
                 app.UseExceptionHandler("/Error/500");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseHsts(options => options.MaxAge(365));
             }
 
             app.UseXContentTypeOptions();
@@ -138,7 +137,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                                                         "https://tagmanager.google.com/")
                                          .UnsafeInline()));
             app.UseHttpsRedirection();
-
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
