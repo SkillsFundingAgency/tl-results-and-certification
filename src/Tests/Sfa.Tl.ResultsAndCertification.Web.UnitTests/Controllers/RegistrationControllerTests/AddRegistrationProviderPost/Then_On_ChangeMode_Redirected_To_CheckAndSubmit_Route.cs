@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         {
             var route = (Result as RedirectToRouteResult);
             route.RouteName.Should().Be(RouteConstants.AddRegistrationCore);
-            route.RouteValues[Constants.IsChangeMode].Should().Be(true);
+            route.RouteValues[Constants.IsChangeMode].Should().Be("true");
         }
     }
 }
