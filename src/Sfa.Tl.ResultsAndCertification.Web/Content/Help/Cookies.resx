@@ -165,9 +165,6 @@
   <data name="Para_GA_Store_Anonymised" xml:space="preserve">
     <value>Google Analytics sets cookies that store anonymised information about:</value>
   </data>
-  <data name="Para_If_You_Have_An_Account" xml:space="preserve">
-    <value>If you have an account with other services provided by the Education and Skills Funding Agency, the information collected using analytics cookies will be linked to your account. This will help us make the service work better for you.</value>
-  </data>
   <data name="Para_No_Js_We_Usse_Cookies" xml:space="preserve">
     <value>We use Javascript to set most of our cookies. Unfortunately, Javascript is not running on your browser, so you cannot change your settings. You can try:</value>
   </data>

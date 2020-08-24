@@ -205,15 +205,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you have an account with other services provided by the Education and Skills Funding Agency, the information collected using analytics cookies will be linked to your account. This will help us make the service work better for you..
-        /// </summary>
-        public static string Para_If_You_Have_An_Account {
-            get {
-                return ResourceManager.GetString("Para_If_You_Have_An_Account", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to We use Javascript to set most of our cookies. Unfortunately, Javascript is not running on your browser, so you cannot change your settings. You can try:.
         /// </summary>
         public static string Para_No_Js_We_Usse_Cookies {
