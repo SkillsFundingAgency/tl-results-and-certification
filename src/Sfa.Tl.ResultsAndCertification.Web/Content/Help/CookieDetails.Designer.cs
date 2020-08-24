@@ -115,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to change which cookies you’re happy for us to use..
+        ///   Looks up a localized string similar to change which cookies you’re happy for us to use.
         /// </summary>
         public static string Link_Text {
             get {
