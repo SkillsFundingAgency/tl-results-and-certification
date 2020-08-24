@@ -131,11 +131,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseReferrerPolicy(opts => opts.NoReferrer());
             app.UseXXssProtection(opts => opts.EnabledWithBlockMode());
             app.UseXfo(xfo => xfo.Deny());
-            app.UseCsp(options => options.ScriptSources(s => s.Self()
-                                         .CustomSources("https://www.google-analytics.com/analytics.js",
+
+            app.UseCsp(options => options.ScriptSources(s => s.StrictDynamic()
+                                         .CustomSources("https:","https://www.google-analytics.com/analytics.js",
                                                         "https://www.googletagmanager.com/",
                                                         "https://tagmanager.google.com/")
-                                         .UnsafeInline()));
+                                         .UnsafeInline())
+                                         .ObjectSources(s => s.None()));
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

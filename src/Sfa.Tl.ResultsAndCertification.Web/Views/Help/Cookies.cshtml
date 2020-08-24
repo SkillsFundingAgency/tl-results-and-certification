@@ -1,11 +1,12 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Help
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = Cookies.Page_Title;
 }
 
 @section scripts{
-    <script src="~/javascripts/cookies.min.js"></script>
+    <script nws-csp-add-nonce="true" src="~/javascripts/cookies.min.js"></script>
 }
 
 <div id="tl-cookie-preferences" class="govuk-grid-row">

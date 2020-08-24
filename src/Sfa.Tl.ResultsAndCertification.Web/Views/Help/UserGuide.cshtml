@@ -1,11 +1,12 @@
 ﻿@inject Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper.IWebConfigurationService ConfigurationService
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "User guide page";
 }
 
 @section scripts {
-    <script src="~/javascripts/user-guide.min.js"></script>
+    <script nws-csp-add-nonce="true" src="~/javascripts/user-guide.min.js"></script>
 }
 
 <div class="govuk-grid-row" id="content">

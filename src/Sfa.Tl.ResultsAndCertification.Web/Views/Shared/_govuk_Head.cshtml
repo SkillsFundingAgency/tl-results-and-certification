@@ -1,9 +1,10 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
 @inject IWebConfigurationService ConfigurationService
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
 
 <head>
     <!-- Google Tag Manager -->
-    <script>
+    <script nws-csp-add-nonce="true">
         (function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
                 'gtm.start':

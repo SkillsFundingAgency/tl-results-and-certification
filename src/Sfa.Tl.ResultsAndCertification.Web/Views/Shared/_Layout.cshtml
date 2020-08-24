@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
 <html lang="en" class="govuk-template">
 
 <partial name="_govuk_Head" />
@@ -12,7 +14,7 @@
     </noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <script>
+    <script nws-csp-add-nonce="true">
         document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
 
