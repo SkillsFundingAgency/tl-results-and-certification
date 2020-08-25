@@ -34,5 +34,7 @@
         public const int RegistrationProfileStartIndex = 100000;
         public const int RegistrationPathwayStartIndex = 200000;
         public const int RegistrationSpecialismsStartIndex = 300000;
+
+        public const string IsChangeMode = "isChangeMode";
     }
 }

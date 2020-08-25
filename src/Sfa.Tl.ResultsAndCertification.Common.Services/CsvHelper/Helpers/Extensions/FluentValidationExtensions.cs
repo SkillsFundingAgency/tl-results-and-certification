@@ -2,11 +2,15 @@
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using System;
+using System.Text.RegularExpressions;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extensions
 {
     public static class FluentValidationExtensions
     {
+        private static readonly string academicYearPattern = "^[0-9]{4}/[0-9]{2}/?$";
+
         public static IRuleBuilderOptions<T, string> Required<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
@@ -46,6 +50,20 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
             return ruleBuilder
                 .Must(y => y.IsDateTimeWithFormat() && y.ParseStringToDateTime() < DateTime.Now)
                 .WithMessage(string.Format(ValidationMessages.DateNotinFuture, "{PropertyName}"));
+        }
+
+        public static IRuleBuilderOptions<T, string> MustBeInAcademicYearPattern<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder
+                .Must(y => Regex.Match(y, academicYearPattern).Success)
+                .WithMessage(string.Format(ValidationMessages.MustBeInFormat, "{PropertyName}", "YYYY/YY"));
+        }
+
+        public static IRuleBuilderOptions<T, string> MusBeValidAcademicYear<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder
+                .Must(y => EnumExtensions.IsValidDisplayName<AcademicYear>(y))
+                .WithMessage(string.Format(ValidationMessages.MustBeCurrentOne, "{PropertyName}"));
         }
     }
 }

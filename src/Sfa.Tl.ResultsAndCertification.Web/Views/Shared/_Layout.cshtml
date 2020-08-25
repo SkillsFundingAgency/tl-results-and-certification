@@ -1,10 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
 <html lang="en" class="govuk-template">
 
 <partial name="_govuk_Head" />
 
 <body class="govuk-template__body">
-    <script>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NH6LQLJ"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <script nws-csp-add-nonce="true">
         document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
 

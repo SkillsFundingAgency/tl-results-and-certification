@@ -55,6 +55,7 @@
         // Add Registration
         public const string AddRegistration = "AddRegistration";
         public const string AddRegistrationUln = "AddRegistrationUln";
+        public const string SubmitRegistrationUln = "SubmitRegistrationUln";
         public const string AddRegistrationLearnersName = "AddRegistrationLearnersName";
         public const string SubmitRegistrationLearnersName = "SubmitRegistrationLearnersName";
         public const string AddRegistrationDateofBirth = "AddRegistrationDateofBirth";
@@ -65,8 +66,8 @@
         public const string SubmitRegistrationCore = "SubmitRegistrationCore";
         public const string AddRegistrationSpecialismQuestion = "AddRegistrationSpecialismQuestion";
         public const string SubmitRegistrationSpecialismQuestion = "SubmitRegistrationSpecialismQuestion";
-        public const string AddRegistrationSpecialism = "AddRegistrationSpecialism";
-        public const string SubmitRegistrationSpecialism = "SubmitRegistrationSpecialism";
+        public const string AddRegistrationSpecialisms = "AddRegistrationSpecialisms";
+        public const string SubmitRegistrationSpecialisms = "SubmitRegistrationSpecialisms";
         public const string AddRegistrationAcademicYear = "AddRegistrationAcademicYear";
         public const string UlnCannotBeRegistered = "UlnCannotBeRegistered";
         public const string SubmitRegistrationAcademicYear = "SubmitRegistrationAcademicYear";
@@ -79,8 +80,7 @@
         public const string SubmitSearchRegistration = "SubmitSearchRegistration";
         public const string SearchRegistrationNotFound = "SearchRegistrationNotFound";
         public const string RegistrationDetails = "RegistrationDetails";
-
-        
+                
         // Cancel Registration
         public const string CancelRegistration = "CancelRegistration";
         public const string SubmitCancelRegistration = "SubmitCancelRegistration";
@@ -94,9 +94,14 @@
         public const string Error = "Error";
 
         // Help
-        public const string CookiePolicy = "CookiePolicy";
-        public const string Privacy = "Privacy";
+        public const string Cookies = "Cookies";
+        public const string CookieDetails = "CookieDetails";
+        public const string PrivacyPolicy = "PrivacyPolicy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string UserGuide = "UserGuide";
+
+        // Document
+        public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
+        public const string DownloadRegistrationDataFormatAndRulesGuide = "DownloadRegistrationDataFormatAndRulesGuide";
     }
 }

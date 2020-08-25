@@ -13,6 +13,7 @@
     <div class="govuk-grid-column-two-thirds">
         <form class="form" asp-route="SubmitRegistrationProvider">
             <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="IsChangeMode" value="@Model.IsChangeMode.ToString()" />
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@SelectProvider.Page_Caption_Text</span>
                 <vc:select-provider model=Model></vc:select-provider>

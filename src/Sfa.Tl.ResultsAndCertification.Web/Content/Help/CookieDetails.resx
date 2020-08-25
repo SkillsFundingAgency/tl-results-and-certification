@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Heading_Change_Your_Settings" xml:space="preserve">
+    <value>Change your settings</value>
+  </data>
+  <data name="Heading_Cookies_That_Measure_Website" xml:space="preserve">
+    <value>Cookies that measure website usage</value>
+  </data>
+  <data name="Heading_Logging_Authentication" xml:space="preserve">
+    <value>Logging in and authentication</value>
+  </data>
+  <data name="Heading_Protecting_Your_Security" xml:space="preserve">
+    <value>Protecting your security</value>
+  </data>
+  <data name="Heading_Saving_Your_Consent" xml:space="preserve">
+    <value>Saving your consent</value>
+  </data>
+  <data name="Heading_Strictly_Necessary" xml:space="preserve">
+    <value>Strictly necessary cookies</value>
+  </data>
+  <data name="Link_Text" xml:space="preserve">
+    <value>change which cookies you’re happy for us to use</value>
+  </data>
+  <data name="List_How_You_Get_To_Site" xml:space="preserve">
+    <value>how you got to the site</value>
+  </data>
+  <data name="List_The_Pages_You_Visit" xml:space="preserve">
+    <value>the pages you visit on this service and how long you spend on them</value>
+  </data>
+  <data name="List_What_You_Click" xml:space="preserve">
+    <value>what you click on while you are visiting the site</value>
+  </data>
+  <data name="Page_Heading" xml:space="preserve">
+    <value>Details about cookies on Manage T Level results</value>
+  </data>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Details about cookies on Manage T Level results</value>
+  </data>
+  <data name="Para_Service_Puts_Small_Files" xml:space="preserve">
+    <value>This service puts small files (known as 'cookies') onto your computer to collect information about how you use the service. Find out more about the cookies we use, what they’re for and when they expire.</value>
+  </data>
+  <data name="Para_We_Use_GA_Software" xml:space="preserve">
+    <value>We use Google Analytics software (Universal Analytics) to collect anonymised information about how you use the service. We do this to help make sure the site is meeting the needs of its users and to help us make improvements. We do not allow Google to use or share the data about how you use this site. Google Analytics stores information about:</value>
+  </data>
+  <data name="Table_Ga_Expire_Row1" xml:space="preserve">
+    <value>When the browser is closed</value>
+  </data>
+  <data name="Table_Ga_Expire_Row2" xml:space="preserve">
+    <value>24 hours</value>
+  </data>
+  <data name="Table_Ga_Name_Row1" xml:space="preserve">
+    <value>_ga</value>
+  </data>
+  <data name="Table_Ga_Name_Row2" xml:space="preserve">
+    <value>_gid</value>
+  </data>
+  <data name="Table_Ga_Purpose_Row1" xml:space="preserve">
+    <value>These help us count how many people visit Manage T Level results by tracking if you’ve visited before</value>
+  </data>
+  <data name="Table_Ga_Purpose_Row2" xml:space="preserve">
+    <value>Stores and updates a unique value for each page you've visited to help us improve your experience</value>
+  </data>
+  <data name="Table_Heading_GA_Expires" xml:space="preserve">
+    <value>Expires</value>
+  </data>
+  <data name="Table_Heading_GA_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Table_Heading_GA_Purpose" xml:space="preserve">
+    <value>Purpose</value>
+  </data>
+  <data name="Table_Heading_Protecting_Expires" xml:space="preserve">
+    <value>Expires</value>
+  </data>
+  <data name="Table_Heading_Protecting_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Table_Heading_Protecting_Purpose" xml:space="preserve">
+    <value>Purpose</value>
+  </data>
+  <data name="Table_Heading_Saving_Consent_Expires" xml:space="preserve">
+    <value>Expires</value>
+  </data>
+  <data name="Table_Heading_Saving_Consent_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Table_Heading_Saving_Consent_Purpose" xml:space="preserve">
+    <value>Purpose</value>
+  </data>
+  <data name="Table_Logging_Expire" xml:space="preserve">
+    <value>Expires</value>
+  </data>
+  <data name="Table_Logging_Expires_Row1" xml:space="preserve">
+    <value>After 30 minutes of inactivity</value>
+  </data>
+  <data name="Table_Logging_Heading_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Table_Logging_Heading_Purpose" xml:space="preserve">
+    <value>Purpose</value>
+  </data>
+  <data name="Table_Logging_Name_Row1" xml:space="preserve">
+    <value>tl-rc-auth-cookie</value>
+  </data>
+  <data name="Table_Logging_Purpose_Row1" xml:space="preserve">
+    <value>Used to track your current session and keep you logged in when browsing the service</value>
+  </data>
+  <data name="Table_Protecting_Expire_Row1" xml:space="preserve">
+    <value>When the browser is closed</value>
+  </data>
+  <data name="Table_Protecting_Expire_Row2" xml:space="preserve">
+    <value>When the browser is closed</value>
+  </data>
+  <data name="Table_Protecting_Name_Row1" xml:space="preserve">
+    <value>CSRF-TOKEN_</value>
+  </data>
+  <data name="Table_Protecting_Name_Row2" xml:space="preserve">
+    <value>tl-rc-x-csrf</value>
+  </data>
+  <data name="Table_Protecting_Purpose_Row1" xml:space="preserve">
+    <value>Used to prevent cross-site scripting attacks</value>
+  </data>
+  <data name="Table_Protecting_Purpose_Row2" xml:space="preserve">
+    <value>Used to prevent cross site scripting attacks</value>
+  </data>
+  <data name="Table_Saving_Consent_Expire_Row1" xml:space="preserve">
+    <value>1 year</value>
+  </data>
+  <data name="Table_Saving_Consent_Expire_Row2" xml:space="preserve">
+    <value>1 year</value>
+  </data>
+  <data name="Table_Saving_Consent_Name_Row1" xml:space="preserve">
+    <value>analytics_consent</value>
+  </data>
+  <data name="Table_Saving_Consent_Name_Row2" xml:space="preserve">
+    <value>cookies_preferences_set</value>
+  </data>
+  <data name="Table_Saving_Consent_Purpose_Row1" xml:space="preserve">
+    <value>This tracks user behaviour on the site so we can monitor how users are using it</value>
+  </data>
+  <data name="Table_Saving_Consent_Purpose_Row2" xml:space="preserve">
+    <value>Lets us know that you’ve saved your cookie consent settings</value>
+  </data>
+  <data name="Text_You_Can" xml:space="preserve">
+    <value>You can </value>
+  </data>
+</root>

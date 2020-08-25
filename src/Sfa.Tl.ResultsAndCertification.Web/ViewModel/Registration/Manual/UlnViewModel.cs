@@ -10,18 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         [Required(ErrorMessageResourceType = typeof(ErrorResource.UlnRegistration), ErrorMessageResourceName = "Validation_Uln_Required")]
         [RegularExpression("^((?!(0))[0-9]{10})$", ErrorMessageResourceType = typeof(ErrorResource.UlnRegistration), ErrorMessageResourceName = "Validation_Uln_Must_Be_Digits")]
         public string Uln { get; set; }
-
         public bool IsChangeMode { get; set; }
-
-        public BackLinkModel BackLink
-        {
-            get
-            {
-                return new BackLinkModel
-                {
-                    RouteName = RouteConstants.RegistrationDashboard,
-                };
-            }
-        }
+        public BackLinkModel BackLink => new BackLinkModel { RouteName = IsChangeMode ? RouteConstants.AddRegistrationCheckAndSubmit : RouteConstants.RegistrationDashboard };
     }
 }

@@ -26,9 +26,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
         [Display(Name = RegistrationFluentHeader.Ukprn)]
         public string Ukprn { get; set; }
 
-        [Column(RegistrationHeader.RegistrationDate, Order = 5)]
-        [Display(Name = RegistrationFluentHeader.StartDate)]
-        public string RegistrationDate { get; set; }
+        [Column(RegistrationHeader.AcademicYear, Order = 5)]
+        [Display(Name = RegistrationFluentHeader.AcademicYear)]
+        public string AcademicYear { get; set; }
 
         [Column(RegistrationHeader.Core, Order = 6)]
         [Display(Name = RegistrationFluentHeader.Core)]

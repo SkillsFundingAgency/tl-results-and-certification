@@ -13,12 +13,14 @@
     <div class="govuk-grid-column-two-thirds">
         <form class="form" asp-route="SubmitRegistrationLearnersName">
             <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="IsChangeMode" value="@Model.IsChangeMode.ToString()"/>
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@LearnersName.Page_Caption_Text</span>
                 <vc:learner-name model=Model></vc:learner-name>
             </div>
             <p>
-                <button type="submit" class="govuk-button" data-module="govuk-button">@LearnersName.Continue_Button_Text</button>
+                @{ var buttonText = Model.IsChangeMode ? @LearnersName.Change_Button_Text : @LearnersName.Continue_Button_Text; }
+                <button type="submit" class="govuk-button" data-module="govuk-button">@buttonText</button>
             </p>
         </form>
     </div>

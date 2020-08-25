@@ -145,7 +145,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             {
                 TqRegistrationProfileId = tqRegistrationProfile.Id,
                 TqProviderId = tqProviderId,
-                RegistrationDate = registrationDate,
                 AcademicYear = registrationDate.Year,
                 StartDate = DateTime.UtcNow,
                 Status = status,

@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
         {
             var expectedStage2Response = new List<RegistrationCsvRecordResponse>
                 {
-                    new RegistrationCsvRecordResponse { RowNum = 1, Uln = 1111111111, FirstName = "First 1", LastName = "Last 1", DateOfBirth = "01/10/1980".ToDateTime(),  ProviderUkprn = 00000001, RegistrationDate = DateTime.UtcNow, CoreCode ="12333333", SpecialismCodes = new List<string> {"234567819"} }
+                    new RegistrationCsvRecordResponse { RowNum = 1, Uln = 1111111111, FirstName = "First 1", LastName = "Last 1", DateOfBirth = "01/10/1980".ToDateTime(),  ProviderUkprn = 00000001, AcademicYear = DateTime.UtcNow.Year, CoreCode ="12333333", SpecialismCodes = new List<string> {"234567819"} }
                 };
 
             var expectedStage3Response = new List<RegistrationRecordResponse>
@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
                         FirstName = "First 1",
                         LastName = "Last 1",
                         DateOfBirth = "01/10/1980".ToDateTime(),
-                        RegistrationDate = DateTime.UtcNow,
+                        AcademicYear = DateTime.UtcNow.Year,
                         TqProviderId = 1,
                         TlProviderId = 1,
                         TqAwardingOrganisationId = 1,
@@ -60,7 +60,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
                                 Id = 1000,
                                 TqProviderId = 1,
                                 AcademicYear = "01/07/2020".ToDateTime().Year, // TODO: Need to calcualate based on the requirements
-                                RegistrationDate = "01/07/2020".ToDateTime(),
                                 StartDate = DateTime.UtcNow,
                                 Status = RegistrationPathwayStatus.Active,
                                 IsBulkUpload = true,

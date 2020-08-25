@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public void Then_On_Success_Redirected_To_AddRegistrationSpecialism_Route()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.AddRegistrationSpecialism);
+            routeName.Should().Be(RouteConstants.AddRegistrationSpecialisms);
         }
     }
 }

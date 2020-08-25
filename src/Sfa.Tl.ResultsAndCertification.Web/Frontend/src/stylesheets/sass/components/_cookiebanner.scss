@@ -1,17 +1,38 @@
-﻿/* custom styles for cookie banner*/
+﻿$border-color-blue: #1d70b8;
 
-/*hide cookie button if javascript is disabled*/
-.tl-hide-cookie-button {
+/* custom styles for cookie banner*/
+
+/*hide cookie button, cookie confirmation and cookie preferences section if javascript is disabled*/
+.tl-accept-all-cookie-button, .tl-cookie-confirmation, .cookie-preferences {
     display: none;
 }
 
 /* if javascript is enabled hide cookie banner if not show cookie banner*/
-.js-enabled .tl-cookie-banner {
-    display: none;
+.js-enabled {
+    .tl-cookie-banner {
+        display: none;
 
-    .tl-hide-cookie-button {
+        .tl-cookie-confirmation {
+            display: none;
+        }
+
+        .tl-accept-all-cookie-button {
+            display: inline-block;
+        }
+    }
+
+    .cookie-preferences__no-js {
+        display: none;
+    }
+
+    .cookie-preferences {
         display: inline-block;
     }
 }
 
-
+.save-notice {
+    padding: 15px;
+    clear: both;
+    margin-bottom: 30px;
+    border: 5px solid $border-color-blue;
+}

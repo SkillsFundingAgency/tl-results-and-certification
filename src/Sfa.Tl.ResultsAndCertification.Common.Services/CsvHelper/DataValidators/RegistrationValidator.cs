@@ -36,10 +36,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .Required()
                 .MustBeNumberWithLength(8, ValidationMessages.MustBeAnNumberWithLength);
 
-            // RegistrationDate
-            RuleFor(r => r.RegistrationDate)
+            // Academic year
+            RuleFor(r => r.AcademicYear)
                 .Required()
-                .ValidDate();
+                .MustBeInAcademicYearPattern()
+                .MusBeValidAcademicYear();
 
             // Core
             RuleFor(r => r.Core)
@@ -48,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
 
             // Specialisms
             RuleFor(r => r.Specialisms)
-                .Must(x => x.Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())).All(a =>  a.Trim().Length == 8))
+                .Must(x => x.Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())).All(a => a.Trim().Length == 8))
                 .WithMessage(string.Format(ValidationMessages.MustBeStringWithLength, "{PropertyName}", 8))
                 .When(r => !string.IsNullOrWhiteSpace(r.Specialisms));
 

@@ -22,8 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 
         public long ProviderUkprn { get; set; }
 
-        public DateTime RegistrationDate { get; set; }
-
         public string CoreCode { get; set; }
 
         public IEnumerable<string> SpecialismCodes { get; set; }

@@ -117,70 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Authentication_Cookie_Name_Text" xml:space="preserve">
-    <value>tl-rc-auth-cookie</value>
+  <data name="Button_Text_Save" xml:space="preserve">
+    <value>Save changes</value>
   </data>
-  <data name="Cookies_Are_Files_Text" xml:space="preserve">
-    <value>Cookies are files saved on your phone, tablet or computer when you visit a website.</value>
+  <data name="Heading_Cookies_Settings" xml:space="preserve">
+    <value>Cookie settings</value>
   </data>
-  <data name="Csrf_Cookie_Name_Text" xml:space="preserve">
-    <value>tl-rc-x-csrf</value>
+  <data name="Heading_Cookie_Measure_Website" xml:space="preserve">
+    <value>Cookies that measure website usage</value>
   </data>
-  <data name="Csrf_Token_Text" xml:space="preserve">
-    <value>CSRF-TOKEN_</value>
+  <data name="Heading_Settings_Were_Saved" xml:space="preserve">
+    <value>Your cookie settings were saved</value>
   </data>
-  <data name="Expires_Text" xml:space="preserve">
-    <value>Expires</value>
+  <data name="Heading_Strictly_Necessary" xml:space="preserve">
+    <value>Strictly necessary cookies</value>
   </data>
-  <data name="Inactivity_Text" xml:space="preserve">
-    <value>After 30 minutes of inactivity</value>
+  <data name="Link_Text_Cookie_Details" xml:space="preserve">
+    <value>Find out more about cookies on Manage T Level results</value>
   </data>
-  <data name="Keep_You_Logged_In_Text" xml:space="preserve">
-    <value>keep you logged in during your browsing session</value>
+  <data name="List_How_Long_Spend" xml:space="preserve">
+    <value>the pages you visit on this service, and how long you spend on each page</value>
   </data>
-  <data name="Logging_In_And_Authentication_Text" xml:space="preserve">
-    <value>Logging in and authentication</value>
+  <data name="List_How_You_Got_Service" xml:space="preserve">
+    <value>how you got to the service</value>
   </data>
-  <data name="Name_Text" xml:space="preserve">
-    <value>Name</value>
+  <data name="List_No_Js_Reloading_Page" xml:space="preserve">
+    <value>reloading the page</value>
+  </data>
+  <data name="List_No_Js_Turning_On_Js" xml:space="preserve">
+    <value>turning on Javascript in your browser</value>
+  </data>
+  <data name="List_What_You_Click" xml:space="preserve">
+    <value>what you click on while you're visiting the service</value>
+  </data>
+  <data name="Option_Dont_Use_Cookies" xml:space="preserve">
+    <value>Do not use cookies that measure my service use</value>
+  </data>
+  <data name="Option_Use_Cookies" xml:space="preserve">
+    <value>Use cookies that measure my service use</value>
+  </data>
+  <data name="Page_Heading" xml:space="preserve">
+    <value>Cookies on Manage T Level results</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Our cookie policy page</value>
+    <value>Cookies on Manage T Level results page</value>
   </data>
-  <data name="Protecting_Your_Security_Text" xml:space="preserve">
-    <value>Protecting your security</value>
+  <data name="Para_GA_Store_Anonymised" xml:space="preserve">
+    <value>Google Analytics sets cookies that store anonymised information about:</value>
   </data>
-  <data name="Purpose_Text" xml:space="preserve">
-    <value>Purpose</value>
+  <data name="Para_No_Js_We_Usse_Cookies" xml:space="preserve">
+    <value>We use Javascript to set most of our cookies. Unfortunately, Javascript is not running on your browser, so you cannot change your settings. You can try:</value>
   </data>
-  <data name="Remember_Which_Notifications_Text" xml:space="preserve">
-    <value>remember which notifications you have seen so you are not shown them more than once</value>
+  <data name="Para_Saved_On_Your_Device" xml:space="preserve">
+    <value>Cookies are files saved on your phone, tablet or computer when you visit a website.</value>
   </data>
-  <data name="Section_Heading" xml:space="preserve">
-    <value>Cookie policy</value>
+  <data name="Para_They_Always_Need_To_Be_On" xml:space="preserve">
+    <value>They always need to be on.</value>
   </data>
-  <data name="Temporarily_Store_Text" xml:space="preserve">
-    <value>temporarily store the selections you make</value>
+  <data name="Para_We_Use_2types" xml:space="preserve">
+    <value>We use 2 types of cookie. You can choose which cookies you’re happy for us to use.</value>
   </data>
-  <data name="These_Essential_Cookies_Text" xml:space="preserve">
-    <value>These essential cookies do things like:</value>
+  <data name="Para_We_Use_Google_Analytics" xml:space="preserve">
+    <value>We use Google Analytics to measure how you use the service so we can improve it based on user needs. We do not allow Google to use or share the data about how you use this service.</value>
   </data>
-  <data name="They_Are_Automatically_Enabled_Text" xml:space="preserve">
-    <value>They are automatically enabled.</value>
+  <data name="Para_We_Use_Such_As_Page_Visit" xml:space="preserve">
+    <value>We use cookies to store information about how you use this service, such as the pages you visit.</value>
   </data>
-  <data name="Used_To_Prevent_Cross_Site_Scripting_Attacks_Text" xml:space="preserve">
-    <value>Used to prevent cross site scripting attacks</value>
+  <data name="Para_You_Can_Review_Anytime" xml:space="preserve">
+    <value>You can review and change your cookie preferences at any time.</value>
   </data>
-  <data name="Used_To_Prevent_Css_Attacks_Text" xml:space="preserve">
-    <value>Used to prevent cross-site scripting attacks</value>
-  </data>
-  <data name="Used_To_Track_Your_Current_Session_Text" xml:space="preserve">
-    <value>Used to track your current session and keep you logged in when browsing the service</value>
-  </data>
-  <data name="We_Only_Use_Cookies_Text" xml:space="preserve">
-    <value>We only use cookies that are essential for you to use this service.</value>
-  </data>
-  <data name="When_The_Browser_Is_Closed" xml:space="preserve">
-    <value>When the browser is closed</value>
+  <data name="These_Essential_Cookies_Do_Things_Like" xml:space="preserve">
+    <value>These essential cookies do things like keep you logged in and remember your progress through a form.</value>
   </data>
 </root>

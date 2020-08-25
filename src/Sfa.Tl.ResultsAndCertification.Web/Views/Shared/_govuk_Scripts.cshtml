@@ -1,5 +1,7 @@
-﻿<script src="~/javascripts/all.min.js"></script>
-<script src="~/govuk/javascripts/all.js"></script>
-<script>
+﻿@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+<script nws-csp-add-nonce="true" src="~/javascripts/all.min.js"></script>
+<script nws-csp-add-nonce="true" src="~/govuk/javascripts/all.js"></script>
+<script nws-csp-add-nonce="true">
     window.GOVUKFrontend.initAll();
 </script>

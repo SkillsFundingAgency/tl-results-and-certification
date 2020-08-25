@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualRegistration.FirstName.Should().Be(expectedRegistration.FirstName);
                 actualRegistration.LastName.Should().Be(expectedRegistration.LastName);
                 actualRegistration.DateOfBirth.Should().Be(expectedRegistration.DateOfBirth);
-                actualRegistration.RegistrationDate.Should().Be(expectedRegistration.RegistrationDate);
+                actualRegistration.AcademicYear.Should().Be(expectedRegistration.AcademicYear);
                 actualRegistration.TqProviderId.Should().Be(TqProvider.Id);
                 actualRegistration.TqAwardingOrganisationId.Should().Be(TqProvider.TqAwardingOrganisationId);
                 actualRegistration.TlAwardingOrganisatonId.Should().Be(TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.Id);

@@ -58,6 +58,11 @@
         }
         return null;
     };
+    GOVUK.acceptAllCookies = function (value) {
+        GOVUK.cookie('cookies_preferences_set', value, { days: 365 });
+        GOVUK.cookie('analytics_consent', value, { days: 365 });
+    }; 
+
 }).call(this);
 (function () {
     "use strict";
@@ -65,15 +70,27 @@
     if (typeof root.GOVUK === 'undefined') { root.GOVUK = {}; }
 
     GOVUK.addCookieMessage = function () {
-        var cookieMessageElement = document.getElementById('tl-cookie-message'),
-            showCookieMessage = (cookieMessageElement && GOVUK.cookie('cookies_preferences_set') === null);
+        var cookieBannerContainerElement = document.getElementById('tl-cookie-banner-container'),
+            cookieMessageContainerElement = document.getElementById('tl-cookie-message-container'),
+            cookieConfirmationContainerElement = document.getElementById('tl-cookie-confirmation-container'),
+            showCookieMessage = (cookieBannerContainerElement && GOVUK.cookie('cookies_preferences_set') === null) &&
+                (document.getElementById('tl-cookie-preferences') === null);
 
         if (showCookieMessage) {
-            cookieMessageElement.style.display = 'block';
+            cookieBannerContainerElement.style.display = 'block';
 
-            $('#hide-cookie-message').click(function (e) {
-                GOVUK.cookie('cookies_preferences_set', 'true', { days: 365 });
-                cookieMessageElement.style.display = 'none';
+            $('#accept-all-cookies').click(function (e) {
+                GOVUK.acceptAllCookies(true);
+                cookieMessageContainerElement.style.display = 'none';
+                cookieConfirmationContainerElement.style.display = 'block';
+                cookieConfirmationContainerElement.setAttribute("role", "alert");
+                e.preventDefault();
+            });
+
+            $('#hide-cookie-confirmation').click(function (e) {
+                cookieConfirmationContainerElement.removeAttribute("role");
+                cookieConfirmationContainerElement.style.display = 'none';
+                cookieBannerContainerElement.style.display = 'none';
                 e.preventDefault();
             });
         }

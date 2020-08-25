@@ -61,29 +61,92 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This service needs to use cookies to make this site work..
+        ///   Looks up a localized string similar to about how you use this service. We use this information to make the site work as well as possible and improve this service..
         /// </summary>
-        public static string Cookie_Message_Text {
+        public static string About_How_To_Use_This_Service_Text {
             get {
-                return ResourceManager.GetString("Cookie_Message_Text", resourceCulture);
+                return ResourceManager.GetString("About_How_To_Use_This_Service_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accept all cookies.
+        /// </summary>
+        public static string Accept_All_Cookies_Button_Text {
+            get {
+                return ResourceManager.GetString("Accept_All_Cookies_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to at any time..
+        /// </summary>
+        public static string At_Any_Time_Text {
+            get {
+                return ResourceManager.GetString("At_Any_Time_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to change your cookie settings.
+        /// </summary>
+        public static string Change_Your_Cookie_Setting_Text {
+            get {
+                return ResourceManager.GetString("Change_Your_Cookie_Setting_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cookies to collect information.
+        /// </summary>
+        public static string Cookies_To_Collect_Information_Text {
+            get {
+                return ResourceManager.GetString("Cookies_To_Collect_Information_Text", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Hide this message.
         /// </summary>
-        public static string Hide_Cookie_Message_Button_Text {
+        public static string Hide_This_Message_Button_Text {
             get {
-                return ResourceManager.GetString("Hide_Cookie_Message_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Hide_This_Message_Button_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View cookie policy.
+        ///   Looks up a localized string similar to Set cookie preferences.
         /// </summary>
-        public static string View_Cookie_Policy_Button_Text {
+        public static string Set_Cookie_Preferences_Button_Text {
             get {
-                return ResourceManager.GetString("View_Cookie_Policy_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Set_Cookie_Preferences_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tell us whether you accept cookies.
+        /// </summary>
+        public static string Tell_Us_Wheather_You_Accept_Cookies_Text {
+            get {
+                return ResourceManager.GetString("Tell_Us_Wheather_You_Accept_Cookies_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We use.
+        /// </summary>
+        public static string We_Use_Text {
+            get {
+                return ResourceManager.GetString("We_Use_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You’ve accepted all cookies. You can.
+        /// </summary>
+        public static string You_Have_Accepted_All_Cookies_Text {
+            get {
+                return ResourceManager.GetString("You_Have_Accepted_All_Cookies_Text", resourceCulture);
             }
         }
     }

@@ -16,15 +16,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 
         public IList<SelectListItem> ProvidersSelectList { get; set; }
 
-        public BackLinkModel BackLink
-        {
-            get
-            {
-                return new BackLinkModel
-                {
-                    RouteName = RouteConstants.AddRegistrationDateofBirth,
-                };
-            }
-        }
+        public bool IsChangeMode { get; set; }
+
+        public BackLinkModel BackLink => new BackLinkModel { RouteName = IsChangeMode ? RouteConstants.AddRegistrationCheckAndSubmit : RouteConstants.AddRegistrationDateofBirth };
     }
 }

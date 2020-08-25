@@ -6,10 +6,10 @@ SET IDENTITY_INSERT [dbo].[TlSpecialism] ON
 
 MERGE INTO [dbo].[TlSpecialism] AS Target 
 USING (VALUES 
-	(1, N'11234567', N'Surveying and Design for Construction and the Built Environment', 1),
-	(2, N'12234567', N'Civil Engineering', 1),
-	(3, N'13234567', N'Building Services Design', 1),
-	(4, N'14234567', N'Hazardous Materials Analysis and Surveying', 1),
+	(1, N'ZTLOS001', N'Surveying and Design for Construction and the Built Environment', 1),
+	(2, N'ZTLOS002', N'Civil Engineering', 1),
+	(3, N'ZTLOS003', N'Building Services Design', 1),
+	(4, N'ZTLOS004', N'Hazardous Materials Analysis and Surveying', 1),
 	(5, N'15234567', N'Carpentry and Joinery', 2),
 	(6, N'16234567', N'Plastering', 2),
 	(7, N'17234567', N'Bricklaying', 2),
@@ -22,10 +22,10 @@ USING (VALUES
 	(14, N'24234567', N'Heating Engineering', 3),
 	(15, N'25234567', N'Air Conditioning Engineering', 3),
 	(16, N'26234567', N'Refrigeration Engineering', 3),
-	(17, N'27234567', N'Early Years Educator', 4),
-	(18, N'28234567', N'Assisting Teaching', 4),
+	(17, N'ZTLOS006', N'Early Years Educator', 4),
+	(18, N'ZTLOS007', N'Assisting Teaching', 4),
 	(19, N'29234567', N'Electrical and Electronic Equipment Engineering', 3),
-	(20, N'30234567', N'Digital Production, Design and Development', 5),
+	(20, N'ZTLOS005', N'Digital Production, Design and Development', 5),
 	(21, N'31234567', N'Digital Infrastructure', 6),
 	(22, N'32234567', N'Network Cabling', 6),
 	(23, N'33234567', N'Unified Communications', 6),

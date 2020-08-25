@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         protected int Ukprn;
         protected Guid UserId;
+        protected bool IsChangeMode;
         protected string CacheKey;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
@@ -50,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override void When()
         {
-            Result = Controller.AddRegistrationSpecialismAsync().Result;
+            Result = Controller.AddRegistrationSpecialismsAsync(IsChangeMode).Result;
         }
     }
 }

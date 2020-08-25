@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SelectSpecialism {
+    public class Privacy {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SelectSpecialism() {
+        internal Privacy() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.SelectSpecialism", typeof(SelectSpecialism).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Help.Privacy", typeof(Privacy).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Continue.
+        ///   Looks up a localized string similar to Privacy policy page.
         /// </summary>
-        public static string Continue_Button_Text {
+        public static string Page_Title {
             get {
-                return ResourceManager.GetString("Continue_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Page_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new registration.
+        ///   Looks up a localized string similar to Privacy policy – awarding organisations and providers.
         /// </summary>
-        public static string Page_Caption_Text {
+        public static string Section_Heading {
             get {
-                return ResourceManager.GetString("Page_Caption_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add a new registration - Select the specialism page.
-        /// </summary>
-        public static string Page_Title_Add_Registration_Select_Specialism {
-            get {
-                return ResourceManager.GetString("Page_Title_Add_Registration_Select_Specialism", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select the specialisms for {0}.
-        /// </summary>
-        public static string Select_The_Specialism_Label_Text {
-            get {
-                return ResourceManager.GetString("Select_The_Specialism_Label_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select a specialism.
-        /// </summary>
-        public static string Validation_Select_Specialism_Required_Message {
-            get {
-                return ResourceManager.GetString("Validation_Select_Specialism_Required_Message", resourceCulture);
+                return ResourceManager.GetString("Section_Heading", resourceCulture);
             }
         }
     }

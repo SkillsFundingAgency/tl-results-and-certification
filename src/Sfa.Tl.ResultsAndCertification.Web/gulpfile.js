@@ -6,12 +6,12 @@ var gulp = require('gulp');
 //require('./gulp/tasks/dev');
 require('./gulp/tasks/default');
 
-gulp.task('default', gulp.series('govuk-js', 'copy-js', 'copy-provider-search-js', 'copy-registration-upload-js', 'copy-assets', 'merge-css',
+gulp.task('default', gulp.series('govuk-js', 'copy-js', 'copy-provider-search-js', 'copy-registration-upload-js', 'copy-user-guide-js', 'copy-cookies-js', 'copy-assets', 'merge-css',
     (done) => {
         done();
     }));
 
-gulp.task('dev', gulp.series('govuk-js', 'copy-js', 'copy-provider-search-js', 'copy-registration-upload-js', 'copy-assets', 'merge-css',
+gulp.task('dev', gulp.series('govuk-js', 'copy-js', 'copy-provider-search-js', 'copy-registration-upload-js', 'copy-user-guide-js', 'copy-cookies-js', 'copy-assets', 'merge-css',
     (done) => {
         done();
     }));

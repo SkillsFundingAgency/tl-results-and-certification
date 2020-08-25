@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         protected Guid UserId;
         protected string CacheKey;
+        protected bool IsChangeMode;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
         protected ILogger<RegistrationController> Logger;
@@ -46,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override void When()
         {
-            Result = Controller.AddRegistrationLearnersNameAsync().Result;
+            Result = Controller.AddRegistrationLearnersNameAsync(IsChangeMode).Result;
         }
     }
 }
