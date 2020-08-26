@@ -1,0 +1,22 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.UlnNotFoundViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper">
+                <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6">
+                    @UlnAlreadyRegisteredByYou.Page_Heading
+                </label>
+            </h1>
+            <p class="govuk-body">
+                @string.Format(UlnAlreadyRegisteredByYou.Information_Text, Model.Uln)
+            </p>
+        </div>
+        <p>
+            <a class="govuk-button" asp-route="RegistrationDetails" asp-route-profileId="@Model.RegistrationProfileId">
+                @UlnAlreadyRegisteredByYou.Button_Back_To_Registrations
+            </a>
+        </p>
+    </div>
+</div>

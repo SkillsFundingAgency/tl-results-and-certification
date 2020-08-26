@@ -43,6 +43,49 @@
         public const string SubmitRemoveProviderTlevel = "SubmitRemoveProviderTlevel";
         public const string RemoveProviderTlevelConfirmation = "RemoveProviderTlevelConfirmation";
 
+        // Registrations
+        public const string RegistrationDashboard = "RegistrationDashboard";
+        public const string UploadRegistrationsFile = "UploadRegistrationsFile";
+        public const string SubmitUploadRegistrationsFile = "SubmitUploadRegistrationsFile";
+        public const string RegistrationsUploadSuccessful = "RegistrationsUploadSuccessful";
+        public const string RegistrationsUploadUnsuccessful = "RegistrationsUploadUnsuccessful";
+        public const string ProblemWithRegistrationsUpload = "ProblemWithRegistrationsUpload";
+        public const string DownloadRegistrationErrors = "DownloadRegistrationErrors";
+
+        // Add Registration
+        public const string AddRegistration = "AddRegistration";
+        public const string AddRegistrationUln = "AddRegistrationUln";
+        public const string SubmitRegistrationUln = "SubmitRegistrationUln";
+        public const string AddRegistrationLearnersName = "AddRegistrationLearnersName";
+        public const string SubmitRegistrationLearnersName = "SubmitRegistrationLearnersName";
+        public const string AddRegistrationDateofBirth = "AddRegistrationDateofBirth";
+        public const string SubmitRegistrationDateofBirth = "SubmitRegistrationDateofBirth";
+        public const string AddRegistrationProvider = "AddRegistrationProvider";
+        public const string SubmitRegistrationProvider = "SubmitRegistrationProvider";
+        public const string AddRegistrationCore = "AddRegistrationCore";
+        public const string SubmitRegistrationCore = "SubmitRegistrationCore";
+        public const string AddRegistrationSpecialismQuestion = "AddRegistrationSpecialismQuestion";
+        public const string SubmitRegistrationSpecialismQuestion = "SubmitRegistrationSpecialismQuestion";
+        public const string AddRegistrationSpecialisms = "AddRegistrationSpecialisms";
+        public const string SubmitRegistrationSpecialisms = "SubmitRegistrationSpecialisms";
+        public const string AddRegistrationAcademicYear = "AddRegistrationAcademicYear";
+        public const string UlnCannotBeRegistered = "UlnCannotBeRegistered";
+        public const string SubmitRegistrationAcademicYear = "SubmitRegistrationAcademicYear";
+        public const string AddRegistrationCheckAndSubmit = "AddRegistrationCheckAndSubmit";
+        public const string SubmitRegistrationCheckAndSubmit = "SubmitRegistrationCheckAndSubmit";
+        public const string AddRegistrationConfirmation = "AddRegistrationConfirmation";
+
+        // Search Registration
+        public const string SearchRegistration = "SearchRegistration";
+        public const string SubmitSearchRegistration = "SubmitSearchRegistration";
+        public const string SearchRegistrationNotFound = "SearchRegistrationNotFound";
+        public const string RegistrationDetails = "RegistrationDetails";
+                
+        // Cancel Registration
+        public const string CancelRegistration = "CancelRegistration";
+        public const string SubmitCancelRegistration = "SubmitCancelRegistration";
+        public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
+
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";
@@ -51,9 +94,14 @@
         public const string Error = "Error";
 
         // Help
-        public const string CookiePolicy = "CookiePolicy";
-        public const string Privacy = "Privacy";
+        public const string Cookies = "Cookies";
+        public const string CookieDetails = "CookieDetails";
+        public const string PrivacyPolicy = "PrivacyPolicy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string UserGuide = "UserGuide";
+
+        // Document
+        public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
+        public const string DownloadRegistrationDataFormatAndRulesGuide = "DownloadRegistrationDataFormatAndRulesGuide";
     }
 }

@@ -3,6 +3,14 @@
     public class ResultsAndCertificationConfiguration
     {
         /// <summary>
+        /// Gets or sets the redis settings.
+        /// </summary>
+        /// <value>
+        /// The redis settings.
+        /// </value>
+        public RedisSettings RedisSettings { get; set; }
+
+        /// <summary>
         /// Gets or sets the BLOB storage settings.
         /// </summary>
         /// <value>
@@ -25,6 +33,14 @@
         /// The SQL connection string.
         /// </value>
         public string SqlConnectionString { get; set; }
+
+        /// <summary>
+        /// Gets or sets the BLOB storage connection string.
+        /// </summary>
+        /// <value>
+        /// The BLOB storage connection string.
+        /// </value>
+        public string BlobStorageConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets the gov uk notify API key.

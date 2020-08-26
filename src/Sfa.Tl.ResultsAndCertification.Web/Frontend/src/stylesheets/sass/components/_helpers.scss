@@ -72,3 +72,19 @@
 .tl-float-right {
     float: right;
 }
+
+.tl-hide {
+    display: none;
+}
+
+body {
+    &.js-enabled {
+
+        .tl-show-on-js-only {
+            display: inherit;
+        }
+    }
+    .tl-show-on-js-only {
+        display: none;
+    }
+}

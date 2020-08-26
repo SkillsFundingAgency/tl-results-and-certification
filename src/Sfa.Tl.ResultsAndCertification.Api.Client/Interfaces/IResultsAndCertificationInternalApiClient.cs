@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<TlevelPathwayDetails> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id);
         Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByStatusIdAsync(long ukprn, int statusId);
         Task<bool> VerifyTlevelAsync(VerifyTlevelDetails model);
+        Task<PathwaySpecialisms> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId);
 
         // Providers
         Task<bool> IsAnyProviderSetupCompletedAsync(long ukprn);
@@ -22,5 +24,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<ProviderTlevelDetails> GetTqProviderTlevelDetailsAsync(long aoUkprn, int tqProviderId);
         Task<bool> RemoveTqProviderTlevelAsync(long aoUkprn, int tqProviderId);
         Task<bool> HasAnyTlevelSetupForProviderAsync(long aoUkprn, int tlProviderId);
+
+        //Registrations
+        Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest model);
+        Task<IList<PathwayDetails>> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn);
+        Task<bool> AddRegistrationAsync(RegistrationRequest model);
+        Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln);
+        Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId);
+        Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
+
+        // DocumentUploadHistory
+        Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);
     }
 }

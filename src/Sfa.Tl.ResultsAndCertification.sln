@@ -25,9 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertificat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Common", "Sfa.Tl.ResultsAndCertification.Common\Sfa.Tl.ResultsAndCertification.Common.csproj", "{93F8946B-D8F0-45F0-BB3F-A712948982F1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.IntegrationTests", "Tests\Sfa.Tl.ResultsAndCertification.Data.IntegrationTests\Sfa.Tl.ResultsAndCertification.IntegrationTests.csproj", "{53D41D57-3DE6-42FE-B1D1-EF2154C04732}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.IntegrationTests", "Tests\Sfa.Tl.ResultsAndCertification.IntegrationTests\Sfa.Tl.ResultsAndCertification.IntegrationTests.csproj", "{53D41D57-3DE6-42FE-B1D1-EF2154C04732}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Tests.Common", "Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj", "{FC6E0F25-FCC0-4908-A883-E792600092EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Tests.Common", "Tests\Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj", "{FC6E0F25-FCC0-4908-A883-E792600092EB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Api.Client", "Sfa.Tl.ResultsAndCertification.Api.Client\Sfa.Tl.ResultsAndCertification.Api.Client.csproj", "{6FFDE65E-61D1-4FAA-B649-B05FD2EEA23D}"
 EndProject
@@ -37,6 +37,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{BFACF837
 	ProjectSection(SolutionItems) = preProject
 		Nuget.config = Nuget.config
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Common.Services", "Sfa.Tl.ResultsAndCertification.Common.Services\Sfa.Tl.ResultsAndCertification.Common.Services.csproj", "{0F338528-DE83-4D4D-95C3-6FCA1A435B2E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests\Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.csproj", "{564E8E93-820F-448D-8381-82914D0CA733}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests\Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.csproj", "{CC1DFCF3-6B56-48F1-B066-F5CAFFDBB3E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +108,18 @@ Global
 		{18FDF69D-CBBA-4876-8042-48936052771A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18FDF69D-CBBA-4876-8042-48936052771A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18FDF69D-CBBA-4876-8042-48936052771A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F338528-DE83-4D4D-95C3-6FCA1A435B2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F338528-DE83-4D4D-95C3-6FCA1A435B2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F338528-DE83-4D4D-95C3-6FCA1A435B2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F338528-DE83-4D4D-95C3-6FCA1A435B2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{564E8E93-820F-448D-8381-82914D0CA733}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{564E8E93-820F-448D-8381-82914D0CA733}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{564E8E93-820F-448D-8381-82914D0CA733}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{564E8E93-820F-448D-8381-82914D0CA733}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC1DFCF3-6B56-48F1-B066-F5CAFFDBB3E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC1DFCF3-6B56-48F1-B066-F5CAFFDBB3E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC1DFCF3-6B56-48F1-B066-F5CAFFDBB3E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC1DFCF3-6B56-48F1-B066-F5CAFFDBB3E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +130,8 @@ Global
 		{53D41D57-3DE6-42FE-B1D1-EF2154C04732} = {27D1F44A-780E-48E7-8423-7E892F7D51F4}
 		{FC6E0F25-FCC0-4908-A883-E792600092EB} = {27D1F44A-780E-48E7-8423-7E892F7D51F4}
 		{18FDF69D-CBBA-4876-8042-48936052771A} = {27D1F44A-780E-48E7-8423-7E892F7D51F4}
+		{564E8E93-820F-448D-8381-82914D0CA733} = {27D1F44A-780E-48E7-8423-7E892F7D51F4}
+		{CC1DFCF3-6B56-48F1-B066-F5CAFFDBB3E6} = {27D1F44A-780E-48E7-8423-7E892F7D51F4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB9971EA-9E54-4506-A8A0-2D78C5C3B588}

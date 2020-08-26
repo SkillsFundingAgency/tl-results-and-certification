@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Before_You_Start_Text" xml:space="preserve">
+    <value>Before you start</value>
+  </data>
+  <data name="Manage_Tlevel_Results_User_Guide_Text" xml:space="preserve">
+    <value>Manage T Level results user guide</value>
+  </data>
   <data name="Page_Heading" xml:space="preserve">
     <value>Sign in to manage your T Level results</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Sign in to manage your T Level results</value>
+  </data>
+  <data name="Read_The_Text" xml:space="preserve">
+    <value>Read the</value>
   </data>
   <data name="Section_Text" xml:space="preserve">
     <value>&lt;p class="govuk-body"&gt;As an awarding organisation you can use this service to:&lt;/p&gt;
@@ -137,5 +146,8 @@
   </data>
   <data name="Start_Button_Text" xml:space="preserve">
     <value>Start now</value>
+  </data>
+  <data name="You_Need_DfE_SignIn_Account_To_Use_This_Service_Text" xml:space="preserve">
+    <value>You need a DfE Sign-in account to use this service.</value>
   </data>
 </root>

@@ -97,6 +97,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registrations.
+        /// </summary>
+        public static string Registration_Dashboard {
+            get {
+                return ResourceManager.GetString("Registration_Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registration details.
+        /// </summary>
+        public static string Registration_Details {
+            get {
+                return ResourceManager.GetString("Registration_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for a registration.
+        /// </summary>
+        public static string Search_For_Registration {
+            get {
+                return ResourceManager.GetString("Search_For_Registration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to T Level details.
         /// </summary>
         public static string Tlevel_Details {
@@ -120,6 +147,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Tlevel_ViewAll {
             get {
                 return ResourceManager.GetString("Tlevel_ViewAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload registrations file.
+        /// </summary>
+        public static string Upload_Registrations_File {
+            get {
+                return ResourceManager.GetString("Upload_Registrations_File", resourceCulture);
             }
         }
     }

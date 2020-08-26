@@ -1,64 +1,84 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Help
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
 
 @{
-    ViewData["Title"] = @Cookies.Page_Title;
+    ViewData["Title"] = Cookies.Page_Title;
 }
 
-<div class="govuk-grid-row">
+@section scripts{
+    <script nws-csp-add-nonce="true" src="~/javascripts/cookies.min.js"></script>
+}
+
+<div id="tl-cookie-preferences" class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">
-            @Cookies.Section_Heading
-        </h1>
 
-        <p class="govuk-body">@Cookies.Cookies_Are_Files_Text</p>
-        <p class="govuk-body">@Cookies.We_Only_Use_Cookies_Text</p>
-        <p class="govuk-body">@Cookies.These_Essential_Cookies_Text</p>
-        <ul class="govuk-list govuk-list--bullet">
-            <li>@Cookies.Remember_Which_Notifications_Text</li>
-            <li>@Cookies.Temporarily_Store_Text</li>
-            <li>@Cookies.Keep_You_Logged_In_Text</li>
-        </ul>
-        <p class="govuk-body">@Cookies.They_Are_Automatically_Enabled_Text</p>
+        <div id="ConfirmationBox" class="tl-hide">
+            <section class="save-notice govuk-!-margin-bottom-8" aria-label="Cookie settings saved" aria-live="polite" role="alert">
+                <h2 class="govuk-heading-m">
+                    @Cookies.Heading_Settings_Were_Saved
+                </h2>
+                <p class="govuk-body">@Cookies.Para_You_Can_Review_Anytime</p>
+            </section>
+        </div>
 
-        <table class="govuk-table govuk-!-margin-top-7">
-            <caption class="govuk-table__caption govuk-heading-m">@Cookies.Protecting_Your_Security_Text</caption>
-            <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">@Cookies.Name_Text</th>
-                    <th scope="col" class="govuk-table__header">@Cookies.Purpose_Text</th>
-                    <th scope="col" class="govuk-table__header">@Cookies.Expires_Text</th>
-                </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                    <td scope="row" class="govuk-table__cell">@Cookies.Csrf_Token_Text</td>
-                    <td class="govuk-table__cell">@Cookies.Used_To_Prevent_Css_Attacks_Text</td>
-                    <td class="govuk-table__cell">@Cookies.When_The_Browser_Is_Closed</td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <td scope="row" class="govuk-table__cell">@Cookies.Csrf_Cookie_Name_Text</td>
-                    <td class="govuk-table__cell">@Cookies.Used_To_Prevent_Cross_Site_Scripting_Attacks_Text</td>
-                    <td class="govuk-table__cell">@Cookies.When_The_Browser_Is_Closed</td>
-                </tr>
-            </tbody>
-        </table>
+        <h1 class="govuk-heading-xl">@Cookies.Page_Heading</h1>
 
-        <table class="govuk-table govuk-!-margin-top-7">
-            <caption class="govuk-table__caption govuk-heading-m">@Cookies.Logging_In_And_Authentication_Text</caption>
-            <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                    <th scope="col" class="govuk-table__header">@Cookies.Name_Text</th>
-                    <th scope="col" class="govuk-table__header">@Cookies.Purpose_Text</th>
-                    <th scope="col" class="govuk-table__header">@Cookies.Expires_Text</th>
-                </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                    <td scope="row" class="govuk-table__cell">@Cookies.Authentication_Cookie_Name_Text</td>
-                    <td class="govuk-table__cell">@Cookies.Used_To_Track_Your_Current_Session_Text</td>
-                    <td class="govuk-table__cell">@Cookies.Inactivity_Text</td>
-                </tr>
-            </tbody>
-        </table>
+        <p class="govuk-body">@Cookies.Para_Saved_On_Your_Device</p>
+        <p class="govuk-body">@Cookies.Para_We_Use_Such_As_Page_Visit</p>
+
+        <h2 class="govuk-heading-l">@Cookies.Heading_Cookies_Settings</h2>
+
+        <div class="cookie-preferences__no-js">
+            <p class="govuk-body">@Cookies.Para_No_Js_We_Usse_Cookies </p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Cookies.List_No_Js_Reloading_Page</li>
+                <li>@Cookies.List_No_Js_Turning_On_Js</li>
+            </ul>
+        </div>
+
+        <div class="cookie-preferences">
+            <p class="govuk-body">@Cookies.Para_We_Use_2types </p>
+
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h3 class=" govuk-heading-m govuk-!-margin-bottom-3">
+                            @Cookies.Heading_Cookie_Measure_Website
+                        </h3>
+                    </legend>
+                    <p class="govuk-hint">@Cookies.Para_We_Use_Google_Analytics</p>
+
+                    <p class="govuk-hint">@Cookies.Para_GA_Store_Anonymised</p>
+                    <ul class="govuk-list govuk-hint govuk-list--bullet">
+                        <li>@Cookies.List_How_You_Got_Service</li>
+                        <li>@Cookies.List_How_Long_Spend</li>
+                        <li>@Cookies.List_What_You_Click</li>
+                    </ul>
+
+                    <div class="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="use-cookie" name="cookie-answer" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="use-cookie">
+                                @Cookies.Option_Use_Cookies
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="do-not-use-cookie" name="cookie-answer" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="do-not-use-cookie">
+                                @Cookies.Option_Dont_Use_Cookies
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button class="govuk-button" data-module="govuk-button" id="SaveChanges">@Cookies.Button_Text_Save</button>
+
+            <h3 class="govuk-heading-m">
+                @Cookies.Heading_Strictly_Necessary
+            </h3>
+            <p class="govuk-hint">@Cookies.These_Essential_Cookies_Do_Things_Like</p>
+            <p class="govuk-hint">@Cookies.Para_They_Always_Need_To_Be_On</p>
+            <p class="govuk-hint"><a class="govuk-link" asp-route="CookieDetails">@Cookies.Link_Text_Cookie_Details </a></p>
+        </div>
     </div>
 </div>

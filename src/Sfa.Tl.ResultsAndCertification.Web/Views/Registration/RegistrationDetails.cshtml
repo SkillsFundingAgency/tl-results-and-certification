@@ -1,0 +1,30 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.RegistrationDetailsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @RegistrationDetails.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">@RegistrationDetails.Registration_Details_Heading_Text</h1>
+        <h2 class="govuk-heading-m">@string.Format(@RegistrationDetails.Uln_Heading_Text, Model.Uln)</h2>
+
+        <dl class="govuk-summary-list">
+            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+            <vc:summary-item model=Model.SummaryCore></vc:summary-item>
+            <vc:summary-list model=Model.SummarySpecialisms></vc:summary-list>
+            <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
+        </dl>
+        <p class="govuk-body">@RegistrationDetails.You_can_Amend_These_Details_By_Text <a class="govuk-link" asp-route="UploadRegistrationsFile">@RegistrationDetails.Uploading_A_Csv_File_Text</a>.</p>
+        <p><a class="govuk-button govuk-button--secondary " role="button" asp-route="CancelRegistration" asp-route-profileId="@Model.ProfileId">@RegistrationDetails.Cancel_This_Registration_Button_Text</a></p>
+        <p><a class="govuk-button" role="button" asp-route="SearchRegistration">@RegistrationDetails.Search_Again_Button_Text</a></p>
+    </div>
+</div>

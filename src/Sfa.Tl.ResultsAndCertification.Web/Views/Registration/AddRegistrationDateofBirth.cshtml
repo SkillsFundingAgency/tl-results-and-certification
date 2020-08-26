@@ -1,0 +1,38 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.DateofBirthViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @DateofBirth.Page_Title_Add_DateofBirth;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="SubmitRegistrationDateofBirth">
+            <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="IsChangeMode" value="@Model.IsChangeMode.ToString()" />
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">@DateofBirth.DateofBirth_Field_Caption</span>
+                <fieldset class="govuk-fieldset" role="group">
+                    <div sfa-validation-class="govuk-form-group--error">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading">
+                                @DateofBirth.DateofBirth_Field_Heading
+                            </h1>
+                        </legend>
+                        <span id="dob-hint" class="govuk-hint">@DateofBirth.Example_Hint_Text</span>
+                        <vc:date-of-birth model="Model"></vc:date-of-birth>
+                    </div>
+
+                </fieldset>
+            </div>
+            <p>
+                @{ var buttonText = Model.IsChangeMode ? @DateofBirth.Change_Button_Text : @DateofBirth.Continue_Button_Text; }
+                <button type="submit" class="govuk-button" data-module="govuk-button">@buttonText</button>
+            </p>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.UlnNotFoundViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = Model.IsRegisteredWithOtherAo ?
+            UlnRegisteredByOtherAo.Page_Title :
+            UlnAlreadyRegisteredByYou.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+@if (Model.IsRegisteredWithOtherAo)
+{
+    <partial name="~/Views/Registration/Partials/_ulnRegisteredByOtherAo.cshtml" model="Model" />
+}
+else
+{
+    <partial name="~/Views/Registration/Partials/_ulnAlreadyRegisteredByYou.cshtml" model="Model" />
+}

@@ -1,0 +1,29 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.LearnersNameViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @LearnersName.Page_Title_Add_Registration_Learners_Name;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="SubmitRegistrationLearnersName">
+            <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="IsChangeMode" value="@Model.IsChangeMode.ToString()"/>
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">@LearnersName.Page_Caption_Text</span>
+                <vc:learner-name model=Model></vc:learner-name>
+            </div>
+            <p>
+                @{ var buttonText = Model.IsChangeMode ? @LearnersName.Change_Button_Text : @LearnersName.Continue_Button_Text; }
+                <button type="submit" class="govuk-button" data-module="govuk-button">@buttonText</button>
+            </p>
+        </form>
+    </div>
+</div>
+
+

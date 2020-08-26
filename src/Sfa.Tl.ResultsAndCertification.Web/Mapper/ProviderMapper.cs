@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.ViewProviderTlevels;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
@@ -57,6 +59,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.Ukprn))
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.ProviderTlevel.TlevelTitle))
                .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.ProviderTlevel.TlProviderId));
+
+            CreateMap<ProviderDetails, SelectListItem>()
+                .ForMember(m => m.Text, o => o.MapFrom(s => $"{s.DisplayName} ({s.Ukprn})"))
+                .ForMember(m => m.Value, o => o.MapFrom(s => s.Ukprn.ToString()))
+                .ForAllOtherMembers(s => s.Ignore());
+
+            CreateMap<IList<ProviderDetails>, SelectProviderViewModel>()
+               .ForMember(d => d.ProvidersSelectList, opts => opts.MapFrom(s => s))
+               .ForAllOtherMembers(d => d.Ignore());
+
+            CreateMap<PathwayDetails, SelectListItem>()
+                .ForMember(m => m.Text, o => o.MapFrom(s => $"{s.Name} ({s.Code})"))
+                .ForMember(m => m.Value, o => o.MapFrom(s => s.Code.ToString()))
+                .ForAllOtherMembers(s => s.Ignore());
+
+            CreateMap<IList<PathwayDetails>, SelectCoreViewModel>()
+               .ForMember(d => d.CoreSelectList, opts => opts.MapFrom(s => s))
+               .ForAllOtherMembers(d => d.Ignore());
         }
     }
 }

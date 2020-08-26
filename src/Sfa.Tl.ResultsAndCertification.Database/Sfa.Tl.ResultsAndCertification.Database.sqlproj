@@ -59,6 +59,7 @@
     <Folder Include="Tables" />
     <Folder Include="PostDeployment" />
     <Folder Include="PreDeployment" />
+    <Folder Include="Indexes" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\TqAwardingOrganisation.sql" />
@@ -73,6 +74,12 @@
     <Build Include="Tables\TlAwardingOrganisation.sql" />
     <Build Include="Tables\TlProvider.sql" />
     <Build Include="Tables\NotificationTemplate.sql" />
+    <Build Include="Tables\DocumentUploadHistory.sql" />
+    <Build Include="Tables\TqRegistrationProfile.sql" />
+    <Build Include="Tables\TqRegistrationPathway.sql" />
+    <Build Include="Tables\TqRegistrationSpecialism.sql" />
+    <Build Include="Indexes\IX_Unique_TqRegistrationPathway.sql" />
+    <Build Include="Indexes\IX_Unique_TqRegistrationSpecialism.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />

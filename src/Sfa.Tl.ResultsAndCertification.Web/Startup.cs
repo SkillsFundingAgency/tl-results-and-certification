@@ -10,9 +10,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Application.Configuration;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication;
 using Sfa.Tl.ResultsAndCertification.Web.Filters;
@@ -20,6 +23,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.Session;
 using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper;
+using StackExchange.Redis;
 using System;
 using System.Globalization;
 
@@ -57,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            
             services.AddAntiforgery(options =>
             {
                 options.Cookie.Name = "tl-rc-x-csrf";
@@ -65,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.HeaderName = "X-XSRF-TOKEN";
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
-            
+
             services.AddSingleton(ResultsAndCertificationConfiguration);
             services.AddTransient<ITokenServiceClient, TokenServiceClient>();
             services.AddTransient<ISessionService, SessionService>();
@@ -85,16 +89,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 config.Filters.Add<CustomExceptionFilterAttribute>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            if(_env.IsDevelopment())
+            if (_env.IsDevelopment())
             {
+                //services.AddSingleton<IDistributedCache, InMemoryCache>();
                 builder.AddRazorRuntimeCompilation();
             }
+
+            services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(_env.IsDevelopment() ? "localhost" : ResultsAndCertificationConfiguration.RedisSettings.CacheConnection));
+            services.AddSingleton<ICacheService, RedisCacheService>();
 
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(RolesExtensions.RequireTLevelsReviewerAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.TlevelsReviewer));
                 options.AddPolicy(RolesExtensions.RequireProviderEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor));
+                options.AddPolicy(RolesExtensions.RequireRegistrationsEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.RegistrationsEditor));
             });
 
             services.AddWebDataProtection(ResultsAndCertificationConfiguration, _env);
@@ -115,22 +124,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             else
             {
                 app.UseExceptionHandler("/Error/500");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseHsts(options => options.MaxAge(365));
             }
 
             app.UseXContentTypeOptions();
             app.UseReferrerPolicy(opts => opts.NoReferrer());
             app.UseXXssProtection(opts => opts.EnabledWithBlockMode());
             app.UseXfo(xfo => xfo.Deny());
-            app.UseCsp(options => options.DefaultSources(s => s.Self()).ScriptSources(s => s.Self().UnsafeInline()));
+
+            app.UseCsp(options => options.ScriptSources(s => s.StrictDynamic()
+                                         .CustomSources("https:","https://www.google-analytics.com/analytics.js",
+                                                        "https://www.googletagmanager.com/",
+                                                        "https://tagmanager.google.com/")
+                                         .UnsafeInline())
+                                         .ObjectSources(s => s.None()));
             app.UseHttpsRedirection();
-            
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseStatusCodePagesWithRedirects("/Error/{0}");            
+            app.UseStatusCodePagesWithRedirects("/Error/{0}");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
@@ -142,8 +155,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IWebConfigurationService, WebConfigurationService>();
+            services.AddTransient<IBlobStorageService, BlobStorageService>();
             services.AddTransient<ITlevelLoader, TlevelLoader>();
             services.AddTransient<IProviderLoader, ProviderLoader>();
+            services.AddTransient<IRegistrationLoader, RegistrationLoader>();
+            services.AddTransient<IDocumentLoader, DocumentLoader>();
         }
     }
 }

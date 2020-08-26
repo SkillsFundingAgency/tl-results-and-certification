@@ -1,0 +1,25 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.SelectAcademicYearViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @SelectAcademicYear.Page_Title_Add_Registration_Select_AcademicYear;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="SubmitRegistrationAcademicYear">
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">@SelectAcademicYear.Page_Caption_Text</span>
+                <vc:select-academic-year model=Model></vc:select-academic-year>
+            </div>
+            <p>
+                @{ var buttonText = Model.IsChangeMode ? @SelectAcademicYear.Change_Button_Text : @SelectAcademicYear.Continue_Button_Text; }
+                <button type="submit" class="govuk-button" data-module="govuk-button">@buttonText</button>
+            </p>
+        </form>
+    </div>
+</div>

@@ -1,12 +1,13 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.FindProviderViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Provider
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = @FindProvider.Page_Title;
 }
 
 @section Scripts {
-    <script src="~/javascripts/provider-search.min.js"></script>
+    <script nws-csp-add-nonce="true" src="~/javascripts/provider-search.min.js"></script>
 }
 
 @section NavigationBar {

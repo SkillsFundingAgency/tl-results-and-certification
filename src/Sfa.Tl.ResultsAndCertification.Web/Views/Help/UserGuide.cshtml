@@ -1,85 +1,236 @@
-﻿@{
-    ViewData["Title"] = "Service user guide";
+﻿@inject Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper.IWebConfigurationService ConfigurationService
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "User guide page";
 }
+
+@section scripts {
+    <script nws-csp-add-nonce="true" src="~/javascripts/user-guide.min.js"></script>
+}
+
+<div class="govuk-grid-row" id="content">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-8">
+            <h1 class="govuk-heading-l">
+                <span class="govuk-caption-xl">
+                    Guidance
+                </span>
+                Manage T Level results user guide
+            </h1>
+        </div>
+        <p class="govuk-body-l">A guide to the tasks awarding organisations need to complete so that the service can calculate students’ overall grades.</p>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <hr class="govuk-section-break govuk-section-break--s govuk-section-break--visible">
+    </div>
+    <div class="app-c-publisher-metadata metadata-column govuk-grid-column-two-thirds">
+        <p class="govuk-body-s">
+            Published 5 August 2020
+            <br>Last updated 5 August 2020 — <a href="#history" class="app-c-published-dates__history-link govuk-link">see all updates</a>
+            <br>From:
+            <a class="govuk-link govuk-!-font-weight-bold" href="https://www.gov.uk/government/organisations/education-and-skills-funding-agency">Education and Skills Funding Agency</a>
+        </p>
+    </div>
+</div>
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">
-            Manage T Levels results user guide
-        </h1>
-        <p class="govuk-body">The Manage T Level results service is run by the Education and Skills Funding Agency (ESFA), an executive agency of the Department for Education (DfE).</p>
-        <p class="govuk-body">As an awarding organisation, this service enables you to:</p>
-        <ul class="govuk-list govuk-list--bullet">
-            <li>tell us if T Level details are correct</li>
-            <li>tell us which T Levels each provider is offering</li>
-            <li>upload, download and amend student registrations</li>
-            <li>enter and generate results</li>
-        </ul>
+        <div class="app-c-important-metadata govuk-!-margin-bottom-8">
+            <dl>
+                <dt class="app-c-important-metadata__term">Applies to: </dt>
+                <dd class="app-c-important-metadata__definition">England</dd>
+            </dl>
+        </div>
+        <div id="stickyref1"></div>
+        <div id="contents" class="app-c-contents-list-with-body" data-module="sticky-element-container">
+            <div class="responsive-bottom-margin">
+                <nav class="gem-c-contents-list  gem-c-contents-list--no-underline " role="navigation">
+                    <h2 class="gem-c-contents-list__title">Contents</h2>
+                    <ol class="gem-c-contents-list__list">
+                        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
+                            <a class="gem-c-contents-list__link govuk-link" href="#signing-in">Signing in</a>
+                        </li>
+                        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
+                            <a class="gem-c-contents-list__link govuk-link" href="#signing-out">Signing out</a>
+                        </li>
+                        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
+                            <a class="gem-c-contents-list__link govuk-link" href="#timeout">Timeout</a>
+                        </li>
+                        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
+                            <a class="gem-c-contents-list__link govuk-link" href="#changing-your-password">Changing your password</a>
+                        </li>
+                        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
+                            <a class="gem-c-contents-list__link govuk-link" href="#changing-your-email">Changing your email</a>
+                        </li>
+                        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
+                            <a class="gem-c-contents-list__link govuk-link" href="#finding-the-login-page">Finding the login page</a>
+                        </li>
+                        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
+                            <a class="gem-c-contents-list__link govuk-link" href="#awarding-organisation-roles-and-permissions">Awarding organisation roles and permissions</a>
+                        </li>
+                        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
+                            <a class="gem-c-contents-list__link govuk-link" href="#t-levels-reviewer-tasks">T Levels Reviewer tasks</a>
+                        </li>
+                        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
+                            <a class="gem-c-contents-list__link govuk-link" href="#providers-editor-tasks">Providers Editor tasks</a>
+                        </li>
+                        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
+                            <a class="gem-c-contents-list__link govuk-link" href="#registrations-editor-tasks">Registrations Editor tasks</a>
+                        </li>
+                        <li class="gem-c-contents-list__list-item gem-c-contents-list__list-item--dashed">
+                            <a class="gem-c-contents-list__link govuk-link" href="#get-help">Get help with Manage T Level results</a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
 
-        <p class="govuk-body">This user guide tells you how to:</p>
-        <ul class="govuk-list govuk-list--bullet">
-            <li>sign in and manage your account</li>
-            <li>manage your T Level details, registrations and results</li>
-        </ul>
+            <p class="govuk-body"><a class="govuk-link" href=".">Manage T Level results</a> is run by the Education and Skills Funding Agency (ESFA), an executive agency of the Department for Education (DfE).</p>
+            <p class="govuk-body">As an awarding organisation, through this service you can:</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>tell us if T Level details are correct</li>
+                <li>tell us which T Levels each provider is offering</li>
+                <li>upload, amend, view, cancel and add student registrations</li>
+            </ul>
 
-        <h2 class="govuk-heading-m">
-            Signing in
-        </h2>
-        <p class="govuk-body">In order to use Manage T Level results you need a DfE Sign-in account. You need to sign in with the work email address and password you set up for DfE Sign-in.</p>
-        <p class="govuk-body">If you have not got a DfE Sign-in account, ask someone with an ‘approver’ role within your organisation to set up an account for you and give you access to Manage T Level results. DfE Sign-in will send you an email so you can verify your work email address.</p>
+            <p class="govuk-body">This user guide tells you how to:</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>sign in and manage your account</li>
+                <li>manage your T Level details, providers and registrations</li>
+            </ul>
 
-        <h2 class="govuk-heading-m">
-            Signing out
-        </h2>
-        <p class="govuk-body">Select ‘sign out’ in the top right-hand corner of the screen to sign out and return to the introduction page. For security reasons you should always sign out when you have finished using the service.</p>
+            <h2 class="govuk-heading-m" id="signing-in">Signing in</h2>
 
-        <h2 class="govuk-heading-m">
-            Timeout
-        </h2>
-        <p class="govuk-body">If you are signed in but are inactive for 30 minutes you will be signed out.</p>
+            <p class="govuk-body">You need a DfE Sign-in account to use Manage T Level results. You need to sign in with the work email address and password you set up for DfE Sign-in.</p>
 
-        <h2 class="govuk-heading-m">
-            Changing your password
-        </h2>
-        <p class="govuk-body">You can change your password at any time in your profile. If you forget your password you can reset it using the forgotten your password page.</p>
+            <p class="govuk-body">If you do not have a DfE Sign-in account, ask someone with an ‘approver’ role within your organisation to set up an account for you and give you access to Manage T Level results. DfE Sign-in will send you an email so you can verify your work email address.</p>
 
-        <h2 class="govuk-heading-m">
-            Changing your email
-        </h2>
-        <p class="govuk-body">You can change your email address at any time in your profile. Once you have changed your email address you need to activate it on a verification email. For security you also need to request the email address change on an email sent to your old account.</p>
+            <h2 class="govuk-heading-m" id="signing-out">Signing out</h2>
 
-        <h2 class="govuk-heading-m">
-            Finding the login page
-        </h2>
-        <p class="govuk-body">The website address is in the email we sent you about the launch of the service. </p>
+            <p class="govuk-body">Select ‘sign out’ in the top right-hand corner of the screen to sign out and return to the 'Start' page. For security reasons you should always sign out when you have finished using the service.</p>
 
-        <h2 class="govuk-heading-m">
-            Awarding organisation roles and permissions
-        </h2>
-        <p class="govuk-body">A user can be given more than one role.</p>
-        <p class="govuk-body"><strong>Site Administrator</strong> – has all roles: T Levels Reviewer, Providers Editor</p>
-        <p class="govuk-body"><strong>T Levels Reviewer</strong> – reviews T Level Technical Qualification titles and confirms that details are correct or not</p>
-        <p class="govuk-body"><strong>Providers Editor</strong> – can enter and amend the T Levels each provider is offering</p>
+            <h2 class="govuk-heading-m" id="timeout">Timeout</h2>
 
-        <h2 class="govuk-heading-m">T Levels Reviewer tasks</h2>
-        <p class="govuk-body">From the Manage T Levels results home page if you select ‘T Levels’ the service will ask you to review the Technical Qualification details of any T Levels that have not yet been confirmed. This happens automatically for any T Levels awaiting confirmation.</p>
-        <p class="govuk-body">In your review you should check that the Technical Qualification details are correct for your T Levels. This includes the T Level’s Core Component and Specialisms. This is important because these details will appear on students’ certificates.</p>
-        <p class="govuk-body">You do not need to review the route title. If all the details are correct you should select ‘yes’. You will then get a message to make it clear that the T Level’s Technical Qualification details have been confirmed.</p>
-        <p class="govuk-body">When you have confirmed all your T Levels’ Technical Qualification details you can still view them to check everything remains correct.</p>
-        <p class="govuk-body">If during your review you find any Technical Qualification details are wrong or missing, select ‘no’ to query it with us. We will then investigate your query and update you within 3 working days.</p>
-        <p class="govuk-body">You can still query a confirmed T Level’s Technical Qualification details at a later date, if you think the information is not accurate anymore.</p>
+            <p class="govuk-body">If you are signed in but are inactive for 30 minutes you will be signed out.</p>
 
-        <h2 class="govuk-heading-m">
-            Providers Editor tasks
-        </h2>
-        <p class="govuk-body">From the Manage T Levels results home page if you select ‘Providers’ you can tell us which T Levels a provider is offering. You find providers by searching on their name. You can then select which T Levels to add or remove. We recommend that you only add a T Level to a provider once the T Level’s details have been confirmed as correct in the ‘T Levels’ section.</p>
+            <h2 class="govuk-heading-m" id="changing-your-password">Changing your password</h2>
+
+            <p class="govuk-body">You can change your password at any time in your profile. If you forget your password you can reset it using the forgotten your password page.</p>
+
+            <h2 class="govuk-heading-m" id="changing-your-email">Changing your email</h2>
+
+            <p class="govuk-body">You can change your email address at any time in your profile. Once you have changed your email address you need to activate it on a verification email. For security you also need to request the email address change on an email sent to your old account.</p>
+
+            <h2 class="govuk-heading-m" id="finding-the-login-page">Finding the login page</h2>
+
+            <p class="govuk-body">You can visit the service at <a class="govuk-link" href=".">Manage T Level results</a>.</p>
+
+            <h2 class="govuk-heading-m" id="awarding-organisation-roles-and-permissions">Awarding organisation roles and permissions</h2>
+
+            <p class="govuk-body">The service roles you can be given are:</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>Site Administrator – has all roles: T Levels Reviewer, Providers Editor, Registrations Editor</li>
+                <li>T Levels Reviewer – reviews T Level Technical Qualification titles and confirms that details are correct or not</li>
+                <li>Providers Editor – can enter and amend the T Levels each provider is offering</li>
+                <li>Registrations Editor – can upload, amend, view, cancel and add student registrations</li>
+            </ul>
+
+            <p class="govuk-body">A user can be given more than one role.</p>
+
+            <h2 class="govuk-heading-m" id="t-levels-reviewer-tasks">T Levels Reviewer tasks</h2>
+
+            <p class="govuk-body">From the Manage T Level results home page if you select ‘T Levels’ the service will ask you to review the Technical Qualification details of any T Levels that have not yet been confirmed. This happens automatically for any T Levels awaiting confirmation.</p>
+
+            <p class="govuk-body">In your review you should check that the Technical Qualification details are correct for each of your T Levels. This includes the T Level’s core component and specialisms. This is important because these details will appear on students’ certificates. </p>
+
+            <p class="govuk-body">You do not need to review the route title. If all the details are correct you should select ‘yes’. You will then get a message to make it clear that the T Level’s Technical Qualification details have been confirmed.</p>
+
+            <p class="govuk-body">When you have confirmed all your T Levels’ Technical Qualification details you can still view them to check everything remains correct. </p>
+
+            <p class="govuk-body">If during your review you find any Technical Qualification details are wrong or missing, select ‘no’ to query it with us. We will then investigate your query and update you within 3 working days.</p>
+
+            <p class="govuk-body">You can still query a confirmed T Level’s Technical Qualification details at a later date, if you think the information is not accurate anymore.</p>
+
+            <h2 class="govuk-heading-m" id="providers-editor-tasks">Providers Editor tasks</h2>
+
+            <p class="govuk-body">From the Manage T Level results home page if you select ‘Providers’ you can tell us which T Levels a provider is offering. You find providers by searching using their name. You can then select which T Levels to add or remove. We recommend that you only add a T Level to a provider once the T Level’s details have been confirmed as correct in the ‘T Levels’ section.</p>
+
+            <h2 class="govuk-heading-m" id="registrations-editor-tasks">Registrations Editor tasks</h2>
+
+            <p class="govuk-body">From the Manage T Level results home page if you select ‘Registrations’ you can upload and amend student registrations in bulk through a data file. You can also view, add and cancel single registrations manually.</p>
+
+            <p class="govuk-body">Find out more about the technical requirements for the file in our <a class="govuk-link" href="download-registration-data-format-and-rules-guide">registration data format and rules guide</a>.</p>
+
+            <h2 class="govuk-heading-m" id="get-help">Get help with Manage T Level results </h2>
+
+            <p class="govuk-body">If you have any general questions about using our service you can <a class="govuk-link" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=Manage%20T%20Level%20results%20user%20guide%20enquiry">contact us</a>.</p>
+
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
 
+            <div id="history" data-module="toggle">
+                <p class="govuk-body-s govuk-!-margin-top-3 govuk-!-margin-bottom-5">
+                    Published 5 August 2020
+                    <br>Last updated 5 August 2020
 
-        <h2 class="govuk-heading-m">
-            Further help
-        </h2>
-        <p class="govuk-body">If you have any questions about using our service you can <a class="govuk-link" href="mailto: @Model.TechnicalSupportEmailAddress?subject=User guide query">contact us</a>.</p>
+                    <a href="#full-history" class="app-c-published-dates__toggle govuk-link" role="button" id="show-hide-history">+ show all updates</a>
+                </p>
+                <div id="full-history" aria-live="polite" role="region">
+                    <ol class="govuk-list">
+                        <li>
+                            <p class="govuk-body-s">
+                                <span class="govuk-!-font-weight-bold">5 August 2020</span>
+                                <br>Added Registrations Editor section.
+                            </p>
+                        </li>
+                        <li>
+                            <p class="govuk-body-s">
+                                <span class="govuk-!-font-weight-bold">1 May 2020</span>
+                                <br>First published.
+                            </p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div id="stickyref2"></div>
+            <div data-sticky-element="" class="app-c-contents-list-with-body__link-wrapper">
+                <div class="app-c-contents-list-with-body__link-container">
+                    <a class="govuk-link app-c-back-to-top dont-print" href="#contents">
+                        <svg class="app-c-back-to-top__icon" xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17">
+                            <path fill="currentColor" d="M6.5 0L0 6.5 1.4 8l4-4v12.7h2V4l4.3 4L13 6.4z"></path>
+                        </svg>
+                        Contents
+                    </a>
+                </div>
+            </div>
 
+        </div>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+        <div class="gem-c-contextual-sidebar">
+            <div class="gem-c-related-navigation">
+                <h2 class="govuk-heading-s govuk-!-margin-top-3">
+                    Related content
+                </h2>
+                <nav role="navigation">
+                    <ul class="govuk-list">
+                        <li>
+                            <a class="govuk-link govuk-!-font-size-16" href="https://www.gov.uk/government/publications/introduction-of-t-levels">
+                                Introduction of T Levels
+                            </a>
+                        </li>
+                        <li class="govuk-!-margin-top-3">
+                            <a class="govuk-link govuk-!-font-size-16" href="https://www.gov.uk/guidance/t-levels-next-steps-for-providers">
+                                T Levels: next steps for providers
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 </div>
