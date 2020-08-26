@@ -28,6 +28,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
 
         public override void When()
         {
+            ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) => {
+                return memberInfo.GetCustomAttribute<System.ComponentModel.DataAnnotations.DisplayAttribute>()?.GetName();
+            };
             using (var stream = File.Open(FilePath, FileMode.Open))
             {
                 ReadAndParseFileResponse = Service.ReadAndParseFileAsync(new RegistrationCsvRecordRequest
