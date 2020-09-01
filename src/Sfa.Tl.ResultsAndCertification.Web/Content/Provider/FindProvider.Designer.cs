@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The following entry field has auto-complete. When autocomplete results are available use up and down arrows to review and enter to select. Touch device users, explore by touch or with swipe gestures..
+        /// </summary>
+        public static string AutoComplete_Help_Text {
+            get {
+                return ResourceManager.GetString("AutoComplete_Help_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Continue_Button_Label {

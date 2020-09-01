@@ -30,6 +30,7 @@
                         <label class="govuk-label" for="search">
                             @FindProvider.Provider_Input_Field_Label
                         </label>
+                        <p class="govuk-visually-hidden">@FindProvider.AutoComplete_Help_Text</p>
                         <span sfa-validation-for="Search"></span>
                         <input id="search" name="Search" class="govuk-input" asp-for="Search" />
                         <input id="previousSearch" type="hidden" asp-for="Search" />
