@@ -27,7 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 ProviderDisplayName = "Test Provider (1234567)",
                 PathwayDisplayName = "Pathway (7654321)",
                 SpecialismsDisplayName = new List<string> { "Specialism1 (2345678)", "Specialism2 (555678)" },
-                AcademicYear = 2020
+                AcademicYear = 2020,
+                Status = RegistrationPathwayStatus.Active
             };
 
             RegistrationLoader.GetRegistrationDetailsByProfileIdAsync(AoUkprn, ProfileId).Returns(mockresult);
@@ -52,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.PathwayDisplayName.Should().Be(mockresult.PathwayDisplayName);
             model.SpecialismsDisplayName.Should().BeEquivalentTo(mockresult.SpecialismsDisplayName);
             model.AcademicYear.Should().Be(mockresult.AcademicYear);
-
+            model.Status.Should().Be(mockresult.Status);
 
             // Summary LearnerName
             model.SummaryLearnerName.Should().NotBeNull();

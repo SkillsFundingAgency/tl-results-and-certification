@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
@@ -13,6 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public string PathwayDisplayName { get; set; }
         public IEnumerable<string> SpecialismsDisplayName{ get; set; }
         public int AcademicYear { get; set; }
-        public int StatusId { get; set; }
+        public RegistrationPathwayStatus Status { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -45,7 +46,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ProviderDisplayName = "Test Provider (1234567)",
                 PathwayDisplayName = "Pathway (7654321)",
                 SpecialismsDisplayName = new List<string> { "Specialism1 (2345678)", "Specialism2 (555678)" },
-                AcademicYear = 2020
+                AcademicYear = 2020,
+                Status = RegistrationPathwayStatus.Active
             };
         }
 
@@ -74,6 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             actualResult.PathwayDisplayName.Should().Be(_mockHttpResult.PathwayDisplayName);
             actualResult.SpecialismsDisplayName.Should().BeEquivalentTo(_mockHttpResult.SpecialismsDisplayName);
             actualResult.AcademicYear.Should().Be(_mockHttpResult.AcademicYear);
+            actualResult.Status.Should().Be(_mockHttpResult.Status);
         }
     }
 }

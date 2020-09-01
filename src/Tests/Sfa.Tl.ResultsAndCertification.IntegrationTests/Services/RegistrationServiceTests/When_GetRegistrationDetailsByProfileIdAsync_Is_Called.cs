@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
@@ -54,6 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             actualResult.PathwayDisplayName.Should().Be(expectedResponse.PathwayDisplayName);
             actualResult.SpecialismsDisplayName.Should().BeEquivalentTo(expectedResponse.SpecialismsDisplayName);
             actualResult.AcademicYear.Should().Be(expectedResponse.AcademicYear);
+            actualResult.Status.Should().Be(expectedResponse.Status);
         }
 
         public static IEnumerable<object[]> Data
@@ -80,7 +82,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                             ProviderDisplayName = $"{tlProvider.Name} ({tlProvider.UkPrn})",
                             PathwayDisplayName = $"{tlPathway.Name} ({tlPathway.LarId})",
                             SpecialismsDisplayName = tlSpecialisms.OrderBy(s => s.Name).Select(s => $"{s.Name} ({s.LarId})"),
-                            AcademicYear = tqRegistrationPathway.AcademicYear                            
+                            AcademicYear = tqRegistrationPathway.AcademicYear,
+                            Status = RegistrationPathwayStatus.Active
                         }
                     }                    
                 };

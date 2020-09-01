@@ -45,7 +45,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     ProviderDisplayName = $"{p.TqProvider.TlProvider.Name} ({p.TqProvider.TlProvider.UkPrn})",
                     PathwayDisplayName = $"{p.TqProvider.TqAwardingOrganisation.TlPathway.Name} ({p.TqProvider.TqAwardingOrganisation.TlPathway.LarId})",
                     SpecialismsDisplayName = p.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).OrderBy(s => s.TlSpecialism.Name).Select(s => $"{s.TlSpecialism.Name} ({s.TlSpecialism.LarId})"),
-                    AcademicYear = p.AcademicYear
+                    AcademicYear = p.AcademicYear,
+                    Status = p.Status
                 }).FirstOrDefaultAsync();
 
             return registrationDetails;

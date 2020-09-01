@@ -15,8 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
     public class RegistrationDetailsViewModel
     {
         public int ProfileId { get; set; }
-        public int StatusId { get; set; }
-        public string Status { get { return string.Empty; } }
         public long Uln { get; set; }
         public string Name { get; set; }
         public DateTime DateofBirth { get; set; }
@@ -24,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public string PathwayDisplayName { get; set; }
         public IEnumerable<string> SpecialismsDisplayName { get; set; }
         public int AcademicYear { get; set; }
+        public RegistrationPathwayStatus Status { get; set; }
 
         public SummaryItemModel SummaryLearnerName => new SummaryItemModel { Id = "learnername", Title = RegistrationDetailsContent.Title_Name_Text, Value = Name, RouteName = RouteConstants.AddRegistrationLearnersName };
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel { Id = "dateofbirth", Title = RegistrationDetailsContent.Title_DateofBirth_Text, Value = DateofBirth.ToShortDateString(), RouteName = RouteConstants.AddRegistrationDateofBirth };

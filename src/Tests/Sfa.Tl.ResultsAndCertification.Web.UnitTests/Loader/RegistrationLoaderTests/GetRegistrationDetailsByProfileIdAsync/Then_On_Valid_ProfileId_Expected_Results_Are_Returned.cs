@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 ProviderDisplayName = "Test Provider (1234567)",
                 PathwayDisplayName = "Pathway (7654321)",
                 SpecialismsDisplayName = new List<string> { "Specialism1 (2345678)", "Specialism2 (555678)" },
-                AcademicYear = 2020
+                AcademicYear = 2020,
+                Status = RegistrationPathwayStatus.Active
             };
 
             InternalApiClient.GetRegistrationDetailsByProfileIdAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
@@ -39,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             ActualResult.PathwayDisplayName.Should().Be(expectedApiResult.PathwayDisplayName);
             ActualResult.SpecialismsDisplayName.Should().BeEquivalentTo(expectedApiResult.SpecialismsDisplayName);
             ActualResult.AcademicYear.Should().Be(expectedApiResult.AcademicYear);
+            ActualResult.Status.Should().Be(expectedApiResult.Status);
         }
     }
 }

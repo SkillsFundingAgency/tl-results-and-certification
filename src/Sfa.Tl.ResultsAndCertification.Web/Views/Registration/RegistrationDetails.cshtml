@@ -1,5 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.RegistrationDetailsViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
 
 @{
     ViewData["Title"] = @RegistrationDetails.Page_Title;
@@ -23,7 +24,7 @@
                     @RegistrationDetails.Title_Status
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    <strong class="govuk-tag @(@Model.StatusId == 1 ? "govuk-tag--green" : "govuk-tag--blue")">@Model.Status</strong>
+                    <strong class="govuk-tag @(@Model.Status == RegistrationPathwayStatus.Active ? "govuk-tag--green" : "govuk-tag--blue")">@Model.Status </strong>
                 </dd>
             </div>
             <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
