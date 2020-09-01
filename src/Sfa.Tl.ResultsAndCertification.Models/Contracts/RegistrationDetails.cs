@@ -13,5 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public string PathwayDisplayName { get; set; }
         public IEnumerable<string> SpecialismsDisplayName{ get; set; }
         public int AcademicYear { get; set; }
+        public int StatusId { get; set; }
     }
 }
