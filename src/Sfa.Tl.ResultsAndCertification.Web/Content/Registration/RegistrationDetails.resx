@@ -150,6 +150,9 @@
   <data name="Title_Specialism_Text" xml:space="preserve">
     <value>Specialism (code)</value>
   </data>
+  <data name="Title_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="Uln_Heading_Text" xml:space="preserve">
     <value>ULN: {0}</value>
   </data>

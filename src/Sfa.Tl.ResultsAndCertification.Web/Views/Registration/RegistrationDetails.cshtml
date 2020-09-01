@@ -16,6 +16,7 @@
         <h2 class="govuk-heading-m">@string.Format(@RegistrationDetails.Uln_Heading_Text, Model.Uln)</h2>
 
         <dl class="govuk-summary-list">
+            <vc:summary-item model=Model.SummaryStatus></vc:summary-item>
             <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
             <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
             <vc:summary-item model=Model.SummaryProvider></vc:summary-item>

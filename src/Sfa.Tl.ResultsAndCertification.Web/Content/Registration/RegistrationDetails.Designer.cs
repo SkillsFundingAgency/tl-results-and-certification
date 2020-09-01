@@ -160,6 +160,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Title_Status {
+            get {
+                return ResourceManager.GetString("Title_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ULN: {0}.
         /// </summary>
         public static string Uln_Heading_Text {
