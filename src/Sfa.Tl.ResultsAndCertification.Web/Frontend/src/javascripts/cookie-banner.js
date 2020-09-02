@@ -126,7 +126,7 @@
         function startSignoutCountDownTimer() {
             var minutesCounterElement = $("#minutesCounter"), secondsCounterElement = $("#secondsCounter");
             minutesCounterElement.text(minutes > 0 ? minutes.toString() + (minutes === 1 ? " minute" : " minutes") : "");
-            secondsCounterElement.text(seconds > 0 ? (seconds < 10 ? "0" : "") + seconds.toString() + " seconds" : "");
+            secondsCounterElement.text(seconds > 0 ? seconds.toString() + " seconds" : "");
 
             if (minutes === 0 && seconds === 0) {
                 clearTimeout(signoutModalTimerHandle);
