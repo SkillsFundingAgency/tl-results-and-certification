@@ -18,7 +18,23 @@
         document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
 
-    <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+    <a id="skipToMainContent" href="#main-content" class="govuk-skip-link">Skip to main content</a>
+    <div id="timeout-message" class="tl-timeout-message hidden">
+        <div class="govuk-grid-row">
+            <div class="tl-modal tl-modal--timeout" role="dialog" aria-modal="true" aria-labelledby="timeoutHeading" aria-describedby="timeoutDescription">
+                <div class="tl-modal--content">
+                    <h1 id="timeoutHeading" class="govuk-heading-l govuk-!-padding-top-4">You will be signed out soon</h1>
+                    <p id="timeoutDescription" class="govuk-body">For security reasons we will sign you out if you remain inactive. You will be signed out in <span id="minutesCounter"></span> <span id="secondsCounter"></span>.</p>
+                    <a id="keepMeSignedIn" class="govuk-button govuk-!-margin-right-4" role="button" tabindex="0">
+                        Keep me signed in
+                    </a>
+                    <a class="govuk-link modal-signout-link" role="link" href="/signout">
+                        Sign out
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <partial name="_govuk_CookieBanner" />
     <partial name="_govuk_Header" />
