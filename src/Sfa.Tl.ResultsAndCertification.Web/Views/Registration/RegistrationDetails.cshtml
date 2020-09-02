@@ -26,6 +26,7 @@
                 <dd class="govuk-summary-list__value">
                     <strong class="govuk-tag @(@Model.Status == RegistrationPathwayStatus.Active ? "govuk-tag--green" : "govuk-tag--blue")">@Model.Status </strong>
                 </dd>
+                @if (Model.Status == RegistrationPathwayStatus.Active) { <dd class="govuk-summary-list__actions"></dd> }
             </div>
             <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
             <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>

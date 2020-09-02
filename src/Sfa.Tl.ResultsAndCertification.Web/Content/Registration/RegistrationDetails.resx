@@ -120,6 +120,9 @@
   <data name="Cancel_This_Registration_Button_Text" xml:space="preserve">
     <value>Cancel this registration</value>
   </data>
+  <data name="Change_Action_Link_Text" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Search for a registration - Registration details page</value>
   </data>
