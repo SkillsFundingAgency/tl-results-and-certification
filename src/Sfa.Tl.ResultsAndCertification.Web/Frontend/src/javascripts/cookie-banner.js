@@ -2,11 +2,7 @@
     "use strict";
     var root = this;
     if (typeof root.GOVUK === 'undefined') { root.GOVUK = {}; }
-    var signoutModalTimerHandle;
-    var signoutCountDownTimerHandle;
-    var currentGetTimeoutStatusXhr = null;
-    var firstTabStop;
-    var lastTabStop;
+
     /*
       Cookie methods
       ==============
@@ -67,111 +63,6 @@
         GOVUK.cookie('analytics_consent', value, { days: 365 });
     };
 
-    GOVUK.handleKeydownEventsForModal = function () {
-
-        //var elementsThatAreFocusable = document.querySelector('.tl-modal').querySelectorAll('a');
-        var elementsThatAreFocusable = $('.tl-modal a');
-        $(".tl-modal").unbind("keydown");
-        $(".tl-modal").on("keydown",
-            function (e) {
-                const keyTab = 9;
-                if (e.keyCode === keyTab) {
-                    if (e.shiftKey) {
-                        if (document.activeElement === firstTabStop) {                            
-                            lastTabStop.focus();
-                            e.preventDefault();
-                        }
-                    } else {
-                        if (document.activeElement === lastTabStop) {                            
-                            firstTabStop.focus();
-                            e.preventDefault();
-                        }
-                    }
-                }
-            });
-
-        if (elementsThatAreFocusable.length > 1) {
-            firstTabStop = elementsThatAreFocusable[0];
-            lastTabStop = elementsThatAreFocusable[elementsThatAreFocusable.length - 1];
-        }
-    }
-
-    GOVUK.clearSignoutModalTimer = function () {
-        clearTimeout(signoutModalTimerHandle);
-    };
-
-    GOVUK.setSignoutModalTimer = function () {
-        signoutModalTimerHandle = setTimeout(function () {
-            $("#timeout-message").removeClass('hidden');
-            $("#keepMeSignedIn").focus();
-            $("#skipToMainContent").attr("tabindex", "-1");
-            GOVUK.handleKeydownEventsForModal();
-            GOVUK.setSignoutCountDownTimer(3, 0);
-        }, 10000);
-    };
-
-    $("#keepMeSignedIn").click(function () {
-        // TODO: renew session and on success call
-        GOVUK.resetSignoutModalTimer();
-    });
-
-    GOVUK.resetSignoutModalTimer = function () {
-        GOVUK.clearSignoutModalTimer();
-        $("#timeout-message").addClass('hidden');
-        $("#skipToMainContent").removeAttr("tabindex");
-        GOVUK.setSignoutModalTimer();
-    };
-
-    GOVUK.setSignoutCountDownTimer = function (minutes, seconds) {
-        function startSignoutCountDownTimer() {
-            var minutesCounterElement = $("#minutesCounter"), secondsCounterElement = $("#secondsCounter");
-            minutesCounterElement.text(minutes > 0 ? minutes.toString() + (minutes === 1 ? " minute" : " minutes") : "");
-            secondsCounterElement.text(seconds > 0 ? seconds.toString() + " seconds" : "");
-
-            if (minutes === 0 && seconds === 0) {
-                clearTimeout(signoutModalTimerHandle);
-                clearTimeout(signoutCountDownTimerHandle);
-                //window.location.href = "/find-provider";
-            }
-            else {
-                seconds--;
-                if (seconds >= 0) {
-                    signoutCountDownTimerHandle = setTimeout(startSignoutCountDownTimer, 1000);
-                } else {
-                    if (minutes >= 1) {
-                        clearTimeout(signoutCountDownTimerHandle);
-                        signoutCountDownTimerHandle = setTimeout(function () {
-                            GOVUK.setSignoutCountDownTimer(minutes - 1, 59);
-                        }, 1000);
-                    }
-                }
-            }
-        }
-        startSignoutCountDownTimer();
-    }
-
-    GOVUK.checkTimeoutStatus = function () {
-        if (currentGetTimeoutStatusXhr != null)
-            currentGetTimeoutStatusXhr.abort();
-
-        currentGetTimeoutStatusXhr = $.ajax({
-            type: "get",
-            url: "/timeout-status",
-            contentType: "application/json",
-            success: function (result) {
-                
-            },
-            timeout: 5000,
-            error: function (xhr, textStatus, errorThrown) {
-                if (textStatus != "abort")
-                    console.log(xhr + textStatus + errorThrown);
-            },
-            complete: function (d) {
-                currentGetTimeoutStatusXhr = null;
-            }
-        });
-    }
-
 }).call(this);
 (function () {
     "use strict";
@@ -211,9 +102,5 @@
     // add cookie message
     if (window.GOVUK && GOVUK.addCookieMessage) {
         GOVUK.addCookieMessage();
-    }
-
-    if (window.GOVUK) {             
-        GOVUK.setSignoutModalTimer();
     }
 }).call(this);
