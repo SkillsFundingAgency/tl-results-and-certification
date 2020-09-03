@@ -38,7 +38,7 @@ $(document).ready(function () {
     };
 
     GOVUK.setSessionTimeoutCountDownTimer = function (minutes, seconds) {
-        function startSignoutCountDownTimer() {
+        function startSessionTimeoutCountDownTimer() {
             var minutesCounterElement = $("#minutes-counter"), secondsCounterElement = $("#seconds-counter");
             minutesCounterElement.text(minutes > 0 ? minutes.toString() + (minutes === 1 ? " minute" : " minutes") : "");
             secondsCounterElement.text(seconds > 0 ? seconds.toString() + " seconds" : "");
@@ -50,12 +50,12 @@ $(document).ready(function () {
             if (minutes === 0 && seconds === 0) {
                 clearTimeout(sessionTimeoutModalTimerHandle);
                 clearTimeout(sessionTimeoutCountDownTimerHandle);
-                //window.location.href = "/signout";
+                window.location.href = "/timeout";
             }
             else {
                 seconds--;
                 if (seconds >= 0) {
-                    sessionTimeoutCountDownTimerHandle = setTimeout(startSignoutCountDownTimer, 1000);
+                    sessionTimeoutCountDownTimerHandle = setTimeout(startSessionTimeoutCountDownTimer, 1000);
                 } else {
                     if (minutes >= 1) {
                         clearTimeout(sessionTimeoutCountDownTimerHandle);
@@ -66,7 +66,7 @@ $(document).ready(function () {
                 }
             }
         }
-        startSignoutCountDownTimer();
+        startSessionTimeoutCountDownTimer();
     };
 
     GOVUK.handleKeydownEventsForModal = function () {
@@ -118,7 +118,7 @@ $(document).ready(function () {
                     else if (timerMinutesValue == 0 && result.minutes > defaultValueToShowTimeoutModalInMinutes) {
                         var resetSessionTimeoutValueInMs = ((result.minutes * 60000) + (result.seconds * 1000)); 
                         GOVUK.clearSessionTimeoutCountDownTimer();
-                        GOVUK.resetSessionTimeoutModalTimer(resetSessionTimeoutValueInMs)
+                        GOVUK.resetSessionTimeoutModalTimer(resetSessionTimeoutValueInMs);
                     }
                 }
             },

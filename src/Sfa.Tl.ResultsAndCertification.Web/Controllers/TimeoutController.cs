@@ -43,5 +43,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return Json(new { minutes = remainingActiveDuration.Minutes, seconds = remainingActiveDuration.Seconds });
         }
+
+        [HttpGet]
+        [Route("timeout", Name = RouteConstants.Timeout)]
+        public IActionResult TimeoutConfirmation()
+        {
+            return View();
+        }
     }
 }
