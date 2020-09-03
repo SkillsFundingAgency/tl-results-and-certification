@@ -5,29 +5,36 @@ $(document).ready(function () {
 
     var firstTabStop;
     var lastTabStop;
-    var signoutModalTimerHandle;
-    var signoutCountDownTimerHandle;
+    var sessionTimeoutModalTimerHandle;
+    var sessionTimeoutCountDownTimerHandle;
     var currentGetTimeoutStatusXhr = null;
+    var currentRenewSessionXhr = null;
+    var defaultValueToShowTimeoutModalInMinutes = 5;
+    var defaultValueForCountDownTimerInMinutes = 1;
 
     GOVUK.clearSessionTimeoutModalTimer = function () {
-        clearTimeout(signoutModalTimerHandle);
+        clearTimeout(sessionTimeoutModalTimerHandle);
     };
 
-    GOVUK.setSessionTimeoutModalTimer = function () {
-        signoutModalTimerHandle = setTimeout(function () {
+    GOVUK.setSessionTimeoutModalTimer = function (timeoutModalInMs) {
+        sessionTimeoutModalTimerHandle = setTimeout(function () {
             $("#timeout-message-container").removeClass('hidden');
             $("#keep-me-signed-in").focus();
             $("#skipToMainContent").attr("tabindex", "-1");
             GOVUK.handleKeydownEventsForModal();
-            GOVUK.setSessionTimeoutCountDownTimer(3, 0);
-        }, 10000);
+            GOVUK.setSessionTimeoutCountDownTimer(defaultValueForCountDownTimerInMinutes, 0);
+        }, timeoutModalInMs);
     };
 
-    GOVUK.resetSessionTimeoutModalTimer = function () {
+    GOVUK.resetSessionTimeoutModalTimer = function (timeoutModalInMs) {
         GOVUK.clearSessionTimeoutModalTimer();
         $("#timeout-message-container").addClass('hidden');
         $("#skipToMainContent").removeAttr("tabindex");
-        GOVUK.setSessionTimeoutModalTimer();
+        GOVUK.setSessionTimeoutModalTimer(timeoutModalInMs);
+    };
+
+    GOVUK.clearSessionTimeoutCountDownTimer = function () {
+        clearTimeout(sessionTimeoutCountDownTimerHandle);
     };
 
     GOVUK.setSessionTimeoutCountDownTimer = function (minutes, seconds) {
@@ -36,19 +43,23 @@ $(document).ready(function () {
             minutesCounterElement.text(minutes > 0 ? minutes.toString() + (minutes === 1 ? " minute" : " minutes") : "");
             secondsCounterElement.text(seconds > 0 ? seconds.toString() + " seconds" : "");
 
+            if (minutes === 0 && seconds === 2) {
+                GOVUK.checkSessionActiveDuration(0, 2);
+            }
+
             if (minutes === 0 && seconds === 0) {
-                clearTimeout(signoutModalTimerHandle);
-                clearTimeout(signoutCountDownTimerHandle);
-                //window.location.href = "/find-provider";
+                clearTimeout(sessionTimeoutModalTimerHandle);
+                clearTimeout(sessionTimeoutCountDownTimerHandle);
+                //window.location.href = "/signout";
             }
             else {
                 seconds--;
                 if (seconds >= 0) {
-                    signoutCountDownTimerHandle = setTimeout(startSignoutCountDownTimer, 1000);
+                    sessionTimeoutCountDownTimerHandle = setTimeout(startSignoutCountDownTimer, 1000);
                 } else {
                     if (minutes >= 1) {
-                        clearTimeout(signoutCountDownTimerHandle);
-                        signoutCountDownTimerHandle = setTimeout(function () {
+                        clearTimeout(sessionTimeoutCountDownTimerHandle);
+                        sessionTimeoutCountDownTimerHandle = setTimeout(function () {
                             GOVUK.setSessionTimeoutCountDownTimer(minutes - 1, 59);
                         }, 1000);
                     }
@@ -86,18 +97,32 @@ $(document).ready(function () {
         }
     }
 
-    GOVUK.checkSessionActiveDuration = function () {
+    GOVUK.checkSessionActiveDuration = function (timerMinutesValue, timerSecondsValue) {
         if (currentGetTimeoutStatusXhr != null)
             currentGetTimeoutStatusXhr.abort();
 
         currentGetTimeoutStatusXhr = $.ajax({
             type: "get",
-            url: "/timeout/active-duration",
+            url: "/active-duration",
             contentType: "application/json",
             success: function (result) {
-
+                if (result) {
+                    if (timerMinutesValue == 0 && result.minutes == 0 && result.seconds > timerSecondsValue) {
+                        GOVUK.clearSessionTimeoutCountDownTimer();
+                        GOVUK.setSessionTimeoutCountDownTimer(0, result.seconds);
+                    }
+                    else if (timerMinutesValue == 0 && (result.minutes > 0 && result.minutes < defaultValueToShowTimeoutModalInMinutes)) {
+                        GOVUK.clearSessionTimeoutCountDownTimer();
+                        GOVUK.setSessionTimeoutCountDownTimer(result.minutes, result.seconds);
+                    }
+                    else if (timerMinutesValue == 0 && result.minutes > defaultValueToShowTimeoutModalInMinutes) {
+                        var resetSessionTimeoutValueInMs = ((result.minutes * 60000) + (result.seconds * 1000)); 
+                        GOVUK.clearSessionTimeoutCountDownTimer();
+                        GOVUK.resetSessionTimeoutModalTimer(resetSessionTimeoutValueInMs)
+                    }
+                }
             },
-            timeout: 5000,
+            timeout: 3000,
             error: function (xhr, textStatus, errorThrown) {
                 if (textStatus != "abort")
                     console.log(xhr + textStatus + errorThrown);
@@ -108,12 +133,37 @@ $(document).ready(function () {
         });
     }
 
+    GOVUK.renewUserSessionActivity = function () {
+        if (currentRenewSessionXhr != null)
+            currentRenewSessionXhr.abort();
+
+        currentRenewSessionXhr = $.ajax({
+            type: "get",
+            url: "/renew-activity",
+            contentType: "application/json",
+            success: function (result) {
+                if (result) {
+                    var resetSessionTimeoutValueInMs = ((result.minutes * 60000) + (result.seconds * 1000));
+                    GOVUK.clearSessionTimeoutCountDownTimer();
+                    GOVUK.resetSessionTimeoutModalTimer(resetSessionTimeoutValueInMs)
+                }
+            },
+            timeout: 3000,
+            error: function (xhr, textStatus, errorThrown) {
+                if (textStatus != "abort")
+                    console.log(xhr + textStatus + errorThrown);
+            },
+            complete: function (d) {
+                currentRenewSessionXhr = null;
+            }
+        });
+    }
     $("#keep-me-signed-in").click(function () {
-        // TODO: renew session and on success call
-        GOVUK.resetSessionTimeoutModalTimer();
+        GOVUK.renewUserSessionActivity();
     });
 
     if (window.GOVUK) {
-        GOVUK.setSessionTimeoutModalTimer();
+        var timeoutValue = $('#timeout-message-container').data('timeout');
+        GOVUK.setSessionTimeoutModalTimer(60000);
     }
 });

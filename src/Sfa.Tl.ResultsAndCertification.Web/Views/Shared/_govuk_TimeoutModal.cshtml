@@ -1,6 +1,8 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Layout
+@using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
+@inject IWebConfigurationService ConfigurationService
 
-<div id="timeout-message-container" class="tl-timeout-message--container hidden">
+<div id="timeout-message-container" class="tl-timeout-message--container hidden" data-timeout="@ConfigurationService.GetSessionTimeoutValue()">
     <div class="govuk-grid-row">
         <div class="tl-modal tl-modal--timeout" role="dialog" aria-modal="true" aria-labelledby="timeout-heading" aria-describedby="timeout-description">
             <div class="tl-modal--content">
