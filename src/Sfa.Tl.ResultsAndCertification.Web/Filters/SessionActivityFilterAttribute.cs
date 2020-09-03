@@ -14,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Filters
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
 
-
         public SessionActivityFilterAttribute(ICacheService cacheService, ILogger<SessionActivityFilterAttribute> logger)
         {
             _cacheService = cacheService;
