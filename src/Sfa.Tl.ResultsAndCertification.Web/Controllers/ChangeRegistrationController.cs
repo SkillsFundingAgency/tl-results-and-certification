@@ -38,9 +38,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("change-learners-name/{profileId}", Name = RouteConstants.ChangeRegistrationLearnersName)]
         public async Task<IActionResult> ChangeLearnersNameAsync(int profileId)
         {
-            await Task.Run(() => true);
-            var vm = new ChangeLearnersNameViewModel { ProfileId = 1, Firstname = "InDev", Lastname = "InDev" };
-            return View(vm);
+            var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeLearnersNameViewModel>(User.GetUkPrn(), profileId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: ChangeLearnersNameAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            
+            return View(viewModel);
         }
 
         [HttpPost]

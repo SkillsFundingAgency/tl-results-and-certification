@@ -57,5 +57,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _registrationService.DeleteRegistrationAsync(aoUkprn, profileId);
         }
+
+        [HttpGet]
+        [Route("GetRegistrationProfile/{aoUkprn}/{profileId}")]
+        public async Task<RegistrationProfile> GetRegistrationProfileAsync(long aoUkprn, int profileId)
+        {
+            return await _registrationService.GetRegistrationProfileAsync(aoUkprn, profileId);
+        }
+
     }
 }

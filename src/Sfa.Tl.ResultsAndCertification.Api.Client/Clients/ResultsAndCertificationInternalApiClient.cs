@@ -154,6 +154,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await DeleteAsync<bool>(requestUri);
         }
 
+        public async Task<RegistrationProfile> GetRegistrationProfileAsync(long aoUkprn, int profileId)
+        {
+            var requestUri = string.Format(ApiConstants.GetRegistrationProfileUri, aoUkprn, profileId);
+            return await GetAsync<RegistrationProfile>(requestUri);
+        }
+
         #region Private Methods
 
         /// <summary>

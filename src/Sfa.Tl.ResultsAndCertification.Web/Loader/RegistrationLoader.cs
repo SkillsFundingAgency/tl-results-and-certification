@@ -118,5 +118,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             return await _internalApiClient.DeleteRegistrationAsync(aoUkprn, profileId);
         }
+
+        public async Task<T> GetRegistrationProfileAsync<T>(long aoUkprn, int profileId)
+        {
+            var response = await _internalApiClient.GetRegistrationProfileAsync(aoUkprn, profileId);
+            return _mapper.Map<T>(response);
+        }
     }
 }

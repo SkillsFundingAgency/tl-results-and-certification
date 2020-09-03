@@ -33,6 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId);
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
 
+        // Change registration
+        Task<RegistrationProfile> GetRegistrationProfileAsync(long aoUkprn, int profileId);
+
         // DocumentUploadHistory
         Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);
     }
