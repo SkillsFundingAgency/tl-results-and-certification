@@ -25,8 +25,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public RegistrationPathwayStatus Status { get; set; }
         
         private string ActionText { get { return Status == RegistrationPathwayStatus.Active ? RegistrationDetailsContent.Change_Action_Link_Text : null; } }
+        public Dictionary<string, string> ChangeLinkRouteAttributes => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } };
 
-        public SummaryItemModel SummaryLearnerName => new SummaryItemModel { Id = "learnername", Title = RegistrationDetailsContent.Title_Name_Text, Value = Name, RouteName = RouteConstants.AddRegistrationLearnersName, ActionText = ActionText };
+        public SummaryItemModel SummaryLearnerName => new SummaryItemModel { Id = "learnername", Title = RegistrationDetailsContent.Title_Name_Text, Value = Name, ActionText = ActionText, RouteName = RouteConstants.ChangeRegistrationLearnersName, RouteAttributes = ChangeLinkRouteAttributes };
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel { Id = "dateofbirth", Title = RegistrationDetailsContent.Title_DateofBirth_Text, Value = DateofBirth.ToShortDateString(), RouteName = RouteConstants.AddRegistrationDateofBirth, ActionText = ActionText };
         public SummaryItemModel SummaryProvider => new SummaryItemModel { Id = "provider", Title = RegistrationDetailsContent.Title_Provider_Text, Value = ProviderDisplayName, RouteName = RouteConstants.AddRegistrationProvider, ActionText = ActionText };
         public SummaryItemModel SummaryCore => new SummaryItemModel { Id = "core", Title = RegistrationDetailsContent.Title_Core_Text, Value = PathwayDisplayName, RouteName = RouteConstants.AddRegistrationCore, ActionText = ActionText };

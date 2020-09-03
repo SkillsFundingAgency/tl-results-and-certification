@@ -36,5 +36,6 @@
         public const int RegistrationSpecialismsStartIndex = 300000;
 
         public const string IsChangeMode = "isChangeMode";
+        public const string ProfileId = "profileId";
     }
 }

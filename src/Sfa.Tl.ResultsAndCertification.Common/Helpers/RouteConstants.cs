@@ -75,6 +75,10 @@
         public const string SubmitRegistrationCheckAndSubmit = "SubmitRegistrationCheckAndSubmit";
         public const string AddRegistrationConfirmation = "AddRegistrationConfirmation";
 
+        // Change Registration
+        public const string ChangeRegistrationLearnersName = "ChangeRegistrationLearnersName";
+        public const string SubmitChangeRegistrationLearnersName = "SubmitChangeRegistrationLearnersName";
+
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";
         public const string SubmitSearchRegistration = "SubmitSearchRegistration";
