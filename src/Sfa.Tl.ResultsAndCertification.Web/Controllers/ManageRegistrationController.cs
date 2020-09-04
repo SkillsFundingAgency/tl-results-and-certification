@@ -18,13 +18,13 @@ using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registrat
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
     [Authorize(Policy = RolesExtensions.RequireRegistrationsEditorAccess)]
-    public class ChangeRegistrationController : Controller
+    public class ManageRegistrationController : Controller
     {
         private readonly IRegistrationLoader _registrationLoader;
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
 
-        public ChangeRegistrationController(
+        public ManageRegistrationController(
             IRegistrationLoader registrationLoader, 
             ICacheService cacheService, 
             ILogger<RegistrationController> logger)
