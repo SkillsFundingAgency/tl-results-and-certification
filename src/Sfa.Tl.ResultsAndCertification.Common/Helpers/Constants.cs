@@ -30,6 +30,8 @@
         public const string SearchRegistrationUlnNotFound = "SearchRegistrationUlnNotFound";
         public const string RegistrationSearchCriteria = "RegistrationSearchCriteria";
 
+        public const string UserSessionActivityId = "UserSessionActivityId";
+
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 100000;
         public const int RegistrationPathwayStartIndex = 200000;

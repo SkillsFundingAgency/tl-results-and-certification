@@ -11,8 +11,8 @@ $(document).ready(function () {
     var currentGetSessionActivityDurationXhr = null;
     var currentRenewSessionXhr = null;
     var delayTimeInMs = 2000;
-    var defaultValueToShowTimeoutModalInMinutes = 1;
-    var defaultValueForCountDownTimerInMinutes = 1;
+    var defaultValueToShowTimeoutModalInMinutes = 5;
+    var defaultValueForCountDownTimerInMinutes = 5;
 
     GOVUK.clearAllTimeoutTimers = function () {
         GOVUK.clearInitialSessionTimeoutModalTimer();
@@ -45,7 +45,6 @@ $(document).ready(function () {
     };
 
     GOVUK.resetSessionTimeoutModalTimer = function (timeoutModalInMs) {
-        GOVUK.clearSessionTimeoutModalTimer();
         GOVUK.hideTimeoutModal();
         GOVUK.setSessionTimeoutModalTimer(timeoutModalInMs);
     };
@@ -70,8 +69,9 @@ $(document).ready(function () {
             }
 
             if (minutes === 0 && seconds === 0) {
+                GOVUK.hideTimeoutModal();
                 GOVUK.clearAllTimeoutTimers();
-                window.location.href = "/timeout";
+                window.location.href = "/signout";
             }
             else {
                 seconds--;
@@ -126,6 +126,7 @@ $(document).ready(function () {
             type: "get",
             url: "/active-duration",
             contentType: "application/json",
+            timeout: 3000,
             success: function (result) {
                 if (result) {
                     if (isPreCheck) {
@@ -175,10 +176,8 @@ $(document).ready(function () {
                         }
                     }
                 }
-            },
-            timeout: 3000,
+            },            
             error: function (xhr, textStatus, errorThrown) {
-                alert('error: ' + xhr + textStatus + errorThrown);
                 if (textStatus != "abort")
                     console.log(xhr + textStatus + errorThrown);
             },
@@ -196,6 +195,7 @@ $(document).ready(function () {
             type: "get",
             url: "/renew-activity",
             contentType: "application/json",
+            timeout: 3000,
             success: function (result) {
                 if (result) {
                     var renewTimeoutValueInMs = ((result.minutes - defaultValueToShowTimeoutModalInMinutes) * 60000) + (result.seconds * 1000);
@@ -203,10 +203,8 @@ $(document).ready(function () {
                     GOVUK.clearAllTimeoutTimers();
                     GOVUK.setInitialSessionTimeoutModalTimer(renewTimeoutValueInMs);
                 }
-            },
-            timeout: 3000,
+            },            
             error: function (xhr, textStatus, errorThrown) {
-                alert('error: ' + xhr + textStatus + errorThrown);
                 if (textStatus != "abort")
                     console.log(xhr + textStatus + errorThrown);
             },
