@@ -59,11 +59,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetRegistrationProfile/{aoUkprn}/{profileId}")]
-        public async Task<RegistrationProfile> GetRegistrationProfileAsync(long aoUkprn, int profileId)
+        [Route("GetRegistration/{aoUkprn}/{profileId}")]
+        public async Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId)
         {
-            return await _registrationService.GetRegistrationProfileAsync(aoUkprn, profileId);
+            return await _registrationService.GetRegistrationAsync(aoUkprn, profileId);
         }
-
     }
 }

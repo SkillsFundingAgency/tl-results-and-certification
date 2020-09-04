@@ -16,6 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln);
         Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId);
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
-        Task<RegistrationProfile> GetRegistrationProfileAsync(long aoUkprn, int profileId);
+        Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId);
     }
 }

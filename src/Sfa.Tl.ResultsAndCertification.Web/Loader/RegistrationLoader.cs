@@ -121,7 +121,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<T> GetRegistrationProfileAsync<T>(long aoUkprn, int profileId)
         {
-            var response = await _internalApiClient.GetRegistrationProfileAsync(aoUkprn, profileId);
+            var response = await _internalApiClient.GetRegistrationAsync(aoUkprn, profileId);
             return _mapper.Map<T>(response);
         }
     }

@@ -27,7 +27,7 @@
         public const string FindUlnUri = "/api/registration/FindUln/{0}/{1}";
         public const string GetRegistrationDetailsUri = "/api/registration/GetRegistrationDetails/{0}/{1}";
         public const string DeleteRegistrationUri = "/api/registration/DeleteRegistration/{0}/{1}";
-        public const string GetRegistrationProfileUri = "/api/registration/GetRegistrationProfile/{0}/{1}";
+        public const string GetRegistrationUri = "/api/registration/GetRegistration/{0}/{1}";
 
         // DocumentUploadHistory Related Uri's
         public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";

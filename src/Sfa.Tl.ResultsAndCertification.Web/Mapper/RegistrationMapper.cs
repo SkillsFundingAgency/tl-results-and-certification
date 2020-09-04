@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<FindUlnResponse, UlnNotFoundViewModel>();
 
             CreateMap<RegistrationDetails, RegistrationDetailsViewModel>();
-            CreateMap<RegistrationProfile, ChangeLearnersNameViewModel>()
+            CreateMap<ManageRegistration, ChangeLearnersNameViewModel>()
                 .ReverseMap();
         }
     }

@@ -353,11 +353,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqRegistrationRepository.DeleteAsync(registrationProfile) > 0;
         }
 
-        public async Task<RegistrationProfile> GetRegistrationProfileAsync(long aoUkprn, int profileId)
+        public async Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId)
         {
-            // TODO: filter with aoUkprn.
-            var profile = await _tqRegistrationRepository.GetFirstOrDefaultAsync(r => r.Id == profileId);
-            return _mapper.Map<RegistrationProfile>(profile);
+            return await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId);
         }
 
         #region Private Methods
