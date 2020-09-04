@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var registeredSessionTime = await _cacheService.GetAsync<DateTime>(CacheKey);
             var remainingActiveDuration = (registeredSessionTime != null && registeredSessionTime != DateTime.MinValue) ? (registeredSessionTime.AddMinutes(_configuration.DfeSignInSettings.Timeout) - DateTime.UtcNow) : new TimeSpan(0,0,0);
-            return Json(new SessionActivityData { Minutes = remainingActiveDuration.Minutes, Seconds = remainingActiveDuration.Seconds });
+            return Json(new SessionActivityData { Minutes = remainingActiveDuration.Minutes < 0 ? 0 : remainingActiveDuration.Minutes, Seconds = remainingActiveDuration.Seconds < 0 ? 0 : remainingActiveDuration.Seconds });
         }
 
         [HttpGet]

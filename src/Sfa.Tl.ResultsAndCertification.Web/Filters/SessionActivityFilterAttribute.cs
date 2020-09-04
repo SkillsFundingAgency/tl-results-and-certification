@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Filters
         {
             try
             {
-                if (context.HttpContext.Request.Method == "GET" && context.Controller.GetType() != typeof(Controllers.TimeoutController))
+                if (context.Controller.GetType() != typeof(Controllers.TimeoutController))
                 {
                     var cacheKey = CacheKeyHelper.GetCacheKey(context.HttpContext.User.GetUserId(), CacheConstants.UserSessionActivityCacheKey);
                     await _cacheService.SetAsync(cacheKey, DateTime.UtcNow);
