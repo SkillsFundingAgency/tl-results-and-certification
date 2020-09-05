@@ -7,6 +7,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using System;
@@ -15,18 +16,18 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Filters.SessionActivity
 {
-    public class Then_SessionActivity_Is_Recorded : When_SessionActivityFilterAttribute_Action_Is_Called
+    public class Then_Home_Activity_Not_Recorded : When_FilterAttribute_Action_Is_Called
     {
-        private DashboardController _dashboardController;
-        private ILogger<DashboardController> _logger;
-        public override void Given() 
-        {
-            _logger = Substitute.For<ILogger<DashboardController>>();
-            _dashboardController = new DashboardController(_logger);
+        private HomeController _homeController;
+        private ILogger<HomeController> _logger;
+        protected ActionExecutingContext _actionExecutingContext;
 
-            var httpContext = new ClaimsIdentityBuilder<DashboardController>(_dashboardController)
+        public override void Given()
+        {
+            _homeController = new HomeController(_logger);
+
+            var httpContext = new ClaimsIdentityBuilder<HomeController>(_homeController)
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
-               .Add(CustomClaimTypes.HasAccessToService, "true")
                .Build()
                .HttpContext;
 
@@ -34,23 +35,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Filters.SessionActivity
             CacheKey = CacheKeyHelper.GetCacheKey(HttpContextAccessor.HttpContext.User.GetUserId(), CacheConstants.UserSessionActivityCacheKey);
 
             var routeData = new RouteData();
-            routeData.Values.Add("controller", "Dashboard");
-            routeData.Values.Add("action", nameof(DashboardController.Index));
+            routeData.Values.Add("controller", "Home");
+            routeData.Values.Add("action", nameof(HomeController.Index));
 
             var controllerActionDescriptor = new ControllerActionDescriptor
             {
-                ControllerName = "Dashboard",
-                ActionName = nameof(DashboardController.Index)
+                ControllerName = "Home",
+                ActionName = nameof(HomeController.Index)
             };
 
             var actionContext = new ActionContext(HttpContextAccessor.HttpContext, routeData, controllerActionDescriptor);
-            ActionExecutingContext = new ActionExecutingContext(actionContext, new List<IFilterMetadata>(), new Dictionary<string, object>(), _dashboardController);
+            _actionExecutingContext = new ActionExecutingContext(actionContext, new List<IFilterMetadata>(), new Dictionary<string, object>(), _homeController);
         }
 
         [Fact]
-        public void Then_SessionActivity_Cache_Is_Synchronised()
+        public void Then_SessionActivity_Is_Not_Recored()
         {
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Any<DateTime>());
+            CacheService.DidNotReceive().SetAsync(CacheKey, Arg.Any<DateTime>());
         }
     }
 }

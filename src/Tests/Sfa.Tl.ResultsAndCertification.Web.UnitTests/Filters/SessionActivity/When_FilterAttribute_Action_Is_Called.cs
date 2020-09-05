@@ -8,7 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Filters;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Filters.SessionActivity
 {
-    public abstract class When_SessionActivityFilterAttribute_Action_Is_Called : BaseTest<SessionActivityFilterAttribute>
+    public abstract class When_FilterAttribute_Action_Is_Called : BaseTest<SessionActivityFilterAttribute>
     {
         protected string CacheKey;        
         protected ICacheService CacheService;

@@ -15,7 +15,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Filters.SessionActivity
 {
-    public class Then_SessionActivity_Is_Not_Recorded : When_SessionActivityFilterAttribute_Action_Is_Called
+    public class Then_Timeout_Activity_Not_Recorded : When_FilterAttribute_Action_Is_Called
     {
         private TimeoutController _timeoutController;
         private ResultsAndCertificationConfiguration _resultsAndCertificationConfiguration;
@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Filters.SessionActivity
         }
 
         [Fact]
-        public void Then_SessionActivity_Cache_Is_Not_Synchronised()
+        public void Then_SessionActivity_Is_Not_Recored()
         {
             CacheService.DidNotReceive().SetAsync(CacheKey, Arg.Any<DateTime>());
         }
