@@ -124,5 +124,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetRegistrationAsync(aoUkprn, profileId);
             return _mapper.Map<T>(response);
         }
+
+        public async Task ProcessProfileChangeAsync(long aoUkprn, ChangeLearnersNameViewModel vm)
+        {
+            var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, vm.ProfileId);
+            if (vm.Firstname.Trim().Equals(reg.FirstName, StringComparison.OrdinalIgnoreCase) &&
+                vm.Lastname.Trim().Equals(reg.LastName, StringComparison.OrdinalIgnoreCase))
+            {
+                // set IsModified false;
+            }
+
+            reg.FirstName = vm.Firstname.Trim();
+            reg.LastName = vm.Lastname.Trim();
+
+            var response = await _internalApiClient.UpdateRegistrationAsync(aoUkprn, reg);
+            return response;
+        }
     }
 }

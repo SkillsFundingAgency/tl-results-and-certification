@@ -53,10 +53,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> ChangeLearnersNameAsync(ChangeLearnersNameViewModel vm)
         {
             await Task.Run(() => true);
+
             if (!ModelState.IsValid)
                 return View(vm);
-            else
-                return RedirectToRoute(RouteConstants.ChangeRegistrationLearnersName, new { vm.ProfileId });
+
+            var processChange = _registrationLoader.ProcessProfileChangeAsync(vm);
+
+
+            return RedirectToRoute(RouteConstants.ChangeRegistrationLearnersName, new { vm.ProfileId });
         }
 
         [HttpGet]
