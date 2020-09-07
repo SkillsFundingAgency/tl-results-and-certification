@@ -358,6 +358,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId);
         }
 
+        public async Task<bool> UpdateRegistrationAsync(ManageRegistration model)
+        {
+            await Task.Run(() => true);
+            return true;
+        }
+
         #region Private Methods
 
         private TqRegistrationProfile TransformManualRegistrationModel(RegistrationRequest model, RegistrationRecordResponse registrationRecord)

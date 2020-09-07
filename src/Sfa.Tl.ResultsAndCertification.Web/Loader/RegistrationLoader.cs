@@ -139,14 +139,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             {
                 var providerPathways = await _internalApiClient.GetRegisteredProviderPathwayDetailsAsync(aoUkprn, viewModel.SelectedProviderUkprn.ToLong());
                 if (providerPathways != null && providerPathways.Count > 0 && providerPathways.Any(p => p.Code.Equals(profileDetails.CoreCode)))
-                {                    
-                    // savechanges to database
-                    return new ProviderChangeResponse { IsModified = true,  IsSuccess = true };
+                {
+                    var isSuccess = await _internalApiClient.UpdateRegistrationAsync(new ManageRegistration());
+                    return new ProviderChangeResponse { IsModified = true,  IsSuccess = isSuccess };
                 }
                 else
                 {
                     return new ProviderChangeResponse { IsCoreNotSupported = true };
-
                 }
             }
         }
