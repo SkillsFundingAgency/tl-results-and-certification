@@ -85,8 +85,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var response = await _registrationLoader.ProcessProviderChangesAsync(User.GetUkPrn(), model);
 
-            return RedirectToRoute(RouteConstants.RegistrationDetails);
+            if(response.IsModified && response.IsSuccess)
+            {
+                return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = model.ProfileId });
+            }
+            else if(response.IsCoreNotSupported && !response.IsSuccess)
+            {
+                return RedirectToRoute(RouteConstants.CannotChangeRegistrationProvider);
+            }
+            else
+            {
+                return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = model.ProfileId });
+            }
         }
+
+        [HttpGet]
+        [Route("cannot-change-provider", Name = RouteConstants.CannotChangeRegistrationProvider)]
+        public IActionResult CannotChangeProviderAsync()
+        {            
+            return View();
+        }
+
+
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());

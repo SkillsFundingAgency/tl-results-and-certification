@@ -2,6 +2,6 @@
 {
     public class ProviderChangeResponse : ManageRegistrationResponse
     {
-        public bool IsCoreSupported { get; set; }
+        public bool IsCoreNotSupported { get; set; }
     }
 }

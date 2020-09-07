@@ -127,7 +127,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<T>(response);
         }
 
-        public async Task<ManageRegistrationResponse> ProcessProviderChangesAsync(long aoUkprn, ChangeProviderViewModel viewModel)
+        public async Task<ProviderChangeResponse> ProcessProviderChangesAsync(long aoUkprn, ChangeProviderViewModel viewModel)
         {
             var profileDetails = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
 
@@ -139,13 +139,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             {
                 var providerPathways = await _internalApiClient.GetRegisteredProviderPathwayDetailsAsync(aoUkprn, viewModel.SelectedProviderUkprn.ToLong());
                 if (providerPathways != null && providerPathways.Count > 0 && providerPathways.Any(p => p.Code.Equals(profileDetails.CoreCode)))
-                {
+                {                    
                     // savechanges to database
-                    return new ProviderChangeResponse { IsSuccess = true };
+                    return new ProviderChangeResponse { IsModified = true,  IsSuccess = true };
                 }
                 else
                 {
-                    return new ProviderChangeResponse { IsModified = false };
+                    return new ProviderChangeResponse { IsCoreNotSupported = true };
 
                 }
             }

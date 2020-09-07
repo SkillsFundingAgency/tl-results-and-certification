@@ -80,6 +80,7 @@
         public const string SubmitChangeRegistrationLearnersName = "SubmitChangeRegistrationLearnersName";
         public const string ChangeRegistrationProvider = "ChangeRegistrationProvider";
         public const string SubmitChangeRegistrationProvider = "SubmitChangeRegistrationProvider";
+        public const string CannotChangeRegistrationProvider = "CannotChangeRegistrationProvider";
 
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";
