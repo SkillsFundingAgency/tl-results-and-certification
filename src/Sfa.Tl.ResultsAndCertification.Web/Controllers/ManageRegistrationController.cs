@@ -1,19 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sfa.Tl.ResultsAndCertification.Common.Constants;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
-using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
-using System.Linq;
 using System.Threading.Tasks;
-using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -78,6 +71,45 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             viewModel.SelectedProviderUkprn = viewModel.SelectedProviderUkprn;
             return View(viewModel);
         }
+
+        [HttpPost]
+        [Route("change-provider", Name = RouteConstants.SubmitChangeRegistrationProvider)]
+        public async Task<IActionResult> ChangeProviderAsync(ChangeProviderViewModel model)
+        {
+            if (model == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var registeredProviderViewModel = await GetAoRegisteredProviders();
+
+            if (!ModelState.IsValid)
+            {
+                model.ProvidersSelectList = registeredProviderViewModel.ProvidersSelectList;
+                return View(model);
+            }
+
+            var response = await _registrationLoader.ProcessProviderChangesAsync(User.GetUkPrn(), model);
+
+            if(response.IsModified && response.IsSuccess)
+            {
+                return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = model.ProfileId });
+            }
+            else if(response.IsCoreNotSupported && !response.IsSuccess)
+            {
+                return RedirectToRoute(RouteConstants.CannotChangeRegistrationProvider);
+            }
+            else
+            {
+                return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = model.ProfileId });
+            }
+        }
+
+        [HttpGet]
+        [Route("cannot-change-provider", Name = RouteConstants.CannotChangeRegistrationProvider)]
+        public IActionResult CannotChangeProviderAsync()
+        {            
+            return View();
+        }
+
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {

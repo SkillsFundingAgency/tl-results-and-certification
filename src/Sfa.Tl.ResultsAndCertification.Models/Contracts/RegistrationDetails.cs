@@ -12,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public DateTime DateofBirth { get; set; }
         public long ProviderUkprn { get; set; }
         public string ProviderDisplayName { get; set; }
+        public string PathwayLarId { get; set; }
         public string PathwayDisplayName { get; set; }
         public IEnumerable<string> SpecialismsDisplayName{ get; set; }
         public int AcademicYear { get; set; }

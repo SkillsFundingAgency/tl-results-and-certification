@@ -44,6 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     DateofBirth = p.TqRegistrationProfile.DateofBirth,
                     ProviderUkprn = p.TqProvider.TlProvider.UkPrn,
                     ProviderDisplayName = $"{p.TqProvider.TlProvider.Name} ({p.TqProvider.TlProvider.UkPrn})",
+                    PathwayLarId = p.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                     PathwayDisplayName = $"{p.TqProvider.TqAwardingOrganisation.TlPathway.Name} ({p.TqProvider.TqAwardingOrganisation.TlPathway.LarId})",
                     SpecialismsDisplayName = p.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).OrderBy(s => s.TlSpecialism.Name).Select(s => $"{s.TlSpecialism.Name} ({s.TlSpecialism.LarId})"),
                     AcademicYear = p.AcademicYear,

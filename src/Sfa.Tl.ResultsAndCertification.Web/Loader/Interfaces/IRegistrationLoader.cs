@@ -22,5 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         // Change Registration loaders
         Task<T> GetRegistrationProfileAsync<T>(long aoUkprn, int profileId);
         Task ProcessProfileChangeAsync(long aoUkprn, ChangeLearnersNameViewModel vm);
+        Task<ProviderChangeResponse> ProcessProviderChangesAsync(long aoUkprn, ChangeProviderViewModel viewModel);
     }
 }
