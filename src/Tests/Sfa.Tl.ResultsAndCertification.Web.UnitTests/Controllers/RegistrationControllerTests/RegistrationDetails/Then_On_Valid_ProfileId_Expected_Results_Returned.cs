@@ -16,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     public class Then_On_Valid_ProfileId_Expected_Results_Returned : When_RegistrationDetails_Action_Is_Called
     {
         private RegistrationDetailsViewModel mockresult = null;
+        private Dictionary<string, string> _routeAttributes;
         public override void Given()
         {
             mockresult = new RegistrationDetailsViewModel
@@ -31,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 Status = RegistrationPathwayStatus.Active
             };
 
+            _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } };
             RegistrationLoader.GetRegistrationDetailsByProfileIdAsync(AoUkprn, ProfileId).Returns(mockresult);
         }
 
@@ -71,7 +73,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryProvider.Should().NotBeNull();
             model.SummaryProvider.Title.Should().Be(RegistrationDetailsContent.Title_Provider_Text);
             model.SummaryProvider.Value.Should().Be(mockresult.ProviderDisplayName);
-            model.SummaryProvider.RouteName.Should().Be(RouteConstants.AddRegistrationProvider);
+            model.SummaryProvider.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
+            model.SummaryProvider.RouteName.Should().Be(RouteConstants.ChangeRegistrationProvider);
+            model.SummaryProvider.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary Core
             model.SummaryCore.Should().NotBeNull();

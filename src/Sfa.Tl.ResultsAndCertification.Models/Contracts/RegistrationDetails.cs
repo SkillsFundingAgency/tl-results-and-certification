@@ -10,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public long Uln { get; set; }
         public string Name { get; set; }
         public DateTime DateofBirth { get; set; }
+        public long ProviderUkprn { get; set; }
         public string ProviderDisplayName { get; set; }
         public string PathwayDisplayName { get; set; }
         public IEnumerable<string> SpecialismsDisplayName{ get; set; }

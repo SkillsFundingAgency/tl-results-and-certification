@@ -78,6 +78,7 @@
         // Change Registration
         public const string ChangeRegistrationLearnersName = "ChangeRegistrationLearnersName";
         public const string SubmitChangeRegistrationLearnersName = "SubmitChangeRegistrationLearnersName";
+        public const string ChangeRegistrationProvider = "ChangeRegistrationProvider";
 
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";

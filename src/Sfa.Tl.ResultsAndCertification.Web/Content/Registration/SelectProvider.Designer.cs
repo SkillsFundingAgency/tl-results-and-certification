@@ -79,6 +79,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Change_Button_Text {
+            get {
+                return ResourceManager.GetString("Change_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you cannot find one of your providers in the list above, ask your Providers Editor to add it in the &apos;Providers&apos; section of this service..
+        /// </summary>
+        public static string Change_Cannot_Find_One_Of_Your_Providers_Details_Text {
+            get {
+                return ResourceManager.GetString("Change_Cannot_Find_One_Of_Your_Providers_Details_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find one of your providers?.
+        /// </summary>
+        public static string Change_Cannot_Find_One_Of_Your_Providers_Text {
+            get {
+                return ResourceManager.GetString("Change_Cannot_Find_One_Of_Your_Providers_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change registration.
+        /// </summary>
+        public static string ChangeRegistration_Caption_Text {
+            get {
+                return ResourceManager.GetString("ChangeRegistration_Caption_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Continue_Button_Text {
@@ -102,6 +138,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Page_Title_Add_Registration_Select_Provider {
             get {
                 return ResourceManager.GetString("Page_Title_Add_Registration_Select_Provider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change provider page.
+        /// </summary>
+        public static string Page_Title_Change_Registration_Select_Provider {
+            get {
+                return ResourceManager.GetString("Page_Title_Change_Registration_Select_Provider", resourceCulture);
             }
         }
         
