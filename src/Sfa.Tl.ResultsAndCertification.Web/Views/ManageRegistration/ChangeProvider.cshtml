@@ -1,0 +1,36 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ChangeProviderViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @SelectProvider.Page_Title_Change_Registration_Select_Provider;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="SubmitRegistrationProvider">
+            <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">@SelectProvider.ChangeRegistration_Caption_Text</span>
+                <vc:select-provider model=Model></vc:select-provider>
+                <details class="govuk-details govuk-!-margin-top-6" closed>
+                    <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text">
+                            @SelectProvider.Change_Cannot_Find_One_Of_Your_Providers_Text
+                        </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body govuk-!-margin-bottom-0">@SelectProvider.Change_Cannot_Find_One_Of_Your_Providers_Details_Text</p>
+                    </div>
+                </details>
+            </div>
+            <p>
+                <button type="submit" class="govuk-button" data-module="govuk-button">@SelectProvider.Change_Button_Text</button>
+            </p>
+        </form>
+    </div>
+</div>

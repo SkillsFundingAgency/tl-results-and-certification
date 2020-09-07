@@ -58,5 +58,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             else
                 return RedirectToRoute(RouteConstants.ChangeRegistrationLearnersName, new { vm.ProfileId });
         }
+
+        [HttpGet]
+        [Route("change-provider/{profileId}", Name = RouteConstants.ChangeRegistrationProvider)]
+        public async Task<IActionResult> ChangeProviderAsync(int profileId)
+        {
+            var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeProviderViewModel>(User.GetUkPrn(), profileId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: ChangeRegistrationProviderAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            var registeredProviders = await GetAoRegisteredProviders();
+            viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
+            viewModel.SelectedProviderUkprn = viewModel.SelectedProviderUkprn;
+            return View(viewModel);
+        }
+
+        private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
+        {
+            return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
+        }
     }
 }

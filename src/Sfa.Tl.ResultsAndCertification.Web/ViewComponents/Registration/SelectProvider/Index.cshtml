@@ -11,6 +11,9 @@
     </h1>
     <span sfa-validation-for="SelectedProviderUkprn"></span>
     <select class="govuk-select" id="selectedproviderukprn" asp-for="SelectedProviderUkprn" asp-items="Model.ProvidersSelectList">
-        <option value="">@SelectProvider.Select_One_Option_Text</option>
+        @if (Model.IncludeSelectOneOption)
+        {
+            <option value="">@SelectProvider.Select_One_Option_Text</option>
+        }
     </select>
 </div>
