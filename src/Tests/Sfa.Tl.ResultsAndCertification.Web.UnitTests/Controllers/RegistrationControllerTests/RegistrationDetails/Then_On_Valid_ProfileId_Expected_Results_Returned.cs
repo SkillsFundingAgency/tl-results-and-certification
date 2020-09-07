@@ -62,6 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryLearnerName.Title.Should().Be(RegistrationDetailsContent.Title_Name_Text);
             model.SummaryLearnerName.Value.Should().Be(mockresult.Name);
             model.SummaryLearnerName.RouteName.Should().Be(RouteConstants.ChangeRegistrationLearnersName);
+            model.SummaryLearnerName.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary DateofBirth
             model.SummaryDateofBirth.Should().NotBeNull();
