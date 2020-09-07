@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
@@ -12,6 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -123,6 +125,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var response = await _internalApiClient.GetRegistrationAsync(aoUkprn, profileId);
             return _mapper.Map<T>(response);
+        }
+
+        public async Task<ManageRegistrationResponse> ProcessProviderChangesAsync(long aoUkprn, ChangeProviderViewModel viewModel)
+        {
+            var profileDetails = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
+
+            if (profileDetails.ProviderUkprn == viewModel.SelectedProviderUkprn.ToLong())
+            {
+                return new ProviderChangeResponse { IsModified = false };
+            }
+            else
+            {
+                var providerPathways = await _internalApiClient.GetRegisteredProviderPathwayDetailsAsync(aoUkprn, viewModel.SelectedProviderUkprn.ToLong());
+                if (providerPathways != null && providerPathways.Count > 0 && providerPathways.Any(p => p.Code.Equals(profileDetails.CoreCode)))
+                {
+                    // savechanges to database
+                    return new ProviderChangeResponse { IsSuccess = true };
+                }
+                else
+                {
+                    return new ProviderChangeResponse { IsModified = false };
+
+                }
+            }
         }
     }
 }
