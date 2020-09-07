@@ -43,17 +43,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("change-learners-name", Name = RouteConstants.SubmitChangeRegistrationLearnersName)]
-        public async Task<IActionResult> ChangeLearnersNameAsync(ChangeLearnersNameViewModel vm)
+        public async Task<IActionResult> ChangeLearnersNameAsync(ChangeLearnersNameViewModel viewModel)
         {
-            await Task.Run(() => true);
-
             if (!ModelState.IsValid)
-                return View(vm);
+                return View(viewModel);
 
-            var processChange = _registrationLoader.ProcessProfileChangeAsync(vm);
+            var response = await _registrationLoader.ProcessProfileNameChangeAsync(User.GetUkPrn(), viewModel);
 
-
-            return RedirectToRoute(RouteConstants.ChangeRegistrationLearnersName, new { vm.ProfileId });
+            if (!response.IsModified)
+                return RedirectToRoute(RouteConstants.RegistrationDetails, new { viewModel.ProfileId });
+            
+            if (!response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+                
+            return RedirectToRoute(RouteConstants.ChangeRegistrationLearnersName, new { viewModel.ProfileId });
         }
 
         [HttpGet]

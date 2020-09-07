@@ -151,20 +151,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             }
         }
 
-        public async Task ProcessProfileChangeAsync(long aoUkprn, ChangeLearnersNameViewModel vm)
+        public async Task<ManageRegistrationResponse> ProcessProfileNameChangeAsync(long aoUkprn, ChangeLearnersNameViewModel viewModel)
         {
-            var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, vm.ProfileId);
-            if (vm.Firstname.Trim().Equals(reg.FirstName, StringComparison.OrdinalIgnoreCase) &&
-                vm.Lastname.Trim().Equals(reg.LastName, StringComparison.OrdinalIgnoreCase))
-            {
-                // set IsModified false;
-            }
+            var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
 
-            reg.FirstName = vm.Firstname.Trim();
-            reg.LastName = vm.Lastname.Trim();
+            if (viewModel.Firstname.Trim().Equals(reg.FirstName, StringComparison.OrdinalIgnoreCase) &&
+                viewModel.Lastname.Trim().Equals(reg.LastName, StringComparison.OrdinalIgnoreCase))
+                return new ManageRegistrationResponse { IsModified = false };
 
-            var response = await _internalApiClient.UpdateRegistrationAsync(aoUkprn, reg);
-            return response;
+            reg.FirstName = viewModel.Firstname.Trim();
+            reg.LastName = viewModel.Lastname.Trim();
+
+            // TODO:
+            //var isSuccess = await _internalApiClient.UpdateRegistrationAsync(aoUkprn, reg);
+            
+            return new ManageRegistrationResponse { IsModified = true, IsSuccess = true };
         }
     }
 }
