@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+﻿using Microsoft.AspNetCore.Mvc;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
@@ -10,5 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId);
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
         Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId);
+        Task<IActionResult> UpdateRegistrationAsync(ManageRegistration model);
     }
 }

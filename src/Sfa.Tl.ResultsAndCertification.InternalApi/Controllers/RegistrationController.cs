@@ -64,5 +64,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _registrationService.GetRegistrationAsync(aoUkprn, profileId);
         }
+
+        [HttpPut]
+        [Route("UpdateRegistration")]
+        public async Task<IActionResult> UpdateRegistrationAsync(ManageRegistration model)
+        {
+            var result = await _registrationService.UpdateRegistrationAsync(model);
+            return Ok(result);
+        }
     }
 }

@@ -160,6 +160,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<ManageRegistration>(requestUri);
         }
 
+        public async Task<bool> UpdateRegistrationAsync(ManageRegistration model)
+        {
+            var requestUri = ApiConstants.UpdateRegistrationUri;
+            return await PutAsync<ManageRegistration, bool>(requestUri, model);
+        }
+
         #region Private Methods
 
         /// <summary>
