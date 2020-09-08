@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             result.ProviderUkprn.Should().Be(RegistrationViewModel.SelectProvider.SelectedProviderUkprn.ToLong());
             result.CoreCode.Should().Be(RegistrationViewModel.SelectCore.SelectedCoreCode);
             result.SpecialismCodes.Should().BeEquivalentTo(RegistrationViewModel.SelectSpecialisms.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code));
-            result.CreatedBy.Should().Be($"{Givenname} {Surname}");
+            result.PerformedBy.Should().Be($"{Givenname} {Surname}");
         }
     }
 }

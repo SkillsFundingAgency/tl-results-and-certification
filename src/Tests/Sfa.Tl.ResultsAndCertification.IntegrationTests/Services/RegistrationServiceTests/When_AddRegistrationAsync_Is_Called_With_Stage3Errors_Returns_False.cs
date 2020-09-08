@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 AcademicYear = DateTime.UtcNow.Year,
                 CoreCode = "123", // Invalid core
                 SpecialismCodes = Specialisms.Select(s => s.LarId),
-                CreatedBy = "Test User"
+                PerformedBy = "Test User"
             };
         }
 

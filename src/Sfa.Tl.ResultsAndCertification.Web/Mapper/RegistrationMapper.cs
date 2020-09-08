@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.SelectCore.SelectedCoreCode))
                .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.SelectSpecialisms != null ? s.SelectSpecialisms.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code) : new List<string>()))
                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.SelectAcademicYear.SelectedAcademicYear))
-               .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<RegistrationViewModel, RegistrationRequest>>());
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<RegistrationViewModel, RegistrationRequest>>());
 
             CreateMap<FindUlnResponse, UlnNotFoundViewModel>();
 
@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.Firstname.Trim()))
                 .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.Lastname.Trim()))
                 .ForMember(d => d.HasProfileChanged, opts => opts.MapFrom(s => true))
-                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<ChangeLearnersNameViewModel, ManageRegistration>>());
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeLearnersNameViewModel, ManageRegistration>>());
             
             CreateMap<ManageRegistration, ChangeProviderViewModel>()
                 .ForMember(d => d.SelectedProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
@@ -64,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<ChangeProviderViewModel, ManageRegistration>()
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.SelectedProviderUkprn))
                 .ForMember(d => d.HasProviderChanged, opts => opts.MapFrom(s => true))
-                .ForMember(d => d.ModifiedBy, opts => opts.MapFrom<UserNameResolver<ChangeProviderViewModel, ManageRegistration>>());
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeProviderViewModel, ManageRegistration>>());
         }
     }
 }

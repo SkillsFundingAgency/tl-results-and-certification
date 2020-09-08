@@ -424,7 +424,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 actualProfile.Firstname = registrationRecord.FirstName;
                 actualProfile.Lastname = registrationRecord.LastName;
                 actualProfile.DateofBirth = registrationRecord.DateOfBirth;
-                actualProfile.ModifiedBy = model.ModifiedBy;
+                actualProfile.ModifiedBy = model.PerformedBy;
                 actualProfile.ModifiedOn = DateTime.UtcNow;
             }
 
@@ -435,13 +435,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     pathway.Status = RegistrationPathwayStatus.Transferred;
                     pathway.EndDate = DateTime.UtcNow;
-                    pathway.ModifiedBy = model.ModifiedBy;
+                    pathway.ModifiedBy = model.PerformedBy;
                     pathway.ModifiedOn = DateTime.UtcNow;
                     pathway.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList().ForEach(s =>
                     {
                         s.Status = RegistrationSpecialismStatus.InActive;
                         s.EndDate = DateTime.UtcNow;
-                        s.ModifiedBy = model.ModifiedBy;
+                        s.ModifiedBy = model.PerformedBy;
                         s.ModifiedOn = DateTime.UtcNow;
                     });
                 }
@@ -456,8 +456,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         StartDate = DateTime.UtcNow,
                         Status = RegistrationPathwayStatus.Active,
                         IsBulkUpload = false,
-                        TqRegistrationSpecialisms = MapSpecialisms(registrationRecord, model.ModifiedBy, 0, false),
-                        CreatedBy = model.ModifiedBy,
+                        TqRegistrationSpecialisms = MapSpecialisms(registrationRecord, model.PerformedBy, 0, false),
+                        CreatedBy = model.PerformedBy,
                         CreatedOn = DateTime.UtcNow
                     });
             }
@@ -475,14 +475,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         s.Status = RegistrationSpecialismStatus.InActive;
                         s.EndDate = DateTime.UtcNow;
-                        s.ModifiedBy = model.ModifiedBy;
+                        s.ModifiedBy = model.PerformedBy;
                         s.ModifiedOn = DateTime.UtcNow;
                     });
 
                     if (filteredTlSpecialismLarIdsToAdd != null && filteredTlSpecialismLarIdsToAdd.Any())
                     {
                         registrationRecord.TlSpecialismLarIds = filteredTlSpecialismLarIdsToAdd;
-                        specialismsToUpdate.AddRange(MapSpecialisms(registrationRecord, model.ModifiedBy, 0, false));
+                        specialismsToUpdate.AddRange(MapSpecialisms(registrationRecord, model.PerformedBy, 0, false));
                     }
                 }
             }
@@ -497,7 +497,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Firstname = registrationRecord.FirstName,
                 Lastname = registrationRecord.LastName,
                 DateofBirth = registrationRecord.DateOfBirth,
-                CreatedBy = model.CreatedBy,
+                CreatedBy = model.PerformedBy,
                 CreatedOn = DateTime.UtcNow,
                 TqRegistrationPathways = new List<TqRegistrationPathway>
                 {
@@ -508,8 +508,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         StartDate = DateTime.UtcNow,
                         Status = RegistrationPathwayStatus.Active,
                         IsBulkUpload = false,
-                        TqRegistrationSpecialisms = MapSpecialisms(registrationRecord, model.CreatedBy, 0, false),
-                        CreatedBy = model.CreatedBy,
+                        TqRegistrationSpecialisms = MapSpecialisms(registrationRecord, model.PerformedBy, 0, false),
+                        CreatedBy = model.PerformedBy,
                         CreatedOn = DateTime.UtcNow
                     }
                 }

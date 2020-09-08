@@ -9,7 +9,5 @@
         public bool HasProviderChanged { get; set; }
 
         public bool HasSpecialismsChanged { get; set; }
-
-        public string ModifiedBy { get; set; }
     }
 }

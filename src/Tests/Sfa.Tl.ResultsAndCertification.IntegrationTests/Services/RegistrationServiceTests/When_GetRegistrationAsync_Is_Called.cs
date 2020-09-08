@@ -56,8 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             actualResult.CoreCode.Should().Be(expectedResponse.CoreCode);
             actualResult.AcademicYear.Should().Be(expectedResponse.AcademicYear);
             actualResult.AoUkprn.Should().Be(expectedResponse.AoUkprn);
-            actualResult.CreatedBy.Should().Be(expectedResponse.CreatedBy);
-            actualResult.ModifiedBy.Should().Be(expectedResponse.ModifiedBy);
+            actualResult.PerformedBy.Should().Be(expectedResponse.PerformedBy);
 
             actualResult.SpecialismCodes.Count().Should().Be(expectedResponse.SpecialismCodes.Count());
             actualResult.SpecialismCodes.ToList().ForEach(spl => 

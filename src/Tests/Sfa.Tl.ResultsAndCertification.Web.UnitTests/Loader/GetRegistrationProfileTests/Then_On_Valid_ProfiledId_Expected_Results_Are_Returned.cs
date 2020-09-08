@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.GetRegistrationPro
                 ProfileId = 1, 
                 FirstName = "John",
                 LastName  = "Smith",
-                ModifiedBy = "updatedUser"
+                PerformedBy = "updatedUser"
             };
 
             InternalApiClient.GetRegistrationAsync(AoUkprn, ProfileId).Returns(mockResult);

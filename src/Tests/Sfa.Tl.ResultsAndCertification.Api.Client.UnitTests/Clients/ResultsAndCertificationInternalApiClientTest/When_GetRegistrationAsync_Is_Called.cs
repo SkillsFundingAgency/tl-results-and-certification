@@ -47,8 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 SpecialismCodes = new List<string> { "sp1", "sp2" },
                 AcademicYear = 2001,
                 AoUkprn = 98765432,
-                CreatedBy = "User Create",
-                ModifiedBy = "User Modify"
+                PerformedBy = "User Create"
             };
         }
 
@@ -80,8 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _result.Result.CoreCode.Should().Be(_expectedResult.CoreCode);
             _result.Result.AcademicYear.Should().Be(_expectedResult.AcademicYear);
             _result.Result.AoUkprn.Should().Be(_expectedResult.AoUkprn);
-            _result.Result.CreatedBy.Should().Be(_expectedResult.CreatedBy);
-            _result.Result.ModifiedBy.Should().Be(_expectedResult.ModifiedBy);
+            _result.Result.PerformedBy.Should().Be(_expectedResult.PerformedBy);
 
             _result.Result.SpecialismCodes.Count().Should().Be(_expectedResult.SpecialismCodes.Count());
             _result.Result.SpecialismCodes.ElementAt(0).Should().Be(_expectedResult.SpecialismCodes.ElementAt(0));

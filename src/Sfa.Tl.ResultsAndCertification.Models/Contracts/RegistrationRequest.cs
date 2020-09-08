@@ -28,6 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 
         public int AcademicYear { get; set; }
 
-        public string CreatedBy { get; set; }
+        public string PerformedBy { get; set; }
     }
 }

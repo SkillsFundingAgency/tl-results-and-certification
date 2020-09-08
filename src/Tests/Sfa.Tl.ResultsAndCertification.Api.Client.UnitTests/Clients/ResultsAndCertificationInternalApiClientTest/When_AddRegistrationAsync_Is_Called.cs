@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ProviderUkprn = 98765432,
                 CoreCode = "7654321",
                 SpecialismCodes = new List<string> { "23456789", "7654321" },
-                CreatedBy = "Test User"
+                PerformedBy = "Test User"
             };
         }
 
