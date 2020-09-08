@@ -1,5 +1,6 @@
 ﻿using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -8,7 +9,9 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 {
@@ -21,6 +24,18 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _logger = logger;
         }
 
+        public async Task<TqRegistrationProfile> GetActiveRegistrationProfileAsync(long aoUkprn, int profileId)
+        {
+            var profile = await _dbContext.TqRegistrationProfile
+                .Where(x => x.Id == profileId && x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active && pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn))
+                .IncludeFilter(x => x.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active))
+                .IncludeFilter(y => y.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active)
+                    .SelectMany(s => s.TqRegistrationSpecialisms.Where(sp => sp.Status == RegistrationSpecialismStatus.Active)))
+                .FirstOrDefaultAsync();
+
+            return profile;
+        }
+
         public async Task<TqRegistrationProfile> GetRegistrationProfileAsync(long aoUkprn, int profileId)
         {
             var profile = await _dbContext.TqRegistrationProfile
@@ -28,9 +43,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqRegistrationSpecialisms)
                 .FirstOrDefaultAsync();
-
             return profile;
-        }
+        }        
 
         public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
         {
@@ -53,6 +67,63 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             return registrationDetails;
         }
+
+        public async Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId)
+        {
+            var registration = await _dbContext.TqRegistrationPathway
+                .Where(p => p.Status == RegistrationPathwayStatus.Active &&
+                            p.TqRegistrationProfile.Id == profileId &&
+                            p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn)
+                .Select(p => new ManageRegistration
+                {
+                    ProfileId = p.TqRegistrationProfileId,
+                    AoUkprn = p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn,
+                    Uln = p.TqRegistrationProfile.UniqueLearnerNumber,
+                    FirstName = p.TqRegistrationProfile.Firstname,
+                    LastName = p.TqRegistrationProfile.Lastname,
+                    DateOfBirth = p.TqRegistrationProfile.DateofBirth,
+                    ProviderUkprn = p.TqProvider.TlProvider.UkPrn,
+                    CoreCode = p.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                    SpecialismCodes = p.TqRegistrationSpecialisms
+                                        .Where(s => s.Status == RegistrationSpecialismStatus.Active)
+                                        .Select(s => s.TlSpecialism.LarId),
+                    AcademicYear = p.AcademicYear,
+                }).FirstOrDefaultAsync();
+
+            return registration;
+        }
+
+        public async Task<TqRegistrationPathway> GetRegistrationPathwayDetails(long aoUkprn, int profileId)
+        {
+            var registrationPathway = await _dbContext.TqRegistrationPathway
+                .Where(p => p.Status == RegistrationPathwayStatus.Active &&
+                            p.TqRegistrationProfile.Id == profileId &&
+                            p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn)
+                .IncludeFilter(p => p.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active))
+                .FirstOrDefaultAsync();
+            return registrationPathway;                
+        }
+
+        public async Task<int> UpdateRegistrationWithSpecifedCollectionsOnlyAsync(TqRegistrationPathway entity, params Expression<Func<TqRegistrationPathway, object>>[] properties)
+        {
+            properties.ToList().ForEach(p =>
+            {
+                var propertyName = p.GetPropertyAccess().Name;
+                _dbContext.Entry(entity).Collection(propertyName).IsModified = true;
+            });
+
+            try
+            {
+                return await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException due)
+            {
+                _logger.LogError(due.Message, due.InnerException);
+                throw;
+            }
+        }
+
+        #region Bulk Registration
 
         public async Task<IList<TqRegistrationProfile>> GetRegistrationProfilesAsync(IList<TqRegistrationProfile> registrations)
         {
@@ -104,31 +175,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 });
             }
             return result;
-        }
-
-        public async Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId)
-        {
-            var registration = await _dbContext.TqRegistrationPathway
-                .Where(p => p.Status == RegistrationPathwayStatus.Active && 
-                            p.TqRegistrationProfile.Id == profileId && 
-                            p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn)
-                .Select(p => new ManageRegistration
-                {
-                    ProfileId = p.TqRegistrationProfileId,
-                    AoUkprn = p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn,
-                    Uln = p.TqRegistrationProfile.UniqueLearnerNumber,
-                    FirstName = p.TqRegistrationProfile.Firstname,
-                    LastName = p.TqRegistrationProfile.Lastname,
-                    DateOfBirth = p.TqRegistrationProfile.DateofBirth,
-                    ProviderUkprn = p.TqProvider.TlProvider.UkPrn,
-                    CoreCode = p.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                    SpecialismCodes = p.TqRegistrationSpecialisms
-                                        .Where(s => s.Status == RegistrationSpecialismStatus.Active)
-                                        .Select(s => s.TlSpecialism.LarId),
-                    AcademicYear = p.AcademicYear,
-                }).FirstOrDefaultAsync();
-
-          return registration;
         }
 
         private async Task<List<TqRegistrationPathway>> ProcessProfileEntities(BulkConfig bulkConfig, List<TqRegistrationProfile> profileEntities, List<TqRegistrationPathway> pathwayRegistrations)
@@ -223,5 +269,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
             return returnResult;
         }
+
+        #endregion
     }
 }

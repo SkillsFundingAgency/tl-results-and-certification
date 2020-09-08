@@ -129,18 +129,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<ProviderChangeResponse> ProcessProviderChangesAsync(long aoUkprn, ChangeProviderViewModel viewModel)
         {
-            var profileDetails = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
+            var registrationDetails = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
 
-            if (profileDetails.ProviderUkprn == viewModel.SelectedProviderUkprn.ToLong())
+            if (registrationDetails == null)
+                return null;
+
+            if (registrationDetails.ProviderUkprn == viewModel.SelectedProviderUkprn.ToLong())
             {
                 return new ProviderChangeResponse { IsModified = false };
             }
             else
             {
                 var providerPathways = await _internalApiClient.GetRegisteredProviderPathwayDetailsAsync(aoUkprn, viewModel.SelectedProviderUkprn.ToLong());
-                if (providerPathways != null && providerPathways.Count > 0 && providerPathways.Any(p => p.Code.Equals(profileDetails.CoreCode)))
+                if (providerPathways != null && providerPathways.Count > 0 && providerPathways.Any(p => p.Code.Equals(registrationDetails.CoreCode)))
                 {
-                    var isSuccess = await _internalApiClient.UpdateRegistrationAsync(new ManageRegistration());
+                    registrationDetails.ProviderUkprn = viewModel.SelectedProviderUkprn.ToLong();
+                    registrationDetails.HasProviderChanged = true;
+                    var isSuccess = await _internalApiClient.UpdateRegistrationAsync(registrationDetails);
                     return new ProviderChangeResponse { IsModified = true,  IsSuccess = isSuccess };
                 }
                 else

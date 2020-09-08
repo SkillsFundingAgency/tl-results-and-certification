@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using AutoMapper.Internal;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -14,6 +16,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -344,7 +347,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var registrationProfile = await _tqRegistrationRepository.GetRegistrationProfileAsync(aoUkprn, profileId);
 
-            if(registrationProfile == null)
+            if (registrationProfile == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to delete registration as registration does not exists for ProfileId = {profileId}. Method: DeleteRegistrationByProfileId({aoUkprn}, {profileId})");
                 return false;
@@ -360,11 +363,131 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> UpdateRegistrationAsync(ManageRegistration model)
         {
-            await Task.Run(() => true);
-            return true;
+            if (model == null) return false;
+
+            var tqRegistrationProfile = await _tqRegistrationRepository.GetActiveRegistrationProfileAsync(model.AoUkprn, model.ProfileId);
+
+            if (tqRegistrationProfile == null || (!model.HasProfileChanged && !model.HasProviderChanged && !model.HasSpecialismsChanged))
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found or no changes detected to update Registration for UniqueLearnerNumber = {model.Uln}. Method: UpdateRegistrationAsync()");
+                return false;
+            }
+
+            var validateStage3Response = await ValidateManualRegistrationTlevelsAsync(model);
+
+            if (validateStage3Response.IsValid)
+            {
+                var toUpdateRegistration = TransformManualChangeRegistrationModel(model, validateStage3Response, tqRegistrationProfile);
+
+                if (model.HasProfileChanged && !model.HasProviderChanged && !model.HasSpecialismsChanged)
+                {
+                    return await _tqRegistrationRepository.UpdateWithSpecifedColumnsOnlyAsync(toUpdateRegistration, u => u.Firstname, u => u.Lastname, u => u.DateofBirth) > 0;
+                }
+                else if (model.HasProfileChanged && model.HasProviderChanged)
+                {
+                    return await _tqRegistrationRepository.UpdateAsync(toUpdateRegistration) > 0;
+                }
+                else if (model.HasProfileChanged && model.HasSpecialismsChanged)
+                {
+                    var profileResult = await _tqRegistrationRepository.UpdateWithSpecifedColumnsOnlyAsync(toUpdateRegistration, u => u.Firstname, u => u.Lastname, u => u.DateofBirth) > 0;
+                    var specialismsResult = await _tqRegistrationRepository.UpdateRegistrationWithSpecifedCollectionsOnlyAsync(toUpdateRegistration.TqRegistrationPathways.First(), u => u.TqRegistrationSpecialisms) > 0;
+                    return profileResult && specialismsResult;
+                }
+                else if (model.HasProviderChanged)
+                {
+                    return await _tqRegistrationRepository.UpdateWithSpecifedCollectionsOnlyAsync(toUpdateRegistration, u => u.TqRegistrationPathways) > 0;
+                }
+                else if (model.HasSpecialismsChanged)
+                {
+                    var pathway = toUpdateRegistration.TqRegistrationPathways.First();
+                    return await _tqRegistrationRepository.UpdateRegistrationWithSpecifedCollectionsOnlyAsync(toUpdateRegistration.TqRegistrationPathways.First(), u => u.TqRegistrationSpecialisms) > 0;
+                }
+                return false;
+            }
+            else
+            {
+                var errorMessage = string.Join(",", validateStage3Response.ValidationErrors.Select(e => e.ErrorMessage));
+                _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Manual Change Registration failed to process due to validation errors = {errorMessage}. Method: UpdateRegistrationAsync()");
+                return false;
+            }
         }
 
         #region Private Methods
+
+        private TqRegistrationProfile TransformManualChangeRegistrationModel(ManageRegistration model, RegistrationRecordResponse registrationRecord, TqRegistrationProfile actualProfile)
+        {
+            if (!model.HasProfileChanged && !model.HasProviderChanged && !model.HasSpecialismsChanged)
+                return null;
+
+            if (model.HasProfileChanged)
+            {
+                actualProfile.Firstname = registrationRecord.FirstName;
+                actualProfile.Lastname = registrationRecord.LastName;
+                actualProfile.DateofBirth = registrationRecord.DateOfBirth;
+                actualProfile.ModifiedBy = model.ModifiedBy;
+                actualProfile.ModifiedOn = DateTime.UtcNow;
+            }
+
+            if (model.HasProviderChanged)
+            {
+                // update existing pathway status to Transferred and specialism status to InActive
+                foreach (var pathway in actualProfile.TqRegistrationPathways.Where(x => x.Status == RegistrationPathwayStatus.Active))
+                {
+                    pathway.Status = RegistrationPathwayStatus.Transferred;
+                    pathway.EndDate = DateTime.UtcNow;
+                    pathway.ModifiedBy = model.ModifiedBy;
+                    pathway.ModifiedOn = DateTime.UtcNow;
+                    pathway.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList().ForEach(s =>
+                    {
+                        s.Status = RegistrationSpecialismStatus.InActive;
+                        s.EndDate = DateTime.UtcNow;
+                        s.ModifiedBy = model.ModifiedBy;
+                        s.ModifiedOn = DateTime.UtcNow;
+                    });
+                }
+
+                // add new records
+                actualProfile.TqRegistrationPathways.Add(
+                    new TqRegistrationPathway
+                    {
+                        TqRegistrationProfileId = actualProfile.Id,
+                        TqProviderId = registrationRecord.TqProviderId,
+                        AcademicYear = registrationRecord.AcademicYear,
+                        StartDate = DateTime.UtcNow,
+                        Status = RegistrationPathwayStatus.Active,
+                        IsBulkUpload = false,
+                        TqRegistrationSpecialisms = MapSpecialisms(registrationRecord, model.ModifiedBy, 0, false),
+                        CreatedBy = model.CreatedBy,
+                        CreatedOn = DateTime.UtcNow
+                    });
+            }
+            else if (model.HasSpecialismsChanged)
+            {
+                var existingPathway = actualProfile.TqRegistrationPathways.FirstOrDefault(x => x.TqProviderId == registrationRecord.TqProviderId && x.Status == RegistrationPathwayStatus.Active);
+
+                if (existingPathway != null)
+                {
+                    var existingSpecialismsInDb = existingPathway.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active);
+                    var filteredTlSpecialismLarIdsToAdd = registrationRecord.TlSpecialismLarIds.Where(s => !existingSpecialismsInDb.Any(r => r.TlSpecialismId == s.Key)).ToList();
+                    var specialismsToUpdate = existingSpecialismsInDb.Where(s => !registrationRecord.TlSpecialismLarIds.Any(x => x.Key == s.TlSpecialismId)).ToList();
+
+                    specialismsToUpdate.ForEach(s =>
+                    {
+                        s.Status = RegistrationSpecialismStatus.InActive;
+                        s.EndDate = DateTime.UtcNow;
+                        s.ModifiedBy = model.ModifiedBy;
+                        s.ModifiedOn = DateTime.UtcNow;
+                    });
+
+                    if (filteredTlSpecialismLarIdsToAdd != null && filteredTlSpecialismLarIdsToAdd.Any())
+                    {
+                        registrationRecord.TlSpecialismLarIds = filteredTlSpecialismLarIdsToAdd;
+                        specialismsToUpdate.AddRange(MapSpecialisms(registrationRecord, model.ModifiedBy, 0, false));
+                    }
+                }
+            }
+            return actualProfile;
+        }
 
         private TqRegistrationProfile TransformManualRegistrationModel(RegistrationRequest model, RegistrationRecordResponse registrationRecord)
         {
