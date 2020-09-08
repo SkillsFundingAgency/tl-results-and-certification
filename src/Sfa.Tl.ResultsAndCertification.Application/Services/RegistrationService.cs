@@ -457,7 +457,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         Status = RegistrationPathwayStatus.Active,
                         IsBulkUpload = false,
                         TqRegistrationSpecialisms = MapSpecialisms(registrationRecord, model.ModifiedBy, 0, false),
-                        CreatedBy = model.CreatedBy,
+                        CreatedBy = model.ModifiedBy,
                         CreatedOn = DateTime.UtcNow
                     });
             }

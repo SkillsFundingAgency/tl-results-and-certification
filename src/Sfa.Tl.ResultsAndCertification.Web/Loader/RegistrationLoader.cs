@@ -142,8 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 var providerPathways = await _internalApiClient.GetRegisteredProviderPathwayDetailsAsync(aoUkprn, viewModel.SelectedProviderUkprn.ToLong());
                 if (providerPathways != null && providerPathways.Count > 0 && providerPathways.Any(p => p.Code.Equals(reg.CoreCode)))
                 {
-                    reg.HasProviderChanged = true;
-                    reg.ProviderUkprn = viewModel.SelectedProviderUkprn.ToLong();                    
+                    _mapper.Map(viewModel, reg);
                     var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
                     return new ProviderChangeResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true,  IsSuccess = isSuccess };
                 }
