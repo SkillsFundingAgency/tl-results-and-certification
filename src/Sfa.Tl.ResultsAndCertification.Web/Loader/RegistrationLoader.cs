@@ -161,10 +161,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             reg.FirstName = viewModel.Firstname.Trim();
             reg.LastName = viewModel.Lastname.Trim();
 
-            // TODO:
-            //var isSuccess = await _internalApiClient.UpdateRegistrationAsync(aoUkprn, reg);
-            
-            return new ManageRegistrationResponse { IsModified = true, IsSuccess = true };
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
+
+            return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
         }
     }
 }
