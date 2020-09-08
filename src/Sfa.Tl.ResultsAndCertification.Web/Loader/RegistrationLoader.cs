@@ -161,11 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 viewModel.Lastname.Trim().Equals(reg.LastName, StringComparison.InvariantCultureIgnoreCase))
                 return new ManageRegistrationResponse { IsModified = false };
 
-            reg.FirstName = viewModel.Firstname.Trim();
-            reg.LastName = viewModel.Lastname.Trim();
-            reg.HasProfileChanged = true;
-            //reg.CreatedBy = 
-
+            _mapper.Map(viewModel, reg);
             var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
 
             return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
