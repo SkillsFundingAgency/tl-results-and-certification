@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
@@ -13,21 +11,22 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ChangeLearnersNameGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ChangeProviderPost
 {
-    public abstract class When_ChangeLearnersNameAsync_Is_Called : BaseTest<ManageRegistrationController>
+    public abstract class TestSetup : BaseTest<ManageRegistrationController>
     {
         protected int AoUkprn;
         protected int ProfileId;
         protected Guid UserId;
-        protected string CacheKey;
+        protected bool IsChangeMode;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
         protected ILogger<ManageRegistrationController> Logger;
         protected ManageRegistrationController Controller;
-        protected RegistrationViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
+        protected ChangeProviderViewModel ViewModel;
         public IActionResult Result { get; private set; }
+        protected ProviderChangeResponse MockResult;
 
         public override void Setup()
         {
@@ -46,12 +45,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
-            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey);
+            ViewModel = new ChangeProviderViewModel();
+            MockResult = new ProviderChangeResponse();
         }
 
         public override void When()
         {
-            Result = Controller.ChangeLearnersNameAsync(ProfileId).Result;
+            Result = Controller.ChangeProviderAsync(ViewModel).Result;
         }
     }
 }

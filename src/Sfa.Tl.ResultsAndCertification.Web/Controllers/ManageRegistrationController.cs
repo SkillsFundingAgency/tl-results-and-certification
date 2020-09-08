@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public ManageRegistrationController(
             IRegistrationLoader registrationLoader, 
             ICacheService cacheService, 
-            ILogger<RegistrationController> logger)
+            ILogger<ManageRegistrationController> logger)
         {
             _registrationLoader = registrationLoader;
             _cacheService = cacheService;
