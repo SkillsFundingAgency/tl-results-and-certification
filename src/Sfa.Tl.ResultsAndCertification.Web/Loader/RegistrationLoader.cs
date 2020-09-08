@@ -154,5 +154,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 }
             }
         }
+
+        public async Task<ManageRegistrationResponse> ProcessProfileNameChangeAsync(long aoUkprn, ChangeLearnersNameViewModel viewModel)
+        {
+            var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
+
+            if (viewModel.Firstname.Trim().Equals(reg.FirstName, StringComparison.OrdinalIgnoreCase) &&
+                viewModel.Lastname.Trim().Equals(reg.LastName, StringComparison.OrdinalIgnoreCase))
+                return new ManageRegistrationResponse { IsModified = false };
+
+            reg.FirstName = viewModel.Firstname.Trim();
+            reg.LastName = viewModel.Lastname.Trim();
+
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
+
+            return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
+        }
     }
 }

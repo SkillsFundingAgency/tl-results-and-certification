@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
@@ -16,6 +18,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly IRegistrationLoader _registrationLoader;
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
+
+        private string CacheKey
+        {
+            get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.RegistrationCacheKey); }
+        }
 
         public ManageRegistrationController(
             IRegistrationLoader registrationLoader, 
@@ -43,13 +50,35 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("change-learners-name", Name = RouteConstants.SubmitChangeRegistrationLearnersName)]
-        public async Task<IActionResult> ChangeLearnersNameAsync(ChangeLearnersNameViewModel vm)
+        public async Task<IActionResult> ChangeLearnersNameAsync(ChangeLearnersNameViewModel viewModel)
         {
-            await Task.Run(() => true);
             if (!ModelState.IsValid)
-                return View(vm);
-            else
-                return RedirectToRoute(RouteConstants.ChangeRegistrationLearnersName, new { vm.ProfileId });
+                return View(viewModel);
+
+            var response = await _registrationLoader.ProcessProfileNameChangeAsync(User.GetUkPrn(), viewModel);
+
+            if (!response.IsModified)
+                return RedirectToRoute(RouteConstants.RegistrationDetails, new { viewModel.ProfileId });
+            
+            if (!response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeRegistrationConfirmationViewModel), response, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.ChangeRegistrationConfirmation);
+        }
+
+        [HttpGet]
+        [Route("registration-details-change-confirmation", Name = RouteConstants.ChangeRegistrationConfirmation)]
+        public async Task<IActionResult> ChangeConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<ManageRegistrationResponse>(string.Concat(CacheKey, Constants.ChangeRegistrationConfirmationViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ChangeRegistrationConfirmationViewModel from temp data in change registration confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
         }
 
         [HttpGet]
