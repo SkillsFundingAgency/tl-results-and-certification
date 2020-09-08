@@ -129,28 +129,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<ProviderChangeResponse> ProcessProviderChangesAsync(long aoUkprn, ChangeProviderViewModel viewModel)
         {
-            var registrationDetails = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
+            var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
 
-            if (registrationDetails == null)
-                return null;
+            if (reg == null) return null;
 
-            if (registrationDetails.ProviderUkprn == viewModel.SelectedProviderUkprn.ToLong())
+            if (reg.ProviderUkprn == viewModel.SelectedProviderUkprn.ToLong())
             {
                 return new ProviderChangeResponse { IsModified = false };
             }
             else
             {
                 var providerPathways = await _internalApiClient.GetRegisteredProviderPathwayDetailsAsync(aoUkprn, viewModel.SelectedProviderUkprn.ToLong());
-                if (providerPathways != null && providerPathways.Count > 0 && providerPathways.Any(p => p.Code.Equals(registrationDetails.CoreCode)))
+                if (providerPathways != null && providerPathways.Count > 0 && providerPathways.Any(p => p.Code.Equals(reg.CoreCode)))
                 {
-                    registrationDetails.ProviderUkprn = viewModel.SelectedProviderUkprn.ToLong();
-                    registrationDetails.HasProviderChanged = true;
-                    var isSuccess = await _internalApiClient.UpdateRegistrationAsync(registrationDetails);
-                    return new ProviderChangeResponse { IsModified = true,  IsSuccess = isSuccess };
+                    reg.HasProviderChanged = true;
+                    reg.ProviderUkprn = viewModel.SelectedProviderUkprn.ToLong();                    
+                    var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
+                    return new ProviderChangeResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true,  IsSuccess = isSuccess };
                 }
                 else
                 {
-                    return new ProviderChangeResponse { IsCoreNotSupported = true };
+                    return new ProviderChangeResponse { IsModified = true, IsCoreNotSupported = true };
                 }
             }
         }
@@ -165,7 +164,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             reg.FirstName = viewModel.Firstname.Trim();
             reg.LastName = viewModel.Lastname.Trim();
-
             var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
 
             return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
