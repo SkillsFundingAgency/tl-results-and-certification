@@ -53,8 +53,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<ManageRegistration, ChangeLearnersNameViewModel>().ReverseMap();
             CreateMap<ManageRegistration, ChangeProviderViewModel>()
                 .ForMember(d => d.SelectedProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
-                .ForMember(d => d.IncludeSelectOneOption, opts => opts.MapFrom(s => false))
-                .ReverseMap();            
+                .ForMember(d => d.IncludeSelectOneOption, opts => opts.MapFrom(s => false));
+
+            CreateMap<ChangeProviderViewModel, ManageRegistration>()
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.SelectedProviderUkprn))
+                .ForMember(d => d.HasProviderChanged, opts => opts.MapFrom(s => true))
+                .ForMember(d => d.ModifiedBy, opts => opts.MapFrom<UserNameResolver<ChangeProviderViewModel, ManageRegistration>>());
         }
     }
 }

@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ChangeRegistrationConfirmationViewModel from temp data in change registration confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ChangeRegistrationConfirmationViewModel from redis cache in change registration confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);
@@ -114,18 +114,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var response = await _registrationLoader.ProcessProviderChangesAsync(User.GetUkPrn(), model);
 
-            if(response.IsModified && response.IsSuccess)
-            {
+            if(response == null)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            if (!response.IsModified)
                 return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = model.ProfileId });
-            }
-            else if(response.IsCoreNotSupported && !response.IsSuccess)
-            {
+            
+            if (response.IsCoreNotSupported)
                 return RedirectToRoute(RouteConstants.CannotChangeRegistrationProvider);
-            }
-            else
-            {
-                return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = model.ProfileId });
-            }
+            
+            if (!response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeRegistrationConfirmationViewModel), response as ManageRegistrationResponse, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.ChangeRegistrationConfirmation);
         }
 
         [HttpGet]
@@ -134,7 +136,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {            
             return View();
         }
-
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
