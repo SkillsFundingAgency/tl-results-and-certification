@@ -13,22 +13,21 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 
-// TODO: This UT will be picked as part of 'Save Registration Name' page. 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ChangeLearnersNamePost
 {
-    public abstract class When_ChangeLearnersNameAsync_Is_Called : BaseTest<ManageRegistrationController>
+    public abstract class TestSetup : BaseTest<ManageRegistrationController>
     {
         protected int AoUkprn;
-        protected int ProfileId;
         protected Guid UserId;
         protected string CacheKey;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
         protected ILogger<RegistrationController> Logger;
         protected ManageRegistrationController Controller;
-        protected RegistrationViewModel ViewModel;
+        protected ChangeLearnersNameViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
-        public IActionResult Result { get; private set; }
+        public IActionResult Result { get; set; }
+        protected ManageRegistrationResponse MockResult;
 
         public override void Setup()
         {
@@ -38,7 +37,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             Logger = Substitute.For<ILogger<RegistrationController>>();
             Controller = new ManageRegistrationController(RegistrationLoader, CacheService, Logger);
 
-            ProfileId = 1;
             AoUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<ManageRegistrationController>(Controller)
                .Add(CustomClaimTypes.Ukprn, AoUkprn.ToString())
@@ -48,11 +46,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey);
+
+            ViewModel = new ChangeLearnersNameViewModel();
+            MockResult = new ManageRegistrationResponse();
         }
 
         public override void When()
         {
-            Result = Controller.ChangeLearnersNameAsync(ProfileId).Result;
+            Result = Controller.ChangeLearnersNameAsync(ViewModel).Result;
         }
     }
 }

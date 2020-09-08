@@ -159,12 +159,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
 
-            if (viewModel.Firstname.Trim().Equals(reg.FirstName, StringComparison.OrdinalIgnoreCase) &&
-                viewModel.Lastname.Trim().Equals(reg.LastName, StringComparison.OrdinalIgnoreCase))
+            if (viewModel.Firstname.Trim().Equals(reg.FirstName, StringComparison.InvariantCultureIgnoreCase) &&
+                viewModel.Lastname.Trim().Equals(reg.LastName, StringComparison.InvariantCultureIgnoreCase))
                 return new ManageRegistrationResponse { IsModified = false };
 
             reg.FirstName = viewModel.Firstname.Trim();
             reg.LastName = viewModel.Lastname.Trim();
+            reg.HasProfileChanged = true;
+            //reg.CreatedBy = 
 
             var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
 
