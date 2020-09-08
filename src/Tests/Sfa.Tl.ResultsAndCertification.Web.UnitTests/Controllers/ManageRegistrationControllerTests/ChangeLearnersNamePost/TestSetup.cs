@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         protected string CacheKey;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
-        protected ILogger<RegistrationController> Logger;
+        protected ILogger<ManageRegistrationController> Logger;
         protected ManageRegistrationController Controller;
         protected ChangeLearnersNameViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             RegistrationLoader = Substitute.For<IRegistrationLoader>();
             CacheService = Substitute.For<ICacheService>();
-            Logger = Substitute.For<ILogger<RegistrationController>>();
+            Logger = Substitute.For<ILogger<ManageRegistrationController>>();
             Controller = new ManageRegistrationController(RegistrationLoader, CacheService, Logger);
 
             AoUkprn = 1234567890;
