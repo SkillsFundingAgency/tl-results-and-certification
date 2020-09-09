@@ -11,7 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ChangeProviderGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ChangeCoreGet
 {
     public abstract class TestSetup : BaseTest<ManageRegistrationController>
     {
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public override void When()
         {
-            Result = Controller.ChangeProviderAsync(ProfileId).Result;
+            Result = Controller.ChangeCoreAsync(ProfileId).Result;
         }
     }
 }
