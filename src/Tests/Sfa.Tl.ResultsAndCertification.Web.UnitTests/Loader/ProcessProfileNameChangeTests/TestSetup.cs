@@ -20,8 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProcessProfileName
         public IBlobStorageService BlobStorageService { get; private set; }
 
         protected RegistrationLoader Loader;
-        protected ChangeLearnersNameViewModel ActualResult;
-        protected 
+        protected ManageRegistrationResponse ActualResult;
+        protected ChangeLearnersNameViewModel ViewModel;
 
         public override void Setup()
         {
