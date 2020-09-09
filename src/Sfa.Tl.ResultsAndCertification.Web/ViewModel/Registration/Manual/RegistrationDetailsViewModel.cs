@@ -31,10 +31,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel { Id = "dateofbirth", Title = RegistrationDetailsContent.Title_DateofBirth_Text, Value = DateofBirth.ToShortDateString(), ActionText = ActionText, RouteName = RouteConstants.ChangeRegistrationDateofBirth, RouteAttributes = ChangeLinkRouteAttributes };
         public SummaryItemModel SummaryProvider => new SummaryItemModel { Id = "provider", Title = RegistrationDetailsContent.Title_Provider_Text, Value = ProviderDisplayName, ActionText = ActionText, RouteName = RouteConstants.ChangeRegistrationProvider, RouteAttributes = ChangeLinkRouteAttributes };
         public SummaryItemModel SummaryCore => new SummaryItemModel { Id = "core", Title = RegistrationDetailsContent.Title_Core_Text, Value = PathwayDisplayName, ActionText = ActionText, RouteName = RouteConstants.ChangeRegistrationCore, RouteAttributes = ChangeLinkRouteAttributes };
-        public SummaryListModel SummarySpecialisms => new SummaryListModel { Id = "specialisms", Title = RegistrationDetailsContent.Title_Specialism_Text, Value = SpecialismsDisplayName, RouteName = RouteConstants.AddRegistrationSpecialisms, HiddenText = GetSpecialismHiddenText, ActionText = ActionText };
+        public SummaryListModel SummarySpecialisms => new SummaryListModel { Id = "specialisms", Title = RegistrationDetailsContent.Title_Specialism_Text, Value = SpecialismsDisplayName, ActionText = ActionText, RouteName = GetSpecialismRouteName, RouteAttributes = ChangeLinkRouteAttributes, HiddenText = GetSpecialismHiddenText };
         public SummaryItemModel SummaryAcademicYear => new SummaryItemModel { Id = "academicyear", Title = RegistrationDetailsContent.Title_AcademicYear_Text, Value = EnumExtensions.GetDisplayName<AcademicYear>(AcademicYear), RouteName = RouteConstants.AddRegistrationAcademicYear, ActionText = ActionText };
 
         public string GetSpecialismHiddenText => (SpecialismsDisplayName == null || !SpecialismsDisplayName.Any()) ? RegistrationDetailsContent.Specialism_None_Selected_Text : null;
+
+        public string GetSpecialismRouteName => SpecialismsDisplayName != null && SpecialismsDisplayName.Any() ? RouteConstants.ChangeRegistrationSpecialismQuestion : RouteConstants.ChangeRegistrationSpecialisms;
 
         public BreadcrumbModel Breadcrumb
         {

@@ -26,8 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         public ManageRegistrationController(
-            IRegistrationLoader registrationLoader, 
-            ICacheService cacheService, 
+            IRegistrationLoader registrationLoader,
+            ICacheService cacheService,
             ILogger<ManageRegistrationController> logger)
         {
             _registrationLoader = registrationLoader;
@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: ChangeLearnersNameAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            
+
             return View(viewModel);
         }
 
@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (!response.IsModified)
                 return RedirectToRoute(RouteConstants.RegistrationDetails, new { viewModel.ProfileId });
-            
+
             if (!response.IsSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
@@ -143,15 +143,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var response = await _registrationLoader.ProcessProviderChangesAsync(User.GetUkPrn(), model);
 
-            if(response == null)
+            if (response == null)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
             if (!response.IsModified)
                 return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = model.ProfileId });
-            
+
             if (response.IsCoreNotSupported)
                 return RedirectToRoute(RouteConstants.CannotChangeRegistrationProvider);
-            
+
             if (!response.IsSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
@@ -162,10 +162,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [HttpGet]
         [Route("cannot-change-provider", Name = RouteConstants.CannotChangeRegistrationProvider)]
         public IActionResult CannotChangeProviderAsync()
-        {            
+        {
             return View();
         }
-                
+
         [HttpGet]
         [Route("change-core/{profileId}", Name = RouteConstants.ChangeRegistrationCore)]
         public async Task<IActionResult> ChangeCoreAsync(int profileId)
@@ -177,6 +177,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("change-registration-learner-decided-specialism-question/{profileId}", Name = RouteConstants.ChangeRegistrationSpecialismQuestion)]
+        public async Task<IActionResult> ChangeRegistrationSpecialismQuestionAsync(int profileId)
+        {
+            var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeSpecialismQuestionViewModel>(User.GetUkPrn(), profileId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: ChangeRegistrationSpecialismQuestionAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("change-registration-learner-decided-specialism-question", Name = RouteConstants.SubmitChangeRegistrationSpecialismQuestion)]
+        public async Task<IActionResult> ChangeRegistrationSpecialismQuestionAsync(ChangeSpecialismQuestionViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            if (model.HasLearnerDecidedSpecialism.Value)
+            {
+                return RedirectToRoute(RouteConstants.ChangeRegistrationSpecialisms, new { profileId = model.ProfileId });
+            }
+            else
+            {
+                var response = await _registrationLoader.ProcessProviderChangesAsync(User.GetUkPrn(), new ChangeProviderViewModel());
+
+                if (!response.IsSuccess)
+                    return RedirectToRoute(RouteConstants.ProblemWithService);
+
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeRegistrationConfirmationViewModel), response as ManageRegistrationResponse, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.ChangeRegistrationConfirmation);
+            }
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

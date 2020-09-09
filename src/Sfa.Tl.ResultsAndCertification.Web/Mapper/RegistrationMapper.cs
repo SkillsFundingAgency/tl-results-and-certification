@@ -75,6 +75,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeProviderViewModel, ManageRegistration>>());
 
             CreateMap<ManageRegistration, ChangeCoreViewModel>();
+
+            CreateMap<ManageRegistration, ChangeSpecialismQuestionViewModel>()
+                .ForMember(d => d.HasLearnerDecidedSpecialism, opts => opts.MapFrom(s => s.SpecialismCodes != null && s.SpecialismCodes.Any()));
         }
     }
 }
