@@ -61,6 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryLearnerName.Should().NotBeNull();
             model.SummaryLearnerName.Title.Should().Be(RegistrationDetailsContent.Title_Name_Text);
             model.SummaryLearnerName.Value.Should().Be(mockresult.Name);
+            model.SummaryLearnerName.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
             model.SummaryLearnerName.RouteName.Should().Be(RouteConstants.ChangeRegistrationLearnersName);
             model.SummaryLearnerName.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
@@ -69,6 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryDateofBirth.Title.Should().Be(RegistrationDetailsContent.Title_DateofBirth_Text);
             model.SummaryDateofBirth.Value.Should().Be(mockresult.DateofBirth.ToShortDateString());
             model.SummaryDateofBirth.RouteName.Should().Be(RouteConstants.AddRegistrationDateofBirth);
+            model.SummaryDateofBirth.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
 
             // Summary Provider
             model.SummaryProvider.Should().NotBeNull();
@@ -83,17 +85,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryCore.Title.Should().Be(RegistrationDetailsContent.Title_Core_Text);
             model.SummaryCore.Value.Should().Be(mockresult.PathwayDisplayName);
             model.SummaryCore.RouteName.Should().Be(RouteConstants.AddRegistrationCore);
+            model.SummaryCore.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
 
             // Summary Specialisms
             model.SummarySpecialisms.Should().NotBeNull();
             model.SummarySpecialisms.Title.Should().Be(RegistrationDetailsContent.Title_Specialism_Text);
             model.SummarySpecialisms.Value.Should().BeEquivalentTo(mockresult.SpecialismsDisplayName);
             model.SummarySpecialisms.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialisms);
+            model.SummarySpecialisms.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
 
             // Summary Academic Year
             model.SummaryAcademicYear.Should().NotBeNull();
             model.SummaryAcademicYear.Title.Should().Be(RegistrationDetailsContent.Title_AcademicYear_Text);
             model.SummaryAcademicYear.Value.Should().Be(EnumExtensions.GetDisplayName<AcademicYear>(mockresult.AcademicYear));
+            model.SummaryAcademicYear.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
 
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
