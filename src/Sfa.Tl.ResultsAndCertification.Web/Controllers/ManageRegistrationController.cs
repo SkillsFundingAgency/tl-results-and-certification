@@ -214,6 +214,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("change-registration-select-specialisms/{profileId}", Name = RouteConstants.ChangeRegistrationSpecialisms)]
+        public IActionResult ChangeRegistrationSpecialismsAsync(int profileId)
+        {
+            return View();
+        }        
+
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
