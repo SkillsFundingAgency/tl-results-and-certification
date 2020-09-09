@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProcessProfileName
         public override void Given()
         {
             ViewModel = new ChangeLearnersNameViewModel { ProfileId = 1, Firstname = firstName, Lastname = lastName };
-            mockResponse = new ManageRegistration { FirstName = firstName.Trim().ToUpper(), LastName = lastName.Trim().ToUpper() }; 
+            mockResponse = new ManageRegistration { FirstName = firstName.Trim().ToUpper(), LastName = lastName.Trim().ToUpper() };
 
             InternalApiClient.GetRegistrationAsync(AoUkprn, ViewModel.ProfileId)
                 .Returns(mockResponse);
@@ -25,6 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProcessProfileName
         public void Then_Called_GetRegistrationAsync()
         {
             InternalApiClient.Received().GetRegistrationAsync(AoUkprn, ViewModel.ProfileId);
+            InternalApiClient.DidNotReceive().UpdateRegistrationAsync(Arg.Any<ManageRegistration>());
         }
 
         [Fact]

@@ -60,7 +60,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProcessProfileName
             });
 
             Mapper = new AutoMapper.Mapper(mapperConfig);
-
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
         }
 
