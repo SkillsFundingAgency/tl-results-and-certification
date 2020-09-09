@@ -1,0 +1,22 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ChangeCoreViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @SelectCore.Page_Title_Change_Registration_Core;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+            <h1 class="govuk-heading-l">@SelectCore.Change_Core_Heading_Text</h1>
+            <p class="govuk-body">@SelectCore.Change_Registration_Core_Body_Text</p>
+        </div>
+        <p>
+            <a class="govuk-button" role="button" asp-route="">@SelectCore.Withdraw_This_Registration_Link_Text</a>
+        </p>
+    </div>
+</div>

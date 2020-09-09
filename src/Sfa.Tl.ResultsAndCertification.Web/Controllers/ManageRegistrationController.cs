@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeProviderViewModel>(User.GetUkPrn(), profileId);
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: ChangeRegistrationProviderAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: ChangeProviderAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             var registeredProviders = await GetAoRegisteredProviders();
@@ -135,6 +135,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public IActionResult CannotChangeProviderAsync()
         {            
             return View();
+        }
+                
+        [HttpGet]
+        [Route("change-core/{profileId}", Name = RouteConstants.ChangeRegistrationCore)]
+        public async Task<IActionResult> ChangeCoreAsync(int profileId)
+        {
+            var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeCoreViewModel>(User.GetUkPrn(), profileId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: ChangeCoreAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
