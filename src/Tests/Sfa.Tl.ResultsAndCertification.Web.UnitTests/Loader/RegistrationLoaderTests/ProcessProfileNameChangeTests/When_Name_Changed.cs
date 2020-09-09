@@ -4,7 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProcessProfileNameChangeTests
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessProfileNameChangeTests
 {
     public class When_Name_Changed : TestSetup
     {
@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProcessProfileName
             ActualResult.Should().NotBeNull();
             ActualResult.IsModified.Should().BeTrue();
             ActualResult.IsSuccess.Should().BeTrue();
-            
+
             ActualResult.Uln.Should().Be(mockResponse.Uln);
             ActualResult.ProfileId.Should().Be(mockResponse.ProfileId);
         }

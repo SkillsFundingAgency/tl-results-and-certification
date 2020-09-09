@@ -12,11 +12,11 @@ using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Security.Claims;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProcessProfileNameChangeTests
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessProfileNameChangeTests
 {
     public abstract class TestSetup : BaseTest<RegistrationLoader>
     {
-        
+
 
         protected readonly long AoUkprn = 12345678;
 
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProcessProfileName
         protected ManageRegistrationResponse ActualResult;
         protected ChangeLearnersNameViewModel ViewModel;
 
-        protected IHttpContextAccessor HttpContextAccessor; 
+        protected IHttpContextAccessor HttpContextAccessor;
         protected readonly string Givenname = "test";
         protected readonly string Surname = "user";
         protected readonly string Email = "test.user@test.com";
