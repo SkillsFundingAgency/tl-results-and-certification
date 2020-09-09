@@ -13,12 +13,13 @@
     <div class="govuk-grid-column-two-thirds">
         <form class="form" asp-route="SubmitChangeRegistrationSpecialismQuestion">
             <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@SpecialismQuestion.Change_Page_Caption_Text</span>
                 <vc:specialism-question model=Model></vc:specialism-question>
             </div>
             <p>
-                <button type="submit" class="govuk-button" data-module="govuk-button">@SpecialismQuestion.Continue_Button_Text</button>
+                <button id="continueButton" type="submit" class="govuk-button" data-module="govuk-button">@SpecialismQuestion.Continue_Button_Text</button>
             </p>
         </form>
     </div>

@@ -104,7 +104,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             var registeredProviders = await GetAoRegisteredProviders();
             viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
-            viewModel.SelectedProviderUkprn = viewModel.SelectedProviderUkprn;
             return View(viewModel);
         }
 
@@ -187,7 +186,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                var response = await _registrationLoader.ProcessProviderChangesAsync(User.GetUkPrn(), new ChangeProviderViewModel());
+                var response = await _registrationLoader.ProcessSpecialismQuestionChangeAsync(User.GetUkPrn(), model);
 
                 if (!response.IsSuccess)
                     return RedirectToRoute(RouteConstants.ProblemWithService);
