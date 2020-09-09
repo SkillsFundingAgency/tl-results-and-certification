@@ -71,6 +71,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("change-learners-date-of-birth", Name = RouteConstants.ChangeRegistrationDateofBirth)]
+        public async Task<IActionResult> ChangeDateofBirthAsync(int profileId)
+        {
+            await Task.Run(() => true);
+            return View();
+        }
+
+        [HttpGet]
         [Route("registration-details-change-confirmation", Name = RouteConstants.ChangeRegistrationConfirmation)]
         public async Task<IActionResult> ChangeConfirmationAsync()
         {
