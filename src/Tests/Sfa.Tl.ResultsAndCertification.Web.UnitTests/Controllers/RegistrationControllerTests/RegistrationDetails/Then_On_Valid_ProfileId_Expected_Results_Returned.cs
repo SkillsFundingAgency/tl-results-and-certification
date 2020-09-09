@@ -71,6 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryDateofBirth.Value.Should().Be(mockresult.DateofBirth.ToShortDateString());
             model.SummaryDateofBirth.RouteName.Should().Be(RouteConstants.ChangeRegistrationDateofBirth);
             model.SummaryDateofBirth.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
+            model.SummaryDateofBirth.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary Provider
             model.SummaryProvider.Should().NotBeNull();

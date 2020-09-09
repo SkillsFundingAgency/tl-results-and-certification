@@ -56,7 +56,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.Lastname.Trim()))
                 .ForMember(d => d.HasProfileChanged, opts => opts.MapFrom(s => true))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeLearnersNameViewModel, ManageRegistration>>());
-            
+
+            CreateMap<ManageRegistration, ChangeDateofBirthViewModel>()
+                .ForMember(d => d.Day, opts => opts.MapFrom(s =>  s.DateOfBirth.Day.ToString().PadLeft(2, '0')))
+                .ForMember(d => d.Month, opts => opts.MapFrom(s => s.DateOfBirth.Month.ToString().PadLeft(2, '0')))
+                .ForMember(d => d.Year, opts => opts.MapFrom(s => s.DateOfBirth.Year))
+                .ReverseMap()
+                .ForMember(d => d.HasProfileChanged, opts => opts.MapFrom(s => true))
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeDateofBirthViewModel, ManageRegistration>>());
+
             CreateMap<ManageRegistration, ChangeProviderViewModel>()
                 .ForMember(d => d.SelectedProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
                 .ForMember(d => d.IncludeSelectOneOption, opts => opts.MapFrom(s => false));

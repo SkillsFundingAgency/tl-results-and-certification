@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Threading.Tasks;
@@ -71,11 +72,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("change-learners-date-of-birth", Name = RouteConstants.ChangeRegistrationDateofBirth)]
+        [Route("change-learners-date-of-birth/{profileId}", Name = RouteConstants.ChangeRegistrationDateofBirth)]
         public async Task<IActionResult> ChangeDateofBirthAsync(int profileId)
         {
+            var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeDateofBirthViewModel>(User.GetUkPrn(), profileId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: ChangeDateofBirthAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("change-learners-date-of-birth", Name = RouteConstants.SubmitChangeRegistrationDateofBirth)]
+        public async Task<IActionResult> ChangeDateofBirthAsync(ChangeDateofBirthViewModel viewModel)
+        {
             await Task.Run(() => true);
-            return View();
+            if (!IsValidDateofBirth(viewModel))
+                return View(viewModel);
+
+            return RedirectToRoute(RouteConstants.PageNotFound);
         }
 
         [HttpGet]
@@ -164,6 +182,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
+        }
+
+        private bool IsValidDateofBirth(ChangeDateofBirthViewModel model)
+        {
+            var validationerrors = model.DateofBirth.ValidateDate("Date of birth");
+            
+            if (validationerrors?.Count == 0)
+                return true;
+
+            foreach (var error in validationerrors)
+                ModelState.AddModelError(error.Key, error.Value);
+
+            return false;
         }
     }
 }

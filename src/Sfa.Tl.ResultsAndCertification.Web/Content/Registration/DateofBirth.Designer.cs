@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change registration.
+        /// </summary>
+        public static string Change_Registration_Caption {
+            get {
+                return ResourceManager.GetString("Change_Registration_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Continue_Button_Text {
@@ -129,6 +138,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Page_Title_Add_DateofBirth {
             get {
                 return ResourceManager.GetString("Page_Title_Add_DateofBirth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change learner’s date of birth page.
+        /// </summary>
+        public static string Page_Title_Change_DateofBirth {
+            get {
+                return ResourceManager.GetString("Page_Title_Change_DateofBirth", resourceCulture);
             }
         }
         
