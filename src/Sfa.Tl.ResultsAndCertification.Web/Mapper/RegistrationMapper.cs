@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.Lastname.Trim()))
                 .ForMember(d => d.HasProfileChanged, opts => opts.MapFrom(s => true))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeLearnersNameViewModel, ManageRegistration>>());
-            
+
             CreateMap<ManageRegistration, ChangeProviderViewModel>()
                 .ForMember(d => d.SelectedProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
                 .ForMember(d => d.IncludeSelectOneOption, opts => opts.MapFrom(s => false));
@@ -67,6 +67,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeProviderViewModel, ManageRegistration>>());
 
             CreateMap<ManageRegistration, ChangeCoreViewModel>();
+
+            CreateMap<ManageRegistration, ChangeSpecialismQuestionViewModel>()
+                .ForMember(d => d.HasLearnerDecidedSpecialism, opts => opts.MapFrom(s => s.SpecialismCodes != null && s.SpecialismCodes.Any()));
         }
     }
 }

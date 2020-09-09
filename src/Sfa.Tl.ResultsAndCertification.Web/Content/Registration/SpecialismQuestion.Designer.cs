@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change registration.
+        /// </summary>
+        public static string Change_Page_Caption_Text {
+            get {
+                return ResourceManager.GetString("Change_Page_Caption_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Continue_Button_Text {
@@ -102,6 +111,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Page_Title_Add_Registration_Has_Learner_Decided_On_Specialisms {
             get {
                 return ResourceManager.GetString("Page_Title_Add_Registration_Has_Learner_Decided_On_Specialisms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change registration - Has the learner decided on the specialism page.
+        /// </summary>
+        public static string Page_Title_Change_Registration_Has_Learner_Decided_On_Specialisms {
+            get {
+                return ResourceManager.GetString("Page_Title_Change_Registration_Has_Learner_Decided_On_Specialisms", resourceCulture);
             }
         }
         
