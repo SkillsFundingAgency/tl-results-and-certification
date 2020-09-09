@@ -84,8 +84,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryCore.Should().NotBeNull();
             model.SummaryCore.Title.Should().Be(RegistrationDetailsContent.Title_Core_Text);
             model.SummaryCore.Value.Should().Be(mockresult.PathwayDisplayName);
-            model.SummaryCore.RouteName.Should().Be(RouteConstants.AddRegistrationCore);
             model.SummaryCore.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
+            model.SummaryCore.RouteName.Should().Be(RouteConstants.ChangeRegistrationCore);
+            model.SummaryProvider.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);            
 
             // Summary Specialisms
             model.SummarySpecialisms.Should().NotBeNull();

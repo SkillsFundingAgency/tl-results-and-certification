@@ -65,6 +65,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.SelectedProviderUkprn))
                 .ForMember(d => d.HasProviderChanged, opts => opts.MapFrom(s => true))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeProviderViewModel, ManageRegistration>>());
+
+            CreateMap<ManageRegistration, ChangeCoreViewModel>();
         }
     }
 }

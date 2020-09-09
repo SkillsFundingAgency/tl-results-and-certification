@@ -82,6 +82,7 @@
         public const string SubmitChangeRegistrationProvider = "SubmitChangeRegistrationProvider";
         public const string CannotChangeRegistrationProvider = "CannotChangeRegistrationProvider";
         public const string ChangeRegistrationConfirmation = "ChangeRegistrationConfirmation";
+        public const string ChangeRegistrationCore = "ChangeRegistrationCore";
 
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";
