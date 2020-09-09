@@ -1,7 +1,37 @@
-﻿
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ChangeDateofBirthViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
 @{
-    ViewData["Title"] = "ChangeDateofBirth";
+    ViewData["Title"] = @DateofBirth.Page_Title_Change_DateofBirth;
 }
 
-<h1>ChangeDateofBirth</h1>
-Development is in progress. 
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="SubmitChangeRegistrationDateofBirth">
+            <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">@DateofBirth.Change_Registration_Caption</span>
+                <fieldset class="govuk-fieldset" role="group">
+                    <div sfa-validation-class="govuk-form-group--error">
+
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading">
+                                @DateofBirth.DateofBirth_Field_Heading
+                            </h1>
+                        </legend>
+                        <span id="dob-hint" class="govuk-hint">@DateofBirth.Example_Hint_Text</span>
+                        <vc:date-of-birth model="Model"></vc:date-of-birth>
+                    </div>
+                </fieldset>
+            </div>
+            <p>
+                <button id="ChangeButton" type="submit" class="govuk-button  govuk-!-margin-right-1" data-module="govuk-button">@DateofBirth.Change_Button_Text</button>
+            </p>
+        </form>
+    </div>
+</div>
