@@ -156,7 +156,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<ManageRegistrationResponse> ProcessProfileNameChangeAsync(long aoUkprn, ChangeLearnersNameViewModel viewModel)
         {
             var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
-
+            
+            if (reg == null) 
+                return null;
+            
             if (viewModel.Firstname.Trim().Equals(reg.FirstName, StringComparison.InvariantCultureIgnoreCase) &&
                 viewModel.Lastname.Trim().Equals(reg.LastName, StringComparison.InvariantCultureIgnoreCase))
                 return new ManageRegistrationResponse { IsModified = false };

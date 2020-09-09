@@ -57,6 +57,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var response = await _registrationLoader.ProcessProfileNameChangeAsync(User.GetUkPrn(), viewModel);
 
+            if (response == null)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
             if (!response.IsModified)
                 return RedirectToRoute(RouteConstants.RegistrationDetails, new { viewModel.ProfileId });
             
