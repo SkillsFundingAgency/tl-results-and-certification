@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 AoUkprn = TlAwardingOrganisation.UkPrn,
                 FirstName = "First",
                 LastName = "Last",
-                DateOfBirth = "13/01/1987".ToDateTime(),
+                DateOfBirth = "11/01/1987".ToDateTime(),
                 ProviderUkprn = TlProvider.UkPrn,
                 AcademicYear = DateTime.UtcNow.Year,
                 CoreCode = "123", // Invalid core
