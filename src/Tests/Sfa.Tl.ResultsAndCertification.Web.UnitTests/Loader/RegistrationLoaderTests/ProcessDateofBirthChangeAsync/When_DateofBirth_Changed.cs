@@ -2,29 +2,24 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessProfileNameChangeTests
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessDateofBirthChangeAsync
 {
-    public class When_Name_Changed : TestSetup
+    public class When_DateofBirth_Changed : TestSetup
     {
         ManageRegistration mockResponse = null;
-        readonly string reqFirstName = "John";
-        readonly string reqLastName = "Smith";
-
-        readonly string existingFirstName = "First";
-        readonly string existingLastName = "Last";
 
         public override void Given()
         {
             var profileId = 1;
             var uln = 1234567890;
 
-            ViewModel = new ChangeLearnersNameViewModel { ProfileId = profileId, Firstname = reqFirstName, Lastname = reqLastName };
+            ViewModel = new ChangeDateofBirthViewModel { ProfileId = profileId, Day = "1", Month = "2", Year = "2000" };
             mockResponse = new ManageRegistration
             {
-                FirstName = existingFirstName,
-                LastName = existingLastName,
+                DateOfBirth = DateTime.UtcNow.Date,
                 Uln = uln,
                 ProfileId = profileId,
                 PerformedBy = "Test user"
