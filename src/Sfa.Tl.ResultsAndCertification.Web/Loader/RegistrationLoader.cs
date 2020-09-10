@@ -175,17 +175,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
 
             if (reg == null || viewModel.HasLearnerDecidedSpecialism == null) return null;
-
-            if (viewModel.HasLearnerDecidedSpecialism.Value)
-            {
-                return new ManageRegistrationResponse { IsModified = false };
-            }
-            else
-            {
-                _mapper.Map(viewModel, reg);
-                var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
-                return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
-            }
+            
+            _mapper.Map(viewModel, reg);
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
+            return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
         }
     }
 }

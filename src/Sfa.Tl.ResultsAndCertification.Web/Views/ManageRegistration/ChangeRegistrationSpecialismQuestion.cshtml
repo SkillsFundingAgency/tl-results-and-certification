@@ -1,8 +1,13 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ChangeSpecialismQuestionViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = @SpecialismQuestion.Page_Title_Change_Registration_Has_Learner_Decided_On_Specialisms;
+}
+
+@section scripts {
+    <script nws-csp-add-nonce="true" src="~/javascripts/registration-specialism-question.min.js"></script>
 }
 
 @section NavigationBar {
@@ -19,7 +24,7 @@
                 <vc:specialism-question model=Model></vc:specialism-question>
             </div>
             <p>
-                <button id="continueButton" type="submit" class="govuk-button" data-module="govuk-button">@SpecialismQuestion.Continue_Button_Text</button>
+                <button id="continueButton" type="submit" class="govuk-button" data-continue-text="@SpecialismQuestion.Continue_Button_Text" data-change-text="@SpecialismQuestion.Change_Button_Text" data-module="govuk-button">@SpecialismQuestion.Continue_Button_Text</button>
             </p>
         </form>
     </div>

@@ -206,7 +206,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 var response = await _registrationLoader.ProcessSpecialismQuestionChangeAsync(User.GetUkPrn(), model);
 
-                if (!response.IsSuccess)
+                if (response == null || !response.IsSuccess)
                     return RedirectToRoute(RouteConstants.ProblemWithService);
 
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeRegistrationConfirmationViewModel), response as ManageRegistrationResponse, CacheExpiryTime.XSmall);
