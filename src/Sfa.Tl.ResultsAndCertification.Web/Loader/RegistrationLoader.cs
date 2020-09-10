@@ -170,6 +170,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
         }
 
+        public async Task<ManageRegistrationResponse> ProcessDateofBirthChangeAsync(long aoUkprn, ChangeDateofBirthViewModel viewModel)
+        {
+            var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
+
+            if (reg == null)
+                return null;
+
+            if (reg.DateOfBirth == viewModel.DateofBirth.ToDateTime()) 
+                return new ManageRegistrationResponse { IsModified = false };
+
+            _mapper.Map(viewModel, reg);
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
+
+            return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
+        }
+
         public async Task<ManageRegistrationResponse> ProcessSpecialismQuestionChangeAsync(long aoUkprn, ChangeSpecialismQuestionViewModel viewModel)
         {
             var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);

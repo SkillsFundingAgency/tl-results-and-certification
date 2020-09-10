@@ -89,11 +89,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("change-learners-date-of-birth", Name = RouteConstants.SubmitChangeRegistrationDateofBirth)]
         public async Task<IActionResult> ChangeDateofBirthAsync(ChangeDateofBirthViewModel viewModel)
         {
-            await Task.Run(() => true);
             if (!IsValidDateofBirth(viewModel))
                 return View(viewModel);
 
-            return RedirectToRoute(RouteConstants.PageNotFound);
+            var response = await _registrationLoader.ProcessDateofBirthChangeAsync(User.GetUkPrn(), viewModel);
+
+            if (response == null)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            if (!response.IsModified)
+                return RedirectToRoute(RouteConstants.RegistrationDetails, new { viewModel.ProfileId });
+
+            if (!response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeRegistrationConfirmationViewModel), response, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.ChangeRegistrationConfirmation);
         }
 
         [HttpGet]
