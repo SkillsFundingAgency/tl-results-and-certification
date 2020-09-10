@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,6 +42,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             {
                 ProfileId = _profileId,
                 Uln = _uln,
+                FirstName = "John",
+                LastName = "Smith",
+                DateOfBirth = DateTime.UtcNow.AddYears(-20),
                 AoUkprn = TlAwardingOrganisation.UkPrn,
                 ProviderUkprn = newProvider.UkPrn,
                 CoreCode = Pathway.LarId,
@@ -59,8 +63,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Result(bool hasProviderChanged, bool hasSpecialismsChanged, bool expectedResult)
+        public async Task Then_Returns_Expected_Result(bool hasProfileChanged, bool hasProviderChanged, bool hasSpecialismsChanged, bool expectedResult)
         {
+            _updateRegistrationRequest.HasProfileChanged = hasProfileChanged;
             _updateRegistrationRequest.HasProviderChanged = hasProviderChanged;
             _updateRegistrationRequest.HasSpecialismsChanged = hasSpecialismsChanged;
             await WhenAsync();
@@ -73,13 +78,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             {
                 return new[]
                 {
+                    // Below is for Profile Changed
+                    new object[] { true, false, false, true },
+                    new object[] { false, false, false, false },
+
                     // Below is for Provier Changed
-                    new object[] { true, false, true },
-                    new object[] { false, false, false},
+                    new object[] { false, true, false, true },
 
                     // Below is for Specialisms Changed
-                    new object[] { false, true, true },
-                    new object[] { false, false, false}
+                    new object[] { false, false, true, true },
                 };
             }
         }
