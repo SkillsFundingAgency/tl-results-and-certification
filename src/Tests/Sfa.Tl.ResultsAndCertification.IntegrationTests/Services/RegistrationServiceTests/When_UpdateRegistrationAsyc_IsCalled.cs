@@ -59,9 +59,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Result(bool hasProviderChanged, bool expectedResult)
+        public async Task Then_Returns_Expected_Result(bool hasProviderChanged, bool hasSpecialismsChanged, bool expectedResult)
         {
             _updateRegistrationRequest.HasProviderChanged = hasProviderChanged;
+            _updateRegistrationRequest.HasSpecialismsChanged = hasSpecialismsChanged;
             await WhenAsync();
             _result.Should().Be(expectedResult);
         }
@@ -72,8 +73,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             {
                 return new[]
                 {
-                    new object[] { true, true },
-                    new object[] { false, false},
+                    // Below is for Provier Changed
+                    new object[] { true, false, true },
+                    new object[] { false, false, false},
+
+                    // Below is for Specialisms Changed
+                    new object[] { false, true, true },
+                    new object[] { false, false, false}
                 };
             }
         }
