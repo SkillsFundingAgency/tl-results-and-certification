@@ -15,7 +15,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_GetAllProviderTlevelsAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_GetAllProviderTlevels_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         private Task<ProviderTlevels> _result;
         private readonly long _ukprn = 12345678;
@@ -58,15 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         }
 
         [Fact]
-        public void Then_Two_Provider_Tlevels_Are_Returned()
-        {
-            _result.Result.Should().NotBeNull();
-            _result.Result.Tlevels.Should().NotBeNull();
-            _result.Result.Tlevels.Count().Should().Be(2);
-        }
-
-        [Fact]
-        public void Then_Expected_Result_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var actualResult = _result.Result;
 
@@ -75,6 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             actualResult.DisplayName.Should().Be(_mockHttpResult.DisplayName);
             actualResult.Ukprn.Should().Be(_mockHttpResult.Ukprn);
             actualResult.Tlevels.Should().NotBeNull();
+            actualResult.Tlevels.Count().Should().Be(2);
 
             var expectedTlevelResult = _mockHttpResult.Tlevels.FirstOrDefault();
             var actualProviderTlevelResult = actualResult.Tlevels.FirstOrDefault();

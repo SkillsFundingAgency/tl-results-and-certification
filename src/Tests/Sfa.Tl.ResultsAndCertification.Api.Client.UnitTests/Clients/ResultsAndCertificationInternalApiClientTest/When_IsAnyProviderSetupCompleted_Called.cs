@@ -12,14 +12,14 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_HasAnyTlevelSetupForProviderAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_IsAnyProviderSetupCompleted_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         // Dependencies
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
         private ResultsAndCertificationInternalApiClient _apiClient;
         private Task<bool> _result;
-        private int _tlProviderId = 1;
+
         private bool _mockHttpResult;
 
         // Method Parameters
@@ -38,17 +38,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, string.Format(ApiConstants.HasAnyTlevelSetupForProviderAsyncUri, _ukprn, _tlProviderId), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, string.Format(ApiConstants.IsAnyProviderSetupCompletedUri, _ukprn), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
         {
-            _result = _apiClient.HasAnyTlevelSetupForProviderAsync(_ukprn, _tlProviderId);
+            _result = _apiClient.IsAnyProviderSetupCompletedAsync(_ukprn);
         }
 
         [Fact]
-        public void Then_True_Is_Returned()
+        public void Then_Returns_Expected_Results()
         {
             _result.Result.Should().BeTrue();
         }

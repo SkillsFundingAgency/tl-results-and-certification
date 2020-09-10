@@ -16,7 +16,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_GetDocumentUploadHistoryDetailsAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_GetDocumentUploadHistoryDetails_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         protected ITokenServiceClient _tokenServiceClient;
         protected ResultsAndCertificationConfiguration _configuration;
@@ -60,12 +60,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         }
 
         [Fact]
-        public void Then_Expected_Result_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var actualResult = Result.Result;
 
             actualResult.Should().NotBeNull();
-
             actualResult.TlAwardingOrganisationId.Should().Be(_mockHttpResult.TlAwardingOrganisationId);
             actualResult.AoUkprn.Should().Be(_mockHttpResult.AoUkprn);
             actualResult.BlobUniqueReference.Should().Be(_mockHttpResult.BlobUniqueReference);

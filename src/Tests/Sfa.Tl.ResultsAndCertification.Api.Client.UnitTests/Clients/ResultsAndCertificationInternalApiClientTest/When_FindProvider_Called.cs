@@ -15,7 +15,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_FindProviderAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_FindProvider_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         // Dependencies
         private ITokenServiceClient _tokenServiceClient;
@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         }
 
         [Fact]
-        public void Then_True_Is_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var actualResult = _result.Result;
             actualResult.Should().NotBeNull();

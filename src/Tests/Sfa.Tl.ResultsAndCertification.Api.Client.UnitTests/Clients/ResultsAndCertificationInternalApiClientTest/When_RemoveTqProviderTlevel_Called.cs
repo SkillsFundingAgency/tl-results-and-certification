@@ -12,43 +12,41 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_IsAnyProviderSetupCompletedAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_RemoveTqProviderTlevel_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        // Dependencies
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
-        private ResultsAndCertificationInternalApiClient _apiClient;
+        private readonly long _ukprn = 1024;
+        private readonly int _tqProviderId = 1;
         private Task<bool> _result;
 
+        private ResultsAndCertificationInternalApiClient _apiClient;
         private bool _mockHttpResult;
-
-        // Method Parameters
-        private readonly long _ukprn = 12345678;
 
         public override void Setup()
         {
             _tokenServiceClient = Substitute.For<ITokenServiceClient>();
+
             _configuration = new ResultsAndCertificationConfiguration
             {
-                ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://provider.api.com" }
+                ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
             };
-
             _mockHttpResult = true;
         }
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, string.Format(ApiConstants.IsAnyProviderSetupCompletedUri, _ukprn), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, string.Format(ApiConstants.RemoveTqProviderTlevelAsyncUri, _ukprn, _tqProviderId), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
         {
-            _result = _apiClient.IsAnyProviderSetupCompletedAsync(_ukprn);
+            _result = _apiClient.RemoveTqProviderTlevelAsync(_ukprn, _tqProviderId);
         }
 
         [Fact]
-        public void Then_True_Is_Returned()
+        public void Then_Returns_Expected_Results()
         {
             _result.Result.Should().BeTrue();
         }

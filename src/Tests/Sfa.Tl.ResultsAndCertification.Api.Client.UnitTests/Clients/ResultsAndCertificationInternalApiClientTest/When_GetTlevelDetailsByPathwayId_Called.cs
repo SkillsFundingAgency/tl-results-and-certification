@@ -15,7 +15,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_GetTlevelDetailsByPathwayIdAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_GetTlevelDetailsByPathwayId_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         }
 
         [Fact]
-        public void Then_Pathway_Id_Expected_Result_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var expectedResult = Result.Result;
 

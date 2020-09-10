@@ -12,7 +12,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest.GetTlevelsByStatusIdAsync
 {
-    public class When_GetTlevelsByStatusIdAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_GetTlevelsByStatusId_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         protected ITokenServiceClient _tokenServiceClient;
         protected ResultsAndCertificationConfiguration _configuration;

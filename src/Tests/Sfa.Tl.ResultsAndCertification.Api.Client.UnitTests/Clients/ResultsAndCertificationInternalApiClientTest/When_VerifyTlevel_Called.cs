@@ -11,20 +11,24 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_ProcessBulkRegistrationsAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_VerifyTlevel_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         protected ITokenServiceClient _tokenServiceClient;
         protected ResultsAndCertificationConfiguration _configuration;
-        protected Task<BulkRegistrationResponse> Result;
+        protected readonly long ukprn = 1024;
+        protected Task<bool> Result;
+
+        protected readonly string RouteName = "Construction";
+        protected readonly string PathwayName = "Design, Surveying and Planning";
+        protected readonly int StatusId = 1;
 
         protected ResultsAndCertificationInternalApiClient _apiClient;
-        protected BulkRegistrationResponse _mockHttpResult;
-        private BulkRegistrationRequest _model;
-        private readonly long _ukprn = 12345678;
+        protected bool _mockHttpResult;
+
+        private VerifyTlevelDetails _model;
 
         public override void Setup()
         {
@@ -35,42 +39,30 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
             };
 
-            _mockHttpResult = new BulkRegistrationResponse
+            _mockHttpResult = true;
+            _model = new VerifyTlevelDetails
             {
-                IsSuccess = false,
-                BlobUniqueReference = Guid.NewGuid(),
-                ErrorFileSize = 1.5
-            };
-
-            _model = new BulkRegistrationRequest
-            {
-                AoUkprn = _ukprn,
-                BlobFileName = "inputfile_1.csv",
-                BlobUniqueReference = Guid.NewGuid()
+                TqAwardingOrganisationId = 1,
+                PathwayStatusId = 2,
+                ModifiedBy = "Test User"
             };
         }
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<BulkRegistrationResponse>(_mockHttpResult, ApiConstants.ProcessBulkRegistrationsUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.VerifyTlevelUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
         {
-            Result = _apiClient.ProcessBulkRegistrationsAsync(_model);
+            Result = _apiClient.VerifyTlevelAsync(_model);
         }
 
         [Fact]
-        public void Then_Expected_Result_Returned()
+        public void Then_Returns_Expected_Results()
         {
-            var actualResult = Result.Result;
-
-            actualResult.Should().NotBeNull();
-
-            actualResult.IsSuccess.Should().BeFalse();
-            actualResult.BlobUniqueReference.Should().Be(_mockHttpResult.BlobUniqueReference);
-            actualResult.ErrorFileSize.Should().Be(_mockHttpResult.ErrorFileSize);
+            Result.Result.Should().BeTrue();
         }
     }
 }

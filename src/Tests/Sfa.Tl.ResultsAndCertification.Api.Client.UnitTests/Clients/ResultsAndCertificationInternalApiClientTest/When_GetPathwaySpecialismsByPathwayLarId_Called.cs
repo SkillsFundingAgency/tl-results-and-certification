@@ -15,7 +15,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_GetPathwaySpecialismsByPathwayLarIdAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_GetPathwaySpecialismsByPathwayLarId_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         private Task<PathwaySpecialisms> _result;
         private readonly long _ukprn = 12345678;
@@ -55,22 +55,15 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         }
 
         [Fact]
-        public void Then_Expected_No_Of_Specialism_Details_Are_Returned()
-        {
-            _result.Result.Should().NotBeNull();
-            _result.Result.Specialisms.Count().Should().Be(_mockHttpResult.Specialisms.Count);
-        }
-
-        [Fact]
-        public void Then_Expected_Result_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var actualResult = _result.Result;
 
             actualResult.Should().NotBeNull();
-
             actualResult.Id.Should().Be(_mockHttpResult.Id);
             actualResult.PathwayName.Should().Be(_mockHttpResult.PathwayName);
             actualResult.PathwayCode.Should().Be(_mockHttpResult.PathwayCode);
+            actualResult.Specialisms.Count().Should().Be(_mockHttpResult.Specialisms.Count);
 
             var expectedSpecialismResult = _mockHttpResult.Specialisms.FirstOrDefault();
             var actualSpecialismResult = actualResult.Specialisms.FirstOrDefault();

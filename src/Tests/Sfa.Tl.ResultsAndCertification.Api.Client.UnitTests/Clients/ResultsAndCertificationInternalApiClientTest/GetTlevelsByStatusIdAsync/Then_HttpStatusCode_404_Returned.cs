@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest.GetTlevelsByStatusIdAsync
 {
-    public class Then_HttpStatusCode_404_Returned : When_GetTlevelsByStatusIdAsync_Is_Called
+    public class Then_HttpStatusCode_404_Returned : When_GetTlevelsByStatusId_Called
     {
         public override void Given()
         {
@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         }
 
         [Fact]
-        public void Then_Expected_Result_404_Returned()
+        public void Then_Returns_Expected_Results()
         {
             Result.IsCompletedSuccessfully.Should().BeFalse();
             Result.IsFaulted.Should().BeTrue();

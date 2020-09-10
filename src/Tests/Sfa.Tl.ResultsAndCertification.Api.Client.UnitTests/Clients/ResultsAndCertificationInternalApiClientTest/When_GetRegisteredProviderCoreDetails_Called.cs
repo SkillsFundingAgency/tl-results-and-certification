@@ -15,7 +15,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_GetRegisteredProviderCoreDetailsAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_GetRegisteredProviderCoreDetails_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         private Task<IList<PathwayDetails>> _result;
         private readonly long _ukprn = 12345678;
@@ -63,19 +63,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         }
 
         [Fact]
-        public void Then_Two_Core_Details_Are_Returned()
-        {
-            _result.Result.Should().NotBeNull();
-            _result.Result.Count().Should().Be(2);
-        }
-
-        [Fact]
-        public void Then_Expected_Result_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var actualResult = _result.Result;
 
             actualResult.Should().NotBeNull();
-
+            actualResult.Count().Should().Be(2);
             var expectedCoreDetailsResult = _mockHttpResult.FirstOrDefault();
             var actualCoreDetailsResult = actualResult.FirstOrDefault();
             actualCoreDetailsResult.Should().NotBeNull();

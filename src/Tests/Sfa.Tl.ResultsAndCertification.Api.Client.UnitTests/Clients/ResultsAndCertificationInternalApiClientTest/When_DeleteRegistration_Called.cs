@@ -1,15 +1,10 @@
 ﻿using FluentAssertions;
-using Newtonsoft.Json;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -17,14 +12,16 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_AddRegistrationAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_DeleteRegistration_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        private Task<bool> _result;
-        protected bool _mockHttpResult;
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
+        private readonly long _ukprn = 1024;
+        private readonly int _profileId = 1;
+        private Task<bool> _result;
+
         private ResultsAndCertificationInternalApiClient _apiClient;
-        private RegistrationRequest _model;
+        private bool _mockHttpResult;
 
         public override void Setup()
         {
@@ -34,36 +31,25 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             {
                 ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
             };
-
             _mockHttpResult = true;
-            _model = new RegistrationRequest
-            {
-                AoUkprn = 1234567890,
-                FirstName = "First",
-                LastName = "Last",
-                DateOfBirth = "07/01/1987".ToDateTime(),
-                ProviderUkprn = 98765432,
-                CoreCode = "7654321",
-                SpecialismCodes = new List<string> { "23456789", "7654321" },
-                PerformedBy = "Test User"
-            };
         }
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.AddRegistrationUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, string.Format(ApiConstants.DeleteRegistrationUri, _ukprn, _profileId), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
         {
-            _result = _apiClient.AddRegistrationAsync(_model);
+            _result = _apiClient.DeleteRegistrationAsync(_ukprn, _profileId);
         }
 
         [Fact]
-        public void Then_Expected_Result_Returned()
+        public void Then_Returns_Expected_Results()
         {
             _result.Result.Should().BeTrue();
         }
     }
 }
+

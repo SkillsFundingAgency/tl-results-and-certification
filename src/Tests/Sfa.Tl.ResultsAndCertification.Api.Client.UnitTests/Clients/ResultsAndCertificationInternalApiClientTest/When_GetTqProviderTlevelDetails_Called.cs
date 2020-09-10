@@ -13,7 +13,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_GetTqProviderTlevelDetailsAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_GetTqProviderTlevelDetails_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         private Task<ProviderTlevelDetails> _result;
         private readonly long _ukprn = 12345678;
@@ -53,12 +53,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         }
 
         [Fact]
-        public void Then_Expected_Result_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var actualResult = _result.Result;
 
             actualResult.Should().NotBeNull();
-
             actualResult.Id.Should().Be(_mockHttpResult.Id);
             actualResult.DisplayName.Should().Be(_mockHttpResult.DisplayName);
             actualResult.Ukprn.Should().Be(_mockHttpResult.Ukprn);

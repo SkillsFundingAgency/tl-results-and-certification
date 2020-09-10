@@ -4,10 +4,10 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest.GetTlevelsByStatusIdAsync
 {
-    public class Then_HttpStatusCode_200_Returned : When_GetTlevelsByStatusIdAsync_Is_Called
+    public class Then_HttpStatusCode_200_Returned : When_GetTlevelsByStatusId_Called
     {
         [Fact]
-        public void Then_Expected_Result_Returned()
+        public void Then_Returns_Expected_Results()
         {
             Result.Result.Should().NotBeNullOrEmpty();
 

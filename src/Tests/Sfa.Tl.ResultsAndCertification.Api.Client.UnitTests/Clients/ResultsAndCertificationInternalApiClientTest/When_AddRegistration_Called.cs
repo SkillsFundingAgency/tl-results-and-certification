@@ -8,7 +8,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -17,14 +16,14 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_UpdateRegistrationAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_AddRegistration_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         private Task<bool> _result;
         protected bool _mockHttpResult;
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
         private ResultsAndCertificationInternalApiClient _apiClient;
-        private ManageRegistration _model;
+        private RegistrationRequest _model;
 
         public override void Setup()
         {
@@ -36,9 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             };
 
             _mockHttpResult = true;
-            _model = new ManageRegistration
+            _model = new RegistrationRequest
             {
-                ProfileId = 1,
                 AoUkprn = 1234567890,
                 FirstName = "First",
                 LastName = "Last",
@@ -52,17 +50,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.UpdateRegistrationUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.AddRegistrationUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
         {
-            _result = _apiClient.UpdateRegistrationAsync(_model);
+            _result = _apiClient.AddRegistrationAsync(_model);
         }
 
         [Fact]
-        public void Then_Expected_Result_Returned()
+        public void Then_Returns_Expected_Results()
         {
             _result.Result.Should().BeTrue();
         }

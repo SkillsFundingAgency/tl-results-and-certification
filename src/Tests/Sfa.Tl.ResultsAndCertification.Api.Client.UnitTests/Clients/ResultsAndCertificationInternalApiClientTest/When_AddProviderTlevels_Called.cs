@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Newtonsoft.Json;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
@@ -6,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -13,17 +15,14 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_FindUlnAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_AddProviderTlevels_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        private readonly long _ukprn = 12345678;
-        private readonly long _uln = 987654321;
-        
-        protected FindUlnResponse _mockHttpResult;
-
+        private Task<bool> _result;
+        protected bool _mockHttpResult;
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
         private ResultsAndCertificationInternalApiClient _apiClient;
-        private Task<FindUlnResponse> _result;
+        private List<ProviderTlevel> _model;
 
         public override void Setup()
         {
@@ -33,38 +32,29 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             {
                 ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
             };
-
-            _mockHttpResult = new FindUlnResponse
+            _mockHttpResult = true;
+            _model = new List<ProviderTlevel>
             {
-                RegistrationProfileId = 1, 
-                Uln = _uln,
-                IsRegisteredWithOtherAo = true,
-                IsActive = false
+                new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1 },
+                new ProviderTlevel { TqAwardingOrganisationId = 1, TlProviderId = 1 }
             };
         }
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<FindUlnResponse>(_mockHttpResult, string.Format(ApiConstants.FindUlnUri, _ukprn, _uln), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.AddProviderTlevelsUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public override void When()
         {
-            _result = _apiClient.FindUlnAsync(_ukprn, _uln);
+            _result = _apiClient.AddProviderTlevelsAsync(_model);
         }
 
         [Fact]
-        public void Then_Expected_Result_Returned()
+        public void Then_Returns_Expected_Results()
         {
-            var actualResult = _result.Result;
-
-            actualResult.Should().NotBeNull();
-
-            actualResult.Uln.Should().Be(_mockHttpResult.Uln);
-            actualResult.RegistrationProfileId.Should().Be(_mockHttpResult.RegistrationProfileId);
-            actualResult.IsRegisteredWithOtherAo.Should().Be(_mockHttpResult.IsRegisteredWithOtherAo);
-            actualResult.IsActive.Should().Be(_mockHttpResult.IsActive);
+            _result.Result.Should().BeTrue();
         }
     }
 }

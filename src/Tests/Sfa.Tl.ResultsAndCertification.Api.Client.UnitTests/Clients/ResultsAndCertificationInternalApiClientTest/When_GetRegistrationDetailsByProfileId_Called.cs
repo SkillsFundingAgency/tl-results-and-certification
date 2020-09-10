@@ -16,7 +16,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_GetRegistrationDetailsByProfileIdAsync_Is_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_GetRegistrationDetailsByProfileId_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         private readonly long _ukprn = 12345678;
         private readonly int _profileId = 1;
@@ -63,12 +63,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         }
 
         [Fact]
-        public void Then_Expected_Result_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var actualResult = _result.Result;
 
             actualResult.Should().NotBeNull();
-
             actualResult.Uln.Should().Be(_mockHttpResult.Uln);
             actualResult.Name.Should().Be(_mockHttpResult.Name);
             actualResult.DateofBirth.Should().Be(_mockHttpResult.DateofBirth);
