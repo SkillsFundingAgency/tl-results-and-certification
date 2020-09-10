@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
@@ -30,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
         public void Setup()
         {
             Logger = Substitute.For<ILogger<GenericRepository<T>>>();
-            DbContext = _isRelationalDb ? TestDatabaseConfiguration.CreateRelationalDbContext() : TestDatabaseConfiguration.CreateInMemoryDbContext();
+            DbContext = _isRelationalDb ? TestDatabaseConfiguration.CreateRelationalDbContext() : InMemoryDbContext.Create();
             Repository = new GenericRepository<T>(Logger, DbContext);
             DbCheckpoint = _isRelationalDb ? new Checkpoint { WithReseed = true } : null;
         }
