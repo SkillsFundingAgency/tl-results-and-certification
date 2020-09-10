@@ -198,7 +198,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            if (model.HasLearnerDecidedSpecialism.Value)
+            if (model.HasLearnerDecidedSpecialism.HasValue && model.HasLearnerDecidedSpecialism.Value)
             {
                 return RedirectToRoute(RouteConstants.ChangeRegistrationSpecialisms, new { profileId = model.ProfileId });
             }
