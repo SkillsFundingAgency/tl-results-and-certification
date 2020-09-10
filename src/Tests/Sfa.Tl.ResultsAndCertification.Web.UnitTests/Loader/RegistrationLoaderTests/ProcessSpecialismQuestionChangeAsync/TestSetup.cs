@@ -12,7 +12,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Security.Claims;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessProviderChangesTests
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessSpecialismQuestionChangeAsync
 {
     public abstract class TestSetup : BaseTest<RegistrationLoader>
     {
@@ -25,9 +25,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         protected RegistrationLoader Loader;
         protected IBlobStorageService BlobStorageService;
         protected bool ApiClientResponse;
-        protected ProviderChangeResponse ActualResult;
+        protected ManageRegistrationResponse ActualResult;
         protected IHttpContextAccessor HttpContextAccessor;
-        protected ChangeProviderViewModel ViewModel;
+        protected ChangeSpecialismQuestionViewModel ViewModel;
 
         protected readonly string Givenname = "test";
         protected readonly string Surname = "user";
@@ -54,14 +54,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 }))
             });
 
-            InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();            
+            InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
 
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddMaps(typeof(RegistrationMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<ChangeProviderViewModel, ManageRegistration>(HttpContextAccessor) : null);
+                                new UserNameResolver<ChangeSpecialismQuestionViewModel, ManageRegistration>(HttpContextAccessor) : null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }
@@ -73,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 
         public override void When()
         {
-            ActualResult = Loader.ProcessProviderChangesAsync(AoUkprn, ViewModel).Result;
+            ActualResult = Loader.ProcessSpecialismQuestionChangeAsync(AoUkprn, ViewModel).Result;
         }
     }
 }
