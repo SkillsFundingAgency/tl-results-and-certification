@@ -10,12 +10,12 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountControllerTests.PostSignIn
 {
-    public class Then_UserAuthenticated_NoAccess_To_Service_Redirected_To_ServiceAccessDenied : When_PostSignIn_Is_Called
+    public class When_User_Authenticated : TestSetup
     {
         public override void Given()
         {
             HttpContext.User.Identity.IsAuthenticated.Returns(true);
-            HttpContext.User.Claims.Returns(new List<Claim> { new Claim(CustomClaimTypes.HasAccessToService, "false") });
+            HttpContext.User.Claims.Returns(new List<Claim> { new Claim(CustomClaimTypes.HasAccessToService, "true") });
 
             Controller.ControllerContext = new ControllerContext
             {
@@ -25,15 +25,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
         }
 
         [Fact]
-        public void Then_Redirected_To_ServiceAccessDenied()
+        public void Then_Redirected_To_Dashboard()
         {
             Result.Should().NotBeNull();
 
             var actualControlName = (Result as RedirectToActionResult).ControllerName;
             var actualActionName = (Result as RedirectToActionResult).ActionName;
-
-            actualControlName.Should().Be(Common.Helpers.Constants.ErrorController);
-            actualActionName.Should().Be(nameof(ErrorController.ServiceAccessDenied));
+            
+            actualControlName.Should().Be(Common.Helpers.Constants.DashboardController);
+            actualActionName.Should().Be(nameof(DashboardController.Index));
         }
     }
 }

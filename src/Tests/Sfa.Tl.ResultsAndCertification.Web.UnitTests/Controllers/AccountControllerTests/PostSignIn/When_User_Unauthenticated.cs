@@ -10,11 +10,11 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountControllerTests.PostSignIn
 {
-    public class Then_User_Is_Authenticated_Redirected_To_Dashboard : When_PostSignIn_Is_Called
+    public class When_User_Unauthenticated : TestSetup
     {
         public override void Given()
         {
-            HttpContext.User.Identity.IsAuthenticated.Returns(true);
+            HttpContext.User.Identity.IsAuthenticated.Returns(false);
             HttpContext.User.Claims.Returns(new List<Claim> { new Claim(CustomClaimTypes.HasAccessToService, "true") });
 
             Controller.ControllerContext = new ControllerContext
@@ -25,15 +25,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
         }
 
         [Fact]
-        public void Then_Redirected_ToDashboard()
+        public void Then_Redirected_To_Home()
         {
             Result.Should().NotBeNull();
 
             var actualControlName = (Result as RedirectToActionResult).ControllerName;
             var actualActionName = (Result as RedirectToActionResult).ActionName;
-            
-            actualControlName.Should().Be(Common.Helpers.Constants.DashboardController);
-            actualActionName.Should().Be(nameof(DashboardController.Index));
+
+            actualControlName.Should().Be(Common.Helpers.Constants.HomeController);
+            actualActionName.Should().Be(nameof(HomeController.Index));
         }
     }
 }

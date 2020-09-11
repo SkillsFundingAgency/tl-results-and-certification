@@ -10,7 +10,7 @@ using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountControllerTests.PostSignIn
 {
-    public abstract class When_PostSignIn_Is_Called : BaseTest<AccountController>
+    public abstract class TestSetup : BaseTest<AccountController>
     {
         protected AccountController Controller;
         protected IActionResult Result;
