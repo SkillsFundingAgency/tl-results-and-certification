@@ -399,7 +399,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
                 else if (model.HasSpecialismsChanged)
                 {
-                    var pathway = toUpdateRegistration.TqRegistrationPathways.First();
                     return await _tqRegistrationRepository.UpdateRegistrationWithSpecifedCollectionsOnlyAsync(toUpdateRegistration.TqRegistrationPathways.First(), u => u.TqRegistrationSpecialisms) > 0;
                 }
                 return false;
