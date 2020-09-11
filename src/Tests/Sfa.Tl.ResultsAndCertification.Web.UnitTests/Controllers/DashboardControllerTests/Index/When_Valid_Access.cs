@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardControllerTests.Index
 {
-    public class Then_Dashboard_View_IsCalled : TestSetup
+    public class When_Valid_Access : TestSetup
     {
         public override void Given()
         {

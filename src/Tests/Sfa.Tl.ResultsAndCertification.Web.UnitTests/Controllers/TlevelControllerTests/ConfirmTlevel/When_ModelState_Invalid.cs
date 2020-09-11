@@ -9,11 +9,11 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ConfirmTlevel
 {
-    public class Then_ModelState_Invalid_Returned_Verify_View : When_ConfirmTlevel_Action_Is_Called
+    public class When_ModelState_Invalid : TestSetup
     {
         private readonly int pathwayId = 99;
         private ConfirmTlevelViewModel expectedResult;
-
+        
         public override void Given()
         {
             expectedResult = new ConfirmTlevelViewModel
@@ -27,7 +27,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
                 Specialisms = new List<string> { "spl1", "spl2" }
             };
 
-
             InputModel = new ConfirmTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.AwaitingConfirmation, PathwayId = pathwayId };
             TlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(ukprn, pathwayId)
                 .Returns(expectedResult);
@@ -36,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_On_ModelState_Not_Valid_Verify_View_Is_Returned()
+        public void Then_Returns_Expected_View()
         {
             var actualView = (Result.Result as ViewResult);
             actualView.Should().NotBeNull();
@@ -44,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_On_ModelState_Not_Valid_Expected_ViewModel_Is_Returned()
+        public void Then_Returns_Expected_ViewModel()
         {
             var actualViewModel = (ConfirmTlevelViewModel) (Result.Result as ViewResult).Model;
             

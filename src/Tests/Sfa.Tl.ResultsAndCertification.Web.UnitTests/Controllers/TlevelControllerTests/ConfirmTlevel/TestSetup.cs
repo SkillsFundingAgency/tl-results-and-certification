@@ -7,19 +7,22 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.Session;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ConfirmationAsync
+
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ConfirmTlevel
 {
-    public abstract class When_ConfirmationAsync_Is_Called : BaseTest<TlevelController>
+    public abstract class TestSetup : BaseTest<TlevelController>
     {
         protected ITlevelLoader TlevelLoader;
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
         protected Task<IActionResult> Result;
         protected long ukprn;
-        protected int Id;
+        protected ConfirmTlevelViewModel InputModel;
         protected TempDataDictionary TempData;
 
         public override void Setup()
@@ -48,9 +51,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             };
         }
 
+        public override void Given() { }
+
         public override void When()
         {
-            Result = Controller.ConfirmationAsync(Id);
+            Result = Controller.ConfirmTlevelAsyc(InputModel);
         }
     }
 }

@@ -3,19 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ConfirmationAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Confirmation
 {
-    public class Then_No_TempData_ReRouted_To_PageNotFound : When_ConfirmationAsync_Is_Called
+    public class When_Parameter_Is_Zero : TestSetup
     {
         public override void Given()
         {
-            Id = 1;
+            Id = 0;
         }
 
         [Fact]
-        public void Then_On_No_TempData_ReRouted_To_PageNotFound()
+        public void Then_Redirected_To_PageNotFound()
         {
-            // Controller
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.PageNotFound);
         }

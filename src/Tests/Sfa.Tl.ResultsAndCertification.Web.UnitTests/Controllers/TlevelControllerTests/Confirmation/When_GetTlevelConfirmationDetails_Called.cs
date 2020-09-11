@@ -4,9 +4,9 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ConfirmationAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Confirmation
 {
-    public class Then_GetTlevelConfirmationDetailsAsync_Is_Called : When_ConfirmationAsync_Is_Called
+    public class When_GetTlevelConfirmationDetails_Called : TestSetup
     {
         private TlevelConfirmationViewModel expectedResult;
 
@@ -21,13 +21,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_GetTlevelConfirmationDetailsAsync_Method_Is_Called()
+        public void Then_Called_Expected_Methods()
         {
             TlevelLoader.Received(1).GetTlevelConfirmationDetailsAsync(ukprn, Id);
         }
 
         [Fact]
-        public void Then_Expected_Results_Are_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as TlevelConfirmationViewModel;

@@ -1,14 +1,13 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.RegistrationDataFormatAndRulesGuide;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Document;
 using Xunit;
 using DocumentResource = Sfa.Tl.ResultsAndCertification.Web.Content.Document;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.RegistrationDataFormatAndRulesGuideGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.RegistrationDataFormatAndRulesGuide
 {
-    public class Then_Expected_ViewModel_Returned : TestSetup
+    public class When_Action_Called : TestSetup
     {
         private RegistrationDataFormatAndRulesGuideViewModel _viewModel;
         public override void Given()

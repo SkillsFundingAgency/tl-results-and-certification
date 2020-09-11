@@ -12,7 +12,7 @@ using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.RegistrationDataFormatAndRulesGuide
 {
-    public abstract class When_RegistrationDataFormatAndRulesGuide_Action_Is_Called : BaseTest<DocumentController>
+    public abstract class TestSetup : BaseTest<DocumentController>
     {
         protected Guid UserId;
         protected IDocumentLoader DocumentLoader;

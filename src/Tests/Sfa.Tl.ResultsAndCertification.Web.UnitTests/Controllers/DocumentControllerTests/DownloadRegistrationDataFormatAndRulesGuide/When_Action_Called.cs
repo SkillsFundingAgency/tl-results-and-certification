@@ -9,7 +9,7 @@ using DocumentResource = Sfa.Tl.ResultsAndCertification.Web.Content.Document;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.DownloadRegistrationDataFormatAndRulesGuideGet
 {
-    public class When_Method_Called : TestSetup
+    public class When_Action_Called : TestSetup
     {
         private string _fileName;
         public override void Given()

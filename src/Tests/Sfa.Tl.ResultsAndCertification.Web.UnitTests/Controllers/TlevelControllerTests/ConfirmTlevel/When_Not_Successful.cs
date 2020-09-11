@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ConfirmTlevel
 {
-    public class Then_On_Success_Redirected_To_TlevelConfirmation_Route : When_ConfirmTlevel_Action_Is_Called
+    public class When_Not_Successful : TestSetup
     {
         private readonly int pathwayId = 99;
 
@@ -16,14 +16,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         {
 
             InputModel = new ConfirmTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.AwaitingConfirmation, PathwayId = pathwayId };
-            TlevelLoader.ConfirmTlevelAsync(InputModel).Returns(true);
+            TlevelLoader.ConfirmTlevelAsync(InputModel).Returns(false);
         }
 
         [Fact]
-        public void Then_ModelState_Valid_Redirected_To_TlevelConfirmation()
+        public void Then_Redirected_To_ProblemWithService()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.TlevelDetailsConfirmed);
+            var routeValue = (Result.Result as RedirectToRouteResult).RouteValues["StatusCode"];
+            routeName.Should().Be(RouteConstants.Error);
+            routeValue.Should().Be(500);
         }
     }
 }
