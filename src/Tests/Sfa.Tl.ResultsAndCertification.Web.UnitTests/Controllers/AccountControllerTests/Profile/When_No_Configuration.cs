@@ -5,15 +5,9 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountControllerTests.Profile
 {
-    public class Then_No_ProfileUrl_Redirected_To_PageNotFound : When_PostSignIn_Is_Called
+    public class When_No_Configuration : TestSetup
     {
-        public override void Given() 
-        {
-            Configuration = new Models.Configuration.ResultsAndCertificationConfiguration
-            {
-                DfeSignInSettings = new Models.Configuration.DfeSignInSettings()
-            };
-        }
+        public override void Given() { }
 
         [Fact]
         public void Then_Redirected_To_PageNotFound()

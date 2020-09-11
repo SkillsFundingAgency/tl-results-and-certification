@@ -8,7 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountControllerTests.Profile
 {
-    public abstract class When_PostSignIn_Is_Called : BaseTest<AccountController>
+    public abstract class TestSetup : BaseTest<AccountController>
     {
         protected AccountController Controller;
         protected IActionResult Result;

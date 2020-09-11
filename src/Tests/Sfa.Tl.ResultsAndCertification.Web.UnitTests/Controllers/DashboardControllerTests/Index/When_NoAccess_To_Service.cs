@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardControllerTests.Index
 {
-    public class Then_Redirected_To_ServiceAccessDenied_IsCalled : When_Index_Action_Called
+    public class When_NoAccess_To_Service : TestSetup
     {
         public override void Given()
         {
@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardCont
         }
 
         [Fact]
-        public void Then_Redirected_To_Route_ServiceAccessDenied()
+        public void Then_Redirected_To_ServiceAccessDenied()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.ServiceAccessDenied);

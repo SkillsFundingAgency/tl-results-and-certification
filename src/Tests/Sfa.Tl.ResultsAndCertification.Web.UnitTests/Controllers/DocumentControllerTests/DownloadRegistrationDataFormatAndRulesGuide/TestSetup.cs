@@ -9,10 +9,9 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System;
-
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.RegistrationDataFormatAndRulesGuideGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.DownloadRegistrationDataFormatAndRulesGuide
 {
-    public abstract class When_RegistrationDataFormatAndRulesGuide_Action_Is_Called : BaseTest<DocumentController>
+    public abstract class TestSetup : BaseTest<DocumentController>
     {
         protected Guid UserId;
         protected IDocumentLoader DocumentLoader;
@@ -40,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
 
         public override void When()
         {
-            Result = Controller.RegistrationDataFormatAndRulesGuide();
+            Result = Controller.DownloadRegistrationDataFormatAndRulesGuideAsync().Result;
         }
     }
 }

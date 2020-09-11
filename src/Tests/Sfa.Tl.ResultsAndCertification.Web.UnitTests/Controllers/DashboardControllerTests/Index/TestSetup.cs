@@ -7,7 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardControllerTests.Index
 {
-    public abstract class When_Index_Action_Called : BaseTest<DashboardController>
+    public abstract class TestSetup : BaseTest<DashboardController>
     {
         protected ILogger<DashboardController> Logger;
         protected DashboardController Controller;

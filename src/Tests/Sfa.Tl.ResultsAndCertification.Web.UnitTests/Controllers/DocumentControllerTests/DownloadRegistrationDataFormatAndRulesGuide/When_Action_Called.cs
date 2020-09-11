@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.DownloadRegistrationDataFormatAndRulesGuide;
 using System.IO;
 using System.Text;
 using Xunit;
@@ -8,7 +9,7 @@ using DocumentResource = Sfa.Tl.ResultsAndCertification.Web.Content.Document;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.DownloadRegistrationDataFormatAndRulesGuideGet
 {
-    public class Then_Expected_Results_Returned : When_DownloadRegistrationDataFormatAndRulesGuide_Action_Is_Called
+    public class When_Method_Called : TestSetup
     {
         private string _fileName;
         public override void Given()
@@ -24,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
         }
 
         [Fact]
-        public void Then_Expected_Results_Are_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as FileStreamResult;
             viewResult.Should().NotBeNull();

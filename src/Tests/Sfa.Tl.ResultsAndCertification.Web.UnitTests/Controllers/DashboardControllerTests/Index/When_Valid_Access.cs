@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardControllerTests.Index
 {
-    public class Then_Dashboard_View_IsCalled : When_Index_Action_Called
+    public class Then_Dashboard_View_IsCalled : TestSetup
     {
         public override void Given()
         {
@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardCont
         }
 
         [Fact]
-        public void Then_Dashboard_View_Page_IsCalled()
+        public void Then_Expected_Result_Returned()
         {
             Result.Should().NotBeNull();
             Result.Should().BeOfType<ViewResult>();

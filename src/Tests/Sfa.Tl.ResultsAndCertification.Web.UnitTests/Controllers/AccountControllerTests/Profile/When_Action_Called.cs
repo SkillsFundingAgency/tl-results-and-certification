@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountControllerTests.Profile
 {
-    public class Then_Expected_Results_Are_Returned : When_PostSignIn_Is_Called
+    public class When_Action_Called : TestSetup
     {
         readonly string mockUrl = "http://dfe-profile";
 
