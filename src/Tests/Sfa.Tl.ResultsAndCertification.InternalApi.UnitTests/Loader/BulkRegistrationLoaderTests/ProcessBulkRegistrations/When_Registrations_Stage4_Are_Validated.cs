@@ -14,9 +14,9 @@ using System.IO;
 using System.Text;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegistrationLoaderTests.ProcessBulkRegistrationsAsync
+namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegistrationLoaderTests.ProcessBulkRegistrations
 {
-    public class Then_Registrations_Stage4_Are_Validated_Returns_Validation_Messages : When_ProcessBulkRegistrationsAsync_Is_Called
+    public class When_Registrations_Stage4_Are_Validated : TestSetup
     {
         public override void Given()
         {
@@ -116,7 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
         }
 
         [Fact]
-        public void Then_Expected_Results_Are_Returned()
+        public void Then_Returns_Expected_Results()
         {
             BlobService.Received(1).DownloadFileAsync(Arg.Any<BlobStorageData>());
             CsvService.Received(1).ReadAndParseFileAsync(Arg.Any<RegistrationCsvRecordRequest>());

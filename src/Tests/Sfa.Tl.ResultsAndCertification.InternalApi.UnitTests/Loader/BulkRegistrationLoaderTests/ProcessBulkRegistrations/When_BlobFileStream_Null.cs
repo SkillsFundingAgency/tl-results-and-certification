@@ -6,9 +6,9 @@ using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegistrationLoaderTests.ProcessBulkRegistrationsAsync
+namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegistrationLoaderTests.ProcessBulkRegistrations
 {
-    public class Then_BlobFileStream_Is_Null_Throw_Exception : When_ProcessBulkRegistrationsAsync_Is_Called
+    public class When_BlobFileStream_Null : TestSetup
     {
         public override void Given()
         {

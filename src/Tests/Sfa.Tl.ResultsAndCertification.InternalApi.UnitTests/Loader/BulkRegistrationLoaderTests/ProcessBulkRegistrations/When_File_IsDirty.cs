@@ -9,9 +9,9 @@ using System.IO;
 using System.Text;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegistrationLoaderTests.ProcessBulkRegistrationsAsync
+namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegistrationLoaderTests.ProcessBulkRegistrations
 {
-    public class Then_File_IsDirty_Returns_Expected_Results : When_ProcessBulkRegistrationsAsync_Is_Called
+    public class When_File_IsDirty : TestSetup
     {
         public override void Given()
         {
@@ -22,16 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
                 ErrorMessage = errorMessage,
             };
 
-            var expectedError = new RegistrationValidationError { ErrorMessage = errorMessage };
-            var expectedWriteFileBytes = new byte[5];
-            
+            var expectedWriteFileBytes = new byte[5];            
             BlobService.DownloadFileAsync(Arg.Any<BlobStorageData>()).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File")));
             CsvService.ReadAndParseFileAsync(Arg.Any<RegistrationCsvRecordRequest>()).Returns(csvResponse);
             CsvService.WriteFileAsync(Arg.Any<List<RegistrationValidationError>>()).Returns(expectedWriteFileBytes);
         }
 
         [Fact]
-        public void Then_Expected_Results_Are_Returned()
+        public void Then_Returns_Expected_Results()
         {
             CsvService.Received(1).ReadAndParseFileAsync(Arg.Any<RegistrationCsvRecordRequest>());
             CsvService.Received(1).WriteFileAsync(Arg.Any<List<RegistrationValidationError>>());

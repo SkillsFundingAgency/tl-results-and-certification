@@ -14,21 +14,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegistrationLoaderTests.ProcessBulkRegistrationsAsync
+namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegistrationLoaderTests.ProcessBulkRegistrations
 {
-    public abstract class When_ProcessBulkRegistrationsAsync_Is_Called : BaseTest<BulkRegistrationLoader>
+    public abstract class TestSetup : BaseTest<BulkRegistrationLoader>
     {
         protected ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> CsvService;
         protected IRegistrationService RegistrationService;
         protected IBlobStorageService BlobService;
         protected IDocumentUploadHistoryService DocumentUploadHistoryService;
         protected ILogger<BulkRegistrationLoader> Logger;
-
         private BulkRegistrationLoader _loader;
-
         protected BulkRegistrationRequest Request;
         protected Task<BulkRegistrationResponse> Response { get; private set; }
-
         protected long AoUkprn = 1234567891;
         protected Guid BlobUniqueRef;
 
