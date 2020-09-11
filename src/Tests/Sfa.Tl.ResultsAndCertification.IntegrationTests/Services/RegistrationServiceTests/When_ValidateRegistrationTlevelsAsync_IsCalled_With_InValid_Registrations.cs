@@ -39,13 +39,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         }
 
         [Fact]
-        public void Then_Expected_ValidationResults_Are_Returned()
+        public void Then_Returns_Expected_Results()
         {
             _result.Should().NotBeNull();
             _result.Count.Should().Be(_stage3RegistrationsData.Count);
 
             var actualValidationErrors = _result.SelectMany(x => x.ValidationErrors).ToList();
-
             actualValidationErrors.Count.Should().Be(_expectedValidationErrors.Count);
             actualValidationErrors.Should().BeEquivalentTo(_expectedValidationErrors);
         }

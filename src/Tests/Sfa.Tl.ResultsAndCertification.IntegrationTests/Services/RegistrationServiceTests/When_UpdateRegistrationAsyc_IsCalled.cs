@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Result(bool hasProfileChanged, bool hasProviderChanged, bool hasSpecialismsChanged, bool expectedResult)
+        public async Task Then_Returns_Expected_Results(bool hasProfileChanged, bool hasProviderChanged, bool hasSpecialismsChanged, bool expectedResult)
         {
             _updateRegistrationRequest.HasProfileChanged = hasProfileChanged;
             _updateRegistrationRequest.HasProviderChanged = hasProviderChanged;
