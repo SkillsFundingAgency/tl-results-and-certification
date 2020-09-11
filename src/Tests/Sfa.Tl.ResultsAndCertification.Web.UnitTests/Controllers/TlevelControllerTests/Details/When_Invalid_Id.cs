@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Details
 {
-    public class Then_PageNotFound_Error_On_Null_Result : When_Details_Action_Called
+    public class When_Invalid_Id : TestSetup
     {
         private TLevelDetailsViewModel mockresult = null;
 
@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_PageNotFound_Is_Returned_OnNull_Result()
+        public void Then_Redirected_To_PageNotFound()
         {
             var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
             actualRouteName.Should().Be(RouteConstants.PageNotFound);

@@ -10,10 +10,12 @@ using Sfa.Tl.ResultsAndCertification.Web.Session;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Index
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Details
 {
-    public abstract class When_Index_Action_Called : BaseTest<TlevelController>
+    public abstract class TestSetup : BaseTest<TlevelController>
     {
+        protected int id = 123;
+        protected long ukPrn = 12345;
         protected ITlevelLoader TlevelLoader;
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
@@ -26,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             {
                 User = new ClaimsPrincipal(new ClaimsIdentity(new[]
                 {
-                    new Claim(CustomClaimTypes.Ukprn, "12345")
+                    new Claim(CustomClaimTypes.Ukprn, ukPrn.ToString())
                 }))
             });
 
@@ -43,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
         public override void When()
         {
-            Result = Controller.IndexAsync();
+            Result = Controller.DetailsAsync(id);
         }
     }
 }

@@ -3,33 +3,36 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Index
 {
-    public class Then_Redirected_To_ViewAll_Action : When_Index_Action_Called
+    public class When_Pending_Tlevels : TestSetup
     {
         public override void Given()
         {
+            var mockresult = new List<YourTlevelViewModel>
+            {
+                    new YourTlevelViewModel { PathwayId = 1, TlevelTitle = "RouteName1: Pathway1" },
+                    new YourTlevelViewModel { PathwayId = 2, TlevelTitle = "RouteName2: Pathway2"}
+            };
             TlevelLoader.GetTlevelsByStatusIdAsync(Arg.Any<long>(), Arg.Any<int>())
-                .Returns(new List<YourTlevelViewModel>());
+                .Returns(mockresult);
         }
 
         [Fact]
-        public void Then_GetTlevelsByStatusIdAsync_Is_Called()
+        public void Then_Called_Expected_Methods()
         {
             TlevelLoader.Received().GetTlevelsByStatusIdAsync(Arg.Any<long>(), (int)TlevelReviewStatus.AwaitingConfirmation);
         }
 
         [Fact]
-        public void Then_Redirected_To_Route_ViewAll()
+        public void Then_Redirected_To_SelectTlevel()
         {
             var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
-            actualRouteName.Should().Be(RouteConstants.YourTlevels);
+            actualRouteName.Should().Be(RouteConstants.SelectTlevel);
         }
     }
 }

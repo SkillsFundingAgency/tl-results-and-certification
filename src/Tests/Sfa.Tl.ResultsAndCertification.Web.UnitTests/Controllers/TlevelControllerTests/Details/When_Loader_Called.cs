@@ -11,7 +11,7 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Details
 {
-    public class Then_TlevelLoader_Returns_Expected_Result : When_Details_Action_Called
+    public class When_Loader_Called : TestSetup
     {
         private TLevelDetailsViewModel mockresult;
 
@@ -31,13 +31,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_GetTlevelDetailsByPathwayIdAsync_Is_Called()
+        public void Then_Called_GetTlevelDetailsByPathwayId()
         {
             TlevelLoader.Received().GetTlevelDetailsByPathwayIdAsync(ukPrn, id);
         }
 
         [Fact]
-        public void Then_Expected_Result_Is_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var viewResult = Result.Result as ViewResult;
             var actualResult = viewResult.Model as TLevelDetailsViewModel;
