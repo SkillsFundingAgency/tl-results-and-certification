@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Service.CsvHelperServiceTests
 {
-    public class Then_No_Registrations_Return_No_Data_Validation_Error : When_ReadAndParseFileAsync_Is_Called
+    public class When_Header_Invalid : TestSetup
     {
         public override void Given()
         {
@@ -14,18 +14,19 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         }
 
         [Fact]
-        public void Then_Returns_Header_Not_Found_Error()
+        public void Then_Returns_Error_FileHeaderNotFound()
         {
             var actualResult = Response.Result;
             actualResult.IsDirty.Should().BeTrue();
             actualResult.Rows.Count().Should().Be(0);
-            actualResult.ErrorMessage.Should().Be(ValidationMessages.NoRecordsFound);
+            actualResult.ErrorMessage.Should().Be(ValidationMessages.FileHeaderNotFound);
         }
 
         private StringBuilder GetInputFilecontent()
         {
             StringBuilder csvData = new StringBuilder();
-            csvData.AppendLine("ULN,First Name,Last Name,Date of Birth,UKPRN,Academic year,Core code,Specialism codes");
+            csvData.AppendLine("Test,Invalid Name,Last Name,Date of Birth,UKPRN,Academic year,Core code,Specialism codes");
+            csvData.AppendLine("1111111111,First 1,Last 1,10012006,10000080,2020,10423456,27234567");
             return csvData;
         }
     }

@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Service.CsvHelperServiceTests
 {
-    public class Then_Valid_Registrations_Return_Expected_Results : When_ReadAndParseFileAsync_Is_Called
+    public class When_Registrations_Valid : TestSetup
     {
         private RegistrationCsvRecordResponse expectedRow;
 
@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         }
 
         [Fact]
-        public void Then_Expectred_Results_Are_Returned()
+        public void Then_Returns_Expected_Results()
         {
             Response.Result.Rows.Count.Should().Be(1);
             var actualData = Response.Result.Rows.First();

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Service.CsvHelperServiceTests
 {
-    public abstract class When_ReadAndParseFileAsync_Is_Called : BaseTest<CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>>
+    public abstract class TestSetup : BaseTest<CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>>
     {
         protected IValidator<RegistrationCsvRecordRequest> RegValidator;
         protected IDataParser<RegistrationCsvRecordResponse> DataParser;

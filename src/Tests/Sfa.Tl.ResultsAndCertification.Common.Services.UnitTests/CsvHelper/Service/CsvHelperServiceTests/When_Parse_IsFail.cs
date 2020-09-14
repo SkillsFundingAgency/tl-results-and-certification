@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Service.CsvHelperServiceTests
 {
-    public class Then_Parse_Failures_Throw_Exception : When_ReadAndParseFileAsync_Is_Called
+    public class When_Parse_IsFail : TestSetup
     {
         public override void Given()
         {
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         }
 
         [Fact]
-        public void Then_Return_Expected_Exception()
+        public void Then_Returns_Expected_Exception()
         {
             Response.Should().Throws<Exception>();
         }
