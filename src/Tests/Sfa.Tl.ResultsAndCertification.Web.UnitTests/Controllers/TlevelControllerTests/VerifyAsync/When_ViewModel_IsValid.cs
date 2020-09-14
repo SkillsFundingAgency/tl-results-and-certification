@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.VerifyAsync
 {
-    public class Then_Expected_ViewModel_Returned : When_VerifyAsync_Get_Action_Is_Called
+    public class When_ViewModel_IsValid : TestSetup
     {
         private ConfirmTlevelViewModel expectedModel;
 
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_Expected_ViewModel_Results_Are_Returned()
+        public void Then_Returns_Expected_ViewModel()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as ConfirmTlevelViewModel;

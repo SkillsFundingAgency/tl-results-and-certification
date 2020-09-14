@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.SelectToReviewGet
 {
-    public class Then_Redirected_On_Empty_ViewModel : When_SelecctToReview_Get_Action_Is_Called
+    public class When_ViewModel_IsEmpty : TestSetup
     {
         public override void Given()
         {
@@ -17,13 +17,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_GetTlevelsToReviewByUkprnAsync_Is_Called()
+        public void Then_Called_Expected_Method()
         {
             TlevelLoader.Received().GetTlevelsToReviewByUkprnAsync(ukprn);
         }
 
         [Fact]
-        public void Then_GetTlevelsToReviewByUkprnAsync_ViewModel_Return_Zero_Rows()
+        public void Then_Redirected_To_PageNotFound()
         {
             var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
             actualRouteName.Should().Be(RouteConstants.PageNotFound);

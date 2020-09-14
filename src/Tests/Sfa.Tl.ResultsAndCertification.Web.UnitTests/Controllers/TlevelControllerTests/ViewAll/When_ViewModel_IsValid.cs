@@ -10,7 +10,7 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ViewAll
 {
-    public class Then_Return_Expected_ViewModel : When_ViewAll_Action_Called
+    public class When_ViewModel_IsValid : TestSetup
     {
         int expectedPathwayId = 11;
         string expectedTlevelTitle = "Route: Pathway";
@@ -32,13 +32,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_GetAllTlevelsByUkprnAsync_Is_Called()
+        public void Then_Called_Expected_Method()
         {
             TlevelLoader.Received().GetYourTlevelsViewModel(Arg.Any<long>());
         }
 
         [Fact]
-        public void Then_GetAllTlevelsByUkprnAsync_ViewModel_Return_ExpectedResults()
+        public void Then_Returns_Expected_ViewModel()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as YourTlevelsViewModel;

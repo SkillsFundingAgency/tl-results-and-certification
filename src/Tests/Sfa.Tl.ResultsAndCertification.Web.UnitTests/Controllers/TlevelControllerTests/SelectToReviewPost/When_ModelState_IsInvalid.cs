@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.SelectToReviewPost
 {
-    public class Then_Redirected_To_TlevelVerify_Route : When_SelecctToReview_Get_Action_Is_Called
+    public class When_ModelState_IsInvalid : TestSetup
     {
         private readonly int selectedPathwayId = 11;
         public override void Given()
@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_Redirected_To_Tlevel_Verify_Route()
+        public void Then_Redirected_To_AreDetailsCorrect()
         {
             var route = (Result.Result as RedirectToRouteResult);
             route.Should().NotBeNull();

@@ -6,17 +6,20 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ViewAll
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.SelectToReviewPost
 {
-    public abstract class When_ViewAll_Action_Called : BaseTest<TlevelController>
+    public abstract class TestSetup : BaseTest<TlevelController>
     {
         protected ITlevelLoader TlevelLoader;
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
         protected Task<IActionResult> Result;
+        protected long ukprn;
+        protected SelectToReviewPageViewModel InputModel;
 
         public override void Setup()
         {
@@ -25,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             {
                 User = new ClaimsPrincipal(new ClaimsIdentity(new[]
                 {
-                    new Claim(CustomClaimTypes.Ukprn, "12345")
+                    new Claim(CustomClaimTypes.Ukprn, ukprn.ToString())
                 }))
             });
 
@@ -37,12 +40,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
                 {
                     HttpContext = httpContextAccessor.HttpContext
                 }
-            };            
+            };
         }
-
+        
         public override void When()
         {
-            Result = Controller.ViewAllAsync();
+            Result = Controller.SelectToReviewAsync(InputModel);
         }
     }
 }

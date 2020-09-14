@@ -10,7 +10,7 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.SelectToReviewGet
 {
-    public class Then_Return_TwoRecord_ViewModel : When_SelecctToReview_Get_Action_Is_Called
+    public class When_ViewModel_IsValid : TestSetup
     {
         private SelectToReviewPageViewModel mockresult;
 
@@ -30,13 +30,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_GetTlevelsToReviewByUkprnAsync_Is_Called()
+        public void Then_Called_Expeccted_Methods()
         {
             TlevelLoader.Received().GetTlevelsToReviewByUkprnAsync(ukprn);
         }
 
         [Fact]
-        public void Then_GetTlevelsToReviewByUkprnAsync_ViewModel_Return_Two_Rows()
+        public void Then_Reeturns_Expected_Results()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as SelectToReviewPageViewModel;
@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_GetTlevelsToReviewByUkprnAsync_Index_Returns_Expected_ViewModel()
+        public void Then_Reeturns_Expected_ViewModel()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as SelectToReviewPageViewModel;

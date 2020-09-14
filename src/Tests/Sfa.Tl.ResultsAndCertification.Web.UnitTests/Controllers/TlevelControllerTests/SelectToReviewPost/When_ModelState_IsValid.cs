@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.SelectToReviewPost
 {
-    public class Then_On_ModelState_Invalid_GetTlevelsToReviewByUkprnAsync_Is_Called : When_SelecctToReview_Get_Action_Is_Called
+    public class When_ModelState_IsValid : TestSetup
     {
         private SelectToReviewPageViewModel mockresult;
         private readonly int selectedPathwayId = 11;
@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_GetTlevelsToReviewByUkprnAsync_Is_Called()
+        public void Then_Called_Expected_Method()
         {
             TlevelLoader.Received().GetTlevelsToReviewByUkprnAsync(ukprn);
         }

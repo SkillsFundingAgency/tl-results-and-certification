@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ViewAll
 {
-    public class Then_No_Results_Redirect_To_PageNotFound : When_ViewAll_Action_Called
+    public class When_Tlevels_NotFound : TestSetup
     {
         public override void Given()
         {
@@ -24,13 +24,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_GetAllTlevelsByUkprnAsync_Is_Called()
+        public void Then_Called_Expected_Method()
         {
             TlevelLoader.Received().GetYourTlevelsViewModel(Arg.Any<long>());
         }
 
         [Fact]
-        public void Then_NoResults_ViewModel_Redirected_To_Route_PageNotFound()
+        public void Then_Redirected_To_PageNotFound()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.PageNotFound);
