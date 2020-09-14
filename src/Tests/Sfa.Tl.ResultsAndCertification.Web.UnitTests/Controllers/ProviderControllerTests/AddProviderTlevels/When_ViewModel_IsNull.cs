@@ -8,9 +8,9 @@ using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.AddProviderTlevelsAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.AddProviderTlevels
 {
-    public class Then_Redirected_On_Null_ViewModel : When_AddProviderTlevelsAsync_Get_Action_Is_Called
+    public class When_ViewModel_IsNull : TestSetup
     {
         public override void Given()
         {
@@ -29,13 +29,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_GetSelectProviderTlevelsAsync_Is_Called()
+        public void Then_Called_Expected_Method()
         {
             ProviderLoader.Received().GetSelectProviderTlevelsAsync(Ukprn, ProviderId);
         }
 
         [Fact]
-        public void Then_GetSelectProviderTlevelsAsync_ViewModel_Return_Zero_Rows()
+        public void Then_Redirected_To_PageNotFound()
         {
             var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
             actualRouteName.Should().Be(RouteConstants.PageNotFound);

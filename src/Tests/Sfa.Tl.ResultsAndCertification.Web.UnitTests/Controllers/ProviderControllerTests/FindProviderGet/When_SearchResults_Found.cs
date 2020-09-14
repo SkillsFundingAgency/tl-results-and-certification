@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.FindProviderGet
 {
-    public class Then_FindProviderViewModel_With_Search_Criteria_Is_Not_Returned : When_FindProviderAsync_Post_Action_Is_Called
+    public class When_SearchResults_Found : When_FindProviderAsync_Post_Action_Is_Called
     {
         private Task<IActionResult> _selectProviderTlevelResult;
         private ProviderTlevelsViewModel _mockresult;
@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
                 ProviderId = 1,
                 DisplayName = _searchText,
                 Ukprn = 10000111,
-                IsAddTlevel = true,
+                IsAddTlevel = false,
                 Tlevels = new List<ProviderTlevelViewModel>
                 {
                     new ProviderTlevelViewModel { TqAwardingOrganisationId = 1, TlProviderId = 1, TlevelTitle = "Route1: Pathway1" },
@@ -46,12 +46,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
         public override void When()
         {
-            _selectProviderTlevelResult = Controller.AddProviderTlevelsAsync(1);
-            Result = Controller.FindProviderAsync();
+            _selectProviderTlevelResult = Controller.SelectProviderTlevelsAsync(1);
+            Result = Controller.FindProviderAsync(true);
         }
 
         [Fact]
-        public void Then_Search_Criteria_Is_Null()
+        public void Then_Returns_Expected_Results()
         {
             Result.Result.Should().BeOfType(typeof(ViewResult));
 
@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
             var model = viewResult.Model as FindProviderViewModel;
             model.Should().NotBeNull();
-            model.Search.Should().BeNull();
+            model.Search.Should().Be(_searchText);    
         }
     }
 }

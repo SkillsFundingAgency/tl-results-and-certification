@@ -7,9 +7,9 @@ using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.AddProviderTlevelsAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.AddProviderTlevels
 {
-    public abstract class When_AddProviderTlevelsAsync_Get_Action_Is_Called : BaseTest<ProviderController>
+    public abstract class TestSetup : BaseTest<ProviderController>
     {
         protected long Ukprn;
         protected int ProviderId;
@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             ProviderLoader = Substitute.For<IProviderLoader>();
             Logger = Substitute.For<ILogger<ProviderController>>();
-            Controller = new ProviderController(ProviderLoader, Logger);            
+            Controller = new ProviderController(ProviderLoader, Logger);
         }
 
         public override void When()

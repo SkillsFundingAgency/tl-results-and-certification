@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.RemoveProviderTlevelPost
 {
-    public class Then_Redirected_On_CanRemoveTlevel_Is_Set_To_False : When_RemoveProviderTlevelAsync_Post_Action_Is_Called
+    public class When_CanRemoveTlevel_IsFalse : TestSetup
     {
         public override void Given()
         {
@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_On_Set_CanRemoveTlevel_To_False_Redirect_To_ProviderTlevels_Route()
+        public void Then_Returns_Expected_Results()
         {
             var route = (Result.Result as RedirectToRouteResult);
             route.RouteName.Should().Be(RouteConstants.ProviderTlevels);

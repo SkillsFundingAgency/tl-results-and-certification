@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.RemoveProviderTlevelPost
 {
-    public class Then_On_ModelState_Invalid_Returns_Validation_Error : When_RemoveProviderTlevelAsync_Post_Action_Is_Called
+    public class When_ModelState_Invalid : TestSetup
     {
         public override void Given()
         {
@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_Expected_Error_Message_Is_Returned()
+        public void Then_Returns_Expected_Results()
         {
             Result.Result.Should().BeOfType(typeof(ViewResult));
 

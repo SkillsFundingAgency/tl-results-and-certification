@@ -11,7 +11,7 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.FindProviderGet
 {
-    public class Then_FindProviderViewModel_Is_Returned : When_FindProviderAsync_Post_Action_Is_Called
+    public class When_ViewModel_IsValid : When_FindProviderAsync_Post_Action_Is_Called
     {
         public override void Given()
         {
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_Expected_Results_Returned()
+        public void Then_Returns_Expected_Results()
         {
             Result.Result.Should().BeOfType(typeof(ViewResult));
             
@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_Expected_Breadcrumb_Returned()
+        public void Then_Returns_Expected_ViewModel()
         {
             Result.Result.Should().BeOfType(typeof(ViewResult));
 

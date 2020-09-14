@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.RemoveProviderTlevelPost
 {
-    public class Then_Redirected_On_Null_ViewModel : When_RemoveProviderTlevelAsync_Post_Action_Is_Called
+    public class When_ViewModel_IsNull : TestSetup
     {
         public override void Given()
         {
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_On_No_Record_Found_Redirect_To_PageNotFound()
+        public void Then_Redirected_To_PageNotFound()
         {
             var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
             actualRouteName.Should().Be(RouteConstants.PageNotFound);

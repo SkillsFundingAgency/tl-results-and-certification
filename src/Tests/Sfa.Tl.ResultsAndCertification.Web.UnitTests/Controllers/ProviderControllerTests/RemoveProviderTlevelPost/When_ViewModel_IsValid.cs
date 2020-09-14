@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.RemoveProviderTlevelPost
 {
-    public class Then_On_Success_Redirected_To_RemoveProviderTlevelConfirmation_Route : When_RemoveProviderTlevelAsync_Post_Action_Is_Called
+    public class When_ViewModel_IsValid : TestSetup
     {
         public override void Given()
         {
@@ -34,7 +34,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_If_Success_Redirected_To_RemoveProviderTlevelConfirmation()
+        public void Then_GetTqAoProviderDetailsAsync_Method_Is_Called()
+        {
+            ProviderLoader.Received(1).GetTqAoProviderDetailsAsync(Ukprn);
+        }
+
+        [Fact]
+        public void Then_Redirected_To_RemoveProviderTlevelConfirmation()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.RemoveProviderTlevelConfirmation);

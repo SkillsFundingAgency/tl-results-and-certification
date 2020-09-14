@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.RemoveProviderTlevelPost
 {
-    public class Then_Not_Success_Redirected_To_Error_500 : When_RemoveProviderTlevelAsync_Post_Action_Is_Called
+    public class When_Remove_IsFail : TestSetup
     {
         public override void Given()
         {
@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_Status_Update_Fail_Redirected_To_Error_500()
+        public void Then_Redirected_To_Error()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
             var routeValue = (Result.Result as RedirectToRouteResult).RouteValues["StatusCode"];

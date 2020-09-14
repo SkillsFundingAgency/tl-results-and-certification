@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.GetProviderLookupData
 {
-    public class Then_On_Valid_ProviderName_Returns_Expected_JsonResults : When_FindProviderAsync_Post_Action_Is_Called
+    public class When_ProviderName_IsValid : When_FindProviderAsync_Post_Action_Is_Called
     {
         private List<ProviderLookupData> expectedResults;
         
@@ -25,13 +25,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_GetProviderLookupDataAsync_Method_Is_Called()
+        public void Then_Called_Expected_Method()
         {
             ProviderLoader.Received(1).GetProviderLookupDataAsync(ProviderName, false);
         }
 
         [Fact]
-        public void Then_Expected_Results_Returned()
+        public void Then_Returns_Expected_Results()
         {
             Result.Result.Should().BeOfType(typeof(JsonResult));
             var actualResults = Result.Result.Value as IEnumerable<ProviderLookupData>;

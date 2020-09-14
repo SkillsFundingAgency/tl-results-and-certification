@@ -9,9 +9,9 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevel
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.AddProviderTlevelsAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.AddProviderTlevels
 {
-    public class Then_Zero_Tlevels_Redirected_To_ProviderTlevels : When_AddProviderTlevelsAsync_Get_Action_Is_Called
+    public class When_Tlevels_NotFound : TestSetup
     {
         private ProviderTlevelsViewModel mockresult;
         public override void Given()
@@ -35,9 +35,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_Zero_Tlevels_Redirected_To_ProviderTlevels_Route()
+        public void Then_Redirected_To_ProviderTlevels()
         {
-            var route = (Result.Result as RedirectToRouteResult);
+            var route = Result.Result as RedirectToRouteResult;
             route.RouteName.Should().Be(RouteConstants.ProviderTlevels);
 
             route.RouteValues["providerId"].Should().Be(ProviderId);

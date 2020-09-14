@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.GetProviderLookupData
 {
-    public class Then_OnEmpty_ProviderName_Returns_Empty_JsonResults : When_FindProviderAsync_Post_Action_Is_Called
+    public class When_ProviderName_IsEmpty : When_FindProviderAsync_Post_Action_Is_Called
     {
         public override void Given()
         {
@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_Expected_Results_Returned()
+        public void Then_Returns_Expected_Results()
         {
             Result.Result.Should().BeOfType(typeof(JsonResult));
             var expectedResult = Result.Result as JsonResult;
