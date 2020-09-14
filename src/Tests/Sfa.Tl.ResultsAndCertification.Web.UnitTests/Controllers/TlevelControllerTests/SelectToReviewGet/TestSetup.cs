@@ -6,21 +6,19 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.Session;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.SelectToReviewPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.SelectToReviewGet
 {
-    public abstract class When_SelecctToReview_Get_Action_Is_Called : BaseTest<TlevelController>
+    public abstract class TestSetup : BaseTest<TlevelController>
     {
         protected ITlevelLoader TlevelLoader;
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
         protected Task<IActionResult> Result;
         protected long ukprn;
-        protected SelectToReviewPageViewModel InputModel;
+        protected int? selectedPathwayId;
 
         public override void Setup()
         {
@@ -46,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
         public override void When()
         {
-            Result = Controller.SelectToReviewAsync(InputModel);
+            Result = Controller.SelectToReviewAsync(selectedPathwayId);
         }
     }
 }

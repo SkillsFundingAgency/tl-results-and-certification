@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.SelectToReviewGet
 {
-    public class Then_On_Id_Passed_In_Route_Returns_SelectedPathwayId : When_SelecctToReview_Get_Action_Is_Called
+    public class When_Route_WithId : TestSetup
     {
         private SelectToReviewPageViewModel mockresult;
 
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_Expected_SelectedPathwayId_Is_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as SelectToReviewPageViewModel;

@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.VerifyAsync
 {
-    public class Then_On_IsBack_Is_True_IsEverythingCorrect_Set_To_False : When_VerifyAsync_Get_Action_Is_Called
+    public class When_Route_WithBackTrue : TestSetup
     {
         private ConfirmTlevelViewModel expectedModel;
 
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_IsEverythingCorrect_Set_To_False()
+        public void Then_Returns_Expected_Results()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as ConfirmTlevelViewModel;

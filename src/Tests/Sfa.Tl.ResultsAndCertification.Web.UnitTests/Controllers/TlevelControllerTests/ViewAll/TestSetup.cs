@@ -6,34 +6,26 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.Session;
-using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.VerifyAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ViewAll
 {
-    public abstract class When_VerifyAsync_Get_Action_Is_Called : BaseTest<TlevelController>
+    public abstract class TestSetup : BaseTest<TlevelController>
     {
         protected ITlevelLoader TlevelLoader;
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
         protected Task<IActionResult> Result;
-        
-        protected long ukprn;
-        protected int pathwayId;
-        protected bool isBack = false;
 
         public override void Setup()
         {
-            ukprn = 9;
-
             var httpContextAccessor = Substitute.For<IHttpContextAccessor>();
             httpContextAccessor.HttpContext.Returns(new DefaultHttpContext
             {
                 User = new ClaimsPrincipal(new ClaimsIdentity(new[]
                 {
-                    new Claim(CustomClaimTypes.Ukprn, ukprn.ToString())
+                    new Claim(CustomClaimTypes.Ukprn, "12345")
                 }))
             });
 
@@ -45,12 +37,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
                 {
                     HttpContext = httpContextAccessor.HttpContext
                 }
-            };
+            };            
         }
 
         public override void When()
         {
-            Result = Controller.VerifyAsync(pathwayId, isBack);
+            Result = Controller.ViewAllAsync();
         }
     }
 }
