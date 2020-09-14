@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.ViewProviderTlevels
 {
-    public abstract class When_ViewProviderTlevelsAsync_Is_Called : BaseTest<ProviderController>
+    public abstract class TestSetup : BaseTest<ProviderController>
     {
         // DI Mock objects
         protected IProviderLoader ProviderLoader;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.YourProviders
 {
-    public abstract class When_YourProvidersAsync_Get_Action_Is_Called : BaseTest<ProviderController>
+    public abstract class TestSetup : BaseTest<ProviderController>
     {
         protected long Ukprn;
         protected IProviderLoader ProviderLoader;

@@ -6,12 +6,11 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.YourProviders
 {
-    public class Then_Redirected_On_No_Records_Found :  When_YourProvidersAsync_Get_Action_Is_Called
+    public class When_YourProviders_NotFound :  TestSetup
     {
         public override void Given()
         {

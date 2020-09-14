@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.SelectProviderTlevelsPost
 {
-    public class Then_ModelState_Invalid_Returns_Expected_ViewModel : When_SelectProviderTlevelsAsync_Post_Action_Is_Called
+    public class When_ModelState_Invalid : TestSetup
     {
         private ProviderTlevelsViewModel mockresult;
 
@@ -33,13 +33,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_GetSelectProviderTlevelsAsync_Method_Is_Called()
+        public void Then_Called_Expected_Method()
         {
             ProviderLoader.Received(1).GetSelectProviderTlevelsAsync(Ukprn, ProviderId);
         }
 
         [Fact]
-        public void Then_On_ModelState_Not_Valid_Expected_ViewModel_Is_Returned()
+        public void Then_Returns_Expected_ViewModel()
         {
             var viewResult = Result.Result as ViewResult;
             var actualViewModel = viewResult.Model as ProviderTlevelsViewModel;

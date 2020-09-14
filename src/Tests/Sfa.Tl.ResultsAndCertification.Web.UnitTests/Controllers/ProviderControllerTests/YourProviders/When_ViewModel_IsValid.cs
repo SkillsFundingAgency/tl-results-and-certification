@@ -13,7 +13,7 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.YourProviders
 {
-    public class Then_YourProvidersViewModel_Is_Returned : When_YourProvidersAsync_Get_Action_Is_Called
+    public class When_ViewModel_IsValid : TestSetup
     {
         private YourProvidersViewModel mockresult;
 

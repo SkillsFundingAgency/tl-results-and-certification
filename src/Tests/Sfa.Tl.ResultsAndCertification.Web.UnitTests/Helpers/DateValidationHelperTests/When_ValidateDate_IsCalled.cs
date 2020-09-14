@@ -5,11 +5,11 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers.DateValidationHelperTests
 {
-    public class Then_Date_Validated : When_ValidateDate_Is_Called
+    public class When_ValidateDate_IsCalled : TestSetup
     {
         [Theory]
         [MemberData(nameof(Data))]
-        public void When_DateValidation_Is_Called_Then_Expected_Results_Returned(string InputDate, Dictionary<string, string> expectedErrors)
+        public void Then_Returns_Expected_Results(string InputDate, Dictionary<string, string> expectedErrors)
         {
             var validationerrors = InputDate.ValidateDate(PropertyName);
 
