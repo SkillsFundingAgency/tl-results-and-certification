@@ -3,7 +3,7 @@ using DateContent = Sfa.Tl.ResultsAndCertification.Web.Content.Helpers.Date;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers.DateValidationHelperTests
 {
-    public abstract class When_ValidateDate_Is_Called
+    public abstract class TestSetup
     {        
         private const string DayProperty = "Day";
         private const string MonthProperty = "Month";
