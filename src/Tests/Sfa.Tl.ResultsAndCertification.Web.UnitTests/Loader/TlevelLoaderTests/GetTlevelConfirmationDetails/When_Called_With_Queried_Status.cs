@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelConfirmationDetailsAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelConfirmationDetails
 {
-    public class Then_Apiclient_Returns_IsQueried_true : When_GetTlevelConfirmationDetailsAsync__Is_Called
+    public class When_Called_With_Queried_Status : TestSetup
     {
         public override void Given()
         {
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         }
 
         [Fact]
-        public void Then_Expected_Results_Are_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var expectedReponse = ApiClientResponse.FirstOrDefault();
             var expectedConfirmationText = string.Format(Confirmation.Section_Heading, EnumExtensions.GetEnumValue<TlevelReviewStatus>(expectedReponse.StatusId).ToString().ToLowerInvariant());
@@ -35,7 +35,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
 
             ActualResult.Should().NotBeNull();
             ActualResult.IsQueried.Should().Be(true);
-
             ActualResult.PathwayId.Should().Be(PathwayId);
             ActualResult.TlevelConfirmationText.Should().Be(expectedConfirmationText);
             ActualResult.TlevelTitle.Should().Be(expectedTlevelTitle);

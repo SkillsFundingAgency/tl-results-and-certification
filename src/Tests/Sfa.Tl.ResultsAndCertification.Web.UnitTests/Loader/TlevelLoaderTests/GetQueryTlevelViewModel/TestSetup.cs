@@ -8,35 +8,42 @@ using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelsByStatusIdAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetQueryTlevelViewModel
 {
-    public abstract class When_Called_Method_GetTlevelsByStatusIdAsync : BaseTest<TlevelLoader>
+    public abstract class TestSetup : BaseTest<TlevelLoader>
     {
+        // Dependencies
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
         protected IMapper Mapper;
+
+        // Data Objects
         protected TlevelLoader Loader;
-        protected readonly int statusId = 9;
-        protected readonly long Ukprn = 1024;
-        protected int PathwayId = 1;
-        protected int StatusId = 1;
-        
-        protected IEnumerable<AwardingOrganisationPathwayStatus> ApiClientResponse;
-        protected IEnumerable<YourTlevelViewModel> ActualResult;
-        protected AwardingOrganisationPathwayStatus ExpectedResult;
-        protected string ExpectedTLevelTitle = "Tlevel Title";
+        protected TlevelPathwayDetails ApiClientResponse;
+        protected TlevelQueryViewModel ActualResult;
+
+        // Params
+        protected readonly long Ukprn = 9;
+        protected int PathwayId = 11;
 
         public override void Setup()
         {
-            ExpectedResult = new AwardingOrganisationPathwayStatus { PathwayId = PathwayId, TlevelTitle = "Tlevel Title", StatusId = 1 };
-            ApiClientResponse = new List<AwardingOrganisationPathwayStatus> { ExpectedResult };
-            
+            ApiClientResponse = new TlevelPathwayDetails 
+            {
+                TqAwardingOrganisationId = 1,
+                RouteId = 2,
+                PathwayId = 3, 
+                RouteName = "Test Route",
+                PathwayName = "Test Pathway",
+                PathwayStatusId = 1,
+                Specialisms = new List<string> { "Spl1", "Spl2" }
+            };
+
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-            InternalApiClient.GetTlevelsByStatusIdAsync(Ukprn, statusId)
+            InternalApiClient.GetTlevelDetailsByPathwayIdAsync(Ukprn, PathwayId)
                 .Returns(ApiClientResponse);
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(TlevelMapper).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
-
         }
 
         public override void Given()
@@ -46,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
 
         public override void When()
         {
-            ActualResult = Loader.GetTlevelsByStatusIdAsync(Ukprn, statusId).Result;
+            ActualResult = Loader.GetQueryTlevelViewModelAsync(Ukprn, PathwayId).Result;
         }
     }
 }

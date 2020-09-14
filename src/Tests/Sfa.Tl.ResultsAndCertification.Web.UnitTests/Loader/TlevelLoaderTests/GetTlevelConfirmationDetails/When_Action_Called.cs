@@ -2,18 +2,18 @@
 using NSubstitute;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelConfirmationDetailsAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelConfirmationDetails
 {
-    public class Then_Apiclient_Returns_ShowMoreTlevelsToReview_True : When_GetTlevelConfirmationDetailsAsync__Is_Called
+    public class When_Action_Called : TestSetup
     {
         [Fact]
-        public void Then_ApiClient_Is_Called()
+        public void Then_Expected_Methods_Called()
         {
             InternalApiClient.Received(1).GetAllTlevelsByUkprnAsync(Ukprn);
         }
 
         [Fact]
-        public void Then_Expected_Results_Are_Returned()
+        public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().NotBeNull();
             

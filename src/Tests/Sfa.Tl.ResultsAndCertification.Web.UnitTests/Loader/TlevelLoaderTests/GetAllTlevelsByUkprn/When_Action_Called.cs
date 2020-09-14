@@ -1,20 +1,20 @@
-﻿using Xunit;
+﻿using FluentAssertions;
 using NSubstitute;
-using FluentAssertions;
 using System.Linq;
+using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetAllTlevelsByUkprnAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetAllTlevelsByUkprn
 {
-    public class Then_ApiClient_Mapper_Is_Called : When_Called_Method_GetTlevelsByUkprnAsync
+    public class When_Action_Called : TestSetup
     {
         [Fact]
-        public void Then_ApiClient_Is_Called()
+        public void Then_Expected_Methods_Called()
         {
             InternalApiClient.Received().GetAllTlevelsByUkprnAsync(Ukprn);
         }
 
         [Fact]
-        public void Then_Expected_Results_Are_Returned()
+        public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().NotBeNull();
             ActualResult.IsAnyReviewPending.Should().BeTrue();

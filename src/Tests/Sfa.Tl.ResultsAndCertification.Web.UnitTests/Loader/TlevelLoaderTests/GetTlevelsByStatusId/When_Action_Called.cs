@@ -3,23 +3,22 @@ using NSubstitute;
 using FluentAssertions;
 using System.Linq;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelsByStatusIdAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelsByStatusId
 {
-    public class Then_Returns_Expected_Results : When_Called_Method_GetTlevelsByStatusIdAsync
+    public class When_Action_Called : TestSetup
     {
         [Fact]
-        public void Then_ApiClient_Is_Called()
+        public void Then_Expected_Methods_Called()
         {
-            InternalApiClient.Received().GetTlevelsByStatusIdAsync(Ukprn, statusId);
+            InternalApiClient.Received(1).GetTlevelsByStatusIdAsync(Ukprn, statusId);
         }
 
         [Fact]
-        public void Then_Expected_Results_Are_Returned()
+        public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().NotBeNull();
 
             var actualResult = ActualResult.First();
-
             actualResult.PathwayId.Should().Be(ExpectedResult.PathwayId);
             actualResult.TlevelTitle.Should().Be(ExpectedTLevelTitle);
         }

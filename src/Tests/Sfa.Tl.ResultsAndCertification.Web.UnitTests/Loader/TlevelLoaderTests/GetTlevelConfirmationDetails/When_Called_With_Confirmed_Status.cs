@@ -9,32 +9,31 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelConfirmationDetailsAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelConfirmationDetails
 {
-    public class Then_Apiclient_Returns_IsQueried_False : When_GetTlevelConfirmationDetailsAsync__Is_Called
+    public class When_Called_With_Confirmed_Status : TestSetup
     {
         public override void Given()
         {
             ApiClientResponse = new List<AwardingOrganisationPathwayStatus>
             {
-                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = PathwayId2, TlevelTitle = "Tlevel Title", StatusId = 2 },
+                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = PathwayId, TlevelTitle = "Tlevel Title", StatusId = 2 },
             };
 
             InternalApiClient.GetAllTlevelsByUkprnAsync(Ukprn).Returns(ApiClientResponse);
-
-            PathwayId = ApiClientResponse.FirstOrDefault().PathwayId;
             Loader = new TlevelLoader(InternalApiClient, Mapper);
         }
 
         [Fact]
-        public void Then_Expected_Results_Are_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var expectedReponse = ApiClientResponse.FirstOrDefault();
             var expectedConfirmationText = string.Format(Confirmation.Section_Heading, EnumExtensions.GetEnumValue<TlevelReviewStatus>(expectedReponse.StatusId).ToString().ToLowerInvariant());
             var expectedTlevelTitle = expectedReponse.TlevelTitle;
-            
+
             ActualResult.Should().NotBeNull();
             ActualResult.IsQueried.Should().Be(false);
+            ActualResult.ShowMoreTlevelsToReview.Should().Be(false);
 
             ActualResult.PathwayId.Should().Be(PathwayId);
             ActualResult.TlevelConfirmationText.Should().Be(expectedConfirmationText);

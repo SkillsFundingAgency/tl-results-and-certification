@@ -6,9 +6,9 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.ConfirmTlevelAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.ConfirmTlevel
 {
-    public abstract class When_Called_Method_ConfirmTlevelAsync : BaseTest<TlevelLoader>
+    public abstract class TestSetup : BaseTest<TlevelLoader>
     {
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
         protected IMapper Mapper;

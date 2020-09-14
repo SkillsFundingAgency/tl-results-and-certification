@@ -8,9 +8,9 @@ using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelConfirmationDetailsAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetAllTlevelsByUkprn
 {
-    public abstract class When_GetTlevelConfirmationDetailsAsync__Is_Called : BaseTest<TlevelLoader>
+    public abstract class TestSetup : BaseTest<TlevelLoader>
     {
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
         protected IMapper Mapper;
@@ -18,24 +18,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         protected readonly long Ukprn = 9;
 
         protected IEnumerable<AwardingOrganisationPathwayStatus> ApiClientResponse;
-        protected TlevelConfirmationViewModel ActualResult;
-        protected int PathwayId = 11;
-        protected int PathwayId2 = 22;
+        protected YourTlevelsViewModel ActualResult;
+        protected YourTlevelsViewModel ExpectedResult;
 
         public override void Setup()
         {
             ApiClientResponse = new List<AwardingOrganisationPathwayStatus>
             {
-                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = PathwayId, TlevelTitle = "Tlevel Title1", StatusId = 2 },
-                new AwardingOrganisationPathwayStatus { Id = 2, PathwayId = PathwayId2, TlevelTitle = "Tlevel Title2", StatusId = 1 },
+                new AwardingOrganisationPathwayStatus { Id = 1, PathwayId = 11, TlevelTitle = "P1", StatusId = 1  },
+                new AwardingOrganisationPathwayStatus { Id = 2, PathwayId = 22, TlevelTitle = "P2", StatusId = 2  },
+                new AwardingOrganisationPathwayStatus { Id = 3, PathwayId = 33, TlevelTitle = "P3", StatusId = 2  },
+                new AwardingOrganisationPathwayStatus { Id = 4, PathwayId = 44, TlevelTitle = "P4", StatusId = 2  },
+                new AwardingOrganisationPathwayStatus { Id = 5, PathwayId = 55, TlevelTitle = "P5", StatusId = 3  }
             };
-
-            InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-            InternalApiClient.GetAllTlevelsByUkprnAsync(Ukprn)
-                .Returns(ApiClientResponse);
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(TlevelMapper).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
+
+            InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
+            InternalApiClient.GetAllTlevelsByUkprnAsync(Ukprn).Returns(ApiClientResponse);
         }
 
         public override void Given()
@@ -45,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
 
         public override void When()
         {
-            ActualResult = Loader.GetTlevelConfirmationDetailsAsync(Ukprn, PathwayId).Result;
+            ActualResult = Loader.GetYourTlevelsViewModel(Ukprn).Result;
         }
     }
 }

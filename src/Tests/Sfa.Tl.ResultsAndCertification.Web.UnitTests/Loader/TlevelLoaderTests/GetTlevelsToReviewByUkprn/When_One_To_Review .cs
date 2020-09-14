@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelsToReviewByUkprnAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelsToReviewByUkprn
 {
-    public class Then_On_One_To_Review_Expected_Results_Are_Returned : When_GetTlevelsToReviewByUkprnAsync__Is_Called
+    public class Then_On_One_To_Review_Expected_Results_Are_Returned : TestSetup
     {
         public override void Given()
         {
@@ -24,23 +24,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         }
 
         [Fact]
-        public void Then_One_Tlevels_AwaitingReview_Returned()
+        public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().NotBeNull();
             ActualResult.TlevelsToReview.Should().NotBeNull();
             ActualResult.TlevelsToReview.Count().Should().Be(1);
-        }
-
-        [Fact]
-        public void Then_IsOnlyOneTlevelReviewPending_Is_False()
-        {
             ActualResult.IsOnlyOneTlevelReviewPending.Should().BeTrue();
-        }
-
-        [Fact]
-        public void Then_ShowViewReviewedTlevelsLink_Is_True()
-        {
-            ActualResult.ShowViewReviewedTlevelsLink.Should().BeFalse();   
+            ActualResult.ShowViewReviewedTlevelsLink.Should().BeFalse();
         }
     }
 }

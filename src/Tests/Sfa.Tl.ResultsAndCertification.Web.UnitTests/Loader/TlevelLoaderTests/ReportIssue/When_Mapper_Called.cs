@@ -11,9 +11,9 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Security.Claims;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.ReportIssueAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.ReportIssue
 {
-    public class Then_Mapper_Returns_Expected_Results : When_Called_Method_ReportIssueAsync
+    public class When_Mapper_Called : TestSetup
     {
         private IHttpContextAccessor _httpContextAccessor;
         private readonly string _givename = "test";
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         }
 
         [Fact]
-        public void Then_Mapper_Has_Expected_Results()
+        public void Then_Returns_Expected_Results()
         {
             var result = Mapper.Map<VerifyTlevelDetails>(TlevelQueryViewModel);
 

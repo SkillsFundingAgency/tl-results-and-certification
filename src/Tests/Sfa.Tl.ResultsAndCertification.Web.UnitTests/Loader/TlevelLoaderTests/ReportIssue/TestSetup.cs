@@ -6,9 +6,9 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.ReportIssueAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.ReportIssue
 {
-    public class When_Called_Method_ReportIssueAsync : BaseTest<TlevelLoader>
+    public class TestSetup : BaseTest<TlevelLoader>
     {
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
         protected IMapper Mapper;

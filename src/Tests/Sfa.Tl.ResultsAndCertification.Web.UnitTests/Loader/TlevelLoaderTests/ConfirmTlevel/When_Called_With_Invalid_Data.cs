@@ -5,26 +5,26 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.ReportIssueAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.ConfirmTlevel
 {
-    public class Then_ApiResponse_False_Is_Returned : When_Called_Method_ReportIssueAsync
+    public class When_Called_With_Invalid_Data : TestSetup
     {
         public override void Given()
         {
             PathwayId = 99;
             ExpectedResult = false;
 
-            TlevelQueryViewModel = new TlevelQueryViewModel { PathwayId = PathwayId, TqAwardingOrganisationId = PathwayId };
+            ConfirmTlevelViewModel = new ConfirmTlevelViewModel { PathwayId = PathwayId, TqAwardingOrganisationId = PathwayId };
             VerifyTlevelDetails = new VerifyTlevelDetails { Id = PathwayId, TqAwardingOrganisationId = PathwayId, PathwayStatusId = StatusId };
 
-            Mapper.Map<VerifyTlevelDetails>(TlevelQueryViewModel).Returns(VerifyTlevelDetails);
+            Mapper.Map<VerifyTlevelDetails>(ConfirmTlevelViewModel).Returns(VerifyTlevelDetails);
             InternalApiClient.VerifyTlevelAsync(VerifyTlevelDetails).Returns(ExpectedResult);
 
             Loader = new TlevelLoader(InternalApiClient, Mapper);
         }
 
         [Fact]
-        public void Then_ApiResponse_Is_False()
+        public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().BeFalse();
         }

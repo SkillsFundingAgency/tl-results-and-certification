@@ -7,9 +7,9 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelDetailsByPathwayIdAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelDetailsByPathwayId
 {
-    public abstract class When_Called_Method_GetTlevelDetailsByPathwayIdAsync : BaseTest<TlevelLoader>
+    public abstract class TestSetup : BaseTest<TlevelLoader>
     {
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
         protected IMapper Mapper;
