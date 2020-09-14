@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.SelectProviderTlevelsPost
 {
-    public abstract class When_SelectProviderTlevelsAsync_Post_Action_Is_Called : BaseTest<TlevelController>
+    public abstract class TestSetup : BaseTest<TlevelController>
     {
         protected long Ukprn;
         protected int ProviderId;

@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.SelectProviderTlevelsPost
 {
-    public class Then_On_Success_Redirected_To_ProviderTlevelConfirmation_Route : When_SelectProviderTlevelsAsync_Post_Action_Is_Called
+    public class When_ViewModel_IsValid : TestSetup
     {
         public override void Given()
         {

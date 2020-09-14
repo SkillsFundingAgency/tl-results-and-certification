@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.ViewProviderTlevels
 {
-    public class Then_On_Navigation_True_Passed_ViewModel_Set_To_True : When_ViewProviderTlevelsAsync_Is_Called
+    public class When_Route_Navigation_IsTrue : TestSetup
     {
         private ProviderViewModel mockViewmodel;
 
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_Expected_ViewModel_Results_Returned()
+        public void Then_Returns_Expected_ViewModel()
         {
             var actualResult = Result.Result;
             actualResult.Should().NotBeNull();

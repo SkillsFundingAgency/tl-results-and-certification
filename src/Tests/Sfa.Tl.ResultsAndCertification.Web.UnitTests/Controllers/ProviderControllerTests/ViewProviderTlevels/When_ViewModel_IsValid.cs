@@ -10,7 +10,7 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.ViewProviderTlevels
 {
-    public class Then_Expected_Results_Are_Returned : When_ViewProviderTlevelsAsync_Is_Called
+    public class When_ViewModel_IsValid : TestSetup
     {
         private ProviderViewModel mockViewmodel;
 
@@ -35,13 +35,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_Loader_GetViewProviderTlevelViewModelAsync_Is_Called()
+        public void Then_Called_Expected_Method()
         {
             ProviderLoader.Received(1).GetViewProviderTlevelViewModelAsync(Arg.Any<long>(), providerId);
         }
 
         [Fact]
-        public void Then_Expected_ViewModel_Results_Returned()
+        public void Then_Returns_Expected_Results()
         {
             var actualResult = Result.Result;
             actualResult.Should().NotBeNull();

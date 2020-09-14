@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.ViewProviderTlevels
 {
-    public class Then_No_TlevelsAvailable_Redirected_To_SelectProviderTlevels : When_ViewProviderTlevelsAsync_Is_Called
+    public class When_Tlevels_NotFound : TestSetup
     {
         private ProviderViewModel mockViewmodel;
 
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_Redirected_To_SelecctProviderTlevels()
+        public void Then_Redirected_To_SelectProviderTlevels()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.SelectProviderTlevels);

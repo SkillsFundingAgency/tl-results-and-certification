@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.ViewProviderTlevels
 {
-    public class Then_On_Null_ViewModel_PageNotFound_Returnered : When_ViewProviderTlevelsAsync_Is_Called
+    public class When_ViewModel_IsNull : TestSetup
     {
         public override void Given() { }
 
