@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ReportIssueAsyncGet
 {
-    public class Then_On_IsBackToVerifyPage_SessionKey_True_Viewmodel_IsBackToVerifyPage_Set_To_True : When_ReportIssueAsync_Is_Called
+    public class When_IsBackToVerifyPage_IsTrue : TestSetup
     {
         public override void Given()
         {
@@ -18,12 +18,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_IsBackToVerifyPage_Set_To_True()
+        public void Then_Returns_Expected_BackLinkModel()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as TlevelQueryViewModel;
 
-            model.IsBackToVerifyPage.Should().BeTrue();
+            model.IsBackToVerifyPage.Should().BeTrue(); 
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AreDetailsCorrect);

@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
@@ -7,18 +8,20 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ReportIssueAsyncPost
 {
-    public class Then_ViewModel_Has_NoAwaitingStatus_Reredirected_To_PageNotFound : When_ReportIssueAsync_Is_Called
+    public class When_ReportIssue_Fail : TestSetup
     {
         public override void Given()
         {
-            InputViewModel = new TlevelQueryViewModel { PathwayStatusId = (int)TlevelReviewStatus.Queried };
+            PathwayId = 99;
+            InputViewModel = new TlevelQueryViewModel { PathwayStatusId = (int)TlevelReviewStatus.AwaitingConfirmation, PathwayId = PathwayId };
+            TlevelLoader.ReportIssueAsync(InputViewModel).Returns(false);
         }
 
         [Fact]
-        public void Then_Null_ViewModel_Redirected_To_Route_PageNotFound()
+        public void Then_Redirected_To_QueryServiceProblem()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.PageNotFound);
+            routeName.Should().Be(RouteConstants.QueryServiceProblem);
         }
     }
 }

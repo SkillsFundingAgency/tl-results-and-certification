@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ReportIssueAsyncPost
 {
-    public class Then_ModelState_Invalid_Returns_Expected_ViewModel : When_ReportIssueAsync_Is_Called
+    public class When_ModelState_Invalid : TestSetup
     {
         public override void Given()
         {
@@ -18,13 +18,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_GetQueryTlevelViewModelAsync_Method_Is_Called()
+        public void Then_Called_Expected_Methods()
         {
             TlevelLoader.Received(1).GetQueryTlevelViewModelAsync(Ukprn, PathwayId);
         }
 
         [Fact]
-        public void Then_Expected_Results_Are_Returns()
+        public void Then_Returns_Expcted_ViewModel()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as TlevelQueryViewModel;

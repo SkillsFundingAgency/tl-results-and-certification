@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ReportIssueAsyncGet
 {
-    public class Then_Status_Is_Queried_Redireced_To_PageNotFound : When_ReportIssueAsync_Is_Called
+    public class When_Satus_IsQueried : TestSetup
     {
         public override void Given()
         {
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_On_Status_Is_Queried_RedirectedTo_PageNotFound()
+        public void Then_Redirected_To_PageNotFound()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.PageNotFound);
