@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         protected ILogger<CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>> Logger;
         
         protected CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> Service { get; private set; }
-        protected Task<CsvResponseModel<RegistrationCsvRecordResponse>> Response;
+        protected CsvResponseModel<RegistrationCsvRecordResponse> Response;
         
         public StringBuilder InputFileContent;
 
@@ -32,9 +32,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
             Service = new CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>(RegValidator, DataParser, Logger);
         }
         
-        public override void When()
+        public async override Task When()
         {
-            Response = Service.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = GetInputFileStream() });
+            Response = await Service.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = GetInputFileStream() });
         }
 
         private Stream GetInputFileStream()

@@ -1,9 +1,10 @@
-﻿using System.Linq;
-using Xunit;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
 {
@@ -19,9 +20,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
             _data = tlSpecialisms.FirstOrDefault();
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = Repository.CreateAsync(_data).GetAwaiter().GetResult();
+            _result = await Repository.CreateAsync(_data);
         }
 
         [Fact]

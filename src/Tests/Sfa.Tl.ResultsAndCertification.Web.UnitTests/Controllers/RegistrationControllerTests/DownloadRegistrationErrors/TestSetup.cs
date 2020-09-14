@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             RegistrationLoader.GetRegistrationValidationErrorsFileAsync(Ukprn, BlobUniqueReference).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File for validation errors")));
         }
 
-        public override void When()
+        public async override Task When()
         {
             Result = Controller.DownloadRegistrationErrors(Id);
         }

@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using Xunit;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqProvider
 {
@@ -17,10 +16,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqProvider
             _data = new TqProviderBuilder().BuildList();
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = Repository.CreateManyAsync(_data)
-                   .GetAwaiter().GetResult();
+            _result = await Repository.CreateManyAsync(_data);
         }
 
         [Fact]

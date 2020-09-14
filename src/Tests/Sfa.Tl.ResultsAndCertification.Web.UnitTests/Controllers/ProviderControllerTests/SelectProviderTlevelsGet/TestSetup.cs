@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         protected int ProviderId;
         protected IProviderLoader ProviderLoader;
         protected ProviderController Controller;
-        protected Task<IActionResult> Result;
+        protected IActionResult Result;
         protected ILogger<ProviderController> Logger;
         protected IHttpContextAccessor HttpContextAccessor;
         protected TempDataDictionary TempData;
@@ -31,9 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             Controller.TempData = TempData;
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = Controller.SelectProviderTlevelsAsync(ProviderId);
+            Result = await Controller.SelectProviderTlevelsAsync(ProviderId);
         }
     }
 }

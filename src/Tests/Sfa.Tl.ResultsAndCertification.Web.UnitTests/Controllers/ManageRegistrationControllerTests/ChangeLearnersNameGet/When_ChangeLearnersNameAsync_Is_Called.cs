@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using System.Threading.Tasks;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ChangeLearnersNameGet
@@ -49,9 +50,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = Controller.ChangeLearnersNameAsync(ProfileId).Result;
+            Result = await Controller.ChangeLearnersNameAsync(ProfileId);
         }
     }
 }

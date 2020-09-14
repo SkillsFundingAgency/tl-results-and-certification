@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.GetPathwaySpecialismsByPathwayLarId
 {
@@ -47,9 +48,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            ActualResult = Loader.GetPathwaySpecialismsByPathwayLarIdAsync(Ukprn, PathwayLarId).Result;
+            ActualResult = await Loader.GetPathwaySpecialismsByPathwayLarIdAsync(Ukprn, PathwayLarId);
         }
     }
 }

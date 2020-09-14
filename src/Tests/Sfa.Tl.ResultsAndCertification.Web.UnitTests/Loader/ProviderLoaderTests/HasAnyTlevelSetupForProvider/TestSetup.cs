@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTests.HasAnyTlevelSetupForProvider
 {
@@ -28,9 +29,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
             Loader = new ProviderLoader(InternalApiClient, Mapper);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            ActualResult = Loader.HasAnyTlevelSetupForProviderAsync(Ukprn, TlProviderId).Result;
+            ActualResult = await Loader.HasAnyTlevelSetupForProviderAsync(Ukprn, TlProviderId);
         }
     }
 }

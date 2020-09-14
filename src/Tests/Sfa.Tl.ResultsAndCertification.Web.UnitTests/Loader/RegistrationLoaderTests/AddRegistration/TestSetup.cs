@@ -14,6 +14,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.AddRegistration
 {
@@ -83,9 +84,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            ActualResult = Loader.AddRegistrationAsync(AoUkprn, RegistrationViewModel).Result;
+            ActualResult = await Loader.AddRegistrationAsync(AoUkprn, RegistrationViewModel);
         }
     }
 }

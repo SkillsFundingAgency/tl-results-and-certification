@@ -4,7 +4,9 @@ using Notify.Interfaces;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
+
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.NotificationServiceTests
 {
@@ -22,14 +24,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.NotificationS
             NotificationService = new NotificationService(Repository, NotificationsClient, NotificationLogger);
         }
 
-        public override void When()
+        public async override Task When()
         {
             ToAddress = "test@test.com";
             var tokens = new Dictionary<string, dynamic>
             {
                 { "tlevel_name",  "Digital" }
             };
-            Result = NotificationService.SendEmailNotificationAsync(_templateName, ToAddress, tokens).GetAwaiter().GetResult();
+            Result = await NotificationService.SendEmailNotificationAsync(_templateName, ToAddress, tokens);
         }
 
         [Fact]

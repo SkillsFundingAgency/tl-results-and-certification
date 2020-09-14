@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
     {
         protected ITokenServiceClient _tokenServiceClient;
         protected ResultsAndCertificationConfiguration _configuration;
-        protected Task<BulkRegistrationResponse> Result;
+        protected BulkRegistrationResponse _result;
 
         protected ResultsAndCertificationInternalApiClient _apiClient;
         protected BulkRegistrationResponse _mockHttpResult;
@@ -56,20 +56,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = _apiClient.ProcessBulkRegistrationsAsync(_model);
+            _result = await _apiClient.ProcessBulkRegistrationsAsync(_model);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var actualResult = Result.Result;
-
-            actualResult.Should().NotBeNull();
-            actualResult.IsSuccess.Should().BeFalse();
-            actualResult.BlobUniqueReference.Should().Be(_mockHttpResult.BlobUniqueReference);
-            actualResult.ErrorFileSize.Should().Be(_mockHttpResult.ErrorFileSize);
+            _result.Should().NotBeNull();
+            _result.IsSuccess.Should().BeFalse();
+            _result.BlobUniqueReference.Should().Be(_mockHttpResult.BlobUniqueReference);
+            _result.ErrorFileSize.Should().Be(_mockHttpResult.ErrorFileSize);
         }
     }
 }

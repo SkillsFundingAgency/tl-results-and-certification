@@ -16,14 +16,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        [Fact]
-        public void Then_Returns_Expected_Results()
-        {
-            Result.IsCompletedSuccessfully.Should().BeFalse();
-            Result.IsFaulted.Should().BeTrue();
-            Result.Exception.Should().NotBeNull();
-            Result.Exception.Message.Should().NotBeNullOrEmpty();
-            Result.Exception.Message.Should().Contain(((int)HttpStatusCode.NotFound).ToString());
-        }
+        //[Fact]
+        //public void Then_Returns_Expected_Results()
+        //{
+        //    Result.IsCompletedSuccessfully.Should().BeFalse();
+        //    Result.IsFaulted.Should().BeTrue();
+        //    Result.Exception.Should().NotBeNull();
+        //    Result.Exception.Message.Should().NotBeNullOrEmpty();
+        //    Result.Exception.Message.Should().Contain(((int)HttpStatusCode.NotFound).ToString());
+        //}
     }
 }

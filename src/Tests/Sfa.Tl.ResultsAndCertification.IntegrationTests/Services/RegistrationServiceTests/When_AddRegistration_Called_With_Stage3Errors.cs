@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 {
     public class When_AddRegistration_Called_With_Stage3Errors : RegistrationServiceBaseTest
     {
-        private Task<bool> _result;
+        private bool _result;
         private RegistrationRequest _registrationRequest;
 
         public override void Given()
@@ -42,16 +42,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             };
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = RegistrationService.AddRegistrationAsync(_registrationRequest);
+            _result = await RegistrationService.AddRegistrationAsync(_registrationRequest);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            _result.Should().NotBeNull();
-            _result.Result.Should().BeFalse();
+            _result.Should().BeFalse();
         }
     }
 }

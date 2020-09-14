@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private ResultsAndCertificationConfiguration _configuration;
         private ResultsAndCertificationInternalApiClient _apiClient;
         
-        private Task<IEnumerable<ProviderMetadata>> _result;
+        private IEnumerable<ProviderMetadata> _result;
         private IEnumerable<ProviderMetadata> _mockHttpResult;
 
         // Method Parameters
@@ -50,20 +50,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = _apiClient.FindProviderAsync(_name, _isExactMatch);
+            _result = await _apiClient.FindProviderAsync(_name, _isExactMatch);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var actualResult = _result.Result;
-            actualResult.Should().NotBeNull();
-            actualResult.Count().Should().Be(2);
-
-            actualResult.First().Id.Should().Be(_mockHttpResult.First().Id);
-            actualResult.First().DisplayName.Should().Be(_mockHttpResult.First().DisplayName);
+            _result.Should().NotBeNull();
+            _result.Count().Should().Be(2);
+            _result.First().Id.Should().Be(_mockHttpResult.First().Id);
+            _result.First().DisplayName.Should().Be(_mockHttpResult.First().DisplayName);
         }
     }
 }

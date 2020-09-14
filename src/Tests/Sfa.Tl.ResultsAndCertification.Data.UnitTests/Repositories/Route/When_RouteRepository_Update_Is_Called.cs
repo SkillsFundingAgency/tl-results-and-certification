@@ -1,9 +1,10 @@
-﻿using System;
-using Xunit;
-using FluentAssertions;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
+﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Route
 {
@@ -26,11 +27,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Route
             _data.ModifiedBy = ModifiedUserName;
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Repository.UpdateAsync(_data).GetAwaiter().GetResult();
-            _result = Repository.GetSingleOrDefaultAsync(x => x.Id == 1)
-                .GetAwaiter().GetResult();
+            await Repository.UpdateAsync(_data);
+            _result = await Repository.GetSingleOrDefaultAsync(x => x.Id == 1);
         }
 
         [Fact]

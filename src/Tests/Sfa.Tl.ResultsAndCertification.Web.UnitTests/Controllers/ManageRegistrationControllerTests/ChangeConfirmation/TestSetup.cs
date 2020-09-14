@@ -12,6 +12,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ChangeConfirmation
 {
@@ -49,9 +50,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             MockResult = new ManageRegistrationResponse { Uln = 123456789, ProfileId = 1 };
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = Controller.ChangeConfirmationAsync().Result;
+            Result = await Controller.ChangeConfirmationAsync();
         }
     }
 }

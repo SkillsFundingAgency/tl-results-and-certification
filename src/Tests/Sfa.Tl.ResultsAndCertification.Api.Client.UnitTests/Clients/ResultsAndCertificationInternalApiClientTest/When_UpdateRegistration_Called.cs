@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 {
     public class When_UpdateRegistration_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        private Task<bool> _result;
+        private bool _result;
         protected bool _mockHttpResult;
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
@@ -56,15 +56,15 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = _apiClient.UpdateRegistrationAsync(_model);
+            _result = await _apiClient.UpdateRegistrationAsync(_model);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            _result.Result.Should().BeTrue();
+            _result.Should().BeTrue();
         }
     }
 }

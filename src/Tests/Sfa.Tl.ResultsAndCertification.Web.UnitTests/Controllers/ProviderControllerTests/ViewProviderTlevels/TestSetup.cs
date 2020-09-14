@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             HttpContextAccessor.HttpContext.Returns(httpContext);
         }
 
-        public override void When()
+        public async override Task When()
         {
             Result = Controller.ViewProviderTlevelsAsync(providerId, navigation);
         }

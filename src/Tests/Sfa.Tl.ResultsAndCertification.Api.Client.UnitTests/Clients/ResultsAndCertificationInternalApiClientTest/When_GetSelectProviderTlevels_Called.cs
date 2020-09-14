@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 {
     public class When_GetSelectProviderTlevels_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        private Task<ProviderTlevels> _result;
+        private ProviderTlevels _result;
         private readonly long _ukprn = 12345678;
         private readonly int _providerId = 1;
         protected ProviderTlevels _mockHttpResult;
@@ -51,25 +51,23 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             HttpClient = new HttpClient(new MockHttpMessageHandler<ProviderTlevels>(_mockHttpResult, string.Format(ApiConstants.GetSelectProviderTlevelsUri, _ukprn, _providerId), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
-        public override void When()
+        public async override Task When()
         {
-            _result = _apiClient.GetSelectProviderTlevelsAsync(_ukprn, _providerId);
+            _result = await _apiClient.GetSelectProviderTlevelsAsync(_ukprn, _providerId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var actualResult = _result.Result;
-
-            actualResult.Should().NotBeNull();
-            actualResult.Id.Should().Be(_mockHttpResult.Id);
-            actualResult.DisplayName.Should().Be(_mockHttpResult.DisplayName);
-            actualResult.Ukprn.Should().Be(_mockHttpResult.Ukprn);
-            actualResult.Tlevels.Should().NotBeNull();
-            actualResult.Tlevels.Count().Should().Be(2);
+            _result.Tlevels.Count().Should().Be(2);
+            _result.Should().NotBeNull();
+            _result.Id.Should().Be(_mockHttpResult.Id);
+            _result.DisplayName.Should().Be(_mockHttpResult.DisplayName);
+            _result.Ukprn.Should().Be(_mockHttpResult.Ukprn);
+            _result.Tlevels.Should().NotBeNull();
 
             var expectedTlevelResult = _mockHttpResult.Tlevels.FirstOrDefault();
-            var actualProviderTlevelResult = actualResult.Tlevels.FirstOrDefault();
+            var actualProviderTlevelResult = _result.Tlevels.FirstOrDefault();
             actualProviderTlevelResult.Should().NotBeNull();
 
             actualProviderTlevelResult.TqAwardingOrganisationId.Should().Be(expectedTlevelResult.TqAwardingOrganisationId);

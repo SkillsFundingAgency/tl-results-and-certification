@@ -1,8 +1,10 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.NotificationTemplate
@@ -19,9 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Notificatio
             DbContext.SaveChanges();
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = Repository.GetManyAsync().ToList();
+            _result = await Repository.GetManyAsync().ToListAsync();
         }
 
         [Fact]

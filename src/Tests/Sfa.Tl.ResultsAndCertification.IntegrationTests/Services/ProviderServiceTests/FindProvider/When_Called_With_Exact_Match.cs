@@ -1,14 +1,15 @@
-﻿using Xunit;
-using NSubstitute;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using System.Collections.Generic;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
+using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.FindProvider
 {
@@ -37,9 +38,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             DbContext.SaveChangesAsync();
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = ProviderService.FindProviderAsync(_providerName, _isExactMatch).Result;
+            _result = await ProviderService.FindProviderAsync(_providerName, _isExactMatch);
         }
 
         [Fact]

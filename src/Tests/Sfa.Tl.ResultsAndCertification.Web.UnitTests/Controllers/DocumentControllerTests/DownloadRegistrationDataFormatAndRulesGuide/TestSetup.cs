@@ -9,6 +9,8 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System;
+using System.Threading.Tasks;
+
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.DownloadRegistrationDataFormatAndRulesGuide
 {
     public abstract class TestSetup : BaseTest<DocumentController>
@@ -37,9 +39,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
             HttpContextAccessor.HttpContext.Returns(httpContext);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = Controller.DownloadRegistrationDataFormatAndRulesGuideAsync().Result;
+            Result = await Controller.DownloadRegistrationDataFormatAndRulesGuideAsync();
         }
     }
 }

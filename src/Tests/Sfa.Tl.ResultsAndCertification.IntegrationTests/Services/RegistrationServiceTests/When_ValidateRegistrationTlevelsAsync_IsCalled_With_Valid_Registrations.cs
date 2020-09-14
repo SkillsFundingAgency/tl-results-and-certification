@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrations;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
@@ -30,9 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             _stage3RegistrationsData = new RegistrationsStage3Builder().BuildValidList();
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = RegistrationService.ValidateRegistrationTlevelsAsync(_aoUkprn, _stage3RegistrationsData).Result;
+            _result = await RegistrationService.ValidateRegistrationTlevelsAsync(_aoUkprn, _stage3RegistrationsData);
         }
 
         [Fact]

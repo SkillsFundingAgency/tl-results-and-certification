@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingOrganisation
@@ -23,10 +24,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingO
             _data.ModifiedBy = ModifiedBy;
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Repository.UpdateAsync(_data).GetAwaiter().GetResult();
-            _result = Repository.GetFirstOrDefaultAsync(x => x.Id == _data.Id).GetAwaiter().GetResult();
+            await Repository.UpdateAsync(_data);
+            _result = await Repository.GetFirstOrDefaultAsync(x => x.Id == _data.Id);
         }
 
         [Fact]

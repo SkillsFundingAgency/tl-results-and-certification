@@ -46,8 +46,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
             BlobService.Received(1).MoveFileAsync(Arg.Any<BlobStorageData>());
             DocumentUploadHistoryService.Received(1).CreateDocumentUploadHistory(Arg.Any<DocumentUploadHistoryDetails>());
 
-            Response.Result.IsSuccess.Should().BeFalse();
-            Response.Result.BlobUniqueReference.Should().Be(BlobUniqueRef);
+            Response.IsSuccess.Should().BeFalse();
+            Response.BlobUniqueReference.Should().Be(BlobUniqueRef);
         }
     }
 }

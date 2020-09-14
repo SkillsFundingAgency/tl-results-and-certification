@@ -10,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.CancelRegistrationGet
 {
@@ -43,9 +44,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             HttpContextAccessor.HttpContext.Returns(httpContext);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = Controller.CancelRegistrationAsync(ProfileId).Result;
+            Result = await Controller.CancelRegistrationAsync(ProfileId);
         }
     }
 }

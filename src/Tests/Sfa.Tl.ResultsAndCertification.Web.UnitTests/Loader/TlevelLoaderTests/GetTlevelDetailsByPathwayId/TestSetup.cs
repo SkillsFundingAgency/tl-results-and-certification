@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelDetailsByPathwayId
 {
@@ -45,9 +46,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
             Loader = new TlevelLoader(InternalApiClient, Mapper);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            ActualResult = Loader.GetTlevelDetailsByPathwayIdAsync(Ukprn, Id).Result;
+            ActualResult = await Loader.GetTlevelDetailsByPathwayIdAsync(Ukprn, Id);
         }
     }
 }

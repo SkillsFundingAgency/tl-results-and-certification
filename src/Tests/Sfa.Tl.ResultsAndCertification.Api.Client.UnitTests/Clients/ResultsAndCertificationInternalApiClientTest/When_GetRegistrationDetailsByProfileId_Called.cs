@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
         private ResultsAndCertificationInternalApiClient _apiClient;
-        private Task<RegistrationDetails> _result;
+        private RegistrationDetails _result;
 
         public override void Setup()
         {
@@ -57,25 +57,23 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = _apiClient.GetRegistrationDetailsByProfileIdAsync(_ukprn, _profileId);
+            _result = await _apiClient.GetRegistrationDetailsByProfileIdAsync(_ukprn, _profileId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var actualResult = _result.Result;
-
-            actualResult.Should().NotBeNull();
-            actualResult.Uln.Should().Be(_mockHttpResult.Uln);
-            actualResult.Name.Should().Be(_mockHttpResult.Name);
-            actualResult.DateofBirth.Should().Be(_mockHttpResult.DateofBirth);
-            actualResult.ProviderDisplayName.Should().Be(_mockHttpResult.ProviderDisplayName);
-            actualResult.PathwayDisplayName.Should().Be(_mockHttpResult.PathwayDisplayName);
-            actualResult.SpecialismsDisplayName.Should().BeEquivalentTo(_mockHttpResult.SpecialismsDisplayName);
-            actualResult.AcademicYear.Should().Be(_mockHttpResult.AcademicYear);
-            actualResult.Status.Should().Be(_mockHttpResult.Status);
+            _result.Should().NotBeNull();
+            _result.Uln.Should().Be(_mockHttpResult.Uln);
+            _result.Name.Should().Be(_mockHttpResult.Name);
+            _result.DateofBirth.Should().Be(_mockHttpResult.DateofBirth);
+            _result.ProviderDisplayName.Should().Be(_mockHttpResult.ProviderDisplayName);
+            _result.PathwayDisplayName.Should().Be(_mockHttpResult.PathwayDisplayName);
+            _result.SpecialismsDisplayName.Should().BeEquivalentTo(_mockHttpResult.SpecialismsDisplayName);
+            _result.AcademicYear.Should().Be(_mockHttpResult.AcademicYear);
+            _result.Status.Should().Be(_mockHttpResult.Status);
         }
     }
 }

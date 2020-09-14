@@ -9,9 +9,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            Result.Result.Should().NotBeNullOrEmpty();
+            Result.Should().NotBeNullOrEmpty();
 
-            var expectedResult = Result.Result.FirstOrDefault();
+            var expectedResult = Result.FirstOrDefault();
             expectedResult.TlevelTitle.Should().Be(TlevelTitle);
             expectedResult.StatusId.Should().Be(StatusId);
         }

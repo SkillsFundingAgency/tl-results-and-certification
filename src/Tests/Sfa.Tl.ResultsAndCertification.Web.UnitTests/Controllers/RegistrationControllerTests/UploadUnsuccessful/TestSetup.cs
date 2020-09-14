@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using System;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.UploadUnsuccessful
 {
@@ -46,9 +47,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             Controller.TempData = TempData;
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = Controller.UploadUnsuccessful().Result;
+            Result = await Controller.UploadUnsuccessful();
         }
     }
 }

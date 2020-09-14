@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
@@ -21,9 +22,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
             DbContext.SaveChanges();
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = Repository.GetFirstOrDefaultAsync(x => x.Id == 1).GetAwaiter().GetResult();
+            _result = await Repository.GetFirstOrDefaultAsync(x => x.Id == 1);
         }
 
         [Fact]

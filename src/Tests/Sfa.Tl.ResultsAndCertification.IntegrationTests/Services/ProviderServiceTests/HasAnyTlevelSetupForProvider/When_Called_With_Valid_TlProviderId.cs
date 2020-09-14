@@ -1,11 +1,12 @@
-﻿using Xunit;
-using FluentAssertions;
-using NSubstitute;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.HasAnyTlevelSetupForProviderAsync
 {
@@ -30,9 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = ProviderService.HasAnyTlevelSetupForProviderAsync(TlAwardingOrganisation.UkPrn, TlProvider.Id).Result;
+            _result = await ProviderService.HasAnyTlevelSetupForProviderAsync(TlAwardingOrganisation.UkPrn, TlProvider.Id);
         }
 
         [Fact]

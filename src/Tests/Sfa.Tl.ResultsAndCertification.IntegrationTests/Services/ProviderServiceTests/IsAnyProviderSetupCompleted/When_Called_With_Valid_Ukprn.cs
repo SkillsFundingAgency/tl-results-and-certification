@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.IsAnyProviderSetupCompleted
 {
@@ -30,9 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = ProviderService.IsAnyProviderSetupCompletedAsync(TlAwardingOrganisation.UkPrn).Result;
+            _result = await ProviderService.IsAnyProviderSetupCompletedAsync(TlAwardingOrganisation.UkPrn);
         }
 
         [Fact]

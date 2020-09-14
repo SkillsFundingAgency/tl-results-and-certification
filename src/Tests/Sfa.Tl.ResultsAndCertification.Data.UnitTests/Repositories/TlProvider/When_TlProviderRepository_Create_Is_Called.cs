@@ -1,7 +1,7 @@
-﻿using Xunit;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlProvider
 {
@@ -15,9 +15,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlProvider
             _data = new TlProviderBuilder().Build();
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = Repository.CreateAsync(_data).GetAwaiter().GetResult();
+            _result = await Repository.CreateAsync(_data);
         }
 
         [Fact]

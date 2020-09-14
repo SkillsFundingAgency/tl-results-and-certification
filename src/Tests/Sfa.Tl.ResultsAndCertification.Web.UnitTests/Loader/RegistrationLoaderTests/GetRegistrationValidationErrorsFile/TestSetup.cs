@@ -13,6 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.GetRegistrationValidationErrorsFile
 {
@@ -59,9 +60,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            ActualResult = Loader.GetRegistrationValidationErrorsFileAsync(Ukprn, BlobUniqueReference).Result;
+            ActualResult = await Loader.GetRegistrationValidationErrorsFileAsync(Ukprn, BlobUniqueReference);
         }
     }
 }

@@ -12,7 +12,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
-
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationSpecialismGet
 {
@@ -49,9 +49,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = Controller.AddRegistrationSpecialismsAsync(IsChangeMode).Result;
+            Result = await Controller.AddRegistrationSpecialismsAsync(IsChangeMode);
         }
     }
 }

@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.SearchRegistrationPost
 {
@@ -54,9 +55,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             RegistrationLoader.FindUlnAsync(AoUkprn, SearchUln.ToLong()).Returns(ulnNotFoundViewModel);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = Controller.SearchRegistrationAsync(SearchRegistrationViewModel).Result;
+            Result = await Controller.SearchRegistrationAsync(SearchRegistrationViewModel);
         }
     }
 }

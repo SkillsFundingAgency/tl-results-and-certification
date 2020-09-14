@@ -1,19 +1,20 @@
-﻿using System.Linq;
-using Xunit;
-using AutoMapper;
-using NSubstitute;
+﻿using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrganisationServiceTests.VerifyTlevelAsync
 {
@@ -44,9 +45,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
             _service = new AwardingOrganisationService(_resultsAndCertificationConfiguration, Repository, null, _mapper, _logger);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _isSuccess = _service.VerifyTlevelAsync(_verifyTlevelDetailsModel).Result;
+            _isSuccess = await _service.VerifyTlevelAsync(_verifyTlevelDetailsModel);
         }
 
         [Fact]

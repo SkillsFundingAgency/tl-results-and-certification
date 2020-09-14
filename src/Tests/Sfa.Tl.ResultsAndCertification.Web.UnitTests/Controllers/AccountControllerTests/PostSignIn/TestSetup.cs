@@ -6,6 +6,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using System.Threading.Tasks;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountControllerTests.PostSignIn
@@ -30,9 +31,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
             Controller = new AccountController(Configuration, Logger);
         }
 
-        public override void When()
+        public override Task When()
         {
-            Result = Controller.PostSignIn();
+            //Result = Controller.PostSignIn();
+            var postSignInTask = Task.Run(() => Controller.PostSignIn());
+            Result = postSignInTask.GetAwaiter().GetResult();
+            return postSignInTask;
         }
     }
 }

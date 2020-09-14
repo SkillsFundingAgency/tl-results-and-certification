@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
 {
@@ -37,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
         }
 
         public abstract void Given();
-        public abstract void When();
+        public abstract Task When();
 
         public void Dispose()
         {

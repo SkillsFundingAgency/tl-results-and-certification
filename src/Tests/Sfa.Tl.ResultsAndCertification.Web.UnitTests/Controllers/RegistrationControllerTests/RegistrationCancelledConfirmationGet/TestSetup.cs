@@ -13,6 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.RegistrationCancelledConfirmationGet
 {
@@ -48,13 +49,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey);
-            //TempData = new TempDataDictionary(HttpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
-            //Controller.TempData = TempData;
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = Controller.RegistrationCancelledConfirmationAsync().Result;
+            Result = await Controller.RegistrationCancelledConfirmationAsync();
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             };
         }
 
-        public override void When()
+        public async override Task When()
         {
             _result = RegistrationService.AddRegistrationAsync(_registrationRequest);
         }

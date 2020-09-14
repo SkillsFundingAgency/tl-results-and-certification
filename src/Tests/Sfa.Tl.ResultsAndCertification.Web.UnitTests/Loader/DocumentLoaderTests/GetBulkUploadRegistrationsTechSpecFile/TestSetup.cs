@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using DocumentResource = Sfa.Tl.ResultsAndCertification.Web.Content.Document;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.DocumentLoaderTests.GetBulkUploadRegistrationsTechSpecFile
@@ -32,9 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.DocumentLoaderTest
             Loader = new DocumentLoader(Logger, BlobStorageService);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            ActualResult = Loader.GetBulkUploadRegistrationsTechSpecFileAsync(FileName).Result;
+            ActualResult = await Loader.GetBulkUploadRegistrationsTechSpecFileAsync(FileName);
         }
     }
 }

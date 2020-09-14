@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTests.GetSelectProviderTlevels
 {
@@ -48,9 +49,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
             Loader = new ProviderLoader(InternalApiClient, Mapper);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            ActualResult = Loader.GetSelectProviderTlevelsAsync(Ukprn, ProviderId).Result;
+            ActualResult = await Loader.GetSelectProviderTlevelsAsync(Ukprn, ProviderId);
         }
     }
 }

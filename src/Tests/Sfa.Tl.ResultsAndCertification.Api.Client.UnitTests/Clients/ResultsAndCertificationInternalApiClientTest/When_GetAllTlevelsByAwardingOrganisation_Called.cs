@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private ResultsAndCertificationConfiguration _configuration;
         private readonly long ukprn = 1024;
 
-        protected Task<IEnumerable<AwardingOrganisationPathwayStatus>> Result;
+        protected IEnumerable<AwardingOrganisationPathwayStatus> Result;
         protected readonly string TlevelTitle = "Construction";
         protected readonly int Status = 1;
 
@@ -50,17 +50,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = _apiClient.GetAllTlevelsByUkprnAsync(ukprn);
+            Result = await _apiClient.GetAllTlevelsByUkprnAsync(ukprn);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            Result.Result.Should().NotBeNullOrEmpty();
+            Result.Should().NotBeNullOrEmpty();
 
-            var expectedResult = Result.Result.FirstOrDefault();
+            var expectedResult = Result.FirstOrDefault();
             expectedResult.TlevelTitle.Should().Be(TlevelTitle);
             expectedResult.StatusId.Should().Be(1);
         }

@@ -18,8 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private ResultsAndCertificationConfiguration _configuration;
         private readonly long _ukprn = 1024;
         private readonly int _profileId = 1;
-        private Task<bool> _result;
-
+        private bool _result;
         private ResultsAndCertificationInternalApiClient _apiClient;
         private bool _mockHttpResult;
 
@@ -40,15 +39,15 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = _apiClient.DeleteRegistrationAsync(_ukprn, _profileId);
+            _result = await _apiClient.DeleteRegistrationAsync(_ukprn, _profileId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            _result.Result.Should().BeTrue();
+            _result.Should().BeTrue();
         }
     }
 }

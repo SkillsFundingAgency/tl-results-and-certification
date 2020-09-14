@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessProfileNameChangeAsync
 {
@@ -63,9 +64,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            ActualResult = Loader.ProcessProfileNameChangeAsync(AoUkprn, ViewModel).Result;
+            ActualResult = await Loader.ProcessProfileNameChangeAsync(AoUkprn, ViewModel);
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardControllerTests.Index
 {
@@ -21,9 +22,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardCont
             Controller = new DashboardController(Logger);
         }
 
-        public override void When()
+        public override Task When()
         {
-            Result = Controller.Index();
+            //Result = Controller.Index();
+            var indexTask = Task.Run(() => Controller.Index());
+            Result = indexTask.GetAwaiter().GetResult();
+            return indexTask;
         }
     }
 }

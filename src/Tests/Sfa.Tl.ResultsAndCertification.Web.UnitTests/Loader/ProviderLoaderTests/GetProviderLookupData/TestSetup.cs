@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTests.GetProviderLookupData
 {
@@ -30,9 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
             Loader = new ProviderLoader(InternalApiClient, Mapper);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            ActualResult = Loader.GetProviderLookupDataAsync(ProviderName, IsExactMatch).Result;
+            ActualResult = await Loader.GetProviderLookupDataAsync(ProviderName, IsExactMatch);
         }
     }
 }

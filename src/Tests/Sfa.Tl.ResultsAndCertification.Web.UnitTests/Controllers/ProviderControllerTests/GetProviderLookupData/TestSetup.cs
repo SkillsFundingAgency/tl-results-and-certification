@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             Controller = new ProviderController(ProviderLoader, Logger);
         }
 
-        public override void When()
+        public async override Task When()
         {
             Result = Controller.GetProviderLookupDataAsync(ProviderName);
         }

@@ -8,6 +8,8 @@ using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelperServiceTests.Registrations
 {
@@ -26,17 +28,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
             return Uri.UnescapeDataString(codeBaseUri.AbsolutePath);
         }
 
-        public override void When()
+        public override Task When()
         {
             ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) => {
                 return memberInfo.GetCustomAttribute<System.ComponentModel.DataAnnotations.DisplayAttribute>()?.GetName();
             };
+
             using (var stream = File.Open(FilePath, FileMode.Open))
             {
-                ReadAndParseFileResponse = Service.ReadAndParseFileAsync(new RegistrationCsvRecordRequest
+                var readAndParseTask = Service.ReadAndParseFileAsync(new RegistrationCsvRecordRequest
                 {
                     FileStream = stream
-                }).Result;
+                });
+
+                ReadAndParseFileResponse = readAndParseTask.Result;
+                return readAndParseTask;
             }
         }
     }

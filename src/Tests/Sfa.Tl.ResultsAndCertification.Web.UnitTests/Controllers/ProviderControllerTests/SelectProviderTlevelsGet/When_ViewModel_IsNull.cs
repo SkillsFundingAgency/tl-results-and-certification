@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_GetSelectProviderTlevelsAsync_ViewModel_Return_Zero_Rows()
         {
-            var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
+            var actualRouteName = (Result as RedirectToRouteResult).RouteName;
             actualRouteName.Should().Be(RouteConstants.PageNotFound);
         }
     }

@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessBulkRegistrations
 {
@@ -70,9 +71,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            ActualResult = Loader.ProcessBulkRegistrationsAsync(UploadRegistrationsRequestViewModel).Result;
+            ActualResult = await Loader.ProcessBulkRegistrationsAsync(UploadRegistrationsRequestViewModel);
         }
     }
 }

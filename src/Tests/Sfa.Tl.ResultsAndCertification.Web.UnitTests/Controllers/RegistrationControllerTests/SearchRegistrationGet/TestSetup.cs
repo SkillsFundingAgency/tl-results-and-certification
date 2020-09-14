@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.SearchRegistrationGet
 {
@@ -48,9 +49,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             Controller.TempData = TempData;
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = Controller.SearchRegistration().Result;
+            Result = await Controller.SearchRegistration();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrationProfile
@@ -15,10 +16,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
             _data = new TqRegistrationProfileBuilder().BuildList();
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = Repository.CreateManyAsync(_data)
-                   .GetAwaiter().GetResult();
+            _result = await Repository.CreateManyAsync(_data);
         }
 
         [Fact]

@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
         protected ILogger<BulkRegistrationLoader> Logger;
         private BulkRegistrationLoader _loader;
         protected BulkRegistrationRequest Request;
-        protected Task<BulkRegistrationResponse> Response { get; private set; }
+        protected BulkRegistrationResponse Response { get; private set; }
         protected long AoUkprn = 1234567891;
         protected Guid BlobUniqueRef;
 
@@ -50,10 +50,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
             };
         }
 
-        public override void When()
+        public async override Task When()
         {
             _loader = new BulkRegistrationLoader(CsvService, RegistrationService, BlobService, DocumentUploadHistoryService, Logger);
-            Response = _loader.ProcessBulkRegistrationsAsync(Request);
+            Response = await _loader.ProcessBulkRegistrationsAsync(Request);
         }
 
         public List<RegistrationValidationError> ExtractExpectedErrors(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)

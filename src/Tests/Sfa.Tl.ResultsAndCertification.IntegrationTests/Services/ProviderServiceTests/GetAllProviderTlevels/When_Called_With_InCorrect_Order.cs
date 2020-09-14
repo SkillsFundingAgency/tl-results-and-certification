@@ -1,15 +1,16 @@
-﻿using System.Linq;
-using Xunit;
-using FluentAssertions;
-using NSubstitute;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.GetAllProviderTlevels
 {
@@ -32,9 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             ProviderService = new ProviderService(ProviderRepository, TlproviderRepository, ProviderMapper, Logger);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = ProviderService.GetAllProviderTlevelsAsync(TlAwardingOrganisation.UkPrn, TlProvider.Id).Result;
+            _result = await ProviderService.GetAllProviderTlevelsAsync(TlAwardingOrganisation.UkPrn, TlProvider.Id);
         }
 
         [Fact]

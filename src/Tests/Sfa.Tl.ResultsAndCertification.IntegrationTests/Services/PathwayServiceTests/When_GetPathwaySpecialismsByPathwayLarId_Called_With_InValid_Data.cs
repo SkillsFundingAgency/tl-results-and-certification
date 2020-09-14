@@ -1,12 +1,13 @@
-﻿using Xunit;
-using FluentAssertions;
-using NSubstitute;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServiceTests
 {
@@ -23,9 +24,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServic
             _service = new PathwayService(Repository, _mapper);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _pathwaySpecialismsResult = _service.GetPathwaySpecialismsByPathwayLarIdAsync(_ukprn, _pathway.LarId).Result;
+            _pathwaySpecialismsResult = await _service.GetPathwaySpecialismsByPathwayLarIdAsync(_ukprn, _pathway.LarId);
         }
 
         [Fact]

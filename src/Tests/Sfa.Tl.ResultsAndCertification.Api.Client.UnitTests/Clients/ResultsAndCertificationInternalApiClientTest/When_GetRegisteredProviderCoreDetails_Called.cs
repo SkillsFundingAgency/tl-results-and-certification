@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 {
     public class When_GetRegisteredProviderCoreDetails_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        private Task<IList<PathwayDetails>> _result;
+        private IList<PathwayDetails> _result;
         private readonly long _ukprn = 12345678;
         private readonly long _providerUkprn = 987654321;
         protected IList<PathwayDetails> _mockHttpResult;
@@ -57,20 +57,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = _apiClient.GetRegisteredProviderPathwayDetailsAsync(_ukprn, _providerUkprn);
+            _result = await _apiClient.GetRegisteredProviderPathwayDetailsAsync(_ukprn, _providerUkprn);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var actualResult = _result.Result;
-
-            actualResult.Should().NotBeNull();
-            actualResult.Count().Should().Be(2);
+            _result.Should().NotBeNull();
+            _result.Count().Should().Be(2);
             var expectedCoreDetailsResult = _mockHttpResult.FirstOrDefault();
-            var actualCoreDetailsResult = actualResult.FirstOrDefault();
+            var actualCoreDetailsResult = _result.FirstOrDefault();
             actualCoreDetailsResult.Should().NotBeNull();
 
             actualCoreDetailsResult.Id.Should().Be(expectedCoreDetailsResult.Id);

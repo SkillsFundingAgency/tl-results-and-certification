@@ -1,7 +1,8 @@
-﻿using Xunit;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingOrganisation
 {
@@ -16,9 +17,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingO
             _data = new TlAwardingOrganisationBuilder().Build(_awardingOrganisation);
         }
         
-        public override void When()
+        public async override Task When()
         {
-            _result = Repository.CreateAsync(_data).GetAwaiter().GetResult();
+            _result = await Repository.CreateAsync(_data);
         }
 
         [Fact]

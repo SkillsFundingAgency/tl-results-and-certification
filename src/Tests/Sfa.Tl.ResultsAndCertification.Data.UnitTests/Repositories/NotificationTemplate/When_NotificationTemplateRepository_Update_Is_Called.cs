@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
+using System.Threading.Tasks;
 using System;
 using Xunit;
 
@@ -23,11 +24,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Notificatio
             _data.ModifiedBy = ModifiedUserName;
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Repository.UpdateAsync(_data).GetAwaiter().GetResult();
-            _result = Repository.GetSingleOrDefaultAsync(x => x.Id == 1)
-                .GetAwaiter().GetResult();
+            await Repository.UpdateAsync(_data);
+            _result = await Repository.GetSingleOrDefaultAsync(x => x.Id == 1);
         }
 
         [Fact]

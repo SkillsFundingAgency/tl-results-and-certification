@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrationPathway
@@ -12,11 +13,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
         public override void Given()
         {
             _data = new TqRegistrationPathwayBuilder().Build();
-
         }
-        public override void When()
+        public async override Task When()
         {
-            _result = Repository.CreateAsync(_data).GetAwaiter().GetResult();
+            _result = await Repository.CreateAsync(_data);
         }
 
         [Fact]

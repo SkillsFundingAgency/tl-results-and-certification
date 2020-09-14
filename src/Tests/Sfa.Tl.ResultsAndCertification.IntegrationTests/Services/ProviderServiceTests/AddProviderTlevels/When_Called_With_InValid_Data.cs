@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.AddProviderTlevels
@@ -36,9 +37,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             _providerTlevelDetails = new List<ProviderTlevel>();
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _isSuccess = ProviderService.AddProviderTlevelsAsync(_providerTlevelDetails).Result;
+            _isSuccess = await ProviderService.AddProviderTlevelsAsync(_providerTlevelDetails);
         }
 
         [Fact]

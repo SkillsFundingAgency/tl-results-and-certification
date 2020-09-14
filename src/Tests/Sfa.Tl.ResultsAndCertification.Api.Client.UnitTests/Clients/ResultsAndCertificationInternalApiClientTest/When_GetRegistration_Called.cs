@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private ResultsAndCertificationConfiguration _configuration;
         private readonly long _ukprn = 1024;
         private readonly int _profileId = 1;
-        private Task<ManageRegistration> _result;
+        private ManageRegistration _result;
 
         private ResultsAndCertificationInternalApiClient _apiClient;
         private ManageRegistration _expectedResult;
@@ -61,28 +61,28 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = _apiClient.GetRegistrationAsync(_ukprn, _profileId);
+            _result = await _apiClient.GetRegistrationAsync(_ukprn, _profileId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            _result.Result.Should().NotBeNull();
-            _result.Result.ProfileId.Should().Be(_expectedResult.ProfileId);
-            _result.Result.FirstName.Should().Be(_expectedResult.FirstName);
-            _result.Result.LastName.Should().Be(_expectedResult.LastName);
-            _result.Result.DateOfBirth.Should().Be(_expectedResult.DateOfBirth);
-            _result.Result.ProviderUkprn.Should().Be(_expectedResult.ProviderUkprn);
-            _result.Result.CoreCode.Should().Be(_expectedResult.CoreCode);
-            _result.Result.AcademicYear.Should().Be(_expectedResult.AcademicYear);
-            _result.Result.AoUkprn.Should().Be(_expectedResult.AoUkprn);
-            _result.Result.PerformedBy.Should().Be(_expectedResult.PerformedBy);
+            _result.Should().NotBeNull();
+            _result.ProfileId.Should().Be(_expectedResult.ProfileId);
+            _result.FirstName.Should().Be(_expectedResult.FirstName);
+            _result.LastName.Should().Be(_expectedResult.LastName);
+            _result.DateOfBirth.Should().Be(_expectedResult.DateOfBirth);
+            _result.ProviderUkprn.Should().Be(_expectedResult.ProviderUkprn);
+            _result.CoreCode.Should().Be(_expectedResult.CoreCode);
+            _result.AcademicYear.Should().Be(_expectedResult.AcademicYear);
+            _result.AoUkprn.Should().Be(_expectedResult.AoUkprn);
+            _result.PerformedBy.Should().Be(_expectedResult.PerformedBy);
 
-            _result.Result.SpecialismCodes.Count().Should().Be(_expectedResult.SpecialismCodes.Count());
-            _result.Result.SpecialismCodes.ElementAt(0).Should().Be(_expectedResult.SpecialismCodes.ElementAt(0));
-            _result.Result.SpecialismCodes.ElementAt(1).Should().Be(_expectedResult.SpecialismCodes.ElementAt(1));
+            _result.SpecialismCodes.Count().Should().Be(_expectedResult.SpecialismCodes.Count());
+            _result.SpecialismCodes.ElementAt(0).Should().Be(_expectedResult.SpecialismCodes.ElementAt(0));
+            _result.SpecialismCodes.ElementAt(1).Should().Be(_expectedResult.SpecialismCodes.ElementAt(1));
         }
     }
 }

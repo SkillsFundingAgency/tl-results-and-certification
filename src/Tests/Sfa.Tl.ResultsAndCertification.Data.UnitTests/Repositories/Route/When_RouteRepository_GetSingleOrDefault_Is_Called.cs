@@ -1,9 +1,10 @@
-﻿using Xunit;
-using FluentAssertions;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
+﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Route
 {
@@ -19,9 +20,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Route
             DbContext.AddRange(_data);
             DbContext.SaveChanges();
         }
-        public override void When()
+        public async override Task When()
         {
-            _result = Repository.GetSingleOrDefaultAsync(x => x.Id == 1).GetAwaiter().GetResult();
+            _result = await Repository.GetSingleOrDefaultAsync(x => x.Id == 1);
         }
 
         [Fact]

@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             };            
         }
 
-        public override void When()
+        public async override Task When()
         {
             Result = Controller.DetailsAsync(id);
         }

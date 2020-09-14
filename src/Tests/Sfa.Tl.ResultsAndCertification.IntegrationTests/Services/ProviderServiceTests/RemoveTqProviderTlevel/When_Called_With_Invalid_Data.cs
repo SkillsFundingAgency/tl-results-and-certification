@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.RemoveTqProviderTlevelAsync
@@ -24,9 +25,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             ProviderService = new ProviderService(ProviderRepository, TlproviderRepository, ProviderMapper, Logger);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = ProviderService.RemoveTqProviderTlevelAsync(TlAwardingOrganisation.UkPrn, 0).Result;
+            _result = await ProviderService.RemoveTqProviderTlevelAsync(TlAwardingOrganisation.UkPrn, 0);
         }
 
         [Fact]

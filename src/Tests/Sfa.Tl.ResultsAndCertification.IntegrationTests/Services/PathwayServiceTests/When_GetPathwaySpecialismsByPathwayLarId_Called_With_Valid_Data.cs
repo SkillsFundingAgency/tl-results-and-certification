@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServiceTests
@@ -22,9 +23,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServic
             _service = new PathwayService(Repository, _mapper);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _pathwaySpecialismsResult = _service.GetPathwaySpecialismsByPathwayLarIdAsync(_tlAwardingOrganisation.UkPrn, _pathway.LarId).Result;
+            _pathwaySpecialismsResult = await _service.GetPathwaySpecialismsByPathwayLarIdAsync(_tlAwardingOrganisation.UkPrn, _pathway.LarId);
         }
 
         [Fact]

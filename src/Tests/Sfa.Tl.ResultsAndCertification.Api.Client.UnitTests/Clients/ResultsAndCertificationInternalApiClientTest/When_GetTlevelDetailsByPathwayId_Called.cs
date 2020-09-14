@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private ResultsAndCertificationConfiguration _configuration;
         private readonly long ukprn = 1024;
         private readonly int tlevelId = 99;
-        protected Task<TlevelPathwayDetails> Result;
+        protected TlevelPathwayDetails _result;
 
         protected readonly string RouteName = "Construction";
         protected readonly string PathwayName = "Design";
@@ -55,24 +55,22 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = _apiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, tlevelId);
+            _result = await _apiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, tlevelId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var expectedResult = Result.Result;
+            _result.Should().NotBeNull();
+            _result.RouteName.Should().Be(RouteName);
+            _result.PathwayName.Should().Be(PathwayName);
+            _result.PathwayStatusId.Should().Be(Status);
 
-            expectedResult.Should().NotBeNull();
-            expectedResult.RouteName.Should().Be(RouteName);
-            expectedResult.PathwayName.Should().Be(PathwayName);
-            expectedResult.PathwayStatusId.Should().Be(Status);
-
-            expectedResult.Specialisms.Should().NotBeNullOrEmpty();
-            expectedResult.Specialisms.Count().Should().Be(2);
-            expectedResult.Specialisms.First().Should().Be(Specialisms.First());
+            _result.Specialisms.Should().NotBeNullOrEmpty();
+            _result.Specialisms.Count().Should().Be(2);
+            _result.Specialisms.First().Should().Be(Specialisms.First());
         }
     }
 }

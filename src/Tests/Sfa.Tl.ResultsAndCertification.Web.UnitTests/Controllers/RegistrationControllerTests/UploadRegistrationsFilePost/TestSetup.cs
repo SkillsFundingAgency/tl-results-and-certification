@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             Controller.TempData = TempData;
         }
 
-        public override void When()
+        public async override Task When()
         {
             Result = Controller.UploadRegistrationsFileAsync(ViewModel);
         }

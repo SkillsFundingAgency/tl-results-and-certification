@@ -1,11 +1,12 @@
-﻿using System.Linq;
-using Xunit;
-using FluentAssertions;
-using NSubstitute;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrganisationServiceTests.GetAllTlevelsByUkprnAsync
 {
@@ -20,9 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
             _service = new AwardingOrganisationService(_resultsAndCertificationConfiguration, Repository, null, _mapper, _logger);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = _service.GetAllTlevelsByUkprnAsync(_tlAwardingOrganisation.UkPrn).Result;
+            _result = await _service.GetAllTlevelsByUkprnAsync(_tlAwardingOrganisation.UkPrn);
         }
 
         [Fact]

@@ -1,8 +1,9 @@
-﻿using Xunit;
-using FluentAssertions;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
+﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Route
 {
@@ -17,9 +18,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Route
             _data = new TlRouteBuilder().Build(_awardingOrganisation);
 
         }
-        public override void When()
+        public async override Task When()
         {
-            _result = Repository.CreateAsync(_data).GetAwaiter().GetResult();
+            _result = await Repository.CreateAsync(_data);
         }
 
         [Fact]

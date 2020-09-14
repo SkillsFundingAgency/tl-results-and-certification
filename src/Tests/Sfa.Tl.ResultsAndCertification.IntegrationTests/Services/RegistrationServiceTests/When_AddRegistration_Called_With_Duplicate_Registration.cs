@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 {
     public class When_AddRegistration_Called_With_Duplicate_Registration : RegistrationServiceBaseTest
     {
-        private Task<bool> _result;
+        private bool _result;
         private RegistrationRequest _registrationRequest;
 
         public override void Given()
@@ -42,17 +42,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             };
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = RegistrationService.AddRegistrationAsync(_registrationRequest); // 1st registration request
-            _result = RegistrationService.AddRegistrationAsync(_registrationRequest); // 2nd registration request
+            _result = await RegistrationService.AddRegistrationAsync(_registrationRequest); // 1st registration request
+            _result = await RegistrationService.AddRegistrationAsync(_registrationRequest); // 2nd registration request
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            _result.Should().NotBeNull();
-            _result.Result.Should().BeFalse();
+            _result.Should().BeFalse();
         }
     }
 }

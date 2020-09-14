@@ -8,9 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 {
     public class When_Validate_CheckAndSubmit : TestSetup
     {
-        public override void Given() { }
-
-        public override void When() { }
+        public override void Given() { }       
 
         [Theory]
         [ClassData(typeof(CheckAndSubmitTestDataGenerator))]

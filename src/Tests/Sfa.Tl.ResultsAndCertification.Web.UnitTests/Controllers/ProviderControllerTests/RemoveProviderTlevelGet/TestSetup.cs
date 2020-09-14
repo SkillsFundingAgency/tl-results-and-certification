@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             Controller.TempData = TempData;
         }
 
-        public override void When()
+        public async override Task When()
         {
             Result = Controller.RemoveProviderTlevelAsync(TqProviderId, false);
         }

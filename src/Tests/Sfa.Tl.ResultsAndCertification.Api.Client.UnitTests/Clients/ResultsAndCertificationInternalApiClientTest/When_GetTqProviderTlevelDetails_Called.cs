@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 {
     public class When_GetTqProviderTlevelDetails_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        private Task<ProviderTlevelDetails> _result;
+        private ProviderTlevelDetails _result;
         private readonly long _ukprn = 12345678;
         private readonly int _tqProviderId = 1;
         protected ProviderTlevelDetails _mockHttpResult;
@@ -47,21 +47,19 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = _apiClient.GetTqProviderTlevelDetailsAsync(_ukprn, _tqProviderId);
+            _result = await _apiClient.GetTqProviderTlevelDetailsAsync(_ukprn, _tqProviderId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var actualResult = _result.Result;
-
-            actualResult.Should().NotBeNull();
-            actualResult.Id.Should().Be(_mockHttpResult.Id);
-            actualResult.DisplayName.Should().Be(_mockHttpResult.DisplayName);
-            actualResult.Ukprn.Should().Be(_mockHttpResult.Ukprn);
-            actualResult.ProviderTlevel.TlevelTitle.Should().Be(_mockHttpResult.ProviderTlevel.TlevelTitle);
+            _result.Should().NotBeNull();
+            _result.Id.Should().Be(_mockHttpResult.Id);
+            _result.DisplayName.Should().Be(_mockHttpResult.DisplayName);
+            _result.Ukprn.Should().Be(_mockHttpResult.Ukprn);
+            _result.ProviderTlevel.TlevelTitle.Should().Be(_mockHttpResult.ProviderTlevel.TlevelTitle);
         }
     }
 }

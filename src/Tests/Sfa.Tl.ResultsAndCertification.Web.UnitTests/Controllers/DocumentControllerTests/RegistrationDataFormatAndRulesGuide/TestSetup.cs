@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.RegistrationDataFormatAndRulesGuide
 {
@@ -38,9 +39,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
             HttpContextAccessor.HttpContext.Returns(httpContext);
         }
 
-        public override void When()
+        public override Task When()
         {
-            Result = Controller.RegistrationDataFormatAndRulesGuide();
+            //Result = Controller.RegistrationDataFormatAndRulesGuide();
+            var ruleGuideTask = Task.Run(() => Controller.RegistrationDataFormatAndRulesGuide());
+            Result = ruleGuideTask.GetAwaiter().GetResult();
+            return ruleGuideTask;
         }
     }
 }

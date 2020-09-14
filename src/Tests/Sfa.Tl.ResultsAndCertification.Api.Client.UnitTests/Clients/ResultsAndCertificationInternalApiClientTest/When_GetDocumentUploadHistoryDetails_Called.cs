@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
     {
         protected ITokenServiceClient _tokenServiceClient;
         protected ResultsAndCertificationConfiguration _configuration;
-        protected Task<DocumentUploadHistoryDetails> Result;
+        protected DocumentUploadHistoryDetails Result;
 
         protected ResultsAndCertificationInternalApiClient _apiClient;
         protected DocumentUploadHistoryDetails _mockHttpResult;
@@ -54,24 +54,22 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = _apiClient.GetDocumentUploadHistoryDetailsAsync(_ukprn, _blobUniqueReference);
+            Result = await _apiClient.GetDocumentUploadHistoryDetailsAsync(_ukprn, _blobUniqueReference);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var actualResult = Result.Result;
-
-            actualResult.Should().NotBeNull();
-            actualResult.TlAwardingOrganisationId.Should().Be(_mockHttpResult.TlAwardingOrganisationId);
-            actualResult.AoUkprn.Should().Be(_mockHttpResult.AoUkprn);
-            actualResult.BlobUniqueReference.Should().Be(_mockHttpResult.BlobUniqueReference);
-            actualResult.BlobFileName.Should().Be(_mockHttpResult.BlobFileName);
-            actualResult.DocumentType.Should().Be(_mockHttpResult.DocumentType);
-            actualResult.FileType.Should().Be(_mockHttpResult.FileType);
-            actualResult.Status.Should().Be(_mockHttpResult.Status);
+            Result.Should().NotBeNull();
+            Result.TlAwardingOrganisationId.Should().Be(_mockHttpResult.TlAwardingOrganisationId);
+            Result.AoUkprn.Should().Be(_mockHttpResult.AoUkprn);
+            Result.BlobUniqueReference.Should().Be(_mockHttpResult.BlobUniqueReference);
+            Result.BlobFileName.Should().Be(_mockHttpResult.BlobFileName);
+            Result.DocumentType.Should().Be(_mockHttpResult.DocumentType);
+            Result.FileType.Should().Be(_mockHttpResult.FileType);
+            Result.Status.Should().Be(_mockHttpResult.Status);
         }
     }
 }

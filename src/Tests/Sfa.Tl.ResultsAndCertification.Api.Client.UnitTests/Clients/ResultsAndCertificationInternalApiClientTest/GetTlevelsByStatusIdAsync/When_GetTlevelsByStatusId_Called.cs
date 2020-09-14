@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         protected ITokenServiceClient _tokenServiceClient;
         protected ResultsAndCertificationConfiguration _configuration;
         protected readonly long ukprn = 1024;
-        protected Task<IEnumerable<AwardingOrganisationPathwayStatus>> Result;
+        protected IEnumerable<AwardingOrganisationPathwayStatus> Result;
 
         protected readonly string TlevelTitle = "Construction";
         protected readonly int StatusId = 1;
@@ -47,9 +47,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = _apiClient.GetTlevelsByStatusIdAsync(ukprn, StatusId);
+            Result = await _apiClient.GetTlevelsByStatusIdAsync(ukprn, StatusId);
         }
     }
 }

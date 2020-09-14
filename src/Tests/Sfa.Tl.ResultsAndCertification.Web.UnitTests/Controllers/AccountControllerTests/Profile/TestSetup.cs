@@ -5,6 +5,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountControllerTests.Profile
 {
@@ -23,10 +24,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
             Logger = Substitute.For<ILogger<AccountController>>();
         }
 
-        public override void When()
+        public override Task When()
         {
             Controller = new AccountController(Configuration, Logger);
-            Result = Controller.Profile();
+            //Result = Controller.Profile();
+            var profileTask = Task.Run(() => Controller.Profile());
+            Result = profileTask.GetAwaiter().GetResult();
+            return profileTask;
         }
     }
 }

@@ -54,7 +54,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             };            
         }
 
-        public override void When() {}
+        public async override Task When() 
+        {
+            await Task.Run(() => null);
+        }
 
         public async Task WhenAsync()
         {            

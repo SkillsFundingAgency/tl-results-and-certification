@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrations
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
@@ -31,9 +32,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             _stage4RegistrationsData = new RegistrationsStage4Builder().BuildValidList();
         }
 
-        public override void When()
-        {
-            _result = RegistrationService.TransformRegistrationModel(_stage4RegistrationsData, _performedBy);
+        public override Task When()
+        {            
+            var transformModelTask = Task.Run(() => RegistrationService.TransformRegistrationModel(_stage4RegistrationsData, _performedBy));
+            _result = transformModelTask.GetAwaiter().GetResult();
+            return transformModelTask;
         }
 
         [Fact]

@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.Index
 {
@@ -24,9 +25,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             Controller = new RegistrationController(RegistrationLoader, CacheService, Logger);
         }
 
-        public override void When()
+        public override Task When()
         {
-            Result = Controller.Index();
+            //Result = Controller.Index();            
+            var indexTask = Task.Run(() => Controller.Index());
+            Result = indexTask.GetAwaiter().GetResult();
+            return indexTask;
         }
     }
 }

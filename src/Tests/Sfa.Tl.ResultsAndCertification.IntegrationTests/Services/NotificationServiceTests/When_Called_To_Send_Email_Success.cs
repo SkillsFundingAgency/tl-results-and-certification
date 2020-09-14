@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.NotificationServiceTests
@@ -21,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.NotificationS
             NotificationService = new NotificationService(Repository, NotificationsClient, NotificationLogger);
         }
 
-        public override void When()
+        public async override Task When()
         {
             ToAddress = "test@test.com";
             var tokens = new Dictionary<string, dynamic>
             {
                 { "tlevel_name",  "Digital" }
             };
-            Result = NotificationService.SendEmailNotificationAsync(NotificationTemplate.TemplateName, ToAddress, tokens).GetAwaiter().GetResult();
+            Result = await NotificationService.SendEmailNotificationAsync(NotificationTemplate.TemplateName, ToAddress, tokens);
         }
 
         [Fact]

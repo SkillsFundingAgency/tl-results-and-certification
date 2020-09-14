@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
         private ResultsAndCertificationInternalApiClient _apiClient;
-        private Task<FindUlnResponse> _result;
+        private FindUlnResponse _result;
 
         public override void Setup()
         {
@@ -49,21 +49,19 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = _apiClient.FindUlnAsync(_ukprn, _uln);
+            _result = await _apiClient.FindUlnAsync(_ukprn, _uln);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var actualResult = _result.Result;
-
-            actualResult.Should().NotBeNull();
-            actualResult.Uln.Should().Be(_mockHttpResult.Uln);
-            actualResult.RegistrationProfileId.Should().Be(_mockHttpResult.RegistrationProfileId);
-            actualResult.IsRegisteredWithOtherAo.Should().Be(_mockHttpResult.IsRegisteredWithOtherAo);
-            actualResult.IsActive.Should().Be(_mockHttpResult.IsActive);
+            _result.Should().NotBeNull();
+            _result.Uln.Should().Be(_mockHttpResult.Uln);
+            _result.RegistrationProfileId.Should().Be(_mockHttpResult.RegistrationProfileId);
+            _result.IsRegisteredWithOtherAo.Should().Be(_mockHttpResult.IsRegisteredWithOtherAo);
+            _result.IsActive.Should().Be(_mockHttpResult.IsActive);
         }
     }
 }

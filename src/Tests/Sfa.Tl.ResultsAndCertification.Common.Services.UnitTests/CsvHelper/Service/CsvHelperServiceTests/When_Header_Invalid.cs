@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         [Fact]
         public void Then_Returns_Error_FileHeaderNotFound()
         {
-            var actualResult = Response.Result;
+            var actualResult = Response;
             actualResult.IsDirty.Should().BeTrue();
             actualResult.Rows.Count().Should().Be(0);
             actualResult.ErrorMessage.Should().Be(ValidationMessages.FileHeaderNotFound);

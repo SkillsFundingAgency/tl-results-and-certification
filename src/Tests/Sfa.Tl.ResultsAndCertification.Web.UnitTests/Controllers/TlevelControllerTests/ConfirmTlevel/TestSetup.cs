@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
         public override void Given() { }
 
-        public override void When()
+        public async override Task When()
         {
             Result = Controller.ConfirmTlevelAsyc(InputModel);
         }

@@ -1,16 +1,16 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Xunit;
-using NSubstitute;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Newtonsoft.Json;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         protected ITokenServiceClient _tokenServiceClient;
         protected ResultsAndCertificationConfiguration _configuration;
         protected readonly long ukprn = 1024;
-        protected Task<bool> Result;
+        protected bool _result;
 
         protected readonly string RouteName = "Construction";
         protected readonly string PathwayName = "Design, Surveying and Planning";
@@ -54,15 +54,15 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = _apiClient.VerifyTlevelAsync(_model);
+            _result = await _apiClient.VerifyTlevelAsync(_model);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            Result.Result.Should().BeTrue();
+            _result.Should().BeTrue();
         }
     }
 }

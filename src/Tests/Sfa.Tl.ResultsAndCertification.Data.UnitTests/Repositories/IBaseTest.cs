@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
 {
@@ -6,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
     {
         void Setup();
         void Given();
-        void When();
+        Task When();
 
     }
 }

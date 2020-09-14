@@ -33,8 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            Response.Result.Rows.Count.Should().Be(1);
-            var actualData = Response.Result.Rows.First();
+            Response.Rows.Count.Should().Be(1);
+            var actualData = Response.Rows.First();
             actualData.Uln.Should().Be(expectedRow.Uln);
             actualData.ValidationErrors.Count().Should().Be(1);
 

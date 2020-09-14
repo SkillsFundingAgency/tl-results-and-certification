@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 {
     public class When_GetTqAoProviderDetails_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        private Task<IList<ProviderDetails>> _result;
+        private IList<ProviderDetails> _result;
         private readonly long _ukprn = 12345678;
         protected IList<ProviderDetails> _mockHttpResult;
         private ITokenServiceClient _tokenServiceClient;
@@ -56,20 +56,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = _apiClient.GetTqAoProviderDetailsAsync(_ukprn);
+            _result = await _apiClient.GetTqAoProviderDetailsAsync(_ukprn);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var actualResult = _result.Result;
-
-            actualResult.Should().NotBeNull();
-            actualResult.Count().Should().Be(2);
+            _result.Should().NotBeNull();
+            _result.Count().Should().Be(2);
             var expectedProviderDetailsResult = _mockHttpResult.FirstOrDefault();
-            var actualProviderDetailsResult = actualResult.FirstOrDefault();
+            var actualProviderDetailsResult = _result.FirstOrDefault();
             actualProviderDetailsResult.Should().NotBeNull();
 
             actualProviderDetailsResult.Id.Should().Be(expectedProviderDetailsResult.Id);

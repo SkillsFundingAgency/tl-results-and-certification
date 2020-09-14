@@ -8,8 +8,8 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ChangeSpecialismQuestionGet
 {
@@ -44,9 +44,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             HttpContextAccessor.HttpContext.Returns(httpContext);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = Controller.ChangeRegistrationSpecialismQuestionAsync(ProfileId).Result;
+            Result = await Controller.ChangeRegistrationSpecialismQuestionAsync(ProfileId);
         }
     }
 }

@@ -12,6 +12,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
@@ -43,9 +44,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             _expectedValidationErrors = new BulkRegistrationValidationErrorsBuilder().BuildStage4ValidationErrorsList();
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = RegistrationService.CompareAndProcessRegistrationsAsync(_tqRegistrationProfilesData).Result;
+            _result = await RegistrationService.CompareAndProcessRegistrationsAsync(_tqRegistrationProfilesData);
         }
 
         [Fact]

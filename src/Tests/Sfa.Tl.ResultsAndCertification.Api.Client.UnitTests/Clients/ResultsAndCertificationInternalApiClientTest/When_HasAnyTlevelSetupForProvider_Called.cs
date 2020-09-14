@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
         private ResultsAndCertificationInternalApiClient _apiClient;
-        private Task<bool> _result;
+        private bool _result;
         private int _tlProviderId = 1;
         private bool _mockHttpResult;
 
@@ -42,15 +42,15 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = _apiClient.HasAnyTlevelSetupForProviderAsync(_ukprn, _tlProviderId);
+            _result = await _apiClient.HasAnyTlevelSetupForProviderAsync(_ukprn, _tlProviderId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            _result.Result.Should().BeTrue();
+            _result.Should().BeTrue();
         }
     }
 }

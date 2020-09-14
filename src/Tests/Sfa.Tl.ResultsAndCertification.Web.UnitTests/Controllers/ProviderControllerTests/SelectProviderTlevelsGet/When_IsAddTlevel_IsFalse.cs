@@ -4,6 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider.SelectProviderTlevels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.SelectProviderTlevelsGet
@@ -31,15 +32,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             ProviderLoader.GetSelectProviderTlevelsAsync(Arg.Any<long>(), Arg.Any<int>()).Returns(mockresult);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = Controller.AddProviderTlevelsAsync(ProviderId);
+            Result = await Controller.AddProviderTlevelsAsync(ProviderId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             var model = viewResult.Model as ProviderTlevelsViewModel;
 
             model.Should().NotBeNull();

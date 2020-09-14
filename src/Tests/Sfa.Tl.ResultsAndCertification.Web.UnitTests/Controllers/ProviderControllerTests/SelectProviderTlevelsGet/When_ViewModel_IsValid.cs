@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_GetSelectProviderTlevelsAsync_ViewModel_Return_Two_Rows()
         {
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             var model = viewResult.Model as ProviderTlevelsViewModel;
 
             model.Should().NotBeNull();
@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_GetSelectProviderTlevelsAsync_Index_Returns_Expected_ViewModel()
         {
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             var model = viewResult.Model as ProviderTlevelsViewModel;
 
             model.Tlevels.Should().NotBeNull();

@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServiceTests.GetTqProviderTlevelDetails
@@ -25,9 +26,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
             ProviderService = new ProviderService(ProviderRepository, TlproviderRepository, ProviderMapper, Logger);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = ProviderService.GetTqProviderTlevelDetailsAsync(TlAwardingOrganisation.UkPrn, TqProvider.Id).Result;
+            _result = await ProviderService.GetTqProviderTlevelDetailsAsync(TlAwardingOrganisation.UkPrn, TqProvider.Id);
         }
 
         [Fact]

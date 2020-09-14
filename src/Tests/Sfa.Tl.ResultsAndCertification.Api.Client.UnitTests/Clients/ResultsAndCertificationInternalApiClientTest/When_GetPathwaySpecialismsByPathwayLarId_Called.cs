@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 {
     public class When_GetPathwaySpecialismsByPathwayLarId_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        private Task<PathwaySpecialisms> _result;
+        private PathwaySpecialisms _result;
         private readonly long _ukprn = 12345678;
         private readonly string _pathwayLarId = "987654321";
         protected PathwaySpecialisms _mockHttpResult;
@@ -49,24 +49,22 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = _apiClient.GetPathwaySpecialismsByPathwayLarIdAsync(_ukprn, _pathwayLarId);
+            _result = await _apiClient.GetPathwaySpecialismsByPathwayLarIdAsync(_ukprn, _pathwayLarId);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var actualResult = _result.Result;
-
-            actualResult.Should().NotBeNull();
-            actualResult.Id.Should().Be(_mockHttpResult.Id);
-            actualResult.PathwayName.Should().Be(_mockHttpResult.PathwayName);
-            actualResult.PathwayCode.Should().Be(_mockHttpResult.PathwayCode);
-            actualResult.Specialisms.Count().Should().Be(_mockHttpResult.Specialisms.Count);
+            _result.Should().NotBeNull();
+            _result.Id.Should().Be(_mockHttpResult.Id);
+            _result.PathwayName.Should().Be(_mockHttpResult.PathwayName);
+            _result.PathwayCode.Should().Be(_mockHttpResult.PathwayCode);
+            _result.Specialisms.Count().Should().Be(_mockHttpResult.Specialisms.Count);
 
             var expectedSpecialismResult = _mockHttpResult.Specialisms.FirstOrDefault();
-            var actualSpecialismResult = actualResult.Specialisms.FirstOrDefault();
+            var actualSpecialismResult = _result.Specialisms.FirstOrDefault();
             actualSpecialismResult.Should().NotBeNull();
 
             actualSpecialismResult.Id.Should().Be(expectedSpecialismResult.Id);

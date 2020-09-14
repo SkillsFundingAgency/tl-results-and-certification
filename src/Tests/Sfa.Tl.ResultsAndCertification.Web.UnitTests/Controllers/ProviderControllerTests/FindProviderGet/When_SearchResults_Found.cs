@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
             ProviderLoader.GetSelectProviderTlevelsAsync(Arg.Any<long>(), Arg.Any<int>()).Returns(_mockresult);
         }
-        public override void When()
+        public async override Task When()
         {
             _selectProviderTlevelResult = Controller.SelectProviderTlevelsAsync(1);
             Result = Controller.FindProviderAsync(true);
