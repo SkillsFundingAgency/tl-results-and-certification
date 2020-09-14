@@ -27,10 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override Task When()
         {
-            //Result = Controller.Index();            
-            var indexTask = Task.Run(() => Controller.Index());
-            Result = indexTask.GetAwaiter().GetResult();
-            return indexTask;
+            Result = Controller.Index();
+            return Task.CompletedTask;
         }
     }
 }

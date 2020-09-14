@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using NSubstitute.Routing.Handlers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
@@ -30,10 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override Task When()
         {
-            //Result = Controller.UploadRegistrationsFile();
-            var uploadRegistrationsTask = Task.Run(() => Controller.UploadRegistrationsFile());
-            Result = uploadRegistrationsTask.GetAwaiter().GetResult();
-            return uploadRegistrationsTask;
+            Result = Controller.UploadRegistrationsFile();
+            return Task.CompletedTask;
         }
     }
 }

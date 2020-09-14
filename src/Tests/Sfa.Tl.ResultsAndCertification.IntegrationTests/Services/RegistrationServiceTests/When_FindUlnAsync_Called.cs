@@ -39,9 +39,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper, RegistrationRepositoryLogger);            
         }
 
-        public async override Task When() 
+        public override Task When() 
         {
-            await Task.Run(() => null);
+            return Task.CompletedTask;
         }
 
         [Theory]

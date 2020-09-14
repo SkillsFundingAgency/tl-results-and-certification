@@ -33,10 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         }
 
         public override Task When()
-        {            
-            var transformModelTask = Task.Run(() => RegistrationService.TransformRegistrationModel(_stage4RegistrationsData, _performedBy));
-            _result = transformModelTask.GetAwaiter().GetResult();
-            return transformModelTask;
+        {         
+            _result = RegistrationService.TransformRegistrationModel(_stage4RegistrationsData, _performedBy);
+            return Task.CompletedTask;
         }
 
         [Fact]

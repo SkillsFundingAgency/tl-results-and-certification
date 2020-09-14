@@ -27,10 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
         public override Task When()
         {
             Controller = new AccountController(Configuration, Logger);
-            //Result = Controller.Profile();
-            var profileTask = Task.Run(() => Controller.Profile());
-            Result = profileTask.GetAwaiter().GetResult();
-            return profileTask;
+            Result = Controller.Profile();
+            return Task.CompletedTask;
         }
     }
 }

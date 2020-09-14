@@ -41,10 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
 
         public override Task When()
         {
-            //Result = Controller.RegistrationDataFormatAndRulesGuide();
-            var ruleGuideTask = Task.Run(() => Controller.RegistrationDataFormatAndRulesGuide());
-            Result = ruleGuideTask.GetAwaiter().GetResult();
-            return ruleGuideTask;
+            Result = Controller.RegistrationDataFormatAndRulesGuide();
+            return Task.CompletedTask;
         }
     }
 }

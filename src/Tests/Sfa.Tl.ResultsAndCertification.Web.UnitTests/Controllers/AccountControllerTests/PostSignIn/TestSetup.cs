@@ -33,10 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
 
         public override Task When()
         {
-            //Result = Controller.PostSignIn();
-            var postSignInTask = Task.Run(() => Controller.PostSignIn());
-            Result = postSignInTask.GetAwaiter().GetResult();
-            return postSignInTask;
+            Result = Controller.PostSignIn();
+            return Task.CompletedTask;
         }
     }
 }
