@@ -32,7 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
                 Id = _tlProviderId,
                 DisplayName = "Test",
                 Ukprn = 10000111,
-                TlevelTitle = "Test Title"                
+                TlevelTitle = "Test Title",
+                TlProviderId = _tlProviderId
             };
 
             ProviderLoader.GetTqProviderTlevelDetailsAsync(Ukprn, TqProviderId).Returns(mockresult);
@@ -61,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_Returns_ProviderTlevels_BackLink()
+        public void Then_Returns_Expected_BackLink()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as ProviderTlevelDetailsViewModel;
