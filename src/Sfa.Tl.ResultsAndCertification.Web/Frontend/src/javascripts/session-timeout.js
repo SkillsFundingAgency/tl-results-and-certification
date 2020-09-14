@@ -62,7 +62,7 @@ $(document).ready(function () {
         function startSessionTimeoutCountDownTimer() {
             var minutesCounterElement = $("#minutes-counter"), secondsCounterElement = $("#seconds-counter");
             minutesCounterElement.text(minutes > 0 ? minutes.toString() + (minutes === 1 ? " minute" : " minutes") : "");
-            secondsCounterElement.text(seconds > 0 ? seconds.toString() + " seconds" : "");
+            secondsCounterElement.text(seconds > 0 ? " " + seconds.toString() + (seconds === 1 ? " second" : " seconds") : "");
 
             if (minutes === 0 && seconds === 2) {
                 GOVUK.checkSessionActiveDuration(0, 2, false);
