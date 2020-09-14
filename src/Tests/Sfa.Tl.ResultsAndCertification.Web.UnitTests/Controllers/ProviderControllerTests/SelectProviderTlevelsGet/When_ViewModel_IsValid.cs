@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.SelectProviderTlevelsGet
 {
-    public class Then_Return_TwoRecord_ViewModel : When_SelectProviderTlevelsAsync_Get_Action_Is_Called
+    public class When_ViewModel_IsValid : TestSetup
     {
         private ProviderTlevelsViewModel mockresult;
 

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.FindProviderPost
 {
-    public abstract class When_FindProviderAsync_Post_Action_Is_Called : BaseTest<ProviderController>
+    public abstract class TestSetup : BaseTest<ProviderController>
     {
         // DI Mock objects
         protected IProviderLoader ProviderLoader;
@@ -25,7 +25,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         protected FindProviderViewModel ViewModel;
         protected readonly long Ukprn = 1234;
 
-        // 
         protected string ProviderName = "Lordswood School & Sixth Form Centre";
         protected int SelectedProviderId = 24;
 

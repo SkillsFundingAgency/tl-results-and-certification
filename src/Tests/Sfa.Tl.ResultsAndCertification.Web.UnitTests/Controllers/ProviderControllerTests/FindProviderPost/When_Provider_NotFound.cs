@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.FindProviderPost
 {
-    public class Then_On_SelectedProviderId_Zero_More_Providers_Returns_Validation_Error : When_FindProviderAsync_Post_Action_Is_Called
+    public class When_Provider_NotFound : TestSetup
     {
         private IEnumerable<ProviderLookupData> expectedMockProviders;
 
@@ -16,23 +16,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         {
             ViewModel.SelectedProviderId = 0;
 
-            expectedMockProviders = new List<ProviderLookupData>
-            {
-                new ProviderLookupData(),
-                new ProviderLookupData(),
-            };
+            expectedMockProviders = new List<ProviderLookupData>();
             ProviderLoader.GetProviderLookupDataAsync(ViewModel.Search, true)
                 .Returns(expectedMockProviders);
         }
 
         [Fact]
-        public void Then_GetProviderLookupDataAsync_Method_Is_Called()
+        public void Then_Called_Expected_Method()
         {
             ProviderLoader.Received(1).GetProviderLookupDataAsync(ViewModel.Search, true);
         }
 
         [Fact]
-        public void Then_Expected_Validation_Error_Returned()
+        public void Then_Returns_Expected_Results()
         {
             Result.Result.Should().BeOfType(typeof(ViewResult));
 

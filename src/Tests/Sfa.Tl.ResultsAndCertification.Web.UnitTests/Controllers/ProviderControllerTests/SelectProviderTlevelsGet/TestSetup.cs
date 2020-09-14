@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.SelectProviderTlevelsGet
 {
-    public abstract class When_SelectProviderTlevelsAsync_Get_Action_Is_Called : BaseTest<ProviderController>
+    public abstract class TestSetup : BaseTest<ProviderController>
     {
         protected long Ukprn;
         protected int ProviderId;

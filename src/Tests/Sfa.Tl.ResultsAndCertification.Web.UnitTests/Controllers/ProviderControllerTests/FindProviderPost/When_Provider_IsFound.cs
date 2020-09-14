@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.FindProviderPost
 {
-    public class Then_On_SelectedProviderId_Zero_ProviderFound_Returns_Expected_Results : When_FindProviderAsync_Post_Action_Is_Called
+    public class When_Provider_IsFound : TestSetup
     {
         private IEnumerable<ProviderLookupData> expectedMockProviders;
 
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_Redirected_ToSelectProviderTLevels()
+        public void Then_Redirected_To_SelectProviderTlevels()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.SelectProviderTlevels);

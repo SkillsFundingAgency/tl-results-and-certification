@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.SelectProviderTlevelsGet
 {
-    public class Then_Return_ProviderTlevels_BackLink_In_ViewModel : When_SelectProviderTlevelsAsync_Get_Action_Is_Called
+    public class When_IsAddTlevel_IsFalse : TestSetup
     {
         private ProviderTlevelsViewModel mockresult;
         private int _providerId = 1;
@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_Returns_ProviderTlevels_BackLink()
+        public void Then_Returns_Expected_Results()
         {
             var viewResult = Result.Result as ViewResult;
             var model = viewResult.Model as ProviderTlevelsViewModel;

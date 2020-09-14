@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.FindProviderPost
 {
-    public class Then_On_Valid_ViewModel_Post_Redirected_To_ProviderTlevels_Route : When_FindProviderAsync_Post_Action_Is_Called
+    public class When_TlevelSetupForProvider_IsTrue : TestSetup
     {
         public override void Given()
         {
@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         }
 
         [Fact]
-        public void Then_ModelState_Valid_Redirected_To_ProviderTlevels()
+        public void Then_Redirected_To_ProviderTlevels()
         {
             var routeName = (Result.Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.ProviderTlevels);

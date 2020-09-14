@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
@@ -9,9 +10,11 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderControllerTests.RemoveProviderTlevelGet
 {
-    public class Then_ProviderTlevelDetailsViewModel_Is_Returned : When_RemoveProviderTlevelAsync_Get_Action_Is_Called
+    public class When_ViewModel_IsValid : TestSetup
     {
         private ProviderTlevelDetailsViewModel mockresult;
+
+        private int _tlProviderId = 1;
         public override void Given()
         {
             Ukprn = 10011881;
@@ -26,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
             mockresult = new ProviderTlevelDetailsViewModel
             {
-                Id = 1,
+                Id = _tlProviderId,
                 DisplayName = "Test",
                 Ukprn = 10000111,
                 TlevelTitle = "Test Title"                
@@ -55,6 +58,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             model.DisplayName.Should().Be(mockresult.DisplayName);
             model.Ukprn.Should().Be(mockresult.Ukprn);
             model.TlevelTitle.Should().Be(mockresult.TlevelTitle);
+        }
+
+        [Fact]
+        public void Then_Returns_ProviderTlevels_BackLink()
+        {
+            var viewResult = Result.Result as ViewResult;
+            var model = viewResult.Model as ProviderTlevelDetailsViewModel;
+
+            model.Should().NotBeNull();
+            var backLink = model.BackLink;
+
+            backLink.RouteName.Should().Be(RouteConstants.ProviderTlevels);
+            backLink.RouteAttributes.Count.Should().Be(1);
+            backLink.RouteAttributes.TryGetValue("providerId", out string routeValue);
+            routeValue.Should().Be(_tlProviderId.ToString());
         }
     }
 }
