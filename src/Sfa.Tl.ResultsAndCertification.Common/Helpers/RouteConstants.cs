@@ -88,6 +88,7 @@
         public const string ChangeRegistrationSpecialismQuestion = "ChangeRegistrationSpecialismQuestion";
         public const string SubmitChangeRegistrationSpecialismQuestion = "SubmitChangeRegistrationSpecialismQuestion";
         public const string ChangeRegistrationSpecialisms = "ChangeRegistrationSpecialisms";
+        public const string SubmitChangeRegistrationSpecialisms = "SubmitChangeRegistrationSpecialisms";
         public const string ChangeAcademicYear = "ChangeAcademicYear";
 
         // Search Registration
