@@ -123,6 +123,9 @@
   <data name="Continue_Button_Text" xml:space="preserve">
     <value>Continue</value>
   </data>
+  <data name="Page_Caption_ChangeRegistration" xml:space="preserve">
+    <value>Change registration</value>
+  </data>
   <data name="Page_Caption_Text" xml:space="preserve">
     <value>Add a new registration</value>
   </data>

@@ -8,7 +8,9 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -226,11 +228,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("change-registration-select-specialisms/{profileId}", Name = RouteConstants.ChangeRegistrationSpecialisms)]
-        public IActionResult ChangeRegistrationSpecialismsAsync(int profileId)
+        [Route("change-registration-select-specialism/{profileId}", Name = RouteConstants.ChangeRegistrationSpecialisms)]
+        public async Task<IActionResult> ChangeRegistrationSpecialismsAsync(int profileId)
         {
-            return View();
-        }        
+            var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeSpecialismViewModel>(User.GetUkPrn(), profileId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: ChangeRegistrationSpecialismsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            viewModel.PathwaySpecialisms = await PopulateSpecialismsAsync(viewModel);
+
+            return View(viewModel);
+        }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
@@ -248,6 +259,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 ModelState.AddModelError(error.Key, error.Value);
 
             return false;
+        }
+
+        private async Task<PathwaySpecialismsViewModel> PopulateSpecialismsAsync(ChangeSpecialismViewModel viewModel)
+        {
+            var coreSpecialisms = await _registrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(User.GetUkPrn(), viewModel.CoreCode);
+            
+            // Update IsSelected flag.
+            coreSpecialisms.Specialisms.ToList().ForEach(x => { x.IsSelected = viewModel.SpecialismCodes.Contains(x.Code); });
+            
+            return coreSpecialisms;
         }
     }
 }

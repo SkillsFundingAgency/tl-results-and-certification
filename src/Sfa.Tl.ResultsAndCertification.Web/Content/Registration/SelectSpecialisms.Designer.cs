@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change registration.
+        /// </summary>
+        public static string Page_Caption_ChangeRegistration {
+            get {
+                return ResourceManager.GetString("Page_Caption_ChangeRegistration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a new registration.
         /// </summary>
         public static string Page_Caption_Text {

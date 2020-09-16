@@ -18,6 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 
         public bool IsChangeModeFromSpecialismQuestion { get; set; }
 
-        public BackLinkModel BackLink => new BackLinkModel { RouteName = (IsChangeMode && !IsChangeModeFromSpecialismQuestion) ? RouteConstants.AddRegistrationCheckAndSubmit : RouteConstants.AddRegistrationSpecialismQuestion, RouteAttributes = (IsChangeMode && IsChangeModeFromSpecialismQuestion) ? new Dictionary<string, string> { { Constants.IsChangeMode, "true" } } : null };
+        public virtual BackLinkModel BackLink => new BackLinkModel { RouteName = (IsChangeMode && !IsChangeModeFromSpecialismQuestion) ? RouteConstants.AddRegistrationCheckAndSubmit : RouteConstants.AddRegistrationSpecialismQuestion, RouteAttributes = (IsChangeMode && IsChangeModeFromSpecialismQuestion) ? new Dictionary<string, string> { { Constants.IsChangeMode, "true" } } : null };
     }
 }

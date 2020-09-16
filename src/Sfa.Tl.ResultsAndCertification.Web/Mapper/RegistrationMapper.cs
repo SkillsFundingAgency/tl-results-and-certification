@@ -83,7 +83,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => new List<string>()))
                 .ForMember(d => d.HasSpecialismsChanged, opts => opts.MapFrom(s => true))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeSpecialismQuestionViewModel, ManageRegistration>>())
-                .ForAllOtherMembers(d => d.Ignore());            
+                .ForAllOtherMembers(d => d.Ignore());
+
+            CreateMap<ManageRegistration, ChangeSpecialismViewModel>()
+                .ReverseMap();
         }
     }
 }
