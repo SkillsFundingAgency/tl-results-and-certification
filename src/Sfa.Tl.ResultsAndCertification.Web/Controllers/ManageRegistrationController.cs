@@ -284,7 +284,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(viewModel);
             }
 
-            await Task.Run(() => true);
+            var response = await _registrationLoader.ProcessSpecialismChangeAsync(User.GetUkPrn(), viewModel);
+            if (response == null)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            if (!response.IsModified)
+                return RedirectToRoute(RouteConstants.RegistrationDetails, new { viewModel.ProfileId });
+
+            if (!response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeRegistrationConfirmationViewModel), response as ManageRegistrationResponse, CacheExpiryTime.XSmall);
             return RedirectToRoute(RouteConstants.ChangeRegistrationConfirmation);
         }
 

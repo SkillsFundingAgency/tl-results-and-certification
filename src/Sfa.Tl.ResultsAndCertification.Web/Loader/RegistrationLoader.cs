@@ -197,6 +197,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
         }
 
+        public async Task<ManageRegistrationResponse> ProcessSpecialismChangeAsync(long aoUkprn, ChangeSpecialismViewModel viewModel)
+        {
+            var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
+
+            if (reg == null)
+                return null;
+
+            var prevSpecialisms = reg.SpecialismCodes;
+            var currentSpecialisms = viewModel.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code);
+            var difference = prevSpecialisms.Except(currentSpecialisms);
+            
+            if (!difference.Any())
+                return new ManageRegistrationResponse { IsModified = false };
+
+            _mapper.Map(viewModel, reg);
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
+
+            // TODO:
+            isSuccess = true;
+
+            return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
+        }
+
         public async Task<ChangeCoreQuestionViewModel> GetRegistrationChangeCoreQuestionDetailsAsync(long aoUkprn, int profileId)
         {
             var response = await _internalApiClient.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
