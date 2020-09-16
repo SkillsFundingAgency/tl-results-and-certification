@@ -101,6 +101,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryAcademicYear.Title.Should().Be(RegistrationDetailsContent.Title_AcademicYear_Text);
             model.SummaryAcademicYear.Value.Should().Be(EnumExtensions.GetDisplayName<AcademicYear>(mockresult.AcademicYear));
             model.SummaryAcademicYear.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
+            model.SummaryAcademicYear.RouteName.Should().Be(RouteConstants.ChangeAcademicYear);
+            model.SummaryAcademicYear.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
