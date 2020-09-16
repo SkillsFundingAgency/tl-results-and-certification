@@ -238,9 +238,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            viewModel.PathwaySpecialisms = await PopulateSpecialismsAsync(viewModel);
-
+            viewModel.PathwaySpecialisms = await GetPathwaySpecialismsAsync(viewModel);
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("change-registration-select-specialism", Name = RouteConstants.SubmitChangeRegistrationSpecialisms)]
+        public async Task<IActionResult> ChangeRegistrationSpecialismsAsync(ChangeSpecialismViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                var model = await _registrationLoader.GetRegistrationProfileAsync<ChangeSpecialismViewModel>(User.GetUkPrn(), viewModel.ProfileId);
+                if (viewModel == null)
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+
+                viewModel.SpecialismCodes = model.SpecialismCodes;
+                return View(viewModel);
+            }
+
+            await Task.Run(() => true);
+            return RedirectToRoute(RouteConstants.ChangeRegistrationConfirmation);
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
@@ -261,7 +278,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return false;
         }
 
-        private async Task<PathwaySpecialismsViewModel> PopulateSpecialismsAsync(ChangeSpecialismViewModel viewModel)
+        private async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsAsync(ChangeSpecialismViewModel viewModel)
         {
             var coreSpecialisms = await _registrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(User.GetUkPrn(), viewModel.CoreCode);
             
