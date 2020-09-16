@@ -18,8 +18,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         [Fact]
         public void Then_Redirected_To_CannotChangeRegistrationProvider()
         {
-            var routeName = (Result as RedirectToRouteResult).RouteName;
+            var route = Result as RedirectToRouteResult;
+            var routeName = route.RouteName;
             routeName.Should().Be(RouteConstants.ChangeCoreQuestion);
+            route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
         }
     }
 }
