@@ -86,7 +86,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForAllOtherMembers(d => d.Ignore());
 
             CreateMap<ManageRegistration, ChangeSpecialismViewModel>()
-                .ReverseMap();
+                .ReverseMap()
+                .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(x => x.Code)))
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeSpecialismViewModel, ManageRegistration>>());
 
             CreateMap<ManageRegistration, ChangeAcademicYearViewModel>();
         }
