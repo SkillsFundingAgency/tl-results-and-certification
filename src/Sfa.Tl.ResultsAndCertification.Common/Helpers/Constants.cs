@@ -30,6 +30,7 @@
         public const string ChangeRegistrationConfirmationViewModel = "ChangeRegistrationConfirmationViewModel";
         public const string SearchRegistrationUlnNotFound = "SearchRegistrationUlnNotFound";
         public const string RegistrationSearchCriteria = "RegistrationSearchCriteria";
+        public const string RegistrationChangeProviderViewModel = "RegistrationChangeProviderViewModel";
 
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 100000;

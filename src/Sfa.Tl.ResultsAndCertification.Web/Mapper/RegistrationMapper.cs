@@ -89,6 +89,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ReverseMap();
 
             CreateMap<ManageRegistration, ChangeAcademicYearViewModel>();
+
+            CreateMap<RegistrationDetails, ChangeCoreQuestionViewModel>()
+                .ForMember(d => d.CoreDisplayName, opts => opts.MapFrom(s => s.PathwayDisplayName));
         }
     }
 }

@@ -152,7 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 model.ProvidersSelectList = registeredProviderViewModel.ProvidersSelectList;
                 return View(model);
             }
-
+            
             var response = await _registrationLoader.ProcessProviderChangesAsync(User.GetUkPrn(), model);
 
             if (response == null)
@@ -162,7 +162,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = model.ProfileId });
 
             if (response.IsCoreNotSupported)
-                return RedirectToRoute(RouteConstants.CannotChangeRegistrationProvider);
+            {
+                model.SelectedProviderDisplayName = registeredProviderViewModel?.ProvidersSelectList?.FirstOrDefault(p => p.Value == model.SelectedProviderUkprn)?.Text;
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RegistrationChangeProviderViewModel), model as ChangeProviderViewModel, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.ChangeCoreQuestion, new { profileId = model.ProfileId });
+            }
 
             if (!response.IsSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
@@ -172,10 +176,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("cannot-change-provider", Name = RouteConstants.CannotChangeRegistrationProvider)]
-        public IActionResult CannotChangeProviderAsync()
+        [Route("change-core-and-provider/{profileId}", Name = RouteConstants.ChangeCoreQuestion)]
+        public async Task<IActionResult> ChangeCoreQuestionAsync(int profileId)
         {
-            return View();
+            var providerViewModel = await _cacheService.GetAndRemoveAsync<ChangeProviderViewModel>(string.Concat(CacheKey, Constants.RegistrationChangeProviderViewModel));
+            if (providerViewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read ChangeProviderViewModel from redis cache in ChangeCoreQuestion page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = await _registrationLoader.GetRegistrationChangeCoreQuestionDetailsAsync(User.GetUkPrn(), profileId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration change core question details found. Method: ChangeCoreQuestionAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            viewModel.ProviderDisplayName = providerViewModel.SelectedProviderDisplayName;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("change-core-and-provider", Name = RouteConstants.SubmitChangeCoreQuestion)]
+        public IActionResult ChangeCoreQuestion(ChangeCoreQuestionViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = model.ProfileId });
         }
 
         [HttpGet]

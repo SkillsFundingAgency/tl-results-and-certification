@@ -1,0 +1,50 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ChangeCoreQuestionViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @ChangeCoreQuestion.Page_Title_Text;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="SubmitChangeCoreQuestion">
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="ProviderDisplayName" value="@Model.ProviderDisplayName" />
+            <input type="hidden" asp-for="CoreDisplayName" value="@Model.CoreDisplayName" />
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <fieldset class="govuk-fieldset" aria-describedby="change-core-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <span class="govuk-caption-xl">@ChangeCoreQuestion.Page_Caption_Text</span>
+                        <h1 class="govuk-fieldset__heading">
+                            @ChangeCoreQuestion.Page_Heading
+                        </h1>
+                    </legend>
+                    <span id="change-core-hint" class="govuk-hint govuk-!-margin-bottom-7">
+                        @Model.ProviderDisplayName @ChangeCoreQuestion.Does_Not_Offer_The_Core_Text @Model.CoreDisplayName.
+                    </span>
+                    <div class="govuk-radios" sfa-validation-for="CanChangeCore" sfa-validation-class="govuk-form-group--error">
+                        <span sfa-validation-for="CanChangeCore"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="canchangecore" asp-for="CanChangeCore" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="canchangecore">
+                                @ChangeCoreQuestion.Section_Yes_Change_Core_Text
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="tl-change-core-no" asp-for="CanChangeCore" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="tl-change-core-no">
+                                @ChangeCoreQuestion.Section_No_Change_Core_Text
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button class="govuk-button" data-module="govuk-button">@ChangeCoreQuestion.Continue_Button_Text</button>
+        </form>
+    </div>
+</div>

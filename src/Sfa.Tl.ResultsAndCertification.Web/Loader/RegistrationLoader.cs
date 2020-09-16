@@ -196,5 +196,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
             return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
         }
+
+        public async Task<ChangeCoreQuestionViewModel> GetRegistrationChangeCoreQuestionDetailsAsync(long aoUkprn, int profileId)
+        {
+            var response = await _internalApiClient.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
+            return _mapper.Map<ChangeCoreQuestionViewModel>(response);
+        }
     }
 }

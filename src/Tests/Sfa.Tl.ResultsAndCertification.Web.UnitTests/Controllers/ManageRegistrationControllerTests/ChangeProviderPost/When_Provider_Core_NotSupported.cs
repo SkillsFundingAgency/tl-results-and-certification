@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         public void Then_Redirected_To_CannotChangeRegistrationProvider()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.CannotChangeRegistrationProvider);
+            routeName.Should().Be(RouteConstants.ChangeCoreQuestion);
         }
     }
 }

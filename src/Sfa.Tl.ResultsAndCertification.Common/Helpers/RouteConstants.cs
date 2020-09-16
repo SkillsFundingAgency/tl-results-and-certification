@@ -82,7 +82,8 @@
         public const string SubmitChangeRegistrationDateofBirth = "SubmitChangeRegistrationDateofBirth";
         public const string ChangeRegistrationProvider = "ChangeRegistrationProvider";
         public const string SubmitChangeRegistrationProvider = "SubmitChangeRegistrationProvider";
-        public const string CannotChangeRegistrationProvider = "CannotChangeRegistrationProvider";
+        public const string ChangeCoreQuestion = "ChangeCoreQuestion";
+        public const string SubmitChangeCoreQuestion = "SubmitChangeCoreQuestion";
         public const string ChangeRegistrationConfirmation = "ChangeRegistrationConfirmation";
         public const string ChangeRegistrationCore = "ChangeRegistrationCore";
         public const string ChangeRegistrationSpecialismQuestion = "ChangeRegistrationSpecialismQuestion";
