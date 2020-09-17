@@ -9,17 +9,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 {
     public class When_ProfileId_Valid : TestSetup
     {
-        private ChangeCoreProviderDetailsViewModel cacheResult;
+        private ChangeProviderCoreNotSupportedViewModel cacheResult;
         private ChangeCoreQuestionViewModel mockresult = null;
 
         public override void Given()
         {
-            cacheResult = new ChangeCoreProviderDetailsViewModel
+            cacheResult = new ChangeProviderCoreNotSupportedViewModel
             {
                 ProviderDisplayName = "Test (12345678)"
             };
 
-            CacheService.GetAndRemoveAsync<ChangeCoreProviderDetailsViewModel>(CacheKey).Returns(cacheResult);
+            CacheService.GetAndRemoveAsync<ChangeProviderCoreNotSupportedViewModel>(CacheKey).Returns(cacheResult);
 
             mockresult = new ChangeCoreQuestionViewModel
             {
@@ -53,9 +53,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
             var backLink = model.BackLink;
             backLink.RouteName.Should().Be(RouteConstants.ChangeRegistrationProvider);
-            backLink.RouteAttributes.Count.Should().Be(1);
+            backLink.RouteAttributes.Count.Should().Be(2);
             backLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValue);
             routeValue.Should().Be(mockresult.ProfileId.ToString());
+            backLink.RouteAttributes.TryGetValue(Constants.IsBack, out string backRouteValue);
+            backRouteValue.Should().Be("true");
         }
     }
 }

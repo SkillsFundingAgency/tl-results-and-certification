@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
-            CacheKey = string.Concat(CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey), Common.Helpers.Constants.ChangeRegistrationCoreProviderDetailsViewModel);
+            CacheKey = string.Concat(CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey), Common.Helpers.Constants.ChangeRegistrationProviderCoreNotSupportedViewModel);
         }
 
         public async override Task When()

@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
                 return new BackLinkModel
                 {
                     RouteName = RouteConstants.ChangeRegistrationProvider,
-                    RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
+                    RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.IsBack, "true" } }
                 };
             }
         }

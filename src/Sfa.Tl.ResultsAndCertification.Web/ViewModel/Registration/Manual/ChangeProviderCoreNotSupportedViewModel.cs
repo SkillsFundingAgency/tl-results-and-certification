@@ -1,7 +1,7 @@
 ﻿
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
-    public class ChangeCoreProviderDetailsViewModel
+    public class ChangeProviderCoreNotSupportedViewModel
     {
         public int ProfileId { get; set; }
         public string ProviderDisplayName { get; set; }
