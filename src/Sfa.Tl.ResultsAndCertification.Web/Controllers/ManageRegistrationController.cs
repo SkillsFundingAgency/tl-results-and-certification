@@ -346,7 +346,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             return View(viewModel);
         }
-        
+
+        [HttpGet]
+        [Route("amend-active-registration/{profileId}", Name = RouteConstants.AmendActiveRegistration)]
+        public async Task<IActionResult> AmendActiveRegistrationAsync(int profileId)
+        {
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Active)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: AmendActiveRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            var viewModel = new AmendActiveRegistrationViewModel { ProfileId = registrationDetails.ProfileId };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("amend-active-registration", Name = RouteConstants.SubmitAmendActiveRegistration)]
+        public IActionResult AmendActiveRegistrationAsync(AmendActiveRegistrationViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            return View(model);
+        }
+
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
