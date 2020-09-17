@@ -206,16 +206,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             var prevSpecialisms = reg.SpecialismCodes;
             var currentSpecialisms = viewModel.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code);
-            var difference = prevSpecialisms.Except(currentSpecialisms);
-            
-            if (!difference.Any())
+            var areSame = prevSpecialisms.Count() == currentSpecialisms.Count() &&
+                    prevSpecialisms.All(x => currentSpecialisms.Contains(x));
+
+            if (areSame)
                 return new ManageRegistrationResponse { IsModified = false };
 
             _mapper.Map(viewModel, reg);
-            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
+            //var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
 
             // TODO:
-            isSuccess = true;
+            var isSuccess = true;
 
             return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
         }

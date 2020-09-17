@@ -14,6 +14,7 @@
         <form class="form" asp-route="SubmitChangeRegistrationSpecialisms">
             <partial name="_ValidationSummary" />
             <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="CoreCode" value="@Model.CoreCode" />
 
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@SelectSpecialisms.Page_Caption_ChangeRegistration</span>
