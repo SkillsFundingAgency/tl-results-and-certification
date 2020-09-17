@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
@@ -19,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         protected int AoUkprn;
         protected int ProfileId;
         protected Guid UserId;
-        protected bool IsChangeMode;
+        protected string CacheKey;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
         protected ILogger<ManageRegistrationController> Logger;
@@ -48,6 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             HttpContextAccessor.HttpContext.Returns(httpContext);
             ViewModel = new ChangeCoreQuestionViewModel();
             MockResult = new ProviderChangeResponse();
+            CacheKey = string.Concat(CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey), Common.Helpers.Constants.ChangeRegistrationProviderCoreNotSupportedViewModel);
         }
 
         public async override Task When()
