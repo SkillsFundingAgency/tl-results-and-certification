@@ -95,8 +95,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<RegistrationDetails, ChangeCoreQuestionViewModel>()
                 .ForMember(d => d.CoreDisplayName, opts => opts.MapFrom(s => s.PathwayDisplayName));
-
-            CreateMap<RegistrationDetails, AmendActiveRegistrationViewModel>();
         }
     }
 }

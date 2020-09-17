@@ -226,11 +226,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
             return _mapper.Map<ChangeCoreQuestionViewModel>(response);
         }
-
-        public async Task<AmendActiveRegistrationViewModel> GetAmendActiveRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
-        {
-            var response = await _internalApiClient.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
-            return _mapper.Map<AmendActiveRegistrationViewModel>(response);
-        }
     }
 }
