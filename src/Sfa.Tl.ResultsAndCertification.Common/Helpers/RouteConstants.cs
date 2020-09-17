@@ -92,6 +92,7 @@
         public const string SubmitChangeRegistrationSpecialisms = "SubmitChangeRegistrationSpecialisms";
         public const string ChangeAcademicYear = "ChangeAcademicYear";
         public const string ChangeRegistrationProviderAndCoreNeedToWithdraw = "ChangeRegistrationProviderAndCoreNeedToWithdraw";
+        public const string ChangeRegistrationProviderNotOfferingSameCore = "ChangeRegistrationProviderNotOfferingSameCore";
 
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";

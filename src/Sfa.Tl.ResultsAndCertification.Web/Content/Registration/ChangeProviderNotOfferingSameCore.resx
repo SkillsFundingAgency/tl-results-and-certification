@@ -117,19 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="If_You_Need_To_Change_Provider_Text" xml:space="preserve">
-    <value>If you need to change the provider and the core you must withdraw this registration first and then register the learner on the new course.</value>
+  <data name="Ask_Your_Providers_Editor_Text" xml:space="preserve">
+    <value>ask your Providers Editor to add it. You will then be able to update this registration.</value>
+  </data>
+  <data name="If_You_Think_Text" xml:space="preserve">
+    <value>If you think</value>
   </data>
   <data name="Page_Caption_Text" xml:space="preserve">
     <value>Change registration</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Change provider and core</value>
+    <value>Provider has not been set up to offer the same core</value>
   </data>
   <data name="Page_Title_Text" xml:space="preserve">
-    <value>Change registration - Change provider and core need to withdraw message page</value>
+    <value>Change registration - Provider does not offer the same core page</value>
   </data>
-  <data name="Withdraw_Registration_Button_Text" xml:space="preserve">
-    <value>Withdraw this registration</value>
+  <data name="Registration_Details_Button_Text" xml:space="preserve">
+    <value>Back to registrations details</value>
+  </data>
+  <data name="Should_Be_Setup_To_Offer_Text" xml:space="preserve">
+    <value>should be set up to offer</value>
   </data>
 </root>

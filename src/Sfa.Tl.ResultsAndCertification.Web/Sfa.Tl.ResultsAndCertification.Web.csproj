@@ -176,6 +176,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ChangeProviderAndCoreNeedToWithdraw.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\ChangeProviderNotOfferingSameCore.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ChangeProviderNotOfferingSameCore.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\CheckAndSubmit.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -432,6 +437,10 @@
     <EmbeddedResource Update="Content\Registration\ChangeProviderAndCoreNeedToWithdraw.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ChangeProviderAndCoreNeedToWithdraw.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\ChangeProviderNotOfferingSameCore.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ChangeProviderNotOfferingSameCore.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\CheckAndSubmit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -202,14 +202,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            if(model.CanChangeCore == true)
-            {
-                var cacheViewModel = new ChangeCoreProviderDetailsViewModel { ProfileId = model.ProfileId, ProviderDisplayName = model.ProviderDisplayName, CanChangeCore = true };
-                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeRegistrationCoreProviderDetailsViewModel), cacheViewModel as ChangeCoreProviderDetailsViewModel, CacheExpiryTime.Small);
-                return RedirectToRoute(RouteConstants.ChangeRegistrationProviderAndCoreNeedToWithdraw);
-            }
-
-            return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = model.ProfileId });
+            var cacheViewModel = new ChangeCoreProviderDetailsViewModel { ProfileId = model.ProfileId, ProviderDisplayName = model.ProviderDisplayName, CoreDisplayName = model.CoreDisplayName, CanChangeCore = model.CanChangeCore };
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeRegistrationCoreProviderDetailsViewModel), cacheViewModel, CacheExpiryTime.Small);
+            return RedirectToRoute(model.CanChangeCore == true ? RouteConstants.ChangeRegistrationProviderAndCoreNeedToWithdraw : RouteConstants.ChangeRegistrationProviderNotOfferingSameCore); 
         }
 
         [HttpGet]
@@ -227,6 +222,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [Route("provider-not-offering-same-core", Name = RouteConstants.ChangeRegistrationProviderNotOfferingSameCore)]
+        public async Task<IActionResult> ChangeProviderNotOfferingSameCoreAsync()
+        {
+            var providerViewModel = await _cacheService.GetAsync<ChangeCoreProviderDetailsViewModel>(string.Concat(CacheKey, Constants.ChangeRegistrationCoreProviderDetailsViewModel));
+            if (providerViewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read ChangeCoreProviderDetailsViewModel from redis cache in ChangeProviderNotOfferingSameCore page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = new ChangeProviderNotOfferingSameCoreViewModel { ProfileId = providerViewModel.ProfileId, ProviderDisplayName = providerViewModel.ProviderDisplayName, CoreDisplayName = providerViewModel.CoreDisplayName };
+            return View(viewModel);
+        }
+        
         [HttpGet]
         [Route("change-core/{profileId}", Name = RouteConstants.ChangeRegistrationCore)]
         public async Task<IActionResult> ChangeCoreAsync(int profileId)

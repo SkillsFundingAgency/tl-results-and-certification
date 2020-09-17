@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ChangeProviderAndCoreNeedToWithdraw {
+    public class ChangeProviderNotOfferingSameCore {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ChangeProviderAndCoreNeedToWithdraw() {
+        internal ChangeProviderNotOfferingSameCore() {
         }
         
         /// <summary>
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.ChangeProviderAndCoreNeed" +
-                            "ToWithdraw", typeof(ChangeProviderAndCoreNeedToWithdraw).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.ChangeProviderNotOffering" +
+                            "SameCore", typeof(ChangeProviderNotOfferingSameCore).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,11 +62,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you need to change the provider and the core you must withdraw this registration first and then register the learner on the new course..
+        ///   Looks up a localized string similar to ask your Providers Editor to add it. You will then be able to update this registration..
         /// </summary>
-        public static string If_You_Need_To_Change_Provider_Text {
+        public static string Ask_Your_Providers_Editor_Text {
             get {
-                return ResourceManager.GetString("If_You_Need_To_Change_Provider_Text", resourceCulture);
+                return ResourceManager.GetString("Ask_Your_Providers_Editor_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you think.
+        /// </summary>
+        public static string If_You_Think_Text {
+            get {
+                return ResourceManager.GetString("If_You_Think_Text", resourceCulture);
             }
         }
         
@@ -80,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change provider and core.
+        ///   Looks up a localized string similar to Provider has not been set up to offer the same core.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -89,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change registration - Change provider and core need to withdraw message page.
+        ///   Looks up a localized string similar to Change registration - Provider does not offer the same core page.
         /// </summary>
         public static string Page_Title_Text {
             get {
@@ -98,11 +107,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Withdraw this registration.
+        ///   Looks up a localized string similar to Back to registrations details.
         /// </summary>
-        public static string Withdraw_Registration_Button_Text {
+        public static string Registration_Details_Button_Text {
             get {
-                return ResourceManager.GetString("Withdraw_Registration_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Registration_Details_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to should be set up to offer.
+        /// </summary>
+        public static string Should_Be_Setup_To_Offer_Text {
+            get {
+                return ResourceManager.GetString("Should_Be_Setup_To_Offer_Text", resourceCulture);
             }
         }
     }
