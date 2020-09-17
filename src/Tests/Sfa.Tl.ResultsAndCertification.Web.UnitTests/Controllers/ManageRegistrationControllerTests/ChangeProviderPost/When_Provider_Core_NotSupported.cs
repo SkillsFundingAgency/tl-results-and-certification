@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         {
             var route = Result as RedirectToRouteResult;
             var routeName = route.RouteName;
-            routeName.Should().Be(RouteConstants.ChangeCoreQuestion);
+            routeName.Should().Be(RouteConstants.ChangeRegistrationCoreQuestion);
             route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
         }
     }

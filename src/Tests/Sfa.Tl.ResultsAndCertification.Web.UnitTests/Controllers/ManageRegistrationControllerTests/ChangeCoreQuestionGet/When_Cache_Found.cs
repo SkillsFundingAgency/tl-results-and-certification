@@ -6,17 +6,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 {
     public class When_Cache_Found : TestSetup
     {
-        private ChangeProviderViewModel cacheResult;
+        private ChangeCoreProviderDetailsViewModel cacheResult;
         private ChangeCoreQuestionViewModel mockresult = null;
 
         public override void Given()
         {
-            cacheResult = new ChangeProviderViewModel
+            cacheResult = new ChangeCoreProviderDetailsViewModel
             {
-                SelectedProviderDisplayName = "Test (12345678)"
+                ProviderDisplayName = "Test (12345678)"
             };
 
-            CacheService.GetAndRemoveAsync<ChangeProviderViewModel>(CacheKey).Returns(cacheResult);
+            CacheService.GetAndRemoveAsync<ChangeCoreProviderDetailsViewModel>(CacheKey).Returns(cacheResult);
 
             mockresult = new ChangeCoreQuestionViewModel
             {

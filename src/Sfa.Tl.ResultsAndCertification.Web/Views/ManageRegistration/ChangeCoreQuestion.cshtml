@@ -16,6 +16,7 @@
             <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
             <input type="hidden" asp-for="ProviderDisplayName" value="@Model.ProviderDisplayName" />
             <input type="hidden" asp-for="CoreDisplayName" value="@Model.CoreDisplayName" />
+            <partial name="_ValidationSummary" />
             <div class="govuk-form-group govuk-!-margin-bottom-7">
                 <fieldset class="govuk-fieldset" aria-describedby="change-core-hint">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">

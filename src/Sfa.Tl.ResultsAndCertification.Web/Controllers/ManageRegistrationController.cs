@@ -163,9 +163,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (response.IsCoreNotSupported)
             {
-                model.SelectedProviderDisplayName = registeredProviderViewModel?.ProvidersSelectList?.FirstOrDefault(p => p.Value == model.SelectedProviderUkprn)?.Text;
-                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RegistrationChangeProviderViewModel), model as ChangeProviderViewModel, CacheExpiryTime.XSmall);
-                return RedirectToRoute(RouteConstants.ChangeCoreQuestion, new { profileId = model.ProfileId });
+                var providerDetailsModel = new ChangeCoreProviderDetailsViewModel { ProviderDisplayName = registeredProviderViewModel?.ProvidersSelectList?.FirstOrDefault(p => p.Value == model.SelectedProviderUkprn)?.Text };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeRegistrationCoreProviderDetailsViewModel), providerDetailsModel as ChangeCoreProviderDetailsViewModel, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.ChangeRegistrationCoreQuestion, new { profileId = model.ProfileId });
             }
 
             if (!response.IsSuccess)
@@ -176,34 +176,55 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("change-core-and-provider/{profileId}", Name = RouteConstants.ChangeCoreQuestion)]
+        [Route("change-core-and-provider/{profileId}", Name = RouteConstants.ChangeRegistrationCoreQuestion)]
         public async Task<IActionResult> ChangeCoreQuestionAsync(int profileId)
         {
-            var providerViewModel = await _cacheService.GetAndRemoveAsync<ChangeProviderViewModel>(string.Concat(CacheKey, Constants.RegistrationChangeProviderViewModel));
+            var providerViewModel = await _cacheService.GetAndRemoveAsync<ChangeCoreProviderDetailsViewModel>(string.Concat(CacheKey, Constants.ChangeRegistrationCoreProviderDetailsViewModel));
             if (providerViewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read ChangeProviderViewModel from redis cache in ChangeCoreQuestion page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var viewModel = await _registrationLoader.GetRegistrationChangeCoreQuestionDetailsAsync(User.GetUkPrn(), profileId);
+            var viewModel = await GetChangeCoreQuestionDetailsAsync(profileId, providerViewModel);
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No registration change core question details found. Method: ChangeCoreQuestionAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            viewModel.ProviderDisplayName = providerViewModel.SelectedProviderDisplayName;
             return View(viewModel);
-        }
+        }        
 
         [HttpPost]
         [Route("change-core-and-provider", Name = RouteConstants.SubmitChangeCoreQuestion)]
-        public IActionResult ChangeCoreQuestion(ChangeCoreQuestionViewModel model)
+        public async Task<IActionResult> ChangeCoreQuestionAsync(ChangeCoreQuestionViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
+            if(model.CanChangeCore == true)
+            {
+                var cacheViewModel = new ChangeCoreProviderDetailsViewModel { ProfileId = model.ProfileId, ProviderDisplayName = model.ProviderDisplayName, CanChangeCore = true };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeRegistrationCoreProviderDetailsViewModel), cacheViewModel as ChangeCoreProviderDetailsViewModel, CacheExpiryTime.Small);
+                return RedirectToRoute(RouteConstants.ChangeRegistrationProviderAndCoreNeedToWithdraw);
+            }
+
             return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("change-registration-provider-and-core-need-to-withdraw", Name = RouteConstants.ChangeRegistrationProviderAndCoreNeedToWithdraw)]
+        public async Task<IActionResult> ChangeProviderAndCoreNeedToWithdrawAsync()
+        {
+            var providerViewModel = await _cacheService.GetAsync<ChangeCoreProviderDetailsViewModel>(string.Concat(CacheKey, Constants.ChangeRegistrationCoreProviderDetailsViewModel));
+            if (providerViewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read ChangeCoreProviderDetailsViewModel from redis cache in ChangeProviderAndCoreNeedToWithdraw page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = new ChangeProviderAndCoreNeedToWithdrawViewModel { ProfileId = providerViewModel.ProfileId };
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -337,6 +358,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             coreSpecialisms.Specialisms.ToList().ForEach(x => { x.IsSelected = viewModel.SpecialismCodes.Contains(x.Code); });
             
             return coreSpecialisms;
+        }
+
+        private async Task<ChangeCoreQuestionViewModel> GetChangeCoreQuestionDetailsAsync(int profileId, ChangeCoreProviderDetailsViewModel providerViewModel)
+        {
+            var coreQuestionDetails = await _registrationLoader.GetRegistrationChangeCoreQuestionDetailsAsync(User.GetUkPrn(), profileId);
+
+            if (coreQuestionDetails != null)
+            {
+                coreQuestionDetails.ProviderDisplayName = providerViewModel?.ProviderDisplayName;
+                coreQuestionDetails.CanChangeCore = providerViewModel.CanChangeCore;
+            }
+            return coreQuestionDetails;
         }
     }
 }

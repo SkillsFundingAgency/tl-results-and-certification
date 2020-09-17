@@ -82,7 +82,7 @@
         public const string SubmitChangeRegistrationDateofBirth = "SubmitChangeRegistrationDateofBirth";
         public const string ChangeRegistrationProvider = "ChangeRegistrationProvider";
         public const string SubmitChangeRegistrationProvider = "SubmitChangeRegistrationProvider";
-        public const string ChangeCoreQuestion = "ChangeCoreQuestion";
+        public const string ChangeRegistrationCoreQuestion = "ChangeRegistrationCoreQuestion";
         public const string SubmitChangeCoreQuestion = "SubmitChangeCoreQuestion";
         public const string ChangeRegistrationConfirmation = "ChangeRegistrationConfirmation";
         public const string ChangeRegistrationCore = "ChangeRegistrationCore";
@@ -91,6 +91,7 @@
         public const string ChangeRegistrationSpecialisms = "ChangeRegistrationSpecialisms";
         public const string SubmitChangeRegistrationSpecialisms = "SubmitChangeRegistrationSpecialisms";
         public const string ChangeAcademicYear = "ChangeAcademicYear";
+        public const string ChangeRegistrationProviderAndCoreNeedToWithdraw = "ChangeRegistrationProviderAndCoreNeedToWithdraw";
 
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";
