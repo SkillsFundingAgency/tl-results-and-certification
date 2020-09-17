@@ -34,9 +34,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            Result.Result.Should().BeOfType(typeof(ViewResult));
+            Result.Should().BeOfType(typeof(ViewResult));
             
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             viewResult.Model.Should().BeOfType(typeof(FindProviderViewModel));
 
             var model = viewResult.Model as FindProviderViewModel;
@@ -49,9 +49,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_Returns_Expected_ViewModel()
         {
-            Result.Result.Should().BeOfType(typeof(ViewResult));
+            Result.Should().BeOfType(typeof(ViewResult));
 
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             viewResult.Model.Should().BeOfType(typeof(FindProviderViewModel));
 
             var model = viewResult.Model as FindProviderViewModel;

@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             var actualResult = viewResult.Model as TLevelDetailsViewModel;
 
             actualResult.PageTitle.Should().Be(mockresult.PageTitle);

@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Redirected_To_QueryServiceProblem()
         {
-            var routeName = (Result.Result as RedirectToRouteResult).RouteName;
+            var routeName = (Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.QueryServiceProblem);
         }
     }

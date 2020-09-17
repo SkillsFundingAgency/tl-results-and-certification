@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         protected TempDataDictionary TempData;
         protected IProviderLoader ProviderLoader;
         protected ProviderController Controller;
-        protected Task<IActionResult> Result;
+        protected IActionResult Result;
         protected ILogger<ProviderController> Logger;
         protected IHttpContextAccessor HttpContextAccessor;
         protected ProviderTlevelsViewModel InputViewModel;
@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
         public async override Task When()
         {
-            Result = Controller.SelectProviderTlevelsAsync(InputViewModel);
+            Result = await Controller.SelectProviderTlevelsAsync(InputViewModel);
         }
     }
 }

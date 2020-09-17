@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Returns_Expected_ViewModel()
         {
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             var model = viewResult.Model as TlevelQueryViewModel;
 
             model.PathwayId.Should().Be(expectedResult.PathwayId);
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Returns_Expected_BackLinkModel()
         {
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             var model = viewResult.Model as TlevelQueryViewModel;
 
             model.IsBackToVerifyPage.Should().BeFalse();

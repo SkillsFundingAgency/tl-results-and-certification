@@ -31,13 +31,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_Called_Expected_Method()
         {
-            ProviderLoader.Received().GetSelectProviderTlevelsAsync(Ukprn, ProviderId);
+            ProviderLoader.Received(1).GetSelectProviderTlevelsAsync(Ukprn, ProviderId);
         }
 
         [Fact]
         public void Then_Redirected_To_PageNotFound()
         {
-            var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
+            var actualRouteName = (Result as RedirectToRouteResult).RouteName;
             actualRouteName.Should().Be(RouteConstants.PageNotFound);
         }
     }

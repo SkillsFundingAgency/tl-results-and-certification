@@ -14,9 +14,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            Result.Result.Should().BeOfType(typeof(JsonResult));
-            var expectedResult = Result.Result as JsonResult;
-
+            Result.Should().BeOfType(typeof(JsonResult));
+            var expectedResult = Result as JsonResult;
             expectedResult.Value.Should().Be(string.Empty);
         }
     }

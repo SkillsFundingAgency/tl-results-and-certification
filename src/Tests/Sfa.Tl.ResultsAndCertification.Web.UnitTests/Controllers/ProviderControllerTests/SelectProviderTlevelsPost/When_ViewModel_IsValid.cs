@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_ModelState_Valid_Redirected_To_ProviderTlevelConfirmation()
         {
-            var routeName = (Result.Result as RedirectToRouteResult).RouteName;
+            var routeName = (Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.ProviderTlevelConfirmation);
         }
     }

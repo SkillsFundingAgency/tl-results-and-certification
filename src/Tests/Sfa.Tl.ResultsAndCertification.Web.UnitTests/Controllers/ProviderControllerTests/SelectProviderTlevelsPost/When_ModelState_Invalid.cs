@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_Returns_Expected_ViewModel()
         {
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             var actualViewModel = viewResult.Model as ProviderTlevelsViewModel;
 
             actualViewModel.Should().NotBeNull();

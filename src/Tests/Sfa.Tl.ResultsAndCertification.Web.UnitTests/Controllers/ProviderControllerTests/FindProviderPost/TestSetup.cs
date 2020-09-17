@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
         // input, output and other mock for tes
         protected ProviderController Controller;
-        protected Task<IActionResult> Result;
+        protected IActionResult Result;
         protected IHttpContextAccessor HttpContextAccessor;
         protected FindProviderViewModel ViewModel;
         protected readonly long Ukprn = 1234;
@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
         public async override Task When()
         {
-            Result = Controller.FindProviderAsync(ViewModel);
+            Result = await Controller.FindProviderAsync(ViewModel);
         }
     }
 }

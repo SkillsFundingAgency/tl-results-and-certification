@@ -34,13 +34,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Called_Expected_Method()
         {
-            TlevelLoader.Received().GetYourTlevelsViewModel(Arg.Any<long>());
+            TlevelLoader.Received(1).GetYourTlevelsViewModel(Arg.Any<long>());
         }
 
         [Fact]
         public void Then_Returns_Expected_ViewModel()
         {
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             var model = viewResult.Model as YourTlevelsViewModel;
 
             model.IsAnyReviewPending.Should().BeTrue();

@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         protected ITlevelLoader TlevelLoader;
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
-        protected Task<IActionResult> Result;
+        protected IActionResult Result;
 
         public override void Setup()
         {
@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
         public async override Task When()
         {
-            Result = Controller.DetailsAsync(id);
+            Result = await Controller.DetailsAsync(id);
         }
     }
 }

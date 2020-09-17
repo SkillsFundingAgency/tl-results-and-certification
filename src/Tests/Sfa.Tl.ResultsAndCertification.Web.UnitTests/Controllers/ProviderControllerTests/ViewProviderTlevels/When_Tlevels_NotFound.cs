@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_Redirected_To_SelectProviderTlevels()
         {
-            var routeName = (Result.Result as RedirectToRouteResult).RouteName;
+            var routeName = (Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.SelectProviderTlevels);
         }
     }

@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
         // input, output and other mock variables
         protected ProviderController Controller;
-        protected Task<JsonResult> Result;
+        protected JsonResult Result;
         protected IHttpContextAccessor HttpContextAccessor;
 
         protected string ProviderName = "King Edward";
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
         public async override Task When()
         {
-            Result = Controller.GetProviderLookupDataAsync(ProviderName);
+            Result = await Controller.GetProviderLookupDataAsync(ProviderName);
         }
     }
 }

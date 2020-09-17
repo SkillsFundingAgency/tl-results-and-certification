@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var viewResult = Result.Result as FileStreamResult;
+            var viewResult = Result as FileStreamResult;
             viewResult.Should().NotBeNull();
             viewResult.FileDownloadName.Should().Be(RegistrationContent.UploadUnsuccessful.Registrations_Error_Report_File_Name_Text);
             viewResult.ContentType.Should().Be("text/csv");

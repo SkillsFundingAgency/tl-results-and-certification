@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         [Fact]
         public void Then_Redirected_To_ProblemWithRegistrationsUpload()
         {
-            var routeName = (Result.Result as RedirectToRouteResult).RouteName;
+            var routeName = (Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.ProblemWithRegistrationsUpload);
         }
     }

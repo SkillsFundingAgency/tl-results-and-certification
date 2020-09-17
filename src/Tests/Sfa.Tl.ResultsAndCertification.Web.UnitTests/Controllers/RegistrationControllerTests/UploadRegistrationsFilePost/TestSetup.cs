@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         protected IFormFile FormFile;
         protected IHttpContextAccessor HttpContextAccessor;
         protected TempDataDictionary TempData;
-        public Task<IActionResult> Result { get; private set; }
+        public IActionResult Result { get; private set; }
         protected Guid BlobUniqueReference;
 
         public override void Setup()
@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public async override Task When()
         {
-            Result = Controller.UploadRegistrationsFileAsync(ViewModel);
+            Result = await Controller.UploadRegistrationsFileAsync(ViewModel);
         }
     }
 }

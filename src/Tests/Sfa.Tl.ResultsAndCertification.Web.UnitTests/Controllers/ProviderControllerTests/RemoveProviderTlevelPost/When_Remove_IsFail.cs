@@ -18,8 +18,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_Redirected_To_Error()
         {
-            var routeName = (Result.Result as RedirectToRouteResult).RouteName;
-            var routeValue = (Result.Result as RedirectToRouteResult).RouteValues["StatusCode"];
+            var routeName = (Result as RedirectToRouteResult).RouteName;
+            var routeValue = (Result as RedirectToRouteResult).RouteValues["StatusCode"];
             routeName.Should().Be(RouteConstants.Error);
             routeValue.Should().Be(500);
         }

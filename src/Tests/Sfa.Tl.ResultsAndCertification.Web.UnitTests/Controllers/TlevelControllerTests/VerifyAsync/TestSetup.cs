@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         protected ITlevelLoader TlevelLoader;
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
-        protected Task<IActionResult> Result;
+        protected IActionResult Result;
         
         protected long ukprn;
         protected int pathwayId;
@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
         public async override Task When()
         {
-            Result = Controller.VerifyAsync(pathwayId, isBack);
+            Result = await Controller.VerifyAsync(pathwayId, isBack);
         }
     }
 }

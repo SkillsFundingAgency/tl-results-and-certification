@@ -20,11 +20,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Returns_Expected_BackLinkModel()
         {
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             var model = viewResult.Model as TlevelQueryViewModel;
 
-            model.IsBackToVerifyPage.Should().BeTrue(); 
-
+            model.IsBackToVerifyPage.Should().BeTrue();
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AreDetailsCorrect);
             model.BackLink.RouteAttributes.Count().Should().Be(2);

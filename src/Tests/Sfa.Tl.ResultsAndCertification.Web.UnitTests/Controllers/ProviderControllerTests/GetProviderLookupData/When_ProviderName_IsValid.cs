@@ -33,8 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            Result.Result.Should().BeOfType(typeof(JsonResult));
-            var actualResults = Result.Result.Value as IEnumerable<ProviderLookupData>;
+            Result.Should().BeOfType(typeof(JsonResult));
+            var actualResults = Result.Value as IEnumerable<ProviderLookupData>;
 
             actualResults.Count().Should().Be(2);
             actualResults.First().Id.Should().Be(expectedResults.First().Id);

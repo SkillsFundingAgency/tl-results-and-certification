@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
         // input, output and other mock variables
         protected ProviderController Controller;
-        protected Task<IActionResult> Result;
+        protected IActionResult Result;
         protected IHttpContextAccessor HttpContextAccessor;
         protected TempDataDictionary TempData;
         protected long Ukprn = 789;
@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
 
         public async override Task When()
         {
-            Result = Controller.FindProviderAsync() ;
+            Result = await Controller.FindProviderAsync() ;
         }
     }
 }

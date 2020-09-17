@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_Returns_Expected_ViewModel()
         {
-            var actualResult = Result.Result;
+            var actualResult = Result;
             actualResult.Should().NotBeNull();
             actualResult.Should().BeOfType(typeof(ViewResult));
 

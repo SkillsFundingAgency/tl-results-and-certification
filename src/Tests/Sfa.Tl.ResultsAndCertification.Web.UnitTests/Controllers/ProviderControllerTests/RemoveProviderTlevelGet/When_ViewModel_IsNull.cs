@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_On_No_Record_Found_Redirect_To_PageNotFound()
         {
-            var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
+            var actualRouteName = (Result as RedirectToRouteResult).RouteName;
             actualRouteName.Should().Be(RouteConstants.PageNotFound);
         }
     }

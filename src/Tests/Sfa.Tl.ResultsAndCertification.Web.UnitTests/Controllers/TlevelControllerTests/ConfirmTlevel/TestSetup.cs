@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         protected ITlevelLoader TlevelLoader;
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
-        protected Task<IActionResult> Result;
+        protected IActionResult Result;
         protected long ukprn;
         protected ConfirmTlevelViewModel InputModel;
         protected TempDataDictionary TempData;
@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
         public async override Task When()
         {
-            Result = Controller.ConfirmTlevelAsyc(InputModel);
+            Result = await Controller.ConfirmTlevelAsyc(InputModel);
         }
     }
 }

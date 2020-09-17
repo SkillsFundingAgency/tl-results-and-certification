@@ -22,13 +22,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Called_Expected_Methods()
         {
-            TlevelLoader.Received().GetTlevelsByStatusIdAsync(Arg.Any<long>(), (int)TlevelReviewStatus.AwaitingConfirmation);
+            TlevelLoader.Received(1).GetTlevelsByStatusIdAsync(Arg.Any<long>(), (int)TlevelReviewStatus.AwaitingConfirmation);
         }
 
         [Fact]
         public void Then_Redirected_To_YourTlevels()
         {
-            var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
+            var actualRouteName = (Result as RedirectToRouteResult).RouteName;
             actualRouteName.Should().Be(RouteConstants.YourTlevels);
         }
     }

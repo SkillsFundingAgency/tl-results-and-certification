@@ -50,14 +50,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_GetTqAoProviderDetailsAsync_Is_Called()
         {
-            ProviderLoader.Received().GetYourProvidersAsync(Ukprn);
+            ProviderLoader.Received(1).GetYourProvidersAsync(Ukprn);
         }
 
         [Fact]
         public void Then_GetTqAoProviderDetailsAsync_ViewModel_Return_Two_Rows()
         {
-            var viewResult = Result.Result as ViewResult;
-            var model = viewResult.Model as YourProvidersViewModel; //List<ProviderDetailsViewModel>;
+            var viewResult = Result as ViewResult;
+            var model = viewResult.Model as YourProvidersViewModel;
 
             model.Should().NotBeNull();
             model.Providers.Should().NotBeNull();
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_YourProviders_Returns_Expected_ViewModel()
         {
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             var model = viewResult.Model as YourProvidersViewModel;
 
             model.Should().NotBeNull();

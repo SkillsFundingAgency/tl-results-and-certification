@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Redirected_To_AreDetailsCorrect()
         {
-            var route = (Result.Result as RedirectToRouteResult);
+            var route = (Result as RedirectToRouteResult);
             route.Should().NotBeNull();
 
             var actualRouteName = route.RouteName;

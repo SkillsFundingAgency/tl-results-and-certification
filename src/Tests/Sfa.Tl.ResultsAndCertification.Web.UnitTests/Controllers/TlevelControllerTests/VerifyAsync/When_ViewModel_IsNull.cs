@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Redirected_To_PageNotFound()
         {
-            var routeName = (Result.Result as RedirectToRouteResult).RouteName;
+            var routeName = (Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.PageNotFound);
         }
 
         [Fact]
         public void Then_Called_Expected_Methods()
         {
-            TlevelLoader.Received().GetVerifyTlevelDetailsByPathwayIdAsync(ukprn, pathwayId);
+            TlevelLoader.Received(1).GetVerifyTlevelDetailsByPathwayIdAsync(ukprn, pathwayId);
         }
     }
 }

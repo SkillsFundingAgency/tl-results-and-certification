@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Returns_Expected_ViewModel()
         {
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             var model = viewResult.Model as ConfirmTlevelViewModel;
 
             model.Should().NotBeNull();
@@ -44,7 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             model.PathwayStatusId.Should().Be(expectedModel.PathwayStatusId);
             model.PathwayName.Should().Be(expectedModel.PathwayName);
             model.IsEverythingCorrect.Should().Be(expectedModel.IsEverythingCorrect);
-
             model.Specialisms.Should().NotBeNull();
             model.Specialisms.Count().Should().Be(2);
         }

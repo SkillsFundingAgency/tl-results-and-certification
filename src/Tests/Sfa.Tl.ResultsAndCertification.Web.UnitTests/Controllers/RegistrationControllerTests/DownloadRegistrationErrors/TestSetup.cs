@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         protected ILogger<RegistrationController> Logger;
         protected RegistrationController Controller;
         protected IHttpContextAccessor HttpContextAccessor;
-        public Task<IActionResult> Result { get; private set; }
+        public IActionResult Result { get; private set; }
         protected Guid BlobUniqueReference;
         protected string Id;
 
@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public async override Task When()
         {
-            Result = Controller.DownloadRegistrationErrors(Id);
+            Result = await Controller.DownloadRegistrationErrors(Id);
         }
     }
 }

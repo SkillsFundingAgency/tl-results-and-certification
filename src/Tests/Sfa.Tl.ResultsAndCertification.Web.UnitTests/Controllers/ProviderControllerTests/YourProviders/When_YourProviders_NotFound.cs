@@ -30,13 +30,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_GetTqAoProviderDetailsAsync_Is_Called()
         {
-            ProviderLoader.Received().GetYourProvidersAsync(Ukprn);
+            ProviderLoader.Received(1).GetYourProvidersAsync(Ukprn);
         }
 
         [Fact]
         public void Then_On_No_Record_Found_Redirect_To_FindProiver()
         {
-            var actualRouteName = (Result.Result as RedirectToRouteResult).RouteName;
+            var actualRouteName = (Result as RedirectToRouteResult).RouteName;
             actualRouteName.Should().Be(RouteConstants.FindProvider);
         }
     }

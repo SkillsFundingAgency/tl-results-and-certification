@@ -25,9 +25,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var route = (Result.Result as RedirectToRouteResult);
+            var route = (Result as RedirectToRouteResult);
             route.RouteName.Should().Be(RouteConstants.ProviderTlevels);
-
             route.RouteValues["providerId"].Should().Be(TlProviderId);
         }
     }

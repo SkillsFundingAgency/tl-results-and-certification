@@ -38,20 +38,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Reeturns_Expected_Results()
         {
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             var model = viewResult.Model as SelectToReviewPageViewModel;
 
             model.Should().NotBeNull();
             model.SelectedPathwayId.Should().Be(mockresult.SelectedPathwayId);
             model.TlevelsToReview.Should().NotBeNull();
-
             model.TlevelsToReview.Count().Should().Be(2);
         }
 
         [Fact]
         public void Then_Reeturns_Expected_ViewModel()
         {
-            var viewResult = Result.Result as ViewResult;
+            var viewResult = Result as ViewResult;
             var model = viewResult.Model as SelectToReviewPageViewModel;
 
             model.TlevelsToReview.Should().NotBeNull();
