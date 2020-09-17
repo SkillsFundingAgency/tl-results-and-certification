@@ -64,6 +64,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryStatus.ActionText.Should().Be(RegistrationDetailsContent.Change_Status_Action_Link_Text);
             model.SummaryStatus.HasTag.Should().BeTrue();
             model.SummaryStatus.TagCssClass.Should().Be("govuk-tag--green");
+            model.SummaryStatus.RouteName.Should().Be(RouteConstants.AmendActiveRegistration);
+            model.SummaryStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary LearnerName
             model.SummaryLearnerName.Should().NotBeNull();
