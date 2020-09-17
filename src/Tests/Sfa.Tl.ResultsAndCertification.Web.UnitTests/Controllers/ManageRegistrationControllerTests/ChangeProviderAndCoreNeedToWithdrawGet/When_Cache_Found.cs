@@ -1,19 +1,18 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ChangeCoreQuestionPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ChangeProviderAndCoreNeedToWithdrawGet
 {
-    public class When_ChangeCore_False : TestSetup
+    public class When_Cache_Found : TestSetup
     {
         private ChangeProviderCoreNotSupportedViewModel cacheResult;
+        private ChangeCoreQuestionViewModel mockresult = null;
 
         public override void Given()
         {
-            ViewModel.CanChangeCore = false;
             cacheResult = new ChangeProviderCoreNotSupportedViewModel
             {
                 ProfileId = 1,
@@ -27,14 +26,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Any<ChangeProviderCoreNotSupportedViewModel>());
+            CacheService.Received(1).GetAsync<ChangeProviderCoreNotSupportedViewModel>(CacheKey);
         }
 
         [Fact]
-        public void Then_Redirected_To_ChangeRegistrationProviderNotOfferingSameCore()
+        public void Then_Returns_Expected_Results()
         {
-            var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.ChangeRegistrationProviderNotOfferingSameCore);
+            Result.Should().NotBeNull();
+            var viewResult = Result as ViewResult;
+            viewResult.Should().NotBeNull();
+
+            var actualModel = viewResult.Model as ChangeProviderAndCoreNeedToWithdrawViewModel;
+            actualModel.ProfileId.Should().Be(cacheResult.ProfileId);
         }
     }
 }

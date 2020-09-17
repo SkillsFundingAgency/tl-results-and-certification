@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         }
 
         [Fact]
-        public void Then_Expecected_Methods_Called()
+        public void Then_Expected_Methods_Called()
         {
             CacheService.Received(1).SetAsync(CacheKey, Arg.Any<ChangeProviderCoreNotSupportedViewModel>());
         }

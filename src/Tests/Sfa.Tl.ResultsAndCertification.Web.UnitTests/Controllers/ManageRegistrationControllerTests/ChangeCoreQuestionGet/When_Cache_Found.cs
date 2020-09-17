@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         }
 
         [Fact]
-        public void Then_Expecected_Methods_Called()
+        public void Then_Expected_Methods_Called()
         {
             RegistrationLoader.Received(1).GetRegistrationChangeCoreQuestionDetailsAsync(AoUkprn, ProfileId);
         }
