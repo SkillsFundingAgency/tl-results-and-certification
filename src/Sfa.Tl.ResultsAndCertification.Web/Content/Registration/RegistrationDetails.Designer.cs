@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change status.
+        /// </summary>
+        public static string Change_Status_Action_Link_Text {
+            get {
+                return ResourceManager.GetString("Change_Status_Action_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for a registration - Registration details page.
         /// </summary>
         public static string Page_Title {

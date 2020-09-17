@@ -6,7 +6,14 @@
         @Model?.Title
     </dt>
     <dd class="govuk-summary-list__value">
-        <p class="govuk-body">@Model?.Value</p>
+        @if (Model?.HasTag == true)
+        {
+            <strong class="govuk-tag @Model.TagCssClass">@Model?.Value</strong>
+        }
+        else
+        {
+            <p class="govuk-body">@Model?.Value</p>
+        }
     </dd>
     @if (!string.IsNullOrWhiteSpace(Model?.ActionText))
     {

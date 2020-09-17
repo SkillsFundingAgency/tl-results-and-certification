@@ -123,6 +123,9 @@
   <data name="Change_Action_Link_Text" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="Change_Status_Action_Link_Text" xml:space="preserve">
+    <value>Change status</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Search for a registration - Registration details page</value>
   </data>

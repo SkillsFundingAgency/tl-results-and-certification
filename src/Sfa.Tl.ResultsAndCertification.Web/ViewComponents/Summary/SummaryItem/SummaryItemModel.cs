@@ -8,6 +8,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem
         public string Title { get; set; }
         public string Value { get; set; }
         public string RouteName { get; set; }
+        public bool HasTag { get; set; }
+        public string TagCssClass { get; set; }
         public Dictionary<string, string> RouteAttributes { get; set; }
         public string ActionText { get; set; }
     }

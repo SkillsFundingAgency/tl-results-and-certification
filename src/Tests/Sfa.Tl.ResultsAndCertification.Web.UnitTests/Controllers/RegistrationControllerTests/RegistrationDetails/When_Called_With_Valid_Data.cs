@@ -57,6 +57,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.AcademicYear.Should().Be(mockresult.AcademicYear);
             model.Status.Should().Be(mockresult.Status);
 
+            // Summary Status
+            model.SummaryStatus.Should().NotBeNull();
+            model.SummaryStatus.Title.Should().Be(RegistrationDetailsContent.Title_Status);
+            model.SummaryStatus.Value.Should().Be(mockresult.Status.ToString());
+            model.SummaryStatus.ActionText.Should().Be(RegistrationDetailsContent.Change_Status_Action_Link_Text);
+            model.SummaryStatus.HasTag.Should().BeTrue();
+            model.SummaryStatus.TagCssClass.Should().Be("govuk-tag--green");
+
             // Summary LearnerName
             model.SummaryLearnerName.Should().NotBeNull();
             model.SummaryLearnerName.Title.Should().Be(RegistrationDetailsContent.Title_Name_Text);
