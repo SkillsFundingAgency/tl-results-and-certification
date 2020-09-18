@@ -5,27 +5,15 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessSpecialismQuestionChangeAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessSpecialismQuestionChange
 {
-    public class When_NoSpecialism_Selected : TestSetup
+    public class When_NoData_Found : TestSetup
     {
-        private ManageRegistration mockResponse = null;
+        readonly ManageRegistration mockResponse = null;
 
         public override void Given()
         {
-            mockResponse = new ManageRegistration
-            {
-                ProfileId = 1,
-                Uln = Uln,
-                FirstName = "Test",
-                LastName = "Last",
-                AoUkprn = AoUkprn,
-                ProviderUkprn = 34567890,
-                CoreCode = "10000112",
-                PerformedBy = "updatedUser"
-            };
-
-            ViewModel = new ChangeSpecialismQuestionViewModel { ProfileId = 1, HasLearnerDecidedSpecialism = null };
+            ViewModel = new ChangeSpecialismQuestionViewModel { ProfileId = 1 };
             InternalApiClient.GetRegistrationAsync(AoUkprn, Arg.Any<int>()).Returns(mockResponse);
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
         }

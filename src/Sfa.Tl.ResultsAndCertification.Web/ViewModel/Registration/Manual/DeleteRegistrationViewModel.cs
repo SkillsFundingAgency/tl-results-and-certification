@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
                 return new BackLinkModel
                 {
                     RouteName = RouteConstants.RegistrationDetails,
-                    RouteAttributes = new Dictionary<string, string> { { "profileId", ProfileId.ToString() } }
+                    RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
                 };
             }
         }

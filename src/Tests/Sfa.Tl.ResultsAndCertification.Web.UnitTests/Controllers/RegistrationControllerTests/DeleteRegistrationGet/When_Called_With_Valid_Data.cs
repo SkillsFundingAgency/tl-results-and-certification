@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.BackLink.RouteName.Should().Be(RouteConstants.RegistrationDetails);
             model.BackLink.RouteAttributes.Count.Should().Be(1);
 
-            model.BackLink.RouteAttributes.TryGetValue("profileId", out string routeValue);
+            model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValue);
             routeValue.Should().Be(mockresult.ProfileId.ToString());
         }
     }

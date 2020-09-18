@@ -4,15 +4,15 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessDateofBirthChangeAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessProfileNameChange
 {
-    public class When_DateofBirth_NotFound : TestSetup
+    public class When_NoData_Found : TestSetup
     {
         readonly ManageRegistration mockResponse = null;
 
         public override void Given()
         {
-            ViewModel = new ChangeDateofBirthViewModel { ProfileId = 1 };
+            ViewModel = new ChangeLearnersNameViewModel { ProfileId = 1 };
             InternalApiClient.GetRegistrationAsync(AoUkprn, Arg.Any<int>())
                 .Returns(mockResponse);
         }

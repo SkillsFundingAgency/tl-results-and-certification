@@ -5,14 +5,15 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessSpecialismQuestionChangeAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessSpecialismQuestionChange
 {
-    public class When_SpecialismQuestionChange_Success : TestSetup
+    public class When_SpecialismQuestionChange_Failed : TestSetup
     {
         private ManageRegistration registrationApiClientResponse;
 
         public override void Given()
         {
+            ApiClientResponse = false;
             registrationApiClientResponse = new ManageRegistration
             {
                 ProfileId = 1,
@@ -44,7 +45,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             var result = Mapper.Map(ViewModel, registrationApiClientResponse);
 
             result.Should().NotBeNull();
-
             result.AoUkprn.Should().Be(AoUkprn);
             result.Uln.Should().Be(registrationApiClientResponse.Uln);
             result.FirstName.Should().Be(registrationApiClientResponse.FirstName);
@@ -59,9 +59,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         public void Then_Expected_Result_Is_Returned()
         {
             ActualResult.Should().NotBeNull();
-
             ActualResult.IsModified.Should().BeTrue();
-            ActualResult.IsSuccess.Should().BeTrue();
+            ActualResult.IsSuccess.Should().BeFalse();
             ActualResult.ProfileId.Should().Be(ViewModel.ProfileId);
             ActualResult.Uln.Should().Be(Uln);
         }

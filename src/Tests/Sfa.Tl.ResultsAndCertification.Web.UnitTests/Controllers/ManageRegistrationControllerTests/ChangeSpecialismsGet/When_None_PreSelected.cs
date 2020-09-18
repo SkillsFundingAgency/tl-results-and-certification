@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             var backLink = model.BackLink;
             backLink.RouteName.Should().Be(RouteConstants.RegistrationDetails);
             backLink.RouteAttributes.Count.Should().Be(1);
-            backLink.RouteAttributes.TryGetValue("profileId", out string routeValue);
+            backLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValue);
             routeValue.Should().Be(mockChangeSpecialismViewModel.ProfileId.ToString());
         }
     }
