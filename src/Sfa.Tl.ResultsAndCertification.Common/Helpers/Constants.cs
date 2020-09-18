@@ -44,5 +44,6 @@
         public const string ProfileId = "profileId";
         public const string IsBack = "isBack";
         public const string ChangeStatusId = "changeStatusId";
+        public const string WithdrawBackLinkOptionId = "withdrawBackLinkOptionId";
     }
 }
