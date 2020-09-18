@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
@@ -18,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
     {
         private Task<bool> _result;
         private RegistrationRequest _registrationRequest;
-
+        
         public override void Given()
         {
             CreateMapper();
@@ -27,7 +28,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper, RegistrationRepositoryLogger);
+            TqRegistrationSpecialismRepositoryLogger = Substitute.For<ILogger<GenericRepository<TqRegistrationSpecialism>>>();
+            TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
+
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper, RegistrationRepositoryLogger, TqRegistrationSpecialismRepository);
             _registrationRequest = new RegistrationRequest
             {
                 AoUkprn = TlAwardingOrganisation.UkPrn,

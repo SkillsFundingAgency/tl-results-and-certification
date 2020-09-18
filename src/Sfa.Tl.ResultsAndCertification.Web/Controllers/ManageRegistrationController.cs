@@ -294,7 +294,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("change-registration-select-specialism/{profileId}", Name = RouteConstants.ChangeRegistrationSpecialisms)]
-        public async Task<IActionResult> ChangeRegistrationSpecialismsAsync(int profileId)
+        public async Task<IActionResult> ChangeSpecialismsAsync(int profileId)
         {
             var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeSpecialismViewModel>(User.GetUkPrn(), profileId);
             if (viewModel == null)
@@ -309,7 +309,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("change-registration-select-specialism", Name = RouteConstants.SubmitChangeRegistrationSpecialisms)]
-        public async Task<IActionResult> ChangeRegistrationSpecialismsAsync(ChangeSpecialismViewModel viewModel)
+        public async Task<IActionResult> ChangeSpecialismsAsync(ChangeSpecialismViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {

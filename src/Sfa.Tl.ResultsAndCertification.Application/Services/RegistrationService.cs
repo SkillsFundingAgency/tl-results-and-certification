@@ -28,11 +28,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRegistrationRepository _tqRegistrationRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<IRegistrationRepository> _logger;
+        private readonly IRepository<TqRegistrationSpecialism> _tqRegistrationSpecialismRepository;
 
-        public RegistrationService(IProviderRepository providerRespository, IRegistrationRepository tqRegistrationRepository, IMapper mapper, ILogger<IRegistrationRepository> logger)
+        public RegistrationService(IProviderRepository providerRespository, 
+            IRegistrationRepository tqRegistrationRepository, 
+            IMapper mapper, 
+            ILogger<IRegistrationRepository> logger, 
+            IRepository<TqRegistrationSpecialism> tqRegistrationSpecialismRepository)
         {
             _tqProviderRepository = providerRespository;
             _tqRegistrationRepository = tqRegistrationRepository;
+            _tqRegistrationSpecialismRepository = tqRegistrationSpecialismRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -399,7 +405,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
                 else if (model.HasSpecialismsChanged)
                 {
-                    return await _tqRegistrationRepository.UpdateRegistrationWithSpecifedCollectionsOnlyAsync(toUpdateRegistration.TqRegistrationPathways.First(), u => u.TqRegistrationSpecialisms) > 0;
+                    var updateSpecialisms = toUpdateRegistration.TqRegistrationPathways.First().TqRegistrationSpecialisms.ToList();
+                    return await _tqRegistrationSpecialismRepository.UpdateManyAsync(updateSpecialisms) > 0;
                 }
                 return false;
             }
@@ -476,12 +483,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         s.EndDate = DateTime.UtcNow;
                         s.ModifiedBy = model.PerformedBy;
                         s.ModifiedOn = DateTime.UtcNow;
+                        s.TqRegistrationPathway = null;
                     });
 
-                    if (filteredTlSpecialismLarIdsToAdd != null && filteredTlSpecialismLarIdsToAdd.Any())
+                    if (filteredTlSpecialismLarIdsToAdd.Count > 0 || specialismsToUpdate.Count > 0)
                     {
                         registrationRecord.TlSpecialismLarIds = filteredTlSpecialismLarIdsToAdd;
-                        specialismsToUpdate.AddRange(MapSpecialisms(registrationRecord, model.PerformedBy, 0, false));
+                        var mappedSpecialisms = MapSpecialisms(registrationRecord, model.PerformedBy, 0, false);
+                        mappedSpecialisms.ToList().ForEach(specialism => specialism.TqRegistrationPathwayId = existingPathway.Id);
+
+                        existingPathway.TqRegistrationSpecialisms.Clear();
+                        existingPathway.TqRegistrationSpecialisms = mappedSpecialisms.Concat(specialismsToUpdate).ToList();
                     }
                 }
             }

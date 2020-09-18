@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessProfileNameChangeAsync
 {
-    public class When_Name_Unchanged : TestSetup
+    public class When_Specialism_Unchanged : TestSetup
     {
         ManageRegistration mockResponse = null;
         readonly string firstName = " John";
