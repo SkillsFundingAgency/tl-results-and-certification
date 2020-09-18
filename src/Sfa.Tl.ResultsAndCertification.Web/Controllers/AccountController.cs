@@ -1,12 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -15,11 +18,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     {
         private readonly ILogger _logger;
         private readonly ResultsAndCertificationConfiguration _configuration;
+        private readonly ICacheService _cacheService;
 
-        public AccountController(ResultsAndCertificationConfiguration configuration, ILogger<AccountController> logger)
+        private string CacheKey
+        {
+            get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.UserSessionActivityCacheKey); }
+        }
+
+        public AccountController(ResultsAndCertificationConfiguration configuration, ICacheService cacheService, ILogger<AccountController> logger)
         {
             _configuration = configuration;
-            _logger = logger;
+            _cacheService = cacheService;
+            _logger = logger;            
         }
 
         [AllowAnonymous]
@@ -50,6 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("signout", Name = RouteConstants.SignOut)]
         public async Task SignOut()
         {
+            await _cacheService.RemoveAsync<DateTime>(CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.UserSessionActivityCacheKey));
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }

@@ -103,5 +103,11 @@
         // Document
         public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
         public const string DownloadRegistrationDataFormatAndRulesGuide = "DownloadRegistrationDataFormatAndRulesGuide";
+
+        // Timeout
+        public const string ActiveDuration = "ActiveDuration";
+        public const string RenewSessionActivity = "RenewSessionActivity";
+        public const string ActivityTimeout = "ActivityTimeout";
+        public const string Timeout = "Timeout";
     }
 }

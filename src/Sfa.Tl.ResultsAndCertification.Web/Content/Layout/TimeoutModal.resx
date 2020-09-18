@@ -117,34 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AutoComplete_Help_Text" xml:space="preserve">
-    <value>The following entry field has auto-complete. When autocomplete results are available use up and down arrows to review and enter to select. Touch device users, explore by touch or with swipe gestures.</value>
+  <data name="For_Security_Reasons_Text" xml:space="preserve">
+    <value>For security reasons we will sign you out if you remain inactive. You will be signed out in</value>
   </data>
-  <data name="Continue_Button_Label" xml:space="preserve">
-    <value>Continue</value>
+  <data name="Keep_Me_Signed_In_Text" xml:space="preserve">
+    <value>Keep me signed in</value>
   </data>
-  <data name="Page_Heading" xml:space="preserve">
-    <value>Find a provider</value>
+  <data name="Signout_Text" xml:space="preserve">
+    <value>Sign out</value>
   </data>
-  <data name="Page_Title" xml:space="preserve">
-    <value>Find a provider page</value>
-  </data>
-  <data name="ProviderName_Char_Limit_Exceed_Validation_Message" xml:space="preserve">
-    <value>The character limit exceeded</value>
-  </data>
-  <data name="ProviderName_NotValid_Validation_Message" xml:space="preserve">
-    <value>No provider found with that name - enter a valid provider’s name</value>
-  </data>
-  <data name="ProviderName_Required_Validation_Message" xml:space="preserve">
-    <value>Enter a provider’s name</value>
-  </data>
-  <data name="Provider_Input_Field_Label" xml:space="preserve">
-    <value>Enter the provider's name</value>
-  </data>
-  <data name="Section_Information_Text" xml:space="preserve">
-    <value>Tell us which T Levels a provider will offer.</value>
-  </data>
-  <data name="View_Providers_Link_Text" xml:space="preserve">
-    <value>View providers you have already set up</value>
+  <data name="You_Will_Be_Signed_Out_Soon_Text" xml:space="preserve">
+    <value>You will be signed out soon</value>
   </data>
 </root>

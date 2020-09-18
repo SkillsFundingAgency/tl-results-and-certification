@@ -41,6 +41,11 @@
 
 
   <ItemGroup>
+    <Compile Update="Content\Timeout\TimeoutConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TimeoutConfirmation.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Dashboard.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -115,6 +120,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>PhaseBanner.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Layout\TimeoutModal.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TimeoutModal.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Provider\Confirmation.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -310,6 +320,10 @@
 
 
   <ItemGroup>
+    <EmbeddedResource Update="Content\Timeout\TimeoutConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TimeoutConfirmation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
@@ -369,6 +383,10 @@
     <EmbeddedResource Update="Content\Layout\PhaseBanner.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PhaseBanner.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Layout\TimeoutModal.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TimeoutModal.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Provider\Confirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
