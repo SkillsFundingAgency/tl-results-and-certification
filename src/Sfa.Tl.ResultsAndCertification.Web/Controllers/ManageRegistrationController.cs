@@ -314,7 +314,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
             {
                 var model = await _registrationLoader.GetRegistrationProfileAsync<ChangeSpecialismViewModel>(User.GetUkPrn(), viewModel.ProfileId);
-                if (viewModel == null)
+                if (model == null)
                     return RedirectToRoute(RouteConstants.PageNotFound);
 
                 viewModel.SpecialismCodes = model.SpecialismCodes;
@@ -370,9 +370,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            if(model.ChangeStatus == RegistrationChangeStatus.Withdraw)
+            if (model.ChangeStatus == RegistrationChangeStatus.Withdraw)
             {
-                return RedirectToRoute(RouteConstants.WithdrawRegistration, new { profileId = model.ProfileId, withdrawBackLinkOptionId  = (int)WithdrawBackLinkOptions.AmendActiveRegistrationPage});
+                return RedirectToRoute(RouteConstants.WithdrawRegistration, new { profileId = model.ProfileId, withdrawBackLinkOptionId = (int)WithdrawBackLinkOptions.AmendActiveRegistrationPage });
             }
 
             return View(model);
