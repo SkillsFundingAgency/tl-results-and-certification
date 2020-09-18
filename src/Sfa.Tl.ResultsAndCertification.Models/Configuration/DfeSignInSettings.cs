@@ -69,5 +69,7 @@
         /// <summary>Gets or sets the sign out redirect URI.</summary>
         /// <value>The sign out redirect URI.</value>
         public string SignOutRedirectUri { get; set; }
+
+        public string TimeoutRedirectUri { get; set; }
     }
 }

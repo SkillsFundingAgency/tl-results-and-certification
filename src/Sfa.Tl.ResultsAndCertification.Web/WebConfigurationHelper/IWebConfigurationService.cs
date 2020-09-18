@@ -6,5 +6,6 @@
         string GetFeedbackEmailAddress();
         string GetSignOutPath();
         string GetFormattedTitle(string pageTitle, bool isModelValid);
+        int GetSessionTimeoutValue();
     }
 }

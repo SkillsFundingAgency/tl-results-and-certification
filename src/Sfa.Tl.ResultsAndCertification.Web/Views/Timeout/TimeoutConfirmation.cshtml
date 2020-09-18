@@ -1,0 +1,21 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Timeout
+
+@{
+    ViewData["Title"] = @TimeoutConfirmation.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+            <h1 class="govuk-heading-l">
+                @TimeoutConfirmation.You_Have_Been_Signed_Out_Text
+            </h1>
+            <p class="govuk-body">@TimeoutConfirmation.Due_To_N_Minutes_Of_Inactivity_Text</p>
+        </div>
+        <p>
+            <a class="govuk-button" role="button" asp-route="SignIn">
+                @TimeoutConfirmation.Sign_In_Button_Text
+            </a>
+        </p>
+    </div>
+</div>

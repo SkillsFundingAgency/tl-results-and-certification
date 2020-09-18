@@ -18,7 +18,12 @@
         document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
 
-    <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+    <a id="skipToMainContent" href="#main-content" class="govuk-skip-link">Skip to main content</a>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <partial name="_govuk_TimeoutModal" />
+    }
 
     <partial name="_govuk_CookieBanner" />
     <partial name="_govuk_Header" />
@@ -38,7 +43,13 @@
     <partial name="_govuk_Footer" />
 
     <partial name="_govuk_Scripts" />
+
     @RenderSection("Scripts", required: false)
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script nws-csp-add-nonce="true" src="~/javascripts/session-timeout.min.js"></script>
+    }
 
 </body>
 </html>

@@ -86,6 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                     NoStore = true,
                     Location = ResponseCacheLocation.None
                 });
+                config.Filters.Add<SessionActivityFilterAttribute>();
                 config.Filters.Add<CustomExceptionFilterAttribute>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
