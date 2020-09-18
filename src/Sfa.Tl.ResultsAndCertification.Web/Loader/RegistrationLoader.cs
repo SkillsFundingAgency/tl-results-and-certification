@@ -228,7 +228,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var model = _mapper.Map<WithdrawRegistrationRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             var isSuccess = await _internalApiClient.WithdrawRegistrationAsync(model);
-            return new WithdrawRegistrationResponse { ProfileId = viewModel.ProfileId, Uln = viewModel.Uln, IsSuccess = isSuccess };
+            return new WithdrawRegistrationResponse { ProfileId = viewModel.ProfileId, Uln = viewModel.Uln, IsSuccess = isSuccess, IsRequestFromProviderAndCorePage = viewModel.IsRequestFromProviderAndCorePage };
         }
     }
 }

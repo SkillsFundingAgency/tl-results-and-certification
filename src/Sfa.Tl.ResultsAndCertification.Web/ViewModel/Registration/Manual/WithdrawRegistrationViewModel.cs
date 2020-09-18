@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public bool? CanWithdraw { get; set; }
 
         public int? WithdrawBackLinkOptionId { get; set; }
-
+        public bool IsRequestFromProviderAndCorePage => WithdrawBackLinkOption != null && WithdrawBackLinkOption != WithdrawBackLinkOptions.AmendActiveRegistrationPage;
         public WithdrawBackLinkOptions BackLinkOptions { get; set; }
 
         public BackLinkModel BackLink => GetBackLinkModel;

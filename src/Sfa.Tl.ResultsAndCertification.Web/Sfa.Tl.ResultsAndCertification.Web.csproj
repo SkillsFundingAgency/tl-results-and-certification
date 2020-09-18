@@ -286,6 +286,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Upload.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\WithdrawConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>WithdrawConfirmation.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\WithdrawRegistration.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -535,6 +540,10 @@
     <EmbeddedResource Update="Content\Registration\Upload.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Upload.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\WithdrawConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WithdrawConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\WithdrawRegistration.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

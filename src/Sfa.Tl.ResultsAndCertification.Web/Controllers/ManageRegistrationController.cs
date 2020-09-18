@@ -416,6 +416,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("registration-withdrawn-confirmation", Name = RouteConstants.WithdrawRegistrationConfirmation)]
+        public async Task<IActionResult> WithdrawConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<WithdrawRegistrationResponse>(string.Concat(CacheKey, Constants.WithdrawRegistrationConfirmationViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read WithdrawRegistrationConfirmationViewModel from redis cache in withdraw registration confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());

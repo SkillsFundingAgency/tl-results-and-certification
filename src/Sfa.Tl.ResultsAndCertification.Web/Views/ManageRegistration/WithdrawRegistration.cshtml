@@ -14,6 +14,7 @@
     <div class="govuk-grid-column-two-thirds">
         <form asp-route="SubmitWithdrawRegistration">
             <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="Uln" value="@Model.Uln" />
             <input type="hidden" asp-for="WithdrawBackLinkOptionId" value="@Model.WithdrawBackLinkOptionId" />
             <partial name="_ValidationSummary" />
             <div class="govuk-form-group govuk-!-margin-bottom-7">
