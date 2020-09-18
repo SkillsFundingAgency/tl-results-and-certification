@@ -105,8 +105,8 @@
         public const string RegistrationDetails = "RegistrationDetails";
                 
         // Cancel Registration
-        public const string CancelRegistration = "CancelRegistration";
-        public const string SubmitCancelRegistration = "SubmitCancelRegistration";
+        public const string DeleteRegistration = "DeleteRegistration";
+        public const string SubmitDeleteRegistration = "SubmitDeleteRegistration";
         public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
 
         // Error

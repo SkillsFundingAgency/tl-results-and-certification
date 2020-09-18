@@ -2,16 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.CancelRegistrationPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.DeleteRegistrationPost
 {
-    public class When_Called_With_CancelRegistration : TestSetup
+    public class When_Success : TestSetup
     {
         public override void Given()
         {
-            ViewModel.CancelRegistration = true;
+            Uln = 1234567890;
+            ViewModel.DeleteRegistration = true;
             RegistrationLoader.DeleteRegistrationAsync(AoUkprn, ProfileId).Returns(true);
+            CacheService.SetAsync(CacheKey, new RegistrationCancelledConfirmationViewModel { Uln = Uln });
         }
 
         [Fact]

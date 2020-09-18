@@ -4,13 +4,13 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.CancelRegistrationPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.DeleteRegistrationPost
 {
     public class When_Failed : TestSetup
     {
         public override void Given()
         {
-            ViewModel.CancelRegistration = true;
+            ViewModel.DeleteRegistration = true;
             RegistrationLoader.DeleteRegistrationAsync(AoUkprn, ProfileId).Returns(false);
         }
 

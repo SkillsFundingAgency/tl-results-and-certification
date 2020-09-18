@@ -6,14 +6,14 @@ using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
-    public class CancelRegistrationViewModel
+    public class DeleteRegistrationViewModel
     {
         public long Uln { get; set; }
 
         public int ProfileId { get; set; }
         
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.CancelRegistration), ErrorMessageResourceName = "Validation_Message")]
-        public bool? CancelRegistration { get; set; }
+        [Required(ErrorMessageResourceType = typeof(ErrorResource.DeleteRegistration), ErrorMessageResourceName = "Validation_Message")]
+        public bool? DeleteRegistration { get; set; }
         
         public BackLinkModel BackLink
         {
