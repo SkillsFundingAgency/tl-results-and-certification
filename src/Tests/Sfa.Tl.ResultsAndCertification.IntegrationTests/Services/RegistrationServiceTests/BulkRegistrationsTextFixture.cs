@@ -29,9 +29,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         public IList<TqProvider> TqProviders;
         protected IList<TlSpecialism> TlSpecialisms;
         protected RegistrationService RegistrationService;        
-        protected IProviderRepository ProviderRepository;        
+        protected IProviderRepository ProviderRepository;
+        protected IRepository<TqRegistrationSpecialism> TqRegistrationSpecialismRepository;
         protected ILogger<ProviderRepository> ProviderRepositoryLogger;
         protected ILogger<RegistrationRepository> RegistrationRepositoryLogger;
+        protected ILogger<GenericRepository<TqRegistrationSpecialism>> TqRegistrationSpecialismRepositoryLogger;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         public IRegistrationRepository RegistrationRepository;
         protected IMapper RegistrationMapper;
@@ -39,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         public IList<TqRegistrationProfile> TqRegistrationProfilesData;
         public Checkpoint DbCheckpoint;
         public ResultsAndCertificationDbContext DbContext;
+
 
 
         public BulkRegistrationsTextFixture()
@@ -55,7 +58,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper, RegistrationRepositoryLogger);
+            TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper, RegistrationRepositoryLogger, TqRegistrationSpecialismRepository);
         }
 
         protected void CreateMapper()
