@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No, do not cancel it.
+        ///   Looks up a localized string similar to No, do not delete it.
         /// </summary>
         public static string Cancel_Registration_No {
             get {
@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes, cancel registration.
+        ///   Looks up a localized string similar to Yes, delete this registration.
         /// </summary>
         public static string Cancel_Registration_Yes {
             get {
@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to cancel this registration?.
+        ///   Looks up a localized string similar to Are you sure you want to delete this registration permanently?.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel registration page.
+        ///   Looks up a localized string similar to Delete registration page.
         /// </summary>
         public static string Page_Title {
             get {

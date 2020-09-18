@@ -585,7 +585,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("cancel-registration/{profileId}", Name = RouteConstants.CancelRegistration)]
+        [Route("delete-registration/{profileId}", Name = RouteConstants.CancelRegistration)]
         public async Task<IActionResult> CancelRegistrationAsync(int profileId)
         {
             var ulnDetails = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
@@ -597,7 +597,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("cancel-registration", Name = RouteConstants.SubmitCancelRegistration)]
+        [Route("delete-registration", Name = RouteConstants.SubmitCancelRegistration)]
         public async Task<IActionResult> CancelRegistrationAsync(CancelRegistrationViewModel viewModel)
         {
             if (!ModelState.IsValid)

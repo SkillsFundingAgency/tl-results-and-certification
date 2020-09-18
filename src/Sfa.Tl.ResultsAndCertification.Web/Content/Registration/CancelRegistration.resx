@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Cancel_Registration_No" xml:space="preserve">
-    <value>No, do not cancel it</value>
+    <value>No, do not delete it</value>
   </data>
   <data name="Cancel_Registration_Yes" xml:space="preserve">
-    <value>Yes, cancel registration</value>
+    <value>Yes, delete this registration</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Are you sure you want to cancel this registration?</value>
+    <value>Are you sure you want to delete this registration permanently?</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Cancel registration page</value>
+    <value>Delete registration page</value>
   </data>
   <data name="Submit_Button_Text" xml:space="preserve">
     <value>Submit</value>
