@@ -166,6 +166,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PutAsync<ManageRegistration, bool>(requestUri, model);
         }
 
+        public async Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model)
+        {
+            var requestUri = ApiConstants.WithdrawRegistrationUri;
+            return await PutAsync<WithdrawRegistrationRequest, bool>(requestUri, model);
+        }
+
         #region Private Methods
 
         /// <summary>

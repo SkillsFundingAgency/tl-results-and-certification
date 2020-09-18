@@ -18,5 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
         Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId);
         Task<bool> UpdateRegistrationAsync(ManageRegistration model);
+        Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model);
     }
 }

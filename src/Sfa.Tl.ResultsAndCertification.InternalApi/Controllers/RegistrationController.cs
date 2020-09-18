@@ -72,5 +72,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             var result = await _registrationService.UpdateRegistrationAsync(model);
             return Ok(result);
         }
+
+        [HttpPut]
+        [Route("WithdrawRegistration")]
+        public async Task<IActionResult> WithdrawRegistrationAsync(WithdrawRegistrationRequest model)
+        {
+            var result = await _registrationService.WithdrawRegistrationAsync(model);
+            return Ok(result);
+        }
     }
 }

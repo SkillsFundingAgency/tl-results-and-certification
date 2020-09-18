@@ -49,10 +49,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             ViewModel = new WithdrawRegistrationViewModel();
         }
 
-        public override Task When()
+        public async override Task When()
         {
-            Result = Controller.WithdrawRegistrationAsync(ViewModel);
-            return Task.CompletedTask;
+            Result = await Controller.WithdrawRegistrationAsync(ViewModel);
         }
     }
 }

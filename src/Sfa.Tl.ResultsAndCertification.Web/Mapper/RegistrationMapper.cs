@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeLearnersNameViewModel, ManageRegistration>>());
 
             CreateMap<ManageRegistration, ChangeDateofBirthViewModel>()
-                .ForMember(d => d.Day, opts => opts.MapFrom(s =>  s.DateOfBirth.Day.ToString().PadLeft(2, '0')))
+                .ForMember(d => d.Day, opts => opts.MapFrom(s => s.DateOfBirth.Day.ToString().PadLeft(2, '0')))
                 .ForMember(d => d.Month, opts => opts.MapFrom(s => s.DateOfBirth.Month.ToString().PadLeft(2, '0')))
                 .ForMember(d => d.Year, opts => opts.MapFrom(s => s.DateOfBirth.Year))
                 .ReverseMap()
@@ -95,6 +95,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<RegistrationDetails, ChangeCoreQuestionViewModel>()
                 .ForMember(d => d.CoreDisplayName, opts => opts.MapFrom(s => s.PathwayDisplayName));
+
+            CreateMap<WithdrawRegistrationViewModel, WithdrawRegistrationRequest>()
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<WithdrawRegistrationViewModel, WithdrawRegistrationRequest>>());
         }
     }
 }

@@ -98,6 +98,8 @@
         public const string WithdrawRegistration = "WithdrawRegistration";
         public const string SubmitWithdrawRegistration = "SubmitWithdrawRegistration";
 
+        public const string WithdrawRegistrationConfirmation = "WithdrawRegistrationConfirmation";
+
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";
         public const string SubmitSearchRegistration = "SubmitSearchRegistration";

@@ -395,7 +395,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("withdraw-registration", Name = RouteConstants.SubmitWithdrawRegistration)]
-        public IActionResult WithdrawRegistrationAsync(WithdrawRegistrationViewModel model)
+        public async Task<IActionResult> WithdrawRegistrationAsync(WithdrawRegistrationViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -404,8 +404,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToRoute(model.BackLink.RouteName, model.BackLink.RouteAttributes);
             }
+            else
+            {
+                var response = await _registrationLoader.WithdrawRegistrationAsync(User.GetUkPrn(), model);
 
-            return View(model);
+                if (!response.IsSuccess)
+                    return RedirectToRoute(RouteConstants.ProblemWithService);
+
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.WithdrawRegistrationConfirmationViewModel), response, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.WithdrawRegistrationConfirmation);
+            }
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

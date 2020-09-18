@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using AutoMapper.Internal;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -16,7 +14,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -418,6 +415,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
         }
 
+        public async Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model)
+        {
+            var tqRegistrationProfile = await _tqRegistrationRepository.GetActiveRegistrationProfileAsync(model.AoUkprn, model.ProfileId);
+
+            if (tqRegistrationProfile == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: WithdrawRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
+                return false;
+            }
+            SetRegistrationPathwayAndSpecialismsByStatus(tqRegistrationProfile, RegistrationPathwayStatus.Withdraw, model.PerformedBy);
+            return await _tqRegistrationRepository.UpdateWithSpecifedCollectionsOnlyAsync(tqRegistrationProfile, u => u.TqRegistrationPathways) > 0;
+        }
+
         #region Private Methods
 
         private TqRegistrationProfile TransformManualChangeRegistrationModel(ManageRegistration model, RegistrationRecordResponse registrationRecord, TqRegistrationProfile actualProfile)
@@ -437,20 +447,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (model.HasProviderChanged)
             {
                 // update existing pathway status to Transferred and specialism status to InActive
-                foreach (var pathway in actualProfile.TqRegistrationPathways.Where(x => x.Status == RegistrationPathwayStatus.Active))
-                {
-                    pathway.Status = RegistrationPathwayStatus.Transferred;
-                    pathway.EndDate = DateTime.UtcNow;
-                    pathway.ModifiedBy = model.PerformedBy;
-                    pathway.ModifiedOn = DateTime.UtcNow;
-                    pathway.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList().ForEach(s =>
-                    {
-                        s.Status = RegistrationSpecialismStatus.InActive;
-                        s.EndDate = DateTime.UtcNow;
-                        s.ModifiedBy = model.PerformedBy;
-                        s.ModifiedOn = DateTime.UtcNow;
-                    });
-                }
+                SetRegistrationPathwayAndSpecialismsByStatus(actualProfile, RegistrationPathwayStatus.Transferred, model.PerformedBy);
 
                 // add new records
                 actualProfile.TqRegistrationPathways.Add(
@@ -498,6 +495,24 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
             }
             return actualProfile;
+        }
+
+        private static void SetRegistrationPathwayAndSpecialismsByStatus(TqRegistrationProfile actualProfile, RegistrationPathwayStatus status, string performedBy)
+        {
+            foreach (var pathway in actualProfile.TqRegistrationPathways.Where(x => x.Status == RegistrationPathwayStatus.Active))
+            {
+                pathway.Status = status;
+                pathway.EndDate = DateTime.UtcNow;
+                pathway.ModifiedBy = performedBy;
+                pathway.ModifiedOn = DateTime.UtcNow;
+                pathway.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList().ForEach(s =>
+                {
+                    s.Status = RegistrationSpecialismStatus.InActive;
+                    s.EndDate = DateTime.UtcNow;
+                    s.ModifiedBy = performedBy;
+                    s.ModifiedOn = DateTime.UtcNow;
+                });
+            }
         }
 
         private TqRegistrationProfile TransformManualRegistrationModel(RegistrationRequest model, RegistrationRecordResponse registrationRecord)
