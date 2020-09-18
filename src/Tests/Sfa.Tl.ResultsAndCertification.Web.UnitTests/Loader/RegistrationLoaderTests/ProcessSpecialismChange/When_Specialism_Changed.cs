@@ -1,32 +1,41 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessProfileNameChangeAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessSpecialismChange
 {
     public class When_Specialism_Changed : TestSetup
     {
         ManageRegistration mockResponse = null;
-        readonly string reqFirstName = "John";
-        readonly string reqLastName = "Smith";
-
-        readonly string existingFirstName = "First";
-        readonly string existingLastName = "Last";
 
         public override void Given()
         {
             var profileId = 1;
             var uln = 1234567890;
 
-            ViewModel = new ChangeLearnersNameViewModel { ProfileId = profileId, Firstname = reqFirstName, Lastname = reqLastName };
+            ViewModel = new ChangeSpecialismViewModel
+            {
+                ProfileId = profileId,
+                PathwaySpecialisms = new PathwaySpecialismsViewModel
+                {
+                    PathwayId = profileId,
+                    Specialisms = new List<SpecialismDetailsViewModel> // Changed 
+                    { 
+                        new SpecialismDetailsViewModel { Code = "111", IsSelected = true },
+                        new SpecialismDetailsViewModel { Code = "555", IsSelected = true }
+                    } 
+                }
+            };
+
             mockResponse = new ManageRegistration
             {
-                FirstName = existingFirstName,
-                LastName = existingLastName,
                 Uln = uln,
                 ProfileId = profileId,
+                SpecialismCodes = new List<string> { "111", "222" },
                 PerformedBy = "Test user"
             };
 
