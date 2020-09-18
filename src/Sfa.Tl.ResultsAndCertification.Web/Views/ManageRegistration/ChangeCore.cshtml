@@ -16,7 +16,9 @@
             <p class="govuk-body">@SelectCore.Change_Registration_Core_Body_Text</p>
         </div>
         <p>
-            <a id="WithdrawButton" class="govuk-button" role="button" asp-route="">@SelectCore.Withdraw_This_Registration_Link_Text</a>
+            <a id="WithdrawButton" class="govuk-button" role="button" asp-route="WithdrawRegistration" asp-route-profileId="@Model.ProfileId" asp-route-withdrawBackLinkOptionId="@Model.WithdrawBackLinkOptionId">
+                @SelectCore.Withdraw_This_Registration_Link_Text
+            </a>
         </p>
     </div>
 </div>

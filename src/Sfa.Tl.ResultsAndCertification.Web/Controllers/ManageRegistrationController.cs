@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.OData.Edm;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
@@ -348,8 +349,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("amend-active-registration/{profileId}", Name = RouteConstants.AmendActiveRegistration)]
-        public async Task<IActionResult> AmendActiveRegistrationAsync(int profileId)
+        [Route("amend-active-registration/{profileId}/{changeStatusId:int?}", Name = RouteConstants.AmendActiveRegistration)]
+        public async Task<IActionResult> AmendActiveRegistrationAsync(int profileId, int? changeStatusId)
         {
             var registrationDetails = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Active)
@@ -357,7 +358,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: AmendActiveRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            var viewModel = new AmendActiveRegistrationViewModel { ProfileId = registrationDetails.ProfileId };
+            var viewModel = new AmendActiveRegistrationViewModel { ProfileId = registrationDetails.ProfileId, ChangeStatusId = changeStatusId };
+            viewModel.SetChangeStatus();
             return View(viewModel);
         }
 
@@ -367,6 +369,41 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
+
+            if(model.ChangeStatus == RegistrationChangeStatus.Withdraw)
+            {
+                return RedirectToRoute(RouteConstants.WithdrawRegistration, new { profileId = model.ProfileId, withdrawBackLinkOptionId  = (int)WithdrawBackLinkOptions.AmendActiveRegistrationPage});
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        [Route("withdraw-registration/{profileId}/{withdrawBackLinkOptionId:int?}", Name = RouteConstants.WithdrawRegistration)]
+        public async Task<IActionResult> WithdrawRegistrationAsync(int profileId, int? withdrawBackLinkOptionId)
+        {
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Active)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: WithdrawRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = new WithdrawRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln, WithdrawBackLinkOptionId = withdrawBackLinkOptionId };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("withdraw-registration", Name = RouteConstants.SubmitWithdrawRegistration)]
+        public IActionResult WithdrawRegistrationAsync(WithdrawRegistrationViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            if(!model.CanWithdraw.Value)
+            {
+                return RedirectToRoute(model.BackLink.RouteName, model.BackLink.RouteAttributes);
+            }
 
             return View(model);
         }

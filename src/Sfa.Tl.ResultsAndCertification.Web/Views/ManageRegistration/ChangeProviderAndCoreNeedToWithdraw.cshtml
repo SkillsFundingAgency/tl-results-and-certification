@@ -19,7 +19,7 @@
             <p class="govuk-body">@ChangeProviderAndCoreNeedToWithdraw.If_You_Need_To_Change_Provider_Text</p>
         </div>
         <p>
-            <a id="withdrawRegistrationButton" class="govuk-button" role="button" asp-route="">
+            <a id="withdrawRegistrationButton" class="govuk-button" role="button" asp-route="WithdrawRegistration" asp-route-profileId="@Model.ProfileId" asp-route-withdrawBackLinkOptionId="@Model.WithdrawBackLinkOptionId">
                 @ChangeProviderAndCoreNeedToWithdraw.Withdraw_Registration_Button_Text
             </a>
         </p>

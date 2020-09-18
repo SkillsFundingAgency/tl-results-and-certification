@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System.Collections.Generic;
 
@@ -7,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
     public class ChangeCoreViewModel
     {
         public int ProfileId { get; set; }
-
+        public int WithdrawBackLinkOptionId => (int)WithdrawBackLinkOptions.ChangeCorePage;
         public BackLinkModel BackLink
         {
             get

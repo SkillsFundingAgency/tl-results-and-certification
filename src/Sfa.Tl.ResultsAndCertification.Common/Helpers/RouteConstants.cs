@@ -95,6 +95,8 @@
         public const string ChangeRegistrationProviderNotOfferingSameCore = "ChangeRegistrationProviderNotOfferingSameCore";
         public const string AmendActiveRegistration = "AmendActiveRegistration";
         public const string SubmitAmendActiveRegistration = "SubmitAmendActiveRegistration";
+        public const string WithdrawRegistration = "WithdrawRegistration";
+        public const string SubmitWithdrawRegistration = "SubmitWithdrawRegistration";
 
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";
