@@ -213,10 +213,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return new ManageRegistrationResponse { IsModified = false };
 
             _mapper.Map(viewModel, reg);
-            //var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
-
-            // TODO:
-            var isSuccess = true;
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
 
             return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
         }
