@@ -9,18 +9,17 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.AmendActiveRegistrationGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.WithdrawRegistrationGet
 {
     public abstract class TestSetup : BaseTest<ManageRegistrationController>
     {
         protected long AoUkprn;
         protected int ProfileId;
         protected Guid UserId;
-        protected RegistrationChangeStatus? ChangeStatusId;
+        protected WithdrawBackLinkOptions? WithdrawBackLinkOption;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
         protected ILogger<ManageRegistrationController> Logger;
@@ -49,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public async override Task When()
         {
-            Result = await Controller.AmendActiveRegistrationAsync(ProfileId, (int?)ChangeStatusId);
+            Result = await Controller.WithdrawRegistrationAsync(ProfileId, (int?)WithdrawBackLinkOption);
         }
     }
 }

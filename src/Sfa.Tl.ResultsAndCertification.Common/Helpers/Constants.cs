@@ -34,14 +34,16 @@
         public const string ChangeRegistrationProviderCoreNotSupportedViewModel = "ChangeRegistrationProviderCoreNotSupportedViewModel";
         public const string ChangeRegistrationCoreNotSupportedProviderUkprn = "ChangeRegistrationCoreNotSupportedProviderUkprn";
 
-
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 100000;
         public const int RegistrationPathwayStartIndex = 200000;
         public const int RegistrationSpecialismsStartIndex = 300000;
 
+        // Route Attributes
         public const string IsChangeMode = "isChangeMode";
         public const string ProfileId = "profileId";
         public const string IsBack = "isBack";
+        public const string ChangeStatusId = "changeStatusId";
+        public const string WithdrawBackLinkOptionId = "withdrawBackLinkOptionId";
     }
 }

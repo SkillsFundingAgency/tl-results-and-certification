@@ -1,18 +1,20 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.AmendActiveRegistrationGet
 {
-    public class When_ProfileId_Valid : TestSetup
+    public class When_Called_With_ChangeStatus_Withdraw : TestSetup
     {
         private RegistrationDetailsViewModel mockresult = null;
 
         public override void Given()
         {
+            ChangeStatusId = Common.Enum.RegistrationChangeStatus.Withdraw;
             mockresult = new RegistrationDetailsViewModel { Uln = 1234567890, ProfileId = ProfileId, Status = Common.Enum.RegistrationPathwayStatus.Active };
             RegistrationLoader.GetRegistrationDetailsByProfileIdAsync(AoUkprn, ProfileId).Returns(mockresult);
         }
@@ -36,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             model.Should().NotBeNull();
 
             model.ProfileId.Should().Be(mockresult.ProfileId);
-            model.ChangeStatus.Should().BeNull();
+            model.ChangeStatus.Should().Be(RegistrationChangeStatus.Withdraw);
 
             var backLink = model.BackLink;
             backLink.RouteName.Should().Be(RouteConstants.RegistrationDetails);
