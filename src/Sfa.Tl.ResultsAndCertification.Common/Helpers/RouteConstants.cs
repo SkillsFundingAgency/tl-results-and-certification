@@ -97,8 +97,9 @@
         public const string SubmitAmendActiveRegistration = "SubmitAmendActiveRegistration";
         public const string WithdrawRegistration = "WithdrawRegistration";
         public const string SubmitWithdrawRegistration = "SubmitWithdrawRegistration";
-
         public const string WithdrawRegistrationConfirmation = "WithdrawRegistrationConfirmation";
+        public const string AmendWithdrawRegistration = "AmendWithdrawRegistration";
+        public const string SubmitAmendWithdrawRegistration = "SubmitAmendWithdrawRegistration";
 
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";

@@ -433,6 +433,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [Route("amend-withdrawn-registration/{profileId}/{changeStatusId:int?}", Name = RouteConstants.AmendWithdrawRegistration)]
+        public async Task<IActionResult> AmendWithdrawRegistrationAsync(int profileId, int? changeStatusId)
+        {
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdraw)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdraw}. Method: AmendWithdrawRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            var viewModel = new AmendWithdrawRegistrationViewModel { ProfileId = registrationDetails.ProfileId, ChangeStatusId = changeStatusId };
+            viewModel.SetChangeStatus();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("amend-withdrawn-registration", Name = RouteConstants.SubmitAmendWithdrawRegistration)]
+        public IActionResult AmendWithdrawRegistrationAsync(AmendWithdrawRegistrationViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            return View(model);
+        }
+
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
