@@ -67,18 +67,16 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpPut]
         [Route("UpdateRegistration")]
-        public async Task<IActionResult> UpdateRegistrationAsync(ManageRegistration model)
+        public async Task<bool> UpdateRegistrationAsync(ManageRegistration model)
         {
-            var result = await _registrationService.UpdateRegistrationAsync(model);
-            return Ok(result);
+            return await _registrationService.UpdateRegistrationAsync(model);
         }
 
         [HttpPut]
         [Route("WithdrawRegistration")]
-        public async Task<IActionResult> WithdrawRegistrationAsync(WithdrawRegistrationRequest model)
+        public async Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model)
         {
-            var result = await _registrationService.WithdrawRegistrationAsync(model);
-            return Ok(result);
+            return await _registrationService.WithdrawRegistrationAsync(model);
         }
     }
 }
