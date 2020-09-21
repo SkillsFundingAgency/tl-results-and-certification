@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SelectAcademicYear {
+    public class ReJoinRegistration {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SelectAcademicYear() {
+        internal ReJoinRegistration() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.SelectAcademicYear", typeof(SelectAcademicYear).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.ReJoinRegistration", typeof(ReJoinRegistration).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,83 +61,65 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to registration details.
+        ///   Looks up a localized string similar to Are you sure you want to reactivate the registration with the same course?.
         /// </summary>
-        public static string Back_To_Registration_Details_Button_Text {
+        public static string Page_Heading {
             get {
-                return ResourceManager.GetString("Back_To_Registration_Details_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Page_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Academic year cannot be changed.
+        ///   Looks up a localized string similar to Reactivate registration with the same course page.
         /// </summary>
-        public static string Change_AcademicYear_Heading_Text {
+        public static string Page_Title_Text {
             get {
-                return ResourceManager.GetString("Change_AcademicYear_Heading_Text", resourceCulture);
+                return ResourceManager.GetString("Page_Title_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change.
+        ///   Looks up a localized string similar to No, do not reactivate registration.
         /// </summary>
-        public static string Change_Button_Text {
+        public static string Section_No_ReJoin_Registration_Text {
             get {
-                return ResourceManager.GetString("Change_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Section_No_ReJoin_Registration_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You cannot change the academic year if you are keeping the same core on an existing registration..
+        ///   Looks up a localized string similar to Yes, reactivate registration.
         /// </summary>
-        public static string Change_Registration_AcademicYear_Body_Text {
+        public static string Section_Yes_ReJoin_Registration_Text {
             get {
-                return ResourceManager.GetString("Change_Registration_AcademicYear_Body_Text", resourceCulture);
+                return ResourceManager.GetString("Section_Yes_ReJoin_Registration_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Continue.
+        ///   Looks up a localized string similar to Select yes if you want to reactivate registration.
         /// </summary>
-        public static string Continue_Button_Text {
+        public static string Select_ReJoin_Validation_Message {
             get {
-                return ResourceManager.GetString("Continue_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Select_ReJoin_Validation_Message", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new registration.
+        ///   Looks up a localized string similar to Submit.
         /// </summary>
-        public static string Page_Caption_Text {
+        public static string Submit_Button_Text {
             get {
-                return ResourceManager.GetString("Page_Caption_Text", resourceCulture);
+                return ResourceManager.GetString("Submit_Button_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new registration - Select the academic year page.
+        ///   Looks up a localized string similar to ULN:.
         /// </summary>
-        public static string Page_Title_Add_Registration_Select_AcademicYear {
+        public static string Uln_Hint_Text {
             get {
-                return ResourceManager.GetString("Page_Title_Add_Registration_Select_AcademicYear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Academic year cannot be changed page.
-        /// </summary>
-        public static string Page_Title_Change_Registration_Select_AcademicYear {
-            get {
-                return ResourceManager.GetString("Page_Title_Change_Registration_Select_AcademicYear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select the academic year.
-        /// </summary>
-        public static string Select_The_AcademicYear_Label_Text {
-            get {
-                return ResourceManager.GetString("Select_The_AcademicYear_Label_Text", resourceCulture);
+                return ResourceManager.GetString("Uln_Hint_Text", resourceCulture);
             }
         }
     }

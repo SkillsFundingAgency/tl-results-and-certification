@@ -455,6 +455,40 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            if (model.ChangeStatus == RegistrationChangeStatus.ReJoin)
+            {
+                return RedirectToRoute(RouteConstants.ReJoinRegistration, new { profileId = model.ProfileId });
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        [Route("reactivate-registration-same-course/{profileId}", Name = RouteConstants.ReJoinRegistration)]
+        public async Task<IActionResult> ReJoinRegistrationAsync(int profileId)
+        {
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdraw)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdraw}. Method: ReJoinRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = new ReJoinRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("reactivate-registration-same-course", Name = RouteConstants.SubmitReJoinRegistration)]
+        public IActionResult ReJoinRegistrationAsync(ReJoinRegistrationViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            if (!model.CanReJoin.Value)
+            {
+                return RedirectToRoute(model.BackLink.RouteName, model.BackLink.RouteAttributes);
+            }
             return View(model);
         }
 
