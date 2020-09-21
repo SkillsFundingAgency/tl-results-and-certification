@@ -374,6 +374,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.WithdrawRegistration, new { profileId = model.ProfileId, withdrawBackLinkOptionId = (int)WithdrawBackLinkOptions.AmendActiveRegistrationPage });
             }
 
+            if (model.ChangeStatus == RegistrationChangeStatus.Delete)
+            {
+                return RedirectToRoute(RouteConstants.DeleteRegistration, new { profileId = model.ProfileId });
+            }
             return View(model);
         }
 
