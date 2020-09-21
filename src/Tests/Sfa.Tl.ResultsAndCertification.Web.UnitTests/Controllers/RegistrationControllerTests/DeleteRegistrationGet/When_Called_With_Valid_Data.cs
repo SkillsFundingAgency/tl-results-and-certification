@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
@@ -40,11 +41,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.DeleteRegistration.Should().BeNull();
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.RegistrationDetails);
-            model.BackLink.RouteAttributes.Count.Should().Be(1);
+            model.BackLink.RouteName.Should().Be(RouteConstants.AmendActiveRegistration);
+            model.BackLink.RouteAttributes.Count.Should().Be(2);
 
-            model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValue);
-            routeValue.Should().Be(mockresult.ProfileId.ToString());
+            model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValueProfileId);
+            routeValueProfileId.Should().Be(mockresult.ProfileId.ToString());
+            model.BackLink.RouteAttributes.TryGetValue(Constants.ChangeStatusId, out string routeValueChangeStatus);
+            routeValueChangeStatus.Should().Be(((int)RegistrationChangeStatus.Delete).ToString());
         }
     }
 }
