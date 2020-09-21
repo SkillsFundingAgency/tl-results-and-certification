@@ -16,14 +16,14 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_UpdateRegistration_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_WithdrawRegistration_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         private bool _result;
         protected bool _mockHttpResult;
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
         private ResultsAndCertificationInternalApiClient _apiClient;
-        private ManageRegistration _model;
+        private WithdrawRegistrationRequest _model;
 
         public override void Setup()
         {
@@ -35,29 +35,23 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             };
 
             _mockHttpResult = true;
-            _model = new ManageRegistration
+            _model = new WithdrawRegistrationRequest
             {
                 ProfileId = 1,
                 AoUkprn = 1234567890,
-                FirstName = "First",
-                LastName = "Last",
-                DateOfBirth = "07/01/1987".ToDateTime(),
-                ProviderUkprn = 98765432,
-                CoreCode = "7654321",
-                SpecialismCodes = new List<string> { "23456789", "7654321" },
                 PerformedBy = "Test User"
             };
         }
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.UpdateRegistrationUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.WithdrawRegistrationUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public async override Task When()
         {
-            _result = await _apiClient.UpdateRegistrationAsync(_model);
+            _result = await _apiClient.WithdrawRegistrationAsync(_model);
         }
 
         [Fact]
