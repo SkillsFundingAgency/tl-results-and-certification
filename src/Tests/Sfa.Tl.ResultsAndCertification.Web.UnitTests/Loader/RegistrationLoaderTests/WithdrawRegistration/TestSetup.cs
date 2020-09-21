@@ -13,24 +13,25 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessSpecialismChange
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.WithdrawRegistration
 {
     public abstract class TestSetup : BaseTest<RegistrationLoader>
     {
         protected readonly long AoUkprn = 12345678;
-        protected IResultsAndCertificationInternalApiClient InternalApiClient;
-        protected IMapper Mapper;
-        protected ILogger<RegistrationLoader> Logger;
-        public IBlobStorageService BlobStorageService { get; private set; }
-
-        protected RegistrationLoader Loader;
-        protected ManageRegistrationResponse ActualResult;
-        protected ChangeSpecialismViewModel ViewModel;
-
-        protected IHttpContextAccessor HttpContextAccessor;
         protected readonly string Givenname = "test";
         protected readonly string Surname = "user";
         protected readonly string Email = "test.user@test.com";
+        protected int ProfileId;
+        protected long Uln;
+        protected bool ApiClientResponse;
+        protected IMapper Mapper;
+        protected ILogger<RegistrationLoader> Logger;
+        protected IResultsAndCertificationInternalApiClient InternalApiClient;
+        protected RegistrationLoader Loader;
+        protected WithdrawRegistrationResponse ActualResult;
+        protected WithdrawRegistrationViewModel ViewModel;
+        protected IHttpContextAccessor HttpContextAccessor;
+        public IBlobStorageService BlobStorageService { get; private set; }
 
         public override void Setup()
         {
@@ -54,16 +55,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 c.AddMaps(typeof(RegistrationMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<ChangeSpecialismViewModel, ManageRegistration>(HttpContextAccessor) : null);
+                                new UserNameResolver<WithdrawRegistrationViewModel, WithdrawRegistrationRequest>(HttpContextAccessor) : null);
             });
 
+            Uln = 123456789;
+            ProfileId = 1;
             Mapper = new AutoMapper.Mapper(mapperConfig);
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
         }
 
         public async override Task When()
         {
-            ActualResult = await Loader.ProcessSpecialismChangeAsync(AoUkprn, ViewModel);
+            ActualResult = await Loader.WithdrawRegistrationAsync(AoUkprn, ViewModel);
         }
     }
 }
