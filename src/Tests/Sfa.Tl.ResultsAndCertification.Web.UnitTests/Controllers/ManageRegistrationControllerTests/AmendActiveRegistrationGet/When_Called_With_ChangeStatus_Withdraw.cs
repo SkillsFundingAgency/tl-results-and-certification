@@ -11,18 +11,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
     public class When_Called_With_ChangeStatus_Withdraw : TestSetup
     {
         private RegistrationDetailsViewModel mockresult = null;
+        private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Active;
 
         public override void Given()
         {
-            ChangeStatusId = Common.Enum.RegistrationChangeStatus.Withdraw;
-            mockresult = new RegistrationDetailsViewModel { Uln = 1234567890, ProfileId = ProfileId, Status = Common.Enum.RegistrationPathwayStatus.Active };
-            RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId).Returns(mockresult);
+            ChangeStatusId = RegistrationChangeStatus.Withdraw;
+            mockresult = new RegistrationDetailsViewModel { Uln = 1234567890, ProfileId = ProfileId, Status = _registrationPathwayStatus };
+            RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            RegistrationLoader.Received(1).GetRegistrationDetailsAsync(AoUkprn, ProfileId);
+            RegistrationLoader.Received(1).GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus);
         }
 
         [Fact]

@@ -351,7 +351,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("amend-active-registration/{profileId}/{changeStatusId:int?}", Name = RouteConstants.AmendActiveRegistration)]
         public async Task<IActionResult> AmendActiveRegistrationAsync(int profileId, int? changeStatusId)
         {
-            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId);
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Active)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: AmendActiveRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
