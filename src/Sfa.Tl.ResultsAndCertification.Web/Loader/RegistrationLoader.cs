@@ -129,7 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<ProviderChangeResponse> ProcessProviderChangesAsync(long aoUkprn, ChangeProviderViewModel viewModel)
         {
-            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId);
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
             if (reg == null)
                 return null;
             
@@ -156,7 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<ManageRegistrationResponse> ProcessProfileNameChangeAsync(long aoUkprn, ChangeLearnersNameViewModel viewModel)
         {
-            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId);
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
             if (reg == null) 
                 return null;
 
@@ -174,7 +174,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<ManageRegistrationResponse> ProcessDateofBirthChangeAsync(long aoUkprn, ChangeDateofBirthViewModel viewModel)
         {
-            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId);
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
             if (reg == null)
                 return null;
 
@@ -190,7 +190,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<ManageRegistrationResponse> ProcessSpecialismQuestionChangeAsync(long aoUkprn, ChangeSpecialismQuestionViewModel viewModel)
         {
-            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId);
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
 
             if (reg == null || viewModel.HasLearnerDecidedSpecialism == null) return null;
 
@@ -202,7 +202,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<ManageRegistrationResponse> ProcessSpecialismChangeAsync(long aoUkprn, ChangeSpecialismViewModel viewModel)
         {
-            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId);
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
             if (reg == null)
                 return null;
 
