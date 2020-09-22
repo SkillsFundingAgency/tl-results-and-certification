@@ -230,5 +230,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var isSuccess = await _internalApiClient.WithdrawRegistrationAsync(model);
             return new WithdrawRegistrationResponse { ProfileId = viewModel.ProfileId, Uln = viewModel.Uln, IsSuccess = isSuccess, IsRequestFromProviderAndCorePage = viewModel.IsRequestFromProviderAndCorePage };
         }
+
+        public async Task<ReJoinRegistrationResponse> ReJoinRegistrationAsync(long aoUkprn, ReJoinRegistrationViewModel viewModel)
+        {
+            var model = _mapper.Map<ReJoinRegistrationRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            var isSuccess = await _internalApiClient.ReJoinRegistrationAsync(model);
+            return new ReJoinRegistrationResponse { ProfileId = viewModel.ProfileId, Uln = viewModel.Uln, IsSuccess = isSuccess };
+        }
     }
 }

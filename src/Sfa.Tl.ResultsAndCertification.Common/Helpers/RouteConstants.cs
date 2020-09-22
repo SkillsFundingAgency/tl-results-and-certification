@@ -102,6 +102,7 @@
         public const string SubmitAmendWithdrawRegistration = "SubmitAmendWithdrawRegistration";
         public const string ReJoinRegistration = "ReJoinRegistration";
         public const string SubmitReJoinRegistration = "SubmitReJoinRegistration";
+        public const string ReJoinRegistrationConfirmation = "ReJoinRegistrationConfirmation";
 
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";

@@ -480,7 +480,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("reactivate-registration-same-course", Name = RouteConstants.SubmitReJoinRegistration)]
-        public IActionResult ReJoinRegistrationAsync(ReJoinRegistrationViewModel model)
+        public async Task<IActionResult> ReJoinRegistrationAsync(ReJoinRegistrationViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -489,7 +489,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToRoute(model.BackLink.RouteName, model.BackLink.RouteAttributes);
             }
-            return View(model);
+            else
+            {
+                var response = await _registrationLoader.ReJoinRegistrationAsync(User.GetUkPrn(), model);
+
+                if (!response.IsSuccess)
+                    return RedirectToRoute(RouteConstants.ProblemWithService);
+
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ReJoinRegistrationConfirmationViewModel), response, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.ReJoinRegistrationConfirmation);
+            }
+        }
+
+        [HttpGet]
+        [Route("registration-reactivated-confirmation", Name = RouteConstants.ReJoinRegistrationConfirmation)]
+        public async Task<IActionResult> ReJoinConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<ReJoinRegistrationResponse>(string.Concat(CacheKey, Constants.ReJoinRegistrationConfirmationViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ReJoinRegistrationConfirmationViewModel from redis cache in ReJoin registration confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

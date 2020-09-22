@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
@@ -13,21 +14,20 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReJoinRegistrationPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReJoinConfirmationGet
 {
     public abstract class TestSetup : BaseTest<ManageRegistrationController>
     {
-        protected long AoUkprn;
-        protected int ProfileId;
+        protected int AoUkprn;
         protected Guid UserId;
-        protected WithdrawBackLinkOptions? WithdrawBackLinkOption;
+        protected string CacheKey;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
         protected ILogger<ManageRegistrationController> Logger;
         protected ManageRegistrationController Controller;
-        protected ReJoinRegistrationViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
-        public IActionResult Result { get; private set; }
+        public IActionResult Result { get; set; }
+        protected ReJoinRegistrationResponse MockResult;
 
         public override void Setup()
         {
@@ -37,7 +37,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             Logger = Substitute.For<ILogger<ManageRegistrationController>>();
             Controller = new ManageRegistrationController(RegistrationLoader, CacheService, Logger);
 
-            ProfileId = 1;
             AoUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<ManageRegistrationController>(Controller)
                .Add(CustomClaimTypes.Ukprn, AoUkprn.ToString())
@@ -46,12 +45,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
-            ViewModel = new ReJoinRegistrationViewModel();
+            CacheKey = string.Concat(CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey), Common.Helpers.Constants.ReJoinRegistrationConfirmationViewModel);
+            MockResult = new ReJoinRegistrationResponse { ProfileId = 1, Uln = 123456789 };
         }
 
         public async override Task When()
         {
-            Result = await Controller.ReJoinRegistrationAsync(ViewModel);
+            Result = await Controller.ReJoinConfirmationAsync();
         }
     }
 }

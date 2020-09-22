@@ -30,6 +30,7 @@
         public const string GetRegistrationUri = "/api/registration/GetRegistration/{0}/{1}";
         public const string UpdateRegistrationUri = "/api/registration/UpdateRegistration";
         public const string WithdrawRegistrationUri = "/api/registration/WithdrawRegistration";
+        public const string ReJoinRegistrationUri = "/api/registration/ReJoinRegistration";
 
         // DocumentUploadHistory Related Uri's
         public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";
