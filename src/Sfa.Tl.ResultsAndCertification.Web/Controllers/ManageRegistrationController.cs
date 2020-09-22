@@ -437,7 +437,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("amend-withdrawn-registration/{profileId}/{changeStatusId:int?}", Name = RouteConstants.AmendWithdrawRegistration)]
         public async Task<IActionResult> AmendWithdrawRegistrationAsync(int profileId, int? changeStatusId)
         {
-            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId);
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdraw);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdraw)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdraw}. Method: AmendWithdrawRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");

@@ -345,11 +345,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return result;
         }
 
-        public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId)
+        public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            var tqRegistration = await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId, null);  // TOOD: remove default param
-            if (tqRegistration == null)
-                return null;
+            var tqRegistration = await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId, status);
+            
+            if (tqRegistration == null)return null;
 
             return _mapper.Map<RegistrationDetails>(tqRegistration);
         }
