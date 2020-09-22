@@ -425,15 +425,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model)
         {
-            var tqRegistrationProfile = await _tqRegistrationRepository.GetActiveRegistrationProfileAsync(model.AoUkprn, model.ProfileId);
+            var registration = await _tqRegistrationRepository.GetRegistrationAsync(model.AoUkprn, model.ProfileId, RegistrationPathwayStatus.Active);
 
-            if (tqRegistrationProfile == null)
+            if (registration == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: WithdrawRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
                 return false;
             }
-            SetRegistrationPathwayAndSpecialismsByStatus(tqRegistrationProfile, RegistrationPathwayStatus.Withdraw, model.PerformedBy);
-            return await _tqRegistrationRepository.UpdateWithSpecifedCollectionsOnlyAsync(tqRegistrationProfile, u => u.TqRegistrationPathways) > 0;
+
+            SetRegistrationPathwayAndSpecialismsByStatus(registration.TqRegistrationProfile, RegistrationPathwayStatus.Withdraw, model.PerformedBy);
+            return await _tqRegistrationRepository.UpdateWithSpecifedCollectionsOnlyAsync(registration.TqRegistrationProfile, u => u.TqRegistrationPathways) > 0;
         }
 
         public async Task<bool> ReJoinRegistrationAsync(ReJoinRegistrationRequest model)
