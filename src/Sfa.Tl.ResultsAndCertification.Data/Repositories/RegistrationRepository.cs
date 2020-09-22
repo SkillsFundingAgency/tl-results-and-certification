@@ -68,6 +68,30 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return registrationDetails;
         }
 
+        public async Task<TqRegistrationPathway> GetRegistrationAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        {
+            // var specialismStatus = GetAssociateSpecialismStatus(status);  TODO:
+
+            var regPathway = await _dbContext.TqRegistrationPathway
+                .Include(x => x.TqRegistrationProfile)
+                .Include(x => x.TqProvider)
+                    .ThenInclude(x => x.TqAwardingOrganisation)
+                        .ThenInclude(x => x.TlPathway)
+                .Include(x => x.TqProvider)
+                    .ThenInclude(x => x.TlProvider)
+                .IncludeFilter(y => y.TqRegistrationSpecialisms.Where(x => x.Status == RegistrationSpecialismStatus.Active))
+                .IncludeFilter(y => y.TqRegistrationSpecialisms.Where(x => x.Status == RegistrationSpecialismStatus.Active).Select(x => x.TlSpecialism))
+                .OrderByDescending(o => o.CreatedOn)
+                .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId &&
+                       p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
+                       (
+                           (status == null && (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdraw)) ||
+                           (status != null && p.Status == status)
+                       ));
+
+            return regPathway;
+        }
+
         public async Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId)
         {
             var registration = await _dbContext.TqRegistrationPathway
