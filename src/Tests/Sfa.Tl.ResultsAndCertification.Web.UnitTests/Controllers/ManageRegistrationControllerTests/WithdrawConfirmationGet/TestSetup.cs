@@ -14,7 +14,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.WithdrawConfirmation
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.WithdrawConfirmationGet
 {
     public abstract class TestSetup : BaseTest<ManageRegistrationController>
     {
@@ -45,7 +45,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
-            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey);
             CacheKey = string.Concat(CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey), Common.Helpers.Constants.WithdrawRegistrationConfirmationViewModel);
             MockResult = new WithdrawRegistrationResponse { ProfileId = 1, Uln = 123456789, IsRequestFromProviderAndCorePage = true };
         }
