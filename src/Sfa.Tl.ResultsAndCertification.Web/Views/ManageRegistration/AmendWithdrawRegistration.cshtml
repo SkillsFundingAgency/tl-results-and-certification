@@ -1,0 +1,47 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.AmendWithdrawRegistrationViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
+
+@{
+    ViewData["Title"] = @AmendWithdrawRegistration.Page_Title_Text;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="SubmitAmendWithdrawRegistration">
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <partial name="_ValidationSummary" />
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                            @AmendWithdrawRegistration.Page_Heading
+                        </h1>
+                    </legend>
+
+                    <div class="govuk-radios" sfa-validation-for="ChangeStatus" sfa-validation-class="govuk-form-group--error">
+                        <span sfa-validation-for="ChangeStatus"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="changestatus" asp-for="ChangeStatus" type="radio" value="@RegistrationChangeStatus.ReJoin">
+                            <label class="govuk-label govuk-radios__label" for="changestatus">
+                                <strong>@AmendWithdrawRegistration.Section_Reactivate_Registration_Text</strong><br>
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="tl-change-status-no" asp-for="ChangeStatus" type="radio" value="@RegistrationChangeStatus.ReRegister">
+                            <label class="govuk-label govuk-radios__label" for="tl-change-status-no">
+                                <strong>@AmendWithdrawRegistration.Section_ReRegister_Registration_Text</strong>
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continueButton" class="govuk-button" data-module="govuk-button">@AmendWithdrawRegistration.Continue_Button_Text</button>
+        </form>
+    </div>
+</div>

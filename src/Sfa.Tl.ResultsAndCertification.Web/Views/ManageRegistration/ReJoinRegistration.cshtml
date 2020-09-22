@@ -1,0 +1,49 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ReJoinRegistrationViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @ReJoinRegistration.Page_Title_Text;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="SubmitReJoinRegistration">
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="Uln" value="@Model.Uln" />
+            <partial name="_ValidationSummary" />
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <fieldset class="govuk-fieldset" aria-describedby="withdraw-uln-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading">
+                            @ReJoinRegistration.Page_Heading
+                        </h1>
+                    </legend>
+                    <span id="withdraw-uln-hint" class="govuk-hint govuk-!-margin-bottom-7">
+                        <strong>@ReJoinRegistration.Uln_Hint_Text</strong> @Model.Uln
+                    </span>
+                    <div class="govuk-radios" sfa-validation-for="CanReJoin" sfa-validation-class="govuk-form-group--error">
+                        <span sfa-validation-for="CanReJoin"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="canrejoin" asp-for="CanReJoin" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="canrejoin">
+                                @ReJoinRegistration.Section_Yes_ReJoin_Registration_Text
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="tl-can-rejoin-no" asp-for="CanReJoin" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="tl-can-rejoin-no">
+                                @ReJoinRegistration.Section_No_ReJoin_Registration_Text
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="submitButton" class="govuk-button" data-module="govuk-button">@ReJoinRegistration.Submit_Button_Text</button>
+        </form>
+    </div>
+</div>

@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public int AcademicYear { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
 
-        private string ChangeStatusRouteName => Status == RegistrationPathwayStatus.Active ? RouteConstants.AmendActiveRegistration : "";
+        private string ChangeStatusRouteName => Status == RegistrationPathwayStatus.Active ? RouteConstants.AmendActiveRegistration : RouteConstants.AmendWithdrawRegistration;
         private string TagCssClassName => Status == RegistrationPathwayStatus.Active ? "govuk-tag--green" : "govuk-tag--blue";
         private string ActionText { get { return Status == RegistrationPathwayStatus.Active ? RegistrationDetailsContent.Change_Action_Link_Text : null; } }
         public Dictionary<string, string> ChangeLinkRouteAttributes => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } };

@@ -12,7 +12,8 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.AmendActiveRegistrationGet
+
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.AmendWithdrawRegistrationGet
 {
     public abstract class TestSetup : BaseTest<ManageRegistrationController>
     {
@@ -48,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public async override Task When()
         {
-            Result = await Controller.AmendActiveRegistrationAsync(ProfileId, (int?)ChangeStatusId);
+            Result = await Controller.AmendWithdrawRegistrationAsync(ProfileId, (int?)ChangeStatusId);
         }
     }
 }

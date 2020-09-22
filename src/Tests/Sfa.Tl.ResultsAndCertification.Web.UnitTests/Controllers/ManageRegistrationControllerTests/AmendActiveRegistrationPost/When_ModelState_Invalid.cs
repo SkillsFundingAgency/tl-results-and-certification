@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         public override void Given()
         {
             ViewModel = new AmendActiveRegistrationViewModel();
-            Controller.ModelState.AddModelError("ChangeStatus", AmendActiveRegistrationContent.Select_Active_Options_Validation_Message);
+            Controller.ModelState.AddModelError(nameof(AmendActiveRegistrationViewModel.ChangeStatus), AmendActiveRegistrationContent.Select_Active_Options_Validation_Message);
         }
 
         [Fact]

@@ -2,29 +2,29 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.AmendActiveRegistrationGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.AmendWithdrawRegistrationPost
 {
     public abstract class TestSetup : BaseTest<ManageRegistrationController>
     {
         protected long AoUkprn;
         protected int ProfileId;
         protected Guid UserId;
-        protected RegistrationChangeStatus? ChangeStatusId;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
         protected ILogger<ManageRegistrationController> Logger;
         protected ManageRegistrationController Controller;
         protected IHttpContextAccessor HttpContextAccessor;
+        protected AmendWithdrawRegistrationViewModel ViewModel;
         public IActionResult Result { get; private set; }
 
         public override void Setup()
@@ -44,11 +44,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
+            ViewModel = new AmendWithdrawRegistrationViewModel();
         }
 
-        public async override Task When()
+        public override Task When()
         {
-            Result = await Controller.AmendActiveRegistrationAsync(ProfileId, (int?)ChangeStatusId);
+            Result = Controller.AmendWithdrawRegistrationAsync(ViewModel);
+            return Task.CompletedTask;
         }
     }
 }
