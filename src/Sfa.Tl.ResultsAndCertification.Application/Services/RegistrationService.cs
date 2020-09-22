@@ -166,7 +166,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             StartDate = DateTime.UtcNow,
                             Status = RegistrationPathwayStatus.Active,
                             IsBulkUpload = true,
-                            TqRegistrationSpecialisms = MapSpecialisms(registration, performedBy, registrationSpecialismStartIndex),
+                            TqRegistrationSpecialisms = MapSpecialisms(registration.TlSpecialismLarIds, performedBy, registrationSpecialismStartIndex),
                             TqProvider = new TqProvider
                             {
                                 TqAwardingOrganisationId = registration.TqAwardingOrganisationId,
@@ -356,7 +356,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)
         {
-            var registrationProfile = await _tqRegistrationRepository.GetRegistrationProfileAsync(aoUkprn, profileId);
+            var registrationProfile = await _tqRegistrationRepository.GetRegistrationDataWithHistoryAsync(aoUkprn, profileId);
 
             if (registrationProfile == null)
             {
@@ -493,7 +493,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         StartDate = DateTime.UtcNow,
                         Status = RegistrationPathwayStatus.Active,
                         IsBulkUpload = false,
-                        TqRegistrationSpecialisms = MapSpecialisms(registrationRecord, model.PerformedBy, 0, false),
+                        TqRegistrationSpecialisms = MapSpecialisms(registrationRecord.TlSpecialismLarIds, model.PerformedBy, 0, false),
                         CreatedBy = model.PerformedBy,
                         CreatedOn = DateTime.UtcNow
                     });
@@ -520,7 +520,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     if (filteredTlSpecialismLarIdsToAdd.Count > 0 || specialismsToUpdate.Count > 0)
                     {
                         registrationRecord.TlSpecialismLarIds = filteredTlSpecialismLarIdsToAdd;
-                        var mappedSpecialisms = MapSpecialisms(registrationRecord, model.PerformedBy, 0, false);
+                        var mappedSpecialisms = MapSpecialisms(registrationRecord.TlSpecialismLarIds, model.PerformedBy, 0, false);
                         mappedSpecialisms.ToList().ForEach(specialism => specialism.TqRegistrationPathwayId = existingPathway.Id);
 
                         existingPathway.TqRegistrationSpecialisms.Clear();
@@ -568,7 +568,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         StartDate = DateTime.UtcNow,
                         Status = RegistrationPathwayStatus.Active,
                         IsBulkUpload = false,
-                        TqRegistrationSpecialisms = MapSpecialisms(registrationRecord, model.PerformedBy, 0, false),
+                        TqRegistrationSpecialisms = MapSpecialisms(registrationRecord.TlSpecialismLarIds, model.PerformedBy, 0, false),
                         CreatedBy = model.PerformedBy,
                         CreatedOn = DateTime.UtcNow
                     }
@@ -610,20 +610,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }).ToListAsync();
 
             return result;
-        }
-
-        private IList<TqRegistrationSpecialism> MapSpecialisms(RegistrationRecordResponse registration, string performedBy, int specialismStartIndex, bool isBulkUpload = true)
-        {
-            return registration.TlSpecialismLarIds.Select((x, index) => new TqRegistrationSpecialism
-            {
-                Id = isBulkUpload ? index - specialismStartIndex : 0,
-                TlSpecialismId = x.Key,
-                StartDate = DateTime.UtcNow,
-                Status = RegistrationSpecialismStatus.Active,
-                IsBulkUpload = isBulkUpload,
-                CreatedBy = performedBy,
-                CreatedOn = DateTime.UtcNow,
-            }).ToList();
         }
 
         private IList<TqRegistrationSpecialism> MapSpecialisms(IEnumerable<KeyValuePair<int, string>> specialismsList, string performedBy, int specialismStartIndex, bool isBulkUpload = true)
