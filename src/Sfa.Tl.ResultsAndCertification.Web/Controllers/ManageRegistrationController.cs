@@ -467,7 +467,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("reactivate-registration-same-course/{profileId}", Name = RouteConstants.ReJoinRegistration)]
         public async Task<IActionResult> ReJoinRegistrationAsync(int profileId)
         {
-            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId);
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdraw);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdraw)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdraw}. Method: ReJoinRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");

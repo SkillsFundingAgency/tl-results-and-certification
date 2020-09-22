@@ -92,7 +92,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 predicate = e => e.Status == RegistrationSpecialismStatus.InActive;
             
             regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(predicate).ToList();
-
             return regPathway;
         }
 
