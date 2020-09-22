@@ -46,28 +46,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return profile;
         }        
 
-        public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
-        {
-            var registrationDetails = await _dbContext.TqRegistrationPathway
-                .Where(p => p.Status == RegistrationPathwayStatus.Active && p.TqRegistrationProfile.Id == profileId && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn)
-                .Select(p => new RegistrationDetails
-                {
-                    ProfileId = p.TqRegistrationProfileId,
-                    Uln = p.TqRegistrationProfile.UniqueLearnerNumber,
-                    Name = $"{p.TqRegistrationProfile.Firstname} {p.TqRegistrationProfile.Lastname}",
-                    DateofBirth = p.TqRegistrationProfile.DateofBirth,
-                    ProviderUkprn = p.TqProvider.TlProvider.UkPrn,
-                    ProviderName = $"{p.TqProvider.TlProvider.Name} ({p.TqProvider.TlProvider.UkPrn})",
-                    PathwayLarId = p.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                    PathwayName = $"{p.TqProvider.TqAwardingOrganisation.TlPathway.Name} ({p.TqProvider.TqAwardingOrganisation.TlPathway.LarId})",
-                    SpecialismsDisplayName = p.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).OrderBy(s => s.TlSpecialism.Name).Select(s => $"{s.TlSpecialism.Name} ({s.TlSpecialism.LarId})"),
-                    AcademicYear = p.AcademicYear,
-                    Status = p.Status
-                }).FirstOrDefaultAsync();
-
-            return registrationDetails;
-        }
-
         public async Task<TqRegistrationPathway> GetRegistrationAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var regPathway = await _dbContext.TqRegistrationPathway

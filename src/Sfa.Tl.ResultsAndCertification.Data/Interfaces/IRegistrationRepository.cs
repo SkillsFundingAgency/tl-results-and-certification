@@ -12,7 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
     {
         Task<TqRegistrationProfile> GetActiveRegistrationProfileAsync(long aoUkprn, int profileId);
         Task<TqRegistrationProfile> GetRegistrationDataWithHistoryAsync(long aoUkprn, int profileId);
-        Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId);
         Task<IList<TqRegistrationProfile>> GetRegistrationProfilesAsync(IList<TqRegistrationProfile> registrations);
         Task<bool> BulkInsertOrUpdateTqRegistrations(List<TqRegistrationProfile> profileEntities, List<TqRegistrationPathway> pathwayEntities, List<TqRegistrationSpecialism> specialismEntities);
         
