@@ -11,12 +11,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
     public class When_Status_Not_Withdraw : TestSetup
     {
         private RegistrationDetailsViewModel mockresult = null;
-        private RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Withdraw;
+        private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Withdraw;
 
         public override void Given()
         {
             mockresult = new RegistrationDetailsViewModel { Uln = 1234567890, ProfileId = ProfileId, Status = RegistrationPathwayStatus.Active };
-            RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId).Returns(mockresult);
+            RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(mockresult);
         }
 
         [Fact]

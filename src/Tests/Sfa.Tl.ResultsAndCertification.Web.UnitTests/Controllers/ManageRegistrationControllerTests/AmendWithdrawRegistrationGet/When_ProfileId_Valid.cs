@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
     public class When_ProfileId_Valid : TestSetup
     {
         private RegistrationDetailsViewModel mockresult = null;
-        private RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Withdraw;
+        private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Withdraw;
 
         public override void Given()
         {
