@@ -17,11 +17,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             {
                 ProfileId = 1,
                 Uln = 1234567890,
-                Name = "Test",
+                Firstname = "John",
+                Lastname = "Smith",
                 DateofBirth = DateTime.UtcNow,
                 ProviderName = "Test Provider (1234567)",
                 PathwayName = "Pathway (7654321)",
-                SpecialismsDisplayName = new List<string> { "Specialism1 (2345678)", "Specialism2 (555678)" },
+                Specialisms = new List<SpecialismDetails> { new SpecialismDetails { Code = "2345678", Name = "Specialism1" }, new SpecialismDetails { Code = "55567", Name = "Specialism2" } },
                 AcademicYear = 2020,
                 Status = RegistrationPathwayStatus.Active
             };
