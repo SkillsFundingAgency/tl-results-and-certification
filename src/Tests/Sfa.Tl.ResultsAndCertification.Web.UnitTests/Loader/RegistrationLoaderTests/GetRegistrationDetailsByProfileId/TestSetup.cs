@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetRegistrationDetailsByProfileIdAsync(AoUkprn, ProfileId);
+            ActualResult = await Loader.GetRegistrationDetailsAsync(AoUkprn, ProfileId);
         }
     }
 }

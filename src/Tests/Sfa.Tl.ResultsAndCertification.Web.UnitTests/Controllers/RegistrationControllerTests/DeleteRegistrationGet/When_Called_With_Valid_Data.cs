@@ -15,14 +15,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public override void Given()
         {
             mockresult = new RegistrationDetailsViewModel { Uln = 1234567890, ProfileId = 99 };
-            RegistrationLoader.GetRegistrationDetailsByProfileIdAsync(Ukprn, ProfileId)
+            RegistrationLoader.GetRegistrationDetailsAsync(Ukprn, ProfileId)
                 .Returns(mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            RegistrationLoader.Received(1).GetRegistrationDetailsByProfileIdAsync(Ukprn, ProfileId);
+            RegistrationLoader.Received(1).GetRegistrationDetailsAsync(Ukprn, ProfileId);
         }
 
         [Fact]

@@ -43,8 +43,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 Uln = 1234567890,
                 Name = "Test",
                 DateofBirth = DateTime.UtcNow,
-                ProviderDisplayName = "Test Provider (1234567)",
-                PathwayDisplayName = "Pathway (7654321)",
+                ProviderName = "Test Provider (1234567)",
+                PathwayName = "Pathway (7654321)",
                 SpecialismsDisplayName = new List<string> { "Specialism1 (2345678)", "Specialism2 (555678)" },
                 AcademicYear = 2020,
                 Status = RegistrationPathwayStatus.Active
@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public async override Task When()
         {
-            _result = await _apiClient.GetRegistrationDetailsByProfileIdAsync(_ukprn, _profileId);
+            _result = await _apiClient.GetRegistrationDetailsAsync(_ukprn, _profileId);
         }
 
         [Fact]
@@ -69,8 +69,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _result.Uln.Should().Be(_mockHttpResult.Uln);
             _result.Name.Should().Be(_mockHttpResult.Name);
             _result.DateofBirth.Should().Be(_mockHttpResult.DateofBirth);
-            _result.ProviderDisplayName.Should().Be(_mockHttpResult.ProviderDisplayName);
-            _result.PathwayDisplayName.Should().Be(_mockHttpResult.PathwayDisplayName);
+            _result.ProviderName.Should().Be(_mockHttpResult.ProviderName);
+            _result.PathwayName.Should().Be(_mockHttpResult.PathwayName);
             _result.SpecialismsDisplayName.Should().BeEquivalentTo(_mockHttpResult.SpecialismsDisplayName);
             _result.AcademicYear.Should().Be(_mockHttpResult.AcademicYear);
             _result.Status.Should().Be(_mockHttpResult.Status);

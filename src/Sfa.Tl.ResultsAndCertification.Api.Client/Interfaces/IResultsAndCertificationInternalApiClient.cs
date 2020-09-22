@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<IList<PathwayDetails>> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn);
         Task<bool> AddRegistrationAsync(RegistrationRequest model);
         Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln);
-        Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId);
+        Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId);
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
 
         // Manage registrations

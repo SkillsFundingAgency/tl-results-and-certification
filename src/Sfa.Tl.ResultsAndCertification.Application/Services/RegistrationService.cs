@@ -341,27 +341,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return result;
         }
 
-        public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
+        public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId)
         {
-            var result = await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId, null);
+            var tqRegistration = await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId, null);  // TOOD: remove default param
+            if (tqRegistration == null)
+                return null;
 
-            var response = new RegistrationDetails
-            {
-                ProfileId = result.TqRegistrationProfileId,
-                Uln = result.TqRegistrationProfile.UniqueLearnerNumber,
-                Name = $"{result.TqRegistrationProfile.Firstname} {result.TqRegistrationProfile.Lastname}",
-                DateofBirth = result.TqRegistrationProfile.DateofBirth,
-                ProviderUkprn = result.TqProvider.TlProvider.UkPrn,
-                ProviderDisplayName = $"{result.TqProvider.TlProvider.Name} ({result.TqProvider.TlProvider.UkPrn})",
-                PathwayLarId = result.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                PathwayDisplayName = $"{result.TqProvider.TqAwardingOrganisation.TlPathway.Name} ({result.TqProvider.TqAwardingOrganisation.TlPathway.LarId})",
-                SpecialismsDisplayName = result.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).OrderBy(s => s.TlSpecialism.Name).Select(s => $"{s.TlSpecialism.Name} ({s.TlSpecialism.LarId})"),
-                AcademicYear = result.AcademicYear,
-                Status = result.Status,
-            };
-
-            return response;
-            //return await _tqRegistrationRepository.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
+            return _mapper.Map<RegistrationDetails>(tqRegistration);
         }
 
         public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)

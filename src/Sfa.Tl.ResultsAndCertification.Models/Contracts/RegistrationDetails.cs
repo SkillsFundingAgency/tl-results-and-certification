@@ -13,19 +13,20 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 
         public int ProfileId { get; set; } 
         public long Uln { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; }  // TODO: delete
         public DateTime DateofBirth { get; set; }
         public long ProviderUkprn { get; set; }
-        public string ProviderDisplayName { get; set; }
+        public string ProviderName { get; set; }
         public string PathwayLarId { get; set; }
-        public string PathwayDisplayName { get; set; }
-        public IEnumerable<string> SpecialismsDisplayName{ get; set; }
+        public string PathwayName { get; set; }
+        public IEnumerable<string> SpecialismsDisplayName{ get; set; } // TODO: delete
         public int AcademicYear { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
 
         // TODO: New Prop.
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public IEnumerable<string> SpecialismCodes { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public IEnumerable<string> SpecialismCodes { get; set; } // Not in use (ManageReg to use below if required)
+        public IEnumerable<SpecialismDetails> Specialisms { get; set; }
     }
 }

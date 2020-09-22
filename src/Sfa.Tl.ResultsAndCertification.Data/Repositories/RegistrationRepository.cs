@@ -57,9 +57,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     Name = $"{p.TqRegistrationProfile.Firstname} {p.TqRegistrationProfile.Lastname}",
                     DateofBirth = p.TqRegistrationProfile.DateofBirth,
                     ProviderUkprn = p.TqProvider.TlProvider.UkPrn,
-                    ProviderDisplayName = $"{p.TqProvider.TlProvider.Name} ({p.TqProvider.TlProvider.UkPrn})",
+                    ProviderName = $"{p.TqProvider.TlProvider.Name} ({p.TqProvider.TlProvider.UkPrn})",
                     PathwayLarId = p.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                    PathwayDisplayName = $"{p.TqProvider.TqAwardingOrganisation.TlPathway.Name} ({p.TqProvider.TqAwardingOrganisation.TlPathway.LarId})",
+                    PathwayName = $"{p.TqProvider.TqAwardingOrganisation.TlPathway.Name} ({p.TqProvider.TqAwardingOrganisation.TlPathway.LarId})",
                     SpecialismsDisplayName = p.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).OrderBy(s => s.TlSpecialism.Name).Select(s => $"{s.TlSpecialism.Name} ({s.TlSpecialism.LarId})"),
                     AcademicYear = p.AcademicYear,
                     Status = p.Status
@@ -70,8 +70,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<TqRegistrationPathway> GetRegistrationAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            // var specialismStatus = GetAssociateSpecialismStatus(status);  TODO:
-
             var regPathway = await _dbContext.TqRegistrationPathway
                 .Include(x => x.TqRegistrationProfile)
                 .Include(x => x.TqProvider)
@@ -79,8 +77,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         .ThenInclude(x => x.TlPathway)
                 .Include(x => x.TqProvider)
                     .ThenInclude(x => x.TlProvider)
-                .IncludeFilter(y => y.TqRegistrationSpecialisms.Where(x => x.Status == RegistrationSpecialismStatus.Active))
-                .IncludeFilter(y => y.TqRegistrationSpecialisms.Where(x => x.Status == RegistrationSpecialismStatus.Active).Select(x => x.TlSpecialism))
+                .Include(x => x.TqRegistrationSpecialisms)
+                    .ThenInclude(x => x.TlSpecialism)
+                //.IncludeFilter(y => y.TqRegistrationSpecialisms.Where(x => x.Status == RegistrationSpecialismStatus.Active))
+                //.IncludeFilter(y => y.TqRegistrationSpecialisms.Where(x => x.Status == RegistrationSpecialismStatus.Active).Select(x => x.TlSpecialism))
                 .OrderByDescending(o => o.CreatedOn)
                 .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId &&
                        p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
@@ -88,6 +88,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                            (status == null && (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdraw)) ||
                            (status != null && p.Status == status)
                        ));
+
+            //var specialismStatus = GetAssociateSpecialismStatus(status);
 
             return regPathway;
         }
@@ -292,6 +294,18 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 returnResult.AddRange(entities.Where(x => selector(x) <= 0).OrderBy(x => selector)); // listToAdd
             }
             return returnResult;
+        }
+
+        private Expression<Func<TqRegistrationSpecialism, bool>> GetAssociateSpecialismStatus(RegistrationPathwayStatus? status)
+        {
+            if (status == RegistrationPathwayStatus.Active)
+                return e => e.Status == RegistrationSpecialismStatus.Active;
+
+            if (status == RegistrationPathwayStatus.Withdraw)
+                return e => e.Status == RegistrationSpecialismStatus.InActive;
+
+            return e => e.Status == RegistrationSpecialismStatus.Active || e.Status == RegistrationSpecialismStatus.InActive;
+            // TODO: In SearchResult we don't know the pathway is Withdraw or Active to filter this. 
         }
 
         #endregion

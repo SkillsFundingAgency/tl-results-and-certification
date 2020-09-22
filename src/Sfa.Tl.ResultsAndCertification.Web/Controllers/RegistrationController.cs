@@ -573,7 +573,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-for-registration-registration-details/{profileId}", Name = RouteConstants.RegistrationDetails)]
         public async Task<IActionResult> RegistrationDetailsAsync(int profileId)
         {
-            var viewModel = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
+            var viewModel = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId);
 
             if (viewModel == null)
             {
@@ -588,7 +588,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("delete-registration/{profileId}", Name = RouteConstants.DeleteRegistration)]
         public async Task<IActionResult> DeleteRegistrationAsync(int profileId)
         {
-            var ulnDetails = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
+            var ulnDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId);
             if (ulnDetails == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
