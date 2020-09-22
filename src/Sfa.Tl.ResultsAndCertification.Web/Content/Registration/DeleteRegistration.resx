@@ -136,6 +136,6 @@
     <value>ULN:</value>
   </data>
   <data name="Validation_Message" xml:space="preserve">
-    <value>Select yes if you want to cancel this registration</value>
+    <value>Select yes if you want to delete this registration</value>
   </data>
 </root>

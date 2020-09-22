@@ -115,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select yes if you want to cancel this registration.
+        ///   Looks up a localized string similar to Select yes if you want to delete this registration.
         /// </summary>
         public static string Validation_Message {
             get {
