@@ -49,10 +49,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             ViewModel = new ReJoinRegistrationViewModel();
         }
 
-        public override Task When()
+        public async override Task When()
         {
-            Result = Controller.ReJoinRegistrationAsync(ViewModel);
-            return Task.CompletedTask;
+            Result = await Controller.ReJoinRegistrationAsync(ViewModel);
         }
     }
 }

@@ -211,6 +211,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>RegistrationDetails.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Registration\ReJoinConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ReJoinConfirmation.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\ReJoinRegistration.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -490,6 +495,10 @@
     <EmbeddedResource Update="Content\Registration\RegistrationDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RegistrationDetails.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\ReJoinConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ReJoinConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\ReJoinRegistration.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
