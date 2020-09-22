@@ -79,8 +79,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     .ThenInclude(x => x.TlProvider)
                 .Include(x => x.TqRegistrationSpecialisms)
                     .ThenInclude(x => x.TlSpecialism)
-                //.IncludeFilter(y => y.TqRegistrationSpecialisms.Where(x => x.Status == RegistrationSpecialismStatus.Active))
-                //.IncludeFilter(y => y.TqRegistrationSpecialisms.Where(x => x.Status == RegistrationSpecialismStatus.Active).Select(x => x.TlSpecialism))
                 .OrderByDescending(o => o.CreatedOn)
                 .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId &&
                        p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
@@ -89,7 +87,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                            (status != null && p.Status == status)
                        ));
 
-            //var specialismStatus = GetAssociateSpecialismStatus(status);
+            Func<TqRegistrationSpecialism, bool> predicate = e => e.Status == RegistrationSpecialismStatus.Active;
+            if (regPathway.Status == RegistrationPathwayStatus.Withdraw)
+                predicate = e => e.Status == RegistrationSpecialismStatus.InActive;
+            
+            regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(predicate).ToList();
 
             return regPathway;
         }
