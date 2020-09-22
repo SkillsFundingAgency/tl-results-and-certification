@@ -13,7 +13,7 @@ using RegistrationDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Re
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.RegistrationDetails
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Called_With_Withdraw_Status_Data : TestSetup
     {
         private RegistrationDetailsViewModel mockresult = null;
         private Dictionary<string, string> _routeAttributes;
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 PathwayDisplayName = "Pathway (7654321)",
                 SpecialismsDisplayName = new List<string> { "Specialism1 (2345678)", "Specialism2 (555678)" },
                 AcademicYear = 2020,
-                Status = RegistrationPathwayStatus.Active
+                Status = RegistrationPathwayStatus.Withdraw
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } };
@@ -63,56 +63,45 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryStatus.Value.Should().Be(mockresult.Status.ToString());
             model.SummaryStatus.ActionText.Should().Be(RegistrationDetailsContent.Change_Status_Action_Link_Text);
             model.SummaryStatus.HasTag.Should().BeTrue();
-            model.SummaryStatus.TagCssClass.Should().Be("govuk-tag--green");
-            model.SummaryStatus.RouteName.Should().Be(RouteConstants.AmendActiveRegistration);
+            model.SummaryStatus.TagCssClass.Should().Be("govuk-tag--blue");
+            model.SummaryStatus.RouteName.Should().Be(RouteConstants.AmendWithdrawRegistration);
             model.SummaryStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary LearnerName
             model.SummaryLearnerName.Should().NotBeNull();
             model.SummaryLearnerName.Title.Should().Be(RegistrationDetailsContent.Title_Name_Text);
             model.SummaryLearnerName.Value.Should().Be(mockresult.Name);
-            model.SummaryLearnerName.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
-            model.SummaryLearnerName.RouteName.Should().Be(RouteConstants.ChangeRegistrationLearnersName);
-            model.SummaryLearnerName.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            model.SummaryLearnerName.ActionText.Should().BeNull();
 
             // Summary DateofBirth
             model.SummaryDateofBirth.Should().NotBeNull();
             model.SummaryDateofBirth.Title.Should().Be(RegistrationDetailsContent.Title_DateofBirth_Text);
             model.SummaryDateofBirth.Value.Should().Be(mockresult.DateofBirth.ToShortDateString());
-            model.SummaryDateofBirth.RouteName.Should().Be(RouteConstants.ChangeRegistrationDateofBirth);
-            model.SummaryDateofBirth.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
-            model.SummaryDateofBirth.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            model.SummaryDateofBirth.ActionText.Should().BeNull();
 
             // Summary Provider
             model.SummaryProvider.Should().NotBeNull();
             model.SummaryProvider.Title.Should().Be(RegistrationDetailsContent.Title_Provider_Text);
             model.SummaryProvider.Value.Should().Be(mockresult.ProviderDisplayName);
-            model.SummaryProvider.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
-            model.SummaryProvider.RouteName.Should().Be(RouteConstants.ChangeRegistrationProvider);
-            model.SummaryProvider.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            model.SummaryProvider.ActionText.Should().BeNull();
 
             // Summary Core
             model.SummaryCore.Should().NotBeNull();
             model.SummaryCore.Title.Should().Be(RegistrationDetailsContent.Title_Core_Text);
             model.SummaryCore.Value.Should().Be(mockresult.PathwayDisplayName);
-            model.SummaryCore.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
-            model.SummaryCore.RouteName.Should().Be(RouteConstants.ChangeRegistrationCore);
-            model.SummaryCore.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);            
+            model.SummaryCore.ActionText.Should().BeNull();
 
             // Summary Specialisms
             model.SummarySpecialisms.Should().NotBeNull();
             model.SummarySpecialisms.Title.Should().Be(RegistrationDetailsContent.Title_Specialism_Text);
             model.SummarySpecialisms.Value.Should().BeEquivalentTo(mockresult.SpecialismsDisplayName);
-            model.SummarySpecialisms.RouteName.Should().Be(RouteConstants.ChangeRegistrationSpecialismQuestion);
-            model.SummarySpecialisms.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
+            model.SummarySpecialisms.ActionText.Should().BeNull();
 
             // Summary Academic Year
             model.SummaryAcademicYear.Should().NotBeNull();
             model.SummaryAcademicYear.Title.Should().Be(RegistrationDetailsContent.Title_AcademicYear_Text);
             model.SummaryAcademicYear.Value.Should().Be(EnumExtensions.GetDisplayName<AcademicYear>(mockresult.AcademicYear));
-            model.SummaryAcademicYear.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
-            model.SummaryAcademicYear.RouteName.Should().Be(RouteConstants.ChangeAcademicYear);
-            model.SummaryAcademicYear.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            model.SummaryAcademicYear.ActionText.Should().BeNull();
 
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
