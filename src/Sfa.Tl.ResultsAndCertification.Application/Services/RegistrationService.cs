@@ -331,7 +331,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     Uln = x.UniqueLearnerNumber,
                     RegistrationProfileId = x.Id,
-                    IsActive = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active &&
+                    IsActive = x.TqRegistrationPathways.Any(pw => (pw.Status == RegistrationPathwayStatus.Active || pw.Status == RegistrationPathwayStatus.Withdraw) && 
                                                             pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn),
                     IsRegisteredWithOtherAo = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active &&
                                                             pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn)
@@ -343,7 +343,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
         {
-            return await _tqRegistrationRepository.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
+            var result = await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId, null);
+
+            var response = new RegistrationDetails
+            {
+                ProfileId = result.TqRegistrationProfileId,
+                Uln = result.TqRegistrationProfile.UniqueLearnerNumber,
+                Name = $"{result.TqRegistrationProfile.Firstname} {result.TqRegistrationProfile.Lastname}",
+                DateofBirth = result.TqRegistrationProfile.DateofBirth,
+                ProviderUkprn = result.TqProvider.TlProvider.UkPrn,
+                ProviderDisplayName = $"{result.TqProvider.TlProvider.Name} ({result.TqProvider.TlProvider.UkPrn})",
+                PathwayLarId = result.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                PathwayDisplayName = $"{result.TqProvider.TqAwardingOrganisation.TlPathway.Name} ({result.TqProvider.TqAwardingOrganisation.TlPathway.LarId})",
+                SpecialismsDisplayName = result.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).OrderBy(s => s.TlSpecialism.Name).Select(s => $"{s.TlSpecialism.Name} ({s.TlSpecialism.LarId})"),
+                AcademicYear = result.AcademicYear,
+                Status = result.Status,
+            };
+
+            return response;
+            //return await _tqRegistrationRepository.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
         }
 
         public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)

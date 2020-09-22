@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId);
         Task<TqRegistrationPathway> GetRegistrationPathwayDetails(long aoUkprn, int profileId);
         Task<int> UpdateRegistrationWithSpecifedCollectionsOnlyAsync(TqRegistrationPathway entity, params Expression<Func<TqRegistrationPathway, object>>[] properties);
+
+        Task<TqRegistrationPathway> GetRegistrationAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
     }
 }
