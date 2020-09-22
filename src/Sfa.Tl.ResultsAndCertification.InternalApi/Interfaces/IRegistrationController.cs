@@ -13,5 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId);
         Task<bool> UpdateRegistrationAsync(ManageRegistration model);
         Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model);
+        Task<bool> ReJoinRegistrationAsync(ReJoinRegistrationRequest model);
     }
 }

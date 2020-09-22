@@ -33,11 +33,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             CreateMapper();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
+            TqRegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
+            TqRegistrationSpecialismRepositoryLogger = new Logger<GenericRepository<TqRegistrationSpecialism>>(new NullLoggerFactory());
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
+            TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper, RegistrationRepositoryLogger, TqRegistrationSpecialismRepository);
-
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, RegistrationMapper, RegistrationRepositoryLogger);
 
             var newProvider = TlProviders.Last();
             _updateRegistrationRequest = new ManageRegistration
