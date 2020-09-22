@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -45,10 +46,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetRegistrationDetails/{aoUkprn}/{profileId}")]
-        public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId)
+        [Route("GetRegistrationDetails/{aoUkprn}/{profileId}/{status:int?}")]
+        public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            return await _registrationService.GetRegistrationDetailsAsync(aoUkprn, profileId);
+            return await _registrationService.GetRegistrationDetailsAsync(aoUkprn, profileId, status);
         }
 
         [HttpDelete]

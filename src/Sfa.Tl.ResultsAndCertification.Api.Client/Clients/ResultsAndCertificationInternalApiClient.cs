@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -142,9 +143,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<FindUlnResponse>(requestUri);
         }
 
-        public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId)
+        public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            var requestUri = string.Format(ApiConstants.GetRegistrationDetailsUri, aoUkprn, profileId);
+            var requestUri = string.Format(ApiConstants.GetRegistrationDetailsUri, aoUkprn, profileId, (int?)status);
             return await GetAsync<RegistrationDetails>(requestUri);
         }
 
