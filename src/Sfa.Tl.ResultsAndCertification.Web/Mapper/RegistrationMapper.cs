@@ -101,6 +101,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<RegistrationDetails, ChangeCoreQuestionViewModel>()
                 .ForMember(d => d.CoreDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"));
 
+            CreateMap<RegistrationDetails, ManageRegistration>()
+                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.PathwayLarId))  // TODO: refactor to use same propname. 
+                .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.Specialisms.Select(x => x.Code))); 
+
+
             CreateMap<WithdrawRegistrationViewModel, WithdrawRegistrationRequest>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))

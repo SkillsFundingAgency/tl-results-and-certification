@@ -10,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
         public RegistrationMapper()
         {
             CreateMap<TqRegistrationPathway, RegistrationDetails>()
+                .ForMember(d => d.AoUkprn, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn))
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.TqRegistrationProfileId))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.TqRegistrationProfile.UniqueLearnerNumber))
                 .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.TqRegistrationProfile.Firstname))

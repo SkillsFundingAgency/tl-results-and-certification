@@ -129,10 +129,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<ProviderChangeResponse> ProcessProviderChangesAsync(long aoUkprn, ChangeProviderViewModel viewModel)
         {
-            var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
-
-            if (reg == null) return null;
-
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId);
+            if (reg == null)
+                return null;
+            
             if (reg.ProviderUkprn == viewModel.SelectedProviderUkprn.ToLong())
             {
                 return new ProviderChangeResponse { IsModified = false };
@@ -140,11 +140,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             else
             {
                 var providerPathways = await _internalApiClient.GetRegisteredProviderPathwayDetailsAsync(aoUkprn, viewModel.SelectedProviderUkprn.ToLong());
-                if (providerPathways != null && providerPathways.Count > 0 && providerPathways.Any(p => p.Code.Equals(reg.CoreCode)))
+                if (providerPathways != null && providerPathways.Count > 0 && providerPathways.Any(p => p.Code.Equals(reg.PathwayLarId)))
                 {
-                    _mapper.Map(viewModel, reg);
-                    var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
-                    return new ProviderChangeResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true,  IsSuccess = isSuccess };
+                    var request = _mapper.Map<ManageRegistration>(reg);
+                    _mapper.Map(viewModel, request);
+                    var isSuccess = await _internalApiClient.UpdateRegistrationAsync(request);
+                    return new ProviderChangeResponse { ProfileId = request.ProfileId, Uln = request.Uln, IsModified = true,  IsSuccess = isSuccess };
                 }
                 else
                 {
@@ -155,56 +156,57 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<ManageRegistrationResponse> ProcessProfileNameChangeAsync(long aoUkprn, ChangeLearnersNameViewModel viewModel)
         {
-            var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
-            
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId);
             if (reg == null) 
                 return null;
-            
-            if (viewModel.Firstname.Trim().Equals(reg.FirstName, StringComparison.InvariantCultureIgnoreCase) &&
-                viewModel.Lastname.Trim().Equals(reg.LastName, StringComparison.InvariantCultureIgnoreCase))
+
+            if (viewModel.Firstname.Trim().Equals(reg.Firstname, StringComparison.InvariantCultureIgnoreCase) &&
+                viewModel.Lastname.Trim().Equals(reg.Lastname, StringComparison.InvariantCultureIgnoreCase))
                 return new ManageRegistrationResponse { IsModified = false };
 
-            _mapper.Map(viewModel, reg);
-            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
+            var request = _mapper.Map<ManageRegistration>(reg);
+            _mapper.Map(viewModel, request);
+            
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(request);
 
-            return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
+            return new ManageRegistrationResponse { ProfileId = request.ProfileId, Uln = request.Uln, IsModified = true, IsSuccess = isSuccess };
         }
 
         public async Task<ManageRegistrationResponse> ProcessDateofBirthChangeAsync(long aoUkprn, ChangeDateofBirthViewModel viewModel)
         {
-            var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
-
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId);
             if (reg == null)
                 return null;
 
-            if (reg.DateOfBirth == viewModel.DateofBirth.ToDateTime()) 
+            if (reg.DateofBirth == viewModel.DateofBirth.ToDateTime()) 
                 return new ManageRegistrationResponse { IsModified = false };
 
-            _mapper.Map(viewModel, reg);
-            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
+            var request = _mapper.Map<ManageRegistration>(reg);
+            _mapper.Map(viewModel, request);
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(request);
 
-            return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
+            return new ManageRegistrationResponse { ProfileId = request.ProfileId, Uln = request.Uln, IsModified = true, IsSuccess = isSuccess };
         }
 
         public async Task<ManageRegistrationResponse> ProcessSpecialismQuestionChangeAsync(long aoUkprn, ChangeSpecialismQuestionViewModel viewModel)
         {
-            var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId);
 
             if (reg == null || viewModel.HasLearnerDecidedSpecialism == null) return null;
-            
-            _mapper.Map(viewModel, reg);
-            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
-            return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
+
+            var request = _mapper.Map<ManageRegistration>(reg);
+            _mapper.Map(viewModel, request);
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(request);
+            return new ManageRegistrationResponse { ProfileId = request.ProfileId, Uln = request.Uln, IsModified = true, IsSuccess = isSuccess };
         }
 
         public async Task<ManageRegistrationResponse> ProcessSpecialismChangeAsync(long aoUkprn, ChangeSpecialismViewModel viewModel)
         {
-            var reg = await _internalApiClient.GetRegistrationAsync(aoUkprn, viewModel.ProfileId);
-
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId);
             if (reg == null)
                 return null;
 
-            var prevSpecialisms = reg.SpecialismCodes;
+            var prevSpecialisms = reg.Specialisms.Select(x => x.Code);
             var currentSpecialisms = viewModel.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code);
             var areSame = prevSpecialisms.Count() == currentSpecialisms.Count() &&
                     prevSpecialisms.All(x => currentSpecialisms.Contains(x));
@@ -212,10 +214,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (areSame)
                 return new ManageRegistrationResponse { IsModified = false };
 
-            _mapper.Map(viewModel, reg);
-            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(reg);
+            var request = _mapper.Map<ManageRegistration>(reg);
+            _mapper.Map(viewModel, request);
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(request);
 
-            return new ManageRegistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsModified = true, IsSuccess = isSuccess };
+            return new ManageRegistrationResponse { ProfileId = request.ProfileId, Uln = request.Uln, IsModified = true, IsSuccess = isSuccess };
         }
 
         public async Task<ChangeCoreQuestionViewModel> GetRegistrationChangeCoreQuestionDetailsAsync(long aoUkprn, int profileId)
