@@ -142,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<FindUlnResponse>(requestUri);
         }
 
-        public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
+        public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId)
         {
             var requestUri = string.Format(ApiConstants.GetRegistrationDetailsUri, aoUkprn, profileId);
             return await GetAsync<RegistrationDetails>(requestUri);

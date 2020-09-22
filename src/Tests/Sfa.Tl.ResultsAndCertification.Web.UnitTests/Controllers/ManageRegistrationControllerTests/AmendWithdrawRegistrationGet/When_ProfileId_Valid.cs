@@ -14,13 +14,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         public override void Given()
         {
             mockresult = new RegistrationDetailsViewModel { Uln = 1234567890, ProfileId = ProfileId, Status = Common.Enum.RegistrationPathwayStatus.Withdraw };
-            RegistrationLoader.GetRegistrationDetailsByProfileIdAsync(AoUkprn, ProfileId).Returns(mockresult);
+            RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId).Returns(mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            RegistrationLoader.Received(1).GetRegistrationDetailsByProfileIdAsync(AoUkprn, ProfileId);
+            RegistrationLoader.Received(1).GetRegistrationDetailsAsync(AoUkprn, ProfileId);
         }
 
         [Fact]

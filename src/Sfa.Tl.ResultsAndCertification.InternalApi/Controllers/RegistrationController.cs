@@ -46,9 +46,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpGet]
         [Route("GetRegistrationDetails/{aoUkprn}/{profileId}")]
-        public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
+        public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId)
         {
-            return await _registrationService.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
+            return await _registrationService.GetRegistrationDetailsAsync(aoUkprn, profileId);
         }
 
         [HttpDelete]

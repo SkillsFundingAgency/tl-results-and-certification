@@ -110,9 +110,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AddRegistrationAsync(registrationModel);
         }
 
-        public async Task<RegistrationDetailsViewModel> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
+        public async Task<RegistrationDetailsViewModel> GetRegistrationDetailsAsync(long aoUkprn, int profileId)
         {
-            var response = await _internalApiClient.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
+            var response = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, profileId);
             return _mapper.Map<RegistrationDetailsViewModel>(response);
         }
 
@@ -220,7 +220,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<ChangeCoreQuestionViewModel> GetRegistrationChangeCoreQuestionDetailsAsync(long aoUkprn, int profileId)
         {
-            var response = await _internalApiClient.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
+            var response = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, profileId);
             return _mapper.Map<ChangeCoreQuestionViewModel>(response);
         }
 

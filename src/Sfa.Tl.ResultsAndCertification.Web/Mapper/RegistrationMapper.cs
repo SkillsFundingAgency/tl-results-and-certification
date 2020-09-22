@@ -49,7 +49,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<FindUlnResponse, UlnNotFoundViewModel>();
 
-            CreateMap<RegistrationDetails, RegistrationDetailsViewModel>();
+            CreateMap<RegistrationDetails, RegistrationDetailsViewModel>()
+                .ForMember(d => d.Name, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
+                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"))
+                .ForMember(d => d.ProviderDisplayName, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"))
+                .ForMember(d => d.SpecialismsDisplayName, opts => opts.MapFrom(s => s.Specialisms.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.Code})" ) ));
+
             CreateMap<ManageRegistration, ChangeLearnersNameViewModel>()
                 .ReverseMap()
                 .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.Firstname.Trim()))
@@ -94,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<ManageRegistration, ChangeAcademicYearViewModel>();
 
             CreateMap<RegistrationDetails, ChangeCoreQuestionViewModel>()
-                .ForMember(d => d.CoreDisplayName, opts => opts.MapFrom(s => s.PathwayDisplayName));
+                .ForMember(d => d.CoreDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"));
 
             CreateMap<WithdrawRegistrationViewModel, WithdrawRegistrationRequest>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))

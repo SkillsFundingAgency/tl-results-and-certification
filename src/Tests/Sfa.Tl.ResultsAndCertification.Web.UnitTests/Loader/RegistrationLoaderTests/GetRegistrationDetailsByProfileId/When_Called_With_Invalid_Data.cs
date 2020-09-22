@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         public override void Given()
         {
             expectedApiResult = null;
-            InternalApiClient.GetRegistrationDetailsByProfileIdAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
+            InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
         }
 
         [Fact]
