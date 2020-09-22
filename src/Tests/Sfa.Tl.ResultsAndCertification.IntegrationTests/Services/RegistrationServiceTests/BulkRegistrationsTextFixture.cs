@@ -30,9 +30,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected IList<TlSpecialism> TlSpecialisms;
         protected RegistrationService RegistrationService;        
         protected IProviderRepository ProviderRepository;
+        protected IRepository<TqRegistrationPathway> TqRegistrationPathwayRepository;
         protected IRepository<TqRegistrationSpecialism> TqRegistrationSpecialismRepository;
         protected ILogger<ProviderRepository> ProviderRepositoryLogger;
         protected ILogger<RegistrationRepository> RegistrationRepositoryLogger;
+        protected ILogger<GenericRepository<TqRegistrationPathway>> TqRegistrationPathwayRepositoryLogger;
         protected ILogger<GenericRepository<TqRegistrationSpecialism>> TqRegistrationSpecialismRepositoryLogger;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         public IRegistrationRepository RegistrationRepository;
@@ -41,8 +43,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         public IList<TqRegistrationProfile> TqRegistrationProfilesData;
         public Checkpoint DbCheckpoint;
         public ResultsAndCertificationDbContext DbContext;
-
-
 
         public BulkRegistrationsTextFixture()
         {
@@ -56,10 +56,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             CreateMapper();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
+            TqRegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
+            TqRegistrationSpecialismRepositoryLogger = new Logger<GenericRepository<TqRegistrationSpecialism>>(new NullLoggerFactory());
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
+            TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper, RegistrationRepositoryLogger, TqRegistrationSpecialismRepository);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, RegistrationMapper, RegistrationRepositoryLogger);
         }
 
         protected void CreateMapper()

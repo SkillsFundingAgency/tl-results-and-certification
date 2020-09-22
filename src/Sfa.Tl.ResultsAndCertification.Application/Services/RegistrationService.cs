@@ -23,18 +23,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     {
         private readonly IProviderRepository _tqProviderRepository;
         private readonly IRegistrationRepository _tqRegistrationRepository;
-        private readonly IMapper _mapper;
-        private readonly ILogger<IRegistrationRepository> _logger;
+        private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
         private readonly IRepository<TqRegistrationSpecialism> _tqRegistrationSpecialismRepository;
+        private readonly IMapper _mapper;
+        private readonly ILogger<IRegistrationRepository> _logger;        
 
         public RegistrationService(IProviderRepository providerRespository, 
-            IRegistrationRepository tqRegistrationRepository, 
+            IRegistrationRepository tqRegistrationRepository,
+            IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
+            IRepository<TqRegistrationSpecialism> tqRegistrationSpecialismRepository,
             IMapper mapper, 
-            ILogger<IRegistrationRepository> logger, 
-            IRepository<TqRegistrationSpecialism> tqRegistrationSpecialismRepository)
+            ILogger<IRegistrationRepository> logger
+            )
         {
             _tqProviderRepository = providerRespository;
             _tqRegistrationRepository = tqRegistrationRepository;
+            _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
             _tqRegistrationSpecialismRepository = tqRegistrationSpecialismRepository;
             _mapper = mapper;
             _logger = logger;
@@ -432,6 +436,32 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqRegistrationRepository.UpdateWithSpecifedCollectionsOnlyAsync(tqRegistrationProfile, u => u.TqRegistrationPathways) > 0;
         }
 
+        public async Task<bool> ReJoinRegistrationAsync(ReJoinRegistrationRequest model)
+        {
+            var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationAsync(model.AoUkprn, model.ProfileId, RegistrationPathwayStatus.Withdraw);
+
+            if (tqRegistrationPathway == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: ReJoinRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
+                return false;
+            }
+
+            var tqPathway = new TqRegistrationPathway
+            {
+                TqRegistrationProfileId = tqRegistrationPathway.TqRegistrationProfileId,
+                TqProviderId = tqRegistrationPathway.TqProviderId,
+                AcademicYear = tqRegistrationPathway.AcademicYear,
+                StartDate = DateTime.UtcNow,
+                Status = RegistrationPathwayStatus.Active,
+                IsBulkUpload = false,
+                TqRegistrationSpecialisms = MapSpecialisms(tqRegistrationPathway.TqRegistrationSpecialisms.Select(s => new KeyValuePair<int, string>(s.TlSpecialism.Id, s.TlSpecialism.LarId)), model.PerformedBy, 0, false),
+                CreatedBy = model.PerformedBy,
+                CreatedOn = DateTime.UtcNow
+            };
+
+            return await _tqRegistrationPathwayRepository.CreateAsync(tqPathway) > 0;
+        }
+
         #region Private Methods
 
         private TqRegistrationProfile TransformManualChangeRegistrationModel(ManageRegistration model, RegistrationRecordResponse registrationRecord, TqRegistrationProfile actualProfile)
@@ -585,6 +615,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private IList<TqRegistrationSpecialism> MapSpecialisms(RegistrationRecordResponse registration, string performedBy, int specialismStartIndex, bool isBulkUpload = true)
         {
             return registration.TlSpecialismLarIds.Select((x, index) => new TqRegistrationSpecialism
+            {
+                Id = isBulkUpload ? index - specialismStartIndex : 0,
+                TlSpecialismId = x.Key,
+                StartDate = DateTime.UtcNow,
+                Status = RegistrationSpecialismStatus.Active,
+                IsBulkUpload = isBulkUpload,
+                CreatedBy = performedBy,
+                CreatedOn = DateTime.UtcNow,
+            }).ToList();
+        }
+
+        private IList<TqRegistrationSpecialism> MapSpecialisms(IEnumerable<KeyValuePair<int, string>> specialismsList, string performedBy, int specialismStartIndex, bool isBulkUpload = true)
+        {
+            return specialismsList.Select((x, index) => new TqRegistrationSpecialism
             {
                 Id = isBulkUpload ? index - specialismStartIndex : 0,
                 TlSpecialismId = x.Key,

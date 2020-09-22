@@ -78,5 +78,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _registrationService.WithdrawRegistrationAsync(model);
         }
+
+        [HttpPut]
+        [Route("ReJoinRegistration")]
+        public async Task<bool> ReJoinRegistrationAsync(ReJoinRegistrationRequest model)
+        {
+            return await _registrationService.ReJoinRegistrationAsync(model);
+        }
     }
 }
