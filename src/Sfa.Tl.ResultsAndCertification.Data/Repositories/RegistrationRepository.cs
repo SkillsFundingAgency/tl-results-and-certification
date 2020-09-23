@@ -1,6 +1,5 @@
 ﻿using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -24,16 +23,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _logger = logger;
         }
 
-        public async Task<TqRegistrationProfile> GetActiveRegistrationProfileAsync(long aoUkprn, int profileId)
+        public async Task<TqRegistrationPathway> GetRegistrationLiteAsync(long aoUkprn, int profileId, RegistrationPathwayStatus status)
         {
-            var profile = await _dbContext.TqRegistrationProfile
-                .Where(x => x.Id == profileId && x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active && pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn))
-                .IncludeFilter(x => x.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active))
-                .IncludeFilter(y => y.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active)
-                    .SelectMany(s => s.TqRegistrationSpecialisms.Where(sp => sp.Status == RegistrationSpecialismStatus.Active)))
+            var registrationPathway = await _dbContext.TqRegistrationPathway
+                .Where(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && p.Status == status)
+                .Include(p => p.TqRegistrationProfile)
+                .IncludeFilter(p => p.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active))
+                .OrderByDescending(p => p.CreatedOn)
                 .FirstOrDefaultAsync();
-
-            return profile;
+            return registrationPathway;
         }
 
         public async Task<TqRegistrationProfile> GetRegistrationDataWithHistoryAsync(long aoUkprn, int profileId)
@@ -68,6 +66,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                            (status != null && p.Status == status)
                        ));
 
+            if (regPathway == null) return null;
+
             Func<TqRegistrationSpecialism, bool> predicate = e => e.Status == RegistrationSpecialismStatus.Active;
             if (regPathway.Status == RegistrationPathwayStatus.Withdraw)
                 predicate = e => e.Status == RegistrationSpecialismStatus.InActive;
@@ -99,36 +99,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 }).FirstOrDefaultAsync();
 
             return registration;
-        }
-
-        public async Task<TqRegistrationPathway> GetRegistrationPathwayDetails(long aoUkprn, int profileId)
-        {
-            var registrationPathway = await _dbContext.TqRegistrationPathway
-                .Where(p => p.Status == RegistrationPathwayStatus.Active &&
-                            p.TqRegistrationProfile.Id == profileId &&
-                            p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn)
-                .IncludeFilter(p => p.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active))
-                .FirstOrDefaultAsync();
-            return registrationPathway;                
-        }
-
-        public async Task<int> UpdateRegistrationWithSpecifedCollectionsOnlyAsync(TqRegistrationPathway entity, params Expression<Func<TqRegistrationPathway, object>>[] properties)
-        {
-            properties.ToList().ForEach(p =>
-            {
-                var propertyName = p.GetPropertyAccess().Name;
-                _dbContext.Entry(entity).Collection(propertyName).IsModified = true;
-            });
-
-            try
-            {
-                return await _dbContext.SaveChangesAsync();
-            }
-            catch (DbUpdateException due)
-            {
-                _logger.LogError(due.Message, due.InnerException);
-                throw;
-            }
         }
 
         #region Bulk Registration
