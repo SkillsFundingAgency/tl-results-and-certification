@@ -147,6 +147,12 @@
   <data name="Page_Title_Change_Registration_Select_Provider" xml:space="preserve">
     <value>Change provider page</value>
   </data>
+  <data name="Page_Title_Reregister_Registration_Select_Provider" xml:space="preserve">
+    <value>Register learner on a new course - Select the provider page</value>
+  </data>
+  <data name="ReregisterRegistration_Caption_Text" xml:space="preserve">
+    <value>Register learner on a new course</value>
+  </data>
   <data name="Select_One_Option_Text" xml:space="preserve">
     <value>Select one</value>
   </data>

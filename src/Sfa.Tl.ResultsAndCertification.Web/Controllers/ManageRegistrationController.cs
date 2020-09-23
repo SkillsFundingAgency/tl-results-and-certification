@@ -455,9 +455,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            if (model.ChangeStatus == RegistrationChangeStatus.ReJoin)
+            if (model.ChangeStatus == RegistrationChangeStatus.Rejoin)
             {
                 return RedirectToRoute(RouteConstants.ReJoinRegistration, new { profileId = model.ProfileId });
+            }
+            else if (model.ChangeStatus == RegistrationChangeStatus.Reregister)
+            {
+                return RedirectToRoute(RouteConstants.ReregisterProvider, new { profileId = model.ProfileId });
             }
 
             return View(model);
@@ -513,6 +517,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);
+        }
+
+
+        [HttpGet]
+        [Route("register-learner-new-course-select-provider/{profileId}", Name = RouteConstants.ReregisterProvider)]
+        public async Task<IActionResult> ReregisterProviderAsync(int profileId)
+        {
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdraw);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdraw)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdraw}. Method: ReregisterProviderAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(CacheKey);
+
+            var registeredProviders = await GetAoRegisteredProviders();
+            var viewModel = cacheModel?.ReregisterProvider == null ? new ReregisterProviderViewModel() : cacheModel.ReregisterProvider;
+            viewModel.ProfileId = profileId;
+            viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("register-learner-new-course-select-provider", Name = RouteConstants.SubmitReregisterProvider)]
+        public async Task<IActionResult> ReregisterProviderAsync(ReregisterProviderViewModel model)
+        {           
+            var registeredProviderViewModel = await GetAoRegisteredProviders();
+
+            if (!ModelState.IsValid)
+            {
+                model.ProvidersSelectList = registeredProviderViewModel.ProvidersSelectList;
+                return View(model);
+            }            
+
+            model.SelectedProviderDisplayName = registeredProviderViewModel?.ProvidersSelectList?.FirstOrDefault(p => p.Value == model.SelectedProviderUkprn)?.Text;
+
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(CacheKey);
+
+            if (cacheModel?.ReregisterProvider != null)
+                cacheModel.ReregisterProvider = model;
+            else
+                cacheModel = new ReregisterViewModel { ReregisterProvider = model };
+
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            return RedirectToRoute(RouteConstants.ReregisterProvider, new { profileId = model.ProfileId });
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

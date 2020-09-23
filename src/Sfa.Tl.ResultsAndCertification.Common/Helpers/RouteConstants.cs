@@ -104,6 +104,10 @@
         public const string SubmitReJoinRegistration = "SubmitReJoinRegistration";
         public const string ReJoinRegistrationConfirmation = "ReJoinRegistrationConfirmation";
 
+        // Reregister
+        public const string ReregisterProvider = "ReregisterProvider";
+        public const string SubmitReregisterProvider = "SubmitReregisterProvider";
+
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";
         public const string SubmitSearchRegistration = "SubmitSearchRegistration";

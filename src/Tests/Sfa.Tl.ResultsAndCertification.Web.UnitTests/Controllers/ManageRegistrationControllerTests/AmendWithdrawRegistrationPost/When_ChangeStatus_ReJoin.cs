@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         public override void Given()
         {
             ViewModel.ProfileId = ProfileId;
-            ViewModel.ChangeStatus = RegistrationChangeStatus.ReJoin;
+            ViewModel.ChangeStatus = RegistrationChangeStatus.Rejoin;
         }
 
         [Fact]

@@ -5,7 +5,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Enum
     {
         Withdraw = 1,        
         Delete = 2,
-        ReJoin = 3,
-        ReRegister=4,
+        Rejoin = 3,
+        Reregister = 4,
     }
 }
