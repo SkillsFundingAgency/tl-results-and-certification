@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,31 +73,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             
             regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(predicate).ToList();
             return regPathway;
-        }
-
-        public async Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId)
-        {
-            var registration = await _dbContext.TqRegistrationPathway
-                .Where(p => p.Status == RegistrationPathwayStatus.Active &&
-                            p.TqRegistrationProfile.Id == profileId &&
-                            p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn)
-                .Select(p => new ManageRegistration
-                {
-                    ProfileId = p.TqRegistrationProfileId,
-                    AoUkprn = p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn,
-                    Uln = p.TqRegistrationProfile.UniqueLearnerNumber,
-                    FirstName = p.TqRegistrationProfile.Firstname,
-                    LastName = p.TqRegistrationProfile.Lastname,
-                    DateOfBirth = p.TqRegistrationProfile.DateofBirth,
-                    ProviderUkprn = p.TqProvider.TlProvider.UkPrn,
-                    CoreCode = p.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                    SpecialismCodes = p.TqRegistrationSpecialisms
-                                        .Where(s => s.Status == RegistrationSpecialismStatus.Active)
-                                        .Select(s => s.TlSpecialism.LarId),
-                    AcademicYear = p.AcademicYear,
-                }).FirstOrDefaultAsync();
-
-            return registration;
         }
 
         #region Bulk Registration

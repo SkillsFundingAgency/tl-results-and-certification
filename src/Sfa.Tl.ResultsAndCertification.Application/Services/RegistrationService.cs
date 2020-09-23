@@ -348,8 +348,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var tqRegistration = await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId, status);
-            
-            if (tqRegistration == null)return null;
+
+            if (tqRegistration == null) return null;
 
             return _mapper.Map<RegistrationDetails>(tqRegistration);
         }
@@ -365,11 +365,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             return await _tqRegistrationRepository.DeleteAsync(registrationProfile) > 0;
-        }
-
-        public async Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId)
-        {
-            return await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId);
         }
 
         public async Task<bool> UpdateRegistrationAsync(ManageRegistration model)

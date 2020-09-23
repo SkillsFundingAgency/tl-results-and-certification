@@ -27,7 +27,6 @@
         public const string FindUlnUri = "/api/registration/FindUln/{0}/{1}";
         public const string GetRegistrationDetailsUri = "/api/registration/GetRegistrationDetails/{0}/{1}/{2}";
         public const string DeleteRegistrationUri = "/api/registration/DeleteRegistration/{0}/{1}";
-        public const string GetRegistrationUri = "/api/registration/GetRegistration/{0}/{1}";
         public const string UpdateRegistrationUri = "/api/registration/UpdateRegistration";
         public const string WithdrawRegistrationUri = "/api/registration/WithdrawRegistration";
         public const string ReJoinRegistrationUri = "/api/registration/ReJoinRegistration";
