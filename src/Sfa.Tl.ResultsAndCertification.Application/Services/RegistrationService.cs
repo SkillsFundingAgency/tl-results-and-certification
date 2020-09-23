@@ -538,7 +538,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 pathway.ModifiedOn = DateTime.UtcNow;
                 pathway.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList().ForEach(s =>
                 {
-                    s.Status = RegistrationSpecialismStatus.InActive;
+                    //s.Status = RegistrationSpecialismStatus.InActive;
                     s.EndDate = DateTime.UtcNow;
                     s.ModifiedBy = performedBy;
                     s.ModifiedOn = DateTime.UtcNow;
