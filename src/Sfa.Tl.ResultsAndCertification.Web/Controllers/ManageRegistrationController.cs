@@ -27,6 +27,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.RegistrationCacheKey); }
         }
 
+        private string ReregisterCacheKey
+        {
+            get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.ReregisterCacheKey); }
+        }
+
         public ManageRegistrationController(
             IRegistrationLoader registrationLoader,
             ICacheService cacheService,
@@ -530,7 +535,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdraw}. Method: ReregisterProviderAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
 
             var registeredProviders = await GetAoRegisteredProviders();
             var viewModel = cacheModel?.ReregisterProvider == null ? new ReregisterProviderViewModel() : cacheModel.ReregisterProvider;
@@ -553,14 +558,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             model.SelectedProviderDisplayName = registeredProviderViewModel?.ProvidersSelectList?.FirstOrDefault(p => p.Value == model.SelectedProviderUkprn)?.Text;
 
-            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
 
             if (cacheModel?.ReregisterProvider != null)
                 cacheModel.ReregisterProvider = model;
             else
                 cacheModel = new ReregisterViewModel { ReregisterProvider = model };
 
-            await _cacheService.SetAsync(CacheKey, cacheModel);
+            await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
             return RedirectToRoute(RouteConstants.ReregisterProvider, new { profileId = model.ProfileId });
         }
 
