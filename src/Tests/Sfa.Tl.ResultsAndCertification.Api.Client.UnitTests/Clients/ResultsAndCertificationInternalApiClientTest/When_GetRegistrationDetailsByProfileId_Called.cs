@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -73,7 +74,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _result.DateofBirth.Should().Be(_mockHttpResult.DateofBirth);
             _result.ProviderName.Should().Be(_mockHttpResult.ProviderName);
             _result.PathwayName.Should().Be(_mockHttpResult.PathwayName);
-            // _result.SpecialismsDisplayName.Should().BeEquivalentTo(_mockHttpResult.SpecialismsDisplayName);  // TODO: Ravi
+
+            _result.Specialisms.Count().Should().Be(_mockHttpResult.Specialisms.Count());
+            _result.Specialisms.ToList().ForEach(x => { _mockHttpResult.Specialisms.Select(s => s.Code).Should().Contain(x.Code); } );
+            
             _result.AcademicYear.Should().Be(_mockHttpResult.AcademicYear);
             _result.Status.Should().Be(_mockHttpResult.Status);
         }

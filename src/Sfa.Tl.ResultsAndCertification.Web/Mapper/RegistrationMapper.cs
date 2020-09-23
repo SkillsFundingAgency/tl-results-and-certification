@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
                 .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"))
                 .ForMember(d => d.ProviderDisplayName, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"))
-                .ForMember(d => d.SpecialismsDisplayName, opts => opts.MapFrom(s => s.Specialisms.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.Code})" ) ));
+                .ForMember(d => d.SpecialismsDisplayName, opts => opts.MapFrom(s => s.Specialisms.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.Code})")));
 
             CreateMap<RegistrationDetails, ManageRegistration>()
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.PathwayLarId))
@@ -69,7 +69,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SelectedProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
                 .ForMember(d => d.IncludeSelectOneOption, opts => opts.MapFrom(s => false));
             CreateMap<RegistrationDetails, ChangeCoreViewModel>();
-            CreateMap<RegistrationDetails, ChangeCoreQuestionViewModel>();
+            CreateMap<RegistrationDetails, ChangeCoreQuestionViewModel>()
+                .ForMember(d => d.CoreDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"))
+                .ForMember(d => d.ProviderDisplayName, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"));
             CreateMap<RegistrationDetails, ChangeSpecialismQuestionViewModel>()
                 .ForMember(d => d.HasLearnerDecidedSpecialism, opts => opts.MapFrom(s => s.Specialisms.Count()));
             CreateMap<RegistrationDetails, ChangeSpecialismViewModel>()
@@ -99,8 +101,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.HasSpecialismsChanged, opts => opts.MapFrom(s => true))
                 .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(x => x.Code)))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeSpecialismViewModel, ManageRegistration>>());
-            CreateMap<RegistrationDetails, ChangeCoreQuestionViewModel>()
-                .ForMember(d => d.CoreDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"));
             
             CreateMap<WithdrawRegistrationViewModel, WithdrawRegistrationRequest>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))

@@ -20,8 +20,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 Firstname = "John",
                 Lastname = "Smith",
                 DateofBirth = DateTime.UtcNow,
-                ProviderName = "Test Provider (1234567)",
-                PathwayName = "Pathway (7654321)",
+                ProviderName = "Test Provider",
+                ProviderUkprn = 1234567,
+                PathwayName = "Pathway",
+                PathwayLarId = "7654321",
                 Specialisms = new List<SpecialismDetails> { new SpecialismDetails { Code = "2345678", Name = "Specialism1" }, new SpecialismDetails { Code = "55567", Name = "Specialism2" } },
                 AcademicYear = 2020,
                 Status = RegistrationPathwayStatus.Active
@@ -30,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
         }
 
-        [Fact(Skip = "Todo Ravi")]
+        [Fact]
         public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().NotBeNull();
@@ -39,9 +41,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             ActualResult.Uln.Should().Be(expectedApiResult.Uln);
             ActualResult.Name.Should().Be(string.Concat(expectedApiResult.Firstname, " ", expectedApiResult.Lastname));
             ActualResult.DateofBirth.Should().Be(expectedApiResult.DateofBirth);
-            ActualResult.ProviderDisplayName.Should().Be(expectedApiResult.ProviderName);
-            ActualResult.PathwayDisplayName.Should().Be(expectedApiResult.PathwayName);
-            //ActualResult.SpecialismsDisplayName.Should().BeEquivalentTo(expectedApiResult.SpecialismsDisplayName);  // TODO: ravi
+            ActualResult.ProviderDisplayName.Should().Be($"{expectedApiResult.ProviderName} ({expectedApiResult.ProviderUkprn})");
+            ActualResult.PathwayDisplayName.Should().Be($"{expectedApiResult.PathwayName} ({expectedApiResult.PathwayLarId})");
+
+            var expectedSpecialisms = expectedApiResult.Specialisms.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.Code})");
+            ActualResult.SpecialismsDisplayName.Count().Should().Be(expectedSpecialisms.Count());
+            ActualResult.SpecialismsDisplayName.ToList().ForEach(x => { expectedSpecialisms.Should().Contain(x); });
+
             ActualResult.AcademicYear.Should().Be(expectedApiResult.AcademicYear);
             ActualResult.Status.Should().Be(expectedApiResult.Status);
         }

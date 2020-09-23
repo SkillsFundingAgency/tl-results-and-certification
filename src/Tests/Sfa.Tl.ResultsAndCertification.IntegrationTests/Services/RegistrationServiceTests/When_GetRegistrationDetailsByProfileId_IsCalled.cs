@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             return Task.CompletedTask;
         }
 
-        [Theory(Skip = "TODO RAVI")]
+        [Theory()]
         [MemberData(nameof(Data))]
         public void Then_Returns_Expected_Results(long aoUkprn, int profileId, RegistrationDetails expectedResponse)
         {
@@ -60,7 +60,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             actualResult.DateofBirth.Should().Be(expectedResponse.DateofBirth);
             actualResult.ProviderName.Should().Be(expectedResponse.ProviderName);
             actualResult.PathwayName.Should().Be(expectedResponse.PathwayName);
-            // actualResult.SpecialismsDisplayName.Should().BeEquivalentTo(expectedResponse.SpecialismsDisplayName);  // TODO: Ravi
+
+            actualResult.Specialisms.Should().NotBeNullOrEmpty();
+            actualResult.Specialisms.Count().Should().Be(expectedResponse.Specialisms?.Count());
+
+            actualResult.Specialisms.ToList().ForEach(x => 
+            { 
+                expectedResponse.Specialisms?.Select(s => s.Code).Should().Contain(x.Code);
+                expectedResponse.Specialisms?.Select(s => s.Name).Should().Contain(x.Name);
+            });
+
             actualResult.AcademicYear.Should().Be(expectedResponse.AcademicYear);
             actualResult.Status.Should().Be(expectedResponse.Status);
         }
@@ -87,9 +96,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                             Firstname = profile.Firstname,
                             Lastname = profile.Lastname,
                             DateofBirth = profile.DateofBirth,
-                            ProviderName = $"{tlProvider.Name} ({tlProvider.UkPrn})",
-                            PathwayName = $"{tlPathway.Name} ({tlPathway.LarId})",
-                            //SpecialismsDisplayName = tlSpecialisms.OrderBy(s => s.Name).Select(s => $"{s.Name} ({s.LarId})"), // TODO: Ravi
+                            AoUkprn = 10011881,
+                            ProfileId = 1,
+                            PathwayLarId = tlPathway.LarId,
+                            ProviderUkprn = tlProvider.UkPrn,
+                            ProviderName = tlProvider.Name,
+                            PathwayName = tlPathway.Name,
+                            Specialisms = tlSpecialisms.Select(x => new SpecialismDetails { Name = x.Name , Code = x.LarId}),
                             AcademicYear = tqRegistrationPathway.AcademicYear,
                             Status = RegistrationPathwayStatus.Active
                         }

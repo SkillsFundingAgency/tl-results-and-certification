@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.GetRegistrationChangeCoreQuestionDetails
 {
     public class When_Called_With_Valid_Data : TestSetup
@@ -20,8 +19,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 Firstname = "John",
                 Lastname = "Smith",
                 DateofBirth = DateTime.UtcNow,
-                ProviderName = "Test Provider (1234567)",
-                PathwayName = "Pathway (7654321)",
+                ProviderName = "Test Provider",
+                ProviderUkprn = 1234567,
+                PathwayName = "Pathway",
+                PathwayLarId = "7654321",
                 Specialisms = new List<SpecialismDetails> { new SpecialismDetails { Code = "2345678", Name = "Specialism1" }, new SpecialismDetails { Code = "55567", Name = "Specialism2" } },
                 AcademicYear = 2020,
                 Status = RegistrationPathwayStatus.Active
@@ -30,12 +31,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
         }
 
-        [Fact(Skip = "TODO Ravi")]
+        [Fact]
         public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().NotBeNull();
             ActualResult.ProfileId.Should().Be(expectedApiResult.ProfileId);
-            ActualResult.ProviderDisplayName.Should().Be(expectedApiResult.ProviderName);
+            ActualResult.ProviderDisplayName.Should().Be($"{expectedApiResult.ProviderName} ({expectedApiResult.ProviderUkprn})");
         }
     }
 }
