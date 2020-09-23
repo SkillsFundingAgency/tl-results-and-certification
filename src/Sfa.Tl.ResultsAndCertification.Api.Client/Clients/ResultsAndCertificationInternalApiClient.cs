@@ -155,12 +155,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await DeleteAsync<bool>(requestUri);
         }
 
-        public async Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId)
-        {
-            var requestUri = string.Format(ApiConstants.GetRegistrationUri, aoUkprn, profileId);
-            return await GetAsync<ManageRegistration>(requestUri);
-        }
-
         public async Task<bool> UpdateRegistrationAsync(ManageRegistration model)
         {
             var requestUri = ApiConstants.UpdateRegistrationUri;

@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Xunit;
 
@@ -7,11 +8,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.GetRegistrationPro
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
-        private readonly ManageRegistration mockResult = null;
+        private readonly RegistrationDetails mockResult = null;
 
         public override void Given()
         {
-            InternalApiClient.GetRegistrationAsync(AoUkprn, ProfileId).Returns(mockResult);
+            InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockResult);
         }
 
         [Fact]

@@ -35,7 +35,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
 
         // Manage registrations
-        Task<ManageRegistration> GetRegistrationAsync(long aoUkprn, int profileId);
         Task<bool> UpdateRegistrationAsync(ManageRegistration model);
         Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model);
         Task<bool> ReJoinRegistrationAsync(ReJoinRegistrationRequest model);
