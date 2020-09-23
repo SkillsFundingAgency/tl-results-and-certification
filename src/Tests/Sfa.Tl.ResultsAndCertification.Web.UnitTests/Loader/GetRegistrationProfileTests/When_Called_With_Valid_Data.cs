@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Xunit;
 
@@ -7,19 +8,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.GetRegistrationPro
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        private ManageRegistration mockResult;
+        private RegistrationDetails mockResult;
 
         public override void Given()
         {
-            mockResult = new ManageRegistration
+            mockResult = new RegistrationDetails
             {
                 ProfileId = 1, 
-                FirstName = "John",
-                LastName  = "Smith",
-                PerformedBy = "updatedUser"
+                Firstname = "John",
+                Lastname  = "Smith",
             };
 
-            InternalApiClient.GetRegistrationAsync(AoUkprn, ProfileId).Returns(mockResult);
+            InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockResult);
         }
 
         [Fact]
@@ -28,8 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.GetRegistrationPro
             ActualResult.Should().NotBeNull();
 
             ActualResult.ProfileId.Should().Be(mockResult.ProfileId);
-            ActualResult.Firstname.Should().Be(mockResult.FirstName);
-            ActualResult.Lastname.Should().Be(mockResult.LastName);
+            ActualResult.Firstname.Should().Be(mockResult.Firstname);
+            ActualResult.Lastname.Should().Be(mockResult.Lastname);
         }
     }
 }

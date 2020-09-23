@@ -6,6 +6,11 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
     public class RegistrationDetails
     {
+        public RegistrationDetails()
+        {
+            Specialisms = new List<SpecialismDetails>();
+        }
+
         public long Uln { get; set; }
         public long AoUkprn { get; set; }
         public int ProfileId { get; set; }

@@ -121,9 +121,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.DeleteRegistrationAsync(aoUkprn, profileId);
         }
 
-        public async Task<T> GetRegistrationProfileAsync<T>(long aoUkprn, int profileId)
+        public async Task<T> GetRegistrationProfileAsync<T>(long aoUkprn, int profileId, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active)
         {
-            var response = await _internalApiClient.GetRegistrationAsync(aoUkprn, profileId);
+            var response = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, profileId, status);
             return _mapper.Map<T>(response);
         }
 
