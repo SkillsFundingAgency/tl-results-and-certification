@@ -1,16 +1,19 @@
-﻿using FluentAssertions;
+﻿using AutoMapper.Internal;
+using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessSpecialismChange
 {
     public class When_Specialism_Changed : TestSetup
     {
-        ManageRegistration mockResponse = null;
+        RegistrationDetails mockRegDetails = null;
 
         public override void Given()
         {
@@ -31,26 +34,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 }
             };
 
-            mockResponse = new ManageRegistration
+            mockRegDetails = new RegistrationDetails
             {
                 Uln = uln,
                 ProfileId = profileId,
-                SpecialismCodes = new List<string> { "111", "222" },
-                PerformedBy = "Test user"
+                Specialisms = ViewModel.PathwaySpecialisms.Specialisms
+                .Select(x => new SpecialismDetails { Code = "different" }),
             };
 
-            InternalApiClient.GetRegistrationAsync(AoUkprn, ViewModel.ProfileId)
-                .Returns(mockResponse);
+            InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active)
+                .Returns(mockRegDetails);
 
-            InternalApiClient.UpdateRegistrationAsync(mockResponse)
+            InternalApiClient.UpdateRegistrationAsync(Arg.Is<ManageRegistration>
+                (x => x.Uln == mockRegDetails.Uln &&
+                x.ProfileId == mockRegDetails.ProfileId &&
+                x.SpecialismCodes.All(s => ViewModel.PathwaySpecialisms.Specialisms
+                    .Select(c => c.Code).Contains(s))))
                 .Returns(true);
         }
 
         [Fact]
         public void Then_Called_ExpectedMethods()
         {
-            InternalApiClient.Received().GetRegistrationAsync(AoUkprn, ViewModel.ProfileId);
-            InternalApiClient.Received().UpdateRegistrationAsync(mockResponse);
+            InternalApiClient.Received().GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId);
+            InternalApiClient.Received().UpdateRegistrationAsync(Arg.Any<ManageRegistration>());
         }
 
         [Fact]
@@ -60,8 +67,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             ActualResult.IsModified.Should().BeTrue();
             ActualResult.IsSuccess.Should().BeTrue();
 
-            ActualResult.Uln.Should().Be(mockResponse.Uln);
-            ActualResult.ProfileId.Should().Be(mockResponse.ProfileId);
+            ActualResult.Uln.Should().Be(mockRegDetails.Uln);
+            ActualResult.ProfileId.Should().Be(mockRegDetails.ProfileId);
         }
     }
 }

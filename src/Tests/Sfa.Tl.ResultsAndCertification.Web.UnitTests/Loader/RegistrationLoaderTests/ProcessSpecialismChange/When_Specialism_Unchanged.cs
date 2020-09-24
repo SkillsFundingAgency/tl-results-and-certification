@@ -1,16 +1,18 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ProcessSpecialismChange
 {
     public class When_Specialism_Unchanged : TestSetup
     {
-        ManageRegistration mockResponse = null;
+        RegistrationDetails mockRegDetails = null;
 
         public override void Given()
         {
@@ -31,25 +33,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 }
             };
 
-            mockResponse = new ManageRegistration
+            mockRegDetails = new RegistrationDetails
             {
                 Uln = uln,
                 ProfileId = profileId,
-                SpecialismCodes = new List<string> { "111", "222" },
-                PerformedBy = "Test user"
+                Specialisms = ViewModel.PathwaySpecialisms.Specialisms
+                .Select(x => new SpecialismDetails { Code = x.Code }),
             };
 
-            InternalApiClient.GetRegistrationAsync(AoUkprn, ViewModel.ProfileId)
-                .Returns(mockResponse);
+            InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active)
+                .Returns(mockRegDetails);
 
-            InternalApiClient.UpdateRegistrationAsync(mockResponse)
+            InternalApiClient.UpdateRegistrationAsync(Arg.Any<ManageRegistration>())
                 .Returns(true);
         }
 
         [Fact]
         public void Then_Called_GetRegistrationAsync()
         {
-            InternalApiClient.Received().GetRegistrationAsync(AoUkprn, ViewModel.ProfileId);
+            InternalApiClient.Received().GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active);
             InternalApiClient.DidNotReceive().UpdateRegistrationAsync(Arg.Any<ManageRegistration>());
         }
 

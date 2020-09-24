@@ -7,20 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Loader\RegistrationLoaderTests\ProcessDateofBirthChange\**" />
-    <Compile Remove="Loader\RegistrationLoaderTests\ProcessProfileNameChange\**" />
     <Compile Remove="Loader\RegistrationLoaderTests\ProcessProviderChanges\**" />
-    <Compile Remove="Loader\RegistrationLoaderTests\ProcessSpecialismChange\**" />
     <Compile Remove="Loader\RegistrationLoaderTests\ProcessSpecialismQuestionChange\**" />
-    <EmbeddedResource Remove="Loader\RegistrationLoaderTests\ProcessDateofBirthChange\**" />
-    <EmbeddedResource Remove="Loader\RegistrationLoaderTests\ProcessProfileNameChange\**" />
     <EmbeddedResource Remove="Loader\RegistrationLoaderTests\ProcessProviderChanges\**" />
-    <EmbeddedResource Remove="Loader\RegistrationLoaderTests\ProcessSpecialismChange\**" />
     <EmbeddedResource Remove="Loader\RegistrationLoaderTests\ProcessSpecialismQuestionChange\**" />
-    <None Remove="Loader\RegistrationLoaderTests\ProcessDateofBirthChange\**" />
-    <None Remove="Loader\RegistrationLoaderTests\ProcessProfileNameChange\**" />
     <None Remove="Loader\RegistrationLoaderTests\ProcessProviderChanges\**" />
-    <None Remove="Loader\RegistrationLoaderTests\ProcessSpecialismChange\**" />
     <None Remove="Loader\RegistrationLoaderTests\ProcessSpecialismQuestionChange\**" />
   </ItemGroup>
 
