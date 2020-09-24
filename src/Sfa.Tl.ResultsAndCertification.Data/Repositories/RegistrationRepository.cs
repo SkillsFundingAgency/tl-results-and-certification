@@ -67,9 +67,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             if (regPathway == null) return null;
 
-            Func<TqRegistrationSpecialism, bool> predicate = e => e.Status == RegistrationSpecialismStatus.Active;
+            Func<TqRegistrationSpecialism, bool> predicate = e => e.Status == RegistrationSpecialismStatus.Active && e.EndDate == null;
             if (regPathway.Status == RegistrationPathwayStatus.Withdrawn)
-                predicate = e => e.Status == RegistrationSpecialismStatus.InActive;
+                predicate = e => e.Status == RegistrationSpecialismStatus.Active && e.EndDate != null;
             
             regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(predicate).ToList();
             return regPathway;
