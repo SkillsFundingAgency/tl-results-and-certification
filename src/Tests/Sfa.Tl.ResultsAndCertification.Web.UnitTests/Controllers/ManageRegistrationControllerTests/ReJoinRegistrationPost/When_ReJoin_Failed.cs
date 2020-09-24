@@ -5,20 +5,20 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReJoinRegistrationPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.RejoinRegistrationPost
 {
-    public class When_ReJoin_Failed : TestSetup
+    public class When_Rejoin_Failed : TestSetup
     {
-        private ReJoinRegistrationResponse mockResponse = null;
+        private RejoinRegistrationResponse mockResponse = null;
 
         public override void Given()
         {
-            ViewModel.CanReJoin = true;
-            mockResponse = new ReJoinRegistrationResponse
+            ViewModel.CanRejoin = true;
+            mockResponse = new RejoinRegistrationResponse
             {
                 IsSuccess = false
             };
-            RegistrationLoader.ReJoinRegistrationAsync(AoUkprn, ViewModel).Returns(mockResponse);
+            RegistrationLoader.RejoinRegistrationAsync(AoUkprn, ViewModel).Returns(mockResponse);
         }
 
         [Fact]

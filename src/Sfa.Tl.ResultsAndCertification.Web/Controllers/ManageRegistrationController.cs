@@ -462,7 +462,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (model.ChangeStatus == RegistrationChangeStatus.Rejoin)
             {
-                return RedirectToRoute(RouteConstants.ReJoinRegistration, new { profileId = model.ProfileId });
+                return RedirectToRoute(RouteConstants.RejoinRegistration, new { profileId = model.ProfileId });
             }
             else if (model.ChangeStatus == RegistrationChangeStatus.Reregister)
             {
@@ -473,52 +473,52 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reactivate-registration-same-course/{profileId}", Name = RouteConstants.ReJoinRegistration)]
-        public async Task<IActionResult> ReJoinRegistrationAsync(int profileId)
+        [Route("reactivate-registration-same-course/{profileId}", Name = RouteConstants.RejoinRegistration)]
+        public async Task<IActionResult> RejoinRegistrationAsync(int profileId)
         {
             var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: ReJoinRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: RejoinRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var viewModel = new ReJoinRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln };
+            var viewModel = new RejoinRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln };
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("reactivate-registration-same-course", Name = RouteConstants.SubmitReJoinRegistration)]
-        public async Task<IActionResult> ReJoinRegistrationAsync(ReJoinRegistrationViewModel model)
+        [Route("reactivate-registration-same-course", Name = RouteConstants.SubmitRejoinRegistration)]
+        public async Task<IActionResult> RejoinRegistrationAsync(RejoinRegistrationViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            if (!model.CanReJoin.Value)
+            if (!model.CanRejoin.Value)
             {
                 return RedirectToRoute(model.BackLink.RouteName, model.BackLink.RouteAttributes);
             }
             else
             {
-                var response = await _registrationLoader.ReJoinRegistrationAsync(User.GetUkPrn(), model);
+                var response = await _registrationLoader.RejoinRegistrationAsync(User.GetUkPrn(), model);
 
                 if (!response.IsSuccess)
                     return RedirectToRoute(RouteConstants.ProblemWithService);
 
-                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ReJoinRegistrationConfirmationViewModel), response, CacheExpiryTime.XSmall);
-                return RedirectToRoute(RouteConstants.ReJoinRegistrationConfirmation);
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RejoinRegistrationConfirmationViewModel), response, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.RejoinRegistrationConfirmation);
             }
         }
 
         [HttpGet]
-        [Route("registration-reactivated-confirmation", Name = RouteConstants.ReJoinRegistrationConfirmation)]
-        public async Task<IActionResult> ReJoinConfirmationAsync()
+        [Route("registration-reactivated-confirmation", Name = RouteConstants.RejoinRegistrationConfirmation)]
+        public async Task<IActionResult> RejoinConfirmationAsync()
         {
-            var viewModel = await _cacheService.GetAndRemoveAsync<ReJoinRegistrationResponse>(string.Concat(CacheKey, Constants.ReJoinRegistrationConfirmationViewModel));
+            var viewModel = await _cacheService.GetAndRemoveAsync<RejoinRegistrationResponse>(string.Concat(CacheKey, Constants.RejoinRegistrationConfirmationViewModel));
 
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ReJoinRegistrationConfirmationViewModel from redis cache in ReJoin registration confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read RejoinRegistrationConfirmationViewModel from redis cache in Rejoin registration confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);

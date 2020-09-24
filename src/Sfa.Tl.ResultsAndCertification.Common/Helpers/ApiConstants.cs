@@ -29,7 +29,7 @@
         public const string DeleteRegistrationUri = "/api/registration/DeleteRegistration/{0}/{1}";
         public const string UpdateRegistrationUri = "/api/registration/UpdateRegistration";
         public const string WithdrawRegistrationUri = "/api/registration/WithdrawRegistration";
-        public const string ReJoinRegistrationUri = "/api/registration/ReJoinRegistration";
+        public const string RejoinRegistrationUri = "/api/registration/RejoinRegistration";
 
         // DocumentUploadHistory Related Uri's
         public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";

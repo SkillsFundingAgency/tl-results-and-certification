@@ -4,13 +4,13 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReJoinConfirmationGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.RejoinConfirmationGet
 {
     public class When_Cache_Found : TestSetup
     {
         public override void Given()
         {
-            CacheService.GetAndRemoveAsync<ReJoinRegistrationResponse>(CacheKey).Returns(MockResult);
+            CacheService.GetAndRemoveAsync<RejoinRegistrationResponse>(CacheKey).Returns(MockResult);
         }
 
         [Fact]
@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             var viewResult = Result as ViewResult;
             viewResult.Should().NotBeNull();
 
-            var actualModel = viewResult.Model as ReJoinRegistrationResponse;
+            var actualModel = viewResult.Model as RejoinRegistrationResponse;
             actualModel.Uln.Should().Be(MockResult.Uln);
             actualModel.ProfileId.Should().Be(MockResult.ProfileId);
         }

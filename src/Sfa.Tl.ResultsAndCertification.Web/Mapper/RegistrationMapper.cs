@@ -107,10 +107,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<WithdrawRegistrationViewModel, WithdrawRegistrationRequest>>());
 
-            CreateMap<ReJoinRegistrationViewModel, ReJoinRegistrationRequest>()
+            CreateMap<RejoinRegistrationViewModel, RejoinRegistrationRequest>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
-                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ReJoinRegistrationViewModel, ReJoinRegistrationRequest>>());
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<RejoinRegistrationViewModel, RejoinRegistrationRequest>>());
         }
     }
 }

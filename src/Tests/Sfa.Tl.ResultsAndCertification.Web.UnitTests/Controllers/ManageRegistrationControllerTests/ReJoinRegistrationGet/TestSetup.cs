@@ -11,7 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReJoinRegistrationGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.RejoinRegistrationGet
 {
     public abstract class TestSetup : BaseTest<ManageRegistrationController>
     {
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public async override Task When()
         {
-            Result = await Controller.ReJoinRegistrationAsync(ProfileId);
+            Result = await Controller.RejoinRegistrationAsync(ProfileId);
         }
     }
 }

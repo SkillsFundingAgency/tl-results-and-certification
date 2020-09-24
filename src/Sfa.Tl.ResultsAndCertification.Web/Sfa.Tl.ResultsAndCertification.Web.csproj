@@ -211,15 +211,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>RegistrationDetails.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\Registration\ReJoinConfirmation.Designer.cs">
+    <Compile Update="Content\Registration\RejoinConfirmation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ReJoinConfirmation.resx</DependentUpon>
+      <DependentUpon>RejoinConfirmation.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\Registration\ReJoinRegistration.Designer.cs">
+    <Compile Update="Content\Registration\RejoinRegistration.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ReJoinRegistration.resx</DependentUpon>
+      <DependentUpon>RejoinRegistration.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Registration\SearchRegistration.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -496,13 +496,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RegistrationDetails.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\Registration\ReJoinConfirmation.resx">
+    <EmbeddedResource Update="Content\Registration\RejoinConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ReJoinConfirmation.Designer.cs</LastGenOutput>
+      <LastGenOutput>RejoinConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\Registration\ReJoinRegistration.resx">
+    <EmbeddedResource Update="Content\Registration\RejoinRegistration.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ReJoinRegistration.Designer.cs</LastGenOutput>
+      <LastGenOutput>RejoinRegistration.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\SearchRegistration.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

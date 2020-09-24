@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ReJoinRegistration {
+    public class RejoinRegistration {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ReJoinRegistration() {
+        internal RejoinRegistration() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.ReJoinRegistration", typeof(ReJoinRegistration).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.RejoinRegistration", typeof(RejoinRegistration).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -81,27 +81,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         /// <summary>
         ///   Looks up a localized string similar to No, do not reactivate registration.
         /// </summary>
-        public static string Section_No_ReJoin_Registration_Text {
+        public static string Section_No_Rejoin_Registration_Text {
             get {
-                return ResourceManager.GetString("Section_No_ReJoin_Registration_Text", resourceCulture);
+                return ResourceManager.GetString("Section_No_Rejoin_Registration_Text", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Yes, reactivate registration.
         /// </summary>
-        public static string Section_Yes_ReJoin_Registration_Text {
+        public static string Section_Yes_Rejoin_Registration_Text {
             get {
-                return ResourceManager.GetString("Section_Yes_ReJoin_Registration_Text", resourceCulture);
+                return ResourceManager.GetString("Section_Yes_Rejoin_Registration_Text", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Select yes if you want to reactivate registration.
         /// </summary>
-        public static string Select_ReJoin_Validation_Message {
+        public static string Select_Rejoin_Validation_Message {
             get {
-                return ResourceManager.GetString("Select_ReJoin_Validation_Message", resourceCulture);
+                return ResourceManager.GetString("Select_Rejoin_Validation_Message", resourceCulture);
             }
         }
         

@@ -5,14 +5,14 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReJoinConfirmationGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.RejoinConfirmationGet
 {
     public class When_NoCache_Found : TestSetup
     {
         public override void Given()
         {
             MockResult = null;
-            CacheService.GetAndRemoveAsync<ReJoinRegistrationResponse>(CacheKey).Returns(MockResult);
+            CacheService.GetAndRemoveAsync<RejoinRegistrationResponse>(CacheKey).Returns(MockResult);
         }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         [Fact]
         public void Then_CacheService_Called()
         {
-            CacheService.Received(1).GetAndRemoveAsync<ReJoinRegistrationResponse>(CacheKey);
+            CacheService.Received(1).GetAndRemoveAsync<RejoinRegistrationResponse>(CacheKey);
         }
     }
 }

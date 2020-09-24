@@ -1,6 +1,6 @@
 ﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
-    public class ReJoinRegistrationRequest
+    public class RejoinRegistrationRequest
     {
         public int ProfileId { get; set; }
 

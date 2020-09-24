@@ -2,16 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
-using ReJoinRegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration.ReJoinRegistration;
+using RejoinRegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration.RejoinRegistration;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReJoinRegistrationPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.RejoinRegistrationPost
 {
     public class When_ModelState_Invalid : TestSetup
     {
         public override void Given()
         {
-            ViewModel = new ReJoinRegistrationViewModel();
-            Controller.ModelState.AddModelError(nameof(ReJoinRegistrationViewModel.CanReJoin), ReJoinRegistrationContent.Select_ReJoin_Validation_Message);
+            ViewModel = new RejoinRegistrationViewModel();
+            Controller.ModelState.AddModelError(nameof(RejoinRegistrationViewModel.CanRejoin), RejoinRegistrationContent.Select_Rejoin_Validation_Message);
         }
 
         [Fact]
@@ -20,13 +20,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             Result.Should().BeOfType(typeof(ViewResult));
 
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(ReJoinRegistrationViewModel));
+            viewResult.Model.Should().BeOfType(typeof(RejoinRegistrationViewModel));
 
             Controller.ViewData.ModelState.Should().ContainSingle();
-            Controller.ViewData.ModelState.ContainsKey(nameof(ReJoinRegistrationViewModel.CanReJoin)).Should().BeTrue();
+            Controller.ViewData.ModelState.ContainsKey(nameof(RejoinRegistrationViewModel.CanRejoin)).Should().BeTrue();
 
-            var modelState = Controller.ViewData.ModelState[nameof(ReJoinRegistrationViewModel.CanReJoin)];
-            modelState.Errors[0].ErrorMessage.Should().Be(ReJoinRegistrationContent.Select_ReJoin_Validation_Message);
+            var modelState = Controller.ViewData.ModelState[nameof(RejoinRegistrationViewModel.CanRejoin)];
+            modelState.Errors[0].ErrorMessage.Should().Be(RejoinRegistrationContent.Select_Rejoin_Validation_Message);
         }
     }
 }

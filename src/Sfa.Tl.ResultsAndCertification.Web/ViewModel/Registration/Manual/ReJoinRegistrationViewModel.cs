@@ -7,14 +7,14 @@ using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
-    public class ReJoinRegistrationViewModel
+    public class RejoinRegistrationViewModel
     {
         public int ProfileId { get; set; }
 
         public long Uln { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.ReJoinRegistration), ErrorMessageResourceName = "Select_ReJoin_Validation_Message")]
-        public bool? CanReJoin { get; set; }
+        [Required(ErrorMessageResourceType = typeof(ErrorResource.RejoinRegistration), ErrorMessageResourceName = "Select_Rejoin_Validation_Message")]
+        public bool? CanRejoin { get; set; }
 
         public BackLinkModel BackLink => new BackLinkModel { RouteName = RouteConstants.AmendWithdrawRegistration, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.ChangeStatusId, ((int)RegistrationChangeStatus.Rejoin).ToString() } } };
     }

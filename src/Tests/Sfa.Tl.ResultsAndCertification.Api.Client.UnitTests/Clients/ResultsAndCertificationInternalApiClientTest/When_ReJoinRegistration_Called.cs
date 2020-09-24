@@ -14,14 +14,14 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_ReJoinRegistration_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_RejoinRegistration_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         private bool _result;
         protected bool _mockHttpResult;
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
         private ResultsAndCertificationInternalApiClient _apiClient;
-        private ReJoinRegistrationRequest _model;
+        private RejoinRegistrationRequest _model;
 
         public override void Setup()
         {
@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             };
 
             _mockHttpResult = true;
-            _model = new ReJoinRegistrationRequest
+            _model = new RejoinRegistrationRequest
             {
                 ProfileId = 1,
                 AoUkprn = 1234567890,
@@ -43,13 +43,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.ReJoinRegistrationUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<bool>(_mockHttpResult, ApiConstants.RejoinRegistrationUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public async override Task When()
         {
-            _result = await _apiClient.ReJoinRegistrationAsync(_model);
+            _result = await _apiClient.RejoinRegistrationAsync(_model);
         }
 
         [Fact]

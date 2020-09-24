@@ -1,21 +1,21 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ReJoinRegistrationResponse
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.RejoinRegistrationResponse
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
 
 @{
-    ViewData["Title"] = @ReJoinConfirmation.Page_Title;
+    ViewData["Title"] = @RejoinConfirmation.Page_Title;
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <div class="govuk-panel govuk-panel--confirmation">
-            <h1 class="govuk-panel__title">@ReJoinConfirmation.Heading_Successful</h1>
+            <h1 class="govuk-panel__title">@RejoinConfirmation.Heading_Successful</h1>
             <div class="govuk-panel__body">
-                @ReJoinConfirmation.Caption_Text_Uln @Model.Uln
+                @RejoinConfirmation.Caption_Text_Uln @Model.Uln
             </div>
         </div>
         <p class="govuk-!-margin-top-8">
-            <a id="viewRegButton" class="govuk-button" role="button" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">@ReJoinConfirmation.View_This_Registration_Button_Text</a>
+            <a id="viewRegButton" class="govuk-button" role="button" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">@RejoinConfirmation.View_This_Registration_Button_Text</a>
         </p>
-        <p><a id="dashboardButton" class="govuk-button govuk-button--secondary" role="button" asp-route="Home">@ReJoinConfirmation.Home_Button_Text</a></p>
+        <p><a id="dashboardButton" class="govuk-button govuk-button--secondary" role="button" asp-route="Home">@RejoinConfirmation.Home_Button_Text</a></p>
     </div>
 </div>

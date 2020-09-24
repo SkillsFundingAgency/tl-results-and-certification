@@ -433,13 +433,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqRegistrationRepository.UpdateWithSpecifedCollectionsOnlyAsync(registration.TqRegistrationProfile, u => u.TqRegistrationPathways) > 0;
         }
 
-        public async Task<bool> ReJoinRegistrationAsync(ReJoinRegistrationRequest model)
+        public async Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model)
         {
             var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, RegistrationPathwayStatus.Withdrawn);
 
             if (tqRegistrationPathway == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: ReJoinRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: RejoinRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
                 return false;
             }
 

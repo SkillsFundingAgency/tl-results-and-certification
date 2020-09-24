@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<bool> UpdateRegistrationAsync(ManageRegistration model);
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
         Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model);
-        Task<bool> ReJoinRegistrationAsync(ReJoinRegistrationRequest model);
+        Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model);
 
         IList<TqRegistrationProfile> TransformRegistrationModel(IList<RegistrationRecordResponse> registrationsData, string performedBy);
         Task<RegistrationProcessResponse> CompareAndProcessRegistrationsAsync(IList<TqRegistrationProfile> registrations);

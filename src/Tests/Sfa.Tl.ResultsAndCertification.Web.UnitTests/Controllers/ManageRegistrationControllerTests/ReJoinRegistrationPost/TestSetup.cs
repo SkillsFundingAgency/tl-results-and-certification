@@ -13,7 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReJoinRegistrationPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.RejoinRegistrationPost
 {
     public abstract class TestSetup : BaseTest<ManageRegistrationController>
     {
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         protected ICacheService CacheService;
         protected ILogger<ManageRegistrationController> Logger;
         protected ManageRegistrationController Controller;
-        protected ReJoinRegistrationViewModel ViewModel;
+        protected RejoinRegistrationViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; private set; }
 
@@ -46,12 +46,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
-            ViewModel = new ReJoinRegistrationViewModel();
+            ViewModel = new RejoinRegistrationViewModel();
         }
 
         public async override Task When()
         {
-            Result = await Controller.ReJoinRegistrationAsync(ViewModel);
+            Result = await Controller.RejoinRegistrationAsync(ViewModel);
         }
     }
 }
