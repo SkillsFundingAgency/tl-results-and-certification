@@ -61,14 +61,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId &&
                        p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
                        (
-                           (status == null && (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdraw)) ||
+                           (status == null && (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn)) ||
                            (status != null && p.Status == status)
                        ));
 
             if (regPathway == null) return null;
 
             Func<TqRegistrationSpecialism, bool> predicate = e => e.Status == RegistrationSpecialismStatus.Active;
-            if (regPathway.Status == RegistrationPathwayStatus.Withdraw)
+            if (regPathway.Status == RegistrationPathwayStatus.Withdrawn)
                 predicate = e => e.Status == RegistrationSpecialismStatus.InActive;
             
             regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(predicate).ToList();
@@ -227,7 +227,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (status == RegistrationPathwayStatus.Active)
                 return e => e.Status == RegistrationSpecialismStatus.Active;
 
-            if (status == RegistrationPathwayStatus.Withdraw)
+            if (status == RegistrationPathwayStatus.Withdrawn)
                 return e => e.Status == RegistrationSpecialismStatus.InActive;
 
             return e => e.Status == RegistrationSpecialismStatus.Active || e.Status == RegistrationSpecialismStatus.InActive;

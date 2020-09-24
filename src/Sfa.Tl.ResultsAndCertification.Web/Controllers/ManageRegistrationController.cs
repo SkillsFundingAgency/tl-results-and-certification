@@ -442,10 +442,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("amend-withdrawn-registration/{profileId}/{changeStatusId:int?}", Name = RouteConstants.AmendWithdrawRegistration)]
         public async Task<IActionResult> AmendWithdrawRegistrationAsync(int profileId, int? changeStatusId)
         {
-            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdraw);
-            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdraw)
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdraw}. Method: AmendWithdrawRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: AmendWithdrawRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             var viewModel = new AmendWithdrawRegistrationViewModel { ProfileId = registrationDetails.ProfileId, ChangeStatusId = changeStatusId };
@@ -476,10 +476,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("reactivate-registration-same-course/{profileId}", Name = RouteConstants.ReJoinRegistration)]
         public async Task<IActionResult> ReJoinRegistrationAsync(int profileId)
         {
-            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdraw);
-            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdraw)
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdraw}. Method: ReJoinRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: ReJoinRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
@@ -529,10 +529,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("register-learner-new-course-select-provider/{profileId}", Name = RouteConstants.ReregisterProvider)]
         public async Task<IActionResult> ReregisterProviderAsync(int profileId)
         {
-            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdraw);
-            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdraw)
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdraw}. Method: ReregisterProviderAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: ReregisterProviderAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);

@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
     public class When_Called_With_ChangeStatus_ReJoin : TestSetup
     {
         private RegistrationDetailsViewModel mockresult = null;
-        private RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Withdraw;
+        private RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Withdrawn;
 
         public override void Given()
         {

@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                 ProfileId = 1,
                 Status = _registrationPathwayStatus
             };
-            RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdraw).Returns(mockresult);
+            RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(mockresult);
         }
 
         [Fact]

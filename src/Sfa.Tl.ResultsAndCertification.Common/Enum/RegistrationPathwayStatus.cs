@@ -5,6 +5,6 @@
         Active = 1,
         InActive = 2,
         Transferred = 3,
-        Withdraw = 4
+        Withdrawn = 4
     }
 }
