@@ -451,7 +451,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 StartDate = DateTime.UtcNow,
                 Status = RegistrationPathwayStatus.Active,
                 IsBulkUpload = false,
-                TqRegistrationSpecialisms = MapSpecialisms(tqRegistrationPathway.TqRegistrationSpecialisms.Select(s => new KeyValuePair<int, string>(s.TlSpecialism.Id, s.TlSpecialism.LarId)), model.PerformedBy, 0, false),
+                TqRegistrationSpecialisms = MapSpecialisms(tqRegistrationPathway.TqRegistrationSpecialisms.Select(s => new KeyValuePair<int, string>(s.TlSpecialismId, null)), model.PerformedBy, 0, false),
                 CreatedBy = model.PerformedBy,
                 CreatedOn = DateTime.UtcNow
             };
