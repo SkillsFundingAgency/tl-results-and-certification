@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
@@ -10,23 +11,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 {
     public class When_ProviderChange_Success : TestSetup
     {
-        private ManageRegistration registrationApiClientResponse;
+        private RegistrationDetails registrationApiClientResponse;
         private long _providerUkprn;
 
         public override void Given()
         {
             _providerUkprn = 12345678;
 
-            registrationApiClientResponse = new ManageRegistration
+            registrationApiClientResponse = new RegistrationDetails
             {
                 ProfileId = 1,
                 Uln = Uln,
-                FirstName = "Test",
-                LastName = "Last",
+                Firstname = "Test",
+                Lastname = "Last",
                 AoUkprn = AoUkprn,
                 ProviderUkprn = 34567890,
-                CoreCode = "10000112",
-                PerformedBy = "updatedUser"
+                PathwayLarId = "10000112",
             };
 
             var mockProviderPathwayDetailsApiClientResponse = new List<PathwayDetails>
@@ -48,37 +48,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             ViewModel = new ChangeProviderViewModel { ProfileId = 1, SelectedProviderUkprn = _providerUkprn.ToString() };
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
 
-            InternalApiClient.GetRegistrationAsync(AoUkprn, ViewModel.ProfileId).Returns(registrationApiClientResponse);
+            InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active)
+                .Returns(registrationApiClientResponse);
             InternalApiClient.GetRegisteredProviderPathwayDetailsAsync(AoUkprn, _providerUkprn).Returns(mockProviderPathwayDetailsApiClientResponse);
-            InternalApiClient.UpdateRegistrationAsync(Arg.Any<ManageRegistration>()).Returns(ApiClientResponse);
+
+            InternalApiClient.UpdateRegistrationAsync(Arg.Is<ManageRegistration>
+                (x => x.Uln == registrationApiClientResponse.Uln && 
+                x.FirstName == registrationApiClientResponse.Firstname && 
+                x.LastName == registrationApiClientResponse.Lastname && 
+                x.ProviderUkprn == _providerUkprn &&
+                x.AoUkprn == registrationApiClientResponse.AoUkprn))
+                .Returns(ApiClientResponse);
         }
 
         [Fact]
         public void Then_Recieved_Call_To_GetRegistrations()
         {
-            InternalApiClient.Received(1).GetRegistrationAsync(AoUkprn, ViewModel.ProfileId);
+            InternalApiClient.Received(1).GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active);
         }
 
         [Fact]
         public void Then_Recieved_Call_To_GetProviderPathwayDetails()
         {
             InternalApiClient.Received(1).GetRegisteredProviderPathwayDetailsAsync(AoUkprn, _providerUkprn);
-        }
-
-        [Fact]
-        public void Then_Mapper_Has_Expected_Results()
-        {
-            var result = Mapper.Map(ViewModel, registrationApiClientResponse);
-
-            result.Should().NotBeNull();
-
-            result.AoUkprn.Should().Be(AoUkprn);
-            result.Uln.Should().Be(registrationApiClientResponse.Uln);
-            result.FirstName.Should().Be(registrationApiClientResponse.FirstName);
-            result.LastName.Should().Be(registrationApiClientResponse.LastName);
-            result.ProviderUkprn.Should().Be(registrationApiClientResponse.ProviderUkprn);
-            result.CoreCode.Should().Be(registrationApiClientResponse.CoreCode);
-            result.PerformedBy.Should().Be(registrationApiClientResponse.PerformedBy);
         }
 
         [Fact]

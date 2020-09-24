@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
@@ -10,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 {
     public class When_ProviderChange_Failed : TestSetup
     {
-        private ManageRegistration mockApiClientResponse;
+        private RegistrationDetails mockApiClientResponse;
         private long _providerUkprn;
 
         public override void Given()
@@ -18,13 +19,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             _providerUkprn = 12345678;
             ApiClientResponse = false;
 
-            mockApiClientResponse = new ManageRegistration
+            mockApiClientResponse = new RegistrationDetails
             {
                 ProfileId = 1,
                 Uln = Uln,
                 ProviderUkprn = 76543678,
-                CoreCode = "10000111",
-                PerformedBy = "updatedUser"
+                PathwayLarId = "10000111",
             };
 
             var mockProviderPathwayDetailsApiClientResponse = new List<PathwayDetails>
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             ViewModel = new ChangeProviderViewModel { ProfileId = 1, SelectedProviderUkprn = _providerUkprn.ToString(), };
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
 
-            InternalApiClient.GetRegistrationAsync(AoUkprn, ViewModel.ProfileId).Returns(mockApiClientResponse);
+            InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active).Returns(mockApiClientResponse);
             InternalApiClient.GetRegisteredProviderPathwayDetailsAsync(AoUkprn, _providerUkprn).Returns(mockProviderPathwayDetailsApiClientResponse);
             InternalApiClient.UpdateRegistrationAsync(Arg.Any<ManageRegistration>()).Returns(ApiClientResponse);
         }
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         [Fact]
         public void Then_Recieved_Call_To_GetRegistrations()
         {
-            InternalApiClient.Received(1).GetRegistrationAsync(AoUkprn, ViewModel.ProfileId);
+            InternalApiClient.Received(1).GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active);
         }
 
         [Fact]

@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
@@ -10,18 +11,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 {
     public class When_Provider_Core_NotSupported : TestSetup
     {
-        private ManageRegistration mockApiClientResponse;
+        private RegistrationDetails mockApiClientResponse;
         private long _providerUkprn;
         public override void Given()
         {
             _providerUkprn = 12345678;
             
-            mockApiClientResponse = new ManageRegistration
+            mockApiClientResponse = new RegistrationDetails
             {
                 ProfileId = 1,
                 ProviderUkprn = 3425678,
-                CoreCode = "20000113",
-                PerformedBy = "updatedUser"
+                PathwayLarId = "20000113",
             };
 
             var mockProviderPathwayDetailsApiClientResponse = new List<PathwayDetails>
@@ -43,14 +43,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             ViewModel = new ChangeProviderViewModel { ProfileId = 1, SelectedProviderUkprn = _providerUkprn.ToString() };
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
 
-            InternalApiClient.GetRegistrationAsync(AoUkprn, ViewModel.ProfileId).Returns(mockApiClientResponse);
+            InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active).Returns(mockApiClientResponse);
             InternalApiClient.GetRegisteredProviderPathwayDetailsAsync(AoUkprn, _providerUkprn).Returns(mockProviderPathwayDetailsApiClientResponse);
         }
 
         [Fact]
         public void Then_Recieved_Call_To_GetRegistrations()
         {
-            InternalApiClient.Received(1).GetRegistrationAsync(AoUkprn, ViewModel.ProfileId);
+            InternalApiClient.Received(1).GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active);
         }
 
         [Fact]

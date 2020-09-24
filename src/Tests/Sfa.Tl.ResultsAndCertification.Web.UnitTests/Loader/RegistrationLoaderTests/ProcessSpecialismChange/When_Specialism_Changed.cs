@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         [Fact]
         public void Then_Called_ExpectedMethods()
         {
-            InternalApiClient.Received().GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId);
+            InternalApiClient.Received().GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active);
             InternalApiClient.Received().UpdateRegistrationAsync(Arg.Any<ManageRegistration>());
         }
 
