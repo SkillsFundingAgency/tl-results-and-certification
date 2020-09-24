@@ -133,7 +133,7 @@
     <value>Change registration - Provider does not offer the same core page</value>
   </data>
   <data name="Registration_Details_Button_Text" xml:space="preserve">
-    <value>Back to registrations details</value>
+    <value>Back to registration details</value>
   </data>
   <data name="Should_Be_Setup_To_Offer_Text" xml:space="preserve">
     <value>should be set up to offer</value>

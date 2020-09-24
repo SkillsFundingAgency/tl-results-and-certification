@@ -107,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to registrations details.
+        ///   Looks up a localized string similar to Back to registration details.
         /// </summary>
         public static string Registration_Details_Button_Text {
             get {
