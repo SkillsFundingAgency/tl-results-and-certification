@@ -335,7 +335,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     Uln = x.UniqueLearnerNumber,
                     RegistrationProfileId = x.Id,
-                    IsActive = x.TqRegistrationPathways.Any(pw => (pw.Status == RegistrationPathwayStatus.Active || pw.Status == RegistrationPathwayStatus.Withdraw) && 
+                    IsActive = x.TqRegistrationPathways.Any(pw => (pw.Status == RegistrationPathwayStatus.Active || pw.Status == RegistrationPathwayStatus.Withdrawn) && 
                                                             pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn),
                     IsRegisteredWithOtherAo = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active &&
                                                             pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn)
@@ -428,14 +428,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
-            SetRegistrationPathwayAndSpecialismsByStatus(registration.TqRegistrationProfile, RegistrationPathwayStatus.Withdraw, model.PerformedBy);
+            SetRegistrationPathwayAndSpecialismsByStatus(registration.TqRegistrationProfile, RegistrationPathwayStatus.Withdrawn, model.PerformedBy);
 
             return await _tqRegistrationRepository.UpdateWithSpecifedCollectionsOnlyAsync(registration.TqRegistrationProfile, u => u.TqRegistrationPathways) > 0;
         }
 
         public async Task<bool> ReJoinRegistrationAsync(ReJoinRegistrationRequest model)
         {
-            var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, RegistrationPathwayStatus.Withdraw);
+            var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, RegistrationPathwayStatus.Withdrawn);
 
             if (tqRegistrationPathway == null)
             {

@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         private SelectProviderViewModel _selectProviderViewModel;
         private RegistrationDetailsViewModel mockresult = null;
         private ReregisterProviderViewModel _reRegisterProviderViewModel;
-        private RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Withdraw;
+        private RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Withdrawn;
 
         public override void Given()
         {
