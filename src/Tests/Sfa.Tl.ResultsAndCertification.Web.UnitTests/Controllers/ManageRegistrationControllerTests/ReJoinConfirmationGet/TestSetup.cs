@@ -14,7 +14,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReJoinConfirmationGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.RejoinConfirmationGet
 {
     public abstract class TestSetup : BaseTest<ManageRegistrationController>
     {
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         protected ManageRegistrationController Controller;
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; set; }
-        protected ReJoinRegistrationResponse MockResult;
+        protected RejoinRegistrationResponse MockResult;
 
         public override void Setup()
         {
@@ -45,13 +45,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
-            CacheKey = string.Concat(CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey), Common.Helpers.Constants.ReJoinRegistrationConfirmationViewModel);
-            MockResult = new ReJoinRegistrationResponse { ProfileId = 1, Uln = 123456789 };
+            CacheKey = string.Concat(CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.RegistrationCacheKey), Common.Helpers.Constants.RejoinRegistrationConfirmationViewModel);
+            MockResult = new RejoinRegistrationResponse { ProfileId = 1, Uln = 123456789 };
         }
 
         public async override Task When()
         {
-            Result = await Controller.ReJoinConfirmationAsync();
+            Result = await Controller.RejoinConfirmationAsync();
         }
     }
 }

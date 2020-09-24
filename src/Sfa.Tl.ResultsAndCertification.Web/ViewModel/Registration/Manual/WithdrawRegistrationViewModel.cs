@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
                     case WithdrawBackLinkOptions.AmendActiveRegistrationPage:
                     default:
                         backLink.RouteName = RouteConstants.AmendActiveRegistration;
-                        backLink.RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.ChangeStatusId, ((int)RegistrationChangeStatus.Withdraw).ToString() } }; ;
+                        backLink.RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.ChangeStatusId, ((int)RegistrationChangeStatus.Withdrawn).ToString() } }; ;
                         break;                   
                 }
                 return backLink;

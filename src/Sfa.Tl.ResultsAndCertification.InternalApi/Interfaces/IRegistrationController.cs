@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<bool> UpdateRegistrationAsync(ManageRegistration model);
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
         Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model);
-        Task<bool> ReJoinRegistrationAsync(ReJoinRegistrationRequest model);
+        Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model);
 
         // Bulk process
         Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request);

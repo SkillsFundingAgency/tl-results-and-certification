@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
     {
         public override void Given()
         {
-            ViewModel.ChangeStatus = RegistrationChangeStatus.Withdraw;
+            ViewModel.ChangeStatus = RegistrationChangeStatus.Withdrawn;
         }
 
         [Fact]

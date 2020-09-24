@@ -15,10 +15,10 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {
-    public class When_ReJoinRegistration_IsCalled : RegistrationServiceBaseTest
+    public class When_RejoinRegistration_IsCalled : RegistrationServiceBaseTest
     {
         private bool _result;
-        private ReJoinRegistrationRequest _reJoinRegistrationRequest;
+        private RejoinRegistrationRequest _reJoinRegistrationRequest;
         private long _uln;
 
         public override void Given()
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
             RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, RegistrationMapper, RegistrationRepositoryLogger);
 
-            _reJoinRegistrationRequest = new ReJoinRegistrationRequest
+            _reJoinRegistrationRequest = new RejoinRegistrationRequest
             {
                 AoUkprn = TlAwardingOrganisation.UkPrn,
                 PerformedBy = "Test User"
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         public async Task WhenAsync()
         {
             await RegistrationService.WithdrawRegistrationAsync(new WithdrawRegistrationRequest { ProfileId = _reJoinRegistrationRequest.ProfileId, AoUkprn = _reJoinRegistrationRequest.AoUkprn });
-            _result = await RegistrationService.ReJoinRegistrationAsync(_reJoinRegistrationRequest);
+            _result = await RegistrationService.RejoinRegistrationAsync(_reJoinRegistrationRequest);
         }
 
         [Theory]

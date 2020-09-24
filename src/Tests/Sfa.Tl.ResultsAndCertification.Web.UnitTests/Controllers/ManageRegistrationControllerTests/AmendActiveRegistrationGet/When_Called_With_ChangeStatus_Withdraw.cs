@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public override void Given()
         {
-            ChangeStatusId = RegistrationChangeStatus.Withdraw;
+            ChangeStatusId = RegistrationChangeStatus.Withdrawn;
             mockresult = new RegistrationDetailsViewModel { Uln = 1234567890, ProfileId = ProfileId, Status = _registrationPathwayStatus };
             RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(mockresult);
         }
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             model.Should().NotBeNull();
 
             model.ProfileId.Should().Be(mockresult.ProfileId);
-            model.ChangeStatus.Should().Be(RegistrationChangeStatus.Withdraw);
+            model.ChangeStatus.Should().Be(RegistrationChangeStatus.Withdrawn);
 
             var backLink = model.BackLink;
             backLink.RouteName.Should().Be(RouteConstants.RegistrationDetails);

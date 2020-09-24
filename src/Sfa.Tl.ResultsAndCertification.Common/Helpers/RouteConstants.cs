@@ -100,9 +100,9 @@
         public const string WithdrawRegistrationConfirmation = "WithdrawRegistrationConfirmation";
         public const string AmendWithdrawRegistration = "AmendWithdrawRegistration";
         public const string SubmitAmendWithdrawRegistration = "SubmitAmendWithdrawRegistration";
-        public const string ReJoinRegistration = "ReJoinRegistration";
-        public const string SubmitReJoinRegistration = "SubmitReJoinRegistration";
-        public const string ReJoinRegistrationConfirmation = "ReJoinRegistrationConfirmation";
+        public const string RejoinRegistration = "RejoinRegistration";
+        public const string SubmitRejoinRegistration = "SubmitRejoinRegistration";
+        public const string RejoinRegistrationConfirmation = "RejoinRegistrationConfirmation";
 
         // Reregister
         public const string ReregisterProvider = "ReregisterProvider";

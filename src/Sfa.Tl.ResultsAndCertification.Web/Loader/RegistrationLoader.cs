@@ -234,11 +234,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return new WithdrawRegistrationResponse { ProfileId = viewModel.ProfileId, Uln = viewModel.Uln, IsSuccess = isSuccess, IsRequestFromProviderAndCorePage = viewModel.IsRequestFromProviderAndCorePage };
         }
 
-        public async Task<ReJoinRegistrationResponse> ReJoinRegistrationAsync(long aoUkprn, ReJoinRegistrationViewModel viewModel)
+        public async Task<RejoinRegistrationResponse> RejoinRegistrationAsync(long aoUkprn, RejoinRegistrationViewModel viewModel)
         {
-            var model = _mapper.Map<ReJoinRegistrationRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
-            var isSuccess = await _internalApiClient.ReJoinRegistrationAsync(model);
-            return new ReJoinRegistrationResponse { ProfileId = viewModel.ProfileId, Uln = viewModel.Uln, IsSuccess = isSuccess };
+            var model = _mapper.Map<RejoinRegistrationRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            var isSuccess = await _internalApiClient.RejoinRegistrationAsync(model);
+            return new RejoinRegistrationResponse { ProfileId = viewModel.ProfileId, Uln = viewModel.Uln, IsSuccess = isSuccess };
         }
     }
 }

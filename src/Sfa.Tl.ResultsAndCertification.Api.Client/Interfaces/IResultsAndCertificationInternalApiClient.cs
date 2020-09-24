@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         // Manage registrations
         Task<bool> UpdateRegistrationAsync(ManageRegistration model);
         Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model);
-        Task<bool> ReJoinRegistrationAsync(ReJoinRegistrationRequest model);
+        Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model);
 
         // DocumentUploadHistory
         Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);

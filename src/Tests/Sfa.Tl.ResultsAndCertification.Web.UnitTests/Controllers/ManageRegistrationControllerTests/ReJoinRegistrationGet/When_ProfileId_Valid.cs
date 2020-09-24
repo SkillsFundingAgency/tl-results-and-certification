@@ -6,7 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReJoinRegistrationGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.RejoinRegistrationGet
 {
     public class When_ProfileId_Valid : TestSetup
     {
@@ -32,13 +32,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             Result.Should().BeOfType(typeof(ViewResult));
 
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(ReJoinRegistrationViewModel));
+            viewResult.Model.Should().BeOfType(typeof(RejoinRegistrationViewModel));
 
-            var model = viewResult.Model as ReJoinRegistrationViewModel;
+            var model = viewResult.Model as RejoinRegistrationViewModel;
             model.Should().NotBeNull();
 
             model.ProfileId.Should().Be(mockresult.ProfileId);
-            model.CanReJoin.Should().BeNull();
+            model.CanRejoin.Should().BeNull();
 
             var backLink = model.BackLink;
             backLink.RouteName.Should().Be(RouteConstants.AmendWithdrawRegistration);

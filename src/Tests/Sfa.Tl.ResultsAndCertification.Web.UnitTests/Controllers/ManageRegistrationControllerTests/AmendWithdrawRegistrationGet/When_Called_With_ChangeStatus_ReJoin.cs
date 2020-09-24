@@ -8,10 +8,10 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.AmendWithdrawRegistrationGet
 {
-    public class When_Called_With_ChangeStatus_ReJoin : TestSetup
+    public class When_Called_With_ChangeStatus_Rejoin : TestSetup
     {
         private RegistrationDetailsViewModel mockresult = null;
-        private RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Withdrawn;
+        private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Withdrawn;
 
         public override void Given()
         {

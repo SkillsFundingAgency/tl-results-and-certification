@@ -34,7 +34,7 @@
         public const string ChangeRegistrationProviderCoreNotSupportedViewModel = "ChangeRegistrationProviderCoreNotSupportedViewModel";
         public const string ChangeRegistrationCoreNotSupportedProviderUkprn = "ChangeRegistrationCoreNotSupportedProviderUkprn";
         public const string WithdrawRegistrationConfirmationViewModel = "WithdrawRegistrationConfirmationViewModel";
-        public const string ReJoinRegistrationConfirmationViewModel = "ReJoinRegistrationConfirmationViewModel";
+        public const string RejoinRegistrationConfirmationViewModel = "RejoinRegistrationConfirmationViewModel";
 
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 100000;

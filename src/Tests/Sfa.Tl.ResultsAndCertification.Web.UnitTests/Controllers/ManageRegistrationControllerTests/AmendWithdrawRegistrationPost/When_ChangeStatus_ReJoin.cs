@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.AmendWithdrawRegistrationPost
 {
-    public class When_ChangeStatus_ReJoin : TestSetup
+    public class When_ChangeStatus_Rejoin : TestSetup
     {
         public override void Given()
         {
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         {
             var route = (Result as RedirectToRouteResult);
             var routeName = route.RouteName;
-            routeName.Should().Be(RouteConstants.ReJoinRegistration);
+            routeName.Should().Be(RouteConstants.RejoinRegistration);
             route.RouteValues[Constants.ProfileId].Should().Be(ProfileId);
         }
     }

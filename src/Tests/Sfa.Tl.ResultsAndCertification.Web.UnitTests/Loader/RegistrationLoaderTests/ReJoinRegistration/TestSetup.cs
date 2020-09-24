@@ -14,7 +14,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.ReJoinRegistration
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.RejoinRegistration
 {
     public abstract class TestSetup : BaseTest<RegistrationLoader>
     {
@@ -29,8 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         protected ILogger<RegistrationLoader> Logger;
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
         protected RegistrationLoader Loader;
-        protected ReJoinRegistrationResponse ActualResult;
-        protected ReJoinRegistrationViewModel ViewModel;
+        protected RejoinRegistrationResponse ActualResult;
+        protected RejoinRegistrationViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
         public IBlobStorageService BlobStorageService { get; private set; }
 
@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 c.AddMaps(typeof(RegistrationMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<ReJoinRegistrationViewModel, ReJoinRegistrationRequest>(HttpContextAccessor) : null);
+                                new UserNameResolver<RejoinRegistrationViewModel, RejoinRegistrationRequest>(HttpContextAccessor) : null);
             });
 
             Uln = 123456789;
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 
         public async override Task When()
         {
-            ActualResult = await Loader.ReJoinRegistrationAsync(AoUkprn, ViewModel);
+            ActualResult = await Loader.RejoinRegistrationAsync(AoUkprn, ViewModel);
         }
     }
 }
