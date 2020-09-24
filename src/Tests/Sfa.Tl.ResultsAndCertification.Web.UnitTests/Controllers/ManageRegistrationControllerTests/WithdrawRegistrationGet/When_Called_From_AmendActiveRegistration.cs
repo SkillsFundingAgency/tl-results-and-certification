@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             backLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValue);
             routeValue.Should().Be(mockresult.ProfileId.ToString());
             backLink.RouteAttributes.TryGetValue(Constants.ChangeStatusId, out string routeValueChangeStatus);
-            routeValueChangeStatus.Should().Be(((int)RegistrationChangeStatus.Withdraw).ToString());
+            routeValueChangeStatus.Should().Be(((int)RegistrationChangeStatus.Withdrawn).ToString());
         }
     }
 }

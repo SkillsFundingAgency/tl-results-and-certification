@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             var routeName = route.RouteName;
             routeName.Should().Be(RouteConstants.AmendActiveRegistration);
             route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId.ToString());
-            route.RouteValues[Constants.ChangeStatusId].Should().Be(((int)RegistrationChangeStatus.Withdraw).ToString());
+            route.RouteValues[Constants.ChangeStatusId].Should().Be(((int)RegistrationChangeStatus.Withdrawn).ToString());
         }
     }
 }

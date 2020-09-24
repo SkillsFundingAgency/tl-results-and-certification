@@ -374,7 +374,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            if (model.ChangeStatus == RegistrationChangeStatus.Withdraw)
+            if (model.ChangeStatus == RegistrationChangeStatus.Withdrawn)
             {
                 return RedirectToRoute(RouteConstants.WithdrawRegistration, new { profileId = model.ProfileId, withdrawBackLinkOptionId = (int)WithdrawBackLinkOptions.AmendActiveRegistrationPage });
             }

@@ -2,10 +2,10 @@
 namespace Sfa.Tl.ResultsAndCertification.Common.Enum
 {
     public enum RegistrationChangeStatus
-    {
-        Withdraw = 1,        
-        Delete = 2,
-        Rejoin = 3,
-        Reregister = 4,
+    {              
+        Delete = 1,
+        Rejoin = 2,
+        Reregister = 3,
+        Withdrawn = 4
     }
 }
