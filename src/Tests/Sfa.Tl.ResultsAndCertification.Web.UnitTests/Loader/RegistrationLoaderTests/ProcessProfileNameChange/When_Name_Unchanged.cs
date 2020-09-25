@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
@@ -8,23 +9,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 {
     public class When_Specialism_Unchanged : TestSetup
     {
-        ManageRegistration mockResponse = null;
+        RegistrationDetails regDetailsMock = null;
         readonly string firstName = " John";
         readonly string lastName = "Smith ";
 
         public override void Given()
         {
             ViewModel = new ChangeLearnersNameViewModel { ProfileId = 1, Firstname = firstName, Lastname = lastName };
-            mockResponse = new ManageRegistration { FirstName = firstName.Trim().ToUpper(), LastName = lastName.Trim().ToUpper() };
+            regDetailsMock = new RegistrationDetails { Firstname = firstName.Trim().ToUpper(), Lastname = lastName.Trim().ToUpper() };
 
-            InternalApiClient.GetRegistrationAsync(AoUkprn, ViewModel.ProfileId)
-                .Returns(mockResponse);
+            InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active)
+                .Returns(regDetailsMock);
         }
 
         [Fact]
         public void Then_Called_GetRegistrationAsync()
         {
-            InternalApiClient.Received().GetRegistrationAsync(AoUkprn, ViewModel.ProfileId);
+            InternalApiClient.Received().GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active);
             InternalApiClient.DidNotReceive().UpdateRegistrationAsync(Arg.Any<ManageRegistration>());
         }
 

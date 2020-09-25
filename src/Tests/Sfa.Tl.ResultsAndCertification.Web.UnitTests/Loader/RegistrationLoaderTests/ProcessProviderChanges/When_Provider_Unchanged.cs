@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
@@ -9,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 {
     public class When_Provider_Unchanged : TestSetup
     {
-        private ManageRegistration mockApiClientResponse;
+        private RegistrationDetails mockApiClientResponse;
         private long _providerUkprn;
         public override void Given()
         {
@@ -17,20 +18,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             ViewModel = new ChangeProviderViewModel { ProfileId = 1, SelectedProviderUkprn = _providerUkprn.ToString() };
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
 
-            mockApiClientResponse = new ManageRegistration
+            mockApiClientResponse = new RegistrationDetails
             {
                 ProfileId = 1,
-                ProviderUkprn = _providerUkprn,
-                PerformedBy = "updatedUser"
+                ProviderUkprn = _providerUkprn
             };
             
-            InternalApiClient.GetRegistrationAsync(AoUkprn, ViewModel.ProfileId).Returns(mockApiClientResponse);
+            InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active)
+                .Returns(mockApiClientResponse);
         }
 
         [Fact]
         public void Then_Recieved_Call_To_GetRegistrations()
         {
-            InternalApiClient.Received(1).GetRegistrationAsync(AoUkprn, ViewModel.ProfileId);
+            InternalApiClient.Received(1).GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active);
         }
 
         [Fact]

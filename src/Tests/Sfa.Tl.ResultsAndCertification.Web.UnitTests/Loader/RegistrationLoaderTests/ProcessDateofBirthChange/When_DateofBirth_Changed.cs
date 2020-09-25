@@ -1,5 +1,8 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
@@ -9,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 {
     public class When_DateofBirth_Changed : TestSetup
     {
-        ManageRegistration mockResponse = null;
+        RegistrationDetails mockRegDetails = null;
 
         public override void Given()
         {
@@ -17,26 +20,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             var uln = 1234567890;
 
             ViewModel = new ChangeDateofBirthViewModel { ProfileId = profileId, Day = "1", Month = "2", Year = "2000" };
-            mockResponse = new ManageRegistration
+            mockRegDetails = new RegistrationDetails
             {
-                DateOfBirth = DateTime.UtcNow.Date,
+                DateofBirth = DateTime.UtcNow.Date,
                 Uln = uln,
                 ProfileId = profileId,
-                PerformedBy = "Test user"
             };
 
-            InternalApiClient.GetRegistrationAsync(AoUkprn, ViewModel.ProfileId)
-                .Returns(mockResponse);
+            InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active)
+                .Returns(mockRegDetails);
 
-            InternalApiClient.UpdateRegistrationAsync(mockResponse)
+            InternalApiClient.UpdateRegistrationAsync(Arg.Is<ManageRegistration>
+                (x => x.Uln == mockRegDetails.Uln &&
+                x.ProfileId == mockRegDetails.ProfileId &&
+                x.DateOfBirth == ViewModel.DateofBirth.ToDateTime()))
                 .Returns(true);
         }
 
         [Fact]
         public void Then_Called_ExpectedMethods()
         {
-            InternalApiClient.Received().GetRegistrationAsync(AoUkprn, ViewModel.ProfileId);
-            InternalApiClient.Received().UpdateRegistrationAsync(mockResponse);
+            InternalApiClient.Received().GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active);
+            InternalApiClient.Received()
+                .UpdateRegistrationAsync(Arg.Any<ManageRegistration>());
         }
 
         [Fact]
@@ -46,8 +52,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             ActualResult.IsModified.Should().BeTrue();
             ActualResult.IsSuccess.Should().BeTrue();
 
-            ActualResult.Uln.Should().Be(mockResponse.Uln);
-            ActualResult.ProfileId.Should().Be(mockResponse.ProfileId);
+            ActualResult.Uln.Should().Be(mockRegDetails.Uln);
+            ActualResult.ProfileId.Should().Be(mockRegDetails.ProfileId);
         }
     }
 }

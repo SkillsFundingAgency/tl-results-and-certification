@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
@@ -9,24 +10,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 {
     public class When_DateofBirth_Unchanged : TestSetup
     {
-        ManageRegistration mockResponse = null;
-        
+        RegistrationDetails regDetailsMock = null;
+
         public override void Given()
         {
             ViewModel = new ChangeDateofBirthViewModel { Day = "1", Month = "2", Year = "2000" };
-            mockResponse = new ManageRegistration 
+            
+            regDetailsMock = new RegistrationDetails
             {
-                DateOfBirth = ViewModel.DateofBirth.ToDateTime()
+                DateofBirth = ViewModel.DateofBirth.ToDateTime(),
+                ProfileId = ViewModel.ProfileId,
             };
 
-            InternalApiClient.GetRegistrationAsync(AoUkprn, ViewModel.ProfileId)
-                .Returns(mockResponse);
+            InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active)
+                .Returns(regDetailsMock);
         }
 
         [Fact]
         public void Then_Called_GetRegistrationAsync()
         {
-            InternalApiClient.Received().GetRegistrationAsync(AoUkprn, ViewModel.ProfileId);
+            InternalApiClient.Received().GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active);
             InternalApiClient.DidNotReceive().UpdateRegistrationAsync(Arg.Any<ManageRegistration>());
         }
 

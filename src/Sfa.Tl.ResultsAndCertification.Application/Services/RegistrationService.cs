@@ -335,8 +335,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     Uln = x.UniqueLearnerNumber,
                     RegistrationProfileId = x.Id,
-                    IsActive = x.TqRegistrationPathways.Any(pw => (pw.Status == RegistrationPathwayStatus.Active || pw.Status == RegistrationPathwayStatus.Withdrawn) && 
-                                                            pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn),
+                    IsActive = x.TqRegistrationPathways.OrderByDescending(o => o.CreatedOn)
+                            .FirstOrDefault(pw => pw.Status == RegistrationPathwayStatus.Active || pw.Status == RegistrationPathwayStatus.Withdrawn)
+                            .TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn,
+
                     IsRegisteredWithOtherAo = x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active &&
                                                             pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn != aoUkprn)
                 })
