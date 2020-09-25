@@ -63,6 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryStatus.Value.Should().Be(mockresult.Status.ToString());
             model.SummaryStatus.ActionText.Should().Be(RegistrationDetailsContent.Change_Status_Action_Link_Text);
             model.SummaryStatus.HasTag.Should().BeTrue();
+            model.SummaryStatus.RenderHiddenActionText.Should().BeFalse();
             model.SummaryStatus.TagCssClass.Should().Be("govuk-tag--green");
             model.SummaryStatus.RouteName.Should().Be(RouteConstants.AmendActiveRegistration);
             model.SummaryStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
@@ -74,6 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryLearnerName.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
             model.SummaryLearnerName.RouteName.Should().Be(RouteConstants.ChangeRegistrationLearnersName);
             model.SummaryLearnerName.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            model.SummaryLearnerName.RenderHiddenActionText.Should().BeTrue();
 
             // Summary DateofBirth
             model.SummaryDateofBirth.Should().NotBeNull();
