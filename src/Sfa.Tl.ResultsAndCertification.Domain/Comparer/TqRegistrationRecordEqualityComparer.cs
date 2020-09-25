@@ -42,10 +42,10 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
                     hashCode = (hashCode * 397) ^ registrationPathway.AcademicYear.GetHashCode();
                     hashCode = (hashCode * 397) ^ registrationPathway.Status.GetHashCode();
 
-                    foreach (var registrationSpecialism in registrationPathway.TqRegistrationSpecialisms.Where(p => p.Status == RegistrationSpecialismStatus.Active).OrderBy(p => p.TlSpecialismId))
+                    foreach (var registrationSpecialism in registrationPathway.TqRegistrationSpecialisms.Where(p => p.IsOptedin && p.EndDate == null).OrderBy(p => p.TlSpecialismId))
                     {
                         hashCode = (hashCode * 397) ^ registrationSpecialism.TlSpecialismId.GetHashCode();
-                        hashCode = (hashCode * 397) ^ registrationSpecialism.Status.GetHashCode();
+                        hashCode = (hashCode * 397) ^ registrationSpecialism.IsOptedin.GetHashCode();
                     }
                 }
                 return hashCode;
@@ -82,8 +82,8 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
 
         private bool AreSpecialismsEqual(TqRegistrationPathway xpathway, TqRegistrationPathway ypathway)
         {
-            var xSpecialisms = xpathway.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active);
-            var ySpecialisms = ypathway.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active);
+            var xSpecialisms = xpathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null);
+            var ySpecialisms = ypathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null);
 
             var isSpecialismEqual = (xSpecialisms.Count() == ySpecialisms.Count());
             if (isSpecialismEqual)
@@ -123,7 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
                 return false;
             else
             {
-                return x.TlSpecialismId == y.TlSpecialismId && x.Status == y.Status;
+                return x.TlSpecialismId == y.TlSpecialismId && x.IsOptedin == y.IsOptedin;
             }
         }
     }

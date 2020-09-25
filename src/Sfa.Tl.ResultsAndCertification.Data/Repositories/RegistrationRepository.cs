@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var registrationPathway = await _dbContext.TqRegistrationPathway
                 .Where(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && p.Status == status)
                 .Include(p => p.TqRegistrationProfile)
-                .IncludeFilter(p => p.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active))
+                .IncludeFilter(p => p.TqRegistrationSpecialisms.Where(s => s.IsOptedin && (status == RegistrationPathwayStatus.Withdrawn) ? s.EndDate != null : s.EndDate == null))
                 .OrderByDescending(p => p.CreatedOn)
                 .FirstOrDefaultAsync();
             return registrationPathway;
@@ -67,9 +67,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             if (regPathway == null) return null;
 
-            Func<TqRegistrationSpecialism, bool> predicate = e => e.Status == RegistrationSpecialismStatus.Active && e.EndDate == null;
+            Func<TqRegistrationSpecialism, bool> predicate = e => e.IsOptedin && e.EndDate == null;
             if (regPathway.Status == RegistrationPathwayStatus.Withdrawn)
-                predicate = e => e.Status == RegistrationSpecialismStatus.Active && e.EndDate != null;
+                predicate = e => e.IsOptedin && e.EndDate != null;
             
             regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(predicate).ToList();
             return regPathway;
@@ -221,19 +221,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
             return returnResult;
         }
-
-        private Expression<Func<TqRegistrationSpecialism, bool>> GetAssociateSpecialismStatus(RegistrationPathwayStatus? status)
-        {
-            if (status == RegistrationPathwayStatus.Active)
-                return e => e.Status == RegistrationSpecialismStatus.Active;
-
-            if (status == RegistrationPathwayStatus.Withdrawn)
-                return e => e.Status == RegistrationSpecialismStatus.InActive;
-
-            return e => e.Status == RegistrationSpecialismStatus.Active || e.Status == RegistrationSpecialismStatus.InActive;
-            // TODO: In SearchResult we don't know the pathway is Withdraw or Active to filter this. 
-        }
-
+        
         #endregion
     }
 }

@@ -68,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
                                     Id =  1,
                                     TlSpecialismId = 5,
                                     StartDate = DateTime.UtcNow,
-                                    Status = RegistrationSpecialismStatus.Active,
+                                    IsOptedin = true,
                                     IsBulkUpload = true,
                                     CreatedBy = "System",
                                     CreatedOn = DateTime.UtcNow,

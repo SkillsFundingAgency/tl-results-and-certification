@@ -385,20 +385,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 var toUpdateRegistration = TransformManualChangeRegistrationModel(model, validateStage3Response, registration.TqRegistrationProfile);
 
-                if (model.HasProfileChanged && !model.HasProviderChanged && !model.HasSpecialismsChanged)
+                if (model.HasProfileChanged)
                 {
                     return await _tqRegistrationRepository.UpdateWithSpecifedColumnsOnlyAsync(toUpdateRegistration, u => u.Firstname, u => u.Lastname, u => u.DateofBirth) > 0;
-                }
-                else if (model.HasProfileChanged && model.HasProviderChanged)
-                {
-                    return await _tqRegistrationRepository.UpdateAsync(toUpdateRegistration) > 0;
-                }
-                else if (model.HasProfileChanged && model.HasSpecialismsChanged)
-                {
-                    var profileResult = await _tqRegistrationRepository.UpdateWithSpecifedColumnsOnlyAsync(toUpdateRegistration, u => u.Firstname, u => u.Lastname, u => u.DateofBirth) > 0;
-                    var specialismsResult = await _tqRegistrationPathwayRepository.UpdateWithSpecifedCollectionsOnlyAsync(toUpdateRegistration.TqRegistrationPathways.First(), u => u.TqRegistrationSpecialisms) > 0;
-                    return profileResult && specialismsResult;
-                }
+                }                
                 else if (model.HasProviderChanged)
                 {
                     return await _tqRegistrationRepository.UpdateWithSpecifedCollectionsOnlyAsync(toUpdateRegistration, u => u.TqRegistrationPathways) > 0;
@@ -477,7 +467,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (model.HasProviderChanged)
             {
-                // update existing pathway status to Transferred and specialism status to InActive
+                // update existing pathway status to Transferred and specialism enddata
                 SetRegistrationPathwayAndSpecialismsByStatus(actualProfile, RegistrationPathwayStatus.Transferred, model.PerformedBy);
 
                 // add new records
@@ -501,13 +491,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 if (existingPathway != null)
                 {
-                    var existingSpecialismsInDb = existingPathway.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active);
+                    var existingSpecialismsInDb = existingPathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null);
                     var filteredTlSpecialismLarIdsToAdd = registrationRecord.TlSpecialismLarIds.Where(s => !existingSpecialismsInDb.Any(r => r.TlSpecialismId == s.Key)).ToList();
                     var specialismsToUpdate = existingSpecialismsInDb.Where(s => !registrationRecord.TlSpecialismLarIds.Any(x => x.Key == s.TlSpecialismId)).ToList();
 
                     specialismsToUpdate.ForEach(s =>
                     {
-                        s.Status = RegistrationSpecialismStatus.InActive;
+                        s.IsOptedin = false;
                         s.EndDate = DateTime.UtcNow;
                         s.ModifiedBy = model.PerformedBy;
                         s.ModifiedOn = DateTime.UtcNow;
@@ -536,9 +526,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 pathway.EndDate = DateTime.UtcNow;
                 pathway.ModifiedBy = performedBy;
                 pathway.ModifiedOn = DateTime.UtcNow;
-                pathway.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList().ForEach(s =>
+                pathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(s =>
                 {
-                    //s.Status = RegistrationSpecialismStatus.InActive;
                     s.EndDate = DateTime.UtcNow;
                     s.ModifiedBy = performedBy;
                     s.ModifiedOn = DateTime.UtcNow;
@@ -616,7 +605,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Id = isBulkUpload ? index - specialismStartIndex : 0,
                 TlSpecialismId = x.Key,
                 StartDate = DateTime.UtcNow,
-                Status = RegistrationSpecialismStatus.Active,
+                IsOptedin = true,
+                //Status = RegistrationSpecialismStatus.Active,
                 IsBulkUpload = isBulkUpload,
                 CreatedBy = performedBy,
                 CreatedOn = DateTime.UtcNow,
@@ -628,7 +618,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return existingRegistration.TqRegistrationPathways.Where(p => p.Status == RegistrationPathwayStatus.Active)
                                     .Select(x =>
                                     {
-                                        x.TqRegistrationSpecialisms = x.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList();
+                                        x.TqRegistrationSpecialisms = x.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).ToList();
                                         return x;
                                     });
         }
@@ -654,19 +644,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var hasProviderChanged = !pathwaysToUpdate.Any(x => amendedRegistration.TqRegistrationPathways.Any(r => r.TqProvider.TlProviderId == x.TqProvider.TlProviderId));
 
-            // change existing TqRegistrationPathway record status and related TqRegistrationSpecialism records status to "Changed"
+            // change existing TqRegistrationPathway record status and related TqRegistrationSpecialism records enddate
             if (hasProviderChanged)
             {
                 pathwaysToUpdate.ForEach(pathwayToUpdate =>
                 {
-                    pathwayToUpdate.Status = hasProviderChanged ? RegistrationPathwayStatus.Transferred : RegistrationPathwayStatus.InActive;
+                    pathwayToUpdate.Status = RegistrationPathwayStatus.Transferred;
                     pathwayToUpdate.EndDate = DateTime.UtcNow;
                     pathwayToUpdate.ModifiedBy = amendedRegistration.CreatedBy;
                     pathwayToUpdate.ModifiedOn = DateTime.UtcNow;
 
-                    pathwayToUpdate.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active).ToList().ForEach(specialismToUpdate =>
+                    pathwayToUpdate.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(specialismToUpdate =>
                     {
-                        specialismToUpdate.Status = RegistrationSpecialismStatus.InActive;
                         specialismToUpdate.EndDate = DateTime.UtcNow;
                         specialismToUpdate.ModifiedBy = amendedRegistration.CreatedBy;
                         specialismToUpdate.ModifiedOn = DateTime.UtcNow;
@@ -684,13 +673,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                     if (existingPathwayRecordInDb.TqRegistrationSpecialisms.Any())
                     {
-                        var existingSpecialismsInDb = existingPathwayRecordInDb.TqRegistrationSpecialisms.Where(s => s.Status == RegistrationSpecialismStatus.Active);
+                        var existingSpecialismsInDb = existingPathwayRecordInDb.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null);
                         var specialismsToAdd = importPathwayRecord.TqRegistrationSpecialisms.Where(s => !existingSpecialismsInDb.Any(r => r.TlSpecialismId == s.TlSpecialismId)).ToList();
                         var specialismsToUpdate = existingSpecialismsInDb.Where(s => !importPathwayRecord.TqRegistrationSpecialisms.Any(r => r.TlSpecialismId == s.TlSpecialismId)).ToList();
 
                         specialismsToUpdate.ForEach(s =>
                         {
-                            s.Status = RegistrationSpecialismStatus.InActive;
                             s.EndDate = DateTime.UtcNow;
                             s.ModifiedBy = amendedRegistration.CreatedBy;
                             s.ModifiedOn = DateTime.UtcNow;

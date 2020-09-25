@@ -100,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
                 actualSpecialism.Should().NotBeNull();
                 actualSpecialism.TlSpecialismId.Should().Be(expectedSpecialism.TlSpecialismId);
-                actualSpecialism.Status.Should().Be(expectedSpecialism.Status);
+                actualSpecialism.IsOptedin.Should().Be(expectedSpecialism.IsOptedin);
                 actualSpecialism.IsBulkUpload.Should().Be(expectedSpecialism.IsBulkUpload);
             }
         }

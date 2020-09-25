@@ -80,6 +80,7 @@
     <Build Include="Tables\TqRegistrationSpecialism.sql" />
     <Build Include="Indexes\IX_Unique_TqRegistrationPathway.sql" />
     <Build Include="Indexes\IX_Unique_TqRegistrationSpecialism.sql" />
+    <Build Include="Indexes\IX_Unique_TqRegistrationSpecialism_IsOptedin.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />

@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
             _result.TqRegistrationPathwayId.Should().Be(_data.TqRegistrationPathwayId);
             _result.TlSpecialismId.Should().Be(_data.TlSpecialismId);
             _result.StartDate.Should().Be(_data.StartDate);
-            _result.Status.Should().Be(_data.Status);
+            _result.IsOptedin.Should().Be(_data.IsOptedin);
             _result.IsBulkUpload.Should().Be(_data.IsBulkUpload);
             _result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
