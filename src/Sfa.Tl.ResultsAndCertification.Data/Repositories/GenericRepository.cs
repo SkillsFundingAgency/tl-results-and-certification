@@ -71,6 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public virtual async Task<int> UpdateManyAsync(IList<T> entities)
         {
+            if (entities.Count == 0) return 0;
             try
             {
                 _dbContext.UpdateRange(entities);

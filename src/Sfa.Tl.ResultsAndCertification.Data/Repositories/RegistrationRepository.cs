@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
 
@@ -22,14 +21,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _logger = logger;
         }
 
-        public async Task<TqRegistrationPathway> GetRegistrationLiteAsync(long aoUkprn, int profileId, RegistrationPathwayStatus status)
+        public async Task<TqRegistrationPathway> GetRegistrationLiteAsync(long aoUkprn, int profileId, RegistrationPathwayStatus status, bool includeProfile = true)
         {
-            var registrationPathway = await _dbContext.TqRegistrationPathway
-                .Where(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && p.Status == status)
-                .Include(p => p.TqRegistrationProfile)
+            var pathwayQueryable = _dbContext.TqRegistrationPathway.AsQueryable();
+               
+            if (includeProfile)
+                pathwayQueryable = pathwayQueryable.Include(p => p.TqRegistrationProfile);
+
+            var registrationPathway = await pathwayQueryable
                 .IncludeFilter(p => p.TqRegistrationSpecialisms.Where(s => s.IsOptedin && (status == RegistrationPathwayStatus.Withdrawn) ? s.EndDate != null : s.EndDate == null))
                 .OrderByDescending(p => p.CreatedOn)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && p.Status == status);
             return registrationPathway;
         }
 

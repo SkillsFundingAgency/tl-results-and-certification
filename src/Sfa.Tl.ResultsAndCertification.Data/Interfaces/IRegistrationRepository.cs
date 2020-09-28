@@ -8,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
     public interface IRegistrationRepository : IRepository<TqRegistrationProfile>
     {
         Task<TqRegistrationPathway> GetRegistrationAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
-        Task<TqRegistrationPathway> GetRegistrationLiteAsync(long aoUkprn, int profileId, RegistrationPathwayStatus status);
+        Task<TqRegistrationPathway> GetRegistrationLiteAsync(long aoUkprn, int profileId, RegistrationPathwayStatus status, bool includeProfile = true);
         Task<TqRegistrationProfile> GetRegistrationDataWithHistoryAsync(long aoUkprn, int profileId);
         
         // Bulk process methods below.

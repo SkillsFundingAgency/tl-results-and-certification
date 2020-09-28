@@ -14,7 +14,9 @@ using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -371,13 +373,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> UpdateRegistrationAsync(ManageRegistration model)
         {
-            if (model == null) return false;
-
-            var registration = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, RegistrationPathwayStatus.Active);
-
-            if (registration == null || (!model.HasProfileChanged && !model.HasProviderChanged && !model.HasSpecialismsChanged))
+            if (model == null || (!model.HasProfileChanged && !model.HasProviderChanged && !model.HasSpecialismsChanged))
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No record found or no changes detected to update Registration for UniqueLearnerNumber = {model.Uln}. Method: UpdateRegistrationAsync()");
+                _logger.LogWarning(LogEvent.NoDataFound, $"Model is null or no changes detected to update Registration for UniqueLearnerNumber = {model.Uln}. Method: UpdateRegistrationAsync()");
                 return false;
             }
 
@@ -385,20 +383,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (validateStage3Response.IsValid)
             {
-                var toUpdateRegistration = TransformManualChangeRegistrationModel(model, validateStage3Response, registration.TqRegistrationProfile);
-
                 if (model.HasProfileChanged)
                 {
-                    return await _tqRegistrationRepository.UpdateWithSpecifedColumnsOnlyAsync(toUpdateRegistration, u => u.Firstname, u => u.Lastname, u => u.DateofBirth) > 0;
-                }                
+                    return await HandleProfileChanges(model);
+                }
                 else if (model.HasProviderChanged)
                 {
-                    return await _tqRegistrationRepository.UpdateWithSpecifedCollectionsOnlyAsync(toUpdateRegistration, u => u.TqRegistrationPathways) > 0;
+                    return await HandleProviderChanges(model, validateStage3Response);
                 }
                 else if (model.HasSpecialismsChanged)
                 {
-                    var updateSpecialisms = toUpdateRegistration.TqRegistrationPathways.First().TqRegistrationSpecialisms.ToList();
-                    return await _tqRegistrationSpecialismRepository.UpdateManyAsync(updateSpecialisms) > 0;
+                    return await HandleSpecialismChanges(model, validateStage3Response);
                 }
                 return false;
             }
@@ -408,11 +403,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Manual Change Registration failed to process due to validation errors = {errorMessage}. Method: UpdateRegistrationAsync()");
                 return false;
             }
-        }
+        }        
 
         public async Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model)
         {
-            var registration = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, RegistrationPathwayStatus.Active);
+            var registration = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, RegistrationPathwayStatus.Active, false);
 
             if (registration == null)
             {
@@ -420,9 +415,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
-            SetRegistrationPathwayAndSpecialismsByStatus(registration.TqRegistrationProfile, RegistrationPathwayStatus.Withdrawn, model.PerformedBy);
+            EndRegistrationWithStatus(registration, RegistrationPathwayStatus.Withdrawn, model.PerformedBy);
 
-            return await _tqRegistrationRepository.UpdateWithSpecifedCollectionsOnlyAsync(registration.TqRegistrationProfile, u => u.TqRegistrationPathways) > 0;
+            return await _tqRegistrationPathwayRepository.UpdateAsync(registration) > 0;
         }
 
         public async Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model)
@@ -453,76 +448,94 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         #region Private Methods
 
-        private TqRegistrationProfile TransformManualChangeRegistrationModel(ManageRegistration model, RegistrationRecordResponse registrationRecord, TqRegistrationProfile actualProfile)
+        private async Task<bool> HandleProfileChanges(ManageRegistration model)
         {
-            if (!model.HasProfileChanged && !model.HasProviderChanged && !model.HasSpecialismsChanged)
-                return null;
-
-            if (model.HasProfileChanged)
+            var profile = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == model.ProfileId
+                                                                                        && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn
+                                                                                        && p.Status == RegistrationPathwayStatus.Active, p => p.TqRegistrationProfile, p => p.CreatedOn, false);
+            if (profile == null)
             {
-                actualProfile.Firstname = registrationRecord.FirstName;
-                actualProfile.Lastname = registrationRecord.LastName;
-                actualProfile.DateofBirth = registrationRecord.DateOfBirth;
-                actualProfile.ModifiedBy = model.PerformedBy;
-                actualProfile.ModifiedOn = DateTime.UtcNow;
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update Registration for UniqueLearnerNumber = {model.Uln}. Method: UpdateRegistrationAsync()");
+                return false;
             }
 
-            if (model.HasProviderChanged)
-            {
-                // update existing pathway status to Transferred and specialism enddata
-                SetRegistrationPathwayAndSpecialismsByStatus(actualProfile, RegistrationPathwayStatus.Transferred, model.PerformedBy);
-
-                // add new records
-                actualProfile.TqRegistrationPathways.Add(
-                    new TqRegistrationPathway
-                    {
-                        TqRegistrationProfileId = actualProfile.Id,
-                        TqProviderId = registrationRecord.TqProviderId,
-                        AcademicYear = registrationRecord.AcademicYear,
-                        StartDate = DateTime.UtcNow,
-                        Status = RegistrationPathwayStatus.Active,
-                        IsBulkUpload = false,
-                        TqRegistrationSpecialisms = MapSpecialisms(registrationRecord.TlSpecialismLarIds, model.PerformedBy, 0, false),
-                        CreatedBy = model.PerformedBy,
-                        CreatedOn = DateTime.UtcNow
-                    });
-            }
-            else if (model.HasSpecialismsChanged)
-            {
-                var existingPathway = actualProfile.TqRegistrationPathways.FirstOrDefault(x => x.TqProviderId == registrationRecord.TqProviderId && x.Status == RegistrationPathwayStatus.Active);
-
-                if (existingPathway != null)
-                {
-                    var existingSpecialismsInDb = existingPathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null);
-                    var filteredTlSpecialismLarIdsToAdd = registrationRecord.TlSpecialismLarIds.Where(s => !existingSpecialismsInDb.Any(r => r.TlSpecialismId == s.Key)).ToList();
-                    var specialismsToUpdate = existingSpecialismsInDb.Where(s => !registrationRecord.TlSpecialismLarIds.Any(x => x.Key == s.TlSpecialismId)).ToList();
-
-                    specialismsToUpdate.ForEach(s =>
-                    {
-                        s.IsOptedin = false;
-                        s.EndDate = DateTime.UtcNow;
-                        s.ModifiedBy = model.PerformedBy;
-                        s.ModifiedOn = DateTime.UtcNow;
-                        s.TqRegistrationPathway = null;
-                    });
-
-                    if (filteredTlSpecialismLarIdsToAdd.Count > 0 || specialismsToUpdate.Count > 0)
-                    {
-                        registrationRecord.TlSpecialismLarIds = filteredTlSpecialismLarIdsToAdd;
-                        var mappedSpecialisms = MapSpecialisms(registrationRecord.TlSpecialismLarIds, model.PerformedBy, 0, false);
-                        mappedSpecialisms.ToList().ForEach(specialism => specialism.TqRegistrationPathwayId = existingPathway.Id);
-
-                        existingPathway.TqRegistrationSpecialisms.Clear();
-                        existingPathway.TqRegistrationSpecialisms = mappedSpecialisms.Concat(specialismsToUpdate).ToList();
-                    }
-                }
-            }
-            return actualProfile;
+            _mapper.Map(model, profile);
+            return await _tqRegistrationRepository.UpdateWithSpecifedColumnsOnlyAsync(profile, u => u.Firstname, u => u.Lastname, u => u.DateofBirth) > 0;
         }
 
-        private static void SetRegistrationPathwayAndSpecialismsByStatus(TqRegistrationProfile actualProfile, RegistrationPathwayStatus status, string performedBy)
+        private async Task<bool> HandleProviderChanges(ManageRegistration model, RegistrationRecordResponse registrationRecord)
         {
-            foreach (var pathway in actualProfile.TqRegistrationPathways.Where(x => x.Status == RegistrationPathwayStatus.Active))
+            var pathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, RegistrationPathwayStatus.Active, false);
+
+            if (pathway == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update Registration for UniqueLearnerNumber = {model.Uln}. Method: HandleProviderChanges()");
+                return false;
+            }
+
+            var pathways = new List<TqRegistrationPathway>();
+            
+            EndRegistrationWithStatus(pathway, RegistrationPathwayStatus.Transferred, model.PerformedBy);
+            pathways.Add(pathway);
+
+            // add new records
+            pathways.Add(
+                new TqRegistrationPathway
+                {
+                    TqRegistrationProfileId = model.ProfileId,
+                    TqProviderId = registrationRecord.TqProviderId,
+                    AcademicYear = registrationRecord.AcademicYear,
+                    StartDate = DateTime.UtcNow,
+                    Status = RegistrationPathwayStatus.Active,
+                    IsBulkUpload = false,
+                    TqRegistrationSpecialisms = MapSpecialisms(registrationRecord.TlSpecialismLarIds, model.PerformedBy, 0, false),
+                    CreatedBy = model.PerformedBy,
+                    CreatedOn = DateTime.UtcNow
+                });
+
+            return await _tqRegistrationPathwayRepository.UpdateManyAsync(pathways) > 0;
+        }
+
+        private async Task<bool> HandleSpecialismChanges(ManageRegistration model, RegistrationRecordResponse registrationRecord)
+        {
+            var existingPathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationProfileId == model.ProfileId
+                                                                                               && p.Status == RegistrationPathwayStatus.Active
+                                                                                               && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn);
+            
+            if (existingPathway == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update Registration for UniqueLearnerNumber = {model.Uln}. Method: HandleSpecialismChanges()");
+                return false;
+            }
+
+            var specialismsToUpdateList = new List<TqRegistrationSpecialism>();
+
+            var existingSpecialismsInDb = _tqRegistrationSpecialismRepository.GetManyAsync(s => s.TqRegistrationPathwayId == existingPathway.Id && s.IsOptedin && s.EndDate == null).ToList();
+            var filteredTlSpecialismLarIdsToAdd = registrationRecord.TlSpecialismLarIds.Where(s => !existingSpecialismsInDb.Any(r => r.TlSpecialismId == s.Key)).ToList();
+            var specialismsToUpdate = existingSpecialismsInDb.Where(s => !registrationRecord.TlSpecialismLarIds.Any(x => x.Key == s.TlSpecialismId)).ToList();
+
+            specialismsToUpdate.ForEach(s =>
+            {
+                s.IsOptedin = false;
+                s.EndDate = DateTime.UtcNow;
+                s.ModifiedBy = model.PerformedBy;
+                s.ModifiedOn = DateTime.UtcNow;
+            });
+
+            if (filteredTlSpecialismLarIdsToAdd.Count > 0 || specialismsToUpdate.Count > 0)
+            {
+                registrationRecord.TlSpecialismLarIds = filteredTlSpecialismLarIdsToAdd;
+                var mappedSpecialisms = MapSpecialisms(registrationRecord.TlSpecialismLarIds, model.PerformedBy, 0, false);
+                mappedSpecialisms.ToList().ForEach(s => s.TqRegistrationPathwayId = existingPathway.Id);
+                specialismsToUpdateList = mappedSpecialisms.Concat(specialismsToUpdate).ToList();
+            }
+
+            return specialismsToUpdateList.Any() ? await _tqRegistrationSpecialismRepository.UpdateManyAsync(specialismsToUpdateList) > 0 : false;
+        }
+
+        private static void EndRegistrationWithStatus(TqRegistrationPathway pathway, RegistrationPathwayStatus status, string performedBy)
+        {
+            if (pathway != null)
             {
                 pathway.Status = status;
                 pathway.EndDate = DateTime.UtcNow;
