@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 {
     public class When_AddRegistrationAsync_Called_With_Valid_Data : RegistrationServiceBaseTest
     {
-        private Task<bool> _result;
+        private bool _result;
         private RegistrationRequest _registrationRequest;
         
         public override void Given()
@@ -50,14 +50,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         public async override Task When()
         {
-            _result = RegistrationService.AddRegistrationAsync(_registrationRequest);
+            _result = await RegistrationService.AddRegistrationAsync(_registrationRequest);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            _result.Should().NotBeNull();
-            _result.Result.Should().BeTrue();            
+            _result.Should().BeTrue();            
         }
     }
 }

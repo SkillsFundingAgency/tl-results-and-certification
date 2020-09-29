@@ -1,6 +1,9 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -52,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 AoUkprn = TlAwardingOrganisation.UkPrn,
                 ProviderUkprn = newProvider.UkPrn,
                 CoreCode = Pathway.LarId,
-                SpecialismCodes = Specialisms.Select(s => s.LarId),
+                SpecialismCodes = new List<string>(),
                 PerformedBy = "Test User",
                 HasProviderChanged = false
             };            
@@ -131,6 +134,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             DbContext.SaveChangesAsync();
 
             _profileId = tqRegistrationProfile.Id;
+        }
+
+        protected override void CreateMapper()
+        {
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddMaps(typeof(RegistrationMapper).Assembly);
+                c.ConstructServicesUsing(type =>
+                            type.Name.Contains("DateTimeResolver") ?
+                                new DateTimeResolver<ManageRegistration, TqRegistrationProfile>(new DateTimeProvider()) :
+                                null);
+            });
+            RegistrationMapper = new Mapper(mapperConfig);
         }
     }
 }
