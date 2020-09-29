@@ -1,0 +1,28 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ChangeSpecialismViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = SelectSpecialisms.Page_Title_Change_Registration_Select_Specialism;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="SubmitChangeRegistrationSpecialisms">
+            <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="CoreCode" value="@Model.CoreCode" />
+
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">@SelectSpecialisms.Page_Caption_ChangeRegistration</span>
+                <vc:select-specialism model=Model></vc:select-specialism>
+            </div>
+            <p>
+                <button id="ChangeButton" type="submit" class="govuk-button" data-module="govuk-button">@SelectSpecialisms.Change_Button_Text</button>
+            </p>
+        </form>
+    </div>
+</div>

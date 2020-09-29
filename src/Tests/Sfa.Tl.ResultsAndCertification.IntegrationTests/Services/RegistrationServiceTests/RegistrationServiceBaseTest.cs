@@ -27,8 +27,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IProviderRepository ProviderRepository;
         protected IRegistrationRepository RegistrationRepository;
+        protected IRepository<TqRegistrationPathway> TqRegistrationPathwayRepository;
+        protected IRepository<TqRegistrationSpecialism> TqRegistrationSpecialismRepository;
         protected ILogger<ProviderRepository> ProviderRepositoryLogger;
         protected ILogger<RegistrationRepository> RegistrationRepositoryLogger;
+        protected ILogger<GenericRepository<TqRegistrationPathway>> TqRegistrationPathwayRepositoryLogger;
+        protected ILogger<GenericRepository<TqRegistrationSpecialism>> TqRegistrationSpecialismRepositoryLogger;
+
         protected IMapper RegistrationMapper;
 
         protected virtual void CreateMapper()

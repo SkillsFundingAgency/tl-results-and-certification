@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
@@ -12,6 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -108,15 +110,135 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AddRegistrationAsync(registrationModel);
         }
 
-        public async Task<RegistrationDetailsViewModel> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
+        public async Task<RegistrationDetailsViewModel> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            var response = await _internalApiClient.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
+            var response = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, profileId, status);
             return _mapper.Map<RegistrationDetailsViewModel>(response);
         }
 
         public async Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId)
         {
             return await _internalApiClient.DeleteRegistrationAsync(aoUkprn, profileId);
+        }
+
+        public async Task<T> GetRegistrationProfileAsync<T>(long aoUkprn, int profileId, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active)
+        {
+            var response = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, profileId, status);
+            return _mapper.Map<T>(response);
+        }
+
+        public async Task<ProviderChangeResponse> ProcessProviderChangesAsync(long aoUkprn, ChangeProviderViewModel viewModel)
+        {
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
+            if (reg == null)
+                return null;
+            
+            if (reg.ProviderUkprn == viewModel.SelectedProviderUkprn.ToLong())
+            {
+                return new ProviderChangeResponse { IsModified = false };
+            }
+            else
+            {
+                var providerPathways = await _internalApiClient.GetRegisteredProviderPathwayDetailsAsync(aoUkprn, viewModel.SelectedProviderUkprn.ToLong());
+                if (providerPathways != null && providerPathways.Count > 0 && providerPathways.Any(p => p.Code.Equals(reg.PathwayLarId)))
+                {
+                    var request = _mapper.Map<ManageRegistration>(reg);
+                    _mapper.Map(viewModel, request);
+                    var isSuccess = await _internalApiClient.UpdateRegistrationAsync(request);
+                    return new ProviderChangeResponse { ProfileId = request.ProfileId, Uln = request.Uln, IsModified = true,  IsSuccess = isSuccess };
+                }
+                else
+                {
+                    return new ProviderChangeResponse { IsModified = true, IsCoreNotSupported = true };
+                }
+            }
+        }
+
+        public async Task<ManageRegistrationResponse> ProcessProfileNameChangeAsync(long aoUkprn, ChangeLearnersNameViewModel viewModel)
+        {
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
+            if (reg == null) 
+                return null;
+
+            if (viewModel.Firstname.Trim().Equals(reg.Firstname, StringComparison.InvariantCultureIgnoreCase) &&
+                viewModel.Lastname.Trim().Equals(reg.Lastname, StringComparison.InvariantCultureIgnoreCase))
+                return new ManageRegistrationResponse { IsModified = false };
+
+            var request = _mapper.Map<ManageRegistration>(reg);
+            _mapper.Map(viewModel, request);
+            
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(request);
+
+            return new ManageRegistrationResponse { ProfileId = request.ProfileId, Uln = request.Uln, IsModified = true, IsSuccess = isSuccess };
+        }
+
+        public async Task<ManageRegistrationResponse> ProcessDateofBirthChangeAsync(long aoUkprn, ChangeDateofBirthViewModel viewModel)
+        {
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
+            if (reg == null)
+                return null;
+
+            if (reg.DateofBirth == viewModel.DateofBirth.ToDateTime()) 
+                return new ManageRegistrationResponse { IsModified = false };
+
+            var request = _mapper.Map<ManageRegistration>(reg);
+            _mapper.Map(viewModel, request);
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(request);
+
+            return new ManageRegistrationResponse { ProfileId = request.ProfileId, Uln = request.Uln, IsModified = true, IsSuccess = isSuccess };
+        }
+
+        public async Task<ManageRegistrationResponse> ProcessSpecialismQuestionChangeAsync(long aoUkprn, ChangeSpecialismQuestionViewModel viewModel)
+        {
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
+
+            if (reg == null || viewModel.HasLearnerDecidedSpecialism == null) return null;
+
+            var request = _mapper.Map<ManageRegistration>(reg);
+            _mapper.Map(viewModel, request);
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(request);
+            return new ManageRegistrationResponse { ProfileId = request.ProfileId, Uln = request.Uln, IsModified = true, IsSuccess = isSuccess };
+        }
+
+        public async Task<ManageRegistrationResponse> ProcessSpecialismChangeAsync(long aoUkprn, ChangeSpecialismViewModel viewModel)
+        {
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
+            if (reg == null)
+                return null;
+
+            var prevSpecialisms = reg.Specialisms.Select(x => x.Code);
+            var currentSpecialisms = viewModel.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code);
+            var areSame = prevSpecialisms.Count() == currentSpecialisms.Count() &&
+                    prevSpecialisms.All(x => currentSpecialisms.Contains(x));
+
+            if (areSame)
+                return new ManageRegistrationResponse { IsModified = false };
+
+            var request = _mapper.Map<ManageRegistration>(reg);
+            _mapper.Map(viewModel, request);
+            var isSuccess = await _internalApiClient.UpdateRegistrationAsync(request);
+
+            return new ManageRegistrationResponse { ProfileId = request.ProfileId, Uln = request.Uln, IsModified = true, IsSuccess = isSuccess };
+        }
+
+        public async Task<ChangeCoreQuestionViewModel> GetRegistrationChangeCoreQuestionDetailsAsync(long aoUkprn, int profileId)
+        {
+            var response = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, profileId);
+            return _mapper.Map<ChangeCoreQuestionViewModel>(response);
+        }
+
+        public async Task<WithdrawRegistrationResponse> WithdrawRegistrationAsync(long aoUkprn, WithdrawRegistrationViewModel viewModel)
+        {
+            var model = _mapper.Map<WithdrawRegistrationRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            var isSuccess = await _internalApiClient.WithdrawRegistrationAsync(model);
+            return new WithdrawRegistrationResponse { ProfileId = viewModel.ProfileId, Uln = viewModel.Uln, IsSuccess = isSuccess, IsRequestFromProviderAndCorePage = viewModel.IsRequestFromProviderAndCorePage };
+        }
+
+        public async Task<RejoinRegistrationResponse> RejoinRegistrationAsync(long aoUkprn, RejoinRegistrationViewModel viewModel)
+        {
+            var model = _mapper.Map<RejoinRegistrationRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            var isSuccess = await _internalApiClient.RejoinRegistrationAsync(model);
+            return new RejoinRegistrationResponse { ProfileId = viewModel.ProfileId, Uln = viewModel.Uln, IsSuccess = isSuccess };
         }
     }
 }

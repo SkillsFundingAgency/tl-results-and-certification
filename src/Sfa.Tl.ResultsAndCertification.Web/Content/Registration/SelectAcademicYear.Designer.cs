@@ -61,11 +61,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back to registration details.
+        /// </summary>
+        public static string Back_To_Registration_Details_Button_Text {
+            get {
+                return ResourceManager.GetString("Back_To_Registration_Details_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Academic year cannot be changed.
+        /// </summary>
+        public static string Change_AcademicYear_Heading_Text {
+            get {
+                return ResourceManager.GetString("Change_AcademicYear_Heading_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Change_Button_Text {
             get {
                 return ResourceManager.GetString("Change_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot change the academic year if you are keeping the same core on an existing registration..
+        /// </summary>
+        public static string Change_Registration_AcademicYear_Body_Text {
+            get {
+                return ResourceManager.GetString("Change_Registration_AcademicYear_Body_Text", resourceCulture);
             }
         }
         
@@ -93,6 +120,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Page_Title_Add_Registration_Select_AcademicYear {
             get {
                 return ResourceManager.GetString("Page_Title_Add_Registration_Select_AcademicYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Academic year cannot be changed page.
+        /// </summary>
+        public static string Page_Title_Change_Registration_Select_AcademicYear {
+            get {
+                return ResourceManager.GetString("Page_Title_Change_Registration_Select_AcademicYear", resourceCulture);
             }
         }
         

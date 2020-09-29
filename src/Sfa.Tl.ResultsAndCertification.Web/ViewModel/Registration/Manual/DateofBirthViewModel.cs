@@ -13,6 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 
         public bool IsChangeMode { get; set; }
 
-        public BackLinkModel BackLink => new BackLinkModel { RouteName = IsChangeMode ? RouteConstants.AddRegistrationCheckAndSubmit : RouteConstants.AddRegistrationLearnersName };
+        public virtual BackLinkModel BackLink => new BackLinkModel { RouteName = IsChangeMode ? RouteConstants.AddRegistrationCheckAndSubmit : RouteConstants.AddRegistrationLearnersName };
     }
 }

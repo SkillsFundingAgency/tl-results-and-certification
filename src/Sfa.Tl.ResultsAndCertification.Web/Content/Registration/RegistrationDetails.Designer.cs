@@ -70,6 +70,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Change_Action_Link_Text {
+            get {
+                return ResourceManager.GetString("Change_Action_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change status.
+        /// </summary>
+        public static string Change_Status_Action_Link_Text {
+            get {
+                return ResourceManager.GetString("Change_Status_Action_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for a registration - Registration details page.
         /// </summary>
         public static string Page_Title {
@@ -156,6 +174,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Title_Specialism_Text {
             get {
                 return ResourceManager.GetString("Title_Specialism_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Title_Status {
+            get {
+                return ResourceManager.GetString("Title_Status", resourceCulture);
             }
         }
         

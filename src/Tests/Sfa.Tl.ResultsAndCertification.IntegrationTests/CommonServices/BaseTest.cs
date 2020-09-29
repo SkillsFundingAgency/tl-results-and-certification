@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices
 {
@@ -23,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices
         }
 
         public abstract void Given();
-        public abstract void When();
+        public abstract Task When();
 
         public void Dispose()
         {

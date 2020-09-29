@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -142,9 +143,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<FindUlnResponse>(requestUri);
         }
 
-        public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
+        public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            var requestUri = string.Format(ApiConstants.GetRegistrationDetailsUri, aoUkprn, profileId);
+            var requestUri = string.Format(ApiConstants.GetRegistrationDetailsUri, aoUkprn, profileId, (int?)status);
             return await GetAsync<RegistrationDetails>(requestUri);
         }
 
@@ -152,6 +153,24 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = string.Format(ApiConstants.DeleteRegistrationUri, aoUkprn, profileId);
             return await DeleteAsync<bool>(requestUri);
+        }
+
+        public async Task<bool> UpdateRegistrationAsync(ManageRegistration model)
+        {
+            var requestUri = ApiConstants.UpdateRegistrationUri;
+            return await PutAsync<ManageRegistration, bool>(requestUri, model);
+        }
+
+        public async Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model)
+        {
+            var requestUri = ApiConstants.WithdrawRegistrationUri;
+            return await PutAsync<WithdrawRegistrationRequest, bool>(requestUri, model);
+        }
+
+        public async Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model)
+        {
+            var requestUri = ApiConstants.RejoinRegistrationUri;
+            return await PutAsync<RejoinRegistrationRequest, bool>(requestUri, model);
         }
 
         #region Private Methods

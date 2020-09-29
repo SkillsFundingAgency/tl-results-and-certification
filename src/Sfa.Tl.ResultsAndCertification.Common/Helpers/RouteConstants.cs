@@ -75,6 +75,39 @@
         public const string SubmitRegistrationCheckAndSubmit = "SubmitRegistrationCheckAndSubmit";
         public const string AddRegistrationConfirmation = "AddRegistrationConfirmation";
 
+        // Change Registration
+        public const string ChangeRegistrationLearnersName = "ChangeRegistrationLearnersName";
+        public const string SubmitChangeRegistrationLearnersName = "SubmitChangeRegistrationLearnersName";
+        public const string ChangeRegistrationDateofBirth = "ChangeRegistrationDateofBirth";
+        public const string SubmitChangeRegistrationDateofBirth = "SubmitChangeRegistrationDateofBirth";
+        public const string ChangeRegistrationProvider = "ChangeRegistrationProvider";
+        public const string SubmitChangeRegistrationProvider = "SubmitChangeRegistrationProvider";
+        public const string ChangeRegistrationCoreQuestion = "ChangeRegistrationCoreQuestion";
+        public const string SubmitChangeCoreQuestion = "SubmitChangeCoreQuestion";
+        public const string ChangeRegistrationConfirmation = "ChangeRegistrationConfirmation";
+        public const string ChangeRegistrationCore = "ChangeRegistrationCore";
+        public const string ChangeRegistrationSpecialismQuestion = "ChangeRegistrationSpecialismQuestion";
+        public const string SubmitChangeRegistrationSpecialismQuestion = "SubmitChangeRegistrationSpecialismQuestion";
+        public const string ChangeRegistrationSpecialisms = "ChangeRegistrationSpecialisms";
+        public const string SubmitChangeRegistrationSpecialisms = "SubmitChangeRegistrationSpecialisms";
+        public const string ChangeAcademicYear = "ChangeAcademicYear";
+        public const string ChangeRegistrationProviderAndCoreNeedToWithdraw = "ChangeRegistrationProviderAndCoreNeedToWithdraw";
+        public const string ChangeRegistrationProviderNotOfferingSameCore = "ChangeRegistrationProviderNotOfferingSameCore";
+        public const string AmendActiveRegistration = "AmendActiveRegistration";
+        public const string SubmitAmendActiveRegistration = "SubmitAmendActiveRegistration";
+        public const string WithdrawRegistration = "WithdrawRegistration";
+        public const string SubmitWithdrawRegistration = "SubmitWithdrawRegistration";
+        public const string WithdrawRegistrationConfirmation = "WithdrawRegistrationConfirmation";
+        public const string AmendWithdrawRegistration = "AmendWithdrawRegistration";
+        public const string SubmitAmendWithdrawRegistration = "SubmitAmendWithdrawRegistration";
+        public const string RejoinRegistration = "RejoinRegistration";
+        public const string SubmitRejoinRegistration = "SubmitRejoinRegistration";
+        public const string RejoinRegistrationConfirmation = "RejoinRegistrationConfirmation";
+
+        // Reregister
+        public const string ReregisterProvider = "ReregisterProvider";
+        public const string SubmitReregisterProvider = "SubmitReregisterProvider";
+
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";
         public const string SubmitSearchRegistration = "SubmitSearchRegistration";
@@ -82,8 +115,8 @@
         public const string RegistrationDetails = "RegistrationDetails";
                 
         // Cancel Registration
-        public const string CancelRegistration = "CancelRegistration";
-        public const string SubmitCancelRegistration = "SubmitCancelRegistration";
+        public const string DeleteRegistration = "DeleteRegistration";
+        public const string SubmitDeleteRegistration = "SubmitDeleteRegistration";
         public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
 
         // Error

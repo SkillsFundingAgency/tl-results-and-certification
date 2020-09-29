@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TimeoutContro
     {
         protected string CacheKey;
         protected TimeoutController Controller;
-        protected Task<JsonResult> Result;
+        protected JsonResult Result;
         protected ICacheService CacheService;
         protected IHttpContextAccessor HttpContextAccessor;
         protected ResultsAndCertificationConfiguration _resultsAndCertificationConfiguration;
@@ -39,9 +39,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TimeoutContro
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.UserSessionActivityCacheKey);
         }
 
-        public override void When()
+        public async override Task When()
         {
-            Result = Controller.GetActiveDurationAsync();
+            Result = await Controller.GetActiveDurationAsync();
         }
     }
 }

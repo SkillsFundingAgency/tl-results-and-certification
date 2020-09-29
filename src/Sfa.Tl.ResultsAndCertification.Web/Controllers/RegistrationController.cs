@@ -573,7 +573,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-for-registration-registration-details/{profileId}", Name = RouteConstants.RegistrationDetails)]
         public async Task<IActionResult> RegistrationDetailsAsync(int profileId)
         {
-            var viewModel = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
+            var viewModel = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId);
 
             if (viewModel == null)
             {
@@ -585,25 +585,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("cancel-registration/{profileId}", Name = RouteConstants.CancelRegistration)]
-        public async Task<IActionResult> CancelRegistrationAsync(int profileId)
+        [Route("delete-registration/{profileId}", Name = RouteConstants.DeleteRegistration)]
+        public async Task<IActionResult> DeleteRegistrationAsync(int profileId)
         {
-            var ulnDetails = await _registrationLoader.GetRegistrationDetailsByProfileIdAsync(User.GetUkPrn(), profileId);
+            var ulnDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId);
             if (ulnDetails == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = new CancelRegistrationViewModel { ProfileId = ulnDetails.ProfileId, Uln = ulnDetails.Uln };
+            var viewModel = new DeleteRegistrationViewModel { ProfileId = ulnDetails.ProfileId, Uln = ulnDetails.Uln };
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("cancel-registration", Name = RouteConstants.SubmitCancelRegistration)]
-        public async Task<IActionResult> CancelRegistrationAsync(CancelRegistrationViewModel viewModel)
+        [Route("delete-registration", Name = RouteConstants.SubmitDeleteRegistration)]
+        public async Task<IActionResult> DeleteRegistrationAsync(DeleteRegistrationViewModel viewModel)
         {
             if (!ModelState.IsValid)
                 return View(viewModel);
 
-            if (!viewModel.CancelRegistration.Value)
+            if (!viewModel.DeleteRegistration.Value)
                 return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = viewModel.ProfileId });
 
             var isSuccess = await _registrationLoader.DeleteRegistrationAsync(User.GetUkPrn(), viewModel.ProfileId);

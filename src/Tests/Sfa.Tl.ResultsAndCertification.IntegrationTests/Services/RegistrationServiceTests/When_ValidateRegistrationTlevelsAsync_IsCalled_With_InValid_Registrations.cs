@@ -9,7 +9,9 @@ using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrations;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {
@@ -26,26 +28,30 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             SeedTestData();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
+            TqRegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
+            TqRegistrationSpecialismRepositoryLogger = new Logger<GenericRepository<TqRegistrationSpecialism>>(new NullLoggerFactory());
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper, RegistrationRepositoryLogger);
+            TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
+            TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, RegistrationMapper, RegistrationRepositoryLogger);
+
             _stage3RegistrationsData = new RegistrationsStage3Builder().BuildInvalidList();
             _expectedValidationErrors = new BulkRegistrationValidationErrorsBuilder().BuildStage3ValidationErrorsList();
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = RegistrationService.ValidateRegistrationTlevelsAsync(_aoUkprn, _stage3RegistrationsData).Result;
+            _result = await RegistrationService.ValidateRegistrationTlevelsAsync(_aoUkprn, _stage3RegistrationsData);
         }
 
         [Fact]
-        public void Then_Expected_ValidationResults_Are_Returned()
+        public void Then_Returns_Expected_Results()
         {
             _result.Should().NotBeNull();
             _result.Count.Should().Be(_stage3RegistrationsData.Count);
 
             var actualValidationErrors = _result.SelectMany(x => x.ValidationErrors).ToList();
-
             actualValidationErrors.Count.Should().Be(_expectedValidationErrors.Count);
             actualValidationErrors.Should().BeEquivalentTo(_expectedValidationErrors);
         }

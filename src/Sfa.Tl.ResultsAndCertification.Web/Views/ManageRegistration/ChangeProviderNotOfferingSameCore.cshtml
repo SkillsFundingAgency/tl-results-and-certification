@@ -1,0 +1,27 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ChangeProviderNotOfferingSameCoreViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @ChangeProviderNotOfferingSameCore.Page_Title_Text;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+            <span class="govuk-caption-xl">@ChangeProviderNotOfferingSameCore.Page_Caption_Text</span>
+            <h1 class="govuk-heading-l">
+                @ChangeProviderNotOfferingSameCore.Page_Heading
+            </h1>
+            <p class="govuk-body">@ChangeProviderNotOfferingSameCore.If_You_Think_Text @Model.ProviderDisplayName @ChangeProviderNotOfferingSameCore.Should_Be_Setup_To_Offer_Text @Model.CoreDisplayName, @ChangeProviderNotOfferingSameCore.Ask_Your_Providers_Editor_Text</p>
+        </div>
+        <p>
+            <a id="registrationDetailsButton" class="govuk-button" role="button" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">
+                @ChangeProviderNotOfferingSameCore.Registration_Details_Button_Text
+            </a>
+        </p>
+    </div>
+</div>

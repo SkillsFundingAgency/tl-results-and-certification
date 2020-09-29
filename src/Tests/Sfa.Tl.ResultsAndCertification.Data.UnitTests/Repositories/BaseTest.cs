@@ -3,6 +3,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
 {
@@ -27,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories
         }
 
         public abstract void Given();
-        public abstract void When();
+        public abstract Task When();
 
         public void Dispose()
         {
