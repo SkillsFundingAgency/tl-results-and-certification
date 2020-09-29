@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
@@ -18,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
         protected ILogger<AccountController> Logger;
         protected HttpContext HttpContext;
         protected IServiceProvider ServiceProvider;
+        protected ICacheService CacheService;
         
         public ResultsAndCertificationConfiguration Configuration { get; set; }
 
@@ -27,8 +29,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AccountContro
             ServiceProvider = Substitute.For<IServiceProvider>();
             ServiceProvider.GetService(typeof(IUrlHelperFactory)).Returns(new UrlHelperFactory());
             HttpContext.RequestServices = ServiceProvider;
+            CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<AccountController>>();
-            Controller = new AccountController(Configuration, Logger);
+            Controller = new AccountController(Configuration, CacheService, Logger);
         }
 
         public override Task When()

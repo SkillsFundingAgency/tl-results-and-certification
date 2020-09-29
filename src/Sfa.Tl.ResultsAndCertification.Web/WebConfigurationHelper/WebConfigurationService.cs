@@ -33,5 +33,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
             var formattedTitle = string.IsNullOrWhiteSpace(title) ? titleSuffix : $"{title} – {titleSuffix}";
             return isModelValid ? formattedTitle : $"{HeaderContent.Error_Text} {formattedTitle}";
         }
+
+        public int GetSessionTimeoutValue()
+        {
+            return _configuration.DfeSignInSettings.Timeout;
+        }
     }
 }

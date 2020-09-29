@@ -36,6 +36,8 @@
         public const string WithdrawRegistrationConfirmationViewModel = "WithdrawRegistrationConfirmationViewModel";
         public const string RejoinRegistrationConfirmationViewModel = "RejoinRegistrationConfirmationViewModel";
 
+        public const string UserSessionActivityId = "UserSessionActivityId";
+
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 100000;
         public const int RegistrationPathwayStartIndex = 200000;

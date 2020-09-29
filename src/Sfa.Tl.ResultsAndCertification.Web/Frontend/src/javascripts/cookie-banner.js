@@ -61,7 +61,7 @@
     GOVUK.acceptAllCookies = function (value) {
         GOVUK.cookie('cookies_preferences_set', value, { days: 365 });
         GOVUK.cookie('analytics_consent', value, { days: 365 });
-    }; 
+    };
 
 }).call(this);
 (function () {
