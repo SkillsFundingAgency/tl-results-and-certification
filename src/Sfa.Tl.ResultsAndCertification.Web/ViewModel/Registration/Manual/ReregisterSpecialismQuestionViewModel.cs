@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
     {
         public override BackLinkModel BackLink => new BackLinkModel 
         { 
-            RouteName = RouteConstants.ReregisterProvider //TODO: direct to core. 
+            RouteName = RouteConstants.ReregisterCore
         };
     }
 }
