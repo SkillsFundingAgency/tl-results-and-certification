@@ -229,6 +229,11 @@
         "ClientId"        
       ],
       "type": "object"
+    },
+	"BypassDfeSignIn": {
+      "minLength": 1,
+      "type": "string",
+      "environmentVariable": "BypassDfeSignIn"
     }
   },
   "additionalProperties": false,
@@ -243,7 +248,8 @@
 	"BlobStorageSettings",
 	"DataProtectionSettings",
     "DfeSignInSettings",
-	"ResultsAndCertificationInternalApiSettings"
+	"ResultsAndCertificationInternalApiSettings",
+	"BypassDfeSignIn"
   ],
   "type": "object"
 }

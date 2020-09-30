@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
         {
             var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
 
-            if (config.EnableLocalAuthentication)
+            if (config.BypassDfeSignIn)
             {
                 services.AddAntiforgery(options =>
                 {
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                 .AddLocalAuthentication(o =>
                 {
                     o.HasAccessToService = true;
-                    o.Ukprn = "10011881";
+                    o.Ukprn = "10009696";
                     o.Identity = o.ClaimsIdentity;
                 });
                 return services;
