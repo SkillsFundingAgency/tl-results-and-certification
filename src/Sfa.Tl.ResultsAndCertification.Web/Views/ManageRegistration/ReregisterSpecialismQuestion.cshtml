@@ -11,8 +11,9 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form class="form" asp-route="SubmitRegistrationSpecialismQuestion">
+        <form class="form" asp-route="SubmitReregisterSpecialismQuestion">
             <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@SpecialismQuestion.Page_Caption_Text_Reregister</span>
                 <vc:specialism-question model=Model></vc:specialism-question>

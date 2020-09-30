@@ -611,19 +611,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.ReregisterCore = model;
 
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.ReregisterSpecialismQuestion);
+            return RedirectToRoute(RouteConstants.ReregisterSpecialismQuestion, new { model.ProfileId });
         }
 
         [HttpGet]
-        [Route("register-learner-new-course-has-learner-decided-specialism", Name = RouteConstants.ReregisterSpecialismQuestion)]
-        public async Task<IActionResult> ReregisterSpecialismQuestionAsync()
+        [Route("register-learner-new-course-has-learner-decided-specialism/{profileId}", Name = RouteConstants.ReregisterSpecialismQuestion)]
+        public async Task<IActionResult> ReregisterSpecialismQuestionAsync(int profileId)
         {
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: ReregisterSpecialismQuestionAsync({profileId}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
 
             if (cacheModel == null || cacheModel.ReregisterCore == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.SpecialismQuestion == null ? new ReregisterSpecialismQuestionViewModel() : cacheModel.SpecialismQuestion;
+            viewModel.ProfileId = profileId;
+
             return View(viewModel);
         }
 
@@ -635,7 +644,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
-            if (model == null || cacheModel?.ReregisterCore == null)
+            if (cacheModel == null || cacheModel.ReregisterCore == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (!model.HasLearnerDecidedSpecialism.Value)
@@ -644,8 +653,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.SpecialismQuestion = model;
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
 
-            // TODO: route setup
-            return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ? RouteConstants.ReregisterSpecialismQuestion : RouteConstants.ReregisterSpecialismQuestion);
+            return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ? 
+                RouteConstants.ReregisterSpecialismQuestion : RouteConstants.ReregisterSpecialismQuestion, 
+                new { model.ProfileId });
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
