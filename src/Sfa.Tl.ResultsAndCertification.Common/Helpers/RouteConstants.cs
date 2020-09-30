@@ -110,6 +110,8 @@
         public const string SubmitReregisterProvider = "SubmitReregisterProvider";
         public const string ReregisterCore = "ReregisterCore";
         public const string SubmitReregisterCore = "SubmitReregisterCore";
+        public const string ReregisterSpecialismQuestion = "ReregisterSpecialismQuestion";
+        public const string SubmitReregisterSpecialismQuestion = "SubmitReregisterSpecialismQuestion";
 
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";

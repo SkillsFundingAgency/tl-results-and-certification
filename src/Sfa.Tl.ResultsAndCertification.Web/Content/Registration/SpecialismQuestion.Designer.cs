@@ -115,6 +115,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register learner on a new course.
+        /// </summary>
+        public static string Page_Caption_Text_Reregister {
+            get {
+                return ResourceManager.GetString("Page_Caption_Text_Reregister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a new registration - Has the learner decided on the specialism page.
         /// </summary>
         public static string Page_Title_Add_Registration_Has_Learner_Decided_On_Specialisms {
@@ -129,6 +138,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Page_Title_Change_Registration_Has_Learner_Decided_On_Specialisms {
             get {
                 return ResourceManager.GetString("Page_Title_Change_Registration_Has_Learner_Decided_On_Specialisms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register learner on a new course - Has the learner decided on the specialism page.
+        /// </summary>
+        public static string Page_Title_Reregister_Has_Learner_Decided_On_Specialisms {
+            get {
+                return ResourceManager.GetString("Page_Title_Reregister_Has_Learner_Decided_On_Specialisms", resourceCulture);
             }
         }
         
