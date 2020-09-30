@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
-    public class CannotSelectSameCoreViewModel
+    public class ReregisterCannotSelectSameCoreViewModel
     {
         public int ProfileId { get; set; }
 

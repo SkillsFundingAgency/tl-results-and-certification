@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         private SelectProviderViewModel _selectProviderViewModel;
         public override void Given()
         {
-            ViewModel = new ReregisterProviderViewModel { SelectedProviderUkprn = "1234567890" };
+            ViewModel = new ReregisterProviderViewModel { ProfileId = ProfileId, SelectedProviderUkprn = "1234567890" };
             _selectProviderViewModel = new SelectProviderViewModel { ProvidersSelectList = new List<SelectListItem> { new SelectListItem { Text = "Hello", Value = "1" } } };
 
             RegistrationLoader.GetRegisteredTqAoProviderDetailsAsync(AoUkprn).Returns(_selectProviderViewModel);
@@ -23,8 +23,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         [Fact]
         public void Then_Redirected_To_ReregisterCore()
         {
-            var routeName = (Result as RedirectToRouteResult).RouteName;
+            var route = Result as RedirectToRouteResult;
+            var routeName = route.RouteName;
             routeName.Should().Be(RouteConstants.ReregisterCore);
+            route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
         }
     }
 }

@@ -598,7 +598,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> ReregisterCoreAsync(ReregisterCoreViewModel model)
         {
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
-            if (model == null || cacheModel?.ReregisterProvider == null)
+            if (cacheModel?.ReregisterProvider == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var coreViewModel = await GetRegisteredProviderCores(cacheModel.ReregisterProvider.SelectedProviderUkprn.ToLong());
@@ -622,6 +622,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
             return RedirectToRoute(model.IsValidCore ? RouteConstants.ReregisterSpecialismQuestion : RouteConstants.ReregisterCannotSelectSameCore, new { model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("cannot-select-same-core/{profileId}", Name = RouteConstants.ReregisterCannotSelectSameCore)]
+        public async Task<IActionResult> ReregisterCannotSelectSameCoreAsync(int profileId)
+        {
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: CannotSelectSameCoreAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = new ReregisterCannotSelectSameCoreViewModel { ProfileId = profileId };
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -667,21 +682,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 RouteConstants.ReregisterSpecialismQuestion : RouteConstants.ReregisterSpecialismQuestion, 
                 new { model.ProfileId });
         }
-
-        [HttpGet]
-        [Route("cannot-select-same-core/{profileId}", Name = RouteConstants.ReregisterCannotSelectSameCore)]
-        public async Task<IActionResult> CannotSelectSameCoreAsync(int profileId)
-        {
-            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
-            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: CannotSelectSameCoreAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            var viewModel = new CannotSelectSameCoreViewModel { ProfileId = profileId };
-            return View(viewModel);
-        }
+        
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());

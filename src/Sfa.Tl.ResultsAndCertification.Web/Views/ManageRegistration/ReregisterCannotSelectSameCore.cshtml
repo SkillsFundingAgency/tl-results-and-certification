@@ -1,8 +1,8 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.CannotSelectSameCoreViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ReregisterCannotSelectSameCoreViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
 
 @{
-    ViewData["Title"] = @CannotSelectSameCore.Page_Title_Text;
+    ViewData["Title"] = @ReregisterCannotSelectSameCore.Page_Title_Text;
 }
 
 @section NavigationBar {
@@ -13,14 +13,14 @@
     <div class="govuk-grid-column-two-thirds">
         <div class="govuk-form-group">
             <h1 class="govuk-heading-l">
-                @CannotSelectSameCore.Page_Heading
+                @ReregisterCannotSelectSameCore.Page_Heading
             </h1>
-            <p class="govuk-body">@CannotSelectSameCore.You_Cannot_Select_Same_Core_Text</p>
-            <p class="govuk-body">@CannotSelectSameCore.To_Register_The_Learner_On_Same_Course_Text</p>
+            <p class="govuk-body">@ReregisterCannotSelectSameCore.You_Cannot_Select_Same_Core_Text</p>
+            <p class="govuk-body">@ReregisterCannotSelectSameCore.To_Register_The_Learner_On_Same_Course_Text</p>
         </div>
         <p>
             <a id="registrationDetailsButton" class="govuk-button" role="button" asp-route="RejoinRegistration" asp-route-profileId="@Model.ProfileId" asp-route-isFromCoreDenialPage="@Model.IsFromCoreDenialPage">
-                @CannotSelectSameCore.Reactivate_The_Registration_Button_Text
+                @ReregisterCannotSelectSameCore.Reactivate_The_Registration_Button_Text
             </a>
         </p>
     </div>
