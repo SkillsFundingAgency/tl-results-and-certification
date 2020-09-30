@@ -107,6 +107,8 @@
         // Reregister
         public const string ReregisterProvider = "ReregisterProvider";
         public const string SubmitReregisterProvider = "SubmitReregisterProvider";
+        public const string ReregisterSpecialismQuestion = "ReregisterSpecialismQuestion";
+        public const string SubmitReregisterSpecialismQuestion = "SubmitReregisterSpecialismQuestion";
 
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";

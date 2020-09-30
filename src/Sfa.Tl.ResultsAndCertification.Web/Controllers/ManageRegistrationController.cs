@@ -566,7 +566,45 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel = new ReregisterViewModel { ReregisterProvider = model };
 
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.ReregisterProvider, new { profileId = model.ProfileId });
+            //return RedirectToRoute(RouteConstants.ReregisterProvider, new { profileId = model.ProfileId });
+
+            return RedirectToRoute(RouteConstants.ReregisterSpecialismQuestion);
+        }
+
+        [HttpGet]
+        [Route("register-learner-new-course-has-learner-decided-specialism", Name = RouteConstants.ReregisterSpecialismQuestion)]
+        public async Task<IActionResult> ReregisterSpecialismQuestionAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+
+            if (cacheModel == null) // TODO: SelectCore 
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = cacheModel?.SpecialismQuestion == null ? new ReregisterSpecialismQuestionViewModel() : cacheModel.SpecialismQuestion;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("register-learner-new-course-has-learner-decided-specialism", Name = RouteConstants.SubmitReregisterSpecialismQuestion)]
+        public async Task<IActionResult> ReregisterSpecialismQuestionAsync(ReregisterSpecialismQuestionViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+            if (model == null || cacheModel == null)  // TODO: SelectCore 
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (!model.HasLearnerDecidedSpecialism.Value)
+            {
+                cacheModel.SelectSpecialisms = null;
+            }
+
+            cacheModel.SpecialismQuestion = model;
+            await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
+
+            // TODO: route setup
+            return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ? RouteConstants.AddRegistrationSpecialisms : RouteConstants.AddRegistrationAcademicYear);   
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
