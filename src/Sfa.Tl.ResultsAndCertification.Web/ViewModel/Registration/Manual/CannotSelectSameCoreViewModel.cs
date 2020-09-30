@@ -4,13 +4,11 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
-    public class ChangeProviderNotOfferingSameCoreViewModel
+    public class CannotSelectSameCoreViewModel
     {
         public int ProfileId { get; set; }
 
-        public string ProviderDisplayName { get; set; }
-
-        public string CoreDisplayName { get; set; }
+        public bool IsFromCoreDenialPage => true;
 
         public BackLinkModel BackLink
         {
@@ -18,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
             {
                 return new BackLinkModel
                 {
-                    RouteName = RouteConstants.ChangeRegistrationCoreQuestion,
+                    RouteName = RouteConstants.ReregisterCore,
                     RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
                 };
             }

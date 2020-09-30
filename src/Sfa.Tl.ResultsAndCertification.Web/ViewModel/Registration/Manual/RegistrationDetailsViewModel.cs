@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public long Uln { get; set; }
         public string Name { get; set; }
         public DateTime DateofBirth { get; set; }
+        public string PathwayLarId { get; set; }
         public string ProviderDisplayName { get; set; }
         public string PathwayDisplayName { get; set; }
         public IEnumerable<string> SpecialismsDisplayName { get; set; }

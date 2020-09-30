@@ -13,12 +13,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
     public class When_Cache_Found : TestSetup
     {
         private ReregisterViewModel cacheResult;
-        private SelectProviderViewModel _selectProviderViewModel;
         private RegistrationDetailsViewModel mockresult = null;
         private ReregisterProviderViewModel _reRegisterProviderViewModel;
         private ReregisterCoreViewModel _reregisterCoreViewModel;
         private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Withdrawn;
-        private long _providerUkprn = 987654321;
+        private readonly long _providerUkprn = 987654321;
 
         public override void Given()
         {
@@ -28,7 +27,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                 Status = _registrationPathwayStatus
             };
 
-            _selectProviderViewModel = new SelectProviderViewModel { ProvidersSelectList = new List<SelectListItem> { new SelectListItem { Text = "Hello", Value = "1" } } };
             _reregisterCoreViewModel = new ReregisterCoreViewModel { SelectedCoreCode = "123", CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = "123" } } };
             _reRegisterProviderViewModel = new ReregisterProviderViewModel { ProfileId = ProfileId, SelectedProviderUkprn = _providerUkprn.ToString() };
 
@@ -36,7 +34,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(cacheResult);
 
             RegistrationLoader.GetRegisteredProviderPathwayDetailsAsync(AoUkprn, _providerUkprn).Returns(_reregisterCoreViewModel);
-            //RegistrationLoader.GetRegisteredTqAoProviderDetailsAsync(AoUkprn).Returns(_selectProviderViewModel);
             RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(mockresult);
         }
 
@@ -44,7 +41,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         public void Then_Expected_Methods_Called()
         {
             RegistrationLoader.Received(1).GetRegisteredProviderPathwayDetailsAsync(AoUkprn, _providerUkprn);
-            //RegistrationLoader.Received(1).GetRegisteredTqAoProviderDetailsAsync(AoUkprn);
             RegistrationLoader.Received(1).GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus);
         }
 

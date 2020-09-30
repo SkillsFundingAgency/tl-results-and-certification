@@ -103,6 +103,7 @@
         public const string RejoinRegistration = "RejoinRegistration";
         public const string SubmitRejoinRegistration = "SubmitRejoinRegistration";
         public const string RejoinRegistrationConfirmation = "RejoinRegistrationConfirmation";
+        public const string ReregisterCannotSelectSameCore = "ReregisterCannotSelectSameCore";
 
         // Reregister
         public const string ReregisterProvider = "ReregisterProvider";

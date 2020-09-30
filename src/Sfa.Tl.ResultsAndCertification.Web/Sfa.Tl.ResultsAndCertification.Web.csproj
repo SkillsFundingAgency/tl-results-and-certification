@@ -41,6 +41,11 @@
 
 
   <ItemGroup>
+    <Compile Update="Content\Registration\CannotSelectSameCore.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CannotSelectSameCore.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Timeout\TimeoutConfirmation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -370,6 +375,10 @@
 
 
   <ItemGroup>
+    <EmbeddedResource Update="Content\Registration\CannotSelectSameCore.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CannotSelectSameCore.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Timeout\TimeoutConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TimeoutConfirmation.Designer.cs</LastGenOutput>

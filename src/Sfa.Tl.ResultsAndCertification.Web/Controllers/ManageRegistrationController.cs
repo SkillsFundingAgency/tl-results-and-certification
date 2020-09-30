@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -442,6 +443,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("amend-withdrawn-registration/{profileId}/{changeStatusId:int?}", Name = RouteConstants.AmendWithdrawRegistration)]
         public async Task<IActionResult> AmendWithdrawRegistrationAsync(int profileId, int? changeStatusId)
         {
+            await _cacheService.RemoveAsync<ReregisterViewModel>(ReregisterCacheKey);
             var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
             {
@@ -473,8 +475,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reactivate-registration-same-course/{profileId}", Name = RouteConstants.RejoinRegistration)]
-        public async Task<IActionResult> RejoinRegistrationAsync(int profileId)
+        [Route("reactivate-registration-same-course/{profileId}/{isFromCoreDenialPage:bool?}", Name = RouteConstants.RejoinRegistration)]
+        public async Task<IActionResult> RejoinRegistrationAsync(int profileId, bool isFromCoreDenialPage)
         {
             var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
@@ -483,7 +485,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var viewModel = new RejoinRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln };
+            var viewModel = new RejoinRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln, IsFromCoreDenialPage = isFromCoreDenialPage };
             return View(viewModel);
         }
 
@@ -607,12 +609,35 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), model.ProfileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: Post - ReregisterCoreAsync({User.GetUkPrn()}, {model.ProfileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            model.CoreCodeAtTheTimeOfWithdrawn = registrationDetails.PathwayLarId;
             model.SelectedCoreDisplayName = coreViewModel?.CoreSelectList?.FirstOrDefault(p => p.Value == model.SelectedCoreCode)?.Text;
             cacheModel.ReregisterCore = model;
-
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.ReregisterProvider, new { profileId = model.ProfileId });
-        }        
+            
+            return RedirectToRoute(model.IsValidCore ? RouteConstants.ReregisterProvider : RouteConstants.ReregisterCannotSelectSameCore, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("cannot-select-same-core/{profileId}", Name = RouteConstants.ReregisterCannotSelectSameCore)]
+        public async Task<IActionResult> CannotSelectSameCoreAsync(int profileId)
+        {
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: CannotSelectSameCoreAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = new CannotSelectSameCoreViewModel { ProfileId = profileId };
+            return View(viewModel);
+        } 
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
