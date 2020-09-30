@@ -628,10 +628,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("cannot-select-same-core/{profileId}", Name = RouteConstants.ReregisterCannotSelectSameCore)]
         public async Task<IActionResult> ReregisterCannotSelectSameCoreAsync(int profileId)
         {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+            if (cacheModel?.ReregisterCore == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
             var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: CannotSelectSameCoreAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: ReregisterCannotSelectSameCoreAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

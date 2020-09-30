@@ -10,15 +10,15 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReregisterCorePost
 {
-    public class When_SelectedCore_Invalid : TestSetup
+    public class When_Valid_Data_And_Incorrect_Status : TestSetup
     {
         private readonly long _providerUkprn = 987654321;
         private readonly string _coreCodeAtTheTimeOfWithdrawn = "123456789";
         private readonly string _selectedCoreCode = "123456789";
         private ReregisterProviderViewModel _reregisterProviderViewModel;
         private SelectCoreViewModel _selectCoreViewModel;
-        private RegistrationDetailsViewModel _registrationDetailsViewModel;        
-        private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Withdrawn;
+        private RegistrationDetailsViewModel _registrationDetailsViewModel;
+        private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Active;
 
         public override void Given()
         {
@@ -40,17 +40,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             ViewModel.SelectedCoreCode = _selectedCoreCode;
 
             CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(cacheResult);
-            RegistrationLoader.GetRegisteredProviderPathwayDetailsAsync(AoUkprn, _providerUkprn).Returns(_selectCoreViewModel);            
+            RegistrationLoader.GetRegisteredProviderPathwayDetailsAsync(AoUkprn, _providerUkprn).Returns(_selectCoreViewModel);
             RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(_registrationDetailsViewModel);
         }
 
         [Fact]
-        public void Then_Redirected_To_ReregisterCannotSelectSameCore()
+        public void Then_Redirected_To_PageNotFound()
         {
-            var route = Result as RedirectToRouteResult;
-            var routeName = route.RouteName;
-            routeName.Should().Be(RouteConstants.ReregisterCannotSelectSameCore);
-            route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
+            var actualRouteName = (Result as RedirectToRouteResult).RouteName;
+            actualRouteName.Should().Be(RouteConstants.PageNotFound);
         }
     }
 }
