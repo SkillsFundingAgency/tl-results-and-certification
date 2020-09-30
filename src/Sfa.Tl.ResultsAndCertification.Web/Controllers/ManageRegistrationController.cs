@@ -526,7 +526,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
-
         [HttpGet]
         [Route("register-learner-new-course-select-provider/{profileId}", Name = RouteConstants.ReregisterProvider)]
         public async Task<IActionResult> ReregisterProviderAsync(int profileId)
@@ -575,16 +574,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("register-learner-new-course-select-core/{profileId}", Name = RouteConstants.ReregisterCore)]
         public async Task<IActionResult> ReregisterCoreAsync(int profileId)
         {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+            if (cacheModel?.ReregisterProvider == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
             var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: ReregisterCoreAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
-            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
-            if (cacheModel?.ReregisterProvider == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
 
             var providerCores = await GetRegisteredProviderCores(cacheModel.ReregisterProvider.SelectedProviderUkprn.ToLong());
             var viewModel = cacheModel?.ReregisterCore == null ? new ReregisterCoreViewModel() : cacheModel.ReregisterCore;
