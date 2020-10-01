@@ -102,16 +102,18 @@
         public const string SubmitAmendWithdrawRegistration = "SubmitAmendWithdrawRegistration";
         public const string RejoinRegistration = "RejoinRegistration";
         public const string SubmitRejoinRegistration = "SubmitRejoinRegistration";
-        public const string RejoinRegistrationConfirmation = "RejoinRegistrationConfirmation";
-        public const string ReregisterCannotSelectSameCore = "ReregisterCannotSelectSameCore";
+        public const string RejoinRegistrationConfirmation = "RejoinRegistrationConfirmation";        
 
         // Reregister
         public const string ReregisterProvider = "ReregisterProvider";
         public const string SubmitReregisterProvider = "SubmitReregisterProvider";
         public const string ReregisterCore = "ReregisterCore";
         public const string SubmitReregisterCore = "SubmitReregisterCore";
+        public const string ReregisterCannotSelectSameCore = "ReregisterCannotSelectSameCore";
         public const string ReregisterSpecialismQuestion = "ReregisterSpecialismQuestion";
         public const string SubmitReregisterSpecialismQuestion = "SubmitReregisterSpecialismQuestion";
+        public const string ReregisterSpecialisms = "ReregisterSpecialisms";
+        public const string SubmitReregisterSpecialisms = "SubmitReregisterSpecialisms";        
 
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";
