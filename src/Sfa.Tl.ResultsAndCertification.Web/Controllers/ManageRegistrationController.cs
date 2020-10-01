@@ -646,7 +646,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("register-learner-new-course-has-learner-decided-specialism/{profileId}", Name = RouteConstants.ReregisterSpecialismQuestion)]
         public async Task<IActionResult> ReregisterSpecialismQuestionAsync(int profileId)
         {
-
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
 
             if (cacheModel == null || cacheModel.ReregisterCore == null || !cacheModel.ReregisterCore.IsValidCore)
