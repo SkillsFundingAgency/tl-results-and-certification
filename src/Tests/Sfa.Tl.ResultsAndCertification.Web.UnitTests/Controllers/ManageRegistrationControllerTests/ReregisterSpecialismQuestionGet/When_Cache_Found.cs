@@ -22,7 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                 Status = _registrationPathwayStatus
             };
 
-            cacheResult = new ReregisterViewModel { ReregisterCore = new ReregisterCoreViewModel() };
+            cacheResult = new ReregisterViewModel
+            {
+                ReregisterCore = new ReregisterCoreViewModel
+                {
+                    CoreCodeAtTheTimeOfWithdrawn = "999",
+                    SelectedCoreCode = "123"
+                }
+            };
             CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(cacheResult);
             RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(mockresult);
         }
