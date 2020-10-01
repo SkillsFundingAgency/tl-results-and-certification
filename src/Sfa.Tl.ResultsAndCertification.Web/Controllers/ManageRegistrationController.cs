@@ -676,16 +676,53 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (!model.HasLearnerDecidedSpecialism.Value)
-                cacheModel.SelectSpecialisms = null;
+                cacheModel.ReregisterSpecialisms = null;
 
             cacheModel.SpecialismQuestion = model;
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
 
             return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ? 
-                RouteConstants.ReregisterSpecialismQuestion : RouteConstants.ReregisterSpecialismQuestion, 
+                RouteConstants.ReregisterSpecialisms : RouteConstants.ReregisterSpecialismQuestion, 
                 new { model.ProfileId });
         }
-        
+
+        [HttpGet]
+        [Route("register-learner-new-course-select-specialism/{profileId}", Name = RouteConstants.ReregisterSpecialisms)]
+        public async Task<IActionResult> ReregisterSpecialismsAsync(int profileId)
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+
+            if (cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: ReregisterSpecialismQuestionAsync({profileId}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = cacheModel?.ReregisterSpecialisms == null ? new ReregisterSpecialismViewModel { PathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.ReregisterCore.SelectedCoreCode) } : cacheModel.ReregisterSpecialisms;
+            viewModel.ProfileId = profileId;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("register-learner-new-course-select-specialism", Name = RouteConstants.SubmitReregisterSpecialisms)]
+        public async Task<IActionResult> ReregisterSpecialismsAsync(ReregisterSpecialismViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+            if (cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.ReregisterSpecialisms = model;
+            await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
+            return RedirectToRoute(RouteConstants.ReregisterSpecialisms, new { model.ProfileId });
+        }
+
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
@@ -729,6 +766,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 coreQuestionDetails.CanChangeCore = providerViewModel.CanChangeCore;
             }
             return coreQuestionDetails;
+        }
+
+        private async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByCoreCode(string coreCode)
+        {
+            return await _registrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(User.GetUkPrn(), coreCode);
         }
     }
 }

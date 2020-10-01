@@ -126,6 +126,9 @@
   <data name="Page_Caption_ChangeRegistration" xml:space="preserve">
     <value>Change registration</value>
   </data>
+  <data name="Page_Caption_Reregister_Text" xml:space="preserve">
+    <value>Register learner on a new course</value>
+  </data>
   <data name="Page_Caption_Text" xml:space="preserve">
     <value>Add a new registration</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="Page_Title_Change_Registration_Select_Specialism" xml:space="preserve">
     <value>Change specialism page</value>
+  </data>
+  <data name="Page_Title_Reregister_Registration_Select_Specialism" xml:space="preserve">
+    <value>Register learner on a new course - Select the specialism page</value>
   </data>
   <data name="Select_The_Specialism_Label_Text" xml:space="preserve">
     <value>Select the specialisms for {0}</value>
