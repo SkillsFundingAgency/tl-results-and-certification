@@ -655,7 +655,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
 
-            if (cacheModel == null || cacheModel.ReregisterCore == null)
+            if (cacheModel == null || cacheModel.ReregisterCore == null || !cacheModel.ReregisterCore.IsValidCore)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.SpecialismQuestion == null ? new ReregisterSpecialismQuestionViewModel() : cacheModel.SpecialismQuestion;
