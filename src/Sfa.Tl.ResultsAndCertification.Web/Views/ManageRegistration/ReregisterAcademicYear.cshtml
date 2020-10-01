@@ -1,0 +1,25 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ReregisterAcademicYearViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @SelectAcademicYear.Reregister_Page_Title_AcademicYear;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="SubmitRegistrationAcademicYear">
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">@SelectAcademicYear.Reregister_Heading_Text</span>
+                <vc:select-academic-year model=Model></vc:select-academic-year>
+            </div>
+            <p>
+                <button type="submit" id="continueButton" class="govuk-button" data-module="govuk-button">@SelectAcademicYear.Continue_Button_Text</button>
+            </p>
+        </form>
+    </div>
+</div>

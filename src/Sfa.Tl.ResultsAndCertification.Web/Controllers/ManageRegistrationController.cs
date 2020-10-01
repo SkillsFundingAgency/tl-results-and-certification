@@ -683,7 +683,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
 
             return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ? 
-                RouteConstants.ReregisterSpecialisms : RouteConstants.ReregisterSpecialismQuestion, 
+                RouteConstants.ReregisterSpecialisms : RouteConstants.ReregisterAcademicYear, 
                 new { model.ProfileId });
         }
 
@@ -721,7 +721,57 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.ReregisterSpecialisms = model;
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.ReregisterSpecialisms, new { model.ProfileId });
+            return RedirectToRoute(RouteConstants.ReregisterAcademicYear, new { model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("register-learner-new-course-select-academic-year/{profileId}", Name = RouteConstants.ReregisterAcademicYear)]
+        public async Task<IActionResult> ReregisterAcademicYearAsync(int profileId)
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+            if (cacheModel == null || cacheModel.SpecialismQuestion == null ||
+                (cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism == true && cacheModel.ReregisterSpecialisms == null))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. " +
+                    $"Method: ReregisterAcademicYearAsync({profileId}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var hasSpecialismsSelected = cacheModel?.ReregisterSpecialisms != null;
+            ReregisterAcademicYearViewModel viewModel;
+            if (cacheModel.ReregisterAcademicYear == null)
+            {
+                viewModel = new ReregisterAcademicYearViewModel { ProfileId = profileId, HasSpecialismsSelected = hasSpecialismsSelected };
+            }
+            else
+            {
+                cacheModel.ReregisterAcademicYear.HasSpecialismsSelected = hasSpecialismsSelected;
+                viewModel = cacheModel?.ReregisterAcademicYear;
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("register-learner-new-course-select-academic-year", Name = RouteConstants.SubmitReregisterAcademicYear)]
+        public async Task<IActionResult> ReregisterAcademicYearAsync(ReregisterAcademicYearViewModel viewModel)
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(CacheKey);
+
+            if (viewModel.IsValidAcademicYear ||
+                cacheModel == null || cacheModel.SpecialismQuestion == null || 
+                (cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism == true && cacheModel.ReregisterSpecialisms == null))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            viewModel.HasSpecialismsSelected = cacheModel.ReregisterSpecialisms != null;
+            cacheModel.ReregisterAcademicYear = viewModel;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            
+            return RedirectToRoute(RouteConstants.ReregisterAcademicYear); // TOOD:
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

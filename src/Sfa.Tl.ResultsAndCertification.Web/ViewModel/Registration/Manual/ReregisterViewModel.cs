@@ -7,5 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public ReregisterCoreViewModel ReregisterCore { get; set; }
         public ReregisterSpecialismQuestionViewModel SpecialismQuestion { get; set; }
         public ReregisterSpecialismViewModel ReregisterSpecialisms { get; set; }
+        public ReregisterAcademicYearViewModel ReregisterAcademicYear { get; set; }
     }
 }
