@@ -141,6 +141,12 @@
   <data name="Page_Title_Change_Registration_Select_AcademicYear" xml:space="preserve">
     <value>Academic year cannot be changed page</value>
   </data>
+  <data name="Reregister_Heading_Text" xml:space="preserve">
+    <value>Register learner on a new course</value>
+  </data>
+  <data name="Reregister_Page_Title_AcademicYear" xml:space="preserve">
+    <value>Register learner on a new course - Select the academic year page</value>
+  </data>
   <data name="Select_The_AcademicYear_Label_Text" xml:space="preserve">
     <value>Select the academic year</value>
   </data>
