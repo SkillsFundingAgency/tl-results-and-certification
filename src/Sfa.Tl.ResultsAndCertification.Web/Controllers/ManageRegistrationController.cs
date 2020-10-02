@@ -759,18 +759,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("register-learner-new-course-select-academic-year", Name = RouteConstants.SubmitReregisterAcademicYear)]
         public async Task<IActionResult> ReregisterAcademicYearAsync(ReregisterAcademicYearViewModel viewModel)
         {
-            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
 
-            if (viewModel.IsValidAcademicYear ||
-                cacheModel == null || cacheModel.SpecialismQuestion == null || 
-                (cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism == true && cacheModel.ReregisterSpecialisms == null))
+            if (cacheModel == null || cacheModel.SpecialismQuestion == null || 
+                (cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism == true && cacheModel.ReregisterSpecialisms == null) ||
+                !viewModel.IsValidAcademicYear)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             viewModel.HasSpecialismsSelected = cacheModel.ReregisterSpecialisms != null;
             cacheModel.ReregisterAcademicYear = viewModel;
-            await _cacheService.SetAsync(CacheKey, cacheModel);
+            await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
             
-            return RedirectToRoute(RouteConstants.ReregisterAcademicYear); // TOOD:
+            return RedirectToRoute(RouteConstants.SubmitReregisterAcademicYear);
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

@@ -14,19 +14,18 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReregisterAcademicYearGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReregisterAcademicYearPost
 {
     public abstract class TestSetup : BaseTest<ManageRegistrationController>
     {
         protected int Ukprn;
         protected Guid UserId;
-        protected int ProfileId;
         protected string CacheKey;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
         protected ILogger<ManageRegistrationController> Logger;
         protected ManageRegistrationController Controller;
-        protected ReregisterViewModel ViewModel;
+        protected ReregisterAcademicYearViewModel AcademicYearViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; private set; }
 
@@ -51,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public async override Task When()
         {
-            Result = await Controller.ReregisterAcademicYearAsync(ProfileId);
+            Result = await Controller.ReregisterAcademicYearAsync(AcademicYearViewModel);
         }
     }
 }
