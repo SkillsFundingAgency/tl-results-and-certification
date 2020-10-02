@@ -740,7 +740,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var hasSpecialismsSelected = cacheModel?.ReregisterSpecialisms != null;
+            var hasSpecialismsSelected = cacheModel.ReregisterSpecialisms != null;
             ReregisterAcademicYearViewModel viewModel;
             if (cacheModel.ReregisterAcademicYear == null)
             {
@@ -749,7 +749,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             else
             {
                 cacheModel.ReregisterAcademicYear.HasSpecialismsSelected = hasSpecialismsSelected;
-                viewModel = cacheModel?.ReregisterAcademicYear;
+                viewModel = cacheModel.ReregisterAcademicYear;
             }
 
             return View(viewModel);
