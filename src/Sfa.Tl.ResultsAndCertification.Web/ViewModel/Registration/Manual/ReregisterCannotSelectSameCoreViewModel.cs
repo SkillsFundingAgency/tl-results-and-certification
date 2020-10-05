@@ -10,6 +10,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 
         public bool IsFromCoreDenialPage => true;
 
+        public bool IsChangeMode { get; set; }
+
         public BackLinkModel BackLink
         {
             get
@@ -17,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
                 return new BackLinkModel
                 {
                     RouteName = RouteConstants.ReregisterCore,
-                    RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
+                    RouteAttributes = IsChangeMode ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.IsChangeMode, "true" } } : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
                 };
             }
         }

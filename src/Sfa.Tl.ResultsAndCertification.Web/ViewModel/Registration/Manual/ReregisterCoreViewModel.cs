@@ -13,16 +13,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 
         public bool IsValidCore => !string.IsNullOrWhiteSpace(SelectedCoreCode) && !string.IsNullOrWhiteSpace(CoreCodeAtTheTimeOfWithdrawn) && !SelectedCoreCode.Equals(CoreCodeAtTheTimeOfWithdrawn, StringComparison.InvariantCultureIgnoreCase);
 
-        public override BackLinkModel BackLink
+        public override BackLinkModel BackLink => new BackLinkModel 
         {
-            get
-            {
-                return new BackLinkModel
-                {
-                    RouteName = RouteConstants.ReregisterProvider,
-                    RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
-                };
-            }
-        }
+            RouteName = (IsChangeMode && !IsChangeModeFromProvider) ? RouteConstants.ReregisterCheckAndSubmit : RouteConstants.ReregisterProvider, 
+            RouteAttributes = (IsChangeMode && IsChangeModeFromProvider) 
+                                ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.IsChangeMode, "true" } }
+                                : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
+        };
     }
 }

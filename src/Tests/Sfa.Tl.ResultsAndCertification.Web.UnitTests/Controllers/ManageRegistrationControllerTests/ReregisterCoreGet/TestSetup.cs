@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public async override Task When()
         {
-            Result = await Controller.ReregisterCoreAsync(ProfileId);
+            Result = await Controller.ReregisterCoreAsync(ProfileId, false);
         }
     }
 }
