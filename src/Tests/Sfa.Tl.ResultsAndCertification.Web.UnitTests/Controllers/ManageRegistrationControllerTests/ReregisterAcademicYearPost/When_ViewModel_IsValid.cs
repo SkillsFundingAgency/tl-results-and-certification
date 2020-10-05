@@ -26,10 +26,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         }
 
         [Fact]
-        public void Then_Redirected_To_SubmitReregisterAcademicYear()
+        public void Then_Redirected_To_ReregisterCheckAndSubmit()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.SubmitReregisterAcademicYear);
+            routeName.Should().Be(RouteConstants.ReregisterCheckAndSubmit);
         }
 
         [Fact]
