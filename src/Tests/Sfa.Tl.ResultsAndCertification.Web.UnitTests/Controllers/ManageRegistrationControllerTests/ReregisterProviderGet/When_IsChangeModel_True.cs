@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReregisterProviderGet
 {
-    public class When_Cache_Found : TestSetup
+    public class When_IsChangeModel_True : TestSetup
     {
         private ReregisterViewModel cacheResult;
         private SelectProviderViewModel _selectProviderViewModel;
@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public override void Given()
         {
+            IsChangeMode = true;
             mockresult = new RegistrationDetailsViewModel
             {
                 ProfileId = 1,
@@ -29,7 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             _selectProviderViewModel = new SelectProviderViewModel { ProvidersSelectList = new List<SelectListItem> { new SelectListItem { Text = "Hello", Value = "1" } } };
             _reRegisterProviderViewModel = new ReregisterProviderViewModel { ProfileId = ProfileId, SelectedProviderUkprn = "12345678" };
             
-            cacheResult = new ReregisterViewModel { ReregisterProvider = _reRegisterProviderViewModel};
+            cacheResult = new ReregisterViewModel 
+            { 
+                ReregisterProvider = _reRegisterProviderViewModel,
+                ReregisterCore = new ReregisterCoreViewModel(),
+                ReregisterAcademicYear = new ReregisterAcademicYearViewModel()
+            };
             CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(cacheResult);
 
             RegistrationLoader.GetRegisteredTqAoProviderDetailsAsync(AoUkprn).Returns(_selectProviderViewModel);
@@ -37,14 +43,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         }
 
         [Fact]
-        public void Then_Expecteds_Methods_Called()
+        public void Then_Called_Expected_Methods()
         {
             RegistrationLoader.Received(1).GetRegisteredTqAoProviderDetailsAsync(AoUkprn);
             RegistrationLoader.Received(1).GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus);
         }
 
         [Fact]
-        public void Then_Returns_Expected_Results()
+        public void Then_Returns_Expected_BackLink()
         {
             Result.Should().NotBeNull();
             Result.Should().BeOfType(typeof(ViewResult));
@@ -56,18 +62,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             model.Should().NotBeNull();
 
             model.ProfileId.Should().Be(mockresult.ProfileId);
-            model.IsChangeMode.Should().BeFalse();
+            model.IsChangeMode.Should().BeTrue();
             model.SelectedProviderUkprn.Should().Be(_reRegisterProviderViewModel.SelectedProviderUkprn);
             model.ProvidersSelectList.Should().NotBeNull();
             model.ProvidersSelectList.Count.Should().Be(_selectProviderViewModel.ProvidersSelectList.Count);
 
             var backLink = model.BackLink;
-            backLink.RouteName.Should().Be(RouteConstants.AmendWithdrawRegistration);
-            backLink.RouteAttributes.Count.Should().Be(2);
+            backLink.RouteName.Should().Be(RouteConstants.ReregisterCheckAndSubmit);
+            backLink.RouteAttributes.Count.Should().Be(1);
             backLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValue);
             routeValue.Should().Be(mockresult.ProfileId.ToString());
-            backLink.RouteAttributes.TryGetValue(Constants.ChangeStatusId, out string routeValueChangeStatus);
-            routeValueChangeStatus.Should().Be(((int)RegistrationChangeStatus.Reregister).ToString());
         }
     }
 }
