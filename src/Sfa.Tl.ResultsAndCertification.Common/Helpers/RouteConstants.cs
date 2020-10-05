@@ -116,6 +116,7 @@
         public const string SubmitReregisterSpecialisms = "SubmitReregisterSpecialisms";
         public const string ReregisterAcademicYear = "ReregisterAcademicYear";
         public const string SubmitReregisterAcademicYear = "SubmitReregisterAcademicYear";
+        public const string ReregisterCheckAndSubmit = "ReregisterCheckAndSubmit";
 
         // Search Registration
         public const string SearchRegistration = "SearchRegistration";

@@ -770,7 +770,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.ReregisterAcademicYear = viewModel;
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
             
-            return RedirectToRoute(RouteConstants.SubmitReregisterAcademicYear);
+            return RedirectToRoute(RouteConstants.ReregisterCheckAndSubmit, new { viewModel.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("register-learner-new-course-check-and-submit/{profileId}", Name = RouteConstants.ReregisterCheckAndSubmit)]
+        public async Task<IActionResult> ReregisterCheckAndSubmitAsync(int profileId)
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+
+            var viewModel = new ReregisterCheckAndSubmitViewModel { ReregisterModel = cacheModel };
+
+            if (!viewModel.IsCheckAndSubmitPageValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. " +
+                    $"Method: ReregisterCheckAndSubmitAsync({profileId}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            viewModel.Uln = registrationDetails.Uln;
+            await _cacheService.SetAsync(CacheKey, viewModel.ResetChangeMode());
+            return View(viewModel);
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
