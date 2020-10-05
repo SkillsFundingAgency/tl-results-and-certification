@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         protected int ProfileId;
         protected Guid UserId;
         protected string CacheKey;
+        protected bool IsChangeMode;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
         protected ILogger<ManageRegistrationController> Logger;
@@ -50,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public async override Task When()
         {
-            Result = await Controller.ReregisterCoreAsync(ProfileId, false);
+            Result = await Controller.ReregisterCoreAsync(ProfileId, IsChangeMode);
         }
     }
 }
