@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -585,8 +586,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("register-learner-new-course-select-core/{profileId}", Name = RouteConstants.ReregisterCore)]
-        public async Task<IActionResult> ReregisterCoreAsync(int profileId)
+        [Route("register-learner-new-course-select-core/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.ReregisterCore)]
+        public async Task<IActionResult> ReregisterCoreAsync(int profileId, bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
             if (cacheModel?.ReregisterProvider == null)
@@ -603,6 +604,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = cacheModel?.ReregisterCore == null ? new ReregisterCoreViewModel() : cacheModel.ReregisterCore;
             viewModel.ProfileId = profileId;
             viewModel.CoreSelectList = providerCores.CoreSelectList;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForCore;
+            viewModel.IsChangeModeFromProvider = cacheModel.ReregisterProvider.IsChangeMode;
             return View(viewModel);
         }
 
@@ -615,7 +618,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var coreViewModel = await GetRegisteredProviderCores(cacheModel.ReregisterProvider.SelectedProviderUkprn.ToLong());
-            
+
             if (!ModelState.IsValid)
             {
                 model.CoreSelectList = coreViewModel.CoreSelectList;
@@ -629,17 +632,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
+            if (cacheModel?.ReregisterCore?.SelectedCoreCode != model.SelectedCoreCode)
+            {
+                cacheModel.SpecialismQuestion = null;
+                cacheModel.ReregisterSpecialisms = null;
+            }
+
             model.CoreCodeAtTheTimeOfWithdrawn = registrationDetails.PathwayLarId;
             model.SelectedCoreDisplayName = coreViewModel?.CoreSelectList?.FirstOrDefault(p => p.Value == model.SelectedCoreCode)?.Text;
             cacheModel.ReregisterCore = model;
 
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
-            return RedirectToRoute(model.IsValidCore ? RouteConstants.ReregisterSpecialismQuestion : RouteConstants.ReregisterCannotSelectSameCore, new { model.ProfileId });
+            object routeValues = model.IsChangeMode ? new RouteValueDictionary { { Constants.ProfileId, model.ProfileId }, { Constants.IsChangeMode, model.IsChangeMode.ToString() } } : new RouteValueDictionary { { Constants.ProfileId, model.ProfileId } };
+            return RedirectToRoute(model.IsValidCore ? RouteConstants.ReregisterSpecialismQuestion : RouteConstants.ReregisterCannotSelectSameCore, routeValues);
         }
 
         [HttpGet]
-        [Route("cannot-select-same-core/{profileId}", Name = RouteConstants.ReregisterCannotSelectSameCore)]
-        public async Task<IActionResult> ReregisterCannotSelectSameCoreAsync(int profileId)
+        [Route("cannot-select-same-core/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.ReregisterCannotSelectSameCore)]
+        public async Task<IActionResult> ReregisterCannotSelectSameCoreAsync(int profileId, bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
             if (cacheModel?.ReregisterCore == null)
@@ -652,7 +662,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var viewModel = new ReregisterCannotSelectSameCoreViewModel { ProfileId = profileId };
+            var viewModel = new ReregisterCannotSelectSameCoreViewModel { ProfileId = profileId, IsChangeMode = isChangeMode };
             return View(viewModel);
         }
 
