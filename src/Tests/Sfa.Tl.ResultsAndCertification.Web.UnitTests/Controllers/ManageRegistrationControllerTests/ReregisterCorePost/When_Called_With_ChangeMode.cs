@@ -52,5 +52,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
             route.RouteValues[Constants.IsChangeMode].Should().Be(IsChangeMode.ToString().ToLowerInvariant());
         }
+
+        [Fact]
+        public void Then_ReregisterViewModel_Reset()
+        {
+            CacheService.Received(1)
+                .SetAsync(CacheKey, Arg.Is<ReregisterViewModel>(x =>
+                    x.ReregisterCore == ViewModel &&
+                    x.SpecialismQuestion == null &&
+                    x.ReregisterSpecialisms == null &&
+                    x.ReregisterAcademicYear == _academicYearViewModel
+                    ));
+        }
     }
 }
