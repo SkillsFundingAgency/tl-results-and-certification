@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         }
 
         [Fact]
-        public void Then_Redirected_To_ReregisterSpecialisms()
+        public void Then_Redirected_To_ReregisterAcademicYear()
         {
             var route = Result as RedirectToRouteResult;
             var routeName = route.RouteName;
