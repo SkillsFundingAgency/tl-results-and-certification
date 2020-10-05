@@ -132,6 +132,12 @@
   <data name="Page_Title_Add_Registration_Check_And_Submit" xml:space="preserve">
     <value>Add a new registration - Check and submit page</value>
   </data>
+  <data name="Page_Title_Reregister_Registration_Check_And_Submit" xml:space="preserve">
+    <value>Register learner on a new course - Check and submit page</value>
+  </data>
+  <data name="ReregisterRegistration_Caption_Text" xml:space="preserve">
+    <value>Register learner on a new course</value>
+  </data>
   <data name="Specialism_None_Selected_Text" xml:space="preserve">
     <value>None selected</value>
   </data>
