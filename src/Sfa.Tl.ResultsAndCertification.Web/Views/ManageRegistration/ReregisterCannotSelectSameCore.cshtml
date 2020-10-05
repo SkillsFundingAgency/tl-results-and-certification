@@ -19,7 +19,7 @@
             <p class="govuk-body">@ReregisterCannotSelectSameCore.To_Register_The_Learner_On_Same_Course_Text</p>
         </div>
         <p>
-            <a id="registrationDetailsButton" class="govuk-button" role="button" asp-route="RejoinRegistration" asp-route-profileId="@Model.ProfileId" asp-route-isFromCoreDenialPage="@Model.IsFromCoreDenialPage">
+            <a id="registrationDetailsButton" class="govuk-button" role="button" asp-route="RejoinRegistration" asp-route-profileId="@Model.ProfileId" asp-route-isFromCoreDenialPage="@Model.IsFromCoreDenialPage.ToString().ToLowerInvariant()">
                 @ReregisterCannotSelectSameCore.Reactivate_The_Registration_Button_Text
             </a>
         </p>

@@ -643,7 +643,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.ReregisterCore = model;
 
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
-            object routeValues = model.IsChangeMode ? new RouteValueDictionary { { Constants.ProfileId, model.ProfileId }, { Constants.IsChangeMode, model.IsChangeMode.ToString() } } : new RouteValueDictionary { { Constants.ProfileId, model.ProfileId } };
+            var routeValues = model.IsChangeMode ? new RouteValueDictionary { { Constants.ProfileId, model.ProfileId }, { Constants.IsChangeMode, "true" } } : new RouteValueDictionary { { Constants.ProfileId, model.ProfileId } };
             return RedirectToRoute(model.IsValidCore ? RouteConstants.ReregisterSpecialismQuestion : RouteConstants.ReregisterCannotSelectSameCore, routeValues);
         }
 

@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             var routeName = route.RouteName;
             routeName.Should().Be(RouteConstants.ReregisterSpecialismQuestion);
             route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
-            route.RouteValues[Constants.IsChangeMode].Should().Be(IsChangeMode.ToString());
+            route.RouteValues[Constants.IsChangeMode].Should().Be(IsChangeMode.ToString().ToLowerInvariant());
         }
     }
 }
