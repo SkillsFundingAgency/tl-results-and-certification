@@ -527,8 +527,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("register-learner-new-course-select-provider/{profileId}", Name = RouteConstants.ReregisterProvider)]
-        public async Task<IActionResult> ReregisterProviderAsync(int profileId)
+        [Route("register-learner-new-course-select-provider/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.ReregisterProvider)]
+        public async Task<IActionResult> ReregisterProviderAsync(int profileId, bool isChangeMode)
         {
             var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
@@ -542,6 +542,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = cacheModel?.ReregisterProvider == null ? new ReregisterProviderViewModel() : cacheModel.ReregisterProvider;
             viewModel.ProfileId = profileId;
             viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
+            viewModel.IsChangeMode = isChangeMode;
+            
             return View(viewModel);
         }
 
@@ -562,12 +564,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
 
             if (cacheModel?.ReregisterProvider != null)
+            {
+                if (cacheModel.ReregisterProvider.SelectedProviderUkprn != model.SelectedProviderUkprn)
+                {
+                    cacheModel.ReregisterCore = null;
+                    cacheModel.SpecialismQuestion = null;
+                    cacheModel.ReregisterSpecialisms = null;
+                    cacheModel.ReregisterAcademicYear = null;
+                }
                 cacheModel.ReregisterProvider = model;
+            }
             else
                 cacheModel = new ReregisterViewModel { ReregisterProvider = model };
 
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.ReregisterCore, new { profileId = model.ProfileId });
+            
+            return model.IsChangeMode ? 
+                RedirectToRoute(RouteConstants.ReregisterCore, new { profileId = model.ProfileId, isChangeMode = "true" }) :
+                RedirectToRoute(RouteConstants.ReregisterCore, new { profileId = model.ProfileId });
         }
 
         [HttpGet]

@@ -13,10 +13,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         {
             get
             {
+                if (IsChangeMode)
+                {
+                    return new BackLinkModel
+                    {
+                        RouteName = RouteConstants.ReregisterCheckAndSubmit,
+                        RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
+                    };
+                }
+
                 return new BackLinkModel
                 {
                     RouteName = RouteConstants.AmendWithdrawRegistration,
-                    RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.ChangeStatusId, ((int)RegistrationChangeStatus.Reregister).ToString() } }
+                    RouteAttributes = new Dictionary<string, string>
+                    { 
+                        { Constants.ProfileId, ProfileId.ToString() },
+                        { Constants.ChangeStatusId, ((int)RegistrationChangeStatus.Reregister).ToString() }
+                    }
                 };
             }
         }
