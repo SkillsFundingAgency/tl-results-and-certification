@@ -476,8 +476,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reactivate-registration-same-course/{profileId}/{isFromCoreDenialPage:bool?}", Name = RouteConstants.RejoinRegistration)]
-        public async Task<IActionResult> RejoinRegistrationAsync(int profileId, bool isFromCoreDenialPage)
+        [Route("reactivate-registration-same-course/{profileId}/{isFromCoreDenialPage:bool?}/{isChangeMode:bool?}", Name = RouteConstants.RejoinRegistration)]
+        public async Task<IActionResult> RejoinRegistrationAsync(int profileId, bool isFromCoreDenialPage, bool isChangeMode)
         {
             var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
@@ -486,7 +486,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var viewModel = new RejoinRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln, IsFromCoreDenialPage = isFromCoreDenialPage };
+            var viewModel = new RejoinRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln, IsFromCoreDenialPage = isFromCoreDenialPage, IsChangeMode = isChangeMode };
             return View(viewModel);
         }
 
