@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                     x.ReregisterCore == null &&
                     x.SpecialismQuestion == null &&
                     x.ReregisterSpecialisms == null &&
-                    x.ReregisterAcademicYear == null &&
+                    x.ReregisterAcademicYear != null &&
                     x.ReregisterProvider == ViewModel
                     ));
         }

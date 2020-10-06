@@ -543,8 +543,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = cacheModel?.ReregisterProvider == null ? new ReregisterProviderViewModel() : cacheModel.ReregisterProvider;
             viewModel.ProfileId = profileId;
             viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
-            viewModel.IsChangeMode = isChangeMode;
-            
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForProvider;
+
             return View(viewModel);
         }
 
@@ -571,7 +571,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     cacheModel.ReregisterCore = null;
                     cacheModel.SpecialismQuestion = null;
                     cacheModel.ReregisterSpecialisms = null;
-                    cacheModel.ReregisterAcademicYear = null;
                 }
                 cacheModel.ReregisterProvider = model;
             }
