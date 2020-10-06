@@ -11,5 +11,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         
         public bool IsChangeModeAllowedForProvider => ReregisterAcademicYear != null;
         public bool IsChangeModeAllowedForCore => ReregisterProvider != null && ReregisterAcademicYear != null;
+
+        public bool IsChangeModeAllowed => ReregisterProvider != null && ReregisterCore != null
+            && SpecialismQuestion != null && ((SpecialismQuestion.HasLearnerDecidedSpecialism == true && ReregisterSpecialisms != null)
+           || (SpecialismQuestion.HasLearnerDecidedSpecialism == false && ReregisterSpecialisms == null)) && ReregisterAcademicYear != null;
     }
 }
