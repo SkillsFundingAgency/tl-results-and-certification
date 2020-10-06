@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 
         public override BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = HasSpecialismsSelected ? RouteConstants.ReregisterSpecialisms : RouteConstants.ReregisterSpecialismQuestion,
+            RouteName = IsChangeMode ? RouteConstants.ReregisterCheckAndSubmit : HasSpecialismsSelected ? RouteConstants.ReregisterSpecialisms : RouteConstants.ReregisterSpecialismQuestion,
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
         };
     }

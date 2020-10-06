@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
     {
         protected int Ukprn;
         protected Guid UserId;
+        protected int ProfileId;
         protected string CacheKey;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
@@ -38,6 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             Controller = new ManageRegistrationController(RegistrationLoader, CacheService, Logger);
 
             Ukprn = 1234567890;
+            ProfileId = 1;
             var httpContext = new ClaimsIdentityBuilder<ManageRegistrationController>(Controller)
                .Add(CustomClaimTypes.Ukprn, Ukprn.ToString())
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())

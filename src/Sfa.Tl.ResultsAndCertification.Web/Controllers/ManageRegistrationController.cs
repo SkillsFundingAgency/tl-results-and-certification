@@ -544,7 +544,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             viewModel.ProfileId = profileId;
             viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
             viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForProvider;
-
             return View(viewModel);
         }
 
@@ -762,8 +761,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("register-learner-new-course-select-academic-year/{profileId}", Name = RouteConstants.ReregisterAcademicYear)]
-        public async Task<IActionResult> ReregisterAcademicYearAsync(int profileId)
+        [Route("register-learner-new-course-select-academic-year/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.ReregisterAcademicYear)]
+        public async Task<IActionResult> ReregisterAcademicYearAsync(int profileId, bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
             if (cacheModel == null || cacheModel.SpecialismQuestion == null ||
@@ -789,7 +788,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.ReregisterAcademicYear.HasSpecialismsSelected = hasSpecialismsSelected;
                 viewModel = cacheModel.ReregisterAcademicYear;
             }
-
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowed;
             return View(viewModel);
         }
 
