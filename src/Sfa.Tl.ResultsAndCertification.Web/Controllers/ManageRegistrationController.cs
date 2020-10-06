@@ -850,7 +850,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             await _cacheService.RemoveAsync<ReregisterViewModel>(ReregisterCacheKey);
             await _cacheService.SetAsync(string.Concat(ReregisterCacheKey, Constants.ReregistrationConfirmationViewModel), response, CacheExpiryTime.XSmall);
-            return RedirectToRoute(RouteConstants.ChangeRegistrationConfirmation);
+            return RedirectToRoute(RouteConstants.ReregistrationConfirmation);
         }
 
         [HttpGet]
