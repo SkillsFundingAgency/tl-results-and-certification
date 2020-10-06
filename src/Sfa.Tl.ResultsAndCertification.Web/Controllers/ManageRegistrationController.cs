@@ -666,8 +666,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("register-learner-new-course-has-learner-decided-specialism/{profileId}", Name = RouteConstants.ReregisterSpecialismQuestion)]
-        public async Task<IActionResult> ReregisterSpecialismQuestionAsync(int profileId)
+        [Route("register-learner-new-course-has-learner-decided-specialism/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.ReregisterSpecialismQuestion)]
+        public async Task<IActionResult> ReregisterSpecialismQuestionAsync(int profileId, bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
 
@@ -683,6 +683,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var viewModel = cacheModel?.SpecialismQuestion == null ? new ReregisterSpecialismQuestionViewModel() : cacheModel.SpecialismQuestion;
             viewModel.ProfileId = profileId;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForSpecialismQuestion;
+            viewModel.IsChangeModeFromCore = cacheModel.ReregisterCore.IsChangeMode;
 
             return View(viewModel);
         }
@@ -704,14 +706,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.SpecialismQuestion = model;
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
 
+            if (model.IsChangeMode)
+                if (model.HasLearnerDecidedSpecialism.Value)
+                    return RedirectToRoute(RouteConstants.ReregisterSpecialisms, new { model.ProfileId, isChangeMode = "true" });
+                else
+                    return RedirectToRoute(RouteConstants.ReregisterCheckAndSubmit, new { model.ProfileId });
+
             return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ? 
                 RouteConstants.ReregisterSpecialisms : RouteConstants.ReregisterAcademicYear, 
                 new { model.ProfileId });
         }
 
         [HttpGet]
-        [Route("register-learner-new-course-select-specialism/{profileId}", Name = RouteConstants.ReregisterSpecialisms)]
-        public async Task<IActionResult> ReregisterSpecialismsAsync(int profileId)
+        [Route("register-learner-new-course-select-specialism/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.ReregisterSpecialisms)]
+        public async Task<IActionResult> ReregisterSpecialismsAsync(int profileId, bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
 
@@ -727,6 +735,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var viewModel = cacheModel?.ReregisterSpecialisms == null ? new ReregisterSpecialismViewModel { PathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.ReregisterCore.SelectedCoreCode) } : cacheModel.ReregisterSpecialisms;
             viewModel.ProfileId = profileId;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForSelectSpecialism;
+            viewModel.IsChangeModeFromSpecialismQuestion = cacheModel.SpecialismQuestion.IsChangeMode;
+            
             return View(viewModel);
         }
 
@@ -741,9 +752,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.SpecialismQuestion == null || cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            if (model.IsChangeMode && cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism.Value == false)
+                cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism = true;
+
             cacheModel.ReregisterSpecialisms = model;
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.ReregisterAcademicYear, new { model.ProfileId });
+            
+            return RedirectToRoute(model.IsChangeMode ? RouteConstants.ReregisterCheckAndSubmit : RouteConstants.ReregisterAcademicYear, new { model.ProfileId });
         }
 
         [HttpGet]

@@ -14,6 +14,8 @@
         <form class="form" asp-route="SubmitReregisterSpecialisms">
             <partial name="_ValidationSummary" />
             <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="IsChangeMode" value="@Model.IsChangeMode.ToString()" />
+            <input type="hidden" asp-for="IsChangeModeFromSpecialismQuestion" value="@Model.IsChangeModeFromSpecialismQuestion.ToString()" />
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@SelectSpecialisms.Page_Caption_Reregister_Text</span>
                 <vc:select-specialism model=Model></vc:select-specialism>
