@@ -699,13 +699,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel == null || cacheModel.ReregisterCore == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            var isChangeMode = model.IsChangeMode;
             if (!model.HasLearnerDecidedSpecialism.Value)
+            {
                 cacheModel.ReregisterSpecialisms = null;
+                model.IsChangeMode = false;
+            }
 
             cacheModel.SpecialismQuestion = model;
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
 
-            if (model.IsChangeMode)
+            if (isChangeMode)
                 if (model.HasLearnerDecidedSpecialism.Value)
                     return RedirectToRoute(RouteConstants.ReregisterSpecialisms, new { model.ProfileId, isChangeMode = "true" });
                 else
