@@ -1,0 +1,19 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ReregistrationResponse
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @ReregistrationConfirmation.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">@ReregistrationConfirmation.Heading_Successful Registration created successfully</h1>
+            <div class="govuk-panel__body">
+                @ReregistrationConfirmation.Caption_Text_Uln @Model.Uln
+            </div>
+        </div>
+        <p class="govuk-body govuk-!-padding-top-3">@ReregistrationConfirmation.You_Successfully_Registered_The_Learner_On_New_Course_Text</p>
+        <p class="govuk-!-margin-top-8"><a id="viewRegistrationButton" class="govuk-button" role="button" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">@ReregistrationConfirmation.View_Registration_Button_Text</a></p>
+    </div>
+</div>

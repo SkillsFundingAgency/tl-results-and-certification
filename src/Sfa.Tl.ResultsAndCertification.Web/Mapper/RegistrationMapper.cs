@@ -111,6 +111,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<RejoinRegistrationViewModel, RejoinRegistrationRequest>>());
+
+            CreateMap<ReregisterViewModel, ReregistrationRequest>()
+               .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ReregisterProvider.ProfileId))
+               .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ReregisterProvider.SelectedProviderUkprn.ToLong()))
+               .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.ReregisterCore.SelectedCoreCode))
+               .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.ReregisterSpecialisms != null ? s.ReregisterSpecialisms.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code) : new List<string>()))
+               .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.ReregisterAcademicYear.SelectedAcademicYear))
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ReregisterViewModel, ReregistrationRequest>>());
         }
     }
 }

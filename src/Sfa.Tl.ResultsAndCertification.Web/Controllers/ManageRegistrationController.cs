@@ -834,6 +834,39 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [Route("register-learner-new-course-check-and-submit", Name = RouteConstants.SubmitReregisterCheckAndSubmit)]
+        public async Task<IActionResult> ReregisterCheckAndSubmitAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var response = await _registrationLoader.ReregistrationAsync(User.GetUkPrn(), cacheModel);
+
+            if (response == null || response.IsSelectedCoreSameAsWithdrawn || !response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            await _cacheService.RemoveAsync<ReregisterViewModel>(ReregisterCacheKey);
+            await _cacheService.SetAsync(string.Concat(ReregisterCacheKey, Constants.ReregistrationConfirmationViewModel), response, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.ChangeRegistrationConfirmation);
+        }
+
+        [HttpGet]
+        [Route("new-course-registration-confirmation", Name = RouteConstants.ReregistrationConfirmation)]
+        public async Task<IActionResult> ReregistrationConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<ReregistrationResponse>(string.Concat(ReregisterCacheKey, Constants.ReregistrationConfirmationViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ReregistrationConfirmationViewModel from redis cache re-registration confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
