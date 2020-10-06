@@ -446,6 +446,43 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqRegistrationPathwayRepository.CreateAsync(tqPathway) > 0;
         }
 
+        public async Task<bool> ReregistrationAsync(ReregistrationRequest model)
+        {
+            var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, false);
+
+            if (tqRegistrationPathway == null || tqRegistrationPathway.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: ReregisterRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
+                return false;
+            }
+
+            var validateStage3Response = await ValidateManualRegistrationTlevelsAsync(model);
+
+            if (validateStage3Response.IsValid)
+            {
+                var tqPathway = new TqRegistrationPathway
+                {
+                    TqRegistrationProfileId = tqRegistrationPathway.TqRegistrationProfileId,
+                    TqProviderId = validateStage3Response.TqProviderId,
+                    AcademicYear = validateStage3Response.AcademicYear,
+                    StartDate = DateTime.UtcNow,
+                    Status = RegistrationPathwayStatus.Active,
+                    IsBulkUpload = false,
+                    TqRegistrationSpecialisms = MapSpecialisms(validateStage3Response.TlSpecialismLarIds, model.PerformedBy, 0, false),
+                    CreatedBy = model.PerformedBy,
+                    CreatedOn = DateTime.UtcNow
+                };
+
+                return await _tqRegistrationPathwayRepository.CreateAsync(tqPathway) > 0;
+            }
+            else
+            {
+                var errorMessage = string.Join(",", validateStage3Response.ValidationErrors.Select(e => e.ErrorMessage));
+                _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Manual Reregistration failed to process due to validation errors = {errorMessage}. Method: ReregistrationAsync()");
+                return false;
+            }            
+        }
+
         #region Private Methods
 
         private async Task<bool> HandleProfileChanges(ManageRegistration model)
