@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public override BackLinkModel BackLink => IsChangeMode
             ? new BackLinkModel
             {
-                RouteName = IsChangeModeFromSpecialismQuestion ? RouteConstants.ReregisterCore : RouteConstants.ReregisterCheckAndSubmit,
+                RouteName = IsChangeModeFromSpecialismQuestion ? RouteConstants.ReregisterSpecialismQuestion : RouteConstants.ReregisterCheckAndSubmit,
                 RouteAttributes = IsChangeModeFromSpecialismQuestion ?
                             new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.IsChangeMode, "true" } } :
                             new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
