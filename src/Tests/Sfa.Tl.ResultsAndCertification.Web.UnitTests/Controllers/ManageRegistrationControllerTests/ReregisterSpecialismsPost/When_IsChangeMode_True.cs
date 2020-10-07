@@ -29,8 +29,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         [Fact]
         public void Then_Redirected_To_ReregisterCheckAndSubmit()
         {
-            var actualRouteName = (Result as RedirectToRouteResult).RouteName;
-            actualRouteName.Should().Be(RouteConstants.ReregisterCheckAndSubmit);
+            var route = Result as RedirectToRouteResult;
+            var routeName = route.RouteName;
+            route.RouteValues.Count.Should().Be(1);
+            routeName.Should().Be(RouteConstants.ReregisterCheckAndSubmit);
+            route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
         }
     }
 }
