@@ -21,8 +21,8 @@
                 <vc:select-specialism model=Model></vc:select-specialism>
             </div>
             <p>
-                @{ var buttonText = @SelectSpecialisms.Continue_Button_Text; }
-                <button type="submit" class="govuk-button" data-module="govuk-button">@buttonText</button>
+                @{ var buttonText = Model.IsChangeMode ? @SelectSpecialisms.Change_Button_Text : @SelectSpecialisms.Continue_Button_Text; }
+                <button id="submitButton" type="submit" class="govuk-button" data-module="govuk-button">@buttonText</button>
             </p>
         </form>
     </div>
