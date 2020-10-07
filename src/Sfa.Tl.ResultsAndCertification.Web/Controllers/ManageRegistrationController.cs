@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("change-learners-name/{profileId}", Name = RouteConstants.ChangeRegistrationLearnersName)]
+        [Route("change-registration-learners-name/{profileId}", Name = RouteConstants.ChangeRegistrationLearnersName)]
         public async Task<IActionResult> ChangeLearnersNameAsync(int profileId)
         {
             var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeLearnersNameViewModel>(User.GetUkPrn(), profileId);
@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("change-learners-name", Name = RouteConstants.SubmitChangeRegistrationLearnersName)]
+        [Route("change-registration-learners-name", Name = RouteConstants.SubmitChangeRegistrationLearnersName)]
         public async Task<IActionResult> ChangeLearnersNameAsync(ChangeLearnersNameViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -81,7 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("change-learners-date-of-birth/{profileId}", Name = RouteConstants.ChangeRegistrationDateofBirth)]
+        [Route("change-registration-learners-date-of-birth/{profileId}", Name = RouteConstants.ChangeRegistrationDateofBirth)]
         public async Task<IActionResult> ChangeDateofBirthAsync(int profileId)
         {
             var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeDateofBirthViewModel>(User.GetUkPrn(), profileId);
@@ -95,7 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("change-learners-date-of-birth", Name = RouteConstants.SubmitChangeRegistrationDateofBirth)]
+        [Route("change-registration-learners-date-of-birth", Name = RouteConstants.SubmitChangeRegistrationDateofBirth)]
         public async Task<IActionResult> ChangeDateofBirthAsync(ChangeDateofBirthViewModel viewModel)
         {
             if (!IsValidDateofBirth(viewModel))
@@ -131,7 +131,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("change-provider/{profileId}/{isback:bool?}", Name = RouteConstants.ChangeRegistrationProvider)]
+        [Route("change-registration-provider/{profileId}/{isback:bool?}", Name = RouteConstants.ChangeRegistrationProvider)]
         public async Task<IActionResult> ChangeProviderAsync(int profileId, bool isback = false)
         {
             var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeProviderViewModel>(User.GetUkPrn(), profileId);
@@ -150,7 +150,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("change-provider", Name = RouteConstants.SubmitChangeRegistrationProvider)]
+        [Route("change-registration-provider", Name = RouteConstants.SubmitChangeRegistrationProvider)]
         public async Task<IActionResult> ChangeProviderAsync(ChangeProviderViewModel model)
         {
             if (model == null)
@@ -235,7 +235,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("provider-not-offering-same-core", Name = RouteConstants.ChangeRegistrationProviderNotOfferingSameCore)]
+        [Route("change-registration-provider-not-offering-core", Name = RouteConstants.ChangeRegistrationProviderNotOfferingSameCore)]
         public async Task<IActionResult> ChangeProviderNotOfferingSameCoreAsync()
         {
             var cacheViewModel = await _cacheService.GetAsync<ChangeProviderCoreNotSupportedViewModel>(string.Concat(CacheKey, Constants.ChangeRegistrationProviderCoreNotSupportedViewModel));

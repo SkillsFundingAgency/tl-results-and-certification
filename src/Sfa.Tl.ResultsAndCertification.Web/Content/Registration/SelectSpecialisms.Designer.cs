@@ -115,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change specialism page.
+        ///   Looks up a localized string similar to Change registration - Select specialism page.
         /// </summary>
         public static string Page_Title_Change_Registration_Select_Specialism {
             get {

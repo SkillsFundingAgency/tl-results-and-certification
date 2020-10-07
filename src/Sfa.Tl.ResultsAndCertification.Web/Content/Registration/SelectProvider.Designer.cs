@@ -142,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change provider page.
+        ///   Looks up a localized string similar to Change registration - Select the provider page.
         /// </summary>
         public static string Page_Title_Change_Registration_Select_Provider {
             get {

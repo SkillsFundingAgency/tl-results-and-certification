@@ -142,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change learner’s date of birth page.
+        ///   Looks up a localized string similar to Change registration - Enter the learner&apos;s date of birth page.
         /// </summary>
         public static string Page_Title_Change_DateofBirth {
             get {
