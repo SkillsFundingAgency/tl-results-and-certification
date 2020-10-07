@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change registration - Provider does not offer the same core page.
+        ///   Looks up a localized string similar to Change registration - Provider has not been set up to offer core page.
         /// </summary>
         public static string Page_Title_Text {
             get {

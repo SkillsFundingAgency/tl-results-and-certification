@@ -130,7 +130,7 @@
     <value>Provider has not been set up to offer the same core</value>
   </data>
   <data name="Page_Title_Text" xml:space="preserve">
-    <value>Change registration - Provider does not offer the same core page</value>
+    <value>Change registration - Provider has not been set up to offer core page</value>
   </data>
   <data name="Registration_Details_Button_Text" xml:space="preserve">
     <value>Back to registration details</value>

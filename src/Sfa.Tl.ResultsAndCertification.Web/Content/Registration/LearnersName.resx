@@ -124,7 +124,7 @@
     <value>Change registration</value>
   </data>
   <data name="ChangeRegistration_Page_Title" xml:space="preserve">
-    <value>Change learner’s name page</value>
+    <value>change-registration-learners-name</value>
   </data>
   <data name="Change_Button_Text" xml:space="preserve">
     <value>Change</value>
