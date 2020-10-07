@@ -622,7 +622,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("registration-cancelled-confirmation", Name = RouteConstants.RegistrationCancelledConfirmation)]
+        [Route("registration-deleted-confirmation", Name = RouteConstants.RegistrationCancelledConfirmation)]
         public async Task<IActionResult> RegistrationCancelledConfirmationAsync()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<RegistrationCancelledConfirmationViewModel>(CacheKey);
