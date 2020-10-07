@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReregisterSpecialismsGet
 {
-    public class When_Cache_Found : TestSetup
+    public class When_ChangeMode_From_SplQuest : TestSetup
     {
         private ReregisterViewModel cacheResult;
         private ReregisterCoreViewModel _reregisterCoreViewModel;
@@ -23,6 +23,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public override void Given()
         {
+            // input variance.
+            var isChangeFromSplQuest = false;
+            IsChangeMode = true;
+
             _registrationDetailsViewModel = new RegistrationDetailsViewModel
             {
                 ProfileId = 1,
@@ -30,24 +34,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             };
 
             _reregisterCoreViewModel = new ReregisterCoreViewModel { SelectedCoreCode = _coreCode, CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = _coreCode } } };
-            _reregisterSpecialismQuestionViewModel = new ReregisterSpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true };
+            _reregisterSpecialismQuestionViewModel = new ReregisterSpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true, IsChangeMode = isChangeFromSplQuest };
             _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayName = "Test Pathway", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Id = 1, Code = "345678", Name = "Test Specialism", DisplayName = "Test Specialism (345678)", IsSelected = true } } };
 
             cacheResult = new ReregisterViewModel
             {
+                ReregisterProvider = new ReregisterProviderViewModel(),
                 ReregisterCore = _reregisterCoreViewModel,
-                SpecialismQuestion = _reregisterSpecialismQuestionViewModel
+                SpecialismQuestion = _reregisterSpecialismQuestionViewModel,
+                ReregisterAcademicYear = new ReregisterAcademicYearViewModel()
             };
             CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(cacheResult);
             RegistrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(AoUkprn, _coreCode).Returns(_pathwaySpecialismsViewModel);
             RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(_registrationDetailsViewModel);
-        }
-
-        [Fact]
-        public void Then_Expected_Methods_Called()
-        {
-            RegistrationLoader.Received(1).GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus);
-            RegistrationLoader.Received(1).GetPathwaySpecialismsByPathwayLarIdAsync(AoUkprn, _coreCode);
         }
 
         [Fact]
@@ -66,15 +65,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             model.HasSpecialismSelected.Should().NotBeNull();
             model.PathwaySpecialisms.Specialisms.Should().NotBeNull();
             model.PathwaySpecialisms.Specialisms.Count.Should().Be(_pathwaySpecialismsViewModel.Specialisms.Count);
-            model.IsChangeMode.Should().BeFalse();
-            model.IsChangeModeFromSpecialismQuestion.Should().BeFalse();
+            model.IsChangeMode.Should().BeTrue();
+            model.IsChangeModeFromSpecialismQuestion.Should().BeFalse(); 
             model.BackLink.Should().NotBeNull();
 
             var backLink = model.BackLink;
-            backLink.RouteName.Should().Be(RouteConstants.ReregisterSpecialismQuestion);
+            backLink.RouteName.Should().Be(RouteConstants.ReregisterCheckAndSubmit);
             backLink.RouteAttributes.Count.Should().Be(1);
-            backLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValue);
-            routeValue.Should().Be(_registrationDetailsViewModel.ProfileId.ToString());
+            
+            backLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileIdParam);
+            profileIdParam.Should().Be(_registrationDetailsViewModel.ProfileId.ToString());
         }
     }
 }

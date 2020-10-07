@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
     {
         protected int AoUkprn;
         protected int ProfileId;
+        protected bool IsChangeMode;
         protected Guid UserId;
         protected string CacheKey;
         protected IRegistrationLoader RegistrationLoader;
@@ -50,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public async override Task When()
         {
-            Result = await Controller.ReregisterSpecialismQuestionAsync(ProfileId, false); // TODO
+            Result = await Controller.ReregisterSpecialismQuestionAsync(ProfileId, IsChangeMode);
         }
     }
 }

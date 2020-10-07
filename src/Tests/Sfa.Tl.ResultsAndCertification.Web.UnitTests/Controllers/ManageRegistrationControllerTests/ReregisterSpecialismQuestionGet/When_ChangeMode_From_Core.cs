@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReregisterSpecialismQuestionGet
 {
-    public class When_Cache_Found : TestSetup
+    public class When_ChangeMode_From_Core : TestSetup
     {
         private ReregisterViewModel cacheResult;
         private RegistrationDetailsViewModel mockresult = null;
@@ -16,28 +16,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public override void Given()
         {
+            // input variance.
+            var isChangeStartedFromCore = true;
+            IsChangeMode = true;
+
+            // mock setup
             mockresult = new RegistrationDetailsViewModel
             {
                 ProfileId = 1,
                 Status = _registrationPathwayStatus
             };
-
             cacheResult = new ReregisterViewModel
             {
-                ReregisterCore = new ReregisterCoreViewModel
-                {
-                    CoreCodeAtTheTimeOfWithdrawn = "999",
-                    SelectedCoreCode = "123"
-                }
+                ReregisterCore = new ReregisterCoreViewModel { IsChangeMode = isChangeStartedFromCore, CoreCodeAtTheTimeOfWithdrawn = "999", SelectedCoreCode = "123" },
+                ReregisterProvider = new ReregisterProviderViewModel(),
+                ReregisterAcademicYear = new ReregisterAcademicYearViewModel()
             };
+
             CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(cacheResult);
             RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(mockresult);
-        }
-
-        [Fact]
-        public void Then_Expected_Methods_Called()
-        {
-            RegistrationLoader.Received(1).GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus);
         }
 
         [Fact]
@@ -53,16 +50,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             model.Should().NotBeNull();
 
             model.ProfileId.Should().Be(mockresult.ProfileId);
-            model.IsChangeMode.Should().BeFalse();
-            model.IsChangeModeFromCore.Should().BeFalse();
+            model.IsChangeMode.Should().BeTrue();
+            model.IsChangeModeFromCore.Should().BeTrue();
 
             model.BackLink.Should().NotBeNull();
             var backLink = model.BackLink;
             backLink.RouteName.Should().Be(RouteConstants.ReregisterCore);
-            backLink.RouteAttributes.Count.Should().Be(1);
-            backLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValue);
-            routeValue.Should().Be(mockresult.ProfileId.ToString());
+            backLink.RouteAttributes.Count.Should().Be(2);
+            
+            backLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeParam1);
+            routeParam1.Should().Be(mockresult.ProfileId.ToString());
+            
+            backLink.RouteAttributes.TryGetValue(Constants.IsChangeMode, out string routeParam2);
+            routeParam2.Should().Be("true");
         }
-
     }
 }
