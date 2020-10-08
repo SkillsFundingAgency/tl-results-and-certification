@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         private ReregistrationRequest _reRegistrationRequest;
         private long _uln;
         private IList<TlPathway> _tlPathways;
+        private TqProvider _initialRegisteredTqProvider;
 
         public override void Given()
         {
@@ -71,9 +72,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(int profileId, bool withdrawRegistration, bool expectedResult)
+        public async Task Then_Returns_Expected_Results(int profileId, bool withdrawRegistration, bool isCoreSameAsWithdrawnCore, bool expectedResult)
         {
             _reRegistrationRequest.ProfileId = profileId;
+            if(isCoreSameAsWithdrawnCore)
+            {
+                _reRegistrationRequest.CoreCode = _initialRegisteredTqProvider.TqAwardingOrganisation.TlPathway.LarId;
+            }
             await WhenAsync(withdrawRegistration);
             _result.Should().Be(expectedResult);
         }
@@ -84,9 +89,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             {
                 return new[]
                 {
-                    new object[] { 1, true, true },
-                    new object[] { 1, false, false},
-                    new object[] { 10000000, true, false }
+                    new object[] { 1, true, false, true },
+                    new object[] { 1, true, true, false},
+                    new object[] { 1, false, false, false},                    
+                    new object[] { 10000000, true, false, false }
                 };
             }
         }
@@ -118,11 +124,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         private void SeedRegistrationData(long uln)
         {
+            _initialRegisteredTqProvider = TqProviders.First();
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
-            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProviders.First());
+            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, _initialRegisteredTqProvider);
 
-            var specialisms = new TlSpecialismBuilder().BuildList(EnumAwardingOrganisation.Pearson, TqProviders.First().TqAwardingOrganisation.TlPathway);
+            var specialisms = new TlSpecialismBuilder().BuildList(EnumAwardingOrganisation.Pearson, _initialRegisteredTqProvider.TqAwardingOrganisation.TlPathway);
 
             foreach (var specialism in specialisms)
             {

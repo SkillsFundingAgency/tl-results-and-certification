@@ -448,11 +448,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> ReregistrationAsync(ReregistrationRequest model)
         {
-            var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, false);
+            var tqRegistrationPathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == model.ProfileId
+                                                                                        && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn, p => p, p => p.CreatedOn, false,
+                                                                                        p => p.TqProvider, p => p.TqProvider.TqAwardingOrganisation, p => p.TqProvider.TqAwardingOrganisation.TlPathway);
 
             if (tqRegistrationPathway == null || tqRegistrationPathway.Status != RegistrationPathwayStatus.Withdrawn)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: ReregisterRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
+                return false;
+            }
+
+            var withdrawnCorecode = tqRegistrationPathway.TqProvider?.TqAwardingOrganisation?.TlPathway?.LarId;
+            if (string.IsNullOrWhiteSpace(withdrawnCorecode) || withdrawnCorecode.Equals(model.CoreCode, StringComparison.InvariantCultureIgnoreCase))
+            {
+                _logger.LogWarning(LogEvent.ManualReregistrationProcessFailed, $"Manual Reregistration failed to process due to validation error = Cannot reregister learner on same course that has withdrawn previously. Method: ReregistrationAsync()");
                 return false;
             }
 
@@ -478,7 +487,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             else
             {
                 var errorMessage = string.Join(",", validateStage3Response.ValidationErrors.Select(e => e.ErrorMessage));
-                _logger.LogWarning(LogEvent.ManualRegistrationProcessFailed, $"Manual Reregistration failed to process due to validation errors = {errorMessage}. Method: ReregistrationAsync()");
+                _logger.LogWarning(LogEvent.ManualReregistrationProcessFailed, $"Manual Reregistration failed to process due to validation errors = {errorMessage}. Method: ReregistrationAsync()");
                 return false;
             }            
         }
