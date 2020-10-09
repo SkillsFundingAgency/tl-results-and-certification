@@ -528,8 +528,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("register-learner-new-course-select-provider/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.ReregisterProvider)]
-        public async Task<IActionResult> ReregisterProviderAsync(int profileId, bool isChangeMode)
+        [Route("register-learner-new-course-select-provider/{profileId}/{isChangeMode:bool?}/{isFromConfirmation:bool?}", Name = RouteConstants.ReregisterProvider)]
+        public async Task<IActionResult> ReregisterProviderAsync(int profileId, bool isChangeMode, bool isFromConfirmation)
         {
             var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
@@ -541,9 +541,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var registeredProviders = await GetAoRegisteredProviders();
             var viewModel = cacheModel?.ReregisterProvider == null ? new ReregisterProviderViewModel() : cacheModel.ReregisterProvider;
-            viewModel.ProfileId = profileId;
             viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
+
+            viewModel.ProfileId = profileId;
             viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForProvider;
+            viewModel.IsFromConfirmation = isFromConfirmation;
+            
             return View(viewModel);
         }
 
