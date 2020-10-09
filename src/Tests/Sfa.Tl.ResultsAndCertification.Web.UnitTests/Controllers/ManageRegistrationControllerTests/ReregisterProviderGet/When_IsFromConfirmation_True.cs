@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReregisterProviderGet
 {
-    public class When_IsChangeModel_True : TestSetup
+    public class When_IsFromConfirmation_True : TestSetup
     {
         private ReregisterViewModel cacheResult;
         private SelectProviderViewModel _selectProviderViewModel;
@@ -20,7 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public override void Given()
         {
-            IsChangeMode = true;
+            IsFromConfirmation = true;
+
             mockresult = new RegistrationDetailsViewModel
             {
                 ProfileId = 1,
@@ -43,13 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         }
 
         [Fact]
-        public void Then_Called_Expected_Methods()
-        {
-            RegistrationLoader.Received(1).GetRegisteredTqAoProviderDetailsAsync(AoUkprn);
-            RegistrationLoader.Received(1).GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus);
-        }
-
-        [Fact]
         public void Then_Returns_Expected_BackLink()
         {
             Result.Should().NotBeNull();
@@ -62,17 +56,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             model.Should().NotBeNull();
 
             model.ProfileId.Should().Be(mockresult.ProfileId);
-            model.IsChangeMode.Should().BeTrue();
-            model.IsFromConfirmation.Should().BeFalse();
+            model.IsChangeMode.Should().BeFalse();
+            model.IsFromConfirmation.Should().BeTrue();
             model.SelectedProviderUkprn.Should().Be(_reRegisterProviderViewModel.SelectedProviderUkprn);
             model.ProvidersSelectList.Should().NotBeNull();
             model.ProvidersSelectList.Count.Should().Be(_selectProviderViewModel.ProvidersSelectList.Count);
 
+            // Backlink
             var backLink = model.BackLink;
-            backLink.RouteName.Should().Be(RouteConstants.ReregisterCheckAndSubmit);
-            backLink.RouteAttributes.Count.Should().Be(1);
+            backLink.RouteName.Should().Be(RouteConstants.AmendWithdrawRegistration);
+            backLink.RouteAttributes.Count.Should().Be(2);
             backLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValue);
             routeValue.Should().Be(mockresult.ProfileId.ToString());
+            backLink.RouteAttributes.TryGetValue(Constants.ChangeStatusId, out string routeValue1);
+            routeValue1.Should().BeNull();
         }
     }
 }

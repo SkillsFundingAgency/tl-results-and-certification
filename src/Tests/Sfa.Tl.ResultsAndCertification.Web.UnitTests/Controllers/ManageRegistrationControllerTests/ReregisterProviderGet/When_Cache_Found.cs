@@ -57,6 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
             model.ProfileId.Should().Be(mockresult.ProfileId);
             model.IsChangeMode.Should().BeFalse();
+            model.IsFromConfirmation.Should().BeFalse();
             model.SelectedProviderUkprn.Should().Be(_reRegisterProviderViewModel.SelectedProviderUkprn);
             model.ProvidersSelectList.Should().NotBeNull();
             model.ProvidersSelectList.Count.Should().Be(_selectProviderViewModel.ProvidersSelectList.Count);
