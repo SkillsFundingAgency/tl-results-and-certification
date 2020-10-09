@@ -247,7 +247,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (reg == null)
                 return null;
 
-            if(reg.PathwayLarId.Equals(viewModel.ReregisterCore.SelectedCoreCode, StringComparison.InvariantCultureIgnoreCase))
+            var isCoreSameAsWithdrawnCore = reg.PathwayLarId.Equals(viewModel.ReregisterCore.SelectedCoreCode, StringComparison.InvariantCultureIgnoreCase);
+            if (isCoreSameAsWithdrawnCore)
             {
                 return new ReregistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsSelectedCoreSameAsWithdrawn = true };
             }
