@@ -20,6 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 
         public bool IsChangeModeFromProvider { get; set; }
 
-        public BackLinkModel BackLink => new BackLinkModel { RouteName = (IsChangeMode && !IsChangeModeFromProvider) ? RouteConstants.AddRegistrationCheckAndSubmit : RouteConstants.AddRegistrationProvider, RouteAttributes = (IsChangeMode && IsChangeModeFromProvider) ? new Dictionary<string, string> { { Constants.IsChangeMode, "true" } } : null };
+        public virtual BackLinkModel BackLink => new BackLinkModel { RouteName = (IsChangeMode && !IsChangeModeFromProvider) ? RouteConstants.AddRegistrationCheckAndSubmit : RouteConstants.AddRegistrationProvider, RouteAttributes = (IsChangeMode && IsChangeModeFromProvider) ? new Dictionary<string, string> { { Constants.IsChangeMode, "true" } } : null };
     }
 }

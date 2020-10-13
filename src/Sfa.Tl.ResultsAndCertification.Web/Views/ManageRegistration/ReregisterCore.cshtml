@@ -1,0 +1,38 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ReregisterCoreViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @SelectCore.Page_Title_Reregister_Registration_Select_Core;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="SubmitReregisterCore">
+            <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="IsChangeMode" value="@Model.IsChangeMode.ToString()" />
+            <input type="hidden" asp-for="IsChangeModeFromProvider" value="@Model.IsChangeModeFromProvider.ToString()" />
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">@SelectProvider.ReregisterRegistration_Caption_Text</span>
+                <vc:select-core model=Model></vc:select-core>
+                <details class="govuk-details govuk-!-margin-top-6" closed>
+                    <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text">
+                            @SelectCore.Cannot_Find_Core_Text
+                        </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body govuk-!-margin-bottom-0">@SelectCore.Cannot_Find_Core_Details_Text</p>
+                    </div>
+                </details>
+            </div>
+            <p>
+                <button type="submit" class="govuk-button" data-module="govuk-button">@SelectCore.Continue_Button_Text</button>
+            </p>
+        </form>
+    </div>
+</div>

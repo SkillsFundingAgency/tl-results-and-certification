@@ -1,9 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
-using System.Collections.Generic;
 using Xunit;
 using SelectSpecialismContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration.SelectSpecialisms;
 

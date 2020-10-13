@@ -434,7 +434,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
-            if (cacheModel?.SpecialismQuestion == null || (cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == true && cacheModel?.SelectSpecialisms == null))
+            if (cacheModel?.SpecialismQuestion == null || 
+                (cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == true && cacheModel?.SelectSpecialisms == null))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var hasSpecialismsSelected = cacheModel?.SelectSpecialisms != null;
@@ -621,7 +622,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("registration-cancelled-confirmation", Name = RouteConstants.RegistrationCancelledConfirmation)]
+        [Route("registration-deleted-confirmation", Name = RouteConstants.RegistrationCancelledConfirmation)]
         public async Task<IActionResult> RegistrationCancelledConfirmationAsync()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<RegistrationCancelledConfirmationViewModel>(CacheKey);

@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryLearnerName.Value.Should().Be($"{_learnersNameViewModel.Firstname} {_learnersNameViewModel.Lastname}");
             model.SummaryLearnerName.RouteName.Should().Be(RouteConstants.AddRegistrationLearnersName);
             model.SummaryLearnerName.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryUln.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            model.SummaryLearnerName.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary DateofBirth
             model.SummaryDateofBirth.Should().NotBeNull();
@@ -91,7 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryDateofBirth.Value.Should().Be($"{_dateofBirthViewModel.Day}/{_dateofBirthViewModel.Month}/{_dateofBirthViewModel.Year}");
             model.SummaryDateofBirth.RouteName.Should().Be(RouteConstants.AddRegistrationDateofBirth);
             model.SummaryDateofBirth.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryUln.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            model.SummaryDateofBirth.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary Provider
             model.SummaryProvider.Should().NotBeNull();
@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryProvider.Value.Should().Be(_selectProviderViewModel.SelectedProviderDisplayName);
             model.SummaryProvider.RouteName.Should().Be(RouteConstants.AddRegistrationProvider);
             model.SummaryProvider.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryUln.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            model.SummaryProvider.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary Core
             model.SummaryCore.Should().NotBeNull();
@@ -107,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryCore.Value.Should().Be(_selectCoreViewModel.SelectedCoreDisplayName);
             model.SummaryCore.RouteName.Should().Be(RouteConstants.AddRegistrationCore);
             model.SummaryCore.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryUln.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            model.SummaryCore.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary Specialisms
             model.SummarySpecialisms.Should().NotBeNull();
@@ -115,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummarySpecialisms.Value.Should().BeEquivalentTo(_selectSpecialismViewModel.PathwaySpecialisms.Specialisms.Where(s => s.IsSelected).Select(s => s.DisplayName));
             model.SummarySpecialisms.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialismQuestion);
             model.SummarySpecialisms.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryUln.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            model.SummarySpecialisms.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary Academic Year
             model.SummaryAcademicYear.Should().NotBeNull();
@@ -123,7 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SummaryAcademicYear.Value.Should().Be(EnumExtensions.GetDisplayName<AcademicYear>(_academicYearViewModel.SelectedAcademicYear));
             model.SummaryAcademicYear.RouteName.Should().Be(RouteConstants.AddRegistrationAcademicYear);
             model.SummaryAcademicYear.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryUln.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            model.SummaryAcademicYear.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AddRegistrationAcademicYear);

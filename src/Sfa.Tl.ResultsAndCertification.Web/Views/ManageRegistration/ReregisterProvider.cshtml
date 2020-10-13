@@ -14,6 +14,7 @@
         <form class="form" asp-route="SubmitReregisterProvider">
             <partial name="_ValidationSummary" />
             <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="IsChangeMode" value="@Model.IsChangeMode.ToString()" />
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@SelectProvider.ReregisterRegistration_Caption_Text</span>
                 <vc:select-provider model=Model></vc:select-provider>

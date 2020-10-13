@@ -61,15 +61,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel this registration.
-        /// </summary>
-        public static string Cancel_This_Registration_Button_Text {
-            get {
-                return ResourceManager.GetString("Cancel_This_Registration_Button_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Change_Action_Link_Text {
@@ -192,24 +183,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Uln_Heading_Text {
             get {
                 return ResourceManager.GetString("Uln_Heading_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to uploading a csv file.
-        /// </summary>
-        public static string Uploading_A_Csv_File_Text {
-            get {
-                return ResourceManager.GetString("Uploading_A_Csv_File_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can amend these details by.
-        /// </summary>
-        public static string You_can_Amend_These_Details_By_Text {
-            get {
-                return ResourceManager.GetString("You_can_Amend_These_Details_By_Text", resourceCulture);
             }
         }
     }

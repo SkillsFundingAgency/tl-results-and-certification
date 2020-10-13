@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change learner’s name page.
+        ///   Looks up a localized string similar to Change registration - Enter the learner&apos;s name page.
         /// </summary>
         public static string ChangeRegistration_Page_Title {
             get {

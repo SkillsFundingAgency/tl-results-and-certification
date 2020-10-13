@@ -18,6 +18,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         protected long AoUkprn;
         protected int ProfileId;
         protected Guid UserId;
+        protected bool IsFromCoreDenialPage;
+        protected bool IsChangeMode;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
         protected ILogger<ManageRegistrationController> Logger;
@@ -46,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public async override Task When()
         {
-            Result = await Controller.RejoinRegistrationAsync(ProfileId);
+            Result = await Controller.RejoinRegistrationAsync(ProfileId, IsFromCoreDenialPage, IsChangeMode);
         }
     }
 }

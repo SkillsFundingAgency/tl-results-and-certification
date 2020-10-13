@@ -106,6 +106,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register learner on a new course - Check and submit page.
+        /// </summary>
+        public static string Page_Title_Reregister_Registration_Check_And_Submit {
+            get {
+                return ResourceManager.GetString("Page_Title_Reregister_Registration_Check_And_Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register learner on a new course.
+        /// </summary>
+        public static string ReregisterRegistration_Caption_Text {
+            get {
+                return ResourceManager.GetString("ReregisterRegistration_Caption_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to None selected.
         /// </summary>
         public static string Specialism_None_Selected_Text {

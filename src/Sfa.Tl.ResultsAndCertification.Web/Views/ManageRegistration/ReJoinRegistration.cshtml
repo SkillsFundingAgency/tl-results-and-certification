@@ -15,6 +15,7 @@
         <form asp-route="SubmitRejoinRegistration">
             <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
             <input type="hidden" asp-for="Uln" value="@Model.Uln" />
+            <input type="hidden" asp-for="IsFromCoreDenialPage" value="@Model.IsFromCoreDenialPage" />
             <partial name="_ValidationSummary" />
             <div class="govuk-form-group govuk-!-margin-bottom-7">
                 <fieldset class="govuk-fieldset" aria-describedby="withdraw-uln-hint">

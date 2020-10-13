@@ -16,6 +16,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         [Required(ErrorMessageResourceType = typeof(ErrorResource.RejoinRegistration), ErrorMessageResourceName = "Select_Rejoin_Validation_Message")]
         public bool? CanRejoin { get; set; }
 
-        public BackLinkModel BackLink => new BackLinkModel { RouteName = RouteConstants.AmendWithdrawRegistration, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.ChangeStatusId, ((int)RegistrationChangeStatus.Rejoin).ToString() } } };
+        public bool IsFromCoreDenialPage { get; set; }
+
+        public bool IsChangeMode { get; set; }
+
+        public BackLinkModel BackLink => new BackLinkModel 
+        {
+            RouteName = IsFromCoreDenialPage ? RouteConstants.ReregisterCannotSelectSameCore : RouteConstants.AmendWithdrawRegistration,
+            RouteAttributes = IsFromCoreDenialPage 
+                            ? IsChangeMode ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.IsChangeMode, "true" } } : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } 
+                            : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.ChangeStatusId, ((int)RegistrationChangeStatus.Rejoin).ToString() } } 
+        };
     }
 }

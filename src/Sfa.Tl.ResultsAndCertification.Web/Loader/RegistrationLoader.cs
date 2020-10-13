@@ -240,5 +240,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var isSuccess = await _internalApiClient.RejoinRegistrationAsync(model);
             return new RejoinRegistrationResponse { ProfileId = viewModel.ProfileId, Uln = viewModel.Uln, IsSuccess = isSuccess };
         }
+
+        public async Task<ReregistrationResponse> ReregistrationAsync(long aoUkprn, ReregisterViewModel viewModel)
+        {
+            var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ReregisterProvider.ProfileId, RegistrationPathwayStatus.Withdrawn);
+            if (reg == null)
+                return null;
+
+            var isCoreSameAsWithdrawnCore = reg.PathwayLarId.Equals(viewModel.ReregisterCore.SelectedCoreCode, StringComparison.InvariantCultureIgnoreCase);
+            if (isCoreSameAsWithdrawnCore)
+            {
+                return new ReregistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsSelectedCoreSameAsWithdrawn = true };
+            }
+
+            var reregistrationRequest = _mapper.Map<ReregistrationRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            var isSuccess =  await _internalApiClient.ReregistrationAsync(reregistrationRequest);
+            return new ReregistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsSuccess = isSuccess };
+        }
     }
 }

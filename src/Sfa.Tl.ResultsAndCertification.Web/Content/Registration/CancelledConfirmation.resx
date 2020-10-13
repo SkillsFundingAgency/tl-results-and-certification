@@ -121,10 +121,10 @@
     <value>Back to registrations</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Registration cancelled successfully</value>
+    <value>Registration deleted successfully</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Registration cancelled confirmation page</value>
+    <value>Registration deleted confirmation page</value>
   </data>
   <data name="Search_For_Another_Registration_Button_Text" xml:space="preserve">
     <value>Search for another registration</value>

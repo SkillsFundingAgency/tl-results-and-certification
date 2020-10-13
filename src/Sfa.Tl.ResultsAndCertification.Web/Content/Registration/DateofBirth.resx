@@ -145,7 +145,7 @@
     <value>Add a new registration - Enter the learner’s date of birth page</value>
   </data>
   <data name="Page_Title_Change_DateofBirth" xml:space="preserve">
-    <value>Change learner’s date of birth page</value>
+    <value>Change registration - Enter the learner's date of birth page</value>
   </data>
   <data name="Year_Field_Label" xml:space="preserve">
     <value>Year</value>

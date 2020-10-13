@@ -351,9 +351,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            var tqRegistration = await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId, status);
+            var tqRegistration = await _tqRegistrationRepository.GetRegistrationAsync(aoUkprn, profileId);
 
-            if (tqRegistration == null) return null;
+            if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 
             return _mapper.Map<RegistrationDetails>(tqRegistration);
         }
@@ -407,9 +407,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model)
         {
-            var registration = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, RegistrationPathwayStatus.Active, false);
+            var registration = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, false);
 
-            if (registration == null)
+            if (registration == null || registration.Status != RegistrationPathwayStatus.Active)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: WithdrawRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
                 return false;
@@ -422,9 +422,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model)
         {
-            var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, RegistrationPathwayStatus.Withdrawn);
+            var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId);
 
-            if (tqRegistrationPathway == null)
+            if (tqRegistrationPathway == null || tqRegistrationPathway.Status != RegistrationPathwayStatus.Withdrawn)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: RejoinRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
                 return false;
@@ -446,6 +446,54 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _tqRegistrationPathwayRepository.CreateAsync(tqPathway) > 0;
         }
 
+        public async Task<bool> ReregistrationAsync(ReregistrationRequest model)
+        {
+            var tqRegistrationPathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == model.ProfileId
+                                                                                        && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn, p => p, p => p.CreatedOn, false,
+                                                                                        p => p.TqProvider, p => p.TqProvider.TqAwardingOrganisation, p => p.TqProvider.TqAwardingOrganisation.TlPathway);
+
+            if (tqRegistrationPathway == null || tqRegistrationPathway.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {model.ProfileId}. Method: ReregisterRegistrationAsync({model.AoUkprn}, {model.ProfileId})");
+                return false;
+            }
+
+            var withdrawnCorecode = tqRegistrationPathway.TqProvider?.TqAwardingOrganisation?.TlPathway?.LarId;
+            var isCoreSameAsWithdrawnCore = string.IsNullOrWhiteSpace(withdrawnCorecode) || withdrawnCorecode.Equals(model.CoreCode, StringComparison.InvariantCultureIgnoreCase);
+
+            if (isCoreSameAsWithdrawnCore)
+            {
+                _logger.LogWarning(LogEvent.ManualReregistrationProcessFailed, $"Manual Reregistration failed to process due to validation error = Cannot reregister learner on same course that has withdrawn previously. Method: ReregistrationAsync()");
+                return false;
+            }
+
+            var validateStage3Response = await ValidateManualRegistrationTlevelsAsync(model);
+
+            if (validateStage3Response.IsValid)
+            {
+                var tqPathway = new TqRegistrationPathway
+                {
+                    TqRegistrationProfileId = tqRegistrationPathway.TqRegistrationProfileId,
+                    TqProviderId = validateStage3Response.TqProviderId,
+                    AcademicYear = validateStage3Response.AcademicYear,
+                    StartDate = DateTime.UtcNow,
+                    Status = RegistrationPathwayStatus.Active,
+                    IsBulkUpload = false,
+                    TqRegistrationSpecialisms = MapSpecialisms(validateStage3Response.TlSpecialismLarIds, model.PerformedBy, 0, false),
+                    CreatedBy = model.PerformedBy,
+                    CreatedOn = DateTime.UtcNow
+                };
+
+                return await _tqRegistrationPathwayRepository.CreateAsync(tqPathway) > 0;
+            }
+            else
+            {
+                var errorMessage = string.Join(",", validateStage3Response.ValidationErrors.Select(e => e.ErrorMessage));
+                _logger.LogWarning(LogEvent.ManualReregistrationProcessFailed, $"Manual Reregistration failed to process due to validation errors = {errorMessage}. Method: ReregistrationAsync()");
+                return false;
+            }            
+        }
+
         #region Private Methods
 
         private async Task<bool> HandleProfileChanges(ManageRegistration model)
@@ -465,9 +513,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<bool> HandleProviderChanges(ManageRegistration model, RegistrationRecordResponse registrationRecord)
         {
-            var pathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, RegistrationPathwayStatus.Active, false);
+            var pathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, false);
 
-            if (pathway == null)
+            if (pathway == null || pathway.Status != RegistrationPathwayStatus.Active)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update Registration for UniqueLearnerNumber = {model.Uln}. Method: HandleProviderChanges()");
                 return false;

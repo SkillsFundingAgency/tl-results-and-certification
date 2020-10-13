@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -43,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("change-learners-name/{profileId}", Name = RouteConstants.ChangeRegistrationLearnersName)]
+        [Route("change-registration-learners-name/{profileId}", Name = RouteConstants.ChangeRegistrationLearnersName)]
         public async Task<IActionResult> ChangeLearnersNameAsync(int profileId)
         {
             var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeLearnersNameViewModel>(User.GetUkPrn(), profileId);
@@ -57,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("change-learners-name", Name = RouteConstants.SubmitChangeRegistrationLearnersName)]
+        [Route("change-registration-learners-name", Name = RouteConstants.SubmitChangeRegistrationLearnersName)]
         public async Task<IActionResult> ChangeLearnersNameAsync(ChangeLearnersNameViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -79,7 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("change-learners-date-of-birth/{profileId}", Name = RouteConstants.ChangeRegistrationDateofBirth)]
+        [Route("change-registration-learners-date-of-birth/{profileId}", Name = RouteConstants.ChangeRegistrationDateofBirth)]
         public async Task<IActionResult> ChangeDateofBirthAsync(int profileId)
         {
             var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeDateofBirthViewModel>(User.GetUkPrn(), profileId);
@@ -93,7 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("change-learners-date-of-birth", Name = RouteConstants.SubmitChangeRegistrationDateofBirth)]
+        [Route("change-registration-learners-date-of-birth", Name = RouteConstants.SubmitChangeRegistrationDateofBirth)]
         public async Task<IActionResult> ChangeDateofBirthAsync(ChangeDateofBirthViewModel viewModel)
         {
             if (!IsValidDateofBirth(viewModel))
@@ -129,7 +131,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("change-provider/{profileId}/{isback:bool?}", Name = RouteConstants.ChangeRegistrationProvider)]
+        [Route("change-registration-provider/{profileId}/{isback:bool?}", Name = RouteConstants.ChangeRegistrationProvider)]
         public async Task<IActionResult> ChangeProviderAsync(int profileId, bool isback = false)
         {
             var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeProviderViewModel>(User.GetUkPrn(), profileId);
@@ -140,15 +142,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             var registeredProviders = await GetAoRegisteredProviders();
             viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
-            
+
             if (isback)
                 viewModel.SelectedProviderUkprn = TempData.Get<string>(Constants.ChangeRegistrationCoreNotSupportedProviderUkprn) ?? viewModel.SelectedProviderUkprn;
-            
+
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("change-provider", Name = RouteConstants.SubmitChangeRegistrationProvider)]
+        [Route("change-registration-provider", Name = RouteConstants.SubmitChangeRegistrationProvider)]
         public async Task<IActionResult> ChangeProviderAsync(ChangeProviderViewModel model)
         {
             if (model == null)
@@ -161,7 +163,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 model.ProvidersSelectList = registeredProviderViewModel.ProvidersSelectList;
                 return View(model);
             }
-            
+
             var response = await _registrationLoader.ProcessProviderChangesAsync(User.GetUkPrn(), model);
 
             if (response == null)
@@ -203,7 +205,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);
-        }        
+        }
 
         [HttpPost]
         [Route("change-core-and-provider", Name = RouteConstants.SubmitChangeCoreQuestion)]
@@ -214,7 +216,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var cacheViewModel = new ChangeProviderCoreNotSupportedViewModel { ProfileId = model.ProfileId, ProviderDisplayName = model.ProviderDisplayName, CoreDisplayName = model.CoreDisplayName, CanChangeCore = model.CanChangeCore };
             await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeRegistrationProviderCoreNotSupportedViewModel), cacheViewModel);
-            return RedirectToRoute(model.CanChangeCore == true ? RouteConstants.ChangeRegistrationProviderAndCoreNeedToWithdraw : RouteConstants.ChangeRegistrationProviderNotOfferingSameCore); 
+            return RedirectToRoute(model.CanChangeCore == true ? RouteConstants.ChangeRegistrationProviderAndCoreNeedToWithdraw : RouteConstants.ChangeRegistrationProviderNotOfferingSameCore);
         }
 
         [HttpGet]
@@ -233,7 +235,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("provider-not-offering-same-core", Name = RouteConstants.ChangeRegistrationProviderNotOfferingSameCore)]
+        [Route("change-registration-provider-not-offering-core", Name = RouteConstants.ChangeRegistrationProviderNotOfferingSameCore)]
         public async Task<IActionResult> ChangeProviderNotOfferingSameCoreAsync()
         {
             var cacheViewModel = await _cacheService.GetAsync<ChangeProviderCoreNotSupportedViewModel>(string.Concat(CacheKey, Constants.ChangeRegistrationProviderCoreNotSupportedViewModel));
@@ -246,7 +248,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = new ChangeProviderNotOfferingSameCoreViewModel { ProfileId = cacheViewModel.ProfileId, ProviderDisplayName = cacheViewModel.ProviderDisplayName, CoreDisplayName = cacheViewModel.CoreDisplayName };
             return View(viewModel);
         }
-        
+
         [HttpGet]
         [Route("change-core/{profileId}", Name = RouteConstants.ChangeRegistrationCore)]
         public async Task<IActionResult> ChangeCoreAsync(int profileId)
@@ -408,7 +410,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            if(!model.CanWithdraw.Value)
+            if (!model.CanWithdraw.Value)
             {
                 return RedirectToRoute(model.BackLink.RouteName, model.BackLink.RouteAttributes);
             }
@@ -442,6 +444,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("amend-withdrawn-registration/{profileId}/{changeStatusId:int?}", Name = RouteConstants.AmendWithdrawRegistration)]
         public async Task<IActionResult> AmendWithdrawRegistrationAsync(int profileId, int? changeStatusId)
         {
+            await _cacheService.RemoveAsync<ReregisterViewModel>(ReregisterCacheKey);
             var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
             {
@@ -473,8 +476,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reactivate-registration-same-course/{profileId}", Name = RouteConstants.RejoinRegistration)]
-        public async Task<IActionResult> RejoinRegistrationAsync(int profileId)
+        [Route("reactivate-registration-same-course/{profileId}/{isFromCoreDenialPage:bool?}/{isChangeMode:bool?}", Name = RouteConstants.RejoinRegistration)]
+        public async Task<IActionResult> RejoinRegistrationAsync(int profileId, bool isFromCoreDenialPage, bool isChangeMode)
         {
             var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
@@ -483,7 +486,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var viewModel = new RejoinRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln };
+            var viewModel = new RejoinRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln, IsFromCoreDenialPage = isFromCoreDenialPage, IsChangeMode = isChangeMode };
             return View(viewModel);
         }
 
@@ -524,49 +527,350 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
-
         [HttpGet]
-        [Route("register-learner-new-course-select-provider/{profileId}", Name = RouteConstants.ReregisterProvider)]
-        public async Task<IActionResult> ReregisterProviderAsync(int profileId)
+        [Route("register-learner-new-course-select-provider/{profileId}/{isChangeMode:bool?}/{isFromConfirmation:bool?}", Name = RouteConstants.ReregisterProvider)]
+        public async Task<IActionResult> ReregisterProviderAsync(int profileId, bool isChangeMode, bool isFromConfirmation)
         {
             var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
             if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: ReregisterProviderAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: ReregisterProviderAsync({profileId}), Ukprn: {User.GetUkPrn()}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
 
             var registeredProviders = await GetAoRegisteredProviders();
             var viewModel = cacheModel?.ReregisterProvider == null ? new ReregisterProviderViewModel() : cacheModel.ReregisterProvider;
-            viewModel.ProfileId = profileId;
             viewModel.ProvidersSelectList = registeredProviders.ProvidersSelectList;
+
+            viewModel.ProfileId = profileId;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForProvider;
+            viewModel.IsFromConfirmation = isFromConfirmation;
+            
             return View(viewModel);
         }
 
         [HttpPost]
         [Route("register-learner-new-course-select-provider", Name = RouteConstants.SubmitReregisterProvider)]
         public async Task<IActionResult> ReregisterProviderAsync(ReregisterProviderViewModel model)
-        {           
+        {
             var registeredProviderViewModel = await GetAoRegisteredProviders();
 
             if (!ModelState.IsValid)
             {
                 model.ProvidersSelectList = registeredProviderViewModel.ProvidersSelectList;
                 return View(model);
-            }            
+            }
 
             model.SelectedProviderDisplayName = registeredProviderViewModel?.ProvidersSelectList?.FirstOrDefault(p => p.Value == model.SelectedProviderUkprn)?.Text;
 
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
 
             if (cacheModel?.ReregisterProvider != null)
+            {
+                if (cacheModel.ReregisterProvider.SelectedProviderUkprn != model.SelectedProviderUkprn)
+                {
+                    cacheModel.ReregisterCore = null;
+                    cacheModel.SpecialismQuestion = null;
+                    cacheModel.ReregisterSpecialisms = null;
+                }
                 cacheModel.ReregisterProvider = model;
+            }
             else
                 cacheModel = new ReregisterViewModel { ReregisterProvider = model };
 
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
-            return RedirectToRoute(RouteConstants.ReregisterProvider, new { profileId = model.ProfileId });
+
+            return model.IsChangeMode ?
+                RedirectToRoute(RouteConstants.ReregisterCore, new { profileId = model.ProfileId, isChangeMode = "true" }) :
+                RedirectToRoute(RouteConstants.ReregisterCore, new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("register-learner-new-course-select-core/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.ReregisterCore)]
+        public async Task<IActionResult> ReregisterCoreAsync(int profileId, bool isChangeMode)
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+            if (cacheModel?.ReregisterProvider == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: ReregisterCoreAsync({profileId}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var providerCores = await GetRegisteredProviderCores(cacheModel.ReregisterProvider.SelectedProviderUkprn.ToLong());
+            var viewModel = cacheModel?.ReregisterCore == null ? new ReregisterCoreViewModel() : cacheModel.ReregisterCore;
+            viewModel.ProfileId = profileId;
+            viewModel.CoreSelectList = providerCores.CoreSelectList;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForCore;
+            viewModel.IsChangeModeFromProvider = cacheModel.ReregisterProvider.IsChangeMode;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("register-learner-new-course-select-core", Name = RouteConstants.SubmitReregisterCore)]
+        public async Task<IActionResult> ReregisterCoreAsync(ReregisterCoreViewModel model)
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+            if (cacheModel?.ReregisterProvider == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var coreViewModel = await GetRegisteredProviderCores(cacheModel.ReregisterProvider.SelectedProviderUkprn.ToLong());
+
+            if (!ModelState.IsValid)
+            {
+                model.CoreSelectList = coreViewModel.CoreSelectList;
+                return View(model);
+            }
+
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), model.ProfileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: Post - ReregisterCoreAsync({model.ProfileId}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            if (cacheModel?.ReregisterCore?.SelectedCoreCode != model.SelectedCoreCode)
+            {
+                cacheModel.SpecialismQuestion = null;
+                cacheModel.ReregisterSpecialisms = null;
+            }
+
+            model.CoreCodeAtTheTimeOfWithdrawn = registrationDetails.PathwayLarId;
+            model.SelectedCoreDisplayName = coreViewModel?.CoreSelectList?.FirstOrDefault(p => p.Value == model.SelectedCoreCode)?.Text;
+            cacheModel.ReregisterCore = model;
+
+            await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
+            var routeValues = model.IsChangeMode ? new RouteValueDictionary { { Constants.ProfileId, model.ProfileId }, { Constants.IsChangeMode, "true" } } : new RouteValueDictionary { { Constants.ProfileId, model.ProfileId } };
+            return RedirectToRoute(model.IsValidCore ? RouteConstants.ReregisterSpecialismQuestion : RouteConstants.ReregisterCannotSelectSameCore, routeValues);
+        }
+
+        [HttpGet]
+        [Route("cannot-select-same-core/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.ReregisterCannotSelectSameCore)]
+        public async Task<IActionResult> ReregisterCannotSelectSameCoreAsync(int profileId, bool isChangeMode)
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+            if (cacheModel?.ReregisterCore == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: ReregisterCannotSelectSameCoreAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = new ReregisterCannotSelectSameCoreViewModel { ProfileId = profileId, IsChangeMode = isChangeMode };
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("register-learner-new-course-has-learner-decided-specialism/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.ReregisterSpecialismQuestion)]
+        public async Task<IActionResult> ReregisterSpecialismQuestionAsync(int profileId, bool isChangeMode)
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+
+            if (cacheModel == null || cacheModel.ReregisterCore == null || !cacheModel.ReregisterCore.IsValidCore)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: ReregisterSpecialismQuestionAsync({profileId}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = cacheModel?.SpecialismQuestion == null ? new ReregisterSpecialismQuestionViewModel() : cacheModel.SpecialismQuestion;
+            viewModel.ProfileId = profileId;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForSpecialismQuestion;
+            viewModel.IsChangeModeFromCore = cacheModel.ReregisterCore.IsChangeMode;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("register-learner-new-course-has-learner-decided-specialism", Name = RouteConstants.SubmitReregisterSpecialismQuestion)]
+        public async Task<IActionResult> ReregisterSpecialismQuestionAsync(ReregisterSpecialismQuestionViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+            if (cacheModel == null || cacheModel.ReregisterCore == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (!model.HasLearnerDecidedSpecialism.Value)
+                cacheModel.ReregisterSpecialisms = null;
+
+            cacheModel.SpecialismQuestion = model;
+            await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
+
+            if (model.IsChangeMode)
+                if (model.HasLearnerDecidedSpecialism.Value)
+                    return RedirectToRoute(RouteConstants.ReregisterSpecialisms, new { model.ProfileId, isChangeMode = "true" });
+                else
+                    return RedirectToRoute(RouteConstants.ReregisterCheckAndSubmit, new { model.ProfileId });
+
+            return RedirectToRoute(model.HasLearnerDecidedSpecialism.Value ?
+                RouteConstants.ReregisterSpecialisms : RouteConstants.ReregisterAcademicYear,
+                new { model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("register-learner-new-course-select-specialism/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.ReregisterSpecialisms)]
+        public async Task<IActionResult> ReregisterSpecialismsAsync(int profileId, bool isChangeMode)
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+
+            if (cacheModel?.ReregisterCore == null || cacheModel?.SpecialismQuestion == null ||
+                (!isChangeMode && cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. Method: ReregisterSpecialismQuestionAsync({profileId}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = cacheModel?.ReregisterSpecialisms == null ? new ReregisterSpecialismViewModel { PathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.ReregisterCore.SelectedCoreCode) } : cacheModel.ReregisterSpecialisms;
+            viewModel.ProfileId = profileId;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForSelectSpecialism;
+            viewModel.IsChangeModeFromSpecialismQuestion = cacheModel.SpecialismQuestion.IsChangeMode;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("register-learner-new-course-select-specialism", Name = RouteConstants.SubmitReregisterSpecialisms)]
+        public async Task<IActionResult> ReregisterSpecialismsAsync(ReregisterSpecialismViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+
+            if (cacheModel?.SpecialismQuestion == null ||
+                (!model.IsChangeMode && cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            if (model.IsChangeMode && cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism.Value == false)
+                cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism = true;
+
+            cacheModel.ReregisterSpecialisms = model;
+            await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
+
+            return RedirectToRoute(model.IsChangeMode ? RouteConstants.ReregisterCheckAndSubmit : RouteConstants.ReregisterAcademicYear, new { model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("register-learner-new-course-select-academic-year/{profileId}/{isChangeMode:bool?}", Name = RouteConstants.ReregisterAcademicYear)]
+        public async Task<IActionResult> ReregisterAcademicYearAsync(int profileId, bool isChangeMode)
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+            if (cacheModel == null || cacheModel.SpecialismQuestion == null ||
+                (cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism == true && cacheModel.ReregisterSpecialisms == null))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. " +
+                    $"Method: ReregisterAcademicYearAsync({profileId}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var hasSpecialismsSelected = cacheModel.ReregisterSpecialisms != null;
+            ReregisterAcademicYearViewModel viewModel;
+            if (cacheModel.ReregisterAcademicYear == null)
+            {
+                viewModel = new ReregisterAcademicYearViewModel { ProfileId = profileId, HasSpecialismsSelected = hasSpecialismsSelected };
+            }
+            else
+            {
+                cacheModel.ReregisterAcademicYear.HasSpecialismsSelected = hasSpecialismsSelected;
+                viewModel = cacheModel.ReregisterAcademicYear;
+            }
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowed;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("register-learner-new-course-select-academic-year", Name = RouteConstants.SubmitReregisterAcademicYear)]
+        public async Task<IActionResult> ReregisterAcademicYearAsync(ReregisterAcademicYearViewModel viewModel)
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+
+            if (cacheModel == null || cacheModel.SpecialismQuestion == null ||
+                (cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism == true && cacheModel.ReregisterSpecialisms == null) ||
+                !viewModel.IsValidAcademicYear)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            viewModel.HasSpecialismsSelected = cacheModel.ReregisterSpecialisms != null;
+            cacheModel.ReregisterAcademicYear = viewModel;
+            await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
+
+            return RedirectToRoute(RouteConstants.ReregisterCheckAndSubmit, new { viewModel.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("register-learner-new-course-check-and-submit/{profileId}", Name = RouteConstants.ReregisterCheckAndSubmit)]
+        public async Task<IActionResult> ReregisterCheckAndSubmitAsync(int profileId)
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+
+            var viewModel = new ReregisterCheckAndSubmitViewModel { ReregisterModel = cacheModel };
+
+            if (!viewModel.IsCheckAndSubmitPageValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Withdrawn)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found with Status: {RegistrationPathwayStatus.Withdrawn}. " +
+                    $"Method: ReregisterCheckAndSubmitAsync({profileId}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            viewModel.Uln = registrationDetails.Uln;
+            await _cacheService.SetAsync(ReregisterCacheKey, viewModel.ResetChangeMode());
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("register-learner-new-course-check-and-submit", Name = RouteConstants.SubmitReregisterCheckAndSubmit)]
+        public async Task<IActionResult> ReregisterCheckAndSubmitAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var response = await _registrationLoader.ReregistrationAsync(User.GetUkPrn(), cacheModel);
+
+            if (response == null || response.IsSelectedCoreSameAsWithdrawn || !response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            await _cacheService.RemoveAsync<ReregisterViewModel>(ReregisterCacheKey);
+            await _cacheService.SetAsync(string.Concat(ReregisterCacheKey, Constants.ReregistrationConfirmationViewModel), response, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.ReregistrationConfirmation);
+        }
+
+        [HttpGet]
+        [Route("new-course-registration-confirmation", Name = RouteConstants.ReregistrationConfirmation)]
+        public async Task<IActionResult> ReregistrationConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<ReregistrationResponse>(string.Concat(ReregisterCacheKey, Constants.ReregistrationConfirmationViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ReregistrationConfirmationViewModel from redis cache re-registration confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
@@ -574,10 +878,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());
         }
 
+        private async Task<SelectCoreViewModel> GetRegisteredProviderCores(long providerUkprn)
+        {
+            return await _registrationLoader.GetRegisteredProviderPathwayDetailsAsync(User.GetUkPrn(), providerUkprn);
+        }
+
         private bool IsValidDateofBirth(ChangeDateofBirthViewModel model)
         {
             var validationerrors = model.DateofBirth.ValidateDate("Date of birth");
-            
+
             if (validationerrors?.Count == 0)
                 return true;
 
@@ -590,10 +899,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsAsync(ChangeSpecialismViewModel viewModel)
         {
             var coreSpecialisms = await _registrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(User.GetUkPrn(), viewModel.CoreCode);
-            
+
             // Update IsSelected flag.
             coreSpecialisms.Specialisms.ToList().ForEach(x => { x.IsSelected = viewModel.SpecialismCodes.Contains(x.Code); });
-            
+
             return coreSpecialisms;
         }
 
@@ -607,6 +916,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 coreQuestionDetails.CanChangeCore = providerViewModel.CanChangeCore;
             }
             return coreQuestionDetails;
+        }
+
+        private async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByCoreCode(string coreCode)
+        {
+            return await _registrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(User.GetUkPrn(), coreCode);
         }
     }
 }

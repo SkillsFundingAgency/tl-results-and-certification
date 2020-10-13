@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _logger = logger;
         }
 
-        public async Task<TqRegistrationPathway> GetRegistrationLiteAsync(long aoUkprn, int profileId, RegistrationPathwayStatus status, bool includeProfile = true)
+        public async Task<TqRegistrationPathway> GetRegistrationLiteAsync(long aoUkprn, int profileId, bool includeProfile = true)
         {
             var pathwayQueryable = _dbContext.TqRegistrationPathway.AsQueryable();
                
@@ -29,9 +29,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 pathwayQueryable = pathwayQueryable.Include(p => p.TqRegistrationProfile);
 
             var registrationPathway = await pathwayQueryable
-                .IncludeFilter(p => p.TqRegistrationSpecialisms.Where(s => s.IsOptedin && (status == RegistrationPathwayStatus.Withdrawn) ? s.EndDate != null : s.EndDate == null))
+                .IncludeFilter(p => p.TqRegistrationSpecialisms.Where(s => s.IsOptedin && (p.Status == RegistrationPathwayStatus.Withdrawn) ? s.EndDate != null : s.EndDate == null))
                 .OrderByDescending(p => p.CreatedOn)
-                .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && p.Status == status);
+                .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn);
             return registrationPathway;
         }
 
@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return profile;
         }        
 
-        public async Task<TqRegistrationPathway> GetRegistrationAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        public async Task<TqRegistrationPathway> GetRegistrationAsync(long aoUkprn, int profileId)
         {
             var regPathway = await _dbContext.TqRegistrationPathway
                 .Include(x => x.TqRegistrationProfile)
@@ -63,8 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId &&
                        p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
                        (
-                           (status == null && (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn)) ||
-                           (status != null && p.Status == status)
+                            p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn
                        ));
 
             if (regPathway == null) return null;

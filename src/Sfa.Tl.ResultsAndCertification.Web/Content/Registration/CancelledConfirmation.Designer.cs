@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registration cancelled successfully.
+        ///   Looks up a localized string similar to Registration deleted successfully.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registration cancelled confirmation page.
+        ///   Looks up a localized string similar to Registration deleted confirmation page.
         /// </summary>
         public static string Page_Title {
             get {

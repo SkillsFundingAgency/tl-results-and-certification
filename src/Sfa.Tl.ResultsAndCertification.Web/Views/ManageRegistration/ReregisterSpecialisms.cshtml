@@ -1,0 +1,29 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ReregisterSpecialismViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @SelectSpecialisms.Page_Title_Reregister_Registration_Select_Specialism;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="SubmitReregisterSpecialisms">
+            <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="IsChangeMode" value="@Model.IsChangeMode.ToString()" />
+            <input type="hidden" asp-for="IsChangeModeFromSpecialismQuestion" value="@Model.IsChangeModeFromSpecialismQuestion.ToString()" />
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">@SelectSpecialisms.Page_Caption_Reregister_Text</span>
+                <vc:select-specialism model=Model></vc:select-specialism>
+            </div>
+            <p>
+                @{ var buttonText = Model.IsChangeMode ? @SelectSpecialisms.Change_Button_Text : @SelectSpecialisms.Continue_Button_Text; }
+                <button id="submitButton" type="submit" class="govuk-button" data-module="govuk-button">@buttonText</button>
+            </p>
+        </form>
+    </div>
+</div>
