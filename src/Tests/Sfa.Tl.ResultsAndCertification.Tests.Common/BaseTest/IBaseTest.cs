@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest
 {
@@ -6,6 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest
     {
         void Setup();
         void Given();
-        void When();
+        Task When();
     }
 }

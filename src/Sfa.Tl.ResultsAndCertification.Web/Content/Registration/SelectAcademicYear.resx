@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Back_To_Registration_Details_Button_Text" xml:space="preserve">
+    <value>Back to registration details</value>
+  </data>
+  <data name="Change_AcademicYear_Heading_Text" xml:space="preserve">
+    <value>Academic year cannot be changed</value>
+  </data>
   <data name="Change_Button_Text" xml:space="preserve">
     <value>Change</value>
+  </data>
+  <data name="Change_Registration_AcademicYear_Body_Text" xml:space="preserve">
+    <value>You cannot change the academic year if you are keeping the same core on an existing registration.</value>
   </data>
   <data name="Continue_Button_Text" xml:space="preserve">
     <value>Continue</value>
@@ -128,6 +137,15 @@
   </data>
   <data name="Page_Title_Add_Registration_Select_AcademicYear" xml:space="preserve">
     <value>Add a new registration - Select the academic year page</value>
+  </data>
+  <data name="Page_Title_Change_Registration_Select_AcademicYear" xml:space="preserve">
+    <value>Academic year cannot be changed page</value>
+  </data>
+  <data name="Reregister_Heading_Text" xml:space="preserve">
+    <value>Register learner on a new course</value>
+  </data>
+  <data name="Reregister_Page_Title_AcademicYear" xml:space="preserve">
+    <value>Register learner on a new course - Select the academic year page</value>
   </data>
   <data name="Select_The_AcademicYear_Label_Text" xml:space="preserve">
     <value>Select the academic year</value>

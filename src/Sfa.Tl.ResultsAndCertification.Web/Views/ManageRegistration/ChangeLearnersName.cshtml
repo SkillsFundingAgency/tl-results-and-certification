@@ -1,0 +1,26 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ChangeLearnersNameViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @LearnersName.ChangeRegistration_Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="SubmitChangeRegistrationLearnersName">
+            <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">@LearnersName.ChangeRegistration_Caption_Text</span>
+                <vc:learner-name model=Model></vc:learner-name>
+            </div>
+            <p>
+                <button id="ChangeButton" type="submit" class="govuk-button" data-module="govuk-button">@LearnersName.Change_Button_Text</button>
+            </p>
+        </form>
+    </div>
+</div>

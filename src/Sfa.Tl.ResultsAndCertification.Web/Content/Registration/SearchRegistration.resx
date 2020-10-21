@@ -130,7 +130,7 @@
     <value>Search for a registration</value>
   </data>
   <data name="Search_Info_Text" xml:space="preserve">
-    <value>You can view and cancel a student’s registration.</value>
+    <value>You can view, amend and delete a learner’s registration.</value>
   </data>
   <data name="Uln_Hint_Text" xml:space="preserve">
     <value>ULN must be 10 digits long</value>

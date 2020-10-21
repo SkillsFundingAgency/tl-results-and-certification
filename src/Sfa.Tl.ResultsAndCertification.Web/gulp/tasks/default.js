@@ -91,6 +91,20 @@ gulp.task('copy-cookies-js', function () {
         .pipe(gulp.dest(paths.dist.defaultJs));
 });
 
+gulp.task('copy-registration-specialism-question-js', function () {
+    return src([
+        'Frontend/src/javascripts/registration-specialism-question.js'
+    ])
+        .pipe(concat('registration-specialism-question.js'))
+        .pipe(minify({
+            noSource: true,
+            ext: {
+                min: '.min.js'
+            }
+        }))
+        .pipe(gulp.dest(paths.dist.defaultJs));
+});
+
 gulp.task('copy-session-timeout-js', function () {
     return src([
         'Frontend/src/javascripts/session-timeout.js'

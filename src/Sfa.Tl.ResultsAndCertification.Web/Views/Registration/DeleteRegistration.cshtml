@@ -1,0 +1,51 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.DeleteRegistrationViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = DeleteRegistration.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<form asp-route="SubmitDeleteRegistration">
+
+    <input type="hidden" asp-for="ProfileId" />
+    <input type="hidden" asp-for="Uln" />
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <partial name="_ValidationSummary" />
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading">
+                            @DeleteRegistration.Page_Heading
+                        </h1>
+                    </legend>
+                    <span id="remove-tlevel-hint" class="govuk-hint govuk-!-margin-bottom-7">
+                        <strong>@DeleteRegistration.Uln_Hint</strong> @Model.Uln
+                    </span>
+                    <div class="govuk-radios" sfa-validation-for="DeleteRegistration" sfa-validation-class="govuk-form-group--error">
+                        <span sfa-validation-for="DeleteRegistration"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="deleteregistration" asp-for="DeleteRegistration" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="deleteregistration">
+                                @DeleteRegistration.Cancel_Registration_Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="cancel-registration-no" asp-for="DeleteRegistration" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="cancel-registration-no">
+                                @DeleteRegistration.Cancel_Registration_No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="submitButton" class="govuk-button" data-module="govuk-button">@DeleteRegistration.Submit_Button_Text</button>
+        </div>
+    </div>
+</form>

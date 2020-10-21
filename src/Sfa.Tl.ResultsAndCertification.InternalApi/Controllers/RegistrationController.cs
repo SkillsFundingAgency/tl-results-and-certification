@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -45,10 +46,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetRegistrationDetails/{aoUkprn}/{profileId}")]
-        public async Task<RegistrationDetails> GetRegistrationDetailsByProfileIdAsync(long aoUkprn, int profileId)
+        [Route("GetRegistrationDetails/{aoUkprn}/{profileId}/{status:int?}")]
+        public async Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            return await _registrationService.GetRegistrationDetailsByProfileIdAsync(aoUkprn, profileId);
+            return await _registrationService.GetRegistrationDetailsAsync(aoUkprn, profileId, status);
         }
 
         [HttpDelete]
@@ -57,5 +58,33 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _registrationService.DeleteRegistrationAsync(aoUkprn, profileId);
         }
+
+        [HttpPut]
+        [Route("UpdateRegistration")]
+        public async Task<bool> UpdateRegistrationAsync(ManageRegistration model)
+        {
+            return await _registrationService.UpdateRegistrationAsync(model);
+        }
+
+        [HttpPut]
+        [Route("WithdrawRegistration")]
+        public async Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model)
+        {
+            return await _registrationService.WithdrawRegistrationAsync(model);
+        }
+
+        [HttpPut]
+        [Route("RejoinRegistration")]
+        public async Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model)
+        {
+            return await _registrationService.RejoinRegistrationAsync(model);
+        }
+
+        [HttpPost]
+        [Route("Reregistration")]
+        public async Task<bool> ReregistrationAsync(ReregistrationRequest model)
+        {
+            return await _registrationService.ReregistrationAsync(model);
+        }        
     }
 }

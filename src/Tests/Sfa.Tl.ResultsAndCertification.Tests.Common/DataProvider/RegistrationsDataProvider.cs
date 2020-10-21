@@ -171,7 +171,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tqRegistrationSpecialism;
         }
 
-        public static TqRegistrationSpecialism CreateTqRegistrationSpecialism(ResultsAndCertificationDbContext _dbContext, TqRegistrationPathway tqRegistrationPathway, TlSpecialism tlSpecialism, RegistrationSpecialismStatus registrationSpecialismStatus = RegistrationSpecialismStatus.Active, bool addToDbContext = true)
+        public static TqRegistrationSpecialism CreateTqRegistrationSpecialism(ResultsAndCertificationDbContext _dbContext, TqRegistrationPathway tqRegistrationPathway, TlSpecialism tlSpecialism, bool isOptedin = true, bool addToDbContext = true)
         {
             if (tqRegistrationPathway == null && tlSpecialism == null)
                 return null;
@@ -183,7 +183,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                 TlSpecialismId = tlSpecialism.Id,
                 TlSpecialism = tlSpecialism,
                 StartDate = DateTime.UtcNow,
-                Status = registrationSpecialismStatus,
+                IsOptedin = isOptedin,
                 IsBulkUpload = true
             };
 

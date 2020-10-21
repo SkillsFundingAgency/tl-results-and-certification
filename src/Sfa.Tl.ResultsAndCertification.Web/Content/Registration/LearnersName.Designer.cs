@@ -61,11 +61,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add a new registration.
+        /// </summary>
+        public static string AddRegistration_Caption_Text {
+            get {
+                return ResourceManager.GetString("AddRegistration_Caption_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Change_Button_Text {
             get {
                 return ResourceManager.GetString("Change_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change registration.
+        /// </summary>
+        public static string ChangeRegistration_Caption_Text {
+            get {
+                return ResourceManager.GetString("ChangeRegistration_Caption_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change registration - Enter the learner&apos;s name page.
+        /// </summary>
+        public static string ChangeRegistration_Page_Title {
+            get {
+                return ResourceManager.GetString("ChangeRegistration_Page_Title", resourceCulture);
             }
         }
         
@@ -102,15 +129,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string LastName_Field_Text {
             get {
                 return ResourceManager.GetString("LastName_Field_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add a new registration.
-        /// </summary>
-        public static string Page_Caption_Text {
-            get {
-                return ResourceManager.GetString("Page_Caption_Text", resourceCulture);
             }
         }
         

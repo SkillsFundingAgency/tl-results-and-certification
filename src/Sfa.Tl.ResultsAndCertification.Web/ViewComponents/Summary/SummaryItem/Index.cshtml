@@ -6,13 +6,26 @@
         @Model?.Title
     </dt>
     <dd class="govuk-summary-list__value">
-        <p class="govuk-body">@Model?.Value</p>
+        @if (Model?.HasTag == true)
+        {
+            <strong class="govuk-tag @Model.TagCssClass">@Model?.Value</strong>
+        }
+        else
+        {
+            <p class="govuk-body">@Model?.Value</p>
+        }
     </dd>
-    @if (!string.IsNullOrWhiteSpace(Model?.ActionText))
-    {
-        <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" id="@Model?.Id" asp-route="@Model?.RouteName" asp-all-route-data="@Model?.RouteAttributes">@Model?.ActionText<span class="govuk-visually-hidden">@Model?.Title</span></a>
-        </dd>
-    }
+    <dd class="govuk-summary-list__actions">
+        @if (!string.IsNullOrWhiteSpace(Model?.ActionText))
+        {
+            <a class="govuk-link" id="@Model?.Id" asp-route="@Model?.RouteName" asp-all-route-data="@Model?.RouteAttributes">
+                @Model?.ActionText
+                @if (Model?.RenderHiddenActionText == true)
+                {
+                    <span class="govuk-visually-hidden">@Model?.Title</span>
+                }
+            </a>
+        }
+    </dd>
 </div>
 

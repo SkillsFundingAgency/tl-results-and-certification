@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest
 {
@@ -14,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest
 
         public abstract void Setup();
         public abstract void Given();
-        public abstract void When();
+        public abstract Task When();
 
         public void Dispose()
         {

@@ -37,9 +37,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TimeoutContro
             HttpContextAccessor.HttpContext.Returns(httpContext);
         }
 
-        public override void When()
+        public override Task When()
         {
             Result = Controller.TimeoutConfirmation();
+            return Task.CompletedTask;
         }
     }
 }

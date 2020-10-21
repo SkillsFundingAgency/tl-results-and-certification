@@ -18,10 +18,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TimeoutContro
         [Fact]
         public void Then_Expected_Empty_Data_Is_Returned()
         {
-            Result.Result.Should().NotBeNull();
-            Result.Result.Should().BeOfType(typeof(JsonResult));
+            Result.Should().NotBeNull();
+            Result.Should().BeOfType(typeof(JsonResult));
 
-            var actualResult = Result.Result.Value as SessionActivityData;
+            var actualResult = Result.Value as SessionActivityData;
 
             actualResult.Minutes.Should().Be(0);
             actualResult.Seconds.Should().Be(0);

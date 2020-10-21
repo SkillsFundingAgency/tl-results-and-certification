@@ -12,9 +12,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Local
 
         public ClaimsIdentity ClaimsIdentity => new ClaimsIdentity(new[]
         {
-            new Claim(ClaimTypes.Email, "test@test.com"),
-            new Claim(ClaimTypes.GivenName, "Firstname"),
-            new Claim(ClaimTypes.Surname, "Surname"),
+            new Claim(ClaimTypes.Email, "test.user@test.com"),
+            new Claim(ClaimTypes.GivenName, "Test"),
+            new Claim(ClaimTypes.Surname, "User"),
             new Claim(ClaimTypes.Role, RolesExtensions.SiteAdministrator),
             new Claim(CustomClaimTypes.HasAccessToService, HasAccessToService.ToString()),            
             new Claim(CustomClaimTypes.Ukprn, string.IsNullOrWhiteSpace(Ukprn) ? Ukprn : "10009696"),

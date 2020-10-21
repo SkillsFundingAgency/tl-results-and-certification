@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrations
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
@@ -25,19 +26,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             SeedTestData(EnumAwardingOrganisation.Pearson);
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
+            TqRegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
+            TqRegistrationSpecialismRepositoryLogger = new Logger<GenericRepository<TqRegistrationSpecialism>>(new NullLoggerFactory());
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, RegistrationMapper, RegistrationRepositoryLogger);
+            TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
+            TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, RegistrationMapper, RegistrationRepositoryLogger);
+
             _stage4RegistrationsData = new RegistrationsStage4Builder().BuildValidList();
         }
 
-        public override void When()
-        {
+        public override Task When()
+        {         
             _result = RegistrationService.TransformRegistrationModel(_stage4RegistrationsData, _performedBy);
+            return Task.CompletedTask;
         }
 
         [Fact]
-        public void Then_Expected_Response_Is_Returned()
+        public void Then_Returns_Expected_Results()
         {
             _result.Should().NotBeNull();
             _result.Count.Should().Be(_stage4RegistrationsData.Count);

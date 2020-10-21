@@ -61,6 +61,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Change_Button_Text {
+            get {
+                return ResourceManager.GetString("Change_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change registration.
+        /// </summary>
+        public static string Change_Page_Caption_Text {
+            get {
+                return ResourceManager.GetString("Change_Page_Caption_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Continue_Button_Text {
@@ -97,11 +115,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register learner on a new course.
+        /// </summary>
+        public static string Page_Caption_Text_Reregister {
+            get {
+                return ResourceManager.GetString("Page_Caption_Text_Reregister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a new registration - Has the learner decided on the specialism page.
         /// </summary>
         public static string Page_Title_Add_Registration_Has_Learner_Decided_On_Specialisms {
             get {
                 return ResourceManager.GetString("Page_Title_Add_Registration_Has_Learner_Decided_On_Specialisms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change registration - Has the learner decided on the specialism page.
+        /// </summary>
+        public static string Page_Title_Change_Registration_Has_Learner_Decided_On_Specialisms {
+            get {
+                return ResourceManager.GetString("Page_Title_Change_Registration_Has_Learner_Decided_On_Specialisms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register learner on a new course - Has the learner decided on the specialism page.
+        /// </summary>
+        public static string Page_Title_Reregister_Has_Learner_Decided_On_Specialisms {
+            get {
+                return ResourceManager.GetString("Page_Title_Reregister_Has_Learner_Decided_On_Specialisms", resourceCulture);
             }
         }
         

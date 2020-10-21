@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can view and cancel a student’s registration..
+        ///   Looks up a localized string similar to You can view, amend and delete a learner’s registration..
         /// </summary>
         public static string Search_Info_Text {
             get {

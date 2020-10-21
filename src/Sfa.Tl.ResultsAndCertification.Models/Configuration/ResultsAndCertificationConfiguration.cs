@@ -98,12 +98,13 @@
         /// </value>
         public bool IsDevevelopment { get; set; }
 
+
         /// <summary>
-        /// Gets or sets a value indicating whether [enable local authentication].
+        /// Gets or sets a value indicating whether [bypass dfe sign in].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [enable local authentication]; otherwise, <c>false</c>.
+        ///   <c>true</c> if [bypass dfe sign in]; otherwise, <c>false</c>.
         /// </value>
-        public bool EnableLocalAuthentication { get; set; }
+        public bool BypassDfeSignIn { get; set; }
     }
 }

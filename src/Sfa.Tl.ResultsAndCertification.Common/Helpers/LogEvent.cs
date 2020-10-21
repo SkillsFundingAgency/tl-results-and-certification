@@ -32,5 +32,6 @@
         public const int BulkRegistrationProcessFailed = 4001;
         public const int ManualRegistrationProcessFailed = 4002;
         public const int RegistrationNotDeleted = 4003;
+        public const int ManualReregistrationProcessFailed = 4004;
     }
 }

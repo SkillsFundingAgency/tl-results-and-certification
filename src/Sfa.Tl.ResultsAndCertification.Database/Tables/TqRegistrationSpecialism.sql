@@ -6,6 +6,7 @@
 	[StartDate] DATETIME NOT NULL,
 	[EndDate] DATETIME NULL,
 	[Status] INT NOT NULL,
+	[IsOptedin] BIT NOT NULL DEFAULT 1,
 	[IsBulkUpload] BIT NOT NULL DEFAULT 0,
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 

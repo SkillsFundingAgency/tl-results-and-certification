@@ -79,6 +79,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change core.
+        /// </summary>
+        public static string Change_Core_Heading_Text {
+            get {
+                return ResourceManager.GetString("Change_Core_Heading_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you want to change the core you must withdraw this registration first. You can then register the learner on the new core..
+        /// </summary>
+        public static string Change_Registration_Core_Body_Text {
+            get {
+                return ResourceManager.GetString("Change_Registration_Core_Body_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Continue_Button_Text {
@@ -106,6 +124,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change core page.
+        /// </summary>
+        public static string Page_Title_Change_Registration_Core {
+            get {
+                return ResourceManager.GetString("Page_Title_Change_Registration_Core", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register learner on a new course - Select the core page.
+        /// </summary>
+        public static string Page_Title_Reregister_Registration_Select_Core {
+            get {
+                return ResourceManager.GetString("Page_Title_Reregister_Registration_Select_Core", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register learner on a new course.
+        /// </summary>
+        public static string ReregisterRegistration_Caption_Text {
+            get {
+                return ResourceManager.GetString("ReregisterRegistration_Caption_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select one.
         /// </summary>
         public static string Select_One_Option_Text {
@@ -129,6 +174,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Validation_Select_Core_Required {
             get {
                 return ResourceManager.GetString("Validation_Select_Core_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Withdraw this registration.
+        /// </summary>
+        public static string Withdraw_This_Registration_Link_Text {
+            get {
+                return ResourceManager.GetString("Withdraw_This_Registration_Link_Text", resourceCulture);
             }
         }
     }

@@ -15,7 +15,7 @@
         public const string ErrorController = "Error";
         public const string TlevelController = "Tlevel";
 
-        // TempData Key Constants
+        // TempData Key Constants        
         public const string IsRedirect = "IsRedirect";
         public const string IsBackToVerifyPage = "IsBackToVerifyPage";
         public const string FindProviderSearchCriteria = "FindProviderSearchCriteria";
@@ -27,8 +27,15 @@
         public const string UlnNotFoundViewModel = "UlnNotFoundViewModel";
 
         public const string RegistrationConfirmationViewModel = "RegistrationConfirmationViewModel";
+        public const string ChangeRegistrationConfirmationViewModel = "ChangeRegistrationConfirmationViewModel";
         public const string SearchRegistrationUlnNotFound = "SearchRegistrationUlnNotFound";
         public const string RegistrationSearchCriteria = "RegistrationSearchCriteria";
+        public const string RegistrationChangeProviderViewModel = "RegistrationChangeProviderViewModel";
+        public const string ChangeRegistrationProviderCoreNotSupportedViewModel = "ChangeRegistrationProviderCoreNotSupportedViewModel";
+        public const string ChangeRegistrationCoreNotSupportedProviderUkprn = "ChangeRegistrationCoreNotSupportedProviderUkprn";
+        public const string WithdrawRegistrationConfirmationViewModel = "WithdrawRegistrationConfirmationViewModel";
+        public const string RejoinRegistrationConfirmationViewModel = "RejoinRegistrationConfirmationViewModel";
+        public const string ReregistrationConfirmationViewModel = "ReregistrationConfirmationViewModel";
 
         public const string UserSessionActivityId = "UserSessionActivityId";
 
@@ -37,6 +44,11 @@
         public const int RegistrationPathwayStartIndex = 200000;
         public const int RegistrationSpecialismsStartIndex = 300000;
 
+        // Route Attributes
         public const string IsChangeMode = "isChangeMode";
+        public const string ProfileId = "profileId";
+        public const string IsBack = "isBack";
+        public const string ChangeStatusId = "changeStatusId";
+        public const string WithdrawBackLinkOptionId = "withdrawBackLinkOptionId";
     }
 }

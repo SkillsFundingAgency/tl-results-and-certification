@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices
 {
@@ -6,6 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices
     {
         void Setup();
         void Given();
-        void When();
+        Task When();
     }
 }

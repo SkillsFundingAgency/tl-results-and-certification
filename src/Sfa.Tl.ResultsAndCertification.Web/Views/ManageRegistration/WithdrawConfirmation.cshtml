@@ -1,0 +1,36 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.WithdrawRegistrationResponse
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @WithdrawConfirmation.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">@WithdrawConfirmation.Heading_Successful</h1>
+            <div class="govuk-panel__body">
+                @WithdrawConfirmation.Caption_Text_Uln @Model.Uln
+            </div>
+        </div>
+        <p class="govuk-!-margin-top-8">
+            @if (Model.IsRequestFromProviderAndCorePage)
+            {
+                <a id="registerNewCourseButton" class="govuk-button" role="button"
+                   asp-route="ReregisterProvider"
+                   asp-route-profileId="@Model.ProfileId"
+                   asp-route-isChangeMode="false"
+                   asp-route-isFromConfirmation="true">
+                    @WithdrawConfirmation.Register_Learner_On_New_Course_Button_Text
+            </a>
+        }
+        else
+        {
+            <a id="viewWithdrawRegButton" class="govuk-button" role="button" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">
+                @WithdrawConfirmation.View_Withdrawn_Registration_Button_Text
+            </a>
+        }
+        </p>
+        <p><a id="dashboardButton" class="govuk-button govuk-button--secondary" role="button" asp-route="Home">@WithdrawConfirmation.Home_Button_Text</a></p>
+    </div>
+</div>

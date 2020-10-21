@@ -1,0 +1,22 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ChangeAcademicYearViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @SelectAcademicYear.Page_Title_Change_Registration_Select_AcademicYear;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+            <h1 class="govuk-heading-l">@SelectAcademicYear.Change_AcademicYear_Heading_Text</h1>
+            <p class="govuk-body">@SelectAcademicYear.Change_Registration_AcademicYear_Body_Text</p>
+        </div>
+        <p>
+            <a id="backToRegistrationDetailsButton" class="govuk-button" role="button" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">@SelectAcademicYear.Back_To_Registration_Details_Button_Text</a>
+        </p>
+    </div>
+</div>

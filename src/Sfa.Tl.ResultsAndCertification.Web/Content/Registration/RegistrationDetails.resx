@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cancel_This_Registration_Button_Text" xml:space="preserve">
-    <value>Cancel this registration</value>
+  <data name="Change_Action_Link_Text" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="Change_Status_Action_Link_Text" xml:space="preserve">
+    <value>Change status</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Search for a registration - Registration details page</value>
@@ -150,13 +153,10 @@
   <data name="Title_Specialism_Text" xml:space="preserve">
     <value>Specialism (code)</value>
   </data>
+  <data name="Title_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="Uln_Heading_Text" xml:space="preserve">
     <value>ULN: {0}</value>
-  </data>
-  <data name="Uploading_A_Csv_File_Text" xml:space="preserve">
-    <value>uploading a csv file</value>
-  </data>
-  <data name="You_can_Amend_These_Details_By_Text" xml:space="preserve">
-    <value>You can amend these details by</value>
   </data>
 </root>

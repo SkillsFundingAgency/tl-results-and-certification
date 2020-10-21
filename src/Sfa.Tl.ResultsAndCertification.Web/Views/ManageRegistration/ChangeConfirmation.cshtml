@@ -1,0 +1,20 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ManageRegistrationResponse
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = ChangeConfirmation.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">@ChangeConfirmation.Heading_Successful</h1>
+            <div class="govuk-panel__body">
+                @ChangeConfirmation.Caption_Text_Uln @Model.Uln
+            </div>
+        </div>
+        <p class="govuk-!-margin-top-8">
+            <a class="govuk-button" role="button" id="BackToRegButton" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">@ChangeConfirmation.Button_Text</a>
+        </p>
+    </div>
+</div>

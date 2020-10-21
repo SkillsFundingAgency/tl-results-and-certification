@@ -123,6 +123,12 @@
   <data name="Cannot_Find_Core_Text" xml:space="preserve">
     <value>Cannot find a core?</value>
   </data>
+  <data name="Change_Core_Heading_Text" xml:space="preserve">
+    <value>Change core</value>
+  </data>
+  <data name="Change_Registration_Core_Body_Text" xml:space="preserve">
+    <value>If you want to change the core you must withdraw this registration first. You can then register the learner on the new core.</value>
+  </data>
   <data name="Continue_Button_Text" xml:space="preserve">
     <value>Continue</value>
   </data>
@@ -132,6 +138,15 @@
   <data name="Page_Title_Add_Registration_Select_Core" xml:space="preserve">
     <value>Add a new registration - Select the core page</value>
   </data>
+  <data name="Page_Title_Change_Registration_Core" xml:space="preserve">
+    <value>Change core page</value>
+  </data>
+  <data name="Page_Title_Reregister_Registration_Select_Core" xml:space="preserve">
+    <value>Register learner on a new course - Select the core page</value>
+  </data>
+  <data name="ReregisterRegistration_Caption_Text" xml:space="preserve">
+    <value>Register learner on a new course</value>
+  </data>
   <data name="Select_One_Option_Text" xml:space="preserve">
     <value>Select one</value>
   </data>
@@ -140,5 +155,8 @@
   </data>
   <data name="Validation_Select_Core_Required" xml:space="preserve">
     <value>Select a core</value>
+  </data>
+  <data name="Withdraw_This_Registration_Link_Text" xml:space="preserve">
+    <value>Withdraw this registration</value>
   </data>
 </root>

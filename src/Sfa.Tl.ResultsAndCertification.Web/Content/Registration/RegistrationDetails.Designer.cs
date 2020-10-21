@@ -61,11 +61,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel this registration.
+        ///   Looks up a localized string similar to Change.
         /// </summary>
-        public static string Cancel_This_Registration_Button_Text {
+        public static string Change_Action_Link_Text {
             get {
-                return ResourceManager.GetString("Cancel_This_Registration_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Change_Action_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change status.
+        /// </summary>
+        public static string Change_Status_Action_Link_Text {
+            get {
+                return ResourceManager.GetString("Change_Status_Action_Link_Text", resourceCulture);
             }
         }
         
@@ -160,29 +169,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Title_Status {
+            get {
+                return ResourceManager.GetString("Title_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ULN: {0}.
         /// </summary>
         public static string Uln_Heading_Text {
             get {
                 return ResourceManager.GetString("Uln_Heading_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to uploading a csv file.
-        /// </summary>
-        public static string Uploading_A_Csv_File_Text {
-            get {
-                return ResourceManager.GetString("Uploading_A_Csv_File_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can amend these details by.
-        /// </summary>
-        public static string You_can_Amend_These_Details_By_Text {
-            get {
-                return ResourceManager.GetString("You_can_Amend_These_Details_By_Text", resourceCulture);
             }
         }
     }

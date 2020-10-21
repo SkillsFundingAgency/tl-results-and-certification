@@ -5,6 +5,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Filters;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Filters.SessionActivity
 {
@@ -23,11 +24,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Filters.SessionActivity
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();            
         }
 
-        public override void When()
+        public override Task When()
         {
             var filterAttribute = new SessionActivityFilterAttribute(CacheService, Logger);
             var actionExecutionDelegate = Substitute.For<ActionExecutionDelegate>();
             filterAttribute.OnActionExecutionAsync(ActionExecutingContext, actionExecutionDelegate).GetAwaiter().GetResult();
+            return Task.CompletedTask;
         }
     }
 }

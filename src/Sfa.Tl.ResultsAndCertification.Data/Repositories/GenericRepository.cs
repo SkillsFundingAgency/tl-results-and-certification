@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -68,6 +69,22 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
         }
 
+        public virtual async Task<int> UpdateManyAsync(IList<T> entities)
+        {
+            if (entities.Count == 0) return 0;
+            try
+            {
+                _dbContext.UpdateRange(entities);
+            
+                return await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException due)
+            {
+                _logger.LogError(due.Message, due.InnerException);
+                throw;
+            }
+        }
+
         public virtual async Task<int> UpdateWithSpecifedColumnsOnlyAsync(T entity, params Expression<Func<T, object>>[] properties)
         {
             properties.ToList().ForEach(p =>
@@ -85,6 +102,25 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 throw;
             }
         }
+
+        public virtual async Task<int> UpdateWithSpecifedCollectionsOnlyAsync(T entity, params Expression<Func<T, object>>[] properties)
+        {
+            properties.ToList().ForEach(p =>
+            {
+                _dbContext.Entry(entity).Collection(p.GetPropertyAccess().Name).IsModified = true;
+            });
+
+            try
+            {
+                return await _dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException due)
+            {
+                _logger.LogError(due.Message, due.InnerException);
+                throw;
+            }
+        }
+        
 
         public virtual async Task<int> DeleteAsync(T entity)
         {
