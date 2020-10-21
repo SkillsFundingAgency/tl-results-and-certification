@@ -129,9 +129,6 @@
   <data name="Is_Registered_With_Another_Ao_Text" xml:space="preserve">
     <value>is registered with another awarding organisation</value>
   </data>
-  <data name="It_Is_No_Longer_Active_Text" xml:space="preserve">
-    <value>is no longer active</value>
-  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>ULN cannot be found page</value>
   </data>

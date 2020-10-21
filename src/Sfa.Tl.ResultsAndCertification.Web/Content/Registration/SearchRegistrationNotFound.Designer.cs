@@ -98,15 +98,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to is no longer active.
-        /// </summary>
-        public static string It_Is_No_Longer_Active_Text {
-            get {
-                return ResourceManager.GetString("It_Is_No_Longer_Active_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ULN cannot be found page.
         /// </summary>
         public static string Page_Title {
