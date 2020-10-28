@@ -12,7 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
         public int MaxFileNameLength { get; set; }
         public int MaxFileSizeInMb { get; set; }
         public int MaxRecordCount { get; set; }
-
         public Type ErrorResourceType { get; set; }
 
         private int MaxFileSize => MaxFileSizeInMb * 1024 * 1024;
