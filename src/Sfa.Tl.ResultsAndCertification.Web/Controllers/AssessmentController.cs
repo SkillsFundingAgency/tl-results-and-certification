@@ -16,5 +16,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewmodel = new DashboardViewModel();
             return View(viewmodel);
         }
+
+        [HttpGet]
+        [Route("upload-assessment-entries-file", Name = RouteConstants.UploadAssessmentsFile)]
+        public IActionResult UploadAssessmentsFile()
+        {
+            return View(new UploadAssessmentsRequestViewModel());
+        }
     }
 }
