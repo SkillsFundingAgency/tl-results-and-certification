@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File must contain between one and {0} registrations.
+        ///   Looks up a localized string similar to File must contain assessment entries for between one and {0} registrations.
         /// </summary>
         public static string File_Max_Record_Count_Validation_Message {
             get {
@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The selected file must be a CSV.
+        ///   Looks up a localized string similar to File extension not valid - must be a CSV file.
         /// </summary>
         public static string Must_Be_Csv_Validation_Message {
             get {
@@ -151,7 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a file to upload.
+        ///   Looks up a localized string similar to Please select assessment entries file.
         /// </summary>
         public static string Select_File_To_Upload_Required_Validation_Message {
             get {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -22,6 +23,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public IActionResult UploadAssessmentsFile()
         {
             return View(new UploadAssessmentsRequestViewModel());
+        }
+
+        [HttpPost]
+        [Route("upload-assessment-entries-file", Name = RouteConstants.SubmitUploadAssessmentsFile)]
+        public IActionResult UploadAssessmentsFileAsync(UploadAssessmentsRequestViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+            return View(viewModel);
         }
     }
 }
