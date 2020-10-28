@@ -41,6 +41,11 @@
 
 
   <ItemGroup>
+    <Compile Update="Content\Assessment\Dashboard.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dashboard.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\ReregisterCannotSelectSameCore.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -380,6 +385,10 @@
 
 
   <ItemGroup>
+    <EmbeddedResource Update="Content\Assessment\Dashboard.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\ReregisterCannotSelectSameCore.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ReregisterCannotSelectSameCore.Designer.cs</LastGenOutput>
