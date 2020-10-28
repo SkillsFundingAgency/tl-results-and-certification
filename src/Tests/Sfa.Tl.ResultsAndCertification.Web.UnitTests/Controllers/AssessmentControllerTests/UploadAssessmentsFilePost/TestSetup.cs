@@ -36,10 +36,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             HttpContextAccessor.HttpContext.Returns(httpContext);
         }
 
-        public override Task When()
+        public async override Task When()
         {
-            Result = Controller.UploadAssessmentsFileAsync(ViewModel);
-            return Task.CompletedTask;
+            Result = await Controller.UploadAssessmentsFileAsync(ViewModel);
         }
     }
 }

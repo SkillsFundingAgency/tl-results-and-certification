@@ -27,12 +27,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("upload-assessment-entries-file", Name = RouteConstants.SubmitUploadAssessmentsFile)]
-        public IActionResult UploadAssessmentsFileAsync(UploadAssessmentsRequestViewModel viewModel)
+        public async Task<IActionResult> UploadAssessmentsFileAsync(UploadAssessmentsRequestViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View(viewModel);
             }
+            await Task.Delay(3000); // This is just for test
             return View(viewModel);
         }
     }
