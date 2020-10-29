@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 {
-    public class BulkAssessmentLoader : BulkBaseLoader, IBulkProcessLoader1
+    public class BulkAssessmentLoader : BulkBaseLoader, IBulkProcessLoader
     {
         private readonly ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> _csvService;
         private readonly IBlobStorageService _blobStorageService;
@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             _logger = logger;
         }
 
-        public async Task<BulkRegistrationResponse> StartBulkProcessAsync(BulkRegistrationRequest request)
+        public async Task<BulkRegistrationResponse> ProcessAsync(BulkRegistrationRequest request)
         {
             var response = new BulkRegistrationResponse();
             try
