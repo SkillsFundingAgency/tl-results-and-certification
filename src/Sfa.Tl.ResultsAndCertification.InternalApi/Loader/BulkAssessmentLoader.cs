@@ -25,11 +25,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         private readonly IDocumentUploadHistoryService _documentUploadHistoryService;
         private readonly ILogger<BulkAssessmentLoader> _logger;
 
-        public BulkAssessmentLoader(ICsvHelperService<AssessmentCsvRecordRequest,
-            CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> csvService,
+        public BulkAssessmentLoader(ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> csvService,
             //IRegistrationService registrationService, 
             IBlobStorageService blobStorageService,
-            IDocumentUploadHistoryService documentUploadHistoryService, ILogger<BulkAssessmentLoader> logger)
+            IDocumentUploadHistoryService documentUploadHistoryService, 
+            ILogger<BulkAssessmentLoader> logger) : base(blobStorageService)
         {
             _csvService = csvService;
             _blobStorageService = blobStorageService;
@@ -81,7 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             {
                 var errorMessage = $"Something went wrong while processing bluk assessments. Method: ProcessBulkAssessmentsAsync(BulkRegistrationRequest : {JsonConvert.SerializeObject(request)}), User: {request.PerformedBy}";
                 _logger.LogError(LogEvent.BulkAssessmentProcessFailed, ex, errorMessage);
-                // await DeleteFileFromProcessingFolderAsync(request); TODO: move this into common.
+                await DeleteFileFromProcessingFolderAsync(request);
             }
 
             // Read from the Blob
@@ -95,44 +95,42 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return await Task.Run(() => response);
         }
 
-        private IList<RegistrationValidationError> ExtractAllValidationErrors(CsvResponseModel<AssessmentCsvRecordResponse> stage2RegistrationsResponse = null, IList<AssessmentCsvRecordResponse> stage3RegistrationsResponse = null)
+        private IList<RegistrationValidationError> ExtractAllValidationErrors(CsvResponseModel<AssessmentCsvRecordResponse> stage2Response = null, IList<AssessmentCsvRecordResponse> stage3Response = null)
         {
-            // TODO: Can this be a generic method to move?
-            if (stage2RegistrationsResponse != null && stage2RegistrationsResponse.IsDirty)
-                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = stage2RegistrationsResponse.ErrorMessage } };
+            if (stage2Response != null && stage2Response.IsDirty)
+                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = stage2Response.ErrorMessage } };
 
             var errors = new List<RegistrationValidationError>();
 
-            if (stage2RegistrationsResponse != null)
+            if (stage2Response != null)
             {
-                foreach (var invalidRegistration in stage2RegistrationsResponse.Rows?.Where(x => !x.IsValid))
+                foreach (var invalidRegistration in stage2Response.Rows?.Where(x => !x.IsValid))
                 {
                     errors.AddRange(invalidRegistration.ValidationErrors);
                 }
             }
 
-            if (stage3RegistrationsResponse != null)
+            if (stage3Response != null)
             {
-                foreach (var invalidRegistration in stage3RegistrationsResponse.Where(x => !x.IsValid))
+                foreach (var invalidAssessment in stage3Response.Where(x => !x.IsValid))
                 {
-                    errors.AddRange(invalidRegistration.ValidationErrors);
+                    errors.AddRange(invalidAssessment.ValidationErrors);
                 }
             }
-
             return errors;
         }
 
-        private static void CheckUlnDuplicates(IList<AssessmentCsvRecordResponse> registrations)
+        private static void CheckUlnDuplicates(IList<AssessmentCsvRecordResponse> assessments)
         {
-            var duplicateRegistrations = registrations.Where(r => r.Uln != 0).GroupBy(r => r.Uln).Where(g => g.Count() > 1).Select(x => x);
+            var duplicateAssessments = assessments.Where(r => r.Uln != 0).GroupBy(r => r.Uln).Where(g => g.Count() > 1).Select(x => x);
 
-            foreach (var record in duplicateRegistrations.SelectMany(duplicateRegistration => duplicateRegistration))
+            foreach (var record in duplicateAssessments.SelectMany(assessemt => assessemt))
             {
                 record.ValidationErrors.Add(new RegistrationValidationError
                 {
                     RowNum = record.RowNum.ToString(),
                     Uln = record.Uln != 0 ? record.Uln.ToString() : string.Empty,
-                    ErrorMessage = ValidationMessages.DuplicateRecord  // TODO: check content is same?
+                    ErrorMessage = ValidationMessages.DuplicateRecord
                 });
             }
         }
