@@ -22,18 +22,16 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
     {
         private readonly ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> _csvService;
         private readonly IBlobStorageService _blobStorageService;
-        private readonly IDocumentUploadHistoryService _documentUploadHistoryService;
         private readonly ILogger<BulkAssessmentLoader> _logger;
 
-        public BulkAssessmentLoader(ICsvHelperService<AssessmentCsvRecordRequest,
-            CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> csvService,
+        public BulkAssessmentLoader(ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> csvService,
             //IRegistrationService registrationService, 
             IBlobStorageService blobStorageService,
-            IDocumentUploadHistoryService documentUploadHistoryService, ILogger<BulkAssessmentLoader> logger)
+            IDocumentUploadHistoryService documentUploadHistoryService, 
+            ILogger<BulkAssessmentLoader> logger) : base(csvService, blobStorageService, documentUploadHistoryService)
         {
             _csvService = csvService;
             _blobStorageService = blobStorageService;
-            _documentUploadHistoryService = documentUploadHistoryService;
             _logger = logger;
         }
 
@@ -49,19 +47,19 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 {
                     ContainerName = request.DocumentType.ToString(),
                     BlobFileName = request.BlobFileName,
-                    SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
+                    SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
                     UserName = request.PerformedBy
                 }))
                 {
                     if (fileStream == null)
                     {
-                        var blobReadError = $"No FileStream found to process bluk registrations. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}";
+                        var blobReadError = $"No FileStream found to process bluk assessments. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}";
                         _logger.LogInformation(LogEvent.FileStreamNotFound, blobReadError);
                         throw new Exception(blobReadError);
                     }
 
                     // Stage 2 validation - TODO
-                    //stage2AssessmentsResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = fileStream });
+                    stage2AssessmentsResponse = await _csvService.ReadAndParseFileAsync(new AssessmentCsvRecordRequest { FileStream = fileStream });
 
                     // TODO: check duplicate function. 
                     if (!stage2AssessmentsResponse.IsDirty)
@@ -72,69 +70,81 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 if (stage2AssessmentsResponse.IsDirty || !stage2AssessmentsResponse.Rows.Any(x => x.IsValid))
                 {
                     var validationErrors = ExtractAllValidationErrors(stage2AssessmentsResponse);
-                    //return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
-                    return response;
+                    return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
                 }
 
+                // TODO: Stage 3
+
+                // Temp response;
+                return new BulkRegistrationResponse 
+                {
+                    IsSuccess = false,
+                    Stats = new BulkUploadStats { TotalRecordsCount = 11 }
+                };
             }
             catch (Exception ex)
             {
                 var errorMessage = $"Something went wrong while processing bluk assessments. Method: ProcessBulkAssessmentsAsync(BulkRegistrationRequest : {JsonConvert.SerializeObject(request)}), User: {request.PerformedBy}";
                 _logger.LogError(LogEvent.BulkAssessmentProcessFailed, ex, errorMessage);
-                // await DeleteFileFromProcessingFolderAsync(request); TODO: move this into common.
+                await DeleteFileFromProcessingFolderAsync(request);
             }
 
-            // Read from the Blob
-            // Parse
-            // return if any erros
-            // validate Stage2 
-
-            // return if any errors
-            // then save to DB and return.
-
-            return await Task.Run(() => response);
+            return response;
         }
 
-        private IList<RegistrationValidationError> ExtractAllValidationErrors(CsvResponseModel<AssessmentCsvRecordResponse> stage2RegistrationsResponse = null, IList<AssessmentCsvRecordResponse> stage3RegistrationsResponse = null)
+        private IList<RegistrationValidationError> ExtractAllValidationErrors(CsvResponseModel<AssessmentCsvRecordResponse> stage2Response = null, IList<AssessmentCsvRecordResponse> stage3Response = null)
         {
-            // TODO: Can this be a generic method to move?
-            if (stage2RegistrationsResponse != null && stage2RegistrationsResponse.IsDirty)
-                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = stage2RegistrationsResponse.ErrorMessage } };
+            if (stage2Response != null && stage2Response.IsDirty)
+                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = stage2Response.ErrorMessage } };
 
             var errors = new List<RegistrationValidationError>();
 
-            if (stage2RegistrationsResponse != null)
+            if (stage2Response != null)
             {
-                foreach (var invalidRegistration in stage2RegistrationsResponse.Rows?.Where(x => !x.IsValid))
+                foreach (var invalidRegistration in stage2Response.Rows?.Where(x => !x.IsValid))
                 {
                     errors.AddRange(invalidRegistration.ValidationErrors);
                 }
             }
 
-            if (stage3RegistrationsResponse != null)
+            if (stage3Response != null)
             {
-                foreach (var invalidRegistration in stage3RegistrationsResponse.Where(x => !x.IsValid))
+                foreach (var invalidAssessment in stage3Response.Where(x => !x.IsValid))
                 {
-                    errors.AddRange(invalidRegistration.ValidationErrors);
+                    errors.AddRange(invalidAssessment.ValidationErrors);
                 }
             }
-
             return errors;
         }
 
-        private static void CheckUlnDuplicates(IList<AssessmentCsvRecordResponse> registrations)
+        private static void CheckUlnDuplicates(IList<AssessmentCsvRecordResponse> assessments)
         {
-            var duplicateRegistrations = registrations.Where(r => r.Uln != 0).GroupBy(r => r.Uln).Where(g => g.Count() > 1).Select(x => x);
+            var duplicateAssessments = assessments.Where(r => r.Uln != 0).GroupBy(r => r.Uln).Where(g => g.Count() > 1).Select(x => x);
 
-            foreach (var record in duplicateRegistrations.SelectMany(duplicateRegistration => duplicateRegistration))
+            foreach (var record in duplicateAssessments.SelectMany(assessemt => assessemt))
             {
                 record.ValidationErrors.Add(new RegistrationValidationError
                 {
                     RowNum = record.RowNum.ToString(),
                     Uln = record.Uln != 0 ? record.Uln.ToString() : string.Empty,
-                    ErrorMessage = ValidationMessages.DuplicateRecord  // TODO: check content is same?
+                    ErrorMessage = ValidationMessages.DuplicateRecord
                 });
             }
+        }
+
+        private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, IList<RegistrationValidationError> validationErrors)
+        {
+            // note: method can't be moved to base. Response type may be different in future. 
+            var errorFile = await CreateErrorFileAsync(validationErrors);
+            await UploadErrorsFileToBlobStorage(request, errorFile);
+            await MoveFileFromProcessingToFailedAsync(request);
+            await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
+
+            response.IsSuccess = false;
+            response.BlobUniqueReference = request.BlobUniqueReference;
+            response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
+
+            return response;
         }
     }
 }
