@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             IBlobStorageService blobStorageService,
             IDocumentUploadHistoryService documentUploadHistoryService)
         {
+            _csvService = csvService;
             _documentUploadHistoryService = documentUploadHistoryService;
             _blobStorageService = blobStorageService;
         }
