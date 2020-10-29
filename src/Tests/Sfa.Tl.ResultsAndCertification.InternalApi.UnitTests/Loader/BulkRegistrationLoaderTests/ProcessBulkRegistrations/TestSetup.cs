@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
         public async override Task When()
         {
             _loader = new BulkRegistrationLoader(CsvService, RegistrationService, BlobService, DocumentUploadHistoryService, Logger);
-            Response = await _loader.ProcessBulkRegistrationsAsync(Request);
+            Response = await _loader.ProcessAsync(Request);
         }
 
         public List<RegistrationValidationError> ExtractExpectedErrors(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
