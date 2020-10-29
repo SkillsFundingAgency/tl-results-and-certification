@@ -22,18 +22,16 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
     {
         private readonly ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> _csvService;
         private readonly IBlobStorageService _blobStorageService;
-        private readonly IDocumentUploadHistoryService _documentUploadHistoryService;
         private readonly ILogger<BulkAssessmentLoader> _logger;
 
         public BulkAssessmentLoader(ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> csvService,
             //IRegistrationService registrationService, 
             IBlobStorageService blobStorageService,
             IDocumentUploadHistoryService documentUploadHistoryService, 
-            ILogger<BulkAssessmentLoader> logger) : base(blobStorageService)
+            ILogger<BulkAssessmentLoader> logger) : base(csvService, blobStorageService, documentUploadHistoryService)
         {
             _csvService = csvService;
             _blobStorageService = blobStorageService;
-            _documentUploadHistoryService = documentUploadHistoryService;
             _logger = logger;
         }
 
@@ -55,13 +53,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 {
                     if (fileStream == null)
                     {
-                        var blobReadError = $"No FileStream found to process bluk registrations. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}";
+                        var blobReadError = $"No FileStream found to process bluk assessments. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}";
                         _logger.LogInformation(LogEvent.FileStreamNotFound, blobReadError);
                         throw new Exception(blobReadError);
                     }
 
                     // Stage 2 validation - TODO
-                    //stage2AssessmentsResponse = await _csvService.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = fileStream });
+                    stage2AssessmentsResponse = await _csvService.ReadAndParseFileAsync(new AssessmentCsvRecordRequest { FileStream = fileStream });
 
                     // TODO: check duplicate function. 
                     if (!stage2AssessmentsResponse.IsDirty)
@@ -72,10 +70,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 if (stage2AssessmentsResponse.IsDirty || !stage2AssessmentsResponse.Rows.Any(x => x.IsValid))
                 {
                     var validationErrors = ExtractAllValidationErrors(stage2AssessmentsResponse);
-                    //return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
-                    return response;
+                    return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
                 }
 
+                // TODO: Stage 3
+
+                // Temp response;
+                return new BulkRegistrationResponse 
+                {
+                    IsSuccess = false,
+                    Stats = new BulkUploadStats { TotalRecordsCount = 11 }
+                };
             }
             catch (Exception ex)
             {
@@ -84,15 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 await DeleteFileFromProcessingFolderAsync(request);
             }
 
-            // Read from the Blob
-            // Parse
-            // return if any erros
-            // validate Stage2 
-
-            // return if any errors
-            // then save to DB and return.
-
-            return await Task.Run(() => response);
+            return response;
         }
 
         private IList<RegistrationValidationError> ExtractAllValidationErrors(CsvResponseModel<AssessmentCsvRecordResponse> stage2Response = null, IList<AssessmentCsvRecordResponse> stage3Response = null)
@@ -133,6 +130,21 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                     ErrorMessage = ValidationMessages.DuplicateRecord
                 });
             }
+        }
+
+        private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, IList<RegistrationValidationError> validationErrors)
+        {
+            // note: method can't be moved to base. Response type may be different in future. 
+            var errorFile = await CreateErrorFileAsync(validationErrors);
+            await UploadErrorsFileToBlobStorage(request, errorFile);
+            await MoveFileFromProcessingToFailedAsync(request);
+            await CreateDocumentUploadHistory(request, DocumentUploadStatus.Failed);
+
+            response.IsSuccess = false;
+            response.BlobUniqueReference = request.BlobUniqueReference;
+            response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
+
+            return response;
         }
     }
 }
