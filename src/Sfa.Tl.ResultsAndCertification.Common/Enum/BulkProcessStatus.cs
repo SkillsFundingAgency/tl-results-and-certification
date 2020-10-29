@@ -1,6 +1,6 @@
 ﻿namespace Sfa.Tl.ResultsAndCertification.Common.Enum
 {
-    public enum BulkRegistrationProcessStatus
+    public enum BulkProcessStatus
     {
         Processing = 1,
         Processed = 2,

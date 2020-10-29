@@ -49,13 +49,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 {
                     ContainerName = request.DocumentType.ToString(),
                     BlobFileName = request.BlobFileName,
-                    SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
+                    SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
                     UserName = request.PerformedBy
                 }))
                 {
                     if (fileStream == null)
                     {
-                        var blobReadError = $"No FileStream found to process bluk registrations. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}";
+                        var blobReadError = $"No FileStream found to process bluk registrations. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}";
                         _logger.LogInformation(LogEvent.FileStreamNotFound, blobReadError);
                         throw new Exception(blobReadError);
                     }

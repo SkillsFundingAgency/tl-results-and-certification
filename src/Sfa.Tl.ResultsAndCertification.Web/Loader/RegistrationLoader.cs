@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 {
                     ContainerName = bulkRegistrationRequest.DocumentType.ToString(),
                     BlobFileName = bulkRegistrationRequest.BlobFileName,
-                    SourceFilePath = $"{bulkRegistrationRequest.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
+                    SourceFilePath = $"{bulkRegistrationRequest.AoUkprn}/{BulkProcessStatus.Processing}",
                     FileStream = fileStream,
                     UserName = bulkRegistrationRequest.PerformedBy
                 });
@@ -63,12 +63,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 {
                     ContainerName = DocumentType.Registrations.ToString(),
                     BlobFileName = tlevelDetails.BlobFileName,
-                    SourceFilePath = $"{aoUkprn}/{BulkRegistrationProcessStatus.ValidationErrors}"
+                    SourceFilePath = $"{aoUkprn}/{BulkProcessStatus.ValidationErrors}"
                 });
 
                 if(fileStream == null)
                 {
-                    var blobReadError = $"No FileStream found to download registration validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.Registrations}, BlobFileName = {tlevelDetails.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkRegistrationProcessStatus.ValidationErrors})";
+                    var blobReadError = $"No FileStream found to download registration validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.Registrations}, BlobFileName = {tlevelDetails.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkProcessStatus.ValidationErrors})";
                     _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
                 }
                 return fileStream;

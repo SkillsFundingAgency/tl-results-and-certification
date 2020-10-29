@@ -51,13 +51,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 {
                     ContainerName = request.DocumentType.ToString(),
                     BlobFileName = request.BlobFileName,
-                    SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
+                    SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
                     UserName = request.PerformedBy
                 }))
                 {
                     if (fileStream == null)
                     {
-                        var blobReadError = $"No FileStream found to process bluk registrations. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}";
+                        var blobReadError = $"No FileStream found to process bluk registrations. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}";
                         _logger.LogInformation(LogEvent.FileStreamNotFound, blobReadError);
                         throw new Exception(blobReadError);
                     }
@@ -201,7 +201,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
             {
                 ContainerName = request.DocumentType.ToString(),
-                SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.ValidationErrors}",
+                SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.ValidationErrors}",
                 BlobFileName = request.BlobFileName,
                 UserName = request.PerformedBy,
                 FileData = errorFile
@@ -217,8 +217,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             {
                 ContainerName = request.DocumentType.ToString(),
                 BlobFileName = request.BlobFileName,
-                SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
-                DestinationFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processed}"
+                SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
+                DestinationFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processed}"
             });
             return true;
         }
@@ -230,9 +230,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             await _blobStorageService.MoveFileAsync(new BlobStorageData
             {
                 ContainerName = request.DocumentType.ToString(),
-                SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
+                SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
                 BlobFileName = request.BlobFileName,
-                DestinationFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Failed}"
+                DestinationFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Failed}"
             });
             return true;
         }
@@ -244,7 +244,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             await _blobStorageService.DeleteFileAsync(new BlobStorageData
             {
                 ContainerName = request.DocumentType.ToString(),
-                SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
+                SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
                 BlobFileName = request.BlobFileName
             });
             return true;

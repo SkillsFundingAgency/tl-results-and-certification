@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             await _blobStorageService.DeleteFileAsync(new BlobStorageData
             {
                 ContainerName = request.DocumentType.ToString(),
-                SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
+                SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
                 BlobFileName = request.BlobFileName
             });
             return true;
