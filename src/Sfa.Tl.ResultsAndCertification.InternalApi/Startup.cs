@@ -143,12 +143,16 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IDataParser<RegistrationCsvRecordResponse>, RegistrationParser>();
             services.AddTransient<IValidator<RegistrationCsvRecordRequest>, RegistrationValidator>();
             services.AddTransient<ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>, CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>>();
+            services.AddTransient<IBulkBaseLoader, BulkBaseLoader>();
             services.AddTransient<IBulkProcessLoader, BulkRegistrationLoader>();
             services.AddTransient<IRegistrationService, RegistrationService>();
 
             // Bulk Assessments
-            //services.AddTransient<ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>, CsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>>();
-            //services.AddTransient<IBulkProcessLoader, BulkAssessmentLoader>();
+            services.AddTransient<IDataParser<AssessmentCsvRecordResponse>, AssessmentParser>();
+            services.AddTransient<IValidator<AssessmentCsvRecordRequest>, AssessmentValidator>();
+            services.AddTransient<ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>, CsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>>();
+            services.AddTransient<IBulkProcessLoader, BulkAssessmentLoader>();
+            //services.AddTransient<IAssessmentService, AssessmentService>();
         }
     }
 }
