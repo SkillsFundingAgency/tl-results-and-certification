@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 {
-    public class BulkRegistrationLoader : IBulkRegistrationLoader
+    public class BulkRegistrationLoader : IBulkProcessLoader
     {
         private readonly ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> _csvService;
         private readonly IRegistrationService _registrationService;
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             _logger = logger;
         }
 
-        public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request)
+        public async Task<BulkRegistrationResponse> ProcessAsync(BulkRegistrationRequest request)
         {
             var response = new BulkRegistrationResponse();
             try

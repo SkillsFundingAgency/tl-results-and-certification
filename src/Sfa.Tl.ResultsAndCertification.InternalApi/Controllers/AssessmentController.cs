@@ -9,9 +9,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     [ApiController]
     public class AssessmentController : ControllerBase
     {
-        private readonly IBulkProcessLoader _bulkAssementProcess;
+        private readonly IBulkProcessLoader1 _bulkAssementProcess;
 
-        public AssessmentController(IBulkProcessLoader bulkAssementProcess)
+        public AssessmentController(IBulkProcessLoader1 bulkAssementProcess)
         {
             _bulkAssementProcess = bulkAssementProcess;
         }

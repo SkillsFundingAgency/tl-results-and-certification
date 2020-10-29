@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 {
-    public class BulkAssessmentLoader : IBulkProcessLoader
+    public class BulkAssessmentLoader : BulkBaseLoader, IBulkProcessLoader1
     {
         private readonly ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> _csvService;
         private readonly IBlobStorageService _blobStorageService;

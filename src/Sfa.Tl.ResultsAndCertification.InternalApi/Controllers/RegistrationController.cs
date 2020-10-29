@@ -13,9 +13,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     public class RegistrationController : ControllerBase, IRegistrationController
     {
         private readonly IRegistrationService _registrationService;
-        private readonly IBulkRegistrationLoader _bulkRegistrationProcess;
+        private readonly IBulkProcessLoader _bulkRegistrationProcess;
 
-        public RegistrationController(IRegistrationService registrationService, IBulkRegistrationLoader bulkRegistrationProcess)
+        public RegistrationController(IRegistrationService registrationService, IBulkProcessLoader bulkRegistrationProcess)
         {
             _registrationService = registrationService;
             _bulkRegistrationProcess = bulkRegistrationProcess; 
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("ProcessBulkRegistrations")]
         public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request)
         {
-            return await _bulkRegistrationProcess.ProcessBulkRegistrationsAsync(request);
+            return await _bulkRegistrationProcess.ProcessAsync(request);
         }
 
         [HttpPost]
