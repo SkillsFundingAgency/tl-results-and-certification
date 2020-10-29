@@ -4,7 +4,7 @@
 	[Name] NVARCHAR(255),
 	[Description] NVARCHAR(1000),
 	[Year] INT NOT NULL,
-	[EndDate] DATETIME NULL,
+	[EndDate] DATETIME NOT NULL,
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 
     [ModifiedOn] DATETIME2 NULL, 

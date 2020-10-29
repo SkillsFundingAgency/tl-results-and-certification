@@ -80,8 +80,8 @@
     <Build Include="Tables\TqRegistrationSpecialism.sql" />
     <Build Include="Indexes\IX_Unique_TqRegistrationPathway.sql" />
     <Build Include="Indexes\IX_Unique_TqRegistrationSpecialism_IsOptedin.sql" />
-    <Build Include="Tables\TqAssessmentPathway.sql" />
-    <Build Include="Tables\TqAssessmentSpecialism.sql" />
+    <Build Include="Tables\TqPathwayAssessment.sql" />
+    <Build Include="Tables\TqSpecialismAssessment.sql" />
     <Build Include="Tables\AssessmentSeries.sql" />
   </ItemGroup>
   <ItemGroup>

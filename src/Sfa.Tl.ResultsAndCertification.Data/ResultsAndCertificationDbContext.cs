@@ -22,6 +22,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<TqRegistrationProfile> TqRegistrationProfile { get; set; }
         public virtual DbSet<TqRegistrationPathway> TqRegistrationPathway { get; set; }
         public virtual DbSet<TqRegistrationSpecialism> TqRegistrationSpecialism { get; set; }
+        public virtual DbSet<AssessmentSeries> AssessmentSeries { get; set; }
+        public virtual DbSet<TqPathwayAssessment> TqPathwayAssessment { get; set; }
+        public virtual DbSet<TqSpecialismAssessment> TqSpecialismAssessment { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
