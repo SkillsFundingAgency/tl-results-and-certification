@@ -133,6 +133,8 @@
 
         // Assessment Entries
         public const string AssessmentDashboard = "AssessmentDashboard";
+        public const string UploadAssessmentsFile = "UploadAssessmentsFile";
+        public const string SubmitUploadAssessmentsFile = "SubmitUploadAssessmentsFile";
 
         // Error
         public const string PageNotFound = "PageNotFound";
