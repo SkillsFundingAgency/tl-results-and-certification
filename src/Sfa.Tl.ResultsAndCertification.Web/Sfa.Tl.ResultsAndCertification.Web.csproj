@@ -51,6 +51,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Upload.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Assessment\UploadSuccessful.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UploadSuccessful.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\ReregisterCannotSelectSameCore.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -397,6 +402,10 @@
     <EmbeddedResource Update="Content\Assessment\Upload.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Upload.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Assessment\UploadSuccessful.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UploadSuccessful.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\ReregisterCannotSelectSameCore.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

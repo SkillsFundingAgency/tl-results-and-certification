@@ -37,6 +37,8 @@
         public const string RejoinRegistrationConfirmationViewModel = "RejoinRegistrationConfirmationViewModel";
         public const string ReregistrationConfirmationViewModel = "ReregistrationConfirmationViewModel";
 
+        public const string AssessmentsUploadSuccessfulViewModel = "AssessmentsUploadSuccessfulViewModel";
+
         public const string UserSessionActivityId = "UserSessionActivityId";
 
         // Registration Data Index Constants

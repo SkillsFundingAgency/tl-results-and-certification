@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
@@ -14,6 +16,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
     public abstract class TestSetup : BaseTest<RegistrationController>
     {
         protected long Ukprn;
+        protected ICacheService CacheService;
+        protected ILogger<AssessmentController> Logger;
         protected AssessmentController Controller;
         protected UploadAssessmentsRequestViewModel ViewModel;
         protected IFormFile FormFile;
@@ -25,7 +29,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         {
             Ukprn = 12345;
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
-            Controller = new AssessmentController();
+            CacheService = Substitute.For<ICacheService>();
+            Logger = Substitute.For<ILogger<AssessmentController>>();
+            Controller = new AssessmentController(CacheService, Logger);
             ViewModel = new UploadAssessmentsRequestViewModel();
 
             var httpContext = new ClaimsIdentityBuilder<AssessmentController>(Controller)
