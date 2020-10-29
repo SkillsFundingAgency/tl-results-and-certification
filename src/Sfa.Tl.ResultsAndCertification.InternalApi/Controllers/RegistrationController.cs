@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
@@ -15,13 +14,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     {
         private readonly IRegistrationService _registrationService;
         private readonly IBulkRegistrationLoader _bulkRegistrationProcess;
-        private readonly ILogger<ProviderController> _logger;
 
-        public RegistrationController(IRegistrationService registrationService, IBulkRegistrationLoader bulkRegistrationProcess, ILogger<ProviderController> logger)
+        public RegistrationController(IRegistrationService registrationService, IBulkRegistrationLoader bulkRegistrationProcess)
         {
             _registrationService = registrationService;
             _bulkRegistrationProcess = bulkRegistrationProcess; 
-            _logger = logger;
         }
 
         [HttpPost]
