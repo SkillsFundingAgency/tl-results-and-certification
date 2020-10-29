@@ -147,8 +147,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IRegistrationService, RegistrationService>();
 
             // Bulk Assessments
-            services.AddTransient<ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>, CsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>>();
-            services.AddTransient<IBulkProcessLoader, BulkAssessmentLoader>();
+            //services.AddTransient<ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>, CsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>>();
+            //services.AddTransient<IBulkProcessLoader, BulkAssessmentLoader>();
         }
     }
 }
