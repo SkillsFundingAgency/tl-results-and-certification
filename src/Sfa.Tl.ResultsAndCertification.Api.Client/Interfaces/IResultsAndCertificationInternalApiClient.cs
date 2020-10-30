@@ -40,6 +40,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model);
         Task<bool> ReregistrationAsync(ReregistrationRequest model);
 
+        // Assessments
+        Task<BulkAssessmentResponse> ProcessBulkAssessmentsAsync(BulkAssessmentRequest model);
+
         // DocumentUploadHistory
         Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);
     }

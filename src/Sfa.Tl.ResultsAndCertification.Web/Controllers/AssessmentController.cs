@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     [Authorize(Policy = RolesExtensions.RequireRegistrationsEditorAccess)]
     public class AssessmentController : Controller
     {
+        private readonly IAssessmentLoader _assessmentLoader;
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
 
@@ -22,8 +24,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AssessmentCacheKey); }
         }
 
-        public AssessmentController(ICacheService cacheService, ILogger<AssessmentController> logger)
+        public AssessmentController(IAssessmentLoader assessmentLoader, ICacheService cacheService, ILogger<AssessmentController> logger)
         {
+            _assessmentLoader = assessmentLoader;
             _cacheService = cacheService;
             _logger = logger;
         }
@@ -53,9 +56,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             await Task.Delay(3000); // This is just for test
 
-            var successfulViewModel = new UploadSuccessfulViewModel { Stats = new ViewModel.BulkUploadStatsViewModel { TotalRecordsCount = 20 } };
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AssessmentsUploadSuccessfulViewModel), successfulViewModel, CacheExpiryTime.XSmall);
+            viewModel.AoUkprn = User.GetUkPrn();
+            var response = new UploadAssessmentsResponseViewModel { IsSuccess = true, Stats = new ViewModel.BulkUploadStatsViewModel { TotalRecordsCount = 20 } }; //await _assessmentLoader.ProcessBulkAssessmentsAsync(viewModel);
 
+            if (response.IsSuccess)
+            {
+                var successfulViewModel = new UploadSuccessfulViewModel { Stats = response.Stats };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AssessmentsUploadSuccessfulViewModel), successfulViewModel, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.AssessmentsUploadSuccessful);
+            }
             return RedirectToRoute(RouteConstants.AssessmentsUploadSuccessful);
         }
 

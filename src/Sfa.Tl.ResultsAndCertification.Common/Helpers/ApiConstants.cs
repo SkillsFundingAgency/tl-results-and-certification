@@ -32,6 +32,9 @@
         public const string RejoinRegistrationUri = "/api/registration/RejoinRegistration";
         public const string ReregistrationUri = "/api/registration/Reregistration";
 
+        // Assessments Related Uri's
+        public const string ProcessBulkAssessmentsUri = "/api/assessment/ProcessBulkAssessments";
+
         // DocumentUploadHistory Related Uri's
         public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";
     }

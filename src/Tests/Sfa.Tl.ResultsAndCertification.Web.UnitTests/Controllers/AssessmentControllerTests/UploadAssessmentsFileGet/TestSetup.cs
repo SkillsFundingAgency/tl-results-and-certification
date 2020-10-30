@@ -4,6 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 {
     public abstract class TestSetup : BaseTest<RegistrationController>
     {
+        protected IAssessmentLoader AssessmentLoader;
         protected ICacheService CacheService;
         protected ILogger<AssessmentController> Logger;
         protected AssessmentController Controller;
@@ -19,9 +21,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
         public override void Setup()
         {
+            AssessmentLoader = Substitute.For<IAssessmentLoader>();
             CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<AssessmentController>>();
-            Controller = new AssessmentController(CacheService, Logger);
+            Controller = new AssessmentController(AssessmentLoader, CacheService, Logger);
             ViewModel = new UploadAssessmentsRequestViewModel();
         }
 

@@ -179,6 +179,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<ReregistrationRequest, bool>(requestUri, model);
         }
 
+        // Assessment Related endpoints
+        public async Task<BulkAssessmentResponse> ProcessBulkAssessmentsAsync(BulkAssessmentRequest model)
+        {
+            var requestUri = ApiConstants.ProcessBulkAssessmentsUri;
+            return await PostAsync<BulkAssessmentRequest, BulkAssessmentResponse>(requestUri, model);
+        }
+
         #region Private Methods
 
         /// <summary>
