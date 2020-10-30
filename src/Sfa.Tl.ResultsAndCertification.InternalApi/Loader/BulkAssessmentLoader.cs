@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 }
 
                 // Step 2: Stage 2 validations 
-                if (stage2AssessmentsResponse.IsDirty || !stage2AssessmentsResponse.Rows.Any(x => x.IsValid))
+                if (stage2AssessmentsResponse.IsDirty || stage2AssessmentsResponse.Rows.Any(x => !x.IsValid))
                 {
                     var validationErrors = ExtractAllValidationErrors(stage2AssessmentsResponse);
                     return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 // Temp response;
                 return new BulkRegistrationResponse 
                 {
-                    IsSuccess = false,
+                    IsSuccess = true,
                     Stats = new BulkUploadStats { TotalRecordsCount = 11 }
                 };
             }

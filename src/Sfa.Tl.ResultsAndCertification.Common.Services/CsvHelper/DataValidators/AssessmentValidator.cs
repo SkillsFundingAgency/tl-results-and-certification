@@ -12,6 +12,17 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             RuleFor(r => r.Uln)
                 .Required()
                 .MustBeNumberWithLength(10);
+
+            //// Core
+            //RuleFor(r => r.CoreCode)
+            //    .Required()
+            //    .MustBeStringWithLength(8);
+
+            //// Core
+            //RuleFor(r => r.SpecialismCode)
+            //    .Required()
+            //    .MustBeStringWithLength(8);
+
         }
     }
 }
