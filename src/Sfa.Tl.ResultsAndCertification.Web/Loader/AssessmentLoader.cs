@@ -2,11 +2,14 @@
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -44,6 +47,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             var bulkAssessmentResponse = await _internalApiClient.ProcessBulkAssessmentsAsync(bulkAssessmentRequest);
             return _mapper.Map<UploadAssessmentsResponseViewModel>(bulkAssessmentResponse);
+        }
+
+        public async Task<Stream> GetAssessmentValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            var documentInfo = await _internalApiClient.GetDocumentUploadHistoryDetailsAsync(aoUkprn, blobUniqueReference);
+
+            if (documentInfo != null && documentInfo.Status == (int)DocumentUploadStatus.Failed)
+            {
+                var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+                {
+                    ContainerName = DocumentType.Assessments.ToString(),
+                    BlobFileName = documentInfo.BlobFileName,
+                    SourceFilePath = $"{aoUkprn}/{BulkProcessStatus.ValidationErrors}"
+                });
+
+                if (fileStream == null)
+                {
+                    var blobReadError = $"No FileStream found to download assessment validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.Assessments}, BlobFileName = {documentInfo.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkProcessStatus.ValidationErrors})";
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+                }
+                return fileStream;
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No DocumentUploadHistoryDetails found or the request is not valid. Method: GetDocumentUploadHistoryDetailsAsync(AoUkprn: {aoUkprn}, BlobUniqueReference = {blobUniqueReference})");
+                return null;
+            }
         }
     }
 }

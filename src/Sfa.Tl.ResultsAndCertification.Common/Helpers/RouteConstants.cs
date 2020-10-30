@@ -136,6 +136,8 @@
         public const string UploadAssessmentsFile = "UploadAssessmentsFile";
         public const string SubmitUploadAssessmentsFile = "SubmitUploadAssessmentsFile";
         public const string AssessmentsUploadSuccessful = "AssessmentsUploadSuccessful";
+        public const string AssessmentsUploadUnsuccessful = "AssessmentsUploadUnsuccessful";
+        public const string DownloadAssessmentErrors = "DownloadAssessmentErrors";
 
         // Error
         public const string PageNotFound = "PageNotFound";

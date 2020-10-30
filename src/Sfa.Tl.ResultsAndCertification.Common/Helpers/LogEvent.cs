@@ -37,6 +37,6 @@
 
         // Assessment events
         public const int BulkAssessmentProcessFailed = 5001;
-
+        public const int DownloadAssesssmentErrorsFailed = 5002;
     }
 }

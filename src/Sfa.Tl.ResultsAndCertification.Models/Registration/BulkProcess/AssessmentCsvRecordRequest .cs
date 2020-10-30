@@ -6,25 +6,24 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
 {
     public class AssessmentCsvRecordRequest : FileBaseModel
     {
-        // TODO: FluentHeader to be created - [Display(Name)] attribute
         [Column(AssessmentFileHeader.Uln, Order = 0)]
-        [Display(Name = AssessmentFileHeader.Uln)]
+        [Display(Name = AsessmentFluentHeader.Uln)]
         public string Uln { get; set; }
 
         [Column(AssessmentFileHeader.CoreCode, Order = 1)]
-        [Display(Name = AssessmentFileHeader.CoreCode)]
+        [Display(Name = AsessmentFluentHeader.CoreCode)]
         public string CoreCode { get; set; }
 
         [Column(AssessmentFileHeader.CoreAssessmentEntry, Order = 2)]
-        [Display(Name = AssessmentFileHeader.CoreAssessmentEntry)]
+        [Display(Name = AsessmentFluentHeader.CoreAssessmentEntry)]
         public string CoreAssessmentEntry { get; set; }
 
         [Column(AssessmentFileHeader.SpecialismCode, Order = 3)]
-        [Display(Name = AssessmentFileHeader.SpecialismCode)]
+        [Display(Name = AsessmentFluentHeader.SpecialismCode)]
         public string SpecialismCode { get; set; }
 
         [Column(AssessmentFileHeader.SpecialismAssessmentEntry, Order = 4)]
-        [Display(Name = AssessmentFileHeader.SpecialismAssessmentEntry)]
+        [Display(Name = AsessmentFluentHeader.SpecialismAssessmentEntry)]
         public string SpecialismAssessmentEntry { get; set; }
     }
 }
