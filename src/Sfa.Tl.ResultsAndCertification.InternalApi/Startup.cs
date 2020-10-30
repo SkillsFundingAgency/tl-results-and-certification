@@ -129,6 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IBlobStorageService, BlobStorageService>();
             services.AddTransient<IProviderRepository, ProviderRepository>();
             services.AddTransient<IRegistrationRepository, RegistrationRepository>();
+            services.AddTransient<IAssessmentRepository, AssessmentRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
@@ -152,7 +153,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IValidator<AssessmentCsvRecordRequest>, AssessmentValidator>();
             services.AddTransient<ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>, CsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>>();
             services.AddTransient<IBulkProcessLoader, BulkAssessmentLoader>();
-            //services.AddTransient<IAssessmentService, AssessmentService>();
+            services.AddTransient<IAssessmentService, AssessmentService>();
         }
     }
 }
