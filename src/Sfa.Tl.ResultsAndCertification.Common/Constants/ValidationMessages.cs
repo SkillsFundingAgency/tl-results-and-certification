@@ -37,5 +37,11 @@
         // Bulk Registration Stage4 Validation Messages
         public const string ActiveUlnWithDifferentAo = "Active ULN with a different awarding organisation";
         public const string CoreForUlnCannotBeChangedYet = "Core for ULN cannot be changed yet";
+
+        // Assessments - Bulk stage 2 validations
+        public const string CorecodeRequired = "Core code required when core assessment entry is included";
+        public const string SpecialismcodeRequired = "Specialism code required when core assessment entry is included";
+        public const string CoreAssementEntryInvalidFormat = "Core assessment entry must be a series followed by a space and a 4 digit year";
+        public const string SpecialismAssementEntryInvalidFormat = "Specialism assessment entry must be a series followed by a space and a 4 digit year";
     }
 }

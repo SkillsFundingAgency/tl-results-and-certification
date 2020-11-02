@@ -111,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("download-assessment-errors", Name = RouteConstants.DownloadAssessmentErrors)]
-        public async Task<IActionResult> DownloadssessmentErrors(string id)
+        public async Task<IActionResult> DownloadAssessmentErrors(string id)
         {
             if (id.IsGuid())
             {
