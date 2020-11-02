@@ -56,10 +56,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(viewModel);
             }
-            await Task.Delay(3000); // This is just for test
 
             viewModel.AoUkprn = User.GetUkPrn();
-            //var response = new UploadAssessmentsResponseViewModel { IsSuccess = true, Stats = new ViewModel.BulkUploadStatsViewModel { TotalRecordsCount = 20 } };
             var response = await _assessmentLoader.ProcessBulkAssessmentsAsync(viewModel);
 
             if (response.IsSuccess)
@@ -70,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             if (response.ShowProblemWithServicePage)
-                return RedirectToRoute(RouteConstants.ProblemWithRegistrationsUpload); // TODO: mapped to reg.
+                return RedirectToRoute(RouteConstants.ProblemWithService);
 
             var unsuccessfulViewModel = new ViewModel.Registration.UploadUnsuccessfulViewModel 
             { 
@@ -78,8 +76,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 FileSize = response.ErrorFileSize, 
                 FileType = FileType.Csv.ToString().ToUpperInvariant() 
             };
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel), unsuccessfulViewModel, CacheExpiryTime.XSmall);
 
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel), unsuccessfulViewModel, CacheExpiryTime.XSmall);
             return RedirectToRoute(RouteConstants.AssessmentsUploadUnsuccessful);
         }
 

@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         protected ILogger<AssessmentController> Logger;
         protected AssessmentController Controller;
         protected UploadAssessmentsRequestViewModel ViewModel;
+        protected UploadAssessmentsResponseViewModel ResponseViewModel;
         protected IFormFile FormFile;
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; private set; }
