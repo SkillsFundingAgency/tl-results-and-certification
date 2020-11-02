@@ -4,18 +4,18 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqPathwayAssessment
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqSpecialismAssessment
 {
-    public class When_Update_Is_Called : BaseTest<Domain.Models.TqPathwayAssessment>
+    public class When_Update_Is_Called : BaseTest<Domain.Models.TqSpecialismAssessment>
     {
-        private Domain.Models.TqPathwayAssessment _result;
-        private Domain.Models.TqPathwayAssessment _data;
+        private Domain.Models.TqSpecialismAssessment _result;
+        private Domain.Models.TqSpecialismAssessment _data;
 
         private const string ModifiedBy = "Modified User Updated";
 
         public override void Given()
         {
-            _data = new TqPathwayAssessmentBuilder().Build();
+            _data = new TqSpecialismAssessmentBuilder().Build();
             DbContext.Add(_data);
             DbContext.SaveChanges();
 
@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqPathwayAs
             _data.Should().NotBeNull();
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
-            _result.TqRegistrationPathwayId.Should().Be(_data.TqRegistrationPathwayId);
+            _result.TqRegistrationSpecialismId.Should().Be(_data.TqRegistrationSpecialismId);
             _result.AssessmentSeriesId.Should().Be(_data.AssessmentSeriesId);
             _result.StartDate.Should().Be(_data.StartDate);
             _result.IsOptedin.Should().Be(_data.IsOptedin);
