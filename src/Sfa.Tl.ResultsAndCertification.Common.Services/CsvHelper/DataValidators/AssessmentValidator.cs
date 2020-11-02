@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             RuleFor(r => r.Uln)
                 .Required()
                 .MustBeNumberWithLength(10);
-
+            
             // CoreCode
             RuleFor(r => r.CoreCode)
                 .MustBeNumberWithLength(8)
@@ -24,6 +24,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .Required()
                 .WithMessage(ValidationMessages.CorecodeRequired)
                 .When(x => !string.IsNullOrEmpty(x.CoreAssessmentEntry));
+            RuleFor(r => r.CoreCode)
+                .Must(x => !string.IsNullOrEmpty(x))
+                .WithMessage(ValidationMessages.AtleastOneEntryRequired)
+                .When(x => string.IsNullOrEmpty(x.SpecialismCode));
 
             // CoreAssessmentEntry
             RuleFor(r => r.CoreAssessmentEntry)

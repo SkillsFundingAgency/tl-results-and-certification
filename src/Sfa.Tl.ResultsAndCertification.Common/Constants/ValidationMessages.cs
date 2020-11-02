@@ -43,5 +43,6 @@
         public const string SpecialismcodeRequired = "Specialism code required when core assessment entry is included";
         public const string CoreAssementEntryInvalidFormat = "Core assessment entry must be a series followed by a space and a 4 digit year";
         public const string SpecialismAssementEntryInvalidFormat = "Specialism assessment entry must be a series followed by a space and a 4 digit year";
+        public const string AtleastOneEntryRequired = "File must contain at least one ULN on one row";
     }
 }
