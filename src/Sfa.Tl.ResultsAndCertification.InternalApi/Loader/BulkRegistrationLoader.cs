@@ -19,23 +19,22 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 {
-    public class BulkRegistrationLoader : IBulkProcessLoader
+    public class BulkRegistrationLoader : BulkBaseLoader, IBulkProcessLoader
     {
         private readonly ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> _csvService;
         private readonly IRegistrationService _registrationService;
         private readonly IBlobStorageService _blobStorageService;
-        private readonly IDocumentUploadHistoryService _documentUploadHistoryService;
         private readonly ILogger<BulkRegistrationLoader> _logger;
 
-        public BulkRegistrationLoader(ICsvHelperService<RegistrationCsvRecordRequest,
-            CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> csvService,
-            IRegistrationService registrationService, IBlobStorageService blobStorageService,
-            IDocumentUploadHistoryService documentUploadHistoryService, ILogger<BulkRegistrationLoader> logger)
+        public BulkRegistrationLoader(ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> csvService,
+            IRegistrationService registrationService, 
+            IBlobStorageService blobStorageService,
+            IDocumentUploadHistoryService documentUploadHistoryService, 
+            ILogger<BulkRegistrationLoader> logger) : base(blobStorageService, documentUploadHistoryService)
         {
             _csvService = csvService;
             _registrationService = registrationService;
             _blobStorageService = blobStorageService;
-            _documentUploadHistoryService = documentUploadHistoryService;
             _logger = logger;
         }
 
@@ -178,37 +177,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return errors;
         }
 
-        private async Task<bool> CreateDocumentUploadHistory(BulkRegistrationRequest request, DocumentUploadStatus status = DocumentUploadStatus.Processed)
-        {
-            if (request == null) return false;
-
-            var model = new DocumentUploadHistoryDetails
-            {
-                AoUkprn = request.AoUkprn,
-                BlobFileName = request.BlobFileName,
-                BlobUniqueReference = request.BlobUniqueReference,
-                DocumentType = (int)request.DocumentType,
-                FileType = (int)request.FileType,
-                Status = (int)status,
-                CreatedBy = request.PerformedBy
-            };
-            return await _documentUploadHistoryService.CreateDocumentUploadHistory(model);
-        }
-
-        private async Task<bool> UploadErrorsFileToBlobStorage(BulkRegistrationRequest request, byte[] errorFile)
-        {
-            if (errorFile == null || errorFile.Length == 0) return false;
-            await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
-            {
-                ContainerName = request.DocumentType.ToString(),
-                SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.ValidationErrors}",
-                BlobFileName = request.BlobFileName,
-                UserName = request.PerformedBy,
-                FileData = errorFile
-            });
-            return true;
-        }
-
         private async Task<bool> MoveFileFromProcessingToProcessedAsync(BulkRegistrationRequest request)
         {
             if (request == null) return false;
@@ -219,33 +187,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 BlobFileName = request.BlobFileName,
                 SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
                 DestinationFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processed}"
-            });
-            return true;
-        }
-
-        private async Task<bool> MoveFileFromProcessingToFailedAsync(BulkRegistrationRequest request)
-        {
-            if (request == null) return false;
-
-            await _blobStorageService.MoveFileAsync(new BlobStorageData
-            {
-                ContainerName = request.DocumentType.ToString(),
-                SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
-                BlobFileName = request.BlobFileName,
-                DestinationFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Failed}"
-            });
-            return true;
-        }
-
-        private async Task<bool> DeleteFileFromProcessingFolderAsync(BulkRegistrationRequest request)
-        {
-            if (request == null) return false;
-
-            await _blobStorageService.DeleteFileAsync(new BlobStorageData
-            {
-                ContainerName = request.DocumentType.ToString(),
-                SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
-                BlobFileName = request.BlobFileName
             });
             return true;
         }

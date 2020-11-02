@@ -14,15 +14,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 {
     public class BulkBaseLoader : IBulkBaseLoader
     {
-        private readonly ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> _csvService; 
         private readonly IBlobStorageService _blobStorageService;
         private readonly IDocumentUploadHistoryService _documentUploadHistoryService;
 
-        public BulkBaseLoader(ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> csvService, 
-            IBlobStorageService blobStorageService,
+        public BulkBaseLoader(IBlobStorageService blobStorageService,
             IDocumentUploadHistoryService documentUploadHistoryService)
         {
-            _csvService = csvService;
             _documentUploadHistoryService = documentUploadHistoryService;
             _blobStorageService = blobStorageService;
         }
@@ -38,11 +35,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 BlobFileName = request.BlobFileName
             });
             return true;
-        }
-
-        public async Task<byte[]> CreateErrorFileAsync(IList<RegistrationValidationError> validationErrors)
-        {
-            return await _csvService.WriteFileAsync(validationErrors);
         }
 
         public async Task<bool> UploadErrorsFileToBlobStorage(BulkRegistrationRequest request, byte[] errorFile)

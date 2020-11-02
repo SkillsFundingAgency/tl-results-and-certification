@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             //IRegistrationService registrationService, 
             IBlobStorageService blobStorageService,
             IDocumentUploadHistoryService documentUploadHistoryService, 
-            ILogger<BulkAssessmentLoader> logger) : base(csvService, blobStorageService, documentUploadHistoryService)
+            ILogger<BulkAssessmentLoader> logger) : base(blobStorageService, documentUploadHistoryService)
         {
             _csvService = csvService;
             _blobStorageService = blobStorageService;
@@ -146,6 +146,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             response.ErrorFileSize = Math.Round((errorFile.Length / 1024D), 2);
 
             return response;
+        }
+        private async Task<byte[]> CreateErrorFileAsync(IList<RegistrationValidationError> validationErrors)
+        {
+            return await _csvService.WriteFileAsync(validationErrors);
         }
     }
 }
