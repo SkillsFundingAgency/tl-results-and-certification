@@ -19,6 +19,20 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _logger = logger;
         }
 
+        public async Task<IList<TqPathwayAssessment>> GetPathwayAssessmentsAsync(IList<TqPathwayAssessment> pathwayAssessments)
+        {
+            var registrationPathwayIds = new HashSet<int>();
+            pathwayAssessments.ToList().ForEach(r => registrationPathwayIds.Add(r.TqRegistrationPathwayId));
+            return await _dbContext.TqPathwayAssessment.Where(x => registrationPathwayIds.Contains(x.TqRegistrationPathwayId) && x.EndDate == null && x.IsOptedin).ToListAsync();
+        }
+
+        public async Task<IList<TqSpecialismAssessment>> GetSpecialismAssessmentsAsync(IList<TqSpecialismAssessment> specialismAssessments)
+        {
+            var registrationSpecialismIds = new HashSet<int>();
+            specialismAssessments.ToList().ForEach(r => registrationSpecialismIds.Add(r.TqRegistrationSpecialismId));
+            return await _dbContext.TqSpecialismAssessment.Where(x => registrationSpecialismIds.Contains(x.TqRegistrationSpecialismId) && x.EndDate == null && x.IsOptedin).ToListAsync();
+        }
+
         public async Task<bool> BulkInsertOrUpdateAssessments(List<TqPathwayAssessment> pathwayAssessments, List<TqSpecialismAssessment> specialismAssessments)
         {
             var result = true;
