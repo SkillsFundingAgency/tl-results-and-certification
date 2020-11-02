@@ -65,5 +65,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
                 .Must(y => EnumExtensions.IsValidDisplayName<AcademicYear>(y))
                 .WithMessage(string.Format(ValidationMessages.MustBeCurrentOne, "{PropertyName}"));
         }
+
+        public static IRuleBuilderOptions<T, string> MustBeInPattern<T>(this IRuleBuilder<T, string> ruleBuilder, string regex)
+        {
+            return ruleBuilder
+                .Must(y => Regex.Match(y, regex, RegexOptions.IgnoreCase).Success);
+        }
     }
 }

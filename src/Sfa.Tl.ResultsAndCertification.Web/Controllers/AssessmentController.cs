@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(viewModel);
             }
-            await Task.Delay(3000); // This is just for test
+            //await Task.Delay(3000); // This is just for test
 
             viewModel.AoUkprn = User.GetUkPrn();
             //var response = new UploadAssessmentsResponseViewModel { IsSuccess = true, Stats = new ViewModel.BulkUploadStatsViewModel { TotalRecordsCount = 20 } };
@@ -113,7 +113,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("download-assessment-errors", Name = RouteConstants.DownloadAssessmentErrors)]
-        public async Task<IActionResult> DownloadssessmentErrors(string id)
+        public async Task<IActionResult> DownloadAssessmentErrors(string id)
         {
             if (id.IsGuid())
             {
