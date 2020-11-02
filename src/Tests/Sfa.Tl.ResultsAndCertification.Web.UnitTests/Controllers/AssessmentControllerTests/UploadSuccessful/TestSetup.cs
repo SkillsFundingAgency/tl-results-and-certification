@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
@@ -12,43 +14,43 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.UploadAssessmentsFilePost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.UploadSuccessful
 {
-    public abstract class TestSetup : BaseTest<RegistrationController>
+    public abstract class TestSetup : BaseTest<AssessmentController>
     {
         protected long Ukprn;
+        protected string CacheKey;
         protected IAssessmentLoader AssessmentLoader;
         protected ICacheService CacheService;
         protected ILogger<AssessmentController> Logger;
         protected AssessmentController Controller;
-        protected UploadAssessmentsRequestViewModel ViewModel;
-        protected UploadAssessmentsResponseViewModel ResponseViewModel;
-        protected IFormFile FormFile;
+        protected UploadSuccessfulViewModel UploadSuccessfulViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; private set; }
-        protected Guid BlobUniqueReference;
+        protected Guid BlobUniqueReference;        
 
         public override void Setup()
         {
             Ukprn = 12345;
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
+            Logger = Substitute.For<ILogger<AssessmentController>>();
             AssessmentLoader = Substitute.For<IAssessmentLoader>();
             CacheService = Substitute.For<ICacheService>();
-            Logger = Substitute.For<ILogger<AssessmentController>>();
             Controller = new AssessmentController(AssessmentLoader, CacheService, Logger);
-            ViewModel = new UploadAssessmentsRequestViewModel();
 
             var httpContext = new ClaimsIdentityBuilder<AssessmentController>(Controller)
                .Add(CustomClaimTypes.Ukprn, Ukprn.ToString())
+               .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
                .Build()
                .HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
+            CacheKey = string.Concat(CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.AssessmentCacheKey), Common.Helpers.Constants.AssessmentsUploadSuccessfulViewModel);
         }
 
         public async override Task When()
         {
-            Result = await Controller.UploadAssessmentsFileAsync(ViewModel);
+            Result = await Controller.UploadSuccessful();
         }
     }
 }
