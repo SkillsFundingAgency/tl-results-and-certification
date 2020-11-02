@@ -54,6 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             {
                 response.IsDirty = true;
                 response.ErrorMessage = ValidationMessages.FileHeaderNotFound;
+                response.ErrorCode = CsvFileErrorCode.HeaderInvalid;
                 return response;
             }
 
@@ -101,6 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             {
                 response.IsDirty = true;
                 response.ErrorMessage = ValidationMessages.NoRecordsFound;
+                response.ErrorCode = CsvFileErrorCode.NoRecordsFound;
             }
             else
             {

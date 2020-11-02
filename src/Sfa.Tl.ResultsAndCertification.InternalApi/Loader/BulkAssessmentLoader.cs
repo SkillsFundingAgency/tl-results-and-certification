@@ -61,7 +61,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                     // Stage 2 validation - TODO
                     stage2AssessmentsResponse = await _csvService.ReadAndParseFileAsync(new AssessmentCsvRecordRequest { FileStream = fileStream });
 
-                    // TODO: check duplicate function. 
                     if (!stage2AssessmentsResponse.IsDirty)
                         CheckUlnDuplicates(stage2AssessmentsResponse.Rows);
                 }
@@ -95,7 +94,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         private IList<RegistrationValidationError> ExtractAllValidationErrors(CsvResponseModel<AssessmentCsvRecordResponse> stage2Response = null, IList<AssessmentCsvRecordResponse> stage3Response = null)
         {
             if (stage2Response != null && stage2Response.IsDirty)
-                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = stage2Response.ErrorMessage } };
+            {
+                var errorMessage = stage2Response.ErrorCode == CsvFileErrorCode.NoRecordsFound ? ValidationMessages.AtleastOneEntryRequired : stage2Response.ErrorMessage;
+                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = errorMessage } };
+            }
 
             var errors = new List<RegistrationValidationError>();
 
@@ -134,7 +136,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
         private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, IList<RegistrationValidationError> validationErrors)
         {
-            // note: method can't be moved to base. Response type may be different in future. 
             var errorFile = await CreateErrorFileAsync(validationErrors);
             await UploadErrorsFileToBlobStorage(request, errorFile);
             await MoveFileFromProcessingToFailedAsync(request);
