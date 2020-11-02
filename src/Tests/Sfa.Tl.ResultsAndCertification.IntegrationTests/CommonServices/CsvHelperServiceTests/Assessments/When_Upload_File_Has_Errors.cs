@@ -1,0 +1,67 @@
+﻿using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidators;
+using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service;
+using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Xunit;
+using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
+
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelperServiceTests.Assessments
+{
+    public class When_Upload_File_Has_Errors : AssessmentsCsvHelperServiceBaseTest
+    {
+        private const string _dataFilePath = @"CommonServices\CsvHelperServiceTests\Assessments\TestData\Assessments_Stage_2_Validation.csv";
+        private IList<RegistrationValidationError> _expectedValidationErrors;
+        private IList<RegistrationValidationError> _validationErrors;
+
+        public override void Given()
+        {
+            Logger = new Logger<CsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>>(new NullLoggerFactory());
+            DataParser = new AssessmentParser();
+            Validator = new AssessmentValidator();
+            Service = new CsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>(Validator, DataParser, Logger);
+            FilePath = Path.Combine(Path.GetDirectoryName(GetCodeBaseAbsolutePath()), _dataFilePath);
+            _expectedValidationErrors = GetExpectedValidationErrors();
+        }
+
+        [Fact]
+        public void Then_Returns_Expected_Results()
+        {
+            ReadAndParseFileResponse.Should().NotBeNull();
+            ReadAndParseFileResponse.Rows.Count.Should().Be(_validationErrors.Count);
+
+            for (var i=0; i<_validationErrors.Count; i++)
+            {
+                var actualError = ReadAndParseFileResponse.Rows[i].ValidationErrors.First();
+                
+                actualError.RowNum.ToString().Should().Be(_validationErrors[i].RowNum);
+                actualError.Uln.ToString().Should().Be(_validationErrors[i].Uln);
+                actualError. ErrorMessage.Should().Be(_validationErrors[i].ErrorMessage);
+            }
+        }
+
+        private IList<RegistrationValidationError> GetExpectedValidationErrors()
+        {
+            _validationErrors = new List<RegistrationValidationError>
+            {
+                new RegistrationValidationError { RowNum = "2", Uln = string.Empty, ErrorMessage = "ULN required" },
+                new RegistrationValidationError { RowNum = "3", Uln = "123", ErrorMessage = "ULN must be a 10 digit number" },
+                new RegistrationValidationError { RowNum = "4", Uln = "1234567890", ErrorMessage = "Core code must have 8 digits only" },
+                new RegistrationValidationError { RowNum = "5", Uln = "1234567891", ErrorMessage = "Core code required when core assessment entry is included" },
+                new RegistrationValidationError { RowNum = "6", Uln = "1234567892", ErrorMessage = "Specialism code required when core assessment entry is included" },
+                new RegistrationValidationError { RowNum = "7", Uln = "1234567893", ErrorMessage = "Specialism code must have 8 characters only" },
+                new RegistrationValidationError { RowNum = "8", Uln = "1234567894", ErrorMessage = "Core assessment entry must be a series followed by a space and a 4 digit year" },
+                new RegistrationValidationError { RowNum = "9", Uln = "1234567895", ErrorMessage = "Specialism assessment entry must be a series followed by a space and a 4 digit year" },
+                new RegistrationValidationError { RowNum = "10", Uln = "1234567896", ErrorMessage = "File must contain at least one ULN on one row" },
+                new RegistrationValidationError { RowNum = "11", Uln = string.Empty, ErrorMessage = "Data in more than the required 5 columns" }
+            };
+
+            return _validationErrors;
+        }       
+    }
+}

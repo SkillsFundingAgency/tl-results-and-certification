@@ -39,6 +39,7 @@
         public const string CoreForUlnCannotBeChangedYet = "Core for ULN cannot be changed yet";
 
         // Assessments - Bulk stage 2 validations
+        public const string CorecodeMustBeDigitsOnly = "Core code must have 8 digits only";
         public const string CorecodeRequired = "Core code required when core assessment entry is included";
         public const string SpecialismcodeRequired = "Specialism code required when core assessment entry is included";
         public const string CoreAssementEntryInvalidFormat = "Core assessment entry must be a series followed by a space and a 4 digit year";

@@ -15,10 +15,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             RuleFor(r => r.Uln)
                 .Required()
                 .MustBeNumberWithLength(10);
-            
+
             // CoreCode
             RuleFor(r => r.CoreCode)
                 .MustBeNumberWithLength(8)
+                .WithMessage(ValidationMessages.CorecodeMustBeDigitsOnly)
                 .When(x => !string.IsNullOrEmpty(x.CoreCode));
             RuleFor(r => r.CoreCode)
                 .Required()
