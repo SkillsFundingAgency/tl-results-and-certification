@@ -21,9 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
                 new ValidationFailure("First name", "First name required"),
             };
 
-            expectedRow = new RegistrationCsvRecordResponse { Uln = 123, RowNum = 1,  ValidationErrors = new List<RegistrationValidationError> 
+            expectedRow = new RegistrationCsvRecordResponse { Uln = 123, RowNum = 1,  ValidationErrors = new List<BulkProcessValidationError> 
             {
-              new RegistrationValidationError { RowNum = "1", Uln = "123", ErrorMessage = "First name required" }
+              new BulkProcessValidationError { RowNum = "1", Uln = "123", ErrorMessage = "First name required" }
             } };
             var regCsvResponse = new ValidationResult(failures);
             RegValidator.ValidateAsync(Arg.Any<RegistrationCsvRecordRequest>()).Returns(regCsvResponse);

@@ -628,9 +628,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return new RegistrationRecordResponse()
             {
-                ValidationErrors = new List<RegistrationValidationError>()
+                ValidationErrors = new List<BulkProcessValidationError>()
                 {
-                    new RegistrationValidationError
+                    new BulkProcessValidationError
                     {
                         RowNum = rowNum.ToString(),
                         Uln = uln.ToString(),
@@ -770,9 +770,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return new Tuple<bool, bool>(hasBothPathwayAndSpecialismsRecordsChanged, hasOnlySpecialismsRecordChanged);
         }
 
-        private RegistrationValidationError GetRegistrationValidationError(long uln, string errorMessage)
+        private BulkProcessValidationError GetRegistrationValidationError(long uln, string errorMessage)
         {
-            return new RegistrationValidationError
+            return new BulkProcessValidationError
             {
                 Uln = uln.ToString(),
                 ErrorMessage = errorMessage

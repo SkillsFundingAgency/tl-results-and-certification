@@ -111,13 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private async Task SaveDocumentHistoryAndMoveFileToProcessed(BulkRegistrationRequest request)
-        {
-            await MoveFileFromProcessingToProcessedAsync(request);
-            await CreateDocumentUploadHistory(request, DocumentUploadStatus.Processed);
-        }
-
-        private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, IList<RegistrationValidationError> registrationValidationErrors)
+        private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, IList<BulkProcessValidationError> registrationValidationErrors)
         {
             var errorFile = await CreateErrorFileAsync(registrationValidationErrors);
             await UploadErrorsFileToBlobStorage(request, errorFile);
@@ -137,7 +131,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             foreach (var record in duplicateRegistrations.SelectMany(duplicateRegistration => duplicateRegistration))
             {
-                record.ValidationErrors.Add(new RegistrationValidationError
+                record.ValidationErrors.Add(new BulkProcessValidationError
                 {
                     RowNum = record.RowNum.ToString(),
                     Uln = record.Uln != 0 ? record.Uln.ToString() : string.Empty,
@@ -146,17 +140,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             }
         }
 
-        private async Task<byte[]> CreateErrorFileAsync(IList<RegistrationValidationError> validationErrors)
+        private async Task<byte[]> CreateErrorFileAsync(IList<BulkProcessValidationError> validationErrors)
         {
             return await _csvService.WriteFileAsync(validationErrors);
         }
 
-        private IList<RegistrationValidationError> ExtractAllValidationErrors(CsvResponseModel<RegistrationCsvRecordResponse> stage2RegistrationsResponse = null, IList<RegistrationRecordResponse> stage3RegistrationsResponse = null)
+        private IList<BulkProcessValidationError> ExtractAllValidationErrors(CsvResponseModel<RegistrationCsvRecordResponse> stage2RegistrationsResponse = null, IList<RegistrationRecordResponse> stage3RegistrationsResponse = null)
         {
             if (stage2RegistrationsResponse != null && stage2RegistrationsResponse.IsDirty)
-                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = stage2RegistrationsResponse.ErrorMessage } };
+                return new List<BulkProcessValidationError> { new BulkProcessValidationError { ErrorMessage = stage2RegistrationsResponse.ErrorMessage } };
 
-            var errors = new List<RegistrationValidationError>();
+            var errors = new List<BulkProcessValidationError>();
 
             if (stage2RegistrationsResponse != null)
             {

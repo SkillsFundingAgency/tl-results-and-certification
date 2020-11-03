@@ -16,8 +16,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
     public class When_Upload_File_Has_Errors : AssessmentsCsvHelperServiceBaseTest
     {
         private const string _dataFilePath = @"CommonServices\CsvHelperServiceTests\Assessments\TestData\Assessments_Stage_2_Validation.csv";
-        private IList<RegistrationValidationError> _expectedValidationErrors;
-        private IList<RegistrationValidationError> _validationErrors;
+        private IList<BulkProcessValidationError> _expectedValidationErrors;
+        private IList<BulkProcessValidationError> _validationErrors;
 
         public override void Given()
         {
@@ -45,20 +45,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
             }
         }
 
-        private IList<RegistrationValidationError> GetExpectedValidationErrors()
+        private IList<BulkProcessValidationError> GetExpectedValidationErrors()
         {
-            _validationErrors = new List<RegistrationValidationError>
+            _validationErrors = new List<BulkProcessValidationError>
             {
-                new RegistrationValidationError { RowNum = "2", Uln = string.Empty, ErrorMessage = "ULN required" },
-                new RegistrationValidationError { RowNum = "3", Uln = "123", ErrorMessage = "ULN must be a 10 digit number" },
-                new RegistrationValidationError { RowNum = "4", Uln = "1234567890", ErrorMessage = "Core code must have 8 digits only" },
-                new RegistrationValidationError { RowNum = "5", Uln = "1234567891", ErrorMessage = "Core code required when core assessment entry is included" },
-                new RegistrationValidationError { RowNum = "6", Uln = "1234567892", ErrorMessage = "Specialism code required when core assessment entry is included" },
-                new RegistrationValidationError { RowNum = "7", Uln = "1234567893", ErrorMessage = "Specialism code must have 8 characters only" },
-                new RegistrationValidationError { RowNum = "8", Uln = "1234567894", ErrorMessage = "Core assessment entry must be a series followed by a space and a 4 digit year" },
-                new RegistrationValidationError { RowNum = "9", Uln = "1234567895", ErrorMessage = "Specialism assessment entry must be a series followed by a space and a 4 digit year" },
-                new RegistrationValidationError { RowNum = "10", Uln = "1234567896", ErrorMessage = "File must contain at least one ULN on one row" },
-                new RegistrationValidationError { RowNum = "11", Uln = string.Empty, ErrorMessage = "Data in more than the required 5 columns" }
+                new BulkProcessValidationError { RowNum = "2", Uln = string.Empty, ErrorMessage = "ULN required" },
+                new BulkProcessValidationError { RowNum = "3", Uln = "123", ErrorMessage = "ULN must be a 10 digit number" },
+                new BulkProcessValidationError { RowNum = "4", Uln = "1234567890", ErrorMessage = "Core code must have 8 digits only" },
+                new BulkProcessValidationError { RowNum = "5", Uln = "1234567891", ErrorMessage = "Core code required when core assessment entry is included" },
+                new BulkProcessValidationError { RowNum = "6", Uln = "1234567892", ErrorMessage = "Specialism code required when core assessment entry is included" },
+                new BulkProcessValidationError { RowNum = "7", Uln = "1234567893", ErrorMessage = "Specialism code must have 8 characters only" },
+                new BulkProcessValidationError { RowNum = "8", Uln = "1234567894", ErrorMessage = "Core assessment entry must be a series followed by a space and a 4 digit year" },
+                new BulkProcessValidationError { RowNum = "9", Uln = "1234567895", ErrorMessage = "Specialism assessment entry must be a series followed by a space and a 4 digit year" },
+                new BulkProcessValidationError { RowNum = "10", Uln = "1234567896", ErrorMessage = "File must contain at least one ULN on one row" },
+                new BulkProcessValidationError { RowNum = "11", Uln = string.Empty, ErrorMessage = "Data in more than the required 5 columns" }
             };
 
             return _validationErrors;

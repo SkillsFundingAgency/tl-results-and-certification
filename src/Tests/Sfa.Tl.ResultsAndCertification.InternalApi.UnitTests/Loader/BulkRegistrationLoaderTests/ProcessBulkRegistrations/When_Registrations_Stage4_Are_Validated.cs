@@ -94,9 +94,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
             var expectedStage4Response = new RegistrationProcessResponse
             {
                 IsSuccess = false,
-                ValidationErrors = new List<RegistrationValidationError>
+                ValidationErrors = new List<BulkProcessValidationError>
                 {
-                    new RegistrationValidationError
+                    new BulkProcessValidationError
                     {
                         Uln = "1111111111",
                         ErrorMessage = "Active ULN with a different awarding organisation"
@@ -112,7 +112,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
             RegistrationService.ValidateRegistrationTlevelsAsync(AoUkprn, Arg.Any<IEnumerable<RegistrationCsvRecordResponse>>()).Returns(expectedStage3Response);
             RegistrationService.TransformRegistrationModel(Arg.Any<IList<RegistrationRecordResponse>>(), Arg.Any<string>()).Returns(tqRegistrationProfiles);
             RegistrationService.CompareAndProcessRegistrationsAsync(Arg.Any<IList<TqRegistrationProfile>>()).Returns(expectedStage4Response);
-            CsvService.WriteFileAsync(Arg.Any<List<RegistrationValidationError>>()).Returns(expectedWriteFileBytes);
+            CsvService.WriteFileAsync(Arg.Any<List<BulkProcessValidationError>>()).Returns(expectedWriteFileBytes);
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
             RegistrationService.Received(1).TransformRegistrationModel(Arg.Any<IList<RegistrationRecordResponse>>(), Arg.Any<string>());
             RegistrationService.Received(1).CompareAndProcessRegistrationsAsync(Arg.Any<IList<TqRegistrationProfile>>());
 
-            CsvService.Received(1).WriteFileAsync(Arg.Any<List<RegistrationValidationError>>());
+            CsvService.Received(1).WriteFileAsync(Arg.Any<List<BulkProcessValidationError>>());
             BlobService.Received(1).UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());
             BlobService.Received(1).MoveFileAsync(Arg.Any<BlobStorageData>());
             DocumentUploadHistoryService.Received(1).CreateDocumentUploadHistory(Arg.Any<DocumentUploadHistoryDetails>());

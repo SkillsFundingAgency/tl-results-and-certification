@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
     {
         private RegistrationProcessResponse _result;
         private IList<TqRegistrationProfile> _tqRegistrationProfilesData;
-        private IList<RegistrationValidationError> _expectedValidationErrors;
+        private IList<BulkProcessValidationError> _expectedValidationErrors;
 
         public override void Given()
         {

@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
     public class When_Upload_File_Has_Empty_Data : RegistrationsCsvHelperServiceBaseTest
     {
         private const string _dataFilePath = @"CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Records_With_Empty_Data_Validation.csv";
-        private IList<RegistrationValidationError> _expectedValidationErrors;
+        private IList<BulkProcessValidationError> _expectedValidationErrors;
 
         public override void Given()
         {

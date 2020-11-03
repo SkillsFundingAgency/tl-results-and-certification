@@ -19,14 +19,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
             var expectedWriteFileRequest = new List<RegistrationCsvRecordResponse>
                 {
                     new RegistrationCsvRecordResponse { RowNum = 1, ProviderUkprn = 11 },
-                    new RegistrationCsvRecordResponse { RowNum = 2, ProviderUkprn = 22, ValidationErrors = new List<RegistrationValidationError>
+                    new RegistrationCsvRecordResponse { RowNum = 2, ProviderUkprn = 22, ValidationErrors = new List<BulkProcessValidationError>
                     {
-                        new RegistrationValidationError { RowNum = "1", Uln = "11", ErrorMessage = "First name required" },
-                        new RegistrationValidationError { RowNum = "1", Uln = "11", ErrorMessage = "Core code required" }
+                        new BulkProcessValidationError { RowNum = "1", Uln = "11", ErrorMessage = "First name required" },
+                        new BulkProcessValidationError { RowNum = "1", Uln = "11", ErrorMessage = "Core code required" }
                     } },
-                    new RegistrationCsvRecordResponse { RowNum = 3, ProviderUkprn = 33, ValidationErrors = new List<RegistrationValidationError>
+                    new RegistrationCsvRecordResponse { RowNum = 3, ProviderUkprn = 33, ValidationErrors = new List<BulkProcessValidationError>
                     {
-                        new RegistrationValidationError { RowNum = "3", Uln = "33", ErrorMessage = "Invalid Date"}
+                        new BulkProcessValidationError { RowNum = "3", Uln = "33", ErrorMessage = "Invalid Date"}
                     } },
                 };
 
@@ -34,14 +34,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
             var expectedWriteFileBytes = new byte[5];
             BlobService.DownloadFileAsync(Arg.Any<BlobStorageData>()).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File")));
             CsvService.ReadAndParseFileAsync(Arg.Any<RegistrationCsvRecordRequest>()).Returns(csvResponse);
-            CsvService.WriteFileAsync(Arg.Any<List<RegistrationValidationError>>()).Returns(expectedWriteFileBytes);
+            CsvService.WriteFileAsync(Arg.Any<List<BulkProcessValidationError>>()).Returns(expectedWriteFileBytes);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             CsvService.Received(1).ReadAndParseFileAsync(Arg.Any<RegistrationCsvRecordRequest>());
-            CsvService.Received(1).WriteFileAsync(Arg.Any<List<RegistrationValidationError>>());
+            CsvService.Received(1).WriteFileAsync(Arg.Any<List<BulkProcessValidationError>>());
             BlobService.Received(1).UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());
             BlobService.Received(1).MoveFileAsync(Arg.Any<BlobStorageData>());
             DocumentUploadHistoryService.Received(1).CreateDocumentUploadHistory(Arg.Any<DocumentUploadHistoryDetails>());

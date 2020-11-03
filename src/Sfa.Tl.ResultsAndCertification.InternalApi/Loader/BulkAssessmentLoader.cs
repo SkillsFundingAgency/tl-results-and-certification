@@ -91,15 +91,15 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private IList<RegistrationValidationError> ExtractAllValidationErrors(CsvResponseModel<AssessmentCsvRecordResponse> stage2Response = null, IList<AssessmentCsvRecordResponse> stage3Response = null)
+        private IList<BulkProcessValidationError> ExtractAllValidationErrors(CsvResponseModel<AssessmentCsvRecordResponse> stage2Response = null, IList<AssessmentCsvRecordResponse> stage3Response = null)
         {
             if (stage2Response != null && stage2Response.IsDirty)
             {
                 var errorMessage = stage2Response.ErrorCode == CsvFileErrorCode.NoRecordsFound ? ValidationMessages.AtleastOneEntryRequired : stage2Response.ErrorMessage;
-                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = errorMessage } };
+                return new List<BulkProcessValidationError> { new BulkProcessValidationError { ErrorMessage = errorMessage } };
             }
 
-            var errors = new List<RegistrationValidationError>();
+            var errors = new List<BulkProcessValidationError>();
 
             if (stage2Response != null)
             {
@@ -125,7 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             foreach (var record in duplicateAssessments.SelectMany(assessemt => assessemt))
             {
-                record.ValidationErrors.Add(new RegistrationValidationError
+                record.ValidationErrors.Add(new BulkProcessValidationError
                 {
                     RowNum = record.RowNum.ToString(),
                     Uln = record.Uln != 0 ? record.Uln.ToString() : string.Empty,
@@ -134,7 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             }
         }
 
-        private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, IList<RegistrationValidationError> validationErrors)
+        private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, IList<BulkProcessValidationError> validationErrors)
         {
             var errorFile = await CreateErrorFileAsync(validationErrors);
             await UploadErrorsFileToBlobStorage(request, errorFile);
@@ -147,7 +147,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             return response;
         }
-        private async Task<byte[]> CreateErrorFileAsync(IList<RegistrationValidationError> validationErrors)
+        private async Task<byte[]> CreateErrorFileAsync(IList<BulkProcessValidationError> validationErrors)
         {
             return await _csvService.WriteFileAsync(validationErrors);
         }

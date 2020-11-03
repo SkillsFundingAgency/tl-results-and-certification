@@ -2,9 +2,8 @@
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
 {
-    public class RegistrationValidationError
+    public class BulkProcessValidationError
     {
-        // TODO: can this be reused for both Reg and Assessment
         [DisplayName("Line")]
         public string RowNum { get; set; }
 

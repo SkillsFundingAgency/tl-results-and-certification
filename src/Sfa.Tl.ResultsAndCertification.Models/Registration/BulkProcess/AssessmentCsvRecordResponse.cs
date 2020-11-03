@@ -2,7 +2,7 @@
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
 {
-    public class AssessmentCsvRecordResponse : ValidationState<RegistrationValidationError>
+    public class AssessmentCsvRecordResponse : ValidationState<BulkProcessValidationError>
     {
         // TODO:
         public int RowNum { get; set; }

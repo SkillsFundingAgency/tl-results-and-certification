@@ -56,12 +56,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
             Response = await _loader.ProcessAsync(Request);
         }
 
-        public List<RegistrationValidationError> ExtractExpectedErrors(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
+        public List<BulkProcessValidationError> ExtractExpectedErrors(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
         {
             if (csvResponse.IsDirty)
-                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = csvResponse.ErrorMessage } };
+                return new List<BulkProcessValidationError> { new BulkProcessValidationError { ErrorMessage = csvResponse.ErrorMessage } };
 
-            var errors = new List<RegistrationValidationError>();
+            var errors = new List<BulkProcessValidationError>();
             var invalidReg = csvResponse.Rows?.Where(x => !x.IsValid).ToList();
             invalidReg.ForEach(x => { errors.AddRange(x.ValidationErrors); });
 
