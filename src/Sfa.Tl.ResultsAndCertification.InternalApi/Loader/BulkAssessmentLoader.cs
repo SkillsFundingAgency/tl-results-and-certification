@@ -21,16 +21,18 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
     public class BulkAssessmentLoader : BulkBaseLoader, IBulkAssessmentLoader
     {
         private readonly ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> _csvService;
+        protected IAssessmentService _assessmentService;
         private readonly IBlobStorageService _blobStorageService;
         private readonly ILogger<BulkAssessmentLoader> _logger;
 
         public BulkAssessmentLoader(ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> csvService,
-            //IRegistrationService registrationService, 
+            IAssessmentService assessmentService, 
             IBlobStorageService blobStorageService,
             IDocumentUploadHistoryService documentUploadHistoryService, 
             ILogger<BulkAssessmentLoader> logger) : base(blobStorageService, documentUploadHistoryService)
         {
             _csvService = csvService;
+            _assessmentService = assessmentService;
             _blobStorageService = blobStorageService;
             _logger = logger;
         }

@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkAssess
 
         public async override Task When()
         {
-            _loader = new BulkAssessmentLoader(CsvService, BlobService, DocumentUploadHistoryService, Logger);
+            _loader = new BulkAssessmentLoader(CsvService, AssessmentService, BlobService, DocumentUploadHistoryService, Logger);
             Response = await _loader.ProcessAsync(Request);
         }
 
