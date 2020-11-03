@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 {
-    public class BulkAssessmentLoader : BulkBaseLoader, IBulkProcessLoader
+    public class BulkAssessmentLoader : BulkBaseLoader, IBulkAssessmentLoader
     {
         private readonly ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> _csvService;
         private readonly IBlobStorageService _blobStorageService;
@@ -35,9 +35,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             _logger = logger;
         }
 
-        public async Task<BulkProcessResponse> ProcessAsync(BulkProcessRequest request)
+        public async Task<BulkAssessmentResponse> ProcessAsync(BulkProcessRequest request)
         {
-            var response = new BulkProcessResponse();
+            var response = new BulkAssessmentResponse();
             try
             {
                 CsvResponseModel<AssessmentCsvRecordResponse> stage2AssessmentsResponse = null;
@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 // TODO: Stage 3
 
                 // Temp response;
-                return new BulkProcessResponse 
+                return new BulkAssessmentResponse
                 {
                     IsSuccess = true,
                     Stats = new BulkUploadStats { TotalRecordsCount = 11 }
@@ -134,7 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             }
         }
 
-        private async Task<BulkProcessResponse> SaveErrorsAndUpdateResponse(BulkProcessRequest request, BulkProcessResponse response, IList<BulkProcessValidationError> validationErrors)
+        private async Task<BulkAssessmentResponse> SaveErrorsAndUpdateResponse(BulkProcessRequest request, BulkAssessmentResponse response, IList<BulkProcessValidationError> validationErrors)
         {
             var errorFile = await CreateErrorFileAsync(validationErrors);
             await UploadErrorsFileToBlobStorage(request, errorFile);

@@ -152,7 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IDataParser<AssessmentCsvRecordResponse>, AssessmentParser>();
             services.AddTransient<IValidator<AssessmentCsvRecordRequest>, AssessmentValidator>();
             services.AddTransient<ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>, CsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>>();
-            services.AddTransient<IBulkProcessLoader, BulkAssessmentLoader>();
+            services.AddTransient<IBulkAssessmentLoader, BulkAssessmentLoader>();
             services.AddTransient<IAssessmentService, AssessmentService>();
         }
     }

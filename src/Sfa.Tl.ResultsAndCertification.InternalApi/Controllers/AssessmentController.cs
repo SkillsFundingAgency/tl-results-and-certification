@@ -9,16 +9,16 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     [ApiController]
     public class AssessmentController : ControllerBase
     {
-        private readonly IBulkProcessLoader _bulkAssementProcess;
+        private readonly IBulkAssessmentLoader _bulkAssementProcess;
 
-        public AssessmentController(IBulkProcessLoader bulkAssementProcess)
+        public AssessmentController(IBulkAssessmentLoader bulkAssementProcess)
         {
             _bulkAssementProcess = bulkAssementProcess;
         }
 
         [HttpPost]
         [Route("ProcessBulkAssessments")]
-        public async Task<BulkProcessResponse> ProcessBulkAssessmentsAsync(BulkProcessRequest request)
+        public async Task<BulkAssessmentResponse> ProcessBulkAssessmentsAsync(BulkProcessRequest request)
         {
             return await _bulkAssementProcess.ProcessAsync(request);
         }
