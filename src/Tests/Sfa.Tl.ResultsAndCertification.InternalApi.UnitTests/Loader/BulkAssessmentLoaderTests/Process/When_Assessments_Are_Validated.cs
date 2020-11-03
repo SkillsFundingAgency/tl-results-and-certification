@@ -12,17 +12,25 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkAssessmentLoaderTests.Process
 {
-    public class When_File_IsDirty : TestSetup
+    public class When_Assessments_Are_Validated : TestSetup
     {
         public override void Given()
         {
-            var errorMessage = "InvalidHeader";
-            var csvResponse = new CsvResponseModel<AssessmentCsvRecordResponse>
-            {
-                IsDirty = true,
-                ErrorMessage = errorMessage,
-            };
+            var expectedWriteFileRequest = new List<AssessmentCsvRecordResponse>
+                {
+                    new AssessmentCsvRecordResponse { RowNum = 1, Uln = 11 },
+                    new AssessmentCsvRecordResponse { RowNum = 2, Uln = 22, ValidationErrors = new List<BulkProcessValidationError>
+                    {
+                        new BulkProcessValidationError { RowNum = "1", Uln = "11", ErrorMessage = "ULN must be a 10 digit number" },
+                        new BulkProcessValidationError { RowNum = "1", Uln = "11", ErrorMessage = "Core code must have 8 digits only" }
+                    } },
+                    new AssessmentCsvRecordResponse { RowNum = 3, Uln = 33, ValidationErrors = new List<BulkProcessValidationError>
+                    {
+                        new BulkProcessValidationError { RowNum = "3", Uln = "33", ErrorMessage = "ULN must be a 10 digit number"}
+                    } },
+                };
 
+            var csvResponse = new CsvResponseModel<AssessmentCsvRecordResponse> { Rows = expectedWriteFileRequest };
             var expectedWriteFileBytes = new byte[5];
             BlobService.DownloadFileAsync(Arg.Any<BlobStorageData>()).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File")));
             CsvService.ReadAndParseFileAsync(Arg.Any<AssessmentCsvRecordRequest>()).Returns(csvResponse);

@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -78,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 return new BulkAssessmentResponse
                 {
                     IsSuccess = true,
-                    Stats = new BulkUploadStats { TotalRecordsCount = 11 }
+                    Stats = new BulkUploadStats { TotalRecordsCount = stage2AssessmentsResponse.Rows.Count }
                 };
             }
             catch (Exception ex)

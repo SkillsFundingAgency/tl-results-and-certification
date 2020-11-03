@@ -1,4 +1,4 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess
 {
     public class AsessmentFluentHeader
     {

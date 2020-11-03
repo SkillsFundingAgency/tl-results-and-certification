@@ -1,14 +1,12 @@
 ﻿using FluentValidation;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extensions;
-using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidators
 {
     public class AssessmentValidator : AbstractValidator<AssessmentCsvRecordRequest>
     {
-        private static readonly string assessmentEntryFormat = "^(summer|autumn) [0-9]{4}$";
-
         public AssessmentValidator()
         {
             // Uln
@@ -25,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .Required()
                 .WithMessage(ValidationMessages.CorecodeRequired)
                 .When(x => !string.IsNullOrEmpty(x.CoreAssessmentEntry));
+            // TODO: review below rule. 
             RuleFor(r => r.CoreCode)
                 .Must(x => !string.IsNullOrEmpty(x))
                 .WithMessage(ValidationMessages.AtleastOneEntryRequired)
@@ -32,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
 
             // CoreAssessmentEntry
             RuleFor(r => r.CoreAssessmentEntry)
-                .MustBeInPattern(assessmentEntryFormat)
+                .MusBeValidAssessmentSeries()
                 .WithMessage(ValidationMessages.CoreAssementEntryInvalidFormat)
                 .When(x => !string.IsNullOrEmpty(x.CoreAssessmentEntry));
 
@@ -47,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
 
             // SpecialismAssessmentEntry
             RuleFor(r => r.SpecialismAssessmentEntry)
-                .MustBeInPattern(assessmentEntryFormat)
+                .MusBeValidAssessmentSeries()
                 .WithMessage(ValidationMessages.SpecialismAssementEntryInvalidFormat)
                 .When(x => !string.IsNullOrEmpty(x.SpecialismAssessmentEntry));
         }

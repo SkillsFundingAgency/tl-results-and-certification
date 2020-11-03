@@ -1,8 +1,9 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
+namespace Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess
 {
     public class AssessmentCsvRecordRequest : FileBaseModel
     {

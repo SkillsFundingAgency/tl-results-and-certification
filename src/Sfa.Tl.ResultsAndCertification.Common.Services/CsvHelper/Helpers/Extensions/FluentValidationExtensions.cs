@@ -10,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
     public static class FluentValidationExtensions
     {
         private static readonly string academicYearPattern = "^[0-9]{4}/[0-9]{2}/?$";
+        private static readonly string assessmentEntryFormat = "^(summer|autumn) [0-9]{4}$";
 
         public static IRuleBuilderOptions<T, string> Required<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
@@ -55,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
         public static IRuleBuilderOptions<T, string> MustBeInAcademicYearPattern<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
-                .Must(y => Regex.Match(y, academicYearPattern).Success)
+                .Must(y => Regex.IsMatch(y, academicYearPattern))
                 .WithMessage(string.Format(ValidationMessages.MustBeInFormat, "{PropertyName}", "YYYY/YY"));
         }
 
@@ -66,10 +67,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
                 .WithMessage(string.Format(ValidationMessages.MustBeCurrentOne, "{PropertyName}"));
         }
 
-        public static IRuleBuilderOptions<T, string> MustBeInPattern<T>(this IRuleBuilder<T, string> ruleBuilder, string regex)
+        public static IRuleBuilderOptions<T, string> MusBeValidAssessmentSeries<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
-                .Must(y => Regex.Match(y, regex, RegexOptions.IgnoreCase).Success);
+                .Must(y => Regex.IsMatch(y, assessmentEntryFormat, RegexOptions.IgnoreCase));
         }
     }
 }

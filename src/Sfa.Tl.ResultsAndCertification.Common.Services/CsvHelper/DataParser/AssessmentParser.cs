@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 {

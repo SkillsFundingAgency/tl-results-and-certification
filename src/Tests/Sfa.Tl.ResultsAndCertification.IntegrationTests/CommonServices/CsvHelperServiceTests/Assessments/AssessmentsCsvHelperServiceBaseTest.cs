@@ -8,7 +8,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelperServiceTests.Assessments
 {
