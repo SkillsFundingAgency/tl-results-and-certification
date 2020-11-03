@@ -10,17 +10,17 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Service.CsvHelperServiceTests
+namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Service.CsvHelperServiceTests.Registrations
 {
     public abstract class TestSetup : BaseTest<CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>>
     {
         protected IValidator<RegistrationCsvRecordRequest> RegValidator;
         protected IDataParser<RegistrationCsvRecordResponse> DataParser;
         protected ILogger<CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>> Logger;
-        
+
         protected CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> Service { get; private set; }
         protected CsvResponseModel<RegistrationCsvRecordResponse> Response;
-        
+
         public StringBuilder InputFileContent;
 
         public override void Setup()
@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
 
             Service = new CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>(RegValidator, DataParser, Logger);
         }
-        
+
         public async override Task When()
         {
             Response = await Service.ReadAndParseFileAsync(new RegistrationCsvRecordRequest { FileStream = GetInputFileStream() });

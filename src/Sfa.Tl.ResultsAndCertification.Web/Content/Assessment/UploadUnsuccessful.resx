@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Assessment_Error_Report_File_Name_Text" xml:space="preserve">
-    <value>Assessment_error_report.csv</value>
+    <value>Assessment_entries_error_report.csv</value>
   </data>
   <data name="Back_To_Assessments_Button_Text" xml:space="preserve">
     <value>Back to assessment entries</value>

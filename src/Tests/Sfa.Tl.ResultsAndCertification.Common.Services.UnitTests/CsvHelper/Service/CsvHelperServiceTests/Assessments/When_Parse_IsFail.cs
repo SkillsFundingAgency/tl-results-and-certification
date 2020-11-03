@@ -3,13 +3,13 @@ using FluentValidation.Results;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NSubstitute.ReturnsExtensions;
-using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Service.CsvHelperServiceTests
+namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Service.CsvHelperServiceTests.Assessments
 {
     public class When_Parse_IsFail : TestSetup
     {
@@ -19,11 +19,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
             var failures = new List<ValidationFailure>
             {
                 new ValidationFailure("ULN", "Uln required"),
-                new ValidationFailure("First name", "First name required"),
+                new ValidationFailure("Core code", "Core code required"),
             };
             var regCsvResponse = new ValidationResult(failures);
-            RegValidator.ValidateAsync(Arg.Any<RegistrationCsvRecordRequest>()).Returns(regCsvResponse);
-            DataParser.ParseErrorObject(Arg.Any<int>(), Arg.Any<RegistrationCsvRecordRequest>(), regCsvResponse).ReturnsNull();
+            RegValidator.ValidateAsync(Arg.Any<AssessmentCsvRecordRequest>()).Returns(regCsvResponse);
+            DataParser.ParseErrorObject(Arg.Any<int>(), Arg.Any<AssessmentCsvRecordRequest>(), regCsvResponse).ReturnsNull();
 
         }
 
@@ -36,8 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         private StringBuilder GetInputFilecontent()
         {
             StringBuilder csvData = new StringBuilder();
-            csvData.AppendLine("ULN,First Name,Last Name,Date of Birth,UKPRN,Academic Year,Core code,Specialism codes");
-            csvData.AppendLine("1111111111,First 1,Last 1,10012006,10000080,2020,10423456,27234567");
+            csvData.AppendLine("ULN,Core code,Core assessment entry,Specialism code,Specialism assessment entry");
+            csvData.AppendLine("1234567890,12345678,Summer 2021,Test1234,Summer 2021");
             return csvData;
         }
     }

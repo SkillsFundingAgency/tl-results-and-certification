@@ -2,13 +2,12 @@
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 {
-    public class AssessmentParser : IDataParser<AssessmentCsvRecordResponse>
+    public class AssessmentParser : BaseParser, IDataParser<AssessmentCsvRecordResponse>
     {
         public AssessmentCsvRecordResponse ParseRow(FileBaseModel model, int rownum)
         {
@@ -18,7 +17,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
             return new AssessmentCsvRecordResponse
             {
                 Uln = assessment.Uln.Trim().ToLong(),
-                // TODO
+                CoreCode = assessment.CoreCode.Trim(),
+                SpecialismCode = assessment.SpecialismCode.Trim(),
+                CoreAssessmentEntry = assessment.CoreAssessmentEntry.Trim(),
+                SpecialismAssessmentEntry = assessment.SpecialismAssessmentEntry.Trim(),
                 RowNum = rownum,
                 ValidationErrors = new List<BulkProcessValidationError>()
             };
@@ -37,25 +39,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 
                 ValidationErrors = BuildValidationError(rownum, ulnValue, validationResult, errorMessage)
             };
-        }
-
-        private IList<BulkProcessValidationError> BuildValidationError(int rownum, long uln, ValidationResult validationResult, string errorMessage)
-        {
-            //TODO: this should be a common method for all parsers. 
-            var validationErrors = new List<BulkProcessValidationError>();
-
-            var errors = validationResult?.Errors?.Select(x => x.ErrorMessage) ?? new List<string> { errorMessage };
-
-            foreach (var err in errors)
-            {
-                validationErrors.Add(new BulkProcessValidationError
-                {
-                    RowNum = rownum != 0 ? rownum.ToString() : string.Empty,
-                    Uln = uln != 0 ? uln.ToString() : string.Empty,
-                    ErrorMessage = err
-                });
-            }
-            return validationErrors;
         }
     }
 }

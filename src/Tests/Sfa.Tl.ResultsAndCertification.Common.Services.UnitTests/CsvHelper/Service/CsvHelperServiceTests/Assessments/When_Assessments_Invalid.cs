@@ -2,33 +2,38 @@
 using FluentValidation.Results;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
-using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Service.CsvHelperServiceTests
+namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Service.CsvHelperServiceTests.Assessments
 {
-    public class When_Registrations_Invalid : TestSetup
+    public class When_Assessments_Invalid : TestSetup
     {
-        private RegistrationCsvRecordResponse expectedRow;
+        private AssessmentCsvRecordResponse expectedRow;
 
         public override void Given()
         {
             InputFileContent = GetInputFilecontent();
             var failures = new List<ValidationFailure>
             {
-                new ValidationFailure("First name", "First name required"),
+                new ValidationFailure("Core code", "Core code must have 8 digits only"),
             };
 
-            expectedRow = new RegistrationCsvRecordResponse { Uln = 123, RowNum = 1,  ValidationErrors = new List<BulkProcessValidationError> 
+            expectedRow = new AssessmentCsvRecordResponse
             {
-              new BulkProcessValidationError { RowNum = "1", Uln = "123", ErrorMessage = "First name required" }
-            } };
+                Uln = 123,
+                RowNum = 1,
+                ValidationErrors = new List<BulkProcessValidationError>
+            {
+              new BulkProcessValidationError { RowNum = "1", Uln = "123", ErrorMessage = "Core code must have 8 digits only" }
+            }
+            };
             var regCsvResponse = new ValidationResult(failures);
-            RegValidator.ValidateAsync(Arg.Any<RegistrationCsvRecordRequest>()).Returns(regCsvResponse);
-            DataParser.ParseErrorObject(Arg.Any<int>(), Arg.Any<RegistrationCsvRecordRequest>(), regCsvResponse).Returns(expectedRow);
+            RegValidator.ValidateAsync(Arg.Any<AssessmentCsvRecordRequest>()).Returns(regCsvResponse);
+            DataParser.ParseErrorObject(Arg.Any<int>(), Arg.Any<AssessmentCsvRecordRequest>(), regCsvResponse).Returns(expectedRow);
         }
 
         [Fact]
@@ -50,8 +55,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         private StringBuilder GetInputFilecontent()
         {
             StringBuilder csvData = new StringBuilder();
-            csvData.AppendLine("ULN,First Name,Last Name,Date of Birth,UKPRN,Academic year,Core code,Specialism codes");
-            csvData.AppendLine("1111111111,First 1,Last 1,10012006,10000080,2020,10423456,27234567");
+            csvData.AppendLine("ULN,Core code,Core assessment entry,Specialism code,Specialism assessment entry");
+            csvData.AppendLine("1234567890,12345678,Summer 2021,Test1234,Summer 2021");
             return csvData;
         }
     }

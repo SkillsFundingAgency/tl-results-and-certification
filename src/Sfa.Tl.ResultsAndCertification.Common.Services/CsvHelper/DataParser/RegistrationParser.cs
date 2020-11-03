@@ -9,7 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 {
-    public class RegistrationParser : IDataParser<RegistrationCsvRecordResponse>
+    public class RegistrationParser : BaseParser, IDataParser<RegistrationCsvRecordResponse>
     {
         public RegistrationCsvRecordResponse ParseRow(FileBaseModel model, int rownum)
         {
@@ -44,24 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 
                 ValidationErrors = BuildValidationError(rownum, ulnValue, validationResult, errorMessage)
             };
-        }
-
-        private IList<BulkProcessValidationError> BuildValidationError(int rownum, long uln, ValidationResult validationResult, string errorMessage)
-        {
-            var validationErrors = new List<BulkProcessValidationError>();
-
-            var errors = validationResult?.Errors?.Select(x => x.ErrorMessage) ?? new List<string> { errorMessage };
-
-            foreach (var err in errors)
-            {
-                validationErrors.Add(new BulkProcessValidationError
-                {
-                    RowNum = rownum != 0 ? rownum.ToString() : string.Empty,
-                    Uln = uln != 0 ? uln.ToString() : string.Empty,
-                    ErrorMessage = err
-                });
-            }
-            return validationErrors;
         }
     }
 }

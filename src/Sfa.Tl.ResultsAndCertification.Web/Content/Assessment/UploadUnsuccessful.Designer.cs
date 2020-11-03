@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment_error_report.csv.
+        ///   Looks up a localized string similar to Assessment_entries_error_report.csv.
         /// </summary>
         public static string Assessment_Error_Report_File_Name_Text {
             get {
