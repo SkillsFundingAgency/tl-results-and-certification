@@ -180,10 +180,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         }
 
         // Assessment Related endpoints
-        public async Task<BulkAssessmentResponse> ProcessBulkAssessmentsAsync(BulkAssessmentRequest model)
+        public async Task<BulkAssessmentResponse> ProcessBulkAssessmentsAsync(BulkRegistrationRequest model)
         {
             var requestUri = ApiConstants.ProcessBulkAssessmentsUri;
-            return await PostAsync<BulkAssessmentRequest, BulkAssessmentResponse>(requestUri, model);
+            return await PostAsync<BulkRegistrationRequest, BulkAssessmentResponse>(requestUri, model);
         }
 
         #region Private Methods

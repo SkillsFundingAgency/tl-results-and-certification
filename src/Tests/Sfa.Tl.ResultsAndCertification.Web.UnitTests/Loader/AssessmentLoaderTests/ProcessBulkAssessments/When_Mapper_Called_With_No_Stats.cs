@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
 
             CreateMapper();
 
-            BulkAssessmentRequest = new BulkAssessmentRequest { AoUkprn = Ukprn };
+            BulkAssessmentRequest = new BulkRegistrationRequest { AoUkprn = Ukprn };
 
             BulkAssessmentResponse = new BulkAssessmentResponse
             {
@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var bulkAssessmentRequestMapperResult = Mapper.Map<BulkAssessmentRequest>(UploadAssessmentsRequestViewModel);
+            var bulkAssessmentRequestMapperResult = Mapper.Map<BulkRegistrationRequest>(UploadAssessmentsRequestViewModel);
 
             bulkAssessmentRequestMapperResult.AoUkprn.Should().Be(UploadAssessmentsRequestViewModel.AoUkprn);
             bulkAssessmentRequestMapperResult.BlobFileName.Should().NotBeNullOrEmpty();
@@ -75,8 +75,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 c.AddMaps(typeof(AssessmentMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<UploadAssessmentsRequestViewModel, BulkAssessmentRequest>(HttpContextAccessor) :
-                                type.Name.Contains("UserEmailResolver") ? (object)new UserEmailResolver<UploadAssessmentsRequestViewModel, BulkAssessmentRequest>(HttpContextAccessor) :
+                                new UserNameResolver<UploadAssessmentsRequestViewModel, BulkRegistrationRequest>(HttpContextAccessor) :
+                                type.Name.Contains("UserEmailResolver") ? (object)new UserEmailResolver<UploadAssessmentsRequestViewModel, BulkRegistrationRequest>(HttpContextAccessor) :
                                 null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);

@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         protected ResultsAndCertificationInternalApiClient _apiClient;
         protected BulkAssessmentResponse _mockHttpResult;
-        private BulkAssessmentRequest _model;
+        private BulkRegistrationRequest _model;
         private readonly long _ukprn = 12345678;
 
         public override void Setup()
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ErrorFileSize = 1.5
             };
 
-            _model = new BulkAssessmentRequest
+            _model = new BulkRegistrationRequest
             {
                 AoUkprn = _ukprn,
                 BlobFileName = "assessmenttfile.csv",

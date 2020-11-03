@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 }
             };
 
-            Mapper.Map<BulkAssessmentRequest>(UploadAssessmentsRequestViewModel).Returns(BulkAssessmentRequest);
+            Mapper.Map<BulkRegistrationRequest>(UploadAssessmentsRequestViewModel).Returns(BulkAssessmentRequest);
             Mapper.Map<UploadAssessmentsResponseViewModel>(BulkAssessmentResponse).Returns(UploadAssessmentsResponseViewModel);
             InternalApiClient.ProcessBulkAssessmentsAsync(BulkAssessmentRequest).Returns(BulkAssessmentResponse);
             Loader = new AssessmentLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
         {
             InternalApiClient.Received(1).ProcessBulkAssessmentsAsync(BulkAssessmentRequest);
             BlobStorageService.Received(1).UploadFileAsync(Arg.Any<BlobStorageData>());
-            Mapper.Received().Map<BulkAssessmentRequest>(UploadAssessmentsRequestViewModel);
+            Mapper.Received().Map<BulkRegistrationRequest>(UploadAssessmentsRequestViewModel);
         }
 
         [Fact]
