@@ -35,9 +35,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 
             CreateMapper();
 
-            BulkRegistrationRequest = new BulkRegistrationRequest { AoUkprn = Ukprn };
+            BulkRegistrationRequest = new BulkProcessRequest { AoUkprn = Ukprn };
 
-            BulkRegistrationResponse = new BulkRegistrationResponse
+            BulkRegistrationResponse = new BulkProcessResponse
             {
                 IsSuccess = false,
                 BlobUniqueReference = Guid.NewGuid(),
@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var bulkRegistrationRequestMapperResult = Mapper.Map<BulkRegistrationRequest>(UploadRegistrationsRequestViewModel);
+            var bulkRegistrationRequestMapperResult = Mapper.Map<BulkProcessRequest>(UploadRegistrationsRequestViewModel);
 
             bulkRegistrationRequestMapperResult.AoUkprn.Should().Be(UploadRegistrationsRequestViewModel.AoUkprn);
             bulkRegistrationRequestMapperResult.BlobFileName.Should().NotBeNullOrEmpty();
@@ -75,8 +75,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 c.AddMaps(typeof(RegistrationMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<UploadRegistrationsRequestViewModel, BulkRegistrationRequest>(HttpContextAccessor) :
-                                type.Name.Contains("UserEmailResolver") ? (object)new UserEmailResolver<UploadRegistrationsRequestViewModel, BulkRegistrationRequest>(HttpContextAccessor) :
+                                new UserNameResolver<UploadRegistrationsRequestViewModel, BulkProcessRequest>(HttpContextAccessor) :
+                                type.Name.Contains("UserEmailResolver") ? (object)new UserEmailResolver<UploadRegistrationsRequestViewModel, BulkProcessRequest>(HttpContextAccessor) :
                                 null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);

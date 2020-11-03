@@ -5,6 +5,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces
 {
     public interface IBulkProcessLoader
     {
-        Task<BulkRegistrationResponse> ProcessAsync(BulkRegistrationRequest request);
+        Task<BulkProcessResponse> ProcessAsync(BulkProcessRequest request);
     }
 }

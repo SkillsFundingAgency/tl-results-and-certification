@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpPost]
         [Route("ProcessBulkAssessments")]
-        public async Task<BulkRegistrationResponse> ProcessBulkAssessmentsAsync(BulkRegistrationRequest request)
+        public async Task<BulkProcessResponse> ProcessBulkAssessmentsAsync(BulkProcessRequest request)
         {
             return await _bulkAssementProcess.ProcessAsync(request);
         }

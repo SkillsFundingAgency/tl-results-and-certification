@@ -17,15 +17,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
     {
         public RegistrationMapper()
         {
-            CreateMap<UploadRegistrationsRequestViewModel, BulkRegistrationRequest>()
+            CreateMap<UploadRegistrationsRequestViewModel, BulkProcessRequest>()
                .ForMember(d => d.AoUkprn, opts => opts.MapFrom(s => s.AoUkprn))
                .ForMember(d => d.BlobFileName, opts => opts.MapFrom(s => $"{DateTime.Now.ToFileTimeUtc()}.{FileType.Csv}"))
                .ForMember(d => d.BlobUniqueReference, opts => opts.MapFrom(s => Guid.NewGuid()))
                .ForMember(d => d.FileType, opts => opts.MapFrom(s => FileType.Csv))
                .ForMember(d => d.DocumentType, opts => opts.MapFrom(s => DocumentType.Registrations))
-               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<UploadRegistrationsRequestViewModel, BulkRegistrationRequest>>());
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<UploadRegistrationsRequestViewModel, BulkProcessRequest>>());
 
-            CreateMap<BulkRegistrationResponse, UploadRegistrationsResponseViewModel>()
+            CreateMap<BulkProcessResponse, UploadRegistrationsResponseViewModel>()
                .ForMember(d => d.IsSuccess, opts => opts.MapFrom(s => s.IsSuccess))
                .ForMember(d => d.BlobUniqueReference, opts => opts.MapFrom(s => s.BlobUniqueReference))
                .ForMember(d => d.Stats, opts => opts.MapFrom(s => s.Stats));

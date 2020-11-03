@@ -107,10 +107,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<bool>(requestUri);
         }
 
-        public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest model)
+        public async Task<BulkProcessResponse> ProcessBulkRegistrationsAsync(BulkProcessRequest model)
         {
             var requestUri = ApiConstants.ProcessBulkRegistrationsUri;
-            return await PostAsync<BulkRegistrationRequest, BulkRegistrationResponse>(requestUri, model);
+            return await PostAsync<BulkProcessRequest, BulkProcessResponse>(requestUri, model);
         }
 
         public async Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference)
@@ -180,10 +180,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         }
 
         // Assessment Related endpoints
-        public async Task<BulkAssessmentResponse> ProcessBulkAssessmentsAsync(BulkRegistrationRequest model)
+        public async Task<BulkAssessmentResponse> ProcessBulkAssessmentsAsync(BulkProcessRequest model)
         {
             var requestUri = ApiConstants.ProcessBulkAssessmentsUri;
-            return await PostAsync<BulkRegistrationRequest, BulkAssessmentResponse>(requestUri, model);
+            return await PostAsync<BulkProcessRequest, BulkAssessmentResponse>(requestUri, model);
         }
 
         #region Private Methods

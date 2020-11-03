@@ -38,9 +38,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             _logger = logger;
         }
 
-        public async Task<BulkRegistrationResponse> ProcessAsync(BulkRegistrationRequest request)
+        public async Task<BulkProcessResponse> ProcessAsync(BulkProcessRequest request)
         {
-            var response = new BulkRegistrationResponse();
+            var response = new BulkProcessResponse();
             try
             {
                 CsvResponseModel<RegistrationCsvRecordResponse> stage2RegistrationsResponse = null;
@@ -102,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private async Task<BulkRegistrationResponse> ProcessRegistrationResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, RegistrationProcessResponse registrationProcessResult)
+        private async Task<BulkProcessResponse> ProcessRegistrationResponse(BulkProcessRequest request, BulkProcessResponse response, RegistrationProcessResponse registrationProcessResult)
         {
             _ = registrationProcessResult.IsSuccess ? await MoveFileFromProcessingToProcessedAsync(request) : await MoveFileFromProcessingToFailedAsync(request);
             await CreateDocumentUploadHistory(request, registrationProcessResult.IsSuccess ? DocumentUploadStatus.Processed : DocumentUploadStatus.Failed);
@@ -111,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, IList<BulkProcessValidationError> registrationValidationErrors)
+        private async Task<BulkProcessResponse> SaveErrorsAndUpdateResponse(BulkProcessRequest request, BulkProcessResponse response, IList<BulkProcessValidationError> registrationValidationErrors)
         {
             var errorFile = await CreateErrorFileAsync(registrationValidationErrors);
             await UploadErrorsFileToBlobStorage(request, errorFile);
@@ -171,7 +171,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return errors;
         }
 
-        private async Task<bool> MoveFileFromProcessingToProcessedAsync(BulkRegistrationRequest request)
+        private async Task<bool> MoveFileFromProcessingToProcessedAsync(BulkProcessRequest request)
         {
             if (request == null) return false;
 

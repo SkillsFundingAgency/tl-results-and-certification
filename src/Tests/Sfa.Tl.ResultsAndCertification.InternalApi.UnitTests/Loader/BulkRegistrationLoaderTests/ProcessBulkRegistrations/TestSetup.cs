@@ -24,8 +24,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
         protected IDocumentUploadHistoryService DocumentUploadHistoryService;
         protected ILogger<BulkRegistrationLoader> Logger;
         private BulkRegistrationLoader _loader;
-        protected BulkRegistrationRequest Request;
-        protected BulkRegistrationResponse Response { get; private set; }
+        protected BulkProcessRequest Request;
+        protected BulkProcessResponse Response { get; private set; }
         protected long AoUkprn = 1234567891;
         protected Guid BlobUniqueRef;
 
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
 
             BlobUniqueRef = Guid.NewGuid();
 
-            Request = new BulkRegistrationRequest
+            Request = new BulkProcessRequest
             {
                 AoUkprn = 1234567891,
                 BlobFileName = "registrations.csv",

@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpPost]
         [Route("ProcessBulkRegistrations")]
-        public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request)
+        public async Task<BulkProcessResponse> ProcessBulkRegistrationsAsync(BulkProcessRequest request)
         {
             return await _bulkRegistrationProcess.ProcessAsync(request);
         }

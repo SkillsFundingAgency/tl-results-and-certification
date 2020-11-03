@@ -8,9 +8,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces
 {
     public interface IBulkBaseLoader
     {
-        public Task<bool> DeleteFileFromProcessingFolderAsync(BulkRegistrationRequest request);
-        public Task<bool> UploadErrorsFileToBlobStorage(BulkRegistrationRequest request, byte[] errorFile);
-        public Task<bool> MoveFileFromProcessingToFailedAsync(BulkRegistrationRequest request);
-        public Task<bool> CreateDocumentUploadHistory(BulkRegistrationRequest request, DocumentUploadStatus status = DocumentUploadStatus.Processed);
+        public Task<bool> DeleteFileFromProcessingFolderAsync(BulkProcessRequest request);
+        public Task<bool> UploadErrorsFileToBlobStorage(BulkProcessRequest request, byte[] errorFile);
+        public Task<bool> MoveFileFromProcessingToFailedAsync(BulkProcessRequest request);
+        public Task<bool> CreateDocumentUploadHistory(BulkProcessRequest request, DocumentUploadStatus status = DocumentUploadStatus.Processed);
     }
 }

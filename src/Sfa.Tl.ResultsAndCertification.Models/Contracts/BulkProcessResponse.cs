@@ -3,7 +3,7 @@ using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
-    public class BulkRegistrationResponse
+    public class BulkProcessResponse
     {
         public bool IsSuccess { get; set; }
         public Guid BlobUniqueReference { get; set; }

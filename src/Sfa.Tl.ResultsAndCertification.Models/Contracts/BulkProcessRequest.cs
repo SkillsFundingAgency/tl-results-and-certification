@@ -3,7 +3,7 @@ using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
-    public class BulkRegistrationRequest
+    public class BulkProcessRequest
     {
         public long AoUkprn { get; set; }
         public string BlobFileName { get; set; }

@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
 
             CreateMapper();
 
-            BulkAssessmentRequest = new BulkRegistrationRequest { AoUkprn = Ukprn };
+            BulkAssessmentRequest = new BulkProcessRequest { AoUkprn = Ukprn };
 
             BulkAssessmentResponse = new BulkAssessmentResponse
             {
@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var bulkAssessmentRequestMapperResult = Mapper.Map<BulkRegistrationRequest>(UploadAssessmentsRequestViewModel);
+            var bulkAssessmentRequestMapperResult = Mapper.Map<BulkProcessRequest>(UploadAssessmentsRequestViewModel);
 
             bulkAssessmentRequestMapperResult.AoUkprn.Should().Be(UploadAssessmentsRequestViewModel.AoUkprn);
             bulkAssessmentRequestMapperResult.BlobFileName.Should().NotBeNullOrEmpty();
@@ -75,8 +75,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 c.AddMaps(typeof(AssessmentMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<UploadAssessmentsRequestViewModel, BulkRegistrationRequest>(HttpContextAccessor) :
-                                type.Name.Contains("UserEmailResolver") ? (object)new UserEmailResolver<UploadAssessmentsRequestViewModel, BulkRegistrationRequest>(HttpContextAccessor) :
+                                new UserNameResolver<UploadAssessmentsRequestViewModel, BulkProcessRequest>(HttpContextAccessor) :
+                                type.Name.Contains("UserEmailResolver") ? (object)new UserEmailResolver<UploadAssessmentsRequestViewModel, BulkProcessRequest>(HttpContextAccessor) :
                                 null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);

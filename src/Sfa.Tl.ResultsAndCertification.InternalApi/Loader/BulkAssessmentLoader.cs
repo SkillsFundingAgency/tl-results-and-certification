@@ -35,9 +35,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             _logger = logger;
         }
 
-        public async Task<BulkRegistrationResponse> ProcessAsync(BulkRegistrationRequest request)
+        public async Task<BulkProcessResponse> ProcessAsync(BulkProcessRequest request)
         {
-            var response = new BulkRegistrationResponse();
+            var response = new BulkProcessResponse();
             try
             {
                 CsvResponseModel<AssessmentCsvRecordResponse> stage2AssessmentsResponse = null;
@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 // TODO: Stage 3
 
                 // Temp response;
-                return new BulkRegistrationResponse 
+                return new BulkProcessResponse 
                 {
                     IsSuccess = true,
                     Stats = new BulkUploadStats { TotalRecordsCount = 11 }
@@ -134,7 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             }
         }
 
-        private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, IList<BulkProcessValidationError> validationErrors)
+        private async Task<BulkProcessResponse> SaveErrorsAndUpdateResponse(BulkProcessRequest request, BulkProcessResponse response, IList<BulkProcessValidationError> validationErrors)
         {
             var errorFile = await CreateErrorFileAsync(validationErrors);
             await UploadErrorsFileToBlobStorage(request, errorFile);

@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<UploadRegistrationsResponseViewModel> ProcessBulkRegistrationsAsync(UploadRegistrationsRequestViewModel viewModel)
         {            
-            var bulkRegistrationRequest = _mapper.Map<BulkRegistrationRequest>(viewModel);
+            var bulkRegistrationRequest = _mapper.Map<BulkProcessRequest>(viewModel);
 
             using (var fileStream = viewModel.File.OpenReadStream())
             {

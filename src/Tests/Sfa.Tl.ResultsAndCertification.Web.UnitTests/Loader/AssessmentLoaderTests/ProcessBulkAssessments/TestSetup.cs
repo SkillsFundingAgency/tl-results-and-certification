@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
         protected readonly long Ukprn = 12345678;
         protected UploadAssessmentsResponseViewModel ActualResult;
         protected BulkAssessmentResponse BulkAssessmentResponse;
-        protected BulkRegistrationRequest BulkAssessmentRequest;
+        protected BulkProcessRequest BulkAssessmentRequest;
         protected UploadAssessmentsRequestViewModel UploadAssessmentsRequestViewModel;
         protected UploadAssessmentsResponseViewModel UploadAssessmentsResponseViewModel;
         protected List<ProviderTlevel> ProviderTlevelDetails;
@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             BlobStorageService = Substitute.For<IBlobStorageService>();
             FormFile = Substitute.For<IFormFile>();
             BlobUniqueReference = Guid.NewGuid();
-            BulkAssessmentRequest = new BulkRegistrationRequest { AoUkprn = Ukprn };
+            BulkAssessmentRequest = new BulkProcessRequest { AoUkprn = Ukprn };
         }
 
         public override void Given()
@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 ErrorFileSize = 1.5
             };
 
-            Mapper.Map<BulkRegistrationRequest>(UploadAssessmentsRequestViewModel).Returns(BulkAssessmentRequest);
+            Mapper.Map<BulkProcessRequest>(UploadAssessmentsRequestViewModel).Returns(BulkAssessmentRequest);
             Mapper.Map<UploadAssessmentsResponseViewModel>(BulkAssessmentResponse).Returns(UploadAssessmentsResponseViewModel);
             InternalApiClient.ProcessBulkAssessmentsAsync(BulkAssessmentRequest).Returns(BulkAssessmentResponse);
             Loader = new AssessmentLoader(Mapper, Logger, InternalApiClient, BlobStorageService);

@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             _blobStorageService = blobStorageService;
         }
 
-        public async Task<bool> DeleteFileFromProcessingFolderAsync(BulkRegistrationRequest request)
+        public async Task<bool> DeleteFileFromProcessingFolderAsync(BulkProcessRequest request)
         {
             if (request == null) return false;
 
@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return true;
         }
 
-        public async Task<bool> UploadErrorsFileToBlobStorage(BulkRegistrationRequest request, byte[] errorFile)
+        public async Task<bool> UploadErrorsFileToBlobStorage(BulkProcessRequest request, byte[] errorFile)
         {
             if (errorFile == null || errorFile.Length == 0) return false;
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return true;
         }
 
-        public async Task<bool> MoveFileFromProcessingToFailedAsync(BulkRegistrationRequest request)
+        public async Task<bool> MoveFileFromProcessingToFailedAsync(BulkProcessRequest request)
         {
             if (request == null) return false;
 
@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return true;
         }
 
-        public async Task<bool> CreateDocumentUploadHistory(BulkRegistrationRequest request, DocumentUploadStatus status = DocumentUploadStatus.Processed)
+        public async Task<bool> CreateDocumentUploadHistory(BulkProcessRequest request, DocumentUploadStatus status = DocumentUploadStatus.Processed)
         {
             if (request == null) return false;
 

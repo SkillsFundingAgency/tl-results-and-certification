@@ -13,13 +13,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
     {
         public AssessmentMapper()
         {
-            CreateMap<UploadAssessmentsRequestViewModel, BulkRegistrationRequest>()
+            CreateMap<UploadAssessmentsRequestViewModel, BulkProcessRequest>()
                .ForMember(d => d.AoUkprn, opts => opts.MapFrom(s => s.AoUkprn))
                .ForMember(d => d.BlobFileName, opts => opts.MapFrom(s => $"{DateTime.Now.ToFileTimeUtc()}.{FileType.Csv}"))
                .ForMember(d => d.BlobUniqueReference, opts => opts.MapFrom(s => Guid.NewGuid()))
                .ForMember(d => d.FileType, opts => opts.MapFrom(s => FileType.Csv))
                .ForMember(d => d.DocumentType, opts => opts.MapFrom(s => DocumentType.Assessments))
-               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<UploadAssessmentsRequestViewModel, BulkRegistrationRequest>>());
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<UploadAssessmentsRequestViewModel, BulkProcessRequest>>());
 
             CreateMap<BulkAssessmentResponse, UploadAssessmentsResponseViewModel>()
                .ForMember(d => d.IsSuccess, opts => opts.MapFrom(s => s.IsSuccess))
