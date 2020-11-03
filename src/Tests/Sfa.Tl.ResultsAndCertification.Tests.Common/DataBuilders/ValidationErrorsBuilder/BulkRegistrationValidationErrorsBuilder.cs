@@ -1,5 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Constants;
-using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrations.ValidationErrorsBuilder

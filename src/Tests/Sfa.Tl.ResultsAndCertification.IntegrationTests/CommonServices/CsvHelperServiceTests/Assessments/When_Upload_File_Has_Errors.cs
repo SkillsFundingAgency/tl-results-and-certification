@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Xunit;
-using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelperServiceTests.Assessments

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {

@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using FluentValidation.Results;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System.Collections.Generic;
 using System.Linq;
