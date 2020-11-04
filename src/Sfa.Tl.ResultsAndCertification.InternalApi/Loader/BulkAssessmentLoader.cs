@@ -92,7 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             }
             catch (Exception ex)
             {
-                var errorMessage = $"Something went wrong while processing bluk assessments. Method: ProcessBulkAssessmentsAsync(BulkRegistrationRequest : {JsonConvert.SerializeObject(request)}), User: {request.PerformedBy}";
+                var errorMessage = $"Something went wrong while processing bluk assessments. Method: ProcessBulkAssessmentsAsync(BulkProcessRequest : {JsonConvert.SerializeObject(request)}), User: {request.PerformedBy}";
                 _logger.LogError(LogEvent.BulkAssessmentProcessFailed, ex, errorMessage);
                 await DeleteFileFromProcessingFolderAsync(request);
             }

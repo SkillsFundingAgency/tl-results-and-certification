@@ -104,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         IsOptedin = true,
                         IsBulkUpload = true,
                         CreatedBy = performedBy,
-                        CreatedOn = DateTime.UtcNow,
+                        CreatedOn = DateTime.UtcNow
                     });
                 }
 
@@ -119,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         IsOptedin = true,
                         IsBulkUpload = true,
                         CreatedBy = performedBy,
-                        CreatedOn = DateTime.UtcNow,
+                        CreatedOn = DateTime.UtcNow
                     });
                 }
             }
@@ -185,7 +185,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             if (newPathwayAssessments.Any())
-                newAndAmendedPathwayAssessmentRecords.AddRange(newPathwayAssessments.Where(p => p.AssessmentSeriesId > 0));
+                newAndAmendedPathwayAssessmentRecords.AddRange(newPathwayAssessments.Where(p => p.TqRegistrationPathwayId != 0 && p.AssessmentSeriesId > 0));
 
             return newAndAmendedPathwayAssessmentRecords;
         }
@@ -233,7 +233,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             if (newSpecialismAssessments.Any())
-                newOrAmendedSpecialismAssessmentRecords.AddRange(newSpecialismAssessments.Where(p => p.AssessmentSeriesId > 0));
+                newOrAmendedSpecialismAssessmentRecords.AddRange(newSpecialismAssessments.Where(p => p.TqRegistrationSpecialismId != 0 && p.AssessmentSeriesId > 0));
 
             return newOrAmendedSpecialismAssessmentRecords;
         }
