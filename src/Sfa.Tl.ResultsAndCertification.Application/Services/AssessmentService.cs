@@ -86,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
-        public (IList<TqPathwayAssessment>, IList<TqSpecialismAssessment>) TransformAssessmentModel(IList<AssessmentRecordResponse> assessmentsData, string performedBy)
+        public (IList<TqPathwayAssessment>, IList<TqSpecialismAssessment>) TransformAssessmentsModel(IList<AssessmentRecordResponse> assessmentsData, string performedBy)
         {            
             var pathwayAssessments = new List<TqPathwayAssessment>();
             var specialismAssessments = new List<TqSpecialismAssessment>();

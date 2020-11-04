@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 }
 
                 // Step: Map data to DB model type.
-                var assessments = _assessmentService.TransformAssessmentModel(stage3Response, request.PerformedBy);
+                var assessments = _assessmentService.TransformAssessmentsModel(stage3Response, request.PerformedBy);
 
                 // Step: DB operation                
                 var assessmentsProcessResult = await _assessmentService.CompareAndProcessAssessmentsAsync(assessments.Item1, assessments.Item2);
