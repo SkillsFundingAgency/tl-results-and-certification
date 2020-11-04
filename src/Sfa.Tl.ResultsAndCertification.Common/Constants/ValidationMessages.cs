@@ -37,6 +37,10 @@
         // Bulk Registration Stage4 Validation Messages
         public const string ActiveUlnWithDifferentAo = "Active ULN with a different awarding organisation";
         public const string CoreForUlnCannotBeChangedYet = "Core for ULN cannot be changed yet";
+        public const string UlnNotRegistered = "ULN not registered with awarding organisation";
+        public const string CannotAddAssessmentToWithdrawnRegistration = "Cannot add assessment entries to a withdrawn registration";
+        public const string InvalidCoreCode = "Core code either not recognised or not registered for this ULN";
+        public const string InvalidSpecialismCode = "Specialism code either not recognised or not registered for this ULN";
 
         // Assessments - Bulk stage 2 validations
         public const string CorecodeMustBeDigitsOnly = "Core code must have 8 digits only";

@@ -9,5 +9,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         Task<IList<TqPathwayAssessment>> GetPathwayAssessmentsAsync(IList<TqPathwayAssessment> pathwayAssessments);
         Task<IList<TqSpecialismAssessment>> GetSpecialismAssessmentsAsync(IList<TqSpecialismAssessment> specialismAssessments);
         Task<bool> BulkInsertOrUpdateAssessments(List<TqPathwayAssessment> pathwayAssessmentEntities, List<TqSpecialismAssessment> specialismAssessmentEntities);
+        Task<IEnumerable<TqRegistrationPathway>> GetBulkAssessmentsAsync(long aoUkprn, IEnumerable<long> uniqueLearnerNumbers);
     }
 }

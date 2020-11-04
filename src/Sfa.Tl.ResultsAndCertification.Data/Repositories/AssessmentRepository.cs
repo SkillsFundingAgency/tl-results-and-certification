@@ -1,6 +1,7 @@
 ﻿using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System;
@@ -63,6 +64,62 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 });
             }
             return result;
+        }
+
+        public async Task<IEnumerable<TqRegistrationPathway>> GetBulkAssessmentsAsync(long aoUkprn, IEnumerable<long> uniqueLearnerNumbers)
+        {
+            var registrations = await _dbContext.TqRegistrationPathway
+                    .Include(x => x.TqPathwayAssessments)
+                        .ThenInclude(x => x.AssessmentSeries)
+                   .Include(x => x.TqRegistrationProfile)
+                   .Include(x => x.TqProvider)
+                       .ThenInclude(x => x.TqAwardingOrganisation)
+                           .ThenInclude(x => x.TlAwardingOrganisaton)
+                   .Include(x => x.TqProvider)
+                       .ThenInclude(x => x.TqAwardingOrganisation)
+                           .ThenInclude(x => x.TlPathway)
+                    .Include(x => x.TqRegistrationSpecialisms)
+                       .ThenInclude(x => x.TlSpecialism)
+                    .Include(x => x.TqRegistrationSpecialisms)
+                        .ThenInclude(x => x.TqSpecialismAssessments)
+                            .ThenInclude(x => x.AssessmentSeries)
+                    .Where(p => uniqueLearnerNumbers.Contains(p.TqRegistrationProfile.UniqueLearnerNumber) &&
+                          p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
+                          (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
+                    .ToListAsync();
+
+            var latestRegistratons = registrations
+                .GroupBy(x => x.TqRegistrationProfileId)
+                .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
+                .ToList();
+
+            if (registrations == null) return null;
+
+            foreach (var reg in latestRegistratons)
+            {
+                // PathwayAssessment
+                Func<TqPathwayAssessment, bool> pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
+                if (reg.Status == RegistrationPathwayStatus.Withdrawn)
+                    pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate != null;
+                reg.TqPathwayAssessments = reg.TqPathwayAssessments.Where(pathwayAssessmentPredicate).ToList();
+
+                // PathwaySpecialism
+                Func<TqRegistrationSpecialism, bool> specialismPredicate = e => e.IsOptedin && e.EndDate == null;
+                if (reg.Status == RegistrationPathwayStatus.Withdrawn)
+                    specialismPredicate = e => e.IsOptedin && e.EndDate != null;
+                reg.TqRegistrationSpecialisms = reg.TqRegistrationSpecialisms.Where(specialismPredicate).ToList();
+
+                foreach (var specialism in reg.TqRegistrationSpecialisms)
+                {
+                    // SpecialismAssessment
+                    Func<TqSpecialismAssessment, bool> specialismAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
+                    if (reg.Status == RegistrationPathwayStatus.Withdrawn)
+                        specialismAssessmentPredicate = e => e.IsOptedin && e.EndDate != null;
+
+                    specialism.TqSpecialismAssessments = specialism.TqSpecialismAssessments.Where(specialismAssessmentPredicate).ToList();
+                }
+            }
+            return latestRegistratons;
         }
 
         private async Task ProcessPathwayAssessments(BulkConfig bulkConfig, List<TqPathwayAssessment> pathwayAssessments)

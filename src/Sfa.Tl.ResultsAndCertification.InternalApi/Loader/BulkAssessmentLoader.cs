@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             var response = new BulkAssessmentResponse();
             try
             {
-                CsvResponseModel<AssessmentCsvRecordResponse> stage2AssessmentsResponse = null;
+                CsvResponseModel<AssessmentCsvRecordResponse> stage2Response = null;
 
                 // Step 1:  Read file from Blob
                 using (var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
@@ -61,26 +61,32 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                     }
 
                     // Stage 2 validation - TODO
-                    stage2AssessmentsResponse = await _csvService.ReadAndParseFileAsync(new AssessmentCsvRecordRequest { FileStream = fileStream });
+                    stage2Response = await _csvService.ReadAndParseFileAsync(new AssessmentCsvRecordRequest { FileStream = fileStream });
 
-                    if (!stage2AssessmentsResponse.IsDirty)
-                        CheckUlnDuplicates(stage2AssessmentsResponse.Rows);
+                    if (!stage2Response.IsDirty)
+                        CheckUlnDuplicates(stage2Response.Rows);
                 }
 
                 // Step 2: Stage 2 validations 
-                if (stage2AssessmentsResponse.IsDirty || stage2AssessmentsResponse.Rows.Any(x => !x.IsValid))
+                if (stage2Response.IsDirty || stage2Response.Rows.Any(x => !x.IsValid))
                 {
-                    var validationErrors = ExtractAllValidationErrors(stage2AssessmentsResponse);
+                    var validationErrors = ExtractAllValidationErrors(stage2Response);
                     return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
                 }
 
-                // TODO: Stage 3
+                // Stage 3 valiation. 
+                var stage3Response = await _assessmentService.ValidateAssessmentsAsync(request.AoUkprn, stage2Response.Rows.Where(x => x.IsValid));
+                if (stage2Response.Rows.Any(x => !x.IsValid) || stage3Response.Any(x => !x.IsValid))
+                {
+                    var validationErrors = ExtractAllValidationErrors(stage2Response, stage3Response);
+                    return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
+                }
 
                 // Temp response;
                 return new BulkAssessmentResponse
                 {
                     IsSuccess = true,
-                    Stats = new BulkUploadStats { TotalRecordsCount = stage2AssessmentsResponse.Rows.Count }
+                    Stats = new BulkUploadStats { TotalRecordsCount = stage2Response.Rows.Count }
                 };
             }
             catch (Exception ex)
