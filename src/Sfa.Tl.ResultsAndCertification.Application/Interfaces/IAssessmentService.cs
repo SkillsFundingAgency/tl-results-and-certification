@@ -8,6 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface IAssessmentService
     {
         Task<bool> CompareAndProcessAssessmentsAsync(IList<TqPathwayAssessment> pathwayAssessments, IList<TqSpecialismAssessment> specialismAssessments);
-        Task<IList<AssessmentCsvRecordResponse>> ValidateAssessmentsAsync(long aoUkprn, IEnumerable<AssessmentCsvRecordResponse> enumerable);
+        Task<IList<AssessmentRecordResponse>> ValidateAssessmentsAsync(long aoUkprn, IEnumerable<AssessmentCsvRecordResponse> enumerable);
     }
 }

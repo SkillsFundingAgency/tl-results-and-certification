@@ -41,43 +41,58 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return result;
         }
 
-        public async Task<IList<AssessmentCsvRecordResponse>> ValidateAssessmentsAsync(long aoUkprn, IEnumerable<AssessmentCsvRecordResponse> csvAssessments)
+        public async Task<IList<AssessmentRecordResponse>> ValidateAssessmentsAsync(long aoUkprn, IEnumerable<AssessmentCsvRecordResponse> csvAssessments)
         {
-            var response = new List<AssessmentCsvRecordResponse>();
-            var dbAssessments = await _assessmentRepository.GetBulkAssessmentsAsync(aoUkprn, csvAssessments.Select(x => x.Uln));
+            var response = new List<AssessmentRecordResponse>();
+            var dbRegistrations = await _assessmentRepository.GetBulkAssessmentsAsync(aoUkprn, csvAssessments.Select(x => x.Uln));
 
             foreach (var assessment in csvAssessments)
             {
                 // 1. ULN not recognised with AO
-                var dbAssessment = dbAssessments.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == assessment.Uln);
-                if (dbAssessment == null)
+                var dbRegistration = dbRegistrations.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == assessment.Uln);
+                if (dbRegistration == null)
                 {
                     response.Add(AddStage3ValidationError(assessment.RowNum, assessment.Uln, ValidationMessages.UlnNotRegistered));
                     continue;
                 }
 
                 // 2. ULN is withdrawn
-                var isWithdrawn = dbAssessment.Status == RegistrationPathwayStatus.Withdrawn;
+                var isWithdrawn = dbRegistration.Status == RegistrationPathwayStatus.Withdrawn;
                 if (isWithdrawn)
                 {
                     response.Add(AddStage3ValidationError(assessment.RowNum, assessment.Uln, ValidationMessages.CannotAddAssessmentToWithdrawnRegistration));
                     continue;
                 }
 
+                var validationErrors = new List<BulkProcessValidationError>();
+
                 // 3. Core Code is incorrect
-                var isValidCoreCode = dbAssessment.TqProvider.TqAwardingOrganisation.TlPathway.Name == assessment.CoreCode;
+                var isValidCoreCode = dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.LarId.Equals(assessment.CoreCode, StringComparison.InvariantCulture);
                 if (!isValidCoreCode)
-                    response.Add(AddStage3ValidationError(assessment.RowNum, assessment.Uln, ValidationMessages.InvalidCoreCode));
+                    validationErrors.Add(new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = ValidationMessages.InvalidCoreCode });
 
                 // 4. Specialism Code is incorrect
-                var isValidSpecialismCode = dbAssessment.TqProvider.TqAwardingOrganisation.TlPathway.Name == assessment.CoreCode;
+                var isValidSpecialismCode = dbRegistration.TqRegistrationSpecialisms.Any(x => x.TlSpecialism.LarId.Equals(assessment.CoreCode, StringComparison.InvariantCulture));
                 if (!isValidSpecialismCode)
-                    response.Add(AddStage3ValidationError(assessment.RowNum, assessment.Uln, ValidationMessages.InvalidSpecialismCode));
+                    validationErrors.Add(new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = ValidationMessages.InvalidSpecialismCode });
 
                 // 5. Core assessment entry must be no more than 4 years after the starting academic year
                 // 6. Specialism assessment entry must be between one and 4 years after the starting academic year
-                
-                // 7. Only one assessment entry allowed per component - Not sure about this
+
+                if (validationErrors.Count == 0)
+                {
+                    var specialismAssessment = dbRegistration.TqRegistrationSpecialisms.FirstOrDefault();
+                    response.Add(new AssessmentRecordResponse
+                    {
+                        TqRegistrationPathwayId = dbRegistration.Id,
+                        PathwayAssessmentSeriesId = dbRegistration.TqPathwayAssessments.SingleOrDefault()?.AssessmentSeriesId,
+
+                        TqRegistrationSpecialismId = specialismAssessment?.Id,
+                        SpecialismAssessmentSeriesId = specialismAssessment?.TqSpecialismAssessments.SingleOrDefault()?.AssessmentSeriesId,
+                    });
+                }
+                else
+                    response.Add(new AssessmentRecordResponse { ValidationErrors = validationErrors });
             }
 
             return response;
@@ -178,9 +193,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             return newOrAmendedSpecialismAssessmentRecords;
         }
-        private AssessmentCsvRecordResponse AddStage3ValidationError(int rowNum, long uln, string errorMessage)
+        private AssessmentRecordResponse AddStage3ValidationError(int rowNum, long uln, string errorMessage)
         {
-            return new AssessmentCsvRecordResponse()
+            return new AssessmentRecordResponse()
             {
                 ValidationErrors = new List<BulkProcessValidationError>()
                 {

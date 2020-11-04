@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private IList<BulkProcessValidationError> ExtractAllValidationErrors(CsvResponseModel<AssessmentCsvRecordResponse> stage2Response = null, IList<AssessmentCsvRecordResponse> stage3Response = null)
+        private IList<BulkProcessValidationError> ExtractAllValidationErrors(CsvResponseModel<AssessmentCsvRecordResponse> stage2Response = null, IList<AssessmentRecordResponse> stage3Response = null)
         {
             if (stage2Response != null && stage2Response.IsDirty)
             {
