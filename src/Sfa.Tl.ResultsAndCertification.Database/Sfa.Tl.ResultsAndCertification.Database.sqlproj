@@ -99,6 +99,7 @@
   <ItemGroup>
     <None Include="Sfa.Tl.ResultsAndCertification.Database.publish.xml" />
     <None Include="Sfa.Tl.ResultsAndCertification.Database.Local.publish.xml" />
+    <None Include="PostDeployment\SeedAssessmentSeries.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="environment">
