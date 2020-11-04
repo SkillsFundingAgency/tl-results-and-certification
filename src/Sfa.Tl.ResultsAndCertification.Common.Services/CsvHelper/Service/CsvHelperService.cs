@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             using var csv = new CsvReader(reader, config);
 
             // validate header
-            var isValidHeader = ValidateHeader(csv, properties);
+            var isValidHeader = await ValidateHeader(csv, properties);
             if (!isValidHeader)
             {
                 response.IsDirty = true;
@@ -119,9 +119,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 HasHeaderRecord = false
             };
 
-            using var ms = new MemoryStream();
-            using (var sw = new StreamWriter(ms))
-            using (var cw = new CsvWriter(sw, config))
+            await using var ms = new MemoryStream();
+            await using (var sw = new StreamWriter(ms))
+            await using (var cw = new CsvWriter(sw, config))
             {
                 var headerNames = typeof(T).GetProperties().Select(pr => pr.GetCustomAttribute<DisplayNameAttribute>(false).DisplayName).ToList();
                 headerNames.ForEach(headerName =>
@@ -136,10 +136,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
 
         private async Task<ValidationResult> ValidateRowAsync(TImportModel importModel)
         {
-            _validator.CascadeMode = CascadeMode.StopOnFirstFailure;
-            var validationResult = await _validator.ValidateAsync(importModel);
-
-            return validationResult;
+            _validator.CascadeMode = CascadeMode.Stop;
+            return await _validator.ValidateAsync(importModel);
         }
 
         private static void ReadRow(CsvReader csv, TImportModel importModel, List<PropertyInfo> properties)
@@ -160,11 +158,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             };
         }
 
-        private static bool ValidateHeader(CsvReader csv, List<PropertyInfo> properties)
+        private async Task<bool> ValidateHeader(CsvReader csv, List<PropertyInfo> properties)
         {
             try
             {
-                csv.Read();
+                await csv.ReadAsync();
                 csv.ReadHeader();
 
                 var csvFileHeaderColumns = csv.Context.HeaderRecord.Select(x => x.Trim());

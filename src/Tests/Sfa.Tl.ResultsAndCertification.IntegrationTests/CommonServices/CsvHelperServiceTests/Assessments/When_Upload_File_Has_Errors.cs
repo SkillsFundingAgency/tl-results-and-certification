@@ -10,14 +10,14 @@ using System.IO;
 using System.Linq;
 using Xunit;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelperServiceTests.Assessments
 {
     public class When_Upload_File_Has_Errors : AssessmentsCsvHelperServiceBaseTest
     {
         private const string _dataFilePath = @"CommonServices\CsvHelperServiceTests\Assessments\TestData\Assessments_Stage_2_Validation.csv";
-        private IList<BulkProcessValidationError> _expectedValidationErrors;
-        private IList<BulkProcessValidationError> _validationErrors;
+        private IList<BulkProcessValidationError> _expectedValidationErrors;        
 
         public override void Given()
         {
@@ -30,24 +30,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
         }
 
         [Fact]
-        public void Then_Returns_Expected_Results()
+        public async Task Then_Returns_Expected_Results()
         {
+            await WhenAsync();
             ReadAndParseFileResponse.Should().NotBeNull();
-            ReadAndParseFileResponse.Rows.Count.Should().Be(_validationErrors.Count);
+            ReadAndParseFileResponse.Rows.Count.Should().Be(_expectedValidationErrors.Count);
 
-            for (var i=0; i<_validationErrors.Count; i++)
+            for (var i=0; i< _expectedValidationErrors.Count; i++)
             {
                 var actualError = ReadAndParseFileResponse.Rows[i].ValidationErrors.First();
                 
-                actualError.RowNum.ToString().Should().Be(_validationErrors[i].RowNum);
-                actualError.Uln.ToString().Should().Be(_validationErrors[i].Uln);
-                actualError. ErrorMessage.Should().Be(_validationErrors[i].ErrorMessage);
+                actualError.RowNum.ToString().Should().Be(_expectedValidationErrors[i].RowNum);
+                actualError.Uln.ToString().Should().Be(_expectedValidationErrors[i].Uln);
+                actualError. ErrorMessage.Should().Be(_expectedValidationErrors[i].ErrorMessage);
             }
         }
 
         private IList<BulkProcessValidationError> GetExpectedValidationErrors()
         {
-            _validationErrors = new List<BulkProcessValidationError>
+            var validationErrors = new List<BulkProcessValidationError>
             {
                 new BulkProcessValidationError { RowNum = "2", Uln = string.Empty, ErrorMessage = "ULN required" },
                 new BulkProcessValidationError { RowNum = "3", Uln = "123", ErrorMessage = "ULN must be a 10 digit number" },
@@ -57,11 +58,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
                 new BulkProcessValidationError { RowNum = "7", Uln = "1234567893", ErrorMessage = "Specialism code must have 8 characters only" },
                 new BulkProcessValidationError { RowNum = "8", Uln = "1234567894", ErrorMessage = "Core assessment entry must be a series followed by a space and a 4 digit year" },
                 new BulkProcessValidationError { RowNum = "9", Uln = "1234567895", ErrorMessage = "Specialism assessment entry must be a series followed by a space and a 4 digit year" },
-                new BulkProcessValidationError { RowNum = "10", Uln = "1234567896", ErrorMessage = "File must contain at least one ULN on one row" },
-                new BulkProcessValidationError { RowNum = "11", Uln = string.Empty, ErrorMessage = "Data in more than the required 5 columns" }
+                new BulkProcessValidationError { RowNum = "10", Uln = string.Empty, ErrorMessage = "Data in more than the required 5 columns" }
             };
 
-            return _validationErrors;
+            return validationErrors;
         }       
     }
 }

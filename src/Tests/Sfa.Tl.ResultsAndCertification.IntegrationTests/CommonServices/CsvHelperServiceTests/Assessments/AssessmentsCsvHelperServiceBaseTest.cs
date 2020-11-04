@@ -29,20 +29,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
 
         public override Task When()
         {
-            ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) =>
-            {
+            return Task.CompletedTask;
+        }
+
+        public async Task WhenAsync()
+        {
+            ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) => {
                 return memberInfo.GetCustomAttribute<System.ComponentModel.DataAnnotations.DisplayAttribute>()?.GetName();
             };
 
-            using (var stream = File.Open(FilePath, FileMode.Open))
+            await using (var stream = File.Open(FilePath, FileMode.Open))
             {
-                var readAndParseTask = Service.ReadAndParseFileAsync(new AssessmentCsvRecordRequest
+                ReadAndParseFileResponse = await Service.ReadAndParseFileAsync(new AssessmentCsvRecordRequest
                 {
                     FileStream = stream
                 });
-
-                ReadAndParseFileResponse = readAndParseTask.Result;
-                return readAndParseTask;
             }
         }
     }

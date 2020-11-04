@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using System.IO;
 using Xunit;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelperServiceTests.Assessments
 {
@@ -26,8 +27,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
         }
 
         [Fact]
-        public void Then_Returns_Expected_Results()
+        public async Task Then_Returns_Expected_Results()
         {
+            await WhenAsync();
             // TODO: Content should change. 
             ReadAndParseFileResponse.Should().NotBeNull();
             ReadAndParseFileResponse.IsDirty.Should().BeTrue();
