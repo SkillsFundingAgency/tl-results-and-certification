@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -26,19 +27,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _assessmentRepository = assessmentRepository;
             _mapper = mapper;
             _logger = logger;
-        }
-
-        public async Task<bool> CompareAndProcessAssessmentsAsync(IList<TqPathwayAssessment> pathwayAssessmentsToProcess, IList<TqSpecialismAssessment> specialismAssessmentsToProcess)
-        {
-            // Prepare Pathway Assessments
-            var newOrAmendedPathwayAssessmentRecords = await PrepareNewAndAmendedPathwayAssessments(pathwayAssessmentsToProcess);
-
-            // Prepare Specialism Assessments
-            var newOrAmendedSpecialismAssessmentRecords = await PrepareNewAndAmendedSpecialismAssessments(specialismAssessmentsToProcess);
-
-            // Process Assessments
-            var result = await _assessmentRepository.BulkInsertOrUpdateAssessments(newOrAmendedPathwayAssessmentRecords, newOrAmendedSpecialismAssessmentRecords);
-            return result;
         }
 
         public async Task<IList<AssessmentRecordResponse>> ValidateAssessmentsAsync(long aoUkprn, IEnumerable<AssessmentCsvRecordResponse> csvAssessments)
@@ -98,6 +86,62 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
+        public (IList<TqPathwayAssessment>, IList<TqSpecialismAssessment>) TransformAssessmentModel(IList<AssessmentRecordResponse> assessmentsData, string performedBy)
+        {            
+            var pathwayAssessments = new List<TqPathwayAssessment>();
+            var specialismAssessments = new List<TqSpecialismAssessment>();
+
+            foreach (var (assessment, index) in assessmentsData.Select((value, i) => (value, i)))
+            {
+                if (assessment.TqRegistrationPathwayId.HasValue && assessment.TqRegistrationPathwayId.Value > 0)
+                {
+                    pathwayAssessments.Add(new TqPathwayAssessment
+                    {
+                        Id = index - Constants.PathwayAssessmentsStartIndex,
+                        TqRegistrationPathwayId = assessment.TqRegistrationPathwayId.Value,
+                        AssessmentSeriesId = assessment.PathwayAssessmentSeriesId ?? 0,
+                        StartDate = DateTime.UtcNow,
+                        IsOptedin = true,
+                        IsBulkUpload = true,
+                        CreatedBy = performedBy,
+                        CreatedOn = DateTime.UtcNow,
+                    });
+                }
+
+                if (assessment.TqRegistrationSpecialismId.HasValue && assessment.TqRegistrationSpecialismId.Value > 0)
+                {
+                    specialismAssessments.Add(new TqSpecialismAssessment
+                    {
+                        Id = index - Constants.SpecialismAssessmentsStartIndex,
+                        TqRegistrationSpecialismId = assessment.TqRegistrationSpecialismId.Value,
+                        AssessmentSeriesId = assessment.SpecialismAssessmentSeriesId ?? 0,
+                        StartDate = DateTime.UtcNow,
+                        IsOptedin = true,
+                        IsBulkUpload = true,
+                        CreatedBy = performedBy,
+                        CreatedOn = DateTime.UtcNow,
+                    });
+                }
+            }
+            return (pathwayAssessments, specialismAssessments);
+        }
+
+        public async Task<AssessmentProcessResponse> CompareAndProcessAssessmentsAsync(IList<TqPathwayAssessment> pathwayAssessmentsToProcess, IList<TqSpecialismAssessment> specialismAssessmentsToProcess)
+        {
+            var response = new AssessmentProcessResponse();
+
+            // Prepare Pathway Assessments
+            var newOrAmendedPathwayAssessmentRecords = await PrepareNewAndAmendedPathwayAssessments(pathwayAssessmentsToProcess);
+
+            // Prepare Specialism Assessments
+            var newOrAmendedSpecialismAssessmentRecords = await PrepareNewAndAmendedSpecialismAssessments(specialismAssessmentsToProcess);
+
+            // Process Assessments
+            response.IsSuccess = await _assessmentRepository.BulkInsertOrUpdateAssessments(newOrAmendedPathwayAssessmentRecords, newOrAmendedSpecialismAssessmentRecords);
+            
+            return response;
+        }
+
         private async Task<List<TqPathwayAssessment>> PrepareNewAndAmendedPathwayAssessments(IList<TqPathwayAssessment> pathwayAssessmentsToProcess)
         {
             var pathwayAssessmentComparer = new TqPathwayAssessmentEqualityComparer();
@@ -132,16 +176,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             existingPathwayAssessment.ModifiedOn = DateTime.UtcNow;
 
                             newAndAmendedPathwayAssessmentRecords.Add(existingPathwayAssessment);
-                            newAndAmendedPathwayAssessmentRecords.Add(amendedPathwayAssessment);
+
+                            if (amendedPathwayAssessment.AssessmentSeriesId > 0)
+                                newAndAmendedPathwayAssessmentRecords.Add(amendedPathwayAssessment);
                         }
                     }
                 });
             }
 
             if (newPathwayAssessments.Any())
-            {
-                newAndAmendedPathwayAssessmentRecords.AddRange(newPathwayAssessments);
-            }
+                newAndAmendedPathwayAssessmentRecords.AddRange(newPathwayAssessments.Where(p => p.AssessmentSeriesId > 0));
 
             return newAndAmendedPathwayAssessmentRecords;
         }
@@ -166,7 +210,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 amendedSpecialismAssessments.ForEach(amendedSpecialismAssessment =>
                 {
-                    var existingSpecialismAssessment = existingSpecialismAssessmentsFromDb.FirstOrDefault(existingSpecialismAssessment => existingSpecialismAssessment.TqRegistrationSpecialismId == amendedSpecialismAssessment.TqRegistrationSpecialismId);
+                    var existingSpecialismAssessment = existingSpecialismAssessmentsFromDb.SingleOrDefault(existingSpecialismAssessment => existingSpecialismAssessment.TqRegistrationSpecialismId == amendedSpecialismAssessment.TqRegistrationSpecialismId);
 
                     if (existingSpecialismAssessment != null)
                     {
@@ -180,19 +224,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             existingSpecialismAssessment.ModifiedOn = DateTime.UtcNow;
 
                             newOrAmendedSpecialismAssessmentRecords.Add(existingSpecialismAssessment);
-                            newOrAmendedSpecialismAssessmentRecords.Add(amendedSpecialismAssessment);
+
+                            if (amendedSpecialismAssessment.AssessmentSeriesId > 0)
+                                newOrAmendedSpecialismAssessmentRecords.Add(amendedSpecialismAssessment);
                         }
                     }
                 });
             }
 
             if (newSpecialismAssessments.Any())
-            {
-                newOrAmendedSpecialismAssessmentRecords.AddRange(newSpecialismAssessments);
-            }
+                newOrAmendedSpecialismAssessmentRecords.AddRange(newSpecialismAssessments.Where(p => p.AssessmentSeriesId > 0));
 
             return newOrAmendedSpecialismAssessmentRecords;
         }
+
         private AssessmentRecordResponse AddStage3ValidationError(int rowNum, long uln, string errorMessage)
         {
             return new AssessmentRecordResponse()

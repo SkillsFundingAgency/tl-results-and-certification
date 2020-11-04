@@ -46,6 +46,10 @@
         public const int RegistrationPathwayStartIndex = 200000;
         public const int RegistrationSpecialismsStartIndex = 300000;
 
+        // Assessment Data Index Constants
+        public const int PathwayAssessmentsStartIndex = 100000;
+        public const int SpecialismAssessmentsStartIndex = 100000;
+
         // Route Attributes
         public const string IsChangeMode = "isChangeMode";
         public const string ProfileId = "profileId";

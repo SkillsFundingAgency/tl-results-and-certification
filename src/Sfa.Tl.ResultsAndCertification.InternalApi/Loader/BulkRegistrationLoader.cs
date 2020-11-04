@@ -169,20 +169,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             }
 
             return errors;
-        }
-
-        private async Task<bool> MoveFileFromProcessingToProcessedAsync(BulkProcessRequest request)
-        {
-            if (request == null) return false;
-
-            await _blobStorageService.MoveFileAsync(new BlobStorageData
-            {
-                ContainerName = request.DocumentType.ToString(),
-                BlobFileName = request.BlobFileName,
-                SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
-                DestinationFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processed}"
-            });
-            return true;
-        }
+        }        
     }
 }

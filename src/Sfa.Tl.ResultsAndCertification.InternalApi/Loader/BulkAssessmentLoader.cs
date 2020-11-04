@@ -82,12 +82,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                     return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
                 }
 
-                // Temp response;
-                return new BulkAssessmentResponse
-                {
-                    IsSuccess = true,
-                    Stats = new BulkUploadStats { TotalRecordsCount = stage2Response.Rows.Count }
-                };
+                // Step: Map data to DB model type.
+                var assessments = _assessmentService.TransformAssessmentModel(stage3Response, request.PerformedBy);
+
+                // Step: DB operation                
+                var assessmentsProcessResult = await _assessmentService.CompareAndProcessAssessmentsAsync(assessments.Item1, assessments.Item2);
+
+                return await ProcessAssessmentsResponse(request, response, assessmentsProcessResult);
             }
             catch (Exception ex)
             {
@@ -155,6 +156,16 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             return response;
         }
+
+        private async Task<BulkAssessmentResponse> ProcessAssessmentsResponse(BulkProcessRequest request, BulkAssessmentResponse response, AssessmentProcessResponse assessmentsProcessResult)
+        {
+            _ = assessmentsProcessResult.IsSuccess ? await MoveFileFromProcessingToProcessedAsync(request) : await MoveFileFromProcessingToFailedAsync(request);
+            await CreateDocumentUploadHistory(request, assessmentsProcessResult.IsSuccess ? DocumentUploadStatus.Processed : DocumentUploadStatus.Failed);
+            response.IsSuccess = assessmentsProcessResult.IsSuccess;
+            response.Stats = assessmentsProcessResult.BulkUploadStats;
+            return response;
+        }
+
         private async Task<byte[]> CreateErrorFileAsync(IList<BulkProcessValidationError> validationErrors)
         {
             return await _csvService.WriteFileAsync(validationErrors);

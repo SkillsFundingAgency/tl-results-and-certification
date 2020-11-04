@@ -1,13 +1,9 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service.Interface;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
-using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
@@ -62,6 +58,20 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
                 BlobFileName = request.BlobFileName,
                 DestinationFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Failed}"
+            });
+            return true;
+        }
+
+        public async Task<bool> MoveFileFromProcessingToProcessedAsync(BulkProcessRequest request)
+        {
+            if (request == null) return false;
+
+            await _blobStorageService.MoveFileAsync(new BlobStorageData
+            {
+                ContainerName = request.DocumentType.ToString(),
+                BlobFileName = request.BlobFileName,
+                SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
+                DestinationFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processed}"
             });
             return true;
         }
