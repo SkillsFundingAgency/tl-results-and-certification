@@ -136,7 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
 
         private async Task<ValidationResult> ValidateRowAsync(TImportModel importModel)
         {
-            _validator.CascadeMode = CascadeMode.Stop;
+            _validator.CascadeMode = CascadeMode.StopOnFirstFailure;
             return await _validator.ValidateAsync(importModel);
         }
 
