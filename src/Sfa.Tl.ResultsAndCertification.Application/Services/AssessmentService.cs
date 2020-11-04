@@ -19,12 +19,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class AssessmentService : IAssessmentService
     {
         private readonly IAssessmentRepository _assessmentRepository;
+        private readonly IRepository<AssessmentSeries> _assessmentSeries;
         private readonly IMapper _mapper;
         private readonly ILogger<IAssessmentRepository> _logger;
 
-        public AssessmentService(IAssessmentRepository assessmentRepository, IMapper mapper, ILogger<IAssessmentRepository> logger)
+        public AssessmentService(IAssessmentRepository assessmentRepository,
+            IRepository<AssessmentSeries> assessmentSeries, IMapper mapper, ILogger<IAssessmentRepository> logger)
         {
             _assessmentRepository = assessmentRepository;
+            _assessmentSeries = assessmentSeries;
             _mapper = mapper;
             _logger = logger;
         }
@@ -55,17 +58,27 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var validationErrors = new List<BulkProcessValidationError>();
 
                 // 3. Core Code is incorrect
-                var isValidCoreCode = dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.LarId.Equals(assessment.CoreCode, StringComparison.InvariantCulture);
+                var isValidCoreCode = dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.LarId.Equals(assessment.CoreCode, StringComparison.InvariantCultureIgnoreCase);
                 if (!isValidCoreCode)
                     validationErrors.Add(new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = ValidationMessages.InvalidCoreCode });
 
                 // 4. Specialism Code is incorrect
-                var isValidSpecialismCode = dbRegistration.TqRegistrationSpecialisms.Any(x => x.TlSpecialism.LarId.Equals(assessment.CoreCode, StringComparison.InvariantCulture));
+                var isValidSpecialismCode = dbRegistration.TqRegistrationSpecialisms.Any(x => x.TlSpecialism.LarId.Equals(assessment.CoreCode, StringComparison.InvariantCultureIgnoreCase));
                 if (!isValidSpecialismCode)
                     validationErrors.Add(new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = ValidationMessages.InvalidSpecialismCode });
 
                 // 5. Core assessment entry must be no more than 4 years after the starting academic year
+                var regYear = dbRegistration.AcademicYear;
+                var csvCoreSeries = await _assessmentSeries.GetFirstOrDefaultAsync(x => x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                var isCoreEntryValid = csvCoreSeries?.Year > regYear && csvCoreSeries?.Year <= regYear + 2;
+                if (csvCoreSeries == null && !isCoreEntryValid)
+                    validationErrors.Add(new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = ValidationMessages.CoreEntryOutOfRange });
+
                 // 6. Specialism assessment entry must be between one and 4 years after the starting academic year
+                var csvSpecialismSeries = await _assessmentSeries.GetFirstOrDefaultAsync(x => x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                var isSpecialismEntryValid = csvSpecialismSeries?.Year > regYear + 1 && csvSpecialismSeries?.Year <= regYear + 2;
+                if (csvSpecialismSeries == null && !isSpecialismEntryValid)
+                    validationErrors.Add(new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = ValidationMessages.SpecialismEntryOutOfRange });
 
                 if (validationErrors.Count == 0)
                 {

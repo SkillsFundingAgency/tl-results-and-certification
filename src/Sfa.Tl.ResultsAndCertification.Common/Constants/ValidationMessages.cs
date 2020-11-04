@@ -41,6 +41,8 @@
         public const string CannotAddAssessmentToWithdrawnRegistration = "Cannot add assessment entries to a withdrawn registration";
         public const string InvalidCoreCode = "Core code either not recognised or not registered for this ULN";
         public const string InvalidSpecialismCode = "Specialism code either not recognised or not registered for this ULN";
+        public const string CoreEntryOutOfRange = "Core assessment entry must be no more than 4 years after the starting academic year";
+        public const string SpecialismEntryOutOfRange = "Specialism assessment entry must be between one and 4 years after the starting academic year";
 
         // Assessments - Bulk stage 2 validations
         public const string CorecodeMustBeDigitsOnly = "Core code must have 8 digits only";
