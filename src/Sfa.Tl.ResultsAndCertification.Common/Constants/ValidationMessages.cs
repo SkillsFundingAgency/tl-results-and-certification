@@ -37,13 +37,7 @@
         // Bulk Registration Stage4 Validation Messages
         public const string ActiveUlnWithDifferentAo = "Active ULN with a different awarding organisation";
         public const string CoreForUlnCannotBeChangedYet = "Core for ULN cannot be changed yet";
-        public const string UlnNotRegistered = "ULN not registered with awarding organisation";
-        public const string CannotAddAssessmentToWithdrawnRegistration = "Cannot add assessment entries to a withdrawn registration";
-        public const string InvalidCoreCode = "Core code either not recognised or not registered for this ULN";
-        public const string InvalidSpecialismCode = "Specialism code either not recognised or not registered for this ULN";
-        public const string CoreEntryOutOfRange = "Core assessment entry must be no more than 4 years after the starting academic year";
-        public const string SpecialismEntryOutOfRange = "Specialism assessment entry must be between one and 4 years after the starting academic year";
-
+        
         // Assessments - Bulk stage 2 validations
         public const string CorecodeMustBeDigitsOnly = "Core code must have 8 digits only";
         public const string CorecodeRequired = "Core code required when core assessment entry is included";
@@ -52,5 +46,13 @@
         public const string SpecialismAssementEntryInvalidFormat = "Specialism assessment entry must be a series followed by a space and a 4 digit year";
         public const string AtleastOneEntryRequired = "File must contain at least one ULN on one row";
         public const string NoDataAfterUln = "No data after ULN - need at least one core code or one specialism code";
+
+        // Assesments - Bulk stage 3 validsions
+        public const string UlnNotRegistered = "ULN not registered with awarding organisation";
+        public const string CannotAddAssessmentToWithdrawnRegistration = "Cannot add assessment entries to a withdrawn registration";
+        public const string InvalidCoreCode = "Core code either not recognised or not registered for this ULN";
+        public const string InvalidSpecialismCode = "Specialism code either not recognised or not registered for this ULN";
+        public const string CoreEntryOutOfRange = "Core assessment entry must be one of the four assessment entry series following the starting academic year and be in the format detailed in the 'format rules' and 'example' columns in the technical specification";
+        public const string SpecialismEntryOutOfRange = "Specialism assessment entry must be the second series in the second academic year or the first series in the third academic year and be in the format detailed in the 'format rules' and 'example' columns in the technical specification";
     }
 }
