@@ -58,26 +58,40 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 var validationErrors = new List<BulkProcessValidationError>();
                 // 3. Core Code is incorrect
-                var isValidCoreCode = dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.LarId.Equals(assessment.CoreCode, StringComparison.InvariantCultureIgnoreCase);
-                if (!isValidCoreCode)
-                    validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidCoreCode));
+                if (!string.IsNullOrEmpty(assessment.CoreCode))
+                {
+                    var isValidCoreCode = dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.LarId.Equals(assessment.CoreCode, StringComparison.InvariantCultureIgnoreCase);
+                    if (!isValidCoreCode)
+                        validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidCoreCode));
+                }
 
                 // 4. Specialism Code is incorrect
-                var isValidSpecialismCode = dbRegistration.TqRegistrationSpecialisms.Any(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
-                if (!isValidSpecialismCode)
-                    validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidSpecialismCode));
+                if (!string.IsNullOrEmpty(assessment.SpecialismCode))
+                {
+                    var isValidSpecialismCode = dbRegistration.TqRegistrationSpecialisms.Any(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
+                    if (!isValidSpecialismCode)
+                        validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidSpecialismCode));
+                }
 
                 // 5. Core assessment entry must be no more than 4 years after the starting academic year
-                var csvCoreSeries = await _assessmentSeries.GetFirstOrDefaultAsync(x => x.Name.Equals(assessment.CoreAssessmentEntry));
-                var isValidCoreSeries = csvCoreSeries != null && IsValidAssessmentEntry(dbRegistration.AcademicYear, csvCoreSeries.Year, AssessmentEntryType.Core);
-                if (!isValidCoreSeries)
-                    validationErrors.Add(BuildValidationError(assessment, ValidationMessages.CoreEntryOutOfRange));
+                AssessmentSeries csvCoreSeries = null;
+                if (!string.IsNullOrEmpty(assessment.CoreAssessmentEntry))
+                {
+                    csvCoreSeries = await _assessmentSeries.GetFirstOrDefaultAsync(x => x.Name.Equals(assessment.CoreAssessmentEntry));
+                    var isValidCoreSeries = csvCoreSeries != null && IsValidAssessmentEntry(dbRegistration.AcademicYear, csvCoreSeries.Year, AssessmentEntryType.Core);
+                    if (!isValidCoreSeries)
+                        validationErrors.Add(BuildValidationError(assessment, ValidationMessages.CoreEntryOutOfRange));
+                }
 
                 // 6. Specialism assessment entry must be between one and 4 years after the starting academic year
-                var csvSpecialismSeries = await _assessmentSeries.GetFirstOrDefaultAsync(x => x.Name.Equals(assessment.SpecialismAssessmentEntry));
-                var isValidAssessmentSeries = csvSpecialismSeries != null && IsValidAssessmentEntry(dbRegistration.AcademicYear, csvSpecialismSeries.Year, AssessmentEntryType.Specialism);
-                if (!isValidAssessmentSeries)
-                    validationErrors.Add(BuildValidationError(assessment, ValidationMessages.SpecialismEntryOutOfRange));
+                AssessmentSeries csvSpecialismSeries = null;
+                if (!string.IsNullOrEmpty(assessment.SpecialismAssessmentEntry))
+                {
+                    csvSpecialismSeries = await _assessmentSeries.GetFirstOrDefaultAsync(x => x.Name.Equals(assessment.SpecialismAssessmentEntry));
+                    var isValidAssessmentSeries = csvSpecialismSeries != null && IsValidAssessmentEntry(dbRegistration.AcademicYear, csvSpecialismSeries.Year, AssessmentEntryType.Specialism);
+                    if (!isValidAssessmentSeries)
+                        validationErrors.Add(BuildValidationError(assessment, ValidationMessages.SpecialismEntryOutOfRange));
+                }
 
                 if (validationErrors.Count == 0)
                 {
@@ -85,10 +99,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     response.Add(new AssessmentRecordResponse
                     {
                         TqRegistrationPathwayId = !string.IsNullOrWhiteSpace(assessment.CoreCode) ? dbRegistration.Id : (int?)null,
-                        PathwayAssessmentSeriesId = dbRegistration.TqPathwayAssessments.SingleOrDefault()?.AssessmentSeriesId,
+                        PathwayAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.CoreAssessmentEntry) ? csvCoreSeries.Id : (int?)null,
 
                         TqRegistrationSpecialismId = !string.IsNullOrWhiteSpace(assessment.SpecialismCode) ? specialismAssessment?.Id : (int?)null,
-                        SpecialismAssessmentSeriesId = specialismAssessment?.TqSpecialismAssessments.SingleOrDefault()?.AssessmentSeriesId,
+                        SpecialismAssessmentSeriesId = !string.IsNullOrWhiteSpace(assessment.SpecialismAssessmentEntry) ? csvSpecialismSeries.Id : (int?)null,
                     });
                 }
                 else
@@ -262,13 +276,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
         }
 
-        private bool IsValidAssessmentEntry(int regYear, int assessmentYear, AssessmentEntryType entryType)
+        private bool IsValidAssessmentEntry(int registrationYear, int assessmentYear, AssessmentEntryType entryType)
         {
             const int endYear = 4;
             var startYear = entryType == AssessmentEntryType.Specialism ? 1 : 0;
             
-            var isValidRange = assessmentYear > (regYear + startYear) && 
-                               assessmentYear <= (regYear + endYear);
+            var isValidRange = assessmentYear > (registrationYear + startYear) && 
+                               assessmentYear <= (registrationYear + endYear);
             
             return isValidRange;
         }
