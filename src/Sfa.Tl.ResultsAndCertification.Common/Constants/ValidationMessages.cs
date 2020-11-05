@@ -42,8 +42,8 @@
         public const string CorecodeMustBeDigitsOnly = "Core code must have 8 digits only";
         public const string CorecodeRequired = "Core code required when core assessment entry is included";
         public const string SpecialismcodeRequired = "Specialism code required when core assessment entry is included";
-        public const string CoreAssementEntryInvalidFormat = "Core assessment entry must be a series followed by a space and a 4 digit year";
-        public const string SpecialismAssementEntryInvalidFormat = "Specialism assessment entry must be a series followed by a space and a 4 digit year";
+        public const string CoreAssementEntryInvalidFormat = "Core assessment entry format must be text followed by a space and a 4-digit year";
+        public const string SpecialismAssementEntryInvalidFormat = "Specialism assessment entry format must be text followed by a space and a 4-digit year";
         public const string AtleastOneEntryRequired = "File must contain at least one ULN on one row";
         public const string NoDataAfterUln = "No data after ULN - need at least one core code or one specialism code";
 

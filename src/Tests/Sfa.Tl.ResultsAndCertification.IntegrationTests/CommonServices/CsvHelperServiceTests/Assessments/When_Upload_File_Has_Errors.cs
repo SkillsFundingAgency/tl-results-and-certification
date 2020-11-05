@@ -56,9 +56,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
                 new BulkProcessValidationError { RowNum = "5", Uln = "1234567891", ErrorMessage = "Core code required when core assessment entry is included" },
                 new BulkProcessValidationError { RowNum = "6", Uln = "1234567892", ErrorMessage = "Specialism code required when core assessment entry is included" },
                 new BulkProcessValidationError { RowNum = "7", Uln = "1234567893", ErrorMessage = "Specialism code must have 8 characters only" },
-                new BulkProcessValidationError { RowNum = "8", Uln = "1234567894", ErrorMessage = "Core assessment entry must be a series followed by a space and a 4 digit year" },
-                new BulkProcessValidationError { RowNum = "9", Uln = "1234567895", ErrorMessage = "Specialism assessment entry must be a series followed by a space and a 4 digit year" },
-                new BulkProcessValidationError { RowNum = "10", Uln = string.Empty, ErrorMessage = "Data in more than the required 5 columns" }
+                new BulkProcessValidationError { RowNum = "8", Uln = "1234567894", ErrorMessage = "Core assessment entry format must be text followed by a space and a 4-digit year" },
+                new BulkProcessValidationError { RowNum = "9", Uln = "1234567895", ErrorMessage = "Specialism assessment entry format must be text followed by a space and a 4-digit year" },
+                new BulkProcessValidationError { RowNum = "10", Uln = string.Empty, ErrorMessage = "Data in more than the required 5 columns" },
+                new BulkProcessValidationError { RowNum = "11", Uln = "1234567898", ErrorMessage = "No data after ULN - need at least one core code or one specialism code" }
             };
 
             return validationErrors;
