@@ -178,7 +178,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var amendedPathwayAssessments = new List<TqPathwayAssessment>();
             var newAndAmendedPathwayAssessmentRecords = new List<TqPathwayAssessment>();
 
-            var existingPathwayAssessmentsFromDb = await _assessmentRepository.GetPathwayAssessmentsAsync(pathwayAssessmentsToProcess);
+            var existingPathwayAssessmentsFromDb = await _assessmentRepository.GetBulkPathwayAssessmentsAsync(pathwayAssessmentsToProcess);
             var newPathwayAssessments = pathwayAssessmentsToProcess.Except(existingPathwayAssessmentsFromDb, pathwayAssessmentComparer).ToList();
             var matchedPathwayAssessments = pathwayAssessmentsToProcess.Intersect(existingPathwayAssessmentsFromDb, pathwayAssessmentComparer).ToList();
             var unchangedPathwayAssessments = matchedPathwayAssessments.Intersect(existingPathwayAssessmentsFromDb, new TqPathwayAssessmentRecordEqualityComparer()).ToList();
@@ -224,7 +224,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var amendedSpecialismAssessments = new List<TqSpecialismAssessment>();
             var newOrAmendedSpecialismAssessmentRecords = new List<TqSpecialismAssessment>();
 
-            var existingSpecialismAssessmentsFromDb = await _assessmentRepository.GetSpecialismAssessmentsAsync(specialismAssessmentsToProcess);
+            var existingSpecialismAssessmentsFromDb = await _assessmentRepository.GetBulkSpecialismAssessmentsAsync(specialismAssessmentsToProcess);
             var newSpecialismAssessments = specialismAssessmentsToProcess.Except(existingSpecialismAssessmentsFromDb, specialismAssessmentComparer).ToList();
             var matchedSpecialismAssessments = specialismAssessmentsToProcess.Intersect(existingSpecialismAssessmentsFromDb, specialismAssessmentComparer).ToList();
             var unchangedSpecialismAssessments = matchedSpecialismAssessments.Intersect(existingSpecialismAssessmentsFromDb, new TqSpecialismAssessmentRecordEqualityComparer()).ToList();
