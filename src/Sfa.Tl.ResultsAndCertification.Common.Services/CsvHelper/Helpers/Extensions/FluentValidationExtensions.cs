@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
     public static class FluentValidationExtensions
     {
         private static readonly string academicYearPattern = "^[0-9]{4}/[0-9]{2}/?$";
-        private static readonly string assessmentEntryFormat = "^(summer|autumn) [0-9]{4}$";
+        private static readonly string assessmentEntryFormat = "^[a-z]{1,20} [0-9]{4}$";
 
         public static IRuleBuilderOptions<T, string> Required<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
