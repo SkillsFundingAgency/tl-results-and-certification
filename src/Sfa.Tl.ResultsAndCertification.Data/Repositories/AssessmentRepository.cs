@@ -69,12 +69,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<IEnumerable<TqRegistrationPathway>> GetBulkAssessmentsAsync(long aoUkprn, IEnumerable<long> uniqueLearnerNumbers)
         {
             var registrations = await _dbContext.TqRegistrationPathway
-                    .Include(x => x.TqPathwayAssessments)
-                        .ThenInclude(x => x.AssessmentSeries)
+                   .Include(x => x.TqPathwayAssessments)
                    .Include(x => x.TqRegistrationProfile)
-                   .Include(x => x.TqProvider)
-                       .ThenInclude(x => x.TqAwardingOrganisation)
-                           .ThenInclude(x => x.TlAwardingOrganisaton)
                    .Include(x => x.TqProvider)
                        .ThenInclude(x => x.TqAwardingOrganisation)
                            .ThenInclude(x => x.TlPathway)
@@ -82,16 +78,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                        .ThenInclude(x => x.TlSpecialism)
                     .Include(x => x.TqRegistrationSpecialisms)
                         .ThenInclude(x => x.TqSpecialismAssessments)
-                            .ThenInclude(x => x.AssessmentSeries)
                     .Where(p => uniqueLearnerNumbers.Contains(p.TqRegistrationProfile.UniqueLearnerNumber) &&
                           p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
                           (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
                     .ToListAsync();
 
             var latestRegistratons = registrations
-                .GroupBy(x => x.TqRegistrationProfileId)
-                .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
-                .ToList();
+                    .GroupBy(x => x.TqRegistrationProfileId)
+                    .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
+                    .ToList();
 
             if (registrations == null) return null;
 

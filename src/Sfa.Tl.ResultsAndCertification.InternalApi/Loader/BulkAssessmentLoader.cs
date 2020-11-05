@@ -68,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 }
 
                 // Step 2: Stage 2 validations 
-                if (stage2Response.IsDirty || stage2Response.Rows.Any(x => !x.IsValid))
+                if (stage2Response.IsDirty || !stage2Response.Rows.Any(x => x.IsValid))
                 {
                     var validationErrors = ExtractAllValidationErrors(stage2Response);
                     return await SaveErrorsAndUpdateResponse(request, response, validationErrors);

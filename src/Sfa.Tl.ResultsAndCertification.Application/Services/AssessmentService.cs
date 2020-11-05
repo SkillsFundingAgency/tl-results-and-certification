@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class AssessmentService : IAssessmentService
     {
         private readonly IAssessmentRepository _assessmentRepository;
-        private readonly IRepository<AssessmentSeries> _assessmentSeries;
+        private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<IAssessmentRepository> _logger;
         private enum AssessmentEntryType { Core, Specialism };
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IRepository<AssessmentSeries> assessmentSeries, IMapper mapper, ILogger<IAssessmentRepository> logger)
         {
             _assessmentRepository = assessmentRepository;
-            _assessmentSeries = assessmentSeries;
+            _assessmentSeriesRepository = assessmentSeries;
             _mapper = mapper;
             _logger = logger;
         }
@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var response = new List<AssessmentRecordResponse>();
             var dbRegistrations = await _assessmentRepository.GetBulkAssessmentsAsync(aoUkprn, csvAssessments.Select(x => x.Uln));
-            var _assessmentSeriesRepository = await _assessmentSeries.GetManyAsync().ToListAsync();
+            var dbAssessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
 
             foreach (var assessment in csvAssessments)
             {
@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 AssessmentSeries csvCoreSeries = null;
                 if (!string.IsNullOrEmpty(assessment.CoreAssessmentEntry))
                 {
-                    csvCoreSeries = _assessmentSeriesRepository.FirstOrDefault(x => x.Name.Equals(assessment.CoreAssessmentEntry));
+                    csvCoreSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.CoreAssessmentEntry));
                     var isValidCoreSeries = csvCoreSeries != null && IsValidAssessmentEntry(dbRegistration.AcademicYear, csvCoreSeries.Year, AssessmentEntryType.Core);
                     if (!isValidCoreSeries)
                         validationErrors.Add(BuildValidationError(assessment, ValidationMessages.CoreEntryOutOfRange));
@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 AssessmentSeries csvSpecialismSeries = null;
                 if (!string.IsNullOrEmpty(assessment.SpecialismAssessmentEntry))
                 {
-                    csvSpecialismSeries = _assessmentSeriesRepository.FirstOrDefault(x => x.Name.Equals(assessment.SpecialismAssessmentEntry));
+                    csvSpecialismSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.SpecialismAssessmentEntry));
                     var isValidAssessmentSeries = csvSpecialismSeries != null && IsValidAssessmentEntry(dbRegistration.AcademicYear, csvSpecialismSeries.Year, AssessmentEntryType.Specialism);
                     if (!isValidAssessmentSeries)
                         validationErrors.Add(BuildValidationError(assessment, ValidationMessages.SpecialismEntryOutOfRange));
