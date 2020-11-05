@@ -57,7 +57,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 var validationErrors = new List<BulkProcessValidationError>();
-
                 // 3. Core Code is incorrect
                 var isValidCoreCode = dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.LarId.Equals(assessment.CoreCode, StringComparison.InvariantCultureIgnoreCase);
                 if (!isValidCoreCode)
@@ -69,12 +68,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidSpecialismCode));
 
                 // 5. Core assessment entry must be no more than 4 years after the starting academic year
-                var isValidCoreSeries = await ValidateAssessmentEntry(assessment.CoreAssessmentEntry, dbRegistration.AcademicYear, AssessmentEntryType.Core);
+                var csvCoreSeries = await _assessmentSeries.GetFirstOrDefaultAsync(x => x.Name.Equals(assessment.CoreAssessmentEntry));
+                var isValidCoreSeries = csvCoreSeries != null && IsValidAssessmentEntry(dbRegistration.AcademicYear, csvCoreSeries.Year, AssessmentEntryType.Core);
                 if (!isValidCoreSeries)
                     validationErrors.Add(BuildValidationError(assessment, ValidationMessages.CoreEntryOutOfRange));
 
                 // 6. Specialism assessment entry must be between one and 4 years after the starting academic year
-                var isValidAssessmentSeries = await ValidateAssessmentEntry(assessment.SpecialismAssessmentEntry, dbRegistration.AcademicYear, AssessmentEntryType.Specialism);
+                var csvSpecialismSeries = await _assessmentSeries.GetFirstOrDefaultAsync(x => x.Name.Equals(assessment.SpecialismAssessmentEntry));
+                var isValidAssessmentSeries = csvSpecialismSeries != null && IsValidAssessmentEntry(dbRegistration.AcademicYear, csvSpecialismSeries.Year, AssessmentEntryType.Specialism);
                 if (!isValidAssessmentSeries)
                     validationErrors.Add(BuildValidationError(assessment, ValidationMessages.SpecialismEntryOutOfRange));
 
@@ -261,15 +262,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
         }
 
-        private async Task<bool> ValidateAssessmentEntry(string entry, int regYear, AssessmentEntryType entryType)
+        private bool IsValidAssessmentEntry(int regYear, int assessmentYear, AssessmentEntryType entryType)
         {
-            const int endYear = 2;
+            const int endYear = 4;
             var startYear = entryType == AssessmentEntryType.Specialism ? 1 : 0;
-
-            var csvCoreSeries = await _assessmentSeries.GetFirstOrDefaultAsync(x => x.Name.Equals(entry));
-            var isCoreEntryValid = csvCoreSeries?.Year > regYear + startYear && csvCoreSeries?.Year <= regYear + endYear;
-
-            return csvCoreSeries == null && !isCoreEntryValid;
+            
+            var isValidRange = assessmentYear > (regYear + startYear) && 
+                               assessmentYear <= (regYear + endYear);
+            
+            return isValidRange;
         }
 
         private BulkProcessValidationError BuildValidationError(AssessmentCsvRecordResponse assessment, string message)
