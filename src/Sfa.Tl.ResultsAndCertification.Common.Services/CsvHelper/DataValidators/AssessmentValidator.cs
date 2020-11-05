@@ -23,12 +23,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .Required()
                 .WithMessage(ValidationMessages.CorecodeRequired)
                 .When(x => !string.IsNullOrEmpty(x.CoreAssessmentEntry));
-
-            // TODO: review below rule. 
-            //RuleFor(r => r.CoreCode)
-            //    .Must(x => !string.IsNullOrEmpty(x))
-            //    .WithMessage(ValidationMessages.AtleastOneEntryRequired)
-            //    .When(x => string.IsNullOrEmpty(x.SpecialismCode));
+            
+            RuleFor(r => r.CoreCode)
+                .Must(x => !string.IsNullOrEmpty(x))
+                .WithMessage(ValidationMessages.NoDataAfterUln)
+                .When(x => string.IsNullOrEmpty(x.CoreAssessmentEntry) && string.IsNullOrEmpty(x.SpecialismCode) && string.IsNullOrEmpty(x.SpecialismAssessmentEntry));
 
             // CoreAssessmentEntry
             RuleFor(r => r.CoreAssessmentEntry)
