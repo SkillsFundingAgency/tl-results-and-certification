@@ -20,51 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _logger = logger;
         }
 
-        public async Task<IList<TqPathwayAssessment>> GetPathwayAssessmentsAsync(IList<TqPathwayAssessment> pathwayAssessments)
-        {
-            var registrationPathwayIds = new HashSet<int>();
-            pathwayAssessments.ToList().ForEach(r => registrationPathwayIds.Add(r.TqRegistrationPathwayId));
-            return await _dbContext.TqPathwayAssessment.Where(x => registrationPathwayIds.Contains(x.TqRegistrationPathwayId) && x.EndDate == null && x.IsOptedin).ToListAsync();
-        }
-
-        public async Task<IList<TqSpecialismAssessment>> GetSpecialismAssessmentsAsync(IList<TqSpecialismAssessment> specialismAssessments)
-        {
-            var registrationSpecialismIds = new HashSet<int>();
-            specialismAssessments.ToList().ForEach(r => registrationSpecialismIds.Add(r.TqRegistrationSpecialismId));
-            return await _dbContext.TqSpecialismAssessment.Where(x => registrationSpecialismIds.Contains(x.TqRegistrationSpecialismId) && x.EndDate == null && x.IsOptedin).ToListAsync();
-        }
-
-        public async Task<bool> BulkInsertOrUpdateAssessments(List<TqPathwayAssessment> pathwayAssessments, List<TqSpecialismAssessment> specialismAssessments)
-        {
-            var result = true;
-            if ((pathwayAssessments != null && pathwayAssessments.Count > 0) || (specialismAssessments != null && specialismAssessments.Count > 0))
-            {
-                var strategy = _dbContext.Database.CreateExecutionStrategy();
-                await strategy.ExecuteAsync(async () =>
-                {
-                    using (var transaction = await _dbContext.Database.BeginTransactionAsync())
-                    {
-                        try
-                        {
-                            var bulkConfig = new BulkConfig() { UseTempDB = true, BatchSize = 5000, BulkCopyTimeout = 60 };
-
-                            await ProcessPathwayAssessments(bulkConfig, pathwayAssessments);
-
-                            await ProcessSpecialismAssessments(bulkConfig, specialismAssessments);
-
-                            transaction.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            _logger.LogError(ex.Message, ex.InnerException);
-                            transaction.Rollback();
-                            result = false;
-                        }
-                    }
-                });
-            }
-            return result;
-        }
+        #region Bulk Assessments
 
         public async Task<IEnumerable<TqRegistrationPathway>> GetBulkAssessmentsAsync(long aoUkprn, IEnumerable<long> uniqueLearnerNumbers)
         {
@@ -117,6 +73,52 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return latestRegistratons;
         }
 
+        public async Task<IList<TqPathwayAssessment>> GetBulkPathwayAssessmentsAsync(IList<TqPathwayAssessment> pathwayAssessments)
+        {
+            var registrationPathwayIds = new HashSet<int>();
+            pathwayAssessments.ToList().ForEach(r => registrationPathwayIds.Add(r.TqRegistrationPathwayId));
+            return await _dbContext.TqPathwayAssessment.Where(x => registrationPathwayIds.Contains(x.TqRegistrationPathwayId) && x.EndDate == null && x.IsOptedin).ToListAsync();
+        }
+
+        public async Task<IList<TqSpecialismAssessment>> GetBulkSpecialismAssessmentsAsync(IList<TqSpecialismAssessment> specialismAssessments)
+        {
+            var registrationSpecialismIds = new HashSet<int>();
+            specialismAssessments.ToList().ForEach(r => registrationSpecialismIds.Add(r.TqRegistrationSpecialismId));
+            return await _dbContext.TqSpecialismAssessment.Where(x => registrationSpecialismIds.Contains(x.TqRegistrationSpecialismId) && x.EndDate == null && x.IsOptedin).ToListAsync();
+        }
+
+        public async Task<bool> BulkInsertOrUpdateAssessments(List<TqPathwayAssessment> pathwayAssessments, List<TqSpecialismAssessment> specialismAssessments)
+        {
+            var result = true;
+            if ((pathwayAssessments != null && pathwayAssessments.Count > 0) || (specialismAssessments != null && specialismAssessments.Count > 0))
+            {
+                var strategy = _dbContext.Database.CreateExecutionStrategy();
+                await strategy.ExecuteAsync(async () =>
+                {
+                    using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+                    {
+                        try
+                        {
+                            var bulkConfig = new BulkConfig() { UseTempDB = true, BatchSize = 5000, BulkCopyTimeout = 60 };
+
+                            await ProcessPathwayAssessments(bulkConfig, pathwayAssessments);
+
+                            await ProcessSpecialismAssessments(bulkConfig, specialismAssessments);
+
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex.Message, ex.InnerException);
+                            transaction.Rollback();
+                            result = false;
+                        }
+                    }
+                });
+            }
+            return result;
+        }
+
         private async Task ProcessPathwayAssessments(BulkConfig bulkConfig, List<TqPathwayAssessment> pathwayAssessments)
         {
             if (pathwayAssessments.Count > 0)
@@ -151,5 +153,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
             return returnResult;
         }
+
+        #endregion
     }
 }
