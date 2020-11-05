@@ -56,5 +56,10 @@
         public const string IsBack = "isBack";
         public const string ChangeStatusId = "changeStatusId";
         public const string WithdrawBackLinkOptionId = "withdrawBackLinkOptionId";
+
+        // Assessments
+        public const int AssessmentEndInYears = 4;
+        public const int CoreAssessmentStartInYears = 0;
+        public const int SpecialismAssessmentStartInYears = 1;
     }
 }
