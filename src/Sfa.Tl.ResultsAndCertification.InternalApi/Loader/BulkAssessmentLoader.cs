@@ -88,6 +88,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 // Step: DB operation                
                 var assessmentsProcessResult = await _assessmentService.CompareAndProcessAssessmentsAsync(assessments.Item1, assessments.Item2);
 
+                // update total assessment records stats
+                assessmentsProcessResult.BulkUploadStats.TotalRecordsCount = stage3Response.Count;
+
                 return await ProcessAssessmentsResponse(request, response, assessmentsProcessResult);
             }
             catch (Exception ex)

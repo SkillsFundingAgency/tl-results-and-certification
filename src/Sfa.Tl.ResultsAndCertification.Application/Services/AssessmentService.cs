@@ -160,8 +160,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var newAndAmendedPathwayAssessmentRecords = new List<TqPathwayAssessment>();
 
             var existingPathwayAssessmentsFromDb = await _assessmentRepository.GetPathwayAssessmentsAsync(pathwayAssessmentsToProcess);
-            //existingPathwayAssessmentsFromDb = existingPathwayAssessmentsFromDb.Where(x => x.IsOptedin && x.EndDate == null).ToList();
-
             var newPathwayAssessments = pathwayAssessmentsToProcess.Except(existingPathwayAssessmentsFromDb, pathwayAssessmentComparer).ToList();
             var matchedPathwayAssessments = pathwayAssessmentsToProcess.Intersect(existingPathwayAssessmentsFromDb, pathwayAssessmentComparer).ToList();
             var unchangedPathwayAssessments = matchedPathwayAssessments.Intersect(existingPathwayAssessmentsFromDb, new TqPathwayAssessmentRecordEqualityComparer()).ToList();
@@ -188,7 +186,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                             newAndAmendedPathwayAssessmentRecords.Add(existingPathwayAssessment);
 
-                            if (amendedPathwayAssessment.AssessmentSeriesId > 0)
+                            if (amendedPathwayAssessment.TqRegistrationPathwayId > 0 && amendedPathwayAssessment.AssessmentSeriesId > 0)
                                 newAndAmendedPathwayAssessmentRecords.Add(amendedPathwayAssessment);
                         }
                     }
@@ -196,7 +194,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             if (newPathwayAssessments.Any())
-                newAndAmendedPathwayAssessmentRecords.AddRange(newPathwayAssessments.Where(p => p.TqRegistrationPathwayId != 0 && p.AssessmentSeriesId > 0));
+                newAndAmendedPathwayAssessmentRecords.AddRange(newPathwayAssessments.Where(p => p.TqRegistrationPathwayId > 0 && p.AssessmentSeriesId > 0));
 
             return newAndAmendedPathwayAssessmentRecords;
         }
@@ -208,8 +206,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var newOrAmendedSpecialismAssessmentRecords = new List<TqSpecialismAssessment>();
 
             var existingSpecialismAssessmentsFromDb = await _assessmentRepository.GetSpecialismAssessmentsAsync(specialismAssessmentsToProcess);
-            //existingSpecialismAssessmentsFromDb = existingSpecialismAssessmentsFromDb.Where(x => x.IsOptedin && x.EndDate == null).ToList();
-
             var newSpecialismAssessments = specialismAssessmentsToProcess.Except(existingSpecialismAssessmentsFromDb, specialismAssessmentComparer).ToList();
             var matchedSpecialismAssessments = specialismAssessmentsToProcess.Intersect(existingSpecialismAssessmentsFromDb, specialismAssessmentComparer).ToList();
             var unchangedSpecialismAssessments = matchedSpecialismAssessments.Intersect(existingSpecialismAssessmentsFromDb, new TqSpecialismAssessmentRecordEqualityComparer()).ToList();
@@ -236,7 +232,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                             newOrAmendedSpecialismAssessmentRecords.Add(existingSpecialismAssessment);
 
-                            if (amendedSpecialismAssessment.AssessmentSeriesId > 0)
+                            if (amendedSpecialismAssessment.TqRegistrationSpecialismId > 0 && amendedSpecialismAssessment.AssessmentSeriesId > 0)
                                 newOrAmendedSpecialismAssessmentRecords.Add(amendedSpecialismAssessment);
                         }
                     }
@@ -244,7 +240,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             if (newSpecialismAssessments.Any())
-                newOrAmendedSpecialismAssessmentRecords.AddRange(newSpecialismAssessments.Where(p => p.TqRegistrationSpecialismId != 0 && p.AssessmentSeriesId > 0));
+                newOrAmendedSpecialismAssessmentRecords.AddRange(newSpecialismAssessments.Where(p => p.TqRegistrationSpecialismId > 0 && p.AssessmentSeriesId > 0));
 
             return newOrAmendedSpecialismAssessmentRecords;
         }
