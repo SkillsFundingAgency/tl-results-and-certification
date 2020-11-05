@@ -85,10 +85,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var specialismAssessment = dbRegistration.TqRegistrationSpecialisms.FirstOrDefault();
                     response.Add(new AssessmentRecordResponse
                     {
-                        TqRegistrationPathwayId = dbRegistration.Id,
+                        TqRegistrationPathwayId = !string.IsNullOrWhiteSpace(assessment.CoreCode) ? dbRegistration.Id : (int?)null,
                         PathwayAssessmentSeriesId = dbRegistration.TqPathwayAssessments.SingleOrDefault()?.AssessmentSeriesId,
 
-                        TqRegistrationSpecialismId = specialismAssessment?.Id,
+                        TqRegistrationSpecialismId = !string.IsNullOrWhiteSpace(assessment.SpecialismCode) ? specialismAssessment?.Id : (int?)null,
                         SpecialismAssessmentSeriesId = specialismAssessment?.TqSpecialismAssessments.SingleOrDefault()?.AssessmentSeriesId,
                     });
                 }
