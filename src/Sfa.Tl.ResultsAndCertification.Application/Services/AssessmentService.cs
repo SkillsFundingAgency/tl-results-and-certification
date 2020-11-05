@@ -63,19 +63,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     validationErrors.Add(new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = ValidationMessages.InvalidCoreCode });
 
                 // 4. Specialism Code is incorrect
-                var isValidSpecialismCode = dbRegistration.TqRegistrationSpecialisms.Any(x => x.TlSpecialism.LarId.Equals(assessment.CoreCode, StringComparison.InvariantCultureIgnoreCase));
+                var isValidSpecialismCode = dbRegistration.TqRegistrationSpecialisms.Any(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
                 if (!isValidSpecialismCode)
                     validationErrors.Add(new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = ValidationMessages.InvalidSpecialismCode });
 
                 // 5. Core assessment entry must be no more than 4 years after the starting academic year
                 var regYear = dbRegistration.AcademicYear;
-                var csvCoreSeries = await _assessmentSeries.GetFirstOrDefaultAsync(x => x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                var csvCoreSeries = await _assessmentSeries.GetFirstOrDefaultAsync(x => x.Name.Equals(assessment.CoreAssessmentEntry));  // TODO: case check required? or it works bydefault?
                 var isCoreEntryValid = csvCoreSeries?.Year > regYear && csvCoreSeries?.Year <= regYear + 2;
                 if (csvCoreSeries == null && !isCoreEntryValid)
                     validationErrors.Add(new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = ValidationMessages.CoreEntryOutOfRange });
 
                 // 6. Specialism assessment entry must be between one and 4 years after the starting academic year
-                var csvSpecialismSeries = await _assessmentSeries.GetFirstOrDefaultAsync(x => x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                var csvSpecialismSeries = await _assessmentSeries.GetFirstOrDefaultAsync(x => x.Name.Equals(assessment.SpecialismAssessmentEntry));
                 var isSpecialismEntryValid = csvSpecialismSeries?.Year > regYear + 1 && csvSpecialismSeries?.Year <= regYear + 2;
                 if (csvSpecialismSeries == null && !isSpecialismEntryValid)
                     validationErrors.Add(new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = ValidationMessages.SpecialismEntryOutOfRange });
