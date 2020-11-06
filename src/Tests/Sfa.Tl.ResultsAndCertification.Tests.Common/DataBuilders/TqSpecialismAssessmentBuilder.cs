@@ -7,10 +7,10 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
     public class TqSpecialismAssessmentBuilder
     {
-        public TqSpecialismAssessment Build(TqRegistrationSpecialism tqRegistrationSpecialism = null)
+        public TqSpecialismAssessment Build(TqRegistrationSpecialism tqRegistrationSpecialism = null, AssessmentSeries assessmentSeries = null)
         {
             tqRegistrationSpecialism ??= new TqRegistrationSpecialismBuilder().Build();
-            var assessmentSeries = new AssessmentSeriesBuilder().Build();
+            assessmentSeries ??= new AssessmentSeriesBuilder().Build();
             return new TqSpecialismAssessment
             {
                 TqRegistrationSpecialismId = tqRegistrationSpecialism.Id,

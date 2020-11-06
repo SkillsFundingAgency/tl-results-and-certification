@@ -7,10 +7,10 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
     public class TqPathwayAssessmentBuilder
     {
-        public TqPathwayAssessment Build(TqRegistrationPathway tqRegistrationPathway = null)
+        public TqPathwayAssessment Build(TqRegistrationPathway tqRegistrationPathway = null, AssessmentSeries assessmentSeries = null)
         {
             tqRegistrationPathway ??= new TqRegistrationPathwayBuilder().Build();
-            var assessmentSeries = new AssessmentSeriesBuilder().Build();
+            assessmentSeries ??= new AssessmentSeriesBuilder().Build();
             return new TqPathwayAssessment
             {
                 TqRegistrationPathwayId = tqRegistrationPathway.Id,
