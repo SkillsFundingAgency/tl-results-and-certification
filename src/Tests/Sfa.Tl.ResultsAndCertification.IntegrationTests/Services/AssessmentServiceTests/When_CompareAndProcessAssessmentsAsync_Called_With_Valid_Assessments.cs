@@ -1,8 +1,5 @@
-﻿using Castle.DynamicProxy.Generators;
-using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
+﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
-using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
