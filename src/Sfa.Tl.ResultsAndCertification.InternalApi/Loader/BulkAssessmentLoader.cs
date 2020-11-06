@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                         throw new Exception(blobReadError);
                     }
 
-                    // Stage 2 validation - TODO
+                    // Stage 2 validation
                     stage2Response = await _csvService.ReadAndParseFileAsync(new AssessmentCsvRecordRequest { FileStream = fileStream });
 
                     if (!stage2Response.IsDirty)
