@@ -1,7 +1,9 @@
-﻿using Sfa.Tl.ResultsAndCertification.Data;
+﻿using Microsoft.EntityFrameworkCore.Internal;
+using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 {
@@ -48,6 +50,15 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                 _dbContext.Add(pathwayAssessment);
             }
             return pathwayAssessment;
+        }
+
+        public static List<TqPathwayAssessment> CreateTqPathwayAssessments(ResultsAndCertificationDbContext _dbContext, List<TqPathwayAssessment> pathwayAssessments, bool addToDbContext = true)
+        {
+            if (addToDbContext && pathwayAssessments != null && pathwayAssessments.Count > 0)
+            {
+                _dbContext.AddRange(pathwayAssessments);
+            }
+            return pathwayAssessments;
         }
     }
 }

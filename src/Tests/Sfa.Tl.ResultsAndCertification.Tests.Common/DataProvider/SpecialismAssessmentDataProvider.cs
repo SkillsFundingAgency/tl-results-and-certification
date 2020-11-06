@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 {
@@ -48,6 +49,15 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                 _dbContext.Add(specialismAssessment);
             }
             return specialismAssessment;
+        }
+
+        public static List<TqSpecialismAssessment> CreateTqSpecialismAssessments(ResultsAndCertificationDbContext _dbContext, List<TqSpecialismAssessment> specialismAssessments, bool addToDbContext = true)
+        {
+            if (addToDbContext && specialismAssessments != null && specialismAssessments.Count > 0)
+            {
+                _dbContext.AddRange(specialismAssessments);
+            }
+            return specialismAssessments;
         }
     }
 }
