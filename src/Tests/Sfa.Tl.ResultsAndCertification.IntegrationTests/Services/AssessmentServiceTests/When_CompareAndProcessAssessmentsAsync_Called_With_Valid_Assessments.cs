@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             _bulkAssessmentsTestFixture.TqSpecialismAssessmentsData = _bulkAssessmentsTestFixture.GetSpecialismAssessmentsDataToProcess(registrationSpecialisms.ToList());
         }
 
-        [Fact(Skip = "Waiting for Devops to setup integration tests")]
+        [Fact(Skip ="Waiting for Devops to setup integration tests")]
         public async Task Then_Expected_Assessments_Are_Created()
         {
             // when
