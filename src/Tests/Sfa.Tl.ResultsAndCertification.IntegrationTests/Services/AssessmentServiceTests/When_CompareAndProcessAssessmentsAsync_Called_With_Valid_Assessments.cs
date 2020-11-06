@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentServiceTests
 {
-    [Collection("BulkAssessment")]
+    [Collection("BulkProcessTests")]
     public class When_CompareAndProcessAssessmentsAsync_Called_With_Valid_Assessments : IClassFixture<BulkAssessmentsTextFixture>
     {
         private AssessmentProcessResponse _result;
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             _bulkAssessmentsTestFixture.TqSpecialismAssessmentsData = _bulkAssessmentsTestFixture.GetSpecialismAssessmentsDataToProcess(registrationSpecialisms.ToList());
         }
 
-        [Fact(Skip ="Waiting for Devops to setup integration tests")]
+        [Fact(Skip = "Waiting for Infrastructure to setup integration tests")]
         public async Task Then_Expected_Assessments_Are_Created()
         {
             // when
