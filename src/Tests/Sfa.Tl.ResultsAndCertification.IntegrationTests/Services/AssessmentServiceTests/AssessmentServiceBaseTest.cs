@@ -26,10 +26,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         protected TqProvider TqProvider;
         protected IList<TlProvider> TlProviders;
         protected IList<TqProvider> TqProviders;
-        protected IList<AssessmentSeries> AssessmentSeries;
+        protected IList<AssessmentSeries> AssessmentSeries;        
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IAssessmentRepository AssessmentRepository;
         protected ILogger<AssessmentRepository> AssessmentRepositoryLogger;
+        protected IRepository<AssessmentSeries> AssessmentSeriesRepository;
+        protected ILogger<GenericRepository<AssessmentSeries>> AssessmentSeriesRepositoryLogger;
 
         protected IMapper AssessmentMapper;
 
