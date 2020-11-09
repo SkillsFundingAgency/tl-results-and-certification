@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you leave this page you will not be able to access this report.
+        ///   Looks up a localized string similar to If you leave this page you will not be able to access this report..
         /// </summary>
         public static string Errors_Not_Accessible_On_Page_Exit_Text {
             get {
@@ -133,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download this error report and send it to your organisation’s technical team.
+        ///   Looks up a localized string similar to Download this error report and send it to your organisation’s technical team..
         /// </summary>
         public static string Send_Errors_TechTeam_Para_Text {
             get {

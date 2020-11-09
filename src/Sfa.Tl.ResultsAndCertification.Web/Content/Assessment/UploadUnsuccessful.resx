@@ -127,7 +127,7 @@
     <value>Download error report</value>
   </data>
   <data name="Errors_Not_Accessible_On_Page_Exit_Text" xml:space="preserve">
-    <value>If you leave this page you will not be able to access this report</value>
+    <value>If you leave this page you will not be able to access this report.</value>
   </data>
   <data name="File_Size_Kb_Text" xml:space="preserve">
     <value>KB</value>
@@ -142,6 +142,6 @@
     <value>The file could not be uploaded because it contains errors.</value>
   </data>
   <data name="Send_Errors_TechTeam_Para_Text" xml:space="preserve">
-    <value>Download this error report and send it to your organisation’s technical team</value>
+    <value>Download this error report and send it to your organisation’s technical team.</value>
   </data>
 </root>
