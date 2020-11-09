@@ -23,7 +23,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<IAssessmentRepository> _logger;
-        private enum AssessmentEntryType { Core, Specialism };
 
         public AssessmentService(IAssessmentRepository assessmentRepository,
             IRepository<AssessmentSeries> assessmentSeries, IMapper mapper, ILogger<IAssessmentRepository> logger)
