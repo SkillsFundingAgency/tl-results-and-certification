@@ -55,16 +55,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             DbContext.SaveChangesAsync();
         }
-        //public List<TqRegistrationProfile> SeedRegistrationsData1(List<long> ulns, TqProvider tqProvider = null)
-        //{
-        //    var profiles = new List<TqRegistrationProfile>();
-
-        //    foreach (var uln in ulns)
-        //    {
-        //        profiles.Add(SeedRegistrationData(uln, tqProvider));
-        //    }
-        //    return profiles;
-        //}
 
         public List<TqRegistrationProfile> SeedRegistrationsData(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null)
         {
