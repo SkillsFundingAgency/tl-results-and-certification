@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You successfully sent assessment entry data for one registration.
+        ///   Looks up a localized string similar to You successfully sent assessment entry data for one registration..
         /// </summary>
         public static string Successfully_Sent_One_Assessment_Entry_Text {
             get {

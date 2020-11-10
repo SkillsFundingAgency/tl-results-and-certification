@@ -127,7 +127,7 @@
     <value>Assessment entries upload successful</value>
   </data>
   <data name="Successfully_Sent_One_Assessment_Entry_Text" xml:space="preserve">
-    <value>You successfully sent assessment entry data for one registration</value>
+    <value>You successfully sent assessment entry data for one registration.</value>
   </data>
   <data name="Successfully_Sent_Total_Assessment_Entries_Text" xml:space="preserve">
     <value>You successfully sent assessment entries for {0} registrations.</value>
