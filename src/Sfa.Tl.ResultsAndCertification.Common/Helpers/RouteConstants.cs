@@ -131,6 +131,14 @@
         public const string SubmitDeleteRegistration = "SubmitDeleteRegistration";
         public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
 
+        // Assessment Entries
+        public const string AssessmentDashboard = "AssessmentDashboard";
+        public const string UploadAssessmentsFile = "UploadAssessmentsFile";
+        public const string SubmitUploadAssessmentsFile = "SubmitUploadAssessmentsFile";
+        public const string AssessmentsUploadSuccessful = "AssessmentsUploadSuccessful";
+        public const string AssessmentsUploadUnsuccessful = "AssessmentsUploadUnsuccessful";
+        public const string DownloadAssessmentErrors = "DownloadAssessmentErrors";
+
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";

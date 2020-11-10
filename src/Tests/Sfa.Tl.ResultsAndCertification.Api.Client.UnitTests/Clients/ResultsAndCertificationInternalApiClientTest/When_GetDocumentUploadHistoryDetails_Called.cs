@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 BlobFileName = "inputfile.csv",
                 DocumentType = (int)DocumentType.Registrations,
                 FileType = (int)FileType.Csv,
-                Status = (int)BulkRegistrationProcessStatus.Processed
+                Status = (int)BulkProcessStatus.Processed
             };            
         }
 

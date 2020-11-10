@@ -19,29 +19,28 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 {
-    public class BulkRegistrationLoader : IBulkRegistrationLoader
+    public class BulkRegistrationLoader : BulkBaseLoader, IBulkProcessLoader
     {
         private readonly ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> _csvService;
         private readonly IRegistrationService _registrationService;
         private readonly IBlobStorageService _blobStorageService;
-        private readonly IDocumentUploadHistoryService _documentUploadHistoryService;
         private readonly ILogger<BulkRegistrationLoader> _logger;
 
-        public BulkRegistrationLoader(ICsvHelperService<RegistrationCsvRecordRequest,
-            CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> csvService,
-            IRegistrationService registrationService, IBlobStorageService blobStorageService,
-            IDocumentUploadHistoryService documentUploadHistoryService, ILogger<BulkRegistrationLoader> logger)
+        public BulkRegistrationLoader(ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse> csvService,
+            IRegistrationService registrationService, 
+            IBlobStorageService blobStorageService,
+            IDocumentUploadHistoryService documentUploadHistoryService, 
+            ILogger<BulkRegistrationLoader> logger) : base(blobStorageService, documentUploadHistoryService)
         {
             _csvService = csvService;
             _registrationService = registrationService;
             _blobStorageService = blobStorageService;
-            _documentUploadHistoryService = documentUploadHistoryService;
             _logger = logger;
         }
 
-        public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request)
+        public async Task<BulkProcessResponse> ProcessAsync(BulkProcessRequest request)
         {
-            var response = new BulkRegistrationResponse();
+            var response = new BulkProcessResponse();
             try
             {
                 CsvResponseModel<RegistrationCsvRecordResponse> stage2RegistrationsResponse = null;
@@ -51,13 +50,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 {
                     ContainerName = request.DocumentType.ToString(),
                     BlobFileName = request.BlobFileName,
-                    SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
+                    SourceFilePath = $"{request.AoUkprn}/{BulkProcessStatus.Processing}",
                     UserName = request.PerformedBy
                 }))
                 {
                     if (fileStream == null)
                     {
-                        var blobReadError = $"No FileStream found to process bluk registrations. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}";
+                        var blobReadError = $"No FileStream found to process bluk registrations. Method: DownloadFileAsync(ContainerName: {request.DocumentType}, BlobFileName = {request.BlobFileName}, SourceFilePath = {request.AoUkprn}/{BulkProcessStatus.Processing}, UserName = {request.PerformedBy}), User: {request.PerformedBy}";
                         _logger.LogInformation(LogEvent.FileStreamNotFound, blobReadError);
                         throw new Exception(blobReadError);
                     }
@@ -103,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private async Task<BulkRegistrationResponse> ProcessRegistrationResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, RegistrationProcessResponse registrationProcessResult)
+        private async Task<BulkProcessResponse> ProcessRegistrationResponse(BulkProcessRequest request, BulkProcessResponse response, RegistrationProcessResponse registrationProcessResult)
         {
             _ = registrationProcessResult.IsSuccess ? await MoveFileFromProcessingToProcessedAsync(request) : await MoveFileFromProcessingToFailedAsync(request);
             await CreateDocumentUploadHistory(request, registrationProcessResult.IsSuccess ? DocumentUploadStatus.Processed : DocumentUploadStatus.Failed);
@@ -112,13 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return response;
         }
 
-        private async Task SaveDocumentHistoryAndMoveFileToProcessed(BulkRegistrationRequest request)
-        {
-            await MoveFileFromProcessingToProcessedAsync(request);
-            await CreateDocumentUploadHistory(request, DocumentUploadStatus.Processed);
-        }
-
-        private async Task<BulkRegistrationResponse> SaveErrorsAndUpdateResponse(BulkRegistrationRequest request, BulkRegistrationResponse response, IList<RegistrationValidationError> registrationValidationErrors)
+        private async Task<BulkProcessResponse> SaveErrorsAndUpdateResponse(BulkProcessRequest request, BulkProcessResponse response, IList<BulkProcessValidationError> registrationValidationErrors)
         {
             var errorFile = await CreateErrorFileAsync(registrationValidationErrors);
             await UploadErrorsFileToBlobStorage(request, errorFile);
@@ -138,7 +131,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             foreach (var record in duplicateRegistrations.SelectMany(duplicateRegistration => duplicateRegistration))
             {
-                record.ValidationErrors.Add(new RegistrationValidationError
+                record.ValidationErrors.Add(new BulkProcessValidationError
                 {
                     RowNum = record.RowNum.ToString(),
                     Uln = record.Uln != 0 ? record.Uln.ToString() : string.Empty,
@@ -147,17 +140,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             }
         }
 
-        private async Task<byte[]> CreateErrorFileAsync(IList<RegistrationValidationError> validationErrors)
+        private async Task<byte[]> CreateErrorFileAsync(IList<BulkProcessValidationError> validationErrors)
         {
             return await _csvService.WriteFileAsync(validationErrors);
         }
 
-        private IList<RegistrationValidationError> ExtractAllValidationErrors(CsvResponseModel<RegistrationCsvRecordResponse> stage2RegistrationsResponse = null, IList<RegistrationRecordResponse> stage3RegistrationsResponse = null)
+        private IList<BulkProcessValidationError> ExtractAllValidationErrors(CsvResponseModel<RegistrationCsvRecordResponse> stage2RegistrationsResponse = null, IList<RegistrationRecordResponse> stage3RegistrationsResponse = null)
         {
             if (stage2RegistrationsResponse != null && stage2RegistrationsResponse.IsDirty)
-                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = stage2RegistrationsResponse.ErrorMessage } };
+                return new List<BulkProcessValidationError> { new BulkProcessValidationError { ErrorMessage = stage2RegistrationsResponse.ErrorMessage } };
 
-            var errors = new List<RegistrationValidationError>();
+            var errors = new List<BulkProcessValidationError>();
 
             if (stage2RegistrationsResponse != null)
             {
@@ -176,78 +169,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             }
 
             return errors;
-        }
-
-        private async Task<bool> CreateDocumentUploadHistory(BulkRegistrationRequest request, DocumentUploadStatus status = DocumentUploadStatus.Processed)
-        {
-            if (request == null) return false;
-
-            var model = new DocumentUploadHistoryDetails
-            {
-                AoUkprn = request.AoUkprn,
-                BlobFileName = request.BlobFileName,
-                BlobUniqueReference = request.BlobUniqueReference,
-                DocumentType = (int)request.DocumentType,
-                FileType = (int)request.FileType,
-                Status = (int)status,
-                CreatedBy = request.PerformedBy
-            };
-            return await _documentUploadHistoryService.CreateDocumentUploadHistory(model);
-        }
-
-        private async Task<bool> UploadErrorsFileToBlobStorage(BulkRegistrationRequest request, byte[] errorFile)
-        {
-            if (errorFile == null || errorFile.Length == 0) return false;
-            await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
-            {
-                ContainerName = request.DocumentType.ToString(),
-                SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.ValidationErrors}",
-                BlobFileName = request.BlobFileName,
-                UserName = request.PerformedBy,
-                FileData = errorFile
-            });
-            return true;
-        }
-
-        private async Task<bool> MoveFileFromProcessingToProcessedAsync(BulkRegistrationRequest request)
-        {
-            if (request == null) return false;
-
-            await _blobStorageService.MoveFileAsync(new BlobStorageData
-            {
-                ContainerName = request.DocumentType.ToString(),
-                BlobFileName = request.BlobFileName,
-                SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
-                DestinationFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processed}"
-            });
-            return true;
-        }
-
-        private async Task<bool> MoveFileFromProcessingToFailedAsync(BulkRegistrationRequest request)
-        {
-            if (request == null) return false;
-
-            await _blobStorageService.MoveFileAsync(new BlobStorageData
-            {
-                ContainerName = request.DocumentType.ToString(),
-                SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
-                BlobFileName = request.BlobFileName,
-                DestinationFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Failed}"
-            });
-            return true;
-        }
-
-        private async Task<bool> DeleteFileFromProcessingFolderAsync(BulkRegistrationRequest request)
-        {
-            if (request == null) return false;
-
-            await _blobStorageService.DeleteFileAsync(new BlobStorageData
-            {
-                ContainerName = request.DocumentType.ToString(),
-                SourceFilePath = $"{request.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
-                BlobFileName = request.BlobFileName
-            });
-            return true;
-        }
+        }        
     }
 }

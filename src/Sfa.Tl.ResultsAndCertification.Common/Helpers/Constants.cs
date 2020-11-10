@@ -37,6 +37,8 @@
         public const string RejoinRegistrationConfirmationViewModel = "RejoinRegistrationConfirmationViewModel";
         public const string ReregistrationConfirmationViewModel = "ReregistrationConfirmationViewModel";
 
+        public const string AssessmentsUploadSuccessfulViewModel = "AssessmentsUploadSuccessfulViewModel";
+
         public const string UserSessionActivityId = "UserSessionActivityId";
 
         // Registration Data Index Constants
@@ -44,11 +46,20 @@
         public const int RegistrationPathwayStartIndex = 200000;
         public const int RegistrationSpecialismsStartIndex = 300000;
 
+        // Assessment Data Index Constants
+        public const int PathwayAssessmentsStartIndex = 100000;
+        public const int SpecialismAssessmentsStartIndex = 100000;
+
         // Route Attributes
         public const string IsChangeMode = "isChangeMode";
         public const string ProfileId = "profileId";
         public const string IsBack = "isBack";
         public const string ChangeStatusId = "changeStatusId";
         public const string WithdrawBackLinkOptionId = "withdrawBackLinkOptionId";
+
+        // Assessments
+        public const int AssessmentEndInYears = 4;
+        public const int CoreAssessmentStartInYears = 0;
+        public const int SpecialismAssessmentStartInYears = 1;
     }
 }

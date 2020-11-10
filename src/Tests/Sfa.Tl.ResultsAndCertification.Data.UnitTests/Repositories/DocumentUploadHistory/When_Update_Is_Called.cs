@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.DocumentUpl
     {
         private Domain.Models.DocumentUploadHistory _result;
         private Domain.Models.DocumentUploadHistory _data;
-        private const BulkRegistrationProcessStatus UpdateStatus = BulkRegistrationProcessStatus.Failed;
+        private const BulkProcessStatus UpdateStatus = BulkProcessStatus.Failed;
         private const string ModifiedUserName = "Modified User";
 
         public override void Given()

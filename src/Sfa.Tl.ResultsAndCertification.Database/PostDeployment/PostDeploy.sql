@@ -18,4 +18,5 @@ BEGIN
 :r ".\SeedTqAwardingOrganisations.sql"
 :r ".\SeedNotificationTemplates.sql"
 :r ".\SeedTlProviders.sql"
+:r ".\SeedAssessmentSeries.sql"
 END

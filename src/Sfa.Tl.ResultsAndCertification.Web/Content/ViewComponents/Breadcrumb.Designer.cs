@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assessment entries.
+        /// </summary>
+        public static string Assessment_Dashboard {
+            get {
+                return ResourceManager.GetString("Assessment_Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
@@ -147,6 +156,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Tlevel_ViewAll {
             get {
                 return ResourceManager.GetString("Tlevel_ViewAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload assessment entries file.
+        /// </summary>
+        public static string Upload_Assessments_File {
+            get {
+                return ResourceManager.GetString("Upload_Assessments_File", resourceCulture);
             }
         }
         

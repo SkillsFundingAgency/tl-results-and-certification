@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<bool> HasAnyTlevelSetupForProviderAsync(long aoUkprn, int tlProviderId);
 
         //Registrations
-        Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest model);
+        Task<BulkProcessResponse> ProcessBulkRegistrationsAsync(BulkProcessRequest model);
         Task<IList<PathwayDetails>> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn);
         Task<bool> AddRegistrationAsync(RegistrationRequest model);
         Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln);
@@ -39,6 +39,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model);
         Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model);
         Task<bool> ReregistrationAsync(ReregistrationRequest model);
+
+        // Assessments
+        Task<BulkAssessmentResponse> ProcessBulkAssessmentsAsync(BulkProcessRequest model);
 
         // DocumentUploadHistory
         Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);

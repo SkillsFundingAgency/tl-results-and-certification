@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System.IO;
 using System.Linq;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelperServiceTests.Registrations
 {
@@ -28,8 +29,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
         }
 
         [Fact]
-        public void Then_Returns_Expected_Results()
+        public async Task Then_Returns_Expected_Results()
         {
+            await WhenAsync();
             ReadAndParseFileResponse.Should().NotBeNull();
             ReadAndParseFileResponse.IsDirty.Should().BeFalse();
             ReadAndParseFileResponse.ErrorMessage.Should().BeNullOrWhiteSpace();

@@ -19,13 +19,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
         {
             var expectedStage2Response = new List<RegistrationCsvRecordResponse>
                 {
-                    new RegistrationCsvRecordResponse { RowNum = 1, Uln = 1111111111, FirstName = "", LastName = "Last3", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 33333333, AcademicYear = 2020, CoreCode ="12333333", SpecialismCodes = new List<string> {"234567819"}, ValidationErrors = new List<RegistrationValidationError>
+                    new RegistrationCsvRecordResponse { RowNum = 1, Uln = 1111111111, FirstName = "", LastName = "Last3", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 33333333, AcademicYear = 2020, CoreCode ="12333333", SpecialismCodes = new List<string> {"234567819"}, ValidationErrors = new List<BulkProcessValidationError>
                     {
-                        new RegistrationValidationError { RowNum = "1", Uln = "1111111111", ErrorMessage = "First name required" }
+                        new BulkProcessValidationError { RowNum = "1", Uln = "1111111111", ErrorMessage = "First name required" }
                     } },
-                    new RegistrationCsvRecordResponse { RowNum = 2, Uln = 1111111112, FirstName = "First2", LastName = "", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 33333333, AcademicYear = 2020, CoreCode ="12333333", SpecialismCodes = new List<string> {"234567819"}, ValidationErrors = new List<RegistrationValidationError>
+                    new RegistrationCsvRecordResponse { RowNum = 2, Uln = 1111111112, FirstName = "First2", LastName = "", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 33333333, AcademicYear = 2020, CoreCode ="12333333", SpecialismCodes = new List<string> {"234567819"}, ValidationErrors = new List<BulkProcessValidationError>
                     {
-                        new RegistrationValidationError { RowNum = "2", Uln = "1111111112", ErrorMessage = "Last name required" }
+                        new BulkProcessValidationError { RowNum = "2", Uln = "1111111112", ErrorMessage = "Last name required" }
                     } },
                     new RegistrationCsvRecordResponse { RowNum = 3, Uln = 1111111113, FirstName = "First3", LastName = "Last3", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 00000000, AcademicYear = 2020, CoreCode ="12333333", SpecialismCodes = new List<string> {"234567819"} },
                     new RegistrationCsvRecordResponse { RowNum = 4, Uln = 1111111114, FirstName = "First4", LastName = "Last4", DateOfBirth = "01/01/1990".ToDateTime(),  ProviderUkprn = 33333333, AcademicYear = 2020, CoreCode ="00000000", SpecialismCodes = new List<string> {"234567819"} },
@@ -34,17 +34,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
 
             var expectedStage3Response = new List<RegistrationRecordResponse>
                 {
-                    new RegistrationRecordResponse { ValidationErrors = new List<RegistrationValidationError>
+                    new RegistrationRecordResponse { ValidationErrors = new List<BulkProcessValidationError>
                     {
-                        new RegistrationValidationError { RowNum = "3", Uln = "1111111113", ErrorMessage = "Provider not registered with awarding organisation" },
+                        new BulkProcessValidationError { RowNum = "3", Uln = "1111111113", ErrorMessage = "Provider not registered with awarding organisation" },
                     } },
-                    new RegistrationRecordResponse { ValidationErrors = new List<RegistrationValidationError>
+                    new RegistrationRecordResponse { ValidationErrors = new List<BulkProcessValidationError>
                     {
-                        new RegistrationValidationError { RowNum = "4", Uln = "1111111114", ErrorMessage = "Core not registered with provider"}
+                        new BulkProcessValidationError { RowNum = "4", Uln = "1111111114", ErrorMessage = "Core not registered with provider"}
                     } },
-                    new RegistrationRecordResponse { ValidationErrors = new List<RegistrationValidationError>
+                    new RegistrationRecordResponse { ValidationErrors = new List<BulkProcessValidationError>
                     {
-                        new RegistrationValidationError { RowNum = "5", Uln = "1111111115", ErrorMessage = "Specialism not valid with core"}
+                        new BulkProcessValidationError { RowNum = "5", Uln = "1111111115", ErrorMessage = "Specialism not valid with core"}
                     } },
                 };
 
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
             BlobService.DownloadFileAsync(Arg.Any<BlobStorageData>()).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File")));
             CsvService.ReadAndParseFileAsync(Arg.Any<RegistrationCsvRecordRequest>()).Returns(csvResponse);
             RegistrationService.ValidateRegistrationTlevelsAsync(AoUkprn, Arg.Any<IEnumerable<RegistrationCsvRecordResponse>>()).Returns(expectedStage3Response);
-            CsvService.WriteFileAsync(Arg.Any<List<RegistrationValidationError>>()).Returns(expectedWriteFileBytes);
+            CsvService.WriteFileAsync(Arg.Any<List<BulkProcessValidationError>>()).Returns(expectedWriteFileBytes);
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
             BlobService.Received(1).DownloadFileAsync(Arg.Any<BlobStorageData>());
             CsvService.Received(1).ReadAndParseFileAsync(Arg.Any<RegistrationCsvRecordRequest>());
             RegistrationService.Received(1).ValidateRegistrationTlevelsAsync(AoUkprn, Arg.Any<IEnumerable<RegistrationCsvRecordResponse>>());
-            CsvService.Received(1).WriteFileAsync(Arg.Any<List<RegistrationValidationError>>());
+            CsvService.Received(1).WriteFileAsync(Arg.Any<List<BulkProcessValidationError>>());
             BlobService.Received(1).UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());
             BlobService.Received(1).MoveFileAsync(Arg.Any<BlobStorageData>());
             DocumentUploadHistoryService.Received(1).CreateDocumentUploadHistory(Arg.Any<DocumentUploadHistoryDetails>());

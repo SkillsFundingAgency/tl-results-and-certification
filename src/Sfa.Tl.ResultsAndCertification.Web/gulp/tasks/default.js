@@ -63,6 +63,20 @@ gulp.task('copy-registration-upload-js', function () {
         .pipe(gulp.dest(paths.dist.defaultJs));
 });
 
+gulp.task('copy-assessment-upload-js', function () {
+    return src([
+        'Frontend/src/javascripts/assessment-upload.js'
+    ])
+        .pipe(concat('assessment-upload.js'))
+        .pipe(minify({
+            noSource: true,
+            ext: {
+                min: '.min.js'
+            }
+        }))
+        .pipe(gulp.dest(paths.dist.defaultJs));
+});
+
 gulp.task('copy-user-guide-js', function () {
     return src([
         'Frontend/src/javascripts/user-guide.js'

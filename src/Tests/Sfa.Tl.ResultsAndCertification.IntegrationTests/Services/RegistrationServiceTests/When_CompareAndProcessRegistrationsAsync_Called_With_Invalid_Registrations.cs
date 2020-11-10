@@ -4,8 +4,8 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
-using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrations.ValidationErrorsBuilder;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
     {
         private RegistrationProcessResponse _result;
         private IList<TqRegistrationProfile> _tqRegistrationProfilesData;
-        private IList<RegistrationValidationError> _expectedValidationErrors;
+        private IList<BulkProcessValidationError> _expectedValidationErrors;
 
         public override void Given()
         {

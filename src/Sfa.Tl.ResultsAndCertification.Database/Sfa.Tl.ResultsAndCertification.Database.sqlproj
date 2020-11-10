@@ -79,8 +79,12 @@
     <Build Include="Tables\TqRegistrationPathway.sql" />
     <Build Include="Tables\TqRegistrationSpecialism.sql" />
     <Build Include="Indexes\IX_Unique_TqRegistrationPathway.sql" />
-    <Build Include="Indexes\IX_Unique_TqRegistrationSpecialism.sql" />
     <Build Include="Indexes\IX_Unique_TqRegistrationSpecialism_IsOptedin.sql" />
+    <Build Include="Tables\TqPathwayAssessment.sql" />
+    <Build Include="Tables\TqSpecialismAssessment.sql" />
+    <Build Include="Tables\AssessmentSeries.sql" />
+    <Build Include="Indexes\IX_Unique_TqPathwayAssessment.sql" />
+    <Build Include="Indexes\IX_Unique_TqSpecialismAssessment.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />
@@ -97,6 +101,7 @@
   <ItemGroup>
     <None Include="Sfa.Tl.ResultsAndCertification.Database.publish.xml" />
     <None Include="Sfa.Tl.ResultsAndCertification.Database.Local.publish.xml" />
+    <None Include="PostDeployment\SeedAssessmentSeries.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="environment">

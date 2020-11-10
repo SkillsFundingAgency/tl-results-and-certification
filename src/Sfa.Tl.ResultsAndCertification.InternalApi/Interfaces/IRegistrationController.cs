@@ -15,6 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<bool> ReregistrationAsync(ReregistrationRequest model);
 
         // Bulk process
-        Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest request);
+        Task<BulkProcessResponse> ProcessBulkRegistrationsAsync(BulkProcessRequest request);
     }
 }

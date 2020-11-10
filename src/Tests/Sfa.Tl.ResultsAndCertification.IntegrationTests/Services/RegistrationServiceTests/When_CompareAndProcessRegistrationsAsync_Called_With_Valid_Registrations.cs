@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {
-    [Collection("BulkRegistration")]
+    [Collection("BulkProcessTests")]
     public class When_CompareAndProcessRegistrationsAsync_Called_With_Valid_Registrations : IClassFixture<BulkRegistrationsTextFixture>
     {
         private RegistrationProcessResponse _result;

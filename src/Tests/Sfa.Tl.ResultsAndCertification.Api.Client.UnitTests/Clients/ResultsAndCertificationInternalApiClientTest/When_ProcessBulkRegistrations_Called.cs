@@ -19,11 +19,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
     {
         protected ITokenServiceClient _tokenServiceClient;
         protected ResultsAndCertificationConfiguration _configuration;
-        protected BulkRegistrationResponse _result;
+        protected BulkProcessResponse _result;
 
         protected ResultsAndCertificationInternalApiClient _apiClient;
-        protected BulkRegistrationResponse _mockHttpResult;
-        private BulkRegistrationRequest _model;
+        protected BulkProcessResponse _mockHttpResult;
+        private BulkProcessRequest _model;
         private readonly long _ukprn = 12345678;
 
         public override void Setup()
@@ -35,14 +35,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
             };
 
-            _mockHttpResult = new BulkRegistrationResponse
+            _mockHttpResult = new BulkProcessResponse
             {
                 IsSuccess = false,
                 BlobUniqueReference = Guid.NewGuid(),
                 ErrorFileSize = 1.5
             };
 
-            _model = new BulkRegistrationRequest
+            _model = new BulkProcessRequest
             {
                 AoUkprn = _ukprn,
                 BlobFileName = "inputfile_1.csv",
@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<BulkRegistrationResponse>(_mockHttpResult, ApiConstants.ProcessBulkRegistrationsUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<BulkProcessResponse>(_mockHttpResult, ApiConstants.ProcessBulkRegistrationsUri, HttpStatusCode.OK, JsonConvert.SerializeObject(_model)));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 

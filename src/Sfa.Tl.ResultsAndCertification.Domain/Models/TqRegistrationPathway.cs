@@ -9,6 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public TqRegistrationPathway()
         {
             TqRegistrationSpecialisms = new HashSet<TqRegistrationSpecialism>();
+            TqPathwayAssessments = new HashSet<TqPathwayAssessment>();
         }
 
         public int TqRegistrationProfileId { get; set; }
@@ -22,5 +23,6 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public virtual TqProvider TqProvider { get; set; }
         public virtual TqRegistrationProfile TqRegistrationProfile { get; set; }
         public virtual ICollection<TqRegistrationSpecialism> TqRegistrationSpecialisms { get; set; }
+        public virtual ICollection<TqPathwayAssessment> TqPathwayAssessments { get; set; }
     }
 }

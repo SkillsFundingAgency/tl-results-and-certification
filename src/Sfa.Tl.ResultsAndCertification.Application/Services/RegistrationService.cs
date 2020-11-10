@@ -14,9 +14,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -630,9 +628,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return new RegistrationRecordResponse()
             {
-                ValidationErrors = new List<RegistrationValidationError>()
+                ValidationErrors = new List<BulkProcessValidationError>()
                 {
-                    new RegistrationValidationError
+                    new BulkProcessValidationError
                     {
                         RowNum = rowNum.ToString(),
                         Uln = uln.ToString(),
@@ -668,8 +666,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Id = isBulkUpload ? index - specialismStartIndex : 0,
                 TlSpecialismId = x.Key,
                 StartDate = DateTime.UtcNow,
-                IsOptedin = true,
-                //Status = RegistrationSpecialismStatus.Active,
+                IsOptedin = true,                
                 IsBulkUpload = isBulkUpload,
                 CreatedBy = performedBy,
                 CreatedOn = DateTime.UtcNow,
@@ -773,9 +770,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return new Tuple<bool, bool>(hasBothPathwayAndSpecialismsRecordsChanged, hasOnlySpecialismsRecordChanged);
         }
 
-        private RegistrationValidationError GetRegistrationValidationError(long uln, string errorMessage)
+        private BulkProcessValidationError GetRegistrationValidationError(long uln, string errorMessage)
         {
-            return new RegistrationValidationError
+            return new BulkProcessValidationError
             {
                 Uln = uln.ToString(),
                 ErrorMessage = errorMessage

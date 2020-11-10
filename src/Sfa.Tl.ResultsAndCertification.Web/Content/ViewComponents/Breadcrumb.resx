@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Assessment_Dashboard" xml:space="preserve">
+    <value>Assessment entries</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="Tlevel_ViewAll" xml:space="preserve">
     <value>Your T Levels</value>
+  </data>
+  <data name="Upload_Assessments_File" xml:space="preserve">
+    <value>Upload assessment entries file</value>
   </data>
   <data name="Upload_Registrations_File" xml:space="preserve">
     <value>Upload registrations file</value>
