@@ -138,7 +138,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("assessment-entries-learner-search", Name = RouteConstants.SearchAssessments)]
-        public async Task<IActionResult> SearchAssessments()
+        public async Task<IActionResult> SearchAssessmentsAsync()
         {
             var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.AssessmentsSearchCriteria);
             var viewModel = new SearchAssessmentsViewModel { SearchUln = defaultValue };
@@ -164,8 +164,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 var ulnAssessmentsNotfoundModel = new UlnAssessmentsNotFoundViewModel { Uln = model.SearchUln.ToString() };
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.SearchAssessmentsUlnNotFound), ulnAssessmentsNotfoundModel, CacheExpiryTime.XSmall);
 
-                return View(model);
+                return RedirectToRoute(RouteConstants.SearchAssessmentsNotFound);
             }
+        }
+
+        [HttpGet]
+        [Route("search-for-learner-ULN-not-found", Name = RouteConstants.SearchAssessmentsNotFound)]
+        public async Task<IActionResult> SearchAssessmentsNotFoundAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<UlnAssessmentsNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchAssessmentsUlnNotFound));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchAssessmentsUlnNotFound from redis cache in search assessments not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
         }
     }
 }
