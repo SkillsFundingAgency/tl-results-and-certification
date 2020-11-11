@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.Logging;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers;
+﻿using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
@@ -70,52 +68,89 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             return profile;
         }
 
-        public List<TqPathwayAssessment> SeedPathwayAssessmentsData(List<TqPathwayAssessment> pathwayAssessments)
+        public List<TqPathwayAssessment> SeedPathwayAssessmentsData(List<TqPathwayAssessment> pathwayAssessments, bool saveChanges = true)
         {            
             var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessments(DbContext, pathwayAssessments);
-            DbContext.SaveChanges();
+            if (saveChanges)
+                DbContext.SaveChanges();
+
             return tqPathwayAssessment;
         }
 
-        public List<TqSpecialismAssessment> SeedSpecialismAssessmentsData(List<TqSpecialismAssessment> specialismAssessments)
+        public List<TqSpecialismAssessment> SeedSpecialismAssessmentsData(List<TqSpecialismAssessment> specialismAssessments, bool saveChanges = true)
         {
             var tqSpecialismAssessments = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessments(DbContext, specialismAssessments);
-            DbContext.SaveChanges();
+            if (saveChanges)
+                DbContext.SaveChanges();
+
             return tqSpecialismAssessments;
         }
 
-        public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true)
+        public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false)
         {
             var tqPathwayAssessments = new List<TqPathwayAssessment>();
 
             foreach (var (pathwayRegistration, index) in pathwayRegistrations.Select((value, i) => (value, i)))
             {
                 var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
-                var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, pathwayAssessment);
-                if(!seedPathwayAssessmentsAsActive)
+                if (isHistorical)
                 {
-                    tqPathwayAssessment.IsOptedin = false;
-                    tqPathwayAssessment.EndDate = DateTime.UtcNow;
+                    // Historical record
+                    pathwayAssessment.IsOptedin = false;
+                    pathwayAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                    var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, pathwayAssessment);
+                    tqPathwayAssessments.Add(tqPathwayAssessment);
+
+                    // current active record
+                    var activePathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
+                    tqPathwayAssessments.Add(PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, activePathwayAssessment));
                 }
-                tqPathwayAssessments.Add(tqPathwayAssessment);
+                else
+                {
+                    var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, pathwayAssessment);
+                    if (!seedPathwayAssessmentsAsActive)
+                    {
+                        tqPathwayAssessment.IsOptedin = false;
+                        tqPathwayAssessment.EndDate = DateTime.UtcNow;
+                    }
+                    tqPathwayAssessments.Add(tqPathwayAssessment);
+                }
             }
             return tqPathwayAssessments;
         }
 
-        public List<TqSpecialismAssessment> GetSpecialismAssessmentsDataToProcess(List<TqRegistrationSpecialism> specialismRegistrations, bool seedSpecialismAssessmentsAsActive = true)
+        public List<TqSpecialismAssessment> GetSpecialismAssessmentsDataToProcess(List<TqRegistrationSpecialism> specialismRegistrations, bool seedSpecialismAssessmentsAsActive = true, bool isHistorical = false)
         {
             var tqSpecialismAssessments = new List<TqSpecialismAssessment>();
 
             foreach (var (specialismRegistration, index) in specialismRegistrations.Select((value, i) => (value, i)))
             {
                 var specialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
-                var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialismAssessment);
-                if (!seedSpecialismAssessmentsAsActive)
+
+                if (isHistorical)
                 {
-                    tqSpecialismAssessment.IsOptedin = false;
-                    tqSpecialismAssessment.EndDate = DateTime.UtcNow;
+                    // Historical record
+                    specialismAssessment.IsOptedin = false;
+                    specialismAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                    var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialismAssessment);
+                    tqSpecialismAssessments.Add(tqSpecialismAssessment);
+
+                    // current active record
+                    var activeSpecialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
+                    tqSpecialismAssessments.Add(SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, activeSpecialismAssessment));
                 }
-                tqSpecialismAssessments.Add(tqSpecialismAssessment);
+                else
+                {
+                    var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialismAssessment);
+                    if (!seedSpecialismAssessmentsAsActive)
+                    {
+                        tqSpecialismAssessment.IsOptedin = false;
+                        tqSpecialismAssessment.EndDate = DateTime.UtcNow;
+                    }
+                    tqSpecialismAssessments.Add(tqSpecialismAssessment);
+                }
             }
             return tqSpecialismAssessments;
         }
