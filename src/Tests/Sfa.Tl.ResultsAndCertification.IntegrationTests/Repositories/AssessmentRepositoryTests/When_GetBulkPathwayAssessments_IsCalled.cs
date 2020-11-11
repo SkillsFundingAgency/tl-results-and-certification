@@ -69,13 +69,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             {
                 var actualPathwayAssessment = _result.FirstOrDefault(p => p.Id == expectedPathwayAssessment.Id);
 
-                actualPathwayAssessment.TqRegistrationPathwayId.Should().Be(actualPathwayAssessment.TqRegistrationPathwayId);
-                actualPathwayAssessment.AssessmentSeriesId.Should().Be(actualPathwayAssessment.AssessmentSeriesId);
-                actualPathwayAssessment.IsOptedin.Should().Be(actualPathwayAssessment.IsOptedin);
-                actualPathwayAssessment.IsBulkUpload.Should().Be(actualPathwayAssessment.IsBulkUpload);
-                actualPathwayAssessment.StartDate.ToShortDateString().Should().Be(actualPathwayAssessment.StartDate.ToShortDateString());
+                actualPathwayAssessment.TqRegistrationPathwayId.Should().Be(expectedPathwayAssessment.TqRegistrationPathwayId);
+                actualPathwayAssessment.AssessmentSeriesId.Should().Be(expectedPathwayAssessment.AssessmentSeriesId);
+                actualPathwayAssessment.IsOptedin.Should().Be(expectedPathwayAssessment.IsOptedin);
+                actualPathwayAssessment.IsBulkUpload.Should().Be(expectedPathwayAssessment.IsBulkUpload);
+                actualPathwayAssessment.StartDate.ToShortDateString().Should().Be(expectedPathwayAssessment.StartDate.ToShortDateString());
                 actualPathwayAssessment.EndDate.Should().BeNull();
-                actualPathwayAssessment.CreatedBy.Should().Be(actualPathwayAssessment.CreatedBy);
+                actualPathwayAssessment.CreatedBy.Should().Be(expectedPathwayAssessment.CreatedBy);
             }
         }
     }
