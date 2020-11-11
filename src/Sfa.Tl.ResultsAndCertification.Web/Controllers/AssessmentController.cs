@@ -205,7 +205,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment withdrawn details found. Method: GetAssessmentDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment details found. Method: GetAssessmentDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
