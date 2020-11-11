@@ -1,8 +1,10 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using AssessmentDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AssessmentDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 {
@@ -16,11 +18,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public string PathwayDisplayName { get; set; }
         public string PathwayAssessmentSeries { get; set; }
 
-
         public string SpecialismDisplayName { get; set; }
         public string SpecialismAssessmentSeries { get; set; }
 
         public RegistrationPathwayStatus PathwayStatus { get; set; }
+
+        private string PathwayAssessmentActionText { get { return !string.IsNullOrWhiteSpace(PathwayDisplayName) ? AssessmentDetailsContent.Change_Text : null; } }
+        private string SpecialismAssessmentActionText { get { return !string.IsNullOrWhiteSpace(SpecialismDisplayName) ? AssessmentDetailsContent.Change_Text : null; } }
+
+        private string PathwayAssessmentSeriesText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? PathwayAssessmentSeries : AssessmentDetailsContent.Not_Specified_Text; } }
+        private string SpecialismAssessmentSeriesText { get { return !string.IsNullOrWhiteSpace(SpecialismAssessmentSeries) ? SpecialismAssessmentSeries : AssessmentDetailsContent.Not_Specified_Text; } }
+
+        public SummaryItemModel SummaryCoreAssessmentEntry => new SummaryItemModel { Id = "coreassessmententry", Title = AssessmentDetailsContent.Assessment_Entry_Text, Value = PathwayAssessmentSeriesText, ActionText = PathwayAssessmentActionText };
+        public SummaryItemModel SummarySpecialismAssessmentEntry => new SummaryItemModel { Id = "specialismassessmententry", Title = AssessmentDetailsContent.Assessment_Entry_Text, Value = SpecialismAssessmentSeriesText, ActionText = SpecialismAssessmentActionText };
+
 
         public BreadcrumbModel Breadcrumb
         {

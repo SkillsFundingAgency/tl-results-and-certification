@@ -160,6 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         {
             var regPathway = await _dbContext.TqRegistrationPathway
                    .Include(x => x.TqPathwayAssessments)
+                       .ThenInclude(x => x.AssessmentSeries)
                    .Include(x => x.TqRegistrationProfile)
                    .Include(x => x.TqProvider)
                        .ThenInclude(x => x.TqAwardingOrganisation)
@@ -170,6 +171,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                        .ThenInclude(x => x.TlSpecialism)
                    .Include(x => x.TqRegistrationSpecialisms)
                        .ThenInclude(x => x.TqSpecialismAssessments)
+                            .ThenInclude(x => x.AssessmentSeries)
                     .OrderByDescending(o => o.CreatedOn)
                     .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId &&
                            p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
