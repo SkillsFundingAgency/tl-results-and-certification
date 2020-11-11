@@ -143,6 +143,7 @@
         public const string SearchAssessments = "SearchAssessments";
         public const string SubmitSearchAssessments = "SubmitSearchAssessments";
         public const string SearchAssessmentsNotFound = "SearchAssessmentsNotFound";
+        public const string AssessmentWithdrawnDetails = "AssessmentWithdrawnDetails";
 
         // Error
         public const string PageNotFound = "PageNotFound";

@@ -181,5 +181,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             return View(viewModel);
         }
+
+        [HttpGet]
+        [Route("learners-assessment-entries-withdrawn-learner", Name = RouteConstants.AssessmentWithdrawnDetails)]
+        public async Task<IActionResult> AssessmentWithdrawnDetailsAsync(int profileId)
+        {
+            var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment withdrawn details found. Method: GetRegistrationDetailsByProfileIdAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }        
     }
 }

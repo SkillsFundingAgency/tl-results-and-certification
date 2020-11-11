@@ -10,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _mapper = mapper;
             _logger = logger;
         }
+
+        #region Bulk Assessments
 
         public async Task<IList<AssessmentRecordResponse>> ValidateAssessmentsAsync(long aoUkprn, IEnumerable<AssessmentCsvRecordResponse> csvAssessments)
         {
@@ -100,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     var registrationSpecialism = dbRegistration.TqRegistrationSpecialisms
                                                     .FirstOrDefault(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
-                    
+
                     response.Add(new AssessmentRecordResponse
                     {
                         TqRegistrationPathwayId = !string.IsNullOrWhiteSpace(assessment.CoreCode) ? dbRegistration?.Id : (int?)null,
@@ -282,16 +285,27 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private bool IsValidAssessmentEntry(int registrationYear, int assessmentYear, AssessmentEntryType entryType)
         {
             var startYear = entryType == AssessmentEntryType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
-            
-            var isValidRange = assessmentYear > (registrationYear + startYear) && 
+
+            var isValidRange = assessmentYear > (registrationYear + startYear) &&
                                assessmentYear <= (registrationYear + Constants.AssessmentEndInYears);
-            
+
             return isValidRange;
         }
 
         private BulkProcessValidationError BuildValidationError(AssessmentCsvRecordResponse assessment, string message)
         {
             return new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = message };
+        }
+
+        #endregion
+
+        public async Task<AssessmentDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        {
+            var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
+
+            if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
+
+            return _mapper.Map<AssessmentDetails>(tqRegistration);
         }
     }
 }
