@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learner&apos;s assessment entries.
+        /// </summary>
+        public static string Learners_Assessment_entries {
+            get {
+                return ResourceManager.GetString("Learners_Assessment_entries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Find a provider.
         /// </summary>
         public static string Provider_Find_Provider {

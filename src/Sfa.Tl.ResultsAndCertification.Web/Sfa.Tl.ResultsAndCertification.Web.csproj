@@ -41,6 +41,11 @@
 
 
   <ItemGroup>
+    <Compile Update="Content\Assessment\AssessmentWithdrawnDetails.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AssessmentWithdrawnDetails.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Assessment\Dashboard.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -410,6 +415,10 @@
 
 
   <ItemGroup>
+    <EmbeddedResource Update="Content\Assessment\AssessmentWithdrawnDetails.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AssessmentWithdrawnDetails.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Assessment\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>

@@ -155,7 +155,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (searchResult?.IsAllowed == true)
             {
-                return View(model);
+                return RedirectToRoute(searchResult.IsWithdrawn ? RouteConstants.AssessmentWithdrawnDetails : RouteConstants.AssessmentWithdrawnDetails, new { profileId = searchResult.RegistrationProfileId });
             }
             else
             {
@@ -183,14 +183,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("learners-assessment-entries-withdrawn-learner", Name = RouteConstants.AssessmentWithdrawnDetails)]
+        [Route("learners-assessment-entries-withdrawn-learner/{profileId}", Name = RouteConstants.AssessmentWithdrawnDetails)]
         public async Task<IActionResult> AssessmentWithdrawnDetailsAsync(int profileId)
         {
-            var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync(User.GetUkPrn(), profileId);
+            var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
 
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment withdrawn details found. Method: GetRegistrationDetailsByProfileIdAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment withdrawn details found. Method: GetAssessmentDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Withdrawn}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

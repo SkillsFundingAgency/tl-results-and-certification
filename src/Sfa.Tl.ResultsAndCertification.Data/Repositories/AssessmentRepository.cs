@@ -164,10 +164,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                    .Include(x => x.TqProvider)
                        .ThenInclude(x => x.TqAwardingOrganisation)
                            .ThenInclude(x => x.TlPathway)
-                    .Include(x => x.TqRegistrationSpecialisms)
+                   .Include(x => x.TqProvider)
+                       .ThenInclude(x => x.TlProvider)
+                   .Include(x => x.TqRegistrationSpecialisms)
                        .ThenInclude(x => x.TlSpecialism)
-                    .Include(x => x.TqRegistrationSpecialisms)
-                        .ThenInclude(x => x.TqSpecialismAssessments)
+                   .Include(x => x.TqRegistrationSpecialisms)
+                       .ThenInclude(x => x.TqSpecialismAssessments)
                     .OrderByDescending(o => o.CreatedOn)
                     .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId &&
                            p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
