@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
-    public class UlnNotFoundViewModel
+    public class UlnRegistrationNotFoundViewModel
     {
         public string Uln { get; set; }
         public int RegistrationProfileId { get; set; }

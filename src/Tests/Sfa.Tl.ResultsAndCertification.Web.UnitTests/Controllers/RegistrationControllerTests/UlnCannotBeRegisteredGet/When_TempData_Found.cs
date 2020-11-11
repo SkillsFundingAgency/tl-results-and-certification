@@ -9,18 +9,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 {
     public class When_TempData_Found : TestSetup
     {
-        private UlnNotFoundViewModel expectedViewModel;
+        private UlnRegistrationNotFoundViewModel expectedViewModel;
         public override void Given() 
         {
-            expectedViewModel = new UlnNotFoundViewModel();
-            CacheService.GetAndRemoveAsync<UlnNotFoundViewModel>(Arg.Any<string>()).Returns(expectedViewModel);
+            expectedViewModel = new UlnRegistrationNotFoundViewModel();
+            CacheService.GetAndRemoveAsync<UlnRegistrationNotFoundViewModel>(Arg.Any<string>()).Returns(expectedViewModel);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as UlnNotFoundViewModel;
+            var model = viewResult.Model as UlnRegistrationNotFoundViewModel;
 
             model.Should().NotBeNull();
             model.RegistrationProfileId.Should().Be(expectedViewModel.RegistrationProfileId);

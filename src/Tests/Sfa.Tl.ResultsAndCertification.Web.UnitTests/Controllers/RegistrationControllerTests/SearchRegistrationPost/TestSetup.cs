@@ -51,8 +51,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             TempData = new TempDataDictionary(HttpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
             Controller.TempData = TempData;
 
-            var ulnNotFoundViewModel = new UlnNotFoundViewModel { Uln = SearchUln, IsActive = false };
-            RegistrationLoader.FindUlnAsync(AoUkprn, SearchUln.ToLong()).Returns(ulnNotFoundViewModel);
+            var ulnRegistrationNotFoundViewModel = new UlnRegistrationNotFoundViewModel { Uln = SearchUln, IsActive = false };
+            RegistrationLoader.FindUlnAsync(AoUkprn, SearchUln.ToLong()).Returns(ulnRegistrationNotFoundViewModel);
         }
 
         public async override Task When()

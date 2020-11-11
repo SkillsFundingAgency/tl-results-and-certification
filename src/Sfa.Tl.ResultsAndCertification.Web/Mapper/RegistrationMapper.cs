@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.SelectAcademicYear.SelectedAcademicYear))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<RegistrationViewModel, RegistrationRequest>>());
 
-            CreateMap<FindUlnResponse, UlnNotFoundViewModel>();
+            CreateMap<FindUlnResponse, UlnRegistrationNotFoundViewModel>();
 
             CreateMap<RegistrationDetails, RegistrationDetailsViewModel>()
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))

@@ -182,7 +182,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (findUln != null && findUln.IsUlnRegisteredAlready)
             {
                 findUln.IsChangeMode = model.IsChangeMode;
-                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UlnNotFoundViewModel), findUln, CacheExpiryTime.XSmall);
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UlnRegistrationNotFoundViewModel), findUln, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.UlnCannotBeRegistered);
             }
 
@@ -193,7 +193,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("ULN-cannot-be-registered", Name = RouteConstants.UlnCannotBeRegistered)]
         public async Task<IActionResult> UlnCannotBeRegistered()
         {
-            var viewModel = await _cacheService.GetAndRemoveAsync<UlnNotFoundViewModel>(string.Concat(CacheKey, Constants.UlnNotFoundViewModel));
+            var viewModel = await _cacheService.GetAndRemoveAsync<UlnRegistrationNotFoundViewModel>(string.Concat(CacheKey, Constants.UlnRegistrationNotFoundViewModel));
             return viewModel == null ? RedirectToRoute(RouteConstants.PageNotFound) : (IActionResult)View(viewModel);
         }
 
@@ -549,7 +549,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 await _cacheService.SetAsync(Constants.RegistrationSearchCriteria, model.SearchUln);
 
-                var ulnNotfoundModel = new UlnNotFoundViewModel { Uln = model.SearchUln.ToString(), BackLinkRouteName = RouteConstants.SearchRegistration };
+                var ulnNotfoundModel = new UlnRegistrationNotFoundViewModel { Uln = model.SearchUln.ToString(), BackLinkRouteName = RouteConstants.SearchRegistration };
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.SearchRegistrationUlnNotFound), ulnNotfoundModel, CacheExpiryTime.XSmall);
 
                 return RedirectToRoute(RouteConstants.SearchRegistrationNotFound);
@@ -560,7 +560,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-for-registration-ULN-not-found", Name = RouteConstants.SearchRegistrationNotFound)]
         public async Task<IActionResult> SearchRegistrationNotFound()
         {
-            var viewModel = await _cacheService.GetAndRemoveAsync<UlnNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchRegistrationUlnNotFound));
+            var viewModel = await _cacheService.GetAndRemoveAsync<UlnRegistrationNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchRegistrationUlnNotFound));
 
             if (viewModel == null)
             {

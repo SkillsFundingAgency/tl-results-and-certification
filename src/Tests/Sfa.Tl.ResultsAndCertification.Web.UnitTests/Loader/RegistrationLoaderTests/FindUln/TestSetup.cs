@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 
         protected RegistrationLoader Loader;
         protected FindUlnResponse expectedApiResult;
-        protected UlnNotFoundViewModel ActualResult;
+        protected UlnRegistrationNotFoundViewModel ActualResult;
 
         public override void Setup()
         {
