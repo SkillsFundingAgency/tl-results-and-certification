@@ -38,6 +38,7 @@
         public const string ReregistrationConfirmationViewModel = "ReregistrationConfirmationViewModel";
 
         public const string AssessmentsUploadSuccessfulViewModel = "AssessmentsUploadSuccessfulViewModel";
+        public const string AssessmentsSearchCriteria = "AssessmentsSearchCriteria";
 
         public const string UserSessionActivityId = "UserSessionActivityId";
 

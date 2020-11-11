@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System.Threading.Tasks;
 using AssessmentContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment;
 
@@ -134,5 +135,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
         }
+
+        [HttpGet]
+        [Route("assessment-entries-learner-search", Name = RouteConstants.SearchAssessments)]
+        public async Task<IActionResult> SearchAssessments()
+        {
+            var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.AssessmentsSearchCriteria);
+            var viewModel = new SearchAssessmentsViewModel { SearchUln = defaultValue };
+            return View(viewModel);
+        }        
     }
 }

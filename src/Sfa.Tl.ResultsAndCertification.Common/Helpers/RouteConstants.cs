@@ -139,6 +139,11 @@
         public const string AssessmentsUploadUnsuccessful = "AssessmentsUploadUnsuccessful";
         public const string DownloadAssessmentErrors = "DownloadAssessmentErrors";
 
+        // Search Assessment Entries
+        public const string SearchAssessments = "SearchAssessments";
+        public const string SubmitSearchAssessments = "SubmitSearchAssessments";
+        public const string SearchAssessmentsNotFound = "SearchAssessmentsNotFound";
+
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";

@@ -1,0 +1,35 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual.SearchAssessmentsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Assessment
+
+@{
+    ViewData["Title"] = @SearchAssessments.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <partial name="_ValidationSummary" />
+        <form asp-route="SubmitSearchRegistration">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
+                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
+                            @SearchAssessments.Search_For_Learner_Heading_Text
+                        </h1>
+                    </legend>
+                    <p class="govuk-body">@SearchAssessments.Search_Info_Text</p>
+                    <div class="govuk-form-group" sfa-validation-for="SearchUln" sfa-validation-class="govuk-form-group--error">
+                        <label class="govuk-label" for="searchuln">@SearchAssessments.Enter_Uln_Field_Text</label>
+                        <span class="govuk-hint">@SearchAssessments.Uln_Hint_Text</span>
+                        <span sfa-validation-for="SearchUln"></span>
+                        <input class="govuk-input govuk-input--width-20" id="searchuln" asp-for="SearchUln" maxlength="10">
+                    </div>
+                </fieldset>
+            </div>
+            <button type="submit" class="govuk-button" data-module="govuk-button">@SearchAssessments.Search_Button_Text</button>
+        </form>
+    </div>
+</div>
