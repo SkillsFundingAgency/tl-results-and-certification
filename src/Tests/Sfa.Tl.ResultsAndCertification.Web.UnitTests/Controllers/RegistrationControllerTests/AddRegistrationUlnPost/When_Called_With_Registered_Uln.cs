@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         {
             var findUln = new UlnRegistrationNotFoundViewModel
             {
-                IsActive = true
+                IsAllowed = true
             };
 
             UlnViewModel = new UlnViewModel { Uln = "1234567890" };

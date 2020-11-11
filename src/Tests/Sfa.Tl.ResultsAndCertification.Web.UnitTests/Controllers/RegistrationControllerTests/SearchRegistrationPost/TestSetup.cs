@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             TempData = new TempDataDictionary(HttpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
             Controller.TempData = TempData;
 
-            var ulnRegistrationNotFoundViewModel = new UlnRegistrationNotFoundViewModel { Uln = SearchUln, IsActive = false };
+            var ulnRegistrationNotFoundViewModel = new UlnRegistrationNotFoundViewModel { Uln = SearchUln, IsAllowed = false };
             RegistrationLoader.FindUlnAsync(AoUkprn, SearchUln.ToLong()).Returns(ulnRegistrationNotFoundViewModel);
         }
 

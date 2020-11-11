@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public override void Given()
         {
             SearchRegistrationViewModel = new SearchRegistrationViewModel { SearchUln = SearchUln };
-            var mockResult = new UlnRegistrationNotFoundViewModel { IsActive = true, Uln = SearchUln };
+            var mockResult = new UlnRegistrationNotFoundViewModel { IsAllowed = true, Uln = SearchUln };
             RegistrationLoader.FindUlnAsync(AoUkprn, SearchUln.ToLong()).Returns(mockResult);
         }
 

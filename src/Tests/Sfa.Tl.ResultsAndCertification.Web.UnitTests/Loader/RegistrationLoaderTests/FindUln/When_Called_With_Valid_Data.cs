@@ -13,7 +13,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             {
                 RegistrationProfileId = 1,
                 Uln = Uln,
-                IsRegisteredWithOtherAo = true
+                IsRegisteredWithOtherAo = true,
+                Status = Common.Enum.RegistrationPathwayStatus.Active
             };
             
             InternalApiClient.FindUlnAsync(Ukprn, Uln).Returns(expectedApiResult);
@@ -22,10 +23,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         [Fact]
         public void Then_Returns_Expected_Results()
         {
+            var expectedIsAllowedValue = expectedApiResult.Status == Common.Enum.RegistrationPathwayStatus.Active || expectedApiResult.Status == Common.Enum.RegistrationPathwayStatus.Withdrawn;
             ActualResult.Should().NotBeNull();
             ActualResult.Uln.Should().Be(expectedApiResult.Uln.ToString());
             ActualResult.RegistrationProfileId.Should().Be(expectedApiResult.RegistrationProfileId);
-            ActualResult.IsActive.Should().Be(expectedApiResult.IsActive);
+            ActualResult.IsAllowed.Should().Be(expectedIsAllowedValue);
             ActualResult.IsRegisteredWithOtherAo.Should().Be(expectedApiResult.IsRegisteredWithOtherAo);
         }
     }

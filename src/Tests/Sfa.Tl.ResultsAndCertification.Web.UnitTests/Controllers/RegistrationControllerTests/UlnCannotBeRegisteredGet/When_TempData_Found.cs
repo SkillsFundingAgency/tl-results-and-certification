@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
             model.Should().NotBeNull();
             model.RegistrationProfileId.Should().Be(expectedViewModel.RegistrationProfileId);
-            model.IsActive.Should().Be(expectedViewModel.IsActive);
+            model.IsAllowed.Should().Be(expectedViewModel.IsAllowed);
             model.IsRegisteredWithOtherAo.Should().Be(expectedViewModel.IsRegisteredWithOtherAo);
             model.Uln.Should().Be(expectedViewModel.Uln);
 

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -56,9 +57,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 expectedResponse.Should().BeNull();
                 return;
             }
+
+            var expecedStatus = expectedResponse.IsRegisteredWithOtherAo ? RegistrationPathwayStatus.NotSpecified : expectedResponse.Status;
             
             actualResult.Uln.Should().Be(expectedResponse.Uln);
-            actualResult.IsActive.Should().Be(expectedResponse.IsActive);
+            actualResult.Status.Should().Be(expecedStatus);
             actualResult.IsRegisteredWithOtherAo.Should().Be(expectedResponse.IsRegisteredWithOtherAo);
         }
 
@@ -73,11 +76,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                     
                     // IsActive
                     new object[] { 10011881, 1111111111,
-                        new FindUlnResponse { Uln = 1111111111, RegistrationProfileId = 1, IsActive = true, IsRegisteredWithOtherAo = false } },
+                        new FindUlnResponse { Uln = 1111111111, RegistrationProfileId = 1, Status = RegistrationPathwayStatus.Active, IsRegisteredWithOtherAo = false } },
                     
                     // IsRegisteredWithOtherAo
                     new object[] { 10011881, 1111111112,
-                        new FindUlnResponse { Uln = 1111111112, RegistrationProfileId = 0, IsActive = false, IsRegisteredWithOtherAo = true } },
+                        new FindUlnResponse { Uln = 1111111112, RegistrationProfileId = 0, Status = RegistrationPathwayStatus.Active, IsRegisteredWithOtherAo = true } },
                 };
             }
         }

@@ -4,12 +4,8 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
-    public class UlnRegistrationNotFoundViewModel
-    {
-        public string Uln { get; set; }
-        public int RegistrationProfileId { get; set; }
-        public bool IsRegisteredWithOtherAo { get; set; }
-        public bool IsActive { get; set; }
+    public class UlnRegistrationNotFoundViewModel : UlnNotFoundViewModel
+    {        
         public bool IsChangeMode { get; set; }
         public string BackLinkRouteName { get; set; }
 
@@ -17,10 +13,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         {
             get
             {
-                return IsActive || IsRegisteredWithOtherAo;
+                return IsAllowed || IsRegisteredWithOtherAo;
             }
         }
 
-        public BackLinkModel BackLink => new BackLinkModel { RouteName = !string.IsNullOrWhiteSpace(BackLinkRouteName) ? BackLinkRouteName : RouteConstants.AddRegistrationUln, RouteAttributes = IsChangeMode ? new Dictionary<string, string> { { Constants.IsChangeMode, "true" } } : null };
+        public override BackLinkModel BackLink => new BackLinkModel { RouteName = !string.IsNullOrWhiteSpace(BackLinkRouteName) ? BackLinkRouteName : RouteConstants.AddRegistrationUln, RouteAttributes = IsChangeMode ? new Dictionary<string, string> { { Constants.IsChangeMode, "true" } } : null };
     }
 }

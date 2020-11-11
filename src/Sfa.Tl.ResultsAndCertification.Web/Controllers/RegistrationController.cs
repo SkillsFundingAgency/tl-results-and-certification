@@ -541,7 +541,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var searchResult = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.SearchUln.ToLong());
 
-            if (searchResult?.IsActive == true)
+            if (searchResult?.IsAllowed == true)
             {
                 return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = searchResult.RegistrationProfileId });
             }
