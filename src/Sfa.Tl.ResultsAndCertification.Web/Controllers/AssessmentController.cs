@@ -143,6 +143,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.AssessmentsSearchCriteria);
             var viewModel = new SearchAssessmentsViewModel { SearchUln = defaultValue };
             return View(viewModel);
-        }        
+        }
+
+        [Route("assessment-entries-learner-search", Name = RouteConstants.SubmitSearchAssessments)]
+        public async Task<IActionResult> SearchAssessmentsAsync(SearchAssessmentsViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var searchResult = await _assessmentLoader.FindUlnAssessmentsAsync(User.GetUkPrn(), model.SearchUln.ToLong());
+
+            if (searchResult?.IsAllowed == true)
+            {
+                return View(model);
+            }
+            else
+            {
+                await _cacheService.SetAsync(Constants.AssessmentsSearchCriteria, model.SearchUln);
+
+                var ulnAssessmentsNotfoundModel = new UlnAssessmentsNotFoundViewModel { Uln = model.SearchUln.ToString() };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.SearchAssessmentsUlnNotFound), ulnAssessmentsNotfoundModel, CacheExpiryTime.XSmall);
+
+                return View(model);
+            }
+        }
     }
 }
