@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -15,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
 {
     public abstract class AssessmentRepositoryBaseTest : BaseTest<TqPathwayAssessment>
     {
+        protected long AoUkprn = 10011881;
         protected AssessmentService AssessmentService;
         protected TlRoute Route;
         protected TlPathway Pathway;
@@ -63,6 +66,37 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProvider);
             var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
+
+            DbContext.SaveChanges();
+            return profile;
+        }
+
+        public List<TqRegistrationProfile> SeedRegistrationsDataByStatus(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null)
+        {
+            var profiles = new List<TqRegistrationProfile>();
+
+            foreach (var uln in ulns)
+            {
+                profiles.Add(SeedRegistrationDataByStatus(uln.Key, uln.Value, tqProvider));
+            }
+            return profiles;
+        }
+
+        public TqRegistrationProfile SeedRegistrationDataByStatus(long uln, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active, TqProvider tqProvider = null)
+        {
+            var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
+            var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
+            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProviders.First());
+            tqRegistrationPathway.Status = status;
+
+            var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
+
+            if (status == RegistrationPathwayStatus.Withdrawn)
+            {
+                tqRegistrationPathway.EndDate = DateTime.UtcNow.AddDays(-1);
+                tqRegistrationSpecialism.IsOptedin = true;
+                tqRegistrationSpecialism.EndDate = DateTime.UtcNow.AddDays(-1);
+            }
 
             DbContext.SaveChanges();
             return profile;
@@ -145,5 +179,32 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             }
             return tqSpecialismAssessments;
         }
+
+        #region Assert Methods
+
+        public void AssertSpecialismAssessment(TqSpecialismAssessment actualSpecialismAssessment, TqSpecialismAssessment expectedSpecialismAssessment)
+        {
+            actualSpecialismAssessment.TqRegistrationSpecialismId.Should().Be(expectedSpecialismAssessment.TqRegistrationSpecialismId);
+            actualSpecialismAssessment.AssessmentSeriesId.Should().Be(expectedSpecialismAssessment.AssessmentSeriesId);
+            actualSpecialismAssessment.IsOptedin.Should().Be(expectedSpecialismAssessment.IsOptedin);
+            actualSpecialismAssessment.IsBulkUpload.Should().Be(expectedSpecialismAssessment.IsBulkUpload);
+            actualSpecialismAssessment.StartDate.ToShortDateString().Should().Be(expectedSpecialismAssessment.StartDate.ToShortDateString());
+            if (actualSpecialismAssessment.EndDate != null)
+                actualSpecialismAssessment.EndDate.Value.ToShortDateString().Should().Be(expectedSpecialismAssessment.EndDate.Value.ToShortDateString());
+            actualSpecialismAssessment.CreatedBy.Should().Be(expectedSpecialismAssessment.CreatedBy);
+        }
+
+        public void AssertPathwayAssessment(TqPathwayAssessment actualPathwayAssessment, TqPathwayAssessment expectedPathwayAssessment)
+        {
+            actualPathwayAssessment.TqRegistrationPathwayId.Should().Be(expectedPathwayAssessment.TqRegistrationPathwayId);
+            actualPathwayAssessment.AssessmentSeriesId.Should().Be(expectedPathwayAssessment.AssessmentSeriesId);
+            actualPathwayAssessment.IsOptedin.Should().Be(expectedPathwayAssessment.IsOptedin);
+            actualPathwayAssessment.IsBulkUpload.Should().Be(actualPathwayAssessment.IsBulkUpload);
+            actualPathwayAssessment.StartDate.ToShortDateString().Should().Be(expectedPathwayAssessment.StartDate.ToShortDateString());
+            if (actualPathwayAssessment.EndDate != null)
+                actualPathwayAssessment.EndDate.Value.ToShortDateString().Should().Be(expectedPathwayAssessment.EndDate.Value.ToShortDateString());
+            actualPathwayAssessment.CreatedBy.Should().Be(expectedPathwayAssessment.CreatedBy);
+        }
+        #endregion
     }
 }
