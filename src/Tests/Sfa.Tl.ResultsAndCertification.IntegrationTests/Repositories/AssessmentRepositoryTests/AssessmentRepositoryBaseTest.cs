@@ -92,30 +92,26 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
 
             foreach (var (pathwayRegistration, index) in pathwayRegistrations.Select((value, i) => (value, i)))
             {
-                var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
                 if (isHistorical)
                 {
                     // Historical record
+                    var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
                     pathwayAssessment.IsOptedin = false;
                     pathwayAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
 
-                    var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, pathwayAssessment);
-                    tqPathwayAssessments.Add(tqPathwayAssessment);
+                    var tqPathwayAssessmentHistorical = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, pathwayAssessment);
+                    tqPathwayAssessments.Add(tqPathwayAssessmentHistorical);
+                }
 
-                    // current active record
-                    var activePathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
-                    tqPathwayAssessments.Add(PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, activePathwayAssessment));
-                }
-                else
+                var activePathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
+                var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, activePathwayAssessment);
+                if (!seedPathwayAssessmentsAsActive)
                 {
-                    var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, pathwayAssessment);
-                    if (!seedPathwayAssessmentsAsActive)
-                    {
-                        tqPathwayAssessment.IsOptedin = false;
-                        tqPathwayAssessment.EndDate = DateTime.UtcNow;
-                    }
-                    tqPathwayAssessments.Add(tqPathwayAssessment);
+                    tqPathwayAssessment.IsOptedin = pathwayRegistration.Status == Common.Enum.RegistrationPathwayStatus.Withdrawn ? true : false;
+                    tqPathwayAssessment.EndDate = DateTime.UtcNow;
                 }
+
+                tqPathwayAssessments.Add(tqPathwayAssessment);
             }
             return tqPathwayAssessments;
         }
@@ -126,31 +122,26 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
 
             foreach (var (specialismRegistration, index) in specialismRegistrations.Select((value, i) => (value, i)))
             {
-                var specialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
-
                 if (isHistorical)
                 {
                     // Historical record
+                    var specialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
                     specialismAssessment.IsOptedin = false;
                     specialismAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
 
-                    var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialismAssessment);
-                    tqSpecialismAssessments.Add(tqSpecialismAssessment);
+                    var tqSpecialismAssessmentHistorical = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialismAssessment);
+                    tqSpecialismAssessments.Add(tqSpecialismAssessmentHistorical);
+                }
 
-                    // current active record
-                    var activeSpecialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
-                    tqSpecialismAssessments.Add(SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, activeSpecialismAssessment));
-                }
-                else
+                var activeSpecialismAssessment = new TqSpecialismAssessmentBuilder().Build(specialismRegistration, AssessmentSeries[index]);
+                var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, activeSpecialismAssessment);
+                if (!seedSpecialismAssessmentsAsActive)
                 {
-                    var tqSpecialismAssessment = SpecialismAssessmentDataProvider.CreateTqSpecialismAssessment(DbContext, specialismAssessment);
-                    if (!seedSpecialismAssessmentsAsActive)
-                    {
-                        tqSpecialismAssessment.IsOptedin = false;
-                        tqSpecialismAssessment.EndDate = DateTime.UtcNow;
-                    }
-                    tqSpecialismAssessments.Add(tqSpecialismAssessment);
+                    tqSpecialismAssessment.IsOptedin = specialismRegistration.TqRegistrationPathway.Status == Common.Enum.RegistrationPathwayStatus.Withdrawn ? true : false;
+                    tqSpecialismAssessment.EndDate = DateTime.UtcNow;
                 }
+                tqSpecialismAssessments.Add(tqSpecialismAssessment);
+                
             }
             return tqSpecialismAssessments;
         }
