@@ -117,49 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Assessment_Dashboard" xml:space="preserve">
-    <value>Assessment entries</value>
+  <data name="Assessment_Entry_Text" xml:space="preserve">
+    <value>Assessment entry</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
+  <data name="Change_Text" xml:space="preserve">
+    <value>Change</value>
   </data>
-  <data name="Learners_Assessment_entries" xml:space="preserve">
+  <data name="Core_Heading_Text" xml:space="preserve">
+    <value>Core: {0}</value>
+  </data>
+  <data name="Learners_Assessment_Entries_Heading_Text" xml:space="preserve">
     <value>Learner's assessment entries</value>
   </data>
-  <data name="Provider_Find_Provider" xml:space="preserve">
-    <value>Find a provider</value>
+  <data name="Name_Heading_Text" xml:space="preserve">
+    <value>Name: {0}</value>
   </data>
-  <data name="Provider_Tlevels" xml:space="preserve">
-    <value>Provider’s T Levels</value>
+  <data name="Not_Specified_Text" xml:space="preserve">
+    <value>Not specified</value>
   </data>
-  <data name="Provider_Your_Providers" xml:space="preserve">
-    <value>Your providers</value>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Learner’s assessment entries page</value>
   </data>
-  <data name="Registration_Dashboard" xml:space="preserve">
-    <value>Registrations</value>
+  <data name="Provider_Heading_Text" xml:space="preserve">
+    <value>Provider: {0}</value>
   </data>
-  <data name="Registration_Details" xml:space="preserve">
-    <value>Registration details</value>
+  <data name="Search_Again_Text" xml:space="preserve">
+    <value>Search again</value>
   </data>
-  <data name="Search_For_Assessments" xml:space="preserve">
-    <value>Search for a learner</value>
+  <data name="Specialism_Heading_Text" xml:space="preserve">
+    <value>Specialism: {0}</value>
   </data>
-  <data name="Search_For_Registration" xml:space="preserve">
-    <value>Search for a registration</value>
+  <data name="Uln_Heading_Text" xml:space="preserve">
+    <value>ULN: {0}</value>
   </data>
-  <data name="Tlevel_Details" xml:space="preserve">
-    <value>T Level details</value>
+  <data name="View_And_Amend_This_Learners_Registration_Details_Text" xml:space="preserve">
+    <value>View and amend this learner's registration details</value>
   </data>
-  <data name="Tlevel_Review_Select" xml:space="preserve">
-    <value>Review T Levels</value>
-  </data>
-  <data name="Tlevel_ViewAll" xml:space="preserve">
-    <value>Your T Levels</value>
-  </data>
-  <data name="Upload_Assessments_File" xml:space="preserve">
-    <value>Upload assessment entries file</value>
-  </data>
-  <data name="Upload_Registrations_File" xml:space="preserve">
-    <value>Upload registrations file</value>
+  <data name="View_This_Learners_Registration_Details_Text" xml:space="preserve">
+    <value>View this learner's registration details</value>
   </data>
 </root>
