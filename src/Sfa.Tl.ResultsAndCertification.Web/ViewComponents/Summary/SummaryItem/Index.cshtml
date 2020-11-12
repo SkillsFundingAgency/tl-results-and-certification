@@ -22,7 +22,8 @@
                 @Model?.ActionText
                 @if (Model?.RenderHiddenActionText == true)
                 {
-                    <span class="govuk-visually-hidden">@Model?.Title</span>
+                    var hiddenText = !string.IsNullOrWhiteSpace(Model?.HiddenActionText) ? Model?.HiddenActionText : Model?.Title;
+                    <span class="govuk-visually-hidden">@hiddenText</span>
                 }
             </a>
         }

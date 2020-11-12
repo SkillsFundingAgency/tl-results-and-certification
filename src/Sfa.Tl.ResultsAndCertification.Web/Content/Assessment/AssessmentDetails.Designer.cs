@@ -70,6 +70,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change core assessment entry.
+        /// </summary>
+        public static string Change_Core_Assessment_Entry_Hidden_Text {
+            get {
+                return ResourceManager.GetString("Change_Core_Assessment_Entry_Hidden_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change specialism assessment entry.
+        /// </summary>
+        public static string Change_Specialism_Assessment_Entry_Hidden_Text {
+            get {
+                return ResourceManager.GetString("Change_Specialism_Assessment_Entry_Hidden_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Core: {0}.
         /// </summary>
         public static string Core_Heading_Text {

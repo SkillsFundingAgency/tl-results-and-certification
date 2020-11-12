@@ -120,6 +120,12 @@
   <data name="Change_Action_Link_Text" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="Change_Core_Assessment_Entry_Hidden_Text" xml:space="preserve">
+    <value>Change core assessment entry</value>
+  </data>
+  <data name="Change_Specialism_Assessment_Entry_Hidden_Text" xml:space="preserve">
+    <value>Change specialism assessment entry</value>
+  </data>
   <data name="Core_Heading_Text" xml:space="preserve">
     <value>Core: {0}</value>
   </data>
