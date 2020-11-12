@@ -85,7 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<AssessmentDetailsViewModel> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            var response = await _internalApiClient.GetAssessmentnDetailsAsync(aoUkprn, profileId, status);
+            var response = await _internalApiClient.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
             return _mapper.Map<AssessmentDetailsViewModel>(response);
         }
     }

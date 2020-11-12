@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 Status = RegistrationPathwayStatus.Active
             };
 
-            InternalApiClient.GetAssessmentnDetailsAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
+            InternalApiClient.GetAssessmentDetailsAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
         }
 
         [Fact]

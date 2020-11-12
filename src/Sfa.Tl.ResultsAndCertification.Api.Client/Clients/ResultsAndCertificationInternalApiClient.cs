@@ -186,7 +186,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<BulkProcessRequest, BulkAssessmentResponse>(requestUri, model);
         }
 
-        public async Task<AssessmentDetails> GetAssessmentnDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        public async Task<AssessmentDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var requestUri = string.Format(ApiConstants.GetAssessmentDetailsUri, aoUkprn, profileId, (int?)status);
             return await GetAsync<AssessmentDetails>(requestUri);
