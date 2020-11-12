@@ -162,10 +162,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProviders.First());
             tqRegistrationPathway.Status = status;
+
             var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
 
             if (status == RegistrationPathwayStatus.Withdrawn)
             {
+                tqRegistrationPathway.EndDate = DateTime.UtcNow.AddDays(-1);
                 tqRegistrationSpecialism.IsOptedin = true;
                 tqRegistrationSpecialism.EndDate = DateTime.UtcNow.AddDays(-1);
             }
