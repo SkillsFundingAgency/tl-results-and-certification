@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         // Assessments
         Task<BulkAssessmentResponse> ProcessBulkAssessmentsAsync(BulkProcessRequest model);
-        Task<AssessmentDetails> GetAssessmentnDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
+        Task<AssessmentDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
 
         // DocumentUploadHistory
         Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);

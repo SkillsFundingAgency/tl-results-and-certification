@@ -61,20 +61,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment entry.
-        /// </summary>
-        public static string Assessment_Entry_Text {
-            get {
-                return ResourceManager.GetString("Assessment_Entry_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
-        public static string Change_Text {
+        public static string Change_Action_Link_Text {
             get {
-                return ResourceManager.GetString("Change_Text", resourceCulture);
+                return ResourceManager.GetString("Change_Action_Link_Text", resourceCulture);
             }
         }
         
@@ -147,6 +138,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string Specialism_Heading_Text {
             get {
                 return ResourceManager.GetString("Specialism_Heading_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assessment entry.
+        /// </summary>
+        public static string Title_Assessment_Entry_Text {
+            get {
+                return ResourceManager.GetString("Title_Assessment_Entry_Text", resourceCulture);
             }
         }
         
