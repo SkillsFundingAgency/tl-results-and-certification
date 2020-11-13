@@ -160,6 +160,6 @@
     <value>ULN: {0}</value>
   </data>
   <data name="ViewAssessmentEntries_Link_Text" xml:space="preserve">
-    <value>View and manage this learner's assessment entries</value>
+    <value>View and amend this learner's assessment entries</value>
   </data>
 </root>

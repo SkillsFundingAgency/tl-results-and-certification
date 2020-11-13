@@ -187,7 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View and manage this learner&apos;s assessment entries.
+        ///   Looks up a localized string similar to View and amend this learner&apos;s assessment entries.
         /// </summary>
         public static string ViewAssessmentEntries_Link_Text {
             get {
