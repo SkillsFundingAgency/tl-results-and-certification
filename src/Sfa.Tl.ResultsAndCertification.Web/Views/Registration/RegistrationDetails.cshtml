@@ -24,6 +24,12 @@
             <vc:summary-list model=Model.SummarySpecialisms></vc:summary-list>
             <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
         </dl>
-        <p class="govuk-body"><a class="govuk-link" asp-route="SearchRegistration">@RegistrationDetails.Search_Again_Button_Text</a></p>
+
+        @if (Model.ShowAssessmentEntriesLink)
+        {
+            <p class="govuk-body govuk-!-margin-top-8"><a class="govuk-link" id="AssessmentEntriesLink" asp-route="AssessmentDetails" asp-route-profileId="1">@RegistrationDetails.ViewAssessmentEntries_Link_Text</a></p>
+        }
+
+        <p class="govuk-body govuk-!-margin-top-8"><a class="govuk-link" asp-route="SearchRegistration">@RegistrationDetails.Search_Again_Button_Text</a></p>
     </div>
 </div>

@@ -159,4 +159,7 @@
   <data name="Uln_Heading_Text" xml:space="preserve">
     <value>ULN: {0}</value>
   </data>
+  <data name="ViewAssessmentEntries_Link_Text" xml:space="preserve">
+    <value>View and manage this learner's assessment entries</value>
+  </data>
 </root>

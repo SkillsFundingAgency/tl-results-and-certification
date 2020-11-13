@@ -56,6 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.SpecialismsDisplayName.Should().BeEquivalentTo(mockresult.SpecialismsDisplayName);
             model.AcademicYear.Should().Be(mockresult.AcademicYear);
             model.Status.Should().Be(mockresult.Status);
+            model.ShowAssessmentEntriesLink.Should().BeTrue();
 
             // Summary Status
             model.SummaryStatus.Should().NotBeNull();

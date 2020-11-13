@@ -24,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public IEnumerable<string> SpecialismsDisplayName { get; set; }
         public int AcademicYear { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
+        public bool ShowAssessmentEntriesLink { get { return Status == RegistrationPathwayStatus.Active;  } }
 
         private string ChangeStatusRouteName => Status == RegistrationPathwayStatus.Active ? RouteConstants.AmendActiveRegistration : RouteConstants.AmendWithdrawRegistration;
         private string TagCssClassName => Status == RegistrationPathwayStatus.Active ? "govuk-tag--green" : "govuk-tag--blue";
