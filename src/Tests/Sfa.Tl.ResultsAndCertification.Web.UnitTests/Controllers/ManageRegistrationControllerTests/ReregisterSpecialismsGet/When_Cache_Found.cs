@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         private RegistrationDetailsViewModel _registrationDetailsViewModel;
         private PathwaySpecialismsViewModel _pathwaySpecialismsViewModel;
         private ReregisterSpecialismQuestionViewModel _reregisterSpecialismQuestionViewModel;
+        private readonly string _selectedSpecialismCode = "12345678";
         private readonly string _coreCode = "12345678";
         private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Withdrawn;
 
@@ -31,15 +32,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
             _reregisterCoreViewModel = new ReregisterCoreViewModel { SelectedCoreCode = _coreCode, CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = _coreCode } } };
             _reregisterSpecialismQuestionViewModel = new ReregisterSpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true };
-            _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayName = "Test Pathway", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Id = 1, Code = "345678", Name = "Test Specialism", DisplayName = "Test Specialism (345678)", IsSelected = true } } };
+            _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayName = "Test Pathway", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Id = 1, Code = _selectedSpecialismCode, Name = "Test Specialism", DisplayName = "Test Specialism (345678)", IsSelected = true } } };
 
             cacheResult = new ReregisterViewModel
             {
                 ReregisterCore = _reregisterCoreViewModel,
-                SpecialismQuestion = _reregisterSpecialismQuestionViewModel
+                SpecialismQuestion = _reregisterSpecialismQuestionViewModel,
+                ReregisterSpecialisms = new ReregisterSpecialismViewModel { SelectedSpecialismCode = _selectedSpecialismCode, PathwaySpecialisms = _pathwaySpecialismsViewModel }
             };
             CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(cacheResult);
-            RegistrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(AoUkprn, _coreCode).Returns(_pathwaySpecialismsViewModel);
             RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(_registrationDetailsViewModel);
         }
 
@@ -47,7 +48,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         public void Then_Expected_Methods_Called()
         {
             RegistrationLoader.Received(1).GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus);
-            RegistrationLoader.Received(1).GetPathwaySpecialismsByPathwayLarIdAsync(AoUkprn, _coreCode);
         }
 
         [Fact]

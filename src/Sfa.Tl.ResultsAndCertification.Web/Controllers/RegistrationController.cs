@@ -423,6 +423,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism = true;
             }
 
+            model.PathwaySpecialisms?.Specialisms?.ToList().ForEach(x => { x.IsSelected = (x.Code == model.SelectedSpecialismCode); });
+
             cacheModel.SelectSpecialisms = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
             return RedirectToRoute(model.IsChangeMode ? RouteConstants.AddRegistrationCheckAndSubmit : RouteConstants.AddRegistrationAcademicYear);

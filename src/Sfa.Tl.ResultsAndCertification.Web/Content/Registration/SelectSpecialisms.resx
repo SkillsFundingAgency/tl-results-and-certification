@@ -142,7 +142,7 @@
     <value>Register learner on a new course - Select the specialism page</value>
   </data>
   <data name="Select_The_Specialism_Label_Text" xml:space="preserve">
-    <value>Select the specialisms for {0}</value>
+    <value>Select the specialism for {0}</value>
   </data>
   <data name="Validation_Select_Specialism_Required_Message" xml:space="preserve">
     <value>Select a specialism</value>

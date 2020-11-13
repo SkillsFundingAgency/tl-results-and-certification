@@ -11,15 +11,15 @@
             </h1>
         </legend>
         <span sfa-validation-for="HasSpecialismSelected"></span>
-        <div class="govuk-checkboxes">
+        <div class="govuk-radios">
             @if (Model?.PathwaySpecialisms?.Specialisms != null)
             {
                 @foreach (var specialism in Model?.PathwaySpecialisms?.Specialisms?.Select((value, i) => (value, i)))
                 {
                     var elementId = (specialism.i > 0) ? "hasspecialismselected-" + specialism.i : "hasspecialismselected";
-                    <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.PathwaySpecialisms.Specialisms[@specialism.i].IsSelected">
-                        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="@elementId" type="radio" asp-for="@Model.SelectedSpecialismCode" value="@Model.PathwaySpecialisms.Specialisms[specialism.i].Code">
+                        <label class="govuk-label govuk-radios__label" for="@elementId">
                             @specialism.value.DisplayName
                         </label>
                     </div>
