@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationSpecialismPost
@@ -16,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private SelectCoreViewModel _selectCoreViewModel;
         private SpecialismQuestionViewModel _specialismQuestionViewModel;
         private PathwaySpecialismsViewModel _pathwaySpecialismsViewModel;
-        private string _coreCode = "12345678";
+        private readonly string _coreCode = "12345678";
 
         public override void Given()
         {
@@ -28,7 +29,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 SpecialismQuestion = _specialismQuestionViewModel
             };
 
-            SelectSpecialismViewModel = new SelectSpecialismViewModel();
+            SelectSpecialismViewModel = new SelectSpecialismViewModel
+            {
+                SelectedSpecialismCode = "SPL12345",
+                PathwaySpecialisms = new PathwaySpecialismsViewModel
+                {
+                    Specialisms = new List<SpecialismDetailsViewModel>
+                    {
+                        new SpecialismDetailsViewModel { Id = 11, Code = "SPL12345" },
+                        new SpecialismDetailsViewModel { Id = 22, Code = "SPL12346" },
+                        new SpecialismDetailsViewModel { Id = 33, Code = "SPL12347" },
+                    }
+                }
+            };
+
             _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayName = "Test Pathway", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Id = 1, Code = "345678", Name = "Test Specialism", DisplayName = "Test Specialism (345678)", IsSelected = true } } };
             RegistrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(Ukprn, _coreCode).Returns(_pathwaySpecialismsViewModel);
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
@@ -39,6 +53,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.AddRegistrationAcademicYear);
+        }
+
+        [Fact]
+        public void Then_CacheUpdated_AsExpected()
+        {
+            CacheService.Received(1).SetAsync(CacheKey,
+                Arg.Is<RegistrationViewModel>(x => x.SelectSpecialisms.PathwaySpecialisms.Specialisms.SingleOrDefault(s => s.IsSelected).Id == 11));
         }
     }
 }
