@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 ProviderUkprn = reg.Ukprn.Trim().ToLong(),
                 AcademicYear = EnumExtensions.GetEnumValueByDisplayName<AcademicYear>(reg.AcademicYear.Trim()).Value,
                 CoreCode = reg.Core.Trim(),
-                SpecialismCodes = reg.Specialisms.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())),
+                SpecialismCodes = reg.Specialism.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())),
                 RowNum = rownum,
                 ValidationErrors = new List<BulkProcessValidationError>()
             };
@@ -41,7 +41,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 // Note: Uln mapped here to use when checking Duplicate Uln and RowNum required at Stage-3 as well.
                 Uln = ulnValue,
                 RowNum = rownum,
-
                 ValidationErrors = BuildValidationError(rownum, ulnValue, validationResult, errorMessage)
             };
         }
