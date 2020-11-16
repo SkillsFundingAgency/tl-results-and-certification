@@ -56,6 +56,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Dashboard.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Assessment\ProblemWithAssessmentsUpload.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProblemWithAssessmentsUpload.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Assessment\SearchAssessments.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -431,6 +436,10 @@
     <EmbeddedResource Update="Content\Assessment\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Assessment\ProblemWithAssessmentsUpload.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProblemWithAssessmentsUpload.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Assessment\SearchAssessments.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

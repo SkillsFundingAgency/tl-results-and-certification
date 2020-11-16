@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             if (response.ShowProblemWithServicePage)
-                return RedirectToRoute(RouteConstants.ProblemWithService);
+                return RedirectToRoute(RouteConstants.ProblemWithAssessmentsUpload);
 
             var unsuccessfulViewModel = new ViewModel.Registration.UploadUnsuccessfulViewModel 
             { 
@@ -108,6 +108,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("problem-with-assessment-entries-upload", Name = RouteConstants.ProblemWithAssessmentsUpload)]
+        public IActionResult ProblemWithAssessmentsUpload()
+        {
+            return View();
         }
 
         [HttpGet]

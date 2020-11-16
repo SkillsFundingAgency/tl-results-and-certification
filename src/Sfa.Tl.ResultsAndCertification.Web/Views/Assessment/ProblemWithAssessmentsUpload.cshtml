@@ -1,0 +1,16 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Assessment
+@using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
+@inject IWebConfigurationService ConfigurationService
+
+@{
+    ViewData["Title"] = @ProblemWithAssessmentsUpload.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">@ProblemWithAssessmentsUpload.Page_Heading</h1>
+        <p class="govuk-body govuk-!-margin-top-7">@ProblemWithAssessmentsUpload.Submit_Your_File_Again_Text <a class="govuk-link" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@ProblemWithAssessmentsUpload.Email_Subject">@ProblemWithAssessmentsUpload.Contact_Manage_TLevels_Results_Team_Text</a>.</p>
+        <p class="govuk-!-margin-top-5"><a class="govuk-button" role="button" asp-route="UploadAssessmentsFile">@ProblemWithAssessmentsUpload.Upload_File_Again_Button_Text</a></p>
+        <p class="govuk-!-margin-top-5"><a class="govuk-button govuk-button--secondary" role="button" asp-route="AssessmentDashboard">@ProblemWithAssessmentsUpload.Back_To_Assessment_Entries_Button_Text</a></p>
+    </div>
+</div>
