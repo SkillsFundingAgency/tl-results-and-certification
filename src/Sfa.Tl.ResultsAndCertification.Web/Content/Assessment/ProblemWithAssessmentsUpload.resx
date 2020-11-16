@@ -130,12 +130,12 @@
     <value>Sorry, there is a problem with the service</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Problem with assessment entries upload page</value>
+    <value>Assessment entries file upload - Problem with the service page</value>
   </data>
   <data name="Submit_Your_File_Again_Text" xml:space="preserve">
     <value>Enter your assessment entry details again. If you keep getting this message</value>
   </data>
   <data name="Upload_File_Again_Button_Text" xml:space="preserve">
-    <value>Back to assessment entries</value>
+    <value>Start again</value>
   </data>
 </root>

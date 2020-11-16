@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Problem with assessment entries upload page.
+        ///   Looks up a localized string similar to Assessment entries file upload - Problem with the service page.
         /// </summary>
         public static string Page_Title {
             get {
@@ -116,7 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to assessment entries.
+        ///   Looks up a localized string similar to Start again.
         /// </summary>
         public static string Upload_File_Again_Button_Text {
             get {

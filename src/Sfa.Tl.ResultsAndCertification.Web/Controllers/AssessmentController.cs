@@ -111,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("problem-with-assessment-entries-upload", Name = RouteConstants.ProblemWithAssessmentsUpload)]
+        [Route("assessment-entries-file-upload-service-problem", Name = RouteConstants.ProblemWithAssessmentsUpload)]
         public IActionResult ProblemWithAssessmentsUpload()
         {
             return View();
