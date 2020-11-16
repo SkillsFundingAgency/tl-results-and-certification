@@ -408,7 +408,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("add-registration-specialisms", Name = RouteConstants.SubmitRegistrationSpecialisms)]
+        [Route("add-registration-specialism", Name = RouteConstants.SubmitRegistrationSpecialisms)]
         public async Task<IActionResult> AddRegistrationSpecialismsAsync(SelectSpecialismViewModel model)
         {
             if (!ModelState.IsValid)
