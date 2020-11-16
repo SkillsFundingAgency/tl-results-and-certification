@@ -393,7 +393,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-registration-specialisms/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationSpecialisms)]
+        [Route("add-registration-specialism/{isChangeMode:bool?}", Name = RouteConstants.AddRegistrationSpecialisms)]
         public async Task<IActionResult> AddRegistrationSpecialismsAsync(bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
