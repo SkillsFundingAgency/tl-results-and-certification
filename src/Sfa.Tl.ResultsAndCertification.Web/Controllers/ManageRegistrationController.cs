@@ -901,13 +901,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsAsync(ChangeSpecialismViewModel viewModel)
         {
             var coreSpecialisms = await _registrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(User.GetUkPrn(), viewModel.CoreCode);
-
-            // Update IsSelected flag.
-            //coreSpecialisms.Specialisms.ToList().ForEach(x => { x.IsSelected = viewModel.SpecialismCodes.Contains(x.Code); });
-            //viewModel.SelectedCode = coreSpecialisms.Specialisms.FirstOrDefault(x => x.IsSelected)?.Code;
-
             viewModel.SelectedSpecialismCode = viewModel.SpecialismCodes.FirstOrDefault();
-
 
             return coreSpecialisms;
         }

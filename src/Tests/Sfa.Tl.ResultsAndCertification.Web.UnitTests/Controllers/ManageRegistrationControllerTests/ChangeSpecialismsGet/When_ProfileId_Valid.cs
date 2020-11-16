@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                 ProfileId = ProfileId,
                 CoreCode = "12345678",
                 PathwaySpecialisms = mockPathwaySpecialismsViewModel,
-                SpecialismCodes = new List<string> { "77777", "99999" }
+                SpecialismCodes = new List<string> { "77777" }
             };
 
             RegistrationLoader.GetRegistrationProfileAsync<ChangeSpecialismViewModel>(AoUkprn, ProfileId).Returns(mockChangeSpecialismViewModel);
@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             model.CoreCode.Should().Be(mockChangeSpecialismViewModel.CoreCode);
             model.ProfileId.Should().Be(mockChangeSpecialismViewModel.ProfileId);
             model.SpecialismCodes.Should().NotBeNullOrEmpty();
-            model.SpecialismCodes.Count().Should().Be(2);
+            model.SpecialismCodes.Count().Should().Be(1);
             model.SpecialismCodes.ToList().ForEach(x => { mockChangeSpecialismViewModel.SpecialismCodes.Contains(x); });
 
             var backLink = model.BackLink;
