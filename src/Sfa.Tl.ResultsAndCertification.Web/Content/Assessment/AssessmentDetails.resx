@@ -121,10 +121,10 @@
     <value>Change</value>
   </data>
   <data name="Change_Core_Assessment_Entry_Hidden_Text" xml:space="preserve">
-    <value>Change core assessment entry</value>
+    <value>Core assessment entry</value>
   </data>
   <data name="Change_Specialism_Assessment_Entry_Hidden_Text" xml:space="preserve">
-    <value>Change specialism assessment entry</value>
+    <value>Specialism assessment entry</value>
   </data>
   <data name="Core_Heading_Text" xml:space="preserve">
     <value>Core: {0}</value>

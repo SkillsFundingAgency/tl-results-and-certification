@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change core assessment entry.
+        ///   Looks up a localized string similar to Core assessment entry.
         /// </summary>
         public static string Change_Core_Assessment_Entry_Hidden_Text {
             get {
@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change specialism assessment entry.
+        ///   Looks up a localized string similar to Specialism assessment entry.
         /// </summary>
         public static string Change_Specialism_Assessment_Entry_Hidden_Text {
             get {
