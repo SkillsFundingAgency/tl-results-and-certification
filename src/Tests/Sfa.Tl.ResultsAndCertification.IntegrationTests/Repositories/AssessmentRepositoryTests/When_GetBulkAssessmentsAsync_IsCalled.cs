@@ -82,7 +82,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             // Uln: 1111111111 - Registration(Active) with no assessments
             var actualresult = _result.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == 1111111111);
             actualresult.Should().NotBeNull();
-            actualresult.TqPathwayAssessments.Should().BeEmpty();
             actualresult.TqRegistrationSpecialisms.FirstOrDefault().Should().NotBeNull();
             actualresult.TqRegistrationSpecialisms.FirstOrDefault().TqSpecialismAssessments.Should().BeEmpty();
 
@@ -90,11 +89,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             var uln = 1111111113;
             actualresult = _result.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == uln);
             actualresult.Should().NotBeNull();
+            actualresult.TqRegistrationSpecialisms.Should().HaveCount(1);
 
             // Uln: 1111111112 - Registration(Active), TqPathwayAssessments(Active + History) and TqSpecialismAssessments(Active + History)
             uln = 1111111112;
             actualresult = _result.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == uln);
             actualresult.Should().NotBeNull();
+            actualresult.TqRegistrationSpecialisms.Should().HaveCount(1);
         }        
     }
 }
