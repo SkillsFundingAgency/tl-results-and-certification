@@ -90,15 +90,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             var uln = 1111111113;
             actualresult = _result.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == uln);
             actualresult.Should().NotBeNull();
-            actualresult.TqPathwayAssessments.Should().HaveCount(1);
-            actualresult.TqRegistrationSpecialisms.Should().HaveCount(1);
 
             // Uln: 1111111112 - Registration(Active), TqPathwayAssessments(Active + History) and TqSpecialismAssessments(Active + History)
             uln = 1111111112;
             actualresult = _result.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == uln);
             actualresult.Should().NotBeNull();
-            actualresult.TqPathwayAssessments.Should().HaveCount(2);
-            actualresult.TqRegistrationSpecialisms.Should().HaveCount(1);
         }        
     }
 }
