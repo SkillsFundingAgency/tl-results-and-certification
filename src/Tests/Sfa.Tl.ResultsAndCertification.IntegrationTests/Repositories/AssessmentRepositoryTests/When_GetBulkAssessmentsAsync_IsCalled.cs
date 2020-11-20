@@ -92,29 +92,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             actualresult.Should().NotBeNull();
             actualresult.TqPathwayAssessments.Should().HaveCount(1);
             actualresult.TqRegistrationSpecialisms.Should().HaveCount(1);
-            var actualPathwayAssessment = actualresult.TqPathwayAssessments.FirstOrDefault();
-            var expectedPathwayAssessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate != null);
-            AssertPathwayAssessment(actualPathwayAssessment, expectedPathwayAssessment);
-
-            var actualSpecialismAssessment = actualresult.TqRegistrationSpecialisms.FirstOrDefault().TqSpecialismAssessments.FirstOrDefault();
-            var expectedSpecialismAssessment = _specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate != null);
-            AssertSpecialismAssessment(actualSpecialismAssessment, expectedSpecialismAssessment);
 
             // Uln: 1111111112 - Registration(Active), TqPathwayAssessments(Active + History) and TqSpecialismAssessments(Active + History)
             uln = 1111111112;
             actualresult = _result.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == uln);
             actualresult.Should().NotBeNull();
-            actualresult.TqPathwayAssessments.Should().HaveCount(1);
+            actualresult.TqPathwayAssessments.Should().HaveCount(2);
             actualresult.TqRegistrationSpecialisms.Should().HaveCount(1);
-            
-            // Assert PathwayAssessment
-            actualPathwayAssessment = actualresult.TqPathwayAssessments.FirstOrDefault();
-            expectedPathwayAssessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate == null);
-            AssertPathwayAssessment(actualPathwayAssessment, expectedPathwayAssessment);
-
-            actualSpecialismAssessment = actualresult.TqRegistrationSpecialisms.FirstOrDefault().TqSpecialismAssessments.FirstOrDefault();
-            expectedSpecialismAssessment = _specialismAssessments.FirstOrDefault(x => x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate == null);
-            AssertSpecialismAssessment(actualSpecialismAssessment, expectedSpecialismAssessment);
         }        
     }
 }

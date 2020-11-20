@@ -41,11 +41,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var response = new List<AssessmentRecordResponse>();
             var dbRegistrations = await _assessmentRepository.GetBulkAssessmentsAsync(aoUkprn, csvAssessments.Select(x => x.Uln));
             var dbAssessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
-
+            
             foreach (var assessment in csvAssessments)
             {
                 // 1. ULN not recognised with AO
-                var dbRegistration = dbRegistrations.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == assessment.Uln);
+                var dbRegistration = dbRegistrations.FirstOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == assessment.Uln);
                 if (dbRegistration == null)
                 {
                     response.Add(AddStage3ValidationError(assessment.RowNum, assessment.Uln, ValidationMessages.UlnNotRegistered));
@@ -114,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     });
                 }
             }
-
+            
             return response;
         }
 
@@ -238,7 +238,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 amendedSpecialismAssessments.ForEach(amendedSpecialismAssessment =>
                 {
-                    var existingSpecialismAssessment = existingSpecialismAssessmentsFromDb.SingleOrDefault(existingSpecialismAssessment => existingSpecialismAssessment.TqRegistrationSpecialismId == amendedSpecialismAssessment.TqRegistrationSpecialismId);
+                    var existingSpecialismAssessment = existingSpecialismAssessmentsFromDb.FirstOrDefault(existingSpecialismAssessment => existingSpecialismAssessment.TqRegistrationSpecialismId == amendedSpecialismAssessment.TqRegistrationSpecialismId);
 
                     if (existingSpecialismAssessment != null)
                     {
@@ -281,7 +281,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
             };
         }
-
+        
         private bool IsValidAssessmentEntry(int registrationYear, int assessmentYear, AssessmentEntryType entryType)
         {
             var startYear = entryType == AssessmentEntryType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
