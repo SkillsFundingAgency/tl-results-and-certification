@@ -10,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,16 +34,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _logger = logger;
         }
 
+        #region Bulk Assessments
+
         public async Task<IList<AssessmentRecordResponse>> ValidateAssessmentsAsync(long aoUkprn, IEnumerable<AssessmentCsvRecordResponse> csvAssessments)
         {
             var response = new List<AssessmentRecordResponse>();
             var dbRegistrations = await _assessmentRepository.GetBulkAssessmentsAsync(aoUkprn, csvAssessments.Select(x => x.Uln));
             var dbAssessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
-
+            
             foreach (var assessment in csvAssessments)
             {
                 // 1. ULN not recognised with AO
-                var dbRegistration = dbRegistrations.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == assessment.Uln);
+                var dbRegistration = dbRegistrations.FirstOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == assessment.Uln);
                 if (dbRegistration == null)
                 {
                     response.Add(AddStage3ValidationError(assessment.RowNum, assessment.Uln, ValidationMessages.UlnNotRegistered));
@@ -100,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     var registrationSpecialism = dbRegistration.TqRegistrationSpecialisms
                                                     .FirstOrDefault(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
-                    
+
                     response.Add(new AssessmentRecordResponse
                     {
                         TqRegistrationPathwayId = !string.IsNullOrWhiteSpace(assessment.CoreCode) ? dbRegistration?.Id : (int?)null,
@@ -111,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     });
                 }
             }
-
+            
             return response;
         }
 
@@ -235,7 +238,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 amendedSpecialismAssessments.ForEach(amendedSpecialismAssessment =>
                 {
-                    var existingSpecialismAssessment = existingSpecialismAssessmentsFromDb.SingleOrDefault(existingSpecialismAssessment => existingSpecialismAssessment.TqRegistrationSpecialismId == amendedSpecialismAssessment.TqRegistrationSpecialismId);
+                    var existingSpecialismAssessment = existingSpecialismAssessmentsFromDb.FirstOrDefault(existingSpecialismAssessment => existingSpecialismAssessment.TqRegistrationSpecialismId == amendedSpecialismAssessment.TqRegistrationSpecialismId);
 
                     if (existingSpecialismAssessment != null)
                     {
@@ -278,20 +281,31 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
             };
         }
-
+        
         private bool IsValidAssessmentEntry(int registrationYear, int assessmentYear, AssessmentEntryType entryType)
         {
             var startYear = entryType == AssessmentEntryType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
-            
-            var isValidRange = assessmentYear > (registrationYear + startYear) && 
+
+            var isValidRange = assessmentYear > (registrationYear + startYear) &&
                                assessmentYear <= (registrationYear + Constants.AssessmentEndInYears);
-            
+
             return isValidRange;
         }
 
         private BulkProcessValidationError BuildValidationError(AssessmentCsvRecordResponse assessment, string message)
         {
             return new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = message };
+        }
+
+        #endregion
+
+        public async Task<AssessmentDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        {
+            var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
+
+            if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
+
+            return _mapper.Map<AssessmentDetails>(tqRegistration);
         }
     }
 }

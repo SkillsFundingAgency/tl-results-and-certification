@@ -24,7 +24,7 @@
 
         public const string UploadUnsuccessfulViewModel = "UploadUnsuccessfulViewModel";
         public const string UploadSuccessfulViewModel = "UploadSuccessfulViewModel";
-        public const string UlnNotFoundViewModel = "UlnNotFoundViewModel";
+        public const string UlnRegistrationNotFoundViewModel = "UlnRegistrationNotFoundViewModel";
 
         public const string RegistrationConfirmationViewModel = "RegistrationConfirmationViewModel";
         public const string ChangeRegistrationConfirmationViewModel = "ChangeRegistrationConfirmationViewModel";
@@ -38,6 +38,8 @@
         public const string ReregistrationConfirmationViewModel = "ReregistrationConfirmationViewModel";
 
         public const string AssessmentsUploadSuccessfulViewModel = "AssessmentsUploadSuccessfulViewModel";
+        public const string AssessmentsSearchCriteria = "AssessmentsSearchCriteria";
+        public const string SearchAssessmentsUlnNotFound = "SearchAssessmentsUlnNotFound";
 
         public const string UserSessionActivityId = "UserSessionActivityId";
 

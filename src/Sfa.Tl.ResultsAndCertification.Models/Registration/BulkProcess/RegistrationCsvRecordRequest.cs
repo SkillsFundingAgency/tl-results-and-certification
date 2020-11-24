@@ -34,8 +34,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
         [Display(Name = RegistrationFluentHeader.Core)]
         public string Core { get; set; }
 
-        [Column(RegistrationHeader.Specialisms, Order = 7)]
+        [Column(RegistrationHeader.Specialism, Order = 7)]
         [Display(Name = RegistrationFluentHeader.Specialism)]
-        public string Specialisms { get; set; }
+        public string Specialism { get; set; }
     }
 }

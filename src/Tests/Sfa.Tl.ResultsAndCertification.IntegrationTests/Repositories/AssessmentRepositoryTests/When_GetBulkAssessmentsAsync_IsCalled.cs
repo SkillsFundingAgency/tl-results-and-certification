@@ -4,8 +4,6 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +18,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
 
         private IEnumerable<TqRegistrationPathway> _result;
+        private List<TqPathwayAssessment> _pathwayAssessments;
+        private List<TqSpecialismAssessment> _specialismAssessments;
 
         public override void Given()
         {
@@ -27,10 +27,31 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             _aoUkprn = 10011881;
             _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Active }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Withdrawn } };
 
-            // Data seed
+            // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
-            SeedRegistrationsData(_ulns, TqProvider);
+            var registrations = SeedRegistrationsDataByStatus(_ulns, TqProvider);
 
+            // Assessments seed
+            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            foreach (var registration in registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
+            {
+                var hasHitoricData = new List<long> { 1111111112 };
+                var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
+                var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
+
+                tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent));
+                
+                foreach (var pathway in registration.TqRegistrationPathways)
+                {
+                    tqSpecialismAssessmentsSeedData.AddRange(GetSpecialismAssessmentsDataToProcess(pathway.TqRegistrationSpecialisms.ToList(), isLatestActive, isHistoricAssessent));
+                }
+            }
+
+            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
+            _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+            DbContext.SaveChanges();
+            
             // TestClass
             AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
             AssessmentRepository = new AssessmentRepository(AssessmentRepositoryLogger, DbContext);
@@ -58,52 +79,23 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             _result.Should().NotBeNullOrEmpty();
             _result.Count().Should().Be(_ulns.Count);
 
-            // Uln: 1111111111 - Registration that has no assessments
+            // Uln: 1111111111 - Registration(Active) with no assessments
             var actualresult = _result.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == 1111111111);
             actualresult.Should().NotBeNull();
-            actualresult.TqPathwayAssessments.Should().BeEmpty();
             actualresult.TqRegistrationSpecialisms.FirstOrDefault().Should().NotBeNull();
             actualresult.TqRegistrationSpecialisms.FirstOrDefault().TqSpecialismAssessments.Should().BeEmpty();
 
-            // Uln: 1111111112 - Registration that has history of assessments
-            //TODO: below scenario
-            //actualresult = _result.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == 1111111112);
-            //actualresult.Should().NotBeNull();
-            //actualresult.TqRegistrationSpecialisms.FirstOrDefault().Should().NotBeNull();
-            //actualresult.TqPathwayAssessments.Should().BeEmpty();
-            //actualresult.TqRegistrationSpecialisms.FirstOrDefault().TqSpecialismAssessments.Should().BeEmpty();
-
-            // Uln: 1111111113 - Registration that is in withdrawn status and no specialism available
-            actualresult = _result.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == 1111111113);
+            // Uln: 1111111113 - Registration(Withdrawn), TqPathwayAssessments(Withdrawn) and TqSpecialismAssessments(Withdrawn)
+            var uln = 1111111113;
+            actualresult = _result.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == uln);
             actualresult.Should().NotBeNull();
-            actualresult.TqPathwayAssessments.Should().BeEmpty();
-            actualresult.TqRegistrationSpecialisms.Should().BeEmpty();
-        }
+            actualresult.TqRegistrationSpecialisms.Should().HaveCount(1);
 
-        #region Dataseed methods
-        public List<TqRegistrationProfile> SeedRegistrationsData(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null)
-        {
-            var profiles = new List<TqRegistrationProfile>();
-
-            foreach (var uln in ulns)
-            {
-                profiles.Add(SeedRegistrationData(uln.Key, uln.Value, tqProvider));
-            }
-            return profiles;
-        }
-
-        public TqRegistrationProfile SeedRegistrationData(long uln, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active, TqProvider tqProvider = null)
-        {
-            var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
-            var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
-            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProviders.First());
-            tqRegistrationPathway.Status = status;
-            var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
-
-            DbContext.SaveChanges();
-            return profile;
-        }
-
-        #endregion
+            // Uln: 1111111112 - Registration(Active), TqPathwayAssessments(Active + History) and TqSpecialismAssessments(Active + History)
+            uln = 1111111112;
+            actualresult = _result.SingleOrDefault(x => x.TqRegistrationProfile.UniqueLearnerNumber == uln);
+            actualresult.Should().NotBeNull();
+            actualresult.TqRegistrationSpecialisms.Should().HaveCount(1);
+        }        
     }
 }

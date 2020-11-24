@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -74,6 +75,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 _logger.LogWarning(LogEvent.NoDataFound, $"No DocumentUploadHistoryDetails found or the request is not valid. Method: GetDocumentUploadHistoryDetailsAsync(AoUkprn: {aoUkprn}, BlobUniqueReference = {blobUniqueReference})");
                 return null;
             }
+        }
+
+        public async Task<UlnAssessmentsNotFoundViewModel> FindUlnAssessmentsAsync(long aoUkprn, long Uln)
+        {
+            var response = await _internalApiClient.FindUlnAsync(aoUkprn, Uln);
+            return _mapper.Map<UlnAssessmentsNotFoundViewModel>(response);
+        }
+
+        public async Task<AssessmentDetailsViewModel> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        {
+            var response = await _internalApiClient.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
+            return _mapper.Map<AssessmentDetailsViewModel>(response);
         }
     }
 }

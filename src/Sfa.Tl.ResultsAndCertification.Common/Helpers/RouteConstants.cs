@@ -137,7 +137,15 @@
         public const string SubmitUploadAssessmentsFile = "SubmitUploadAssessmentsFile";
         public const string AssessmentsUploadSuccessful = "AssessmentsUploadSuccessful";
         public const string AssessmentsUploadUnsuccessful = "AssessmentsUploadUnsuccessful";
-        public const string DownloadAssessmentErrors = "DownloadAssessmentErrors";
+        public const string ProblemWithAssessmentsUpload = "ProblemWithAssessmentsUpload";
+        public const string DownloadAssessmentErrors = "DownloadAssessmentErrors";        
+
+        // Search Assessment Entries
+        public const string SearchAssessments = "SearchAssessments";
+        public const string SubmitSearchAssessments = "SubmitSearchAssessments";
+        public const string SearchAssessmentsNotFound = "SearchAssessmentsNotFound";
+        public const string AssessmentDetails = "AssessmentDetails";
+        public const string AssessmentWithdrawnDetails = "AssessmentWithdrawnDetails";        
 
         // Error
         public const string PageNotFound = "PageNotFound";

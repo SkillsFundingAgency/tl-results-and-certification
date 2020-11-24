@@ -25,51 +25,32 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<IEnumerable<TqRegistrationPathway>> GetBulkAssessmentsAsync(long aoUkprn, IEnumerable<long> uniqueLearnerNumbers)
         {
             var registrations = await _dbContext.TqRegistrationPathway
-                   .Include(x => x.TqPathwayAssessments)
                    .Include(x => x.TqRegistrationProfile)
                    .Include(x => x.TqProvider)
                        .ThenInclude(x => x.TqAwardingOrganisation)
                            .ThenInclude(x => x.TlPathway)
                     .Include(x => x.TqRegistrationSpecialisms)
                        .ThenInclude(x => x.TlSpecialism)
-                    .Include(x => x.TqRegistrationSpecialisms)
-                        .ThenInclude(x => x.TqSpecialismAssessments)
                     .Where(p => uniqueLearnerNumbers.Contains(p.TqRegistrationProfile.UniqueLearnerNumber) &&
                           p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
                           (p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn))
                     .ToListAsync();
+
+            if (registrations == null) return null;
 
             var latestRegistratons = registrations
                     .GroupBy(x => x.TqRegistrationProfileId)
                     .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
                     .ToList();
 
-            if (registrations == null) return null;
-
             foreach (var reg in latestRegistratons)
             {
-                // PathwayAssessment
-                Func<TqPathwayAssessment, bool> pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
-                if (reg.Status == RegistrationPathwayStatus.Withdrawn)
-                    pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate != null;
-                reg.TqPathwayAssessments = reg.TqPathwayAssessments.Where(pathwayAssessmentPredicate).ToList();
-
-                // PathwaySpecialism
                 Func<TqRegistrationSpecialism, bool> specialismPredicate = e => e.IsOptedin && e.EndDate == null;
                 if (reg.Status == RegistrationPathwayStatus.Withdrawn)
                     specialismPredicate = e => e.IsOptedin && e.EndDate != null;
                 reg.TqRegistrationSpecialisms = reg.TqRegistrationSpecialisms.Where(specialismPredicate).ToList();
-
-                foreach (var specialism in reg.TqRegistrationSpecialisms)
-                {
-                    // SpecialismAssessment
-                    Func<TqSpecialismAssessment, bool> specialismAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
-                    if (reg.Status == RegistrationPathwayStatus.Withdrawn)
-                        specialismAssessmentPredicate = e => e.IsOptedin && e.EndDate != null;
-
-                    specialism.TqSpecialismAssessments = specialism.TqSpecialismAssessments.Where(specialismAssessmentPredicate).ToList();
-                }
             }
+
             return latestRegistratons;
         }
 
@@ -155,5 +136,55 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         }
 
         #endregion
+
+        public async Task<TqRegistrationPathway> GetAssessmentsAsync(long aoUkprn, int profileId)
+        {
+            var regPathway = await _dbContext.TqRegistrationPathway
+                   .Include(x => x.TqPathwayAssessments)
+                       .ThenInclude(x => x.AssessmentSeries)
+                   .Include(x => x.TqRegistrationProfile)
+                   .Include(x => x.TqProvider)
+                       .ThenInclude(x => x.TqAwardingOrganisation)
+                           .ThenInclude(x => x.TlPathway)
+                   .Include(x => x.TqProvider)
+                       .ThenInclude(x => x.TlProvider)
+                   .Include(x => x.TqRegistrationSpecialisms)
+                       .ThenInclude(x => x.TlSpecialism)
+                   .Include(x => x.TqRegistrationSpecialisms)
+                       .ThenInclude(x => x.TqSpecialismAssessments)
+                            .ThenInclude(x => x.AssessmentSeries)
+                    .OrderByDescending(o => o.CreatedOn)
+                    .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId &&
+                           p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
+                           (
+                                p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn
+                           ));
+
+
+            if (regPathway == null) return null;
+
+            Func<TqPathwayAssessment, bool> pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
+            if (regPathway.Status == RegistrationPathwayStatus.Withdrawn)
+                pathwayAssessmentPredicate = e => e.IsOptedin && e.EndDate != null;
+            regPathway.TqPathwayAssessments = regPathway.TqPathwayAssessments.Where(pathwayAssessmentPredicate).ToList();
+
+            // PathwaySpecialism
+            Func<TqRegistrationSpecialism, bool> specialismPredicate = e => e.IsOptedin && e.EndDate == null;
+            if (regPathway.Status == RegistrationPathwayStatus.Withdrawn)
+                specialismPredicate = e => e.IsOptedin && e.EndDate != null;
+            regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(specialismPredicate).ToList();
+
+            foreach (var specialism in regPathway.TqRegistrationSpecialisms)
+            {
+                // SpecialismAssessment
+                Func<TqSpecialismAssessment, bool> specialismAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
+                if (regPathway.Status == RegistrationPathwayStatus.Withdrawn)
+                    specialismAssessmentPredicate = e => e.IsOptedin && e.EndDate != null;
+
+                specialism.TqSpecialismAssessments = specialism.TqSpecialismAssessments.Where(specialismAssessmentPredicate).ToList();
+            }
+
+            return regPathway;
+        }
     }
 }

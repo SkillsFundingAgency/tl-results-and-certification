@@ -11,9 +11,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         public override void Given()
         {
-            var findUln = new UlnNotFoundViewModel
+            var findUln = new UlnRegistrationNotFoundViewModel
             {
-                IsActive = true
+                IsAllowed = true
             };
 
             UlnViewModel = new UlnViewModel { Uln = "1234567890" };

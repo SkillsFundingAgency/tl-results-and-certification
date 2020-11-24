@@ -98,10 +98,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<PathwaySpecialismsViewModel>(pathwaySpecialisms);
         }
 
-        public async Task<UlnNotFoundViewModel> FindUlnAsync(long aoUkprn, long Uln)
+        public async Task<UlnRegistrationNotFoundViewModel> FindUlnAsync(long aoUkprn, long Uln)
         {
             var response = await _internalApiClient.FindUlnAsync(aoUkprn, Uln);
-            return _mapper.Map<UlnNotFoundViewModel>(response);
+            return _mapper.Map<UlnRegistrationNotFoundViewModel>(response);
         }
 
         public async Task<bool> AddRegistrationAsync(long aoUkprn, RegistrationViewModel model)

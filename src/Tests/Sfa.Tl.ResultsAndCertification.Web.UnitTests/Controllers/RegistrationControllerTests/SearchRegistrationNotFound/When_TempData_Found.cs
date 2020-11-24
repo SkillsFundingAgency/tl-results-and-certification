@@ -11,15 +11,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         public override void Given()
         {
-            CacheService.GetAndRemoveAsync<UlnNotFoundViewModel>(Arg.Any<string>())
-                .Returns(new UlnNotFoundViewModel { Uln = Uln, BackLinkRouteName = RouteConstants.SearchRegistration });
+            CacheService.GetAndRemoveAsync<UlnRegistrationNotFoundViewModel>(Arg.Any<string>())
+                .Returns(new UlnRegistrationNotFoundViewModel { Uln = Uln, BackLinkRouteName = RouteConstants.SearchRegistration });
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as UlnNotFoundViewModel;
+            var model = viewResult.Model as UlnRegistrationNotFoundViewModel;
 
             model.Should().NotBeNull();
             model.Uln.Should().Be(Uln);

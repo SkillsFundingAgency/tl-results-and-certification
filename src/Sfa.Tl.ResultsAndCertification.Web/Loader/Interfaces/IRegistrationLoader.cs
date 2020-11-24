@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<SelectCoreViewModel> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn);
         Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId);
         
-        Task<UlnNotFoundViewModel> FindUlnAsync(long aoUkprn, long uln);
+        Task<UlnRegistrationNotFoundViewModel> FindUlnAsync(long aoUkprn, long uln);
         Task<RegistrationDetailsViewModel> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         Task<bool> AddRegistrationAsync(long aoUkprn, RegistrationViewModel model);
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);

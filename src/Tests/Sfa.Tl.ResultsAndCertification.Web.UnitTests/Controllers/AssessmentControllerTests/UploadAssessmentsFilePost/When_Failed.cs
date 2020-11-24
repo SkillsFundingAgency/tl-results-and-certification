@@ -35,10 +35,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         }
 
         [Fact]
-        public void Then_Redirected_To_ProblemWithService()
+        public void Then_Redirected_To_ProblemWithAssessmentsUpload()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.ProblemWithService);
+            routeName.Should().Be(RouteConstants.ProblemWithAssessmentsUpload);
         }
     }
 }

@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System.Threading.Tasks;
 using AssessmentContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment;
 
@@ -68,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             if (response.ShowProblemWithServicePage)
-                return RedirectToRoute(RouteConstants.ProblemWithService);
+                return RedirectToRoute(RouteConstants.ProblemWithAssessmentsUpload);
 
             var unsuccessfulViewModel = new ViewModel.Registration.UploadUnsuccessfulViewModel 
             { 
@@ -110,6 +111,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("assessment-entries-file-upload-service-problem", Name = RouteConstants.ProblemWithAssessmentsUpload)]
+        public IActionResult ProblemWithAssessmentsUpload()
+        {
+            return View();
+        }
+
+        [HttpGet]
         [Route("download-assessment-errors", Name = RouteConstants.DownloadAssessmentErrors)]
         public async Task<IActionResult> DownloadAssessmentErrors(string id)
         {
@@ -133,6 +141,82 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.DownloadAssesssmentErrorsFailed, $"Not a valid guid to read file.Method: DownloadAssessmentErrors(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
+        }
+
+        [HttpGet]
+        [Route("assessment-entries-learner-search", Name = RouteConstants.SearchAssessments)]
+        public async Task<IActionResult> SearchAssessmentsAsync()
+        {
+            var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.AssessmentsSearchCriteria);
+            var viewModel = new SearchAssessmentsViewModel { SearchUln = defaultValue };
+            return View(viewModel);
+        }
+
+        [Route("assessment-entries-learner-search", Name = RouteConstants.SubmitSearchAssessments)]
+        public async Task<IActionResult> SearchAssessmentsAsync(SearchAssessmentsViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var searchResult = await _assessmentLoader.FindUlnAssessmentsAsync(User.GetUkPrn(), model.SearchUln.ToLong());
+
+            if (searchResult?.IsAllowed == true)
+            {
+                return RedirectToRoute(searchResult.IsWithdrawn ? RouteConstants.AssessmentWithdrawnDetails : RouteConstants.AssessmentDetails, new { profileId = searchResult.RegistrationProfileId });
+            }
+            else
+            {
+                await _cacheService.SetAsync(Constants.AssessmentsSearchCriteria, model.SearchUln);
+
+                var ulnAssessmentsNotfoundModel = new UlnAssessmentsNotFoundViewModel { Uln = model.SearchUln.ToString() };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.SearchAssessmentsUlnNotFound), ulnAssessmentsNotfoundModel, CacheExpiryTime.XSmall);
+
+                return RedirectToRoute(RouteConstants.SearchAssessmentsNotFound);
+            }
+        }
+
+        [HttpGet]
+        [Route("search-for-learner-ULN-not-found", Name = RouteConstants.SearchAssessmentsNotFound)]
+        public async Task<IActionResult> SearchAssessmentsNotFoundAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<UlnAssessmentsNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchAssessmentsUlnNotFound));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchAssessmentsUlnNotFound from redis cache in search assessments not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("learners-assessment-entries-withdrawn-learner/{profileId}", Name = RouteConstants.AssessmentWithdrawnDetails)]
+        public async Task<IActionResult> AssessmentWithdrawnDetailsAsync(int profileId)
+        {
+            var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment withdrawn details found. Method: GetAssessmentDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Withdrawn}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("learners-assessment-entries/{profileId}", Name = RouteConstants.AssessmentDetails)]
+        public async Task<IActionResult> AssessmentDetailsAsync(int profileId)
+        {
+            var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment details found. Method: GetAssessmentDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
         }
     }
 }
