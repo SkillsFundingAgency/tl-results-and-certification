@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 PathwayDisplayName = "Pathway (7654321)",
                 PathwayAssessmentSeries = "Summer 2021",
                 SpecialismDisplayName = "Specialism1 (2345678)",
-                SpecialismAssessmentSeries = "Autumn 2022",
+                SpecialismAssessmentSeries = AssessmentDetailsContent.Available_After_Autumn2021,
                 PathwayStatus = RegistrationPathwayStatus.Active
             };
 
@@ -57,27 +57,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.SummaryCoreAssessmentEntry.Should().NotBeNull();
             model.SummaryCoreAssessmentEntry.Title.Should().Be(AssessmentDetailsContent.Title_Assessment_Entry_Text);
             model.SummaryCoreAssessmentEntry.Value.Should().Be(mockresult.PathwayAssessmentSeries);
-            model.SummaryCoreAssessmentEntry.ActionText.Should().Be(AssessmentDetailsContent.Change_Action_Link_Text);
+            model.SummaryCoreAssessmentEntry.ActionText.Should().Be(AssessmentDetailsContent.Remove_Entry_Action_Link_Text);
             model.SummaryCoreAssessmentEntry.RenderHiddenActionText.Should().Be(true);
-
-            if (!string.IsNullOrWhiteSpace(mockresult.PathwayDisplayName))
-            {
-                model.SummaryCoreAssessmentEntry.HiddenActionText.Should().Be(AssessmentDetailsContent.Change_Core_Assessment_Entry_Hidden_Text);
-            }
-
+            model.SummaryCoreAssessmentEntry.HiddenActionText.Should().Be(AssessmentDetailsContent.Core_Assessment_Entry_Hidden_Text);
+            
             // Summary SpecialismAssessment Entry
-            var expectedSpecialismActionText = !string.IsNullOrWhiteSpace(mockresult.SpecialismDisplayName) ? AssessmentDetailsContent.Change_Action_Link_Text : null;
             model.SummarySpecialismAssessmentEntry.Should().NotBeNull();
             model.SummarySpecialismAssessmentEntry.Title.Should().Be(AssessmentDetailsContent.Title_Assessment_Entry_Text);
-            model.SummarySpecialismAssessmentEntry.Value.Should().Be(mockresult.SpecialismAssessmentSeries);
-            model.SummarySpecialismAssessmentEntry.ActionText.Should().Be(expectedSpecialismActionText);
+            model.SummarySpecialismAssessmentEntry.Value.Should().Be(AssessmentDetailsContent.Available_After_Autumn2021);
+            model.SummarySpecialismAssessmentEntry.ActionText.Should().BeNull();
             model.SummarySpecialismAssessmentEntry.RenderHiddenActionText.Should().Be(true);
+            model.SummarySpecialismAssessmentEntry.HiddenActionText.Should().Be(AssessmentDetailsContent.Specialism_Assessment_Entry_Hidden_Text);
 
-            if (!string.IsNullOrWhiteSpace(mockresult.SpecialismDisplayName))
-            {
-                model.SummarySpecialismAssessmentEntry.HiddenActionText.Should().Be(AssessmentDetailsContent.Change_Specialism_Assessment_Entry_Hidden_Text);
-            }
-
+            // Breadcrum
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Count.Should().Be(4);
