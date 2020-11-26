@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
@@ -51,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
 
         private string GetResourceMessage(string errorResourceName)
         {
-            return (string)ErrorResourceType.GetProperty(errorResourceName)?.GetValue(null, null);
+            return CommonHelper.GetResourceMessage(errorResourceName, ErrorResourceType);
         }
     }
 }

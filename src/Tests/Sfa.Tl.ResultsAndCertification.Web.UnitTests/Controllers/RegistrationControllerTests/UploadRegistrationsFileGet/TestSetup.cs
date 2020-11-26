@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override Task When()
         {
-            Result = Controller.UploadRegistrationsFile();
+            Result = Controller.UploadRegistrationsFile(null);
             return Task.CompletedTask;
         }
     }

@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Web.Content.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
@@ -45,10 +46,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("upload-registrations-file", Name = RouteConstants.UploadRegistrationsFile)]
-        public IActionResult UploadRegistrationsFile()
+        [Route("upload-registrations-file/{errorTypeId:int?}", Name = RouteConstants.UploadRegistrationsFile)]
+        public IActionResult UploadRegistrationsFile(int? errorTypeId)
         {
-            return View(new UploadRegistrationsRequestViewModel());
+            var model = new UploadRegistrationsRequestViewModel { ErrorTypeId = errorTypeId };
+            model.SetAnyModelErrors(ModelState);
+            return View(model);
         }
 
         [HttpPost]
