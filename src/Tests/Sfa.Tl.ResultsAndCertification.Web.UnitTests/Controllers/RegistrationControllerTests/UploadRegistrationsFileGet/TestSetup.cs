@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 {
     public abstract class TestSetup : BaseTest<RegistrationController>
     {
-        protected int? ErrorTypeId;
+        protected int? RequestErrorTypeId;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
         protected ILogger<RegistrationController> Logger;
@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override Task When()
         {
-            Result = Controller.UploadRegistrationsFile(ErrorTypeId);
+            Result = Controller.UploadRegistrationsFile(RequestErrorTypeId);
             return Task.CompletedTask;
         }
     }

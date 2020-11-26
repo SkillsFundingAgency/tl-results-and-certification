@@ -46,10 +46,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("upload-registrations-file/{errorTypeId:int?}", Name = RouteConstants.UploadRegistrationsFile)]
-        public IActionResult UploadRegistrationsFile(int? errorTypeId)
+        [Route("upload-registrations-file/{requestErrorTypeId:int?}", Name = RouteConstants.UploadRegistrationsFile)]
+        public IActionResult UploadRegistrationsFile(int? requestErrorTypeId)
         {
-            var model = new UploadRegistrationsRequestViewModel { ErrorTypeId = errorTypeId };
+            var model = new UploadRegistrationsRequestViewModel { RequestErrorTypeId = requestErrorTypeId };
             model.SetAnyModelErrors(ModelState);
             return View(model);
         }

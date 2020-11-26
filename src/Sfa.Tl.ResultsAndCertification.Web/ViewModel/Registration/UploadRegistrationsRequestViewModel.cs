@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration
         [FileValidation(AllowedExtensions = ".csv", MaxFileNameLength = 150, MaxFileSizeInMb = 5, MaxRecordCount = 10000, ErrorResourceType = typeof(ErrorResource.Upload))]
         public IFormFile File { get; set; }
 
-        public int? ErrorTypeId { get; set; }        
+        public int? RequestErrorTypeId { get; set; }        
 
         public BreadcrumbModel Breadcrumb
         {
@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration
         {
             if(modelState != null && IsValidErrorType)
             {
-                var error = ModelStateHelper.GetUploadErrorMessage((ErrorType)ErrorTypeId, typeof(ErrorResource.Upload));
+                var error = ModelStateHelper.GetUploadErrorMessage((RequestErrorType)RequestErrorTypeId, typeof(ErrorResource.Upload));
 
                 if(error != null)
                 {
@@ -53,6 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration
             }
         }       
         
-        private bool IsValidErrorType => EnumExtensions.IsValidValue<ErrorType>(ErrorTypeId);
+        private bool IsValidErrorType => EnumExtensions.IsValidValue<RequestErrorType>(RequestErrorTypeId);
     }
 }

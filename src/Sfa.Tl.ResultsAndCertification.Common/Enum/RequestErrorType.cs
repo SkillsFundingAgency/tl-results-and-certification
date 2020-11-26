@@ -1,6 +1,6 @@
 ﻿namespace Sfa.Tl.ResultsAndCertification.Common.Enum
 {
-    public enum ErrorType
+    public enum RequestErrorType
     {
         NotSpecified = 0,
         FileType = 1

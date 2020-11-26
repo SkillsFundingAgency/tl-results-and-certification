@@ -6,15 +6,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
 {
     public static class ModelStateHelper
     {
-        public static Tuple<string, string> GetUploadErrorMessage(ErrorType errorType, Type errorResourceType)
+        public static Tuple<string, string> GetUploadErrorMessage(RequestErrorType errorType, Type errorResourceType)
         {
             Tuple<string, string> errorMessage = null;
             if (errorResourceType != null)
             {
                 errorMessage = errorType switch
                 {
-                    ErrorType.FileType => new Tuple<string, string>("File", CommonHelper.GetResourceMessage("Must_Be_Csv_Validation_Message", errorResourceType)),
-                    ErrorType.NotSpecified => null,
+                    RequestErrorType.FileType => new Tuple<string, string>("File", CommonHelper.GetResourceMessage("Must_Be_Csv_Validation_Message", errorResourceType)),
+                    RequestErrorType.NotSpecified => null,
                     _ => null
                 };
             }

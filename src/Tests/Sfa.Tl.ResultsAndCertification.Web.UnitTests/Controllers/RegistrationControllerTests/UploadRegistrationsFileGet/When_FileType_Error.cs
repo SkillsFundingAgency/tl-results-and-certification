@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         public override void Given()
         {
-            ErrorTypeId = (int)ErrorType.FileType;
+            RequestErrorTypeId = (int)RequestErrorType.FileType;
         }
 
         [Fact]
