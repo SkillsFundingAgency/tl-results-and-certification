@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using NSubstitute.Routing.Handlers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
@@ -13,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 {
     public abstract class TestSetup : BaseTest<RegistrationController>
     {
+        protected int? ErrorTypeId;
         protected IRegistrationLoader RegistrationLoader;
         protected ICacheService CacheService;
         protected ILogger<RegistrationController> Logger;
@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
         public override Task When()
         {
-            Result = Controller.UploadRegistrationsFile(null);
+            Result = Controller.UploadRegistrationsFile(ErrorTypeId);
             return Task.CompletedTask;
         }
     }
