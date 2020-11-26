@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -217,6 +218,40 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.AddCoreAssessmentSeries)]
+        public async Task<IActionResult> AddCoreAssessmentSeriesAsync(int profileId)
+        {
+            var model = new AddAssessmentSeriesViewModel
+            {
+                ProfileId = profileId,
+                AssessmentSeriesId = 1, 
+                AssessmentSeriesName = "Summer 2021", /*TODO*/ 
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("add-core-assessment-entry-next-available-series", Name = RouteConstants.SubmitAddCoreAssessmentSeries)]
+        public async Task<IActionResult> AddCoreAssessmentSeriesAsync(AddAssessmentSeriesViewModel model)
+        {
+            if (!IsValidModelState(ModelState, model))
+            {
+                return View(model);
+            }
+
+            return View(model);
+        }
+
+        private bool IsValidModelState(ModelStateDictionary modelState, AddAssessmentSeriesViewModel model)
+        {
+            if (!model.IsOpted.HasValue)
+                modelState.AddModelError("IsOpted", $"{AssessmentContent.AddCoreAssessmentSeries.Select_Option_To_Add_Validation_Text} {model.AssessmentSeriesName}");
+            
+            return modelState.IsValid;
         }
     }
 }

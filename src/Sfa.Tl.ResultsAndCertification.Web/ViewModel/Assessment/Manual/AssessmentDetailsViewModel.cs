@@ -10,6 +10,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 {
     public class AssessmentDetailsViewModel
     {
+        private string PathwayAssessmentActionText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? AssessmentDetailsContent.Remove_Entry_Action_Link_Text : AssessmentDetailsContent.Add_Entry_Action_Link_Text; } }
+        private string SpecialismAssessmentActionText { get { return null; } }
+
+        private string PathwayAssessmentSeriesText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? PathwayAssessmentSeries : AssessmentDetailsContent.Not_Specified_Text; } }
+        private string SpecialismAssessmentSeriesText { get { return AssessmentDetailsContent.Available_After_Autumn2021; } }
+
+        private string PathwayAddAssessmentRoute { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? "#Todo" : RouteConstants.AddCoreAssessmentSeries; } }
+
         public int ProfileId { get; set; }
         public long Uln { get; set; }
         public string Name { get; set; }
@@ -23,13 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 
         public RegistrationPathwayStatus PathwayStatus { get; set; }
 
-        private string PathwayAssessmentActionText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? AssessmentDetailsContent.Remove_Entry_Action_Link_Text : AssessmentDetailsContent.Add_Entry_Action_Link_Text; } }
-        private string SpecialismAssessmentActionText { get { return null; } }
-
-        private string PathwayAssessmentSeriesText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? PathwayAssessmentSeries : AssessmentDetailsContent.Not_Specified_Text; } }
-        private string SpecialismAssessmentSeriesText { get { return AssessmentDetailsContent.Available_After_Autumn2021; } }
-
-        public SummaryItemModel SummaryCoreAssessmentEntry => new SummaryItemModel { Id = "coreassessmententry", Title = AssessmentDetailsContent.Title_Assessment_Entry_Text, Value = PathwayAssessmentSeriesText, ActionText = PathwayAssessmentActionText, HiddenActionText = AssessmentDetailsContent.Core_Assessment_Entry_Hidden_Text };
+        public SummaryItemModel SummaryCoreAssessmentEntry => new SummaryItemModel { Id = "coreassessmententry", Title = AssessmentDetailsContent.Title_Assessment_Entry_Text, Value = PathwayAssessmentSeriesText, ActionText = PathwayAssessmentActionText, HiddenActionText = AssessmentDetailsContent.Core_Assessment_Entry_Hidden_Text, RouteName = PathwayAddAssessmentRoute, RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } };
         public SummaryItemModel SummarySpecialismAssessmentEntry => new SummaryItemModel { Id = "specialismassessmententry", Title = AssessmentDetailsContent.Title_Assessment_Entry_Text, Value = SpecialismAssessmentSeriesText, ActionText = SpecialismAssessmentActionText, HiddenActionText = AssessmentDetailsContent.Specialism_Assessment_Entry_Hidden_Text };
 
         public BreadcrumbModel Breadcrumb

@@ -138,7 +138,9 @@
         public const string AssessmentsUploadSuccessful = "AssessmentsUploadSuccessful";
         public const string AssessmentsUploadUnsuccessful = "AssessmentsUploadUnsuccessful";
         public const string ProblemWithAssessmentsUpload = "ProblemWithAssessmentsUpload";
-        public const string DownloadAssessmentErrors = "DownloadAssessmentErrors";        
+        public const string DownloadAssessmentErrors = "DownloadAssessmentErrors";
+        public const string AddCoreAssessmentSeries = "AddCoreAssessmentSeries";
+        public const string SubmitAddCoreAssessmentSeries = "SubmitAddCoreAssessmentSeries";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";
