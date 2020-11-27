@@ -12,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 {
     public abstract class TestSetup : BaseTest<RegistrationController>
     {
+        protected int? RequestErrorTypeId;
         protected IAssessmentLoader AssessmentLoader;
         protected ICacheService CacheService;
         protected ILogger<AssessmentController> Logger;
@@ -30,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
         public override Task When()
         {
-            Result = Controller.UploadAssessmentsFile(null);
+            Result = Controller.UploadAssessmentsFile(RequestErrorTypeId);
             return Task.CompletedTask;
         }
     }
