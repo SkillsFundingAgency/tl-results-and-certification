@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
         public override Task When()
         {
-            Result = Controller.UploadAssessmentsFile();
+            Result = Controller.UploadAssessmentsFile(null);
             return Task.CompletedTask;
         }
     }

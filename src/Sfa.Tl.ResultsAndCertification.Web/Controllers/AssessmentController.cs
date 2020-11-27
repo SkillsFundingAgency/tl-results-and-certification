@@ -43,10 +43,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("upload-assessment-entries-file", Name = RouteConstants.UploadAssessmentsFile)]
-        public IActionResult UploadAssessmentsFile()
+        [Route("upload-assessment-entries-file/{requestErrorTypeId:int?}", Name = RouteConstants.UploadAssessmentsFile)]
+        public IActionResult UploadAssessmentsFile(int? requestErrorTypeId)
         {
-            return View(new UploadAssessmentsRequestViewModel());
+            var model = new UploadAssessmentsRequestViewModel { RequestErrorTypeId = requestErrorTypeId };
+            model.SetAnyModelErrors(ModelState);
+            return View(model);
         }
 
         [HttpPost]

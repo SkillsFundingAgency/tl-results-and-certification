@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using System.Collections.Generic;
@@ -18,6 +22,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment
         [FileValidation(AllowedExtensions = ".csv", MaxFileNameLength = 150, MaxFileSizeInMb = 5, MaxRecordCount = 10000, ErrorResourceType = typeof(ErrorResource.Upload))]
         public IFormFile File { get; set; }
 
+        public int? RequestErrorTypeId { get; set; }
+
         public BreadcrumbModel Breadcrumb
         {
             get
@@ -33,5 +39,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment
                 };
             }
         }
+
+        public void SetAnyModelErrors(ModelStateDictionary modelState)
+        {
+            if (modelState != null && IsValidErrorType)
+            {
+                var error = ModelStateHelper.GetUploadErrorMessage((RequestErrorType)RequestErrorTypeId, typeof(ErrorResource.Upload));
+
+                if (error != null)
+                {
+                    ModelStateHelper.AddModelStateError(modelState, error.Item1, error.Item2);
+                }
+            }
+        }
+
+        private bool IsValidErrorType => EnumExtensions.IsValidValue<RequestErrorType>(RequestErrorTypeId);
     }
 }
