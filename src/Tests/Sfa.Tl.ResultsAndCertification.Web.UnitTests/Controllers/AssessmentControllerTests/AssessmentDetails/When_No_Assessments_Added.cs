@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
+using System.Collections.Generic;
 using Xunit;
 using AssessmentDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AssessmentDetails;
 
@@ -11,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
     public class When_No_Assessments_Added : TestSetup
     {
         private AssessmentDetailsViewModel mockresult = null;
+        private Dictionary<string, string> _routeAttributes;
 
         public override void Given()
         {
@@ -25,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 SpecialismAssessmentSeries = null,
                 PathwayStatus = RegistrationPathwayStatus.Active
             };
-
+            _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } };
             AssessmentLoader.GetAssessmentDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockresult);
         }
 
@@ -57,7 +60,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.SummaryCoreAssessmentEntry.ActionText.Should().Be(AssessmentDetailsContent.Add_Entry_Action_Link_Text);
             model.SummaryCoreAssessmentEntry.RenderHiddenActionText.Should().Be(true);
             model.SummaryCoreAssessmentEntry.HiddenActionText.Should().Be(AssessmentDetailsContent.Core_Assessment_Entry_Hidden_Text);
-            
+            model.SummaryCoreAssessmentEntry.RouteName.Should().Be(RouteConstants.AddCoreAssessmentSeries);
+            model.SummaryCoreAssessmentEntry.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+
+
             // Summary SpecialismAssessment Entry
             model.SummarySpecialismAssessmentEntry.Should().NotBeNull();
             model.SummarySpecialismAssessmentEntry.Title.Should().Be(AssessmentDetailsContent.Title_Assessment_Entry_Text);
