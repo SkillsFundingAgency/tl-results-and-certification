@@ -310,30 +310,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
         {
-            var series = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId);
-
-            var isValid = IsValidAssessmentEntry(series.Item1, assessmentEntryType);
-            if (series == null || !isValid)
+            var startInYear = assessmentEntryType == AssessmentEntryType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+            var series = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, startInYear);
+            
+            if (series == null)
                 return null;
 
             return new AvailableAssessmentSeries 
             {
                 ProfileId = profileId,
-                AssessmentSeriesId = series.Item2.Id,
-                AssessmentSeriesName = series.Item2.Name
+                AssessmentSeriesId = series.Id,
+                AssessmentSeriesName = series.Name
             };
-        }
-
-        private bool IsValidAssessmentEntry(int academicYear, AssessmentEntryType assessmentEntryType)
-        {
-            var result = true;
-            if (assessmentEntryType == AssessmentEntryType.Specialism)
-            {
-                // TODO: next story
-                result = false;
-            }
-
-            return result;
         }
     }
 }

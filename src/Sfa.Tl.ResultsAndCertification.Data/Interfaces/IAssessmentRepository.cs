@@ -17,6 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         #endregion
 
         Task<TqRegistrationPathway> GetAssessmentsAsync(long aoUkprn, int profileId);
-        Task<Tuple<int, AssessmentSeries>> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId);
+        Task<AssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, int startInYear);
     }
 }

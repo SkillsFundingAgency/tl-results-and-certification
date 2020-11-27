@@ -187,15 +187,18 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return regPathway;
         }
 
-        public async Task<Tuple<int, AssessmentSeries>> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId)
+        public async Task<AssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, int startInYear)
         {
-            var series = await (from rpw in _dbContext.TqRegistrationPathway
-                            join s in _dbContext.AssessmentSeries on rpw.AcademicYear + 1 equals s.Year // review required.
-                            where
-                                rpw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
-                                rpw.TqRegistrationProfile.Id == profileId &&
-                                (DateTime.UtcNow.Date >= s.StartDate.Date && DateTime.UtcNow.Date <= s.EndDate.Date)
-                                select new Tuple<int, AssessmentSeries>(rpw.AcademicYear, s)).FirstOrDefaultAsync();
+            var currentDate = DateTime.Now.Date;
+            
+            var series = await _dbContext.TqRegistrationPathway
+                .Where(rpw => rpw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && 
+                       rpw.TqRegistrationProfile.Id == profileId)
+                .Select(reg => _dbContext.AssessmentSeries
+                        .FirstOrDefault(s => s.Year >= reg.AcademicYear + startInYear && s.Year <= reg.AcademicYear + startInYear + Common.Helpers.Constants.AssessmentEndInYears && 
+                        currentDate >= s.StartDate && currentDate <= s.EndDate))
+                .FirstOrDefaultAsync();
+
             return series;
         }
     }
