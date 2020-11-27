@@ -88,5 +88,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
             return _mapper.Map<AssessmentDetailsViewModel>(response);
         }
+
+        public async Task<AddAssessmentSeriesViewModel> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        {
+            var response = await _internalApiClient.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, assessmentEntryType);
+            return _mapper.Map<AddAssessmentSeriesViewModel>(response);
+        }
     }
 }

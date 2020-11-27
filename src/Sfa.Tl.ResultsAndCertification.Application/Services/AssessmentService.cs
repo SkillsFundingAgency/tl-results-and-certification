@@ -307,5 +307,33 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             return _mapper.Map<AssessmentDetails>(tqRegistration);
         }
+
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        {
+            var series = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId);
+
+            var isValid = IsValidAssessmentEntry(series.Item1, assessmentEntryType);
+            if (series == null || !isValid)
+                return null;
+
+            return new AvailableAssessmentSeries 
+            {
+                ProfileId = profileId,
+                AssessmentSeriesId = series.Item2.Id,
+                AssessmentSeriesName = series.Item2.Name
+            };
+        }
+
+        private bool IsValidAssessmentEntry(int academicYear, AssessmentEntryType assessmentEntryType)
+        {
+            var result = true;
+            if (assessmentEntryType == AssessmentEntryType.Specialism)
+            {
+                // TODO: next story
+                result = false;
+            }
+
+            return result;
+        }
     }
 }

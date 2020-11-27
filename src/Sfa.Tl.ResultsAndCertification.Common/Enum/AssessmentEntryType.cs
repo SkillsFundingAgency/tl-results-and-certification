@@ -2,7 +2,7 @@
 {
     public enum AssessmentEntryType 
     { 
-        Core, 
-        Specialism 
+        Core = 1, 
+        Specialism = 2
     };
 }

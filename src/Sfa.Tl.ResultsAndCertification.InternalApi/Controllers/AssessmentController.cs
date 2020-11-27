@@ -34,5 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _assessmentService.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
         }
+
+        [HttpGet]
+        [Route("GetAvailableAssessmentSeries/{aoUkprn}/{profileId}/{entryType}")]
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        {
+            return await _assessmentService.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, assessmentEntryType);
+        }
     }
 }

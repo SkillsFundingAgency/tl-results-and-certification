@@ -186,5 +186,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             return regPathway;
         }
+
+        public async Task<Tuple<int, AssessmentSeries>> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId)
+        {
+            var series = await (from rpw in _dbContext.TqRegistrationPathway
+                            join s in _dbContext.AssessmentSeries on rpw.AcademicYear + 1 equals s.Year // review required.
+                            where
+                                rpw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
+                                rpw.TqRegistrationProfile.Id == profileId &&
+                                (DateTime.UtcNow.Date >= s.StartDate.Date && DateTime.UtcNow.Date <= s.EndDate.Date)
+                                select new Tuple<int, AssessmentSeries>(rpw.AcademicYear, s)).FirstOrDefaultAsync();
+            return series;
+        }
     }
 }

@@ -191,6 +191,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var requestUri = string.Format(ApiConstants.GetAssessmentDetailsUri, aoUkprn, profileId, (int?)status);
             return await GetAsync<AssessmentDetails>(requestUri);
         }
+        
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        {
+            var requestUri = string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, aoUkprn, profileId, (int)assessmentEntryType);
+            return await GetAsync<AvailableAssessmentSeries>(requestUri);
+        }
 
         #region Private Methods
 

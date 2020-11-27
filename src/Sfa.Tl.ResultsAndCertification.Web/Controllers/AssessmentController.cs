@@ -224,14 +224,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.AddCoreAssessmentSeries)]
         public async Task<IActionResult> AddCoreAssessmentSeriesAsync(int profileId)
         {
-            var model = new AddAssessmentSeriesViewModel
+            var viewModel = await _assessmentLoader.GetAvailableAssessmentSeriesAsync(User.GetUkPrn(), profileId, AssessmentEntryType.Core);
+            if (viewModel == null)
             {
-                ProfileId = profileId,
-                AssessmentSeriesId = 1, 
-                AssessmentSeriesName = "Summer 2021", /*TODO*/ 
-            };
+                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available. Method: GetAvailableAssessmentSeriesAsync({User.GetUkPrn()}, {profileId}, {AssessmentEntryType.Core}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
 
-            return View(model);
+            return View(viewModel);
         }
 
         [HttpPost]
