@@ -63,7 +63,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.SummaryCoreAssessmentEntry.RouteName.Should().Be(RouteConstants.AddCoreAssessmentSeries);
             model.SummaryCoreAssessmentEntry.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
-
             // Summary SpecialismAssessment Entry
             model.SummarySpecialismAssessmentEntry.Should().NotBeNull();
             model.SummarySpecialismAssessmentEntry.Title.Should().Be(AssessmentDetailsContent.Title_Assessment_Entry_Text);

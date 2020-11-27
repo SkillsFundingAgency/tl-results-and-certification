@@ -13,7 +13,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System.Threading.Tasks;
 using AssessmentContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment;
 
-
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
     [Authorize(Policy = RolesExtensions.RequireRegistrationsEditorAccess)]
