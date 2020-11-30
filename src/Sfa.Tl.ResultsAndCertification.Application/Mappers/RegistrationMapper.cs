@@ -32,6 +32,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateOfBirth))
                 .ForMember(d => d.ModifiedBy, opts => opts.MapFrom(s => s.PerformedBy))
                 .ForMember(d => d.ModifiedOn, opts => opts.MapFrom<DateTimeResolver<ManageRegistration, TqRegistrationProfile>>());
+
+            CreateMap<AssessmentSeries, AvailableAssessmentSeries>()
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom((src, dest, destMember, context) => (int)context.Items["profileId"]))
+                .ForMember(d => d.AssessmentSeriesId, opts => opts.MapFrom(s => s.Id))
+                .ForMember(d => d.AssessmentSeriesName, opts => opts.MapFrom(s => s.Name));
         }
     }
 }

@@ -312,16 +312,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var startInYear = assessmentEntryType == AssessmentEntryType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
             var series = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, startInYear);
-            
+
             if (series == null)
                 return null;
 
-            return new AvailableAssessmentSeries 
-            {
-                ProfileId = profileId,
-                AssessmentSeriesId = series.Id,
-                AssessmentSeriesName = series.Name
-            };
+            return _mapper.Map<AvailableAssessmentSeries>(series, opt => opt.Items["profileId"] = profileId);
         }
     }
 }
