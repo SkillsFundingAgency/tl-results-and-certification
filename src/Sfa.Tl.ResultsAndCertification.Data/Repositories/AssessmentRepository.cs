@@ -195,7 +195,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Where(rpw => rpw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && 
                        rpw.TqRegistrationProfile.Id == profileId)
                 .Select(reg => _dbContext.AssessmentSeries
-                        .FirstOrDefault(s => s.Year >= reg.AcademicYear + startInYear && s.Year <= reg.AcademicYear + startInYear + Common.Helpers.Constants.AssessmentEndInYears && 
+                        .FirstOrDefault(s => s.Year >= reg.AcademicYear + startInYear && s.Year <= reg.AcademicYear + Common.Helpers.Constants.AssessmentEndInYears && 
                         currentDate >= s.StartDate && currentDate <= s.EndDate))
                 .FirstOrDefaultAsync();
 
