@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
@@ -14,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
                 errorMessage = errorType switch
                 {
                     RequestErrorType.FileType => new Tuple<string, string>("File", CommonHelper.GetResourceMessage("Must_Be_Csv_Validation_Message", errorResourceType)),
+                    RequestErrorType.FileSize => new Tuple<string, string>("File", string.Format(CommonHelper.GetResourceMessage("File_Size_Too_Large_Validation_Message", errorResourceType), Constants.MaxFileSizeInMb)),
                     RequestErrorType.NotSpecified => null,
                     _ => null
                 };
