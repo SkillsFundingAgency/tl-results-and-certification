@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
@@ -240,11 +241,40 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddCoreAssessmentSeriesAsync(AddAssessmentSeriesViewModel model)
         {
             if (!IsValidModelState(ModelState, model))
-            {
                 return View(model);
+
+            if (!model.IsOpted.Value)
+                return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+
+            var request = new AddAssessmentSeriesRequest { AoUkprn = User.GetUkPrn(), ProfileId = model.ProfileId, AssessmentSeriesId = model.AssessmentSeriesId, AssessmentEntryType = AssessmentEntryType.Core };
+            var response = await _assessmentLoader.AddAssessmentSeriesAsync(request);
+
+            if (!response.Status)
+            {
+                _logger.LogWarning(LogEvent.AddCoreAssessmentSeriesFailed, $"Unable to add core assessment for ProfileId= {model.ProfileId}. Method: AddAssessmentSeriesAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
 
-            return View(model);
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddAssessmentSeriesConfirmationViewModel),
+                new AddAssessmentSeriesConfirmationViewModel { ProfileId = model.ProfileId, UniqueLearnerReference = response.UniqueLearnerNumber.ToString() },
+                CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.AssessmentEntryAddedConfirmation);
+        }
+
+        [HttpGet]
+        [Route("assessment-entry-added-confirmation", Name = RouteConstants.AssessmentEntryAddedConfirmation)]
+        public async Task<IActionResult> AddAssessmentSeriesConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<AddAssessmentSeriesConfirmationViewModel>(string.Concat(CacheKey, Constants.AddAssessmentSeriesConfirmationViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read AddAssessmentSeriesConfirmationViewModel from temp data in add assessment confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            
+            return View(viewModel);
         }
 
         private bool IsValidModelState(ModelStateDictionary modelState, AddAssessmentSeriesViewModel model)

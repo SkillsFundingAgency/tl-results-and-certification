@@ -141,6 +141,7 @@
         public const string DownloadAssessmentErrors = "DownloadAssessmentErrors";
         public const string AddCoreAssessmentSeries = "AddCoreAssessmentSeries";
         public const string SubmitAddCoreAssessmentSeries = "SubmitAddCoreAssessmentSeries";
+        public const string AssessmentEntryAddedConfirmation = "AssessmentEntryAddedConfirmation";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";

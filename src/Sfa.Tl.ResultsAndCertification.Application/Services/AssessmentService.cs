@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Assessment;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -21,14 +22,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class AssessmentService : IAssessmentService
     {
         private readonly IAssessmentRepository _assessmentRepository;
+        private readonly IRepository<TqPathwayAssessment> _pathwayAssessmentRepository;
+        private readonly IRepository<TqSpecialismAssessment> _specialismAssessmentRepository;
         private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<IAssessmentRepository> _logger;
 
         public AssessmentService(IAssessmentRepository assessmentRepository,
+            IRepository<TqPathwayAssessment> pathwayAssessmentRepository, 
+            IRepository<TqSpecialismAssessment> specialismAssessmentRepository,
             IRepository<AssessmentSeries> assessmentSeries, IMapper mapper, ILogger<IAssessmentRepository> logger)
         {
             _assessmentRepository = assessmentRepository;
+            _pathwayAssessmentRepository = pathwayAssessmentRepository;
+            _specialismAssessmentRepository = specialismAssessmentRepository;
             _assessmentSeriesRepository = assessmentSeries;
             _mapper = mapper;
             _logger = logger;
@@ -310,13 +317,65 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
         {
+            // Validate
+            var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
+            var isValid = IsValidAddAssessmentRequestAsync(tqRegistration, assessmentEntryType);
+            if (!isValid) return null;
+
             var startInYear = assessmentEntryType == AssessmentEntryType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
             var series = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, startInYear);
-
             if (series == null)
                 return null;
 
             return _mapper.Map<AvailableAssessmentSeries>(series, opt => opt.Items["profileId"] = profileId);
+        }
+
+        public async Task<AddAssessmentSeriesResponse> AddAssessmentSeriesAsync(AddAssessmentSeriesRequest request)
+        {
+            // Validate
+            var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
+            var isValid = IsValidAddAssessmentRequestAsync(tqRegistration, request.AssessmentEntryType);
+            if (!isValid)
+                return new AddAssessmentSeriesResponse { Status = false };
+
+            var status = 0;
+            if (request.AssessmentEntryType == AssessmentEntryType.Core)
+                status = await _pathwayAssessmentRepository.CreateAsync(new TqPathwayAssessment
+                {
+                    TqRegistrationPathwayId = tqRegistration.Id,
+                    AssessmentSeriesId = request.AssessmentSeriesId,
+                    IsOptedin = true,
+                    StartDate = DateTime.UtcNow,
+                    EndDate = null,
+                    IsBulkUpload = false,
+                });
+
+            if (request.AssessmentEntryType == AssessmentEntryType.Specialism)
+                status = await _specialismAssessmentRepository.CreateAsync(new TqSpecialismAssessment
+                {
+                    TqRegistrationSpecialismId = tqRegistration.TqRegistrationSpecialisms.FirstOrDefault().Id,
+                    AssessmentSeriesId = request.AssessmentSeriesId,
+                    IsOptedin = true,
+                    StartDate = DateTime.UtcNow,
+                    EndDate = null,
+                    IsBulkUpload = false,
+                });
+
+            return new AddAssessmentSeriesResponse { UniqueLearnerNumber = tqRegistration.TqRegistrationProfile.UniqueLearnerNumber, Status = status > 0 };
+        }
+
+        private bool IsValidAddAssessmentRequestAsync(TqRegistrationPathway registrationPathway, AssessmentEntryType assessmentEntryType)
+        {
+            // 1. Must be an active registration.
+            if (registrationPathway == null || registrationPathway.Status != RegistrationPathwayStatus.Active)
+                return false;
+
+            // 2. Must not have an active assessment.
+            var anyActiveAssessment = assessmentEntryType == AssessmentEntryType.Core ?
+                        registrationPathway.TqPathwayAssessments.Any(x => x.IsOptedin && x.EndDate == null) :
+                        registrationPathway.TqRegistrationSpecialisms.Any(x => x.TqSpecialismAssessments.Any(x => x.IsOptedin && x.EndDate == null));
+
+            return !anyActiveAssessment;
         }
     }
 }

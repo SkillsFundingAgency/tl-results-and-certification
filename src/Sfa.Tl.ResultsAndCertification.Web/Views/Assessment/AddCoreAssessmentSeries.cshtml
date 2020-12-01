@@ -14,6 +14,7 @@
         <form asp-route="SubmitAddCoreAssessmentSeries" class="form" id="addCoreAssessmentForm">
             <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
             <input type="hidden" asp-for="AssessmentSeriesName" value="@Model.AssessmentSeriesName" />
+            <input type="hidden" asp-for="AssessmentSeriesId" value="@Model.AssessmentSeriesId" />
             <partial name="_ValidationSummary" />
 
             <div class="govuk-form-group govuk-!-margin-bottom-7">
