@@ -155,6 +155,7 @@
         public const string AccessDeniedWrongRole = "AccessDeniedWrongRole";
         public const string ProblemWithService = "ProblemWithService";
         public const string Error = "Error";
+        public const string VirusUploaded = "VirusUploaded";
 
         // Help
         public const string Cookies = "Cookies";
