@@ -25,6 +25,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.SpecialismAssessmentSeries, opts => opts.MapFrom(s => s.TqRegistrationSpecialisms.Any() ? s.TqRegistrationSpecialisms.FirstOrDefault().TqSpecialismAssessments.Any() ? s.TqRegistrationSpecialisms.FirstOrDefault().TqSpecialismAssessments.FirstOrDefault().AssessmentSeries.Name : null : null))
                 .ForMember(d => d.SpecialismAssessmentId, opts => opts.MapFrom(s => s.TqRegistrationSpecialisms.Any() ? s.TqRegistrationSpecialisms.FirstOrDefault().TqSpecialismAssessments.Any() ? s.TqRegistrationSpecialisms.FirstOrDefault().TqSpecialismAssessments.FirstOrDefault().Id : (int?)null : null))
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status));
+
+            CreateMap<TqPathwayAssessment, AssessmentEntryDetails>()
+               .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.Id))
+               .ForMember(d => d.AssessmentSeriesName, opts => opts.MapFrom(s => s.AssessmentSeries.Name));
         }
     }
 }

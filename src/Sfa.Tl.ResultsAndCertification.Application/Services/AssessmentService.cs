@@ -364,6 +364,26 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return new AddAssessmentSeriesResponse { UniqueLearnerNumber = tqRegistration.TqRegistrationProfile.UniqueLearnerNumber, Status = status > 0 };
         }
 
+        public async Task<AssessmentEntryDetails> GetActivePathwayAssessmentEntryDetailsAsync(long aoUkprn, int pathwayAssessmentId)
+        {
+            // Validate
+            var pathwayAssessment = await _assessmentRepository.GetPathwayAssessmentDetailsAsync(aoUkprn, pathwayAssessmentId);
+            var isValid = IsValidPathwayAssessment(pathwayAssessment);
+            
+            if (!isValid)
+                return null;
+
+            return _mapper.Map<AssessmentEntryDetails>(pathwayAssessment);
+        }
+
+        private bool IsValidPathwayAssessment(TqPathwayAssessment pathwayAssessment)
+        {
+            if (pathwayAssessment == null || pathwayAssessment.TqRegistrationPathway.Status != RegistrationPathwayStatus.Active)
+                return false;
+
+            return pathwayAssessment.IsOptedin && pathwayAssessment.EndDate == null;
+        }
+
         private bool IsValidAddAssessmentRequestAsync(TqRegistrationPathway registrationPathway, AssessmentEntryType assessmentEntryType)
         {
             // 1. Must be an active registration.
