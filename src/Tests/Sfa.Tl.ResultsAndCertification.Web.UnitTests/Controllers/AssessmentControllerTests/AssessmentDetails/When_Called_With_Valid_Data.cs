@@ -24,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 ProviderDisplayName = "Test Provider (1234567)",
                 PathwayDisplayName = "Pathway (7654321)",
                 PathwayAssessmentSeries = "Summer 2021",
+                PathwayAssessmentId = 5,
                 SpecialismDisplayName = "Specialism1 (2345678)",
                 SpecialismAssessmentSeries = AssessmentDetailsContent.Available_After_Autumn2021,
                 PathwayStatus = RegistrationPathwayStatus.Active

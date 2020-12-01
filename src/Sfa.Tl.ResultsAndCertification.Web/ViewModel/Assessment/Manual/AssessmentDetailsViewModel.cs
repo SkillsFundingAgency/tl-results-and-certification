@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public string ProviderDisplayName { get; set; }
         public string PathwayDisplayName { get; set; }
         public string PathwayAssessmentSeries { get; set; }
-        public string PathwayAssessmentId { get; set; }
+        public int PathwayAssessmentId { get; set; }
 
         public string SpecialismDisplayName { get; set; }
         public string SpecialismAssessmentSeries { get; set; }
