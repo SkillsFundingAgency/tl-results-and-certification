@@ -366,21 +366,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<AssessmentEntryDetails> GetActivePathwayAssessmentEntryDetailsAsync(long aoUkprn, int pathwayAssessmentId)
         {
-            // Validate
             var pathwayAssessment = await _assessmentRepository.GetPathwayAssessmentDetailsAsync(aoUkprn, pathwayAssessmentId);
-            var isValid = IsValidPathwayAssessment(pathwayAssessment);
             
-            if (!isValid)
+            if (!IsValidActivePathwayAssessment(pathwayAssessment))
                 return null;
 
             return _mapper.Map<AssessmentEntryDetails>(pathwayAssessment);
         }
 
-        private bool IsValidPathwayAssessment(TqPathwayAssessment pathwayAssessment)
+        private bool IsValidActivePathwayAssessment(TqPathwayAssessment pathwayAssessment)
         {
+            // 1. Must be an active registration.
             if (pathwayAssessment == null || pathwayAssessment.TqRegistrationPathway.Status != RegistrationPathwayStatus.Active)
                 return false;
 
+            // 2. Must have an active assessment.
             return pathwayAssessment.IsOptedin && pathwayAssessment.EndDate == null;
         }
 
