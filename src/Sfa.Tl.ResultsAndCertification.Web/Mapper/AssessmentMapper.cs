@@ -48,6 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Status));
 
             CreateMap<AvailableAssessmentSeries, AddAssessmentSeriesViewModel>();
+            CreateMap<AssessmentEntryDetails, AssessmentEntryDetailsViewModel>();
         }
     }
 }

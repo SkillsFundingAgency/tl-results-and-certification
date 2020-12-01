@@ -205,7 +205,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<AvailableAssessmentSeries>(requestUri);
         }
 
-        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetails(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType)
+        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType)
         {
             var requestUri = string.Format(ApiConstants.GetActiveAssessmentEntryDetailsUri, aoUkprn, assessmentId, (int)assessmentEntryType);
             return await GetAsync<AssessmentEntryDetails>(requestUri);
