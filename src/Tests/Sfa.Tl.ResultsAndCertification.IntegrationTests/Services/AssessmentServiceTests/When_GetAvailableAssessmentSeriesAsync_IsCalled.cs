@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,6 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private AvailableAssessmentSeries _actualResult;
         private List<TqRegistrationProfile> _registrations;
+        private List<TqPathwayAssessment> _pathwayAssessments;
+        private List<TqSpecialismAssessment> _specialismAssessments;
 
         public override void Given()
         {
@@ -25,11 +28,32 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             CreateMapper();
 
             // Parameters
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Active } };
+            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Active }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Withdrawn } };
 
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsData(_ulns, TqProvider);
+
+            // Assessments seed
+            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
+            {
+                var hasHitoricData = new List<long> { 1111111112 };
+                var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
+                var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
+
+                tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent));
+
+                foreach (var pathway in registration.TqRegistrationPathways)
+                {
+                    tqSpecialismAssessmentsSeedData.AddRange(GetSpecialismAssessmentsDataToProcess(pathway.TqRegistrationSpecialisms.ToList(), isLatestActive, isHistoricAssessent));
+                }
+            }
+
+            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
+            _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+            DbContext.SaveChanges();
 
             AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
             AssessmentSeriesRepositoryLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
@@ -85,10 +109,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                     { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, AssessmentEntryType = AssessmentEntryType.Specialism },
                       null },
 
-                    // invalid profil id
+                    // Has an active assessment
                     new object[]
                     { new RequestParameter { AoUkprn = 10011881, ProfileId = 2, AssessmentEntryType = AssessmentEntryType.Core },
-                      null }
+                      null },
+
+                    // registration is withdrawn
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 3, AssessmentEntryType = AssessmentEntryType.Core },
+                      null },
+
+                    // invalid profil id
+                    new object[]
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 99, AssessmentEntryType = AssessmentEntryType.Core },
+                      null },
                 };
             }
         }
