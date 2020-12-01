@@ -37,6 +37,7 @@
         public const string GetAssessmentDetailsUri = "/api/assessment/GetAssessmentDetails/{0}/{1}/{2}";
         public const string GetAvailableAssessmentSeriesUri = "/api/assessment/GetAvailableAssessmentSeries/{0}/{1}/{2}";
         public const string AddAssessmentSeriesUri = "/api/assessment/AddAssessmentSeries";
+        public const string GetActiveAssessmentEntryDetailsUri = "/api/assessment/GetActiveAssessmentEntryDetails/{0}/{1}/{2}";        
 
         // DocumentUploadHistory Related Uri's
         public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";

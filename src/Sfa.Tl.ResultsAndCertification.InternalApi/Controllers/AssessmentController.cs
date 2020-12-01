@@ -52,12 +52,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetActiveAssessmentEntryDetails/{aoUkprn}/{profileId}/{assessmentEntryType}")]
-        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int pathwayAssessmentId, AssessmentEntryType assessmentEntryType)
+        [Route("GetActiveAssessmentEntryDetails/{aoUkprn}/{assessmentId}/{assessmentEntryType}")]
+        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType)
         {
             return assessmentEntryType switch
             {
-                AssessmentEntryType.Core => await _assessmentService.GetActivePathwayAssessmentEntryDetailsAsync(aoUkprn, pathwayAssessmentId),
+                AssessmentEntryType.Core => await _assessmentService.GetActivePathwayAssessmentEntryDetailsAsync(aoUkprn, assessmentId),
                 AssessmentEntryType.Specialism => null,
                 AssessmentEntryType.NotSpecified => null,
                 _ => null
