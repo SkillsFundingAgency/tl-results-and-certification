@@ -27,8 +27,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status));
 
             CreateMap<TqPathwayAssessment, AssessmentEntryDetails>()
-               .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.Id))
-               .ForMember(d => d.AssessmentSeriesName, opts => opts.MapFrom(s => s.AssessmentSeries.Name));
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.TqRegistrationPathway.TqRegistrationProfileId))
+                .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.Id))
+                .ForMember(d => d.AssessmentSeriesName, opts => opts.MapFrom(s => s.AssessmentSeries.Name));
         }
     }
 }

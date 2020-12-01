@@ -142,6 +142,8 @@
         public const string AddCoreAssessmentSeries = "AddCoreAssessmentSeries";
         public const string SubmitAddCoreAssessmentSeries = "SubmitAddCoreAssessmentSeries";
         public const string AssessmentEntryAddedConfirmation = "AssessmentEntryAddedConfirmation";
+        public const string RemoveCoreAssessmentEntry = "RemoveCoreAssessmentEntry";
+        public const string SubmitRemoveCoreAssessmentEntry = "SubmitRemoveCoreAssessmentEntry";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";
