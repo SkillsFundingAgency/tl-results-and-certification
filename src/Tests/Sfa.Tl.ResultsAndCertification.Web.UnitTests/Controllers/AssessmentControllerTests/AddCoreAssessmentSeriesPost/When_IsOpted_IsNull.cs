@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
             Controller.ViewData.ModelState.ContainsKey(nameof(AddAssessmentSeriesViewModel.IsOpted)).Should().BeTrue();
             var modelState = Controller.ViewData.ModelState[nameof(AddAssessmentSeriesViewModel.IsOpted)];
-            modelState.Errors[0].ErrorMessage.Should().Be($"{AssessmentContent.AddCoreAssessmentSeries.Select_Option_To_Add_Validation_Text} {ViewModel.AssessmentSeriesName}");
+            modelState.Errors[0].ErrorMessage.Should().Be($"{AssessmentContent.AddCoreAssessmentEntry.Select_Option_To_Add_Validation_Text} {ViewModel.AssessmentSeriesName}");
         }
     }
 }

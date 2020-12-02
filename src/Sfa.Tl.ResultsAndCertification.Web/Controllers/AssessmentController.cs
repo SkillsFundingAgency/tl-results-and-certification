@@ -237,17 +237,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("add-core-assessment-entry-next-available-series", Name = RouteConstants.SubmitAddCoreAssessmentSeries)]
+        [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.SubmitAddCoreAssessmentSeries)]
         public async Task<IActionResult> AddCoreAssessmentSeriesAsync(AddAssessmentSeriesViewModel model)
         {
+            //if (!ModelState.IsValid)
+            //    return View(model);
+
             if (!IsValidModelState(ModelState, model))
                 return View(model);
 
             if (!model.IsOpted.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
 
-            var request = new AddAssessmentSeriesRequest { AoUkprn = User.GetUkPrn(), ProfileId = model.ProfileId, AssessmentSeriesId = model.AssessmentSeriesId, AssessmentEntryType = AssessmentEntryType.Core };
-            var response = await _assessmentLoader.AddAssessmentSeriesAsync(request);
+            model.AssessmentEntryType = AssessmentEntryType.Core;
+            var response = await _assessmentLoader.AddAssessmentSeriesAsync(User.GetUkPrn(), model);
 
             if (!response.Status)
             {
@@ -280,8 +283,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private bool IsValidModelState(ModelStateDictionary modelState, AddAssessmentSeriesViewModel model)
         {
             if (!model.IsOpted.HasValue)
-                modelState.AddModelError("IsOpted", $"{AssessmentContent.AddCoreAssessmentSeries.Select_Option_To_Add_Validation_Text} {model.AssessmentSeriesName}");
-            
+                modelState.AddModelError("IsOpted", $"{AssessmentContent.AddCoreAssessmentEntry.Select_Option_To_Add_Validation_Text} {model.AssessmentSeriesName}");
+
             return modelState.IsValid;
         }
     }

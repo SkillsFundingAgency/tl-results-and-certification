@@ -96,10 +96,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<AddAssessmentSeriesViewModel>(response);
         }
 
-        public async Task<AddAssessmentSeriesResponse> AddAssessmentSeriesAsync(AddAssessmentSeriesRequest request)
+        public async Task<AddAssessmentSeriesResponse> AddAssessmentSeriesAsync(long aoUkprn, AddAssessmentSeriesViewModel viewModel)
         {
+            var request = _mapper.Map<AddAssessmentSeriesRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.AddAssessmentSeriesAsync(request);
-            //return _mapper.Map<AddAssessmentSeriesViewModel>(response);
         }
     }
 }

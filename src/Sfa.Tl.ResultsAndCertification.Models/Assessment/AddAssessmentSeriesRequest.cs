@@ -8,5 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Assessment
         public int ProfileId { get; set; }
         public int AssessmentSeriesId { get; set; }
         public AssessmentEntryType AssessmentEntryType { get; set; }
+        public string PerformedBy { get; set; }
     }
 }
