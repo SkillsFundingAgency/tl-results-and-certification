@@ -4,7 +4,6 @@
     {
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
-
         public string AssessmentSeriesName { get; set; }
     }
 }
