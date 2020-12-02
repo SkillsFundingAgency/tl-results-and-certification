@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
@@ -49,5 +50,18 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _assessmentService.AddAssessmentSeriesAsync(request);
         }
+
+        [HttpGet]
+        [Route("GetActiveAssessmentEntryDetails/{aoUkprn}/{assessmentId}/{assessmentEntryType}")]
+        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType)
+        {
+            return assessmentEntryType switch
+            {
+                AssessmentEntryType.Core => await _assessmentService.GetActivePathwayAssessmentEntryDetailsAsync(aoUkprn, assessmentId),
+                AssessmentEntryType.Specialism => null,
+                AssessmentEntryType.NotSpecified => null,
+                _ => null
+            };
+        }        
     }
 }

@@ -16,5 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<AssessmentDetailsViewModel> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         Task<AddAssessmentSeriesViewModel> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType);
         Task<AddAssessmentSeriesResponse> AddAssessmentSeriesAsync(long aoUkprn, AddAssessmentSeriesViewModel viewModel);
+        Task<AssessmentEntryDetailsViewModel> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType);
     }
 }

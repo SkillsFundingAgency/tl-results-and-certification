@@ -71,6 +71,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ProblemWithAssessmentsUpload.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Assessment\RemoveCoreAssessmentEntry.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RemoveCoreAssessmentEntry.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Assessment\SearchAssessments.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -463,6 +468,10 @@
     <EmbeddedResource Update="Content\Assessment\ProblemWithAssessmentsUpload.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProblemWithAssessmentsUpload.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Assessment\RemoveCoreAssessmentEntry.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RemoveCoreAssessmentEntry.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Assessment\SearchAssessments.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

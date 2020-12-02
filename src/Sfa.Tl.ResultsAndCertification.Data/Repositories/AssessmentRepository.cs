@@ -201,5 +201,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             return series;
         }
+
+        public async Task<TqPathwayAssessment> GetPathwayAssessmentDetailsAsync(long aoUkprn, int pathwayAssessmentId)
+        {
+            var pathwayAssessment = await _dbContext.TqPathwayAssessment
+                .Include(p => p.AssessmentSeries)
+                .Include(p => p.TqRegistrationPathway)
+                    .ThenInclude(P => P.TqRegistrationProfile)
+                .FirstOrDefaultAsync(pa => pa.Id == pathwayAssessmentId && pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn);
+
+            return pathwayAssessment;
+        }
     }
 }

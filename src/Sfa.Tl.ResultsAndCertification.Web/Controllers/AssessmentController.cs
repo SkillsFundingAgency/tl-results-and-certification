@@ -280,6 +280,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [Route("remove-core-assessment-entry/{assessmentId}", Name = RouteConstants.RemoveCoreAssessmentEntry)]
+        public async Task<IActionResult> RemoveCoreAssessmentEntryAsync(int assessmentId)
+        {
+            var viewModel = await _assessmentLoader.GetActiveAssessmentEntryDetailsAsync(User.GetUkPrn(), assessmentId, AssessmentEntryType.Core);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No valid assessment entry available. Method: GetActiveAssessmentEntryDetailsAsync({User.GetUkPrn()}, {assessmentId}, {AssessmentEntryType.Core}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("remove-core-assessment-entry/{assessmentId}", Name = RouteConstants.SubmitRemoveCoreAssessmentEntry)]
+        public async Task<IActionResult> RemoveCoreAssessmentEntryAsync(AssessmentEntryDetailsViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            if(model.CanRemoveAssessmentEntry.Value)
+            {
+                return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+            }
+            else
+            {
+                return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+            }            
+        }
+
         private bool IsValidModelState(ModelStateDictionary modelState, AddAssessmentSeriesViewModel model)
         {
             if (!model.IsOpted.HasValue)

@@ -7,12 +7,14 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Xunit;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using AssessmentDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AssessmentDetails;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AssessmentDetails
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
         private AssessmentDetailsViewModel mockresult = null;
+        private Dictionary<string, string> _routeAttributes;
 
         public override void Given()
         {
@@ -24,11 +26,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 ProviderDisplayName = "Test Provider (1234567)",
                 PathwayDisplayName = "Pathway (7654321)",
                 PathwayAssessmentSeries = "Summer 2021",
+                PathwayAssessmentId = 5,
                 SpecialismDisplayName = "Specialism1 (2345678)",
                 SpecialismAssessmentSeries = AssessmentDetailsContent.Available_After_Autumn2021,
                 PathwayStatus = RegistrationPathwayStatus.Active
             };
 
+            _routeAttributes = new Dictionary<string, string> { { Constants.AssessmentId, mockresult.PathwayAssessmentId.ToString() } };
             AssessmentLoader.GetAssessmentDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockresult);
         }
 
@@ -60,7 +64,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.SummaryCoreAssessmentEntry.ActionText.Should().Be(AssessmentDetailsContent.Remove_Entry_Action_Link_Text);
             model.SummaryCoreAssessmentEntry.RenderHiddenActionText.Should().Be(true);
             model.SummaryCoreAssessmentEntry.HiddenActionText.Should().Be(AssessmentDetailsContent.Core_Assessment_Entry_Hidden_Text);
-            
+            model.SummaryCoreAssessmentEntry.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+
             // Summary SpecialismAssessment Entry
             model.SummarySpecialismAssessmentEntry.Should().NotBeNull();
             model.SummarySpecialismAssessmentEntry.Title.Should().Be(AssessmentDetailsContent.Title_Assessment_Entry_Text);
