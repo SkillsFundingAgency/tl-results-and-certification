@@ -1,6 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Assessment;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.Collections.Generic;

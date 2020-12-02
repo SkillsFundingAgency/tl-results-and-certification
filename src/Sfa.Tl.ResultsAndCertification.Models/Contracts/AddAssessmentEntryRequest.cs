@@ -1,6 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
-namespace Sfa.Tl.ResultsAndCertification.Models.Assessment
+namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
     public class AddAssessmentEntryRequest
     {

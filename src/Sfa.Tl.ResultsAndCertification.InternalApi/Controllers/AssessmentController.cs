@@ -4,7 +4,6 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Models.Assessment;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers

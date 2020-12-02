@@ -8,7 +8,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Assessment;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;

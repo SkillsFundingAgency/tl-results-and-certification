@@ -1,4 +1,4 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Models.Assessment
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
     public class AddAssessmentEntryResponse
     {
