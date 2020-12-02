@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
-using Sfa.Tl.ResultsAndCertification.Models.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
@@ -240,10 +239,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.EntrySeries)]
         public async Task<IActionResult> AddCoreAssessmentEntryAsync(AddAssessmentEntryViewModel model)
         {
-            //if (!ModelState.IsValid)
-            //    return View(model);
-
-            if (!IsValidModelState(ModelState, model))
+            if (!ModelState.IsValid)
                 return View(model);
 
             if (!model.IsOpted.Value)
@@ -309,14 +305,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
             }            
-        }
-
-        private bool IsValidModelState(ModelStateDictionary modelState, AddAssessmentEntryViewModel model)
-        {
-            if (!model.IsOpted.HasValue)
-                modelState.AddModelError("IsOpted", $"{AssessmentContent.AddCoreAssessmentEntry.Select_Option_To_Add_Validation_Text} {model.AssessmentSeriesName}");
-
-            return modelState.IsValid;
         }
     }
 }

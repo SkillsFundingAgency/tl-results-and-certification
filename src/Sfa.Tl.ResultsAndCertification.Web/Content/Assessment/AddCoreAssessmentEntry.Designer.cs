@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select yes to add to.
+        ///   Looks up a localized string similar to Select yes to add to {0}.
         /// </summary>
         public static string Select_Option_To_Add_Validation_Text {
             get {
