@@ -49,6 +49,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         // DocumentUploadHistory
         Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);
-        Task<AddAssessmentSeriesResponse> AddAssessmentSeriesAsync(AddAssessmentSeriesRequest request);
+        Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request);
     }
 }

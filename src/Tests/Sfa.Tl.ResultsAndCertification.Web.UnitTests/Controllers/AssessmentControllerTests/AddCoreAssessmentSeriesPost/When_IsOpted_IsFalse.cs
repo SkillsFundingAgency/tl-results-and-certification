@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
     {
         public override void Given()
         {
-            ViewModel = new AddAssessmentSeriesViewModel 
+            ViewModel = new AddAssessmentEntryViewModel 
             {
                 ProfileId = 1,
                 AssessmentSeriesId = 11,

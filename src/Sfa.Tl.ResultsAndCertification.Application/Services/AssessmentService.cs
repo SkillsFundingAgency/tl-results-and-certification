@@ -330,13 +330,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<AvailableAssessmentSeries>(series, opt => opt.Items["profileId"] = profileId);
         }
 
-        public async Task<AddAssessmentSeriesResponse> AddAssessmentSeriesAsync(AddAssessmentSeriesRequest request)
+        public async Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request)
         {
             // Validate
             var tqRegistrationPathway = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
             var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, request.AssessmentEntryType);
             if (!isValid)
-                return new AddAssessmentSeriesResponse { Status = false };
+                return new AddAssessmentEntryResponse { Status = false };
 
             var status = 0;
             if (request.AssessmentEntryType == AssessmentEntryType.Core)
@@ -351,7 +351,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     CreatedBy = request.PerformedBy
                 });
 
-            return new AddAssessmentSeriesResponse { UniqueLearnerNumber = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, Status = status > 0 };
+            return new AddAssessmentEntryResponse { UniqueLearnerNumber = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, Status = status > 0 };
         }
 
         public async Task<AssessmentEntryDetails> GetActivePathwayAssessmentEntryDetailsAsync(long aoUkprn, int pathwayAssessmentId)

@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         protected ICacheService CacheService;
         protected ILogger<AssessmentController> Logger;
         protected AssessmentController Controller;
-        protected AddAssessmentSeriesViewModel ViewModel;
+        protected AddAssessmentEntryViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
 
         public IActionResult Result { get; private set; }
@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
         public async override Task When()
         {
-            Result = await Controller.AddCoreAssessmentSeriesAsync(ViewModel);
+            Result = await Controller.AddCoreAssessmentEntryAsync(ViewModel);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Assessment
 {
-    public class AddAssessmentSeriesRequest
+    public class AddAssessmentEntryRequest
     {
         public long AoUkprn { get; set; }
         public int ProfileId { get; set; }

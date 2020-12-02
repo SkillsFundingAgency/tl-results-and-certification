@@ -7,7 +7,7 @@ using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 {
-    public class AddAssessmentSeriesViewModel
+    public class AddAssessmentEntryViewModel
     {
         public int ProfileId { get; set; }
         public int AssessmentSeriesId { get; set; }

@@ -90,16 +90,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<AssessmentDetailsViewModel>(response);
         }
 
-        public async Task<AddAssessmentSeriesViewModel> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        public async Task<AddAssessmentEntryViewModel> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
         {
             var response = await _internalApiClient.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, assessmentEntryType);
-            return _mapper.Map<AddAssessmentSeriesViewModel>(response);
+            return _mapper.Map<AddAssessmentEntryViewModel>(response);
         }
 
-        public async Task<AddAssessmentSeriesResponse> AddAssessmentSeriesAsync(long aoUkprn, AddAssessmentSeriesViewModel viewModel)
+        public async Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(long aoUkprn, AddAssessmentEntryViewModel viewModel)
         {
-            var request = _mapper.Map<AddAssessmentSeriesRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
-            return await _internalApiClient.AddAssessmentSeriesAsync(request);
+            var request = _mapper.Map<AddAssessmentEntryRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.AddAssessmentEntryAsync(request);
         }
 
         public async Task<AssessmentEntryDetailsViewModel> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType)

@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.SummaryCoreAssessmentEntry.ActionText.Should().Be(AssessmentDetailsContent.Add_Entry_Action_Link_Text);
             model.SummaryCoreAssessmentEntry.RenderHiddenActionText.Should().Be(true);
             model.SummaryCoreAssessmentEntry.HiddenActionText.Should().Be(AssessmentDetailsContent.Core_Assessment_Entry_Hidden_Text);
-            model.SummaryCoreAssessmentEntry.RouteName.Should().Be(RouteConstants.AddCoreAssessmentSeries);
+            model.SummaryCoreAssessmentEntry.RouteName.Should().Be(RouteConstants.AddCoreAssessmentEntry);
             model.SummaryCoreAssessmentEntry.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary SpecialismAssessment Entry

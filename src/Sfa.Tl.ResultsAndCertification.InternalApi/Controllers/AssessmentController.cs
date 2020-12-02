@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
@@ -45,10 +44,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpPost]
-        [Route("AddAssessmentSeries")]
-        public async Task<AddAssessmentSeriesResponse> AddAssessmentSeriesAsync(AddAssessmentSeriesRequest request)
+        [Route("AddAssessmentEntry")]
+        public async Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request)
         {
-            return await _assessmentService.AddAssessmentSeriesAsync(request);
+            return await _assessmentService.AddAssessmentEntryAsync(request);
         }
 
         [HttpGet]

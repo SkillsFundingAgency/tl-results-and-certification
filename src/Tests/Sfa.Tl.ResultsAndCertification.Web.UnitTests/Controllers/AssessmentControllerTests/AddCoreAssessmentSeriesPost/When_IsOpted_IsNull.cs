@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
     {
         public override void Given()
         {
-            ViewModel = new AddAssessmentSeriesViewModel 
+            ViewModel = new AddAssessmentEntryViewModel 
             {
                 ProfileId = 1,
                 AssessmentSeriesId = 11,
@@ -26,9 +26,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             Result.Should().BeOfType(typeof(ViewResult));
 
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(AddAssessmentSeriesViewModel));
+            viewResult.Model.Should().BeOfType(typeof(AddAssessmentEntryViewModel));
 
-            var model = viewResult.Model as AddAssessmentSeriesViewModel;
+            var model = viewResult.Model as AddAssessmentEntryViewModel;
             model.Should().NotBeNull();
 
             model.ProfileId.Should().Be(ViewModel.ProfileId);
@@ -36,8 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.AssessmentSeriesName.Should().Be(ViewModel.AssessmentSeriesName);
             model.IsOpted.Should().BeNull();
 
-            Controller.ViewData.ModelState.ContainsKey(nameof(AddAssessmentSeriesViewModel.IsOpted)).Should().BeTrue();
-            var modelState = Controller.ViewData.ModelState[nameof(AddAssessmentSeriesViewModel.IsOpted)];
+            Controller.ViewData.ModelState.ContainsKey(nameof(AddAssessmentEntryViewModel.IsOpted)).Should().BeTrue();
+            var modelState = Controller.ViewData.ModelState[nameof(AddAssessmentEntryViewModel.IsOpted)];
             modelState.Errors[0].ErrorMessage.Should().Be($"{AssessmentContent.AddCoreAssessmentEntry.Select_Option_To_Add_Validation_Text} {ViewModel.AssessmentSeriesName}");
         }
     }

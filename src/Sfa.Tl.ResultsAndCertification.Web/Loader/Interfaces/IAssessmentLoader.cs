@@ -14,8 +14,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<Stream> GetAssessmentValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference);
         Task<UlnAssessmentsNotFoundViewModel> FindUlnAssessmentsAsync(long aoUkprn, long Uln);
         Task<AssessmentDetailsViewModel> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
-        Task<AddAssessmentSeriesViewModel> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType);
-        Task<AddAssessmentSeriesResponse> AddAssessmentSeriesAsync(long aoUkprn, AddAssessmentSeriesViewModel viewModel);
+        Task<AddAssessmentEntryViewModel> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType);
+        Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(long aoUkprn, AddAssessmentEntryViewModel viewModel);
         Task<AssessmentEntryDetailsViewModel> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType);
     }
 }
