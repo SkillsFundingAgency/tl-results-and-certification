@@ -12,5 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType);
         Task<AddAssessmentSeriesResponse> AddAssessmentSeriesAsync(AddAssessmentSeriesRequest request);
         Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType);
+        Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model);
     }
 }
