@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
         public async override Task When()
         {
-            Result = await Controller.AddCoreAssessmentSeriesAsync(ProfileId);
+            Result = await Controller.AddCoreAssessmentEntryAsync(ProfileId);
         }
     }
 }

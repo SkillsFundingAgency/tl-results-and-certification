@@ -1,8 +1,8 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual.AddAssessmentSeriesViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual.AddAssessmentEntryViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Assessment
 
 @{
-    ViewData["Title"] = @AddCoreAssessmentSeries.Page_Title;
+    ViewData["Title"] = @AddCoreAssessmentEntry.Page_Title;
 }
 
 @section NavigationBar {
@@ -11,7 +11,7 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form asp-route="SubmitAddCoreAssessmentSeries" class="form" id="addCoreAssessmentForm">
+        <form asp-route="SubmitAddCoreAssessmentEntry" class="form" id="addCoreAssessmentForm">
             <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
             <input type="hidden" asp-for="AssessmentSeriesName" value="@Model.AssessmentSeriesName" />
             <input type="hidden" asp-for="AssessmentSeriesId" value="@Model.AssessmentSeriesId" />
@@ -21,10 +21,10 @@
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                         <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
-                            @string.Format(@AddCoreAssessmentSeries.Page_Heading, Model.AssessmentSeriesName)
+                            @string.Format(@AddCoreAssessmentEntry.Page_Heading, Model.AssessmentSeriesName)
                         </h1>
                         <p class="govuk-inset-text govuk-body-m govuk-!-font-weight-regular govuk-!-margin-top-4">
-                            @string.Format(@AddCoreAssessmentSeries.Series_Available_Text, Model.AssessmentSeriesName)
+                            @string.Format(@AddCoreAssessmentEntry.Series_Available_Text, Model.AssessmentSeriesName)
                         </p>
                     </legend>
                     <div class="govuk-radios" sfa-validation-for="IsOpted" sfa-validation-class="govuk-form-group--error">
@@ -32,20 +32,20 @@
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="isopted" asp-for="IsOpted" type="radio" value=true>
                             <label class="govuk-label govuk-radios__label" for="isopted">
-                                @string.Format(@AddCoreAssessmentSeries.Add_Series_Option_Yes, Model.AssessmentSeriesName)
+                                @string.Format(@AddCoreAssessmentEntry.Add_Series_Option_Yes, Model.AssessmentSeriesName)
                             </label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="addSeries-no" asp-for="IsOpted" type="radio" value=false>
                             <label class="govuk-label govuk-radios__label" for="addSeries-no">
-                                @string.Format(@AddCoreAssessmentSeries.Add_Series_Option_No, Model.AssessmentSeriesName)
+                                @string.Format(@AddCoreAssessmentEntry.Add_Series_Option_No, Model.AssessmentSeriesName)
                             </label>
                         </div>
                     </div>
                 </fieldset>
             </div>
             <p>
-                <button id="submitButton" class="govuk-button" data-module="govuk-button">@AddCoreAssessmentSeries.Submit_Button_Text</button>
+                <button id="submitButton" class="govuk-button" data-module="govuk-button">@AddCoreAssessmentEntry.Submit_Button_Text</button>
             </p>
         </form>
     </div>

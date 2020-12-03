@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         private string PathwayAssessmentSeriesText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? PathwayAssessmentSeries : AssessmentDetailsContent.Not_Specified_Text; } }
         private string SpecialismAssessmentSeriesText { get { return AssessmentDetailsContent.Available_After_Autumn2021; } }
 
-        private string PathwayAddAssessmentRoute { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? RouteConstants.RemoveCoreAssessmentEntry : RouteConstants.AddCoreAssessmentSeries; } }
+        private string PathwayAddAssessmentRoute { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? RouteConstants.RemoveCoreAssessmentEntry : RouteConstants.AddCoreAssessmentEntry; } }
 
         private Dictionary<string, string> PathwayAssessmentRouteAttributes { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? new Dictionary<string, string> { { Constants.AssessmentId, PathwayAssessmentId.ToString() } } : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } ; } }
 

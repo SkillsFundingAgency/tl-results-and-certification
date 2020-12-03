@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
 
         protected AssessmentLoader Loader;
         protected AvailableAssessmentSeries expectedApiResult;
-        protected AddAssessmentSeriesViewModel ActualResult;
+        protected AddAssessmentEntryViewModel ActualResult;
 
         public override void Setup()
         {

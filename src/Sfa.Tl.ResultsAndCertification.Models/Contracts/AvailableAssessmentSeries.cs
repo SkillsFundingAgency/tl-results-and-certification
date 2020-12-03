@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
     public class AvailableAssessmentSeries
     {

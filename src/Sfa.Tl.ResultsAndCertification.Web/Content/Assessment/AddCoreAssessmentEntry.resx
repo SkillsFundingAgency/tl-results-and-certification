@@ -130,7 +130,7 @@
     <value>Do you want to add a core assessment entry to the next available series page</value>
   </data>
   <data name="Select_Option_To_Add_Validation_Text" xml:space="preserve">
-    <value>Select yes to add to</value>
+    <value>Select yes to add to {0}</value>
   </data>
   <data name="Series_Available_Text" xml:space="preserve">
     <value>{0} is the only series available.</value>

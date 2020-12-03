@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
-using Sfa.Tl.ResultsAndCertification.Models.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
@@ -223,8 +222,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.AddCoreAssessmentSeries)]
-        public async Task<IActionResult> AddCoreAssessmentSeriesAsync(int profileId)
+        [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.AddCoreAssessmentEntry)]
+        public async Task<IActionResult> AddCoreAssessmentEntryAsync(int profileId)
         {
             var viewModel = await _assessmentLoader.GetAvailableAssessmentSeriesAsync(User.GetUkPrn(), profileId, AssessmentEntryType.Core);
             if (viewModel == null)
@@ -237,26 +236,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("add-core-assessment-entry-next-available-series", Name = RouteConstants.SubmitAddCoreAssessmentSeries)]
-        public async Task<IActionResult> AddCoreAssessmentSeriesAsync(AddAssessmentSeriesViewModel model)
+        [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.EntrySeries)]
+        public async Task<IActionResult> AddCoreAssessmentEntryAsync(AddAssessmentEntryViewModel model)
         {
-            if (!IsValidModelState(ModelState, model))
+            if (!ModelState.IsValid)
                 return View(model);
 
             if (!model.IsOpted.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
 
-            var request = new AddAssessmentSeriesRequest { AoUkprn = User.GetUkPrn(), ProfileId = model.ProfileId, AssessmentSeriesId = model.AssessmentSeriesId, AssessmentEntryType = AssessmentEntryType.Core };
-            var response = await _assessmentLoader.AddAssessmentSeriesAsync(request);
+            model.AssessmentEntryType = AssessmentEntryType.Core;
+            var response = await _assessmentLoader.AddAssessmentEntryAsync(User.GetUkPrn(), model);
 
             if (!response.Status)
             {
-                _logger.LogWarning(LogEvent.AddCoreAssessmentSeriesFailed, $"Unable to add core assessment for ProfileId= {model.ProfileId}. Method: AddAssessmentSeriesAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.AddCoreAssessmentEntryFailed, $"Unable to add core assessment for ProfileId= {model.ProfileId}. Method: AddAssessmentEntryAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
 
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddAssessmentSeriesConfirmationViewModel),
-                new AddAssessmentSeriesConfirmationViewModel { ProfileId = model.ProfileId, UniqueLearnerReference = response.UniqueLearnerNumber.ToString() },
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddAssessmentEntryConfirmationViewModel),
+                new AddAssessmentEntryConfirmationViewModel { ProfileId = model.ProfileId, UniqueLearnerReference = response.UniqueLearnerNumber.ToString() },
                 CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.AssessmentEntryAddedConfirmation);
@@ -264,13 +263,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("assessment-entry-added-confirmation", Name = RouteConstants.AssessmentEntryAddedConfirmation)]
-        public async Task<IActionResult> AddAssessmentSeriesConfirmationAsync()
+        public async Task<IActionResult> AddAssessmentEntryConfirmationAsync()
         {
-            var viewModel = await _cacheService.GetAndRemoveAsync<AddAssessmentSeriesConfirmationViewModel>(string.Concat(CacheKey, Constants.AddAssessmentSeriesConfirmationViewModel));
+            var viewModel = await _cacheService.GetAndRemoveAsync<AddAssessmentEntryConfirmationViewModel>(string.Concat(CacheKey, Constants.AddAssessmentEntryConfirmationViewModel));
 
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read AddAssessmentSeriesConfirmationViewModel from temp data in add assessment confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read AddAssessmentEntryConfirmationViewModel from temp data in add assessment confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             
@@ -306,14 +305,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
             }            
-        }
-
-        private bool IsValidModelState(ModelStateDictionary modelState, AddAssessmentSeriesViewModel model)
-        {
-            if (!model.IsOpted.HasValue)
-                modelState.AddModelError("IsOpted", $"{AssessmentContent.AddCoreAssessmentSeries.Select_Option_To_Add_Validation_Text} {model.AssessmentSeriesName}");
-
-            return modelState.IsValid;
         }
     }
 }

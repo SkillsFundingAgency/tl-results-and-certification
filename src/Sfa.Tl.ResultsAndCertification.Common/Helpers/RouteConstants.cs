@@ -139,8 +139,8 @@
         public const string AssessmentsUploadUnsuccessful = "AssessmentsUploadUnsuccessful";
         public const string ProblemWithAssessmentsUpload = "ProblemWithAssessmentsUpload";
         public const string DownloadAssessmentErrors = "DownloadAssessmentErrors";
-        public const string AddCoreAssessmentSeries = "AddCoreAssessmentSeries";
-        public const string SubmitAddCoreAssessmentSeries = "SubmitAddCoreAssessmentSeries";
+        public const string AddCoreAssessmentEntry = "AddCoreAssessmentEntry";
+        public const string EntrySeries = "SubmitAddCoreAssessmentEntry";
         public const string AssessmentEntryAddedConfirmation = "AssessmentEntryAddedConfirmation";
         public const string RemoveCoreAssessmentEntry = "RemoveCoreAssessmentEntry";
         public const string SubmitRemoveCoreAssessmentEntry = "SubmitRemoveCoreAssessmentEntry";

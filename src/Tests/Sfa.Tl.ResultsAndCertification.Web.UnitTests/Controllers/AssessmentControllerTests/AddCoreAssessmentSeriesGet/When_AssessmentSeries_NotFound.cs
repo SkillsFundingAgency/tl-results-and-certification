@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 {
     public class When_AssessmentSeries_NotFound : TestSetup
     {
-        private AddAssessmentSeriesViewModel mockresult = null;
+        private AddAssessmentEntryViewModel mockresult = null;
         public override void Given()
         {
             AssessmentLoader.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, Arg.Any<AssessmentEntryType>()).Returns(mockresult);

@@ -10,11 +10,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 {
     public class When_AssessmentSeries_Found : TestSetup
     {
-        private AddAssessmentSeriesViewModel mockresult = null;
+        private AddAssessmentEntryViewModel mockresult = null;
 
         public override void Given()
         {
-            mockresult = new AddAssessmentSeriesViewModel
+            mockresult = new AddAssessmentEntryViewModel
             {
                 ProfileId = 1,
                 AssessmentSeriesId = 11,
@@ -31,9 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             Result.Should().BeOfType(typeof(ViewResult));
 
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(AddAssessmentSeriesViewModel));
+            viewResult.Model.Should().BeOfType(typeof(AddAssessmentEntryViewModel));
 
-            var model = viewResult.Model as AddAssessmentSeriesViewModel;
+            var model = viewResult.Model as AddAssessmentEntryViewModel;
             model.Should().NotBeNull();
 
             model.ProfileId.Should().Be(mockresult.ProfileId);

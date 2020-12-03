@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AddAssessmentSeriesConfirmation {
+    public class AddCoreAssessmentEntry {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AddAssessmentSeriesConfirmation() {
+        internal AddCoreAssessmentEntry() {
         }
         
         /// <summary>
@@ -39,8 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AddAssessmentSeriesConfirma" +
-                            "tion", typeof(AddAssessmentSeriesConfirmation).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AddCoreAssessmentEntry", typeof(AddCoreAssessmentEntry).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,16 +61,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to learner&apos;s assessment entries.
+        ///   Looks up a localized string similar to No, do not add to {0}.
         /// </summary>
-        public static string Back_Button_Text {
+        public static string Add_Series_Option_No {
             get {
-                return ResourceManager.GetString("Back_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Add_Series_Option_No", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment entry added successfully.
+        ///   Looks up a localized string similar to Yes, add to {0}.
+        /// </summary>
+        public static string Add_Series_Option_Yes {
+            get {
+                return ResourceManager.GetString("Add_Series_Option_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to add a core assessment entry to the next available series?.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -80,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment entry added confirmation page.
+        ///   Looks up a localized string similar to Do you want to add a core assessment entry to the next available series page.
         /// </summary>
         public static string Page_Title {
             get {
@@ -89,11 +97,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN: {0}.
+        ///   Looks up a localized string similar to Select yes to add to {0}.
         /// </summary>
-        public static string Uln_Text {
+        public static string Select_Option_To_Add_Validation_Text {
             get {
-                return ResourceManager.GetString("Uln_Text", resourceCulture);
+                return ResourceManager.GetString("Select_Option_To_Add_Validation_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is the only series available..
+        /// </summary>
+        public static string Series_Available_Text {
+            get {
+                return ResourceManager.GetString("Series_Available_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string Submit_Button_Text {
+            get {
+                return ResourceManager.GetString("Submit_Button_Text", resourceCulture);
             }
         }
     }

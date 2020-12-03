@@ -8,7 +8,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Assessment;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -331,38 +330,28 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<AvailableAssessmentSeries>(series, opt => opt.Items["profileId"] = profileId);
         }
 
-        public async Task<AddAssessmentSeriesResponse> AddAssessmentSeriesAsync(AddAssessmentSeriesRequest request)
+        public async Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request)
         {
             // Validate
-            var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
-            var isValid = IsValidAddAssessmentRequestAsync(tqRegistration, request.AssessmentEntryType);
+            var tqRegistrationPathway = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
+            var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, request.AssessmentEntryType);
             if (!isValid)
-                return new AddAssessmentSeriesResponse { Status = false };
+                return new AddAssessmentEntryResponse { Status = false };
 
             var status = 0;
             if (request.AssessmentEntryType == AssessmentEntryType.Core)
                 status = await _pathwayAssessmentRepository.CreateAsync(new TqPathwayAssessment
                 {
-                    TqRegistrationPathwayId = tqRegistration.Id,
+                    TqRegistrationPathwayId = tqRegistrationPathway.Id,
                     AssessmentSeriesId = request.AssessmentSeriesId,
                     IsOptedin = true,
                     StartDate = DateTime.UtcNow,
                     EndDate = null,
                     IsBulkUpload = false,
+                    CreatedBy = request.PerformedBy
                 });
 
-            if (request.AssessmentEntryType == AssessmentEntryType.Specialism)
-                status = await _specialismAssessmentRepository.CreateAsync(new TqSpecialismAssessment
-                {
-                    TqRegistrationSpecialismId = tqRegistration.TqRegistrationSpecialisms.FirstOrDefault().Id,
-                    AssessmentSeriesId = request.AssessmentSeriesId,
-                    IsOptedin = true,
-                    StartDate = DateTime.UtcNow,
-                    EndDate = null,
-                    IsBulkUpload = false,
-                });
-
-            return new AddAssessmentSeriesResponse { UniqueLearnerNumber = tqRegistration.TqRegistrationProfile.UniqueLearnerNumber, Status = status > 0 };
+            return new AddAssessmentEntryResponse { UniqueLearnerNumber = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, Status = status > 0 };
         }
 
         public async Task<AssessmentEntryDetails> GetActivePathwayAssessmentEntryDetailsAsync(long aoUkprn, int pathwayAssessmentId)

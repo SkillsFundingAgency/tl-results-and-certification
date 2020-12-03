@@ -41,15 +41,15 @@
 
 
   <ItemGroup>
-    <Compile Update="Content\Assessment\AddCoreAssessmentSeries - Copy.Designer.cs">
-      <DependentUpon>AddCoreAssessmentSeries.resx</DependentUpon>
+    <Compile Update="Content\Assessment\AddAssessmentEntryConfirmation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DependentUpon>AddAssessmentEntryConfirmation.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\Assessment\AddAssessmentSeriesConfirmation.Designer.cs">
+    <Compile Update="Content\Assessment\AddCoreAssessmentEntry.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>AddAssessmentSeriesConfirmation.resx</DependentUpon>
+      <DependentUpon>AddCoreAssessmentEntry.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Assessment\AssessmentDetails.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -445,13 +445,13 @@
 
 
   <ItemGroup>
-    <EmbeddedResource Update="Content\Assessment\AddAssessmentSeriesConfirmation.resx">
-      <LastGenOutput>AddAssessmentSeriesConfirmation.Designer.cs</LastGenOutput>
+    <EmbeddedResource Update="Content\Assessment\AddAssessmentEntryConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddAssessmentEntryConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\Assessment\AddCoreAssessmentSeries.resx">
+    <EmbeddedResource Update="Content\Assessment\AddCoreAssessmentEntry.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>AddAssessmentSeriesConfirmation.Designer.cs</LastGenOutput>
+      <LastGenOutput>AddCoreAssessmentEntry.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Assessment\AssessmentDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

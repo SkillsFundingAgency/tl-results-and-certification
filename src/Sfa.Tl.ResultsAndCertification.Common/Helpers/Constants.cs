@@ -40,7 +40,7 @@
         public const string AssessmentsUploadSuccessfulViewModel = "AssessmentsUploadSuccessfulViewModel";
         public const string AssessmentsSearchCriteria = "AssessmentsSearchCriteria";
         public const string SearchAssessmentsUlnNotFound = "SearchAssessmentsUlnNotFound";
-        public const string AddAssessmentSeriesConfirmationViewModel = "AddAssessmentSeriesConfirmationViewModel";
+        public const string AddAssessmentEntryConfirmationViewModel = "AddAssessmentEntryConfirmationViewModel";
 
 
         public const string UserSessionActivityId = "UserSessionActivityId";

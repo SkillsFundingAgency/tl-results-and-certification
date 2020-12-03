@@ -1,6 +1,6 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Models.Assessment
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
-    public class AddAssessmentSeriesResponse
+    public class AddAssessmentEntryResponse
     {
         public long UniqueLearnerNumber { get; set; }
         public bool Status { get; set; }
