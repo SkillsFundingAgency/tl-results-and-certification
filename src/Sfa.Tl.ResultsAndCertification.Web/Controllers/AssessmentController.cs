@@ -255,7 +255,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddAssessmentEntryConfirmationViewModel),
-                new AddAssessmentEntryConfirmationViewModel { ProfileId = model.ProfileId, UniqueLearnerReference = response.UniqueLearnerNumber.ToString() },
+                new AddAssessmentEntryConfirmationViewModel { ProfileId = model.ProfileId, UniqueLearnerReference = response.UniqueLearnerNumber },
                 CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.AssessmentEntryAddedConfirmation);
