@@ -13,6 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -362,6 +363,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return null;
 
             return _mapper.Map<AssessmentEntryDetails>(pathwayAssessment);
+        }
+
+        public async Task<bool> RemovePathwayAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
+        {
+            var pathwayAssessment = await _pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin 
+                                                                                              && pa.EndDate == null && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active 
+                                                                                              && pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn);
+
+            if (pathwayAssessment == null) return false;
+
+            pathwayAssessment.IsOptedin = false;
+            pathwayAssessment.EndDate = DateTime.UtcNow;
+            pathwayAssessment.ModifiedBy = model.PerformedBy;
+
+            return await _pathwayAssessmentRepository.UpdateAsync(pathwayAssessment) > 0;
         }
 
         private bool IsValidActivePathwayAssessment(TqPathwayAssessment pathwayAssessment)

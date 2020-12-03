@@ -60,6 +60,19 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
                 AssessmentEntryType.NotSpecified => null,
                 _ => null
             };
-        }        
+        }
+
+        [HttpPut]
+        [Route("RemoveAssessmentEntry")]
+        public async Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
+        {
+            return model.AssessmentEntryType switch
+            {
+                AssessmentEntryType.Core => await _assessmentService.RemovePathwayAssessmentEntryAsync(model),
+                AssessmentEntryType.Specialism => false,
+                AssessmentEntryType.NotSpecified => false,
+                _ => false
+            };
+        }
     }
 }
