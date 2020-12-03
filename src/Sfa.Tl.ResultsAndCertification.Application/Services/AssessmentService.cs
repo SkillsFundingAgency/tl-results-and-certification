@@ -337,7 +337,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (!isValid)
                 return new AddAssessmentEntryResponse { Status = false };
 
-            var status = 0;
+            int status;
             if (request.AssessmentEntryType == AssessmentEntryType.Core)
                 status = await _pathwayAssessmentRepository.CreateAsync(new TqPathwayAssessment
                 {
@@ -349,6 +349,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     IsBulkUpload = false,
                     CreatedBy = request.PerformedBy
                 });
+            else return null; // TODO: upcoming story.
 
             return new AddAssessmentEntryResponse { UniqueLearnerNumber = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, Status = status > 0 };
         }

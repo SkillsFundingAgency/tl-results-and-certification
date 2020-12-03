@@ -250,7 +250,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (!response.Status)
             {
-                _logger.LogWarning(LogEvent.AddCoreAssessmentEntryFailed, $"Unable to add core assessment for ProfileId= {model.ProfileId}. Method: AddAssessmentEntryAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.AddCoreAssessmentEntryFailed, $"Unable to add core assessment for ProfileId: {model.ProfileId}. Method: AddAssessmentEntryAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
 
