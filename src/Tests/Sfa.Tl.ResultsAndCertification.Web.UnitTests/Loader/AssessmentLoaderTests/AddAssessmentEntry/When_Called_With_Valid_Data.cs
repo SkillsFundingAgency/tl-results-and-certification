@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 AssessmentEntryType = Common.Enum.AssessmentEntryType.Core,
             };
 
-            ExpectedApiResult = new AddAssessmentEntryResponse { Status = true, UniqueLearnerNumber = 1234567890 }; 
+            ExpectedApiResult = new AddAssessmentEntryResponse { IsSuccess = true, UniqueLearnerNumber = 1234567890 }; 
             InternalApiClient
                 .AddAssessmentEntryAsync(Arg.Is<AddAssessmentEntryRequest>(
                     x => x.ProfileId == ViewModel.ProfileId && 
@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
         public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().NotBeNull();
-            ActualResult.Status.Should().Be(ExpectedApiResult.Status);
+            ActualResult.IsSuccess.Should().Be(ExpectedApiResult.IsSuccess);
             ActualResult.UniqueLearnerNumber.Should().Be(ExpectedApiResult.UniqueLearnerNumber);
         }
     }

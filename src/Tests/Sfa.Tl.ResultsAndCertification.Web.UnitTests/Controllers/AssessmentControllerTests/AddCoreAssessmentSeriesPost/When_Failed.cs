@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 IsOpted = true
             };
 
-            AddAssessmentEntryResponse = new AddAssessmentEntryResponse { Status = false };
+            AddAssessmentEntryResponse = new AddAssessmentEntryResponse { IsSuccess = false };
             AssessmentLoader.AddAssessmentEntryAsync(AoUkprn, ViewModel).Returns(AddAssessmentEntryResponse);
         }
 

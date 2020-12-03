@@ -247,7 +247,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             model.AssessmentEntryType = AssessmentEntryType.Core;
             var response = await _assessmentLoader.AddAssessmentEntryAsync(User.GetUkPrn(), model);
 
-            if (!response.Status)
+            if (!response.IsSuccess)
             {
                 _logger.LogWarning(LogEvent.AddCoreAssessmentEntryFailed, $"Unable to add core assessment for ProfileId: {model.ProfileId}. Method: AddAssessmentEntryAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });

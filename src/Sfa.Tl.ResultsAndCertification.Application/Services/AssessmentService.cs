@@ -336,7 +336,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var tqRegistrationPathway = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
             var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, request.AssessmentEntryType);
             if (!isValid)
-                return new AddAssessmentEntryResponse { Status = false };
+                return new AddAssessmentEntryResponse { IsSuccess = false };
 
             int status;
             if (request.AssessmentEntryType == AssessmentEntryType.Core)
@@ -352,7 +352,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 });
             else return null; // TODO: upcoming story.
 
-            return new AddAssessmentEntryResponse { UniqueLearnerNumber = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, Status = status > 0 };
+            return new AddAssessmentEntryResponse { UniqueLearnerNumber = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, IsSuccess = status > 0 };
         }
 
         public async Task<AssessmentEntryDetails> GetActivePathwayAssessmentEntryDetailsAsync(long aoUkprn, int pathwayAssessmentId)

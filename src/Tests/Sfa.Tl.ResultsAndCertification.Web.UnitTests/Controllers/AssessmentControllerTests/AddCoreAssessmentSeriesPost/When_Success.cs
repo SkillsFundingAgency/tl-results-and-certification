@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
             AddAssessmentEntryResponse = new AddAssessmentEntryResponse 
             {
-                Status = true,
+                IsSuccess = true,
                 UniqueLearnerNumber = 1234567890
             };
 
