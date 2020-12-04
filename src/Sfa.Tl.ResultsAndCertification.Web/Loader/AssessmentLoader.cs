@@ -106,5 +106,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetActiveAssessmentEntryDetailsAsync(aoUkprn, assessmentId, assessmentEntryType);
             return _mapper.Map<AssessmentEntryDetailsViewModel>(response);
         }
+
+        public async Task<bool> RemoveAssessmentEntryAsync(long aoUkprn, AssessmentEntryDetailsViewModel viewModel)
+        {
+            var request = _mapper.Map<RemoveAssessmentEntryRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.RemoveAssessmentEntryAsync(request);
+        }
     }
 }

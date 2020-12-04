@@ -1,0 +1,24 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual.RemoveAssessmentEntryConfirmationViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Assessment
+
+@{
+    ViewData["Title"] = RemoveAssessmentEntryConfirmation.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">
+                @RemoveAssessmentEntryConfirmation.Page_Heading
+            </h1>
+            <div class="govuk-panel__body">
+                @string.Format(RemoveAssessmentEntryConfirmation.Uln_Text, Model?.Uln)
+            </div>
+        </div>
+        <p class="govuk-!-margin-top-8">
+            <a class="govuk-button" role="button" id="backButton" asp-route="AssessmentDetails" asp-route-profileId="@Model?.ProfileId">
+                @RemoveAssessmentEntryConfirmation.Back_Button_Text
+            </a>
+        </p>
+    </div>
+</div>

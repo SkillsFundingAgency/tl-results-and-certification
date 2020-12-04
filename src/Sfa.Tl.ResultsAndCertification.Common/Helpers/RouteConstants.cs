@@ -144,6 +144,7 @@
         public const string AssessmentEntryAddedConfirmation = "AssessmentEntryAddedConfirmation";
         public const string RemoveCoreAssessmentEntry = "RemoveCoreAssessmentEntry";
         public const string SubmitRemoveCoreAssessmentEntry = "SubmitRemoveCoreAssessmentEntry";
+        public const string AssessmentEntryRemovedConfirmation = "AssessmentEntryRemovedConfirmation";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";
