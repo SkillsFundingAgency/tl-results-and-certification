@@ -19,14 +19,14 @@
         <p class="govuk-body">@string.Format(AssessmentDetails.Provider_Heading_Text, Model.ProviderDisplayName)</p>
         <hr class="govuk-section-break govuk-section-break--visible">
 
-        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-8 govuk-!-font-weight-bold">@string.Format(AssessmentDetails.Core_Heading_Text, Model.PathwayDisplayName)</h3>
+        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@string.Format(AssessmentDetails.Core_Heading_Text, Model.PathwayDisplayName)</h3>
 
         <dl class="govuk-summary-list">
             <vc:summary-item model=Model.SummaryCoreAssessmentEntry></vc:summary-item>
         </dl>
 
         <hr class="govuk-section-break govuk-section-break--visible">
-        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-8 govuk-!-font-weight-bold">@string.Format(AssessmentDetails.Specialism_Heading_Text, !string.IsNullOrWhiteSpace(Model.SpecialismDisplayName) ? Model.SpecialismDisplayName : AssessmentDetails.Not_Specified_Text)</h3>
+        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@string.Format(AssessmentDetails.Specialism_Heading_Text, !string.IsNullOrWhiteSpace(Model.SpecialismDisplayName) ? Model.SpecialismDisplayName : AssessmentDetails.Not_Specified_Text)</h3>
         <dl class="govuk-summary-list">
             <vc:summary-item model=Model.SummarySpecialismAssessmentEntry></vc:summary-item>
         </dl>
