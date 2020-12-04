@@ -19,8 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private AddAssessmentEntryResponse _actualResult;
         private List<TqRegistrationProfile> _registrations;
-        private List<TqPathwayAssessment> _pathwayAssessments;
-        private List<TqSpecialismAssessment> _specialismAssessments;
 
         public override void Given()
         {
@@ -51,8 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 }
             }
 
-            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
-            _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+            SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
+            SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
             DbContext.SaveChanges();
 
             AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
@@ -86,7 +84,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             // Assert
             _actualResult.IsSuccess.Should().Be(expectedResult.IsSuccess);
-            _actualResult.Uln.Should().Be(expectedResult.Uln);
+            if (_actualResult.IsSuccess)
+                _actualResult.Uln.Should().Be(expectedResult.Uln);
         }
 
         public static IEnumerable<object[]> Data
@@ -105,15 +104,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                     { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 1  },
                       new AddAssessmentEntryResponse { IsSuccess = false } },
 
-                    // assessment is active already - returns false
+                    // Reg has an active assessment already - returns false
                     new object[]
                     { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 2  },
+                      new AddAssessmentEntryResponse { IsSuccess = false } },
+
+                    // When specialism entry type - returns false
+                    new object[]
+                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, AssessmentEntryType = AssessmentEntryType.Specialism },
                       new AddAssessmentEntryResponse { IsSuccess = false } },
 
                     // valid request - returns true
                     new object[]
                     { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, AssessmentEntryType = AssessmentEntryType.Core },
-                      new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111113 } },
+                      new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111113 } }
                 };
             }
         }
