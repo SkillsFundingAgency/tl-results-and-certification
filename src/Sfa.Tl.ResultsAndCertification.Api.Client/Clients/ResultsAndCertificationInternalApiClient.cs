@@ -210,6 +210,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<AssessmentEntryDetails>(requestUri);
         }
 
+        public async Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
+        {
+            var requestUri = ApiConstants.RemoveAssessmentEntryUri;
+            return await PutAsync<RemoveAssessmentEntryRequest, bool>(requestUri, model);
+        }        
+
         #region Private Methods
 
         /// <summary>

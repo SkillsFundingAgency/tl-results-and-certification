@@ -296,14 +296,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            if(model.CanRemoveAssessmentEntry.Value)
-            {
+            if (!model.CanRemoveAssessmentEntry.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+
+            model.AssessmentEntryType = AssessmentEntryType.Core;
+            var isSuccess = await _assessmentLoader.RemoveAssessmentEntryAsync(User.GetUkPrn(), model);
+
+            if (!isSuccess)
+            {
+                _logger.LogWarning(LogEvent.AddCoreAssessmentEntryFailed, $"Unable to remove core assessment for ProfileId: {model.ProfileId} and AssessmentId: {model.AssessmentId}. Method: RemoveAssessmentEntryAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
-            else
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RemoveAssessmentEntryConfirmationViewModel),
+                new RemoveAssessmentEntryConfirmationViewModel { ProfileId = model.ProfileId, Uln = model.Uln }, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.AssessmentEntryRemovedConfirmation);                       
+        }
+
+        [HttpGet]
+        [Route("assessment-entry-removed-confirmation", Name = RouteConstants.AssessmentEntryRemovedConfirmation)]
+        public async Task<IActionResult> RemoveAssessmentEntryConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<RemoveAssessmentEntryConfirmationViewModel>(string.Concat(CacheKey, Constants.RemoveAssessmentEntryConfirmationViewModel));
+
+            if (viewModel == null)
             {
-                return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
-            }            
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read RemoveAssessmentEntryConfirmationViewModel from redis cache in remove assessment confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
         }
     }
 }

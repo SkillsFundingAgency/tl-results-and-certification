@@ -375,6 +375,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             pathwayAssessment.IsOptedin = false;
             pathwayAssessment.EndDate = DateTime.UtcNow;
+            pathwayAssessment.ModifiedOn = DateTime.UtcNow;
             pathwayAssessment.ModifiedBy = model.PerformedBy;
 
             return await _pathwayAssessmentRepository.UpdateAsync(pathwayAssessment) > 0;

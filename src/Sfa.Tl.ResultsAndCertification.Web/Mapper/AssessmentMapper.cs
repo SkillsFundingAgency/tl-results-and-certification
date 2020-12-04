@@ -57,6 +57,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddAssessmentEntryViewModel, AddAssessmentEntryRequest>>());
             
             CreateMap<AssessmentEntryDetails, AssessmentEntryDetailsViewModel>();
+
+            CreateMap<AssessmentEntryDetailsViewModel, RemoveAssessmentEntryRequest>()
+                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
+                .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.AssessmentId))
+                .ForMember(d => d.AssessmentEntryType, opts => opts.MapFrom(s => s.AssessmentEntryType))
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AssessmentEntryDetailsViewModel, RemoveAssessmentEntryRequest>>());            
         }
     }
 }
