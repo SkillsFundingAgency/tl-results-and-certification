@@ -6,11 +6,11 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AddAssessmentEntryConfirmation
 {
-    public class When_TempData_Found : TestSetup
+    public class When_Cache_Found : TestSetup
     {
         public override void Given()
         {
-            ViewModel = new AddAssessmentEntryConfirmationViewModel { ProfileId = 1, UniqueLearnerReference = 1234567890 };
+            ViewModel = new AddAssessmentEntryConfirmationViewModel { ProfileId = 1, Uln = 1234567890 };
             CacheService.GetAndRemoveAsync<AddAssessmentEntryConfirmationViewModel>(Arg.Any<string>()).Returns(ViewModel);
         }
 
@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             var model = viewResult.Model as AddAssessmentEntryConfirmationViewModel;
 
             model.Should().NotBeNull();
-            model.UniqueLearnerReference.Should().Be(ViewModel.UniqueLearnerReference);
+            model.Uln.Should().Be(ViewModel.Uln);
             model.ProfileId.Should().Be(ViewModel.ProfileId);
         }
     }

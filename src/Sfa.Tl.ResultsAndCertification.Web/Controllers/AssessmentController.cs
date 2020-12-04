@@ -254,7 +254,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddAssessmentEntryConfirmationViewModel),
-                new AddAssessmentEntryConfirmationViewModel { ProfileId = model.ProfileId, UniqueLearnerReference = response.UniqueLearnerNumber },
+                new AddAssessmentEntryConfirmationViewModel { ProfileId = model.ProfileId, Uln = response.Uln },
                 CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.AssessmentEntryAddedConfirmation);
@@ -268,7 +268,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read AddAssessmentEntryConfirmationViewModel from temp data in add assessment confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read AddAssessmentEntryConfirmationViewModel from redis cache in add assessment confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             

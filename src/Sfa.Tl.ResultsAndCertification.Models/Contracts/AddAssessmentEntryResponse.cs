@@ -2,7 +2,7 @@
 {
     public class AddAssessmentEntryResponse
     {
-        public long UniqueLearnerNumber { get; set; }
+        public long Uln { get; set; }
         public bool IsSuccess { get; set; }
     }
 }

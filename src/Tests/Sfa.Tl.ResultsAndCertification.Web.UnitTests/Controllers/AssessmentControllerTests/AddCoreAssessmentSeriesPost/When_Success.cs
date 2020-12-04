@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             AddAssessmentEntryResponse = new AddAssessmentEntryResponse 
             {
                 IsSuccess = true,
-                UniqueLearnerNumber = 1234567890
+                Uln = 1234567890
             };
 
             AssessmentLoader.AddAssessmentEntryAsync(AoUkprn, ViewModel).Returns(AddAssessmentEntryResponse);
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             CacheService.Received(1).SetAsync(string.Concat(CacheKey, Constants.AddAssessmentEntryConfirmationViewModel), 
                 Arg.Is<AddAssessmentEntryConfirmationViewModel>
                 (x => x.ProfileId == ViewModel.ProfileId &&
-                      x.UniqueLearnerReference == AddAssessmentEntryResponse.UniqueLearnerNumber),
+                      x.Uln == AddAssessmentEntryResponse.Uln),
                  CacheExpiryTime.XSmall);
         }
 

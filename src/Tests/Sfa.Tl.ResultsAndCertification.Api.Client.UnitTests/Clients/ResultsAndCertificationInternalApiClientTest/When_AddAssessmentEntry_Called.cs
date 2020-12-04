@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _mockHttpResult = new AddAssessmentEntryResponse
             {
                 IsSuccess = true,
-                UniqueLearnerNumber = 1234567890
+                Uln = 1234567890
             };
 
             _model = new AddAssessmentEntryRequest
@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         {
             _result.Should().NotBeNull();
             _result.IsSuccess.Should().BeTrue();
-            _result.UniqueLearnerNumber.Should().Be(_mockHttpResult.UniqueLearnerNumber);
+            _result.Uln.Should().Be(_mockHttpResult.Uln);
         }
     }
 }

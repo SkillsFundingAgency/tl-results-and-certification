@@ -86,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             // Assert
             _actualResult.IsSuccess.Should().Be(expectedResult.IsSuccess);
-            _actualResult.UniqueLearnerNumber.Should().Be(expectedResult.UniqueLearnerNumber);
+            _actualResult.Uln.Should().Be(expectedResult.Uln);
         }
 
         public static IEnumerable<object[]> Data
@@ -113,7 +113,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                     // valid request - returns true
                     new object[]
                     { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, AssessmentEntryType = AssessmentEntryType.Core },
-                      new AddAssessmentEntryResponse { IsSuccess = true, UniqueLearnerNumber = 1111111113 } },
+                      new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111113 } },
                 };
             }
         }

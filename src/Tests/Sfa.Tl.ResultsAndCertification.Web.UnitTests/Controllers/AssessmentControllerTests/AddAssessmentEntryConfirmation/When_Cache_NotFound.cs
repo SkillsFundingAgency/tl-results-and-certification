@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.AddAssessmentEntryConfirmation
 {
-    public class When_TempData_NotFound : TestSetup
+    public class When_Cache_NotFound : TestSetup
     {
         public override void Given() { }
 

@@ -3,6 +3,6 @@
     public class AddAssessmentEntryConfirmationViewModel
     {
         public int ProfileId { get; set; }
-        public long UniqueLearnerReference { get; set; }
+        public long Uln { get; set; }
     }
 }

@@ -352,7 +352,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 });
             else return null; // TODO: upcoming story.
 
-            return new AddAssessmentEntryResponse { UniqueLearnerNumber = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, IsSuccess = status > 0 };
+            return new AddAssessmentEntryResponse { Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, IsSuccess = status > 0 };
         }
 
         public async Task<AssessmentEntryDetails> GetActivePathwayAssessmentEntryDetailsAsync(long aoUkprn, int pathwayAssessmentId)
