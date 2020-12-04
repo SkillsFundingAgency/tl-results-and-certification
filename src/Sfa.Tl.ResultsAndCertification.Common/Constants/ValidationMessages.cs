@@ -49,9 +49,9 @@
         public const string CannotAddAssessmentToWithdrawnRegistration = "Cannot add assessment entries to a withdrawn registration";
         public const string InvalidCoreCode = "Core code either not recognised or not registered for this ULN";
         public const string InvalidSpecialismCode = "Specialism code either not recognised or not registered for this ULN";
-        public const string InvalidCoreAssessmentEntry = "Core assessment entry must be in the format detailed in the ‘format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the first academic year or subsequent approaching series)";
+        public const string InvalidCoreAssessmentEntry = "Core assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the first academic year or subsequent approaching series)";
         public const string InvalidNextCoreAssessmentEntry = "Core assessment entry is beyond the next available series - only the next available series is allowed (the second series of the first academic year or subsequent approaching series)";
-        public const string InvalidSpecialismAssessmentEntry = "Specialism assessment entry must be in the format detailed in the ‘format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the second academic year or subsequent approaching series)";
+        public const string InvalidSpecialismAssessmentEntry = "Specialism assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the second academic year or subsequent approaching series)";
         public const string InvalidNextSpecialismAssessmentEntry = "Specialism assessment entry is beyond the next available series - only the next available series is allowed (the second series of the second academic year or subsequent approaching series)";
 
     }
