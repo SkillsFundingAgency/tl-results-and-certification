@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         protected IRepository<TqSpecialismAssessment> SpecialismAssessmentRepository;
         protected IRepository<AssessmentSeries> AssessmentSeriesRepository;
         protected ILogger<GenericRepository<AssessmentSeries>> AssessmentSeriesRepositoryLogger;
-
+        protected ILogger<GenericRepository<TqPathwayAssessment>> PathwayAssessmentRepositoryLogger;
         protected IMapper AssessmentMapper;
 
         protected virtual void CreateMapper()

@@ -59,6 +59,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             AssessmentSeriesRepositoryLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
             AssessmentRepository = new AssessmentRepository(AssessmentRepositoryLogger, DbContext);
             AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesRepositoryLogger, DbContext);
+            PathwayAssessmentRepositoryLogger = new Logger<GenericRepository<TqPathwayAssessment>>(new NullLoggerFactory());
+            PathwayAssessmentRepository = new GenericRepository<TqPathwayAssessment>(PathwayAssessmentRepositoryLogger, DbContext);
+
             AssessmentService = new AssessmentService(AssessmentRepository, PathwayAssessmentRepository, SpecialismAssessmentRepository, AssessmentSeriesRepository, AssessmentMapper, AssessmentRepositoryLogger);
         }
 
@@ -108,9 +111,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                       new AddAssessmentEntryResponse { IsSuccess = false } },
 
                     // valid request - returns true
-                    //new object[]
-                    //{ new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, AssessmentEntryType = AssessmentEntryType.Core },
-                    //  new AddAssessmentEntryResponse { IsSuccess = true, UniqueLearnerNumber = 1111111113 } },
+                    new object[]
+                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, AssessmentEntryType = AssessmentEntryType.Core },
+                      new AddAssessmentEntryResponse { IsSuccess = true, UniqueLearnerNumber = 1111111113 } },
                 };
             }
         }
