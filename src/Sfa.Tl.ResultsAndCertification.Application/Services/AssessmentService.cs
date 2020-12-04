@@ -85,23 +85,31 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 5. Core assessment entry must be no more than 4 years after the starting academic year
-                AssessmentSeries csvCoreSeries = null;
                 if (!string.IsNullOrEmpty(assessment.CoreAssessmentEntry))
                 {
-                    csvCoreSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.CoreAssessmentEntry));
-                    var isValidCoreSeries = csvCoreSeries != null && IsValidAssessmentEntry(dbRegistration.AcademicYear, csvCoreSeries.Year, AssessmentEntryType.Core);
-                    if (!isValidCoreSeries)
-                        validationErrors.Add(BuildValidationError(assessment, ValidationMessages.CoreEntryOutOfRange));
+                    var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                    if (!isSeriesFound)
+                        validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidCoreAssessmentEntry));
+                    else
+                    {
+                        var isValidNextAssessmentSeries = IsValidNextAssessmentSeries(dbAssessmentSeries, dbRegistration.AcademicYear, assessment.CoreAssessmentEntry, Constants.CoreAssessmentStartInYears);
+                        if (!isValidNextAssessmentSeries)
+                            validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidNextCoreAssessmentEntry));
+                    }
                 }
 
                 // 6. Specialism assessment entry must be between one and 4 years after the starting academic year
-                AssessmentSeries csvSpecialismSeries = null;
                 if (!string.IsNullOrEmpty(assessment.SpecialismAssessmentEntry))
                 {
-                    csvSpecialismSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.SpecialismAssessmentEntry));
-                    var isValidAssessmentSeries = csvSpecialismSeries != null && IsValidAssessmentEntry(dbRegistration.AcademicYear, csvSpecialismSeries.Year, AssessmentEntryType.Specialism);
-                    if (!isValidAssessmentSeries)
-                        validationErrors.Add(BuildValidationError(assessment, ValidationMessages.SpecialismEntryOutOfRange));
+                    var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                    if (!isSeriesFound)
+                        validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidSpecialismAssessmentEntry));
+                    else
+                    {
+                        var isValidNextAssessmentSeries = IsValidNextAssessmentSeries(dbAssessmentSeries, dbRegistration.AcademicYear, assessment.SpecialismAssessmentEntry, Constants.SpecialismAssessmentStartInYears);
+                        if (!isValidNextAssessmentSeries)
+                            validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidNextSpecialismAssessmentEntry));
+                    }
                 }
 
                 if (validationErrors.Any())
@@ -110,6 +118,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     var registrationSpecialism = dbRegistration.TqRegistrationSpecialisms
                                                     .FirstOrDefault(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
+                    
+                    var csvCoreSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.CoreAssessmentEntry));
+                    var csvSpecialismSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.SpecialismAssessmentEntry));
 
                     response.Add(new AssessmentRecordResponse
                     {
@@ -124,7 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             
             return response;
         }
-
+        
         public (IList<TqPathwayAssessment>, IList<TqSpecialismAssessment>) TransformAssessmentsModel(IList<AssessmentRecordResponse> assessmentsData, string performedBy)
         {
             var pathwayAssessments = new List<TqPathwayAssessment>();
@@ -289,16 +300,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
         }
         
-        private bool IsValidAssessmentEntry(int registrationYear, int assessmentYear, AssessmentEntryType entryType)
-        {
-            var startYear = entryType == AssessmentEntryType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
-
-            var isValidRange = assessmentYear > (registrationYear + startYear) &&
-                               assessmentYear <= (registrationYear + Constants.AssessmentEndInYears);
-
-            return isValidRange;
-        }
-
         private BulkProcessValidationError BuildValidationError(AssessmentCsvRecordResponse assessment, string message)
         {
             return new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = message };
@@ -338,7 +339,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (!isValid)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
 
-            int status;
+            int status = 0;
             if (request.AssessmentEntryType == AssessmentEntryType.Core)
                 status = await _pathwayAssessmentRepository.CreateAsync(new TqPathwayAssessment
                 {
@@ -350,7 +351,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     IsBulkUpload = false,
                     CreatedBy = request.PerformedBy
                 });
-            else return null; // TODO: upcoming story.
 
             return new AddAssessmentEntryResponse { Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, IsSuccess = status > 0 };
         }
@@ -403,6 +403,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         registrationPathway.TqRegistrationSpecialisms.Any(x => x.TqSpecialismAssessments.Any(x => x.IsOptedin && x.EndDate == null));
 
             return !anyActiveAssessment;
+        }
+
+        private static bool IsValidNextAssessmentSeries(IList<AssessmentSeries> dbAssessmentSeries, int regAcademicYear, string assessmentEntryName, int startYearOffset)
+        {
+            var currentDate = DateTime.UtcNow.Date;
+
+            var isValidNextAssessmentSeries = dbAssessmentSeries.Any(s =>
+                s.Name.Equals(assessmentEntryName, StringComparison.InvariantCultureIgnoreCase) &&
+                currentDate >= s.StartDate && currentDate <= s.EndDate &&
+                s.Year > regAcademicYear + startYearOffset && s.Year <= regAcademicYear + Constants.AssessmentEndInYears);
+
+            return isValidNextAssessmentSeries;
         }
     }
 }
