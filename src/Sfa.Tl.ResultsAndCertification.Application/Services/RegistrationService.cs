@@ -216,6 +216,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                     if (existingRegistration != null)
                     {
+                        // Validation: Registration should not be in Withdrawn Status.
+                        var withdrawnReg = existingRegistration.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault(x => x.Status == RegistrationPathwayStatus.Withdrawn);
+                        if (withdrawnReg != null)
+                        {
+                            response.ValidationErrors.Add(GetRegistrationValidationError(existingRegistration.UniqueLearnerNumber, ValidationMessages.RegistrationCannotBeInWithdrawnStatus));
+                            return;
+                        }
+
                         var hasBothPathwayAndSpecialismsRecordsChanged = false;
                         var hasOnlySpecialismsRecordChanged = false;
                         var hasTqRegistrationProfileRecordChanged = !tqRegistrationProfileComparer.Equals(amendedRegistration, existingRegistration);
