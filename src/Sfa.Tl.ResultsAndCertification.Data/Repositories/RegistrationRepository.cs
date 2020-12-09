@@ -86,13 +86,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return await _dbContext.TqRegistrationProfile.Where(x => ulns.Contains(x.UniqueLearnerNumber))
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqRegistrationSpecialisms)
+                        .ThenInclude(x => x.TqSpecialismAssessments)
+                .Include(x => x.TqRegistrationPathways)
+                    .ThenInclude(x => x.TqPathwayAssessments)
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqProvider)
                         .ThenInclude(x => x.TqAwardingOrganisation)
                 .ToListAsync();
         }
 
-        public async Task<bool> BulkInsertOrUpdateTqRegistrations(List<TqRegistrationProfile> profileEntities, List<TqRegistrationPathway> pathwayEntities, List<TqRegistrationSpecialism> specialismEntities)
+        public async Task<bool> BulkInsertOrUpdateTqRegistrations(List<TqRegistrationProfile> profileEntities, List<TqRegistrationPathway> pathwayEntities, List<TqRegistrationSpecialism> specialismEntities, List<TqPathwayAssessment> pathwayAssessments, List<TqSpecialismAssessment> specialismAssessments)
         {
             var result = true;
             if ((profileEntities != null && profileEntities.Count > 0) || (pathwayEntities != null && pathwayEntities.Count > 0) || (specialismEntities != null && specialismEntities.Count > 0))
@@ -116,6 +119,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                             await ProcessRegistrationSpecialismEntities(specialismRegistrations);
 
+                            await ProcessPathwayAssessments(bulkConfig, pathwayAssessments);
+                            await ProcessSpecialismAssessments(bulkConfig, specialismAssessments);
+
+
                             transaction.Commit();
                         }
                         catch (Exception ex)
@@ -128,6 +135,24 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 });
             }
             return result;
+        }
+
+        private async Task ProcessSpecialismAssessments(BulkConfig bulkConfig, List<TqSpecialismAssessment> specialismAssessments)
+        {
+            if (specialismAssessments == null || !specialismAssessments.Any())
+                return;
+
+            specialismAssessments = SortUpdateAndInsertOrder(specialismAssessments, x => x.Id);
+            await _dbContext.BulkInsertOrUpdateAsync(specialismAssessments, bulkConfig);
+        }
+
+        private async Task ProcessPathwayAssessments(BulkConfig bulkConfig, List<TqPathwayAssessment> pathwayAssessments)
+        {
+            if (pathwayAssessments == null || !pathwayAssessments.Any())
+                return;
+
+            pathwayAssessments = SortUpdateAndInsertOrder(pathwayAssessments, x => x.Id);
+            await _dbContext.BulkInsertOrUpdateAsync(pathwayAssessments, bulkConfig);
         }
 
         private async Task<List<TqRegistrationPathway>> ProcessProfileEntities(BulkConfig bulkConfig, List<TqRegistrationProfile> profileEntities, List<TqRegistrationPathway> pathwayRegistrations)
