@@ -601,6 +601,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     s.ModifiedBy = performedBy;
                     s.ModifiedOn = DateTime.UtcNow;
                 });
+                pathway.TqPathwayAssessments.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(pa =>
+                {
+                    pa.EndDate = DateTime.UtcNow;
+                    pa.ModifiedBy = performedBy;
+                    pa.ModifiedOn = DateTime.UtcNow;
+                });
             }
         }
 
