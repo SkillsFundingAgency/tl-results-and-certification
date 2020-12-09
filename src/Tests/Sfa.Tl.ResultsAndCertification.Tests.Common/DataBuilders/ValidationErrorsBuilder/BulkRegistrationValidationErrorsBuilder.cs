@@ -137,6 +137,11 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             {
                 Uln = "1111111112",
                 ErrorMessage = ValidationMessages.CoreForUlnCannotBeChangedYet
+            },
+            new BulkProcessValidationError
+            {
+                Uln = "1111111113",
+                ErrorMessage = ValidationMessages.RegistrationCannotBeInWithdrawnStatus
             }
         };
     }
