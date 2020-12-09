@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,5 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         #endregion
 
         Task<TqRegistrationPathway> GetAssessmentsAsync(long aoUkprn, int profileId);
+        Task<AssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, int startInYear);
+        Task<TqPathwayAssessment> GetPathwayAssessmentDetailsAsync(long aoUkprn, int pathwayAssessmentId);
     }
 }

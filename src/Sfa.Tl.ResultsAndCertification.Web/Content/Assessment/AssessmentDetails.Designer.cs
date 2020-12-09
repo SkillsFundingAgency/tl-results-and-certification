@@ -61,29 +61,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change.
+        ///   Looks up a localized string similar to Add entry.
         /// </summary>
-        public static string Change_Action_Link_Text {
+        public static string Add_Entry_Action_Link_Text {
             get {
-                return ResourceManager.GetString("Change_Action_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Add_Entry_Action_Link_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Core assessment entry.
+        ///   Looks up a localized string similar to Available to add after Autumn 2021 series has passed.
         /// </summary>
-        public static string Change_Core_Assessment_Entry_Hidden_Text {
+        public static string Available_After_Autumn2021 {
             get {
-                return ResourceManager.GetString("Change_Core_Assessment_Entry_Hidden_Text", resourceCulture);
+                return ResourceManager.GetString("Available_After_Autumn2021", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Specialism assessment entry.
+        ///   Looks up a localized string similar to  for core.
         /// </summary>
-        public static string Change_Specialism_Assessment_Entry_Hidden_Text {
+        public static string Core_Assessment_Entry_Hidden_Text {
             get {
-                return ResourceManager.GetString("Change_Specialism_Assessment_Entry_Hidden_Text", resourceCulture);
+                return ResourceManager.GetString("Core_Assessment_Entry_Hidden_Text", resourceCulture);
             }
         }
         
@@ -142,11 +142,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove entry.
+        /// </summary>
+        public static string Remove_Entry_Action_Link_Text {
+            get {
+                return ResourceManager.GetString("Remove_Entry_Action_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search again.
         /// </summary>
         public static string Search_Again_Text {
             get {
                 return ResourceManager.GetString("Search_Again_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  for specialism.
+        /// </summary>
+        public static string Specialism_Assessment_Entry_Hidden_Text {
+            get {
+                return ResourceManager.GetString("Specialism_Assessment_Entry_Hidden_Text", resourceCulture);
             }
         }
         
@@ -160,7 +178,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment entry.
+        ///   Looks up a localized string similar to First assessment entry.
         /// </summary>
         public static string Title_Assessment_Entry_Text {
             get {

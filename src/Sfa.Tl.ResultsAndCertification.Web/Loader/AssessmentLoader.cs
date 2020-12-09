@@ -88,5 +88,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
             return _mapper.Map<AssessmentDetailsViewModel>(response);
         }
+
+        public async Task<AddAssessmentEntryViewModel> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        {
+            var response = await _internalApiClient.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, assessmentEntryType);
+            return _mapper.Map<AddAssessmentEntryViewModel>(response);
+        }
+
+        public async Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(long aoUkprn, AddAssessmentEntryViewModel viewModel)
+        {
+            var request = _mapper.Map<AddAssessmentEntryRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.AddAssessmentEntryAsync(request);
+        }
+
+        public async Task<AssessmentEntryDetailsViewModel> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType)
+        {
+            var response = await _internalApiClient.GetActiveAssessmentEntryDetailsAsync(aoUkprn, assessmentId, assessmentEntryType);
+            return _mapper.Map<AssessmentEntryDetailsViewModel>(response);
+        }
+
+        public async Task<bool> RemoveAssessmentEntryAsync(long aoUkprn, AssessmentEntryDetailsViewModel viewModel)
+        {
+            var request = _mapper.Map<RemoveAssessmentEntryRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.RemoveAssessmentEntryAsync(request);
+        }
     }
 }

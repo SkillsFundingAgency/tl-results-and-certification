@@ -33,6 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         protected ILogger<GenericRepository<AssessmentSeries>> AssessmentSeriesRepositoryLogger;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         public IAssessmentRepository AssessmentRepository;
+        protected IRepository<TqPathwayAssessment> PathwayAssessmentRepository;
+        protected IRepository<TqSpecialismAssessment> SpecialismAssessmentRepository;
         protected IRepository<AssessmentSeries> AssessmentSeriesRepository;
         protected IMapper AssessmentMapper;
         public AssessmentProcessResponse Result;
@@ -57,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             AssessmentSeriesRepositoryLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
             AssessmentRepository = new AssessmentRepository(AssessmentRepositoryLogger, DbContext);
             AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesRepositoryLogger, DbContext);
-            AssessmentService = new AssessmentService(AssessmentRepository, AssessmentSeriesRepository, AssessmentMapper, AssessmentRepositoryLogger);
+            AssessmentService = new AssessmentService(AssessmentRepository, PathwayAssessmentRepository, SpecialismAssessmentRepository, AssessmentSeriesRepository, AssessmentMapper, AssessmentRepositoryLogger);
         }
 
         protected void CreateMapper()

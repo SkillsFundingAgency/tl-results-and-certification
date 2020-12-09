@@ -19,6 +19,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             _logger = logger;
         }
 
+        [Route("uploaded-file-virus", Name = RouteConstants.VirusUploaded)]
+        public IActionResult VirusUploaded()
+        {
+            return View();
+        }
+
         [Route("access-denied-wrong-role", Name = RouteConstants.AccessDeniedWrongRole)]
         public IActionResult AccessDenied()
         {

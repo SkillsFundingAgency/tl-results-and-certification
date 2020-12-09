@@ -12,7 +12,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System.Threading.Tasks;
 using AssessmentContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment;
 
-
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
     [Authorize(Policy = RolesExtensions.RequireRegistrationsEditorAccess)]
@@ -43,10 +42,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("upload-assessment-entries-file", Name = RouteConstants.UploadAssessmentsFile)]
-        public IActionResult UploadAssessmentsFile()
+        [Route("upload-assessment-entries-file/{requestErrorTypeId:int?}", Name = RouteConstants.UploadAssessmentsFile)]
+        public IActionResult UploadAssessmentsFile(int? requestErrorTypeId)
         {
-            return View(new UploadAssessmentsRequestViewModel());
+            var model = new UploadAssessmentsRequestViewModel { RequestErrorTypeId = requestErrorTypeId };
+            model.SetAnyModelErrors(ModelState);
+            return View(model);
         }
 
         [HttpPost]
@@ -213,6 +214,115 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No assessment details found. Method: GetAssessmentDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.AddCoreAssessmentEntry)]
+        public async Task<IActionResult> AddCoreAssessmentEntryAsync(int profileId)
+        {
+            var viewModel = await _assessmentLoader.GetAvailableAssessmentSeriesAsync(User.GetUkPrn(), profileId, AssessmentEntryType.Core);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available. Method: GetAvailableAssessmentSeriesAsync({User.GetUkPrn()}, {profileId}, {AssessmentEntryType.Core}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.EntrySeries)]
+        public async Task<IActionResult> AddCoreAssessmentEntryAsync(AddAssessmentEntryViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            if (!model.IsOpted.Value)
+                return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+
+            model.AssessmentEntryType = AssessmentEntryType.Core;
+            var response = await _assessmentLoader.AddAssessmentEntryAsync(User.GetUkPrn(), model);
+
+            if (!response.IsSuccess)
+            {
+                _logger.LogWarning(LogEvent.AddCoreAssessmentEntryFailed, $"Unable to add core assessment for ProfileId: {model.ProfileId}. Method: AddAssessmentEntryAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddAssessmentEntryConfirmationViewModel),
+                new AddAssessmentEntryConfirmationViewModel { ProfileId = model.ProfileId, Uln = response.Uln },
+                CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.AssessmentEntryAddedConfirmation);
+        }
+
+        [HttpGet]
+        [Route("assessment-entry-added-confirmation", Name = RouteConstants.AssessmentEntryAddedConfirmation)]
+        public async Task<IActionResult> AddAssessmentEntryConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<AddAssessmentEntryConfirmationViewModel>(string.Concat(CacheKey, Constants.AddAssessmentEntryConfirmationViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read AddAssessmentEntryConfirmationViewModel from redis cache in add assessment confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("remove-core-assessment-entry/{assessmentId}", Name = RouteConstants.RemoveCoreAssessmentEntry)]
+        public async Task<IActionResult> RemoveCoreAssessmentEntryAsync(int assessmentId)
+        {
+            var viewModel = await _assessmentLoader.GetActiveAssessmentEntryDetailsAsync(User.GetUkPrn(), assessmentId, AssessmentEntryType.Core);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No valid assessment entry available. Method: GetActiveAssessmentEntryDetailsAsync({User.GetUkPrn()}, {assessmentId}, {AssessmentEntryType.Core}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("remove-core-assessment-entry/{assessmentId}", Name = RouteConstants.SubmitRemoveCoreAssessmentEntry)]
+        public async Task<IActionResult> RemoveCoreAssessmentEntryAsync(AssessmentEntryDetailsViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            if (!model.CanRemoveAssessmentEntry.Value)
+                return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
+
+            model.AssessmentEntryType = AssessmentEntryType.Core;
+            var isSuccess = await _assessmentLoader.RemoveAssessmentEntryAsync(User.GetUkPrn(), model);
+
+            if (!isSuccess)
+            {
+                _logger.LogWarning(LogEvent.AddCoreAssessmentEntryFailed, $"Unable to remove core assessment for ProfileId: {model.ProfileId} and AssessmentId: {model.AssessmentId}. Method: RemoveAssessmentEntryAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RemoveAssessmentEntryConfirmationViewModel),
+                new RemoveAssessmentEntryConfirmationViewModel { ProfileId = model.ProfileId, Uln = model.Uln }, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.AssessmentEntryRemovedConfirmation);                       
+        }
+
+        [HttpGet]
+        [Route("assessment-entry-removed-confirmation", Name = RouteConstants.AssessmentEntryRemovedConfirmation)]
+        public async Task<IActionResult> RemoveAssessmentEntryConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<RemoveAssessmentEntryConfirmationViewModel>(string.Concat(CacheKey, Constants.RemoveAssessmentEntryConfirmationViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read RemoveAssessmentEntryConfirmationViewModel from redis cache in remove assessment confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

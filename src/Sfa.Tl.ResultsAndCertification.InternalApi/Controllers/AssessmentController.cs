@@ -34,5 +34,45 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _assessmentService.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
         }
+
+        [HttpGet]
+        [Route("GetAvailableAssessmentSeries/{aoUkprn}/{profileId}/{assessmentEntryType}")]
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        {
+            return await _assessmentService.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, assessmentEntryType);
+        }
+
+        [HttpPost]
+        [Route("AddAssessmentEntry")]
+        public async Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request)
+        {
+            return await _assessmentService.AddAssessmentEntryAsync(request);
+        }
+
+        [HttpGet]
+        [Route("GetActiveAssessmentEntryDetails/{aoUkprn}/{assessmentId}/{assessmentEntryType}")]
+        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType)
+        {
+            return assessmentEntryType switch
+            {
+                AssessmentEntryType.Core => await _assessmentService.GetActivePathwayAssessmentEntryDetailsAsync(aoUkprn, assessmentId),
+                AssessmentEntryType.Specialism => null,
+                AssessmentEntryType.NotSpecified => null,
+                _ => null
+            };
+        }
+
+        [HttpPut]
+        [Route("RemoveAssessmentEntry")]
+        public async Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
+        {
+            return model.AssessmentEntryType switch
+            {
+                AssessmentEntryType.Core => await _assessmentService.RemovePathwayAssessmentEntryAsync(model),
+                AssessmentEntryType.Specialism => false,
+                AssessmentEntryType.NotSpecified => false,
+                _ => false
+            };
+        }
     }
 }

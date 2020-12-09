@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesRepositoryLogger, DbContext);
 
             // TestClass
-            AssessmentService = new AssessmentService(AssessmentRepository, AssessmentSeriesRepository, AssessmentMapper, AssessmentRepositoryLogger);
+            AssessmentService = new AssessmentService(AssessmentRepository, PathwayAssessmentRepository, SpecialismAssessmentRepository, AssessmentSeriesRepository, AssessmentMapper, AssessmentRepositoryLogger);
 
             // setup input parameter
             SetupInputParameter();
@@ -82,20 +82,33 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             { 
                 ValidationMessages.InvalidCoreCode,
                 ValidationMessages.InvalidSpecialismCode,
-                ValidationMessages.CoreEntryOutOfRange,
-                ValidationMessages.SpecialismEntryOutOfRange
+                ValidationMessages.InvalidCoreAssessmentEntry,
+                ValidationMessages.InvalidSpecialismAssessmentEntry
             };
             TestValidatonErrors(actualResult.ValidationErrors, expectedErrors, rowIndex);
 
-            // 4. Valid Row.
+            // 4. Core and Specialism series are not open. 
+            rowIndex++;
+            actualResult = _stage3Result.Result[rowIndex];
+            actualResult.IsValid.Should().BeFalse();
+            actualResult.ValidationErrors.Count.Should().Be(2);
+            expectedErrors = new List<string>
+            {
+                ValidationMessages.InvalidNextCoreAssessmentEntry,
+                ValidationMessages.InvalidNextSpecialismAssessmentEntry
+            };
+            TestValidatonErrors(actualResult.ValidationErrors, expectedErrors, rowIndex);
+
+            // 5. Valid Row.
             rowIndex++;
             actualResult = _stage3Result.Result[rowIndex];
             actualResult.IsValid.Should().BeTrue();
             actualResult.ValidationErrors.Count.Should().Be(0);
             actualResult.TqRegistrationPathwayId.Should().Be(3);
-            actualResult.TqRegistrationSpecialismId.Should().Be(3);
             actualResult.PathwayAssessmentSeriesId.Should().Be(1);
-            actualResult.SpecialismAssessmentSeriesId.Should().Be(3);
+
+            actualResult.TqRegistrationSpecialismId.Should().BeNull();
+            actualResult.SpecialismAssessmentSeriesId.Should().BeNull();
         }
 
         private void TestValidatonErrors(IList<BulkProcessValidationError> actualErrors, List<string> expectedErrors, int rowIndex)
@@ -125,10 +138,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 new AssessmentCsvRecordResponse { RowNum = 2, Uln = 1111111111 },
 
                 // 3. Invalid - Core Code, Specialism Code, Core assessment entry and Specialism assessment entry
-                new AssessmentCsvRecordResponse { RowNum = 1, Uln = 1111111112, CoreCode = "Invalid", CoreAssessmentEntry = "Invalid", SpecialismCode = "Invalid", SpecialismAssessmentEntry = "Invalid" },
+                new AssessmentCsvRecordResponse { RowNum = 3, Uln = 1111111112, CoreCode = "Invalid", CoreAssessmentEntry = "Invalid", SpecialismCode = "Invalid", SpecialismAssessmentEntry = "Invalid" },
 
-                // 4. Valid Row
-                new AssessmentCsvRecordResponse { RowNum = 1, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "Summer 2021", SpecialismCode = "10123456", SpecialismAssessmentEntry = "Summer 2022" },
+                // 4. Core and Specialism assessment series are not open. 
+                new AssessmentCsvRecordResponse { RowNum = 4, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "Summer 2022", SpecialismCode = "10123456", SpecialismAssessmentEntry = "Summer 2022" },
+
+                 // 5. Valid Row
+                new AssessmentCsvRecordResponse { RowNum = 5, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "Summer 2021" },
             };
         }
     }

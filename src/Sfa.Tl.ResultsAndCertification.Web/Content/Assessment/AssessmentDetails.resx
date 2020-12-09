@@ -117,14 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Change_Action_Link_Text" xml:space="preserve">
-    <value>Change</value>
+  <data name="Add_Entry_Action_Link_Text" xml:space="preserve">
+    <value>Add entry</value>
   </data>
-  <data name="Change_Core_Assessment_Entry_Hidden_Text" xml:space="preserve">
-    <value>Core assessment entry</value>
+  <data name="Available_After_Autumn2021" xml:space="preserve">
+    <value>Available to add after Autumn 2021 series has passed</value>
   </data>
-  <data name="Change_Specialism_Assessment_Entry_Hidden_Text" xml:space="preserve">
-    <value>Specialism assessment entry</value>
+  <data name="Core_Assessment_Entry_Hidden_Text" xml:space="preserve">
+    <value> for core</value>
   </data>
   <data name="Core_Heading_Text" xml:space="preserve">
     <value>Core: {0}</value>
@@ -144,14 +144,20 @@
   <data name="Provider_Heading_Text" xml:space="preserve">
     <value>Provider: {0}</value>
   </data>
+  <data name="Remove_Entry_Action_Link_Text" xml:space="preserve">
+    <value>Remove entry</value>
+  </data>
   <data name="Search_Again_Text" xml:space="preserve">
     <value>Search again</value>
+  </data>
+  <data name="Specialism_Assessment_Entry_Hidden_Text" xml:space="preserve">
+    <value> for specialism</value>
   </data>
   <data name="Specialism_Heading_Text" xml:space="preserve">
     <value>Specialism: {0}</value>
   </data>
   <data name="Title_Assessment_Entry_Text" xml:space="preserve">
-    <value>Assessment entry</value>
+    <value>First assessment entry</value>
   </data>
   <data name="Uln_Heading_Text" xml:space="preserve">
     <value>ULN: {0}</value>

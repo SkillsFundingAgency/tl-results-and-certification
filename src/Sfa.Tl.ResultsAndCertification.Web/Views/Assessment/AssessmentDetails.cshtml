@@ -10,7 +10,7 @@
 }
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-two-thirds assessment-details">
 
         <h1 class="govuk-heading-l">@AssessmentDetails.Learners_Assessment_Entries_Heading_Text</h1>
         <h2 class="govuk-heading-m">@string.Format(AssessmentDetails.Uln_Heading_Text, Model.Uln)</h2>
@@ -19,17 +19,18 @@
         <p class="govuk-body">@string.Format(AssessmentDetails.Provider_Heading_Text, Model.ProviderDisplayName)</p>
         <hr class="govuk-section-break govuk-section-break--visible">
 
-        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-8 govuk-!-font-weight-bold">@string.Format(AssessmentDetails.Core_Heading_Text, Model.PathwayDisplayName)</h3>
+        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@string.Format(AssessmentDetails.Core_Heading_Text, Model.PathwayDisplayName)</h3>
 
         <dl class="govuk-summary-list">
             <vc:summary-item model=Model.SummaryCoreAssessmentEntry></vc:summary-item>
         </dl>
 
-        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-8 govuk-!-font-weight-bold">@string.Format(AssessmentDetails.Specialism_Heading_Text, !string.IsNullOrWhiteSpace(Model.SpecialismDisplayName) ? Model.SpecialismDisplayName : AssessmentDetails.Not_Specified_Text)</h3>
-
+        <hr class="govuk-section-break govuk-section-break--visible">
+        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@string.Format(AssessmentDetails.Specialism_Heading_Text, !string.IsNullOrWhiteSpace(Model.SpecialismDisplayName) ? Model.SpecialismDisplayName : AssessmentDetails.Not_Specified_Text)</h3>
         <dl class="govuk-summary-list">
             <vc:summary-item model=Model.SummarySpecialismAssessmentEntry></vc:summary-item>
         </dl>
+        <hr class="govuk-section-break govuk-section-break--visible">
 
         <p class="govuk-body govuk-!-margin-top-8"><a class="govuk-link" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">@AssessmentDetails.View_And_Amend_This_Learners_Registration_Details_Text</a></p>
 

@@ -98,3 +98,9 @@ body {
     color: #144e81;
     background: #d2e2f1;
 }
+
+.assessment-details {
+    .govuk-summary-list__key, .govuk-summary-list__value, .govuk-summary-list__actions {
+        border-bottom: none !important;
+    }
+}

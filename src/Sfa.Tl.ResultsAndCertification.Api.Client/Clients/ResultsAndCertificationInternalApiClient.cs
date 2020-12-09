@@ -191,6 +191,30 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var requestUri = string.Format(ApiConstants.GetAssessmentDetailsUri, aoUkprn, profileId, (int?)status);
             return await GetAsync<AssessmentDetails>(requestUri);
         }
+        
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        {
+            var requestUri = string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, aoUkprn, profileId, (int)assessmentEntryType);
+            return await GetAsync<AvailableAssessmentSeries>(requestUri);
+        }
+
+        public async Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request)
+        {
+            var requestUri = ApiConstants.AddAssessmentEntryUri;
+            return await PostAsync<AddAssessmentEntryRequest, AddAssessmentEntryResponse>(requestUri, request);
+        }
+
+        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType)
+        {
+            var requestUri = string.Format(ApiConstants.GetActiveAssessmentEntryDetailsUri, aoUkprn, assessmentId, (int)assessmentEntryType);
+            return await GetAsync<AssessmentEntryDetails>(requestUri);
+        }
+
+        public async Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
+        {
+            var requestUri = ApiConstants.RemoveAssessmentEntryUri;
+            return await PutAsync<RemoveAssessmentEntryRequest, bool>(requestUri, model);
+        }        
 
         #region Private Methods
 
