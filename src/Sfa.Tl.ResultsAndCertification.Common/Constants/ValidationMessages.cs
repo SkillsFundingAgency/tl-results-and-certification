@@ -34,6 +34,7 @@
         // Bulk Registration Stage4 Validation Messages
         public const string ActiveUlnWithDifferentAo = "Active ULN with a different awarding organisation";
         public const string CoreForUlnCannotBeChangedYet = "Core for ULN cannot be changed yet";
+        public const string RegistrationCannotBeInWithdrawnStatus = "Cannot upload data for a withdrawn registration or make it active - these can only be done manually";
 
         // Assessments - Bulk stage 2 validations
         public const string CorecodeMustBeDigitsOnly = "Core code must have 8 digits only";
