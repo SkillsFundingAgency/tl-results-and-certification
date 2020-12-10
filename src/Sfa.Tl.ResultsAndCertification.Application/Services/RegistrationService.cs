@@ -730,38 +730,39 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                     pathwayToUpdate.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(specialismToUpdate =>
                     {
+                        specialismToUpdate.IsOptedin = false;
                         specialismToUpdate.EndDate = DateTime.UtcNow;
                         specialismToUpdate.ModifiedBy = amendedRegistration.CreatedBy;
                         specialismToUpdate.ModifiedOn = DateTime.UtcNow;
 
-                        specialismToUpdate.TqSpecialismAssessments.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(specialismAssessment =>
-                        {
-                            var newActiveAssessment = new TqSpecialismAssessment
-                            { TqRegistrationSpecialismId = specialismToUpdate.Id, AssessmentSeriesId = specialismAssessment.AssessmentSeriesId, IsOptedin = true, StartDate = specialismAssessment.StartDate, EndDate = null, IsBulkUpload = true, CreatedBy = amendedRegistration.CreatedBy, CreatedOn = DateTime.UtcNow };
+                        //specialismToUpdate.TqSpecialismAssessments.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(specialismAssessment =>
+                        //{
+                        //    var newActiveAssessment = new TqSpecialismAssessment
+                        //    { TqRegistrationSpecialismId = specialismToUpdate.Id, AssessmentSeriesId = specialismAssessment.AssessmentSeriesId, IsOptedin = true, StartDate = specialismAssessment.StartDate, EndDate = null, IsBulkUpload = true, CreatedBy = amendedRegistration.CreatedBy, CreatedOn = DateTime.UtcNow };
 
-                            specialismAssessment.IsOptedin = false; //TODO- do we have to do this?
-                            specialismAssessment.EndDate = DateTime.UtcNow;
-                            specialismAssessment.ModifiedBy = amendedRegistration.CreatedBy;
-                            specialismAssessment.ModifiedOn = DateTime.UtcNow;
+                        //    specialismAssessment.IsOptedin = false;
+                        //    specialismAssessment.EndDate = DateTime.UtcNow;
+                        //    specialismAssessment.ModifiedBy = amendedRegistration.CreatedBy;
+                        //    specialismAssessment.ModifiedOn = DateTime.UtcNow;
 
-                            specialismAssessments.Add(specialismAssessment);
-                            specialismAssessments.Add(newActiveAssessment);
-                        });
+                        //    specialismAssessments.Add(specialismAssessment);
+                        //    specialismAssessments.Add(newActiveAssessment);
+                        //});
                     });
 
-                    pathwayToUpdate.TqPathwayAssessments.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(pathwayAssessment =>
-                    {
-                        var newActiveAssessment = new TqPathwayAssessment 
-                        { TqRegistrationPathwayId = pathwayToUpdate.Id, AssessmentSeriesId = pathwayAssessment.AssessmentSeriesId, IsOptedin = true, StartDate = pathwayAssessment.StartDate, EndDate = null, IsBulkUpload = true, CreatedBy = amendedRegistration.CreatedBy, CreatedOn = DateTime.UtcNow };
+                    //pathwayToUpdate.TqPathwayAssessments.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(pathwayAssessment =>
+                    //{
+                    //    var newActiveAssessment = new TqPathwayAssessment 
+                    //    { TqRegistrationPathwayId = pathwayToUpdate.Id, AssessmentSeriesId = pathwayAssessment.AssessmentSeriesId, IsOptedin = true, StartDate = pathwayAssessment.StartDate, EndDate = null, IsBulkUpload = true, CreatedBy = amendedRegistration.CreatedBy, CreatedOn = DateTime.UtcNow };
 
-                        pathwayAssessment.IsOptedin = false; //TODO- do we have to do this?
-                        pathwayAssessment.EndDate = DateTime.UtcNow;
-                        pathwayAssessment.ModifiedBy = amendedRegistration.CreatedBy;
-                        pathwayAssessment.ModifiedOn = DateTime.UtcNow;
+                    //    pathwayAssessment.IsOptedin = false;
+                    //    pathwayAssessment.EndDate = DateTime.UtcNow;
+                    //    pathwayAssessment.ModifiedBy = amendedRegistration.CreatedBy;
+                    //    pathwayAssessment.ModifiedOn = DateTime.UtcNow;
 
-                        pathwayAssessments.Add(pathwayAssessment);
-                        pathwayAssessments.Add(newActiveAssessment);
-                    });
+                    //    pathwayAssessments.Add(pathwayAssessment);
+                    //    pathwayAssessments.Add(newActiveAssessment);
+                    //});
 
                 });
                 hasBothPathwayAndSpecialismsRecordsChanged = true;
