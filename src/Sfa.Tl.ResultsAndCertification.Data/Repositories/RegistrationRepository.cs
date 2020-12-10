@@ -120,8 +120,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                             await ProcessRegistrationSpecialismEntities(specialismRegistrations);
 
-                            await ProcessPathwayAssessments(bulkConfig, pathwayAssessments);
-                            await ProcessSpecialismAssessments(bulkConfig, specialismAssessments);
+                            //await ProcessPathwayAssessments(bulkConfig, pathwayAssessments);
+                            //await ProcessSpecialismAssessments(bulkConfig, specialismAssessments);
 
 
                             transaction.Commit();
