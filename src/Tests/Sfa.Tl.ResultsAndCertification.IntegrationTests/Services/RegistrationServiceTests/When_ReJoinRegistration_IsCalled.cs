@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
             tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList()));
-            SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
+            SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
 
             CreateMapper();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
