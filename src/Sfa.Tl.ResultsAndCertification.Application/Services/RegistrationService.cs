@@ -445,12 +445,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Status = RegistrationPathwayStatus.Active,
                 IsBulkUpload = false,
                 TqRegistrationSpecialisms = MapSpecialisms(tqRegistrationPathway.TqRegistrationSpecialisms.Select(s => new KeyValuePair<int, string>(s.TlSpecialismId, null)), model.PerformedBy, 0, false),
+                TqPathwayAssessments = MapPathwayAssessments(tqRegistrationPathway, true, false, model.PerformedBy),
                 CreatedBy = model.PerformedBy,
                 CreatedOn = DateTime.UtcNow
             };
 
             return await _tqRegistrationPathwayRepository.CreateAsync(tqPathway) > 0;
-        }
+        }        
 
         public async Task<bool> ReregistrationAsync(ReregistrationRequest model)
         {
@@ -543,14 +544,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     Status = RegistrationPathwayStatus.Active,
                     IsBulkUpload = false,
                     TqRegistrationSpecialisms = MapSpecialisms(registrationRecord.TlSpecialismLarIds, model.PerformedBy, 0, false),
-                    TqPathwayAssessments = pathway.TqPathwayAssessments.Select(x => new TqPathwayAssessment
-                    {                        
-                        AssessmentSeriesId = x.AssessmentSeriesId,
-                        StartDate = DateTime.UtcNow,
-                        IsOptedin = true,
-                        IsBulkUpload = false,
-                        CreatedBy = model.PerformedBy
-                    }).ToList(),
+                    TqPathwayAssessments = MapPathwayAssessments(pathway, true, false, model.PerformedBy),                    
                     CreatedBy = model.PerformedBy,
                     CreatedOn = DateTime.UtcNow
                 });
@@ -692,6 +686,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 IsBulkUpload = isBulkUpload,
                 CreatedBy = performedBy,
                 CreatedOn = DateTime.UtcNow,
+            }).ToList();
+        }
+
+        private static List<TqPathwayAssessment> MapPathwayAssessments(TqRegistrationPathway tqRegistrationPathway, bool isOptedIn, bool isBulkUpload, string performedBy)
+        {
+            return tqRegistrationPathway.TqPathwayAssessments.Select(x => new TqPathwayAssessment
+            {
+                AssessmentSeriesId = x.AssessmentSeriesId,
+                StartDate = DateTime.UtcNow,
+                IsOptedin = isOptedIn,
+                IsBulkUpload = isBulkUpload,
+                CreatedBy = performedBy
             }).ToList();
         }
 
