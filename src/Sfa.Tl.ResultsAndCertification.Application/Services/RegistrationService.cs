@@ -543,6 +543,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     Status = RegistrationPathwayStatus.Active,
                     IsBulkUpload = false,
                     TqRegistrationSpecialisms = MapSpecialisms(registrationRecord.TlSpecialismLarIds, model.PerformedBy, 0, false),
+                    TqPathwayAssessments = pathway.TqPathwayAssessments.Where(s => s.IsOptedin && s.EndDate == null).Select(x => new TqPathwayAssessment
+                    {
+                        TqRegistrationPathwayId = x.TqRegistrationPathwayId,
+                        AssessmentSeriesId = x.AssessmentSeriesId,
+                        StartDate = DateTime.UtcNow,
+                        IsOptedin = true,
+                        IsBulkUpload = false,
+                        CreatedBy = model.PerformedBy
+                    }).ToList(),
                     CreatedBy = model.PerformedBy,
                     CreatedOn = DateTime.UtcNow
                 });
