@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             if(hasProviderChanged)
             {
                 // Assessments seed
-                SeedPathwayAssessmentsData(GetPathwayAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.ToList()), false);
+                SeedPathwayAssessmentsData(GetPathwayAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.ToList()));
             }
 
             await WhenAsync();
