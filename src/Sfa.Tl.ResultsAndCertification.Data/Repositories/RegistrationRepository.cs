@@ -42,6 +42,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Where(x => x.Id == profileId && x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active && pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn))
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqRegistrationSpecialisms)
+                .Include(x => x.TqRegistrationPathways)
+                    .ThenInclude(x => x.TqPathwayAssessments)
                 .FirstOrDefaultAsync();
             return profile;
         }        

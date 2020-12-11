@@ -219,8 +219,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     if (existingRegistration != null)
                     {
                         // Validation: Registration should not be in Withdrawn Status.
-                        var withdrawnReg = existingRegistration.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault(x => x.Status == RegistrationPathwayStatus.Withdrawn);
-                        if (withdrawnReg != null)
+                        var latestRegPathway = existingRegistration.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+                        if (latestRegPathway != null && latestRegPathway.Status == RegistrationPathwayStatus.Withdrawn)
                         {
                             response.ValidationErrors.Add(GetRegistrationValidationError(existingRegistration.UniqueLearnerNumber, ValidationMessages.RegistrationCannotBeInWithdrawnStatus));
                             return;
