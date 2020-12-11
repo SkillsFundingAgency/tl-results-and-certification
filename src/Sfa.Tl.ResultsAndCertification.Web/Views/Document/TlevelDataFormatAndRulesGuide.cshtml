@@ -1,0 +1,58 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Document
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Document.TlevelDataFormatAndRulesGuideViewModel
+
+@{
+    ViewData["Title"] = @TlevelDataFormatAndRulesGuide.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">@TlevelDataFormatAndRulesGuide.Section_Heading</h1>
+
+        <p class="govuk-body">@TlevelDataFormatAndRulesGuide.Section_Info_Text</p>
+        <p class="govuk-body">@TlevelDataFormatAndRulesGuide.Section_Info_Explain_How_To_Text</p>
+        <ul class="govuk-list govuk-list--bullet govuk-!-padding-bottom-5">
+            <li>@TlevelDataFormatAndRulesGuide.Meet_The_Technical_Requirements_Text</li>
+            <li>@TlevelDataFormatAndRulesGuide.Use_The_Correct_Format_For_File_Data_Items_Text</li>
+            <li>@TlevelDataFormatAndRulesGuide.Choose_The_Right_Core_And_Specialism_Codes_Text</li>
+            <li>@TlevelDataFormatAndRulesGuide.Present_Your_Data_Correctly_By_Viewing_An_Example_CSV_File_Text</li>
+        </ul>
+
+        <h2 class="govuk-heading-m ">
+            @TlevelDataFormatAndRulesGuide.Registrations_Heading_Text
+        </h2>
+
+        <section class="gem-c-attachment">
+            <div class="gem-c-attachment__thumbnail">
+                <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="DownloadRegistrationDataFormatAndRulesGuide">
+                    <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                        <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
+                    </svg>
+                </a>
+            </div>
+            <h2 class="govuk-heading-s">
+                <a class="govuk-link" target="_self" asp-route="DownloadRegistrationDataFormatAndRulesGuide">@TlevelDataFormatAndRulesGuide.Download_Registration_DataFormat_And_Rules_Guide_Text</a>
+            </h2>
+            <p class="govuk-body-s">@Model.FileType, @Model.RegistrationsFileSize@TlevelDataFormatAndRulesGuide.File_Size_Kb_Text, @Model.RegistrationsVersion, @Model.RegistrationsPublishedDate</p>
+        </section>
+
+        <h2 class="govuk-heading-m govuk-!-margin-top-7">
+            @TlevelDataFormatAndRulesGuide.Assessment_Entries_Heading_Text
+        </h2>
+
+        <section class="gem-c-attachment">
+            <div class="gem-c-attachment__thumbnail">
+                <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="DownloadAssessmentEntriesDataFormatAndRulesGuide">
+                    <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                        <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
+                    </svg>
+                </a>
+            </div>
+            <h2 class="govuk-heading-s">
+                <a class="govuk-link" target="_self" asp-route="DownloadRegistrationDataFormatAndRulesGuide">@TlevelDataFormatAndRulesGuide.Download_Assessment_Entries_DataFormat_And_Rules_Guide_Text</a>
+            </h2>
+            <p class="govuk-body-s">@Model.FileType, @Model.AssessmentEntriesFileSize@TlevelDataFormatAndRulesGuide.File_Size_Kb_Text, @Model.AssessmentEntriesVersion, @Model.AssessmentEntriesPublishedDate</p>
+        </section>
+
+    </div>
+</div>

@@ -171,6 +171,9 @@
         // Document
         public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
         public const string DownloadRegistrationDataFormatAndRulesGuide = "DownloadRegistrationDataFormatAndRulesGuide";
+        public const string DownloadAssessmentEntriesDataFormatAndRulesGuide = "DownloadAssessmentEntriesDataFormatAndRulesGuide";
+
+        public const string TlevelDataFormatAndRulesGuide = "TlevelDataFormatAndRulesGuide";
 
         // Timeout
         public const string ActiveDuration = "ActiveDuration";
