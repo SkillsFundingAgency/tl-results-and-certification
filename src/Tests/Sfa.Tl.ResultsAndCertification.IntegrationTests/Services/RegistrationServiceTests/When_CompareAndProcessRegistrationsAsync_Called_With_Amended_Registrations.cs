@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             _bulkRegistrationTestFixture.TqRegistrationProfilesData = new List<TqRegistrationProfile> { registrationDataToProcess };
         }
 
-        [Fact(Skip = "Waiting for Infrastructure to setup integration tests")]
+        [Fact]
         public async Task Then_Expected_Registrations_Are_Amended()
         {
             // when
