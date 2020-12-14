@@ -1,4 +1,4 @@
-	{
+{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {},
   "id": "http://example.com/example.json",
@@ -11,26 +11,26 @@
     "BlobStorageConnectionString": {
       "type": "string",
       "environmentVariable": "BlobStorageConnectionString"
-    },    
-	"GovUkNotifyApiKey": {
+    },
+    "GovUkNotifyApiKey": {
       "type": "string",
       "environmentVariable": "GovUkNotifyApiKey"
     },
-	"TlevelQueriedSupportEmailAddress": {
+    "TlevelQueriedSupportEmailAddress": {
       "type": "string",
       "environmentVariable": "TlevelQueriedSupportEmailAddress"
-    },	
-	"TechnicalSupportEmailAddress": {
+    },
+    "TechnicalSupportEmailAddress": {
       "type": "string",
       "environmentVariable": "TechnicalSupportEmailAddress"
     },
-	"FeedbackEmailAddress": {
+    "FeedbackEmailAddress": {
       "type": "string",
       "environmentVariable": "FeedbackEmailAddress"
     },
-	"RedisSettings": {
-      "properties": {    
-		"CacheConnection": {
+    "RedisSettings": {
+      "properties": {
+        "CacheConnection": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "RedisCacheConnection"
@@ -42,9 +42,9 @@
       ],
       "type": "object"
     },
-	"BlobStorageSettings": {
-      "properties": {    
-		"AccountName": {
+    "BlobStorageSettings": {
+      "properties": {
+        "AccountName": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "BlobStorageAccountName"
@@ -58,13 +58,13 @@
       "additionalProperties": false,
       "required": [
         "AccountName",
-        "AccountKey"      
+        "AccountKey"
       ],
       "type": "object"
     },
-	"DataProtectionSettings": {
-      "properties": {    
-		"ContainerName": {
+    "DataProtectionSettings": {
+      "properties": {
+        "ContainerName": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "DataProtectionContainerName"
@@ -74,7 +74,7 @@
           "type": "string",
           "environmentVariable": "DataProtectionBlobName"
         },
-		"KeyVaultKeyId": {
+        "KeyVaultKeyId": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "DataProtectionKeyVaultKeyId"
@@ -84,7 +84,7 @@
       "required": [
         "ContainerName",
         "BlobName",
-		"KeyVaultKeyId"
+        "KeyVaultKeyId"
       ],
       "type": "object"
     },
@@ -119,13 +119,13 @@
           "minLength": 1,
           "type": "string",
           "environmentVariable": "DfeSignInLogoutPath"
-        },		
-		"ProfileUrl": {
+        },
+        "ProfileUrl": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "DfeProfileUrl"
         },
-		"Timeout": {
+        "Timeout": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "DfeSignInTimeout"
@@ -160,17 +160,17 @@
           "type": "string",
           "environmentVariable": "DfeSignInAuthority"
         },
-		"SignOutEnabled": {
+        "SignOutEnabled": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "DfeSignOutEnabled"
         },
-		"SignOutRedirectUriEnabled": {
+        "SignOutRedirectUriEnabled": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "DfeSignOutRedirectUriEnabled"
         },
-		"SignOutRedirectUri": {
+        "SignOutRedirectUri": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "DfeSignOutRedirectUri"
@@ -184,23 +184,23 @@
         "CallbackPath",
         "SignedOutCallbackPath",
         "LogoutPath",
-		"ProfileUrl",
-		"Timeout",
+        "ProfileUrl",
+        "Timeout",
         "Issuer",
         "Audience",
         "ApiSecret",
         "ApiUri",
         "TokenEndpoint",
         "Authority",
-		"SignOutEnabled",
-		"SignOutRedirectUriEnabled",
-		"SignOutRedirectUri"
+        "SignOutEnabled",
+        "SignOutRedirectUriEnabled",
+        "SignOutRedirectUri"
       ],
       "type": "object"
     },
-	"ResultsAndCertificationInternalApiSettings": {
-      "properties": {    
-		"Uri": {
+    "ResultsAndCertificationInternalApiSettings": {
+      "properties": {
+        "Uri": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "ResultsAndCertificationInternalApiUri"
@@ -209,7 +209,7 @@
           "minLength": 1,
           "type": "string",
           "environmentVariable": "ResultsAndCertificationInternalApiIdentifierUri"
-        },        
+        },
         "TenantId": {
           "minLength": 1,
           "type": "string",
@@ -226,7 +226,7 @@
         "Uri",
         "IdentifierUri",
         "TenantId",
-        "ClientId"        
+        "ClientId"
       ],
       "type": "object"
     }
@@ -235,15 +235,15 @@
   "required": [
     "SqlConnectionString",
     "BlobStorageConnectionString",
-	"GovUkNotifyApiKey",
-	"TlevelQueriedSupportEmailAddress",
-	"TechnicalSupportEmailAddress",
-	"FeedbackEmailAddress",
-	"RedisSettings",
-	"BlobStorageSettings",
-	"DataProtectionSettings",
+    "GovUkNotifyApiKey",
+    "TlevelQueriedSupportEmailAddress",
+    "TechnicalSupportEmailAddress",
+    "FeedbackEmailAddress",
+    "RedisSettings",
+    "BlobStorageSettings",
+    "DataProtectionSettings",
     "DfeSignInSettings",
-	"ResultsAndCertificationInternalApiSettings"
+    "ResultsAndCertificationInternalApiSettings"
   ],
   "type": "object"
 }

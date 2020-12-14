@@ -19,3 +19,9 @@
     fill: #b1b4b6;
     stroke: #b1b4b6;
 }
+
+.gem-c-attachment:after {
+    content: "";
+    display: block;
+    clear: both;
+}
