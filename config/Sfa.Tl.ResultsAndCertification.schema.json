@@ -8,6 +8,11 @@
       "type": "string",
       "environmentVariable": "SQLServiceAccountConnectionString"
     },
+    "IntTestSqlConnectionString": {
+      "minLength": 1,
+      "type": "string",
+      "environmentVariable": "IntTestSQLServiceAccountConnectionString"
+    },
     "BlobStorageConnectionString": {
       "type": "string",
       "environmentVariable": "BlobStorageConnectionString"

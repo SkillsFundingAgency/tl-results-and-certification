@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration
         public static ResultsAndCertificationDbContext CreateRelationalDbContext()
         {
             var dbContextOptions = new DbContextOptionsBuilder<ResultsAndCertificationDbContext>()
-                .UseSqlServer(ResultsAndCertificationConfiguration.SqlConnectionString, builder =>
+                .UseSqlServer(ResultsAndCertificationConfiguration.IntTestSqlConnectionString, builder =>
                     builder.EnableRetryOnFailure().UseNetTopologySuite()).Options;
 
             return new ResultsAndCertificationDbContext(dbContextOptions);
@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration
 
         public static string GetConnectionString()
         {
-            return ResultsAndCertificationConfiguration.SqlConnectionString;
+            return ResultsAndCertificationConfiguration.IntTestSqlConnectionString;
         }
     }
 }

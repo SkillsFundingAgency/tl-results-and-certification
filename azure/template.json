@@ -99,7 +99,8 @@
         "uiAppServiceName": "[concat(variables('resourceNamePrefix'),'-as')]",
         "apiAppServiceName": "[concat(variables('resourceNamePrefix'),'api-as')]",
         "internalApiAppServiceName": "[concat(variables('resourceNamePrefix'),'intapi-as')]",
-        "databaseName": "[concat(variables('resourceNamePrefix'),'-db')]"
+        "databaseName": "[concat(variables('resourceNamePrefix'),'-db')]",
+        "IntTestdatabaseName": "[concat(variables('resourceNamePrefix'),'-inttest','-db')]"
     },
     "resources": [
         {
@@ -495,6 +496,37 @@
                     }
                 }
             }
+        },
+        {
+            "condition": "[not(equals(parameters('environmentName'), 'PROD'))]",
+            "apiVersion": "2017-05-10",
+            "name": "sql-database",
+            "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "[parameters('sharedSqlResourceGroup')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'sql-database.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "databaseName": {
+                        "value": "[variables('IntTestdatabaseName')]"
+                    },
+                    "sqlServerName": {
+                        "value": "[parameters('sharedSqlServerName')]"
+                    },
+                    "databaseSkuName": {
+                        "value": "[parameters('databaseSkuName')]"
+                    },
+                    "databaseTier": {
+                        "value": "[parameters('databaseTier')]"
+                    },
+                    "serverlessAutoPauseDelay": {
+                        "value": "[parameters('serverlessAutoPauseDelay')]"
+                    }
+                }
+            }
         }
     ],
     "outputs": {
@@ -513,6 +545,10 @@
         "DatabaseName": {
             "type": "string",
             "value": "[variables('databaseName')]"
+        },
+        "IntTestDatabaseName": {
+            "type": "string",
+            "value": "[variables('IntTestdatabaseName')]"
         },
         "StorageAccountName": {
             "type": "string",
