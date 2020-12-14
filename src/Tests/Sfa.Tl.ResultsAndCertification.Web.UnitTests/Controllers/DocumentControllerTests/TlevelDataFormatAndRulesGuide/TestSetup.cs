@@ -11,7 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.RegistrationDataFormatAndRulesGuide
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.TlevelDataFormatAndRulesGuide
 {
     public abstract class TestSetup : BaseTest<DocumentController>
     {
@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
 
         public override Task When()
         {
-            Result = Controller.RegistrationDataFormatAndRulesGuide();
+            Result = Controller.TlevelDataFormatAndRulesGuide();
             return Task.CompletedTask;
         }
     }

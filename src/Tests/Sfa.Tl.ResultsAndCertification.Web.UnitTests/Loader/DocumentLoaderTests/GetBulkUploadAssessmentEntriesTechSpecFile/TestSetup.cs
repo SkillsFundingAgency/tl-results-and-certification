@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DocumentResource = Sfa.Tl.ResultsAndCertification.Web.Content.Document;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.DocumentLoaderTests.GetBulkUploadRegistrationsTechSpecFile
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.DocumentLoaderTests.GetBulkUploadAssessmentEntriesTechSpecFile
 {
     public abstract class TestSetup : BaseTest<DocumentLoader>
     {
