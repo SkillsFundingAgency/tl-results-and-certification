@@ -12,6 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         
         // Bulk process methods below.
         Task<IList<TqRegistrationProfile>> GetRegistrationProfilesAsync(IList<TqRegistrationProfile> registrations);
-        Task<bool> BulkInsertOrUpdateTqRegistrations(List<TqRegistrationProfile> profileEntities, List<TqRegistrationPathway> pathwayEntities, List<TqRegistrationSpecialism> specialismEntities, List<TqPathwayAssessment> pathwayAssessments, List<TqSpecialismAssessment> specialismAssessments);
+        Task<bool> BulkInsertOrUpdateTqRegistrations(List<TqRegistrationProfile> profileEntities, List<TqRegistrationPathway> pathwayEntities, List<TqRegistrationSpecialism> specialismEntities);
     }
 }
