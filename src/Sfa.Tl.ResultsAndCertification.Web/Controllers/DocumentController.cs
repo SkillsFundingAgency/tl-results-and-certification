@@ -20,27 +20,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             _documentLoader = documentLoader;
             _logger = logger;
-        }
-
-        [HttpGet]
-        [Route("download-registration-data-format-and-rules-guide", Name = RouteConstants.RegistrationDataFormatAndRulesGuide)]
-        public IActionResult RegistrationDataFormatAndRulesGuide()
-        {
-            var viewModel = new RegistrationDataFormatAndRulesGuideViewModel
-            {
-                FileType = FileType.Xlsx.ToString().ToUpperInvariant(),
-                FileSize = DocumentResource.RegistrationDataFormatAndRulesGuide.FileSize_Text,
-                Version = DocumentResource.RegistrationDataFormatAndRulesGuide.Version_Text,
-                PublishedDate = $"{DocumentResource.RegistrationDataFormatAndRulesGuide.Published_Text} {DocumentResource.RegistrationDataFormatAndRulesGuide.PublishedDate_Text}"
-            };
-            return View(viewModel);
-        }
+        }        
 
         [HttpGet]
         [Route("download-registration-data-format-and-rules-guide-file", Name = RouteConstants.DownloadRegistrationDataFormatAndRulesGuide)]
         public async Task<IActionResult> DownloadRegistrationDataFormatAndRulesGuideAsync()
         {
-            var fileName = DocumentResource.RegistrationDataFormatAndRulesGuide.Registrations_Data_Format_And_Rules_Guide_File_Name_Text;
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Registrations_Data_Format_And_Rules_Guide_File_Name_Text;
             var fileStream = await _documentLoader.GetBulkUploadRegistrationsTechSpecFileAsync(fileName);
             if (fileStream == null)
             {
