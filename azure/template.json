@@ -500,7 +500,7 @@
         {
             "condition": "[not(equals(parameters('environmentName'), 'PROD'))]",
             "apiVersion": "2017-05-10",
-            "name": "sql-database",
+            "name": "sql-database-int-test",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[parameters('sharedSqlResourceGroup')]",
             "properties": {
