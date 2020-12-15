@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1.0.
+        ///   Looks up a localized string similar to version 1.0.
         /// </summary>
         public static string Assessment_Entries_Version_Text {
             get {
@@ -215,7 +215,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1.4.
+        ///   Looks up a localized string similar to version 1.4.
         /// </summary>
         public static string Registrations_Version_Text {
             get {
