@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             _bulkRegistrationTestFixture.TqRegistrationProfilesData = _bulkRegistrationTestFixture.GetRegistrationsDataToProcess(new List<long> { _bulkRegistrationTestFixture.Uln });
         }
 
-        [Fact(Skip ="Waiting for Infrastructure to setup integration tests")]
+        [Fact]
         public async Task Then_Expected_Registrations_Are_Created()
         {
             // when
