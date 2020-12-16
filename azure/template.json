@@ -100,7 +100,7 @@
         "apiAppServiceName": "[concat(variables('resourceNamePrefix'),'api-as')]",
         "internalApiAppServiceName": "[concat(variables('resourceNamePrefix'),'intapi-as')]",
         "databaseName": "[concat(variables('resourceNamePrefix'),'-db')]",
-        "IntTestdatabaseName": "[concat(variables('resourceNamePrefix'),'-inttest','-db')]"
+        "intTestdatabaseName": "[concat(variables('resourceNamePrefix'),'-inttest','-db')]"
     },
     "resources": [
         {
@@ -511,7 +511,7 @@
                 },
                 "parameters": {
                     "databaseName": {
-                        "value": "[variables('IntTestdatabaseName')]"
+                        "value": "[variables('intTestdatabaseName')]"
                     },
                     "sqlServerName": {
                         "value": "[parameters('sharedSqlServerName')]"
@@ -548,7 +548,7 @@
         },
         "IntTestDatabaseName": {
             "type": "string",
-            "value": "[variables('IntTestdatabaseName')]"
+            "value": "[variables('intTestdatabaseName')]"
         },
         "StorageAccountName": {
             "type": "string",
