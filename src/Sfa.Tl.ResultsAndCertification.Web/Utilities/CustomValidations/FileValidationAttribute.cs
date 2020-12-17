@@ -23,28 +23,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations
             if (value is IFormFile file)
             {
                 var extension = Path.GetExtension(file?.FileName);
-                if (!Extensions.Contains(extension.ToLower()))
+                if (!string.IsNullOrEmpty(AllowedExtensions) && !Extensions.Contains(extension.ToLower()))
                 {                    
                     return new ValidationResult(GetResourceMessage("Must_Be_Csv_Validation_Message"));
                 }
 
                 var fileName = Path.GetFileNameWithoutExtension(file?.FileName);
-                if (fileName.Length > MaxFileNameLength)
+                if (MaxFileNameLength > 0 && fileName.Length > MaxFileNameLength)
                 {
                     return new ValidationResult(string.Format(GetResourceMessage("File_Name_Length_Validation_Message"), MaxFileNameLength));
                 }
 
-                if (file.Length > MaxFileSize)
+                if (MaxFileSize > 0 && file.Length > MaxFileSize)
                 {
                     return new ValidationResult(string.Format(GetResourceMessage("File_Size_Too_Large_Validation_Message"), MaxFileSizeInMb));
                 }
 
-                var recordCount = 0;
-                using var reader = new StreamReader(file.OpenReadStream());
-                while (reader.ReadLine() != null)
+                if (MaxRecordCount > 0)
                 {
-                    if (recordCount++ > MaxRecordCount)
-                        return new ValidationResult(string.Format(GetResourceMessage("File_Max_Record_Count_Validation_Message"), MaxRecordCount.ToString("N0")));
+                    var recordCount = 0;
+                    using var reader = new StreamReader(file.OpenReadStream());
+                    while (reader.ReadLine() != null)
+                    {
+                        if (recordCount++ > MaxRecordCount)
+                            return new ValidationResult(string.Format(GetResourceMessage("File_Max_Record_Count_Validation_Message"), MaxRecordCount.ToString("N0")));
+                    }
                 }
             }
             return ValidationResult.Success;
