@@ -26,7 +26,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             // Seed Tlevel data for pearson
             _uln = 1111111111;
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
-            SeedRegistrationData(_uln);
+            var registration = SeedRegistrationData(_uln);
+
+            // Assessments seed
+            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList()));
+            SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
 
             CreateMapper();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
@@ -94,10 +99,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 TqProviders.Add(ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, tlProvider));
             }
 
+            AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             DbContext.SaveChangesAsync();
         }
 
-        private void SeedRegistrationData(long uln)
+        private TqRegistrationProfile SeedRegistrationData(long uln)
         {
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
@@ -109,6 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             }
 
             DbContext.SaveChangesAsync();
+            return profile;
         }
     }
 }

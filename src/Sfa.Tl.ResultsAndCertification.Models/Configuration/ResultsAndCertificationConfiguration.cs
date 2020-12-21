@@ -35,6 +35,14 @@
         public string SqlConnectionString { get; set; }
 
         /// <summary>
+        /// Gets or sets the SQL connection string for Integration Tests.
+        /// </summary>
+        /// <value>
+        /// The SQL connection string for Integration Tests.
+        /// </value>
+        public string IntTestSqlConnectionString { get; set; }
+
+        /// <summary>
         /// Gets or sets the BLOB storage connection string.
         /// </summary>
         /// <value>

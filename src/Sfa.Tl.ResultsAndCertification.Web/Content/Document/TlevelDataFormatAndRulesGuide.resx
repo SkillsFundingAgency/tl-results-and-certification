@@ -117,35 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add_And_Edit_Registrations_Text" xml:space="preserve">
-    <value>add and edit registrations</value>
+  <data name="Assessment_Entries_FileSize_Text" xml:space="preserve">
+    <value>158</value>
+  </data>
+  <data name="Assessment_Entries_Heading_Text" xml:space="preserve">
+    <value>Assessment entries</value>
+  </data>
+  <data name="Assessment_Entries_PublishedDate_Text" xml:space="preserve">
+    <value>23 November 2020</value>
+  </data>
+  <data name="Assessment_Entries_Version_Text" xml:space="preserve">
+    <value>version 1.0</value>
+  </data>
+  <data name="Assessment_Entry_Data_Format_And_Rules_Guide_File_Name_Text" xml:space="preserve">
+    <value>TLevels_assessment_entry_data_format_and_rules_guide.xlsx</value>
   </data>
   <data name="Choose_The_Right_Core_And_Specialism_Codes_Text" xml:space="preserve">
     <value>choose the right core and specialism codes</value>
   </data>
-  <data name="Download_Registration_DataFormat_And_Rules_Guide_Text" xml:space="preserve">
-    <value>Download registration data format and rules guide</value>
+  <data name="Download_Assessment_Entries_DataFormat_And_Rules_Guide_Text" xml:space="preserve">
+    <value>Download assessment entries data format and rules guide</value>
   </data>
-  <data name="FileSize_Text" xml:space="preserve">
-    <value>157</value>
+  <data name="Download_Registration_DataFormat_And_Rules_Guide_Text" xml:space="preserve">
+    <value>Download registrations data format and rules guide</value>
   </data>
   <data name="File_Size_Kb_Text" xml:space="preserve">
     <value>KB</value>
-  </data>
-  <data name="Find_UniqueLearnerNumbers_And_UK_Provider_Reference_Numbers_Text" xml:space="preserve">
-    <value>find Unique Learner Numbers and UK Provider Reference Numbers</value>
   </data>
   <data name="Meet_The_Technical_Requirements_Text" xml:space="preserve">
     <value>meet the technical requirements</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Download registration data: format and rules guide page</value>
+    <value>T Level data format and rules guides page</value>
   </data>
   <data name="Present_Your_Data_Correctly_By_Viewing_An_Example_CSV_File_Text" xml:space="preserve">
     <value>present your data correctly, by viewing an example CSV file</value>
-  </data>
-  <data name="PublishedDate_Text" xml:space="preserve">
-    <value>4 August 2020</value>
   </data>
   <data name="Published_Text" xml:space="preserve">
     <value>published</value>
@@ -153,16 +159,28 @@
   <data name="Registrations_Data_Format_And_Rules_Guide_File_Name_Text" xml:space="preserve">
     <value>Registrations_data_format_and_rules_guide.xlsx</value>
   </data>
+  <data name="Registrations_FileSize_Text" xml:space="preserve">
+    <value>167</value>
+  </data>
+  <data name="Registrations_Heading_Text" xml:space="preserve">
+    <value>Registrations</value>
+  </data>
+  <data name="Registrations_PublishedDate_Text" xml:space="preserve">
+    <value>16 November 2020</value>
+  </data>
+  <data name="Registrations_Version_Text" xml:space="preserve">
+    <value>version 1.4</value>
+  </data>
   <data name="Section_Heading" xml:space="preserve">
-    <value>T Levels registration data: format and rules guide</value>
+    <value>T Level data format and rules guides</value>
+  </data>
+  <data name="Section_Info_Explain_How_To_Text" xml:space="preserve">
+    <value>They explain how to:</value>
   </data>
   <data name="Section_Info_Text" xml:space="preserve">
-    <value>This guide shows you how to:</value>
+    <value>These guides show you how to create files that add and amend data for Manage T Level results by bulk upload.</value>
   </data>
   <data name="Use_The_Correct_Format_For_File_Data_Items_Text" xml:space="preserve">
     <value>use the correct format for file data items</value>
-  </data>
-  <data name="Version_Text" xml:space="preserve">
-    <value>version 1.2</value>
   </data>
 </root>

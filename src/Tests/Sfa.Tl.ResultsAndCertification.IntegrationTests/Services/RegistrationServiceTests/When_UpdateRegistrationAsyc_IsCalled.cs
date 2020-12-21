@@ -25,13 +25,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         private ManageRegistration _updateRegistrationRequest;
         private int _profileId;
         private long _uln;
+        private TqRegistrationProfile _tqRegistrationProfile;
 
         public override void Given()
         {
             // Seed Tlevel data for pearson
             _uln = 1111111111;
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
-            SeedRegistrationData(_uln);
+            _tqRegistrationProfile = SeedRegistrationData(_uln);
 
             CreateMapper();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
@@ -78,6 +79,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             _updateRegistrationRequest.HasProfileChanged = hasProfileChanged;
             _updateRegistrationRequest.HasProviderChanged = hasProviderChanged;
             _updateRegistrationRequest.HasSpecialismsChanged = hasSpecialismsChanged;
+
+            if(hasProviderChanged)
+            {
+                // Assessments seed
+                SeedPathwayAssessmentsData(GetPathwayAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.ToList()));
+            }
+
             await WhenAsync();
             _result.Should().Be(expectedResult);
         }
@@ -116,11 +124,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             {
                 TqProviders.Add(ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, tlProvider));
             }
-
+            AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             DbContext.SaveChangesAsync();
         }
 
-        private void SeedRegistrationData(long uln)
+        private TqRegistrationProfile SeedRegistrationData(long uln)
         {
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
@@ -134,6 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             DbContext.SaveChangesAsync();
 
             _profileId = tqRegistrationProfile.Id;
+            return profile;
         }
 
         protected override void CreateMapper()

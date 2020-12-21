@@ -30,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             var registrationPathway = await pathwayQueryable
                 .IncludeFilter(p => p.TqRegistrationSpecialisms.Where(s => s.IsOptedin && (p.Status == RegistrationPathwayStatus.Withdrawn) ? s.EndDate != null : s.EndDate == null))
+                .IncludeFilter(p => p.TqPathwayAssessments.Where(s => s.IsOptedin && (p.Status == RegistrationPathwayStatus.Withdrawn) ? s.EndDate != null : s.EndDate == null))
                 .OrderByDescending(p => p.CreatedOn)
                 .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn);
             return registrationPathway;
@@ -41,6 +42,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Where(x => x.Id == profileId && x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active && pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn))
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqRegistrationSpecialisms)
+                .Include(x => x.TqRegistrationPathways)
+                    .ThenInclude(x => x.TqPathwayAssessments)
                 .FirstOrDefaultAsync();
             return profile;
         }        
@@ -86,6 +89,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return await _dbContext.TqRegistrationProfile.Where(x => ulns.Contains(x.UniqueLearnerNumber))
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqRegistrationSpecialisms)
+                        .ThenInclude(x => x.TqSpecialismAssessments)
+                .Include(x => x.TqRegistrationPathways)
+                    .ThenInclude(x => x.TqPathwayAssessments)
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqProvider)
                         .ThenInclude(x => x.TqAwardingOrganisation)
@@ -103,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     using (var transaction = await _dbContext.Database.BeginTransactionAsync())
                     {
                         try
-                        {
+                         {
                             var bulkConfig = new BulkConfig() { UseTempDB = true, SetOutputIdentity = true, BatchSize = 5000, BulkCopyTimeout = 60 };
 
                             var pathwayRegistrations = pathwayEntities ?? new List<TqRegistrationPathway>();
@@ -112,9 +118,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                             var specialismRegistrations = specialismEntities ?? new List<TqRegistrationSpecialism>();
 
-                            specialismRegistrations = await ProcessRegistrationPathwayEntities(bulkConfig, pathwayRegistrations, specialismRegistrations);
+                            var pathwayAssessments = new List<TqPathwayAssessment>();
+                            var processEntitiesResult = await ProcessRegistrationPathwayEntities(bulkConfig, pathwayRegistrations, specialismRegistrations, pathwayAssessments);
+
+                            specialismRegistrations = processEntitiesResult.Item1;
+                            pathwayAssessments = processEntitiesResult.Item2;
 
                             await ProcessRegistrationSpecialismEntities(specialismRegistrations);
+
+                            await ProcessPathwayAssessments(pathwayAssessments);
 
                             transaction.Commit();
                         }
@@ -163,7 +175,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return pathwayRegistrations;
         }
 
-        private async Task<List<TqRegistrationSpecialism>> ProcessRegistrationPathwayEntities(BulkConfig bulkConfig, List<TqRegistrationPathway> pathwayRegistrations, List<TqRegistrationSpecialism> specialismRegistrations)
+        private async Task<Tuple<List<TqRegistrationSpecialism>, List<TqPathwayAssessment>>> ProcessRegistrationPathwayEntities(BulkConfig bulkConfig, List<TqRegistrationPathway> pathwayRegistrations, List<TqRegistrationSpecialism> specialismRegistrations, List<TqPathwayAssessment> pathwayAssessments)
         {
             if (pathwayRegistrations.Count > 0)
             {
@@ -192,9 +204,20 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         }
                         specialismRegistrations.Add(specialism);
                     }
+
+                    foreach (var assessment in pathway.TqPathwayAssessments)
+                    {
+                        if (assessment.TqRegistrationPathwayId == 0)
+                        {
+                            assessment.TqRegistrationPathwayId = pathwayEntity.Id;
+                        }
+
+                        pathwayAssessments.Add(assessment);
+                    }
                 });
             }
-            return specialismRegistrations;
+
+            return new Tuple<List<TqRegistrationSpecialism>, List<TqPathwayAssessment>>(specialismRegistrations, pathwayAssessments);
         }
 
         private async Task ProcessRegistrationSpecialismEntities(List<TqRegistrationSpecialism> specialismRegistrations)
@@ -204,6 +227,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 specialismRegistrations = SortUpdateAndInsertOrder(specialismRegistrations, x => x.Id);
                 await _dbContext.BulkInsertOrUpdateAsync(specialismRegistrations, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
             }
+        }
+
+        private async Task ProcessPathwayAssessments(List<TqPathwayAssessment> pathwayAssessments)
+        {
+            if (pathwayAssessments == null || !pathwayAssessments.Any())
+                return;
+
+            pathwayAssessments = SortUpdateAndInsertOrder(pathwayAssessments, x => x.Id);
+            await _dbContext.BulkInsertOrUpdateAsync(pathwayAssessments, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
         }
 
         private List<T> SortUpdateAndInsertOrder<T>(List<T> entities, Func<T, int> selector) where T : class
