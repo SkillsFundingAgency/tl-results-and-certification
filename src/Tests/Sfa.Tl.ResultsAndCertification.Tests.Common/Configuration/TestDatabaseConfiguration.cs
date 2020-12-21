@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration
         {
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.test.json").Build();
 
-            if (configuration[Constants.EnvironmentNameConfigKey].Equals("local", StringComparison.InvariantCultureIgnoreCase))
+            if (configuration[Constants.EnvironmentNameConfigKey].Equals("__EnvironmentName__", StringComparison.InvariantCultureIgnoreCase))
             {
                 configuration = new ConfigurationBuilder().AddJsonFile("appsettings.local.json").Build();
             }
