@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
 {
-    public class RegistrationCsvRecordResponse : ValidationState<RegistrationValidationError>
+    public class RegistrationCsvRecordResponse : ValidationState<BulkProcessValidationError>
     {
         public RegistrationCsvRecordResponse()
         {

@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new registration - Select the specialisms page.
+        ///   Looks up a localized string similar to Add a new registration - Select the specialism page.
         /// </summary>
         public static string Page_Title_Add_Registration_Select_Specialism {
             get {
@@ -133,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the specialisms for {0}.
+        ///   Looks up a localized string similar to Select the specialism for {0}.
         /// </summary>
         public static string Select_The_Specialism_Label_Text {
             get {

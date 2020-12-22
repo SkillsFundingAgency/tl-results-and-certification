@@ -24,7 +24,7 @@
 
         public const string UploadUnsuccessfulViewModel = "UploadUnsuccessfulViewModel";
         public const string UploadSuccessfulViewModel = "UploadSuccessfulViewModel";
-        public const string UlnNotFoundViewModel = "UlnNotFoundViewModel";
+        public const string UlnRegistrationNotFoundViewModel = "UlnRegistrationNotFoundViewModel";
 
         public const string RegistrationConfirmationViewModel = "RegistrationConfirmationViewModel";
         public const string ChangeRegistrationConfirmationViewModel = "ChangeRegistrationConfirmationViewModel";
@@ -37,6 +37,13 @@
         public const string RejoinRegistrationConfirmationViewModel = "RejoinRegistrationConfirmationViewModel";
         public const string ReregistrationConfirmationViewModel = "ReregistrationConfirmationViewModel";
 
+        public const string AssessmentsUploadSuccessfulViewModel = "AssessmentsUploadSuccessfulViewModel";
+        public const string AssessmentsSearchCriteria = "AssessmentsSearchCriteria";
+        public const string SearchAssessmentsUlnNotFound = "SearchAssessmentsUlnNotFound";
+        public const string AddAssessmentEntryConfirmationViewModel = "AddAssessmentEntryConfirmationViewModel";
+        public const string RemoveAssessmentEntryConfirmationViewModel = "RemoveAssessmentEntryConfirmationViewModel";
+
+
         public const string UserSessionActivityId = "UserSessionActivityId";
 
         // Registration Data Index Constants
@@ -44,11 +51,23 @@
         public const int RegistrationPathwayStartIndex = 200000;
         public const int RegistrationSpecialismsStartIndex = 300000;
 
+        // Assessment Data Index Constants
+        public const int PathwayAssessmentsStartIndex = 100000;
+        public const int SpecialismAssessmentsStartIndex = 100000;
+
         // Route Attributes
         public const string IsChangeMode = "isChangeMode";
         public const string ProfileId = "profileId";
         public const string IsBack = "isBack";
         public const string ChangeStatusId = "changeStatusId";
         public const string WithdrawBackLinkOptionId = "withdrawBackLinkOptionId";
+        public const string AssessmentId = "assessmentId";
+
+        // Assessments
+        public const int AssessmentEndInYears = 4;
+        public const int CoreAssessmentStartInYears = 0;
+        public const int SpecialismAssessmentStartInYears = 1;
+
+        public const int MaxFileSizeInMb = 5;
     }
 }

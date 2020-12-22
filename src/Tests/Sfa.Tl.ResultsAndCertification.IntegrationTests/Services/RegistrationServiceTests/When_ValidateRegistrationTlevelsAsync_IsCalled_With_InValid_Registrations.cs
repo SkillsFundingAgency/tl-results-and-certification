@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {
@@ -20,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         private readonly long _aoUkprn = 10011881;
         private IList<RegistrationRecordResponse> _result;      
         private IList<RegistrationCsvRecordResponse> _stage3RegistrationsData;
-        private IList<RegistrationValidationError> _expectedValidationErrors;
+        private IList<BulkProcessValidationError> _expectedValidationErrors;
 
         public override void Given()
         {

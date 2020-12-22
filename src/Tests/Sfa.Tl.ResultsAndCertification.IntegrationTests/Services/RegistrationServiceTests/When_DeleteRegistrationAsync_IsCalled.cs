@@ -20,7 +20,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         {
             // Seed Tlevel data for pearson
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
-            SeedRegistrationData(1111111111);
+
+            var registration = SeedRegistrationData(1111111111);
+
+            // Assessments seed
+            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList()));
+            SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
 
             CreateMapper();
 
@@ -70,10 +76,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Pathway, TlAwardingOrganisation);
             TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, TlProvider);
+            AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             DbContext.SaveChangesAsync();
         }
 
-        private void SeedRegistrationData(long uln)
+        private TqRegistrationProfile SeedRegistrationData(long uln)
         {
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
@@ -84,6 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 tqRegistrationPathway.TqRegistrationSpecialisms.Add(RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, specialism));
             }
             DbContext.SaveChangesAsync();
+            return profile;
         }
     }
 }

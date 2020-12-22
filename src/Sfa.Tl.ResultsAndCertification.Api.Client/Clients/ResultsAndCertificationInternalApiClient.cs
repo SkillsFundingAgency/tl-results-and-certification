@@ -107,10 +107,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<bool>(requestUri);
         }
 
-        public async Task<BulkRegistrationResponse> ProcessBulkRegistrationsAsync(BulkRegistrationRequest model)
+        public async Task<BulkProcessResponse> ProcessBulkRegistrationsAsync(BulkProcessRequest model)
         {
             var requestUri = ApiConstants.ProcessBulkRegistrationsUri;
-            return await PostAsync<BulkRegistrationRequest, BulkRegistrationResponse>(requestUri, model);
+            return await PostAsync<BulkProcessRequest, BulkProcessResponse>(requestUri, model);
         }
 
         public async Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference)
@@ -178,6 +178,43 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var requestUri = ApiConstants.ReregistrationUri;
             return await PostAsync<ReregistrationRequest, bool>(requestUri, model);
         }
+
+        // Assessment Related endpoints
+        public async Task<BulkAssessmentResponse> ProcessBulkAssessmentsAsync(BulkProcessRequest model)
+        {
+            var requestUri = ApiConstants.ProcessBulkAssessmentsUri;
+            return await PostAsync<BulkProcessRequest, BulkAssessmentResponse>(requestUri, model);
+        }
+
+        public async Task<AssessmentDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        {
+            var requestUri = string.Format(ApiConstants.GetAssessmentDetailsUri, aoUkprn, profileId, (int?)status);
+            return await GetAsync<AssessmentDetails>(requestUri);
+        }
+        
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        {
+            var requestUri = string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, aoUkprn, profileId, (int)assessmentEntryType);
+            return await GetAsync<AvailableAssessmentSeries>(requestUri);
+        }
+
+        public async Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request)
+        {
+            var requestUri = ApiConstants.AddAssessmentEntryUri;
+            return await PostAsync<AddAssessmentEntryRequest, AddAssessmentEntryResponse>(requestUri, request);
+        }
+
+        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType)
+        {
+            var requestUri = string.Format(ApiConstants.GetActiveAssessmentEntryDetailsUri, aoUkprn, assessmentId, (int)assessmentEntryType);
+            return await GetAsync<AssessmentEntryDetails>(requestUri);
+        }
+
+        public async Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
+        {
+            var requestUri = ApiConstants.RemoveAssessmentEntryUri;
+            return await PutAsync<RemoveAssessmentEntryRequest, bool>(requestUri, model);
+        }        
 
         #region Private Methods
 

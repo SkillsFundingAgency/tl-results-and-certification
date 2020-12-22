@@ -185,5 +185,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
                 return ResourceManager.GetString("Uln_Heading_Text", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View and amend this learner&apos;s assessment entries.
+        /// </summary>
+        public static string ViewAssessmentEntries_Link_Text {
+            get {
+                return ResourceManager.GetString("ViewAssessmentEntries_Link_Text", resourceCulture);
+            }
+        }
     }
 }

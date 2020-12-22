@@ -28,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected IList<TlProvider> TlProviders;
         public IList<TqProvider> TqProviders;
         protected IList<TlSpecialism> TlSpecialisms;
+        private IList<AssessmentSeries> AssessmentSeries;
         protected RegistrationService RegistrationService;        
         protected IProviderRepository ProviderRepository;
         protected IRepository<TqRegistrationPathway> TqRegistrationPathwayRepository;
@@ -63,6 +64,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
             RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, RegistrationMapper, RegistrationRepositoryLogger);
+            
+            AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null);
+            DbContext.SaveChanges();
         }
 
         protected void CreateMapper()
@@ -151,6 +155,45 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         public async Task ResetData()
         {
             await DbCheckpoint.Reset(TestDatabaseConfiguration.GetConnectionString());
+        }
+
+        public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false)
+        {
+            var tqPathwayAssessments = new List<TqPathwayAssessment>();
+
+            foreach (var (pathwayRegistration, index) in pathwayRegistrations.Select((value, i) => (value, i)))
+            {
+                if (isHistorical)
+                {
+                    // Historical record
+                    var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
+                    pathwayAssessment.IsOptedin = false;
+                    pathwayAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                    var tqPathwayAssessmentHistorical = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, pathwayAssessment);
+                    tqPathwayAssessments.Add(tqPathwayAssessmentHistorical);
+                }
+
+                var activePathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
+                var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, activePathwayAssessment);
+                if (!seedPathwayAssessmentsAsActive)
+                {
+                    tqPathwayAssessment.IsOptedin = pathwayRegistration.Status == Common.Enum.RegistrationPathwayStatus.Withdrawn ? true : false;
+                    tqPathwayAssessment.EndDate = DateTime.UtcNow;
+                }
+
+                tqPathwayAssessments.Add(tqPathwayAssessment);
+            }
+            return tqPathwayAssessments;
+        }
+
+        public List<TqPathwayAssessment> SeedPathwayAssessmentsData(List<TqPathwayAssessment> pathwayAssessments, bool saveChanges = true)
+        {
+            var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessments(DbContext, pathwayAssessments);
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return tqPathwayAssessment;
         }
     }
 }

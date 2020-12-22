@@ -25,8 +25,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         protected IBlobStorageService BlobStorageService;
         protected readonly long Ukprn = 12345678;
         protected UploadRegistrationsResponseViewModel ActualResult;
-        protected BulkRegistrationResponse BulkRegistrationResponse;
-        protected BulkRegistrationRequest BulkRegistrationRequest;
+        protected BulkProcessResponse BulkRegistrationResponse;
+        protected BulkProcessRequest BulkRegistrationRequest;
         protected UploadRegistrationsRequestViewModel UploadRegistrationsRequestViewModel;
         protected UploadRegistrationsResponseViewModel UploadRegistrationsResponseViewModel;
         protected List<ProviderTlevel> ProviderTlevelDetails;
@@ -44,12 +44,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             BlobStorageService = Substitute.For<IBlobStorageService>();
             FormFile = Substitute.For<IFormFile>();
             BlobUniqueReference = Guid.NewGuid();
-            BulkRegistrationRequest = new BulkRegistrationRequest { AoUkprn = Ukprn };
+            BulkRegistrationRequest = new BulkProcessRequest { AoUkprn = Ukprn };
         }
 
         public override void Given()
         {          
-            BulkRegistrationResponse = new BulkRegistrationResponse
+            BulkRegistrationResponse = new BulkProcessResponse
             {
                 IsSuccess = false,
                 BlobUniqueReference = BlobUniqueReference,
@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 ErrorFileSize = 1.5
             };
 
-            Mapper.Map<BulkRegistrationRequest>(UploadRegistrationsRequestViewModel).Returns(BulkRegistrationRequest);
+            Mapper.Map<BulkProcessRequest>(UploadRegistrationsRequestViewModel).Returns(BulkRegistrationRequest);
             Mapper.Map<UploadRegistrationsResponseViewModel>(BulkRegistrationResponse).Returns(UploadRegistrationsResponseViewModel);
             InternalApiClient.ProcessBulkRegistrationsAsync(BulkRegistrationRequest).Returns(BulkRegistrationResponse);
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);

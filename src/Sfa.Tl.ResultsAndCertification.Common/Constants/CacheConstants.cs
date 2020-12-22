@@ -5,5 +5,6 @@
         public const string RegistrationCacheKey = "Registration";
         public const string ReregisterCacheKey = "Reregister";
         public const string UserSessionActivityCacheKey = "UserSessionActivity";
+        public const string AssessmentCacheKey = "Assessment";
     }
 }

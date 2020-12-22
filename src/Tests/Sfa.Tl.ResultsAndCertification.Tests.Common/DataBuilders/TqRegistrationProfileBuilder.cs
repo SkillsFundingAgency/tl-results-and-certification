@@ -52,6 +52,17 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
+            },
+            new Domain.Models.TqRegistrationProfile
+            {
+                UniqueLearnerNumber = 1111111114,
+                Firstname = "First 4",
+                Lastname = "Last 4",
+                DateofBirth = "03/07/1982".ToDateTime(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
             }
         };
     }

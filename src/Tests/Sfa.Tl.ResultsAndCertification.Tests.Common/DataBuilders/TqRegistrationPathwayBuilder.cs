@@ -1,5 +1,4 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
+﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using System;
 using System.Collections.Generic;

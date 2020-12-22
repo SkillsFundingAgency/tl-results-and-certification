@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<UploadRegistrationsResponseViewModel> ProcessBulkRegistrationsAsync(UploadRegistrationsRequestViewModel viewModel)
         {            
-            var bulkRegistrationRequest = _mapper.Map<BulkRegistrationRequest>(viewModel);
+            var bulkRegistrationRequest = _mapper.Map<BulkProcessRequest>(viewModel);
 
             using (var fileStream = viewModel.File.OpenReadStream())
             {
@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 {
                     ContainerName = bulkRegistrationRequest.DocumentType.ToString(),
                     BlobFileName = bulkRegistrationRequest.BlobFileName,
-                    SourceFilePath = $"{bulkRegistrationRequest.AoUkprn}/{BulkRegistrationProcessStatus.Processing}",
+                    SourceFilePath = $"{bulkRegistrationRequest.AoUkprn}/{BulkProcessStatus.Processing}",
                     FileStream = fileStream,
                     UserName = bulkRegistrationRequest.PerformedBy
                 });
@@ -63,12 +63,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 {
                     ContainerName = DocumentType.Registrations.ToString(),
                     BlobFileName = tlevelDetails.BlobFileName,
-                    SourceFilePath = $"{aoUkprn}/{BulkRegistrationProcessStatus.ValidationErrors}"
+                    SourceFilePath = $"{aoUkprn}/{BulkProcessStatus.ValidationErrors}"
                 });
 
                 if(fileStream == null)
                 {
-                    var blobReadError = $"No FileStream found to download registration validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.Registrations}, BlobFileName = {tlevelDetails.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkRegistrationProcessStatus.ValidationErrors})";
+                    var blobReadError = $"No FileStream found to download registration validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.Registrations}, BlobFileName = {tlevelDetails.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkProcessStatus.ValidationErrors})";
                     _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
                 }
                 return fileStream;
@@ -98,10 +98,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<PathwaySpecialismsViewModel>(pathwaySpecialisms);
         }
 
-        public async Task<UlnNotFoundViewModel> FindUlnAsync(long aoUkprn, long Uln)
+        public async Task<UlnRegistrationNotFoundViewModel> FindUlnAsync(long aoUkprn, long Uln)
         {
             var response = await _internalApiClient.FindUlnAsync(aoUkprn, Uln);
-            return _mapper.Map<UlnNotFoundViewModel>(response);
+            return _mapper.Map<UlnRegistrationNotFoundViewModel>(response);
         }
 
         public async Task<bool> AddRegistrationAsync(long aoUkprn, RegistrationViewModel model)

@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {
-    [Collection("BulkRegistration")]
+    [Collection("BulkProcessTests")]
     public class When_CompareAndProcessRegistrationsAsync_Called_With_Amended_Registrations : IClassFixture<BulkRegistrationsTextFixture>
     {
         private RegistrationProcessResponse _result;
@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             _bulkRegistrationTestFixture.TqRegistrationProfilesData = new List<TqRegistrationProfile> { registrationDataToProcess };
         }
 
-        [Fact(Skip = "Waiting for Infrastructure to setup integration tests")]
+        [Fact]
         public async Task Then_Expected_Registrations_Are_Amended()
         {
             // when

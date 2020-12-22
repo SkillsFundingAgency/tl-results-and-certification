@@ -1,0 +1,43 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Assessment
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.UploadAssessmentsRequestViewModel
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = @Upload.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+@section Scripts {
+    <script nws-csp-add-nonce="true" src="~/javascripts/assessment-upload.min.js"></script>
+}
+
+<div id="uploadAssessmentsContainer">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <partial name="_ValidationSummary" />
+            <h1 class="govuk-heading-xl">@Upload.Page_Heading</h1>
+            <p class="govuk-body">@Html.Raw(@Upload.On_Existing_Registrations_You_Can_Add_Text)</p>
+            <p class="govuk-body">@Upload.We_Can_Only_Accept_Files_Text</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Upload.Are_In_Csv_Format_Text</li>
+                <li>@Upload.Include_All_Mandatory_Fields_Text</li>
+                <li>@Upload.No_Of_Assessments_To_Upload_Text</li>
+            </ul>
+            <form id="uploadAssessmentsForm" class="form" asp-route="SubmitUploadAssessmentsFile" enctype="multipart/form-data">
+                <div class="govuk-form-group" sfa-validation-for="File" sfa-validation-class="govuk-form-group--error">
+                    <label for="file" class="govuk-label govuk-!-font-size-19 govuk-!-padding-top-5 govuk-!-font-weight-bold">
+                        @Upload.Upload_File_Text
+                    </label>
+                    <span sfa-validation-for="File"></span>
+                    <input class="govuk-file-upload" id="file" asp-for="File" type="file" accept=".csv">
+                </div>
+                <button id="uploadAssessmentsButton" class="govuk-button tl-show-on-js-only" data-module="govuk-button" type="submit">@Upload.Upload_File_Button_Text</button>
+                <partial name="~/Views/Assessment/Partials/_uploadAssessmentNoScriptSubmit.cshtml" />
+            </form>
+        </div>
+    </div>
+</div>
+<partial name="~/Views/Assessment/Partials/_uploadAssessmentProgress.cshtml" />

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Xunit;
 using UploadContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration.Upload;

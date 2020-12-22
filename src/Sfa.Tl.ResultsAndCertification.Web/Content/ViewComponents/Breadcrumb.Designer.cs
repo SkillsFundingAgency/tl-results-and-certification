@@ -61,11 +61,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assessment entries.
+        /// </summary>
+        public static string Assessment_Dashboard {
+            get {
+                return ResourceManager.GetString("Assessment_Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner&apos;s assessment entries.
+        /// </summary>
+        public static string Learners_Assessment_entries {
+            get {
+                return ResourceManager.GetString("Learners_Assessment_entries", resourceCulture);
             }
         }
         
@@ -115,6 +133,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search for a learner.
+        /// </summary>
+        public static string Search_For_Assessments {
+            get {
+                return ResourceManager.GetString("Search_For_Assessments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for a registration.
         /// </summary>
         public static string Search_For_Registration {
@@ -147,6 +174,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Tlevel_ViewAll {
             get {
                 return ResourceManager.GetString("Tlevel_ViewAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload assessment entries file.
+        /// </summary>
+        public static string Upload_Assessments_File {
+            get {
+                return ResourceManager.GetString("Upload_Assessments_File", resourceCulture);
             }
         }
         

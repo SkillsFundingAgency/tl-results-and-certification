@@ -33,5 +33,11 @@
         public const int ManualRegistrationProcessFailed = 4002;
         public const int RegistrationNotDeleted = 4003;
         public const int ManualReregistrationProcessFailed = 4004;
+
+
+        // Assessment events
+        public const int BulkAssessmentProcessFailed = 5001;
+        public const int DownloadAssesssmentErrorsFailed = 5002;
+        public const int AddCoreAssessmentEntryFailed = 5501;
     }
 }

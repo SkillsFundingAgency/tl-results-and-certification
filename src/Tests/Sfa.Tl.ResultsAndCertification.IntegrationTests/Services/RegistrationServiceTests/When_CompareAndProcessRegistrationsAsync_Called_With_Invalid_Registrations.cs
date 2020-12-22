@@ -2,14 +2,16 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
-using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrations.ValidationErrorsBuilder;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
     {
         private RegistrationProcessResponse _result;
         private IList<TqRegistrationProfile> _tqRegistrationProfilesData;
-        private IList<RegistrationValidationError> _expectedValidationErrors;
+        private IList<BulkProcessValidationError> _expectedValidationErrors;
 
         public override void Given()
         {
@@ -33,6 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             // Seed Tlevel data for ncfe
             SeedTestData(EnumAwardingOrganisation.Ncfe, true);
             SeedRegistrationData(1111111112);
+            SeedRegistrationData(1111111113, RegistrationPathwayStatus.Withdrawn);
 
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
@@ -44,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
             RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, RegistrationMapper, RegistrationRepositoryLogger);
 
-            _tqRegistrationProfilesData = GetRegistrationsDataToProcess(new List<long> { 1111111111, 1111111112 });
+            _tqRegistrationProfilesData = GetRegistrationsDataToProcess(new List<long> { 1111111111, 1111111112, 1111111113 });
             _expectedValidationErrors = new BulkRegistrationValidationErrorsBuilder().BuildStage4ValidationErrorsList();
         }
 
@@ -83,11 +86,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             DbContext.SaveChangesAsync();
         }
 
-        private void SeedRegistrationData(long uln)
+        private void SeedRegistrationData(long uln, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active)
         {
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProviders.First());
+
+            if (status == RegistrationPathwayStatus.Withdrawn)
+            {
+                tqRegistrationPathway.Status = status;
+                tqRegistrationPathway.EndDate = DateTime.UtcNow.AddDays(-1);
+            }
 
             DbContext.SaveChangesAsync();
         }

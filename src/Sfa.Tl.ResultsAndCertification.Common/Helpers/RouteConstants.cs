@@ -131,12 +131,35 @@
         public const string SubmitDeleteRegistration = "SubmitDeleteRegistration";
         public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
 
+        // Assessment Entries
+        public const string AssessmentDashboard = "AssessmentDashboard";
+        public const string UploadAssessmentsFile = "UploadAssessmentsFile";
+        public const string SubmitUploadAssessmentsFile = "SubmitUploadAssessmentsFile";
+        public const string AssessmentsUploadSuccessful = "AssessmentsUploadSuccessful";
+        public const string AssessmentsUploadUnsuccessful = "AssessmentsUploadUnsuccessful";
+        public const string ProblemWithAssessmentsUpload = "ProblemWithAssessmentsUpload";
+        public const string DownloadAssessmentErrors = "DownloadAssessmentErrors";
+        public const string AddCoreAssessmentEntry = "AddCoreAssessmentEntry";
+        public const string EntrySeries = "SubmitAddCoreAssessmentEntry";
+        public const string AssessmentEntryAddedConfirmation = "AssessmentEntryAddedConfirmation";
+        public const string RemoveCoreAssessmentEntry = "RemoveCoreAssessmentEntry";
+        public const string SubmitRemoveCoreAssessmentEntry = "SubmitRemoveCoreAssessmentEntry";
+        public const string AssessmentEntryRemovedConfirmation = "AssessmentEntryRemovedConfirmation";
+
+        // Search Assessment Entries
+        public const string SearchAssessments = "SearchAssessments";
+        public const string SubmitSearchAssessments = "SubmitSearchAssessments";
+        public const string SearchAssessmentsNotFound = "SearchAssessmentsNotFound";
+        public const string AssessmentDetails = "AssessmentDetails";
+        public const string AssessmentWithdrawnDetails = "AssessmentWithdrawnDetails";        
+
         // Error
         public const string PageNotFound = "PageNotFound";
         public const string ServiceAccessDenied = "ServiceAccessDenied";
         public const string AccessDeniedWrongRole = "AccessDeniedWrongRole";
         public const string ProblemWithService = "ProblemWithService";
         public const string Error = "Error";
+        public const string VirusUploaded = "VirusUploaded";
 
         // Help
         public const string Cookies = "Cookies";
@@ -148,6 +171,9 @@
         // Document
         public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
         public const string DownloadRegistrationDataFormatAndRulesGuide = "DownloadRegistrationDataFormatAndRulesGuide";
+        public const string DownloadAssessmentEntriesDataFormatAndRulesGuide = "DownloadAssessmentEntriesDataFormatAndRulesGuide";
+
+        public const string TlevelDataFormatAndRulesGuide = "TlevelDataFormatAndRulesGuide";
 
         // Timeout
         public const string ActiveDuration = "ActiveDuration";

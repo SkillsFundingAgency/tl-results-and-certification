@@ -327,6 +327,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(viewModel);
             }
 
+            viewModel.PathwaySpecialisms?.Specialisms?.ToList().ForEach(x => { x.IsSelected = (x.Code == viewModel.SelectedSpecialismCode); });
             var response = await _registrationLoader.ProcessSpecialismChangeAsync(User.GetUkPrn(), viewModel);
             if (response == null)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
@@ -760,6 +761,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (model.IsChangeMode && cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism.Value == false)
                 cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism = true;
 
+            model.PathwaySpecialisms?.Specialisms?.ToList().ForEach(x => { x.IsSelected = (x.Code == model.SelectedSpecialismCode); });
             cacheModel.ReregisterSpecialisms = model;
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
 
@@ -899,9 +901,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsAsync(ChangeSpecialismViewModel viewModel)
         {
             var coreSpecialisms = await _registrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(User.GetUkPrn(), viewModel.CoreCode);
-
-            // Update IsSelected flag.
-            coreSpecialisms.Specialisms.ToList().ForEach(x => { x.IsSelected = viewModel.SpecialismCodes.Contains(x.Code); });
+            viewModel.SelectedSpecialismCode = viewModel.SpecialismCodes.FirstOrDefault();
 
             return coreSpecialisms;
         }

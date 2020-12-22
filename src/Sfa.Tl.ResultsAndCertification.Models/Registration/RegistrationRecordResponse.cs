@@ -1,11 +1,10 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
-using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Registration
 {
-    public class RegistrationRecordResponse : ValidationState<RegistrationValidationError>
+    public class RegistrationRecordResponse : ValidationState<BulkProcessValidationError>
     {
         public RegistrationRecordResponse()
         {

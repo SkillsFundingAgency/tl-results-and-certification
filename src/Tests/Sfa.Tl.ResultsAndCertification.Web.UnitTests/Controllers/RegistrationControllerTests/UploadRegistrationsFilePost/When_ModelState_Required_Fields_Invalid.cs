@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             Controller.ViewData.ModelState.ContainsKey(nameof(UploadRegistrationsRequestViewModel.File)).Should().BeTrue();
 
             var modelState = Controller.ViewData.ModelState[nameof(UploadRegistrationsRequestViewModel.File)];
-            modelState.Errors[0].ErrorMessage.Should().Be(Upload.Select_File_To_Upload_Required_Validation_Message);
+            modelState.Errors[0].ErrorMessage.Should().Be(UploadContent.Select_File_To_Upload_Required_Validation_Message);
         }
     }
 }

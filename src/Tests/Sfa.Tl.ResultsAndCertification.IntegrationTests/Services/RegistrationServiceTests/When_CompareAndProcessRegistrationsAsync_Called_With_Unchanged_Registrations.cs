@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {
-    [Collection("BulkRegistration")]
+    [Collection("BulkProcessTests")]
     public class When_CompareAndProcessRegistrationsAsync_Called_With_Unchanged_Registrations : IClassFixture<BulkRegistrationsTextFixture>
     {
         private RegistrationProcessResponse _result;
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             _bulkRegistrationTestFixture.TqRegistrationProfilesData = _bulkRegistrationTestFixture.GetRegistrationsDataToProcess(new List<long> { _bulkRegistrationTestFixture.Uln }, barnsleyCollegeTqProvider);
         }
 
-        [Fact(Skip = "Waiting for Infrastructure to setup integration tests")]
+        [Fact]
         public async Task Then_Expected_Registrations_Are_Unchanged()
         {
             // when

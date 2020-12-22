@@ -79,6 +79,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add and amend assessment entries.
+        /// </summary>
+        public static string Assessment_Entries_Description_Text {
+            get {
+                return ResourceManager.GetString("Assessment_Entries_Description_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assessment entries.
+        /// </summary>
+        public static string Assessment_Entries_Text {
+            get {
+                return ResourceManager.GetString("Assessment_Entries_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home page.
         /// </summary>
         public static string Page_Title {

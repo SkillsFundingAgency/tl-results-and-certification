@@ -11,13 +11,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelperServiceTests.Registrations
 {
     public class When_Upload_File_Has_Empty_Data : RegistrationsCsvHelperServiceBaseTest
     {
         private const string _dataFilePath = @"CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Records_With_Empty_Data_Validation.csv";
-        private IList<RegistrationValidationError> _expectedValidationErrors;
+        private IList<BulkProcessValidationError> _expectedValidationErrors;
 
         public override void Given()
         {
@@ -30,8 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
         }
 
         [Fact]
-        public void Then_Returns_Expected_Results()
+        public async Task Then_Returns_Expected_Results()
         {
+            await WhenAsync();
             ReadAndParseFileResponse.Should().NotBeNull();
             ReadAndParseFileResponse.Rows.Count.Should().Be(1);
 

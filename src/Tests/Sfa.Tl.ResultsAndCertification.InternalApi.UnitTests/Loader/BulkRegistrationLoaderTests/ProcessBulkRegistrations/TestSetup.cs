@@ -24,8 +24,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
         protected IDocumentUploadHistoryService DocumentUploadHistoryService;
         protected ILogger<BulkRegistrationLoader> Logger;
         private BulkRegistrationLoader _loader;
-        protected BulkRegistrationRequest Request;
-        protected BulkRegistrationResponse Response { get; private set; }
+        protected BulkProcessRequest Request;
+        protected BulkProcessResponse Response { get; private set; }
         protected long AoUkprn = 1234567891;
         protected Guid BlobUniqueRef;
 
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
 
             BlobUniqueRef = Guid.NewGuid();
 
-            Request = new BulkRegistrationRequest
+            Request = new BulkProcessRequest
             {
                 AoUkprn = 1234567891,
                 BlobFileName = "registrations.csv",
@@ -53,15 +53,15 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkRegist
         public async override Task When()
         {
             _loader = new BulkRegistrationLoader(CsvService, RegistrationService, BlobService, DocumentUploadHistoryService, Logger);
-            Response = await _loader.ProcessBulkRegistrationsAsync(Request);
+            Response = await _loader.ProcessAsync(Request);
         }
 
-        public List<RegistrationValidationError> ExtractExpectedErrors(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
+        public List<BulkProcessValidationError> ExtractExpectedErrors(CsvResponseModel<RegistrationCsvRecordResponse> csvResponse)
         {
             if (csvResponse.IsDirty)
-                return new List<RegistrationValidationError> { new RegistrationValidationError { ErrorMessage = csvResponse.ErrorMessage } };
+                return new List<BulkProcessValidationError> { new BulkProcessValidationError { ErrorMessage = csvResponse.ErrorMessage } };
 
-            var errors = new List<RegistrationValidationError>();
+            var errors = new List<BulkProcessValidationError>();
             var invalidReg = csvResponse.Rows?.Where(x => !x.IsValid).ToList();
             invalidReg.ForEach(x => { errors.AddRange(x.ValidationErrors); });
 

@@ -16,20 +16,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private SelectCoreViewModel _selectCoreViewModel;
         private SpecialismQuestionViewModel _specialismQuestionViewModel;
         private PathwaySpecialismsViewModel _pathwaySpecialismsViewModel;
-        private string _coreCode = "12345678";
+        private readonly string _coreCode = "12345678";
+        private readonly string _selectedSepecialismCode = "3456789";
 
         public override void Given()
         {
             _selectCoreViewModel = new SelectCoreViewModel { SelectedCoreCode = _coreCode, CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = _coreCode } } };
             _specialismQuestionViewModel = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true };
+            _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayName = "Test Pathway", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Id = 1, Code = _selectedSepecialismCode, Name = "Test Specialism", DisplayName = "Test Specialism (345678)", IsSelected = true } } };
             cacheResult = new RegistrationViewModel
             {
                 SelectCore = _selectCoreViewModel,
-                SpecialismQuestion = _specialismQuestionViewModel
+                SpecialismQuestion = _specialismQuestionViewModel,
+                SelectSpecialisms = new SelectSpecialismViewModel { SelectedSpecialismCode = _selectedSepecialismCode, PathwaySpecialisms = _pathwaySpecialismsViewModel }
             };
-
-            _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayName = "Test Pathway", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Id = 1, Code = "345678", Name = "Test Specialism", DisplayName = "Test Specialism (345678)", IsSelected = true } } };
-            RegistrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(Ukprn, _coreCode).Returns(_pathwaySpecialismsViewModel);
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
         }
 

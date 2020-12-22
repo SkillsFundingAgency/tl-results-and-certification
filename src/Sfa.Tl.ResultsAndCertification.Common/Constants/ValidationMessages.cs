@@ -2,7 +2,6 @@
 {
     public class ValidationMessages
     {
-        // Todo: can this move to resource file? assess. 
         // Property validation messages
         public const string Required = "{0} required";
         public const string MustBeNumberWithLength = "{0} must be a {1} digit number";
@@ -26,9 +25,6 @@
         public const string UnableToReadCsvData = "Unable to interpret content.";
         public const string UnexpectedError = "Unexpected error while reading file content.";
 
-        // Bulk Registration Stage2 Validation Messages
-        public const string DuplicateSpecialism = "Cannot have duplicate specialism codes for one registration";
-
         // Bulk Registration Stage3 Validation Messages
         public const string ProviderNotRegisteredWithAo = "Provider not registered with awarding organisation";
         public const string CoreNotRegisteredWithProvider = "Core not registered with provider";
@@ -37,5 +33,25 @@
         // Bulk Registration Stage4 Validation Messages
         public const string ActiveUlnWithDifferentAo = "Active ULN with a different awarding organisation";
         public const string CoreForUlnCannotBeChangedYet = "Core for ULN cannot be changed yet";
+        public const string RegistrationCannotBeInWithdrawnStatus = "Cannot upload data for a withdrawn registration or make it active - these can only be done manually";
+
+        // Assessments - Bulk stage 2 validations
+        public const string CorecodeMustBeDigitsOnly = "Core code must have 8 digits only";
+        public const string CorecodeRequired = "Core code required when core assessment entry is included";
+        public const string SpecialismcodeRequired = "Specialism code required when core assessment entry is included";
+        public const string CoreAssementEntryInvalidFormat = "Core assessment entry format must be text followed by a space and a 4-digit year";
+        public const string SpecialismAssementEntryInvalidFormat = "Specialism assessment entry format must be text followed by a space and a 4-digit year";
+        public const string AtleastOneEntryRequired = "File must contain at least one ULN on one row";
+        public const string NoDataAfterUln = "No data after ULN - need at least one core code or one specialism code";
+
+        // Assesments - Bulk stage 3 validsions
+        public const string UlnNotRegistered = "ULN not registered with awarding organisation";
+        public const string CannotAddAssessmentToWithdrawnRegistration = "Cannot add assessment entries to a withdrawn registration";
+        public const string InvalidCoreCode = "Core code either not recognised or not registered for this ULN";
+        public const string InvalidSpecialismCode = "Specialism code either not recognised or not registered for this ULN";
+        public const string InvalidCoreAssessmentEntry = "Core assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the first academic year or subsequent approaching series)";
+        public const string InvalidNextCoreAssessmentEntry = "Core assessment entry is beyond the next available series - only the next available series is allowed (the second series of the first academic year or subsequent approaching series)";
+        public const string InvalidSpecialismAssessmentEntry = "Specialism assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the second academic year or subsequent approaching series)";
+        public const string InvalidNextSpecialismAssessmentEntry = "Specialism assessment entry is beyond the next available series - only the next available series is allowed (the second series of the second academic year or subsequent approaching series)";
     }
 }

@@ -15,5 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem
         public bool HasTag { get; set; }
         public string TagCssClass { get; set; }
         public bool RenderHiddenActionText { get; set; } = true;
+        public string HiddenActionText { get; set; }
     }
 }

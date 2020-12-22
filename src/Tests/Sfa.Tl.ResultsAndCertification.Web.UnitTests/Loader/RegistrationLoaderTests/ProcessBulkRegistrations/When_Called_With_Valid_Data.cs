@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
     {
         public override void Given()
         {
-            BulkRegistrationResponse = new BulkRegistrationResponse
+            BulkRegistrationResponse = new BulkProcessResponse
             {
                 IsSuccess = true,
                 Stats = new BulkUploadStats
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 }
             };
 
-            Mapper.Map<BulkRegistrationRequest>(UploadRegistrationsRequestViewModel).Returns(BulkRegistrationRequest);
+            Mapper.Map<BulkProcessRequest>(UploadRegistrationsRequestViewModel).Returns(BulkRegistrationRequest);
             Mapper.Map<UploadRegistrationsResponseViewModel>(BulkRegistrationResponse).Returns(UploadRegistrationsResponseViewModel);
             InternalApiClient.ProcessBulkRegistrationsAsync(BulkRegistrationRequest).Returns(BulkRegistrationResponse);
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         {
             InternalApiClient.Received(1).ProcessBulkRegistrationsAsync(BulkRegistrationRequest);
             BlobStorageService.Received(1).UploadFileAsync(Arg.Any<BlobStorageData>());
-            Mapper.Received().Map<BulkRegistrationRequest>(UploadRegistrationsRequestViewModel);
+            Mapper.Received().Map<BulkProcessRequest>(UploadRegistrationsRequestViewModel);
         }
         
         [Fact]

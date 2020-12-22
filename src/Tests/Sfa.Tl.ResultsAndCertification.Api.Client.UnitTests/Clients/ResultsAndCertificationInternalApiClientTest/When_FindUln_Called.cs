@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 RegistrationProfileId = 1, 
                 Uln = _uln,
                 IsRegisteredWithOtherAo = true,
-                IsActive = false
+                Status = Common.Enum.RegistrationPathwayStatus.Active
             };
         }
 
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _result.Uln.Should().Be(_mockHttpResult.Uln);
             _result.RegistrationProfileId.Should().Be(_mockHttpResult.RegistrationProfileId);
             _result.IsRegisteredWithOtherAo.Should().Be(_mockHttpResult.IsRegisteredWithOtherAo);
-            _result.IsActive.Should().Be(_mockHttpResult.IsActive);
+            _result.Status.Should().Be(_mockHttpResult.Status);
         }
     }
 }

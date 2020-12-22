@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration
         {
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.test.json").Build();
 
-            if (configuration[Constants.EnvironmentNameConfigKey].Equals("local", StringComparison.InvariantCultureIgnoreCase))
+            if (configuration[Constants.EnvironmentNameConfigKey].Equals("__EnvironmentName__", StringComparison.InvariantCultureIgnoreCase))
             {
                 configuration = new ConfigurationBuilder().AddJsonFile("appsettings.local.json").Build();
             }
@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration
         public static ResultsAndCertificationDbContext CreateRelationalDbContext()
         {
             var dbContextOptions = new DbContextOptionsBuilder<ResultsAndCertificationDbContext>()
-                .UseSqlServer(ResultsAndCertificationConfiguration.SqlConnectionString, builder =>
+                .UseSqlServer(ResultsAndCertificationConfiguration.IntTestSqlConnectionString, builder =>
                     builder.EnableRetryOnFailure().UseNetTopologySuite()).Options;
 
             return new ResultsAndCertificationDbContext(dbContextOptions);
@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration
 
         public static string GetConnectionString()
         {
-            return ResultsAndCertificationConfiguration.SqlConnectionString;
+            return ResultsAndCertificationConfiguration.IntTestSqlConnectionString;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Constants
     {
         public const string TechSpecFolderName = "TechSpec";
         public const string RegistrationsFolderName = "Registrations";
+        public const string AssessmentsFolderName = "Assessments";
 
     }
 }
