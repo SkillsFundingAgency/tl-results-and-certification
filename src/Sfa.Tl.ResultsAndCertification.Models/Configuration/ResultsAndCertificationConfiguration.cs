@@ -114,5 +114,15 @@
         ///   <c>true</c> if [bypass dfe sign in]; otherwise, <c>false</c>.
         /// </value>
         public bool BypassDfeSignIn { get; set; }
+
+        /// <summary>
+        /// Gets or sets the learning record service settings.
+        /// </summary>
+        /// <value>
+        /// The learning record service settings.
+        /// </value>
+        public LearningRecordServiceSettings LearningRecordServiceSettings { get; set; }
+
+        public string KeyVaultUri { get; set; }
     }
 }
