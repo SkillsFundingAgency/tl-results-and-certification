@@ -144,6 +144,12 @@
   <data name="Registrations_Text" xml:space="preserve">
     <value>Registrations</value>
   </data>
+  <data name="Results_Description_Text" xml:space="preserve">
+    <value>Add and amend results</value>
+  </data>
+  <data name="Results_Text" xml:space="preserve">
+    <value>Results</value>
+  </data>
   <data name="Section_Heading_Text" xml:space="preserve">
     <value>Manage T Level results</value>
   </data>
