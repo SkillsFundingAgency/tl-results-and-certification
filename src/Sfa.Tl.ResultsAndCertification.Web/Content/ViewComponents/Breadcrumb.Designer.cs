@@ -133,6 +133,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Results.
+        /// </summary>
+        public static string Result_Dashboard {
+            get {
+                return ResourceManager.GetString("Result_Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for a learner.
         /// </summary>
         public static string Search_For_Assessments {
