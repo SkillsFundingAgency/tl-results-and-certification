@@ -6,7 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
-    [Authorize(Policy = RolesExtensions.RequireRegistrationsEditorAccess)]
+    [Authorize(Policy = RolesExtensions.RequireResultsEditorAccess)]
     public class ResultController : Controller
     {
         [HttpGet]
