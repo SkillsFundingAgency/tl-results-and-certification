@@ -203,5 +203,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
                 return ResourceManager.GetString("Upload_Registrations_File", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload results file.
+        /// </summary>
+        public static string Upload_Results_File {
+            get {
+                return ResourceManager.GetString("Upload_Results_File", resourceCulture);
+            }
+        }
     }
 }
