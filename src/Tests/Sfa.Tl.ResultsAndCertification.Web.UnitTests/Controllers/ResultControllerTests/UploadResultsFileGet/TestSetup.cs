@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
 using System.Threading.Tasks;
 
@@ -9,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 {
     public abstract class TestSetup : BaseTest<ResultController>
     {
+        protected IResultLoader ResultLoader;
         protected int? RequestErrorTypeId;
         protected ILogger<ResultController> Logger;
         protected ResultController Controller;
@@ -17,7 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 
         public override void Setup()
         {
-            Controller = new ResultController();
+            ResultLoader = Substitute.For<IResultLoader>();
+            Controller = new ResultController(ResultLoader);
             ViewModel = new UploadResultsRequestViewModel();
         }
 

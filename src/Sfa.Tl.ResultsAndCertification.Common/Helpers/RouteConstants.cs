@@ -150,6 +150,8 @@
         public const string ResultsDashboard = "ResultsDashboard";
         public const string UploadResultsFile = "UploadResultsFile";
         public const string SubmitUploadResultsFile = "SubmitUploadResultsFile";
+        public const string ResultsUploadSuccessful = "ResultsUploadSuccessful";
+        public const string ResultsUploadUnsuccessful = "ResultsUploadUnsuccessful";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";

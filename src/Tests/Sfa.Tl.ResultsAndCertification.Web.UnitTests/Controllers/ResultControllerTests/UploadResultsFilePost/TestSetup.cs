@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
 using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 {
     public abstract class TestSetup : BaseTest<ResultController>
     {
+        protected IResultLoader ResultLoader;
         protected long Ukprn;
         protected ResultController Controller;
         protected UploadResultsRequestViewModel ViewModel;
@@ -23,7 +25,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         {
             Ukprn = 12345;
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
-            Controller = new ResultController();
+            ResultLoader = Substitute.For<IResultLoader>(); 
+            Controller = new ResultController(ResultLoader);
             ViewModel = new UploadResultsRequestViewModel();
 
             var httpContext = new ClaimsIdentityBuilder<ResultController>(Controller)

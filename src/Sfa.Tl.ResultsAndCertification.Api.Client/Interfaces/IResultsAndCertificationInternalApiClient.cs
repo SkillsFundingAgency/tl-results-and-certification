@@ -47,6 +47,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType);
         Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model);
 
+        // Results
+        Task<BulkResultResponse> ProcessBulkResultsAsync(BulkProcessRequest model);
+
         // DocumentUploadHistory
         Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);
         Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request);

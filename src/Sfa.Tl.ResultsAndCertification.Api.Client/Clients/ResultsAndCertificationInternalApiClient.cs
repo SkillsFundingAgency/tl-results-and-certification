@@ -214,7 +214,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = ApiConstants.RemoveAssessmentEntryUri;
             return await PutAsync<RemoveAssessmentEntryRequest, bool>(requestUri, model);
-        }        
+        }
+
+        // Results endpoints
+        public async Task<BulkResultResponse> ProcessBulkResultsAsync(BulkProcessRequest model)
+        {
+            var requestUri = ApiConstants.ProcessBulkResultsUri;
+            return await PostAsync<BulkProcessRequest, BulkResultResponse>(requestUri, model);
+        }
 
         #region Private Methods
 
