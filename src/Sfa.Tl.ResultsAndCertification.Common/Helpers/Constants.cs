@@ -43,6 +43,8 @@
         public const string AddAssessmentEntryConfirmationViewModel = "AddAssessmentEntryConfirmationViewModel";
         public const string RemoveAssessmentEntryConfirmationViewModel = "RemoveAssessmentEntryConfirmationViewModel";
 
+        public const string ResultsSearchCriteria = "ResultsSearchCriteria";
+
 
         public const string UserSessionActivityId = "UserSessionActivityId";
 

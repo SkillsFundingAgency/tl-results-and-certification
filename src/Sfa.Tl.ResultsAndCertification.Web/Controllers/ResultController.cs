@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -12,10 +15,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class ResultController : Controller
     {
         private readonly IResultLoader _resultLoader;
+        private readonly ICacheService _cacheService;
+        private readonly ILogger _logger;
 
-        public ResultController(IResultLoader resultLoader)
+        public ResultController(IResultLoader resultLoader, ICacheService cacheService, ILogger<ResultController> logger)
         {
             _resultLoader = resultLoader;
+            _cacheService = cacheService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -48,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var response = await _resultLoader.ProcessBulkResultsAsync(viewModel);
 
             // TODO: refine in upcoming stories
-            if(response.IsSuccess)
+            if (response.IsSuccess)
                 return RedirectToRoute(RouteConstants.ResultsUploadSuccessful);
             else
                 return RedirectToRoute(RouteConstants.ResultsUploadUnsuccessful);
@@ -66,6 +73,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> UploadUnsuccessful()
         {
             return View();
+        }
+
+        [HttpGet]
+        [Route("results-learner-search", Name = RouteConstants.SearchResults)]
+        public async Task<IActionResult> SearchResultsAsync()
+        {
+            var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.ResultsSearchCriteria);
+            var viewModel = new SearchResultsViewModel { SearchUln = defaultValue };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("results-learner-search", Name = RouteConstants.SubmitSearchResults)]
+        public IActionResult SearchResultsAsync(SearchResultsViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            return View(model);
         }
     }
 }
