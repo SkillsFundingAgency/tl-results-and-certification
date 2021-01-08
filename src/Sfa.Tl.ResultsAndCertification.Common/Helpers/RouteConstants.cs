@@ -146,6 +146,13 @@
         public const string SubmitRemoveCoreAssessmentEntry = "SubmitRemoveCoreAssessmentEntry";
         public const string AssessmentEntryRemovedConfirmation = "AssessmentEntryRemovedConfirmation";
 
+        // Search Assessment Entries
+        public const string SearchAssessments = "SearchAssessments";
+        public const string SubmitSearchAssessments = "SubmitSearchAssessments";
+        public const string SearchAssessmentsNotFound = "SearchAssessmentsNotFound";
+        public const string AssessmentDetails = "AssessmentDetails";
+        public const string AssessmentWithdrawnDetails = "AssessmentWithdrawnDetails";
+
         // Results
         public const string ResultsDashboard = "ResultsDashboard";
         public const string UploadResultsFile = "UploadResultsFile";
@@ -154,12 +161,9 @@
         public const string ResultsUploadUnsuccessful = "ResultsUploadUnsuccessful";
         public const string DownloadResultErrors = "DownloadResultErrors";
 
-        // Search Assessment Entries
-        public const string SearchAssessments = "SearchAssessments";
-        public const string SubmitSearchAssessments = "SubmitSearchAssessments";
-        public const string SearchAssessmentsNotFound = "SearchAssessmentsNotFound";
-        public const string AssessmentDetails = "AssessmentDetails";
-        public const string AssessmentWithdrawnDetails = "AssessmentWithdrawnDetails";        
+        // Search Results
+        public const string SearchResults = "SearchResults";
+        public const string SubmitSearchResults = "SubmitSearchResults";
 
         // Error
         public const string PageNotFound = "PageNotFound";

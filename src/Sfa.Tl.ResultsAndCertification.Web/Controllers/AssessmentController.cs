@@ -153,6 +153,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
         [Route("assessment-entries-learner-search", Name = RouteConstants.SubmitSearchAssessments)]
         public async Task<IActionResult> SearchAssessmentsAsync(SearchAssessmentsViewModel model)
         {

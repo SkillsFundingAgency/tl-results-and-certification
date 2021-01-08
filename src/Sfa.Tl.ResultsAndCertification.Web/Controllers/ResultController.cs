@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -107,6 +108,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 FileDownloadName = "ValidationErrors.csv"
             };
+        }
+
+        [HttpGet]
+        [Route("results-learner-search", Name = RouteConstants.SearchResults)]
+        public async Task<IActionResult> SearchResultsAsync()
+        {
+            var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.ResultsSearchCriteria);
+            var viewModel = new SearchResultsViewModel { SearchUln = defaultValue };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("results-learner-search", Name = RouteConstants.SubmitSearchResults)]
+        public async Task<IActionResult> SearchResultsAsync(SearchResultsViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var searchResult = await _resultLoader.FindUlnResultsAsync(User.GetUkPrn(), model.SearchUln.ToLong());
+
+            return View(model);
         }
     }
 }

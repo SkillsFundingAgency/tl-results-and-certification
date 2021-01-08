@@ -160,6 +160,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search for a learner.
+        /// </summary>
+        public static string Search_For_Results {
+            get {
+                return ResourceManager.GetString("Search_For_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to T Level details.
         /// </summary>
         public static string Tlevel_Details {

@@ -21,6 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 
         protected long Ukprn;
         protected ResultController Controller;
+        protected ICacheService CacheService;
+        protected ILogger<ResultController> Logger;
         protected UploadResultsRequestViewModel ViewModel;
         protected IFormFile FormFile;
         protected IHttpContextAccessor HttpContextAccessor;
