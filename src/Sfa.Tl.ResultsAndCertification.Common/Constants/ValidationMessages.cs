@@ -55,9 +55,9 @@
         public const string InvalidNextSpecialismAssessmentEntry = "Specialism assessment entry is beyond the next available series - only the next available series is allowed (the second series of the second academic year or subsequent approaching series)";
 
         // Results - Bulk Stage 2 validations
-        public const string CorecodeRequiredWhenResultIncluded = "Core code required when result is included";
-        public const string AssessmentEntryNeedsToBeProvided = "Assessment entry needs to be provided";
-        public const string InvalidCoreAssessmentSeries = "Core assessment entry does not match what is on the registration  - and  format must be text followed by a space and a 4-digit year";
-        public const string NoDataAfterUlnNeedCoreCode = "No data after ULN - need a core code";
+        public const string CorecodeRequiredWhenResultIncluded = "Core code required when result is included";
+        public const string AssessmentEntryNeedsToBeProvided = "Assessment entry needs to be provided";
+        public const string InvalidCoreAssessmentSeries = "Core assessment entry does not match what is on the registration - and format must be text followed by a space and a 4-digit year";
+        public const string NoDataAfterUlnNeedCoreCode = "No data after ULN - need a core code";
     }
 }
