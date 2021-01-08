@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
@@ -17,6 +19,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly IResultLoader _resultLoader;
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
+
+        private string CacheKey
+        {
+            get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.ResultCacheKey); }
+        }
 
         public ResultController(IResultLoader resultLoader, ICacheService cacheService, ILogger<ResultController> logger)
         {
@@ -102,10 +109,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("results-learner-search", Name = RouteConstants.SubmitSearchResults)]
-        public IActionResult SearchResultsAsync(SearchResultsViewModel model)
+        public async Task<IActionResult> SearchResultsAsync(SearchResultsViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
+
+            var searchResult = await _resultLoader.FindUlnResultsAsync(User.GetUkPrn(), model.SearchUln.ToLong());
 
             return View(model);
         }
