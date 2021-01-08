@@ -152,6 +152,7 @@
         public const string SubmitUploadResultsFile = "SubmitUploadResultsFile";
         public const string ResultsUploadSuccessful = "ResultsUploadSuccessful";
         public const string ResultsUploadUnsuccessful = "ResultsUploadUnsuccessful";
+        public const string DownloadResultErrors = "DownloadResultErrors";
 
         // Search Assessment Entries
         public const string SearchAssessments = "SearchAssessments";

@@ -48,10 +48,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var response = await _resultLoader.ProcessBulkResultsAsync(viewModel);
 
             // TODO: refine in upcoming stories
-            if(response.IsSuccess)
+            if (response.IsSuccess)
                 return RedirectToRoute(RouteConstants.ResultsUploadSuccessful);
             else
-                return RedirectToRoute(RouteConstants.ResultsUploadUnsuccessful);
+            {
+                ViewBag.BlobId = response.BlobUniqueReference;
+                return View("UploadUnsuccessful");
+                //return RedirectToRoute(RouteConstants.ResultsUploadUnsuccessful);
+            }
         }
 
         [HttpGet]
@@ -66,6 +70,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> UploadUnsuccessful()
         {
             return View();
+        }
+
+        [HttpGet]
+        [Route("download-result-errors", Name = RouteConstants.DownloadResultErrors)]
+        public async Task<IActionResult> DownloadAssessmentErrors(string id)
+        {
+            var fileStream = await _resultLoader.GetResultValidationErrorsFileAsync(User.GetUkPrn(), id.ToGuid());
+            fileStream.Position = 0;
+            return new FileStreamResult(fileStream, "text/csv")
+            {
+                FileDownloadName = "ValidationErrors.csv"
+            };
         }
     }
 }

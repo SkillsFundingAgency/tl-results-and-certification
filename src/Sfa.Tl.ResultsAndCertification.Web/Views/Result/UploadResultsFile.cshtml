@@ -10,6 +10,10 @@
     <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
+@section Scripts {
+    <script nws-csp-add-nonce="true" src="~/javascripts/result-upload.min.js"></script>
+}
+
 <div id="uploadResultsContainer">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -30,8 +34,10 @@
                     <span sfa-validation-for="File"></span>
                     <input class="govuk-file-upload" id="file" asp-for="File" type="file" accept=".csv">
                 </div>
-                <button id="uploadResultsButton" class="govuk-button" data-module="govuk-button" type="submit">@Upload.Upload_File_Button_Text</button>
+                <button id="uploadResultsButton" class="govuk-button tl-show-on-js-only" data-module="govuk-button" type="submit">@Upload.Upload_File_Button_Text</button>
+                <partial name="~/Views/Result/Partials/_uploadResultNoScriptSubmit.cshtml" />
             </form>
         </div>
     </div>
 </div>
+<partial name="~/Views/Result/Partials/_uploadResultProgress.cshtml" />

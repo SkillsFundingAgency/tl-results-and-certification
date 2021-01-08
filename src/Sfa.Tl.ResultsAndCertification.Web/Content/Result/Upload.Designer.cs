@@ -106,6 +106,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Submit (only click once).
+        /// </summary>
+        public static string Js_Disabled_Upload_File_Button_Text {
+            get {
+                return ResourceManager.GetString("Js_Disabled_Upload_File_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size..
+        /// </summary>
+        public static string Js_Disabled_Upload_File_Help_Text {
+            get {
+                return ResourceManager.GetString("Js_Disabled_Upload_File_Help_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File extension not valid - must be a CSV file.
         /// </summary>
         public static string Must_Be_Csv_Validation_Message {
@@ -151,6 +169,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Processing results file.
+        /// </summary>
+        public static string Processing_Result_Entries_File_Text {
+            get {
+                return ResourceManager.GetString("Processing_Result_Entries_File_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please select results file.
         /// </summary>
         public static string Select_File_To_Upload_Required_Validation_Message {
@@ -174,6 +201,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Upload_File_Text {
             get {
                 return ResourceManager.GetString("Upload_File_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processing, please wait. This could take up to 10 seconds. Do not refresh..
+        /// </summary>
+        public static string Upload_Processing_Spinner_Text {
+            get {
+                return ResourceManager.GetString("Upload_Processing_Spinner_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string Warning_Text {
+            get {
+                return ResourceManager.GetString("Warning_Text", resourceCulture);
             }
         }
         
