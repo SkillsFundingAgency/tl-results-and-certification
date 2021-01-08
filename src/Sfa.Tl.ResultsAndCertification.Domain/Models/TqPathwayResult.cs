@@ -4,7 +4,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 {
     public partial class TqPathwayResult : BaseEntity
     {
-        public int TqRegistrationAssessmentId { get; set; }
+        public int TqPathwayAssessmentId { get; set; }
         public int TlLookupId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
