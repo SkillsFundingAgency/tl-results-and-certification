@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Castle.Core.Logging;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
@@ -14,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         protected IResultLoader ResultLoader;
         protected ICacheService CacheService;
         protected ILogger<ResultController> Logger;
+
         protected ResultController Controller;
         public IActionResult Result { get; private set; }
 
@@ -22,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             ResultLoader = Substitute.For<IResultLoader>();
             CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<ResultController>>();
+
             Controller = new ResultController(ResultLoader, CacheService, Logger);
         }
 

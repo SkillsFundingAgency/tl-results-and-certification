@@ -68,6 +68,18 @@
     <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Valid_File.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Results\TestData\Results_Stage2_Valid_File.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Results\TestData\Results_Stage2_Header_Validation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Results\TestData\Results_Stage_2_Validation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Results\TestData\Results_Stage2_Has_No_records.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

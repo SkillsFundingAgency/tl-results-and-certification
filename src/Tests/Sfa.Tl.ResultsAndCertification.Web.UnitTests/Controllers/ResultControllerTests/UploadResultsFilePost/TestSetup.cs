@@ -16,10 +16,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
     public abstract class TestSetup : BaseTest<ResultController>
     {
         protected IResultLoader ResultLoader;
-        protected long Ukprn;
-        protected ResultController Controller;
         protected ICacheService CacheService;
         protected ILogger<ResultController> Logger;
+
+        protected long Ukprn;
+        protected ResultController Controller;
         protected UploadResultsRequestViewModel ViewModel;
         protected IFormFile FormFile;
         protected IHttpContextAccessor HttpContextAccessor;
@@ -32,6 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             ResultLoader = Substitute.For<IResultLoader>();
             CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<ResultController>>();
+
             Controller = new ResultController(ResultLoader, CacheService, Logger);
             ViewModel = new UploadResultsRequestViewModel();
 

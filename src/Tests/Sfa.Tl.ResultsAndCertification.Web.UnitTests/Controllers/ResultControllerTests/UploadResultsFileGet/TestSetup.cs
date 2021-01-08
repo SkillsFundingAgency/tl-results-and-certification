@@ -13,9 +13,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
     public abstract class TestSetup : BaseTest<ResultController>
     {
         protected IResultLoader ResultLoader;
-        protected int? RequestErrorTypeId;
         protected ICacheService CacheService;
         protected ILogger<ResultController> Logger;
+
+        protected int? RequestErrorTypeId;
         protected ResultController Controller;
         protected UploadResultsRequestViewModel ViewModel;
         public IActionResult Result { get; private set; }
@@ -23,8 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         public override void Setup()
         {
             ResultLoader = Substitute.For<IResultLoader>();
-            CacheService = Substitute.For<ICacheService>();
-            Logger = Substitute.For<ILogger<ResultController>>();
             Controller = new ResultController(ResultLoader, CacheService, Logger);
             ViewModel = new UploadResultsRequestViewModel();
         }

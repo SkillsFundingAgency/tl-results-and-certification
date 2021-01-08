@@ -75,6 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 }
 
                 var resultsProcessResult = new ResultProcessResponse();
+                resultsProcessResult.IsSuccess = true;
 
                 return await ProcessResultsResponse(request, response, resultsProcessResult);
 

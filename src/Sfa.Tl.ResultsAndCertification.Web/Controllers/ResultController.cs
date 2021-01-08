@@ -54,22 +54,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> UploadResultsFileAsync(UploadResultsRequestViewModel viewModel)
         {
             if (!ModelState.IsValid)
-            {
                 return View(viewModel);
-            }
 
             viewModel.AoUkprn = User.GetUkPrn();
             var response = await _resultLoader.ProcessBulkResultsAsync(viewModel);
 
-            // TODO: refine in upcoming stories
             if (response.IsSuccess)
                 return RedirectToRoute(RouteConstants.ResultsUploadSuccessful);
-            else
+
+            if (response.ShowProblemWithServicePage)
+                return RedirectToRoute(RouteConstants.PageNotFound); // TODO:
+
+            var unsuccessfulViewModel = new ViewModel.Registration.UploadUnsuccessfulViewModel
             {
-                ViewBag.BlobId = response.BlobUniqueReference;
-                return View("UploadUnsuccessful");
-                //return RedirectToRoute(RouteConstants.ResultsUploadUnsuccessful);
-            }
+                BlobUniqueReference = response.BlobUniqueReference,
+                FileSize = response.ErrorFileSize,
+                FileType = FileType.Csv.ToString().ToUpperInvariant()
+            };
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel), unsuccessfulViewModel, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.ResultsUploadUnsuccessful);
         }
 
         [HttpGet]
@@ -83,12 +87,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("results-upload-unsuccessful", Name = RouteConstants.ResultsUploadUnsuccessful)]
         public async Task<IActionResult> UploadUnsuccessful()
         {
-            return View();
+            var viewModel = await _cacheService.GetAndRemoveAsync<ViewModel.Registration.UploadUnsuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel));
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.UploadUnsuccessfulPageFailed,
+                    $"Unable to read upload unsuccessful results response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
         }
 
         [HttpGet]
         [Route("download-result-errors", Name = RouteConstants.DownloadResultErrors)]
-        public async Task<IActionResult> DownloadAssessmentErrors(string id)
+        public async Task<IActionResult> DownloadResultsErrors(string id)
         {
             var fileStream = await _resultLoader.GetResultValidationErrorsFileAsync(User.GetUkPrn(), id.ToGuid());
             fileStream.Position = 0;
