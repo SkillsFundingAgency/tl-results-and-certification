@@ -1,0 +1,22 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+
+<div id="processingResultsContainer" class="tl-hide">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-form-group">
+                <h1 class="govuk-heading-xl">
+                    @Upload.Processing_Result_Entries_File_Text
+                </h1>
+            </div>
+
+            <div class="tl-box-container">
+                <div class="tl-spinner-container" tabindex="0">
+                    <div class="tl-spinner-control">
+                        <div class="tl-spinner"></div>
+                    </div>
+                    <div id="spinnerText" class="tl-spinner-label govuk-body">@Upload.Upload_Processing_Spinner_Text</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

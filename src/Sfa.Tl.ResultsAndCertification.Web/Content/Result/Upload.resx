@@ -132,6 +132,12 @@
   <data name="Include_All_Mandatory_Fields_Text" xml:space="preserve">
     <value>include all mandatory fields</value>
   </data>
+  <data name="Js_Disabled_Upload_File_Button_Text" xml:space="preserve">
+    <value>Submit (only click once)</value>
+  </data>
+  <data name="Js_Disabled_Upload_File_Help_Text" xml:space="preserve">
+    <value>JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size.</value>
+  </data>
   <data name="Must_Be_Csv_Validation_Message" xml:space="preserve">
     <value>File extension not valid - must be a CSV file</value>
   </data>
@@ -147,6 +153,9 @@
   <data name="Page_Title" xml:space="preserve">
     <value>Upload results file page</value>
   </data>
+  <data name="Processing_Result_Entries_File_Text" xml:space="preserve">
+    <value>Processing results file</value>
+  </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
     <value>Please select results file</value>
   </data>
@@ -155,6 +164,12 @@
   </data>
   <data name="Upload_File_Text" xml:space="preserve">
     <value>Upload a file</value>
+  </data>
+  <data name="Upload_Processing_Spinner_Text" xml:space="preserve">
+    <value>Processing, please wait. This could take up to 10 seconds. Do not refresh.</value>
+  </data>
+  <data name="Warning_Text" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="We_Can_Only_Accept_Files_Text" xml:space="preserve">
     <value>We can only accept files that:</value>
