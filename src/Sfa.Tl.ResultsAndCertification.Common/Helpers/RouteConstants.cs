@@ -164,6 +164,7 @@
         // Search Results
         public const string SearchResults = "SearchResults";
         public const string SubmitSearchResults = "SubmitSearchResults";
+        public const string SearchResultsNotFound = "SearchResultsNotFound";
 
         // Error
         public const string PageNotFound = "PageNotFound";

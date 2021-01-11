@@ -136,6 +136,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SearchResults.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Result\SearchResultsNotFound.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SearchResultsNotFound.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Result\Upload.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -545,6 +550,10 @@
     <EmbeddedResource Update="Content\Result\SearchResults.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SearchResults.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Result\SearchResultsNotFound.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SearchResultsNotFound.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Result\Upload.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
