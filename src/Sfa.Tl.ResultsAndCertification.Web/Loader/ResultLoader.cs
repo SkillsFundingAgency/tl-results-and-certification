@@ -30,7 +30,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _blobStorageService = blobStorageService;
         }
 
-
         public async Task<UploadResultsResponseViewModel> ProcessBulkResultsAsync(UploadResultsRequestViewModel viewModel)
         {
             var bulkResultRequest = _mapper.Map<BulkProcessRequest>(viewModel);
