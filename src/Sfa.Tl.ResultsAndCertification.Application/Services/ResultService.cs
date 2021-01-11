@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<ResultDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        public async Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
 

@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("GetResultDetails/{aoUkprn}/{profileId}/{status:int?}")]
         public async Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            return await _resultService.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
+            return await _resultService.GetResultDetailsAsync(aoUkprn, profileId, status);
         }
     }
 }

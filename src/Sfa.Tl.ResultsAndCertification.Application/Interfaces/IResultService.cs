@@ -6,6 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
     public interface IResultService
     {
-        Task<ResultDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
+        Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
     }
 }
