@@ -1,0 +1,26 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ResultDetailsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+
+@{
+    ViewData["Title"] = @ResultWithdrawnDetails.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">@ResultWithdrawnDetails.Learners_Results_Heading_Text</h1>
+        <h2 class="govuk-heading-m">@string.Format(ResultWithdrawnDetails.Uln_Heading_Text, Model.Uln)</h2>
+
+        <p class="govuk-body">@string.Format(ResultWithdrawnDetails.Name_Heading_Text, Model.Name)</p>
+        <p class="govuk-body">@string.Format(ResultWithdrawnDetails.Provider_Heading_Text, Model.ProviderDisplayName)</p>
+        <hr class="govuk-section-break govuk-section-break--visible">
+
+        <p class="govuk-inset-text">@ResultWithdrawnDetails.This_Learners_Registration_Has_Been_Withdrawn_Text</p>
+
+        <p class="govuk-body govuk-!-margin-top-8"><a class="govuk-link" asp-route="SearchResults">@ResultWithdrawnDetails.Search_Again_Text</a></p>
+    </div>
+</div>

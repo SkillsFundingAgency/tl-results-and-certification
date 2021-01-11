@@ -130,7 +130,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (searchResult?.IsAllowed == true)
             {
-                return View(model);
+                return RedirectToRoute(searchResult.IsWithdrawn ? RouteConstants.ResultWithdrawnDetails : RouteConstants.SearchResults, new { profileId = searchResult.RegistrationProfileId });
             }
             else
             {
@@ -154,6 +154,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchResultsUlnNotFound from redis cache in search results not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("learners-results-withdrawn-learner/{profileId}", Name = RouteConstants.ResultWithdrawnDetails)]
+        public async Task<IActionResult> ResultWithdrawnDetailsAsync(int profileId)
+        {
+            var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No result withdrawn details found. Method: GetResultDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Withdrawn}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
             return View(viewModel);
         }
     }

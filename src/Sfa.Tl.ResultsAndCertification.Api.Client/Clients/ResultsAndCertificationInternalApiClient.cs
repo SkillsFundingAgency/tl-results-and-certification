@@ -223,6 +223,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<BulkProcessRequest, BulkResultResponse>(requestUri, model);
         }
 
+        public async Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        {
+            var requestUri = string.Format(ApiConstants.GetResultDetailsUri, aoUkprn, profileId, (int?)status);
+            return await GetAsync<ResultDetails>(requestUri);
+        }
+
         #region Private Methods
 
         /// <summary>

@@ -83,5 +83,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.FindUlnAsync(aoUkprn, Uln);
             return _mapper.Map<UlnResultsNotFoundViewModel>(response);
         }
+
+        public async Task<ResultDetailsViewModel> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        {
+            var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, status);
+            return _mapper.Map<ResultDetailsViewModel>(response);
+        }
     }
 }

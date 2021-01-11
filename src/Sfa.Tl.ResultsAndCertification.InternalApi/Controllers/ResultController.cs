@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -25,6 +26,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<BulkResultResponse> ProcessBulkResultsAsync(BulkProcessRequest request)
         {
             return await _bulkResultProcess.ProcessAsync(request);
+        }
+
+        [HttpGet]
+        [Route("GetResultDetails/{aoUkprn}/{profileId}/{status:int?}")]
+        public async Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        {
+            return await _resultService.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
         }
     }
 }

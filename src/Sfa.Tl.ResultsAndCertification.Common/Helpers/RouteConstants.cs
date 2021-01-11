@@ -159,12 +159,13 @@
         public const string SubmitUploadResultsFile = "SubmitUploadResultsFile";
         public const string ResultsUploadSuccessful = "ResultsUploadSuccessful";
         public const string ResultsUploadUnsuccessful = "ResultsUploadUnsuccessful";
-        public const string DownloadResultErrors = "DownloadResultErrors";
+        public const string DownloadResultErrors = "DownloadResultErrors";        
 
         // Search Results
         public const string SearchResults = "SearchResults";
         public const string SubmitSearchResults = "SubmitSearchResults";
         public const string SearchResultsNotFound = "SearchResultsNotFound";
+        public const string ResultWithdrawnDetails = "ResultWithdrawnDetails";
 
         // Error
         public const string PageNotFound = "PageNotFound";
