@@ -74,8 +74,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                     return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
                 }
 
-                var resultsProcessResult = new ResultProcessResponse();
-                resultsProcessResult.IsSuccess = true;
+                var resultsProcessResult = new ResultProcessResponse
+                {
+                    IsSuccess = true,
+                    BulkUploadStats = new BulkUploadStats { TotalRecordsCount = stage2Response.Rows.Count }
+                };
 
                 return await ProcessResultsResponse(request, response, resultsProcessResult);
 

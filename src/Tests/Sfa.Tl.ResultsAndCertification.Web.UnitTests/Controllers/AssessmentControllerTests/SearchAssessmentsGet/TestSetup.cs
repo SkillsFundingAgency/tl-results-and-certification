@@ -22,7 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         protected ICacheService CacheService;
         protected ILogger<AssessmentController> Logger;
         protected AssessmentController Controller;
-        //protected UploadAssessmentsRequestViewModel ViewModel;
 
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; private set; }
@@ -34,7 +33,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<AssessmentController>>();
             Controller = new AssessmentController(AssessmentLoader, CacheService, Logger);
-            //ViewModel = new UploadAssessmentsRequestViewModel();
 
             Ukprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<AssessmentController>(Controller)
