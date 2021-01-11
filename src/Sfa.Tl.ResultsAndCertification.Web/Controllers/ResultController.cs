@@ -10,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System.Threading.Tasks;
+using ResultContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -63,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.ResultsUploadSuccessful);
 
             if (response.ShowProblemWithServicePage)
-                return RedirectToRoute(RouteConstants.PageNotFound); // TODO:
+                return RedirectToRoute(RouteConstants.ProblemWithService); // TODO:
 
             var unsuccessfulViewModel = new ViewModel.Registration.UploadUnsuccessfulViewModel
             {
@@ -100,14 +101,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("download-result-errors", Name = RouteConstants.DownloadResultErrors)]
-        public async Task<IActionResult> DownloadResultsErrors(string id)
+        public async Task<IActionResult> DownloadResultErrors(string id)
         {
-            var fileStream = await _resultLoader.GetResultValidationErrorsFileAsync(User.GetUkPrn(), id.ToGuid());
-            fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/csv")
+            if (id.IsGuid())
             {
-                FileDownloadName = "ValidationErrors.csv"
-            };
+                var fileStream = await _resultLoader.GetResultValidationErrorsFileAsync(User.GetUkPrn(), id.ToGuid());
+                if (fileStream == null)
+                {
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download result validation errors. Method: GetResultValidationErrorsFileAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+                }
+
+                fileStream.Position = 0;
+                return new FileStreamResult(fileStream, "text/csv")
+                {
+                    FileDownloadName = ResultContent.UploadUnsuccessful.Result_Error_Report_File_Name_Text
+                };
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.DownloadResultErrorsFailed, $"Not a valid guid to read file.Method: DownloadResultErrors(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
         }
 
         [HttpGet]
