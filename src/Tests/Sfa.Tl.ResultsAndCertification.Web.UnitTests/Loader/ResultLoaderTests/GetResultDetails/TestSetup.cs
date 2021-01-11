@@ -7,12 +7,12 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTests.GetAssessmentDetails
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetResultDetails
 {
-    public abstract class TestSetup : BaseTest<AssessmentLoader>
+    public abstract class TestSetup : BaseTest<ResultLoader>
     {
         protected readonly long AoUkprn = 12345678;
         protected readonly int ProfileId = 1;
@@ -21,28 +21,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
 
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
         protected IMapper Mapper;
-        protected ILogger<AssessmentLoader> Logger;
+        protected ILogger<ResultLoader> Logger;
         public IBlobStorageService BlobStorageService { get; private set; }
 
-        protected AssessmentLoader Loader;
-        protected AssessmentDetails expectedApiResult;
-        protected AssessmentDetailsViewModel ActualResult;
+        protected ResultLoader Loader;
+        protected ResultDetails expectedApiResult;
+        protected ResultDetailsViewModel ActualResult;
 
         public override void Setup()
         {
-            Logger = Substitute.For<ILogger<AssessmentLoader>>();
+            Logger = Substitute.For<ILogger<ResultLoader>>();
             BlobStorageService = Substitute.For<IBlobStorageService>();
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AssessmentMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ResultMapper).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
-            Loader = new AssessmentLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
+            Loader = new ResultLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
         }
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetAssessmentDetailsAsync(AoUkprn, ProfileId);
+            ActualResult = await Loader.GetResultDetailsAsync(AoUkprn, ProfileId);
         }
     }
 }
