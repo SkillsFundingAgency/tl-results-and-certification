@@ -23,7 +23,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         protected ICacheService CacheService;
         protected ILogger<AssessmentController> Logger;
         protected AssessmentController Controller;
-        //protected RegistrationViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
         
         public IActionResult Result { get; private set; }
