@@ -130,7 +130,7 @@
     <value>is registered with another awarding organisation</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>ULN cannot be found page</value>
+    <value>Results - ULN cannot be found page</value>
   </data>
   <data name="Uln_Cannot_Be_Found_Text" xml:space="preserve">
     <value>ULN ({0}) cannot be found</value>

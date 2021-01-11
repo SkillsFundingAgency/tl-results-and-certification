@@ -143,7 +143,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var searchResult = await _resultLoader.FindUlnResultsAsync(User.GetUkPrn(), model.SearchUln.ToLong());
 
-            return View(model);
+            if (searchResult?.IsAllowed == true)
+            {
+                return View(model);
+            }
+            else
+            {
+                await _cacheService.SetAsync(Constants.ResultsSearchCriteria, model.SearchUln);
+
+                var ulnResultsNotfoundModel = new UlnResultsNotFoundViewModel { Uln = model.SearchUln.ToString() };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.SearchResultsUlnNotFound), ulnResultsNotfoundModel, CacheExpiryTime.XSmall);
+
+                return RedirectToRoute(RouteConstants.SearchResultsNotFound);
+            }
+        }
+
+        [HttpGet]
+        [Route("search-for-learner-results-ULN-not-found", Name = RouteConstants.SearchResultsNotFound)]
+        public async Task<IActionResult> SearchResultsNotFoundAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<UlnResultsNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchResultsUlnNotFound));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchResultsUlnNotFound from redis cache in search results not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
         }
     }
 }

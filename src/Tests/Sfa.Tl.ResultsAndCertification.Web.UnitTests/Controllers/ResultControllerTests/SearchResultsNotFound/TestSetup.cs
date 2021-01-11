@@ -11,34 +11,33 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.SearchAssessmentsNotFound
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.SearchResultsNotFound
 {
-    public abstract class TestSetup : BaseTest<AssessmentController>
+    public abstract class TestSetup : BaseTest<ResultController>
     {
         protected int Ukprn;
         protected string Uln;
         protected Guid UserId;
         protected string CacheKey;
-        protected IAssessmentLoader AssessmentLoader;
+        protected IResultLoader ResultLoader;
         protected ICacheService CacheService;
-        protected ILogger<AssessmentController> Logger;
-        protected AssessmentController Controller;
-        //protected RegistrationViewModel ViewModel;
+        protected ILogger<ResultController> Logger;
+        protected ResultController Controller;
         protected IHttpContextAccessor HttpContextAccessor;
-        
+
         public IActionResult Result { get; private set; }
 
         public override void Setup()
         {
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
-            AssessmentLoader = Substitute.For<IAssessmentLoader>();
+            ResultLoader = Substitute.For<IResultLoader>();
             CacheService = Substitute.For<ICacheService>();
-            Logger = Substitute.For<ILogger<AssessmentController>>();
-            Controller = new AssessmentController(AssessmentLoader, CacheService, Logger);
+            Logger = Substitute.For<ILogger<ResultController>>();
+            Controller = new ResultController(ResultLoader, CacheService, Logger);
 
             Ukprn = 1234567890;
-            Uln = "8765456786";
-            var httpContext = new ClaimsIdentityBuilder<AssessmentController>(Controller)
+            Uln = "7765456786";
+            var httpContext = new ClaimsIdentityBuilder<ResultController>(Controller)
                .Add(CustomClaimTypes.Ukprn, Ukprn.ToString())
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
                .Build()
@@ -49,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
         public async override Task When()
         {
-            Result = await Controller.SearchAssessmentsNotFoundAsync();
+            Result = await Controller.SearchResultsNotFoundAsync();
         }
     }
 }
