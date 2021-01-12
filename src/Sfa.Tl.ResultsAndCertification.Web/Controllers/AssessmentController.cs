@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using System.Threading.Tasks;
@@ -72,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (response.ShowProblemWithServicePage)
                 return RedirectToRoute(RouteConstants.ProblemWithAssessmentsUpload);
 
-            var unsuccessfulViewModel = new ViewModel.Registration.UploadUnsuccessfulViewModel 
+            var unsuccessfulViewModel = new UploadUnsuccessfulViewModel 
             { 
                 BlobUniqueReference = response.BlobUniqueReference, 
                 FileSize = response.ErrorFileSize, 
@@ -101,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("assessment-entries-upload-unsuccessful", Name = RouteConstants.AssessmentsUploadUnsuccessful)]
         public async Task<IActionResult> UploadUnsuccessful()
         {
-            var viewModel = await _cacheService.GetAndRemoveAsync<ViewModel.Registration.UploadUnsuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel));
+            var viewModel = await _cacheService.GetAndRemoveAsync<UploadUnsuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel));
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.UploadUnsuccessfulPageFailed,
