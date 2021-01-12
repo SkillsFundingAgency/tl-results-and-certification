@@ -59,5 +59,13 @@
         public const string AssessmentEntryNeedsToBeProvided = "Assessment entry needs to be provided";
         public const string InvalidCoreAssessmentSeries = "Core assessment entry does not match what is on the registration - and format must be text followed by a space and a 4-digit year";
         public const string NoDataAfterUlnNeedCoreCode = "No data after ULN - need a core code";
+
+        // Results - Bulk stage 3 validsions
+        public const string CannotAddResultToWithdrawnRegistration = "Cannot add results to a withdrawn registration";
+        public const string InvalidCoreComponentCode = "Core component code either not recognised or not registered for this ULN";
+        public const string InvalidCoreAssessmentSeriesEntry = "Assessment series does not exist - see results data format and rules guide for examples of valid series";
+        public const string NoCoreAssessmentEntryCurrentlyActive = "No assessment entry is currently active for the core component on this registration - needs adding first through assessment entries file upload or manual entry";
+        public const string AssessmentSeriesDoesNotMatchTheSeriesOnTheRegistration = "Assessment series does not match the series on the registration";
+        public const string InvalidCoreComponentGrade = "Core component grade not valid - needs to be A* to E, or Unclassified";
     }
 }

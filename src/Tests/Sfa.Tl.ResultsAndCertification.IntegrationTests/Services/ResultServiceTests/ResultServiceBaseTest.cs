@@ -32,6 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         protected IList<TqProvider> TqProviders;
         protected IList<AssessmentSeries> AssessmentSeries;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
+        protected IResultRepository ResultRepository;
+        protected ILogger<ResultRepository> ResultRepositoryLogger;
         protected IAssessmentRepository AssessmentRepository;
         protected ILogger<AssessmentRepository> AssessmentRepositoryLogger;
         protected IRepository<TqPathwayAssessment> PathwayAssessmentRepository;
@@ -39,6 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         protected IRepository<AssessmentSeries> AssessmentSeriesRepository;
         protected ILogger<GenericRepository<AssessmentSeries>> AssessmentSeriesRepositoryLogger;
         protected ILogger<GenericRepository<TqPathwayAssessment>> PathwayAssessmentRepositoryLogger;
+        protected IRepository<TlLookup> TlLookupRepository;
+        protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
         protected IMapper ResultMapper;
 
         protected virtual void CreateMapper()
