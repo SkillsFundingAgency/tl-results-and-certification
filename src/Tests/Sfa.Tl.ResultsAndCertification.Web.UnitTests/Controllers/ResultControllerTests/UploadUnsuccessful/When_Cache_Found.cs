@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System;
 using Xunit;
 

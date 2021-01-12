@@ -6,6 +6,7 @@
         public const string Required = "{0} required";
         public const string MustBeNumberWithLength = "{0} must be a {1} digit number";
         public const string MustBeAnNumberWithLength = "{0} must be an {1} digit number";
+        public const string MustHaveDigitsWithLength = "{0} must have {1} digits only";
         public const string StringLength = "{0} cannot have more than {1} characters";
         public const string MustBeStringWithLength = "{0} must have {1} characters only";
         public const string MustBeValidDate = "{0} must be a valid date in DDMMYYYY format";
@@ -55,10 +56,10 @@
         public const string InvalidNextSpecialismAssessmentEntry = "Specialism assessment entry is beyond the next available series - only the next available series is allowed (the second series of the second academic year or subsequent approaching series)";
 
         // Results - Bulk Stage 2 validations
-        public const string CorecodeRequiredWhenResultIncluded = "Core code required when result is included";
-        public const string AssessmentEntryNeedsToBeProvided = "Assessment entry needs to be provided";
-        public const string InvalidCoreAssessmentSeries = "Core assessment entry does not match what is on the registration - and format must be text followed by a space and a 4-digit year";
-        public const string NoDataAfterUlnNeedCoreCode = "No data after ULN - need a core code";
+        public const string CorecodeRequiredWhenResultIncluded = "Core component code required when result is included";
+        public const string AssessmentEntryNeedsToBeProvided = "Assessment series needs to be provided";
+        public const string InvalidCoreAssessmentSeries = "Core assessment series format must be text followed by a space and a 4-digit year";
+        public const string NoDataAfterUlnNeedCoreCode = "No data after ULN - need a core component code";
 
         // Results - Bulk stage 3 validsions
         public const string CannotAddResultToWithdrawnRegistration = "Cannot add results to a withdrawn registration";
