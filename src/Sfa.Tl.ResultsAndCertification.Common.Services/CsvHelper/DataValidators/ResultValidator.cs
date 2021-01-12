@@ -16,8 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
 
             // Core code
             RuleFor(r => r.CoreCode)
-                .MustBeNumberWithLength(8)
-                .WithMessage(ValidationMessages.CorecodeMustBeDigitsOnly)  // TODO: Message must be generic constant.
+                .MustBeNumberWithLength(8, ValidationMessages.MustHaveDigitsWithLength)
                 .When(x => !string.IsNullOrEmpty(x.CoreCode));
             RuleFor(r => r.CoreCode)
                 .Required()
