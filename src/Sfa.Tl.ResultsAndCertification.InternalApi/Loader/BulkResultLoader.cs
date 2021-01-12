@@ -73,7 +73,22 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                     var validationErrors = ExtractAllValidationErrors(stage2Response);
                     return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
                 }
+                
+                // Stage 3 valiation. 
+                var stage3Response = await _resultService.ValidateResultsAsync(request.AoUkprn, stage2Response.Rows.Where(x => x.IsValid));
+                if (stage2Response.Rows.Any(x => !x.IsValid) || stage3Response.Any(x => !x.IsValid))
+                {
+                    var validationErrors = ExtractAllValidationErrors(stage2Response, stage3Response);
+                    return await SaveErrorsAndUpdateResponse(request, response, validationErrors);
+                }
 
+                // Step: Map data to DB model type.
+
+
+                // Step: DB operation
+
+
+                // Step: Process result response
                 var resultsProcessResult = new ResultProcessResponse
                 {
                     IsSuccess = true,

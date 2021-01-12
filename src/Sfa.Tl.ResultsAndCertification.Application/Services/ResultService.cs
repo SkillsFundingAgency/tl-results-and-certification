@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 var validationErrors = new List<BulkProcessValidationError>();
                 // 3. Core Code is incorrect
-                if (!string.IsNullOrEmpty(result.CoreCode))
+                if (!string.IsNullOrWhiteSpace(result.CoreCode))
                 {
                     var isValidCoreCode = dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.LarId.Equals(result.CoreCode, StringComparison.InvariantCultureIgnoreCase);
                     if (!isValidCoreCode)
@@ -70,39 +70,63 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 4. Assessment Series does not exists
-                var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
-                if (!isSeriesFound)
+                if (!string.IsNullOrWhiteSpace(result.CoreAssessmentSeries))
                 {
-                    validationErrors.Add(BuildValidationError(result, ValidationMessages.InvalidCoreAssessmentSeriesEntry));
-                    continue;
+                    var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
+                    if (!isSeriesFound)
+                    {
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.InvalidCoreAssessmentSeriesEntry));
+                        continue;
+                    }
+
                 }
 
                 // 5. No assessment entry is currently active
-                var hasAnyActiveCoreAssessment = dbRegistration.TqPathwayAssessments.Any(pa => pa.IsOptedin && pa.EndDate == null);
-                if (!hasAnyActiveCoreAssessment)
+                if (!string.IsNullOrWhiteSpace(result.CoreCode))
                 {
-                    validationErrors.Add(BuildValidationError(result, ValidationMessages.NoCoreAssessmentEntryCurrentlyActive));
-                    continue;
+                    var hasAnyActiveCoreAssessment = dbRegistration.TqPathwayAssessments.Any(pa => pa.IsOptedin && pa.EndDate == null);
+                    if (!hasAnyActiveCoreAssessment)
+                    {
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.NoCoreAssessmentEntryCurrentlyActive));
+                        continue;
+                    }
                 }
 
                 // 6. Assessment entry mapping error 
-                var hasAssessmentSeriesMatchTheSeriesOnRegistrationCore = dbRegistration.TqPathwayAssessments.Any(pa => pa.IsOptedin && pa.EndDate == null && pa.AssessmentSeries.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
-                if(!hasAssessmentSeriesMatchTheSeriesOnRegistrationCore)
+                if (!string.IsNullOrWhiteSpace(result.CoreAssessmentSeries))
                 {
-                    validationErrors.Add(BuildValidationError(result, ValidationMessages.AssessmentSeriesDoesNotMatchTheSeriesOnTheRegistration));
-                    continue;
+                    var hasAssessmentSeriesMatchTheSeriesOnRegistrationCore = dbRegistration.TqPathwayAssessments.Any(pa => pa.IsOptedin && pa.EndDate == null && pa.AssessmentSeries.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
+                    if (!hasAssessmentSeriesMatchTheSeriesOnRegistrationCore)
+                    {
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.AssessmentSeriesDoesNotMatchTheSeriesOnTheRegistration));
+                        continue;
+                    }
                 }
 
                 // 7. Core component grade not valid - needs to be A* to E, or Unclassified
-                if (!string.IsNullOrEmpty(result.CoreGrade))
+                var pathwayComponentGrades = tlLookup.Where(lr => lr.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase));
+                if (!string.IsNullOrWhiteSpace(result.CoreGrade))
                 {
-                    var tlPathwayCoreComponentGrades = tlLookup.Where(lr => lr.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase));
-                    var isValidCoreComponentGrade = tlPathwayCoreComponentGrades.Any(pcg => pcg.Value.Equals(result.CoreGrade, StringComparison.InvariantCultureIgnoreCase));
+                    var isValidCoreComponentGrade = pathwayComponentGrades.Any(pcg => pcg.Value.Equals(result.CoreGrade, StringComparison.InvariantCultureIgnoreCase));
                     if(!isValidCoreComponentGrade)
                     {
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.InvalidCoreComponentGrade));
                         continue;
                     }
+                }
+
+                if (validationErrors.Any())
+                    response.Add(new ResultRecordResponse { ValidationErrors = validationErrors });
+                else
+                {
+                    var pathwayAssessment = dbRegistration.TqPathwayAssessments.FirstOrDefault(pa => pa.IsOptedin && pa.EndDate == null && pa.AssessmentSeries.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
+                    var pathwayComponentGrade = pathwayComponentGrades.FirstOrDefault(pcg => pcg.Value.Equals(result.CoreGrade, StringComparison.InvariantCultureIgnoreCase));
+
+                    response.Add(new ResultRecordResponse
+                    {
+                        TqPathwayAssessmentId = !string.IsNullOrWhiteSpace(result.CoreCode) ? pathwayAssessment?.Id : null,
+                        PathwayComponentGradeLookupId = !string.IsNullOrWhiteSpace(result.CoreGrade) ? pathwayComponentGrade?.Id : null
+                    });
                 }
             }
             return response;
