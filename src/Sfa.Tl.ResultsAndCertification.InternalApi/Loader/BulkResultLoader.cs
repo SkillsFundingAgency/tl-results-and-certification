@@ -136,9 +136,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
             if (stage3Response != null)
             {
-                foreach (var invalidAssessment in stage3Response.Where(x => !x.IsValid))
+                foreach (var invalidResult in stage3Response.Where(x => !x.IsValid))
                 {
-                    errors.AddRange(invalidAssessment.ValidationErrors);
+                    errors.AddRange(invalidResult.ValidationErrors);
                 }
             }
             return errors;
@@ -146,9 +146,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
         private static void CheckUlnDuplicates(IList<ResultCsvRecordResponse> results)
         {
-            var duplicateAssessments = results.Where(r => r.Uln != 0).GroupBy(r => r.Uln).Where(g => g.Count() > 1).Select(x => x);
+            var duplicateResults = results.Where(r => r.Uln != 0).GroupBy(r => r.Uln).Where(g => g.Count() > 1).Select(x => x);
 
-            foreach (var record in duplicateAssessments.SelectMany(assessemt => assessemt))
+            foreach (var record in duplicateResults.SelectMany(result => result))
             {
                 record.ValidationErrors.Add(new BulkProcessValidationError
                 {

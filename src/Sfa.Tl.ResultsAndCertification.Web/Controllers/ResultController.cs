@@ -92,7 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.UploadUnsuccessfulPageFailed,
-                    $"Unable to read upload unsuccessful results response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                    $"Unable to read upload unsuccessful results response from redis cache. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
