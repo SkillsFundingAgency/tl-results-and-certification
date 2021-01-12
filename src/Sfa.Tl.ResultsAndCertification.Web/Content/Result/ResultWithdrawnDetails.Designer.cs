@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This learner&apos;s registration has been withdrawn.
+        ///   Looks up a localized string similar to This learner&apos;s registration has been withdrawn..
         /// </summary>
         public static string This_Learners_Registration_Has_Been_Withdrawn_Text {
             get {
