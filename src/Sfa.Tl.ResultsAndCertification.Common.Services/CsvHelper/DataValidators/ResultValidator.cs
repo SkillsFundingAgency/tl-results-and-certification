@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             RuleFor(r => r.CoreCode)
                 .Required()
                 .WithMessage(ValidationMessages.NoDataAfterUlnNeedCoreCode)
-                .When(x => string.IsNullOrEmpty(x.CoreAssessmentSeries) && string.IsNullOrEmpty(x.CoreGrade));
+                .When(x => !string.IsNullOrEmpty(x.Uln) && string.IsNullOrEmpty(x.CoreAssessmentSeries) && string.IsNullOrEmpty(x.CoreGrade));
 
             // Core Assessment Series
             RuleFor(r => r.CoreAssessmentSeries)

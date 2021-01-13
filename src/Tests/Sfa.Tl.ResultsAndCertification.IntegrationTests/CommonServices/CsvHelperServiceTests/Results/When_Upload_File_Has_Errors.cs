@@ -58,6 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
                 new BulkProcessValidationError { RowNum = "7", Uln = "1234567893", ErrorMessage = "Core assessment series format must be text followed by a space and a 4-digit year" },
                 new BulkProcessValidationError { RowNum = "8", Uln = "1234567894", ErrorMessage = "No data after ULN - need a core component code" },
                 new BulkProcessValidationError { RowNum = "9", Uln = string.Empty, ErrorMessage = "Data in more than the required 4 columns" },
+                new BulkProcessValidationError { RowNum = "10", Uln = string.Empty, ErrorMessage = "ULN required" },
             };
 
             return validationErrors;

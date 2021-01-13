@@ -3,6 +3,7 @@ using FluentValidation.Results;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NSubstitute.ReturnsExtensions;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Models.Result.BulkProcess;
 using System;
 using System.Collections.Generic;
@@ -18,13 +19,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
             InputFileContent = GetInputFilecontent();
             var failures = new List<ValidationFailure>
             {
-                new ValidationFailure("ULN", "Uln required"),
-                new ValidationFailure("Core code", "Core code required"),
+                new ValidationFailure(ResultFileHeader.Uln, string.Format(ValidationMessages.Required, ResultFluentHeader.Uln)),
             };
             var regCsvResponse = new ValidationResult(failures);
             RegValidator.ValidateAsync(Arg.Any<ResultCsvRecordRequest>()).Returns(regCsvResponse);
             DataParser.ParseErrorObject(Arg.Any<int>(), Arg.Any<ResultCsvRecordRequest>(), regCsvResponse).ReturnsNull();
-
         }
 
         [Fact]

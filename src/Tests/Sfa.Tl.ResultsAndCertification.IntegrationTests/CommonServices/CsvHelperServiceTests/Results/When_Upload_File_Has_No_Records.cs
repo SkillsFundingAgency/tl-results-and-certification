@@ -34,6 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
             ReadAndParseFileResponse.Should().NotBeNull();
             ReadAndParseFileResponse.IsDirty.Should().BeTrue();
             ReadAndParseFileResponse.ErrorMessage.Should().Be(ValidationMessages.NoRecordsFound);
+            ReadAndParseFileResponse.ErrorCode.Should().Be(CsvFileErrorCode.NoRecordsFound);
         }
     }
 }
