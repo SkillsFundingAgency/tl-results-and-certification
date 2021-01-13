@@ -56,8 +56,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     response.Add(AddStage3ValidationError(result.RowNum, result.Uln, ValidationMessages.CannotAddResultToWithdrawnRegistration));
                     continue;
                 }
-
+                                
                 var validationErrors = new List<BulkProcessValidationError>();
+                var isCoreAndAssesssmentSeriesValid = true;
+
                 // 3. Core Code is incorrect
                 if (!string.IsNullOrWhiteSpace(result.CoreCode))
                 {
@@ -65,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     if (!isValidCoreCode)
                     {
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.InvalidCoreComponentCode));
-                        continue;
+                        isCoreAndAssesssmentSeriesValid = false;
                     }
                 }
 
@@ -76,43 +78,37 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     if (!isSeriesFound)
                     {
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.InvalidCoreAssessmentSeriesEntry));
-                        continue;
+                        isCoreAndAssesssmentSeriesValid = false;
                     }
-
                 }
 
-                // 5. No assessment entry is currently active
+                // 5. Core component grade not valid - needs to be A* to E, or Unclassified
+                var pathwayComponentGrades = tlLookup.Where(lr => lr.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase));
+                if (!string.IsNullOrWhiteSpace(result.CoreGrade))
+                {
+                    var isValidCoreComponentGrade = pathwayComponentGrades.Any(pcg => pcg.Value.Equals(result.CoreGrade, StringComparison.InvariantCultureIgnoreCase));
+                    if (!isValidCoreComponentGrade)
+                        validationErrors.Add(BuildValidationError(result, ValidationMessages.InvalidCoreComponentGrade));
+                }
+
+                // 6. No assessment entry is currently active
+                var hasActiveCoreAssessmentEntry = true;
                 if (!string.IsNullOrWhiteSpace(result.CoreCode))
                 {
                     var hasAnyActiveCoreAssessment = dbRegistration.TqPathwayAssessments.Any(pa => pa.IsOptedin && pa.EndDate == null);
                     if (!hasAnyActiveCoreAssessment)
                     {
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.NoCoreAssessmentEntryCurrentlyActive));
-                        continue;
+                        hasActiveCoreAssessmentEntry = false;
                     }
                 }
 
-                // 6. Assessment entry mapping error 
-                if (!string.IsNullOrWhiteSpace(result.CoreAssessmentSeries))
+                // 7. Assessment entry mapping error 
+                if (isCoreAndAssesssmentSeriesValid && hasActiveCoreAssessmentEntry && !string.IsNullOrWhiteSpace(result.CoreAssessmentSeries))
                 {
                     var hasAssessmentSeriesMatchTheSeriesOnRegistrationCore = dbRegistration.TqPathwayAssessments.Any(pa => pa.IsOptedin && pa.EndDate == null && pa.AssessmentSeries.Name.Equals(result.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
                     if (!hasAssessmentSeriesMatchTheSeriesOnRegistrationCore)
-                    {
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.AssessmentSeriesDoesNotMatchTheSeriesOnTheRegistration));
-                        continue;
-                    }
-                }
-
-                // 7. Core component grade not valid - needs to be A* to E, or Unclassified
-                var pathwayComponentGrades = tlLookup.Where(lr => lr.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase));
-                if (!string.IsNullOrWhiteSpace(result.CoreGrade))
-                {
-                    var isValidCoreComponentGrade = pathwayComponentGrades.Any(pcg => pcg.Value.Equals(result.CoreGrade, StringComparison.InvariantCultureIgnoreCase));
-                    if(!isValidCoreComponentGrade)
-                    {
-                        validationErrors.Add(BuildValidationError(result, ValidationMessages.InvalidCoreComponentGrade));
-                        continue;
-                    }
                 }
 
                 if (validationErrors.Any())
