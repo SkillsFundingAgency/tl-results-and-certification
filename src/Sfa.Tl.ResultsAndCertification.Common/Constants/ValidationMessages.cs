@@ -57,7 +57,7 @@
 
         // Results - Bulk Stage 2 validations
         public const string CorecodeRequiredWhenResultIncluded = "Core component code required when result is included";
-        public const string AssessmentEntryNeedsToBeProvided = "Assessment series needs to be provided";
+        public const string AssessmentSeriesNeedsToBeProvided = "Assessment series needs to be provided";
         public const string InvalidCoreAssessmentSeries = "Core assessment series format must be text followed by a space and a 4-digit year";
         public const string NoDataAfterUlnNeedCoreCode = "No data after ULN - need a core component code";
 

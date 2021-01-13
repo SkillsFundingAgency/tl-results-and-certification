@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             // Core Assessment Series
             RuleFor(r => r.CoreAssessmentSeries)
                 .Required()
-                .WithMessage(ValidationMessages.AssessmentEntryNeedsToBeProvided)
+                .WithMessage(ValidationMessages.AssessmentSeriesNeedsToBeProvided)
                 .When(x => !string.IsNullOrEmpty(x.CoreCode) || !string.IsNullOrEmpty(x.CoreGrade));
             RuleFor(r => r.CoreAssessmentSeries)
                 .MusBeValidAssessmentSeries()
