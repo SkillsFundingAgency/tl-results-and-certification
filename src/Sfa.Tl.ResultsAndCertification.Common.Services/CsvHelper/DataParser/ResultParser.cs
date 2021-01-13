@@ -17,7 +17,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
             return new ResultCsvRecordResponse
             {
                 Uln = result.Uln.Trim().ToLong(),
-                CoreAssessmentSeries = result.CoreAssessmentSeries.Trim(),
+                CoreAssessmentSeries = result.CoreAssessmentSeries?.Trim(),
+                CoreCode = result.CoreCode?.Trim(),
+                CoreGrade = result.CoreGrade?.Trim(),
                 RowNum = rownum,
                 ValidationErrors = new List<BulkProcessValidationError>()
             };
