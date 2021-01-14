@@ -31,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         protected IList<TlProvider> TlProviders;
         protected IList<TqProvider> TqProviders;
         protected IList<AssessmentSeries> AssessmentSeries;
+        protected IList<TlLookup> TlLookup;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IResultRepository ResultRepository;
         protected ILogger<ResultRepository> ResultRepositoryLogger;
@@ -61,6 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
+            TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             DbContext.SaveChangesAsync();
         }
 
