@@ -12,30 +12,20 @@ using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkResultLoaderTests.Process
 {
-    public class When_Results_Stage2_Are_Validated : TestSetup
+    public class When_File_IsDirty : TestSetup
     {
-        private List<ResultCsvRecordResponse> expectedStage2Response;
-
         public override void Given()
         {
-            expectedStage2Response = new List<ResultCsvRecordResponse>
+            var errorMessage = "InvalidHeader";
+            var csvResponse = new CsvResponseModel<ResultCsvRecordResponse>
             {
-                new ResultCsvRecordResponse { RowNum = 1, Uln = 1111111111, CoreCode = "1234567", CoreAssessmentSeries = "Summer 2021", CoreGrade = "A", ValidationErrors = new List<BulkProcessValidationError>
-                {
-                    new BulkProcessValidationError { RowNum = "1", Uln = "1111111111", ErrorMessage = "Core component code must have 8 digits only" }
-                } },
-                new ResultCsvRecordResponse { RowNum = 2, Uln = 1111111112, CoreCode = "", CoreAssessmentSeries = "Summer 2021", CoreGrade = "A", ValidationErrors = new List<BulkProcessValidationError>
-                {
-                    new BulkProcessValidationError { RowNum = "2", Uln = "1111111112", ErrorMessage = "Core component code required when result is included" }
-                } }
+                IsDirty = true,
+                ErrorMessage = errorMessage,
             };
 
-            var csvResponse = new CsvResponseModel<ResultCsvRecordResponse> { Rows = expectedStage2Response };
-            CsvService.ReadAndParseFileAsync(Arg.Any<ResultCsvRecordRequest>()).Returns(csvResponse);
-            ResultService.ValidateResultsAsync(AoUkprn, Arg.Any<IEnumerable<ResultCsvRecordResponse>>()).Returns(new List<ResultRecordResponse>());
-            BlobService.DownloadFileAsync(Arg.Any<BlobStorageData>()).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File")));
-
             var expectedWriteFileBytes = new byte[5];
+            BlobService.DownloadFileAsync(Arg.Any<BlobStorageData>()).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File")));
+            CsvService.ReadAndParseFileAsync(Arg.Any<ResultCsvRecordRequest>()).Returns(csvResponse);
             CsvService.WriteFileAsync(Arg.Any<List<BulkProcessValidationError>>()).Returns(expectedWriteFileBytes);
         }
 
