@@ -12,7 +12,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients
+namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
     public class When_GetResultDetails_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
