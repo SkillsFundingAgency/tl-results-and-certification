@@ -88,6 +88,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learner&apos;s results.
+        /// </summary>
+        public static string Learners_Results {
+            get {
+                return ResourceManager.GetString("Learners_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Find a provider.
         /// </summary>
         public static string Provider_Find_Provider {
@@ -133,6 +142,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Results.
+        /// </summary>
+        public static string Result_Dashboard {
+            get {
+                return ResourceManager.GetString("Result_Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for a learner.
         /// </summary>
         public static string Search_For_Assessments {
@@ -147,6 +165,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Search_For_Registration {
             get {
                 return ResourceManager.GetString("Search_For_Registration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for a learner.
+        /// </summary>
+        public static string Search_For_Results {
+            get {
+                return ResourceManager.GetString("Search_For_Results", resourceCulture);
             }
         }
         
@@ -192,6 +219,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Upload_Registrations_File {
             get {
                 return ResourceManager.GetString("Upload_Registrations_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload results file.
+        /// </summary>
+        public static string Upload_Results_File {
+            get {
+                return ResourceManager.GetString("Upload_Results_File", resourceCulture);
             }
         }
     }

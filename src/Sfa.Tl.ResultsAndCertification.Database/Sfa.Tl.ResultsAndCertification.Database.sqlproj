@@ -85,6 +85,8 @@
     <Build Include="Tables\AssessmentSeries.sql" />
     <Build Include="Indexes\IX_Unique_TqPathwayAssessment.sql" />
     <Build Include="Indexes\IX_Unique_TqSpecialismAssessment.sql" />
+    <Build Include="Tables\TlLookup.sql" />
+    <Build Include="Tables\TqPathwayResult.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />
@@ -94,6 +96,7 @@
     <None Include="PostDeployment\SeedTlAwardingOrganisations.sql" />
     <None Include="PostDeployment\SeedTlProviders.sql" />
     <None Include="PostDeployment\SeedNotificationTemplates.sql" />
+    <None Include="PostDeployment\SeedTlLookup.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="PreDeployment\PreDeploy.sql" />

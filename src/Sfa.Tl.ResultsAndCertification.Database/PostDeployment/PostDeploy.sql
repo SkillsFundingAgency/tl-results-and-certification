@@ -19,4 +19,5 @@ BEGIN
 :r ".\SeedNotificationTemplates.sql"
 :r ".\SeedTlProviders.sql"
 :r ".\SeedAssessmentSeries.sql"
+:r ".\SeedTlLookup.sql"
 END

@@ -42,7 +42,8 @@
         public const string SearchAssessmentsUlnNotFound = "SearchAssessmentsUlnNotFound";
         public const string AddAssessmentEntryConfirmationViewModel = "AddAssessmentEntryConfirmationViewModel";
         public const string RemoveAssessmentEntryConfirmationViewModel = "RemoveAssessmentEntryConfirmationViewModel";
-
+        public const string SearchResultsUlnNotFound = "SearchResultsUlnNotFound";
+        public const string ResultsSearchCriteria = "ResultsSearchCriteria";
 
         public const string UserSessionActivityId = "UserSessionActivityId";
 

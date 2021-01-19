@@ -1,0 +1,48 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.DashboardViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+
+@{
+    ViewData["Title"] = @Dashboard.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <div class="govuk-form-group">
+            <h1 class="govuk-heading-xl">
+                @Dashboard.Page_Heading
+            </h1>
+        </div>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group result-card">
+            <h2 class="govuk-heading-m govuk-!-padding-top-3">
+                @Dashboard.Card_Heading_Upload_Results
+            </h2>
+            <p class="govuk-body">
+                <a class="govuk-link" asp-route="UploadResultsFile">
+                    @Dashboard.Card_Link_Upload_Results
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group result-card">
+            <h2 class="govuk-heading-m govuk-!-padding-top-3">
+                @Dashboard.Card_Heading_Manual_Add_Amend_Results
+            </h2>
+            <p class="govuk-body">
+                <a class="govuk-link" asp-route="SearchResults">
+                    @Dashboard.Card_Link_Search_Learner
+                </a>
+            </p>
+        </div>
+    </div>
+</div>

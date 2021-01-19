@@ -151,7 +151,21 @@
         public const string SubmitSearchAssessments = "SubmitSearchAssessments";
         public const string SearchAssessmentsNotFound = "SearchAssessmentsNotFound";
         public const string AssessmentDetails = "AssessmentDetails";
-        public const string AssessmentWithdrawnDetails = "AssessmentWithdrawnDetails";        
+        public const string AssessmentWithdrawnDetails = "AssessmentWithdrawnDetails";
+
+        // Results
+        public const string ResultsDashboard = "ResultsDashboard";
+        public const string UploadResultsFile = "UploadResultsFile";
+        public const string SubmitUploadResultsFile = "SubmitUploadResultsFile";
+        public const string ResultsUploadSuccessful = "ResultsUploadSuccessful";
+        public const string ResultsUploadUnsuccessful = "ResultsUploadUnsuccessful";
+        public const string DownloadResultErrors = "DownloadResultErrors";        
+
+        // Search Results
+        public const string SearchResults = "SearchResults";
+        public const string SubmitSearchResults = "SubmitSearchResults";
+        public const string SearchResultsNotFound = "SearchResultsNotFound";
+        public const string ResultWithdrawnDetails = "ResultWithdrawnDetails";
 
         // Error
         public const string PageNotFound = "PageNotFound";

@@ -142,6 +142,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add and amend results.
+        /// </summary>
+        public static string Results_Description_Text {
+            get {
+                return ResourceManager.GetString("Results_Description_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results.
+        /// </summary>
+        public static string Results_Text {
+            get {
+                return ResourceManager.GetString("Results_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage T Level results.
         /// </summary>
         public static string Section_Heading_Text {

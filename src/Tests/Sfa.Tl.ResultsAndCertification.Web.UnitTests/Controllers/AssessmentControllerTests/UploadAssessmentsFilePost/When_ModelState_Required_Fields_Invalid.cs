@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Xunit;
 using UploadContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.Upload;

@@ -1,0 +1,30 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.UlnResultsNotFoundViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+
+@{
+    ViewData["Title"] = @SearchResultsNotFound.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper">
+                <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6">
+                    @string.Format(@SearchResultsNotFound.Uln_Cannot_Be_Found_Text, @Model.Uln)
+                </label>
+            </h1>
+            <p class="govuk-body">@SearchResultsNotFound.If_you_Think_That_The_Uln_Should_Exists_Text</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@SearchResultsNotFound.Is_Registered_With_Another_Ao_Text</li>
+                <li>@SearchResultsNotFound.Is_Not_Registered_With_Us_Text</li>
+            </ul>
+        </div>
+        <p>
+            <a id="backButton" class="govuk-button" role="button" asp-route="@Model.BackLink.RouteName">@SearchResultsNotFound.Back_To_Search_Link_Text</a>
+        </p>
+    </div>
+</div>
