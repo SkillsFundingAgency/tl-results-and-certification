@@ -15,6 +15,12 @@
             <p class="govuk-body">@Model?.Value</p>
         }
     </dd>
+    @if (!string.IsNullOrEmpty(Model.AdditionalColumn))
+    {
+        <dd class="govuk-summary-list__value">
+            <p class="govuk-body">@Model?.AdditionalColumn</p>
+        </dd>
+    }
     <dd class="govuk-summary-list__actions">
         @if (!string.IsNullOrWhiteSpace(Model?.ActionText))
         {

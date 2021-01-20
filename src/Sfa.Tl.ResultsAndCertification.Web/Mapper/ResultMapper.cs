@@ -37,6 +37,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
                 .ForMember(d => d.ProviderDisplayName, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"))
+                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"))
+                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
+                .ForMember(d => d.SpecialismDisplayName, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.SpecialismLarId) ? $"{s.SpecialismName} ({s.SpecialismLarId})" : null))
+                .ForMember(d => d.PathwayResult, opts => opts.MapFrom(s => s.PathwayResult))
+                .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Status));
         }
     }
