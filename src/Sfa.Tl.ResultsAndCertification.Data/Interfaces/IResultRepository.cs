@@ -7,5 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
     public interface IResultRepository
     {
         Task<IEnumerable<TqRegistrationPathway>> GetBulkResultsAsync(long aoUkprn, IEnumerable<long> uniqueLearnerNumbers);
+        Task<IList<TqPathwayResult>> GetBulkPathwayResultsAsync(IList<TqPathwayResult> pathwayResults);
+        Task<bool> BulkInsertOrUpdateResults(List<TqPathwayResult> pathwayResults);
     }
 }

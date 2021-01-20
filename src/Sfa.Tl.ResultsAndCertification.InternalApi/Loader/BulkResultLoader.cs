@@ -83,20 +83,15 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 }
 
                 // Step: Map data to DB model type.
-
+                var results = _resultService.TransformResultsModel(stage3Response, request.PerformedBy);
 
                 // Step: DB operation
+                var resultsProcessResult = await _resultService.CompareAndProcessResultsAsync(results);
 
-
-                // Step: Process result response
-                var resultsProcessResult = new ResultProcessResponse
-                {
-                    IsSuccess = true,
-                    BulkUploadStats = new BulkUploadStats { TotalRecordsCount = stage2Response.Rows.Count }
-                };
-
+                // update total assessment records stats
+                resultsProcessResult.BulkUploadStats = new BulkUploadStats { TotalRecordsCount = stage3Response.Count };
+                
                 return await ProcessResultsResponse(request, response, resultsProcessResult);
-
             }
             catch(Exception ex)
             {

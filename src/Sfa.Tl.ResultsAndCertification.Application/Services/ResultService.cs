@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -128,6 +130,42 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
+        public IList<TqPathwayResult> TransformResultsModel(IList<ResultRecordResponse> resultsData, string performedBy)
+        {
+            var pathwayResults = new List<TqPathwayResult>();
+
+            foreach (var (result, index) in resultsData.Select((value, i) => (value, i)))
+            {
+                if (result.TqPathwayAssessmentId.HasValue && result.TqPathwayAssessmentId.Value > 0)
+                {
+                    pathwayResults.Add(new TqPathwayResult
+                    {
+                        Id = index - Constants.PathwayResultsStartIndex,
+                        TqPathwayAssessmentId = result.TqPathwayAssessmentId.Value,
+                        TlLookupId = result.PathwayComponentGradeLookupId ?? 0,
+                        StartDate = DateTime.UtcNow,
+                        IsOptedin = true,
+                        IsBulkUpload = true,
+                        CreatedBy = performedBy,
+                        CreatedOn = DateTime.UtcNow
+                    });
+                }
+            }
+            return pathwayResults;
+        }
+
+        public async Task<ResultProcessResponse> CompareAndProcessResultsAsync(IList<TqPathwayResult> pathwayResultsToProcess)
+        {
+            var response = new ResultProcessResponse();
+
+            // Prepare Pathway Results
+            var newOrAmendedPathwayResultRecords = await PrepareNewAndAmendedPathwayResults(pathwayResultsToProcess);
+
+            // Process Results
+            response.IsSuccess = await _resultRepository.BulkInsertOrUpdateResults(newOrAmendedPathwayResultRecords);
+            return response;
+        }
+
         public async Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
@@ -158,6 +196,52 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private BulkProcessValidationError BuildValidationError(ResultCsvRecordResponse result, string message)
         {
             return new BulkProcessValidationError { RowNum = result.RowNum.ToString(), Uln = result.Uln.ToString(), ErrorMessage = message };
+        }
+
+        private async Task<List<TqPathwayResult>> PrepareNewAndAmendedPathwayResults(IList<TqPathwayResult> pathwayResultsToProcess)
+        {
+            var pathwayResultComparer = new TqPathwayResultEqualityComparer();
+            var amendedPathwayResults = new List<TqPathwayResult>();
+            var newAndAmendedPathwayResultRecords = new List<TqPathwayResult>();
+
+            var existingPathwayResultsFromDb = await _resultRepository.GetBulkPathwayResultsAsync(pathwayResultsToProcess);
+            var newPathwayResults = pathwayResultsToProcess.Except(existingPathwayResultsFromDb, pathwayResultComparer).ToList();
+            var matchedPathwayResults = pathwayResultsToProcess.Intersect(existingPathwayResultsFromDb, pathwayResultComparer).ToList();
+            var unchangedPathwayResults = matchedPathwayResults.Intersect(existingPathwayResultsFromDb, new TqPathwayResultRecordEqualityComparer()).ToList();
+            var hasAnyMatchedPathwayResultsToProcess = matchedPathwayResults.Count != unchangedPathwayResults.Count;
+
+            if (hasAnyMatchedPathwayResultsToProcess)
+            {
+                amendedPathwayResults = matchedPathwayResults.Except(unchangedPathwayResults, pathwayResultComparer).ToList();
+
+                amendedPathwayResults.ForEach(amendedPathwayResult =>
+                {
+                    var existingPathwayResult = existingPathwayResultsFromDb.FirstOrDefault(existingPathwayResult => existingPathwayResult.TqPathwayAssessmentId == amendedPathwayResult.TqPathwayAssessmentId);
+
+                    if (existingPathwayResult != null)
+                    {
+                        var hasPathwayResultChanged = amendedPathwayResult.TlLookupId != existingPathwayResult.TlLookupId;
+
+                        if (hasPathwayResultChanged)
+                        {
+                            existingPathwayResult.IsOptedin = false;
+                            existingPathwayResult.EndDate = DateTime.UtcNow;
+                            existingPathwayResult.ModifiedBy = amendedPathwayResult.CreatedBy;
+                            existingPathwayResult.ModifiedOn = DateTime.UtcNow;
+
+                            newAndAmendedPathwayResultRecords.Add(existingPathwayResult);
+
+                            if (amendedPathwayResult.TqPathwayAssessmentId > 0 && amendedPathwayResult.TlLookupId > 0)
+                                newAndAmendedPathwayResultRecords.Add(amendedPathwayResult);
+                        }
+                    }
+                });
+            }
+
+            if (newPathwayResults.Any())
+                newAndAmendedPathwayResultRecords.AddRange(newPathwayResults.Where(p => p.TqPathwayAssessmentId > 0 && p.TlLookupId > 0));
+
+            return newAndAmendedPathwayResultRecords;
         }
 
         #endregion

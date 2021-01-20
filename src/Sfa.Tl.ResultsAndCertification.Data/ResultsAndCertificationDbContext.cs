@@ -9,7 +9,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data
             : base(options)
         {
         }
-       
+
+        public virtual DbSet<TlLookup> TlLookup { get; set; }
         public virtual DbSet<TlAwardingOrganisation> TlAwardingOrganisation { get; set; }
         public virtual DbSet<TlPathway> TlPathway { get; set; }
         public virtual DbSet<TlProvider> TlProvider { get; set; }
@@ -24,7 +25,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<TqRegistrationSpecialism> TqRegistrationSpecialism { get; set; }
         public virtual DbSet<AssessmentSeries> AssessmentSeries { get; set; }
         public virtual DbSet<TqPathwayAssessment> TqPathwayAssessment { get; set; }
-        public virtual DbSet<TqSpecialismAssessment> TqSpecialismAssessment { get; set; }
+        public virtual DbSet<TqSpecialismAssessment> TqSpecialismAssessment { get; set; }        
+        public virtual DbSet<TqPathwayResult> TqPathwayResult { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
