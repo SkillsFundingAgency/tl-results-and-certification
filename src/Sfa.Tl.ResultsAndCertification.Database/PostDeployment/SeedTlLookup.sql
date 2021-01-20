@@ -9,9 +9,9 @@ USING (VALUES
   (1, N'PathwayComponentGrade', N'PCG1', N'A*', 1),
   (2, N'PathwayComponentGrade', N'PCG2', N'A', 1),
   (3, N'PathwayComponentGrade', N'PCG3', N'B', 1),
-  (6, N'PathwayComponentGrade', N'PCG4', N'C', 1),
-  (4, N'PathwayComponentGrade', N'PCG5', N'D', 1),
-  (5, N'PathwayComponentGrade', N'PCG6', N'E', 1),
+  (4, N'PathwayComponentGrade', N'PCG4', N'C', 1),
+  (5, N'PathwayComponentGrade', N'PCG5', N'D', 1),
+  (6, N'PathwayComponentGrade', N'PCG6', N'E', 1),
   (7, N'PathwayComponentGrade', N'PCG7', N'Unclassified', 1)
   )
   AS Source ([Id], [Category], [Code], [Value], [IsActive]) 
