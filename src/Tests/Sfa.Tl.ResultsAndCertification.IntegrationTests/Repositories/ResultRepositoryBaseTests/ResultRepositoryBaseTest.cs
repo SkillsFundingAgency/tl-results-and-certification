@@ -28,6 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.ResultRep
         protected IList<TlProvider> TlProviders;
         protected IList<TqProvider> TqProviders;
         protected IList<AssessmentSeries> AssessmentSeries;
+        protected IList<TlLookup> TlLookup;
+        protected IList<TlLookup> PathwayComponentGrades;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IResultRepository ResultRepository;
         protected ILogger<ResultRepository> ResultRepositoryLogger;
@@ -44,6 +46,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.ResultRep
             TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
+            TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
+            PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
             DbContext.SaveChangesAsync();
         }
 
@@ -157,34 +161,34 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.ResultRep
             return tqPathwayAssessments;
         }
 
-        public List<TqPathwayAssessment> GetPathwayResultsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false)
+        public List<TqPathwayResult> GetPathwayResultsDataToProcess(List<TqPathwayAssessment> pathwayAssessments, bool seedPathwayResultsAsActive = true, bool isHistorical = false)
         {
-            var tqPathwayAssessments = new List<TqPathwayAssessment>();
+            var tqPathwayResults = new List<TqPathwayResult>();
 
-            foreach (var (pathwayRegistration, index) in pathwayRegistrations.Select((value, i) => (value, i)))
+            foreach (var (pathwayAssessment, index) in pathwayAssessments.Select((value, i) => (value, i)))
             {
                 if (isHistorical)
                 {
                     // Historical record
-                    var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
-                    pathwayAssessment.IsOptedin = false;
-                    pathwayAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
+                    var pathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, PathwayComponentGrades[index]);
+                    pathwayResult.IsOptedin = false;
+                    pathwayResult.EndDate = DateTime.UtcNow.AddDays(-1);
 
-                    var tqPathwayAssessmentHistorical = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, pathwayAssessment);
-                    tqPathwayAssessments.Add(tqPathwayAssessmentHistorical);
+                    var tqPathwayResultHistorical = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, pathwayResult);
+                    tqPathwayResults.Add(tqPathwayResultHistorical);
                 }
 
-                var activePathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
-                var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, activePathwayAssessment);
-                if (!seedPathwayAssessmentsAsActive)
+                var activePathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, PathwayComponentGrades[index]);
+                var tqPathwayResult = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, activePathwayResult);
+                if (!seedPathwayResultsAsActive)
                 {
-                    tqPathwayAssessment.IsOptedin = pathwayRegistration.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
-                    tqPathwayAssessment.EndDate = DateTime.UtcNow;
+                    tqPathwayResult.IsOptedin = pathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
+                    tqPathwayResult.EndDate = DateTime.UtcNow;
                 }
 
-                tqPathwayAssessments.Add(tqPathwayAssessment);
+                tqPathwayResults.Add(tqPathwayResult);
             }
-            return tqPathwayAssessments;
+            return tqPathwayResults;
         }
 
         public List<TqSpecialismAssessment> GetSpecialismAssessmentsDataToProcess(List<TqRegistrationSpecialism> specialismRegistrations, bool seedSpecialismAssessmentsAsActive = true, bool isHistorical = false)
