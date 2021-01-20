@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
@@ -125,6 +126,39 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     });
                 }
             }
+            return response;
+        }
+
+        public IList<TqPathwayResult> TransformResultsModel(IList<ResultRecordResponse> resultsData, string performedBy)
+        {
+            var pathwayResults = new List<TqPathwayResult>();
+
+            foreach (var (result, index) in resultsData.Select((value, i) => (value, i)))
+            {
+                if (result.TqPathwayAssessmentId.HasValue && result.TqPathwayAssessmentId.Value > 0)
+                {
+                    pathwayResults.Add(new TqPathwayResult
+                    {
+                        Id = index - Constants.PathwayResultsStartIndex,
+                        TqPathwayAssessmentId = result.TqPathwayAssessmentId.Value,
+                        TlLookupId = result.PathwayComponentGradeLookupId ?? 0,
+                        StartDate = DateTime.UtcNow,
+                        IsOptedin = true,
+                        IsBulkUpload = true,
+                        CreatedBy = performedBy,
+                        CreatedOn = DateTime.UtcNow
+                    });
+                }                
+            }
+            return pathwayResults;
+        }
+
+        public async Task<ResultProcessResponse> CompareAndProcessResultsAsync(IList<TqPathwayResult> pathwayResultsToProcess)
+        {
+            var response = new ResultProcessResponse();
+
+            // Process Results
+            response.IsSuccess = true;
             return response;
         }
 
