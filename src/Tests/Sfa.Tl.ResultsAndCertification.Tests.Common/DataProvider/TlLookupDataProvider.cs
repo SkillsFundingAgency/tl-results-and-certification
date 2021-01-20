@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tlLookup;
         }
 
-        public static IList<TlLookup> CreateTlLookupList(ResultsAndCertificationDbContext _dbContext, IList<TlLookup> tlLookup, bool addToDbContext = true)
+        public static IList<TlLookup> CreateTlLookupList(ResultsAndCertificationDbContext _dbContext, IList<TlLookup> tlLookup = null, bool addToDbContext = true)
         {
             if (tlLookup == null)
                 tlLookup = new TlLookupBuilder().BuildList();
