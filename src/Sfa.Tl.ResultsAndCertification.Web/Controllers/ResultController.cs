@@ -157,7 +157,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (searchResult?.IsAllowed == true)
             {
-                return RedirectToRoute(searchResult.IsWithdrawn ? RouteConstants.ResultWithdrawnDetails : RouteConstants.SearchResults, new { profileId = searchResult.RegistrationProfileId });
+                return RedirectToRoute(searchResult.IsWithdrawn ? RouteConstants.ResultWithdrawnDetails : RouteConstants.ResultDetails, new { profileId = searchResult.RegistrationProfileId });
             }
             else
             {
@@ -193,6 +193,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No result withdrawn details found. Method: GetResultDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Withdrawn}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("learners-results/{profileId}", Name = RouteConstants.ResultDetails)]
+        public async Task<IActionResult> ResultDetailsAsync(int profileId)
+        {
+            var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No result details found. Method: GetResultDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

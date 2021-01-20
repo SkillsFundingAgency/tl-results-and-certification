@@ -11,6 +11,20 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public long ProviderUkprn { get; set; }
         public string ProviderName { get; set; }
 
+        // Pathway Assessment
+        public string PathwayLarId { get; set; }
+        public string PathwayName { get; set; }
+        public string PathwayAssessmentSeries { get; set; }
+
+        // Specialism Assessment
+        public string SpecialismLarId { get; set; }
+        public string SpecialismName { get; set; }
+        public int? SpecialismAssessmentId { get; set; }
+
+        // Pathway Result
+        public string PathwayResult { get; set; }
+        public int? PathwayResultId { get; set; }
+
         public RegistrationPathwayStatus Status { get; set; }
     }
 }
