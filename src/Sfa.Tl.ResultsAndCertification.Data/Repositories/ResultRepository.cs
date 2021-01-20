@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCore.BulkExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -50,5 +51,68 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             return latestRegistratons;
         }
+
+        public async Task<IList<TqPathwayResult>> GetBulkPathwayResultsAsync(IList<TqPathwayResult> pathwayResults)
+        {
+            var pathwayAssessmentIds = new HashSet<int>();
+            pathwayResults.ToList().ForEach(r => pathwayAssessmentIds.Add(r.TqPathwayAssessmentId));
+            return await _dbContext.TqPathwayResult.Where(x => pathwayAssessmentIds.Contains(x.TqPathwayAssessmentId) && x.EndDate == null && x.IsOptedin).ToListAsync();
+        }
+
+        public async Task<bool> BulkInsertOrUpdateResults(List<TqPathwayResult> pathwayResults)
+        {
+            var result = true;
+            if ((pathwayResults != null && pathwayResults.Count > 0))
+            {
+                var strategy = _dbContext.Database.CreateExecutionStrategy();
+                await strategy.ExecuteAsync(async () =>
+                {
+                    using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+                    {
+                        try
+                        {
+                            var bulkConfig = new BulkConfig() { UseTempDB = true, BatchSize = 5000, BulkCopyTimeout = 60 };
+
+                            await ProcessPathwayResults(bulkConfig, pathwayResults);
+
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex.Message, ex.InnerException);
+                            transaction.Rollback();
+                            result = false;
+                        }
+                    }
+                });
+            }
+            return result;
+        }
+
+        private async Task ProcessPathwayResults(BulkConfig bulkConfig, List<TqPathwayResult> pathwayResults)
+        {
+            if (pathwayResults.Count > 0)
+            {
+                pathwayResults = SortUpdateAndInsertOrder(pathwayResults, x => x.Id);
+                await _dbContext.BulkInsertOrUpdateAsync(pathwayResults, bulkConfig);
+            }
+        }
+        private List<T> SortUpdateAndInsertOrder<T>(List<T> entities, Func<T, int> selector) where T : class
+        {
+            // It is important as we are doing BulkInsertOrUpdate in one go, we would like to have update
+            // records at the top and newley added records at the bootom of the list, so that SetOutputIdentiy
+            // will work as expected. If you change the order of the entities then Id values will be interchanged. 
+            // please do not make any changes to below code
+
+            var returnResult = new List<T>();
+
+            if (entities != null && selector != null)
+            {
+                returnResult.AddRange(entities.Where(x => selector(x) > 0).OrderBy(x => selector)); // listToUpdate
+                returnResult.AddRange(entities.Where(x => selector(x) <= 0).OrderBy(x => selector)); // listToAdd
+            }
+            return returnResult;
+        }
+
     }
 }
