@@ -18,6 +18,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         }
 
         [Fact]
+        public void Then_Expected_Methods_Called()
+        {
+            CacheService.Received().GetAndRemoveAsync<UploadSuccessfulViewModel>(Arg.Any<string>());
+        }
+
+        [Fact]
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
