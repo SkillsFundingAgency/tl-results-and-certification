@@ -62,7 +62,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var response = await _resultLoader.ProcessBulkResultsAsync(viewModel);
 
             if (response.IsSuccess)
+            {
+                var successfulViewModel = new UploadSuccessfulViewModel { Stats = response.Stats };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ResultsUploadSuccessfulViewModel), successfulViewModel, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.ResultsUploadSuccessful);
+            }            
 
             if (response.ShowProblemWithServicePage)
                 return RedirectToRoute(RouteConstants.ProblemWithService); // TODO:
@@ -79,10 +83,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("results-upload-successful", Name = RouteConstants.ResultsUploadSuccessful)]
+        [Route("results-upload-confirmation", Name = RouteConstants.ResultsUploadSuccessful)]
         public async Task<IActionResult> UploadSuccessful()
         {
-            return View();
+            var viewModel = await _cacheService.GetAndRemoveAsync<UploadSuccessfulViewModel>(string.Concat(CacheKey, Constants.ResultsUploadSuccessfulViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.UploadSuccessfulPageFailed, $"Unable to read upload successful result response from redis cache. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
         }
 
         [HttpGet]
