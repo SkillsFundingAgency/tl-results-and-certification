@@ -229,6 +229,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<ResultDetails>(requestUri);
         }
 
+        public async Task<AddResultResponse> AddResultAsync(AddResultRequest request)
+        {
+            var requestUri = ApiConstants.AddResultUri;
+            return await PostAsync<AddResultRequest, AddResultResponse>(requestUri, request);
+        }
+
         #region Private Methods
 
         /// <summary>
