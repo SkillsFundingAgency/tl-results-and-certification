@@ -168,7 +168,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
+            var tqRegistration = await _resultRepository.GetResultsAsync(aoUkprn, profileId);
 
             if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 

@@ -213,5 +213,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(viewModel);
         }
+
+        [HttpGet]
+        [Route("change-core-result-indev/{resultId}", Name = RouteConstants.ChangeCoreResult)]
+        public IActionResult ChangeCoreResult(int resultId)
+        {
+            return View();
+        }
+
+        [Route("add-core-result-indev/{profileId}", Name = RouteConstants.AddCoreResult)]
+        public IActionResult AddCoreResult(int profileId)
+        {
+            return View();
+        }
     }
 }

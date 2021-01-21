@@ -21,7 +21,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.TqPathwayAssessments.Any() ? s.TqPathwayAssessments.FirstOrDefault().AssessmentSeries.Name : null))
                 .ForMember(d => d.SpecialismLarId, opts => opts.MapFrom(s => s.TqRegistrationSpecialisms.Any() ? s.TqRegistrationSpecialisms.FirstOrDefault().TlSpecialism.LarId : null))
                 .ForMember(d => d.SpecialismName, opts => opts.MapFrom(s => s.TqRegistrationSpecialisms.Any() ? s.TqRegistrationSpecialisms.FirstOrDefault().TlSpecialism.Name : null))
+                .ForMember(d => d.PathwayResult, opts => 
+                                opts.MapFrom(s => s.TqPathwayAssessments.Any() && s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.Any() ?
+                                s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.FirstOrDefault().TlLookup.Value : null))
+                .ForMember(d => d.PathwayResultId, opts =>
+                                opts.MapFrom(s => s.TqPathwayAssessments.Any() && s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.Any() ?
+                                s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.FirstOrDefault().Id : (int?)null))
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status));
+
+            // Todo: Disucss model shouldn't be a flat rather simple complex obj.
         }
     }
 }

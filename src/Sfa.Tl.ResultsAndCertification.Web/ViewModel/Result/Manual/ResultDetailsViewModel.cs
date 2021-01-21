@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
             Id = "coreresult",
             Title = ResultDetailsContent.Title_Result_Text,
             Value = PathwayAssessmentSeries, 
-            AdditionalColumn = PathwayResultText, 
+            Value2 = PathwayResultText, 
             ActionText = PathwayResultActionText,
             RouteName = PathwayAddResultRoute,
             HiddenActionText = ResultDetailsContent.Core_Result_Hidden_Text,
