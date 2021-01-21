@@ -106,8 +106,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                    .Include(x => x.TqRegistrationSpecialisms)
                        .ThenInclude(x => x.TlSpecialism)
                    .Include(x => x.TqRegistrationSpecialisms)
-                       .ThenInclude(x => x.TqSpecialismAssessments)
-                            .ThenInclude(x => x.AssessmentSeries)
                     .OrderByDescending(o => o.CreatedOn)
                     .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId &&
                            p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
@@ -127,16 +125,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (regPathway.Status == RegistrationPathwayStatus.Withdrawn)
                 specialismPredicate = e => e.IsOptedin && e.EndDate != null;
             regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(specialismPredicate).ToList();
-
-            foreach (var specialism in regPathway.TqRegistrationSpecialisms)
-            {
-                // SpecialismAssessment
-                Func<TqSpecialismAssessment, bool> specialismAssessmentPredicate = e => e.IsOptedin && e.EndDate == null;
-                if (regPathway.Status == RegistrationPathwayStatus.Withdrawn)
-                    specialismAssessmentPredicate = e => e.IsOptedin && e.EndDate != null;
-
-                specialism.TqSpecialismAssessments = specialism.TqSpecialismAssessments.Where(specialismAssessmentPredicate).ToList();
-            }
 
             foreach (var pathwayAssessment in regPathway.TqPathwayAssessments)
             {

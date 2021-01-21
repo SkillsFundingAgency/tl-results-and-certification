@@ -246,6 +246,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.ResultRep
                 actualPathwayAssessment.EndDate.Value.ToShortDateString().Should().Be(expectedPathwayAssessment.EndDate.Value.ToShortDateString());
             actualPathwayAssessment.CreatedBy.Should().Be(expectedPathwayAssessment.CreatedBy);
         }
+
+        public void AssertPathwayResult(TqPathwayResult actualPathwayResult, TqPathwayResult expectedPathwayResult)
+        {
+            actualPathwayResult.TqPathwayAssessmentId.Should().Be(expectedPathwayResult.TqPathwayAssessmentId);
+            actualPathwayResult.TlLookupId.Should().Be(expectedPathwayResult.TlLookupId);
+            actualPathwayResult.IsOptedin.Should().Be(expectedPathwayResult.IsOptedin);
+            actualPathwayResult.IsBulkUpload.Should().Be(actualPathwayResult.IsBulkUpload);
+            actualPathwayResult.StartDate.ToShortDateString().Should().Be(expectedPathwayResult.StartDate.ToShortDateString());
+            if (actualPathwayResult.EndDate != null)
+                actualPathwayResult.EndDate.Value.ToShortDateString().Should().Be(expectedPathwayResult.EndDate.Value.ToShortDateString());
+            actualPathwayResult.CreatedBy.Should().Be(expectedPathwayResult.CreatedBy);
+        }
+
         #endregion
     }
 }
