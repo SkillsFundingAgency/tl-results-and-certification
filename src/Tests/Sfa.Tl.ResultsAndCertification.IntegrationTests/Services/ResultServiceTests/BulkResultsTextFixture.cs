@@ -47,8 +47,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         protected IList<AssessmentSeries> AssessmentSeries;
         public Checkpoint DbCheckpoint;
         public ResultsAndCertificationDbContext DbContext;
-        protected IAssessmentRepository AssessmentRepository;
-        protected ILogger<AssessmentRepository> AssessmentRepositoryLogger;
+        protected IRepository<TqPathwayResult> PathwayResultRepository;
+        protected ILogger<GenericRepository<TqPathwayResult>> PathwayResultRepositoryLogger;
         protected IRepository<TlLookup> TlLookupRepository;
         protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
         protected IList<TlLookup> TlLookup;
@@ -65,8 +65,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         {
             CreateMapper();
             // Dependencies 
-            AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
-            AssessmentRepository = new AssessmentRepository(AssessmentRepositoryLogger, DbContext);
+            PathwayResultRepositoryLogger = new Logger<GenericRepository<TqPathwayResult>>(new NullLoggerFactory());
+            PathwayResultRepository = new GenericRepository<TqPathwayResult>(PathwayResultRepositoryLogger, DbContext);
 
             AssessmentSeriesRepositoryLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
             AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesRepositoryLogger, DbContext);
@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             ResultRepository = new ResultRepository(ResultRepositoryLogger, DbContext);
 
             // Service
-            ResultService = new ResultService(AssessmentRepository, AssessmentSeriesRepository, TlLookupRepository, ResultRepository, ResultMapper);
+            ResultService = new ResultService(AssessmentSeriesRepository, TlLookupRepository, ResultRepository, PathwayResultRepository, ResultMapper);
         }
 
         protected void CreateMapper()

@@ -49,8 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
             DbContext.SaveChanges();
 
-            AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
-            AssessmentRepository = new AssessmentRepository(AssessmentRepositoryLogger, DbContext);
+            PathwayResultRepositoryLogger = new Logger<GenericRepository<TqPathwayResult>>(new NullLoggerFactory());
+            PathwayResultRepository = new GenericRepository<TqPathwayResult>(PathwayResultRepositoryLogger, DbContext);
 
             AssessmentSeriesRepositoryLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
             AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesRepositoryLogger, DbContext);
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             ResultRepositoryLogger = new Logger<ResultRepository>(new NullLoggerFactory());
             ResultRepository = new ResultRepository(ResultRepositoryLogger, DbContext);
 
-            ResultService = new ResultService(AssessmentRepository, AssessmentSeriesRepository, TlLookupRepository, ResultRepository, ResultMapper);
+            ResultService = new ResultService(AssessmentSeriesRepository, TlLookupRepository, ResultRepository, PathwayResultRepository, ResultMapper);
         }
 
         public override Task When()

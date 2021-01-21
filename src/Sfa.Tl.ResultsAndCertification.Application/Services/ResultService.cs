@@ -18,19 +18,19 @@ using System.Threading.Tasks;
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class ResultService : IResultService
-    {
-        private readonly IAssessmentRepository _assessmentRepository;
+    {        
         private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
         private readonly IRepository<TlLookup> _tlLookupRepository;
         private readonly IResultRepository _resultRepository;
+        private readonly IRepository<TqPathwayResult> _pathwayResultRepository;
         private readonly IMapper _mapper;
 
-        public ResultService(IAssessmentRepository assessmentRepository, IRepository<AssessmentSeries> assessmentSeriesRepository, IRepository<TlLookup> tlLookupRepository, IResultRepository resultRepository, IMapper mapper)
+        public ResultService(IRepository<AssessmentSeries> assessmentSeriesRepository, IRepository<TlLookup> tlLookupRepository, IResultRepository resultRepository, IRepository<TqPathwayResult> pathwayResultRepository, IMapper mapper)
         {
-            _assessmentRepository = assessmentRepository;
             _assessmentSeriesRepository = assessmentSeriesRepository;
             _tlLookupRepository = tlLookupRepository;
             _resultRepository = resultRepository;
+            _pathwayResultRepository = pathwayResultRepository;
             _mapper = mapper;
         }
 
@@ -175,6 +175,30 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<ResultDetails>(tqRegistration);
         }
 
+        public async Task<AddResultResponse> AddResultAsync(AddResultRequest request)
+        {
+            // Validate
+            var tqRegistrationPathway = await _resultRepository.GetResultsAsync(request.AoUkprn, request.ProfileId);
+            var isValid = IsValidAddResultRequestAsync(tqRegistrationPathway, request);
+            if (!isValid)
+                return new AddResultResponse { IsSuccess = false };
+
+            int status = 0;
+            if (request.AssessmentEntryType == AssessmentEntryType.Core)
+                status = await _pathwayResultRepository.CreateAsync(new TqPathwayResult
+                {
+                    TqPathwayAssessmentId = request.TqPathwayAssessmentId,
+                    TlLookupId = request.TlLookupId,
+                    IsOptedin = true,
+                    StartDate = DateTime.UtcNow,
+                    EndDate = null,
+                    IsBulkUpload = false,
+                    CreatedBy = request.PerformedBy
+                });
+
+            return new AddResultResponse { Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, IsSuccess = status > 0 };
+        }
+
         #region Private Methods
 
         private ResultRecordResponse AddStage3ValidationError(int rowNum, long uln, string errorMessage)
@@ -242,6 +266,28 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 newAndAmendedPathwayResultRecords.AddRange(newPathwayResults.Where(p => p.TqPathwayAssessmentId > 0 && p.TlLookupId > 0));
 
             return newAndAmendedPathwayResultRecords;
+        }
+
+        private bool IsValidAddResultRequestAsync(TqRegistrationPathway registrationPathway, AddResultRequest addResultRequest)
+        {
+            // 1. Must be an active registration.
+            if (registrationPathway == null || registrationPathway.Status != RegistrationPathwayStatus.Active)
+                return false;
+
+
+            if(addResultRequest.AssessmentEntryType == AssessmentEntryType.Core)
+            {
+                var assessmentEntry = registrationPathway.TqPathwayAssessments.FirstOrDefault(p => p.Id == addResultRequest.TqPathwayAssessmentId && p.IsOptedin && p.EndDate == null);
+
+                if (assessmentEntry == null) return false;
+
+                var anyActiveResult = assessmentEntry.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null);
+                return !anyActiveResult;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         #endregion
