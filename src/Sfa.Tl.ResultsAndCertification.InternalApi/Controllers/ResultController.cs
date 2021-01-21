@@ -34,5 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _resultService.GetResultDetailsAsync(aoUkprn, profileId, status);
         }
+
+        [HttpPost]
+        [Route("AddResult")]
+        public async Task<AddResultResponse> AddResultAsync(AddResultRequest request)
+        {
+            return await _resultService.AddResultAsync(request);
+        }
     }
 }

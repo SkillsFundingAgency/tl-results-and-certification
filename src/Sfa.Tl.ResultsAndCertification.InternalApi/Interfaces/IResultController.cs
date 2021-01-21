@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
     public interface IResultController
     {
         Task<BulkResultResponse> ProcessBulkResultsAsync(BulkProcessRequest request);
-
         Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
+        Task<AddResultResponse> AddResultAsync(AddResultRequest request);
     }
 }
