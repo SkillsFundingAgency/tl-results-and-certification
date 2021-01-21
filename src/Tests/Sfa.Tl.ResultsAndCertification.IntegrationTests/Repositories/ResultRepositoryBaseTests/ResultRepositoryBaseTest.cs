@@ -230,8 +230,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.ResultRep
             actualSpecialismAssessment.IsOptedin.Should().Be(expectedSpecialismAssessment.IsOptedin);
             actualSpecialismAssessment.IsBulkUpload.Should().Be(expectedSpecialismAssessment.IsBulkUpload);
             actualSpecialismAssessment.StartDate.ToShortDateString().Should().Be(expectedSpecialismAssessment.StartDate.ToShortDateString());
-            if (actualSpecialismAssessment.EndDate != null)
+            if (expectedSpecialismAssessment.EndDate != null)
                 actualSpecialismAssessment.EndDate.Value.ToShortDateString().Should().Be(expectedSpecialismAssessment.EndDate.Value.ToShortDateString());
+            else
+                actualSpecialismAssessment.Should().BeNull();
             actualSpecialismAssessment.CreatedBy.Should().Be(expectedSpecialismAssessment.CreatedBy);
         }
 
@@ -242,8 +244,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.ResultRep
             actualPathwayAssessment.IsOptedin.Should().Be(expectedPathwayAssessment.IsOptedin);
             actualPathwayAssessment.IsBulkUpload.Should().Be(actualPathwayAssessment.IsBulkUpload);
             actualPathwayAssessment.StartDate.ToShortDateString().Should().Be(expectedPathwayAssessment.StartDate.ToShortDateString());
-            if (actualPathwayAssessment.EndDate != null)
+            if (expectedPathwayAssessment.EndDate != null)
                 actualPathwayAssessment.EndDate.Value.ToShortDateString().Should().Be(expectedPathwayAssessment.EndDate.Value.ToShortDateString());
+            else
+                actualPathwayAssessment.Should().BeNull();
             actualPathwayAssessment.CreatedBy.Should().Be(expectedPathwayAssessment.CreatedBy);
         }
 
@@ -254,8 +258,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.ResultRep
             actualPathwayResult.IsOptedin.Should().Be(expectedPathwayResult.IsOptedin);
             actualPathwayResult.IsBulkUpload.Should().Be(actualPathwayResult.IsBulkUpload);
             actualPathwayResult.StartDate.ToShortDateString().Should().Be(expectedPathwayResult.StartDate.ToShortDateString());
-            if (actualPathwayResult.EndDate != null)
+            if (expectedPathwayResult.EndDate != null)
                 actualPathwayResult.EndDate.Value.ToShortDateString().Should().Be(expectedPathwayResult.EndDate.Value.ToShortDateString());
+            else
+                actualPathwayResult.EndDate.Should().BeNull();
             actualPathwayResult.CreatedBy.Should().Be(expectedPathwayResult.CreatedBy);
         }
 

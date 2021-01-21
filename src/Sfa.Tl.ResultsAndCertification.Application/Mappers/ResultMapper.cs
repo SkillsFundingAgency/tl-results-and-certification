@@ -28,8 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                                 opts.MapFrom(s => s.TqPathwayAssessments.Any() && s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.Any() ?
                                 s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.FirstOrDefault().Id : (int?)null))
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status));
-
-            // Todo: Disucss model shouldn't be a flat rather simple complex obj.
         }
     }
 }
