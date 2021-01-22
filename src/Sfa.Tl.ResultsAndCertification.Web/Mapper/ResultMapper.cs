@@ -43,6 +43,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PathwayResult, opts => opts.MapFrom(s => s.PathwayResult))
                 .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Status));
+
+            CreateMap<AddResultViewModel, AddResultRequest>()
+                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.TqPathwayAssessmentId, opts => opts.MapFrom(s => s.TqPathwayAssessmentId))
+                .ForMember(d => d.TlLookupId, opts => opts.MapFrom(s => s.TlLookupId))                
+                .ForMember(d => d.AssessmentEntryType, opts => opts.MapFrom(s => s.AssessmentEntryType))
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddResultViewModel, AddResultRequest>>());
         }
     }
 }

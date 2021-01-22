@@ -88,5 +88,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, status);
             return _mapper.Map<ResultDetailsViewModel>(response);
         }
+
+        public async Task<AddResultResponse> AddResultAsync(long aoUkprn, AddResultViewModel viewModel)
+        {
+            var request = _mapper.Map<AddResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.AddResultAsync(request);
+        }
     }
 }
