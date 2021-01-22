@@ -62,7 +62,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.SummaryCoreResult.Value.Should().Be(mockresult.PathwayAssessmentSeries);
             model.SummaryCoreResult.ActionText.Should().Be(ResultDetailsContent.Change_Result_Action_Link_Text);
             model.SummaryCoreResult.RenderHiddenActionText.Should().Be(true);
-            model.SummaryCoreResult.HiddenActionText.Should().Be(ResultDetailsContent.Core_Result_Hidden_Text);
+            model.SummaryCoreResult.HiddenActionText.Should().Be(ResultDetailsContent.Hidden_Action_Text);
+            model.SummaryCoreResult.HiddenValueText.Should().Be(ResultDetailsContent.Hidden_Value_Text); 
             model.SummaryCoreResult.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Breadcrum

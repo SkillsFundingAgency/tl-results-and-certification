@@ -12,6 +12,10 @@
         }
         else
         {
+            @if (!string.IsNullOrWhiteSpace(Model?.HiddenValueText))
+            {
+                <span class="govuk-visually-hidden">@Model?.HiddenValueText</span>
+            }
             <p class="govuk-body">@Model?.Value</p>
         }
     </dd>

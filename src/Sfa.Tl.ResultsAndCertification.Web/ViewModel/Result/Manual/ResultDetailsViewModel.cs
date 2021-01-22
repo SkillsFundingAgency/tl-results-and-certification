@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
     public class ResultDetailsViewModel
     {
         private string PathwayResultActionText { get { return !string.IsNullOrWhiteSpace(PathwayResult) ? ResultDetailsContent.Change_Result_Action_Link_Text : ResultDetailsContent.Add_Result_Action_Link_Text; } }
-        private string PathwayResultText { get { return string.Format(ResultDetailsContent.Grade_Label_Text, !string.IsNullOrWhiteSpace(PathwayResult) ? PathwayResult : ResultDetailsContent.Not_Specified_Text); } }
+        private string PathwayResultText { get { return string.Format(ResultDetailsContent.Grade_Label_Text, !string.IsNullOrWhiteSpace(PathwayResult) ? PathwayResult : ResultDetailsContent.Not_Received_Text); } }
 
         private string PathwayAddResultRoute { get { return !string.IsNullOrWhiteSpace(PathwayResult) ? RouteConstants.ChangeCoreResult : RouteConstants.AddCoreResult; } }
         private Dictionary<string, string> PathwayResultRouteAttributes { get { return !string.IsNullOrWhiteSpace(PathwayResult) ? new Dictionary<string, string> { { Constants.ResultId, PathwayResultId.ToString() } } : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }; } }
@@ -40,8 +40,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
             Value2 = PathwayResultText, 
             ActionText = PathwayResultActionText,
             RouteName = PathwayAddResultRoute,
-            HiddenActionText = ResultDetailsContent.Core_Result_Hidden_Text,
-            RouteAttributes = PathwayResultRouteAttributes
+            HiddenValueText = ResultDetailsContent.Hidden_Value_Text,
+            HiddenActionText = ResultDetailsContent.Hidden_Action_Text,
+            RouteAttributes = PathwayResultRouteAttributes,
+            RenderHiddenActionText = true
         };
 
         public BreadcrumbModel Breadcrumb

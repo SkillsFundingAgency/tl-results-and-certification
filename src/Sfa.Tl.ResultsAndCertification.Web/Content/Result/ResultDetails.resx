@@ -129,17 +129,23 @@
   <data name="Core_Result_Cannot_Be_Entered" xml:space="preserve">
     <value>Core result cannot be entered until an assessment entry is added.</value>
   </data>
-  <data name="Core_Result_Hidden_Text" xml:space="preserve">
-    <value> for core</value>
-  </data>
   <data name="Grade_Label_Text" xml:space="preserve">
     <value>Grade: {0}</value>
+  </data>
+  <data name="Hidden_Action_Text" xml:space="preserve">
+    <value> for core</value>
+  </data>
+  <data name="Hidden_Value_Text" xml:space="preserve">
+    <value>for </value>
   </data>
   <data name="Learners_Result_Heading_Text" xml:space="preserve">
     <value>Learner’s results</value>
   </data>
   <data name="Name_Heading_Text" xml:space="preserve">
     <value>Name: {0}</value>
+  </data>
+  <data name="Not_Received_Text" xml:space="preserve">
+    <value>Not received</value>
   </data>
   <data name="Not_Specified_Text" xml:space="preserve">
     <value>Not specified</value>

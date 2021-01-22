@@ -97,20 +97,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  for core.
-        /// </summary>
-        public static string Core_Result_Hidden_Text {
-            get {
-                return ResourceManager.GetString("Core_Result_Hidden_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Grade: {0}.
         /// </summary>
         public static string Grade_Label_Text {
             get {
                 return ResourceManager.GetString("Grade_Label_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  for core.
+        /// </summary>
+        public static string Hidden_Action_Text {
+            get {
+                return ResourceManager.GetString("Hidden_Action_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to for .
+        /// </summary>
+        public static string Hidden_Value_Text {
+            get {
+                return ResourceManager.GetString("Hidden_Value_Text", resourceCulture);
             }
         }
         
@@ -129,6 +138,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Name_Heading_Text {
             get {
                 return ResourceManager.GetString("Name_Heading_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not received.
+        /// </summary>
+        public static string Not_Received_Text {
+            get {
+                return ResourceManager.GetString("Not_Received_Text", resourceCulture);
             }
         }
         

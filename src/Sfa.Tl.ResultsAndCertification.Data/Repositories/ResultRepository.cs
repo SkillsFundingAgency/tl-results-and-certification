@@ -105,13 +105,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                        .ThenInclude(x => x.TlProvider)
                    .Include(x => x.TqRegistrationSpecialisms)
                        .ThenInclude(x => x.TlSpecialism)
-                   .Include(x => x.TqRegistrationSpecialisms)
                     .OrderByDescending(o => o.CreatedOn)
                     .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId &&
-                           p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
-                           (
+                            p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&
+                            (
                                 p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn
-                           ));
+                            ));
 
             if (regPathway == null) return null;
 
