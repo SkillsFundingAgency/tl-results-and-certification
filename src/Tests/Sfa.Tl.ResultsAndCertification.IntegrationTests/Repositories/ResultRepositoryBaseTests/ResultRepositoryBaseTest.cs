@@ -247,7 +247,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.ResultRep
             if (expectedPathwayAssessment.EndDate != null)
                 actualPathwayAssessment.EndDate.Value.ToShortDateString().Should().Be(expectedPathwayAssessment.EndDate.Value.ToShortDateString());
             else
-                actualPathwayAssessment.Should().BeNull();
+                actualPathwayAssessment.EndDate.Should().BeNull();
             actualPathwayAssessment.CreatedBy.Should().Be(expectedPathwayAssessment.CreatedBy);
         }
 

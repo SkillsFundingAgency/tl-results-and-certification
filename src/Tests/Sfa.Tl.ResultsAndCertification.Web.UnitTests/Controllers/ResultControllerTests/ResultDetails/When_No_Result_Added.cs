@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.SummaryCoreResult.Should().NotBeNull();
             model.SummaryCoreResult.Title.Should().Be(ResultDetailsContent.Title_Result_Text);
             model.SummaryCoreResult.Value.Should().Be(mockresult.PathwayAssessmentSeries);
-            model.SummaryCoreResult.Value2.Should().Be(string.Format(ResultDetailsContent.Grade_Label_Text, ResultDetailsContent.Not_Specified_Text));
+            model.SummaryCoreResult.Value2.Should().Be(string.Format(ResultDetailsContent.Grade_Label_Text, ResultDetailsContent.Not_Received_Text));
             model.SummaryCoreResult.ActionText.Should().Be(ResultDetailsContent.Add_Result_Action_Link_Text);
             model.SummaryCoreResult.RenderHiddenActionText.Should().Be(true);
             model.SummaryCoreResult.HiddenActionText.Should().Be(ResultDetailsContent.Hidden_Action_Text);

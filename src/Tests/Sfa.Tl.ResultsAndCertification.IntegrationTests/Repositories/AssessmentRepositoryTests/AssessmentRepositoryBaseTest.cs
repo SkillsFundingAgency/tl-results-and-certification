@@ -192,7 +192,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             if (expectedSpecialismAssessment.EndDate != null)
                 actualSpecialismAssessment.EndDate.Value.ToShortDateString().Should().Be(expectedSpecialismAssessment.EndDate.Value.ToShortDateString());
             else
-                actualSpecialismAssessment.Should().BeNull();
+                actualSpecialismAssessment.EndDate.Should().BeNull();
             actualSpecialismAssessment.CreatedBy.Should().Be(expectedSpecialismAssessment.CreatedBy);
         }
 
@@ -206,7 +206,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             if (expectedPathwayAssessment.EndDate != null)
                 actualPathwayAssessment.EndDate.Value.ToShortDateString().Should().Be(expectedPathwayAssessment.EndDate.Value.ToShortDateString());
             else
-                actualPathwayAssessment.Should().BeNull();
+                actualPathwayAssessment.EndDate.Should().BeNull();
             actualPathwayAssessment.CreatedBy.Should().Be(expectedPathwayAssessment.CreatedBy);
         }
         #endregion
