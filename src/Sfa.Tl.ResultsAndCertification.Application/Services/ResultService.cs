@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
@@ -197,6 +198,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 });
 
             return new AddResultResponse { Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, IsSuccess = status > 0 };
+        }
+        
+        public async Task<CoreResult> GetCoreResultAsync(long aoUkprn, int profileId, int assessmentId)
+        {
+            var tqRegistration = await _resultRepository.GetPathwayResultAsync(aoUkprn, profileId, assessmentId);
+            return _mapper.Map<CoreResult>(tqRegistration);
+        }
+
+        public async Task<IEnumerable<LookupData>> GetLookupDataAsync(int lookupCategory)
+        {
+            // TODO: validate the aoUkprn -> Is this required?
+            var lookupData = _tlLookupRepository.GetManyAsync(x => x.IsActive && x.Category == EnumExtensions.GetDisplayName<LookupCategory>(lookupCategory));
+            //TODO: .OrderBy(x => x.Order); 
+            return _mapper.Map<IEnumerable<LookupData>>(lookupData);
         }
 
         #region Private Methods

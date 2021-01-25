@@ -1,8 +1,47 @@
-﻿
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.AddCoreResultViewModel;
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+
 @{
-    ViewData["Title"] = "AddCoreResult";
+    ViewData["Title"] = AddCoreResult.Page_Title;
 }
 
-<h1>AddCoreResult</h1>
-<h2>Development is inprogress</h2>
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
 
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" id="addCoreResultForm" asp-route="SubmitAddCoreResult">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="AssessmentId" />
+
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">
+                            @AddCoreResult.Heading
+                            <p class="govuk-body-l govuk-!-font-weight-regular govuk-!-margin-top-4">
+                                @string.Format(AddCoreResult.Core_Assessment_Title, @Model.PathwayDisplayName, @Model.AssessmentSeries)
+                            </p>
+                        </h1>
+                    </legend>
+
+                    @foreach (var grade in Model?.Grades?.Select((value, i) => (value, i)))
+                    {
+                        var elementId = (grade.i > 0) ? "hasgradeselected-" + grade.i : "hasgradeselected";
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="@elementId" type="radio" asp-for="@Model.SelectedGradeCode" value="@Model.Grades[grade.i].Code">
+                            <label class="govuk-label govuk-radios__label" for="@elementId">
+                                @grade.value.Value
+                            </label>
+                        </div>
+                    }
+                </fieldset>
+            </div>
+
+            <p>
+                <button type="submit" class="govuk-button" data-module="govuk-button">@AddCoreResult.SubmitButton</button>
+            </p>
+        </form>
+    </div>
+</div>

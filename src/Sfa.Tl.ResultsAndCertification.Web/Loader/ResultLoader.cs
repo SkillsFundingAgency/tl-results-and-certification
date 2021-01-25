@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -89,10 +90,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<ResultDetailsViewModel>(response);
         }
 
-        public async Task<AddResultResponse> AddResultAsync(long aoUkprn, AddResultViewModel viewModel)
+        public async Task<AddResultResponse> AddResultAsync(long aoUkprn, AddCoreResultViewModel viewModel)
         {
             var request = _mapper.Map<AddResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.AddResultAsync(request);
+        }
+
+        public async Task<AddCoreResultViewModel> GetAddCoreResultViewModelAsync(long aoUkprn, int profileId, int assessmentId)
+        {
+            var response = await _internalApiClient.GetCoreResultAsync(aoUkprn, profileId, assessmentId);
+            var grades = await _internalApiClient.GetLookupData(LookupCategory.PathwayComponentGrade);
+            grades.Add(new LookupData { Code = string.Empty, Value = Content.Result.AddCoreResult.Option_Not_Received });
+            
+            return _mapper.Map<AddCoreResultViewModel>(response, opt => opt.Items["grades"] = grades.OrderBy(x => x.Id).ToList());
         }
     }
 }

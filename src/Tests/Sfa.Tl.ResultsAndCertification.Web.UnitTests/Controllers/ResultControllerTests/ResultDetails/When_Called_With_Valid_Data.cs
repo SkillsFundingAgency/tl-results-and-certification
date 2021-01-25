@@ -26,6 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 ProviderDisplayName = "Test Provider (1234567)",
                 PathwayDisplayName = "Pathway (7654321)",
                 PathwayAssessmentSeries = "Summer 2021",
+                PathwayAssessmentId = 11,
                 SpecialismDisplayName = "Specialism1 (2345678)",
                 PathwayResult = "A",
                 PathwayResultId = 123, 
@@ -53,6 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.ProviderDisplayName.Should().Be(mockresult.ProviderDisplayName);
             model.PathwayDisplayName.Should().Be(mockresult.PathwayDisplayName);
             model.PathwayAssessmentSeries.Should().Be(mockresult.PathwayAssessmentSeries);
+            model.PathwayAssessmentId.Should().Be(mockresult.PathwayAssessmentId);
             model.SpecialismDisplayName.Should().Be(mockresult.SpecialismDisplayName);
             model.PathwayStatus.Should().Be(mockresult.PathwayStatus);
 

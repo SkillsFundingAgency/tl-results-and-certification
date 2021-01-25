@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
@@ -40,6 +41,21 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<AddResultResponse> AddResultAsync(AddResultRequest request)
         {
             return await _resultService.AddResultAsync(request);
+        }
+
+        [HttpGet]
+        [Route("GetCoreResult/{aoUkprn}/{profileId}/{assessmentId}")]
+        public async Task<CoreResult> GetCoreResultAsync(long aoUkprn, int profileId, int assessmentId)
+        {
+            return await _resultService.GetCoreResultAsync(aoUkprn, profileId, assessmentId);
+        }
+
+        [HttpGet]
+        [Route("GetLookupData/{lookupCategory}")]
+        public async Task<IEnumerable<LookupData>> GetLookupDataAsync(int lookupCategory)
+        {
+            // TODO: move this call into generic controller.
+            return await _resultService.GetLookupDataAsync(lookupCategory);
         }
     }
 }

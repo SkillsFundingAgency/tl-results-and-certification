@@ -221,10 +221,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View();
         }
 
-        [Route("add-core-result-indev/{profileId}", Name = RouteConstants.AddCoreResult)]
-        public IActionResult AddCoreResult(int profileId)
+        [HttpGet]
+        [Route("select-core-result/{profileId}/{assessmentId}", Name = RouteConstants.AddCoreResult)]
+        public async Task<IActionResult> AddCoreResult(int profileId, int assessmentId)
         {
-            return View();
+            var viewModel = await _resultLoader.GetAddCoreResultViewModelAsync(User.GetUkPrn(), profileId, assessmentId);
+            
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetAddCoreResultViewModelAsync({User.GetUkPrn()}, {profileId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("select-core-result", Name = RouteConstants.SubmitAddCoreResult)]
+        public async Task<IActionResult> SubmitAddCoreResult(AddCoreResultViewModel model)
+        {
+            if (string.IsNullOrEmpty(model?.SelectedGradeCode))
+            {
+                return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
+            }
+
+            return View("ChangeCoreResult");
         }
     }
 }

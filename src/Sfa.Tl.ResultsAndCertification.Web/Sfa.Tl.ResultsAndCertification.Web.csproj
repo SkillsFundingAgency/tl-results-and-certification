@@ -126,6 +126,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ReregistrationConfirmation.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Result\AddCoreResult.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddCoreResult.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Result\Dashboard.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -557,6 +562,10 @@
     <EmbeddedResource Update="Content\Registration\ReregistrationConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ReregistrationConfirmation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Result\AddCoreResult.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddCoreResult.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Result\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

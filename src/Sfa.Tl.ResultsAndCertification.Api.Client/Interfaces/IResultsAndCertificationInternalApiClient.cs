@@ -55,5 +55,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         // DocumentUploadHistory
         Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);
         Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request);
+        Task<CoreResult> GetCoreResultAsync(long aoUkprn, int profileId, int assessmentId);
+        
+        // Common
+        Task<IList<LookupData>> GetLookupData(LookupCategory pathwayComponentGrade);
     }
 }

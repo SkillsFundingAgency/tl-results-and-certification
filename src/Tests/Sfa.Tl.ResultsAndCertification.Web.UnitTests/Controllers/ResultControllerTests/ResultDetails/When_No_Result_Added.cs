@@ -25,9 +25,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 ProviderDisplayName = "Test Provider (1234567)",
                 PathwayDisplayName = "Pathway (7654321)",
                 PathwayAssessmentSeries = "Summer 2021",
+                PathwayAssessmentId = 11,
                 PathwayStatus = RegistrationPathwayStatus.Active
             };
-            _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } };
+            _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() }, { Constants.AssessmentId, mockresult.PathwayAssessmentId.ToString() } };
             ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockresult);
         }
 
@@ -48,6 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.ProviderDisplayName.Should().Be(mockresult.ProviderDisplayName);
             model.PathwayDisplayName.Should().Be(mockresult.PathwayDisplayName);
             model.PathwayAssessmentSeries.Should().Be(mockresult.PathwayAssessmentSeries);
+            model.PathwayAssessmentId.Should().Be(mockresult.PathwayAssessmentId);
             model.SpecialismDisplayName.Should().Be(mockresult.SpecialismDisplayName);
             model.PathwayStatus.Should().Be(mockresult.PathwayStatus);
 

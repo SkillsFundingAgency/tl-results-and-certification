@@ -162,6 +162,7 @@
         public const string DownloadResultErrors = "DownloadResultErrors";
         public const string ChangeCoreResult = "ChangeCoreResult";
         public const string AddCoreResult = "AddCoreResult";
+        public const string SubmitAddCoreResult = "SubmitAddCoreResult";
 
         // Search Results
         public const string SearchResults = "SearchResults";

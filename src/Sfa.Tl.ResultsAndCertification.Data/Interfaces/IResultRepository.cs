@@ -10,5 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         Task<IList<TqPathwayResult>> GetBulkPathwayResultsAsync(IList<TqPathwayResult> pathwayResults);
         Task<bool> BulkInsertOrUpdateResults(List<TqPathwayResult> pathwayResults);
         Task<TqRegistrationPathway> GetResultsAsync(long aoUkprn, int profileId);
+        Task<TqRegistrationPathway> GetPathwayResultAsync(long aoUkprn, int profileId, int assessmentId);
     }
 }

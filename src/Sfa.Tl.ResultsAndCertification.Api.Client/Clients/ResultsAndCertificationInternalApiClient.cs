@@ -235,6 +235,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<AddResultRequest, AddResultResponse>(requestUri, request);
         }
 
+        public async Task<CoreResult> GetCoreResultAsync(long aoUkprn, int profileId, int assessmentId)
+        {
+            var requestUri = string.Format(ApiConstants.GetCoreResultUri, aoUkprn, profileId, assessmentId);
+            return await GetAsync<CoreResult>(requestUri);
+        }
+
+        public async Task<IList<LookupData>> GetLookupData(LookupCategory pathwayComponentGrade)
+        {
+            var requestUri = string.Format(ApiConstants.GetLookupDataUri, (int)pathwayComponentGrade);
+            return await GetAsync<IList<LookupData>>(requestUri);
+        }
+
         #region Private Methods
 
         /// <summary>

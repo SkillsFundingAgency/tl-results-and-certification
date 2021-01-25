@@ -138,6 +138,19 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return regPathway;
         }
 
+        public async Task<TqRegistrationPathway> GetPathwayResultAsync(long aoUkprn, int profileId, int assessmentId)
+        {
+            var result = await GetResultsAsync(aoUkprn, profileId);
+            if (result == null)
+                return null;
+
+            var assessment = result.TqPathwayAssessments?.Where(x => x.IsOptedin && x.EndDate == null && x.Id == assessmentId);
+            if (!assessment.Any())
+                return null;
+
+            return result;
+        }
+
         private async Task ProcessPathwayResults(BulkConfig bulkConfig, List<TqPathwayResult> pathwayResults)
         {
             if (pathwayResults.Count > 0)
