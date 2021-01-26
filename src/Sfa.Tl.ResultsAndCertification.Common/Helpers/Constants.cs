@@ -45,6 +45,7 @@
         public const string SearchResultsUlnNotFound = "SearchResultsUlnNotFound";
         public const string ResultsSearchCriteria = "ResultsSearchCriteria";
         public const string ResultsUploadSuccessfulViewModel = "ResultsUploadSuccessfulViewModel";
+        public const string ResultConfirmationViewModel = "ResultConfirmationViewModel";
 
         public const string UserSessionActivityId = "UserSessionActivityId";
 

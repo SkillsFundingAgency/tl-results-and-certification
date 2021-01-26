@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.TqPathwayAssessmentId, opts => opts.MapFrom(s => s.AssessmentId))
-                .ForMember(d => d.TlLookupId, opts => opts.MapFrom(s => s.SelectedGradeCode))                
+                .ForMember(d => d.TlLookupId, opts => opts.MapFrom(s => s.TlLookupId))
                 .ForMember(d => d.AssessmentEntryType, opts => opts.MapFrom(s => AssessmentEntryType.Core))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddCoreResultViewModel, AddResultRequest>>());
 
