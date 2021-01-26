@@ -33,6 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlLookup
             _result.Code.Should().Be(_data.Code);
             _result.Value.Should().Be(_data.Value);
             _result.IsActive.Should().Be(_data.IsActive);
+            _result.SortOrder.Should().Be(_data.SortOrder);
             _result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
             _result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);

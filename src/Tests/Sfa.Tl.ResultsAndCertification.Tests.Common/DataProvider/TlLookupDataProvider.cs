@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tlLookup;
         }
 
-        public static TlLookup CreateTlLookup(ResultsAndCertificationDbContext _dbContext, string category, string code, string value, bool isActive, bool addToDbContext = true)
+        public static TlLookup CreateTlLookup(ResultsAndCertificationDbContext _dbContext, string category, string code, string value, bool isActive, int? sortOrder, bool addToDbContext = true)
         {
             var tlLookup = new TlLookup
             {
@@ -40,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                 Code = code,
                 Value = value,
                 IsActive = isActive,
+                SortOrder = sortOrder,
                 CreatedBy = "Test User"
             };
 

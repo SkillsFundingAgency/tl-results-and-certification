@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<AddCoreResultViewModel> GetAddCoreResultViewModelAsync(long aoUkprn, int profileId, int assessmentId)
         {
             var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId);
-            if (response == null && response.PathwayAssessmentId == assessmentId)
+            if (response == null || response.PathwayAssessmentId != assessmentId || response.PathwayResultId.HasValue)
                 return null;
 
             var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
