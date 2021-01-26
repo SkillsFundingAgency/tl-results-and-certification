@@ -247,7 +247,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var response = await _resultLoader.AddResultAsync(User.GetUkPrn(), model);
 
-            if (response == null)
+            if (response == null || !response.IsSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
             await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ResultConfirmationViewModel), new ResultConfirmationViewModel { Uln = response.Uln, ProfileId = response.ProfileId }, CacheExpiryTime.XSmall);
