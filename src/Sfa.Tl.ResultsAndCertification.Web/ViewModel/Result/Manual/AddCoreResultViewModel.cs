@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public string PathwayDisplayName { get; set; }
         
         public string SelectedGradeCode { get; set; }
+        public int TlLookupId { get; set; }
         public List<LookupViewModel> Grades { get; set; }
         
         public BackLinkModel BackLink => new BackLinkModel

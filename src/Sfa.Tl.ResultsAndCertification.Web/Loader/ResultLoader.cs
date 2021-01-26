@@ -92,6 +92,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<AddResultResponse> AddResultAsync(long aoUkprn, AddCoreResultViewModel viewModel)
         {
+            var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
+
+            var selectedGrade = grades?.FirstOrDefault(x => x.Code.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase));
+
+            if (selectedGrade == null) return null;
+
+            viewModel.TlLookupId = selectedGrade.Id;
             var request = _mapper.Map<AddResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.AddResultAsync(request);
         }

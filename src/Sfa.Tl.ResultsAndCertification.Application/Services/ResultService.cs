@@ -196,7 +196,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     CreatedBy = request.PerformedBy
                 });
 
-            return new AddResultResponse { Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, IsSuccess = status > 0 };
+            return new AddResultResponse { Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ProfileId = request.ProfileId, IsSuccess = status > 0 };
         }
         
         #region Private Methods

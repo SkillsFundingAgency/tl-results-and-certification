@@ -231,7 +231,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetAddCoreResultViewModelAsync({User.GetUkPrn()}, {profileId}, {assessmentId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
-            }
+            }            
 
             return View(viewModel);
         }
@@ -245,7 +245,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
             }
 
-            return View("ChangeCoreResult");
+            var response = await _resultLoader.AddResultAsync(User.GetUkPrn(), model);
+
+            if (response == null)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ResultConfirmationViewModel), new ResultConfirmationViewModel { UniqueLearnerNumber = response.Uln.ToString(), ProfileId = response.ProfileId }, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.AddResultConfirmation);
+        }
+
+        [HttpGet]
+        [Route("result-added-confirmation", Name = RouteConstants.AddResultConfirmation)]
+        public async Task<IActionResult> AddResultConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<ResultConfirmationViewModel>(string.Concat(CacheKey, Constants.ResultConfirmationViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ResultConfirmationViewModel from redis cache in add result confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
         }
     }
 }
