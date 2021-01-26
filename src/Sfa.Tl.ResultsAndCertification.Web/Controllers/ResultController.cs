@@ -238,7 +238,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("select-core-result", Name = RouteConstants.SubmitAddCoreResult)]
-        public async Task<IActionResult> SubmitAddCoreResultAsync(AddCoreResultViewModel model)
+        public async Task<IActionResult> AddCoreResultPostAsync(AddCoreResultViewModel model)
         {
             if (string.IsNullOrEmpty(model?.SelectedGradeCode))
             {
