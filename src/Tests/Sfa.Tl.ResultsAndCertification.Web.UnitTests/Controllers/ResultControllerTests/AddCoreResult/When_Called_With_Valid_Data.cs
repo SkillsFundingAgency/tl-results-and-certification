@@ -7,7 +7,7 @@ using Xunit;
 using System.Collections.Generic;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.AddCoreResultAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.AddCoreResult
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
