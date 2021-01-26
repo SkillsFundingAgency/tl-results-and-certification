@@ -22,8 +22,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public string SpecialismName { get; set; }
 
         // Pathway Result
-        public string PathwayResult { get; set; }
         public int? PathwayResultId { get; set; }
+        public string PathwayResultCode { get; set; }
+        public string PathwayResult { get; set; }
 
         public RegistrationPathwayStatus Status { get; set; }
     }

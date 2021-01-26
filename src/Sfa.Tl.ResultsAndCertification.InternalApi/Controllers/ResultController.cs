@@ -4,7 +4,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
@@ -14,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     public class ResultController : ControllerBase, IResultController
     {
         private readonly IBulkResultLoader _bulkResultProcess;
-        protected IResultService _resultService;
+        private readonly IResultService _resultService;
         
         public ResultController(IBulkResultLoader bulkResultProcess, IResultService resultService)
         {
@@ -41,20 +40,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<AddResultResponse> AddResultAsync(AddResultRequest request)
         {
             return await _resultService.AddResultAsync(request);
-        }
-
-        [HttpGet]
-        [Route("GetCoreResult/{aoUkprn}/{profileId}/{assessmentId}")]
-        public async Task<CoreResult> GetCoreResultAsync(long aoUkprn, int profileId, int assessmentId)
-        {
-            return await _resultService.GetCoreResultAsync(aoUkprn, profileId, assessmentId);
-        }
-
-        [HttpGet]
-        [Route("GetLookupData/{lookupCategory}")]
-        public async Task<IEnumerable<LookupData>> GetLookupDataAsync(int lookupCategory)
-        {
-            return await _resultService.GetLookupDataAsync(lookupCategory);
         }
     }
 }

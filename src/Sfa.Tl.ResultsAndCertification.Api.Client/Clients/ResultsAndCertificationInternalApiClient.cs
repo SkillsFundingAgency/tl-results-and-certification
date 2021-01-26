@@ -235,12 +235,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<AddResultRequest, AddResultResponse>(requestUri, request);
         }
 
-        public async Task<CoreResult> GetCoreResultAsync(long aoUkprn, int profileId, int assessmentId)
-        {
-            var requestUri = string.Format(ApiConstants.GetCoreResultUri, aoUkprn, profileId, assessmentId);
-            return await GetAsync<CoreResult>(requestUri);
-        }
-
         public async Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade)
         {
             var requestUri = string.Format(ApiConstants.GetLookupDataUri, (int)pathwayComponentGrade);
