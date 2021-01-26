@@ -10,24 +10,22 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.AddCoreResultAsync
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.SubmitAddCoreResult
 {
     public abstract class TestSetup : BaseTest<ResultController>
     {
         protected int AoUkprn;
-        protected int ProfileId;
-        protected int AssessmentId;
         protected Guid UserId;
         protected string CacheKey;
         protected IResultLoader ResultLoader;
         protected ICacheService CacheService;
         protected ILogger<ResultController> Logger;
         protected ResultController Controller;
-        protected RegistrationViewModel ViewModel;
+        AddCoreResultViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; private set; }
 
@@ -39,8 +37,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             Logger = Substitute.For<ILogger<ResultController>>();
             Controller = new ResultController(ResultLoader, CacheService, Logger);
 
-            ProfileId = 1;
-            AssessmentId = 11;
             AoUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<ResultController>(Controller)
                .Add(CustomClaimTypes.Ukprn, AoUkprn.ToString())
@@ -54,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 
         public async override Task When()
         {
-            Result = await Controller.AddCoreResultAsync(ProfileId, AssessmentId);
+            Result = await Controller.SubmitAddCoreResultAsync(ViewModel);
         }
     }
 }
