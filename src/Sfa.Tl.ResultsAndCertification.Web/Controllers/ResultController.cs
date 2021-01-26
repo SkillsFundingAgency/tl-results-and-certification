@@ -250,7 +250,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (response == null)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ResultConfirmationViewModel), new ResultConfirmationViewModel { UniqueLearnerNumber = response.Uln.ToString(), ProfileId = response.ProfileId }, CacheExpiryTime.XSmall);
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ResultConfirmationViewModel), new ResultConfirmationViewModel { Uln = response.Uln, ProfileId = response.ProfileId }, CacheExpiryTime.XSmall);
             return RedirectToRoute(RouteConstants.AddResultConfirmation);
         }
 

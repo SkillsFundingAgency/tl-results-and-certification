@@ -2,7 +2,7 @@
 {
     public class ResultConfirmationViewModel
     {
-        public string UniqueLearnerNumber { get; set; }
+        public long Uln { get; set; }
 
         public int ProfileId { get; set; }
     }
