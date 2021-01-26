@@ -58,6 +58,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<CoreResult> GetCoreResultAsync(long aoUkprn, int profileId, int assessmentId);
         
         // Common
-        Task<IList<LookupData>> GetLookupData(LookupCategory pathwayComponentGrade);
+        Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);
     }
 }

@@ -216,14 +216,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("change-core-result-indev/{resultId}", Name = RouteConstants.ChangeCoreResult)]
-        public IActionResult ChangeCoreResult(int resultId)
+        public IActionResult ChangeCoreResultAsync(int resultId)
         {
             return View();
         }
 
         [HttpGet]
         [Route("select-core-result/{profileId}/{assessmentId}", Name = RouteConstants.AddCoreResult)]
-        public async Task<IActionResult> AddCoreResult(int profileId, int assessmentId)
+        public async Task<IActionResult> AddCoreResultAsync(int profileId, int assessmentId)
         {
             var viewModel = await _resultLoader.GetAddCoreResultViewModelAsync(User.GetUkPrn(), profileId, assessmentId);
             
@@ -238,7 +238,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("select-core-result", Name = RouteConstants.SubmitAddCoreResult)]
-        public async Task<IActionResult> SubmitAddCoreResult(AddCoreResultViewModel model)
+        public async Task<IActionResult> SubmitAddCoreResultAsync(AddCoreResultViewModel model)
         {
             if (string.IsNullOrEmpty(model?.SelectedGradeCode))
             {

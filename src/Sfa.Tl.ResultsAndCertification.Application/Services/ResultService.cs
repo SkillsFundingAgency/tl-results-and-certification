@@ -208,9 +208,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<IEnumerable<LookupData>> GetLookupDataAsync(int lookupCategory)
         {
-            // TODO: validate the aoUkprn -> Is this required?
-            var lookupData = _tlLookupRepository.GetManyAsync(x => x.IsActive && x.Category == EnumExtensions.GetDisplayName<LookupCategory>(lookupCategory));
-            //TODO: .OrderBy(x => x.Order); 
+            // TODO: Is this validation required?
+            var isValid = EnumExtensions.IsValidValue<LookupCategory>(lookupCategory);
+            if (!isValid)
+                return null;
+
+            var lookupData = _tlLookupRepository.GetManyAsync(x => x.IsActive &&
+                                    x.Category == EnumExtensions.GetDisplayName<LookupCategory>(lookupCategory))
+                            .OrderBy(x => x.SortOrder);
+
             return _mapper.Map<IEnumerable<LookupData>>(lookupData);
         }
 

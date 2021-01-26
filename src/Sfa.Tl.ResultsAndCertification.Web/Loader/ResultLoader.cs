@@ -99,10 +99,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<AddCoreResultViewModel> GetAddCoreResultViewModelAsync(long aoUkprn, int profileId, int assessmentId)
         {
             var response = await _internalApiClient.GetCoreResultAsync(aoUkprn, profileId, assessmentId);
-            var grades = await _internalApiClient.GetLookupData(LookupCategory.PathwayComponentGrade);
-            grades.Add(new LookupData { Code = string.Empty, Value = Content.Result.AddCoreResult.Option_Not_Received });
-            
-            return _mapper.Map<AddCoreResultViewModel>(response, opt => opt.Items["grades"] = grades.OrderBy(x => x.Id).ToList());
+            if (response == null)
+                return null;
+
+            var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
+            if (grades == null || !grades.Any())
+                return null;
+
+            grades.Insert(0, new LookupData { Code = string.Empty, Value = Content.Result.AddCoreResult.Option_Not_Received });
+            return _mapper.Map<AddCoreResultViewModel>(response, opt => opt.Items["grades"] = grades);
         }
     }
 }

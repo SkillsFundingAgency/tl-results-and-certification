@@ -144,6 +144,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (result == null)
                 return null;
 
+            // TODO: SingleOrDefault?
             var assessment = result.TqPathwayAssessments?.Where(x => x.IsOptedin && x.EndDate == null && x.Id == assessmentId);
             if (!assessment.Any())
                 return null;

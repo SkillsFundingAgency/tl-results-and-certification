@@ -54,7 +54,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("GetLookupData/{lookupCategory}")]
         public async Task<IEnumerable<LookupData>> GetLookupDataAsync(int lookupCategory)
         {
-            // TODO: move this call into generic controller.
             return await _resultService.GetLookupDataAsync(lookupCategory);
         }
     }

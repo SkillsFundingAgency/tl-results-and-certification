@@ -241,7 +241,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<CoreResult>(requestUri);
         }
 
-        public async Task<IList<LookupData>> GetLookupData(LookupCategory pathwayComponentGrade)
+        public async Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade)
         {
             var requestUri = string.Format(ApiConstants.GetLookupDataUri, (int)pathwayComponentGrade);
             return await GetAsync<IList<LookupData>>(requestUri);
