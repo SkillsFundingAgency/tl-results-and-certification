@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
         public override void Given()
         {
             expectedApiResultDetails = new Models.Contracts.ResultDetails { PathwayAssessmentId = AssessmentId };
-            InternalApiClient.GetResultDetailsAsync(AoUkprn, ProfileId).Returns(expectedApiResultDetails);
+            InternalApiClient.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(expectedApiResultDetails);
 
             expectedApiLookupData = new List<LookupData>();
             InternalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade).Returns(expectedApiLookupData);
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            InternalApiClient.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId);
+            InternalApiClient.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active);
             InternalApiClient.Received(1).GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
         }
     }

@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 {
@@ -20,9 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpGet]
         [Route("GetLookupData/{lookupCategory}")]
-        public IEnumerable<LookupData> GetLookupDataAsync(LookupCategory lookupCategory)
+        public async Task<IEnumerable<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory)
         {
-            return _commonService.GetLookupDataAsync(lookupCategory);
+            return await _commonService.GetLookupDataAsync(lookupCategory);
         }
     }
 }

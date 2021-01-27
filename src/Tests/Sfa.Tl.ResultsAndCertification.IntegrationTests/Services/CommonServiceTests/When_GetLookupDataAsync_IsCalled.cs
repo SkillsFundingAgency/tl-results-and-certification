@@ -28,10 +28,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CommonService
             CommonService = new CommonService(TlLookupRepository, CommonMapper);
         }
 
-        public override Task When()
+        public async override Task When()
         {
-            _lookupResponse = CommonService.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
-            return Task.CompletedTask;
+            _lookupResponse = await CommonService.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
         }
 
         [Fact]

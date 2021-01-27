@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 PathwayName = "Construction",
                 PathwayResultId = null, 
             };
-            InternalApiClient.GetResultDetailsAsync(AoUkprn, ProfileId).Returns(expectedApiResultDetails);
+            InternalApiClient.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(expectedApiResultDetails);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            InternalApiClient.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId);
+            InternalApiClient.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active);
             InternalApiClient.Received(1).GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
         }
     }
