@@ -28,13 +28,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 ProfileId = 1
             };
 
-            ResultLoader.AddResultAsync(AoUkprn, ViewModel).Returns(AddResultResponse);
+            ResultLoader.AddCoreResultAsync(AoUkprn, ViewModel).Returns(AddResultResponse);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            ResultLoader.Received(1).AddResultAsync(AoUkprn, ViewModel);
+            ResultLoader.Received(1).AddCoreResultAsync(AoUkprn, ViewModel);
             CacheService.Received(1).SetAsync(string.Concat(CacheKey, Constants.ResultConfirmationViewModel),
                 Arg.Is<ResultConfirmationViewModel>
                 (x => x.ProfileId == ViewModel.ProfileId &&

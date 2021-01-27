@@ -45,8 +45,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             {
                 AoUkprn = 1,
                 ProfileId = 11,
-                TqPathwayAssessmentId = 1,
-                TlLookupId = 1,
+                AssessmentId = 1,
+                LookupId = 1,
                 AssessmentEntryType = Common.Enum.AssessmentEntryType.Core,
                 PerformedBy = "Test User"
             };

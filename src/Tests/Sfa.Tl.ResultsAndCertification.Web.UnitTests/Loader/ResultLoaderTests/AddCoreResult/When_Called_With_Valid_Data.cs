@@ -7,7 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.AddResult
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.AddCoreResult
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 ProfileId = ProfileId,
                 AssessmentId = 1,
                 SelectedGradeCode = "PCG1",
-                TlLookupId = 1
+                LookupId = 1
             };
 
             
@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                     x => x.ProfileId == ViewModel.ProfileId &&
                     x.AoUkprn == AoUkprn &&
                     x.AssessmentEntryType == AssessmentEntryType.Core &&
-                    x.TlLookupId == ViewModel.TlLookupId))
+                    x.LookupId == ViewModel.LookupId))
                 .Returns(ExpectedApiResult);
         }
 

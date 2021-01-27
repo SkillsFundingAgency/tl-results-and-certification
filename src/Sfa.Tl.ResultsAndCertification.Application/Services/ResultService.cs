@@ -187,8 +187,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (request.AssessmentEntryType == AssessmentEntryType.Core)
                 status = await _pathwayResultRepository.CreateAsync(new TqPathwayResult
                 {
-                    TqPathwayAssessmentId = request.TqPathwayAssessmentId,
-                    TlLookupId = request.TlLookupId,
+                    TqPathwayAssessmentId = request.AssessmentId,
+                    TlLookupId = request.LookupId,
                     IsOptedin = true,
                     StartDate = DateTime.UtcNow,
                     EndDate = null,
@@ -277,7 +277,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if(addResultRequest.AssessmentEntryType == AssessmentEntryType.Core)
             {
-                var assessmentEntry = registrationPathway.TqPathwayAssessments.FirstOrDefault(p => p.Id == addResultRequest.TqPathwayAssessmentId && p.IsOptedin && p.EndDate == null);
+                var assessmentEntry = registrationPathway.TqPathwayAssessments.FirstOrDefault(p => p.Id == addResultRequest.AssessmentId && p.IsOptedin && p.EndDate == null);
 
                 if (assessmentEntry == null) return false;
 

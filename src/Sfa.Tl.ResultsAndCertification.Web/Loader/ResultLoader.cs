@@ -90,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<ResultDetailsViewModel>(response);
         }
 
-        public async Task<AddResultResponse> AddResultAsync(long aoUkprn, AddCoreResultViewModel viewModel)
+        public async Task<AddResultResponse> AddCoreResultAsync(long aoUkprn, AddCoreResultViewModel viewModel)
         {
             var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
 
@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             if (selectedGrade == null) return null;
 
-            viewModel.TlLookupId = selectedGrade.Id;
+            viewModel.LookupId = selectedGrade.Id;
             var request = _mapper.Map<AddResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.AddResultAsync(request);
         }

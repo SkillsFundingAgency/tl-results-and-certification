@@ -243,7 +243,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (string.IsNullOrEmpty(model?.SelectedGradeCode))
                 return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
 
-            var response = await _resultLoader.AddResultAsync(User.GetUkPrn(), model);
+            var response = await _resultLoader.AddCoreResultAsync(User.GetUkPrn(), model);
 
             if (response == null || !response.IsSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);

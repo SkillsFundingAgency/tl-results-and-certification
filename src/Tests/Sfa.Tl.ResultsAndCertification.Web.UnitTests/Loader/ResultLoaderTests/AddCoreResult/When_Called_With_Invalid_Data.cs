@@ -3,7 +3,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.AddResult
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.AddCoreResult
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {

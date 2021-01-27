@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         Task<UlnResultsNotFoundViewModel> FindUlnResultsAsync(long aoUkprn, long Uln);
         Task<ResultDetailsViewModel> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
-        Task<AddResultResponse> AddResultAsync(long aoUkprn, AddCoreResultViewModel viewModel);
+        Task<AddResultResponse> AddCoreResultAsync(long aoUkprn, AddCoreResultViewModel viewModel);
         Task<AddCoreResultViewModel> GetAddCoreResultViewModelAsync(long aoUkprn, int profileId, int assessmentId);
     }
 }

@@ -49,8 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<AddCoreResultViewModel, AddResultRequest>()
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-                .ForMember(d => d.TqPathwayAssessmentId, opts => opts.MapFrom(s => s.AssessmentId))
-                .ForMember(d => d.TlLookupId, opts => opts.MapFrom(s => s.TlLookupId))
+                .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.AssessmentId))
+                .ForMember(d => d.LookupId, opts => opts.MapFrom(s => s.LookupId))
                 .ForMember(d => d.AssessmentEntryType, opts => opts.MapFrom(s => AssessmentEntryType.Core))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddCoreResultViewModel, AddResultRequest>>());
 

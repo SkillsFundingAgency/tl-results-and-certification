@@ -82,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
            var assessmentId = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId)?.Id;
 
             if (assessmentId != null)
-                request.TqPathwayAssessmentId = assessmentId.Value;
+                request.AssessmentId = assessmentId.Value;
 
             await WhenAsync(request);
 
@@ -123,7 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
                     // valid request - returns true
                     new object[]
-                    { new AddResultRequest { AoUkprn = 10011881, ProfileId = 3, TlLookupId = 1, AssessmentEntryType = AssessmentEntryType.Core },
+                    { new AddResultRequest { AoUkprn = 10011881, ProfileId = 3, LookupId = 1, AssessmentEntryType = AssessmentEntryType.Core },
                       new AddResultResponse { IsSuccess = true, Uln = 1111111113, ProfileId = 3 } }
                 };
             }

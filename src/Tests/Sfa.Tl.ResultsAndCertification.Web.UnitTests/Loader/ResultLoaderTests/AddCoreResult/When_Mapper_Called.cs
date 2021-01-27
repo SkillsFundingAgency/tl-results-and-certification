@@ -4,7 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.AddResult
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.AddCoreResult
 {
     public class When_Mapper_Called : TestSetup
     {
@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 ProfileId = ProfileId,
                 AssessmentId = 1,
                 SelectedGradeCode = "PCG1",
-                TlLookupId = 1
+                LookupId = 1
             };
 
             var result = Mapper.Map<AddResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = AoUkprn);
@@ -26,8 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             result.Should().NotBeNull();
             result.AoUkprn.Should().Be(AoUkprn);
             result.ProfileId.Should().Be(viewModel.ProfileId);
-            result.TqPathwayAssessmentId.Should().Be(viewModel.AssessmentId);
-            result.TlLookupId.Should().Be(viewModel.TlLookupId);
+            result.AssessmentId.Should().Be(viewModel.AssessmentId);
+            result.LookupId.Should().Be(viewModel.LookupId);
             result.AssessmentEntryType.Should().Be(AssessmentEntryType.Core);
             result.PerformedBy.Should().Be($"{Givenname} {Surname}");
         }

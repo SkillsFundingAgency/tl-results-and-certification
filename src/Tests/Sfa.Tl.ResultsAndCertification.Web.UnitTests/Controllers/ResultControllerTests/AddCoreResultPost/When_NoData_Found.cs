@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         public override void Given()
         {
             MockResult = null;
-            ResultLoader.AddResultAsync(AoUkprn, ViewModel).Returns(MockResult);
+            ResultLoader.AddCoreResultAsync(AoUkprn, ViewModel).Returns(MockResult);
         }
 
         [Fact]

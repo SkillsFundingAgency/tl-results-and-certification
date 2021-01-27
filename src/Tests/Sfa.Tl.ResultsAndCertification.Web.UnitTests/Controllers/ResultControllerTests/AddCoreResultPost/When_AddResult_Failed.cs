@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             MockResult.IsSuccess = false;
             MockResult.Uln = 1234567891;
             MockResult.ProfileId = 1;
-            ResultLoader.AddResultAsync(AoUkprn, ViewModel).Returns(MockResult);
+            ResultLoader.AddCoreResultAsync(AoUkprn, ViewModel).Returns(MockResult);
         }
 
         [Fact]
