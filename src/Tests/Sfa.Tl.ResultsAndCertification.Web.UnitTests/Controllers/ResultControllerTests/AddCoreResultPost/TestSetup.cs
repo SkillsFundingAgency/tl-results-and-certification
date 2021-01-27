@@ -64,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 
         public async override Task When()
         {
-            Result = await Controller.AddCoreResultPostAsync(ViewModel);
+            Result = await Controller.AddCoreResultAsync(ViewModel);
         }
     }
 }
