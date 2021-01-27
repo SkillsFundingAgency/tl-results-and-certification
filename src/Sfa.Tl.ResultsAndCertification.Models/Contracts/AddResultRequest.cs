@@ -8,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
         public int LookupId { get; set; }
-        public AssessmentEntryType AssessmentEntryType { get; set; }
+        public ComponentType ComponentType { get; set; }
         public string PerformedBy { get; set; }
     }
 }

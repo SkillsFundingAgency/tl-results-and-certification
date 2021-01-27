@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                 .ForMember(d => d.AssessmentSeriesId, opts => opts.MapFrom(s => s.AssessmentSeriesId))
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-                .ForMember(d => d.AssessmentEntryType, opts => opts.MapFrom(s => s.AssessmentEntryType))
+                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComponentType))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddAssessmentEntryViewModel, AddAssessmentEntryRequest>>());
             
             CreateMap<AssessmentEntryDetails, AssessmentEntryDetailsViewModel>();
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<AssessmentEntryDetailsViewModel, RemoveAssessmentEntryRequest>()
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.AssessmentId))
-                .ForMember(d => d.AssessmentEntryType, opts => opts.MapFrom(s => s.AssessmentEntryType))
+                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComponentType))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AssessmentEntryDetailsViewModel, RemoveAssessmentEntryRequest>>());            
         }
     }

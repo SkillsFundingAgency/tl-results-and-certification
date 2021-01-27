@@ -13,13 +13,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         private AssessmentEntryDetailsViewModel mockresult = null;
         public override void Given()
         {
-            AssessmentLoader.GetActiveAssessmentEntryDetailsAsync(AoUkprn, AssessmentId, AssessmentEntryType.Core).Returns(mockresult);
+            AssessmentLoader.GetActiveAssessmentEntryDetailsAsync(AoUkprn, AssessmentId, ComponentType.Core).Returns(mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            AssessmentLoader.Received(1).GetActiveAssessmentEntryDetailsAsync(AoUkprn, AssessmentId, AssessmentEntryType.Core);
+            AssessmentLoader.Received(1).GetActiveAssessmentEntryDetailsAsync(AoUkprn, AssessmentId, ComponentType.Core);
         }
 
         [Fact]

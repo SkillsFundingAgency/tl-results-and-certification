@@ -226,10 +226,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-core-assessment-entry-next-available-series/{profileId}", Name = RouteConstants.AddCoreAssessmentEntry)]
         public async Task<IActionResult> AddCoreAssessmentEntryAsync(int profileId)
         {
-            var viewModel = await _assessmentLoader.GetAvailableAssessmentSeriesAsync(User.GetUkPrn(), profileId, AssessmentEntryType.Core);
+            var viewModel = await _assessmentLoader.GetAvailableAssessmentSeriesAsync(User.GetUkPrn(), profileId, ComponentType.Core);
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available. Method: GetAvailableAssessmentSeriesAsync({User.GetUkPrn()}, {profileId}, {AssessmentEntryType.Core}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No assessment series available. Method: GetAvailableAssessmentSeriesAsync({User.GetUkPrn()}, {profileId}, {ComponentType.Core}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
@@ -246,7 +246,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!model.IsOpted.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
 
-            model.AssessmentEntryType = AssessmentEntryType.Core;
+            model.ComponentType = ComponentType.Core;
             var response = await _assessmentLoader.AddAssessmentEntryAsync(User.GetUkPrn(), model);
 
             if (!response.IsSuccess)
@@ -281,10 +281,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("remove-core-assessment-entry/{assessmentId}", Name = RouteConstants.RemoveCoreAssessmentEntry)]
         public async Task<IActionResult> RemoveCoreAssessmentEntryAsync(int assessmentId)
         {
-            var viewModel = await _assessmentLoader.GetActiveAssessmentEntryDetailsAsync(User.GetUkPrn(), assessmentId, AssessmentEntryType.Core);
+            var viewModel = await _assessmentLoader.GetActiveAssessmentEntryDetailsAsync(User.GetUkPrn(), assessmentId, ComponentType.Core);
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No valid assessment entry available. Method: GetActiveAssessmentEntryDetailsAsync({User.GetUkPrn()}, {assessmentId}, {AssessmentEntryType.Core}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No valid assessment entry available. Method: GetActiveAssessmentEntryDetailsAsync({User.GetUkPrn()}, {assessmentId}, {ComponentType.Core}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
@@ -301,7 +301,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!model.CanRemoveAssessmentEntry.Value)
                 return RedirectToRoute(RouteConstants.AssessmentDetails, new { model.ProfileId });
 
-            model.AssessmentEntryType = AssessmentEntryType.Core;
+            model.ComponentType = ComponentType.Core;
             var isSuccess = await _assessmentLoader.RemoveAssessmentEntryAsync(User.GetUkPrn(), model);
 
             if (!isSuccess)

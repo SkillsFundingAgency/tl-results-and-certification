@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             {
                 ProfileId = ProfileId,
                 AssessmentId = 1,
-                AssessmentEntryType = Common.Enum.AssessmentEntryType.Core,
+                ComponentType = Common.Enum.ComponentType.Core,
             };            
 
             ExpectedApiResult = true;
@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 .RemoveAssessmentEntryAsync(Arg.Is<RemoveAssessmentEntryRequest>(
                     x => x.AssessmentId == ViewModel.AssessmentId &&
                     x.AoUkprn == AoUkprn &&
-                    x.AssessmentEntryType == Common.Enum.AssessmentEntryType.Core))
+                    x.ComponentType == Common.Enum.ComponentType.Core))
                 .Returns(ExpectedApiResult);
         }
 

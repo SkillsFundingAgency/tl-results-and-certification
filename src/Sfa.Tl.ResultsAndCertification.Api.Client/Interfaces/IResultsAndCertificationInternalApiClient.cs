@@ -43,8 +43,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         // Assessments
         Task<BulkAssessmentResponse> ProcessBulkAssessmentsAsync(BulkProcessRequest model);
         Task<AssessmentDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
-        Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType);
-        Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType);
+        Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType);
+        Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, ComponentType componentType);
         Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model);
 
         // Results

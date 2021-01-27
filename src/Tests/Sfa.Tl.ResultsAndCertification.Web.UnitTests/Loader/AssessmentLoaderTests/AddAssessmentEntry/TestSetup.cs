@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
     {
         protected readonly long AoUkprn = 12345678;
         protected readonly int ProfileId = 1;
-        protected readonly AssessmentEntryType assessmentEntryType = AssessmentEntryType.Core;
+        protected readonly ComponentType componentType = ComponentType.Core;
         protected AddAssessmentEntryViewModel ViewModel;
 
         protected IMapper Mapper;

@@ -67,19 +67,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        public async Task WhenAsync(long aoUkprn, int profileId, ComponentType componentType)
         {
             if (_actualResult != null)
                 return;
 
-            _actualResult = await AssessmentService.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, assessmentEntryType);
+            _actualResult = await AssessmentService.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, componentType);
         }
 
         [Theory()]
         [MemberData(nameof(Data))]
         public async Task Then_Expected_Results_Are_Returned(RequestParameter request, AvailableAssessmentSeries expectedResult)
         {
-            await WhenAsync(request.AoUkprn, request.ProfileId, request.AssessmentEntryType);
+            await WhenAsync(request.AoUkprn, request.ProfileId, request.ComponentType);
 
             if (_actualResult == null)
             {
@@ -101,27 +101,27 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 {
                     // core assessment window opend
                     new object[]
-                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, AssessmentEntryType = AssessmentEntryType.Core },
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Core },
                       new AvailableAssessmentSeries { ProfileId = 1, AssessmentSeriesId = 1, AssessmentSeriesName = "Summer 2021" } },
 
                     // specialism assessment window not opened
                     new object[]
-                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, AssessmentEntryType = AssessmentEntryType.Specialism },
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Specialism },
                       null },
 
                     // Has an active assessment
                     new object[]
-                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 2, AssessmentEntryType = AssessmentEntryType.Core },
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 2, ComponentType = ComponentType.Core },
                       null },
 
                     // registration is withdrawn
                     new object[]
-                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 3, AssessmentEntryType = AssessmentEntryType.Core },
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core },
                       null },
 
                     // invalid profil id
                     new object[]
-                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 99, AssessmentEntryType = AssessmentEntryType.Core },
+                    { new RequestParameter { AoUkprn = 10011881, ProfileId = 99, ComponentType = ComponentType.Core },
                       null },
                 };
             }
@@ -132,6 +132,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
     {
         public long AoUkprn { get; set; }
         public int ProfileId { get; set; }
-        public AssessmentEntryType AssessmentEntryType { get; set; }
+        public ComponentType ComponentType { get; set; }
     }
 }

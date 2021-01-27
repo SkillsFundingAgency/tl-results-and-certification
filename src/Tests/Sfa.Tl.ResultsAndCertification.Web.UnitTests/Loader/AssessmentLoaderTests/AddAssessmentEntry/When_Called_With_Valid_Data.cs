@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             {
                 ProfileId = ProfileId,
                 AssessmentSeriesId = 1,
-                AssessmentEntryType = Common.Enum.AssessmentEntryType.Core,
+                ComponentType = Common.Enum.ComponentType.Core,
             };
 
             ExpectedApiResult = new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1234567890 }; 
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 .AddAssessmentEntryAsync(Arg.Is<AddAssessmentEntryRequest>(
                     x => x.ProfileId == ViewModel.ProfileId && 
                     x.AoUkprn == AoUkprn && 
-                    x.AssessmentEntryType == Common.Enum.AssessmentEntryType.Core &&
+                    x.ComponentType == Common.Enum.ComponentType.Core &&
                     x.AssessmentSeriesId == ViewModel.AssessmentSeriesId))
                 .Returns(ExpectedApiResult);
         }

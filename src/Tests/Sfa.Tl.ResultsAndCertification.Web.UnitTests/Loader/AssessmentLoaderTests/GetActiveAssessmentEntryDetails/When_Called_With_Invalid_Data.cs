@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
         public override void Given()
         {
             expectedApiResult = null;
-            InternalApiClient.GetActiveAssessmentEntryDetailsAsync(AoUkprn, ProfileId, assessmentEntryType).Returns(expectedApiResult);
+            InternalApiClient.GetActiveAssessmentEntryDetailsAsync(AoUkprn, ProfileId, componentType).Returns(expectedApiResult);
         }
 
         [Fact]

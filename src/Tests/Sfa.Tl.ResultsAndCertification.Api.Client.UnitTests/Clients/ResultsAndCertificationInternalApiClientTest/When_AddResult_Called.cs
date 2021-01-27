@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ProfileId = 11,
                 AssessmentId = 1,
                 LookupId = 1,
-                AssessmentEntryType = Common.Enum.AssessmentEntryType.Core,
+                ComponentType = Common.Enum.ComponentType.Core,
                 PerformedBy = "Test User"
             };
         }

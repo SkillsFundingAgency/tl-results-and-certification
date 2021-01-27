@@ -192,9 +192,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<AssessmentDetails>(requestUri);
         }
         
-        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
         {
-            var requestUri = string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, aoUkprn, profileId, (int)assessmentEntryType);
+            var requestUri = string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, aoUkprn, profileId, (int)componentType);
             return await GetAsync<AvailableAssessmentSeries>(requestUri);
         }
 
@@ -204,9 +204,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<AddAssessmentEntryRequest, AddAssessmentEntryResponse>(requestUri, request);
         }
 
-        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType)
+        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, ComponentType componentType)
         {
-            var requestUri = string.Format(ApiConstants.GetActiveAssessmentEntryDetailsUri, aoUkprn, assessmentId, (int)assessmentEntryType);
+            var requestUri = string.Format(ApiConstants.GetActiveAssessmentEntryDetailsUri, aoUkprn, assessmentId, (int)componentType);
             return await GetAsync<AssessmentEntryDetails>(requestUri);
         }
 

@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
     {
         protected readonly long AoUkprn = 12345678;
         protected readonly int ProfileId = 1;
-        protected readonly AssessmentEntryType assessmentEntryType = AssessmentEntryType.Core;
+        protected readonly ComponentType componentType = ComponentType.Core;
 
         protected IMapper Mapper;
         protected ILogger<AssessmentLoader> Logger;        
@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetActiveAssessmentEntryDetailsAsync(AoUkprn, ProfileId, assessmentEntryType);
+            ActualResult = await Loader.GetActiveAssessmentEntryDetailsAsync(AoUkprn, ProfileId, componentType);
         }
     }
 }

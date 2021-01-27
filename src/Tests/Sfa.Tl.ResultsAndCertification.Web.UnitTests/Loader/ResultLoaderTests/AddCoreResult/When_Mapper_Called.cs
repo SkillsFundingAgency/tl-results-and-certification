@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             result.ProfileId.Should().Be(viewModel.ProfileId);
             result.AssessmentId.Should().Be(viewModel.AssessmentId);
             result.LookupId.Should().Be(viewModel.LookupId);
-            result.AssessmentEntryType.Should().Be(AssessmentEntryType.Core);
+            result.ComponentType.Should().Be(ComponentType.Core);
             result.PerformedBy.Should().Be($"{Givenname} {Surname}");
         }
     }

@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 .AddResultAsync(Arg.Is<AddResultRequest>(
                     x => x.ProfileId == ViewModel.ProfileId &&
                     x.AoUkprn == AoUkprn &&
-                    x.AssessmentEntryType == AssessmentEntryType.Core &&
+                    x.ComponentType == ComponentType.Core &&
                     x.LookupId == ViewModel.LookupId))
                 .Returns(ExpectedApiResult);
         }
