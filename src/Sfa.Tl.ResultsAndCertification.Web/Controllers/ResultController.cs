@@ -241,9 +241,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddCoreResultPostAsync(AddCoreResultViewModel model)
         {
             if (string.IsNullOrEmpty(model?.SelectedGradeCode))
-            {
                 return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
-            }
 
             var response = await _resultLoader.AddResultAsync(User.GetUkPrn(), model);
 
