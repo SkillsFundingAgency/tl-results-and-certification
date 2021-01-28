@@ -106,11 +106,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  core.
+        /// </summary>
+        public static string Hidden_Action_Text_Core {
+            get {
+                return ResourceManager.GetString("Hidden_Action_Text_Core", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  for core.
         /// </summary>
-        public static string Hidden_Action_Text {
+        public static string Hidden_Action_Text_For_Core {
             get {
-                return ResourceManager.GetString("Hidden_Action_Text", resourceCulture);
+                return ResourceManager.GetString("Hidden_Action_Text_For_Core", resourceCulture);
             }
         }
         

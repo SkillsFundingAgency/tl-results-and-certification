@@ -132,7 +132,10 @@
   <data name="Grade_Label_Text" xml:space="preserve">
     <value>Grade: {0}</value>
   </data>
-  <data name="Hidden_Action_Text" xml:space="preserve">
+  <data name="Hidden_Action_Text_Core" xml:space="preserve">
+    <value> core</value>
+  </data>
+  <data name="Hidden_Action_Text_For_Core" xml:space="preserve">
     <value> for core</value>
   </data>
   <data name="Hidden_Value_Text" xml:space="preserve">
