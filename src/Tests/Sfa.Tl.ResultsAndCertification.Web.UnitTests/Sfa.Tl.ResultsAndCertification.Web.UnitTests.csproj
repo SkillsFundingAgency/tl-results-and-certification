@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\ResultControllerTests\AddCoreResult\When_Called_With_Withdrawn_Status_Data.cs" />
+    <Compile Remove="Controllers\ResultControllerTests\AddCoreResultGet\When_Called_With_Withdrawn_Status_Data.cs" />
   </ItemGroup>
 
   <ItemGroup>

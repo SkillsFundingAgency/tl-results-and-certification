@@ -7,7 +7,7 @@ using Xunit;
 using System.Collections.Generic;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.AddCoreResult
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.AddCoreResultGet
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             var model = viewResult.Model as AddCoreResultViewModel;
             model.Should().NotBeNull();
 
-            model.ProfileId.Should().Be(mockresult.ProfileId); 
+            model.ProfileId.Should().Be(mockresult.ProfileId);
             model.PathwayDisplayName.Should().Be(mockresult.PathwayDisplayName);
             model.AssessmentId.Should().Be(mockresult.AssessmentId);
             model.AssessmentSeries.Should().Be(mockresult.AssessmentSeries);
