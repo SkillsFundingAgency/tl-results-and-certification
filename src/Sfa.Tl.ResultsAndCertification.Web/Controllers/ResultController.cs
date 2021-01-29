@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }            
 
             if (response.ShowProblemWithServicePage)
-                return RedirectToRoute(RouteConstants.ProblemWithService); // TODO:
+                return RedirectToRoute(RouteConstants.ProblemWithResultsUpload);
 
             var unsuccessfulViewModel = new UploadUnsuccessfulViewModel
             {
@@ -109,6 +109,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("results-file-upload-service-problem", Name = RouteConstants.ProblemWithResultsUpload)]
+        public IActionResult ProblemWithResultsUpload()
+        {
+            return View();
         }
 
         [HttpGet]

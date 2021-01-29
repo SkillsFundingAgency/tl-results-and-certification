@@ -1,0 +1,20 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+@using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper
+@inject IWebConfigurationService ConfigurationService
+
+@{
+    ViewData["Title"] = @ProblemWithResultsUpload.Page_Title;
+}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl">@ProblemWithResultsUpload.Problem_With_Service_Heading</h1>
+        <p class="govuk-body govuk-!-margin-top-7">@ProblemWithResultsUpload.Submit_Again_Text <a class="govuk-link" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@ProblemWithResultsUpload.Email_Subject">@ProblemWithResultsUpload.Contact_Manage_TLevels_Results_Team_Text</a>.</p>
+
+        <p class="govuk-!-margin-top-5"><a id="uploadFileButton" class="govuk-button" role="button" asp-route="UploadResultsFile">@ProblemWithResultsUpload.Upload_Button_Text</a></p>
+        <p class="govuk-!-margin-top-5"><a id="resultsButton" class="govuk-button govuk-button--secondary" role="button" asp-route="ResultsDashboard">@ProblemWithResultsUpload.Results_Button_Text</a></p>
+
+    </div>
+</div>
