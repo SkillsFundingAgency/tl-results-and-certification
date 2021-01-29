@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         public override void Given()
         {
             FormFile = Substitute.For<IFormFile>();
-            FormFile.FileName.Returns("assessments.csv");
+            FormFile.FileName.Returns("results.csv");
             ViewModel.File = FormFile;
             BlobUniqueReference = Guid.Empty;
 
