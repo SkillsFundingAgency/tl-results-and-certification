@@ -9,15 +9,18 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+
 IF ('$(environment)' <> 'test')
 BEGIN
+/* Below seed script is not applicable for test environment as testers are seeding their own data in test environment */
 :r ".\SeedTlAwardingOrganisations.sql"
+:r ".\SeedTlProviders.sql"
 :r ".\SeedTlRoutes.sql"
 :r ".\SeedTlPathways.sql"
 :r ".\SeedTlSpecialisms.sql"
 :r ".\SeedTqAwardingOrganisations.sql"
+END
+
 :r ".\SeedNotificationTemplates.sql"
-:r ".\SeedTlProviders.sql"
 :r ".\SeedAssessmentSeries.sql"
 :r ".\SeedTlLookup.sql"
-END
