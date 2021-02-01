@@ -10,17 +10,23 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-IF ('$(environment)' <> 'test')
+IF ('$(environment)' = 'test')
 BEGIN
 /* Below seed script is not applicable for test environment as testers are seeding their own data in test environment */
+:r ".\SeedNotificationTemplates.sql"
+:r ".\SeedAssessmentSeries.sql"
+:r ".\SeedTlLookup.sql"
+END
+ELSE IF ('$(environment)' <> 'DevIntegration')
+BEGIN
+/*For DevIntegration we do not want to seed any data */
 :r ".\SeedTlAwardingOrganisations.sql"
 :r ".\SeedTlProviders.sql"
 :r ".\SeedTlRoutes.sql"
 :r ".\SeedTlPathways.sql"
 :r ".\SeedTlSpecialisms.sql"
 :r ".\SeedTqAwardingOrganisations.sql"
-END
-
 :r ".\SeedNotificationTemplates.sql"
 :r ".\SeedAssessmentSeries.sql"
 :r ".\SeedTlLookup.sql"
+END
