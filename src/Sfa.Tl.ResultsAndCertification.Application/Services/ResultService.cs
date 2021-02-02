@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -16,19 +18,19 @@ using System.Threading.Tasks;
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class ResultService : IResultService
-    {
-        private readonly IAssessmentRepository _assessmentRepository;
+    {        
         private readonly IRepository<AssessmentSeries> _assessmentSeriesRepository;
         private readonly IRepository<TlLookup> _tlLookupRepository;
         private readonly IResultRepository _resultRepository;
+        private readonly IRepository<TqPathwayResult> _pathwayResultRepository;
         private readonly IMapper _mapper;
 
-        public ResultService(IAssessmentRepository assessmentRepository, IRepository<AssessmentSeries> assessmentSeriesRepository, IRepository<TlLookup> tlLookupRepository, IResultRepository resultRepository, IMapper mapper)
+        public ResultService(IRepository<AssessmentSeries> assessmentSeriesRepository, IRepository<TlLookup> tlLookupRepository, IResultRepository resultRepository, IRepository<TqPathwayResult> pathwayResultRepository, IMapper mapper)
         {
-            _assessmentRepository = assessmentRepository;
             _assessmentSeriesRepository = assessmentSeriesRepository;
             _tlLookupRepository = tlLookupRepository;
             _resultRepository = resultRepository;
+            _pathwayResultRepository = pathwayResultRepository;
             _mapper = mapper;
         }
 
@@ -128,15 +130,75 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
+        public IList<TqPathwayResult> TransformResultsModel(IList<ResultRecordResponse> resultsData, string performedBy)
+        {
+            var pathwayResults = new List<TqPathwayResult>();
+
+            foreach (var (result, index) in resultsData.Select((value, i) => (value, i)))
+            {
+                if (result.TqPathwayAssessmentId.HasValue && result.TqPathwayAssessmentId.Value > 0)
+                {
+                    pathwayResults.Add(new TqPathwayResult
+                    {
+                        Id = index - Constants.PathwayResultsStartIndex,
+                        TqPathwayAssessmentId = result.TqPathwayAssessmentId.Value,
+                        TlLookupId = result.PathwayComponentGradeLookupId ?? 0,
+                        StartDate = DateTime.UtcNow,
+                        IsOptedin = true,
+                        IsBulkUpload = true,
+                        CreatedBy = performedBy,
+                        CreatedOn = DateTime.UtcNow
+                    });
+                }
+            }
+            return pathwayResults;
+        }
+
+        public async Task<ResultProcessResponse> CompareAndProcessResultsAsync(IList<TqPathwayResult> pathwayResultsToProcess)
+        {
+            var response = new ResultProcessResponse();
+
+            // Prepare Pathway Results
+            var newOrAmendedPathwayResultRecords = await PrepareNewAndAmendedPathwayResults(pathwayResultsToProcess);
+
+            // Process Results
+            response.IsSuccess = await _resultRepository.BulkInsertOrUpdateResults(newOrAmendedPathwayResultRecords);
+            return response;
+        }
+
         public async Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
-            var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
+            var tqRegistration = await _resultRepository.GetResultsAsync(aoUkprn, profileId);
 
             if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 
             return _mapper.Map<ResultDetails>(tqRegistration);
         }
 
+        public async Task<AddResultResponse> AddResultAsync(AddResultRequest request)
+        {
+            // Validate
+            var tqRegistrationPathway = await _resultRepository.GetResultsAsync(request.AoUkprn, request.ProfileId);
+            var isValid = IsValidAddResultRequestAsync(tqRegistrationPathway, request);
+            if (!isValid)
+                return new AddResultResponse { IsSuccess = false };
+
+            int status = 0;
+            if (request.ComponentType == ComponentType.Core)
+                status = await _pathwayResultRepository.CreateAsync(new TqPathwayResult
+                {
+                    TqPathwayAssessmentId = request.AssessmentId,
+                    TlLookupId = request.LookupId,
+                    IsOptedin = true,
+                    StartDate = DateTime.UtcNow,
+                    EndDate = null,
+                    IsBulkUpload = false,
+                    CreatedBy = request.PerformedBy
+                });
+
+            return new AddResultResponse { Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ProfileId = request.ProfileId, IsSuccess = status > 0 };
+        }
+        
         #region Private Methods
 
         private ResultRecordResponse AddStage3ValidationError(int rowNum, long uln, string errorMessage)
@@ -158,6 +220,74 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private BulkProcessValidationError BuildValidationError(ResultCsvRecordResponse result, string message)
         {
             return new BulkProcessValidationError { RowNum = result.RowNum.ToString(), Uln = result.Uln.ToString(), ErrorMessage = message };
+        }
+
+        private async Task<List<TqPathwayResult>> PrepareNewAndAmendedPathwayResults(IList<TqPathwayResult> pathwayResultsToProcess)
+        {
+            var pathwayResultComparer = new TqPathwayResultEqualityComparer();
+            var amendedPathwayResults = new List<TqPathwayResult>();
+            var newAndAmendedPathwayResultRecords = new List<TqPathwayResult>();
+
+            var existingPathwayResultsFromDb = await _resultRepository.GetBulkPathwayResultsAsync(pathwayResultsToProcess);
+            var newPathwayResults = pathwayResultsToProcess.Except(existingPathwayResultsFromDb, pathwayResultComparer).ToList();
+            var matchedPathwayResults = pathwayResultsToProcess.Intersect(existingPathwayResultsFromDb, pathwayResultComparer).ToList();
+            var unchangedPathwayResults = matchedPathwayResults.Intersect(existingPathwayResultsFromDb, new TqPathwayResultRecordEqualityComparer()).ToList();
+            var hasAnyMatchedPathwayResultsToProcess = matchedPathwayResults.Count != unchangedPathwayResults.Count;
+
+            if (hasAnyMatchedPathwayResultsToProcess)
+            {
+                amendedPathwayResults = matchedPathwayResults.Except(unchangedPathwayResults, pathwayResultComparer).ToList();
+
+                amendedPathwayResults.ForEach(amendedPathwayResult =>
+                {
+                    var existingPathwayResult = existingPathwayResultsFromDb.FirstOrDefault(existingPathwayResult => existingPathwayResult.TqPathwayAssessmentId == amendedPathwayResult.TqPathwayAssessmentId);
+
+                    if (existingPathwayResult != null)
+                    {
+                        var hasPathwayResultChanged = amendedPathwayResult.TlLookupId != existingPathwayResult.TlLookupId;
+
+                        if (hasPathwayResultChanged)
+                        {
+                            existingPathwayResult.IsOptedin = false;
+                            existingPathwayResult.EndDate = DateTime.UtcNow;
+                            existingPathwayResult.ModifiedBy = amendedPathwayResult.CreatedBy;
+                            existingPathwayResult.ModifiedOn = DateTime.UtcNow;
+
+                            newAndAmendedPathwayResultRecords.Add(existingPathwayResult);
+
+                            if (amendedPathwayResult.TqPathwayAssessmentId > 0 && amendedPathwayResult.TlLookupId > 0)
+                                newAndAmendedPathwayResultRecords.Add(amendedPathwayResult);
+                        }
+                    }
+                });
+            }
+
+            if (newPathwayResults.Any())
+                newAndAmendedPathwayResultRecords.AddRange(newPathwayResults.Where(p => p.TqPathwayAssessmentId > 0 && p.TlLookupId > 0));
+
+            return newAndAmendedPathwayResultRecords;
+        }
+
+        private bool IsValidAddResultRequestAsync(TqRegistrationPathway registrationPathway, AddResultRequest addResultRequest)
+        {
+            // 1. Must be an active registration.
+            if (registrationPathway == null || registrationPathway.Status != RegistrationPathwayStatus.Active)
+                return false;
+
+
+            if(addResultRequest.ComponentType == ComponentType.Core)
+            {
+                var assessmentEntry = registrationPathway.TqPathwayAssessments.FirstOrDefault(p => p.Id == addResultRequest.AssessmentId && p.IsOptedin && p.EndDate == null);
+
+                if (assessmentEntry == null) return false;
+
+                var anyActiveResult = assessmentEntry.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null);
+                return !anyActiveResult;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         #endregion

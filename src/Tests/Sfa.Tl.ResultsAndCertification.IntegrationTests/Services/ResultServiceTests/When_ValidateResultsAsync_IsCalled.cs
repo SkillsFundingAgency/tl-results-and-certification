@@ -49,8 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             DbContext.SaveChanges();
 
             // Dependencies 
-            AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
-            AssessmentRepository = new AssessmentRepository(AssessmentRepositoryLogger, DbContext);
+            PathwayResultRepositoryLogger = new Logger<GenericRepository<TqPathwayResult>>(new NullLoggerFactory());
+            PathwayResultRepository = new GenericRepository<TqPathwayResult>(PathwayResultRepositoryLogger, DbContext);
 
             AssessmentSeriesRepositoryLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
             AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesRepositoryLogger, DbContext);
@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             ResultRepository = new ResultRepository(ResultRepositoryLogger, DbContext);
 
             // Service
-            ResultService = new ResultService(AssessmentRepository, AssessmentSeriesRepository, TlLookupRepository, ResultRepository, ResultMapper);
+            ResultService = new ResultService(AssessmentSeriesRepository, TlLookupRepository, ResultRepository, PathwayResultRepository, ResultMapper);
 
             // setup input parameter
             SetupInputParameter();

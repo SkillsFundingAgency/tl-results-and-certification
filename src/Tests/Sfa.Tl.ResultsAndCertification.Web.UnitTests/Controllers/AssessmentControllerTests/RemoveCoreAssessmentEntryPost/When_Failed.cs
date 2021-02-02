@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             {
                 ProfileId = ProfileId,
                 AssessmentId = 5,
-                AssessmentEntryType = Common.Enum.AssessmentEntryType.Core,
+                ComponentType = Common.Enum.ComponentType.Core,
                 CanRemoveAssessmentEntry = true
             };
 

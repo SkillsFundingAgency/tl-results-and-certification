@@ -89,9 +89,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<AssessmentDetailsViewModel>(response);
         }
 
-        public async Task<AddAssessmentEntryViewModel> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        public async Task<AddAssessmentEntryViewModel> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
         {
-            var response = await _internalApiClient.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, assessmentEntryType);
+            var response = await _internalApiClient.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, componentType);
             return _mapper.Map<AddAssessmentEntryViewModel>(response);
         }
 
@@ -101,9 +101,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AddAssessmentEntryAsync(request);
         }
 
-        public async Task<AssessmentEntryDetailsViewModel> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType)
+        public async Task<AssessmentEntryDetailsViewModel> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, ComponentType componentType)
         {
-            var response = await _internalApiClient.GetActiveAssessmentEntryDetailsAsync(aoUkprn, assessmentId, assessmentEntryType);
+            var response = await _internalApiClient.GetActiveAssessmentEntryDetailsAsync(aoUkprn, assessmentId, componentType);
             return _mapper.Map<AssessmentEntryDetailsViewModel>(response);
         }
 

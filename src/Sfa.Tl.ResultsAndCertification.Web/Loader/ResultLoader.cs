@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -87,6 +88,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, status);
             return _mapper.Map<ResultDetailsViewModel>(response);
+        }
+
+        public async Task<AddResultResponse> AddCoreResultAsync(long aoUkprn, AddCoreResultViewModel viewModel)
+        {
+            var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
+
+            var selectedGrade = grades?.FirstOrDefault(x => x.Code.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase));
+
+            if (selectedGrade == null) return null;
+
+            viewModel.LookupId = selectedGrade.Id;
+            var request = _mapper.Map<AddResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.AddResultAsync(request);
+        }
+
+        public async Task<AddCoreResultViewModel> GetAddCoreResultViewModelAsync(long aoUkprn, int profileId, int assessmentId)
+        {
+            var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
+            if (response == null || response.PathwayAssessmentId != assessmentId || response.PathwayResultId.HasValue)
+                return null;
+
+            var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
+            if (grades == null || !grades.Any())
+                return null;
+
+            grades.Insert(0, new LookupData { Code = string.Empty, Value = Content.Result.AddCoreResult.Option_Not_Received });
+            return _mapper.Map<AddCoreResultViewModel>(response, opt => opt.Items["grades"] = grades);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             {
                 AoUkprn = 1,
                 AssessmentId = 5,
-                AssessmentEntryType = Common.Enum.AssessmentEntryType.Core,
+                ComponentType = Common.Enum.ComponentType.Core,
                 PerformedBy = "Test User"
             };
         }

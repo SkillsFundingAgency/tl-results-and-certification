@@ -192,9 +192,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<AssessmentDetails>(requestUri);
         }
         
-        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
         {
-            var requestUri = string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, aoUkprn, profileId, (int)assessmentEntryType);
+            var requestUri = string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, aoUkprn, profileId, (int)componentType);
             return await GetAsync<AvailableAssessmentSeries>(requestUri);
         }
 
@@ -204,9 +204,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<AddAssessmentEntryRequest, AddAssessmentEntryResponse>(requestUri, request);
         }
 
-        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType)
+        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, ComponentType componentType)
         {
-            var requestUri = string.Format(ApiConstants.GetActiveAssessmentEntryDetailsUri, aoUkprn, assessmentId, (int)assessmentEntryType);
+            var requestUri = string.Format(ApiConstants.GetActiveAssessmentEntryDetailsUri, aoUkprn, assessmentId, (int)componentType);
             return await GetAsync<AssessmentEntryDetails>(requestUri);
         }
 
@@ -227,6 +227,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = string.Format(ApiConstants.GetResultDetailsUri, aoUkprn, profileId, (int?)status);
             return await GetAsync<ResultDetails>(requestUri);
+        }
+
+        public async Task<AddResultResponse> AddResultAsync(AddResultRequest request)
+        {
+            var requestUri = ApiConstants.AddResultUri;
+            return await PostAsync<AddResultRequest, AddResultResponse>(requestUri, request);
+        }
+
+        public async Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade)
+        {
+            var requestUri = string.Format(ApiConstants.GetLookupDataUri, (int)pathwayComponentGrade);
+            return await GetAsync<IList<LookupData>>(requestUri);
         }
 
         #region Private Methods

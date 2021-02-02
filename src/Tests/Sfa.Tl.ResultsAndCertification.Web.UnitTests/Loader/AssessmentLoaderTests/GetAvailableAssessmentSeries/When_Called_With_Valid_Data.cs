@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 AssessmentSeriesName = "Summer 2021"
             };
 
-            InternalApiClient.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, assessmentEntryType).Returns(expectedApiResult);
+            InternalApiClient.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, componentType).Returns(expectedApiResult);
         }
 
         [Fact]

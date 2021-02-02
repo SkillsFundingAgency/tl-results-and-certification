@@ -35,8 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IResultRepository ResultRepository;
         protected ILogger<ResultRepository> ResultRepositoryLogger;
-        protected IAssessmentRepository AssessmentRepository;
-        protected ILogger<AssessmentRepository> AssessmentRepositoryLogger;
+        protected IRepository<TqPathwayResult> PathwayResultRepository;
+        protected ILogger<GenericRepository<TqPathwayResult>> PathwayResultRepositoryLogger;
         protected IRepository<TqPathwayAssessment> PathwayAssessmentRepository;
         protected IRepository<TqSpecialismAssessment> SpecialismAssessmentRepository;
         protected IRepository<AssessmentSeries> AssessmentSeriesRepository;

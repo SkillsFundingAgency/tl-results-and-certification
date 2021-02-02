@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         [Required(ErrorMessageResourceType = typeof(ErrorResource.RemoveCoreAssessmentEntry), ErrorMessageResourceName = "Select_RemoveCoreAssessment_Validation_Message")]
         public bool? CanRemoveAssessmentEntry { get; set; }
 
-        public AssessmentEntryType AssessmentEntryType { get; set; }
+        public ComponentType ComponentType { get; set; }
 
         public BackLinkModel BackLink
         {

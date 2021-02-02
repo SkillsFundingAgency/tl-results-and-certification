@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sfa.Tl.ResultsAndCertification.Domain.Models
+﻿namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 {
     public partial class TlLookup : BaseEntity
     {
@@ -10,5 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public string Code { get; set; }
         public string Value { get; set; }
         public bool IsActive { get; set; }
+        public int? SortOrder { get; set; }
     }
 }

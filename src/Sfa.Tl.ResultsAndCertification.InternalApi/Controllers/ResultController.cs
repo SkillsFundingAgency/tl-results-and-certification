@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     public class ResultController : ControllerBase, IResultController
     {
         private readonly IBulkResultLoader _bulkResultProcess;
-        protected IResultService _resultService;
+        private readonly IResultService _resultService;
         
         public ResultController(IBulkResultLoader bulkResultProcess, IResultService resultService)
         {
@@ -33,6 +33,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             return await _resultService.GetResultDetailsAsync(aoUkprn, profileId, status);
+        }
+
+        [HttpPost]
+        [Route("AddResult")]
+        public async Task<AddResultResponse> AddResultAsync(AddResultRequest request)
+        {
+            return await _resultService.AddResultAsync(request);
         }
     }
 }

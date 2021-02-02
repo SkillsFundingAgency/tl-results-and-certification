@@ -12,9 +12,19 @@
         }
         else
         {
+            @if (!string.IsNullOrWhiteSpace(Model?.HiddenValueText))
+            {
+                <span class="govuk-visually-hidden">@Model?.HiddenValueText</span>
+            }
             <p class="govuk-body">@Model?.Value</p>
         }
     </dd>
+    @if (!string.IsNullOrEmpty(Model.Value2))
+    {
+        <dd class="govuk-summary-list__value">
+            <p class="govuk-body">@Model?.Value2</p>
+        </dd>
+    }
     <dd class="govuk-summary-list__actions">
         @if (!string.IsNullOrWhiteSpace(Model?.ActionText))
         {

@@ -36,10 +36,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAvailableAssessmentSeries/{aoUkprn}/{profileId}/{assessmentEntryType}")]
-        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        [Route("GetAvailableAssessmentSeries/{aoUkprn}/{profileId}/{componentType}")]
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
         {
-            return await _assessmentService.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, assessmentEntryType);
+            return await _assessmentService.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, componentType);
         }
 
         [HttpPost]
@@ -50,14 +50,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetActiveAssessmentEntryDetails/{aoUkprn}/{assessmentId}/{assessmentEntryType}")]
-        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, AssessmentEntryType assessmentEntryType)
+        [Route("GetActiveAssessmentEntryDetails/{aoUkprn}/{assessmentId}/{componentType}")]
+        public async Task<AssessmentEntryDetails> GetActiveAssessmentEntryDetailsAsync(long aoUkprn, int assessmentId, ComponentType componentType)
         {
-            return assessmentEntryType switch
+            return componentType switch
             {
-                AssessmentEntryType.Core => await _assessmentService.GetActivePathwayAssessmentEntryDetailsAsync(aoUkprn, assessmentId),
-                AssessmentEntryType.Specialism => null,
-                AssessmentEntryType.NotSpecified => null,
+                ComponentType.Core => await _assessmentService.GetActivePathwayAssessmentEntryDetailsAsync(aoUkprn, assessmentId),
+                ComponentType.Specialism => null,
+                ComponentType.NotSpecified => null,
                 _ => null
             };
         }
@@ -66,11 +66,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("RemoveAssessmentEntry")]
         public async Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
         {
-            return model.AssessmentEntryType switch
+            return model.ComponentType switch
             {
-                AssessmentEntryType.Core => await _assessmentService.RemovePathwayAssessmentEntryAsync(model),
-                AssessmentEntryType.Specialism => false,
-                AssessmentEntryType.NotSpecified => false,
+                ComponentType.Core => await _assessmentService.RemovePathwayAssessmentEntryAsync(model),
+                ComponentType.Specialism => false,
+                ComponentType.NotSpecified => false,
                 _ => false
             };
         }

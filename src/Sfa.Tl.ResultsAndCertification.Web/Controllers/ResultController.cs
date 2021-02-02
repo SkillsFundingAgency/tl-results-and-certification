@@ -62,10 +62,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var response = await _resultLoader.ProcessBulkResultsAsync(viewModel);
 
             if (response.IsSuccess)
+            {
+                var successfulViewModel = new UploadSuccessfulViewModel { Stats = response.Stats };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ResultsUploadSuccessfulViewModel), successfulViewModel, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.ResultsUploadSuccessful);
+            }            
 
             if (response.ShowProblemWithServicePage)
-                return RedirectToRoute(RouteConstants.ProblemWithService); // TODO:
+                return RedirectToRoute(RouteConstants.ProblemWithResultsUpload);
 
             var unsuccessfulViewModel = new UploadUnsuccessfulViewModel
             {
@@ -79,10 +83,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("results-upload-successful", Name = RouteConstants.ResultsUploadSuccessful)]
+        [Route("results-upload-confirmation", Name = RouteConstants.ResultsUploadSuccessful)]
         public async Task<IActionResult> UploadSuccessful()
         {
-            return View();
+            var viewModel = await _cacheService.GetAndRemoveAsync<UploadSuccessfulViewModel>(string.Concat(CacheKey, Constants.ResultsUploadSuccessfulViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.UploadSuccessfulPageFailed, $"Unable to read upload successful result response from redis cache. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -98,6 +109,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("results-file-upload-service-problem", Name = RouteConstants.ProblemWithResultsUpload)]
+        public IActionResult ProblemWithResultsUpload()
+        {
+            return View();
         }
 
         [HttpGet]
@@ -146,7 +164,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (searchResult?.IsAllowed == true)
             {
-                return RedirectToRoute(searchResult.IsWithdrawn ? RouteConstants.ResultWithdrawnDetails : RouteConstants.SearchResults, new { profileId = searchResult.RegistrationProfileId });
+                return RedirectToRoute(searchResult.IsWithdrawn ? RouteConstants.ResultWithdrawnDetails : RouteConstants.ResultDetails, new { profileId = searchResult.RegistrationProfileId });
             }
             else
             {
@@ -185,6 +203,73 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("learners-results/{profileId}", Name = RouteConstants.ResultDetails)]
+        public async Task<IActionResult> ResultDetailsAsync(int profileId)
+        {
+            var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No result details found. Method: GetResultDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("change-core-result-indev/{resultId}", Name = RouteConstants.ChangeCoreResult)]
+        public IActionResult ChangeCoreResultAsync(int resultId)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("select-core-result/{profileId}/{assessmentId}", Name = RouteConstants.AddCoreResult)]
+        public async Task<IActionResult> AddCoreResultAsync(int profileId, int assessmentId)
+        {
+            var viewModel = await _resultLoader.GetAddCoreResultViewModelAsync(User.GetUkPrn(), profileId, assessmentId);
+            
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetAddCoreResultViewModelAsync({User.GetUkPrn()}, {profileId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }            
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("select-core-result", Name = RouteConstants.SubmitAddCoreResult)]
+        public async Task<IActionResult> AddCoreResultAsync(AddCoreResultViewModel model)
+        {
+            if (string.IsNullOrEmpty(model?.SelectedGradeCode))
+                return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
+
+            var response = await _resultLoader.AddCoreResultAsync(User.GetUkPrn(), model);
+
+            if (response == null || !response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ResultConfirmationViewModel), new ResultConfirmationViewModel { Uln = response.Uln, ProfileId = response.ProfileId }, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.AddResultConfirmation);
+        }
+
+        [HttpGet]
+        [Route("result-added-confirmation", Name = RouteConstants.AddResultConfirmation)]
+        public async Task<IActionResult> AddResultConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<ResultConfirmationViewModel>(string.Concat(CacheKey, Constants.ResultConfirmationViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ResultConfirmationViewModel from redis cache in add result confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
             return View(viewModel);
         }
     }
