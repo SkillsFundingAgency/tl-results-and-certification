@@ -33,7 +33,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 PathwayStatus = RegistrationPathwayStatus.Active
             };
 
-            _routeAttributes = new Dictionary<string, string> { { Constants.ResultId, mockresult.PathwayResultId.ToString() } };
+            _routeAttributes =  new Dictionary<string, string> 
+            { 
+                { Constants.ProfileId, ProfileId.ToString() }, 
+                { Constants.AssessmentId, mockresult.PathwayAssessmentId.ToString() } 
+            };
+
             ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockresult);
         }
 

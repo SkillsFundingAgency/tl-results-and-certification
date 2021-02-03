@@ -222,13 +222,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("change-core-result-indev/{resultId}", Name = RouteConstants.ChangeCoreResult)]
-        public IActionResult ChangeCoreResultAsync(int resultId)
-        {
-            return View();
-        }
-
-        [HttpGet]
         [Route("select-core-result/{profileId}/{assessmentId}", Name = RouteConstants.AddCoreResult)]
         public async Task<IActionResult> AddCoreResultAsync(int profileId, int assessmentId)
         {
@@ -270,6 +263,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ResultConfirmationViewModel from redis cache in add result confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("change-core-result/{profileId}/{assessmentId}", Name = RouteConstants.ChangeCoreResult)]
+        public async Task<IActionResult> ChangeCoreResultAsync(int profileId, int assessmentId)
+        {
+            var viewModel = await _resultLoader.GetAddCoreResultViewModelAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: true);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetAddCoreResultViewModelAsync({User.GetUkPrn()}, {profileId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
             return View(viewModel);
         }
     }

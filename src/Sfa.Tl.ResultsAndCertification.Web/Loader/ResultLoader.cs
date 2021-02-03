@@ -103,10 +103,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AddResultAsync(request);
         }
 
-        public async Task<AddCoreResultViewModel> GetAddCoreResultViewModelAsync(long aoUkprn, int profileId, int assessmentId)
+        public async Task<AddCoreResultViewModel> GetAddCoreResultViewModelAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode = false)
         {
             var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
-            if (response == null || response.PathwayAssessmentId != assessmentId || response.PathwayResultId.HasValue)
+            
+            if (response == null || response.PathwayAssessmentId != assessmentId || 
+                (!isChangeMode && response.PathwayResultId.HasValue) || (isChangeMode && !response.PathwayResultId.HasValue))
                 return null;
 
             var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
