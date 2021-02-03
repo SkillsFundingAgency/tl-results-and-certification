@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } };
-            ResultLoader.GetAddCoreResultViewModelAsync(AoUkprn, ProfileId, AssessmentId).Returns(mockresult);
+            ResultLoader.GetManageCoreResultViewModelAsync(AoUkprn, ProfileId, AssessmentId).Returns(mockresult);
         }
 
         [Fact]

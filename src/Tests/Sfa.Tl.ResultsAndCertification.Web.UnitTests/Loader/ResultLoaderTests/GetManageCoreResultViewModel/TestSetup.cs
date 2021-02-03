@@ -11,7 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetAddCoreResultViewModel
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResultViewModel
 {
     public abstract class TestSetup : BaseTest<ResultLoader>
     {
@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetAddCoreResultViewModelAsync(AoUkprn, ProfileId, AssessmentId);
+            ActualResult = await Loader.GetManageCoreResultViewModelAsync(AoUkprn, ProfileId, AssessmentId);
         }
     }
 }

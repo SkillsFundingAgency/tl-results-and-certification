@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetAddCoreResultViewModel
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResultViewModel
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
