@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AddResultAsync(request);
         }
 
-        public async Task<ManageCoreResultViewModel> GetManageCoreResultViewModelAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode = false)
+        public async Task<ManageCoreResultViewModel> GetManageCoreResultViewModelAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode)
         {
             var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
             

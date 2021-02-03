@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetManageCoreResultViewModelAsync(AoUkprn, ProfileId, AssessmentId);
+            ActualResult = await Loader.GetManageCoreResultViewModelAsync(AoUkprn, ProfileId, AssessmentId, isChangeMode: false);
         }
     }
 }

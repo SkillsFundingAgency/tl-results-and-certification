@@ -225,7 +225,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("select-core-result/{profileId}/{assessmentId}", Name = RouteConstants.AddCoreResult)]
         public async Task<IActionResult> AddCoreResultAsync(int profileId, int assessmentId)
         {
-            var viewModel = await _resultLoader.GetManageCoreResultViewModelAsync(User.GetUkPrn(), profileId, assessmentId);
+            var viewModel = await _resultLoader.GetManageCoreResultViewModelAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: false);
             
             if (viewModel == null)
             {
