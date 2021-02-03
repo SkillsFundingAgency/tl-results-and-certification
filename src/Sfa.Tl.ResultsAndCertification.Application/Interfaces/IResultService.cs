@@ -15,5 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 
         Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         Task<AddResultResponse> AddResultAsync(AddResultRequest request);
+        Task<UpdateResultResponse> UpdateResultAsync(UpdateResultRequest request);
     }
 }

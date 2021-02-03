@@ -45,6 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         protected IRepository<TlLookup> TlLookupRepository;
         protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
         protected IMapper ResultMapper;
+        protected ILogger<ResultService> ResultServiceLogger;
 
         protected virtual void CreateMapper()
         {

@@ -61,7 +61,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             ResultRepositoryLogger = new Logger<ResultRepository>(new NullLoggerFactory());
             ResultRepository = new ResultRepository(ResultRepositoryLogger, DbContext);
 
-            ResultService = new ResultService(AssessmentSeriesRepository, TlLookupRepository, ResultRepository, PathwayResultRepository, ResultMapper);
+            ResultServiceLogger = new Logger<ResultService>(new NullLoggerFactory());
+
+            ResultService = new ResultService(AssessmentSeriesRepository, TlLookupRepository, ResultRepository, PathwayResultRepository, ResultMapper, ResultServiceLogger);
         }
 
         public override Task When()
