@@ -61,8 +61,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             ResultRepositoryLogger = new Logger<ResultRepository>(new NullLoggerFactory());
             ResultRepository = new ResultRepository(ResultRepositoryLogger, DbContext);
 
+            ResultServiceLogger = new Logger<ResultService>(new NullLoggerFactory());
+
             // Service
-            ResultService = new ResultService(AssessmentSeriesRepository, TlLookupRepository, ResultRepository, PathwayResultRepository, ResultMapper);
+            ResultService = new ResultService(AssessmentSeriesRepository, TlLookupRepository, ResultRepository, PathwayResultRepository, ResultMapper, ResultServiceLogger);
 
             // setup input parameter
             SetupInputParameter();
