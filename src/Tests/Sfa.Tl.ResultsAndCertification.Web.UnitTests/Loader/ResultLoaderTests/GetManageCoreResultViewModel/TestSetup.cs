@@ -24,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
         protected ILogger<ResultLoader> Logger;
         public IBlobStorageService BlobStorageService { get; private set; }
 
+        protected bool IsChangeMode = false;
         protected ResultLoader Loader;
         protected ManageCoreResultViewModel ActualResult;
 
@@ -44,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetManageCoreResultViewModelAsync(AoUkprn, ProfileId, AssessmentId, isChangeMode: false);
+            ActualResult = await Loader.GetManageCoreResultViewModelAsync(AoUkprn, ProfileId, AssessmentId, IsChangeMode);
         }
     }
 }
