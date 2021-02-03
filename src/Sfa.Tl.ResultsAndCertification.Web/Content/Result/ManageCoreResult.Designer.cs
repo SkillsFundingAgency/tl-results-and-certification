@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AddCoreResult {
+    public class ManageCoreResult {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AddCoreResult() {
+        internal ManageCoreResult() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Result.AddCoreResult", typeof(AddCoreResult).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Result.ManageCoreResult", typeof(ManageCoreResult).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change core result page.
+        /// </summary>
+        public static string Change_Button {
+            get {
+                return ResourceManager.GetString("Change_Button", resourceCulture);
             }
         }
         
@@ -90,18 +99,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         /// <summary>
         ///   Looks up a localized string similar to Select the core result page.
         /// </summary>
-        public static string Page_Title {
+        public static string Page_Title_Add_Result {
             get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
+                return ResourceManager.GetString("Page_Title_Add_Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Page_Title_Change_Result {
+            get {
+                return ResourceManager.GetString("Page_Title_Change_Result", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
-        public static string SubmitButton {
+        public static string Submit_Button {
             get {
-                return ResourceManager.GetString("SubmitButton", resourceCulture);
+                return ResourceManager.GetString("Submit_Button", resourceCulture);
             }
         }
     }

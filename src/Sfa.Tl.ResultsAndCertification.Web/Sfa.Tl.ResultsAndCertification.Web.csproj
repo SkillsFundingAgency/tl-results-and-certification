@@ -126,15 +126,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ReregistrationConfirmation.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\Result\AddCoreResult.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AddCoreResult.resx</DependentUpon>
-    </Compile>
     <Compile Update="Content\Result\Dashboard.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Dashboard.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Result\ManageCoreResult.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ManageCoreResult.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Result\ProblemWithResultsUpload.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -573,13 +573,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ReregistrationConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Content\Result\AddCoreResult.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>AddCoreResult.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Content\Result\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Result\ManageCoreResult.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ManageCoreResult.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Result\ProblemWithResultsUpload.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -2,7 +2,7 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Result
 
 @{
-    ViewData["Title"] = "Change core result page";
+    ViewData["Title"] = ManageCoreResult.Page_Title_Change_Result;
 }
 
 @section NavigationBar {
@@ -19,9 +19,9 @@
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                         <h1 class="govuk-fieldset__heading">
-                            @AddCoreResult.Heading
+                            @ManageCoreResult.Heading
                             <p class="govuk-body-l govuk-!-font-weight-regular govuk-!-margin-top-4">
-                                @string.Format(AddCoreResult.Core_Assessment_Title, @Model.PathwayDisplayName, @Model.AssessmentSeries)
+                                @string.Format(ManageCoreResult.Core_Assessment_Title, @Model.PathwayDisplayName, @Model.AssessmentSeries)
                             </p>
                         </h1>
                     </legend>
@@ -40,9 +40,8 @@
             </div>
 
             <p>
-                <button type="submit" id="changeButton" class="govuk-button" data-module="govuk-button">Change</button>
+                <button type="submit" id="changeButton" class="govuk-button" data-module="govuk-button">@ManageCoreResult.Change_Button</button>
             </p>
         </form>
-        @*TODO: content separate or same?*@
     </div>
 </div>
