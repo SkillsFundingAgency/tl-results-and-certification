@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
         public IBlobStorageService BlobStorageService { get; private set; }
 
         protected ResultLoader Loader;
-        protected AddCoreResultViewModel ActualResult;
+        protected ManageCoreResultViewModel ActualResult;
 
         protected ResultDetails expectedApiResultDetails;
         protected IList<LookupData> expectedApiLookupData;
