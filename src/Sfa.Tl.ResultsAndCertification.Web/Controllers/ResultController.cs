@@ -285,11 +285,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("change-core-result", Name = RouteConstants.SubmitChangeCoreResult)]
         public async Task<IActionResult> ChangeCoreResultAsync(ManageCoreResultViewModel model)
         {
-            if (1 == 2)
+            var isResultChanged = await _resultLoader.IsCoreResultChanged(User.GetUkPrn(), model);
+            if (!isResultChanged.HasValue)
             {
-                // TODO: validate if selected is Same code
-                return View(model);
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"ChangeCoreResult request data-mismatch. Method:IsCoreResultChanged({User.GetUkPrn()}, ManageCoreResultViewModel), ProfileId: {model.ProfileId}, ResultId: {model.ResultId}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
             }
+
+            if (isResultChanged == false)
+                return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
 
             return RedirectToRoute(RouteConstants.ChangeCoreResultConfirmation);
         }

@@ -118,5 +118,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             grades.Insert(0, new LookupData { Code = string.Empty, Value = Content.Result.ManageCoreResult.Option_Not_Received });
             return _mapper.Map<ManageCoreResultViewModel>(response, opt => opt.Items["grades"] = grades);
         }
+
+        public async Task<bool?> IsCoreResultChanged(long aoUkprn, ManageCoreResultViewModel viewModel)
+        {
+            var currentResult = await _internalApiClient.GetResultDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
+
+            if (currentResult.PathwayResultId != viewModel.ResultId)
+                return null;
+
+            var isResultChanged = !currentResult.PathwayResultCode.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCulture);
+            return isResultChanged;
+        }
     }
 }

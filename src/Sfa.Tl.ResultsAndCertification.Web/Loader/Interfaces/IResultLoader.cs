@@ -17,5 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<ResultDetailsViewModel> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         Task<AddResultResponse> AddCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel);
         Task<ManageCoreResultViewModel> GetManageCoreResultViewModelAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode);
+        Task<bool?> IsCoreResultChanged(long aoUkprn, ManageCoreResultViewModel model);
     }
 }
