@@ -288,7 +288,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var isResultChanged = await _resultLoader.IsCoreResultChanged(User.GetUkPrn(), model);
             if (!isResultChanged.HasValue)
             {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"ChangeCoreResult request data-mismatch. Method:IsCoreResultChanged({User.GetUkPrn()}, ManageCoreResultViewModel), ProfileId: {model.ProfileId}, ResultId: {model.ResultId}");
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"ChangeCoreResult request data-mismatch. Method:IsCoreResultChanged({User.GetUkPrn()}, {model}), ProfileId: {model.ProfileId}, ResultId: {model.ResultId}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

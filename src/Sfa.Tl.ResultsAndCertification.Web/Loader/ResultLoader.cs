@@ -123,12 +123,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var existingResult = await _internalApiClient.GetResultDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
 
-            if (existingResult != null && 
-                viewModel.ResultId.HasValue && 
-                existingResult.PathwayResultId != viewModel.ResultId)
+            if (existingResult == null || existingResult.PathwayResultId != viewModel.ResultId)
                 return null;
 
-            var isResultChanged = !existingResult.PathwayResultCode.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCulture);
+            var isResultChanged = !existingResult.PathwayResultCode.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase);
             return isResultChanged;
         }
     }
