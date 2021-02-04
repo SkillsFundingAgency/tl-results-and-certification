@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 
         public int? ResultId { get; set; }
         public string SelectedGradeCode { get; set; }
-        public int LookupId { get; set; }
+        public int? LookupId { get; set; }
         public List<LookupViewModel> Grades { get; set; }
         
         public BackLinkModel BackLink => new BackLinkModel
