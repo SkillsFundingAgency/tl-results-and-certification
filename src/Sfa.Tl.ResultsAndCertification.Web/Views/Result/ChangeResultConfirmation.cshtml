@@ -1,0 +1,19 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ResultConfirmationViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+
+@{
+    ViewData["Title"] = @ResultConfirmation.Changed_Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">@ResultConfirmation.Result_Changed_Successful_Text</h1>
+            <div class="govuk-panel__body">
+                @ResultConfirmation.Uln_Text: @Model.Uln
+            </div>
+        </div>
+
+        <p class="govuk-!-margin-top-8"><a id="backToResultsButton" class="govuk-button" role="button" asp-route="ResultDetails" asp-route-profileId="@Model.ProfileId">@ResultConfirmation.Back_To_Learners_Results_Button_Text</a></p>
+    </div>
+</div>

@@ -295,14 +295,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (isResultChanged == false)
                 return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
 
-            return RedirectToRoute(RouteConstants.ChangeCoreResultConfirmation);
+            return RedirectToRoute(RouteConstants.ChangeResultConfirmation);
         }
 
         [HttpGet]
-        [Route("result-change-confirmation", Name = RouteConstants.ChangeCoreResultConfirmation)]
-        public async Task<IActionResult> ChangeCoreResultConfirmationAsync()
+        [Route("result-change-confirmation", Name = RouteConstants.ChangeResultConfirmation)]
+        public async Task<IActionResult> ChangeResultConfirmationAsync()
         {
-            return View();
+            var viewModel = await _cacheService.GetAndRemoveAsync<ResultConfirmationViewModel>(string.Concat(CacheKey, Constants.ChangeResultConfirmationViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ResultConfirmationViewModel from redis cache in change result confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
         }
     }
 }
