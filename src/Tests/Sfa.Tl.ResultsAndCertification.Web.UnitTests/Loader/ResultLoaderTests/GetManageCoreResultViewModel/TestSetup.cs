@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
 
         protected bool IsChangeMode = false;
         protected ResultLoader Loader;
-        protected AddCoreResultViewModel ActualResult;
+        protected ManageCoreResultViewModel ActualResult;
 
         protected ResultDetails expectedApiResultDetails;
         protected IList<LookupData> expectedApiLookupData;

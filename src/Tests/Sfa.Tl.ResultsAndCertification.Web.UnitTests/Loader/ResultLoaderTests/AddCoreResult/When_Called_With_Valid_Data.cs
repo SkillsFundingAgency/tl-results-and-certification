@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
         {
             var lookupApiClientResponse = new List<LookupData> { new LookupData { Id = 1, Code = "PCG1", Value = "A*" } };
 
-            ViewModel = new AddCoreResultViewModel
+            ViewModel = new ManageCoreResultViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = 1,

@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
         protected readonly long AoUkprn = 12345678;
         protected readonly int ProfileId = 1;
         protected readonly ComponentType componentType = ComponentType.Core;
-        protected AddCoreResultViewModel ViewModel;
+        protected ManageCoreResultViewModel ViewModel;
 
         protected IMapper Mapper;
         protected ILogger<ResultLoader> Logger;
@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 c.AddMaps(typeof(ResultMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<AddCoreResultViewModel, AddResultRequest>(HttpContextAccessor) : null);
+                                new UserNameResolver<ManageCoreResultViewModel, AddResultRequest>(HttpContextAccessor) : null);
             });
 
             Mapper = new AutoMapper.Mapper(mapperConfig);
