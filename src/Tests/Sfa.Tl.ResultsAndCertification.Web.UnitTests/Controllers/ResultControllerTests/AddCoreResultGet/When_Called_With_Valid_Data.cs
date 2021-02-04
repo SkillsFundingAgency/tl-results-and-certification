@@ -11,14 +11,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        private ManageCoreResultViewModel mockresult = null;
+        private AddCoreResultViewModel mockresult = null;
         private Dictionary<string, string> _routeAttributes;
         private List<LookupViewModel> grades;
 
         public override void Given()
         {
             grades = new List<LookupViewModel> { new LookupViewModel { Id = 1, Code = "C1", Value = "V1" }, new LookupViewModel { Id = 2, Code = "C2", Value = "V2" } };
-            mockresult = new ManageCoreResultViewModel
+            mockresult = new AddCoreResultViewModel
             {
                 ProfileId = 1,
                 PathwayDisplayName = "Pathway (7654321)",
@@ -39,9 +39,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             Result.Should().BeOfType(typeof(ViewResult));
 
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(ManageCoreResultViewModel));
+            viewResult.Model.Should().BeOfType(typeof(AddCoreResultViewModel));
 
-            var model = viewResult.Model as ManageCoreResultViewModel;
+            var model = viewResult.Model as AddCoreResultViewModel;
             model.Should().NotBeNull();
 
             model.ProfileId.Should().Be(mockresult.ProfileId);

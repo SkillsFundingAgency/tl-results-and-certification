@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 {
-    public class ManageCoreResultViewModel
+    public class AddCoreResultViewModel
     {
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }

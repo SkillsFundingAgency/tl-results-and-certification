@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         protected ICacheService CacheService;
         protected ILogger<ResultController> Logger;
         protected ResultController Controller;
-        protected ManageCoreResultViewModel ViewModel;
+        protected AddCoreResultViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
         protected AddResultResponse MockResult;
 
@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             ProfileId = 1;
             AoUkprn = 1234567890;
 
-            ViewModel = new ManageCoreResultViewModel
+            ViewModel = new AddCoreResultViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = 1,

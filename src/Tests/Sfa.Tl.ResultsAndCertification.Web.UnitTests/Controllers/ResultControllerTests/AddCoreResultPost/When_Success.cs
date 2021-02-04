@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 
         public override void Given()
         {
-            ViewModel = new ManageCoreResultViewModel
+            ViewModel = new AddCoreResultViewModel
             {
                 ProfileId = 1,
                 SelectedGradeCode = "PCG1"                

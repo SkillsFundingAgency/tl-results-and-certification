@@ -46,15 +46,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Status));
 
-            CreateMap<ManageCoreResultViewModel, AddResultRequest>()
+            CreateMap<AddCoreResultViewModel, AddResultRequest>()
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.AssessmentId))
                 .ForMember(d => d.LookupId, opts => opts.MapFrom(s => s.LookupId))
                 .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Core))
-                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ManageCoreResultViewModel, AddResultRequest>>());
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddCoreResultViewModel, AddResultRequest>>());
 
-            CreateMap<ResultDetails, ManageCoreResultViewModel>()
+            CreateMap<ResultDetails, AddCoreResultViewModel>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                 .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"))
                 .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
