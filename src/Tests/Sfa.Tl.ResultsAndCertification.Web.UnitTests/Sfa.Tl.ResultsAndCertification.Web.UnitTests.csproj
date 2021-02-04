@@ -29,4 +29,8 @@
     <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Web\Sfa.Tl.ResultsAndCertification.Web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\ResultControllerTests\ChangeCoreResultPost\" />
+  </ItemGroup>
+
 </Project>

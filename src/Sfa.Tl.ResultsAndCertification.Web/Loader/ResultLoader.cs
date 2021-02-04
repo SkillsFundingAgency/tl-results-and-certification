@@ -123,7 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var currentResult = await _internalApiClient.GetResultDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
 
-            if (currentResult.PathwayResultId != viewModel.ResultId)
+            if (viewModel.ResultId.HasValue && currentResult.PathwayResultId != viewModel.ResultId)
                 return null;
 
             var isResultChanged = !currentResult.PathwayResultCode.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCulture);

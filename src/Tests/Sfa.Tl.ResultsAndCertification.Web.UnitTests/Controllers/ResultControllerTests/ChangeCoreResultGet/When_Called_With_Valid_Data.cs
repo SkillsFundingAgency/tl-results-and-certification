@@ -7,7 +7,7 @@ using Xunit;
 using System.Collections.Generic;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.AddCoreResultGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ChangeCoreResultGet
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
@@ -24,13 +24,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 PathwayDisplayName = "Pathway (7654321)",
                 AssessmentSeries = "Summer 2021",
                 AssessmentId = 11,
-                ResultId = null,
+                ResultId = 111,
                 SelectedGradeCode = string.Empty,
                 Grades = grades
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } };
-            ResultLoader.GetManageCoreResultViewModelAsync(AoUkprn, ProfileId, AssessmentId, false).Returns(mockresult);
+            ResultLoader.GetManageCoreResultViewModelAsync(AoUkprn, ProfileId, AssessmentId, true).Returns(mockresult);
         }
 
         [Fact]
