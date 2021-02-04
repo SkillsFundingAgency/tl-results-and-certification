@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Change_Button" xml:space="preserve">
-    <value>Change core result page</value>
+    <value>Change</value>
   </data>
   <data name="Core_Assessment_Title" xml:space="preserve">
     <value>{0} for {1}</value>
@@ -133,7 +133,7 @@
     <value>Select the core result page</value>
   </data>
   <data name="Page_Title_Change_Result" xml:space="preserve">
-    <value>Change</value>
+    <value>Change core result page</value>
   </data>
   <data name="Submit_Button" xml:space="preserve">
     <value>Submit</value>
