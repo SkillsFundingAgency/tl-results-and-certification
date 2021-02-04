@@ -121,12 +121,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<bool?> IsCoreResultChanged(long aoUkprn, ManageCoreResultViewModel viewModel)
         {
-            var currentResult = await _internalApiClient.GetResultDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
+            var existingResult = await _internalApiClient.GetResultDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
 
-            if (viewModel.ResultId.HasValue && currentResult.PathwayResultId != viewModel.ResultId)
+            if (existingResult != null && 
+                viewModel.ResultId.HasValue && 
+                existingResult.PathwayResultId != viewModel.ResultId)
                 return null;
 
-            var isResultChanged = !currentResult.PathwayResultCode.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCulture);
+            var isResultChanged = !existingResult.PathwayResultCode.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCulture);
             return isResultChanged;
         }
     }
