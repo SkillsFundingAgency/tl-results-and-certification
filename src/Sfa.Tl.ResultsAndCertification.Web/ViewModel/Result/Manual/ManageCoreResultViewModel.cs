@@ -11,7 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public int AssessmentId { get; set; }
         public string AssessmentSeries { get; set; }
         public string PathwayDisplayName { get; set; }
-        
+
+        public int ResultId { get; set; }
         public string SelectedGradeCode { get; set; }
         public int LookupId { get; set; }
         public List<LookupViewModel> Grades { get; set; }

@@ -280,5 +280,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(viewModel);
         }
+
+        [HttpPost]
+        [Route("change-core-result", Name = RouteConstants.SubmitChangeCoreResult)]
+        public async Task<IActionResult> ChangeCoreResultAsync(ManageCoreResultViewModel model)
+        {
+            if (1 == 2)
+            {
+                // TODO: validate if selected is Same code
+                return View(model);
+            }
+
+            return RedirectToRoute(RouteConstants.ChangeCoreResultConfirmation);
+        }
+
+        [HttpGet]
+        [Route("result-change-confirmation", Name = RouteConstants.ChangeCoreResultConfirmation)]
+        public async Task<IActionResult> ChangeCoreResultConfirmationAsync()
+        {
+            return View();
+        }
     }
 }
