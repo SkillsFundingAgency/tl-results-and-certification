@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change core result page.
+        ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Change_Button {
             get {
@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change.
+        ///   Looks up a localized string similar to Change core result page.
         /// </summary>
         public static string Page_Title_Change_Result {
             get {
