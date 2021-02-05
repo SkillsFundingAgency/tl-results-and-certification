@@ -204,6 +204,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<ChangeResultResponse> ChangeResultAsync(ChangeResultRequest request)
         {
+            if (request.ComponentType != ComponentType.Core)
+                return new ChangeResultResponse { IsSuccess = false };
+
             var existingPathwayResult = await _pathwayResultRepository.GetFirstOrDefaultAsync(pr => pr.Id == request.ResultId && pr.EndDate == null && pr.IsOptedin
                                                                          && pr.TqPathwayAssessment.EndDate == null && pr.IsOptedin
                                                                          && pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
@@ -227,19 +230,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (request.LookupId.HasValue && request.LookupId > 0)
             {
-                if (request.ComponentType == ComponentType.Core)
+                pathwayResultsToUpdate.Add(new TqPathwayResult
                 {
-                    pathwayResultsToUpdate.Add(new TqPathwayResult
-                    {
-                        TqPathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
-                        TlLookupId = request.LookupId.Value,
-                        IsOptedin = true,
-                        StartDate = DateTime.UtcNow,
-                        EndDate = null,
-                        IsBulkUpload = false,
-                        CreatedBy = request.PerformedBy
-                    });
-                }
+                    TqPathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
+                    TlLookupId = request.LookupId.Value,
+                    IsOptedin = true,
+                    StartDate = DateTime.UtcNow,
+                    EndDate = null,
+                    IsBulkUpload = false,
+                    CreatedBy = request.PerformedBy
+                });
             }
 
             var isSuccess = await _pathwayResultRepository.UpdateManyAsync(pathwayResultsToUpdate) > 0;
