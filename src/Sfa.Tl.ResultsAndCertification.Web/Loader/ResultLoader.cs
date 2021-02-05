@@ -129,5 +129,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var isResultChanged = !existingResult.PathwayResultCode.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase);
             return isResultChanged;
         }
+
+        public async Task<UpdateResultResponse> ChangeCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
+        {
+            if (!string.IsNullOrWhiteSpace(viewModel.SelectedGradeCode))
+            {
+                var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
+
+                var selectedGrade = grades?.FirstOrDefault(x => x.Code.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase));
+
+                if (selectedGrade == null) return null;
+
+                viewModel.LookupId = selectedGrade.Id;
+            }
+            var request = _mapper.Map<UpdateResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.ChangeResultAsync(request);
+        }
     }
 }

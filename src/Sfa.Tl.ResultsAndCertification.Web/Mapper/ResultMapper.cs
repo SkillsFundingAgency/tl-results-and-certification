@@ -62,6 +62,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.PathwayResultId))
                 .ForMember(d => d.SelectedGradeCode, opts => opts.MapFrom(s => s.PathwayResultId.HasValue ? s.PathwayResultCode : string.Empty))
                 .ForMember(d => d.Grades, opts => opts.MapFrom((src, dest, destMember, context) => (IList<LookupData>)context.Items["grades"]));
+
+            CreateMap<ManageCoreResultViewModel, UpdateResultRequest>()
+                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.ResultId))
+                .ForMember(d => d.LookupId, opts => opts.MapFrom(s => s.LookupId))
+                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Core))
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ManageCoreResultViewModel, UpdateResultRequest>>());
         }
     }
 }

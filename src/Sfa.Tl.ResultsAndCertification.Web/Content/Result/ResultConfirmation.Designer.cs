@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Result changed confirmation page.
+        /// </summary>
+        public static string Changed_Page_Title {
+            get {
+                return ResourceManager.GetString("Changed_Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Result added confirmation page.
         /// </summary>
         public static string Page_Title {
@@ -84,6 +93,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Result_Added_Successful_Text {
             get {
                 return ResourceManager.GetString("Result_Added_Successful_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change successful.
+        /// </summary>
+        public static string Result_Changed_Successful_Text {
+            get {
+                return ResourceManager.GetString("Result_Changed_Successful_Text", resourceCulture);
             }
         }
         

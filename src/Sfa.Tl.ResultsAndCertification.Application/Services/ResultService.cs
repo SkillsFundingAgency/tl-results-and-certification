@@ -225,14 +225,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             pathwayResultsToUpdate.Add(existingPathwayResult);
 
-            if (request.LookupId > 0)
+            if (request.LookupId.HasValue && request.LookupId > 0)
             {
                 if (request.ComponentType == ComponentType.Core)
                 {
                     pathwayResultsToUpdate.Add(new TqPathwayResult
                     {
                         TqPathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
-                        TlLookupId = request.LookupId,
+                        TlLookupId = request.LookupId.Value,
                         IsOptedin = true,
                         StartDate = DateTime.UtcNow,
                         EndDate = null,

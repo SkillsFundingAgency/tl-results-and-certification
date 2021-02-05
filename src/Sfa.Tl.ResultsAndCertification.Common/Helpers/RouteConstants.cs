@@ -165,8 +165,8 @@
         public const string SubmitChangeCoreResult = "SubmitChangeCoreResult";
         public const string AddCoreResult = "AddCoreResult";
         public const string SubmitAddCoreResult = "SubmitAddCoreResult";
-        public const string AddResultConfirmation = "AddResultnConfirmation";
-        public const string ChangeCoreResultConfirmation = "ChangeCoreResultConfirmation";
+        public const string AddResultConfirmation = "AddResultConfirmation";
+        public const string ChangeResultConfirmation = "ChangeResultConfirmation";
 
         // Search Results
         public const string SearchResults = "SearchResults";
