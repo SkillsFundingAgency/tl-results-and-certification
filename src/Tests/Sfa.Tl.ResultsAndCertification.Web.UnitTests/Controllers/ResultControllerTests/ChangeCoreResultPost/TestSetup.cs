@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         protected ResultController Controller;
         protected ManageCoreResultViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
-        protected AddResultResponse MockResult;
+        protected ChangeResultResponse MockResult;
 
         public IActionResult Result { get; private set; }
 
@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.ResultCacheKey);
-            MockResult = new AddResultResponse();
+            MockResult = new ChangeResultResponse();
         }
 
         public async override Task When()
