@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         private readonly bool? mockResult = false;
         public override void Given()
         {
-            ResultLoader.IsCoreResultChanged(AoUkprn, Arg.Any<ManageCoreResultViewModel>()).Returns(mockResult);
+            ResultLoader.IsCoreResultChangedAsync(AoUkprn, Arg.Any<ManageCoreResultViewModel>()).Returns(mockResult);
         }
 
         [Fact]

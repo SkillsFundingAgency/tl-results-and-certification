@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AddResultAsync(request);
         }
 
-        public async Task<ManageCoreResultViewModel> GetManageCoreResultViewModelAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode)
+        public async Task<ManageCoreResultViewModel> GetManageCoreResultAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode)
         {
             var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
             
@@ -119,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<ManageCoreResultViewModel>(response, opt => opt.Items["grades"] = grades);
         }
 
-        public async Task<bool?> IsCoreResultChanged(long aoUkprn, ManageCoreResultViewModel viewModel)
+        public async Task<bool?> IsCoreResultChangedAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
         {
             var existingResult = await _internalApiClient.GetResultDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
 

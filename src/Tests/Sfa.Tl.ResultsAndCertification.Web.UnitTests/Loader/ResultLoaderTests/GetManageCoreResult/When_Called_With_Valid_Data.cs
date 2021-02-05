@@ -5,28 +5,28 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResultViewModel
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResult
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
         public override void Given()
         {
-            expectedApiLookupData = new List<LookupData> 
-            {  
+            expectedApiLookupData = new List<LookupData>
+            {
                 new LookupData { Id = 1, Code = "C1", Value = "V1" },
                 new LookupData { Id = 2, Code = "C2", Value = "V2" }
             };
 
-            InternalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade).Returns(expectedApiLookupData); 
-            
-            expectedApiResultDetails = new ResultDetails 
-            { 
+            InternalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade).Returns(expectedApiLookupData);
+
+            expectedApiResultDetails = new ResultDetails
+            {
                 ProfileId = ProfileId,
-                PathwayAssessmentId = AssessmentId,  
+                PathwayAssessmentId = AssessmentId,
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayLarId = "12345678",
                 PathwayName = "Construction",
-                PathwayResultId = null, 
+                PathwayResultId = null,
             };
             InternalApiClient.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(expectedApiResultDetails);
         }
