@@ -8,6 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
     public class ManageCoreResultViewModel
     {
         public int ProfileId { get; set; }
+        public long Uln { get; set; }
         public int AssessmentId { get; set; }
         public string AssessmentSeries { get; set; }
         public string PathwayDisplayName { get; set; }

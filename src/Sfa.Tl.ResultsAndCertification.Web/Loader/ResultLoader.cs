@@ -130,7 +130,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return isResultChanged;
         }
 
-        public async Task<UpdateResultResponse> ChangeCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
+        public async Task<ChangeResultResponse> ChangeCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
         {
             if (!string.IsNullOrWhiteSpace(viewModel.SelectedGradeCode))
             {
@@ -142,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
                 viewModel.LookupId = selectedGrade.Id;
             }
-            var request = _mapper.Map<UpdateResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            var request = _mapper.Map<ChangeResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.ChangeResultAsync(request);
         }
     }

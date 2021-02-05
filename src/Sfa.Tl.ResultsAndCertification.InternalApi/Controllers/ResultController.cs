@@ -43,10 +43,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateResult")]
-        public async Task<UpdateResultResponse> UpdateResultAsync(UpdateResultRequest request)
+        [Route("ChangeResult")]
+        public async Task<ChangeResultResponse> ChangeResultAsync(ChangeResultRequest request)
         {
-            return await _resultService.UpdateResultAsync(request);
+            return await _resultService.ChangeResultAsync(request);
         }
     }
 }

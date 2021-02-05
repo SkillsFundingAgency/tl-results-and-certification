@@ -202,7 +202,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return new AddResultResponse { Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ProfileId = request.ProfileId, IsSuccess = status > 0 };
         }
 
-        public async Task<UpdateResultResponse> UpdateResultAsync(UpdateResultRequest request)
+        public async Task<ChangeResultResponse> ChangeResultAsync(ChangeResultRequest request)
         {
             var existingPathwayResult = await _pathwayResultRepository.GetFirstOrDefaultAsync(pr => pr.Id == request.ResultId && pr.EndDate == null && pr.IsOptedin
                                                                          && pr.TqPathwayAssessment.EndDate == null && pr.IsOptedin
@@ -212,8 +212,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (existingPathwayResult == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update Pathway Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: UpdateResultAsync()");
-                return new UpdateResultResponse { IsSuccess = false };
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to change Pathway Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: ChangeResultAsync({request})");
+                return new ChangeResultResponse { IsSuccess = false };
             }
 
             var pathwayResultsToUpdate = new List<TqPathwayResult>();
@@ -244,7 +244,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var isSuccess = await _pathwayResultRepository.UpdateManyAsync(pathwayResultsToUpdate) > 0;
 
-            return new UpdateResultResponse { Uln = existingPathwayResult.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ProfileId = request.ProfileId, IsSuccess = isSuccess };
+            return new ChangeResultResponse { Uln = request.Uln, ProfileId = request.ProfileId, IsSuccess = isSuccess };
         }
 
         #region Private Methods

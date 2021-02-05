@@ -235,10 +235,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<AddResultRequest, AddResultResponse>(requestUri, request);
         }
 
-        public async Task<UpdateResultResponse> ChangeResultAsync(UpdateResultRequest model)
+        public async Task<ChangeResultResponse> ChangeResultAsync(ChangeResultRequest model)
         {
             var requestUri = ApiConstants.ChangeResultUri;
-            return await PutAsync<UpdateResultRequest, UpdateResultResponse>(requestUri, model);
+            return await PutAsync<ChangeResultRequest, ChangeResultResponse>(requestUri, model);
         }
 
         public async Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade)
