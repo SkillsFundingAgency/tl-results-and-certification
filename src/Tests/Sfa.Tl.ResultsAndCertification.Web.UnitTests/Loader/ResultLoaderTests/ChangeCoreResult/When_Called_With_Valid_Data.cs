@@ -6,11 +6,11 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.AddCoreResult
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.ChangeCoreResult
 {
     public class When_Called_With_Valid_Data : TestSetup
-    {        
-        private AddResultResponse ExpectedApiResult { get; set; }
+    {
+        private ChangeResultResponse ExpectedApiResult { get; set; }
 
         public override void Given()
         {
@@ -19,20 +19,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             ViewModel = new ManageCoreResultViewModel
             {
                 ProfileId = ProfileId,
-                AssessmentId = 1,
+                ResultId = 1,
                 SelectedGradeCode = "PCG1",
                 LookupId = 1
             };
 
-            
-            ExpectedApiResult = new AddResultResponse { IsSuccess = true, Uln = 1234567890, ProfileId = ProfileId };
-            
+
+            ExpectedApiResult = new ChangeResultResponse { IsSuccess = true, Uln = 1234567890, ProfileId = ProfileId };
+
             InternalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade).Returns(lookupApiClientResponse);
 
             InternalApiClient
-                .AddResultAsync(Arg.Is<AddResultRequest>(
+                .ChangeResultAsync(Arg.Is<ChangeResultRequest>(
                     x => x.ProfileId == ViewModel.ProfileId &&
                     x.AoUkprn == AoUkprn &&
+                    x.ResultId == ViewModel.ResultId &&
                     x.ComponentType == ComponentType.Core &&
                     x.LookupId == ViewModel.LookupId))
                 .Returns(ExpectedApiResult);

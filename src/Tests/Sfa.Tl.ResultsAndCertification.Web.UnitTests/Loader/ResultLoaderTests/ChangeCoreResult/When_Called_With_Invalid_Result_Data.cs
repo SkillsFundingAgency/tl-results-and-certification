@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -6,11 +7,11 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.AddCoreResult
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.ChangeCoreResult
 {
-    public class When_Called_With_Valid_Data : TestSetup
-    {        
-        private AddResultResponse ExpectedApiResult { get; set; }
+    public class When_Called_With_Invalid_Result_Data : TestSetup
+    {
+        private ChangeResultResponse ExpectedApiResult { get; set; }
 
         public override void Given()
         {
@@ -19,20 +20,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             ViewModel = new ManageCoreResultViewModel
             {
                 ProfileId = ProfileId,
-                AssessmentId = 1,
-                SelectedGradeCode = "PCG1",
+                ResultId = 1,
+                SelectedGradeCode = "PCG10",
                 LookupId = 1
             };
 
-            
-            ExpectedApiResult = new AddResultResponse { IsSuccess = true, Uln = 1234567890, ProfileId = ProfileId };
-            
+            ExpectedApiResult = new ChangeResultResponse { IsSuccess = true, Uln = 1234567890, ProfileId = ProfileId };
+
             InternalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade).Returns(lookupApiClientResponse);
 
             InternalApiClient
-                .AddResultAsync(Arg.Is<AddResultRequest>(
+                .ChangeResultAsync(Arg.Is<ChangeResultRequest>(
                     x => x.ProfileId == ViewModel.ProfileId &&
                     x.AoUkprn == AoUkprn &&
+                    x.ResultId == ViewModel.ResultId &&
                     x.ComponentType == ComponentType.Core &&
                     x.LookupId == ViewModel.LookupId))
                 .Returns(ExpectedApiResult);
@@ -45,12 +46,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
         }
 
         [Fact]
+        public void Then_NotRecieved_Call_To_ChangeResult()
+        {
+            InternalApiClient.DidNotReceive().ChangeResultAsync(new ChangeResultRequest());
+        }
+
+        [Fact]
         public void Then_Returns_Expected_Results()
         {
-            ActualResult.Should().NotBeNull();
-            ActualResult.IsSuccess.Should().Be(ExpectedApiResult.IsSuccess);
-            ActualResult.Uln.Should().Be(ExpectedApiResult.Uln);
-            ActualResult.ProfileId.Should().Be(ExpectedApiResult.ProfileId);
+            ActualResult.Should().BeNull();            
         }
     }
 }
