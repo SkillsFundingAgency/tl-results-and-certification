@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         private ManageCoreResultViewModel mockresult = null;
         public override void Given()
         {
-            ResultLoader.GetManageCoreResultViewModelAsync(AoUkprn, ProfileId, AssessmentId, false).Returns(mockresult);
+            ResultLoader.GetManageCoreResultAsync(AoUkprn, ProfileId, AssessmentId, false).Returns(mockresult);
         }
 
         [Fact]

@@ -3,13 +3,13 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResultViewModel
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResult
 {
-    public class When_Called_With_Invalid_Data : TestSetup
+    public class When_Assessment_NotFound : TestSetup
     {
         public override void Given()
         {
-            expectedApiResultDetails = null;
+            expectedApiResultDetails = new Models.Contracts.ResultDetails { PathwayAssessmentId = 999 };
             InternalApiClient.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(expectedApiResultDetails);
         }
 

@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResultViewModel
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResult
 {
     public class When_ChangeMode_HasResult : TestSetup
     {

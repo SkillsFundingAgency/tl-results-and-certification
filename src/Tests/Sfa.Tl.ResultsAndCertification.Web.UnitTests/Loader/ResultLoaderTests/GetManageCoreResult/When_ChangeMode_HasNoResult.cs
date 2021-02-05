@@ -3,13 +3,15 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResultViewModel
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResult
 {
-    public class When_Assessment_HasResult : TestSetup
+    public class When_ChangeMode_HasNoResult : TestSetup
     {
         public override void Given()
         {
-            expectedApiResultDetails = new Models.Contracts.ResultDetails { PathwayResultId = 1 };
+            IsChangeMode = true;
+
+            expectedApiResultDetails = new Models.Contracts.ResultDetails { PathwayResultId = null };
             InternalApiClient.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(expectedApiResultDetails);
         }
 

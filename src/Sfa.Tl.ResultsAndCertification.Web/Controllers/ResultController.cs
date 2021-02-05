@@ -225,7 +225,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("select-core-result/{profileId}/{assessmentId}", Name = RouteConstants.AddCoreResult)]
         public async Task<IActionResult> AddCoreResultAsync(int profileId, int assessmentId)
         {
-            var viewModel = await _resultLoader.GetManageCoreResultViewModelAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: false);
+            var viewModel = await _resultLoader.GetManageCoreResultAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: false);
             
             if (viewModel == null)
             {
@@ -270,7 +270,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("change-core-result/{profileId}/{assessmentId}", Name = RouteConstants.ChangeCoreResult)]
         public async Task<IActionResult> ChangeCoreResultAsync(int profileId, int assessmentId)
         {
-            var viewModel = await _resultLoader.GetManageCoreResultViewModelAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: true);
+            var viewModel = await _resultLoader.GetManageCoreResultAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: true);
 
             if (viewModel == null)
             {
@@ -285,10 +285,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("change-core-result", Name = RouteConstants.SubmitChangeCoreResult)]
         public async Task<IActionResult> ChangeCoreResultAsync(ManageCoreResultViewModel model)
         {
-            var isResultChanged = await _resultLoader.IsCoreResultChanged(User.GetUkPrn(), model);
+            var isResultChanged = await _resultLoader.IsCoreResultChangedAsync(User.GetUkPrn(), model);
             if (!isResultChanged.HasValue)
             {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"ChangeCoreResult request data-mismatch. Method:IsCoreResultChanged({User.GetUkPrn()}, {model}), ProfileId: {model.ProfileId}, ResultId: {model.ResultId}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"ChangeCoreResult request data-mismatch. Method:IsCoreResultChanged({User.GetUkPrn()}, {model}), ProfileId: {model.ProfileId}, ResultId: {model.ResultId}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
