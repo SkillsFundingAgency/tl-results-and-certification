@@ -27,12 +27,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var walsallCollegeTqProvider = _bulkRegistrationTestFixture.TqProviders.FirstOrDefault(p => p.TlProvider.UkPrn == 10007315);
 
             var seededTqRegistrationProfile = _bulkRegistrationTestFixture.SeedRegistrationData(_bulkRegistrationTestFixture.Uln, barnsleyCollegeTqProvider);
-            
+
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
-            var seededRegistrationProfile = seededTqRegistrationProfile.TqRegistrationPathways.ToList();
-            tqPathwayAssessmentsSeedData.AddRange(_bulkRegistrationTestFixture.GetPathwayAssessmentsDataToProcess(seededRegistrationProfile));
+            var seededRegistrationPathways = seededTqRegistrationProfile.TqRegistrationPathways.ToList();
+            tqPathwayAssessmentsSeedData.AddRange(_bulkRegistrationTestFixture.GetPathwayAssessmentsDataToProcess(seededRegistrationPathways));
             var _pathwayAssessments = _bulkRegistrationTestFixture.SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
+
+            // Results seed
+            var results = _bulkRegistrationTestFixture.GetPathwayResultsDataToProcess(_pathwayAssessments);
+            var _pathwayResults = _bulkRegistrationTestFixture.SeedPathwayResultsData(results);
 
             // Input param
             var registrationDataToProcess = _bulkRegistrationTestFixture.GetRegistrationsDataToProcess(_bulkRegistrationTestFixture.Uln, walsallCollegeTqProvider);
@@ -63,6 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                                                                                                                            .ThenInclude(x => x.TqRegistrationSpecialisms)
                                                                                                                        .Include(x => x.TqRegistrationPathways)
                                                                                                                             .ThenInclude(x => x.TqPathwayAssessments)
+                                                                                                                                .ThenInclude(x => x.TqPathwayResults)
                                                                                                                        .FirstOrDefault();
             // assert registration profile data
             actualRegistrationProfile.Should().NotBeNull();
@@ -87,13 +92,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 // Assert Transferred Registration
                 AssertRegistrations(actualActivePathway, expectedPathway);
 
-                // Assesert Active Pathway Assessment
+                // Assert Active Pathway Assessment
                 var actualActiveAssessment = actualActivePathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate == null);
                 AssertAssessments(actualActiveAssessment, actualActivePathway);
 
-                // Assesert Transferred Pathway Assessment
+                // Assert Transferred Pathway Assessment
                 var actualTransferredAssessment = actualTransferredPathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate != null);
                 AssertAssessments(actualTransferredAssessment, actualTransferredPathway);
+
+                // Assert Active PathwayResult
+                var actualActiveResults = actualActiveAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate == null);
+                AssertResults(actualActiveResults, actualActiveAssessment);
+
+                // Assert Transferred PathwayResult
+                var actualTransferredResults = actualTransferredAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
+                AssertResults(actualTransferredResults, actualTransferredAssessment);
             }
         }
 
@@ -130,6 +143,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualAssessment.EndDate.Should().BeNull();
             else
                 actualAssessment.EndDate.Should().NotBeNull();
+        }
+
+        private static void AssertResults(TqPathwayResult actualResult, TqPathwayAssessment tqAssessment)
+        {
+            actualResult.Should().NotBeNull();
+            actualResult.TqPathwayAssessmentId.Should().Be(tqAssessment.Id);
+            actualResult.IsOptedin.Should().BeTrue();
+            actualResult.IsBulkUpload.Should().BeTrue();
+
+            if (tqAssessment.TqRegistrationPathway.Status == Common.Enum.RegistrationPathwayStatus.Active)
+                actualResult.EndDate.Should().BeNull();
+            else
+                actualResult.EndDate.Should().NotBeNull();
         }
     }
 }
