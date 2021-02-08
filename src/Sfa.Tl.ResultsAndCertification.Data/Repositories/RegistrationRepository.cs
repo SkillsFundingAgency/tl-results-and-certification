@@ -92,6 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         .ThenInclude(x => x.TqSpecialismAssessments)
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqPathwayAssessments)
+                        .ThenInclude(x => x.TqPathwayResults)
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqProvider)
                         .ThenInclude(x => x.TqAwardingOrganisation)
@@ -126,7 +127,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                             await ProcessRegistrationSpecialismEntities(specialismRegistrations);
 
-                            await ProcessPathwayAssessments(pathwayAssessments);
+                            var pathwayResults = new List <TqPathwayResult>();
+                            await ProcessPathwayAssessments(bulkConfig, pathwayAssessments, pathwayResults);
+                            await ProcessPathwayResults(pathwayResults);
 
                             transaction.Commit();
                         }
@@ -229,13 +232,38 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
         }
 
-        private async Task ProcessPathwayAssessments(List<TqPathwayAssessment> pathwayAssessments)
+        private async Task ProcessPathwayAssessments(BulkConfig bulkConfig, List<TqPathwayAssessment> pathwayAssessments, List<TqPathwayResult> pathwayResults)
         {
             if (pathwayAssessments == null || !pathwayAssessments.Any())
                 return;
 
+            // Dev note: below Copy obj has navigation prop's but no new Id's
+            var pathwayAssessmentsCopy = new List<TqPathwayAssessment>(pathwayAssessments);
+
             pathwayAssessments = SortUpdateAndInsertOrder(pathwayAssessments, x => x.Id);
-            await _dbContext.BulkInsertOrUpdateAsync(pathwayAssessments, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
+            await _dbContext.BulkInsertOrUpdateAsync(pathwayAssessments, bulkConfig);
+            // Dev note: above pathwayAssessments obj has no navigation prop's but has new Id's
+
+            foreach (var assessment in pathwayAssessments)
+            {
+                var assessmentCopy = pathwayAssessmentsCopy.FirstOrDefault(x => x.TqRegistrationPathwayId == assessment.TqRegistrationPathwayId);
+                foreach (var resultCopy in assessmentCopy.TqPathwayResults)
+                {
+                    if (resultCopy.Id <= 0)
+                        resultCopy.TqPathwayAssessmentId = assessment.Id;
+                    
+                    pathwayResults.Add(resultCopy);
+                }
+            }
+        }
+
+        private async Task ProcessPathwayResults(List<TqPathwayResult> pathwayResults)
+        {
+            if (pathwayResults == null || !pathwayResults.Any())
+                return;
+
+            pathwayResults = SortUpdateAndInsertOrder(pathwayResults, x => x.Id);
+            await _dbContext.BulkInsertOrUpdateAsync(pathwayResults, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
         }
 
         private List<T> SortUpdateAndInsertOrder<T>(List<T> entities, Func<T, int> selector) where T : class

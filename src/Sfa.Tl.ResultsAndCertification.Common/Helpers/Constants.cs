@@ -58,6 +58,7 @@
         // Assessment Data Index Constants
         public const int PathwayAssessmentsStartIndex = 100000;
         public const int SpecialismAssessmentsStartIndex = 100000;
+        public const int PathwayResultStartIndex = 100000;
 
         // Results Data Index Constants
         public const int PathwayResultsStartIndex = 100000;
