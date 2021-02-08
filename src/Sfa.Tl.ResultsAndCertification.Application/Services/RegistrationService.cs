@@ -211,7 +211,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 amendedRegistrations = matchedRegistrations.Except(unchangedRegistrations, ulnComparer).ToList();
 
                 int pathwayAssessmentStartIndex = Constants.PathwayAssessmentsStartIndex;
-                int pathwayResultStartIndex = Constants.PathwayResultStartIndex;
+                int pathwayResultStartIndex = Constants.PathwayResultsStartIndex;
+
                 amendedRegistrations.ForEach(amendedRegistration =>
                 {
                     var existingRegistration = existingRegistrationsFromDb.FirstOrDefault(existingRegistration => existingRegistration.UniqueLearnerNumber == amendedRegistration.UniqueLearnerNumber);
@@ -771,15 +772,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             CreatedBy = amendedRegistration.CreatedBy
                         };
 
-                        associatedPathwayToAdd.TqPathwayAssessments.Add(newActiveAssessment);
-                    };
-                    pathwayAssessmentStartIndex -= pathwayAssessmentsToUpdate.Count();
-
-                    // Transfer - Results
-                    if (pathwayAssessmentsToUpdate.Any())
-                    {
-                        var pathwayResultsToUpdate = pathwayAssessmentsToUpdate?.FirstOrDefault().TqPathwayResults.Where(s => s.IsOptedin && s.EndDate == null).ToList();
-                        foreach (var (pathwayResult, idx) in pathwayResultsToUpdate.Select((value, i) => (value, i)))
+                        // Transfer - Results
+                        var pathwayResultsToUpdate = pathwayAssessment.TqPathwayResults.Where(s => s.IsOptedin && s.EndDate == null).ToList();
+                        foreach (var (pathwayResult, index) in pathwayResultsToUpdate.Select((value, i) => (value, i)))
                         {
                             pathwayResult.EndDate = DateTime.UtcNow;
                             pathwayResult.ModifiedBy = amendedRegistration.CreatedBy;
@@ -787,18 +782,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                             var newActiveResult = new TqPathwayResult
                             {
-                                Id = idx - pathwayResultStartIndex,
+                                Id = index - pathwayResultStartIndex,
                                 TlLookupId = pathwayResult.TlLookupId,
                                 IsOptedin = true,
                                 StartDate = DateTime.UtcNow,
                                 IsBulkUpload = true,
                                 CreatedBy = amendedRegistration.CreatedBy
                             };
-
-                            associatedPathwayToAdd.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.Add(newActiveResult);
+                            newActiveAssessment.TqPathwayResults.Add(newActiveResult);
                         };
                         pathwayResultStartIndex -= pathwayResultsToUpdate.Count();
-                    }
+
+                        associatedPathwayToAdd.TqPathwayAssessments.Add(newActiveAssessment);
+                    };
+                    pathwayAssessmentStartIndex -= pathwayAssessmentsToUpdate.Count();
                 });
                 hasBothPathwayAndSpecialismsRecordsChanged = true;
             }
