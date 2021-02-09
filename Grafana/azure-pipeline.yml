@@ -7,12 +7,12 @@ resources:
     - repository: deployment
       type: github
       endpoint: s126GitHub
-      name: s126GitHub/operations-devops-deployment
+      name: DFE-Digital/operations-devops-deployment
 
     - repository: devopsTemplates
       type: github
       endpoint: s126GitHub
-      name: s126GitHub/operations-devops-templates
+      name: DFE-Digital/operations-devops-templates
     
 trigger:
   branches:
