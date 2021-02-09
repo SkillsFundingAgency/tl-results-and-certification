@@ -31,6 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var registrationPathway = await pathwayQueryable
                 .IncludeFilter(p => p.TqRegistrationSpecialisms.Where(s => s.IsOptedin && (p.Status == RegistrationPathwayStatus.Withdrawn) ? s.EndDate != null : s.EndDate == null))
                 .IncludeFilter(p => p.TqPathwayAssessments.Where(s => s.IsOptedin && (p.Status == RegistrationPathwayStatus.Withdrawn) ? s.EndDate != null : s.EndDate == null))
+                .IncludeFilter(p => p.TqPathwayAssessments.Where(s => s.IsOptedin && (p.Status == RegistrationPathwayStatus.Withdrawn) ? s.EndDate != null : s.EndDate == null)
+                                                          .SelectMany(a => a.TqPathwayResults.Where(r => r.IsOptedin && (a.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? r.EndDate != null : r.EndDate == null)))
                 .OrderByDescending(p => p.CreatedOn)
                 .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId && p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn);
             return registrationPathway;

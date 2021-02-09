@@ -447,7 +447,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Status = RegistrationPathwayStatus.Active,
                 IsBulkUpload = false,
                 TqRegistrationSpecialisms = MapSpecialisms(tqRegistrationPathway.TqRegistrationSpecialisms.Select(s => new KeyValuePair<int, string>(s.TlSpecialismId, null)), model.PerformedBy, 0, false),
-                TqPathwayAssessments = MapPathwayAssessments(tqRegistrationPathway, true, false, model.PerformedBy),
+                TqPathwayAssessments = MapPathwayAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),
                 CreatedBy = model.PerformedBy,
                 CreatedOn = DateTime.UtcNow
             };
@@ -533,6 +533,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var pathways = new List<TqRegistrationPathway>();
             
             EndRegistrationWithStatus(pathway, RegistrationPathwayStatus.Transferred, model.PerformedBy);
+            
             pathways.Add(pathway);
 
             // add new records
@@ -546,7 +547,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     Status = RegistrationPathwayStatus.Active,
                     IsBulkUpload = false,
                     TqRegistrationSpecialisms = MapSpecialisms(registrationRecord.TlSpecialismLarIds, model.PerformedBy, 0, false),
-                    TqPathwayAssessments = MapPathwayAssessments(pathway, true, false, model.PerformedBy),                    
+                    TqPathwayAssessments = MapPathwayAssessmentsAndResults(pathway, true, false, model.PerformedBy),                    
                     CreatedBy = model.PerformedBy,
                     CreatedOn = DateTime.UtcNow
                 });
@@ -599,17 +600,26 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 pathway.EndDate = DateTime.UtcNow;
                 pathway.ModifiedBy = performedBy;
                 pathway.ModifiedOn = DateTime.UtcNow;
+
                 pathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(s =>
                 {
                     s.EndDate = DateTime.UtcNow;
                     s.ModifiedBy = performedBy;
                     s.ModifiedOn = DateTime.UtcNow;
                 });
+
                 pathway.TqPathwayAssessments.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(pa =>
                 {
                     pa.EndDate = DateTime.UtcNow;
                     pa.ModifiedBy = performedBy;
                     pa.ModifiedOn = DateTime.UtcNow;
+
+                    pa.TqPathwayResults.Where(r => r.IsOptedin && r.EndDate == null).ToList().ForEach(pr =>
+                    {
+                        pr.EndDate = DateTime.UtcNow;
+                        pr.ModifiedBy = performedBy;
+                        pr.ModifiedOn = DateTime.UtcNow;
+                    });
                 });
             }
         }
@@ -691,7 +701,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }).ToList();
         }
 
-        private static List<TqPathwayAssessment> MapPathwayAssessments(TqRegistrationPathway tqRegistrationPathway, bool isOptedIn, bool isBulkUpload, string performedBy)
+        private static List<TqPathwayAssessment> MapPathwayAssessmentsAndResults(TqRegistrationPathway tqRegistrationPathway, bool isOptedIn, bool isBulkUpload, string performedBy)
         {
             return tqRegistrationPathway.TqPathwayAssessments.Select(x => new TqPathwayAssessment
             {
@@ -699,7 +709,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 StartDate = DateTime.UtcNow,
                 IsOptedin = isOptedIn,
                 IsBulkUpload = isBulkUpload,
-                CreatedBy = performedBy
+                CreatedBy = performedBy,
+                TqPathwayResults = x.TqPathwayResults.Select(r => new TqPathwayResult
+                {
+                    TlLookupId = r.TlLookupId,
+                    StartDate = DateTime.UtcNow,
+                    IsOptedin = isOptedIn,
+                    IsBulkUpload = isBulkUpload,
+                    CreatedBy = performedBy,
+                }).ToList()
             }).ToList();
         }
 
