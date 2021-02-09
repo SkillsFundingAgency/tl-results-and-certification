@@ -1,0 +1,28 @@
+name: CreateGrafana
+resources:  
+  repositories:
+    - repository: self
+      persistCredentials: true
+      clean: true  
+    - repository: deployment
+      type: github
+      endpoint: DFE-Digital
+      name: DFE-Digital/operations-devops-deployment
+
+    - repository: devopsTemplates
+      type: github
+      endpoint: DFE-Digital
+      name: DFE-Digital/operations-devops-templates
+    
+trigger:
+  branches:
+    include:
+    - GrafanaPipeline
+stages:
+  - template: ./grafana/grafana-build.yml@devopsTemplates
+    parameters:
+      applicationId: $(applicationId)
+      purpose: $(purpose)
+      environment: $(environment)
+      SourcePath: $(System.DefaultWorkingDirectory)/Grafana
+
