@@ -12,7 +12,7 @@ resources:
     - repository: devopsTemplates
       type: github
       endpoint: DFE-Digital
-      name: DFE-Digital/operations-devops-templates
+      name: DFE-Digital/operations-devops-pipeline-templates
     
 trigger:
   branches:
