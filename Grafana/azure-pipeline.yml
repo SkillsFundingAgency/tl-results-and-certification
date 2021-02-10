@@ -19,10 +19,20 @@ trigger:
     include:
     - GrafanaPipeline
 stages:
-  - template: ./grafana/grafana-build.yml@devopsTemplates
-    parameters:
-      applicationId: $(applicationId)
-      purpose: $(purpose)
-      environment: $(environment)
-      SourcePath: $(System.DefaultWorkingDirectory)/Grafana
+- stage: ShowFiles
+  jobs: 
+  - job: ShowFiles
+    steps:
+    - checkout: self
+    - checkout: deployment
+    - checkout: devopsTemplates
+    - pwsh: Get-ChildItem -Recurse
+
+
+  # - template: ./grafana/grafana-build.yml@devopsTemplates
+  #   parameters:
+  #     applicationId: $(applicationId)
+  #     purpose: $(purpose)
+  #     environment: $(environment)
+  #     SourcePath: $(System.DefaultWorkingDirectory)/Grafana
 
