@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
     public class TqPathwayResultBuilder
     {
-        public TqPathwayResult Build(TqPathwayAssessment tqPathwayAssessment = null, TlLookup tlLookupPathwayComponentGrade = null)
+        public TqPathwayResult Build(TqPathwayAssessment tqPathwayAssessment = null, TlLookup tlLookupPathwayComponentGrade = null, bool isBulkUpload = true)
         {
             tqPathwayAssessment ??= new TqPathwayAssessmentBuilder().Build();
             tlLookupPathwayComponentGrade ??= new TlLookupBuilder().Build();
@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 TlLookupId = tlLookupPathwayComponentGrade.Id,
                 StartDate = DateTime.UtcNow,
                 IsOptedin = true,
-                IsBulkUpload = true,
+                IsBulkUpload = isBulkUpload,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             };
         }
 
-        public IList<TqPathwayResult> BuildList(TqPathwayAssessment tqPathwayAssessment = null)
+        public IList<TqPathwayResult> BuildList(TqPathwayAssessment tqPathwayAssessment = null, bool isBulkUpload = true)
         {
             tqPathwayAssessment ??= new TqPathwayAssessmentBuilder().Build();
             var tlLookupPathwayComponentGrades = new TlLookupBuilder().BuildList();
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     TlLookupId = tlLookupPathwayComponentGrades[0].Id,
                     StartDate = DateTime.UtcNow,
                     IsOptedin = true,
-                    IsBulkUpload = true,
+                    IsBulkUpload = isBulkUpload,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
                     ModifiedBy = Constants.ModifiedByUser,
@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     TlLookupId = tlLookupPathwayComponentGrades[1].Id,
                     StartDate = DateTime.UtcNow,
                     IsOptedin = true,
-                    IsBulkUpload = true,
+                    IsBulkUpload = isBulkUpload,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
                     ModifiedBy = Constants.ModifiedByUser,
