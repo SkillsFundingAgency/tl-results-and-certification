@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -69,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             return TqPathwayAssessment;
         }
 
-        public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false)
+        public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
         {
             var tqPathwayAssessments = new List<TqPathwayAssessment>();
 
@@ -78,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 if (isHistorical)
                 {
                     // Historical record
-                    var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
+                    var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index], isBulkUpload);
                     pathwayAssessment.IsOptedin = false;
                     pathwayAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
 
@@ -86,7 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                     tqPathwayAssessments.Add(tqPathwayAssessmentHistorical);
                 }
 
-                var activePathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
+                var activePathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index], isBulkUpload);
                 var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, activePathwayAssessment);
                 if (!seedPathwayAssessmentsAsActive)
                 {
@@ -97,6 +98,44 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 tqPathwayAssessments.Add(tqPathwayAssessment);
             }
             return tqPathwayAssessments;
+        }
+
+        public List<TqPathwayResult> GetPathwayResultsDataToProcess(List<TqPathwayAssessment> pathwayAssessments, bool seedPathwayResultsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
+        {
+            var tqPathwayResults = new List<TqPathwayResult>();
+
+            foreach (var (pathwayAssessment, index) in pathwayAssessments.Select((value, i) => (value, i)))
+            {
+                if (isHistorical)
+                {
+                    // Historical record
+                    var pathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, isBulkUpload: isBulkUpload);
+                    pathwayAssessment.IsOptedin = false;
+                    pathwayAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                    var tqPathwayResultHistorical = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, pathwayResult);
+                    tqPathwayResults.Add(tqPathwayResultHistorical);
+                }
+
+                var activePathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, isBulkUpload: isBulkUpload);
+                var tqPathwayResult = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, activePathwayResult);
+                if (!seedPathwayResultsAsActive)
+                {
+                    tqPathwayResult.IsOptedin = pathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
+                    tqPathwayResult.EndDate = DateTime.UtcNow;
+                }
+
+                tqPathwayResults.Add(tqPathwayResult);
+            }
+            return tqPathwayResults;
+        }
+        public List<TqPathwayResult> SeedPathwayResultsData(List<TqPathwayResult> pathwayResults, bool saveChanges = true)
+        {
+            var tqPathwayResults = TqPathwayResultDataProvider.CreateTqPathwayResults(DbContext, pathwayResults);
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return tqPathwayResults;
         }
     }
 }
