@@ -6,12 +6,12 @@ resources:
       clean: true  
     - repository: deployment
       type: github
-      endpoint: s126GitHub
+      endpoint: DFE-Digital
       name: DFE-Digital/operations-devops-deployment
 
     - repository: devopsTemplates
       type: github
-      endpoint: s126GitHub
+      endpoint: DFE-Digital
       name: DFE-Digital/operations-devops-templates
     
 trigger:
