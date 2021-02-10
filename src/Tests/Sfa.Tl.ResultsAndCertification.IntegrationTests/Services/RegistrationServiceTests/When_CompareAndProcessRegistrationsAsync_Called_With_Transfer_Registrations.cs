@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             actualRegistrationProfile.UniqueLearnerNumber.Should().Be(expectedRegistrationProfile.UniqueLearnerNumber);
 
             // Assert registration pathway data
-            actualRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == Common.Enum.RegistrationPathwayStatus.Active).ToList().Count.Should().Be(expectedRegistrationProfile.TqRegistrationPathways.Count);
+            actualRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == Common.Enum.RegistrationPathwayStatus.Active).ToList().Count.Should().Be(1);
             actualRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == Common.Enum.RegistrationPathwayStatus.Transferred).ToList().Count.Should().Be(1);
 
             // Assert Transferred Pathway
@@ -138,9 +138,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         {
             actualAssessment.Should().NotBeNull();
             actualAssessment.TqRegistrationPathwayId.Should().Be(expectedAssessment.TqRegistrationPathwayId);
+            actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId); 
             actualAssessment.IsOptedin.Should().BeTrue();
             actualAssessment.IsBulkUpload.Should().BeTrue();
-            actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
 
             if (actualAssessment.TqRegistrationPathway.Status == Common.Enum.RegistrationPathwayStatus.Active)
                 actualAssessment.EndDate.Should().BeNull();
