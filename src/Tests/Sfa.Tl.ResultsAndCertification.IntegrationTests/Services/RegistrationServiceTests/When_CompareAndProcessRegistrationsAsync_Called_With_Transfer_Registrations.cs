@@ -140,7 +140,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             actualAssessment.TqRegistrationPathwayId.Should().Be(expectedAssessment.TqRegistrationPathwayId);
             actualAssessment.IsOptedin.Should().BeTrue();
             actualAssessment.IsBulkUpload.Should().BeTrue();
-            actualAssessment.TqRegistrationPathwayId.Should().Be(expectedAssessment.TqRegistrationPathwayId);
+            actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
 
             if (actualAssessment.TqRegistrationPathway.Status == Common.Enum.RegistrationPathwayStatus.Active)
                 actualAssessment.EndDate.Should().BeNull();
