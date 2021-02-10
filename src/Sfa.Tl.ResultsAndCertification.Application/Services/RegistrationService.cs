@@ -246,7 +246,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                             if (response.IsValid)
                             {
-                                var entitiesChangeStatus = PrepareAmendedPathwayAndSpecialisms(amendedRegistration, pathwaysToAdd, pathwaysToUpdate, pathwayAssessmentStartIndex, pathwayResultStartIndex);
+                                var entitiesChangeStatus = PrepareAndAmendRegistrationData(amendedRegistration, pathwaysToAdd, pathwaysToUpdate, pathwayAssessmentStartIndex, pathwayResultStartIndex);
                                 hasBothPathwayAndSpecialismsRecordsChanged = entitiesChangeStatus.Item1;
                                 hasOnlySpecialismsRecordChanged = entitiesChangeStatus.Item2;
                                 pathwayAssessmentStartIndex = entitiesChangeStatus.Item3;
@@ -747,7 +747,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
-        private Tuple<bool, bool, int, int> PrepareAmendedPathwayAndSpecialisms(TqRegistrationProfile amendedRegistration, List<TqRegistrationPathway> pathwaysToAdd, List<TqRegistrationPathway> pathwaysToUpdate, int pathwayAssessmentStartIndex, int pathwayResultStartIndex)
+        private Tuple<bool, bool, int, int> PrepareAndAmendRegistrationData(TqRegistrationProfile amendedRegistration, List<TqRegistrationPathway> pathwaysToAdd, List<TqRegistrationPathway> pathwaysToUpdate, int pathwayAssessmentStartIndex, int pathwayResultStartIndex)
         {
             var hasBothPathwayAndSpecialismsRecordsChanged = false;
             var hasOnlySpecialismsRecordChanged = false;

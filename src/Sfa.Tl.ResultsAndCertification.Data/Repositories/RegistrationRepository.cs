@@ -239,15 +239,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (pathwayAssessments == null || !pathwayAssessments.Any())
                 return;
 
-            // Dev note: below Copy obj has navigation prop's but no new Id's
+            // Dev note: below Copy obj has navigation prop's but no newly added Id's
             var pathwayAssessmentsCopy = new List<TqPathwayAssessment>(pathwayAssessments);
 
             pathwayAssessments = SortUpdateAndInsertOrder(pathwayAssessments, x => x.Id);
             await _dbContext.BulkInsertOrUpdateAsync(pathwayAssessments, bulkConfig);
-            // Dev note: above pathwayAssessments obj has no navigation prop's but has new Id's
 
             foreach (var assessmentCopy in pathwayAssessmentsCopy)
             {
+                // Dev note: below pathwayAssessments obj has no navigation prop's but has newly added Id's
                 var assessment = pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathwayId == assessmentCopy.TqRegistrationPathwayId);
                 foreach (var resultCopy in assessmentCopy.TqPathwayResults)
                 {
