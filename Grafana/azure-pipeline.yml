@@ -24,6 +24,6 @@ stages:
     applicationId: $(applicationId)
     purpose: $(purpose)
     environment: $(environment)
-    SourcePath: $(System.DefaultWorkingDirectory)/Grafana/Files
+    SourcePath: $(System.DefaultWorkingDirectory)\tl-results-and-certification\Grafana\Files
     ServiceConnection: $(ServiceConnection)
 
