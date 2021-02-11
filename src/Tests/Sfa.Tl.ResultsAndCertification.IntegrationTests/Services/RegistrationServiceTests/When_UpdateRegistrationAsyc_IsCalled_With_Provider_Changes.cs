@@ -1,15 +1,18 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,12 +20,12 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {
-    public class When_WithdrawRegistration_Called : RegistrationServiceBaseTest
+    public class When_UpdateRegistrationAsyc_IsCalled_With_Provider_Changes : RegistrationServiceBaseTest
     {
         private bool _result;
-        private WithdrawRegistrationRequest _withdrawRegistrationRequest;
+        private ManageRegistration _updateRegistrationRequest;
+        private int _profileId;
         private long _uln;
-        private TqRegistrationPathway _tqRegistrationPathway;
         private TqRegistrationProfile _tqRegistrationProfile;
 
         public override void Given()
@@ -30,13 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             // Seed Tlevel data for pearson
             _uln = 1111111111;
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
-
             _tqRegistrationProfile = SeedRegistrationData(_uln);
 
-            // Assessments seed
-            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
-            tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.ToList(), isBulkUpload: false));
-            var pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
+            var pathwayAssessments = SeedPathwayAssessmentsData(GetPathwayAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.ToList(), isBulkUpload: false));
 
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
 
@@ -48,7 +47,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             SeedPathwayResultsData(tqPathwayResultsSeedData);
 
             CreateMapper();
-
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
             RegistrationRepositoryLogger = new Logger<RegistrationRepository>(new NullLoggerFactory());
             TqRegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
@@ -59,10 +57,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
             RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, RegistrationMapper, RegistrationRepositoryLogger);
 
-            _withdrawRegistrationRequest = new WithdrawRegistrationRequest
+            var newProvider = TlProviders.Last();
+            _updateRegistrationRequest = new ManageRegistration
             {
+                ProfileId = _profileId,
+                Uln = _uln,
+                FirstName = "John",
+                LastName = "Smith",
+                DateOfBirth = DateTime.UtcNow.AddYears(-20),
                 AoUkprn = TlAwardingOrganisation.UkPrn,
-                PerformedBy = "Test User"
+                ProviderUkprn = newProvider.UkPrn,
+                CoreCode = Pathway.LarId,
+                SpecialismCodes = new List<string>(),
+                PerformedBy = "Test User",
+                HasProviderChanged = false
             };
         }
 
@@ -73,14 +81,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         public async Task WhenAsync()
         {
-            _result = await RegistrationService.WithdrawRegistrationAsync(_withdrawRegistrationRequest);
+            _result = await RegistrationService.UpdateRegistrationAsync(_updateRegistrationRequest);
         }
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(int profileId, bool expectedResult)
+        public async Task Then_Returns_Expected_Results(bool hasProviderChanged, bool expectedResult)
         {
-            _withdrawRegistrationRequest.ProfileId = profileId;
+            _updateRegistrationRequest.HasProviderChanged = hasProviderChanged;
+
             await WhenAsync();
             _result.Should().Be(expectedResult);
 
@@ -104,35 +113,41 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualRegistrationProfile.UniqueLearnerNumber.Should().Be(expectedRegistrationProfile.UniqueLearnerNumber);
 
                 // Assert registration pathway data
-                actualRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == RegistrationPathwayStatus.Active).ToList().Count.Should().Be(0);
-                actualRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == RegistrationPathwayStatus.Withdrawn).ToList().Count.Should().Be(1);
+                actualRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == Common.Enum.RegistrationPathwayStatus.Active).ToList().Count.Should().Be(1);
+                actualRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == Common.Enum.RegistrationPathwayStatus.Transferred).ToList().Count.Should().Be(1);
 
-                // Assert Any Active Pathway
-                actualRegistrationProfile.TqRegistrationPathways.Any(x => x.Status == RegistrationPathwayStatus.Active).Should().BeFalse();
+                var expectedPathwayBeforeTransfer = expectedRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == Common.Enum.RegistrationPathwayStatus.Transferred).ToList();
+                var expectedPathwayAfterTransfer = expectedRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == Common.Enum.RegistrationPathwayStatus.Active).ToList();
 
-                // Assert Withdrawn Pathway
-                var actualWithdrawnPathway = actualRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => expectedRegistrationProfile.TqRegistrationPathways.Any(y => y.TqProviderId == x.TqProviderId));
-                var expectedWithdrawnPathway = expectedRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => actualRegistrationProfile.TqRegistrationPathways.Any(y => y.TqProviderId == x.TqProviderId));
-                AssertRegistrationPathway(actualWithdrawnPathway, expectedWithdrawnPathway);
+                // Assert Transferred Pathway
+                var actualTransferredPathway = actualRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => expectedPathwayBeforeTransfer.Any(y => y.TqProviderId == x.TqProviderId));
+                var expectedTransferredPathway = expectedPathwayBeforeTransfer.FirstOrDefault(x => actualRegistrationProfile.TqRegistrationPathways.Any(y => y.TqProviderId == x.TqProviderId));
+                AssertRegistrationPathway(actualTransferredPathway, expectedTransferredPathway);
 
-                // Assert Any Active PathwayAssessments
-                actualWithdrawnPathway.TqPathwayAssessments.Any(x => x.EndDate == null).Should().BeFalse();
+                // Assert Active Pathway
+                var activePathway = actualRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => expectedPathwayAfterTransfer.Any(y => y.TqProviderId == x.TqProviderId));
+                var expectedActivePathway = expectedPathwayAfterTransfer.FirstOrDefault(x => actualRegistrationProfile.TqRegistrationPathways.Any(y => y.TqProviderId == x.TqProviderId));
+                AssertRegistrationPathway(activePathway, expectedActivePathway);
 
-                // Assert Withdrawn PathwayAssessment
-                var actualWithdrawnAssessment = actualWithdrawnPathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate != null);
-                var expectedWithdrawnAssessment = expectedWithdrawnPathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate != null);
-                AssertPathwayAssessment(actualWithdrawnAssessment, expectedWithdrawnAssessment);
+                // Assert Active PathwayAssessment
+                var actualActiveAssessment = activePathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate == null);
+                var expectedActiveAssessment = expectedActivePathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate == null);
+                AssertPathwayAssessment(actualActiveAssessment, expectedActiveAssessment);
 
-                // Assert Any Active PathwayResult
-                foreach(var pathwayResult in actualWithdrawnPathway.TqPathwayAssessments)
-                {
-                    pathwayResult.TqPathwayResults.Any(x => x.EndDate == null).Should().BeFalse();
-                }
+                // Assert Transferred PathwayAssessment
+                var actualTransferredAssessment = actualTransferredPathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate != null);
+                var expectedTransferredAssessment = expectedTransferredPathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate != null);
+                AssertPathwayAssessment(actualTransferredAssessment, expectedTransferredAssessment);
 
-                // Assert Withdrawn PathwayResult
-                var actualWithdrawnResult = actualWithdrawnAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
-                var expectedWithdrawndResult = expectedWithdrawnAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
-                AssertPathwayResults(actualWithdrawnResult, expectedWithdrawndResult);
+                // Assert Active PathwayResult
+                var actualActiveResult = actualActiveAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate == null);
+                var expectedActiveResult = expectedActiveAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate == null);
+                AssertPathwayResults(actualActiveResult, expectedActiveResult);
+
+                // Assert Transferred PathwayResult
+                var actualTransferredResult = actualTransferredAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
+                var expectedTransferredResult = expectedTransferredAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
+                AssertPathwayResults(actualTransferredResult, expectedTransferredResult);
             }
         }
 
@@ -141,16 +156,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             get
             {
                 return new[]
-                {
-                    new object[] { 1, true },
-                    new object[] { 10000000, false }
+                {                  
+                    // Below is for Provier Changed
+                    new object[] { true, true},
+
+                    // Below is for Provier not changed
+                    new object[] { false, false }
                 };
             }
         }
 
         protected override void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
-            AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
             Route = TlevelDataProvider.CreateTlRoute(DbContext, awardingOrganisation);
             Pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, Route);
@@ -164,7 +181,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             {
                 TqProviders.Add(ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, tlProvider));
             }
-
+            AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             DbContext.SaveChangesAsync();
         }
 
@@ -172,15 +189,30 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         {
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
-            _tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProviders.First());
+            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProviders.First());
 
             foreach (var specialism in Specialisms)
             {
-                _tqRegistrationPathway.TqRegistrationSpecialisms.Add(RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, _tqRegistrationPathway, specialism));
+                tqRegistrationPathway.TqRegistrationSpecialisms.Add(RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, specialism));
             }
 
             DbContext.SaveChangesAsync();
+
+            _profileId = tqRegistrationProfile.Id;
             return profile;
         }
+
+        protected override void CreateMapper()
+        {
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddMaps(typeof(RegistrationMapper).Assembly);
+                c.ConstructServicesUsing(type =>
+                            type.Name.Contains("DateTimeResolver") ?
+                                new DateTimeResolver<ManageRegistration, TqRegistrationProfile>(new DateTimeProvider()) :
+                                null);
+            });
+            RegistrationMapper = new Mapper(mapperConfig);
+        }        
     }
 }

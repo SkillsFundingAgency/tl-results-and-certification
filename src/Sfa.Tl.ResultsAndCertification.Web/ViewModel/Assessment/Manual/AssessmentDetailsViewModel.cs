@@ -10,7 +10,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 {
     public class AssessmentDetailsViewModel
     {
-        private string PathwayAssessmentActionText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? AssessmentDetailsContent.Remove_Entry_Action_Link_Text : AssessmentDetailsContent.Add_Entry_Action_Link_Text; } }
+        private string PathwayAssessmentActionText 
+        { 
+            get 
+            {
+                if (!string.IsNullOrWhiteSpace(PathwayAssessmentSeries))
+                    return IsResultExist ? string.Empty : AssessmentDetailsContent.Remove_Entry_Action_Link_Text;
+                else
+                    return AssessmentDetailsContent.Add_Entry_Action_Link_Text;
+            } 
+        }
+
         private string SpecialismAssessmentActionText { get { return null; } }
 
         private string PathwayAssessmentSeriesText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? PathwayAssessmentSeries : AssessmentDetailsContent.Not_Specified_Text; } }
@@ -31,6 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 
         public string SpecialismDisplayName { get; set; }
         public string SpecialismAssessmentSeries { get; set; }
+
+        public bool IsResultExist { get; set; }
 
         public RegistrationPathwayStatus PathwayStatus { get; set; }
 

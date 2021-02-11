@@ -142,6 +142,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var regPathway = await _dbContext.TqRegistrationPathway
                    .Include(x => x.TqPathwayAssessments)
                        .ThenInclude(x => x.AssessmentSeries)
+                    .Include(x => x.TqPathwayAssessments)
+                       .ThenInclude(x => x.TqPathwayResults)
                    .Include(x => x.TqRegistrationProfile)
                    .Include(x => x.TqProvider)
                        .ThenInclude(x => x.TqAwardingOrganisation)
@@ -182,6 +184,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     specialismAssessmentPredicate = e => e.IsOptedin && e.EndDate != null;
 
                 specialism.TqSpecialismAssessments = specialism.TqSpecialismAssessments.Where(specialismAssessmentPredicate).ToList();
+            }
+
+            foreach (var pathwayAssessment in regPathway.TqPathwayAssessments)
+            {
+                // TqPathwayResults
+                Func<TqPathwayResult, bool> pathwayResultPredicate = e => e.IsOptedin && e.EndDate == null;
+                if (regPathway.Status == RegistrationPathwayStatus.Withdrawn)
+                    pathwayResultPredicate = e => e.IsOptedin && e.EndDate != null;
+
+                pathwayAssessment.TqPathwayResults = pathwayAssessment.TqPathwayResults.Where(pathwayResultPredicate).ToList();
             }
 
             return regPathway;

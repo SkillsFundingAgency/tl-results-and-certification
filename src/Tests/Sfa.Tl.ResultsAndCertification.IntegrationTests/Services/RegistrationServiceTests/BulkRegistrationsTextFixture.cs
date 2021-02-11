@@ -45,6 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected IMapper RegistrationMapper;
         public RegistrationProcessResponse Result;
         public IList<TqRegistrationProfile> TqRegistrationProfilesData;
+        public TqRegistrationProfile TqRegistrationProfileBeforeSeed;
         public Checkpoint DbCheckpoint;
         public ResultsAndCertificationDbContext DbContext;
 

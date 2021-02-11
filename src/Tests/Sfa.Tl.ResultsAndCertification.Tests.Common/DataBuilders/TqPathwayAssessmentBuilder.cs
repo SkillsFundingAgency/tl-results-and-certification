@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
     public class TqPathwayAssessmentBuilder
     {
-        public TqPathwayAssessment Build(TqRegistrationPathway tqRegistrationPathway = null, AssessmentSeries assessmentSeries = null)
+        public TqPathwayAssessment Build(TqRegistrationPathway tqRegistrationPathway = null, AssessmentSeries assessmentSeries = null, bool isBulkUpload = true)
         {
             tqRegistrationPathway ??= new TqRegistrationPathwayBuilder().Build();
             assessmentSeries ??= new AssessmentSeriesBuilder().Build();
@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 AssessmentSeriesId = assessmentSeries.Id,
                 StartDate = DateTime.UtcNow,
                 IsOptedin = true,
-                IsBulkUpload = true,
+                IsBulkUpload = isBulkUpload,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             };
         }
 
-        public IList<TqPathwayAssessment> BuildList(TqRegistrationPathway tqRegistrationPathway = null)
+        public IList<TqPathwayAssessment> BuildList(TqRegistrationPathway tqRegistrationPathway = null, bool isBulkUpload = true)
         {
             tqRegistrationPathway ??= new TqRegistrationPathwayBuilder().Build();
             var assessmentSeries = new AssessmentSeriesBuilder().BuildList();
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     AssessmentSeriesId = assessmentSeries[0].Id,
                     StartDate = DateTime.UtcNow,
                     IsOptedin = true,
-                    IsBulkUpload = true,
+                    IsBulkUpload = isBulkUpload,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
                     ModifiedBy = Constants.ModifiedByUser,
@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     AssessmentSeriesId = assessmentSeries[1].Id,
                     StartDate = DateTime.UtcNow,
                     IsOptedin = true,
-                    IsBulkUpload = true,
+                    IsBulkUpload = isBulkUpload,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
                     ModifiedBy = Constants.ModifiedByUser,                    
