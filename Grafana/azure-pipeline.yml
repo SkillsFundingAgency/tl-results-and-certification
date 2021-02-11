@@ -6,7 +6,7 @@ resources:
       clean: true  
     - repository: deployment
       type: github
-      endpoint: DFE-Digital
+      endpoint: DFE-Digital9
       name: DFE-Digital/operations-devops-deployment
 
     - repository: devopsTemplates
@@ -24,6 +24,6 @@ stages:
     applicationId: $(applicationId)
     purpose: $(purpose)
     environment: $(environment)
-    SourcePath: $(System.DefaultWorkingDirectory)/Grafana
+    SourcePath: $(System.DefaultWorkingDirectory)/Grafana/Files
     ServiceConnection: $(ServiceConnection)
 
