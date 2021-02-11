@@ -25,4 +25,5 @@ stages:
     purpose: $(purpose)
     environment: $(environment)
     SourcePath: $(System.DefaultWorkingDirectory)/Grafana
+    ServiceConnection: $(ServiceConnection)
 
