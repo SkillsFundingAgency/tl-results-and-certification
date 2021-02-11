@@ -6,7 +6,7 @@ resources:
       clean: true  
     - repository: deployment
       type: github
-      endpoint: DFE-Digital9
+      endpoint: DFE-Digital
       name: DFE-Digital/operations-devops-deployment
 
     - repository: devopsTemplates
