@@ -4,7 +4,7 @@ resources:
     - repository: self
       persistCredentials: true
       clean: true
-      
+
     - repository: deployment
       type: github
       endpoint: DFE-Digital
@@ -24,6 +24,9 @@ trigger:
   branches:
     include:
     - GrafanaPipeline
+variables:
+  - group: platform-grafana
+
 stages:
 - template: ./Application/grafana-build.yml@devopsTemplates
   parameters:
