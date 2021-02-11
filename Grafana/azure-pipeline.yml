@@ -3,7 +3,8 @@ resources:
   repositories:
     - repository: self
       persistCredentials: true
-      clean: true  
+      clean: true
+      
     - repository: deployment
       type: github
       endpoint: DFE-Digital
@@ -13,6 +14,11 @@ resources:
       type: github
       endpoint: DFE-Digital
       name: DFE-Digital/operations-devops-pipeline-templates
+
+    - repository: devopsTools
+      type: github
+      endpoint: DFE-Digital
+      name: DFE-Digital/operations-devops-tools
     
 trigger:
   branches:
