@@ -19,6 +19,7 @@ trigger:
     include:
     - GrafanaPipeline
 stages:
+- checkout: devopsTemplates
 - template: ./operations-devops-pipeline-templates/Application/grafana-build.yml@devopsTemplates
   parameters:
     applicationId: $(applicationId)
