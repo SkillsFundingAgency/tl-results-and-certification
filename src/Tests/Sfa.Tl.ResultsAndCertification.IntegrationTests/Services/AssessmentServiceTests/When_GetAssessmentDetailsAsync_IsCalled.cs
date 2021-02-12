@@ -27,7 +27,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         {
             // Parameters
             AoUkprn = 10011881;
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Active }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Withdrawn } };
+            _ulns = new Dictionary<long, RegistrationPathwayStatus> 
+            { 
+                { 1111111111, RegistrationPathwayStatus.Active }, 
+                { 1111111112, RegistrationPathwayStatus.Active }, 
+                { 1111111113, RegistrationPathwayStatus.Withdrawn },
+                { 1111111114, RegistrationPathwayStatus.Active },
+            };
 
             // Create mapper
             CreateMapper();
@@ -39,18 +45,24 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
             var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+
             foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
             {
                 var hasHitoricData = new List<long> { 1111111112 };
                 var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
                 var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
 
-                tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent));
+                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent);
+                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
 
                 foreach (var pathway in registration.TqRegistrationPathways)
                 {
                     tqSpecialismAssessmentsSeedData.AddRange(GetSpecialismAssessmentsDataToProcess(pathway.TqRegistrationSpecialisms.ToList(), isLatestActive, isHistoricAssessent));
                 }
+
+                // Build Pathway results
+                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessments, isLatestActive, isHistoricAssessent));
             }
 
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
@@ -149,14 +161,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 ProviderName = expectedPathway.TqProvider.TlProvider.Name,
                 PathwayLarId = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                 PathwayName = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
-                PathwayAssessmentSeries = expectedPathwayAssessment != null ? expectedPathwayAssessment.AssessmentSeries.Name : null,
+                PathwayAssessmentSeries = expectedPathwayAssessment?.AssessmentSeries.Name,
                 PathwayAssessmentId = expectedPathwayAssessment != null ? expectedPathwayAssessment.Id : (int?)null,
 
-                SpecialismLarId = expectedSpecialim != null ? expectedSpecialim.TlSpecialism.LarId : null,
-                SpecialismName = expectedSpecialim != null ? expectedSpecialim.TlSpecialism.Name : null,
-                SpecialismAssessmentSeries = expectedSpecialismAssessment != null ? expectedSpecialismAssessment.AssessmentSeries.Name : null,
+                SpecialismLarId = expectedSpecialim?.TlSpecialism.LarId,
+                SpecialismName = expectedSpecialim?.TlSpecialism.Name,
+                SpecialismAssessmentSeries = expectedSpecialismAssessment?.AssessmentSeries.Name,
                 SpecialismAssessmentId = expectedSpecialismAssessment != null ? expectedSpecialismAssessment.Id : (int?)null,
-                Status = expectedPathway.Status
+                Status = expectedPathway.Status,
+
+                PathwayResultId = expectedPathwayAssessment?.TqPathwayResults.FirstOrDefault(x => x.EndDate == null && x.IsOptedin)?.Id
             };
 
             // Assert
@@ -197,6 +211,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
                     // Uln: 1111111113 - Registration(Withdrawn), TqPathwayAssessments(Withdrawn) and TqSpecialismAssessments(Withdrawn)
                     new object[] { 10011881, 1111111113, 3, RegistrationPathwayStatus.Withdrawn, true, true },
+
+                    // Uln: 1111111114 - Registration(Active), TqPathwayAssessments(Active), TqResult (Active)
+                    new object[] { 10011881, 1111111114, 4, RegistrationPathwayStatus.Active, true, true },
+
                 };
             }
         }        
