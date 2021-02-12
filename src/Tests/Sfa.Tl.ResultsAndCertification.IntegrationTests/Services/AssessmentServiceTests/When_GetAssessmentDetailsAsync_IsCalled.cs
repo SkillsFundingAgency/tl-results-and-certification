@@ -130,14 +130,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             }
 
             TqPathwayAssessment expectedPathwayAssessment = null;
-
+            TqPathwayResult expectedPathwayResult = null;
             if (status == RegistrationPathwayStatus.Withdrawn)
             {
                 expectedPathwayAssessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate != null);
+                expectedPathwayResult = expectedPathwayAssessment?.TqPathwayResults.FirstOrDefault(x => x.IsOptedin && x.EndDate != null);
             }
             else
             {
                 expectedPathwayAssessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate == null);
+                expectedPathwayResult = expectedPathwayAssessment?.TqPathwayResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
             }
 
             TqSpecialismAssessment expectedSpecialismAssessment = null;
@@ -170,7 +172,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 SpecialismAssessmentId = expectedSpecialismAssessment != null ? expectedSpecialismAssessment.Id : (int?)null,
                 Status = expectedPathway.Status,
 
-                PathwayResultId = expectedPathwayAssessment?.TqPathwayResults.FirstOrDefault(x => x.EndDate == null && x.IsOptedin)?.Id
+                PathwayResultId = expectedPathwayResult?.Id
             };
 
             // Assert
@@ -189,6 +191,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             _result.SpecialismAssessmentSeries.Should().Be(expectedAssessmentDetails.SpecialismAssessmentSeries);
             _result.SpecialismAssessmentId.Should().Be(expectedAssessmentDetails.SpecialismAssessmentId);
             _result.Status.Should().Be(expectedAssessmentDetails.Status);
+            _result.PathwayResultId.Should().Be(expectedAssessmentDetails.PathwayResultId);
         }
 
         public static IEnumerable<object[]> Data
@@ -214,7 +217,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
                     // Uln: 1111111114 - Registration(Active), TqPathwayAssessments(Active), TqResult (Active)
                     new object[] { 10011881, 1111111114, 4, RegistrationPathwayStatus.Active, true, true },
-
                 };
             }
         }        

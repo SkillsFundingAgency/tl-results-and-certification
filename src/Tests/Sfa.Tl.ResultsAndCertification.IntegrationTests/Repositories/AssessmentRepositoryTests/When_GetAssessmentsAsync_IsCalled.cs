@@ -122,14 +122,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             }
 
             TqPathwayAssessment expectedPathwayAssessment = null;
+            TqPathwayResult expectedPathwayResult = null;
 
             if (status == RegistrationPathwayStatus.Withdrawn)
             {
                 expectedPathwayAssessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate != null);
+                expectedPathwayResult = expectedPathwayAssessment?.TqPathwayResults.FirstOrDefault(x => x.IsOptedin && x.EndDate != null);
             }
             else
             {
                 expectedPathwayAssessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate == null);
+                expectedPathwayResult = expectedPathwayAssessment?.TqPathwayResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
             }
 
             TqSpecialismAssessment expectedSpecialismAssessment = null;
@@ -150,6 +153,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             var actualSpecialism = actualPathway.TqRegistrationSpecialisms.FirstOrDefault();
             var actualPathwayAssessment = actualPathway.TqPathwayAssessments.FirstOrDefault();
             var actualSpecialismAssessment = actualSpecialism.TqSpecialismAssessments.FirstOrDefault();
+            var actualPathwayResult = actualPathwayAssessment?.TqPathwayResults.FirstOrDefault();
 
             // Assert Registration Pathway
             actualPathway.TqRegistrationProfileId.Should().Be(expectedPathway.TqRegistrationProfileId);
@@ -171,6 +175,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             {
                 AssertPathwayAssessment(actualPathwayAssessment, expectedPathwayAssessment);
                 AssertSpecialismAssessment(actualSpecialismAssessment, expectedSpecialismAssessment);
+                
+                AssertPathwayResult(actualPathwayResult, expectedPathwayResult);
             }
         }
 
