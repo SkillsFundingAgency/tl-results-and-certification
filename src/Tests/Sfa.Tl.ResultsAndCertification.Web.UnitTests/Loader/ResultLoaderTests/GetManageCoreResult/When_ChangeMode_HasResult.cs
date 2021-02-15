@@ -5,28 +5,31 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetAddCoreResultViewModel
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResult
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_ChangeMode_HasResult : TestSetup
     {
         public override void Given()
         {
-            expectedApiLookupData = new List<LookupData> 
-            {  
+            IsChangeMode = true;
+
+            expectedApiLookupData = new List<LookupData>
+            {
                 new LookupData { Id = 1, Code = "C1", Value = "V1" },
                 new LookupData { Id = 2, Code = "C2", Value = "V2" }
             };
 
-            InternalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade).Returns(expectedApiLookupData); 
-            
-            expectedApiResultDetails = new ResultDetails 
-            { 
+            InternalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade).Returns(expectedApiLookupData);
+
+            expectedApiResultDetails = new ResultDetails
+            {
                 ProfileId = ProfileId,
-                PathwayAssessmentId = AssessmentId,  
+                PathwayAssessmentId = AssessmentId,
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayLarId = "12345678",
                 PathwayName = "Construction",
-                PathwayResultId = null, 
+                PathwayResultCode = "C1",
+                PathwayResultId = 1,
             };
             InternalApiClient.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(expectedApiResultDetails);
         }
@@ -39,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             ActualResult.AssessmentId.Should().Be(expectedApiResultDetails.PathwayAssessmentId);
             ActualResult.AssessmentSeries.Should().Be(expectedApiResultDetails.PathwayAssessmentSeries);
             ActualResult.PathwayDisplayName.Should().Be($"{expectedApiResultDetails.PathwayName} ({expectedApiResultDetails.PathwayLarId})");
-            ActualResult.SelectedGradeCode.Should().Be(string.Empty);
+            ActualResult.SelectedGradeCode.Should().Be(expectedApiResultDetails.PathwayResultCode);
 
             ActualResult.Grades.Should().NotBeNull();
             ActualResult.Grades.Count.Should().Be(expectedApiLookupData.Count);

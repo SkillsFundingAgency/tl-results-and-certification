@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var viewModel = new AddCoreResultViewModel
+            var viewModel = new ManageCoreResultViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = 1,

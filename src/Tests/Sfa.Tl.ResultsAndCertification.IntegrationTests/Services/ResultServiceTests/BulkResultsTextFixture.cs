@@ -53,6 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
+        protected ILogger<ResultService> Logger;
 
         public BulkResultsTextFixture()
         {
@@ -77,8 +78,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             ResultRepositoryLogger = new Logger<ResultRepository>(new NullLoggerFactory());
             ResultRepository = new ResultRepository(ResultRepositoryLogger, DbContext);
 
+            Logger = new Logger<ResultService>(new NullLoggerFactory());
             // Service
-            ResultService = new ResultService(AssessmentSeriesRepository, TlLookupRepository, ResultRepository, PathwayResultRepository, ResultMapper);
+            ResultService = new ResultService(AssessmentSeriesRepository, TlLookupRepository, ResultRepository, PathwayResultRepository, ResultMapper, Logger);
         }
 
         protected void CreateMapper()

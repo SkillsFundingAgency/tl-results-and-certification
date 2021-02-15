@@ -41,5 +41,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _resultService.AddResultAsync(request);
         }
+
+        [HttpPut]
+        [Route("ChangeResult")]
+        public async Task<ChangeResultResponse> ChangeResultAsync(ChangeResultRequest request)
+        {
+            return await _resultService.ChangeResultAsync(request);
+        }
     }
 }

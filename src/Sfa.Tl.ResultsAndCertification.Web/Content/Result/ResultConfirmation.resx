@@ -120,11 +120,17 @@
   <data name="Back_To_Learners_Results_Button_Text" xml:space="preserve">
     <value>Back to learner’s results</value>
   </data>
+  <data name="Changed_Page_Title" xml:space="preserve">
+    <value>Result changed confirmation page</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Result added confirmation page</value>
   </data>
   <data name="Result_Added_Successful_Text" xml:space="preserve">
     <value>Result added successfully</value>
+  </data>
+  <data name="Result_Changed_Successful_Text" xml:space="preserve">
+    <value>Change successful</value>
   </data>
   <data name="Uln_Text" xml:space="preserve">
     <value>ULN</value>

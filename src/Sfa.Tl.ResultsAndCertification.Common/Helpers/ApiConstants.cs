@@ -44,6 +44,7 @@
         public const string ProcessBulkResultsUri = "/api/result/ProcessBulkResults";
         public const string GetResultDetailsUri = "/api/result/GetResultDetails/{0}/{1}/{2}";
         public const string AddResultUri = "/api/result/AddResult";
+        public const string ChangeResultUri = "/api/result/ChangeResult";
         public const string GetLookupDataUri = "/api/common/GetLookupData/{0}";
 
         // DocumentUploadHistory Related Uri's

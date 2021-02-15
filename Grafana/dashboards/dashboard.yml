@@ -1,0 +1,79 @@
+apiVersion: 1
+
+providers:
+  # <string> an unique provider name
+- name: 'DfE T-Levels Test Dashboards'
+  # <int> org id. will default to orgId 1 if not specified
+  orgId: 1
+  # <string, required> name of the dashboard folder. Required
+  folder: 'Test'
+  # <string> folder UID. will be automatically generated if not specified
+  folderUid: ''
+  # <string, required> provider type. Required
+  type: file
+  # <bool> disable dashboard deletion
+  disableDeletion: false
+  # <bool> enable dashboard editing
+  editable: true
+  # <int> how often Grafana will scan for changed dashboards
+  updateIntervalSeconds: 60
+  options:
+    # <string, required> path to dashboard files on disk. Required
+    path: /etc/grafana/provisioning/dashboards/test
+
+- name: 'DfE T-Levels Pre-Production Dashboards'
+  # <int> org id. will default to orgId 1 if not specified
+  orgId: 1
+  # <string, required> name of the dashboard folder. Required
+  folder: 'Pre-Production'
+  # <string> folder UID. will be automatically generated if not specified
+  folderUid: ''
+  # <string, required> provider type. Required
+  type: file
+  # <bool> disable dashboard deletion
+  disableDeletion: false
+  # <bool> enable dashboard editing
+  editable: true
+  # <int> how often Grafana will scan for changed dashboards
+  updateIntervalSeconds: 60
+  options:
+    # <string, required> path to dashboard files on disk. Required
+    path: /etc/grafana/provisioning/dashboards/pp
+
+- name: 'DfE T-Levels Production Dashboards'
+  # <int> org id. will default to orgId 1 if not specified
+  orgId: 1
+  # <string, required> name of the dashboard folder. Required
+  folder: 'Production'
+  # <string> folder UID. will be automatically generated if not specified
+  folderUid: ''
+  # <string, required> provider type. Required
+  type: file
+  # <bool> disable dashboard deletion
+  disableDeletion: false
+  # <bool> enable dashboard editing
+  editable: true
+  # <int> how often Grafana will scan for changed dashboards
+  updateIntervalSeconds: 60
+  options:
+    # <string, required> path to dashboard files on disk. Required
+    path: /etc/grafana/provisioning/dashboards/pr
+
+- name: 'DfE T-Levels DEV Dashboards'
+  # <int> org id. will default to orgId 1 if not specified
+  orgId: 1
+  # <string, required> name of the dashboard folder. Required
+  folder: 'DEV'
+  # <string> folder UID. will be automatically generated if not specified
+  folderUid: ''
+  # <string, required> provider type. Required
+  type: file
+  # <bool> disable dashboard deletion
+  disableDeletion: false
+  # <bool> enable dashboard editing
+  editable: true
+  # <int> how often Grafana will scan for changed dashboards
+  updateIntervalSeconds: 60
+  options:
+    # <string, required> path to dashboard files on disk. Required
+    path: /etc/grafana/provisioning/dashboards/dev

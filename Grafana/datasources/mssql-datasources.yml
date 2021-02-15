@@ -1,0 +1,62 @@
+apiVersion: 1
+
+deleteDatasources:
+  - name: dev-test-db
+    orgId: 1
+  - name: S126d01 - DEV
+    orgId: 1
+  - name: s126d01-resac-db
+    orgId: 1
+
+datasources:
+  - name: __dev_resacDatabaseName__
+    type: mssql
+    access: proxy
+    url: __dev_sqlServerName__.database.windows.net
+    database: __dev_resacDatabaseName__
+    user: __resacGrafanaDatabaseUserName__
+    jsonData:
+      maxOpenConns: 0 # Grafana v5.4+
+      maxIdleConns: 2 # Grafana v5.4+
+      connMaxLifetime: 14400 # Grafana v5.4+
+    secureJsonData:
+      password: "__dev_resacGrafanaDatabaseUserPassword__"
+
+  - name: __test_resacDatabaseName__
+    type: mssql
+    access: proxy
+    url: __test_sqlServerName__.database.windows.net
+    database: __test_resacDatabaseName__
+    user: __resacGrafanaDatabaseUserName__
+    jsonData:
+      maxOpenConns: 0 # Grafana v5.4+
+      maxIdleConns: 2 # Grafana v5.4+
+      connMaxLifetime: 14400 # Grafana v5.4+
+    secureJsonData:
+      password: "__test_resacGrafanaDatabaseUserPassword__"
+
+  - name: __pp_resacDatabaseName__
+    type: mssql
+    access: proxy
+    url: __pp_sqlServerName__.database.windows.net
+    database: __pp_resacDatabaseName__
+    user: __resacGrafanaDatabaseUserName__
+    jsonData:
+      maxOpenConns: 0 # Grafana v5.4+
+      maxIdleConns: 2 # Grafana v5.4+
+      connMaxLifetime: 14400 # Grafana v5.4+
+    secureJsonData:
+      password: "__pp_resacGrafanaDatabaseUserPassword__"
+
+  - name: __pr_resacDatabaseName__
+    type: mssql
+    access: proxy
+    url: __pr_sqlServerName__.database.windows.net
+    database: __pr_resacDatabaseName__
+    user: __resacGrafanaDatabaseUserName__
+    jsonData:
+      maxOpenConns: 0 # Grafana v5.4+
+      maxIdleConns: 2 # Grafana v5.4+
+      connMaxLifetime: 14400 # Grafana v5.4+
+    secureJsonData:
+      password: "__pr_resacGrafanaDatabaseUserPassword__"

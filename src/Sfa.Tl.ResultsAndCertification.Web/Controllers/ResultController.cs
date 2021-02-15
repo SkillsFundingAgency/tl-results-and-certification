@@ -222,17 +222,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("change-core-result-indev/{resultId}", Name = RouteConstants.ChangeCoreResult)]
-        public IActionResult ChangeCoreResultAsync(int resultId)
-        {
-            return View();
-        }
-
-        [HttpGet]
         [Route("select-core-result/{profileId}/{assessmentId}", Name = RouteConstants.AddCoreResult)]
         public async Task<IActionResult> AddCoreResultAsync(int profileId, int assessmentId)
         {
-            var viewModel = await _resultLoader.GetAddCoreResultViewModelAsync(User.GetUkPrn(), profileId, assessmentId);
+            var viewModel = await _resultLoader.GetManageCoreResultAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: false);
             
             if (viewModel == null)
             {
@@ -245,9 +238,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("select-core-result", Name = RouteConstants.SubmitAddCoreResult)]
-        public async Task<IActionResult> AddCoreResultAsync(AddCoreResultViewModel model)
+        public async Task<IActionResult> AddCoreResultAsync(ManageCoreResultViewModel model)
         {
-            if (string.IsNullOrEmpty(model?.SelectedGradeCode))
+            if (string.IsNullOrWhiteSpace(model?.SelectedGradeCode))
                 return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
 
             var response = await _resultLoader.AddCoreResultAsync(User.GetUkPrn(), model);
@@ -268,6 +261,58 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ResultConfirmationViewModel from redis cache in add result confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("change-core-result/{profileId}/{assessmentId}", Name = RouteConstants.ChangeCoreResult)]
+        public async Task<IActionResult> ChangeCoreResultAsync(int profileId, int assessmentId)
+        {
+            var viewModel = await _resultLoader.GetManageCoreResultAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: true);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetManageCoreResultViewModelAsync({User.GetUkPrn()}, {profileId}, {assessmentId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("change-core-result", Name = RouteConstants.SubmitChangeCoreResult)]
+        public async Task<IActionResult> ChangeCoreResultAsync(ManageCoreResultViewModel model)
+        {
+            var isResultChanged = await _resultLoader.IsCoreResultChangedAsync(User.GetUkPrn(), model);
+            if (!isResultChanged.HasValue)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"ChangeCoreResult request data-mismatch. Method:IsCoreResultChanged({User.GetUkPrn()}, {model}), ProfileId: {model.ProfileId}, ResultId: {model.ResultId}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            if (isResultChanged == false)
+                return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = model.ProfileId });
+
+            var response = await _resultLoader.ChangeCoreResultAsync(User.GetUkPrn(), model);
+
+            if (response == null || !response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeResultConfirmationViewModel), new ResultConfirmationViewModel { Uln = response.Uln, ProfileId = response.ProfileId }, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.ChangeResultConfirmation);
+        }
+
+        [HttpGet]
+        [Route("result-change-confirmation", Name = RouteConstants.ChangeResultConfirmation)]
+        public async Task<IActionResult> ChangeResultConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<ResultConfirmationViewModel>(string.Concat(CacheKey, Constants.ChangeResultConfirmationViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ResultConfirmationViewModel from redis cache in change result confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);

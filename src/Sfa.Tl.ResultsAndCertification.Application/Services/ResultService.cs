@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -24,14 +25,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IResultRepository _resultRepository;
         private readonly IRepository<TqPathwayResult> _pathwayResultRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public ResultService(IRepository<AssessmentSeries> assessmentSeriesRepository, IRepository<TlLookup> tlLookupRepository, IResultRepository resultRepository, IRepository<TqPathwayResult> pathwayResultRepository, IMapper mapper)
+        public ResultService(IRepository<AssessmentSeries> assessmentSeriesRepository, IRepository<TlLookup> tlLookupRepository, IResultRepository resultRepository, IRepository<TqPathwayResult> pathwayResultRepository, IMapper mapper, ILogger<ResultService> logger)
         {
             _assessmentSeriesRepository = assessmentSeriesRepository;
             _tlLookupRepository = tlLookupRepository;
             _resultRepository = resultRepository;
             _pathwayResultRepository = pathwayResultRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<IList<ResultRecordResponse>> ValidateResultsAsync(long aoUkprn, IEnumerable<ResultCsvRecordResponse> csvResults)
@@ -198,7 +201,52 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             return new AddResultResponse { Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ProfileId = request.ProfileId, IsSuccess = status > 0 };
         }
-        
+
+        public async Task<ChangeResultResponse> ChangeResultAsync(ChangeResultRequest request)
+        {
+            if (request.ComponentType != ComponentType.Core)
+                return new ChangeResultResponse { IsSuccess = false };
+
+            var existingPathwayResult = await _pathwayResultRepository.GetFirstOrDefaultAsync(pr => pr.Id == request.ResultId && pr.EndDate == null && pr.IsOptedin
+                                                                         && pr.TqPathwayAssessment.EndDate == null && pr.IsOptedin
+                                                                         && pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
+                                                                         && pr.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                                                                         && pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == request.AoUkprn);
+
+            if (existingPathwayResult == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to change Pathway Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: ChangeResultAsync({request})");
+                return new ChangeResultResponse { IsSuccess = false };
+            }
+
+            var pathwayResultsToUpdate = new List<TqPathwayResult>();
+
+            existingPathwayResult.IsOptedin = false;
+            existingPathwayResult.EndDate = DateTime.UtcNow;
+            existingPathwayResult.ModifiedBy = request.PerformedBy;
+            existingPathwayResult.ModifiedOn = DateTime.UtcNow;
+
+            pathwayResultsToUpdate.Add(existingPathwayResult);
+
+            if (request.LookupId.HasValue && request.LookupId > 0)
+            {
+                pathwayResultsToUpdate.Add(new TqPathwayResult
+                {
+                    TqPathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
+                    TlLookupId = request.LookupId.Value,
+                    IsOptedin = true,
+                    StartDate = DateTime.UtcNow,
+                    EndDate = null,
+                    IsBulkUpload = false,
+                    CreatedBy = request.PerformedBy
+                });
+            }
+
+            var isSuccess = await _pathwayResultRepository.UpdateManyAsync(pathwayResultsToUpdate) > 0;
+
+            return new ChangeResultResponse { Uln = request.Uln, ProfileId = request.ProfileId, IsSuccess = isSuccess };
+        }
+
         #region Private Methods
 
         private ResultRecordResponse AddStage3ValidationError(int rowNum, long uln, string errorMessage)

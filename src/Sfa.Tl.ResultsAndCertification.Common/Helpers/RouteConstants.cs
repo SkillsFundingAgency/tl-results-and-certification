@@ -162,9 +162,11 @@
         public const string ResultsUploadUnsuccessful = "ResultsUploadUnsuccessful";
         public const string DownloadResultErrors = "DownloadResultErrors";
         public const string ChangeCoreResult = "ChangeCoreResult";
+        public const string SubmitChangeCoreResult = "SubmitChangeCoreResult";
         public const string AddCoreResult = "AddCoreResult";
         public const string SubmitAddCoreResult = "SubmitAddCoreResult";
-        public const string AddResultConfirmation = "AddResultnConfirmation";
+        public const string AddResultConfirmation = "AddResultConfirmation";
+        public const string ChangeResultConfirmation = "ChangeResultConfirmation";
 
         // Search Results
         public const string SearchResults = "SearchResults";

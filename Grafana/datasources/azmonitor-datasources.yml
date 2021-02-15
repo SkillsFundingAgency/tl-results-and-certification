@@ -1,0 +1,68 @@
+apiVersion: 1
+
+deleteDatasources:
+  - name: DfE-test-Dev
+    orgId: 1
+  - name: S126d01 - DEV
+    orgId: 1
+
+datasources:
+  - name: S126d01 - DEV
+    type: grafana-azure-monitor-datasource
+    typeLogoUrl: public/app/plugins/datasource/grafana-azure-monitor-datasource/img/logo.jpg
+    access: proxy
+    jsonData:
+      appInsightsAppId: __S126d01_appInsightsAppId__
+      azureLogAnalyticsSameAs: false
+      clientId: __S126d01_azureMonitorClientId__
+      cloudName: azuremonitor
+      subscriptionId: __S126d01_azureSubscriptionId__
+      tenantId: __S126d01_azureTenantId__
+    secureJsonData:
+      clientSecret: __S126d01_azureMonitorClientSecret__
+      appInsightsApiKey: __S126d01_appInsightsApiKey__
+
+  - name: S126t01 - TEST
+    type: grafana-azure-monitor-datasource
+    typeLogoUrl: public/app/plugins/datasource/grafana-azure-monitor-datasource/img/logo.jpg
+    access: proxy
+    jsonData:
+      appInsightsAppId: __S126t01_appInsightsAppId__
+      azureLogAnalyticsSameAs: false
+      clientId: __S126t01_azureMonitorClientId__
+      cloudName: azuremonitor
+      subscriptionId: __S126t01_azureSubscriptionId__
+      tenantId: __S126t01_azureTenantId__
+    secureJsonData:
+      clientSecret: __S126t01_azureMonitorClientSecret__
+      appInsightsApiKey: __S126t01_appInsightsApiKey__
+
+  - name: S126t02 - PP
+    type: grafana-azure-monitor-datasource
+    typeLogoUrl: public/app/plugins/datasource/grafana-azure-monitor-datasource/img/logo.jpg
+    access: proxy
+    jsonData:
+      appInsightsAppId: __S126t02_appInsightsAppId__
+      azureLogAnalyticsSameAs: false
+      clientId: __S126t02_azureMonitorClientId__
+      cloudName: azuremonitor
+      subscriptionId: __S126t02_azureSubscriptionId__
+      tenantId: __S126t02_azureTenantId__
+    secureJsonData:
+      clientSecret: __S126t02_azureMonitorClientSecret__
+      appInsightsApiKey: __S126t02_appInsightsApiKey__
+
+  - name: S126p01 - PR
+    type: grafana-azure-monitor-datasource
+    typeLogoUrl: public/app/plugins/datasource/grafana-azure-monitor-datasource/img/logo.jpg
+    access: proxy
+    jsonData:
+      appInsightsAppId: __S126p01_appInsightsAppId__
+      azureLogAnalyticsSameAs: false
+      clientId: __S126p01_azureMonitorClientId__
+      cloudName: azuremonitor
+      subscriptionId: __S126p01_azureSubscriptionId__
+      tenantId: __S126p01_azureTenantId__
+    secureJsonData:
+      clientSecret: __S126p01_azureMonitorClientSecret__
+      appInsightsApiKey: __S126p01_appInsightsApiKey__

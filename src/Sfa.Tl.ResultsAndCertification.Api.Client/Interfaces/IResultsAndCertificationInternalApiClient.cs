@@ -51,6 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<BulkResultResponse> ProcessBulkResultsAsync(BulkProcessRequest model);
         Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         Task<AddResultResponse> AddResultAsync(AddResultRequest request);
+        Task<ChangeResultResponse> ChangeResultAsync(ChangeResultRequest model);
 
         // DocumentUploadHistory
         Task<DocumentUploadHistoryDetails> GetDocumentUploadHistoryDetailsAsync(long aoUkprn, Guid blobUniqueReference);

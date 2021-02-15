@@ -5,13 +5,13 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetAddCoreResultViewModel
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResult
 {
     public class When_LookupData_NotFound : TestSetup
     {
         public override void Given()
         {
-            expectedApiResultDetails = new Models.Contracts.ResultDetails { PathwayAssessmentId = AssessmentId };
+            expectedApiResultDetails = new ResultDetails { PathwayAssessmentId = AssessmentId };
             InternalApiClient.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(expectedApiResultDetails);
 
             expectedApiLookupData = new List<LookupData>();

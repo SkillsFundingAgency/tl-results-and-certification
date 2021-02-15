@@ -2,7 +2,6 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System.Collections.Generic;
 using Xunit;
@@ -10,15 +9,14 @@ using Xunit;
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.AddCoreResult
 {
     public class When_Called_With_Valid_Data : TestSetup
-    {
-        private AddResultResponse ExpectedResult { get; set; }
+    {        
         private AddResultResponse ExpectedApiResult { get; set; }
 
         public override void Given()
         {
             var lookupApiClientResponse = new List<LookupData> { new LookupData { Id = 1, Code = "PCG1", Value = "A*" } };
 
-            ViewModel = new AddCoreResultViewModel
+            ViewModel = new ManageCoreResultViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = 1,

@@ -90,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<ResultDetailsViewModel>(response);
         }
 
-        public async Task<AddResultResponse> AddCoreResultAsync(long aoUkprn, AddCoreResultViewModel viewModel)
+        public async Task<AddResultResponse> AddCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
         {
             var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
 
@@ -103,18 +103,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AddResultAsync(request);
         }
 
-        public async Task<AddCoreResultViewModel> GetAddCoreResultViewModelAsync(long aoUkprn, int profileId, int assessmentId)
+        public async Task<ManageCoreResultViewModel> GetManageCoreResultAsync(long aoUkprn, int profileId, int assessmentId, bool isChangeMode)
         {
             var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, RegistrationPathwayStatus.Active);
-            if (response == null || response.PathwayAssessmentId != assessmentId || response.PathwayResultId.HasValue)
+            
+            if (response == null || response.PathwayAssessmentId != assessmentId || 
+                (!isChangeMode && response.PathwayResultId.HasValue) || (isChangeMode && !response.PathwayResultId.HasValue))
                 return null;
 
             var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
             if (grades == null || !grades.Any())
                 return null;
 
-            grades.Insert(0, new LookupData { Code = string.Empty, Value = Content.Result.AddCoreResult.Option_Not_Received });
-            return _mapper.Map<AddCoreResultViewModel>(response, opt => opt.Items["grades"] = grades);
+            grades.Insert(0, new LookupData { Code = string.Empty, Value = Content.Result.ManageCoreResult.Option_Not_Received });
+            return _mapper.Map<ManageCoreResultViewModel>(response, opt => opt.Items["grades"] = grades);
+        }
+
+        public async Task<bool?> IsCoreResultChangedAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
+        {
+            var existingResult = await _internalApiClient.GetResultDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
+
+            if (existingResult == null || existingResult.PathwayResultId != viewModel.ResultId)
+                return null;
+
+            var isResultChanged = !existingResult.PathwayResultCode.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase);
+            return isResultChanged;
+        }
+
+        public async Task<ChangeResultResponse> ChangeCoreResultAsync(long aoUkprn, ManageCoreResultViewModel viewModel)
+        {
+            if (!string.IsNullOrWhiteSpace(viewModel.SelectedGradeCode))
+            {
+                var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
+
+                var selectedGrade = grades?.FirstOrDefault(x => x.Code.Equals(viewModel.SelectedGradeCode, StringComparison.InvariantCultureIgnoreCase));
+
+                if (selectedGrade == null) return null;
+
+                viewModel.LookupId = selectedGrade.Id;
+            }
+            var request = _mapper.Map<ChangeResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.ChangeResultAsync(request);
         }
     }
 }
