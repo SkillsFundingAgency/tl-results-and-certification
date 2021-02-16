@@ -6,8 +6,10 @@ trigger:
       - master
       - feature/*
 
-pr: none
-
+pr: 
+  - master
+  - dev
+  
 workspace:
     clean: all
 
