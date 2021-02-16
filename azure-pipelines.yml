@@ -6,7 +6,9 @@ trigger:
       - master
       - feature/*
 
-pr: none
+pr: 
+  - master
+  - develop
 
 workspace:
     clean: all
@@ -17,7 +19,7 @@ variables:
 
 pool:
   name: 'Azure Pipelines'
-  vmImage: 'windows-latest'
+  vmImage: 'vs2017-win2016'
 
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@5
