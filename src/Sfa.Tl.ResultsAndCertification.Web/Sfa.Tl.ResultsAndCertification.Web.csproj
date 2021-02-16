@@ -116,6 +116,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>VirusUploaded.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Help\Contact.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Contact.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\ReregisterCannotSelectSameCore.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -564,6 +569,10 @@
     <EmbeddedResource Update="Content\Error\VirusUploaded.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>VirusUploaded.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Help\Contact.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Contact.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\ReregisterCannotSelectSameCore.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

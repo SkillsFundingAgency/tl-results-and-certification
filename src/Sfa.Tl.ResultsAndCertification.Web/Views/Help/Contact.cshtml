@@ -1,0 +1,33 @@
+﻿@inject Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper.IWebConfigurationService ConfigurationService
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Help
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Help.ContactViewModel
+
+
+@{
+    ViewData["Title"] = Contact.Page_Title;
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+
+    @section NavigationBar {
+        <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+    }
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">@Contact.Heading_Contactus</h1>
+        <p class="govuk-body">
+            @Contact.Para_Contactus
+            <a class="govuk-link" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@Contact.Email_Subject">@Contact.Link_Text_Email_Tlevel_Team</a>.
+        </p>
+        <p class="govuk-body">@Contact.Para_Response_Time</p>
+
+        <h2 class="govuk-heading-l">@Contact.Heading_Discussion_Forum</h2>
+        <p class="govuk-body">
+            @Contact.Para_Discussion_Forum_Text1<a class="govuk-link" href="@Contact.Link_Url_Discussion_Forum">@Contact.Link_Text_Discussion_Forum</a>@Contact.Para_Discussion_Forum_Text2
+        </p>
+    </div>
+</div>

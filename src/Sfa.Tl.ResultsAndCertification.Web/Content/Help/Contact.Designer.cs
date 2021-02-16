@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Footer {
+    public class Contact {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Footer() {
+        internal Contact() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Layout.Footer", typeof(Footer).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Help.Contact", typeof(Contact).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,119 +61,101 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Accessibility statement.
+        ///   Looks up a localized string similar to Manage%20T%20Level%20results%20query.
         /// </summary>
-        public static string Accessibilitystatement_Link_Text {
+        public static string Email_Subject {
             get {
-                return ResourceManager.GetString("Accessibilitystatement_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Email_Subject", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contact.
+        ///   Looks up a localized string similar to Contact us.
         /// </summary>
-        public static string Contact_Link_Text {
+        public static string Heading_Contactus {
             get {
-                return ResourceManager.GetString("Contact_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Heading_Contactus", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cookies.
+        ///   Looks up a localized string similar to Discussion forum.
         /// </summary>
-        public static string Cookies_Link_Text {
+        public static string Heading_Discussion_Forum {
             get {
-                return ResourceManager.GetString("Cookies_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Heading_Discussion_Forum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to © Crown copyright.
+        ///   Looks up a localized string similar to Support with delivering T Levels discussion forum.
         /// </summary>
-        public static string Copyright_Link_Text {
+        public static string Link_Text_Discussion_Forum {
             get {
-                return ResourceManager.GetString("Copyright_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Link_Text_Discussion_Forum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Built by the.
+        ///   Looks up a localized string similar to email the Manage T Level results team.
         /// </summary>
-        public static string Esfa_Link_Info_Text {
+        public static string Link_Text_Email_Tlevel_Team {
             get {
-                return ResourceManager.GetString("Esfa_Link_Info_Text", resourceCulture);
+                return ResourceManager.GetString("Link_Text_Email_Tlevel_Team", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Education and Skills Funding Agency.
+        ///   Looks up a localized string similar to https://support.tlevels.gov.uk/hc/en-gb/community/posts.
         /// </summary>
-        public static string Esfa_Link_Text {
+        public static string Link_Url_Discussion_Forum {
             get {
-                return ResourceManager.GetString("Esfa_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Link_Url_Discussion_Forum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Support links.
+        ///   Looks up a localized string similar to Contact us page.
         /// </summary>
-        public static string Heading_Support_Links_Text {
+        public static string Page_Title {
             get {
-                return ResourceManager.GetString("Heading_Support_Links_Text", resourceCulture);
+                return ResourceManager.GetString("Page_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All content is available under the.
+        ///   Looks up a localized string similar to If you have any questions or feedback about our service, you can .
         /// </summary>
-        public static string Licence_Desc_Link_Info_Text_Part1 {
+        public static string Para_Contactus {
             get {
-                return ResourceManager.GetString("Licence_Desc_Link_Info_Text_Part1", resourceCulture);
+                return ResourceManager.GetString("Para_Contactus", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to , except where otherwise stated.
+        ///   Looks up a localized string similar to You can use the .
         /// </summary>
-        public static string Licence_Desc_Link_Info_Text_Part2 {
+        public static string Para_Discussion_Forum_Text1 {
             get {
-                return ResourceManager.GetString("Licence_Desc_Link_Info_Text_Part2", resourceCulture);
+                return ResourceManager.GetString("Para_Discussion_Forum_Text1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open Government Licence v3.0.
+        ///   Looks up a localized string similar to  to get general help..
         /// </summary>
-        public static string Licence_Desc_Link_Text {
+        public static string Para_Discussion_Forum_Text2 {
             get {
-                return ResourceManager.GetString("Licence_Desc_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Para_Discussion_Forum_Text2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to opens in a new window or tab.
+        ///   Looks up a localized string similar to We aim to respond within 3 working days..
         /// </summary>
-        public static string Opens_In_New_Window_Or_Tab_Text {
+        public static string Para_Response_Time {
             get {
-                return ResourceManager.GetString("Opens_In_New_Window_Or_Tab_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Privacy.
-        /// </summary>
-        public static string Privacy_Link_Text {
-            get {
-                return ResourceManager.GetString("Privacy_Link_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Terms and conditions.
-        /// </summary>
-        public static string TermsAndCond_Link_Text {
-            get {
-                return ResourceManager.GetString("TermsAndCond_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Para_Response_Time", resourceCulture);
             }
         }
     }

@@ -117,43 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Accessibilitystatement_Link_Text" xml:space="preserve">
-    <value>Accessibility statement</value>
+  <data name="Email_Subject" xml:space="preserve">
+    <value>Manage%20T%20Level%20results%20query</value>
   </data>
-  <data name="Contact_Link_Text" xml:space="preserve">
-    <value>Contact</value>
+  <data name="Heading_Contactus" xml:space="preserve">
+    <value>Contact us</value>
   </data>
-  <data name="Cookies_Link_Text" xml:space="preserve">
-    <value>Cookies</value>
+  <data name="Heading_Discussion_Forum" xml:space="preserve">
+    <value>Discussion forum</value>
   </data>
-  <data name="Copyright_Link_Text" xml:space="preserve">
-    <value>© Crown copyright</value>
+  <data name="Link_Text_Discussion_Forum" xml:space="preserve">
+    <value>Support with delivering T Levels discussion forum</value>
   </data>
-  <data name="Esfa_Link_Info_Text" xml:space="preserve">
-    <value>Built by the</value>
+  <data name="Link_Text_Email_Tlevel_Team" xml:space="preserve">
+    <value>email the Manage T Level results team</value>
   </data>
-  <data name="Esfa_Link_Text" xml:space="preserve">
-    <value>Education and Skills Funding Agency</value>
+  <data name="Link_Url_Discussion_Forum" xml:space="preserve">
+    <value>https://support.tlevels.gov.uk/hc/en-gb/community/posts</value>
   </data>
-  <data name="Heading_Support_Links_Text" xml:space="preserve">
-    <value>Support links</value>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Contact us page</value>
   </data>
-  <data name="Licence_Desc_Link_Info_Text_Part1" xml:space="preserve">
-    <value>All content is available under the</value>
+  <data name="Para_Contactus" xml:space="preserve">
+    <value>If you have any questions or feedback about our service, you can </value>
   </data>
-  <data name="Licence_Desc_Link_Info_Text_Part2" xml:space="preserve">
-    <value>, except where otherwise stated</value>
+  <data name="Para_Discussion_Forum_Text1" xml:space="preserve">
+    <value>You can use the </value>
   </data>
-  <data name="Licence_Desc_Link_Text" xml:space="preserve">
-    <value>Open Government Licence v3.0</value>
+  <data name="Para_Discussion_Forum_Text2" xml:space="preserve">
+    <value> to get general help.</value>
   </data>
-  <data name="Opens_In_New_Window_Or_Tab_Text" xml:space="preserve">
-    <value>opens in a new window or tab</value>
-  </data>
-  <data name="Privacy_Link_Text" xml:space="preserve">
-    <value>Privacy</value>
-  </data>
-  <data name="TermsAndCond_Link_Text" xml:space="preserve">
-    <value>Terms and conditions</value>
+  <data name="Para_Response_Time" xml:space="preserve">
+    <value>We aim to respond within 3 working days.</value>
   </data>
 </root>
