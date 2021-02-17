@@ -87,6 +87,9 @@
     <Build Include="Indexes\IX_Unique_TqSpecialismAssessment.sql" />
     <Build Include="Tables\TlLookup.sql" />
     <Build Include="Tables\TqPathwayResult.sql" />
+    <Build Include="Tables\QualificationType.sql" />
+    <Build Include="Tables\QualificationGrade.sql" />
+    <Build Include="Tables\Qualification.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />
