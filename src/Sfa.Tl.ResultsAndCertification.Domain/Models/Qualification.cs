@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sfa.Tl.ResultsAndCertification.Domain.Models
+﻿namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 {
     public partial class Qualification : BaseEntity
     {

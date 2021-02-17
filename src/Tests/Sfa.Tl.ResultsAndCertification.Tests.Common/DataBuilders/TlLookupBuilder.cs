@@ -106,5 +106,46 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 ModifiedOn = Constants.ModifiedOn
             }
         };
+
+        public TlLookup BuildSubjectType() => new TlLookup
+        {
+            Category = "Subject",
+            Code = "Eng",
+            Value = "English",
+            IsActive = true,
+            SortOrder = 1,
+            CreatedBy = Constants.CreatedByUser,
+            CreatedOn = Constants.CreatedOn,
+            ModifiedBy = Constants.ModifiedByUser,
+            ModifiedOn = Constants.ModifiedOn
+        };
+
+        public IList<TlLookup> BuildSubjectTypeList() => new List<TlLookup>
+        {
+            new TlLookup
+            {
+                Category = "Subject",
+                Code = "Eng",
+                Value = "English",
+                IsActive = true,
+                SortOrder = 1,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new TlLookup
+            {
+                Category = "Subject",
+                Code = "Mat",
+                Value = "Maths",
+                IsActive = true,
+                SortOrder = 1,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            }
+        };
     }
 }
