@@ -5,6 +5,7 @@
 	[TlLookupId] INT NOT NULL,
 	[Code] NVARCHAR(50),
 	[Title] NVARCHAR(255),	
+	[IsSendQualification] BIT NOT NULL DEFAULT 0,
 	[IsActive] BIT NOT NULL DEFAULT 1,
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL,
