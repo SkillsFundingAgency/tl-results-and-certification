@@ -7,11 +7,11 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.DeleteRegistrationGet
 {
-    public class When_Called_With_Invalid_Data : TestSetup
+    public class When_Registration_HasResult : TestSetup
     {
         public override void Given()
         {
-            AssessmentDetailsViewModel mockresult = null;
+            var mockresult = new AssessmentDetailsViewModel { ProfileId = 99, IsResultExist = true };
             RegistrationLoader.GetRegistrationAssessmentAsync(Ukprn, ProfileId).Returns(mockresult);
         }
 
@@ -22,10 +22,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         }
 
         [Fact]
-        public void Then_Returns_Expected_Results()
+        public void Then_Redirected_To_RegistrationCannotBeDeleted()
         {
-            var actualRouteName = (Result as RedirectToRouteResult).RouteName;
-            actualRouteName.Should().Be(RouteConstants.PageNotFound);
+            var route = (Result as RedirectToRouteResult);
+            route.RouteName.Should().Be(RouteConstants.RegistrationCannotBeDeleted);
         }
     }
 }
