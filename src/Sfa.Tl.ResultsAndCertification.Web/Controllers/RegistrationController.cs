@@ -594,15 +594,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> DeleteRegistrationAsync(int profileId)
         {
             var registrationDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), profileId);
-            if (registrationDetails == null)
+            if (registrationDetails == null || registrationDetails.IsResultExist)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-
-            if (registrationDetails.IsResultExist)
-            {
-                var cannotBeDeletedViewModel = new RegistrationCannotBeDeletedViewModel { ProfileId = registrationDetails.ProfileId };
-                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel), cannotBeDeletedViewModel, CacheExpiryTime.XSmall);
-                return RedirectToRoute(RouteConstants.RegistrationCannotBeDeleted);
-            }
 
             var viewModel = new DeleteRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln };
             return View(viewModel);

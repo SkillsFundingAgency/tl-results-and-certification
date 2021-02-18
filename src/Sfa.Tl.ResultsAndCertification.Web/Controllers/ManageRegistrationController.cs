@@ -372,7 +372,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("amend-active-registration", Name = RouteConstants.SubmitAmendActiveRegistration)]
-        public IActionResult AmendActiveRegistrationAsync(AmendActiveRegistrationViewModel model)
+        public async Task<IActionResult> AmendActiveRegistrationAsync(AmendActiveRegistrationViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -384,6 +384,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (model.ChangeStatus == RegistrationChangeStatus.Delete)
             {
+                var registrationDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), model.ProfileId);
+                if (registrationDetails == null)
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+
+                if (registrationDetails.IsResultExist)
+                {
+                    var cannotBeDeletedViewModel = new RegistrationCannotBeDeletedViewModel { ProfileId = registrationDetails.ProfileId };
+                    await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel), cannotBeDeletedViewModel, CacheExpiryTime.XSmall);
+                    return RedirectToRoute(RouteConstants.RegistrationCannotBeDeleted);
+                }
+
                 return RedirectToRoute(RouteConstants.DeleteRegistration, new { profileId = model.ProfileId });
             }
             return View(model);

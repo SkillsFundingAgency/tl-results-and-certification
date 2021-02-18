@@ -13,7 +13,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public override void Given()
         {
             RegistrationCannotBeDeletedViewModel = new RegistrationCannotBeDeletedViewModel { ProfileId = 1};
-            CacheService.GetAndRemoveAsync<RegistrationCannotBeDeletedViewModel>(CacheKey).Returns(RegistrationCannotBeDeletedViewModel);
+            CacheService.GetAndRemoveAsync<RegistrationCannotBeDeletedViewModel>(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel))
+                .Returns(RegistrationCannotBeDeletedViewModel);
         }
 
         [Fact]

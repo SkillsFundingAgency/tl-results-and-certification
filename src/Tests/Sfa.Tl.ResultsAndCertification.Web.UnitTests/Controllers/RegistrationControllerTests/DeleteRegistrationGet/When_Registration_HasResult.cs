@@ -22,10 +22,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         }
 
         [Fact]
-        public void Then_Redirected_To_RegistrationCannotBeDeleted()
+        public void Then_Redirected_To_PageNotFound()
         {
             var route = (Result as RedirectToRouteResult);
-            route.RouteName.Should().Be(RouteConstants.RegistrationCannotBeDeleted);
+            route.RouteName.Should().Be(RouteConstants.PageNotFound);
         }
     }
 }

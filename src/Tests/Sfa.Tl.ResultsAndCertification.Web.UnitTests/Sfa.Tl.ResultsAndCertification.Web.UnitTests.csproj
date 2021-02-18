@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\RegistrationControllerTests\RegistrationCannotBeDeleted\When_Model_Null.cs" />
+    <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Invalid_Data.cs" />
+    <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Valid_Data.cs" />
+    <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Registration_HasResult.cs" />
     <Compile Remove="Controllers\ResultControllerTests\AddCoreResultGet\When_Called_With_Withdrawn_Status_Data.cs" />
   </ItemGroup>
 
