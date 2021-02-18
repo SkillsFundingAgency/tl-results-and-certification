@@ -593,11 +593,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("delete-registration/{profileId}", Name = RouteConstants.DeleteRegistration)]
         public async Task<IActionResult> DeleteRegistrationAsync(int profileId)
         {
-            var ulnDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId);
-            if (ulnDetails == null)
+            var registrationDetails = await _registrationLoader.GetRegistrationAndResultAsync(User.GetUkPrn(), profileId);
+            if (registrationDetails == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = new DeleteRegistrationViewModel { ProfileId = ulnDetails.ProfileId, Uln = ulnDetails.Uln };
+            if (registrationDetails.IsResultExist)
+            {
+                var cannotBeDeletedViewModel = new RegistrationCannotBeDeletedViewModel { ProfileId = registrationDetails.ProfileId };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel), cannotBeDeletedViewModel, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.RegistrationCannotBeDeleted);
+            }
+
+            var viewModel = new DeleteRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln };
             return View(viewModel);
         }
 
@@ -637,6 +644,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     $"Unable to read cancel registration confirmation viewmodel from cache. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("registration-with-result-cannot-be-deleted", Name = RouteConstants.RegistrationCannotBeDeleted)]
+        public async Task<IActionResult> RegistrationCannotBeDeletedAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<RegistrationCannotBeDeletedViewModel>(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel));
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound,
+                    $"Unable to read RegistrationCannotBeDeletedViewModel from cache. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            
             return View(viewModel);
         }
 

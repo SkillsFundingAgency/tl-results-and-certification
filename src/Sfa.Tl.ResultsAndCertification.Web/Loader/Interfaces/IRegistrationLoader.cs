@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
@@ -18,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         
         Task<UlnRegistrationNotFoundViewModel> FindUlnAsync(long aoUkprn, long uln);
         Task<RegistrationDetailsViewModel> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
+        Task<AssessmentDetailsViewModel> GetRegistrationAndResultAsync(long aoUkprn, int profileId); 
         Task<bool> AddRegistrationAsync(long aoUkprn, RegistrationViewModel model);
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
 

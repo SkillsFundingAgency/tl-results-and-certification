@@ -1,0 +1,29 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.RegistrationCannotBeDeletedViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @RegistrationCannotBeDeleted.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper">
+                <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6">
+                    @RegistrationCannotBeDeleted.Heading
+                </label>
+            </h1>
+            <p class="govuk-body">@RegistrationCannotBeDeleted.Has_Result_Text</p>
+        </div>
+        <p>
+            <a class="govuk-button" id="backButton" role="button" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">
+                @RegistrationCannotBeDeleted.Back_Button_Text
+            </a>
+        </p>
+    </div>
+</div>
