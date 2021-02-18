@@ -111,8 +111,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 {
                     // Historical record
                     var pathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, isBulkUpload: isBulkUpload);
-                    pathwayAssessment.IsOptedin = false;
-                    pathwayAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
+                    pathwayResult.IsOptedin = false;
+                    pathwayResult.EndDate = DateTime.UtcNow.AddDays(-1);
 
                     var tqPathwayResultHistorical = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, pathwayResult);
                     tqPathwayResults.Add(tqPathwayResultHistorical);
@@ -139,12 +139,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             return tqPathwayResults;
         }
 
-        public static void AssertRegistrationPathway(TqRegistrationPathway actualPathway, TqRegistrationPathway expectedPathway)
+        public static void AssertRegistrationPathway(TqRegistrationPathway actualPathway, TqRegistrationPathway expectedPathway, bool assertStatus = true)
         {
             actualPathway.Should().NotBeNull();
             actualPathway.TqProviderId.Should().Be(expectedPathway.TqProviderId);
             actualPathway.AcademicYear.Should().Be(expectedPathway.AcademicYear);
-            actualPathway.Status.Should().Be(expectedPathway.Status);
+            if (assertStatus)
+                actualPathway.Status.Should().Be(expectedPathway.Status);
+
             actualPathway.IsBulkUpload.Should().Be(expectedPathway.IsBulkUpload);
 
             // Assert specialisms
@@ -161,10 +163,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             }
         }
 
-        public static void AssertPathwayAssessment(TqPathwayAssessment actualAssessment, TqPathwayAssessment expectedAssessment)
+        public static void AssertPathwayAssessment(TqPathwayAssessment actualAssessment, TqPathwayAssessment expectedAssessment, bool isRejoin = false)
         {
             actualAssessment.Should().NotBeNull();
-            actualAssessment.TqRegistrationPathwayId.Should().Be(expectedAssessment.TqRegistrationPathwayId);
+            if (!isRejoin)
+                actualAssessment.TqRegistrationPathwayId.Should().Be(expectedAssessment.TqRegistrationPathwayId);
+
+            actualAssessment.TqRegistrationPathway.TqProviderId.Should().Be(expectedAssessment.TqRegistrationPathway.TqProviderId);
             actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
             actualAssessment.IsOptedin.Should().BeTrue();
             actualAssessment.IsBulkUpload.Should().BeFalse();
@@ -175,10 +180,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualAssessment.EndDate.Should().NotBeNull();
         }
 
-        public static void AssertPathwayResults(TqPathwayResult actualResult, TqPathwayResult expectedResult)
+        public static void AssertPathwayResults(TqPathwayResult actualResult, TqPathwayResult expectedResult, bool isRejoin = false)
         {
             actualResult.Should().NotBeNull();
+            if (!isRejoin)
             actualResult.TqPathwayAssessmentId.Should().Be(expectedResult.TqPathwayAssessmentId);
+
             actualResult.TlLookupId.Should().Be(expectedResult.TlLookupId);
             actualResult.IsOptedin.Should().BeTrue();
             actualResult.IsBulkUpload.Should().BeFalse();
