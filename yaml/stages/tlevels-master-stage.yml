@@ -2,8 +2,7 @@ stages:
   - template: tlevels-build-stage.yml
     parameters:        
       variableGroups:
-        - platform-global-resac
-      applicationName: $(applicationName)
+        - platform-global-resac      
 ######################## DEV ##############################################
   - template: tlevels-shared-stage.yml
     parameters:
@@ -13,6 +12,7 @@ stages:
       environmentName: dev
       sharedEnvironmentId: d01
       serviceConnection: $(devServiceConnection)
+      applicationName: $(applicationName)
     
   - template: tlevels-stage.yml
     parameters:
@@ -23,6 +23,7 @@ stages:
       environmentId: d01
       sharedEnvironmentId: d01
       serviceConnection: $(devServiceConnection)
+      applicationName: $(applicationName)
 ######################## TEST ##############################################
   - template: tlevels-shared-stage.yml
     parameters:
@@ -32,6 +33,7 @@ stages:
       environmentName: tst
       sharedEnvironmentId: t01
       serviceConnection: $(testServiceConnection)
+      applicationName: $(applicationName)
     
   - template: tlevels-stage.yml
     parameters:
@@ -42,6 +44,7 @@ stages:
       environmentId: t01
       sharedEnvironmentId: t01
       serviceConnection: $(testServiceConnection)
+      applicationName: $(applicationName)
 
 ######################## Pre Prod ##############################################
   - template: tlevels-shared-stage.yml
@@ -53,6 +56,7 @@ stages:
       environmentName: pp
       sharedEnvironmentId: p02
       serviceConnection: $(prodServiceConnection)
+      applicationName: $(applicationName)
     
   - template: tlevels-stage.yml
     parameters:
@@ -63,6 +67,7 @@ stages:
       environmentId: p02
       sharedEnvironmentId: p02
       serviceConnection: $(prodServiceConnection)
+      applicationName: $(applicationName)
 
 # ######################## Prod ##############################################
   - template: tlevels-shared-stage.yml
@@ -74,6 +79,7 @@ stages:
       environmentName: prd
       sharedEnvironmentId: p01
       serviceConnection: $(prodServiceConnection)
+      applicationName: $(applicationName)
     
   - template: tlevels-stage.yml
     parameters:
@@ -84,3 +90,4 @@ stages:
       environmentId: p01
       sharedEnvironmentId: p01
       serviceConnection: $(prodServiceConnection)
+      applicationName: $(applicationName)
