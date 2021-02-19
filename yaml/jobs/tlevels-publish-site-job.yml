@@ -1,0 +1,63 @@
+parameters:
+  - name: serviceConnection
+    type: string
+  - name: sharedEnvironmentId
+    type: string
+jobs:
+- job: PublishSite
+  variables:
+    ConfigStorageAccountName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.ConfigStorageAccountName'] ]
+    uiAppName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.uiAppName'] ]
+
+  pool:
+    name: 'Azure Pipelines'
+    vmImage: 'windows-2019'
+  dependsOn: 
+    - DeployInfrastructure
+    - GenerateConfigs
+  steps:
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      buildType: 'current'
+      downloadType: 'single'
+      artifactName: 'appdrop'
+      downloadPath: '$(System.ArtifactsDirectory)'
+  
+  - task: AzureRmWebAppDeployment@3
+    displayName: 'Azure App Service Deploy: $(uiAppName)'
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      WebAppName: '$(uiAppName)'
+      DeployToSlotFlag: true
+      ResourceGroupName: '$(ResourceGroupName)'
+      SlotName: 'staging'
+      Package: '$(System.ArtifactsDirectory)/appdrop/Sfa.Tl.ResultsAndCertification.Web.zip'
+      UseWebDeploy: true
+      RemoveAdditionalFilesFlag: true
+
+  - task: AzureAppServiceManage@0
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      Action: 'Start Azure App Service'
+      WebAppName: '$(uiAppName)'
+      SpecifySlotOrASE: true
+      ResourceGroupName: '$(ResourceGroupName)'
+      Slot: 'staging'
+  
+
+  - task: AzureAppServiceManage@0
+    displayName: 'Swap Slots: $(uiAppName)'
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      WebAppName: '$(uiAppName)'
+      ResourceGroupName: '$(ResourceGroupName)'
+      SourceSlot: staging
+  
+  - task: AzureAppServiceManage@0
+    displayName: 'Delete swap Slot: $(uiAppName)'
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      Action: 'Delete Slot'
+      WebAppName: '$(uiAppName)'
+      ResourceGroupName: '$(ResourceGroupName)'
+      Slot: 'staging'

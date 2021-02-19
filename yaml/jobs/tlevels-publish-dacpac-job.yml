@@ -1,0 +1,40 @@
+parameters:
+  - name: serviceConnection
+    type: string
+  - name: sharedEnvironmentId
+    type: string
+jobs:
+- job: DeploySQLDatabase
+  pool:
+    name: 'Azure Pipelines'
+    vmImage: 'windows-2019'
+  dependsOn:
+    - DeployInfrastructure 
+
+  variables:
+    SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
+    DatabaseName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.sqlDatabaseName'] ]
+  steps:
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'sqldrop'
+        downloadPath: '$(System.ArtifactsDirectory)'
+   
+    - task: SqlAzureDacpacDeployment@1
+      displayName: 'Azure SQL Publish'
+      inputs:
+        azureSubscription: ${{ parameters.serviceConnection }}
+        ServerName: '$(SharedSQLServerName).database.windows.net'
+        DatabaseName: '$(DatabaseName)'
+        SqlUsername: '$(SQLServerAdminUsername)'
+        SqlPassword: '$(SQLServerAdminPassword)'
+        DacpacFile: '$(System.ArtifactsDirectory)/sqldrop/src/Sfa.Tl.ResultsAndCertification.Database/bin/Release/Sfa.Tl.ResultsAndCertification.Database.dacpac'
+        AdditionalArguments: '/p:GenerateSmartDefaults=True'
+
+    - pwsh: | 
+        $SqlConnectionString = "Server=tcp:$(SharedSQLServerName).database.windows.net,1433;Initial Catalog=$(DatabaseName);Persist Security Info=False;User ID=$(SQLServerAdminUsername);Password=$(SQLServerAdminPassword);MultipleActiveResultSets=True;Encrypt=true;TrustServerCertificate=False;Connection Timeout=1200;"
+        Write-Host "##vso[task.setvariable variable=SqlConnectionString;isOutput=true]$SqlConnectionString"        
+      name: SqlVariables
+

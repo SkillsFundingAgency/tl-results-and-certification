@@ -1,0 +1,296 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "environmentNameAbbreviation": {
+            "type": "string"
+        },
+        "sqlServerAdminUsername": {
+            "type": "string"
+        },
+        "sqlServerAdminPassword": {
+            "type": "securestring"
+        },
+        "sqlServerActiveDirectoryAdminLogin": {
+            "type": "string"
+        },
+        "sqlServerActiveDirectoryAdminObjectId": {
+            "type": "string"
+        },
+        "threatDetectionEmailAddress": {
+            "type": "string"
+        },
+        "appServicePlanTier": {
+            "type": "string",
+            "allowedValues": [
+                "Standard",
+                "Premium",
+                "PremiumV2"
+            ]
+        },
+        "appServicePlanSize": {
+            "type": "string",
+            "allowedValues": [
+                "1",
+                "2",
+                "3"
+            ]
+        },
+        "appServicePlanInstances": {
+            "type": "int",
+            "minValue": 1
+        },
+        "azureWebsitesRPObjectId": {
+            "type": "string"
+        },
+        "keyVaultReadWriteObjectIds": {
+            "type": "array"
+        },
+        "keyVaultFullAccessObjectIds": {
+            "type": "array"
+        }
+    },
+    "variables": {
+        "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/operations-devops-deployment/master/ArmTemplates/",
+        "resourceNamePrefix": "[toLower(parameters('environmentNameAbbreviation'))]",
+        "sqlServerName": "[concat(variables('resourceNamePrefix'), '-shared-sql')]",
+        "sharedStorageAccountName": "[replace(concat(variables('resourceNamePrefix'), 'sharedstr'), '-', '')]",
+        "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-shared-asp')]",
+        "configStorageAccountName": "[replace(concat(variables('resourceNamePrefix'), 'configstr'), '-', '')]",
+        "keyVaultName": "[replace(concat(variables('resourceNamePrefix'), 'sharedkv'), '-', '')]",
+        "keyVaultAccessPolicies": [
+            {
+                "objectId": "[parameters('azureWebsitesRPObjectId')]",
+                "tenantId": "[subscription().tenantId]",
+                "permissions": {
+                    "secrets": [
+                        "Get"
+                    ]
+                }
+            }
+        ],
+        "readWriteAccessPolicies": {
+            "copy": [
+                {
+                    "name": "readWriteAccessPolicies",
+                    "count": "[length(parameters('keyVaultReadWriteObjectIds'))]",
+                    "input": {
+                        "objectId": "[parameters('keyVaultReadWriteObjectIds')[copyIndex('readWriteAccessPolicies')]]",
+                        "tenantId": "[subscription().tenantId]",
+                        "permissions": {
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "fullAccessPolicies": {
+            "copy": [
+                {
+                    "name": "fullAccessPolicies",
+                    "count": "[length(parameters('keyVaultFullAccessObjectIds'))]",
+                    "input": {
+                        "objectId": "[parameters('keyVaultFullAccessObjectIds')[copyIndex('fullAccessPolicies')]]",
+                        "tenantId": "[subscription().tenantId]",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[concat('shared-storage-account','-', parameters('environmentNameAbbreviation'))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'storage-account-arm.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "storageAccountName": {
+                        "value": "[variables('sharedStorageAccountName')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[concat('sql-server','-', parameters('environmentNameAbbreviation'))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'sql-server.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "sqlServerName": {
+                        "value": "[variables('sqlServerName')]"
+                    },
+                    "sqlServerAdminUserName": {
+                        "value": "[parameters('sqlServerAdminUsername')]"
+                    },
+                    "sqlServerAdminPassword": {
+                        "value": "[parameters('sqlServerAdminPassword')]"
+                    },
+                    "sqlServerActiveDirectoryAdminLogin": {
+                        "value": "[parameters('sqlServerActiveDirectoryAdminLogin')]"
+                    },
+                    "sqlServerActiveDirectoryAdminObjectId": {
+                        "value": "[parameters('sqlServerActiveDirectoryAdminObjectId')]"
+                    },
+                    "threatDetectionEmailAddress": {
+                        "value": "[parameters('threatDetectionEmailAddress')]"
+                    },
+                    "sqlStorageAccountName": {
+                        "value": "[variables('sharedStorageAccountName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[concat('shared-storage-account','-', parameters('environmentNameAbbreviation'))]"
+            ]
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[concat('app-service-plan','-', parameters('environmentNameAbbreviation'))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'app-service-plan-ase.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appServicePlanName": {
+                        "value": "[variables('appServicePlanName')]"
+                    },
+                    "nonASETier": {
+                        "value": "[parameters('appServicePlanTier')]"
+                    },
+                    "aspSize": {
+                        "value": "[parameters('appServicePlanSize')]"
+                    },
+                    "aspInstances": {
+                        "value": "[parameters('appServicePlanInstances')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[concat('config-storage-account','-', parameters('environmentNameAbbreviation'))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'storage-account-arm.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "storageAccountName": {
+                        "value": "[variables('configStorageAccountName')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[concat('key-vault','-', parameters('environmentNameAbbreviation'))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'keyvault.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultName": {
+                        "value": "[variables('keyVaultName')]"
+                    },
+                    "enabledForTemplateDeployment": {
+                        "value": true
+                    },
+                    "enableSoftDelete": {
+                        "value": true
+                    },
+                    "keyVaultAccessPolicies": {
+                        "value": "[concat(variables('keyVaultAccessPolicies'), variables('readWriteAccessPolicies').readWriteAccessPolicies, variables('fullAccessPolicies').fullAccessPolicies)]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "sharedASPName": {
+            "type": "string",
+            "value": "[variables('appServicePlanName')]"
+        },
+        "sharedKeyVaultName": {
+            "type": "string",
+            "value": "[variables('keyVaultName')]"
+        },
+        "sharedSQLServerName": {
+            "type": "string",
+            "value": "[variables('sqlServerName')]"
+        },
+        "sharedStorageConnectionString": {
+            "type": "string",
+            "value": "[reference(concat('shared-storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionString.value]"
+        },
+        "configStorageConnectionString": {
+            "type": "string",
+            "value": "[reference(concat('config-storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionString.value]"
+        },
+        "ConfigStorageAccountName": {
+            "type": "string",
+            "value": "[variables('configStorageAccountName')]"
+        }
+    }
+}
