@@ -54,5 +54,27 @@
             <p class="govuk-body-s">@Model.FileType, @Model.AssessmentEntriesFileSize@TlevelDataFormatAndRulesGuide.File_Size_Kb_Text, @Model.AssessmentEntriesVersion, @Model.AssessmentEntriesPublishedDate</p>
         </section>
 
+
+
+
+        <h2 class="govuk-heading-m govuk-!-margin-top-7">
+            @TlevelDataFormatAndRulesGuide.Results_Heading_Text
+        </h2>
+
+        <section class="gem-c-attachment">
+            <div class="gem-c-attachment__thumbnail">
+                <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="DownloadResultsDataFormatAndRulesGuide">
+                    <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                        <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
+                    </svg>
+                </a>
+            </div>
+            <h3 class="govuk-heading-s">
+                <a class="govuk-link" target="_self" asp-route="DownloadResultsDataFormatAndRulesGuide">@TlevelDataFormatAndRulesGuide.Download_Result_DataFormat_And_Rules_Guide_Text</a>
+            </h3>
+            <p class="govuk-body-s">@Model.FileType, @Model.ResultsFileSize@TlevelDataFormatAndRulesGuide.File_Size_Kb_Text, @Model.ResultsVersion, @Model.ResultsPublishedDate</p>
+        </section>
+
+
     </div>
 </div>

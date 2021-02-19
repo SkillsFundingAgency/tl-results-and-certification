@@ -7,5 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     {
         Task<Stream> GetBulkUploadRegistrationsTechSpecFileAsync(string fileName);
         Task<Stream> GetBulkUploadAssessmentEntriesTechSpecFileAsync(string fileName);
+        Task<Stream> GetBulkUploadResultsTechSpecFileAsync(string fileName);
     }
 }
