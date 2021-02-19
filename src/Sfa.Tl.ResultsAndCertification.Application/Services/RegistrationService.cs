@@ -381,8 +381,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                     .Any(a => a.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null)));
             if (isResultExist)
             {
-                // TODO:
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to delete registration as registration does not exists for ProfileId = {profileId}. Method: DeleteRegistrationByProfileId({aoUkprn}, {profileId})");
+                _logger.LogWarning(LogEvent.RegistrationNotDeleted, $"Unable to delete registration as registration has results exist for ProfileId = {profileId}. Method: DeleteRegistrationByProfileId({aoUkprn}, {profileId})");
                 return false;
             }
 
