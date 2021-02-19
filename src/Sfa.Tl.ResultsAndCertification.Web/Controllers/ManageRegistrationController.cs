@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
@@ -883,6 +882,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ReregistrationConfirmationViewModel from redis cache re-registration confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("registration-with-result-cannot-be-deleted", Name = RouteConstants.RegistrationCannotBeDeleted)]
+        public async Task<IActionResult> RegistrationCannotBeDeletedAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<RegistrationCannotBeDeletedViewModel>(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel));
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound,
+                    $"Unable to read RegistrationCannotBeDeletedViewModel from cache. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
             return View(viewModel);
         }
 

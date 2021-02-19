@@ -6,13 +6,13 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.RegistrationCannotBeDeleted
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.RegistrationCannotBeDeleted
 {
     public class When_Action_Called : TestSetup
     {
         public override void Given()
         {
-            RegistrationCannotBeDeletedViewModel = new RegistrationCannotBeDeletedViewModel { ProfileId = 1};
+            RegistrationCannotBeDeletedViewModel = new RegistrationCannotBeDeletedViewModel { ProfileId = 1 };
             CacheService.GetAndRemoveAsync<RegistrationCannotBeDeletedViewModel>(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel))
                 .Returns(RegistrationCannotBeDeletedViewModel);
         }

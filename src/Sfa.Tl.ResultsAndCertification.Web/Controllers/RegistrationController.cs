@@ -640,21 +640,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        [Route("registration-with-result-cannot-be-deleted", Name = RouteConstants.RegistrationCannotBeDeleted)]
-        public async Task<IActionResult> RegistrationCannotBeDeletedAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<RegistrationCannotBeDeletedViewModel>(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel));
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound,
-                    $"Unable to read RegistrationCannotBeDeletedViewModel from cache. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            
-            return View(viewModel);
-        }
-
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()
         {
             return await _registrationLoader.GetRegisteredTqAoProviderDetailsAsync(User.GetUkPrn());

@@ -15,17 +15,17 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.RegistrationCannotBeDeleted
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.RegistrationCannotBeDeleted
 {
-    public abstract class TestSetup : BaseTest<RegistrationController>
+    public abstract class TestSetup : BaseTest<ManageRegistrationController>
     {
         protected long AoUkprn;
         protected Guid UserId;
         protected string CacheKey;
         protected ICacheService CacheService;
         protected IRegistrationLoader RegistrationLoader;
-        protected ILogger<RegistrationController> Logger;
-        protected RegistrationController Controller;
+        protected ILogger<ManageRegistrationController> Logger;
+        protected ManageRegistrationController Controller;
         protected IHttpContextAccessor HttpContextAccessor;
         protected TempDataDictionary TempData;
         protected RegistrationCannotBeDeletedViewModel RegistrationCannotBeDeletedViewModel;
@@ -38,10 +38,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             RegistrationLoader = Substitute.For<IRegistrationLoader>();
             CacheService = Substitute.For<ICacheService>();
-            Logger = Substitute.For<ILogger<RegistrationController>>();
-            Controller = new RegistrationController(RegistrationLoader, CacheService, Logger);
+            Logger = Substitute.For<ILogger<ManageRegistrationController>>();
+            Controller = new ManageRegistrationController(RegistrationLoader, CacheService, Logger);
 
-            var httpContext = new ClaimsIdentityBuilder<RegistrationController>(Controller)
+            var httpContext = new ClaimsIdentityBuilder<ManageRegistrationController>(Controller)
                .Add(CustomClaimTypes.Ukprn, AoUkprn.ToString())
                .Add(CustomClaimTypes.UserId, UserId.ToString())
                .Build()
