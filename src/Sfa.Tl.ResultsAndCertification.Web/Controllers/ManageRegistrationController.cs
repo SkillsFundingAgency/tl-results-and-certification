@@ -383,7 +383,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (model.ChangeStatus == RegistrationChangeStatus.Delete)
             {
-                var registrationDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), model.ProfileId);
+                var registrationDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), model.ProfileId, RegistrationPathwayStatus.Active);
                 if (registrationDetails == null)
                     return RedirectToRoute(RouteConstants.PageNotFound);
 

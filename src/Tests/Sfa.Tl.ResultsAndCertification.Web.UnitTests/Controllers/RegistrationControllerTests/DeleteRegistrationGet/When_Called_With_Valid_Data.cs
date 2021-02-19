@@ -16,14 +16,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public override void Given()
         {
             mockresult = new AssessmentDetailsViewModel { Uln = 1234567890, ProfileId = 99, IsResultExist = false };
-            RegistrationLoader.GetRegistrationAssessmentAsync(Ukprn, ProfileId)
+            RegistrationLoader.GetRegistrationAssessmentAsync(Ukprn, ProfileId, RegistrationPathwayStatus.Active)
                 .Returns(mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            RegistrationLoader.Received(1).GetRegistrationAssessmentAsync(Ukprn, ProfileId);
+            RegistrationLoader.Received(1).GetRegistrationAssessmentAsync(Ukprn, ProfileId, RegistrationPathwayStatus.Active);
         }
 
         [Fact]

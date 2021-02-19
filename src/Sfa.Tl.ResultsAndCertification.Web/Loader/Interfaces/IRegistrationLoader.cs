@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         
         Task<UlnRegistrationNotFoundViewModel> FindUlnAsync(long aoUkprn, long uln);
         Task<RegistrationDetailsViewModel> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
-        Task<AssessmentDetailsViewModel> GetRegistrationAssessmentAsync(long aoUkprn, int profileId); 
+        Task<AssessmentDetailsViewModel> GetRegistrationAssessmentAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null); 
         Task<bool> AddRegistrationAsync(long aoUkprn, RegistrationViewModel model);
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
 

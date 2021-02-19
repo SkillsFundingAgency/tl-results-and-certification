@@ -17,14 +17,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             ViewModel.ChangeStatus = RegistrationChangeStatus.Delete;
             ViewModel.ProfileId = ProfileId;
 
-            RegistrationLoader.GetRegistrationAssessmentAsync(AoUkprn, ProfileId)
+            RegistrationLoader.GetRegistrationAssessmentAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active)
                 .Returns(mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            RegistrationLoader.Received(1).GetRegistrationAssessmentAsync(AoUkprn, ProfileId);
+            RegistrationLoader.Received(1).GetRegistrationAssessmentAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active);
         }
 
         [Fact]

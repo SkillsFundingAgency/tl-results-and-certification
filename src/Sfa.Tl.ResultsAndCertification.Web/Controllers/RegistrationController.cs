@@ -593,7 +593,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("delete-registration/{profileId}", Name = RouteConstants.DeleteRegistration)]
         public async Task<IActionResult> DeleteRegistrationAsync(int profileId)
         {
-            var registrationDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), profileId);
+            var registrationDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
             if (registrationDetails == null || registrationDetails.IsResultExist)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
