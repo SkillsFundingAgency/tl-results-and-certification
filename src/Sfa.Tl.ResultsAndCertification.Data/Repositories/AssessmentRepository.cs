@@ -220,6 +220,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Include(p => p.AssessmentSeries)
                 .Include(p => p.TqRegistrationPathway)
                     .ThenInclude(P => P.TqRegistrationProfile)
+                .Include(p => p.TqPathwayResults)
                 .FirstOrDefaultAsync(pa => pa.Id == pathwayAssessmentId && pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn);
 
             return pathwayAssessment;
