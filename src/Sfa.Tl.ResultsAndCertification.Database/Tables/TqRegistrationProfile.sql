@@ -5,6 +5,7 @@
 	[Firstname] NVARCHAR(100) NOT NULL, 
 	[Lastname] NVARCHAR(100) NOT NULL, 
 	[DateofBirth] DATE NOT NULL,
+	[Gender] NVARCHAR(25) NULL,
 	[IsLearnerVerified] BIT NULL,
 	[IsMathsAndEnglishAchieved] BIT NULL,
 	[IsSendLearner] BIT NULL,
