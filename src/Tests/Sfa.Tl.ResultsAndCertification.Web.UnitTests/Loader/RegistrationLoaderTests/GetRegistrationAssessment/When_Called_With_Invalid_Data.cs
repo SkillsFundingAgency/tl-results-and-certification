@@ -2,7 +2,7 @@
 using NSubstitute;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetRegistrationAssessment
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.GetRegistrationAssessment
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
