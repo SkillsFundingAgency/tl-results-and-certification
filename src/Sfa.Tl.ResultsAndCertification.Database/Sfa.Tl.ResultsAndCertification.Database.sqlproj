@@ -91,6 +91,7 @@
     <Build Include="Tables\QualificationGrade.sql" />
     <Build Include="Tables\Qualification.sql" />
     <Build Include="Tables\QualificationAchieved.sql" />
+    <Build Include="Tables\FunctionLog.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />
