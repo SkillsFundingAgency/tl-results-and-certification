@@ -1,7 +1,8 @@
 ﻿CREATE TABLE [dbo].[QualificationType]
 (
 	[Id] INT IDENTITY(1,1) NOT NULL,	
-	[Name] NVARCHAR(255),	
+	[Name] NVARCHAR(255) NOT NULL,
+	[SubTitle] NVARCHAR(255) NULL,
 	[IsActive] BIT NOT NULL DEFAULT 1,	
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 

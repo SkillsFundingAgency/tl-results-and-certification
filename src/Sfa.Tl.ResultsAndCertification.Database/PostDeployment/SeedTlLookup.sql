@@ -12,7 +12,10 @@ USING (VALUES
   (4, N'PathwayComponentGrade', N'PCG4', N'C', 4, 1),
   (5, N'PathwayComponentGrade', N'PCG5', N'D', 5, 1),
   (6, N'PathwayComponentGrade', N'PCG6', N'E', 6, 1),
-  (7, N'PathwayComponentGrade', N'PCG7', N'Unclassified', 7, 1)
+  (7, N'PathwayComponentGrade', N'PCG7', N'Unclassified', 7, 1),
+  (8, N'QualificationSubject', N'Eng', N'English', 1, 1),
+  (9, N'QualificationSubject', N'Math', N'Maths', 2, 1)
+
   )
   AS Source ([Id], [Category], [Code], [Value], [SortOrder], [IsActive]) 
 ON Target.[Id] = Source.[Id] 
