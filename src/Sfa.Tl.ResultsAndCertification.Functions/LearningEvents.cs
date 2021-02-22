@@ -12,13 +12,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 {
     public class LearningEvents
     {
-        private readonly ILearnerRecordService _learnerRecordService;
+        private readonly IPersonalLearningRecordService _personalLearningRecordService;
         private readonly ICommonService _commonService;
 
-        public LearningEvents(ICommonService commonService, ILearnerRecordService learnerRecordService)
+        public LearningEvents(ICommonService commonService, IPersonalLearningRecordService personalLearningRecordService)
         {
             _commonService = commonService;
-            _learnerRecordService = learnerRecordService;
+            _personalLearningRecordService = personalLearningRecordService;
         }
 
         [FunctionName("GetLearningEvents")]
@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                _learnerRecordService.ProcessLearnerVerificationAndLearningEvents();
+                await _personalLearningRecordService.ProcessLearnerVerificationAndLearningEvents();
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Processed);
 

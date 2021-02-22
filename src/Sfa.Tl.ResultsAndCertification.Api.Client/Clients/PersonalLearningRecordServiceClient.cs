@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _configuration = configuration;
         }
 
-        public async Task<bool> GetLearnerEventsAsync(string uln, string firstName, string lastName, string dateOfBirth)
+        public async Task<bool> GetLearnerEventsAsync(string uln, string firstName, string lastName, DateTime dateOfBirth)
         {
             try
             {
@@ -32,8 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                     Username = _configuration.LearningRecordServiceSettings.Username,
                     Password = _configuration.LearningRecordServiceSettings.Password
                 };
-                var response = await _learnerServiceR9Client.GetLearnerLearningEventsAsync(invokingOrganisation, "ORG", _configuration.LearningRecordServiceSettings.VendorId, "ENG", uln, firstName, lastName, dateOfBirth, null, "FULL");
-                //_learnerServiceR9Client.Close();
+                var response = await _learnerServiceR9Client.GetLearnerLearningEventsAsync(invokingOrganisation, "ORG", _configuration.LearningRecordServiceSettings.VendorId, "ENG", uln, firstName, lastName, dateOfBirth.ToString("yyyy-MM-dd"), null, "FULL");
                 return true;
             }
             catch (Exception ex)
@@ -41,8 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                 if (_learnerServiceR9Client.State == CommunicationState.Faulted)
                     _learnerServiceR9Client.Abort();
 
-                _logger.LogError($"Error while executing GetLearnerLearningEventsAsync. Exception = {ex}");
-                //_learnerServiceR9Client.Close();
+                _logger.LogError($"Error while executing GetLearnerEventsAsync. Exception = {ex}");
                 return false;
             }
         }
