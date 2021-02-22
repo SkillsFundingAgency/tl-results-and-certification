@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
@@ -65,12 +66,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> DownloadResultsDataFormatAndRulesGuideAsync()
         {
             var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Results_Data_Format_And_Rules_Guide_File_Name_Text;
-            var fileStream = await _documentLoader.GetBulkUploadResultsTechSpecFileAsync(fileName);
+            var fileStream = await _documentLoader.GetTechSpecFileAsync(BlobStorageConstants.ResultsFolderName, fileName);
             if (fileStream == null)
-            {
-                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download bulk upload result tech spec document. Method: GetBulkUploadResultsTechSpecFileAsync(FileName: {fileName})");
                 return RedirectToRoute(RouteConstants.PageNotFound);
-            }
 
             fileStream.Position = 0;
             return new FileStreamResult(fileStream, "text/xlsx")
@@ -98,8 +96,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 ResultsFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.Results_FileSize_Text,
                 ResultsVersion = DocumentResource.TlevelDataFormatAndRulesGuide.Results_Version_Text,
                 ResultsPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Results_Published_Date}",
-
             };
+
             return View(viewModel);
         }        
     }

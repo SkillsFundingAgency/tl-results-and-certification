@@ -61,21 +61,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return fileStream;
         }
 
-        public async Task<Stream> GetBulkUploadResultsTechSpecFileAsync(string fileName)
+        public async Task<Stream> GetTechSpecFileAsync(string folderName, string fileName)
         {
-            if (string.IsNullOrWhiteSpace(fileName))
+            if (string.IsNullOrWhiteSpace(folderName) || string.IsNullOrWhiteSpace(fileName))
                 return null;
 
             var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
             {
                 ContainerName = DocumentType.Documents.ToString(),
                 BlobFileName = fileName,
-                SourceFilePath = $"{BlobStorageConstants.TechSpecFolderName}/{BlobStorageConstants.ResultsFolderName}"
+                SourceFilePath = $"{BlobStorageConstants.TechSpecFolderName}/{folderName}"
             });
 
             if (fileStream == null)
             {
-                var blobReadError = $"No FileStream found to download bulkupload result tech spec. Method: DownloadFileAsync(ContainerName: {DocumentType.Documents}, BlobFileName = {fileName}, SourceFilePath = {BlobStorageConstants.TechSpecFolderName}/{BlobStorageConstants.ResultsFolderName})";
+                var blobReadError = $"No FileStream found to download tech spec. Method: DownloadFileAsync(ContainerName: {DocumentType.Documents}, BlobFileName = {fileName}, SourceFilePath = {BlobStorageConstants.TechSpecFolderName}/{folderName})";
                 _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
             }
             return fileStream;
