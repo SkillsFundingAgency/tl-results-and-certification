@@ -15,8 +15,12 @@ using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Functions;
+using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Functions.Services;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
+using System.Linq;
+using System.Reflection;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 namespace Sfa.Tl.ResultsAndCertification.Functions
@@ -45,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                                       .EnableRetryOnFailure()), ServiceLifetime.Transient);
 
             services.AddSingleton(ResultsAndCertificationConfiguration);
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(Startup).Assembly.GetReferencedAssemblies().Where(a => a.FullName.Contains("Sfa.Tl.ResultsAndCertification.Application")).Select(Assembly.Load));
             services.AddHttpContextAccessor();
 
             RegisterApplicationServices(services);
@@ -59,6 +63,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IResultRepository, ResultRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+
+            services.AddTransient<ICommonService, CommonService>();
+            services.AddTransient<ILearnerRecordService, LearnerRecordService>();
         }
 
         private void RegisterApiClients(IServiceCollection services)

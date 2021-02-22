@@ -13,11 +13,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CommonService
     public abstract class CommonServiceBaseTest : BaseTest<TlLookup>
     {
         protected CommonService CommonService;
+        protected ILogger<CommonService> CommonServiceLogger;
         protected IList<TlLookup> TlLookup;
         protected IRepository<TlLookup> TlLookupRepository;
+        protected IRepository<FunctionLog> FunctionLogRepository;
 
         protected IMapper CommonMapper;
         protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
+        protected ILogger<GenericRepository<FunctionLog>> FunctionLogRepositoryLogger;
 
         protected virtual void CreateMapper()
         {
