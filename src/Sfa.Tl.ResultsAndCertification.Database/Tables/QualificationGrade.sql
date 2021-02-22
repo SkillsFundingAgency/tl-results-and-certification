@@ -2,7 +2,7 @@
 (
 	[Id] INT IDENTITY(1,1) NOT NULL,
 	[QualificationTypeId] INT NOT NULL,
-	[Grade] NVARCHAR(50),
+	[Grade] NVARCHAR(50) NOT NULL,
 	[IsAllowable] BIT NOT NULL DEFAULT 0,	
 	[IsActive] BIT NOT NULL DEFAULT 1,
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 

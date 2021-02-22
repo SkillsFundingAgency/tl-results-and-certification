@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public DateTime DateofBirth { get; set; }
         public string Gender { get; set; }
         public bool? IsLearnerVerified { get; set; }
-        public bool? IsMathsAndEnglishAchieved { get; set; }
+        public bool? IsEnglishAndMathsAchieved { get; set; }
         public bool? IsSendLearner { get; set; }
         public bool? IsRcFeed { get; set; }
 

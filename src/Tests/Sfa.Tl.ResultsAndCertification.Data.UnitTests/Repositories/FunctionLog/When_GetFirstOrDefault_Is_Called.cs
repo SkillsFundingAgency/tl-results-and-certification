@@ -4,16 +4,16 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrationProfile
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.FunctionLog
 {
-    public class When_GetFirstOrDefault_Is_Called : BaseTest<Domain.Models.TqRegistrationProfile>
+    public class When_GetFirstOrDefault_Is_Called : BaseTest<Domain.Models.FunctionLog>
     {
-        private Domain.Models.TqRegistrationProfile _result;
-        private Domain.Models.TqRegistrationProfile _data;
+        private Domain.Models.FunctionLog _result;
+        private Domain.Models.FunctionLog _data;
 
         public override void Given()
         {
-            _data = new TqRegistrationProfileBuilder().Build();
+            _data = new FunctionLogBuilder().Build();
             DbContext.AddRange(_data);
             DbContext.SaveChanges();
         }
@@ -29,15 +29,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
             _data.Should().NotBeNull();
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
-            _result.UniqueLearnerNumber.Should().Be(_data.UniqueLearnerNumber);
-            _result.Firstname.Should().Be(_data.Firstname);
-            _result.Lastname.Should().Be(_data.Lastname);
-            _result.DateofBirth.Should().Be(_data.DateofBirth);
-            _result.Gender.Should().Be(_data.Gender);
-            _result.IsLearnerVerified.Should().Be(_data.IsLearnerVerified);
-            _result.IsEnglishAndMathsAchieved.Should().Be(_data.IsEnglishAndMathsAchieved);
-            _result.IsSendLearner.Should().Be(_data.IsSendLearner);
-            _result.IsRcFeed.Should().Be(_data.IsRcFeed);
+            _result.Name.Should().Be(_data.Name);
+            _result.StartDate.Should().Be(_data.StartDate);
+            _result.EndDate.Should().Be(_data.EndDate);
+            _result.Status.Should().Be(_data.Status);
+            _result.Message.Should().Be(_data.Message);
             _result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
             _result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);

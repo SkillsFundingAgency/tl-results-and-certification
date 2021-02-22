@@ -7,16 +7,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrationProfile
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.FunctionLog
 {
-    public class When_GetMany_Is_Called : BaseTest<Domain.Models.TqRegistrationProfile>
+    public class When_GetMany_Is_Called : BaseTest<Domain.Models.FunctionLog>
     {
-        private IEnumerable<Domain.Models.TqRegistrationProfile> _result;
-        private IList<Domain.Models.TqRegistrationProfile> _data;
+        private IEnumerable<Domain.Models.FunctionLog> _result;
+        private IList<Domain.Models.FunctionLog> _data;
 
         public override void Given()
         {
-            _data = new TqRegistrationProfileBuilder().BuildList();
+            _data = new FunctionLogBuilder().BuildList();
             DbContext.AddRange(_data);
             DbContext.SaveChanges();
         }
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
 
         [Fact]
         public void Then_The_Expected_Number_Of_Paths_Is_Returned() =>
-            _result.Count().Should().Be(4);
+            _result.Count().Should().Be(_data.Count);
 
         [Fact]
         public void Then_First_Path_Fields_Have_Expected_Values()
@@ -38,15 +38,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
             testData.Should().NotBeNull();
             result.Should().NotBeNull();
             result.Id.Should().Be(1);
-            result.UniqueLearnerNumber.Should().Be(testData.UniqueLearnerNumber);
-            result.Firstname.Should().Be(testData.Firstname);
-            result.Lastname.Should().Be(testData.Lastname);
-            result.DateofBirth.Should().Be(testData.DateofBirth);
-            result.Gender.Should().Be(testData.Gender);
-            result.IsLearnerVerified.Should().Be(testData.IsLearnerVerified);
-            result.IsEnglishAndMathsAchieved.Should().Be(testData.IsEnglishAndMathsAchieved);
-            result.IsSendLearner.Should().Be(testData.IsSendLearner);
-            result.IsRcFeed.Should().Be(testData.IsRcFeed);
+            result.Name.Should().Be(testData.Name);
+            result.StartDate.Should().Be(testData.StartDate);
+            result.EndDate.Should().Be(testData.EndDate);
+            result.Status.Should().Be(testData.Status);
+            result.Message.Should().Be(testData.Message);
             result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
             result.CreatedOn.Should().Be(Constants.CreatedOn);
             result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);

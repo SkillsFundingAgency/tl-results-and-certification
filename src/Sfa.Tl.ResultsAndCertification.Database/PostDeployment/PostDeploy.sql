@@ -16,6 +16,9 @@ BEGIN
 :r ".\SeedNotificationTemplates.sql"
 :r ".\SeedAssessmentSeries.sql"
 :r ".\SeedTlLookup.sql"
+:r ".\SeedQualificationType.sql"
+:r ".\SeedQualificationGrade.sql"
+:r ".\SeedQualification.sql"
 END
 ELSE IF ('$(environment)' <> 'DevIntegration')
 BEGIN
@@ -29,4 +32,7 @@ BEGIN
 :r ".\SeedNotificationTemplates.sql"
 :r ".\SeedAssessmentSeries.sql"
 :r ".\SeedTlLookup.sql"
+:r ".\SeedQualificationType.sql"
+:r ".\SeedQualificationGrade.sql"
+:r ".\SeedQualification.sql"
 END

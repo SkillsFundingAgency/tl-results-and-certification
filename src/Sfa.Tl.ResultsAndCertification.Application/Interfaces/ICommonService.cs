@@ -8,5 +8,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface ICommonService
     {
         Task<IEnumerable<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory);
+
+        // FunctionLog
+        Task<bool> CreateFunctionLog(FunctionLogDetails model);
+        Task<bool> UpdateFunctionLog(FunctionLogDetails model);
     }
 }
