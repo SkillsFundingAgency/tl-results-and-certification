@@ -2,7 +2,7 @@ jobs:
 - job: 'CodeBuild'
   pool:
       name: 'Azure Pipelines'
-      vmImage: 'vs2017-win2016'
+      vmImage: 'windows-latest'
   workspace:
     clean: all
   steps:        
@@ -40,12 +40,6 @@ jobs:
       inputs:
         workingDir: src/Sfa.Tl.ResultsAndCertification.Web/
         verbose: false
-    # - task: Npm@1
-    #   inputs:
-    #     command: 'custom'
-    #     workingDir: 'src/Sfa.Tl.ResultsAndCertification.Web/'
-    #     customCommand: 'i -f'
-    #     verbose: true
     
     - task: Gulp@0
       displayName: gulp
