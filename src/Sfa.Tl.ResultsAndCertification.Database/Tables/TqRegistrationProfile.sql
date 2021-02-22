@@ -7,7 +7,7 @@
 	[DateofBirth] DATE NOT NULL,
 	[Gender] NVARCHAR(25) NULL,
 	[IsLearnerVerified] BIT NULL,
-	[IsMathsAndEnglishAchieved] BIT NULL,
+	[IsEnglishAndMathsAchieved] BIT NULL,
 	[IsSendLearner] BIT NULL,
 	[IsRcFeed] BIT NULL,
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
