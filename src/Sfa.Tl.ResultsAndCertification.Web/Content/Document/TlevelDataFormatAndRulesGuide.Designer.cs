@@ -262,9 +262,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         /// <summary>
         ///   Looks up a localized string similar to 28 January 2021.
         /// </summary>
-        public static string Results_Published_Date {
+        public static string Results_PublishedDate_Text {
             get {
-                return ResourceManager.GetString("Results_Published_Date", resourceCulture);
+                return ResourceManager.GetString("Results_PublishedDate_Text", resourceCulture);
             }
         }
         
