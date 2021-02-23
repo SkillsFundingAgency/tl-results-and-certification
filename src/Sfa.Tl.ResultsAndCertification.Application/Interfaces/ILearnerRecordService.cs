@@ -8,6 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface ILearnerRecordService
     {
         Task<IList<RegistrationLearnerDetails>> GetValidRegistrationLearners();
-        Task<bool> ProcessLearnerRecords(List<LearnerRecordDetails> learnerRecords);
+        Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerRecords(List<LearnerRecordDetails> learnerRecords);
     }
 }

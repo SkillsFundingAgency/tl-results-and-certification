@@ -4,7 +4,6 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,19 +26,20 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _learnerRecordService = learnerRecordService;
         }
 
-        public async Task ProcessLearnerVerificationAndLearningEvents()
+        public async Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerVerificationAndLearningEvents()
         {
             var registeredLearners = await _learnerRecordService.GetValidRegistrationLearners();
 
             if (registeredLearners == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No learners found to process learner verification and learning events. Method: ProcessLearnerVerificationAndLearningEvents()");
-                return;
+                var message = $"No registration learners found to process learner verification and learning events. Method: ProcessLearnerVerificationAndLearningEvents()";
+                _logger.LogWarning(LogEvent.NoDataFound, message);
+                return new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, Message = message };
             }
 
             var learnerRecordDetailsList = new List<LearnerRecordDetails>();
 
-            foreach (var learner in registeredLearners.Skip(2).Take(1))
+            foreach (var learner in registeredLearners.Skip(3).Take(2))
             {
                 var plrResult = await _personalLearningRecordApiClient.GetLearnerEventsAsync(learner.Uln.ToString(), learner.Firstname, learner.Lastname, learner.DateofBirth);
 
@@ -61,7 +61,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             }
 
             // process learner records
-            var result = await _learnerRecordService.ProcessLearnerRecords(learnerRecordDetailsList);
+            var response = await _learnerRecordService.ProcessLearnerRecords(learnerRecordDetailsList);
+            response.RegistrationsRecordsCount = registeredLearners.Count();
+            return response;
         }
     }    
 }

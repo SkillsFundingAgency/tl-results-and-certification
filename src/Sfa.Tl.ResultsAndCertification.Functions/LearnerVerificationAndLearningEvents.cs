@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
-    public class LearningEvents
+    public class LearnerVerificationAndLearningEvents
     {
         private readonly IPersonalLearningRecordService _personalLearningRecordService;
         private readonly ICommonService _commonService;
 
-        public LearningEvents(ICommonService commonService, IPersonalLearningRecordService personalLearningRecordService)
+        public LearnerVerificationAndLearningEvents(ICommonService commonService, IPersonalLearningRecordService personalLearningRecordService)
         {
             _commonService = commonService;
             _personalLearningRecordService = personalLearningRecordService;
         }
 
-        [FunctionName("GetLearningEvents")]
-        public async Task GetLearningEventsAsync([TimerTrigger("%LearningEventsTrigger%")]TimerInfo timer, ExecutionContext context, ILogger logger)
+        [FunctionName("VerifyLearnerAndFetchLearningEvents")]
+        public async Task VerifyLearnerAndFetchLearningEventsAsync([TimerTrigger("%LearnerVerificationAndLearningEventsTrigger%")]TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
@@ -36,9 +36,17 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                await _personalLearningRecordService.ProcessLearnerVerificationAndLearningEvents();
+                var response = await _personalLearningRecordService.ProcessLearnerVerificationAndLearningEvents();
 
-                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Processed);
+                var message = $"Function {context.FunctionName} completed processing.\n" +
+                                      $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}\n" +
+                                      $"\tTotal registration profiles to process: {response.RegistrationsRecordsCount}\n" +
+                                      $"\tLearners retrieved from lrs: {response.LrsRecordsCount}\n" +
+                                      $"\tModified registration record to process: {response.ModifiedRecordsCount}\n" +
+                                      $"\tRows saved: {response.SavedRecordsCount}\n" +                                      
+                                      $"\tAdditional message: {response.Message}";
+
+                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed, message);
 
                 await _commonService.UpdateFunctionLog(functionLogDetails);
 

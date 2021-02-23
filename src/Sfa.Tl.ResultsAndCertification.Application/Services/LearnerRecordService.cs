@@ -42,12 +42,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<IList<RegistrationLearnerDetails>>(registrationLearners);
         }
 
-        public async Task<bool> ProcessLearnerRecords(List<LearnerRecordDetails> learnerRecords)
+        public async Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerRecords(List<LearnerRecordDetails> learnerRecords)
         {
             if (learnerRecords == null || !learnerRecords.Any())
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No learners found to process learner records. Method: ProcessLearnerRecords()");
-                return true;
+                var message = $"No learners data retrived from LRS to process. Method: ProcessLearnerRecords()";
+                _logger.LogWarning(LogEvent.NoDataFound, message);
+                return new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, Message = message };
             }
 
             var registrationProfilesToProcessLrsData = new List<TqRegistrationProfile>();
@@ -69,7 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
             }
 
-            return registrationProfilesToProcessLrsData.Any() ? await _tqRegistrationRepository.UpdateManyAsync(registrationProfilesToProcessLrsData) > 0 : true;
+            if(registrationProfilesToProcessLrsData.Any())
+            {
+                var isSuccess = await _tqRegistrationRepository.UpdateManyAsync(registrationProfilesToProcessLrsData) > 0;
+                return new LearnerVerificationAndLearningEventsResponse { IsSuccess = isSuccess, LrsRecordsCount = learnerRecords.Count(), ModifiedRecordsCount = registrationProfilesToProcessLrsData.Count(), SavedRecordsCount = registrationProfilesToProcessLrsData.Count() };
+            }
+            else
+            {
+                return new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, LrsRecordsCount = learnerRecords.Count(), ModifiedRecordsCount = 0, SavedRecordsCount = 0 };
+            }
         }
 
         private static void ProcessLearningEvents(List<Qualification> qualifications, LearnerRecordDetails learnerRecord)
