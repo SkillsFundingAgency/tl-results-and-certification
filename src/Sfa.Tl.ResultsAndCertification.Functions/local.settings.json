@@ -3,7 +3,7 @@
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
     //"APPINSIGHTS_INSTRUMENTATIONKEY": "0e9ff781-22e3-4439-a0da-14c516adbb7f",
-    "LearningEventsTrigger": "0 22 15 1-12 *", // 0 */1 * * * * // 0 22 15 1-12 *
+    "LearnerVerificationAndLearningEventsTrigger": "0 22 15 1-12 *", // 0 */1 * * * * // 0 22 15 1-12 *
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "ConfigurationStorageConnectionString": "UseDevelopmentStorage=true;",
     "EnvironmentName": "LOCAL",
