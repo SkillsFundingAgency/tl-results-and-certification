@@ -269,7 +269,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to version 1.1.
+        ///   Looks up a localized string similar to version 1.0.
         /// </summary>
         public static string Results_Version_Text {
             get {
