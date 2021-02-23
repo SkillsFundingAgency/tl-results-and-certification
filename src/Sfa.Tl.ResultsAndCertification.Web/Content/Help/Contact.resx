@@ -123,6 +123,9 @@
   <data name="Heading_Contactus" xml:space="preserve">
     <value>Contact us</value>
   </data>
+  <data name="Heading_Contact_Tlevel_Team" xml:space="preserve">
+    <value>Contact the Manage T Level results team</value>
+  </data>
   <data name="Heading_Discussion_Forum" xml:space="preserve">
     <value>Discussion forum</value>
   </data>

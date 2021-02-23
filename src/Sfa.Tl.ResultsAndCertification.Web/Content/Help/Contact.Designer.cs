@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contact the Manage T Level results team.
+        /// </summary>
+        public static string Heading_Contact_Tlevel_Team {
+            get {
+                return ResourceManager.GetString("Heading_Contact_Tlevel_Team", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact us.
         /// </summary>
         public static string Heading_Contactus {

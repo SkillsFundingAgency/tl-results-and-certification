@@ -18,7 +18,16 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">@Contact.Heading_Contactus</h1>
+        <h1 class="govuk-heading-xl">
+            @if (User.Identity.IsAuthenticated)
+            {
+                @Contact.Heading_Contactus
+            }
+            else
+            {
+                @Contact.Heading_Contact_Tlevel_Team
+            }
+        </h1>
         <p class="govuk-body">
             @Contact.Para_Contactus
             <a class="govuk-link" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@Contact.Email_Subject">@Contact.Link_Text_Email_Tlevel_Team</a>.
