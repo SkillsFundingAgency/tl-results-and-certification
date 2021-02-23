@@ -48,6 +48,17 @@
         },
         "keyVaultFullAccessObjectIds": {
             "type": "array"
+        },
+        "redisCacheSku": {
+            "type": "object",
+            "defaultValue": {
+                "name": "Basic",
+                "family": "C",
+                "capacity": 0
+            },
+            "metadata": {
+                "description": ""
+            }
         }
     },
     "variables": {
@@ -58,6 +69,7 @@
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-shared-asp')]",
         "configStorageAccountName": "[replace(concat(variables('resourceNamePrefix'), 'configstr'), '-', '')]",
         "keyVaultName": "[replace(concat(variables('resourceNamePrefix'), 'sharedkv'), '-', '')]",
+        "redisCacheName": "[concat(variables('resourceNamePrefix'),'-redis')]",
         "keyVaultAccessPolicies": [
             {
                 "objectId": "[parameters('azureWebsitesRPObjectId')]",
@@ -265,6 +277,17 @@
                     }
                 }
             }
+        },
+        {
+            "type": "Microsoft.Cache/Redis",
+            "name": "[variables('redisCacheName')]",
+            "apiVersion": "2019-07-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "sku": "[parameters('redisCacheSku')]",
+                "enableNonSslPort": false,
+                "minimumTlsVersion": "1.2"
+            }
         }
     ],
     "outputs": {
@@ -291,6 +314,11 @@
         "ConfigStorageAccountName": {
             "type": "string",
             "value": "[variables('configStorageAccountName')]"
+        },        
+        "RedisConnectionString": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2016-04-01').primaryKey]"            
         }
+
     }
 }
