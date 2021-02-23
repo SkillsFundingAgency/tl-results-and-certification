@@ -314,6 +314,11 @@
         "ConfigStorageAccountName": {
             "type": "string",
             "value": "[variables('configStorageAccountName')]"
+        },        
+        "RedisConnectionString": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2016-04-01').primaryKey]"            
         }
+
     }
 }

@@ -31,7 +31,7 @@ jobs:
         SqlUsername: '$(SQLServerAdminUsername)'
         SqlPassword: '$(SQLServerAdminPassword)'
         DacpacFile: '$(System.ArtifactsDirectory)/sqldrop/src/Sfa.Tl.ResultsAndCertification.Database/bin/Release/Sfa.Tl.ResultsAndCertification.Database.dacpac'
-        AdditionalArguments: '/p:GenerateSmartDefaults=True'
+        AdditionalArguments: '/p:GenerateSmartDefaults=True /v:environment=$(environment)'
 
     - pwsh: | 
         $SqlConnectionString = "Server=tcp:$(SharedSQLServerName).database.windows.net,1433;Initial Catalog=$(DatabaseName);Persist Security Info=False;User ID=$(SQLServerAdminUsername);Password=$(SQLServerAdminPassword);MultipleActiveResultSets=True;Encrypt=true;TrustServerCertificate=False;Connection Timeout=1200;"
