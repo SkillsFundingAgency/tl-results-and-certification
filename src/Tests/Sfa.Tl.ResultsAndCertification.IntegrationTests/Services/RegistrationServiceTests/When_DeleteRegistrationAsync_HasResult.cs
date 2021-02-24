@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
@@ -16,30 +17,43 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 {
     public class When_DeleteRegistrationAsync_HasResult : RegistrationServiceBaseTest
     {
+        private Dictionary<long, RegistrationPathwayStatus> _ulns;
+        private List<TqRegistrationProfile> _registrations;
+        private List<TqPathwayAssessment> _pathwayAssessments;
+
         public override void Given()
         {
-            // Seed Tlevel data for pearson
+            _ulns = new Dictionary<long, RegistrationPathwayStatus> 
+            { 
+                { 1111111111, RegistrationPathwayStatus.Active }, 
+                { 1111111112, RegistrationPathwayStatus.Withdrawn },
+                { 1111111113, RegistrationPathwayStatus.Active }
+            };
+
+            // Seed data
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
+            _registrations = SeedRegistrationsDataByStatus(_ulns, TqProvider);
 
-            var registration = SeedRegistrationData(1111111111);
-
-            // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
-            var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isBulkUpload: false);
-            tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
-            SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
-
-            // Results seed
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
-            foreach (var assessment in pathwayAssessments)
+            foreach (var registration in _registrations)
             {
-                var isHistoricalResult = assessment.TqRegistrationPathway.TqRegistrationProfileId == 1000;
-                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(new List<TqPathwayAssessment> { assessment }, isHistoricalResult, isBulkUpload: false));
-            }
-            
-            SeedPathwayResultsData(tqPathwayResultsSeedData, false);
-            DbContext.SaveChangesAsync();
+                var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
+                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive);
+                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
 
+                // Seed Pathway results
+                foreach (var assessment in pathwayAssessments)
+                {
+                    var hasHitoricData = new List<long> { 1111111113 };
+                    var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
+                    var isLatestActiveResult = !isHistoricAssessent; 
+
+                    var tqPathwayResultSeedData = GetPathwayResultDataToProcess(assessment, isLatestActiveResult, isHistoricAssessent);
+                    tqPathwayResultsSeedData.AddRange(tqPathwayResultSeedData);
+                }
+            }
+            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
             CreateMapper();
 
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
@@ -73,8 +87,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 return new[]
                 {
                     // params { AoUkprn, profileId, expectedResult }
-                    new object[] { 10011881, 1, true },     // Has Inactive Result
-                    new object[] { 10011881, 1000, false }, // Has Active Result
+                    new object[] { 10011881, 1, false }, // PathwayActive + ResultActive
+                    new object[] { 10011881, 2, false }, // PathwayWidrawn + ResultInactive 
+                    new object[] { 10011881, 3, true },  // PathwayActive + ResultInactive
                 };
             }
         }
