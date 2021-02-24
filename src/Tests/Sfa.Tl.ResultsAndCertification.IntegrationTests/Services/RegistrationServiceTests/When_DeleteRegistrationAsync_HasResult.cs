@@ -5,7 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
@@ -19,7 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
-        private List<TqPathwayAssessment> _pathwayAssessments;
 
         public override void Given()
         {
@@ -53,7 +51,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                     tqPathwayResultsSeedData.AddRange(tqPathwayResultSeedData);
                 }
             }
-            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
+
+            SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
+            
             CreateMapper();
 
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
@@ -74,9 +74,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void Then_Returns_Expected_Results(long aoUkprn, int profileId, bool expectedResponse)
+        public async Task Then_Returns_Expected_Results(long aoUkprn, int profileId, bool expectedResponse)
         {
-            var actualResult = RegistrationService.DeleteRegistrationAsync(aoUkprn, profileId).Result;
+            bool actualResult = await RegistrationService.DeleteRegistrationAsync(aoUkprn, profileId);
             actualResult.Should().Be(expectedResponse);
         }
 
@@ -105,20 +105,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, TlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             DbContext.SaveChangesAsync();
-        }
-
-        private TqRegistrationProfile SeedRegistrationData(long uln)
-        {
-            var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
-            var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
-            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProvider);
-
-            foreach (var specialism in Specialisms)
-            {
-                tqRegistrationPathway.TqRegistrationSpecialisms.Add(RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, specialism));
-            }
-            DbContext.SaveChangesAsync();
-            return profile;
-        }
+        }        
     }
 }
