@@ -54,12 +54,14 @@ stages:
       serviceConnection: ${{ parameters.serviceConnection }}
       sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
       appName: 'uiAppName'
+      name: 'Website'
   
   - template: ../jobs/tlevels-publish-site-job.yml
     parameters:
       serviceConnection: ${{ parameters.serviceConnection }}
       sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
       appName: 'internalApiAppName'
+      name: 'internalAPI'
   
   - template: ../jobs/tlevels-publish-function-job.yml
     parameters:
