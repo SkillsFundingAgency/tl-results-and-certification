@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         public async Task Then_Returns_Expected_Results()
         {
             // when
-            await _bulkRegistrationTestFixture.WhenReJoinAsync();
+            var profileId = _bulkRegistrationTestFixture.DbContext.TqRegistrationProfile.AsNoTracking().FirstOrDefault(x => x.UniqueLearnerNumber == _bulkRegistrationTestFixture.Uln)?.Id;
+            var reJoinRegistrationRequest = new RejoinRegistrationRequest
+            {
+                ProfileId = profileId ?? 0,
+                AoUkprn = _bulkRegistrationTestFixture.TlAwardingOrganisation.UkPrn,
+                PerformedBy = "Test User"
+            };
+            await _bulkRegistrationTestFixture.WhenReJoinAsync(reJoinRegistrationRequest);
 
             // then
             _result = _bulkRegistrationTestFixture.RejoinResult;
