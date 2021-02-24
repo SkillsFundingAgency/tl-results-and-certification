@@ -3,11 +3,13 @@ parameters:
     type: string
   - name: sharedEnvironmentId
     type: string
+  - name: appName
+    type: string
 jobs:
 - job: PublishSite
   variables:
     ConfigStorageAccountName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.ConfigStorageAccountName'] ]
-    uiAppName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.uiAppName'] ]
+    uiAppName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.${{parameters.appName }}'] ]
 
   pool:
     name: 'Azure Pipelines'
