@@ -141,7 +141,7 @@
                             },
                             {
                                 "name": "ServiceName",
-                                "value": "Sfa.Tl.Resac"
+                                "value": "Sfa.Tl.ResultsAndCertification"
                             },
                             {
                                 "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
@@ -197,7 +197,7 @@
                             },
                             {
                                 "name": "ServiceName",
-                                "value": "Sfa.Tl.Resac"
+                                "value": "Sfa.Tl.ResultsAndCertification"
                             },                                                        
                             {
                                 "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
