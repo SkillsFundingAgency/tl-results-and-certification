@@ -40,14 +40,16 @@
             "defaultValue": ""
         },
         "apiCertificateName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": ""
         },
         "internalApiCustomHostname": {
             "type": "string",
             "defaultValue": ""
         },
         "internalApiCertificateName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": ""
         }
     },
     "variables": {
