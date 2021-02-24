@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using Sfa.Tl.ResultsAndCertification.Models.Functions;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.Interfaces
 {
     public interface IPersonalLearningRecordService
     {
-        Task ProcessLearnerVerificationAndLearningEvents();
+        Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerVerificationAndLearningEvents();
     }
 }

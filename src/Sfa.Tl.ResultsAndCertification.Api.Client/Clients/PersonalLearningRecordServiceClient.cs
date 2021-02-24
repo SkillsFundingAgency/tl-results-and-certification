@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _configuration = configuration;
         }
 
-        public async Task<bool> GetLearnerEventsAsync(string uln, string firstName, string lastName, DateTime dateOfBirth)
+        public async Task<GetLearnerLearningEventsResponse> GetLearnerEventsAsync(string uln, string firstName, string lastName, DateTime dateOfBirth)
         {
             try
             {
@@ -32,16 +32,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                     Username = _configuration.LearningRecordServiceSettings.Username,
                     Password = _configuration.LearningRecordServiceSettings.Password
                 };
+
                 var response = await _learnerServiceR9Client.GetLearnerLearningEventsAsync(invokingOrganisation, "ORG", _configuration.LearningRecordServiceSettings.VendorId, "ENG", uln, firstName, lastName, dateOfBirth.ToString("yyyy-MM-dd"), null, "FULL");
-                return true;
+                return response;
             }
             catch (Exception ex)
             {
                 if (_learnerServiceR9Client.State == CommunicationState.Faulted)
                     _learnerServiceR9Client.Abort();
 
-                _logger.LogError($"Error while executing GetLearnerEventsAsync. Exception = {ex}");
-                return false;
+                _logger.LogError($"Error while executing GetLearnerEventsAsync({uln}, {firstName}, {lastName}, {dateOfBirth.ToShortDateString()}). Exception = {ex}");
+                return null;
             }
         }
     }

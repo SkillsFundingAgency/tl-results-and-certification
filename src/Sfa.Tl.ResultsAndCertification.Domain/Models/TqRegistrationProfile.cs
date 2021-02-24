@@ -8,6 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public TqRegistrationProfile()
         {
             TqRegistrationPathways = new HashSet<TqRegistrationPathway>();
+            QualificationAchieved = new HashSet<QualificationAchieved>();
         }
 
         public long UniqueLearnerNumber { get; set; }
@@ -21,5 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public bool? IsRcFeed { get; set; }
 
         public virtual ICollection<TqRegistrationPathway> TqRegistrationPathways { get; set; }
+        public virtual ICollection<QualificationAchieved> QualificationAchieved { get; set; }
     }
 }
