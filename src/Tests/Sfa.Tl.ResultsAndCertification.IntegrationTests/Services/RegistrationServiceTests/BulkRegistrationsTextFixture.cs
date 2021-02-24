@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
     public class BulkRegistrationsTextFixture : IDisposable
     {
         public long Uln;
-        protected TlAwardingOrganisation TlAwardingOrganisation;
+        public TlAwardingOrganisation TlAwardingOrganisation;
         protected IList<TlSpecialism> Specialisms;
         protected IList<TlProvider> TlProviders;
         public IList<TqProvider> TqProviders;
@@ -83,17 +83,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             RegistrationMapper = new Mapper(mapperConfig);
         }
 
-        public async Task WhenReJoinAsync()
-        {
-            var profileId = DbContext.TqRegistrationProfile.AsNoTracking().FirstOrDefault(x => x.UniqueLearnerNumber == Uln)?.Id;
-            var reJoinRegistrationRequest = new RejoinRegistrationRequest
-            {
-                ProfileId = profileId ?? 0,
-                AoUkprn = TlAwardingOrganisation.UkPrn,
-                PerformedBy = "Test User"
-            };
-            
-            RejoinResult = await RegistrationService.RejoinRegistrationAsync(reJoinRegistrationRequest);
+        public async Task WhenReJoinAsync(RejoinRegistrationRequest rejoinRegistrationRequest)
+        {           
+            RejoinResult = await RegistrationService.RejoinRegistrationAsync(rejoinRegistrationRequest);
         }
 
         public async Task WhenAsync()
