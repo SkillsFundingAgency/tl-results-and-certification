@@ -16,10 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 {
     public class When_DeleteRegistrationAsync_HasResult : RegistrationServiceBaseTest
     {
-        private long aoUkprn;
-        private int profileId;
-        private bool actualResult;
-
         public override void Given()
         {
             // Seed Tlevel data for pearson
@@ -36,7 +32,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             // Results seed
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
             foreach (var assessment in pathwayAssessments)
-                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(new List<TqPathwayAssessment> { assessment }, isBulkUpload: false));
+            {
+                var isHistoricalResult = assessment.TqRegistrationPathway.TqRegistrationProfileId == 1000;
+                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(new List<TqPathwayAssessment> { assessment }, isHistoricalResult, isBulkUpload: false));
+            }
             
             SeedPathwayResultsData(tqPathwayResultsSeedData, false);
             DbContext.SaveChangesAsync();
@@ -52,21 +51,32 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
             RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, RegistrationMapper, RegistrationRepositoryLogger);
-
-            // Input params
-            profileId = registration.Id;
-            aoUkprn = 10011881;
         }
 
-        public async override Task When() 
+        public override Task When()
         {
-            actualResult = await RegistrationService.DeleteRegistrationAsync(aoUkprn, profileId);
+            return Task.CompletedTask;
         }
 
-        [Fact]
-        public void Then_Returns_False()
+        [Theory]
+        [MemberData(nameof(Data))]
+        public void Then_Returns_Expected_Results(long aoUkprn, int profileId, bool expectedResponse)
         {
-            actualResult.Should().BeFalse();
+            var actualResult = RegistrationService.DeleteRegistrationAsync(aoUkprn, profileId).Result;
+            actualResult.Should().Be(expectedResponse);
+        }
+
+        public static IEnumerable<object[]> Data
+        {
+            get
+            {
+                return new[]
+                {
+                    // params { AoUkprn, profileId, expectedResult }
+                    new object[] { 10011881, 1, true },     // Has Inactive Result
+                    new object[] { 10011881, 1000, false }, // Has Active Result
+                };
+            }
         }
 
         protected override void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
