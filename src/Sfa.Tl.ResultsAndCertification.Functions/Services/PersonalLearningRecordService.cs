@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
             var learnerRecordDetailsList = new List<LearnerRecordDetails>();
 
-            foreach (var learner in registeredLearners.Skip(3).Take(2))
+            foreach (var learner in registeredLearners)
             {
                 var plrResult = await _personalLearningRecordApiClient.GetLearnerEventsAsync(learner.Uln.ToString(), learner.Firstname, learner.Lastname, learner.DateofBirth);
 
