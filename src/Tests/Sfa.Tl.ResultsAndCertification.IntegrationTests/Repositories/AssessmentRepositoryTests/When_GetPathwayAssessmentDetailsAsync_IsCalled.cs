@@ -44,7 +44,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
                 tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessments, isLatestActive, isHistoricAssessent));
             }
 
-            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
+            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
+            SeedPathwayResultsData(tqPathwayResultsSeedData);
 
             AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
             AssessmentRepository = new AssessmentRepository(AssessmentRepositoryLogger, DbContext);

@@ -70,7 +70,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 }
             }
 
-            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
+            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
+            SeedPathwayResultsData(tqPathwayResultsSeedData);
 
             AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
             AssessmentSeriesRepositoryLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
