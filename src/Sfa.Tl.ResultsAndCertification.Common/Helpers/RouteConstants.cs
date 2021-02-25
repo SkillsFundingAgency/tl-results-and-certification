@@ -130,6 +130,7 @@
         public const string DeleteRegistration = "DeleteRegistration";
         public const string SubmitDeleteRegistration = "SubmitDeleteRegistration";
         public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
+        public const string RegistrationCannotBeDeleted = "RegistrationCannotBeDeleted";
 
         // Assessment Entries
         public const string AssessmentDashboard = "AssessmentDashboard";
@@ -185,6 +186,7 @@
 
         // Help
         public const string Cookies = "Cookies";
+        public const string Contact = "Contact";
         public const string CookieDetails = "CookieDetails";
         public const string PrivacyPolicy = "PrivacyPolicy";
         public const string TermsAndConditions = "TermsAndConditions";
@@ -194,6 +196,7 @@
         public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
         public const string DownloadRegistrationDataFormatAndRulesGuide = "DownloadRegistrationDataFormatAndRulesGuide";
         public const string DownloadAssessmentEntriesDataFormatAndRulesGuide = "DownloadAssessmentEntriesDataFormatAndRulesGuide";
+        public const string DownloadResultsDataFormatAndRulesGuide = "DownloadResultsDataFormatAndRulesGuide";
 
         public const string TlevelDataFormatAndRulesGuide = "TlevelDataFormatAndRulesGuide";
 

@@ -377,6 +377,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
+            var isResultExist = registrationProfile.TqRegistrationPathways.Any(p => p.TqPathwayAssessments
+                                                    .Any(a => a.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null)));
+            if (isResultExist)
+            {
+                _logger.LogWarning(LogEvent.RegistrationNotDeleted, $"Unable to delete registration as registration has results exist for ProfileId = {profileId}. Method: DeleteRegistrationByProfileId({aoUkprn}, {profileId})");
+                return false;
+            }
+
             return await _tqRegistrationRepository.DeleteAsync(registrationProfile) > 0;
         }
 

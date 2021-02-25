@@ -5,6 +5,8 @@ trigger:
     include:
       - master
       - feature/*
+    exclude:
+      - feature/lrs-integration
 
 pr: 
   - master

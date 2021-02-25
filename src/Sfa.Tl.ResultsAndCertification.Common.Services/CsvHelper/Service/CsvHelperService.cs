@@ -153,7 +153,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             return new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 HasHeaderRecord = true,
-                PrepareHeaderForMatch = (string header, int index) => header.Trim().ToLower(),
+                PrepareHeaderForMatch = args => args.Header.Trim().ToLower(),
                 DetectColumnCountChanges = true
             };
         }
@@ -165,7 +165,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 await csv.ReadAsync();
                 csv.ReadHeader();
 
-                var csvFileHeaderColumns = csv.Context.HeaderRecord.Select(x => x.Trim());
+                var csvFileHeaderColumns = csv.HeaderRecord.Select(x => x.Trim());
                 var entityHeaderColumns = properties.Select(x => x.GetCustomAttribute<ColumnAttribute>(false).Name);
 
                 if (entityHeaderColumns.Count() != csvFileHeaderColumns.Count()) return false;

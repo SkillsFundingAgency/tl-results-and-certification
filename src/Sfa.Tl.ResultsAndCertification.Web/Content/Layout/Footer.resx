@@ -120,6 +120,9 @@
   <data name="Accessibilitystatement_Link_Text" xml:space="preserve">
     <value>Accessibility statement</value>
   </data>
+  <data name="Contact_Link_Text" xml:space="preserve">
+    <value>Contact</value>
+  </data>
   <data name="Cookies_Link_Text" xml:space="preserve">
     <value>Cookies</value>
   </data>

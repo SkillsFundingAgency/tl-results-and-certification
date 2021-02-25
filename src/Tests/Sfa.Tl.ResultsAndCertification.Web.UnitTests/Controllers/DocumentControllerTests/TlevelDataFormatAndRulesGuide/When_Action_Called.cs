@@ -16,12 +16,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
             _viewModel = new TlevelDataFormatAndRulesGuideViewModel
             {
                 FileType = FileType.Xlsx.ToString().ToUpperInvariant(),
+                
                 RegistrationsFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.Registrations_FileSize_Text,
                 RegistrationsVersion = DocumentResource.TlevelDataFormatAndRulesGuide.Registrations_Version_Text,
                 RegistrationsPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Registrations_PublishedDate_Text}",
+                
                 AssessmentEntriesFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.Assessment_Entries_FileSize_Text,
                 AssessmentEntriesVersion = DocumentResource.TlevelDataFormatAndRulesGuide.Assessment_Entries_Version_Text,
-                AssessmentEntriesPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Assessment_Entries_PublishedDate_Text}"
+                AssessmentEntriesPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Assessment_Entries_PublishedDate_Text}",
+
+                ResultsFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.Results_FileSize_Text,
+                ResultsVersion = DocumentResource.TlevelDataFormatAndRulesGuide.Results_Version_Text,
+                ResultsPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Results_PublishedDate_Text}",
             };
         }
 
@@ -36,12 +42,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
 
             var viewResultModel = viewResult.Model as TlevelDataFormatAndRulesGuideViewModel;
             viewResultModel.FileType.Should().Be(_viewModel.FileType);
+            
             viewResultModel.RegistrationsFileSize.Should().Be(_viewModel.RegistrationsFileSize);
             viewResultModel.RegistrationsVersion.Should().Be(_viewModel.RegistrationsVersion);
             viewResultModel.RegistrationsPublishedDate.Should().Be(_viewModel.RegistrationsPublishedDate);
+            
             viewResultModel.AssessmentEntriesFileSize.Should().Be(_viewModel.AssessmentEntriesFileSize);
             viewResultModel.AssessmentEntriesVersion.Should().Be(_viewModel.AssessmentEntriesVersion);
             viewResultModel.AssessmentEntriesPublishedDate.Should().Be(_viewModel.AssessmentEntriesPublishedDate);
+
+            viewResultModel.ResultsFileSize.Should().Be(_viewModel.ResultsFileSize);
+            viewResultModel.ResultsVersion.Should().Be(_viewModel.ResultsVersion);
+            viewResultModel.ResultsPublishedDate.Should().Be(_viewModel.ResultsPublishedDate);
         }
     }
 }
