@@ -30,14 +30,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
 
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
 
             foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
             {
                 var hasHitoricData = new List<long> { 1111111112 };
                 var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
                 var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
-
-                tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent));                
+                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent);
+                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);;
+                
+                // Build Pathway results
+                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessments, isLatestActive, isHistoricAssessent));
             }
 
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
@@ -73,12 +77,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
 
             // Expected result
             var expectedAssessment = _pathwayAssessments.FirstOrDefault(x => x.Id == assessmentId);
-
             expectedAssessment.Should().NotBeNull();
 
             var expectedPathway = expectedAssessment.TqRegistrationPathway;            
             expectedPathway.Should().NotBeNull();
-
 
             // Actual result
             var actualAssessment = _result;
@@ -93,8 +95,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             actualPathway.Status.Should().Be(expectedPathway.Status);
             
             AssertPathwayAssessment(actualAssessment, expectedAssessment);
-        }
 
+            foreach (var (actiaResult, index) in actualAssessment.TqPathwayResults.Select((actualResult, i) => (actualResult, i)))
+                AssertPathwayResult(actiaResult, expectedAssessment.TqPathwayResults.ToArray()[index]);
+        }
 
         public static IEnumerable<object[]> Data
         {
