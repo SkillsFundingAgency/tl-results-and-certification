@@ -173,33 +173,43 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             return tqSpecialismAssessments;
         }
 
-        public List<TqPathwayResult> GetPathwayResultsDataToProcess(List<TqPathwayAssessment> pathwayAssessments, bool seedPathwayResultsAsActive = true, bool isHistorical = false)
+        public List<TqPathwayResult> GetPathwayResultsDataToProcess(List<TqPathwayAssessment> pathwayAssessments, bool seedPathwayResultsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
         {
             var tqPathwayResults = new List<TqPathwayResult>();
 
             foreach (var (pathwayAssessment, index) in pathwayAssessments.Select((value, i) => (value, i)))
             {
-                if (isHistorical)
-                {
-                    // Historical record
-                    var pathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, PathwayComponentGrades[index]);
-                    pathwayResult.IsOptedin = false;
-                    pathwayResult.EndDate = DateTime.UtcNow.AddDays(-1);
-
-                    var tqPathwayResultHistorical = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, pathwayResult);
-                    tqPathwayResults.Add(tqPathwayResultHistorical);
-                }
-
-                var activePathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, PathwayComponentGrades[index]);
-                var tqPathwayResult = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, activePathwayResult);
-                if (!seedPathwayResultsAsActive)
-                {
-                    tqPathwayResult.IsOptedin = pathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
-                    tqPathwayResult.EndDate = DateTime.UtcNow;
-                }
-
-                tqPathwayResults.Add(tqPathwayResult);
+                var tqresults = GetPathwayResultDataToProcess(pathwayAssessment, seedPathwayResultsAsActive, isHistorical, isBulkUpload);
+                tqPathwayResults.AddRange(tqresults);
             }
+
+            return tqPathwayResults;
+        }
+
+        public List<TqPathwayResult> GetPathwayResultDataToProcess(TqPathwayAssessment pathwayAssessment, bool seedPathwayResultsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
+        {
+            var tqPathwayResults = new List<TqPathwayResult>();
+
+            if (isHistorical)
+            {
+                // Historical record
+                var pathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, isBulkUpload: isBulkUpload);
+                pathwayResult.IsOptedin = false;
+                pathwayResult.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                var tqPathwayResultHistorical = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, pathwayResult);
+                tqPathwayResults.Add(tqPathwayResultHistorical);
+            }
+
+            var activePathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, isBulkUpload: isBulkUpload);
+            var tqPathwayResult = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, activePathwayResult);
+            if (!seedPathwayResultsAsActive)
+            {
+                tqPathwayResult.IsOptedin = pathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
+                tqPathwayResult.EndDate = DateTime.UtcNow;
+            }
+
+            tqPathwayResults.Add(tqPathwayResult);
             return tqPathwayResults;
         }
     }
