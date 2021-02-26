@@ -36,7 +36,7 @@
         public const string WithdrawRegistrationConfirmationViewModel = "WithdrawRegistrationConfirmationViewModel";
         public const string RejoinRegistrationConfirmationViewModel = "RejoinRegistrationConfirmationViewModel";
         public const string ReregistrationConfirmationViewModel = "ReregistrationConfirmationViewModel";
-
+        public const string RegistrationCannotBeDeletedViewModel = "RegistrationCannotBeDeletedViewModel";
         public const string AssessmentsUploadSuccessfulViewModel = "AssessmentsUploadSuccessfulViewModel";
         public const string AssessmentsSearchCriteria = "AssessmentsSearchCriteria";
         public const string SearchAssessmentsUlnNotFound = "SearchAssessmentsUlnNotFound";

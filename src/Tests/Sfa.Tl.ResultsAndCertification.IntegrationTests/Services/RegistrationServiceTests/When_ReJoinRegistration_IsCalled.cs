@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -20,18 +22,29 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         private bool _result;
         private RejoinRegistrationRequest _reJoinRegistrationRequest;
         private long _uln;
+        private TqRegistrationProfile _tqRegistrationProfile;
 
         public override void Given()
         {
             // Seed Tlevel data for pearson
             _uln = 1111111111;
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
-            var registration = SeedRegistrationData(_uln);
+            _tqRegistrationProfile = SeedRegistrationData(_uln);
 
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
-            tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList()));
-            SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
+            var pathwayAssessments = GetPathwayAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.ToList(), isBulkUpload: false);
+            tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
+            SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
+
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+            foreach (var assessment in pathwayAssessments)
+            {
+                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(new List<TqPathwayAssessment> { assessment }, isBulkUpload: false));
+            }
+
+            SeedPathwayResultsData(tqPathwayResultsSeedData, false);
+            DbContext.SaveChangesAsync();
 
             CreateMapper();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
@@ -69,6 +82,48 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             _reJoinRegistrationRequest.ProfileId = profileId;
             await WhenAsync();
             _result.Should().Be(expectedResult);
+
+            if (expectedResult == false) 
+                return;
+
+            var expectedRegistrationProfile = _tqRegistrationProfile;
+            var actualRegistrationProfile = DbContext.TqRegistrationProfile.AsNoTracking().Where(x => x.UniqueLearnerNumber == _tqRegistrationProfile.UniqueLearnerNumber)
+                                                                                                                       .Include(x => x.TqRegistrationPathways)
+                                                                                                                           .ThenInclude(x => x.TqRegistrationSpecialisms)
+                                                                                                                       .Include(x => x.TqRegistrationPathways)
+                                                                                                                            .ThenInclude(x => x.TqPathwayAssessments)
+                                                                                                                                .ThenInclude(x => x.TqPathwayResults)
+                                                                                                                       .FirstOrDefault();
+
+            // assert registration profile data
+            actualRegistrationProfile.Should().NotBeNull();
+            actualRegistrationProfile.UniqueLearnerNumber.Should().Be(expectedRegistrationProfile.UniqueLearnerNumber);
+            actualRegistrationProfile.Firstname.Should().Be(expectedRegistrationProfile.Firstname);
+            actualRegistrationProfile.Lastname.Should().Be(expectedRegistrationProfile.Lastname);
+            actualRegistrationProfile.DateofBirth.Should().Be(expectedRegistrationProfile.DateofBirth);
+            actualRegistrationProfile.UniqueLearnerNumber.Should().Be(expectedRegistrationProfile.UniqueLearnerNumber);
+
+            // Assert registration pathway data
+            actualRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == RegistrationPathwayStatus.Active).ToList().Count.Should().Be(1);
+            actualRegistrationProfile.TqRegistrationPathways.Where(x => x.Status == RegistrationPathwayStatus.Withdrawn).ToList().Count.Should().Be(1);
+
+            // Assert Any Active Pathway
+            actualRegistrationProfile.TqRegistrationPathways.Any(x => x.Status == RegistrationPathwayStatus.Active).Should().BeTrue();
+
+            // Assert Active Pathway
+            var actualActivePathway = actualRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => x.EndDate == null && x.Status == RegistrationPathwayStatus.Active);
+            var expectedActivePathway = expectedRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => actualRegistrationProfile.TqRegistrationPathways.Any(y => y.TqProviderId == x.TqProviderId && x.Status == RegistrationPathwayStatus.Withdrawn));
+            AssertRegistrationPathway(actualActivePathway, expectedActivePathway, false);
+
+            // Assert Withdrawn PathwayAssessment
+            var actualActiveAssessment = actualActivePathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate == null);
+            var expectedPreviousAssessment = expectedActivePathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate != null);
+            AssertPathwayAssessment(actualActiveAssessment, expectedPreviousAssessment, isRejoin: true);
+
+            // Assert Active PathwayResult
+            var actualActiveResult = actualActiveAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate == null);
+            var expectedPreviousResult = expectedPreviousAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
+            AssertPathwayResults(actualActiveResult, expectedPreviousResult, isRejoin: true);
         }
 
         public static IEnumerable<object[]> Data
@@ -108,10 +163,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProviders.First());
+            tqRegistrationPathway.IsBulkUpload = false;
 
             foreach (var specialism in Specialisms)
             {
-                tqRegistrationPathway.TqRegistrationSpecialisms.Add(RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, specialism));
+                var specialismToAdd = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, specialism);
+                specialismToAdd.IsBulkUpload = false;
+                tqRegistrationPathway.TqRegistrationSpecialisms.Add(specialismToAdd);
             }
 
             DbContext.SaveChangesAsync();
