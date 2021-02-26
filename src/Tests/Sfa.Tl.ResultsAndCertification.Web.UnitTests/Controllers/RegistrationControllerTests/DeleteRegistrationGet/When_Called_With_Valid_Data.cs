@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
@@ -10,19 +11,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        private RegistrationDetailsViewModel mockresult;
+        private AssessmentDetailsViewModel mockresult;
 
         public override void Given()
         {
-            mockresult = new RegistrationDetailsViewModel { Uln = 1234567890, ProfileId = 99 };
-            RegistrationLoader.GetRegistrationDetailsAsync(Ukprn, ProfileId)
+            mockresult = new AssessmentDetailsViewModel { Uln = 1234567890, ProfileId = 99, IsResultExist = false };
+            RegistrationLoader.GetRegistrationAssessmentAsync(Ukprn, ProfileId, RegistrationPathwayStatus.Active)
                 .Returns(mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            RegistrationLoader.Received(1).GetRegistrationDetailsAsync(Ukprn, ProfileId);
+            RegistrationLoader.Received(1).GetRegistrationAssessmentAsync(Ukprn, ProfileId, RegistrationPathwayStatus.Active);
         }
 
         [Fact]

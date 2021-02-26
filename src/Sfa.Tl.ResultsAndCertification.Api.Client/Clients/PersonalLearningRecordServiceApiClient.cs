@@ -2,19 +2,20 @@
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 {
-    public class PersonalLearningRecordServiceClient : IPersonalLearningRecordApiClient
+    public class PersonalLearningRecordServiceApiClient : IPersonalLearningRecordApiClient
     {
-        private readonly ILogger<LearnerServiceR9Client> _logger;
+        private readonly ILogger<ILearnerServiceR9Client> _logger;
         private readonly ILearnerServiceR9Client _learnerServiceR9Client;
-        private readonly ResultsAndCertificationConfiguration _configuration;
+        private readonly ResultsAndCertificationConfiguration _configuration;        
 
-        public PersonalLearningRecordServiceClient(ILogger<LearnerServiceR9Client> logger, ILearnerServiceR9Client learnerServiceR9Client, ResultsAndCertificationConfiguration configuration)
+        public PersonalLearningRecordServiceApiClient(ILogger<ILearnerServiceR9Client> logger, ILearnerServiceR9Client learnerServiceR9Client, ResultsAndCertificationConfiguration configuration)
         {
             _logger = logger;
             _learnerServiceR9Client = learnerServiceR9Client;

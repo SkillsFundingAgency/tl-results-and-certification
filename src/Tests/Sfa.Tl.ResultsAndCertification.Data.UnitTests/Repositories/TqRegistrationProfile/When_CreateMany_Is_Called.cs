@@ -23,6 +23,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
 
         [Fact]
         public void Then_Two_Records_Should_Have_Been_Created() =>
-            _result.Should().Be(4);
+            _result.Should().Be(5);
     }
 }

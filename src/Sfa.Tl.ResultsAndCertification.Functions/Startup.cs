@@ -81,7 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
                 return client;
             });
-            services.AddTransient<IPersonalLearningRecordApiClient, PersonalLearningRecordServiceClient>();
+            services.AddTransient<IPersonalLearningRecordApiClient, PersonalLearningRecordServiceApiClient>();
         }
     }
 }

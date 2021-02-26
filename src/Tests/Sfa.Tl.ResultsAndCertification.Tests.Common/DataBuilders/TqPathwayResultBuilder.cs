@@ -16,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 TqPathwayAssessmentId = tqPathwayAssessment.Id,
                 TqPathwayAssessment = tqPathwayAssessment,
                 TlLookupId = tlLookupPathwayComponentGrade.Id,
+                TlLookup = tlLookupPathwayComponentGrade,
                 StartDate = DateTime.UtcNow,
                 IsOptedin = true,
                 IsBulkUpload = isBulkUpload,

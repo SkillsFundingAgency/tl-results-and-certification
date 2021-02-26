@@ -134,6 +134,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download results data format and rules guide.
+        /// </summary>
+        public static string Download_Result_DataFormat_And_Rules_Guide_Text {
+            get {
+                return ResourceManager.GetString("Download_Result_DataFormat_And_Rules_Guide_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KB.
         /// </summary>
         public static string File_Size_Kb_Text {
@@ -220,6 +229,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         public static string Registrations_Version_Text {
             get {
                 return ResourceManager.GetString("Registrations_Version_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TLevels_results_data_format_and_rules_guide.xlsx.
+        /// </summary>
+        public static string Results_Data_Format_And_Rules_Guide_File_Name_Text {
+            get {
+                return ResourceManager.GetString("Results_Data_Format_And_Rules_Guide_File_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 152.
+        /// </summary>
+        public static string Results_FileSize_Text {
+            get {
+                return ResourceManager.GetString("Results_FileSize_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results.
+        /// </summary>
+        public static string Results_Heading_Text {
+            get {
+                return ResourceManager.GetString("Results_Heading_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 28 January 2021.
+        /// </summary>
+        public static string Results_PublishedDate_Text {
+            get {
+                return ResourceManager.GetString("Results_PublishedDate_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to version 1.0.
+        /// </summary>
+        public static string Results_Version_Text {
+            get {
+                return ResourceManager.GetString("Results_Version_Text", resourceCulture);
             }
         }
         
