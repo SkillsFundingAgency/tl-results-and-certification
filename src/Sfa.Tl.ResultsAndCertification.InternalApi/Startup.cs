@@ -35,6 +35,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.Result.BulkProcess;
 using System.Linq;
 using System.Reflection;
 
@@ -131,6 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IProviderRepository, ProviderRepository>();
             services.AddTransient<IRegistrationRepository, RegistrationRepository>();
             services.AddTransient<IAssessmentRepository, AssessmentRepository>();
+            services.AddTransient<IResultRepository, ResultRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
@@ -140,6 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(ResultsAndCertificationConfiguration.GovUkNotifyApiKey));
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IDocumentUploadHistoryService, DocumentUploadHistoryService>();
+            services.AddTransient<ICommonService, CommonService>();
 
             // Bulk Registrations
             services.AddTransient<IDataParser<RegistrationCsvRecordResponse>, RegistrationParser>();
@@ -155,6 +158,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<ICsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>, CsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse>>();
             services.AddTransient<IBulkAssessmentLoader, BulkAssessmentLoader>();
             services.AddTransient<IAssessmentService, AssessmentService>();
+
+            // Bulk Results
+            services.AddTransient<IDataParser<ResultCsvRecordResponse>, ResultParser>();
+            services.AddTransient<IValidator<ResultCsvRecordRequest>, ResultValidator>();
+            services.AddTransient<ICsvHelperService<ResultCsvRecordRequest, CsvResponseModel<ResultCsvRecordResponse>, ResultCsvRecordResponse>, CsvHelperService<ResultCsvRecordRequest, CsvResponseModel<ResultCsvRecordResponse>, ResultCsvRecordResponse>>();
+            services.AddTransient<IBulkResultLoader, BulkResultLoader>();
+            services.AddTransient<IResultService, ResultService>();
         }
     }
 }

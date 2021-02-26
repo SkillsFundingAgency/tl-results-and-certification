@@ -27,6 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 PathwayDisplayName = "Pathway (7654321)",
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayAssessmentId = 5,
+                IsResultExist = false,
                 SpecialismDisplayName = "Specialism1 (2345678)",
                 SpecialismAssessmentSeries = AssessmentDetailsContent.Available_After_Autumn2021,
                 PathwayStatus = RegistrationPathwayStatus.Active
@@ -56,6 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             model.SpecialismDisplayName.Should().Be(mockresult.SpecialismDisplayName);
             model.SpecialismAssessmentSeries.Should().Be(mockresult.SpecialismAssessmentSeries);
             model.PathwayStatus.Should().Be(mockresult.PathwayStatus);
+            model.IsResultExist.Should().BeFalse();
 
             // Summary CoreAssessment Entry            
             model.SummaryCoreAssessmentEntry.Should().NotBeNull();

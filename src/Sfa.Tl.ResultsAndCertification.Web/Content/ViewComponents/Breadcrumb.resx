@@ -120,11 +120,17 @@
   <data name="Assessment_Dashboard" xml:space="preserve">
     <value>Assessment entries</value>
   </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact us</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
   <data name="Learners_Assessment_entries" xml:space="preserve">
     <value>Learner's assessment entries</value>
+  </data>
+  <data name="Learners_Results" xml:space="preserve">
+    <value>Learner's results</value>
   </data>
   <data name="Provider_Find_Provider" xml:space="preserve">
     <value>Find a provider</value>
@@ -141,11 +147,17 @@
   <data name="Registration_Details" xml:space="preserve">
     <value>Registration details</value>
   </data>
+  <data name="Result_Dashboard" xml:space="preserve">
+    <value>Results</value>
+  </data>
   <data name="Search_For_Assessments" xml:space="preserve">
     <value>Search for a learner</value>
   </data>
   <data name="Search_For_Registration" xml:space="preserve">
     <value>Search for a registration</value>
+  </data>
+  <data name="Search_For_Results" xml:space="preserve">
+    <value>Search for a learner</value>
   </data>
   <data name="Tlevel_Details" xml:space="preserve">
     <value>T Level details</value>
@@ -161,5 +173,8 @@
   </data>
   <data name="Upload_Registrations_File" xml:space="preserve">
     <value>Upload registrations file</value>
+  </data>
+  <data name="Upload_Results_File" xml:space="preserve">
+    <value>Upload results file</value>
   </data>
 </root>

@@ -64,6 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.BulkAssess
             BlobService.Received(1).DownloadFileAsync(Arg.Any<BlobStorageData>());
             CsvService.Received(1).ReadAndParseFileAsync(Arg.Any<AssessmentCsvRecordRequest>());
             AssessmentService.Received(1).ValidateAssessmentsAsync(AoUkprn, Arg.Is<IEnumerable<AssessmentCsvRecordResponse>>(x => x.All(r => r.IsValid)));
+            AssessmentService.DidNotReceive().TransformAssessmentsModel(Arg.Any<IList<AssessmentRecordResponse>>(), Arg.Any<string>());
             CsvService.Received(1).WriteFileAsync(Arg.Any<List<BulkProcessValidationError>>());
             BlobService.Received(1).UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());
             BlobService.Received(1).MoveFileAsync(Arg.Any<BlobStorageData>());

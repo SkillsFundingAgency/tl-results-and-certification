@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTests.FindUlnAssessments
 {
-    public abstract class TestSetup : BaseTest<RegistrationLoader>
+    public abstract class TestSetup : BaseTest<AssessmentLoader>
     {
         protected readonly long Ukprn = 34567891;
         protected readonly long Uln = 7890123456;

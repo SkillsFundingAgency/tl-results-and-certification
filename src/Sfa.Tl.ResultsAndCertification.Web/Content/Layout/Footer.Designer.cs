@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contact.
+        /// </summary>
+        public static string Contact_Link_Text {
+            get {
+                return ResourceManager.GetString("Contact_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cookies.
         /// </summary>
         public static string Cookies_Link_Text {

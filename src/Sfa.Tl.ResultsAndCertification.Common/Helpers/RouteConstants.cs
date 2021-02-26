@@ -130,6 +130,7 @@
         public const string DeleteRegistration = "DeleteRegistration";
         public const string SubmitDeleteRegistration = "SubmitDeleteRegistration";
         public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
+        public const string RegistrationCannotBeDeleted = "RegistrationCannotBeDeleted";
 
         // Assessment Entries
         public const string AssessmentDashboard = "AssessmentDashboard";
@@ -151,7 +152,29 @@
         public const string SubmitSearchAssessments = "SubmitSearchAssessments";
         public const string SearchAssessmentsNotFound = "SearchAssessmentsNotFound";
         public const string AssessmentDetails = "AssessmentDetails";
-        public const string AssessmentWithdrawnDetails = "AssessmentWithdrawnDetails";        
+        public const string AssessmentWithdrawnDetails = "AssessmentWithdrawnDetails";
+
+        // Results
+        public const string ResultsDashboard = "ResultsDashboard";
+        public const string UploadResultsFile = "UploadResultsFile";
+        public const string SubmitUploadResultsFile = "SubmitUploadResultsFile";
+        public const string ProblemWithResultsUpload = "ProblemWithResultsUpload";
+        public const string ResultsUploadSuccessful = "ResultsUploadSuccessful";
+        public const string ResultsUploadUnsuccessful = "ResultsUploadUnsuccessful";
+        public const string DownloadResultErrors = "DownloadResultErrors";
+        public const string ChangeCoreResult = "ChangeCoreResult";
+        public const string SubmitChangeCoreResult = "SubmitChangeCoreResult";
+        public const string AddCoreResult = "AddCoreResult";
+        public const string SubmitAddCoreResult = "SubmitAddCoreResult";
+        public const string AddResultConfirmation = "AddResultConfirmation";
+        public const string ChangeResultConfirmation = "ChangeResultConfirmation";
+
+        // Search Results
+        public const string SearchResults = "SearchResults";
+        public const string SubmitSearchResults = "SubmitSearchResults";
+        public const string SearchResultsNotFound = "SearchResultsNotFound";
+        public const string ResultWithdrawnDetails = "ResultWithdrawnDetails";
+        public const string ResultDetails = "ResultDetails";
 
         // Error
         public const string PageNotFound = "PageNotFound";
@@ -163,6 +186,7 @@
 
         // Help
         public const string Cookies = "Cookies";
+        public const string Contact = "Contact";
         public const string CookieDetails = "CookieDetails";
         public const string PrivacyPolicy = "PrivacyPolicy";
         public const string TermsAndConditions = "TermsAndConditions";
@@ -172,6 +196,7 @@
         public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
         public const string DownloadRegistrationDataFormatAndRulesGuide = "DownloadRegistrationDataFormatAndRulesGuide";
         public const string DownloadAssessmentEntriesDataFormatAndRulesGuide = "DownloadAssessmentEntriesDataFormatAndRulesGuide";
+        public const string DownloadResultsDataFormatAndRulesGuide = "DownloadResultsDataFormatAndRulesGuide";
 
         public const string TlevelDataFormatAndRulesGuide = "TlevelDataFormatAndRulesGuide";
 

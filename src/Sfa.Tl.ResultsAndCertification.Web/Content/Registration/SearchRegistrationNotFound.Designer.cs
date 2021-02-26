@@ -71,20 +71,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to has never been registered with us.
-        /// </summary>
-        public static string Has_Never_Been_Registered_With_Us_Text {
-            get {
-                return ResourceManager.GetString("Has_Never_Been_Registered_With_Us_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to If you think that the ULN should exist it may be that it:.
         /// </summary>
         public static string If_you_Think_That_The_Uln_Should_Exists_Text {
             get {
                 return ResourceManager.GetString("If_you_Think_That_The_Uln_Should_Exists_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is not registered with us.
+        /// </summary>
+        public static string Is_Not_Registered_With_Us_Text {
+            get {
+                return ResourceManager.GetString("Is_Not_Registered_With_Us_Text", resourceCulture);
             }
         }
         

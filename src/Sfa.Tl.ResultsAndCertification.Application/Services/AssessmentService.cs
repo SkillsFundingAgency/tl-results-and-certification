@@ -316,14 +316,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<AssessmentDetails>(tqRegistration);
         }
 
-        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, AssessmentEntryType assessmentEntryType)
+        public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
         {
             // Validate
             var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
-            var isValid = IsValidAddAssessmentRequestAsync(tqRegistration, assessmentEntryType);
+            var isValid = IsValidAddAssessmentRequestAsync(tqRegistration, componentType);
             if (!isValid) return null;
 
-            var startInYear = assessmentEntryType == AssessmentEntryType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
+            var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
             var series = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, startInYear);
             if (series == null)
                 return null;
@@ -335,12 +335,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             // Validate
             var tqRegistrationPathway = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
-            var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, request.AssessmentEntryType);
+            var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, request.ComponentType);
             if (!isValid)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
 
             int status = 0;
-            if (request.AssessmentEntryType == AssessmentEntryType.Core)
+            if (request.ComponentType == ComponentType.Core)
                 status = await _pathwayAssessmentRepository.CreateAsync(new TqPathwayAssessment
                 {
                     TqRegistrationPathwayId = tqRegistrationPathway.Id,
@@ -367,10 +367,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> RemovePathwayAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
         {
-            var pathwayAssessment = await _pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin 
-                                                                                              && pa.EndDate == null && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active 
-                                                                                              && pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn);
-
+            var pathwayAssessment = await _pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin
+                                                                                              && pa.EndDate == null && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                                                                                              && pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn
+                                                                                              && !pa.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null));
             if (pathwayAssessment == null) return false;
 
             pathwayAssessment.IsOptedin = false;
@@ -388,17 +388,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
 
             // 2. Must have an active assessment.
-            return pathwayAssessment.IsOptedin && pathwayAssessment.EndDate == null;
+            var isActiveAssessment = pathwayAssessment.IsOptedin && pathwayAssessment.EndDate == null;
+            if (!isActiveAssessment)
+                return false;
+
+            // 3. Must not have results
+            var hasActiveResult = pathwayAssessment.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null);
+            return !hasActiveResult;
         }
 
-        private bool IsValidAddAssessmentRequestAsync(TqRegistrationPathway registrationPathway, AssessmentEntryType assessmentEntryType)
+        private bool IsValidAddAssessmentRequestAsync(TqRegistrationPathway registrationPathway, ComponentType componentType)
         {
             // 1. Must be an active registration.
             if (registrationPathway == null || registrationPathway.Status != RegistrationPathwayStatus.Active)
                 return false;
 
             // 2. Must not have an active assessment.
-            var anyActiveAssessment = assessmentEntryType == AssessmentEntryType.Core ?
+            var anyActiveAssessment = componentType == ComponentType.Core ?
                         registrationPathway.TqPathwayAssessments.Any(x => x.IsOptedin && x.EndDate == null) :
                         registrationPathway.TqRegistrationSpecialisms.Any(x => x.TqSpecialismAssessments.Any(x => x.IsOptedin && x.EndDate == null));
 

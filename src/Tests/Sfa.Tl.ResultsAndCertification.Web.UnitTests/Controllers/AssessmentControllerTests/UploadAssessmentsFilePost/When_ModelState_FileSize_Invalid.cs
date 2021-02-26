@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment;
 using Xunit;
-using UploadContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration.Upload;
+using UploadContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.Upload;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.UploadAssessmentsFilePost
 {

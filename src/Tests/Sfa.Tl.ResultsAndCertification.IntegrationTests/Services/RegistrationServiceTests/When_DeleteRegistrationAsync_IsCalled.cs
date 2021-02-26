@@ -49,9 +49,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void Then_Returns_Expected_Results(long aoUkprn, int profileId, bool expectedResponse)
+        public async Task Then_Returns_Expected_Results(long aoUkprn, int profileId, bool expectedResponse)
         {
-            var actualResult = RegistrationService.DeleteRegistrationAsync(aoUkprn, profileId).Result;
+            var actualResult = await RegistrationService.DeleteRegistrationAsync(aoUkprn, profileId);
             actualResult.Should().Be(expectedResponse);
         }
 

@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         [RequiredWithMessage(Property = nameof(AssessmentSeriesName), ErrorResourceType = typeof(ErrorResource.AddCoreAssessmentEntry), ErrorResourceName = "Select_Option_To_Add_Validation_Text")]
         public bool? IsOpted { get; set; }
 
-        public AssessmentEntryType AssessmentEntryType { get; set; }
+        public ComponentType ComponentType { get; set; }
         public BackLinkModel BackLink {
             get
             {

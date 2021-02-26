@@ -26,7 +26,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         {
             // Parameters
             AoUkprn = 10011881;
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Active }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Withdrawn } };
+            _ulns = new Dictionary<long, RegistrationPathwayStatus>
+            {
+                { 1111111111, RegistrationPathwayStatus.Active },
+                { 1111111112, RegistrationPathwayStatus.Active },
+                { 1111111113, RegistrationPathwayStatus.Withdrawn },
+                { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active },
+            };
 
             // Create mapper
             CreateMapper();
@@ -37,16 +44,33 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
             foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
             {
                 var hasHitoricData = new List<long> { 1111111112 };
                 var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
                 var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
 
-                tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent));
-            }
+                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent);
+                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
 
-            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
+                //Build Pathway results
+                var ulnWithResult = new List<long> { 1111111114, 1111111115 };
+                if (ulnWithResult.Any(x => x == registration.UniqueLearnerNumber))
+                {
+                    foreach (var assessment in pathwayAssessments)
+                    {
+                        var hasHitoricResult = new List<long> { 1111111115 };
+                        var isHistoricResult = hasHitoricResult.Any(x => x == registration.UniqueLearnerNumber);
+                        var isLatestActiveResult = !isHistoricResult;
+
+                        var tqPathwayResultSeedData = GetPathwayResultDataToProcess(assessment, isLatestActiveResult, isHistoricResult);
+                        tqPathwayResultsSeedData.AddRange(tqPathwayResultSeedData);
+                    }
+                }
+            }
+            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
+            SeedPathwayResultsData(tqPathwayResultsSeedData);
 
             AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
             AssessmentSeriesRepositoryLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
@@ -113,6 +137,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                     // Uln: 1111111113 - Registration(Withdrawn), TqPathwayAssessments(Withdrawn)
                     new object[] { 10011881, 1111111113, false, false },
                     new object[] { 10011881, 1111111113, true, false },
+
+                    // Uln: 1111111114 - Registration(Active), TqPathwayAssessments(Active), Results(Active)
+                    new object[] { 10011881, 1111111114, true, false },
+
+                    // Uln: 1111111115 - Registration(Active), TqPathwayAssessments(Active), Results(Inactive)
+                    new object[] { 10011881, 1111111115, true, true },
                 };
             }
         }

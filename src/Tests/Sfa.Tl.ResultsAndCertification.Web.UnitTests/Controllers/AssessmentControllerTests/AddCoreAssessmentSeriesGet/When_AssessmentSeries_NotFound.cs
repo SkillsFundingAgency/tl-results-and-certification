@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         private AddAssessmentEntryViewModel mockresult = null;
         public override void Given()
         {
-            AssessmentLoader.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, Arg.Any<AssessmentEntryType>()).Returns(mockresult);
+            AssessmentLoader.GetAvailableAssessmentSeriesAsync(AoUkprn, ProfileId, Arg.Any<ComponentType>()).Returns(mockresult);
         }
 
         [Fact]

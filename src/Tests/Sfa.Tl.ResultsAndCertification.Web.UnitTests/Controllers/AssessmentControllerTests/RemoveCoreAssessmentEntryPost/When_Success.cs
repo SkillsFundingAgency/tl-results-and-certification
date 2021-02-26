@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 ProfileId = 1,
                 Uln = 12345678,
                 AssessmentId = 5,
-                AssessmentEntryType = AssessmentEntryType.Core,
+                ComponentType = ComponentType.Core,
                 CanRemoveAssessmentEntry = true
             };
 

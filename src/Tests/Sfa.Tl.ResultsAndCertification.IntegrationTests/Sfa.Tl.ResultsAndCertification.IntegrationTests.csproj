@@ -13,7 +13,7 @@
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.8" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
     <PackageReference Include="NSubstitute" Version="4.2.2" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -66,6 +66,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Valid_File.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Results\TestData\Results_Stage2_Valid_File.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Results\TestData\Results_Stage2_Header_Validation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Results\TestData\Results_Stage_2_Validation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Results\TestData\Results_Stage2_Has_No_records.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

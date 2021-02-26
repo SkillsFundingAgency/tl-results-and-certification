@@ -36,13 +36,17 @@
         public const string WithdrawRegistrationConfirmationViewModel = "WithdrawRegistrationConfirmationViewModel";
         public const string RejoinRegistrationConfirmationViewModel = "RejoinRegistrationConfirmationViewModel";
         public const string ReregistrationConfirmationViewModel = "ReregistrationConfirmationViewModel";
-
+        public const string RegistrationCannotBeDeletedViewModel = "RegistrationCannotBeDeletedViewModel";
         public const string AssessmentsUploadSuccessfulViewModel = "AssessmentsUploadSuccessfulViewModel";
         public const string AssessmentsSearchCriteria = "AssessmentsSearchCriteria";
         public const string SearchAssessmentsUlnNotFound = "SearchAssessmentsUlnNotFound";
         public const string AddAssessmentEntryConfirmationViewModel = "AddAssessmentEntryConfirmationViewModel";
         public const string RemoveAssessmentEntryConfirmationViewModel = "RemoveAssessmentEntryConfirmationViewModel";
-
+        public const string SearchResultsUlnNotFound = "SearchResultsUlnNotFound";
+        public const string ResultsSearchCriteria = "ResultsSearchCriteria";
+        public const string ResultsUploadSuccessfulViewModel = "ResultsUploadSuccessfulViewModel";
+        public const string ResultConfirmationViewModel = "ResultConfirmationViewModel";
+        public const string ChangeResultConfirmationViewModel = "ChangeResultConfirmationViewModel";
 
         public const string UserSessionActivityId = "UserSessionActivityId";
 
@@ -55,6 +59,9 @@
         public const int PathwayAssessmentsStartIndex = 100000;
         public const int SpecialismAssessmentsStartIndex = 100000;
 
+        // Results Data Index Constants
+        public const int PathwayResultsStartIndex = 100000;
+
         // Route Attributes
         public const string IsChangeMode = "isChangeMode";
         public const string ProfileId = "profileId";
@@ -62,6 +69,7 @@
         public const string ChangeStatusId = "changeStatusId";
         public const string WithdrawBackLinkOptionId = "withdrawBackLinkOptionId";
         public const string AssessmentId = "assessmentId";
+        public const string ResultId = "resultId";
 
         // Assessments
         public const int AssessmentEndInYears = 4;

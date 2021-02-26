@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
@@ -9,7 +8,6 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.Threading.Tasks;
 
@@ -25,7 +23,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         protected ICacheService CacheService;
         protected ILogger<AssessmentController> Logger;
         protected AssessmentController Controller;
-        //protected RegistrationViewModel ViewModel;
         protected IHttpContextAccessor HttpContextAccessor;
         
         public IActionResult Result { get; private set; }

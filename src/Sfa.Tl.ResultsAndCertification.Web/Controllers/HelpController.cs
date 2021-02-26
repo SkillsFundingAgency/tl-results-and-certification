@@ -31,6 +31,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("contact-us", Name = RouteConstants.Contact)]
+        public IActionResult Contact()
+        {
+            var viewmodel = new ContactViewModel();
+            return View(viewmodel);
+        }
+
+        [HttpGet]
         [Route("privacy-policy", Name = RouteConstants.PrivacyPolicy)]
         public IActionResult Privacy()
         {

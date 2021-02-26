@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.UploadAssessmentsFileGet
 {
-    public abstract class TestSetup : BaseTest<RegistrationController>
+    public abstract class TestSetup : BaseTest<AssessmentController>
     {
         protected int? RequestErrorTypeId;
         protected IAssessmentLoader AssessmentLoader;

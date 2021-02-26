@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public long AoUkprn { get; set; }
         public int ProfileId { get; set; }
         public int AssessmentSeriesId { get; set; }
-        public AssessmentEntryType AssessmentEntryType { get; set; }
+        public ComponentType ComponentType { get; set; }
         public string PerformedBy { get; set; }
     }
 }

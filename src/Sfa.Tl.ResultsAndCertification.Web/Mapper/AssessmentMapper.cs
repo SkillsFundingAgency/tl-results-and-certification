@@ -46,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
                 .ForMember(d => d.SpecialismDisplayName, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.SpecialismLarId) ? $"{s.SpecialismName} ({s.SpecialismLarId})" : null))
                 .ForMember(d => d.SpecialismAssessmentSeries, opts => opts.MapFrom(s => s.SpecialismAssessmentSeries))
+                .ForMember(d => d.IsResultExist, opts => opts.MapFrom(s => s.PathwayResultId > 0))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Status));
 
             CreateMap<AvailableAssessmentSeries, AddAssessmentEntryViewModel>();
@@ -53,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                 .ForMember(d => d.AssessmentSeriesId, opts => opts.MapFrom(s => s.AssessmentSeriesId))
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-                .ForMember(d => d.AssessmentEntryType, opts => opts.MapFrom(s => s.AssessmentEntryType))
+                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComponentType))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddAssessmentEntryViewModel, AddAssessmentEntryRequest>>());
             
             CreateMap<AssessmentEntryDetails, AssessmentEntryDetailsViewModel>();
@@ -61,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<AssessmentEntryDetailsViewModel, RemoveAssessmentEntryRequest>()
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.AssessmentId))
-                .ForMember(d => d.AssessmentEntryType, opts => opts.MapFrom(s => s.AssessmentEntryType))
+                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComponentType))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AssessmentEntryDetailsViewModel, RemoveAssessmentEntryRequest>>());            
         }
     }

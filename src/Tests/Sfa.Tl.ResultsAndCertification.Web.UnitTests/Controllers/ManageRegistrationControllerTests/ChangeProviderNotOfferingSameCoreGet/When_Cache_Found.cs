@@ -9,7 +9,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
     public class When_Cache_Found : TestSetup
     {
         private ChangeProviderCoreNotSupportedViewModel cacheResult;
-        private ChangeCoreQuestionViewModel mockresult = null;
 
         public override void Given()
         {
