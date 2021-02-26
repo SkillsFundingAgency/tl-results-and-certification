@@ -9,6 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         public QualificationType Build() => new QualificationType
         {
             Name = "GCSE",
+            SubTitle = "GCSE",
             IsActive = true,
             CreatedBy = Constants.CreatedByUser,
             CreatedOn = Constants.CreatedOn,
@@ -21,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             new QualificationType
             {
                 Name = "GCSE",
+                SubTitle = "GCSE",
                 IsActive = true,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
@@ -30,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             new QualificationType
             {
                 Name = "GCE A Levels",
+                SubTitle = "GCE A Levels",
                 IsActive = true,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
@@ -39,6 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             new QualificationType
             {
                 Name = "Basic Skills",
+                SubTitle = "Basic Skills",
                 IsActive = true,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
@@ -48,6 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             new QualificationType
             {
                 Name = "Functional Skills",
+                SubTitle = "Functional Skills",
                 IsActive = true,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
