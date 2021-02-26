@@ -278,9 +278,10 @@
                 }
             }
         },
+        
         {
             "type": "Microsoft.Cache/Redis",
-            "name": "[variables('redisCacheName')]",
+            "name": "[concat('Redis-Cache','-', parameters('environmentNameAbbreviation'))]",
             "apiVersion": "2019-07-01",
             "location": "[resourceGroup().location]",
             "properties": {
@@ -317,7 +318,7 @@
         },        
         "RedisConnectionString": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2016-04-01').primaryKey]"            
+            "value": "[concat(variables('redisCacheName'), '.redis.cache.windows.net:6380,password=',listKeys(resourceId('Microsoft.Cache/Redis', variables('redisCacheName')), '2016-04-01').primary ,'ssl=True,abortConnect=False')]"
         }
 
     }
