@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
             };
 
             _registrationLearnerDetails = new List<RegistrationLearnerDetails> { registrationLearnerDetails };
-            LearnerRecordService.GetValidRegistrationLearners().Returns(_registrationLearnerDetails);
+            LearnerRecordService.GetPendingVerificationAndLearningEventsLearners().Returns(_registrationLearnerDetails);
 
             var apiResponse = new GetLearnerLearningEventsResponse { IncomingULN = registrationLearnerDetails.Uln.ToString(), FoundULN = registrationLearnerDetails.Uln.ToString() };
             PersonalLearningRecordApiClient.GetLearnerEventsAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<DateTime>()).Returns(apiResponse);
@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            LearnerRecordService.Received(1).GetValidRegistrationLearners();
+            LearnerRecordService.Received(1).GetPendingVerificationAndLearningEventsLearners();
             PersonalLearningRecordApiClient.Received(1).GetLearnerEventsAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<DateTime>());
             LearnerRecordService.Received(1).ProcessLearnerRecords(Arg.Any<List<LearnerRecordDetails>>());
         }

@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
         public async Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerVerificationAndLearningEvents()
         {
-            var registeredLearners = await _learnerRecordService.GetValidRegistrationLearners();
+            var registeredLearners = await _learnerRecordService.GetPendingVerificationAndLearningEventsLearners();
 
             if (registeredLearners == null)
             {

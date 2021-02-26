@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
         public override void Given()
         {
             _registrationLearnerDetails = new List<RegistrationLearnerDetails>();
-            LearnerRecordService.GetValidRegistrationLearners().Returns(_registrationLearnerDetails);
+            LearnerRecordService.GetPendingVerificationAndLearningEventsLearners().Returns(_registrationLearnerDetails);
 
             PersonalLearningRecordApiClient.GetLearnerEventsAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<DateTime>()).Returns(_apiResponse);
 
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            LearnerRecordService.Received(1).GetValidRegistrationLearners();
+            LearnerRecordService.Received(1).GetPendingVerificationAndLearningEventsLearners();
             PersonalLearningRecordApiClient.DidNotReceive().GetLearnerEventsAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<DateTime>());
             LearnerRecordService.Received(1).ProcessLearnerRecords(Arg.Any<List<LearnerRecordDetails>>());
         }

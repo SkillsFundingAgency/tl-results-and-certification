@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRegistrationRepository _tqRegistrationRepository;
         private readonly IRepository<Qualification> _qualificationRepository;
 
-        public LearnerRecordService(IMapper mapper, ILogger<LearnerRecordService> logger,
+        public LearnerRecordService(IMapper mapper, ILogger<ILearnerRecordService> logger,
             IRegistrationRepository tqRegistrationRepository,
             IRepository<Qualification> qualificationRepository)
         {
@@ -30,8 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _tqRegistrationRepository = tqRegistrationRepository;
             _qualificationRepository = qualificationRepository;
         }
-
-        public async Task<IList<RegistrationLearnerDetails>> GetValidRegistrationLearners()
+        
+        public async Task<IList<RegistrationLearnerDetails>> GetPendingVerificationAndLearningEventsLearners()
         {
             var registrationLearners = await _tqRegistrationRepository.GetManyAsync(r => r.IsLearnerVerified == null || r.IsLearnerVerified.Value == false ||
                                                                      ((r.IsEnglishAndMathsAchieved == null || r.IsEnglishAndMathsAchieved.Value == false) &&
