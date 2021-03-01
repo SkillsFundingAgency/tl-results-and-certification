@@ -50,6 +50,12 @@
         "internalApiCertificateName": {
             "type": "string",
             "defaultValue": ""
+        },
+        "storageAccountContainerArray": {
+            "type": "array",
+            "metadata": {
+                "description": "An array of container names to create in the storage account."
+            }
         }
     },
     "variables": {
@@ -61,6 +67,7 @@
         "workerFunctionAppName": "[concat(parameters('resourceNamePrefix'), '-func-worker')]",
         "sqlDatabaseName": "[concat(parameters('resourceNamePrefix'), '-sqldb')]",
         "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]"
+
     },
     "resources": [
         {
@@ -79,6 +86,37 @@
                     }
                 }
             }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[concat('storage-account-container', parameters('storageAccountContainerArray')[copyIndex()])]",
+            "type": "Microsoft.Resources/deployments",
+            "condition": "[greater(length(parameters('storageAccountContainerArray')), 0)]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'storage-container.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "storageAccountName": {
+                        "value": "[variables('storageAccountName')]"
+                    },
+                    "containerName": {
+                        "value": "[parameters('storageAccountContainerArray')[copyIndex()]]"
+                    },
+                    "publicAccess": {
+                        "value": "None"
+                    }
+                }
+            },
+            "copy": {
+                "name": "storageaccountcontainercopy",
+                "count": "[length(parameters('storageAccountContainerArray'))]"
+            },
+            "dependsOn": [
+                "[concat('storage-account','-', parameters('environmentNameAbbreviation'))]"
+            ]
         },
         {
             "apiVersion": "2017-05-10",
