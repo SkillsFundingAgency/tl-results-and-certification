@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
             // process learner records
             var response = await _learnerRecordService.ProcessLearnerRecordsAsync(learnerRecordDetailsList);
-            response.RegistrationsRecordsCount = registeredLearners.Count();
+            response.TotalCount = registeredLearners.Count();
             return response;
         }
     }    

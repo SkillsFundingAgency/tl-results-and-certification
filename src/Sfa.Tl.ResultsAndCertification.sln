@@ -44,9 +44,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertificat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests\Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.csproj", "{CC1DFCF3-6B56-48F1-B066-F5CAFFDBB3E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfa.Tl.ResultsAndCertification.Functions", "Sfa.Tl.ResultsAndCertification.Functions\Sfa.Tl.ResultsAndCertification.Functions.csproj", "{314C5E9B-E66B-4402-B7B9-54420BB13F59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Functions", "Sfa.Tl.ResultsAndCertification.Functions\Sfa.Tl.ResultsAndCertification.Functions.csproj", "{314C5E9B-E66B-4402-B7B9-54420BB13F59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfa.Tl.ResultsAndCertification.Functions.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.Functions.UnitTests\Sfa.Tl.ResultsAndCertification.Functions.UnitTests.csproj", "{960FB856-86D0-4D4B-B38D-FAB5DC3DDF93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Functions.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.Functions.UnitTests\Sfa.Tl.ResultsAndCertification.Functions.UnitTests.csproj", "{960FB856-86D0-4D4B-B38D-FAB5DC3DDF93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

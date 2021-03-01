@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
             var apiResponse = new GetLearnerLearningEventsResponse { IncomingULN = registrationLearnerDetails.Uln.ToString(), FoundULN = registrationLearnerDetails.Uln.ToString() };
             PersonalLearningRecordApiClient.GetLearnerEventsAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<DateTime>()).Returns(apiResponse);
 
-            _expectedResult = new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, RegistrationsRecordsCount = 1, LrsRecordsCount = 1, ModifiedRecordsCount = 1, SavedRecordsCount = 1  };
+            _expectedResult = new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, TotalCount = 1, LrsCount = 1, ModifiedCount = 1, SavedCount = 1  };
             LearnerRecordService.ProcessLearnerRecordsAsync(Arg.Any<List<LearnerRecordDetails>>()).Returns(_expectedResult);
         }
 
@@ -49,10 +49,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
             ActualResult.Should().NotBeNull();
 
             ActualResult.IsSuccess.Should().Be(_expectedResult.IsSuccess);
-            ActualResult.RegistrationsRecordsCount.Should().Be(_expectedResult.RegistrationsRecordsCount);
-            ActualResult.LrsRecordsCount.Should().Be(_expectedResult.LrsRecordsCount);
-            ActualResult.ModifiedRecordsCount.Should().Be(_expectedResult.ModifiedRecordsCount);
-            ActualResult.SavedRecordsCount.Should().Be(_expectedResult.SavedRecordsCount);
+            ActualResult.TotalCount.Should().Be(_expectedResult.TotalCount);
+            ActualResult.LrsCount.Should().Be(_expectedResult.LrsCount);
+            ActualResult.ModifiedCount.Should().Be(_expectedResult.ModifiedCount);
+            ActualResult.SavedCount.Should().Be(_expectedResult.SavedCount);
         }
     }
 }

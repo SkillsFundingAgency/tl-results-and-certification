@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
-    public class LearnerVerificationAndLearningEvents
+    public class LearnerGender
     {
-        private readonly IPersonalLearningRecordService _personalLearningRecordService;
+        private readonly ILearnerService _learnerService;
         private readonly ICommonService _commonService;
 
-        public LearnerVerificationAndLearningEvents(ICommonService commonService, IPersonalLearningRecordService personalLearningRecordService)
+        public LearnerGender(ICommonService commonService, ILearnerService learnerService)
         {
             _commonService = commonService;
-            _personalLearningRecordService = personalLearningRecordService;
+            _learnerService = learnerService;
         }
 
-        [FunctionName("VerifyLearnerAndFetchLearningEvents")]
-        public async Task VerifyLearnerAndFetchLearningEventsAsync([TimerTrigger("%LearnerVerificationAndLearningEventsTrigger%")]TimerInfo timer, ExecutionContext context, ILogger logger)
+        [FunctionName("FetchLearnerGender")]
+        public async Task FetchLearnerGenderAsync([TimerTrigger("%LearnerGenderTrigger%")]TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
@@ -36,14 +36,14 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var response = await _personalLearningRecordService.ProcessLearnerVerificationAndLearningEvents();
+                var response = await _learnerService.FetchLearnerGenderAsync();
 
                 var message = $"Function {context.FunctionName} completed processing.\n" +
                                       $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}\n" +
-                                      $"\tTotal registration profiles to process: {response.TotalCount}\n" +
+                                      $"\tTotal learners to process: {response.TotalCount}\n" +
                                       $"\tLearners retrieved from lrs: {response.LrsCount}\n" +
-                                      $"\tModified registration record to process: {response.ModifiedCount}\n" +
-                                      $"\tRows saved: {response.SavedCount}\n" +                                      
+                                      $"\tModified learners to process: {response.ModifiedCount}\n" +
+                                      $"\tRows saved: {response.SavedCount}\n" +
                                       $"\tAdditional message: {response.Message}";
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed, message);
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
                 logger.LogError(errorMessage);
@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
                 _ = (functionLogDetails.Id > 0) ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
-                
+
                 throw;
             }
         }

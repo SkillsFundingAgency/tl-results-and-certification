@@ -5,7 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using System.Collections.Generic;
@@ -30,12 +29,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _tqRegistrationRepository = tqRegistrationRepository;
             _qualificationRepository = qualificationRepository;
         }
-        
+
         public async Task<IList<RegistrationLearnerDetails>> GetPendingVerificationAndLearningEventsLearnersAsync()
         {
             var registrationLearners = await _tqRegistrationRepository.GetManyAsync(r => r.IsLearnerVerified == null || r.IsLearnerVerified.Value == false ||
                                                                      ((r.IsEnglishAndMathsAchieved == null || r.IsEnglishAndMathsAchieved.Value == false) &&
                                                                      (r.IsRcFeed == null || r.IsRcFeed.Value == false))).ToListAsync();
+
+            if (registrationLearners == null) return null;
+
+            return _mapper.Map<IList<RegistrationLearnerDetails>>(registrationLearners);
+        }
+
+        public async Task<IList<RegistrationLearnerDetails>> GetPendingGenderLearnersAsync()
+        {
+            var registrationLearners = await _tqRegistrationRepository.GetManyAsync(r => r.Gender == null).ToListAsync();
 
             if (registrationLearners == null) return null;
 
@@ -51,9 +59,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, Message = message };
             }
 
-            var registrationProfilesToProcessLrsData = new List<TqRegistrationProfile>();
+            var profilesAndQualsToUpdate = new List<TqRegistrationProfile>();
             var qualifications = await GetAllQualifications();
-            var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToList());
+            var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToList(), includeQualificationAchieved: true);
 
             foreach (var learnerRecord in learnerRecords)
             {
@@ -66,20 +74,55 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var modifiedProfile = ProcessProfileAndQualificationsAchieved(learnerRecord, registrationProfile);
 
                     if (modifiedProfile != null)
-                        registrationProfilesToProcessLrsData.Add(modifiedProfile);
+                        profilesAndQualsToUpdate.Add(modifiedProfile);
                 }
             }
 
-            if(registrationProfilesToProcessLrsData.Any())
+            if (profilesAndQualsToUpdate.Any())
             {
-                var isSuccess = await _tqRegistrationRepository.UpdateManyAsync(registrationProfilesToProcessLrsData) > 0;
-                return new LearnerVerificationAndLearningEventsResponse { IsSuccess = isSuccess, LrsRecordsCount = learnerRecords.Count(), ModifiedRecordsCount = registrationProfilesToProcessLrsData.Count(), SavedRecordsCount = registrationProfilesToProcessLrsData.Count() };
+                var isSuccess = await _tqRegistrationRepository.UpdateManyAsync(profilesAndQualsToUpdate) > 0;
+                return new LearnerVerificationAndLearningEventsResponse { IsSuccess = isSuccess, LrsCount = learnerRecords.Count(), ModifiedCount = profilesAndQualsToUpdate.Count(), SavedCount = isSuccess ? profilesAndQualsToUpdate.Count() : 0 };
             }
             else
             {
-                return new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, LrsRecordsCount = learnerRecords.Count(), ModifiedRecordsCount = 0, SavedRecordsCount = 0 };
+                return new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, LrsCount = learnerRecords.Count(), ModifiedCount = 0, SavedCount = 0 };
             }
         }
+
+        public async Task<LearnerGenderResponse> ProcessLearnerGenderAsync(List<LearnerRecordDetails> learnerRecords)
+        {
+            if (learnerRecords == null || !learnerRecords.Any())
+            {
+                var message = $"No learners data retrived from LRS to process gender information. Method: ProcessLearnerGenderAsync()";
+                _logger.LogWarning(LogEvent.NoDataFound, message);
+                return new LearnerGenderResponse { IsSuccess = true, Message = message };
+            }
+
+            var profilesToUpdate = new List<TqRegistrationProfile>();
+            var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToList(), includeQualificationAchieved: true);
+
+            learnerRecords.ForEach(learnerRecord =>
+            {
+                var profileToUpdate = registrationProfiles.FirstOrDefault(p => p.Id == learnerRecord.ProfileId);
+
+                if (profileToUpdate != null && profileToUpdate.Gender == null && learnerRecord.IsLearnerVerified && learnerRecord.Gender != null)
+                {
+                    profileToUpdate.Gender = learnerRecord.Gender;
+                    profilesToUpdate.Add(profileToUpdate);
+                }
+            });
+
+            if (profilesToUpdate.Any())
+            {
+                var response = await _tqRegistrationRepository.UpdateManyAsync(profilesToUpdate);
+                return new LearnerGenderResponse { IsSuccess = response > 0, LrsCount = learnerRecords.Count(), ModifiedCount = profilesToUpdate.Count(), SavedCount = response };
+            }
+            else
+            {
+                return new LearnerGenderResponse { IsSuccess = true, LrsCount = learnerRecords.Count(), ModifiedCount = profilesToUpdate.Count(), SavedCount = 0 };
+            }
+        }
+
 
         private static void ProcessLearningEvents(List<Qualification> qualifications, LearnerRecordDetails learnerRecord)
         {
@@ -183,9 +226,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return true;
         }
 
-        private async Task<List<TqRegistrationProfile>> GetRegistrationProfilesByIds(List<int> profileIds)
+        private async Task<List<TqRegistrationProfile>> GetRegistrationProfilesByIds(List<int> profileIds, bool includeQualificationAchieved = false)
         {
-            return await _tqRegistrationRepository.GetManyAsync(p => profileIds.Contains(p.Id), p => p.QualificationAchieved).ToListAsync();
+            var registrationQueryable = _tqRegistrationRepository.GetManyAsync(p => profileIds.Contains(p.Id));
+
+            if (includeQualificationAchieved)
+                registrationQueryable.Include(p => p.QualificationAchieved);
+
+            return await registrationQueryable.ToListAsync();
+            //return await _tqRegistrationRepository.GetManyAsync(p => profileIds.Contains(p.Id), p => p.QualificationAchieved).ToListAsync();
         }
 
         private async Task<List<Qualification>> GetAllQualifications()

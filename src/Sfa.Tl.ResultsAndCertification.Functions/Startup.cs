@@ -67,6 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
             services.AddTransient<ICommonService, CommonService>();
+            services.AddTransient<ILearnerService, LearnerService>();
             services.AddTransient<IPersonalLearningRecordService, PersonalLearningRecordService>();
             services.AddTransient<ILearnerRecordService, LearnerRecordService>();
         }
@@ -82,6 +83,14 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 return client;
             });
             services.AddTransient<IPersonalLearningRecordApiClient, PersonalLearningRecordServiceApiClient>();
+
+            services.AddTransient<ILearnerPortTypeClient>(learnerClient =>
+            {
+                var client = new LearnerPortTypeClient();
+                client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
+                return client;
+            });
+            services.AddTransient<ILearnerServiceApiClient, LearnerServiceApiClient>();
         }
     }
 }

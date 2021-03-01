@@ -72,8 +72,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
             _result.Should().NotBeNull();
 
             _result.IsSuccess.Should().BeTrue();
-            _result.ModifiedRecordsCount.Should().Be(_learnerRecords.Count);
-            _result.SavedRecordsCount.Should().Be(_learnerRecords.Count);
+            _result.ModifiedCount.Should().Be(_learnerRecords.Count);
+            _result.SavedCount.Should().Be(_learnerRecords.Count);
 
             var actualRegistrations = DbContext.TqRegistrationProfile.AsNoTracking().Where(x => _testCriteriaData.Select(t => t.uln).Contains(x.UniqueLearnerNumber))
                                                                                     .Include(x => x.QualificationAchieved)

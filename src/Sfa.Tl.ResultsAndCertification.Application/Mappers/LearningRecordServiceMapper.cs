@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Functions;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 {

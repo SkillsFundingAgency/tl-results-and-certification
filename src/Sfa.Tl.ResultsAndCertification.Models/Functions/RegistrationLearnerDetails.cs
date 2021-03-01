@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
+namespace Sfa.Tl.ResultsAndCertification.Models.Functions
 {
     public class RegistrationLearnerDetails
     {
