@@ -92,7 +92,9 @@ namespace Lrs.LearnerService.Api.Client
     public interface ILearnerPortTypeClient : ICommunicationObject, LearnerPortType { }
     public partial class LearnerPortTypeClient : ILearnerPortTypeClient
     {
+#pragma warning disable IDE0060 // Remove unused parameter
         static partial void ConfigureEndpoint(System.ServiceModel.Description.ServiceEndpoint serviceEndpoint, System.ServiceModel.Description.ClientCredentials clientCredentials)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             (serviceEndpoint.Binding as BasicHttpBinding).Security.Transport.ClientCredentialType = HttpClientCredentialType.Certificate;
         }

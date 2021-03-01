@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 {
     public class When_GetLookupData_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        private readonly LookupCategory _pathwayComponentGrade;
+        private LookupCategory _pathwayComponentGrade;
         protected IList<LookupData> _mockHttpResult;
 
         private ITokenServiceClient _tokenServiceClient;
@@ -28,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Setup()
         {
+            _pathwayComponentGrade = LookupCategory.PathwayComponentGrade;
             _tokenServiceClient = Substitute.For<ITokenServiceClient>();
 
             _configuration = new ResultsAndCertificationConfiguration

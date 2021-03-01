@@ -16,9 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
 {
     public class When_Called_With_Valid_Ukprn : ProviderServiceBaseTest
     {
-        private IList<TlRoute> _routes;
-        private IList<TlPathway> _pathways;
-        private IList<TqAwardingOrganisation> _tqAwardingOrganisations;
         private IList<PathwayDetails> _result;
 
         public override void Given()

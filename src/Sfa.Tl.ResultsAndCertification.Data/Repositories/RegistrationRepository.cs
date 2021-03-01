@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 {
     public class RegistrationRepository : GenericRepository<TqRegistrationProfile>, IRegistrationRepository
     {
-        private ILogger<RegistrationRepository> _logger;
+        private readonly ILogger<RegistrationRepository> _logger;
 
         public RegistrationRepository(ILogger<RegistrationRepository> logger, ResultsAndCertificationDbContext dbContext) : base(logger, dbContext)
         {

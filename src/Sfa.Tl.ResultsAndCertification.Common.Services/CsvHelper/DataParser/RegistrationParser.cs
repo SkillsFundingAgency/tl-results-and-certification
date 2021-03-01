@@ -33,8 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 
         public RegistrationCsvRecordResponse ParseErrorObject(int rownum, FileBaseModel model, ValidationResult validationResult, string errorMessage = null)
         {
-            var reg = model as RegistrationCsvRecordRequest;
-            var ulnValue = reg != null && reg.Uln.IsLong() ? reg.Uln.ToLong() : 0;
+            var ulnValue = model is RegistrationCsvRecordRequest reg && reg.Uln.IsLong() ? reg.Uln.ToLong() : 0;
 
             return new RegistrationCsvRecordResponse
             {
