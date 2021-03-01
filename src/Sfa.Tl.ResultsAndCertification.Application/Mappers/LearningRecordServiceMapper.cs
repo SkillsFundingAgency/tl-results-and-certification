@@ -8,9 +8,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
     {
         public LearningRecordServiceMapper()
         {
-            CreateMap<TqRegistrationProfile, RegistrationLearnerDetails>();
+            CreateMap<TqRegistrationProfile, RegisteredLearnerDetails>();
 
-            CreateMap<TqRegistrationProfile, RegistrationLearnerDetails>()
+            CreateMap<TqRegistrationProfile, RegisteredLearnerDetails>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.UniqueLearnerNumber))
                 .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))

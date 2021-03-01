@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _configuration = configuration;
         }
 
-        public async Task<verifyLearnerResponse> VerifyLearnerAsync(RegistrationLearnerDetails learnerDetails)
+        public async Task<verifyLearnerResponse> VerifyLearnerAsync(RegisteredLearnerDetails learnerDetails)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             }
         }
 
-        public async Task<findLearnerByULNResponse> FetchLearnerDetailsAsync(RegistrationLearnerDetails learnerDetails)
+        public async Task<findLearnerByULNResponse> FetchLearnerDetailsAsync(RegisteredLearnerDetails learnerDetails)
         {
             try
             {

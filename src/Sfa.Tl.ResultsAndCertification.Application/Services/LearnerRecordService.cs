@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _qualificationRepository = qualificationRepository;
         }
 
-        public async Task<IList<RegistrationLearnerDetails>> GetPendingVerificationAndLearningEventsLearnersAsync()
+        public async Task<IList<RegisteredLearnerDetails>> GetPendingVerificationAndLearningEventsLearnersAsync()
         {
             var registrationLearners = await _tqRegistrationRepository.GetManyAsync(r => r.IsLearnerVerified == null || r.IsLearnerVerified.Value == false ||
                                                                      ((r.IsEnglishAndMathsAchieved == null || r.IsEnglishAndMathsAchieved.Value == false) &&
@@ -38,23 +38,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (registrationLearners == null) return null;
 
-            return _mapper.Map<IList<RegistrationLearnerDetails>>(registrationLearners);
+            return _mapper.Map<IList<RegisteredLearnerDetails>>(registrationLearners);
         }
 
-        public async Task<IList<RegistrationLearnerDetails>> GetPendingGenderLearnersAsync()
+        public async Task<IList<RegisteredLearnerDetails>> GetPendingGenderLearnersAsync()
         {
             var registrationLearners = await _tqRegistrationRepository.GetManyAsync(r => r.Gender == null).ToListAsync();
 
             if (registrationLearners == null) return null;
 
-            return _mapper.Map<IList<RegistrationLearnerDetails>>(registrationLearners);
+            return _mapper.Map<IList<RegisteredLearnerDetails>>(registrationLearners);
         }
 
         public async Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerRecordsAsync(List<LearnerRecordDetails> learnerRecords)
         {
             if (learnerRecords == null || !learnerRecords.Any())
             {
-                var message = $"No learners data retrived from LRS to process. Method: ProcessLearnerRecords()";
+                var message = $"No learners data retrived from LRS to process. Method: ProcessLearnerRecordsAsync()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
                 return new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, Message = message };
             }

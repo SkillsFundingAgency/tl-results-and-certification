@@ -36,13 +36,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var response = await _personalLearningRecordService.ProcessLearnerVerificationAndLearningEvents();
+                var response = await _personalLearningRecordService.ProcessLearnerVerificationAndLearningEventsAsync();
 
                 var message = $"Function {context.FunctionName} completed processing.\n" +
                                       $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}\n" +
-                                      $"\tTotal registration profiles to process: {response.TotalCount}\n" +
+                                      $"\tTotal learners to process: {response.TotalCount}\n" +
                                       $"\tLearners retrieved from lrs: {response.LrsCount}\n" +
-                                      $"\tModified registration record to process: {response.ModifiedCount}\n" +
+                                      $"\tModified learners to process: {response.ModifiedCount}\n" +
                                       $"\tRows saved: {response.SavedCount}\n" +                                      
                                       $"\tAdditional message: {response.Message}";
 

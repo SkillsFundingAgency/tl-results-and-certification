@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
     public class When_GetPendingVerificationAndLearningEventsLearners_IsCalled : LearnerRecordServiceBaseTest
     {
         private IList<TqRegistrationProfile> _profilesData;
-        private IList<RegistrationLearnerDetails> _result;
+        private IList<RegisteredLearnerDetails> _result;
 
         public override void Given()
         {

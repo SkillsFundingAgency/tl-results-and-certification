@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerVerification
         public override void Given()
         {
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            PersonalLearningRecordService.ProcessLearnerVerificationAndLearningEvents().Returns(new LearnerVerificationAndLearningEventsResponse { IsSuccess = true });
+            PersonalLearningRecordService.ProcessLearnerVerificationAndLearningEventsAsync().Returns(new LearnerVerificationAndLearningEventsResponse { IsSuccess = true });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }        
 
@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerVerification
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(1).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            PersonalLearningRecordService.Received(1).ProcessLearnerVerificationAndLearningEvents();
+            PersonalLearningRecordService.Received(1).ProcessLearnerVerificationAndLearningEventsAsync();
             CommonService.Received(1).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }       
     }

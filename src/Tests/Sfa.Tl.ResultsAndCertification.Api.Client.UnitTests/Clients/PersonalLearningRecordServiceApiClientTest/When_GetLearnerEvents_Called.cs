@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PersonalLe
     {
         private GetLearnerLearningEventsResponse _result;
         private GetLearnerLearningEventsResponse _mockHttpResult;
-        private RegistrationLearnerDetails _registrationLearnerDetails;        
+        private RegisteredLearnerDetails _registrationLearnerDetails;        
         private ILogger<ILearnerServiceR9Client> _logger;
         private ILearnerServiceR9Client _learnerServiceR9Client;
         private ResultsAndCertificationConfiguration _configuration;
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PersonalLe
             _logger = Substitute.For<ILogger<ILearnerServiceR9Client>>();
             _learnerServiceR9Client = Substitute.For<ILearnerServiceR9Client>();
 
-            _registrationLearnerDetails = new RegistrationLearnerDetails
+            _registrationLearnerDetails = new RegisteredLearnerDetails
             {
                 Uln = 1234567890,
                 Firstname = "First 1",
@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PersonalLe
 
         public async override Task When()
         {
-            _result = await _apiClient.GetLearnerEventsAsync(_registrationLearnerDetails.Uln.ToString(), _registrationLearnerDetails.Firstname, _registrationLearnerDetails.Lastname, _registrationLearnerDetails.DateofBirth);
+            _result = await _apiClient.GetLearnerEventsAsync(_registrationLearnerDetails);
         }
 
         [Fact]

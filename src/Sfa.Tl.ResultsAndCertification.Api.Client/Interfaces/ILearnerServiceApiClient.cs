@@ -6,7 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 {
     public interface ILearnerServiceApiClient
     {
-        Task<verifyLearnerResponse> VerifyLearnerAsync(RegistrationLearnerDetails learnerDetails);
-        Task<findLearnerByULNResponse> FetchLearnerDetailsAsync(RegistrationLearnerDetails learnerDetails);
+        Task<verifyLearnerResponse> VerifyLearnerAsync(RegisteredLearnerDetails learnerDetails);
+        Task<findLearnerByULNResponse> FetchLearnerDetailsAsync(RegisteredLearnerDetails learnerDetails);
     }
 }

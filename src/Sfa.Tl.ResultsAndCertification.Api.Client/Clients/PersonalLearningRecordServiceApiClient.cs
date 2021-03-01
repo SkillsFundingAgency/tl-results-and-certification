@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _configuration = configuration;
         }
 
-        public async Task<GetLearnerLearningEventsResponse> GetLearnerEventsAsync(string uln, string firstName, string lastName, DateTime dateOfBirth)
+        public async Task<GetLearnerLearningEventsResponse> GetLearnerEventsAsync(RegisteredLearnerDetails learnerDetails)
         {
             try
             {
@@ -34,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                     Password = _configuration.LearningRecordServiceSettings.Password
                 };
 
-                var response = await _learnerServiceR9Client.GetLearnerLearningEventsAsync(invokingOrganisation, "ORG", _configuration.LearningRecordServiceSettings.VendorId, "ENG", uln, firstName, lastName, dateOfBirth.ToString("yyyy-MM-dd"), null, "FULL");
+                var response = await _learnerServiceR9Client.GetLearnerLearningEventsAsync(invokingOrganisation, "ORG", _configuration.LearningRecordServiceSettings.VendorId, "ENG", learnerDetails.Uln.ToString(), learnerDetails.Firstname, learnerDetails.Lastname, learnerDetails.DateofBirth.ToString("yyyy-MM-dd"), null, "FULL");
                 return response;
             }
             catch (Exception ex)
@@ -42,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                 if (_learnerServiceR9Client.State == CommunicationState.Faulted)
                     _learnerServiceR9Client.Abort();
 
-                _logger.LogError($"Error while executing GetLearnerEventsAsync({uln}, {firstName}, {lastName}, {dateOfBirth.ToShortDateString()}). Exception = {ex}");
+                _logger.LogError($"Error while executing GetLearnerEventsAsync({learnerDetails}). Exception = {ex}");
                 return null;
             }
         }

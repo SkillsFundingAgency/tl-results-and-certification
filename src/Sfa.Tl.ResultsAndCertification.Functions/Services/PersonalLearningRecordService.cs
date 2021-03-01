@@ -26,26 +26,26 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _learnerRecordService = learnerRecordService;
         }
 
-        public async Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerVerificationAndLearningEvents()
+        public async Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerVerificationAndLearningEventsAsync()
         {
-            var registeredLearners = await _learnerRecordService.GetPendingVerificationAndLearningEventsLearnersAsync();
+            var pendingLearners = await _learnerRecordService.GetPendingVerificationAndLearningEventsLearnersAsync();
 
-            if (registeredLearners == null)
+            if (pendingLearners == null)
             {
-                var message = $"No registration learners found to process learner verification and learning events. Method: ProcessLearnerVerificationAndLearningEvents()";
+                var message = $"No pending learners found to process learner verification and learning events. Method: ProcessLearnerVerificationAndLearningEventsAsync()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
                 return new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, Message = message };
             }
 
             var learnerRecordDetailsList = new List<LearnerRecordDetails>();
 
-            foreach (var learner in registeredLearners)
+            foreach (var pendingLearner in pendingLearners)
             {
-                var plrResult = await _personalLearningRecordApiClient.GetLearnerEventsAsync(learner.Uln.ToString(), learner.Firstname, learner.Lastname, learner.DateofBirth);
+                var plrResult = await _personalLearningRecordApiClient.GetLearnerEventsAsync(pendingLearner);
 
                 if (plrResult != null)
                 {
-                    var learnerRecord = _mapper.Map<LearnerRecordDetails>(plrResult, opt => opt.Items["profileId"] = learner.ProfileId);
+                    var learnerRecord = _mapper.Map<LearnerRecordDetails>(plrResult, opt => opt.Items["profileId"] = pendingLearner.ProfileId);
 
                     learnerRecord.IsLearnerVerified = true; //!string.IsNullOrWhiteSpace(plrResult.ResponseCode) && plrResult.ResponseCode == "WSEC0208" ? false : true;
 
@@ -62,8 +62,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
             // process learner records
             var response = await _learnerRecordService.ProcessLearnerRecordsAsync(learnerRecordDetailsList);
-            response.TotalCount = registeredLearners.Count();
+            response.TotalCount = pendingLearners.Count();
             return response;
         }
-    }    
+    }
 }

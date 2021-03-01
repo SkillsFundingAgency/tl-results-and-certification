@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
 
         public async override Task When()
         {
-            ActualResult = await Service.ProcessLearnerVerificationAndLearningEvents();
+            ActualResult = await Service.ProcessLearnerVerificationAndLearningEventsAsync();
         }
     }
 }

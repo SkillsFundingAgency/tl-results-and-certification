@@ -5,6 +5,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Interfaces
 {
     public interface IPersonalLearningRecordService
     {
-        Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerVerificationAndLearningEvents();
+        Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerVerificationAndLearningEventsAsync();
     }
 }

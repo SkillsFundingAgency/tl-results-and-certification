@@ -6,8 +6,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
     public interface ILearnerRecordService
     {
-        Task<IList<RegistrationLearnerDetails>> GetPendingGenderLearnersAsync();
-        Task<IList<RegistrationLearnerDetails>> GetPendingVerificationAndLearningEventsLearnersAsync();
+        Task<IList<RegisteredLearnerDetails>> GetPendingGenderLearnersAsync();
+        Task<IList<RegisteredLearnerDetails>> GetPendingVerificationAndLearningEventsLearnersAsync();
         Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerRecordsAsync(List<LearnerRecordDetails> learnerRecords);
         Task<LearnerGenderResponse> ProcessLearnerGenderAsync(List<LearnerRecordDetails> learnerRecords);
     }

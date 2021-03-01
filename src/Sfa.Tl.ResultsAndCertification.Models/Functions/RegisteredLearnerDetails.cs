@@ -2,7 +2,7 @@
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Functions
 {
-    public class RegistrationLearnerDetails
+    public class RegisteredLearnerDetails
     {
         public int ProfileId { get; set; }
         public long Uln { get; set; }        
