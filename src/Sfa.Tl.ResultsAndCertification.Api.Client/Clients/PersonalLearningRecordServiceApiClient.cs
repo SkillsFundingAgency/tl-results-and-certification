@@ -55,7 +55,9 @@ namespace Lrs.PersonalLearningRecordService.Api.Client
     public interface ILearnerServiceR9Client : ICommunicationObject, ILearnerServiceR9 { }
     public partial class LearnerServiceR9Client : ILearnerServiceR9Client
     {
+#pragma warning disable IDE0060 // Remove unused parameter
         static partial void ConfigureEndpoint(System.ServiceModel.Description.ServiceEndpoint serviceEndpoint, System.ServiceModel.Description.ClientCredentials clientCredentials)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             (serviceEndpoint.Binding as BasicHttpBinding).Security.Transport.ClientCredentialType = HttpClientCredentialType.Certificate;
         }

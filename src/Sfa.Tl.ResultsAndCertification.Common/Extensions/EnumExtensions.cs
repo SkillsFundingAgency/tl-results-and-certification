@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 
         public static bool IsValidValue<T>(object value) where T : System.Enum
         {
-            return value != null ? System.Enum.IsDefined(typeof(T), value.ToString().IsInt() ? value.ToString().ToInt() : value) : false;
+            return value != null && System.Enum.IsDefined(typeof(T), value.ToString().IsInt() ? value.ToString().ToInt() : value);
         }
 
         public static bool IsValidDisplayName<T>(object value) where T : System.Enum

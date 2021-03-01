@@ -23,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Filters.SessionActivity
 
         public override void Given()
         {
+            _logger = Substitute.For<ILogger<HomeController>>();
             _homeController = new HomeController(_logger);
 
             var httpContext = new ClaimsIdentityBuilder<HomeController>(_homeController)

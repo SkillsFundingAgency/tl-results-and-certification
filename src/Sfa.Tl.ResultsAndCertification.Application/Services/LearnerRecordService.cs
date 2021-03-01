@@ -214,18 +214,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return profile != null && (profile.IsRcFeed == null || profile.IsRcFeed.Value == false);
         }
-
-        private bool HasAnyChangesForProfile(TqRegistrationProfile profile, IEnumerable<LearningEventDetails> learningEventDetails)
-        {
-            if (profile == null || learningEventDetails == null) return false;
-
-            var hasEnglishAndMatchAchieved = learningEventDetails.Any(e => e.IsAchieved && e.IsEnglishSubject) && learningEventDetails.Any(e => e.IsAchieved && e.IsEnglishSubject);
-
-            var anyChanges = profile.IsEnglishAndMathsAchieved != hasEnglishAndMatchAchieved || profile.QualificationAchieved.Count() != learningEventDetails.Count() || profile.IsRcFeed != false;
-
-            return true;
-        }
-
+        
         private async Task<List<TqRegistrationProfile>> GetRegistrationProfilesByIds(List<int> profileIds, bool includeQualificationAchieved = false)
         {
             var registrationQueryable = _tqRegistrationRepository.GetManyAsync(p => profileIds.Contains(p.Id));
@@ -234,7 +223,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 registrationQueryable.Include(p => p.QualificationAchieved);
 
             return await registrationQueryable.ToListAsync();
-            //return await _tqRegistrationRepository.GetManyAsync(p => profileIds.Contains(p.Id), p => p.QualificationAchieved).ToListAsync();
         }
 
         private async Task<List<Qualification>> GetAllQualifications()
