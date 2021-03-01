@@ -44,5 +44,6 @@ jobs:
             -sqlDatabaseTier "$(SQLDatabaseTier)"
             -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"
             -uiCustomHostName "$(UICustomHostName)"
-            -certificateName "$(CertificateName)"'
+            -certificateName "$(CertificateName)"
+            -storageAccountContainerArray "$(storageAccountContainerArray)"'
           processOutputs: true
