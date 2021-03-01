@@ -56,6 +56,12 @@
             "metadata": {
                 "description": "An array of container names to create in the storage account."
             }
+        },
+        "learnerVerificationAndLearningEventsTrigger": {
+            "type": "string"
+        },
+        "learnerGenderTrigger": {
+            "type": "string"
         }
     },
     "variables": {
@@ -447,7 +453,15 @@
                             {
                                 "name": "FUNCTIONS_EXTENSION_VERSION",
                                 "value": "~3"
-                            }
+                            },
+                            {
+                                "name": "LearnerVerificationAndLearningEventsTrigger",
+                                "value": "[parameters('learnerVerificationAndLearningEventsTrigger')]"
+                            },
+                            {
+                                "name": "LearnerGenderTrigger",
+                                "value": "[parameters('learnerGenderTrigger')]"
+                            },
                         ]
                     }
                 }

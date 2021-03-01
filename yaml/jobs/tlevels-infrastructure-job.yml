@@ -45,5 +45,7 @@ jobs:
             -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"
             -uiCustomHostName "$(UICustomHostName)"
             -certificateName "$(CertificateName)"
-            -storageAccountContainerArray "$(storageAccountContainerArray)"'
+            -storageAccountContainerArray "$(storageAccountContainerArray)"
+            -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
+            -learnerGenderTrigger "$(learnerGenderTrigger)"'
           processOutputs: true
