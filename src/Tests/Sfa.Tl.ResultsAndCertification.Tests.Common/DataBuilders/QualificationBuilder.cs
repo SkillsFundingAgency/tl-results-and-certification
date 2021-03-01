@@ -26,13 +26,15 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             qualificationType ??= new QualificationTypeBuilder().Build();
             var subjectLookupList = new TlLookupBuilder().BuildSubjectTypeList();
             var englishSubject = subjectLookupList.FirstOrDefault(x => x.Code.Equals("Eng", System.StringComparison.InvariantCultureIgnoreCase));
-            var mathsSubject = subjectLookupList.FirstOrDefault(x => x.Code.Equals("Mat", System.StringComparison.InvariantCultureIgnoreCase));
+            var mathsSubject = subjectLookupList.FirstOrDefault(x => x.Code.Equals("Math", System.StringComparison.InvariantCultureIgnoreCase));
 
             var qualificationList = new List<Qualification> {
                 new Qualification
                 {
                     TlLookupId = mathsSubject.Id,
+                    TlLookup = mathsSubject,
                     QualificationTypeId = qualificationType.Id,
+                    QualificationType = qualificationType,
                     Code = "500/7856/2",
                     Title = "AQA Level 1/Level 2 GCSE in Mathematics",
                     IsSendQualification = false,
@@ -45,7 +47,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new Qualification
                 {                    
                     TlLookupId = englishSubject.Id,
+                    TlLookup = englishSubject,
                     QualificationTypeId = qualificationType.Id,
+                    QualificationType = qualificationType,
                     Code = "601/4292/3",
                     Title = "AQA Level 1/Level 2 GCSE (9-1) in English Language",
                     IsSendQualification = false,
@@ -58,7 +62,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new Qualification
                 {
                     TlLookupId = mathsSubject.Id,
+                    TlLookup = mathsSubject,
                     QualificationTypeId = qualificationType.Id,
+                    QualificationType = qualificationType,
                     Code = "100/3432/8",
                     Title = "CCEA Advanced GCE in Mathematics",
                     IsSendQualification = false,
@@ -71,7 +77,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new Qualification
                 {
                     TlLookupId = englishSubject.Id,
+                    TlLookup = englishSubject,
                     QualificationTypeId = qualificationType.Id,
+                    QualificationType = qualificationType,
                     Code = "500/8464/1",
                     Title = "Pearson Edexcel Functional Skills Qualification in English at Entry 3",
                     IsSendQualification = true,

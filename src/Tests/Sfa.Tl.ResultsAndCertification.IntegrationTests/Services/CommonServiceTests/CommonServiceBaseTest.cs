@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using System.Collections.Generic;
 
@@ -32,6 +33,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CommonService
         {
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             DbContext.SaveChangesAsync();
+        }
+
+        public FunctionLog  SeedFunctionLog()
+        {
+            var functionLog = new FunctionLogBuilder().Build();
+            var functionLogEntity = FunctionLogDataProvider.CreateFunctionLog(DbContext, functionLog);
+
+            DbContext.SaveChanges();
+            return functionLogEntity;
         }
     }
 }

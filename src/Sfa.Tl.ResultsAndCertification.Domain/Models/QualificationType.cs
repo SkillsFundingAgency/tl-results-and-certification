@@ -11,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         }
 
         public string Name { get; set; }
+        public string SubTitle { get; set; }
         public bool IsActive { get; set; }
 
         public virtual ICollection<QualificationGrade> QualificationGrades { get; set; }

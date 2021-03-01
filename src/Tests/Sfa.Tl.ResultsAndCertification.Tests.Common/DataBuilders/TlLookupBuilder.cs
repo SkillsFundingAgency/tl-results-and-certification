@@ -137,7 +137,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             new TlLookup
             {
                 Category = "Subject",
-                Code = "Mat",
+                Code = "Math",
                 Value = "Maths",
                 IsActive = true,
                 SortOrder = 1,

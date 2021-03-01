@@ -23,6 +23,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Qualificati
 
         [Fact]
         public void Then_Expected_Records_Should_Have_Been_Created() =>
-            _result.Should().Be(_data.Count);
+            _result.Should().Be(7);
     }
 }
