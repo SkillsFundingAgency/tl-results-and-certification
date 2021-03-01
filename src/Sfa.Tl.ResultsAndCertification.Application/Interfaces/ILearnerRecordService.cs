@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
     public interface ILearnerRecordService
     {
-        Task<IList<RegistrationLearnerDetails>> GetPendingVerificationAndLearningEventsLearners();
-        Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerRecords(List<LearnerRecordDetails> learnerRecords);
+        Task<IList<RegistrationLearnerDetails>> GetPendingVerificationAndLearningEventsLearnersAsync();
+        Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerRecordsAsync(List<LearnerRecordDetails> learnerRecords);
     }
 }

@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _qualificationRepository = qualificationRepository;
         }
         
-        public async Task<IList<RegistrationLearnerDetails>> GetPendingVerificationAndLearningEventsLearners()
+        public async Task<IList<RegistrationLearnerDetails>> GetPendingVerificationAndLearningEventsLearnersAsync()
         {
             var registrationLearners = await _tqRegistrationRepository.GetManyAsync(r => r.IsLearnerVerified == null || r.IsLearnerVerified.Value == false ||
                                                                      ((r.IsEnglishAndMathsAchieved == null || r.IsEnglishAndMathsAchieved.Value == false) &&
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<IList<RegistrationLearnerDetails>>(registrationLearners);
         }
 
-        public async Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerRecords(List<LearnerRecordDetails> learnerRecords)
+        public async Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerRecordsAsync(List<LearnerRecordDetails> learnerRecords)
         {
             if (learnerRecords == null || !learnerRecords.Any())
             {

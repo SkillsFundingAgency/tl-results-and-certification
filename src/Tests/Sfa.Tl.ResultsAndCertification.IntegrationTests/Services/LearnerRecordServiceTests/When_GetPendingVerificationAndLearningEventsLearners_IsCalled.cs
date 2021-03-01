@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
 
         public async Task WhenAsync()
         {
-            _result = await LrsService.GetPendingVerificationAndLearningEventsLearners();
+            _result = await LrsService.GetPendingVerificationAndLearningEventsLearnersAsync();
         }
 
         [Fact]

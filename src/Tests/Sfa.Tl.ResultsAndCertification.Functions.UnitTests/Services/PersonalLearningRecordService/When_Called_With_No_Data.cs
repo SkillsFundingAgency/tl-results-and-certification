@@ -18,20 +18,20 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
         public override void Given()
         {
             _registrationLearnerDetails = null;
-            LearnerRecordService.GetPendingVerificationAndLearningEventsLearners().Returns(_registrationLearnerDetails);
+            LearnerRecordService.GetPendingVerificationAndLearningEventsLearnersAsync().Returns(_registrationLearnerDetails);
                         
             PersonalLearningRecordApiClient.GetLearnerEventsAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<DateTime>()).Returns(_apiResponse);
 
             _expectedResult = new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, RegistrationsRecordsCount = 0, LrsRecordsCount = 0, ModifiedRecordsCount = 0, SavedRecordsCount = 0 };
-            LearnerRecordService.ProcessLearnerRecords(Arg.Any<List<LearnerRecordDetails>>()).Returns(_expectedResult);
+            LearnerRecordService.ProcessLearnerRecordsAsync(Arg.Any<List<LearnerRecordDetails>>()).Returns(_expectedResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            LearnerRecordService.Received(1).GetPendingVerificationAndLearningEventsLearners();
+            LearnerRecordService.Received(1).GetPendingVerificationAndLearningEventsLearnersAsync();
             PersonalLearningRecordApiClient.DidNotReceive().GetLearnerEventsAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<DateTime>());
-            LearnerRecordService.DidNotReceive().ProcessLearnerRecords(Arg.Any<List<LearnerRecordDetails>>());
+            LearnerRecordService.DidNotReceive().ProcessLearnerRecordsAsync(Arg.Any<List<LearnerRecordDetails>>());
         }
 
         [Fact]

@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
         public async Task<LearnerVerificationAndLearningEventsResponse> ProcessLearnerVerificationAndLearningEvents()
         {
-            var registeredLearners = await _learnerRecordService.GetPendingVerificationAndLearningEventsLearners();
+            var registeredLearners = await _learnerRecordService.GetPendingVerificationAndLearningEventsLearnersAsync();
 
             if (registeredLearners == null)
             {
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             }
 
             // process learner records
-            var response = await _learnerRecordService.ProcessLearnerRecords(learnerRecordDetailsList);
+            var response = await _learnerRecordService.ProcessLearnerRecordsAsync(learnerRecordDetailsList);
             response.RegistrationsRecordsCount = registeredLearners.Count();
             return response;
         }

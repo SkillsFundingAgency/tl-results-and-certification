@@ -102,6 +102,65 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             }
         };
 
+        public IList<Domain.Models.TqRegistrationProfile> BuildListWithoutLrsData() => new List<Domain.Models.TqRegistrationProfile>
+        {
+            new Domain.Models.TqRegistrationProfile
+            {
+                UniqueLearnerNumber = 1111111111,
+                Firstname = "First 1",
+                Lastname = "Last 1",
+                DateofBirth = "10/10/1980".ToDateTime(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new Domain.Models.TqRegistrationProfile
+            {
+                UniqueLearnerNumber = 1111111112,
+                Firstname = "First 2",
+                Lastname = "Last 2",
+                DateofBirth = "07/05/1981".ToDateTime(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new Domain.Models.TqRegistrationProfile
+            {
+                UniqueLearnerNumber = 1111111113,
+                Firstname = "First 3",
+                Lastname = "Last 3",
+                DateofBirth = "03/07/1982".ToDateTime(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new Domain.Models.TqRegistrationProfile
+            {
+                UniqueLearnerNumber = 1111111114,
+                Firstname = "First 4",
+                Lastname = "Last 4",
+                DateofBirth = "03/07/1982".ToDateTime(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new Domain.Models.TqRegistrationProfile
+            {
+                UniqueLearnerNumber = 1111111115,
+                Firstname = "First 5",
+                Lastname = "Last 5",
+                DateofBirth = "03/07/1982".ToDateTime(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            }
+        };
+
         public IList<Domain.Models.TqRegistrationProfile> BuildLrsVerificationLearningEventsList() => new List<Domain.Models.TqRegistrationProfile>
         {
             new Domain.Models.TqRegistrationProfile
