@@ -461,7 +461,7 @@
                             {
                                 "name": "LearnerGenderTrigger",
                                 "value": "[parameters('learnerGenderTrigger')]"
-                            },
+                            }
                         ]
                     }
                 }
