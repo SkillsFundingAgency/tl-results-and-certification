@@ -302,7 +302,7 @@
         },
         "sharedKeyVaultUri": {
             "type": "string",
-            "value": "[reference(concat('key-vault','-', parameters('environmentNameAbbreviation'))).outputs.vaultUri.value]"
+            "value": "[reference(concat('key-vault','-', parameters('environmentNameAbbreviation'))).outputs.keyVaultUri.value]"
         },
         "sharedSQLServerName": {
             "type": "string",
