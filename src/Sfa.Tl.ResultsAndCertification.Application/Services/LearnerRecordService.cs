@@ -108,6 +108,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 if (profileToUpdate != null && profileToUpdate.Gender == null && learnerRecord.IsLearnerVerified && learnerRecord.Gender != null)
                 {
                     profileToUpdate.Gender = learnerRecord.Gender;
+                    profileToUpdate.ModifiedOn = DateTime.UtcNow;
+                    profileToUpdate.ModifiedBy = learnerRecord.PerformedBy;
                     profilesToUpdate.Add(profileToUpdate);
                 }
             });
