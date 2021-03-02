@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
                 var lrsResponse = await _learnerServiceApiClient.FetchLearnerDetailsAsync(learner);
 
                 if (lrsResponse != null && lrsResponse.FindLearnerResponse?.Learner?.Length > 0)
-                    learnerRecordDetailsList.Add(_mapper.Map<LearnerRecordDetails>(lrsResponse.FindLearnerResponse.Learner[0], opt => { opt.Items["profileId"] = learner.ProfileId; opt.Items["responseCode"] = lrsResponse.FindLearnerResponse.ResponseCode; }));
+                    learnerRecordDetailsList.Add(_mapper.Map<LearnerRecordDetails>(lrsResponse.FindLearnerResponse.Learner[0], opt => { opt.Items[Constants.LrsProfileId] = learner.ProfileId; opt.Items[Constants.LrsResponseCode] = lrsResponse.FindLearnerResponse.ResponseCode; }));
             }
 
             // process learner gender

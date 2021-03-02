@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var qualifications = await GetAllQualifications();
             var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToList(), includeQualificationAchieved: true);
 
-            foreach (var learnerRecord in learnerRecords)
+            learnerRecords.ForEach(learnerRecord =>
             {
                 var registrationProfile = registrationProfiles.FirstOrDefault(p => p.Id == learnerRecord.ProfileId);
 
@@ -76,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     if (modifiedProfile != null)
                         profilesAndQualsToUpdate.Add(modifiedProfile);
                 }
-            }
+            });
 
             if (profilesAndQualsToUpdate.Any())
             {

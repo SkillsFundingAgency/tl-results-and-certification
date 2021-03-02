@@ -1,8 +1,8 @@
 ﻿using Lrs.PersonalLearningRecordService.Api.Client;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using System.ServiceModel;
@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                     Password = _configuration.LearningRecordServiceSettings.Password
                 };
 
-                var response = await _learnerServiceR9Client.GetLearnerLearningEventsAsync(invokingOrganisation, "LNR", _configuration.LearningRecordServiceSettings.VendorId, "ENG", learnerDetails.Uln.ToString(), learnerDetails.Firstname, learnerDetails.Lastname, learnerDetails.DateofBirth.ToString("yyyy-MM-dd"), null, "FULL");
+                var response = await _learnerServiceR9Client.GetLearnerLearningEventsAsync(invokingOrganisation, Constants.LearnerLearningEventsUserType, _configuration.LearningRecordServiceSettings.VendorId, Constants.LrsLanguage, learnerDetails.Uln.ToString(), learnerDetails.Firstname, learnerDetails.Lastname, learnerDetails.DateofBirth.ToString(Constants.LrsDateFormat), null, Constants.LearnerLearningEventsGetType);
                 return response;
             }
             catch (Exception ex)

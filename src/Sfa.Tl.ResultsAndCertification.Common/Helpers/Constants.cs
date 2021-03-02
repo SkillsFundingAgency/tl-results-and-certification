@@ -8,6 +8,18 @@
         public const string VersionConfigKey = "Version";
         public const string ServiceNameConfigKey = "ServiceName";
 
+        // LearnerRecordService(LRS) Constants
+        public const string LearnerLearningEventsUserType = "LNR";
+        public const string LearnerLearningEventsGetType = "FULL";
+        public const string LearnerLearningEventsNotVerifiedResponseCode = "WSEC0208";
+        public const string LrsLanguage = "ENG";
+        public const string LrsDateFormat = "yyyy-MM-dd";
+        public const string LearnerByULNFindType = "FUL";
+        public const string LearnerByUlnExactMatchResponseCode = "WSRC0004";
+        public const string LrsProfileId = "profileId";
+        public const string LrsResponseCode = "responseCode";
+        public const string FunctionPerformedBy = "System";
+
         // Controller Names
         public const string HomeController = "Home";
         public const string AccountController = "Account";

@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
                 var plrResult = await _personalLearningRecordApiClient.GetLearnerEventsAsync(pendingLearner);
 
                 if (plrResult != null)
-                    learnerRecordDetailsList.Add(_mapper.Map<LearnerRecordDetails>(plrResult, opt => opt.Items["profileId"] = pendingLearner.ProfileId));
+                    learnerRecordDetailsList.Add(_mapper.Map<LearnerRecordDetails>(plrResult, opt => opt.Items[Constants.LrsProfileId] = pendingLearner.ProfileId));
             }
 
             // process learner records
