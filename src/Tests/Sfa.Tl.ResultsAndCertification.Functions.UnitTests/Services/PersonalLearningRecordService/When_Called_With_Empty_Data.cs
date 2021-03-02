@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
         {
             LearnerRecordService.Received(1).GetPendingVerificationAndLearningEventsLearnersAsync();
             PersonalLearningRecordApiClient.DidNotReceive().GetLearnerEventsAsync(Arg.Any<RegisteredLearnerDetails>());
-            LearnerRecordService.Received(1).ProcessLearnerRecordsAsync(Arg.Any<List<LearnerRecordDetails>>());
+            LearnerRecordService.DidNotReceive().ProcessLearnerRecordsAsync(Arg.Any<List<LearnerRecordDetails>>());
         }
 
         [Fact]
