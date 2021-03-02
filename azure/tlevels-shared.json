@@ -300,7 +300,7 @@
             "type": "string",
             "value": "[variables('keyVaultName')]"
         },
-        "KeyVaultUri": {
+        "sharedKeyVaultUri": {
             "type": "string",
             "value": "[reference(concat('key-vault','-', parameters('environmentNameAbbreviation'))).outputs.vaultUri.value]"
         },

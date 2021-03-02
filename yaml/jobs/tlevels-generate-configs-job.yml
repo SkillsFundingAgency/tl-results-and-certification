@@ -13,7 +13,7 @@ jobs:
       SqlConnectionString: $[ dependencies.DeploySQLDatabase.outputs['SqlVariables.SqlConnectionString'] ]
       BlobStorageConnectionString: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.BlobStorageConnectionString'] ]
       RedisCacheConnection: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.RedisConnectionString'] ]
-
+      KeyVaultUri: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedKeyVaultUri'] ]
     pool:
       name: "Azure Pipelines"
       vmImage: "windows-2019"
@@ -26,7 +26,8 @@ jobs:
           'Write-Host "SqlConnectionString variable: $(SqlConnectionString)"'
           'Write-Host "BlobStorageConnectionString variable: $(BlobStorageConnectionString)"'
           'Write-Host "RedisCacheConnection variable: $(RedisCacheConnection)"'
-        name: SetVariables
+          'Write-Host "KeyVaultUri variable: $(KeyVaultUri)"'
+        name: ShowVariables
 
       - task: DownloadBuildArtifacts@0
         inputs:
