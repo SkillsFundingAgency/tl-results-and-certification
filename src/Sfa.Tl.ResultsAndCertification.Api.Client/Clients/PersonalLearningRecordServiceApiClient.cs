@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                     Password = _configuration.LearningRecordServiceSettings.Password
                 };
 
-                var response = await _learnerServiceR9Client.GetLearnerLearningEventsAsync(invokingOrganisation, "ORG", _configuration.LearningRecordServiceSettings.VendorId, "ENG", learnerDetails.Uln.ToString(), learnerDetails.Firstname, learnerDetails.Lastname, learnerDetails.DateofBirth.ToString("yyyy-MM-dd"), null, "FULL");
+                var response = await _learnerServiceR9Client.GetLearnerLearningEventsAsync(invokingOrganisation, "LNR", _configuration.LearningRecordServiceSettings.VendorId, "ENG", learnerDetails.Uln.ToString(), learnerDetails.Firstname, learnerDetails.Lastname, learnerDetails.DateofBirth.ToString("yyyy-MM-dd"), null, "FULL");
                 return response;
             }
             catch (Exception ex)

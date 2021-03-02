@@ -5,7 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
         {
             var pendingGenderLearners = await _learnerRecordService.GetPendingGenderLearnersAsync();
 
-            if (pendingGenderLearners == null)
+            if (pendingGenderLearners == null || !pendingGenderLearners.Any())
             {
                 var message = $"No pending learners found to process gender. Method: FetchLearnerGenderAsync()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
@@ -45,11 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
                 var lrsResponse = await _learnerServiceApiClient.FetchLearnerDetailsAsync(learner);
 
                 if (lrsResponse != null && lrsResponse.FindLearnerResponse?.Learner?.Length > 0)
-                {
-                    var learnerRecord = _mapper.Map<LearnerRecordDetails>(lrsResponse.FindLearnerResponse.Learner[0], opt => opt.Items["profileId"] = learner.ProfileId);
-                    learnerRecord.IsLearnerVerified = !string.IsNullOrWhiteSpace(lrsResponse.FindLearnerResponse?.ResponseCode) && lrsResponse.FindLearnerResponse.ResponseCode.Equals("WSRC0004", StringComparison.InvariantCultureIgnoreCase);
-                    learnerRecordDetailsList.Add(learnerRecord);
-                }
+                    learnerRecordDetailsList.Add(_mapper.Map<LearnerRecordDetails>(lrsResponse.FindLearnerResponse.Learner[0], opt => { opt.Items["profileId"] = learner.ProfileId; opt.Items["responseCode"] = lrsResponse.FindLearnerResponse.ResponseCode; }));
             }
 
             // process learner gender

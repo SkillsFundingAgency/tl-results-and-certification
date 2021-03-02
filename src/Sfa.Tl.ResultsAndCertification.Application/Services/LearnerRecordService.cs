@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             if (learnerRecords == null || !learnerRecords.Any())
             {
-                var message = $"No learners data retrived from LRS to process. Method: ProcessLearnerRecordsAsync()";
+                var message = $"No learners data retrieved from LRS to process learner and learning events. Method: ProcessLearnerRecordsAsync()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
                 return new LearnerVerificationAndLearningEventsResponse { IsSuccess = true, Message = message };
             }
@@ -93,7 +93,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             if (learnerRecords == null || !learnerRecords.Any())
             {
-                var message = $"No learners data retrived from LRS to process gender information. Method: ProcessLearnerGenderAsync()";
+                var message = $"No learners data retrieved from LRS to process gender information. Method: ProcessLearnerGenderAsync()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
                 return new LearnerGenderResponse { IsSuccess = true, Message = message };
             }

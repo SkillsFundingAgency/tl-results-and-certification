@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Mapper
             CreateMap<GetLearnerLearningEventsResponse, LearnerRecordDetails>()
             .ForMember(d => d.ProfileId, opts => opts.MapFrom((src, dest, destMember, context) => (int)context.Items["profileId"]))
             .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.IncomingULN))
+            .ForMember(d => d.IsLearnerVerified, opts => opts.MapFrom(s => !s.ResponseCode.Equals("WSEC0208", System.StringComparison.InvariantCultureIgnoreCase)))
             .ForMember(d => d.LearningEventDetails, opts => opts.MapFrom(s => s.LearnerRecord))
             .ForMember(d => d.PerformedBy, opts => opts.MapFrom(s => "System"));
 
@@ -25,6 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Mapper
             .ForMember(d => d.ProfileId, opts => opts.MapFrom((src, dest, destMember, context) => (int)context.Items["profileId"]))
             .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.ULN))
             .ForMember(d => d.Gender, opts => opts.MapFrom(s => EnumExtensions.GetDisplayName<LrsGender>(s.Gender)))
+            .ForMember(d => d.IsLearnerVerified, opts => opts.MapFrom((src, dest, destMember, context) => ((string)context.Items["responseCode"]).Equals("WSRC0004", System.StringComparison.InvariantCultureIgnoreCase)))
             .ForMember(d => d.PerformedBy, opts => opts.MapFrom(s => "System"));
         }
     }
