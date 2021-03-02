@@ -1,0 +1,45 @@
+parameters:
+  - name: serviceConnection
+    type: string
+  - name: sharedEnvironmentId
+    type: string
+  - name: tableName
+    type: string
+    default: "configuration"
+jobs:
+  - job: GenerateConfigs
+    variables:
+      ConfigStorageAccountName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.ConfigStorageAccountName'] ]
+      SqlConnectionString: $[ dependencies.DeploySQLDatabase.outputs['SqlVariables.SqlConnectionString'] ]
+      BlobStorageConnectionString: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.BlobStorageConnectionString'] ]
+      RedisCacheConnection: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.RedisConnectionString'] ]
+      KeyVaultUri: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedKeyVaultUri'] ]
+    pool:
+      name: "Azure Pipelines"
+      vmImage: "windows-2019"
+    dependsOn:
+      - DeployInfrastructure
+      - DeploySQLDatabase
+    steps:
+      - pwsh: |
+          'Write-Host "ConfigStorageAccountName variable: $(ConfigStorageAccountName)"'
+          'Write-Host "SqlConnectionString variable: $(SqlConnectionString)"'
+          'Write-Host "BlobStorageConnectionString variable: $(BlobStorageConnectionString)"'
+          'Write-Host "RedisCacheConnection variable: $(RedisCacheConnection)"'
+          'Write-Host "KeyVaultUri variable: $(KeyVaultUri)"'
+        name: ShowVariables
+
+      - task: DownloadBuildArtifacts@0
+        inputs:
+          buildType: "current"
+          downloadType: "single"
+          artifactName: "appdrop"
+          downloadPath: "$(System.ArtifactsDirectory)"
+
+      - task: GenerateEnvironmentConfiguration@3
+        displayName: "Process schemas in $(System.ArtifactsDirectory)/appdrop/config"
+        inputs:
+          SourcePath: "$(System.ArtifactsDirectory)/appdrop/config"
+          ServiceConnectionName: ${{ parameters.serviceConnection}}
+          StorageAccountName: "$(ConfigStorageAccountName)"
+          TableName: Configuration

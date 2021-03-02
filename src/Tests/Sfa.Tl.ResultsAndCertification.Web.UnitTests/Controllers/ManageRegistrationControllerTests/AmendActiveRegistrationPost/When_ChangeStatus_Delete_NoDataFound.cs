@@ -10,15 +10,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 {
     public class When_ChangeStatus_Delete_NoDataFound : TestSetup
     {
-        private AssessmentDetailsViewModel mockresult;
+        private AssessmentDetailsViewModel _mockresult;
 
         public override void Given()
         {
+            _mockresult = null;
             ViewModel.ChangeStatus = RegistrationChangeStatus.Delete;
             ViewModel.ProfileId = ProfileId;
 
             RegistrationLoader.GetRegistrationAssessmentAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active)
-                .Returns(mockresult);
+                .Returns(_mockresult);
         }
 
         [Fact]

@@ -1,0 +1,51 @@
+parameters:
+  - name: BaseName
+    type: string
+  - name: serviceConnection
+    type: string
+  - name: sharedEnvironmentId
+    type: string
+  - name: environmentName
+    type: string
+jobs:
+  - job: DeployInfrastructure
+    variables:
+      SharedASPName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedASPName'] ]
+      SharedKeyVaultName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedKeyVaultName'] ]
+      SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
+      ConfigurationStorageConnectionString: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.configStorageConnectionString'] ]
+      SharedResourceGroup: $[stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.SharedVariables.SharedResourceGroup']]
+      
+    steps:
+      - checkout: self
+      - pwsh: |
+          'Write-Host "SharedResourceGroup variable: $(SharedResourceGroup)"'
+          'Write-Host "SharedASPName variable: $(SharedASPName)"'
+          'Write-Host "SharedKeyVaultName variable: $(SharedKeyVaultName)"'
+          'Write-Host "SharedSQLServerName variable: $(SharedSQLServerName)"'
+          'Write-Host "ConfigurationStorageConnectionString variable: $(ConfigurationStorageConnectionString)"'
+        displayName: 'Show Variables'
+
+      - template: ./Infrastructure/steps/deploy-template.yml@devopsTemplates
+        parameters:
+          serviceConnection: ${{ parameters.serviceConnection }}
+          subscriptionId: $(subscriptionId)
+          resourceGroupName: $(ResourceGroupName)
+          location: "West Europe"
+          templateFilePath: "./azure/tlevels-environment.json"
+          armParameterOverrideString:
+            '-environmentNameAbbreviation "${{parameters.environmentName}}"
+            -resourceNamePrefix "${{parameters.BaseName}}"
+            -sharedASPName "$(SharedASPName)"
+            -sharedEnvResourceGroup "$(SharedResourceGroup)"
+            -sharedKeyVaultName "$(SharedKeyVaultName)"
+            -sharedSQLServerName "$(SharedSQLServerName)"
+            -sqlDatabaseSkuName "$(SQLDatabaseSkuName)"
+            -sqlDatabaseTier "$(SQLDatabaseTier)"
+            -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"
+            -uiCustomHostName "$(UICustomHostName)"
+            -certificateName "$(CertificateName)"
+            -storageAccountContainerArray "$(storageAccountContainerArray)"
+            -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
+            -learnerGenderTrigger "$(learnerGenderTrigger)"'
+          processOutputs: true

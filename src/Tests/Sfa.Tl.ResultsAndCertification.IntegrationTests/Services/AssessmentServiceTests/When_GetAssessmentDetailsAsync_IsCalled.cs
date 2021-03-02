@@ -91,7 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(long aoUkprn, long uln, int profileId, RegistrationPathwayStatus status, bool hasAssessments, bool expectedResponse)
+        public async Task Then_Expected_Results_Are_Returned(long aoUkprn, long uln, int profileId, RegistrationPathwayStatus status, bool expectedResponse)
         {
             await WhenAsync(aoUkprn, profileId);
 
@@ -201,22 +201,22 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 return new[]
                 {
                     // Uln not found
-                    new object[] { 10011881, 0000000000, 0, RegistrationPathwayStatus.Active, false, false },
+                    new object[] { 10011881, 0000000000, 0, RegistrationPathwayStatus.Active, false },
 
                     // Uln not found for registered AoUkprn
-                    new object[] { 00000000, 1111111111, 1, RegistrationPathwayStatus.Active, false, false },
+                    new object[] { 00000000, 1111111111, 1, RegistrationPathwayStatus.Active, false },
                     
                     // Uln: 1111111111 - Registration(Active) but no asessment entries for pathway and specialism
-                    new object[] { 10011881, 1111111111, 1, RegistrationPathwayStatus.Active, false, true },
+                    new object[] { 10011881, 1111111111, 1, RegistrationPathwayStatus.Active, true },
 
                     // Uln: 1111111112 - Registration(Active), TqPathwayAssessments(Active + History) and TqSpecialismAssessments(Active + History)
-                    new object[] { 10011881, 1111111112, 2, RegistrationPathwayStatus.Active, true, true },
+                    new object[] { 10011881, 1111111112, 2, RegistrationPathwayStatus.Active, true },
 
                     // Uln: 1111111113 - Registration(Withdrawn), TqPathwayAssessments(Withdrawn) and TqSpecialismAssessments(Withdrawn)
-                    new object[] { 10011881, 1111111113, 3, RegistrationPathwayStatus.Withdrawn, true, true },
+                    new object[] { 10011881, 1111111113, 3, RegistrationPathwayStatus.Withdrawn, true },
 
                     // Uln: 1111111114 - Registration(Active), TqPathwayAssessments(Active), TqResult (Active)
-                    new object[] { 10011881, 1111111114, 4, RegistrationPathwayStatus.Active, true, true },
+                    new object[] { 10011881, 1111111114, 4, RegistrationPathwayStatus.Active, true },
                 };
             }
         }        

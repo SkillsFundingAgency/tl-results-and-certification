@@ -22,10 +22,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CommonService
             CreateMapper();
             SeedLookupData();
 
+            CommonServiceLogger = new Logger<CommonService>(new NullLoggerFactory());
             TlLookupRepositoryLogger = new Logger<GenericRepository<TlLookup>>(new NullLoggerFactory());
             TlLookupRepository = new GenericRepository<TlLookup>(TlLookupRepositoryLogger, DbContext);
-
-            CommonService = new CommonService(TlLookupRepository, CommonMapper);
+            FunctionLogRepositoryLogger = new Logger<GenericRepository<FunctionLog>>(new NullLoggerFactory());
+            FunctionLogRepository = new GenericRepository<FunctionLog>(FunctionLogRepositoryLogger, DbContext);
+            CommonService = new CommonService(CommonServiceLogger, CommonMapper, TlLookupRepository, FunctionLogRepository);
         }
 
         public async override Task When()

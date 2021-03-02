@@ -2,6 +2,7 @@
 {
     public enum LookupCategory
     {
-        PathwayComponentGrade = 1
+        PathwayComponentGrade = 1,
+        QualificationSubject = 2
     }
 }

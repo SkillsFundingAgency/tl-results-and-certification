@@ -598,7 +598,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 specialismsToUpdateList = mappedSpecialisms.Concat(specialismsToUpdate).ToList();
             }
 
-            return specialismsToUpdateList.Any() ? await _tqRegistrationSpecialismRepository.UpdateManyAsync(specialismsToUpdateList) > 0 : false;
+            return specialismsToUpdateList.Any() && await _tqRegistrationSpecialismRepository.UpdateManyAsync(specialismsToUpdateList) > 0;
         }
 
         private static void EndRegistrationWithStatus(TqRegistrationPathway pathway, RegistrationPathwayStatus status, string performedBy)
