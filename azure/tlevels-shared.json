@@ -300,6 +300,10 @@
             "type": "string",
             "value": "[variables('keyVaultName')]"
         },
+        "KeyVaultUri": {
+            "type": "string",
+            "value": "[reference(concat('key-vault','-', parameters('environmentNameAbbreviation'))).outputs.vaultUri.value]"
+        },
         "sharedSQLServerName": {
             "type": "string",
             "value": "[variables('sqlServerName')]"
