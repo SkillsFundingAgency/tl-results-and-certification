@@ -1,6 +1,7 @@
 ﻿using Lrs.LearnerService.Api.Client;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
@@ -38,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                             ULN = learnerDetails.Uln.ToString(),
                             GivenName = learnerDetails.Firstname,
                             FamilyName = learnerDetails.Lastname,
-                            DateOfBirth = learnerDetails.DateofBirth.ToString("yyyy-MM-dd")
+                            DateOfBirth = learnerDetails.DateofBirth.ToString(Constants.LrsDateFormat)
                         }
                     }
                 };
@@ -69,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                         ULN = learnerDetails.Uln.ToString(),
                         GivenName = learnerDetails.Firstname,
                         FamilyName = learnerDetails.Lastname,
-                        FindType = "FUL"
+                        FindType = Constants.LearnerByULNFindType
                     }
                 };                
 

@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PersonalLe
         public override void Given()
         {
             _apiClient = new PersonalLearningRecordServiceApiClient(_logger, _learnerServiceR9Client, _configuration);
-            _learnerServiceR9Client.GetLearnerLearningEventsAsync(Arg.Any<InvokingOrganisationR10>(), "ORG", _configuration.LearningRecordServiceSettings.VendorId, "ENG",
+            _learnerServiceR9Client.GetLearnerLearningEventsAsync(Arg.Any<InvokingOrganisationR10>(), "LNR", _configuration.LearningRecordServiceSettings.VendorId, "ENG",
                                                                     _registrationLearnerDetails.Uln.ToString(), _registrationLearnerDetails.Firstname, _registrationLearnerDetails.Lastname,
                                                                     _registrationLearnerDetails.DateofBirth.ToString("yyyy-MM-dd"), null, "FULL").Returns(_mockHttpResult);            
         }

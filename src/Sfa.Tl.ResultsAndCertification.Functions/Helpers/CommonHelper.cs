@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 
@@ -14,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Helpers
                 Name = functionName,
                 StartDate = DateTime.UtcNow,
                 Status = FunctionStatus.Processing,
-                PerformedBy = "System"
+                PerformedBy = Constants.FunctionPerformedBy
             };
         }
 
