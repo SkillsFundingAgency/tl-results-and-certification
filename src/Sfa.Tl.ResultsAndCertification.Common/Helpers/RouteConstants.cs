@@ -205,5 +205,11 @@
         public const string RenewSessionActivity = "RenewSessionActivity";
         public const string ActivityTimeout = "ActivityTimeout";
         public const string Timeout = "Timeout";
+
+        # region TrainingProvider specific constants
+
+        public const string EnterUln = "EnterUln";
+
+        # endregion
     }
 }
