@@ -10,15 +10,14 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardControllerTests.Index
 {
-    public class When_Valid_Access : TestSetup
+    public class When_Valid_TrainingProvider_UserType : TestSetup
     {
         public override void Given()
         {
             var httpContext = new ClaimsIdentityBuilder<DashboardController>(Controller)
                 .Add(CustomClaimTypes.HasAccessToService, "true")
-                .Add(CustomClaimTypes.LoginUserType, ((int)LoginUserType.AwardingOrganisation).ToString())
-                .Build()
-                .HttpContext;
+                .Add(CustomClaimTypes.LoginUserType, ((int)LoginUserType.TrainingProvider).ToString())
+                .Build().HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
         }
@@ -33,8 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardCont
 
             var model = viewResult.Model as DashboardViewModel;
             model.Should().NotBeNull();
-            model.IsAoUser.Should().BeTrue();
-            model.IsTrainingProviderUser.Should().BeFalse();
+            model.IsAoUser.Should().BeFalse();
+            model.IsTrainingProviderUser.Should().BeTrue();
         }
     }
 }
