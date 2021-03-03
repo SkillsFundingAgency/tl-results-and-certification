@@ -133,20 +133,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Providers Administrator .
+        ///   Looks up a localized string similar to Provider Administrator .
         /// </summary>
-        public static string Providers_Administrator_Role {
+        public static string Provider_Administrator_Role {
             get {
-                return ResourceManager.GetString("Providers_Administrator_Role", resourceCulture);
+                return ResourceManager.GetString("Provider_Administrator_Role", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to – has all roles: Learner Records Editor.
         /// </summary>
-        public static string Providers_Administrator_Role_Info {
+        public static string Provider_Administrator_Role_Info {
             get {
-                return ResourceManager.GetString("Providers_Administrator_Role_Info", resourceCulture);
+                return ResourceManager.GetString("Provider_Administrator_Role_Info", resourceCulture);
             }
         }
         

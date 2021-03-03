@@ -141,10 +141,10 @@
   <data name="Page_Title" xml:space="preserve">
     <value>Sign in to manage your T Level results</value>
   </data>
-  <data name="Providers_Administrator_Role" xml:space="preserve">
-    <value>Providers Administrator </value>
+  <data name="Provider_Administrator_Role" xml:space="preserve">
+    <value>Provider Administrator </value>
   </data>
-  <data name="Providers_Administrator_Role_Info" xml:space="preserve">
+  <data name="Provider_Administrator_Role_Info" xml:space="preserve">
     <value>– has all roles: Learner Records Editor</value>
   </data>
   <data name="Read_The_Text_Part1" xml:space="preserve">
@@ -203,7 +203,6 @@
     &lt;ul class="govuk-list govuk-list--bullet"&gt;
       &lt;li&gt;tell us if a learner has achieved the minimum standard for English and maths&lt;/li&gt;
       &lt;li&gt;tell us if a learner has completed their industry placement&lt;/li&gt;
-      &lt;li&gt;request statements of achievement&lt;/li&gt;
     &lt;/ul&gt;
 
     &lt;p class="govuk-body govuk-!-margin-top-7"&gt;You will be signed out if you are inactive for 30 minutes.&lt;/p&gt;</value>
