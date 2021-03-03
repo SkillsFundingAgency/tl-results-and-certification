@@ -70,16 +70,52 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage T Level results user guide.
+        ///   Looks up a localized string similar to Awarding organisation service roles.
         /// </summary>
-        public static string Manage_Tlevel_Results_User_Guide_Text {
+        public static string Collapsable_Awarding_Organisation_Service_Roles {
             get {
-                return ResourceManager.GetString("Manage_Tlevel_Results_User_Guide_Text", resourceCulture);
+                return ResourceManager.GetString("Collapsable_Awarding_Organisation_Service_Roles", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sign in to manage your T Level results.
+        ///   Looks up a localized string similar to Provider service roles.
+        /// </summary>
+        public static string Collapsable_Provider_service_Roles {
+            get {
+                return ResourceManager.GetString("Collapsable_Provider_service_Roles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner Records Editor .
+        /// </summary>
+        public static string Learner_Records_Editors_Role {
+            get {
+                return ResourceManager.GetString("Learner_Records_Editors_Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to – can upload, amend, view, delete and add English and maths achievements and update industry placement completion status.
+        /// </summary>
+        public static string Learner_Records_Editors_Role_Info {
+            get {
+                return ResourceManager.GetString("Learner_Records_Editors_Role_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level data format and rules guides.
+        /// </summary>
+        public static string Manage_Data_Format_User_Guide {
+            get {
+                return ResourceManager.GetString("Manage_Data_Format_User_Guide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage T Level results.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -97,25 +133,143 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Read the.
+        ///   Looks up a localized string similar to Providers Administrator .
         /// </summary>
-        public static string Read_The_Text {
+        public static string Providers_Administrator_Role {
             get {
-                return ResourceManager.GetString("Read_The_Text", resourceCulture);
+                return ResourceManager.GetString("Providers_Administrator_Role", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;As an awarding organisation you can use this service to:&lt;/p&gt;
+        ///   Looks up a localized string similar to – has all roles: Learner Records Editor.
+        /// </summary>
+        public static string Providers_Administrator_Role_Info {
+            get {
+                return ResourceManager.GetString("Providers_Administrator_Role_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You may need to prepare your CSV files for uploading registrations, assessments and results in bulk. Find out more about the technical requirements for each file on our .
+        /// </summary>
+        public static string Read_The_Text_Part1 {
+            get {
+                return ResourceManager.GetString("Read_The_Text_Part1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to page..
+        /// </summary>
+        public static string Read_The_Text_Part2 {
+            get {
+                return ResourceManager.GetString("Read_The_Text_Part2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Providers Editor .
+        /// </summary>
+        public static string Role_Providers_Editor {
+            get {
+                return ResourceManager.GetString("Role_Providers_Editor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to – can enter and amend the T Levels each provider is offering.
+        /// </summary>
+        public static string Role_Providers_Editor_Info {
+            get {
+                return ResourceManager.GetString("Role_Providers_Editor_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registrations Editor .
+        /// </summary>
+        public static string Role_Registrations_Editor {
+            get {
+                return ResourceManager.GetString("Role_Registrations_Editor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to – can upload, amend, view, remove and add learner registrations and assessment entries.
+        /// </summary>
+        public static string Role_Registrations_Editor_Info {
+            get {
+                return ResourceManager.GetString("Role_Registrations_Editor_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results Editor .
+        /// </summary>
+        public static string Role_Results_Editor {
+            get {
+                return ResourceManager.GetString("Role_Results_Editor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to – can upload, amend, view, remove and add learners’ core component results.
+        /// </summary>
+        public static string Role_Results_Editor_Info {
+            get {
+                return ResourceManager.GetString("Role_Results_Editor_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site Administrator .
+        /// </summary>
+        public static string Role_Site_Administrator {
+            get {
+                return ResourceManager.GetString("Role_Site_Administrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to – has all roles: T Levels Reviewer, Providers Editor, Registrations Editor, Results Editor.
+        /// </summary>
+        public static string Role_Site_Administrator_Info {
+            get {
+                return ResourceManager.GetString("Role_Site_Administrator_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Levels Reviewer .
+        /// </summary>
+        public static string Role_TLevels_Reviewer {
+            get {
+                return ResourceManager.GetString("Role_TLevels_Reviewer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to – reviews T Level Technical Qualification titles and confirms that details are correct or not.
+        /// </summary>
+        public static string Role_TLevels_Reviewer_Info {
+            get {
+                return ResourceManager.GetString("Role_TLevels_Reviewer_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;
+        ///      This service is for awarding organisations and providers who deliver T Level qualifications.
+        ///    &lt;/p&gt;
         ///
-        ///        &lt;ul class=&quot;govuk-list govuk-list--bullet&quot;&gt;
-        ///            &lt;li&gt;review your T Level details&lt;/li&gt;
-        ///            &lt;li&gt;tell us which providers are offering your T Levels&lt;/li&gt;
-        ///            &lt;li&gt;enter student registrations – from September 2020&lt;/li&gt;
-        ///            &lt;li&gt;enter student results – from 2021&lt;/li&gt;
-        ///        &lt;/ul&gt;
+        ///    &lt;p class=&quot;govuk-body&quot;&gt;Awarding organisations can use this service to:&lt;/p&gt;
         ///
-        ///        &lt;p class=&quot;govuk-body govuk-!-margin-top-7&quot;&gt;You will be signed out if you are inactive for 30 minut [rest of string was truncated]&quot;;.
+        ///    &lt;ul class=&quot;govuk-list govuk-list--bullet&quot;&gt;
+        ///      &lt;li&gt;tell us if T Level details are correct&lt;/li&gt;
+        ///      &lt;li&gt;tell us which T Levels each provider is offering&lt;/li&gt;
+        ///      &lt;li&gt;upload, amend, view, delete and add learner registrations&lt;/li&gt;
+        ///      &lt;li&gt;upload, amend, view, remove and add assessm [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Section_Text {
             get {
@@ -133,7 +287,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You need a DfE Sign-in account to use this service..
+        ///   Looks up a localized string similar to You will need a DfE Sign-in account and an assigned service role..
         /// </summary>
         public static string You_Need_DfE_SignIn_Account_To_Use_This_Service_Text {
             get {
