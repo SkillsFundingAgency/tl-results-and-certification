@@ -1,4 +1,5 @@
-﻿@using Sfa.Tl.ResultsAndCertification.Web.Content
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Dashboard.DashboardViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content
 
 @{
     ViewData["Title"] = Dashboard.Page_Title;
@@ -115,6 +116,42 @@
 
             <p class="govuk-body">
                 @Dashboard.Account_Description_Text
+            </p>
+        </div>
+    </div>
+
+    <!-- Providers Dashboard -->
+
+    <!-- BLOCK 1 Manage Learning Records -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group learning-provider-card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="">
+                        @Dashboard.Manage_Learners_Records_Text
+                    </a>
+                </h2>
+            </p>
+
+            <p class="govuk-body">
+                @Dashboard.Manage_Learners_Records_Description_Text
+            </p>
+        </div>
+    </div>
+
+    <!-- BLOCK 2 Manage Your Account -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group learning-provider-card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="AccountProfile">
+                        @Dashboard.Manage_Your_Account_Text
+                    </a>
+                </h2>
+            </p>
+
+            <p class="govuk-body">
+                @Dashboard.Manage_Your_Account_Description_Text
             </p>
         </div>
     </div>
