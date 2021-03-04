@@ -312,7 +312,7 @@
         //     ]
         // },
         {
-            "condition": "[greater(length(parameters('internalApiCustomHostName')), 0)]",
+            "condition": "[greater(length(parameters('internalApiCertificateName')), 0)]",
             "apiVersion": "2017-05-10",
             "name": "[concat('internal-api-app-service-certificate','-',parameters('environmentNameAbbreviation'))]",
             "resourceGroup": "[resourceGroup().name]",
