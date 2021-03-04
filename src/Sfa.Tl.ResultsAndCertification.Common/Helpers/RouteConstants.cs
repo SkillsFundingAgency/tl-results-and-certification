@@ -208,6 +208,7 @@
 
         # region TrainingProvider specific constants
 
+        public const string ManageLearnerRecordsDashboard = "ManageLearnerRecordsDashboard";
         public const string EnterUln = "EnterUln";
 
         # endregion

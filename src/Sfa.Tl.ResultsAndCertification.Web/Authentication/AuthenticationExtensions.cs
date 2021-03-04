@@ -172,7 +172,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
                                 if (userInfo.Roles != null && userInfo.Roles.Any())
                                 {
-                                    claims.Add(new Claim(ClaimTypes.Role, "Provider Administrator"));
+                                    claims.Add(new Claim(ClaimTypes.Role, RolesExtensions.ProviderAdministrator));
                                     claims.AddRange(userInfo.Roles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
                                 }
                             }

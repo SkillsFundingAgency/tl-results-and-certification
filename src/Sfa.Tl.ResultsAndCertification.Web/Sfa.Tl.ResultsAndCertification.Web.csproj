@@ -501,6 +501,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ViewAll.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\Dashboard.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dashboard.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\ViewComponents\BackLink.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -882,6 +887,10 @@
     <EmbeddedResource Update="Content\Tlevel\ViewAll.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ViewAll.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\Dashboard.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\ViewComponents\BackLink.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
