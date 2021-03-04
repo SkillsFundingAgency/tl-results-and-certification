@@ -439,7 +439,7 @@
                     },
                     "keyVaultAccessPolicies": [
                         {
-                            "objectId": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.Identity.PrincipalId.value]",
+                            "objectId": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]",
                             "tenantId": "[subscription().tenantId]",
                             "permissions": {
                                 "keys": [
