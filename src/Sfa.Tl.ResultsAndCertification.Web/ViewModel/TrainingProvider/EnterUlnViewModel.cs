@@ -11,6 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider
         [RegularExpression(@"^\d{10}$", ErrorMessageResourceType = typeof(ErrorResource.EnterUniqueLearnerReference), ErrorMessageResourceName = "Uln_Not_Valid_Validation_Message")]
         public string EnterUln { get; set; }
 
-        public BackLinkModel BackLink => new BackLinkModel { RouteName = RouteConstants.AssessmentDashboard }; // TODO: Ravi
+        public BackLinkModel BackLink => new BackLinkModel { RouteName = RouteConstants.ManageLearnerRecordsDashboard };
     }
 }

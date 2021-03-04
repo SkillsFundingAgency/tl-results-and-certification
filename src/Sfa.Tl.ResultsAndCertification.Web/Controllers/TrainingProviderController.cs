@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-learner-record-unique-learner-number", Name = RouteConstants.EnterUln)]
+        [Route("add-learner-record-unique-learner-number", Name = RouteConstants.EnterUniqueLearnerNumber)]
         public IActionResult EnterUniqueLearnerReference()
         {
             var viewModel = new EnterUlnViewModel();
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(viewModel);
 
-            return View();
+            return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumber);
         }
     }
 }
