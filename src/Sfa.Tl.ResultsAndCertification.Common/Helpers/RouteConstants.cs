@@ -208,7 +208,8 @@
 
         # region TrainingProvider specific constants
 
-        public const string EnterUln = "EnterUln";
+        public const string EnterUniqueLearnerNumber = "EnterUniqueLearnerNumber";
+        public const string SubmitEnterUniqueLearnerNumber = "SubmitEnterUniqueLearnerNumber";
 
         # endregion
     }
