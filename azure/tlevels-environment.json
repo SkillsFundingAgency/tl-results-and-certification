@@ -414,7 +414,9 @@
                     "certificateThumbprint": {
                         "value": "[if(greater(length(parameters('functionCertificateName')), 0), reference(concat('function-app-certificate','-',parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
                     },
-                    "systemAssignedIdentity": "SystemAssigned"
+                    "systemAssignedIdentity": {
+                        "value": "SystemAssigned"
+                    }
                 }
             }
         },
