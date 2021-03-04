@@ -430,7 +430,10 @@
                 },
                 "parameters": {
                     "keyVaultName": {
-                        "value": ""
+                        "value": "[parameters('sharedKeyVaultName')]"
+                    },
+                    "keyVaultResourceGroup": {
+                        "value": "[parameters('sharedEnvResourceGroup')]"
                     },
                     "keyVaultAccessPolicies": [
                         {
