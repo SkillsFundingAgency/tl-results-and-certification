@@ -437,23 +437,25 @@
                     "keyVaultResourceGroup": {
                         "value": "[parameters('sharedEnvResourceGroup')]"
                     },
-                    "keyVaultAccessPolicies": [
-                        {
-                            "objectId": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]",
-                            "tenantId": "[subscription().tenantId]",
-                            "permissions": {
-                                "keys": [
-                                    "All"
-                                ],
-                                "certificates": [
-                                    "All"
-                                ],
-                                "secrets": [
-                                    "All"
-                                ]
+                    "keyVaultAccessPolicies": {
+                        "value": [
+                            {
+                                "objectId": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]",
+                                "tenantId": "[subscription().tenantId]",
+                                "permissions": {
+                                    "keys": [
+                                        "All"
+                                    ],
+                                    "certificates": [
+                                        "All"
+                                    ],
+                                    "secrets": [
+                                        "All"
+                                    ]
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "dependsOn": [
