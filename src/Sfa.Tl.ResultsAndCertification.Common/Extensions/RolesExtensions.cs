@@ -6,7 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
     public static class RolesExtensions
     {
-        // Policy Names
+        // Awarding Organisation Policy Names
         public const string RequireTLevelsReviewerAccess = "RequireTLevelsReviewerAccess";
         public const string RequireProviderEditorAccess = "RequireProviderEditorAccess";
         public const string RequireRegistrationsEditorAccess = "RequireRegistrationsEditorAccess";
@@ -19,7 +19,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         public const string RegistrationsEditor = "Registrations Editor";
         public const string ResultsEditor = "Results Editor";
 
-        // Provider Roles
+        // Training Provider Policy Names
+        public const string RequireLearnerRecordsEditorAccess = "RequireLearnerRecordsEditorAccess";
+
+        // TrainingProvider Roles
         public const string ProviderAdministrator = "Provider Administrator";
         public const string LearnerRecordsEditor = "Learner Records Editor";        
 

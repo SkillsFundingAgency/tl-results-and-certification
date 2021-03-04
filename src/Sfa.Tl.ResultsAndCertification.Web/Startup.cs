@@ -102,10 +102,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
             services.AddAuthorization(options =>
             {
+                // Awarding Organisation Access Policies
                 options.AddPolicy(RolesExtensions.RequireTLevelsReviewerAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.TlevelsReviewer));
                 options.AddPolicy(RolesExtensions.RequireProviderEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor));
                 options.AddPolicy(RolesExtensions.RequireRegistrationsEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.RegistrationsEditor));
                 options.AddPolicy(RolesExtensions.RequireResultsEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ResultsEditor));
+
+                // Training Provider Access Policies                
+                options.AddPolicy(RolesExtensions.RequireLearnerRecordsEditorAccess, policy => policy.RequireRole(RolesExtensions.ProviderAdministrator, RolesExtensions.LearnerRecordsEditor));
             });
 
             services.AddWebDataProtection(ResultsAndCertificationConfiguration, _env);
@@ -164,7 +168,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<IAssessmentLoader, AssessmentLoader>();
             services.AddTransient<IResultLoader, ResultLoader>();
             services.AddTransient<IDocumentLoader, DocumentLoader>();
-
             services.AddTransient<ITrainingProviderLoader, TrainingProviderLoader>();
         }
     }
