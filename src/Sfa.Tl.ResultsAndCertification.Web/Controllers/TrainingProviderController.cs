@@ -28,8 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-learner-record-unique-learner-number", Name = RouteConstants.EnterUniqueLearnerNumber)]
         public IActionResult EnterUniqueLearnerReference()
         {
-            var viewModel = new EnterUlnViewModel();
-            return View(viewModel);
+            return View(new EnterUlnViewModel());
         }
 
         [HttpPost]
