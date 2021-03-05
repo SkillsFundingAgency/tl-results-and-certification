@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 {
     public class QualificationAchievedDataProvider
     {
-        public static QualificationAchieved CreateTqPathwayResult(ResultsAndCertificationDbContext _dbContext, bool addToDbContext = true)
+        public static QualificationAchieved CreateQualificationAchieved(ResultsAndCertificationDbContext _dbContext, bool addToDbContext = true)
         {
             var qualificationAchieved = new QualificationAchievedBuilder().Build();
 
@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return qualificationAchieved;
         }
 
-        public static QualificationAchieved CreateTqPathwayResult(ResultsAndCertificationDbContext _dbContext, QualificationAchieved qualificationAchieved, bool addToDbContext = true)
+        public static QualificationAchieved CreateQualificationAchieved(ResultsAndCertificationDbContext _dbContext, QualificationAchieved qualificationAchieved, bool addToDbContext = true)
         {
             if (qualificationAchieved == null)
             {
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return qualificationAchieved;
         }
 
-        public static QualificationAchieved CreateTqPathwayResult(ResultsAndCertificationDbContext _dbContext, int tqRegistrationProfileId, int qualificationId, int qualificationGradeId, bool isAchieved, bool addToDbContext = true)
+        public static QualificationAchieved CreateQualificationAchieved(ResultsAndCertificationDbContext _dbContext, int tqRegistrationProfileId, int qualificationId, int qualificationGradeId, bool isAchieved, bool addToDbContext = true)
         {
             var qualificationAchieved = new QualificationAchieved
             {
@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return qualificationAchieved;
         }
 
-        public static List<QualificationAchieved> CreateTqPathwayResults(ResultsAndCertificationDbContext _dbContext, List<QualificationAchieved> qualificationAchieved, bool addToDbContext = true)
+        public static List<QualificationAchieved> CreateQualificationAchieved(ResultsAndCertificationDbContext _dbContext, List<QualificationAchieved> qualificationAchieved, bool addToDbContext = true)
         {
             if (addToDbContext && qualificationAchieved != null && qualificationAchieved.Count > 0)
             {

@@ -94,6 +94,7 @@
     <Build Include="Tables\FunctionLog.sql" />
     <None Include="PostDeployment\SeedQualificationGrade.sql" />
     <None Include="PostDeployment\SeedQualificationType.sql" />
+    <Build Include="Tables\IndustryPlacement.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />
