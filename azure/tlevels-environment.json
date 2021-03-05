@@ -422,7 +422,7 @@
         },
         {
             "apiVersion": "2017-05-10",
-            "name": "[concat('function-app-access-policy','-', parameters('environmentNameAbbreviation'))]",
+            "name": "[concat('function-app-kv-access-policy','-', parameters('environmentNameAbbreviation'))]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
@@ -440,18 +440,12 @@
                     "keyVaultAccessPolicies": {
                         "value": [
                             {
-                                "objectId": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]",
+                                "objectId": "[reference(concat('function-app','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]",
                                 "tenantId": "[subscription().tenantId]",
                                 "permissions": {
-                                    "keys": [
-                                        "All"
-                                    ],
-                                    "certificates": [
-                                        "All"
-                                    ],
-                                    "secrets": [
-                                        "All"
-                                    ]
+                                    "keys": [ "All" ],
+                                    "certificates": [ "All" ],
+                                    "secrets": [ "All" ]
                                 }
                             }
                         ]
