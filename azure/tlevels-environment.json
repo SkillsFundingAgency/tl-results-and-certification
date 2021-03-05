@@ -440,7 +440,7 @@
                     "keyVaultAccessPolicies": {
                         "value": [
                             {
-                                "objectId": "[reference(resourceId('Microsoft.Web/sites', 'function-app','-',parameters('environmentNameAbbreviation')),'2019-08-01', 'full').identity.principalId]",                                
+                                "objectId": "[reference(concat('function-app','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]",                                
                                 "tenantId": "[subscription().tenantId]",
                                 "permissions": {
                                     "keys": [ "All" ],

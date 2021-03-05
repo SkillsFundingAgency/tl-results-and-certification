@@ -1,9 +1,9 @@
 stages:
-  - template: tlevels-build-stage.yml
-    parameters:        
-      variableGroups:
-        - platform-global
-        - platform-global-resac
+  # - template: tlevels-build-stage.yml
+  #   parameters:        
+  #     variableGroups:
+  #       - platform-global
+  #       - platform-global-resac
 ######################## DEV ##############################################
   - template: tlevels-shared-stage.yml
     parameters:
