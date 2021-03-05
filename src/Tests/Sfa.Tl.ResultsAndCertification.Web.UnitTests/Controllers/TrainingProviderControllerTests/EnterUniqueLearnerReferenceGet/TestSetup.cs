@@ -22,13 +22,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             TrainingProviderLoader = Substitute.For<ITrainingProviderLoader>();
             CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<TrainingProviderController>>();
-            Controller = new TrainingProviderController(TrainingProviderLoader, CacheService);
+            Controller = new TrainingProviderController(TrainingProviderLoader, CacheService, Logger);
         }
 
-        public override Task When()
+        public async override Task When()
         {
-            Result = Controller.EnterUniqueLearnerReference();
-            return Task.CompletedTask;
+            Result = await Controller.EnterUniqueLearnerReference();
         }
     }
 }

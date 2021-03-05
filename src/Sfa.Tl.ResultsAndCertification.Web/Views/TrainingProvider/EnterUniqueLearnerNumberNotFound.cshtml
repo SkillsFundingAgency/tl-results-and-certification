@@ -1,0 +1,22 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.ProvidersUlnNotFoundViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+
+@{
+    ViewData["Title"] = EnterUniqueLearnerReferenceNotFound.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">
+            @string.Format(EnterUniqueLearnerReferenceNotFound.Uln_Cannot_Be_Found_Heading, @Model.Uln)
+        </h1>
+        <p class="govuk-body">
+            @EnterUniqueLearnerReferenceNotFound.Uln_Cannot_Be_Found_Text
+        </p>
+        <p><a id="backButton" class="govuk-button govuk-!-margin-top-6" role="button" asp-route="@Model.BackLink.RouteName">@EnterUniqueLearnerReferenceNotFound.Back_Button</a></p>
+    </div>
+</div>

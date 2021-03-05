@@ -211,6 +211,7 @@
         public const string ManageLearnerRecordsDashboard = "ManageLearnerRecordsDashboard";
         public const string EnterUniqueLearnerNumber = "EnterUniqueLearnerNumber";
         public const string SubmitEnterUniqueLearnerNumber = "SubmitEnterUniqueLearnerNumber";
+        public const string EnterUniqueLearnerNumberNotFound = "EnterUniqueLearnerNumberNotFound";
 
         # endregion
     }

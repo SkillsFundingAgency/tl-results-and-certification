@@ -89,5 +89,9 @@
         public const int SpecialismAssessmentStartInYears = 1;
 
         public const int MaxFileSizeInMb = 5;
+
+        // TrainingProvider constants
+        public const string EnterUniqueLearnerNumberNotFound = "EnterUniqueLearnerNumberNotFound";
+        public const string EnterUniqueLearnerNumberCriteria = "EnterUniqueLearnerNumberCriteria";
     }
 }
