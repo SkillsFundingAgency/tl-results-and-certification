@@ -437,15 +437,50 @@
                     "keyVaultResourceGroup": {
                         "value": "[parameters('sharedEnvResourceGroup')]"
                     },
+
                     "keyVaultAccessPolicies": {
                         "value": [
                             {
-                                "objectId": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]",                                
+                                "objectId": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]",
                                 "tenantId": "[subscription().tenantId]",
                                 "permissions": {
-                                    "keys": [ "All" ],
-                                    "certificates": [ "All" ],
-                                    "secrets": [ "All" ]
+                                    "keys": [
+                                        "Get",
+                                        "List",
+                                        "Update",
+                                        "Create",
+                                        "Import",
+                                        "Delete",
+                                        "Recover",
+                                        "Backup",
+                                        "Restore"
+                                    ],
+                                    "secrets": [
+                                        "Get",
+                                        "List",
+                                        "Set",
+                                        "Delete",
+                                        "Recover",
+                                        "Backup",
+                                        "Restore"
+                                    ],
+                                    "certificates": [
+                                        "Get",
+                                        "List",
+                                        "Update",
+                                        "Create",
+                                        "Import",
+                                        "Delete",
+                                        "Recover",
+                                        "Backup",
+                                        "Restore",
+                                        "ManageContacts",
+                                        "ManageIssuers",
+                                        "GetIssuers",
+                                        "ListIssuers",
+                                        "SetIssuers",
+                                        "DeleteIssuers"
+                                    ]
                                 }
                             }
                         ]
