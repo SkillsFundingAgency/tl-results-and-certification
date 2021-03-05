@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.EnterUniqueLearnerReferenceGet
 {
-    public class When_Action_Called : TestSetup
+    public class When_Called_With_Invalid_Data : TestSetup
     {
         public override void Given() { }
 
@@ -14,10 +14,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public void Then_Returns_Expected_Results()
         {
             Result.Should().NotBeNull();
+            Result.Should().NotBeNull();
             (Result as ViewResult).Model.Should().NotBeNull();
 
             var model = (Result as ViewResult).Model as EnterUlnViewModel;
             model.BackLink.Should().NotBeNull();
+            model.EnterUln.Should().BeEmpty();
             model.BackLink.RouteName.Should().Be(RouteConstants.ManageLearnerRecordsDashboard);
             model.BackLink.RouteAttributes.Count.Should().Be(0);
         }
