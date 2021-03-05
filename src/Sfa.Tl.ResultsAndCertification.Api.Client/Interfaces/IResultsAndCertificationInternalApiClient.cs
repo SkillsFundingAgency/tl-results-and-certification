@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request);
 
         // TraningProvider
-        Task<FindUlnResponse> FindProvidersUlnAsync(long aoUkprn, long uln);
+        Task<bool> FindProvidersUlnAsync(long aoUkprn, long uln);
 
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);

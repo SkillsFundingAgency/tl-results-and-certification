@@ -54,9 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            // await _trainingProviderLoader.FindProvidersUlnAsync(User.GetUkPrn(), model.EnterUln.ToLong());
-
-            bool isFound = false;
+            var isFound = await _trainingProviderLoader.FindProvidersUlnAsync(User.GetUkPrn(isProvider: true), model.EnterUln.ToLong());
             if (!isFound)
             {
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberCriteria), model.EnterUln);

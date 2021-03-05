@@ -247,10 +247,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IList<LookupData>>(requestUri);
         }
 
-        public async Task<FindUlnResponse> FindProvidersUlnAsync(long providerUkprn, long uln)
+        public async Task<bool> FindProvidersUlnAsync(long providerUkprn, long uln)
         {
             var requestUri = string.Format(ApiConstants.FindProvidersUlnUri, providerUkprn, uln);
-            return await GetAsync<FindUlnResponse>(requestUri);
+            return await GetAsync<bool>(requestUri);
         }
 
         #region Private Methods
