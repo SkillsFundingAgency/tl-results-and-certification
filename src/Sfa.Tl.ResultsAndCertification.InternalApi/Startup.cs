@@ -168,7 +168,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
 
             // TrainingProvider
             services.AddTransient<ITrainingProviderService, TrainingProviderService>();
-            services.AddTransient<ITrainingProviderRepository, TrainingProviderRepository>();
         }
     }
 }
