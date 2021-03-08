@@ -52,9 +52,9 @@ jobs:
           processOutputs: true
       
       - pwsh: |
-          Write-Host "1: $armOutputs.armOutput.workerFunctionAppName"
-          Write-Host "2: $armOutput.workerFunctionAppName"
-          Write-Host "3: $workerFunctionAppName"
+          Write-Host "1: $(armOutputs.armOutput.workerFunctionAppName)"
+          Write-Host "2: $(armOutput.workerFunctionAppName)"
+          Write-Host "3: $(workerFunctionAppName)"
           
           $objectId = az functionapp identity show -n $armOutputs.armOutput.workerFunctionAppName -g $(ResourceGroupName) --query "principalId"
           Write-Host "ObjectID : $objectId"
