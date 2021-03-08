@@ -108,7 +108,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.IndustryPlacementQuestion = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            return RedirectToRoute(RouteConstants.AddRegistrationDateofBirth);
+            return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
         }
     }
 }
