@@ -8,5 +8,6 @@
         public string ProviderName { get; set; }
         public bool IsLearnerRegistered { get; set; }
         public bool IsLearnerRecordAdded { get; set; }
+        public bool IsSendQualification { get; set; }
     }
 }

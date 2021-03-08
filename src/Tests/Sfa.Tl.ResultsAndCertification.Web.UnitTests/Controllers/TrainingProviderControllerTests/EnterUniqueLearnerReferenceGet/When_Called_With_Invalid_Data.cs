@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             var model = (Result as ViewResult).Model as EnterUlnViewModel;
             model.BackLink.Should().NotBeNull();
-            model.EnterUln.Should().BeEmpty();
+            model.EnterUln.Should().BeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.ManageLearnerRecordsDashboard);
             model.BackLink.RouteAttributes.Count.Should().Be(0);
         }
