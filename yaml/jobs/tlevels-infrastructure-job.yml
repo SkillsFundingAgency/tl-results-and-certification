@@ -52,7 +52,8 @@ jobs:
           processOutputs: true
       
       - pwsh: |
-          Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName) -ObjectId $(functionIdentityObjectId) -PermissionsToSecrets "get" -PermissionsToKeys "get" -PermissionsToCertificates "get"
+          $objectId = az functionapp identity show -n $(workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
+          Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName) -ObjectId $objectId -PermissionsToSecrets "get" -PermissionsToKeys "get" -PermissionsToCertificates "get"
       
       # - template: ../tasks/tlevels-Add-KeyvaultAccessPolicy-task.yml
       #   parameters:

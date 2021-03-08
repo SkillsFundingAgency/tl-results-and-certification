@@ -560,10 +560,6 @@
         "BlobStorageConnectionString": {
             "type": "string",
             "value": "[reference(concat('storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionString.value]"
-        },
-        "functionIdentityObjectId": {
-            "type": "string",
-            "value": "[reference(concat('function-app','-', parameters('environmentNameAbbreviation'))).outputs.objectId.value]"
-        }
+        }        
     }
 }
