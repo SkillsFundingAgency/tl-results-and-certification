@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -247,10 +248,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IList<LookupData>>(requestUri);
         }
 
-        public async Task<bool> FindLearnerRecordAsync(long providerUkprn, long uln)
+        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
         {
             var requestUri = string.Format(ApiConstants.FindLearnerRecordUri, providerUkprn, uln);
-            return await GetAsync<bool>(requestUri);
+            return await GetAsync<FindLearnerRecord>(requestUri);
         }
 
         #region Private Methods

@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -58,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request);
 
         // TraningProvider
-        Task<bool> FindLearnerRecordAsync(long aoUkprn, long uln);
+        Task<FindLearnerRecord> FindLearnerRecordAsync(long aoUkprn, long uln);
 
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);

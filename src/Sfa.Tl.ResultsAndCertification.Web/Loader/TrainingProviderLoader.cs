@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<bool> FindLearnerRecordAsync(long providerUkprn, long uln)
+        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
         {
             return await _internalApiClient.FindLearnerRecordAsync(providerUkprn, uln);
         }
