@@ -52,7 +52,7 @@ jobs:
           processOutputs: true
       
       - pwsh: |
-          $objectId = az functionapp identity show -n $(armOutput.workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
+          $objectId = az functionapp identity show -n $armOutput.workerFunctionAppName -g $(ResourceGroupName) --query "principalId"
           Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName) -ObjectId $objectId -PermissionsToSecrets "get" -PermissionsToKeys "get" -PermissionsToCertificates "get"
       
       # - template: ../tasks/tlevels-Add-KeyvaultAccessPolicy-task.yml
