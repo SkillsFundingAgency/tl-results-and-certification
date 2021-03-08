@@ -50,12 +50,15 @@ jobs:
             -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
             -learnerGenderTrigger "$(learnerGenderTrigger)"'
           processOutputs: true
-      - template: ../tasks/tlevels-Add-KeyvaultAccessPolicy-task.yml
-        parameters:
-          VaultName: "$(SharedKeyVaultName)"
-          ObjectId: "$(functionIdentityObjectId)"
-          PermissionsToSecrets: "get"
-          PermissionsToKeys: "get"
-          PermissionsToCertificates: "get"
+      
+      - pwsh |
+        Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName) -ObjectId $(functionIdentityObjectId) -PermissionsToSecrets get -PermissionsToKeys get -PermissionsToCertificates get
+      # - template: ../tasks/tlevels-Add-KeyvaultAccessPolicy-task.yml
+      #   parameters:
+      #     VaultName: "$(SharedKeyVaultName)"
+      #     ObjectId: "$(functionIdentityObjectId)"
+      #     PermissionsToSecrets: "get"
+      #     PermissionsToKeys: "get"
+      #     PermissionsToCertificates: "get"
 
 
