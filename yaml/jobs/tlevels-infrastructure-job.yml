@@ -51,13 +51,9 @@ jobs:
             -learnerGenderTrigger "$(learnerGenderTrigger)"'
           processOutputs: true
       
-      - pwsh: |
-          Write-Host "1: $(armOutputs.armOutput.workerFunctionAppName)"
-          Write-Host "2: $(armOutput.workerFunctionAppName)"
-          Write-Host "3: $(workerFunctionAppName)"
-          
-          $objectId = az functionapp identity show -n $armOutputs.armOutput.workerFunctionAppName -g $(ResourceGroupName) --query "principalId"
-          Write-Host "ObjectID : $objectId"
+      - pwsh: |                  
+          $objectId = az functionapp identity show -n $(armOutputs.armOutput.workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
+          Write-Host "ObjectID : $(objectId)"
           
           # Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName) -ObjectId $objectId -PermissionsToSecrets "get" -PermissionsToKeys "get" -PermissionsToCertificates "get"
       
