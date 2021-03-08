@@ -10,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
 
         public override void Given()
         {
+            expectedApiResult = null;
             InternalApiClient.FindLearnerRecordAsync(Arg.Any<long>(), Arg.Any<long>())
                 .Returns(expectedApiResult);
         }

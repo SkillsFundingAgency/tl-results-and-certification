@@ -21,6 +21,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         }
 
         [Fact]
+        public void Then_Expected_Methods_Called()
+        {
+            TrainingProviderLoader.Received(1).FindLearnerRecordAsync(providerUkprn, uln);
+        }
+
+        [Fact]
         public void Then_Redirected_To_EnterUniqueLearnerNumberNotFound()
         {
             var route = (Result as RedirectToRouteResult);

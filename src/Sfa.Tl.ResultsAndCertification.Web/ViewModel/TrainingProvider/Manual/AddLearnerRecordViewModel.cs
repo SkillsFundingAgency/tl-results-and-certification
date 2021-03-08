@@ -6,6 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
     {
         public FindLearnerRecord LearnerRecord { get; set; }
         public EnterUlnViewModel Uln { get; set; }
-        public IndustryPlacementQuestionViewModel IndustryPlacementQuestion{ get; set; }
+        public IndustryPlacementQuestionViewModel IndustryPlacementQuestion { get; set; }
     }
 }
