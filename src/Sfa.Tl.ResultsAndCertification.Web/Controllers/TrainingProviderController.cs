@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("add-learner-record-unique-learner-number", Name = RouteConstants.EnterUniqueLearnerNumber)]
-        public async Task<IActionResult> EnterUniqueLearnerReference()
+        public async Task<IActionResult> EnterUniqueLearnerReferenceAsync()
         {
             var defaultValue = await _cacheService.GetAndRemoveAsync<string>(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberCriteria));
             var viewModel = new EnterUlnViewModel { EnterUln = defaultValue };
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var isFound = await _trainingProviderLoader.FindProvidersUlnAsync(User.GetUkPrn(isProvider: true), model.EnterUln.ToLong());
+            var isFound = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(isProvider: true), model.EnterUln.ToLong());
             if (!isFound)
             {
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberCriteria), model.EnterUln);

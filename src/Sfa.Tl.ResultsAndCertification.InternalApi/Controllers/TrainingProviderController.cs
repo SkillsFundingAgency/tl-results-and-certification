@@ -17,10 +17,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("FindProvidersUln/{providerUkprn}/{uln}")]
-        public async Task<bool> FindProvidersUlnAsync(long providerUkprn, long uln)
+        [Route("FindLearnerRecord/{providerUkprn}/{uln}")]
+        public async Task<bool> FindLearnerRecordAsync(long providerUkprn, long uln)
         {
-            return await _trainingProviderService.FindProvidersUlnAsync(providerUkprn, uln);
+            return await _trainingProviderService.FindLearnerRecordAsync(providerUkprn, uln);
         }
     }
 }

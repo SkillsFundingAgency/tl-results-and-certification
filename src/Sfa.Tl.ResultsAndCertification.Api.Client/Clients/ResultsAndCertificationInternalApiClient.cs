@@ -247,9 +247,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IList<LookupData>>(requestUri);
         }
 
-        public async Task<bool> FindProvidersUlnAsync(long providerUkprn, long uln)
+        public async Task<bool> FindLearnerRecordAsync(long providerUkprn, long uln)
         {
-            var requestUri = string.Format(ApiConstants.FindProvidersUlnUri, providerUkprn, uln);
+            var requestUri = string.Format(ApiConstants.FindLearnerRecordUri, providerUkprn, uln);
             return await GetAsync<bool>(requestUri);
         }
 

@@ -16,9 +16,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<bool> FindProvidersUlnAsync(long providerUkprn, long uln)
+        public async Task<bool> FindLearnerRecordAsync(long providerUkprn, long uln)
         {
-            return await _internalApiClient.FindProvidersUlnAsync(providerUkprn, uln);
+            return await _internalApiClient.FindLearnerRecordAsync(providerUkprn, uln);
         }
     }
 }

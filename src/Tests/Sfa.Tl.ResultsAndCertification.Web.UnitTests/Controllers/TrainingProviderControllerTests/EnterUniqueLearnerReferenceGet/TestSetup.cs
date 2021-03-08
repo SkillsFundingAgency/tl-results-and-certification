@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
         public async override Task When()
         {
-            Result = await Controller.EnterUniqueLearnerReference();
+            Result = await Controller.EnterUniqueLearnerReferenceAsync();
         }
     }
 }
