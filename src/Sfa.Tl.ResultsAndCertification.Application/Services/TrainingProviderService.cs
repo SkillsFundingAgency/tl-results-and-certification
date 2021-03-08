@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<bool> FindLearnerRecordAsync(long providerUkprn, long uln)
+        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
         {
             var latestPathway = await _tqRegistrationPathwayRepository
                                     .GetManyAsync(x => x.TqRegistrationProfile.UniqueLearnerNumber == uln && 
@@ -35,11 +36,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                     .OrderByDescending(o => o.CreatedOn)
                                     .FirstOrDefaultAsync();
 
-            if (latestPathway == null || 
+            if (latestPathway == null ||
                 !(latestPathway.Status == RegistrationPathwayStatus.Active || latestPathway.Status == RegistrationPathwayStatus.Withdrawn))
-                return false;
+                return null;
             else
-                return true;
+                return _mapper.Map<FindLearnerRecord>(latestPathway);
         }
     }
 }
