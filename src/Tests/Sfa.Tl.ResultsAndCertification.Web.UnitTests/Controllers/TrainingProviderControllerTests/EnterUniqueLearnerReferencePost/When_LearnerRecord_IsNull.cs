@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Any<AddLearnerRecordViewModel>());
             CacheService.Received(1).SetAsync(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberNotFound),
-                    Arg.Is<ProvidersUlnNotFoundViewModel>(x => x.Uln == uln.ToString()), CacheExpiryTime.XSmall);
+                    Arg.Is<LearnerRecordNotFoundViewModel>(x => x.Uln == uln.ToString()), CacheExpiryTime.XSmall);
         }
     }
 }

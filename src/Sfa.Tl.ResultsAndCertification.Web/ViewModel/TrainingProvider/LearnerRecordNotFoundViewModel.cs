@@ -3,7 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider
 {
-    public class ProvidersUlnNotFoundViewModel
+    public class LearnerRecordNotFoundViewModel
     {
         public string Uln { get; set; }
         
