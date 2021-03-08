@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (learnerRecord == null || !learnerRecord.IsLearnerRegistered)
             {
-                var ulnNotFoundViewModel = new ProvidersUlnNotFoundViewModel { Uln = model.EnterUln.ToString() };
+                var ulnNotFoundViewModel = new LearnerRecordNotFoundViewModel { Uln = model.EnterUln.ToString() };
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberNotFound), ulnNotFoundViewModel, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberNotFound);
             }
@@ -82,6 +82,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             
             return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumber);
+        }
+
+        [HttpGet]
+        [Route("add-learner-record-ULN-not-registered", Name = RouteConstants.EnterUniqueLearnerNumberNotFound)]
+        public async Task<IActionResult> EnterUniqueLearnerNumberNotFoundAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<LearnerRecordNotFoundViewModel>(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberNotFound));
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read EnterUniqueLearnerNumberNotFound from redis cache in enter uln not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
         }
 
         [HttpGet]

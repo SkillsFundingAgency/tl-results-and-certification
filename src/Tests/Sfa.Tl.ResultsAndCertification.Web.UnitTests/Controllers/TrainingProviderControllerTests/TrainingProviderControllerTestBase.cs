@@ -15,8 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public abstract class TrainingProviderControllerTestBase : BaseTest<TrainingProviderController>
     {
-        protected string CacheKey;
-
         // Dependencies
         protected ITrainingProviderLoader TrainingProviderLoader;
         protected ICacheService CacheService;
@@ -24,9 +22,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         protected TrainingProviderController Controller;
 
         // HttpContext
-        protected int Ukprn;
+        protected int providerUkprn;
         protected Guid UserId;
         protected IHttpContextAccessor HttpContextAccessor;
+        protected string CacheKey;
 
         public override void Setup()
         {
@@ -35,15 +34,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             Logger = Substitute.For<ILogger<TrainingProviderController>>();
             Controller = new TrainingProviderController(TrainingProviderLoader, CacheService, Logger);
 
-            Ukprn = 1234567890;
+            providerUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<TrainingProviderController>(Controller)
-               .Add(CustomClaimTypes.Ukprn, Ukprn.ToString())
+               .Add(CustomClaimTypes.ProviderUkprn, providerUkprn.ToString())
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
                .Build()
                .HttpContext;
 
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             HttpContextAccessor.HttpContext.Returns(httpContext);
+
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.TrainingProviderCacheKey);
         }
     }
