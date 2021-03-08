@@ -60,7 +60,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
             if (cacheModel?.Uln != null)
+            {
+                cacheModel.LearnerRecord = learnerRecord;
                 cacheModel.Uln = model;
+            }
             else
                 cacheModel = new AddLearnerRecordViewModel { LearnerRecord = learnerRecord, Uln = model };
 
@@ -104,6 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.IndustryPlacementQuestion == null ? new IndustryPlacementQuestionViewModel() : cacheModel.IndustryPlacementQuestion;
+            viewModel.LearnerName = cacheModel.LearnerRecord.Name;
             return View(viewModel);
         }
 
