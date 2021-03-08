@@ -1,0 +1,18 @@
+parameters:
+  - name: "VaultName"
+    type: string
+  - name: "ObjectId"
+    type: string
+  - name: "PermissionsToSecrets"
+    type: string
+  - name: "PermissionsToKeys"
+    type: string
+  - name: "PermissionsToCertificates"
+    type: string
+
+jobs:
+- job: 'AddKeyvaultAccessPolicy'    
+  steps:        
+    - pwsh |
+      Set-AzKeyVaultAccessPolicy -VaultName ${{parameters.VaultName}} -ObjectId ${{parameters.ObjectId}} -PermissionsToSecrets ${{parameters.PermissionsToSecrets}} -PermissionsToKeys ${{parameters.PermissionsToKeys}} -PermissionsToCertificates ${{parameters.PermissionsToCertificates}}
+      
