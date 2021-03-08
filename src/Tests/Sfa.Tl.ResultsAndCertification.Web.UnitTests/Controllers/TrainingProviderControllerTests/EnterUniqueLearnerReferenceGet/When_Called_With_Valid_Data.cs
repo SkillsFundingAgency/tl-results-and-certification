@@ -3,18 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.EnterUniqueLearnerReferenceGet
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        private string _searchUln = "9895641231";
+        private EnterUlnViewModel _ulnViewModel;
 
-        public override void Given() 
+        public override void Given()
         {
-            CacheService.GetAndRemoveAsync<string>(Arg.Any<string>()).Returns(_searchUln);
-        }
+            _ulnViewModel = new EnterUlnViewModel { EnterUln = "9895641231" };
+            var cacheModel = new AddLearnerRecordViewModel { Uln = _ulnViewModel };
+            CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(cacheModel);
+        }        
 
         [Fact]
         public void Then_Returns_Expected_Results()
@@ -25,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             var model = (Result as ViewResult).Model as EnterUlnViewModel;
             model.BackLink.Should().NotBeNull();
-            model.EnterUln.Should().Be(_searchUln);
+            model.EnterUln.Should().Be(_ulnViewModel.EnterUln);
             model.BackLink.RouteName.Should().Be(RouteConstants.ManageLearnerRecordsDashboard);
             model.BackLink.RouteAttributes.Count.Should().Be(0);
         }

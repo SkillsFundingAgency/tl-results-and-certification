@@ -44,8 +44,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-learner-record-unique-learner-number", Name = RouteConstants.EnterUniqueLearnerNumber)]
         public async Task<IActionResult> EnterUniqueLearnerReferenceAsync()
         {
-            var defaultValue = await _cacheService.GetAndRemoveAsync<string>(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberCriteria));
-            var viewModel = new EnterUlnViewModel { EnterUln = defaultValue };
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+            var viewModel = cacheModel?.Uln != null ? cacheModel.Uln : new EnterUlnViewModel();
             return View(viewModel);
         }
 
@@ -57,14 +57,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(isProvider: true), model.EnterUln.ToLong());
-            if (learnerRecord == null || !learnerRecord.IsLearnerRegistered)
-            {
-                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberCriteria), model.EnterUln);
-
-                var ulnNotFoundViewModel = new ProvidersUlnNotFoundViewModel { Uln = model.EnterUln.ToString() };
-                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberNotFound), ulnNotFoundViewModel, CacheExpiryTime.XSmall);
-                return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberNotFound);
-            }
 
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
             if (cacheModel?.Uln != null)
@@ -73,6 +65,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel = new AddLearnerRecordViewModel { LearnerRecord = learnerRecord, Uln = model };
 
             await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            if (learnerRecord == null || !learnerRecord.IsLearnerRegistered)
+            {
+                var ulnNotFoundViewModel = new ProvidersUlnNotFoundViewModel { Uln = model.EnterUln.ToString() };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberNotFound), ulnNotFoundViewModel, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberNotFound);
+            }
 
             if (learnerRecord.IsSendQualification)
             {

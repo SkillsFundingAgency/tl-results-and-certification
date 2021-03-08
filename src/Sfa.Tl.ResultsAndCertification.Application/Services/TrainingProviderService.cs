@@ -30,9 +30,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                         x.TqProvider.TlProvider.UkPrn == providerUkprn,
                                         navigationPropertyPath: new Expression<Func<TqRegistrationPathway, object>>[] 
                                         {
+                                            n => n.TqRegistrationProfile,                                            
                                             n => n.TqProvider.TlProvider, 
-                                            n => n.TqRegistrationProfile
-                                        })
+                                            n => n.IndustryPlacements
+                                        }).Include(x => x.TqRegistrationProfile.QualificationAchieved).ThenInclude(x => x.Qualification)
                                     .OrderByDescending(o => o.CreatedOn)
                                     .FirstOrDefaultAsync();
 
