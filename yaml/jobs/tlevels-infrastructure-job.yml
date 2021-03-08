@@ -50,7 +50,7 @@ jobs:
             -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
             -learnerGenderTrigger "$(learnerGenderTrigger)"'
           processOutputs: true
-      - template: ./tlevels-Add-KeyvaultAccessPolicy-job.yml
+      - template: ../tasks/tlevels-Add-KeyvaultAccessPolicy-task.yml
         parameters:
           VaultName: "$(SharedKeyVaultName)"
           ObjectId: "$(functionIdentityObjectId)"

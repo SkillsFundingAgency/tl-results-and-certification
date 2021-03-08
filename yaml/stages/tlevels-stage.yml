@@ -37,13 +37,7 @@ stages:
           serviceConnection: ${{ parameters.serviceConnection }}
           sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
           environmentName: ${{ parameters.environmentName }}
-
-      - template: ../jobs/tlevels-infrastructure-job.yml
-        parameters:
-          BaseName: $(BaseName)
-          serviceConnection: ${{ parameters.serviceConnection }}
-          sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
-          environmentName: ${{ parameters.environmentName }}
+                
     # - template: ../jobs/tlevels-publish-dacpac-job.yml
     #   parameters:
     #     serviceConnection: ${{ parameters.serviceConnection }}
