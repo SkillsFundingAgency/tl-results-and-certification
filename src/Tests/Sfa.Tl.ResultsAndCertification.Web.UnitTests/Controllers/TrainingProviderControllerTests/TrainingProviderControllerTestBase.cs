@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
@@ -20,9 +22,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         protected TrainingProviderController Controller;
 
         // HttpContext
-        protected int Ukprn;
+        protected int providerUkprn;
         protected Guid UserId;
         protected IHttpContextAccessor HttpContextAccessor;
+        protected string CacheKey;
 
         public override void Setup()
         {
@@ -31,15 +34,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             Logger = Substitute.For<ILogger<TrainingProviderController>>();
             Controller = new TrainingProviderController(TrainingProviderLoader, CacheService, Logger);
 
-            Ukprn = 1234567890;
+            providerUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<TrainingProviderController>(Controller)
-               .Add(CustomClaimTypes.Ukprn, Ukprn.ToString())
+               .Add(CustomClaimTypes.ProviderUkprn, providerUkprn.ToString())
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
                .Build()
                .HttpContext;
 
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             HttpContextAccessor.HttpContext.Returns(httpContext);
+
+            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.TrainingProviderCacheKey);
         }
     }
 }
