@@ -213,6 +213,9 @@
         public const string SubmitEnterUniqueLearnerNumber = "SubmitEnterUniqueLearnerNumber";
         public const string EnterUniqueLearnerNumberNotFound = "EnterUniqueLearnerNumberNotFound";
         public const string AddIndustryPlacementQuestion = "AddIndustryPlacementQuestion";
+        public const string SubmitIndustryPlacementQuestion = "SubmitIndustryPlacementQuestion";
+
+        //CheckAndSubmit
 
         # endregion
     }

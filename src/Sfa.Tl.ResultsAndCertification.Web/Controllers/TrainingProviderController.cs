@@ -66,6 +66,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberNotFound);
             }
 
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+            if (cacheModel?.Uln != null)
+                cacheModel.Uln = model;
+            else
+                cacheModel = new AddLearnerRecordViewModel { LearnerRecord = learnerRecord, Uln = model };
+
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            if (learnerRecord.IsSendQualification)
+            {
+                return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
+            }
+            
             return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumber);
         }
 
@@ -75,11 +88,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
 
-            if (cacheModel?.Uln == null)
+            if (cacheModel?.LearnerRecord == null || cacheModel?.LearnerRecord.IsSendQualification == false || cacheModel?.Uln == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.IndustryPlacementQuestion == null ? new IndustryPlacementQuestionViewModel() : cacheModel.IndustryPlacementQuestion;
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("has-learner-completed-industry-placement", Name = RouteConstants.SubmitIndustryPlacementQuestion)]
+        public async Task<IActionResult> AddIndustryPlacementQuestionAsync(IndustryPlacementQuestionViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+            if (cacheModel?.Uln == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.IndustryPlacementQuestion = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return RedirectToRoute(RouteConstants.AddRegistrationDateofBirth);
         }
     }
 }
