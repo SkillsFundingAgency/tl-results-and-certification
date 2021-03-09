@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                     .OrderByDescending(o => o.CreatedOn)
                                     .FirstOrDefaultAsync();
 
-            return (latestPathway?.Status == RegistrationPathwayStatus.Active || latestPathway?.Status == RegistrationPathwayStatus.Withdrawn) ? _mapper.Map<FindLearnerRecord>(latestPathway) : null;
+            return _mapper.Map<FindLearnerRecord>(latestPathway);
         }
     }
 }
