@@ -51,17 +51,27 @@ jobs:
             -learnerGenderTrigger "$(learnerGenderTrigger)"'
           processOutputs: true
 
-      - task: AzurePowerShell@4
+      - task: AzureCLI@2
         inputs:
-          azureSubscription: ${{ parameters.serviceConnection }}
-          scriptType: inlineScript
-          inline: |
-            Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName)`
-              -ObjectId (Get-AzFunctionApp -Name $(armOutputs.armOutput.workerFunctionAppName) -ResourceGroupName $(ResourceGroupName)).IdentityPrincipalId.Trim()`
-              -PermissionsToSecrets "get"`
-              -PermissionsToKeys "get"`
-              -PermissionsToCertificates "get"`              
-          azurePowerShellVersion: latestVersion
+          azureSubscription: 'S126-TL-Dev-Service-Connection'
+          scriptType: 'pscore'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            $objectId = az functionapp identity show -n $(armOutputs.armOutput.workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
+            az keyvault set-policy --name $(SharedKeyVaultName) --object-id $objectId --secret-permissions "get" --key-permissions "get" --certificate-permissions "get"
+
+
+      # - task: AzurePowerShell@4
+      #   inputs:
+      #     azureSubscription: ${{ parameters.serviceConnection }}
+      #     scriptType: inlineScript
+      #     inline: |
+      #       Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName)`
+      #         -ObjectId (Get-AzFunctionApp -Name $(armOutputs.armOutput.workerFunctionAppName) -ResourceGroupName $(ResourceGroupName)).IdentityPrincipalId.Trim()`
+      #         -PermissionsToSecrets "get"`
+      #         -PermissionsToKeys "get"`
+      #         -PermissionsToCertificates "get"`              
+      #     azurePowerShellVersion: latestVersion
       # - pwsh: |
       #     $objectId = az functionapp identity show -n $(armOutputs.armOutput.workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
       #     Write-Host "ObjectID : $objectId"
