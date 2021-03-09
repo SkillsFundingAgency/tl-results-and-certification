@@ -9,14 +9,14 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.EnterUniqueLearnerReferencePost
 {
-    public class When_Called_With_Send_Qualification : TestSetup
+    public class When_Called_With_Lrs_Data_And_Not_Send_Qual : TestSetup
     {       
         private FindLearnerRecord _learnerRecord;
         private readonly long _uln = 9874561236;
 
         public override void Given()
         {
-            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", IsLearnerRegistered = true, IsSendQualification = true };
+            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, HasSendQualification = false };
             EnterUlnViewModel = new EnterUlnViewModel { EnterUln = _uln.ToString() };
 
             var cacheModel = new AddLearnerRecordViewModel { LearnerRecord = _learnerRecord, Uln = EnterUlnViewModel };

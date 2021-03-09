@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.DateofBirth.Should().Be(_mockApiResponse.DateofBirth);
             _actualResult.ProviderName.Should().Be(_mockApiResponse.ProviderName);
             _actualResult.IsLearnerRegistered.Should().Be(_mockApiResponse.IsLearnerRegistered);
-            _actualResult.IsSendQualification.Should().Be(_mockApiResponse.IsSendQualification);
+            _actualResult.HasSendQualification.Should().Be(_mockApiResponse.HasSendQualification);
             _actualResult.IsLearnerRecordAdded.Should().Be(_mockApiResponse.IsLearnerRecordAdded);
         }
     }

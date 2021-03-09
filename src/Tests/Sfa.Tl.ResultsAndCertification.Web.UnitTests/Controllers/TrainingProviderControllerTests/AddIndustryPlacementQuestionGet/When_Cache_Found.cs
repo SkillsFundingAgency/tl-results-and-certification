@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
         public override void Given()
         {
-            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", IsSendQualification = true };
+            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name" };
             _ulnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
             _industryPlacementQuestionViewModel = new IndustryPlacementQuestionViewModel { LearnerName = _learnerRecord.Name, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
 

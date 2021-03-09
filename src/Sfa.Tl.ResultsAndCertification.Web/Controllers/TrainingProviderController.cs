@@ -76,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberNotFound);
             }
 
-            if (learnerRecord.IsSendQualification)
+            if (learnerRecord.HasLrsEnglishAndMaths && !learnerRecord.HasSendQualification)
             {
                 return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
             }
@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
 
-            if (cacheModel?.LearnerRecord == null || cacheModel?.LearnerRecord.IsSendQualification == false || cacheModel?.Uln == null)
+            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.IndustryPlacementQuestion == null ? new IndustryPlacementQuestionViewModel() : cacheModel.IndustryPlacementQuestion;

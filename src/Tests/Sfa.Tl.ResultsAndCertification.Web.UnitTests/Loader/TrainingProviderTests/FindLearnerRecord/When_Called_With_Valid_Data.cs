@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 DateofBirth = DateTime.UtcNow.AddYears(-20),
                 ProviderName = "Barsley College",
                 IsLearnerRegistered = true,
-                IsSendQualification = true, 
+                HasSendQualification = true, 
                 IsLearnerRecordAdded = true,
 
             };
@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.DateofBirth.Should().Be(expectedApiResult.DateofBirth);
             ActualResult.ProviderName.Should().Be(expectedApiResult.ProviderName);
             ActualResult.IsLearnerRegistered.Should().Be(expectedApiResult.IsLearnerRegistered);
-            ActualResult.IsSendQualification.Should().Be(expectedApiResult.IsSendQualification);
+            ActualResult.HasSendQualification.Should().Be(expectedApiResult.HasSendQualification);
             ActualResult.IsLearnerRecordAdded.Should().Be(expectedApiResult.IsLearnerRecordAdded);
         }
     }
