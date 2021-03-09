@@ -56,9 +56,12 @@ jobs:
           azureSubscription: ${{ parameters.serviceConnection }}
           scriptType: inlineScript
           inline: |
-            $objId = (Get-AzFunctionApp -Name $(armOutputs.armOutput.workerFunctionAppName) -ResourceGroupName $(ResourceGroupName)).IdentityPrincipalId.Trim()
-            $objId
-            Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName) -ObjectId $objId -ResourceGroupName $(ResourceGroupName)).IdentityPrincipalId -PermissionsToSecrets "get" -PermissionsToKeys "get" -PermissionsToCertificates "get" -BypassObjectIdValidation
+            Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName)`
+              -ObjectId (Get-AzFunctionApp -Name $(armOutputs.armOutput.workerFunctionAppName) -ResourceGroupName $(ResourceGroupName)).IdentityPrincipalId.Trim()`
+              -PermissionsToSecrets "get"`
+              -PermissionsToKeys "get"`
+              -PermissionsToCertificates "get"`
+              -BypassObjectIdValidation`
           azurePowerShellVersion: latestVersion
       # - pwsh: |
       #     $objectId = az functionapp identity show -n $(armOutputs.armOutput.workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
