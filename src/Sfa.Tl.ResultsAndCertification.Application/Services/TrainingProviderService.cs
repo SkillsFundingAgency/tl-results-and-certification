@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
@@ -32,7 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                         {
                                             n => n.TqRegistrationProfile,
                                             n => n.TqProvider.TlProvider
-                                        }).Include(x => x.TqRegistrationProfile.QualificationAchieved).ThenInclude(x => x.Qualification)
+                                        })
+                                    .Include(x => x.TqRegistrationProfile.QualificationAchieved).ThenInclude(x => x.Qualification)
                                     .OrderByDescending(o => o.CreatedOn)
                                     .FirstOrDefaultAsync();
 
