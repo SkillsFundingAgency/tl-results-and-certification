@@ -58,7 +58,7 @@ jobs:
           inline: |
             $objId = (Get-AzFunctionApp -Name $(armOutputs.armOutput.workerFunctionAppName) -ResourceGroupName $(ResourceGroupName)).IdentityPrincipalId
             $objId
-            Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName) -ObjectId (Get-AzFunctionApp -Name $(armOutputs.armOutput.workerFunctionAppName) -ResourceGroupName $(ResourceGroupName)).IdentityPrincipalId -PermissionsToSecrets "get" -PermissionsToKeys "get" -PermissionsToCertificates "get"
+            Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName) -ObjectId $objId -ResourceGroupName $(ResourceGroupName)).IdentityPrincipalId -PermissionsToSecrets "get" -PermissionsToKeys "get" -PermissionsToCertificates "get" -BypassObjectIdValidation
           azurePowerShellVersion: latestVersion
       # - pwsh: |
       #     $objectId = az functionapp identity show -n $(armOutputs.armOutput.workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
