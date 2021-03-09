@@ -56,9 +56,9 @@ jobs:
           azureSubscription: ${{ parameters.serviceConnection }}
           scriptType: inlineScript
           inline: |
-            $objectId = az functionapp identity show -n $(armOutputs.armOutput.workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
-            Write-Host "ObjectID : $objectId"          
-            # Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName) -ObjectId $objectId -PermissionsToSecrets "get" -PermissionsToKeys "get" -PermissionsToCertificates "get"
+            $objectId = (Get-AzFunctionApp -Name $(armOutputs.armOutput.workerFunctionAppName) -ResourceGroupName $(ResourceGroupName)).IdentityPrincipalId
+            Write-Host "ObjectID : $objectId"         
+            Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName) -ObjectId $objectId -PermissionsToSecrets "get" -PermissionsToKeys "get" -PermissionsToCertificates "get"
           azurePowerShellVersion: latestVersion
           
                 
