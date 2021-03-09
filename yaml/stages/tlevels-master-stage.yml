@@ -25,70 +25,70 @@ stages:
       sharedEnvironmentId: d01
       serviceConnection: $(devServiceConnection)
       applicationName: resac
-# ######################## TEST ##############################################
-#   - template: tlevels-shared-stage.yml
-#     parameters:
-#       stageName: Test
-#       dependencies:
-#         - build
-#       environmentName: tst
-#       sharedEnvironmentId: t01
-#       serviceConnection: $(testServiceConnection)
-#       applicationName: resac
+######################## TEST ##############################################
+  - template: tlevels-shared-stage.yml
+    parameters:
+      stageName: Test
+      dependencies:
+        - build
+      environmentName: tst
+      sharedEnvironmentId: t01
+      serviceConnection: $(testServiceConnection)
+      applicationName: resac
     
-#   - template: tlevels-stage.yml
-#     parameters:
-#       stageName: Test
-#       dependencies:
-#         - DeploySharedInfrastructure_t01
-#       environmentName: tst
-#       environmentId: t01
-#       sharedEnvironmentId: t01
-#       serviceConnection: $(testServiceConnection)
-#       applicationName: resac
+  - template: tlevels-stage.yml
+    parameters:
+      stageName: Test
+      dependencies:
+        - DeploySharedInfrastructure_t01
+      environmentName: tst
+      environmentId: t01
+      sharedEnvironmentId: t01
+      serviceConnection: $(testServiceConnection)
+      applicationName: resac
 
-# ######################## Pre Prod ##############################################
-#   - template: tlevels-shared-stage.yml
-#     parameters:
-#       stageName: PreProd
-#       dependencies:
-#         - DeploySharedInfrastructure_t01
-#         - Deploy_t01
-#       environmentName: pp
-#       sharedEnvironmentId: p02
-#       serviceConnection: $(prodServiceConnection)
-#       applicationName: resac
+######################## Pre Prod ##############################################
+  - template: tlevels-shared-stage.yml
+    parameters:
+      stageName: PreProd
+      dependencies:
+        - DeploySharedInfrastructure_t01
+        - Deploy_t01
+      environmentName: pp
+      sharedEnvironmentId: p02
+      serviceConnection: $(prodServiceConnection)
+      applicationName: resac
     
-#   - template: tlevels-stage.yml
-#     parameters:
-#       stageName: PreProd
-#       dependencies:
-#         - DeploySharedInfrastructure_p02
-#       environmentName: pp
-#       environmentId: p02
-#       sharedEnvironmentId: p02
-#       serviceConnection: $(prodServiceConnection)
-#       applicationName: resac
+  - template: tlevels-stage.yml
+    parameters:
+      stageName: PreProd
+      dependencies:
+        - DeploySharedInfrastructure_p02
+      environmentName: pp
+      environmentId: p02
+      sharedEnvironmentId: p02
+      serviceConnection: $(prodServiceConnection)
+      applicationName: resac
 
-# # ######################## Prod ##############################################
-#   - template: tlevels-shared-stage.yml
-#     parameters:
-#       stageName: Prod
-#       dependencies:
-#         - DeploySharedInfrastructure_p02
-#         - Deploy_p02
-#       environmentName: prd
-#       sharedEnvironmentId: p01
-#       serviceConnection: $(prodServiceConnection)
-#       applicationName: resac
+# ######################## Prod ##############################################
+  - template: tlevels-shared-stage.yml
+    parameters:
+      stageName: Prod
+      dependencies:
+        - DeploySharedInfrastructure_p02
+        - Deploy_p02
+      environmentName: prd
+      sharedEnvironmentId: p01
+      serviceConnection: $(prodServiceConnection)
+      applicationName: resac
     
-#   - template: tlevels-stage.yml
-#     parameters:
-#       stageName: Prod
-#       dependencies:
-#         - DeploySharedInfrastructure_p01
-#       environmentName: prd
-#       environmentId: p01
-#       sharedEnvironmentId: p01
-#       serviceConnection: $(prodServiceConnection)
-#       applicationName: resac
+  - template: tlevels-stage.yml
+    parameters:
+      stageName: Prod
+      dependencies:
+        - DeploySharedInfrastructure_p01
+      environmentName: prd
+      environmentId: p01
+      sharedEnvironmentId: p01
+      serviceConnection: $(prodServiceConnection)
+      applicationName: resac
