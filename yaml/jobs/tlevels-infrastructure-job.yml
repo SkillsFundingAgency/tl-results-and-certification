@@ -51,11 +51,22 @@ jobs:
             -learnerGenderTrigger "$(learnerGenderTrigger)"'
           processOutputs: true
       
-      - pwsh: |                  
-          $objectId = az functionapp identity show -n $(armOutputs.armOutput.workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
-          Write-Host "ObjectID : $objectId"
+      - task: AzurePowerShell@4
+        inputs:
+          azureSubscription: ${{ parameters.serviceConnection }}
+          scriptType: inlineScript
+          inline: |
+            $objectId = az functionapp identity show -n $(armOutputs.armOutput.workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
+            Write-Host "ObjectID : $objectId"          
+            # Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName) -ObjectId $objectId -PermissionsToSecrets "get" -PermissionsToKeys "get" -PermissionsToCertificates "get"
+          azurePowerShellVersion: latestVersion
           
-          # Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName) -ObjectId $objectId -PermissionsToSecrets "get" -PermissionsToKeys "get" -PermissionsToCertificates "get"
+                
+      # - pwsh: |
+      #     $objectId = az functionapp identity show -n $(armOutputs.armOutput.workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
+      #     Write-Host "ObjectID : $objectId"
+          
+      #     # Set-AzKeyVaultAccessPolicy -VaultName $(SharedKeyVaultName) -ObjectId $objectId -PermissionsToSecrets "get" -PermissionsToKeys "get" -PermissionsToCertificates "get"
       
       # - template: ../tasks/tlevels-Add-KeyvaultAccessPolicy-task.yml
       #   parameters:
