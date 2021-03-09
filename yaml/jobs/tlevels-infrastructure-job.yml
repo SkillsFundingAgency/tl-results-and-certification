@@ -60,8 +60,7 @@ jobs:
               -ObjectId (Get-AzFunctionApp -Name $(armOutputs.armOutput.workerFunctionAppName) -ResourceGroupName $(ResourceGroupName)).IdentityPrincipalId.Trim()`
               -PermissionsToSecrets "get"`
               -PermissionsToKeys "get"`
-              -PermissionsToCertificates "get"`
-              -BypassObjectIdValidation`
+              -PermissionsToCertificates "get"`              
           azurePowerShellVersion: latestVersion
       # - pwsh: |
       #     $objectId = az functionapp identity show -n $(armOutputs.armOutput.workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
