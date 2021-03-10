@@ -136,7 +136,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.IndustryPlacementQuestion = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
+            return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
+        }
+
+        [HttpGet]
+        [Route("add-learner-record-check-and-submitt", Name = RouteConstants.AddLearnerRecordCheckAndSubmit)]
+        public async Task<IActionResult> AddLearnerRecordCheckAndSubmitAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+
+            var viewModel = new CheckAndSubmitViewModel { LearnerRecordModel = cacheModel };
+
+            if (!viewModel.IsCheckAndSubmitPageValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
         }
 
         private async Task SyncCacheUln(EnterUlnViewModel model, FindLearnerRecord learnerRecord = null)

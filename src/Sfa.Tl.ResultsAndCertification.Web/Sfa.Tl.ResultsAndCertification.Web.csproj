@@ -501,6 +501,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ViewAll.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\CheckAndSubmit.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CheckAndSubmit.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\TrainingProvider\EnterUniqueLearnerReference.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -907,6 +912,10 @@
     <EmbeddedResource Update="Content\Tlevel\ViewAll.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ViewAll.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\CheckAndSubmit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CheckAndSubmit.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAddedAlready.resx">
       <LastGenOutput>EnterUniqueLearnerReferenceNotFound.Designer.cs</LastGenOutput>
