@@ -11,7 +11,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
     {
         public AddLearnerRecordViewModel LearnerRecordModel { get; set; }
 
-        public bool IsCheckAndSubmitPageValid => LearnerRecordModel != null && LearnerRecordModel.Uln != null && LearnerRecordModel.IndustryPlacementQuestion != null;
+        public bool IsCheckAndSubmitPageValid => LearnerRecordModel != null && LearnerRecordModel.LearnerRecord != null 
+            && LearnerRecordModel.Uln != null && LearnerRecordModel.IndustryPlacementQuestion != null 
+            && LearnerRecordModel.LearnerRecord.IsLearnerRegistered == true && LearnerRecordModel.LearnerRecord.IsLearnerRecordAdded == false;
 
         public SummaryItemModel SummaryUln => new SummaryItemModel { Id = "uln", Title = CheckAndSubmitContent.Title_Uln_Text, Value = LearnerRecordModel.Uln.EnterUln, NeedBorderBottomLine = false };
         public SummaryItemModel SummaryLearnerName => new SummaryItemModel { Id = "learnername", Title = CheckAndSubmitContent.Title_Name_Text, Value = LearnerRecordModel.LearnerRecord.Name, NeedBorderBottomLine = false };
