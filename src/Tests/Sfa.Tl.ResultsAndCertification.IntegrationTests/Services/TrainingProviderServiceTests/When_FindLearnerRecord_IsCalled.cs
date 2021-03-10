@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
     public class When_FindLearnerRecord_IsCalled : TrainingProviderServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
-        private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification)> _testCriteriaData;
+        private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved)> _testCriteriaData;
         private IList<TqRegistrationProfile> _profiles;
 
         public override void Given()
@@ -31,11 +31,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 { 1111111113, RegistrationPathwayStatus.Active }
             };
 
-            _testCriteriaData = new List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification)>
+            _testCriteriaData = new List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved)>
             {
-                (1111111111, false, true, true), // Lrs data with Send Qualification
-                (1111111112, true, false, false), // Not from Lrs
-                (1111111113, false, true, false), // Lrs data with out Send Qualification
+                (1111111111, false, true, true, true), // Lrs data with Send Qualification
+                (1111111112, true, false, false, false), // Not from Lrs
+                (1111111113, false, true, false, true), // Lrs data with out Send Qualification
             };
 
             // Registrations seed
@@ -43,10 +43,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _profiles = SeedRegistrationsData(_ulns, TqProvider);
             TransferRegistration(1111111113, Provider.WalsallCollege);
 
-            foreach (var (uln, isRcFeed, seedQualificationAchieved, isSendQualification) in _testCriteriaData)
+            foreach (var (uln, isRcFeed, seedQualificationAchieved, isSendQualification, isEngishAndMathsAchieved) in _testCriteriaData)
             {
                 var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
-                BuildLearnerRecordCriteria(profile, isRcFeed, seedQualificationAchieved, isSendQualification);
+                BuildLearnerRecordCriteria(profile, isRcFeed, seedQualificationAchieved, isSendQualification, isEngishAndMathsAchieved);
             }
 
             DbContext.SaveChanges();

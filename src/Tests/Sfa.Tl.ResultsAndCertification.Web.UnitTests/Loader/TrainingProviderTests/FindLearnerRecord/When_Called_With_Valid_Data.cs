@@ -14,17 +14,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             expectedApiResult = new Models.Contracts.TrainingProvider.FindLearnerRecord
             {
                 Uln = 123456789,
-                Name= "Test user",
+                Name = "Test user",
                 DateofBirth = DateTime.UtcNow.AddYears(-20),
                 ProviderName = "Barsley College",
                 IsLearnerRegistered = true,
-                HasSendQualification = true, 
                 IsLearnerRecordAdded = true,
-
+                IsEnglishAndMathsAchieved = true,
+                HasSendQualification = true,
+                HasLrsEnglishAndMaths = true
             };
 
-            InternalApiClient.FindLearnerRecordAsync(ProviderUkprn, Uln)
-                .Returns(expectedApiResult);
+            InternalApiClient.FindLearnerRecordAsync(ProviderUkprn, Uln).Returns(expectedApiResult);
         }
 
         [Fact]
@@ -36,8 +36,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.DateofBirth.Should().Be(expectedApiResult.DateofBirth);
             ActualResult.ProviderName.Should().Be(expectedApiResult.ProviderName);
             ActualResult.IsLearnerRegistered.Should().Be(expectedApiResult.IsLearnerRegistered);
-            ActualResult.HasSendQualification.Should().Be(expectedApiResult.HasSendQualification);
             ActualResult.IsLearnerRecordAdded.Should().Be(expectedApiResult.IsLearnerRecordAdded);
+            ActualResult.IsEnglishAndMathsAchieved.Should().Be(expectedApiResult.IsEnglishAndMathsAchieved);
+            ActualResult.HasSendQualification.Should().Be(expectedApiResult.HasSendQualification);
+            ActualResult.HasLrsEnglishAndMaths.Should().Be(expectedApiResult.HasLrsEnglishAndMaths);
         }
     }
 }

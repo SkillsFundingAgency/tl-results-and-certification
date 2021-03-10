@@ -103,13 +103,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             return qualifications;
         }
 
-        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification)
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved)
         {
             if (profile == null) return;
 
             profile.IsRcFeed = isRcFeed;
+            profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
 
-            if(seedQualificationAchieved)
+            if (seedQualificationAchieved)
             {
                 var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng");
                 var mathQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Math");                

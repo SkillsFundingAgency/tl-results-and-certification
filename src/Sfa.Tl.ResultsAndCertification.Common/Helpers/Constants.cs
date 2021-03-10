@@ -94,5 +94,9 @@
         public const string EnterUniqueLearnerNumberNotFound = "EnterUniqueLearnerNumberNotFound";
         public const string EnterUniqueLearnerNumberAddedAlready = "EnterUniqueLearnerNumberAddedAlready";
         public const string EnterUniqueLearnerNumberCriteria = "EnterUniqueLearnerNumberCriteria";
+
+
+        // Other constants
+        public const string NoBorderBottomCssClassName = "tl-no-border-bottom";
     }
 }
