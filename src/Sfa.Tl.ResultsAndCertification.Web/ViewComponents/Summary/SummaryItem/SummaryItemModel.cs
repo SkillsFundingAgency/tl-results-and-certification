@@ -18,5 +18,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem
         public bool RenderHiddenActionText { get; set; } = true;
         public string HiddenActionText { get; set; }
         public string HiddenValueText { get; set; }
+
+        public bool RenderActionColumn { get; set; } = true;
+        public bool IsRawHtml { get; set; } = false;
+        public bool NeedBorderLine { get; set; } = true;
+        public string BorderCssClass => NeedBorderLine ? "" : "tl-no-border-bottom";
     }
 }

@@ -214,6 +214,7 @@
         public const string EnterUniqueLearnerNumberNotFound = "EnterUniqueLearnerNumberNotFound";
         public const string AddIndustryPlacementQuestion = "AddIndustryPlacementQuestion";
         public const string SubmitIndustryPlacementQuestion = "SubmitIndustryPlacementQuestion";
+        public const string AddLearnerRecordCheckAndSubmit = "AddLearnerRecordCheckAndSubmit";
 
         //CheckAndSubmit
 

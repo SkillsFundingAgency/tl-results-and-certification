@@ -2,11 +2,16 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key">
+    <dt class="govuk-summary-list__key @Model.BorderCssClass">
         @Model?.Title
     </dt>
-    <dd class="govuk-summary-list__value">
-        @if (Model?.HasTag == true)
+
+    <dd class="govuk-summary-list__value @Model.BorderCssClass">
+        @if (Model?.IsRawHtml == true)
+        {
+            @Html.Raw(Model?.Value)
+        }
+        else if (Model?.HasTag == true)
         {
             <strong class="govuk-tag @Model.TagCssClass">@Model?.Value</strong>
         }
@@ -19,24 +24,28 @@
             <p class="govuk-body">@Model?.Value</p>
         }
     </dd>
+
     @if (!string.IsNullOrEmpty(Model.Value2))
     {
-        <dd class="govuk-summary-list__value">
+        <dd class="govuk-summary-list__value @Model.BorderCssClass">
             <p class="govuk-body">@Model?.Value2</p>
         </dd>
     }
-    <dd class="govuk-summary-list__actions">
-        @if (!string.IsNullOrWhiteSpace(Model?.ActionText))
-        {
-            <a class="govuk-link" id="@Model?.Id" asp-route="@Model?.RouteName" asp-all-route-data="@Model?.RouteAttributes">
-                @Model?.ActionText
-                @if (Model?.RenderHiddenActionText == true)
-                {
-                    var hiddenText = !string.IsNullOrWhiteSpace(Model?.HiddenActionText) ? Model?.HiddenActionText : Model?.Title;
-                    <span class="govuk-visually-hidden">@hiddenText</span>
-                }
-            </a>
-        }
-    </dd>
-</div>
 
+    @if (Model?.RenderActionColumn == true)
+    {
+        <dd class="govuk-summary-list__actions @Model.BorderCssClass">
+            @if (!string.IsNullOrWhiteSpace(Model?.ActionText))
+            {
+                <a class="govuk-link" id="@Model?.Id" asp-route="@Model?.RouteName" asp-all-route-data="@Model?.RouteAttributes">
+                    @Model?.ActionText
+                    @if (Model?.RenderHiddenActionText == true)
+                    {
+                        var hiddenText = !string.IsNullOrWhiteSpace(Model?.HiddenActionText) ? Model?.HiddenActionText : Model?.Title;
+                        <span class="govuk-visually-hidden">@hiddenText</span>
+                    }
+                </a>
+            }
+        </dd>
+    }
+</div>

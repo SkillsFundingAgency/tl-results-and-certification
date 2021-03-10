@@ -83,6 +83,10 @@
     display: none;
 }
 
+.tl-no-border-bottom {
+    border-bottom: none !important;
+}
+
 body {
     &.js-enabled {
 
