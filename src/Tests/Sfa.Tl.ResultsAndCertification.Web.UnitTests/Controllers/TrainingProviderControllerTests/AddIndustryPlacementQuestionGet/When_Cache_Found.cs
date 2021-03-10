@@ -34,6 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         }
 
         [Fact]
+        public void Then_Expected_Methods_Called()
+        {
+            CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
+        }
+
+        [Fact]
         public void Then_Returns_Expected_Results()
         {
             Result.Should().NotBeNull();

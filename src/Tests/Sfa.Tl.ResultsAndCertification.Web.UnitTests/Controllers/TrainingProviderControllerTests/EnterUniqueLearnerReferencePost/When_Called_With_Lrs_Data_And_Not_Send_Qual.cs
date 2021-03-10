@@ -29,6 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public void Then_Expected_Methods_Called()
         {
             TrainingProviderLoader.Received(1).FindLearnerRecordAsync(providerUkprn, _uln);
+            CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Any<AddLearnerRecordViewModel>());
         }
 
         [Fact]
