@@ -34,6 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
+        protected IList<Qualification> Qualifications;
 
         protected virtual void CreateMapper()
         {
@@ -52,8 +53,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProviders.First());
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
-            PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+            PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();            
             DbContext.SaveChangesAsync();
+
+            Qualifications = SeedQualificationsData();
         }
 
         public List<TqRegistrationProfile> SeedRegistrationsData(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null)
@@ -69,7 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
         public TqRegistrationProfile SeedRegistrationData(long uln, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active, TqProvider tqProvider = null)
         {
-            var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
+            var profile = new TqRegistrationProfileBuilder().BuildListWithoutLrsData().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProviders.First());
             var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
@@ -84,6 +87,47 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             DbContext.SaveChanges();
             return profile;
+        }        
+
+        public IList<Qualification> SeedQualificationsData()
+        {
+            var qualificationsList = new QualificationBuilder().BuildList();
+            var qualifications = QualificationDataProvider.CreateQualificationList(DbContext, qualificationsList);
+
+            foreach (var qual in qualifications)
+            {
+                qual.QualificationType.QualificationGrades = new QualificationGradeBuilder().BuildList(qual.QualificationType);
+            }
+
+            DbContext.SaveChanges();
+            return qualifications;
+        }
+
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification)
+        {
+            if (profile == null) return;
+
+            profile.IsRcFeed = isRcFeed;
+
+            if(seedQualificationAchieved)
+            {
+                var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng");
+                var mathQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Math");                
+
+                var engQualifcationGrades = engQual.QualificationType.QualificationGrades;
+                var mathsQualifcationGrades = mathQual.QualificationType.QualificationGrades;
+
+                var qualification = Qualifications.FirstOrDefault(q => q.IsSendQualification == isSendQualification);
+                var qualificationGrade = qualification.QualificationType.QualificationGrades.FirstOrDefault(g => g.IsAllowable);
+
+                profile.QualificationAchieved.Add(new QualificationAchieved
+                {
+                    TqRegistrationProfileId = profile.Id,
+                    QualificationId = qualification.Id,
+                    QualificationGradeId = qualificationGrade.Id,
+                    IsAchieved = qualificationGrade.IsAllowable
+                });
+            }                        
         }
     }
 }

@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -35,10 +36,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             {
                 ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
             };
-            
+
             _mockApiResponse = new FindLearnerRecord
             {
                 Uln = _uln,
+                Name = "Test User",
+                DateofBirth = DateTime.UtcNow.AddYears(30),
+                ProviderName = "Barnsley College (123456789)",
+                IsLearnerRegistered = true,
+                HasLrsEnglishAndMaths = true,
+                HasSendQualification = false,
+                IsLearnerRecordAdded = false
             };
         }
 
