@@ -75,7 +75,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 return;
             }
 
-            var expectedProviderName = TlProviders.FirstOrDefault(p => p.UkPrn == (long)provider)?.Name;
+            var expectedProvider = TlProviders.FirstOrDefault(p => p.UkPrn == (long)provider);
+            var expectedProviderName = expectedProvider != null ? $"{expectedProvider.Name} ({expectedProvider.UkPrn})" : null;
             var expectedProfile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
 
             expectedProfile.Should().NotBeNull();
