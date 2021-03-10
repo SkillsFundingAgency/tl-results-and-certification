@@ -511,6 +511,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Dashboard.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAlreadyAdded.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EnterUniqueLearnerReferenceAlreadyAdded.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\TrainingProvider\EnterUniqueLearnerReferenceNotFound.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -902,6 +907,14 @@
     <EmbeddedResource Update="Content\Tlevel\ViewAll.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ViewAll.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAddedAlready.resx">
+      <LastGenOutput>EnterUniqueLearnerReferenceNotFound.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAlreadyAdded.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EnterUniqueLearnerReferenceAlreadyAdded.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceNotFound.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -92,6 +92,7 @@
 
         // TrainingProvider constants
         public const string EnterUniqueLearnerNumberNotFound = "EnterUniqueLearnerNumberNotFound";
+        public const string EnterUniqueLearnerNumberAddedAlready = "EnterUniqueLearnerNumberAddedAlready";
         public const string EnterUniqueLearnerNumberCriteria = "EnterUniqueLearnerNumberCriteria";
     }
 }

@@ -61,20 +61,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (learnerRecord == null || !learnerRecord.IsLearnerRegistered)
             {
-                await SyncCacheUln(model);
+                await SyncCacheUln(model); // TODO: check why do we have to sync
                 var ulnNotFoundViewModel = new LearnerRecordNotFoundViewModel { Uln = model.EnterUln.ToString() };
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberNotFound), ulnNotFoundViewModel, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberNotFound);
             }
 
-            await SyncCacheUln(model, learnerRecord);
-
-            if (learnerRecord.HasLrsEnglishAndMaths && !learnerRecord.HasSendQualification)
+            if (learnerRecord.IsLearnerRecordAdded)
             {
-                return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
+                await SyncCacheUln(model);
+                var learnerAddedAlready = new LearnerRecordAddedAlreadyViewModel { Uln = model.EnterUln.ToString() };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberAddedAlready), learnerAddedAlready, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberAddedAlready);
             }
+
+            await SyncCacheUln(model, learnerRecord);
+            if (learnerRecord.HasLrsEnglishAndMaths && !learnerRecord.HasSendQualification)
+                return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
             
             return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumber);
+        }
+
+        [HttpGet]
+        [Route("add-learner-record-ULN-already-added", Name = RouteConstants.EnterUniqueLearnerNumberAddedAlready)]
+        public async Task<IActionResult> EnterUniqueLearnerNumberAddedAlreadyAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<LearnerRecordAddedAlreadyViewModel>(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberAddedAlready));
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read LearnerRecordAddedAlreadyViewModel from redis cache in Uln alrady added page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
         }
 
         [HttpGet]
