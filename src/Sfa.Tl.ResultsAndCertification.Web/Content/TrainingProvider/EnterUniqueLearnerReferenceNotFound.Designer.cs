@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can only update a learner&apos;s record once the awarding organisation has registered the learner for a T Level. If you think that this learner should have been registered, please contact the awarding organisation..
+        ///   Looks up a localized string similar to You can only add a learner record once the awarding organisation has registered the learner for a T Level. If you think that this learner should have been registered, please contact the awarding organisation..
         /// </summary>
         public static string Uln_Cannot_Be_Found_Text {
             get {

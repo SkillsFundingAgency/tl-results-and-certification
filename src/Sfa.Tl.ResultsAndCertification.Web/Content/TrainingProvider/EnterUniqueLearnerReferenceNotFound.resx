@@ -127,6 +127,6 @@
     <value>ULN ({0}) has not been registered by the awarding organisation</value>
   </data>
   <data name="Uln_Cannot_Be_Found_Text" xml:space="preserve">
-    <value>You can only update a learner's record once the awarding organisation has registered the learner for a T Level. If you think that this learner should have been registered, please contact the awarding organisation.</value>
+    <value>You can only add a learner record once the awarding organisation has registered the learner for a T Level. If you think that this learner should have been registered, please contact the awarding organisation.</value>
   </data>
 </root>
