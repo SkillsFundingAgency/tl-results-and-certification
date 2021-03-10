@@ -16,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.TqRegistrationProfile.DateofBirth))
                 .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => $"{s.TqProvider.TlProvider.Name} ({s.TqProvider.TlProvider.UkPrn})"))
                 .ForMember(d => d.IsLearnerRegistered, opts => opts.MapFrom(s => s.Status == RegistrationPathwayStatus.Active || s.Status == RegistrationPathwayStatus.Withdrawn))
+                .ForMember(d => d.IsEnglishAndMathsAchieved, opts => opts.MapFrom(s => s.TqRegistrationProfile.IsEnglishAndMathsAchieved))                
                 .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.TqRegistrationProfile.IsRcFeed == false && s.TqRegistrationProfile.QualificationAchieved.Any()))
                 .ForMember(d => d.HasSendQualification, opts => opts.MapFrom(s => s.TqRegistrationProfile.QualificationAchieved.Any(q => q.Qualification != null && q.Qualification.IsSendQualification)));
         }

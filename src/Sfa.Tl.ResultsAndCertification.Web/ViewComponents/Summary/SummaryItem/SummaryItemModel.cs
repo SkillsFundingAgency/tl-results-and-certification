@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem
 
         public bool RenderActionColumn { get; set; } = true;
         public bool IsRawHtml { get; set; } = false;
-        public bool NeedBorderLine { get; set; } = true;
-        public string BorderCssClass => NeedBorderLine ? "" : "tl-no-border-bottom";
+        public bool NeedBorderBottomLine { get; set; } = true;
+        public string BorderBottomCssClass => NeedBorderBottomLine ? "" : "tl-no-border-bottom";
     }
 }

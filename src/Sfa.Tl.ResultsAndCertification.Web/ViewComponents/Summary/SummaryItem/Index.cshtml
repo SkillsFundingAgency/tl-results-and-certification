@@ -1,12 +1,12 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem.SummaryItemModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<div class="govuk-summary-list__row">
-    <dt class="govuk-summary-list__key @Model.BorderCssClass">
+<div class="govuk-summary-list__row @Model.BorderBottomCssClass">
+    <dt class="govuk-summary-list__key @Model.BorderBottomCssClass">
         @Model?.Title
     </dt>
 
-    <dd class="govuk-summary-list__value @Model.BorderCssClass">
+    <dd class="govuk-summary-list__value @Model.BorderBottomCssClass">
         @if (Model?.IsRawHtml == true)
         {
             @Html.Raw(Model?.Value)
@@ -27,14 +27,14 @@
 
     @if (!string.IsNullOrEmpty(Model.Value2))
     {
-        <dd class="govuk-summary-list__value @Model.BorderCssClass">
+        <dd class="govuk-summary-list__value @Model.BorderBottomCssClass">
             <p class="govuk-body">@Model?.Value2</p>
         </dd>
     }
 
     @if (Model?.RenderActionColumn == true)
     {
-        <dd class="govuk-summary-list__actions @Model.BorderCssClass">
+        <dd class="govuk-summary-list__actions @Model.BorderBottomCssClass">
             @if (!string.IsNullOrWhiteSpace(Model?.ActionText))
             {
                 <a class="govuk-link" id="@Model?.Id" asp-route="@Model?.RouteName" asp-all-route-data="@Model?.RouteAttributes">
