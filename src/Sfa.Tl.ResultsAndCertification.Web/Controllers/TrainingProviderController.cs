@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider;
@@ -56,25 +57,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(isProvider: true), model.EnterUln.ToLong());
-
-            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-            if (cacheModel?.Uln != null)
-            {
-                cacheModel.LearnerRecord = learnerRecord;
-                cacheModel.Uln = model;
-            }
-            else
-                cacheModel = new AddLearnerRecordViewModel { LearnerRecord = learnerRecord, Uln = model };
-
-            await _cacheService.SetAsync(CacheKey, cacheModel);
+            var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(isProvider: true), model.EnterUln.ToLong());          
 
             if (learnerRecord == null || !learnerRecord.IsLearnerRegistered)
             {
+                await SyncCacheUln(model);
                 var ulnNotFoundViewModel = new LearnerRecordNotFoundViewModel { Uln = model.EnterUln.ToString() };
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberNotFound), ulnNotFoundViewModel, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberNotFound);
             }
+
+            await SyncCacheUln(model, learnerRecord);
 
             if (learnerRecord.HasLrsEnglishAndMaths && !learnerRecord.HasSendQualification)
             {
@@ -103,7 +96,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
 
-            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null)
+            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.IndustryPlacementQuestion == null ? new IndustryPlacementQuestionViewModel() : cacheModel.IndustryPlacementQuestion;
@@ -126,6 +119,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
+        }
+
+        private async Task SyncCacheUln(EnterUlnViewModel model, FindLearnerRecord learnerRecord = null)
+        {
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+            if (cacheModel?.Uln != null)
+            {
+                cacheModel.LearnerRecord = learnerRecord;
+                cacheModel.Uln = model;
+            }
+            else
+                cacheModel = new AddLearnerRecordViewModel { LearnerRecord = learnerRecord, Uln = model };
+
+            await _cacheService.SetAsync(CacheKey, cacheModel);
         }
     }
 }
