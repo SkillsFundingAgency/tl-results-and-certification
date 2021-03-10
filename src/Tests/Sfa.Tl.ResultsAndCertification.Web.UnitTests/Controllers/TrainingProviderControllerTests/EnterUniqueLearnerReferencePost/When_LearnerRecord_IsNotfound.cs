@@ -4,6 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.EnterUniqueLearnerReferencePost
@@ -24,12 +25,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public void Then_Expected_Methods_Called()
         {
             TrainingProviderLoader.Received(1).FindLearnerRecordAsync(providerUkprn, uln);
+            CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Any<AddLearnerRecordViewModel>());
         }
 
         [Fact]
         public void Then_Redirected_To_EnterUniqueLearnerNumberNotFound()
         {
-            var route = (Result as RedirectToRouteResult);
+            var route = Result as RedirectToRouteResult;
             route.RouteName.Should().Be(RouteConstants.EnterUniqueLearnerNumberNotFound);
         }
     }

@@ -26,6 +26,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         }
 
         [Fact]
+        public void Then_Expected_Methods_Called()
+        {
+            CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
+        }
+
+        [Fact]
         public void Then_Redirected_To_PageNotFound()
         {
             var actualRouteName = (Result as RedirectToRouteResult).RouteName;

@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
     public class When_FindLearnerRecord_IsCalled : TrainingProviderServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
+        private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification)> _testCriteriaData;
+        private IList<TqRegistrationProfile> _profiles;
 
         public override void Given()
         {
@@ -25,12 +28,28 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             {
                 { 1111111111, RegistrationPathwayStatus.Active },
                 { 1111111112, RegistrationPathwayStatus.Withdrawn },
+                { 1111111113, RegistrationPathwayStatus.Active }
+            };
+
+            _testCriteriaData = new List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification)>
+            {
+                (1111111111, false, true, true), // Lrs data with Send Qualification
+                (1111111112, true, false, false), // Not from Lrs
+                (1111111113, false, true, false), // Lrs data with out Send Qualification
             };
 
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
-            SeedRegistrationsData(_ulns, TqProvider);
-            SeedRegistrationTransfer(1111111113, Provider.BarsleyCollege, Provider.WalsallCollege);
+            _profiles = SeedRegistrationsData(_ulns, TqProvider);
+            TransferRegistration(1111111113, Provider.WalsallCollege);
+
+            foreach (var (uln, isRcFeed, seedQualificationAchieved, isSendQualification) in _testCriteriaData)
+            {
+                var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
+                BuildLearnerRecordCriteria(profile, isRcFeed, seedQualificationAchieved, isSendQualification);
+            }
+
+            DbContext.SaveChanges();
 
             // Create Service
             CreateMapper();
@@ -56,9 +75,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 return;
             }
 
+            var expectedProviderName = TlProviders.FirstOrDefault(p => p.UkPrn == (long)provider)?.Name;
+            var expectedProfile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
+
+            expectedProfile.Should().NotBeNull();
             actualResult.Should().NotBeNull();
             actualResult.Uln.Should().Be(expectedResult.Uln);
+            actualResult.Name.Should().Be($"{expectedProfile.Firstname} {expectedProfile.Lastname}");
+            actualResult.DateofBirth.Should().Be(expectedProfile.DateofBirth);
+            actualResult.ProviderName.Should().Be(expectedProviderName);
             actualResult.IsLearnerRegistered.Should().Be(expectedResult.IsLearnerRegistered);
+            actualResult.HasLrsEnglishAndMaths.Should().Be(expectedResult.HasLrsEnglishAndMaths);
+            actualResult.HasSendQualification.Should().Be(expectedResult.HasSendQualification);
         }
 
         public static IEnumerable<object[]> Data
@@ -69,24 +97,38 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 {
                     new object[] { 9999999999, Provider.WalsallCollege, null }, // Invalid Uln
 
-                    new object[] { 1111111111, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111111, IsLearnerRegistered = true } },
+                    new object[] { 1111111111, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111111, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, HasSendQualification = true } }, // Active
                     new object[] { 1111111111, Provider.WalsallCollege, null }, // Uln not from WalsallCollege
 
-                    new object[] { 1111111112, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111112, IsLearnerRegistered = true } }, // Withdrawn
-                    new object[] { 1111111113, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = false } }, // Transferred
-                    new object[] { 1111111113, Provider.WalsallCollege, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = true } }
+                    new object[] { 1111111112, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111112, IsLearnerRegistered = true, HasLrsEnglishAndMaths = false, HasSendQualification = false } }, // Withdrawn
+                    new object[] { 1111111113, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = false, HasLrsEnglishAndMaths = true, HasSendQualification = false } }, // Transferred
+                    new object[] { 1111111113, Provider.WalsallCollege, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, HasSendQualification = false } } // Active
                 };
             }
         }
 
-        private void SeedRegistrationTransfer(long uln, Provider transferFrom, Provider transferTo)
+        private void TransferRegistration(long uln, Provider transferTo)
         {
             var toProvider = DbContext.TlProvider.FirstOrDefault(x => x.UkPrn == (long)transferTo);
             var transferToTqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, toProvider, true);
-            var transferFromTqProvider = DbContext.TqProvider.FirstOrDefault(x => x.TlProvider.UkPrn == (long)transferFrom);
 
-            SeedRegistrationData(uln, RegistrationPathwayStatus.Transferred, transferFromTqProvider);
-            SeedRegistrationData(uln, RegistrationPathwayStatus.Active, transferToTqProvider);
+            var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
+
+            foreach(var pathway in profile.TqRegistrationPathways)
+            {
+                pathway.Status = RegistrationPathwayStatus.Transferred;
+                pathway.EndDate = DateTime.UtcNow;
+
+                foreach(var specialism in pathway.TqRegistrationSpecialisms)
+                {
+                    specialism.IsOptedin = true;
+                    specialism.EndDate = DateTime.UtcNow;
+                }
+            }
+
+            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, profile, transferToTqProvider);
+            var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
+            DbContext.SaveChanges();
         }
     }
 
