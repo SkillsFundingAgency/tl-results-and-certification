@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.EnterUniqueLearnerReferenceAddedAlready
@@ -10,11 +11,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
     public class When_Cache_Found : TestSetup
     {
         private readonly long uln = 1234567890;
+        private AddLearnerRecordViewModel mockCache = null;
 
         public override void Given()
         {
-            CacheService.GetAndRemoveAsync<LearnerRecordAddedAlreadyViewModel>(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberAddedAlready))
-                .Returns(new LearnerRecordAddedAlreadyViewModel { Uln = uln.ToString() });
+            mockCache = new AddLearnerRecordViewModel { Uln = new EnterUlnViewModel { EnterUln = uln.ToString() } };
+            CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey)
+                .Returns(mockCache);
         }
 
         [Fact]
@@ -29,6 +32,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.EnterUniqueLearnerNumber);
             model.BackLink.RouteAttributes.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void Then_Expected_Methods_AreCalled()
+        {
+            CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
         }
     }
 }

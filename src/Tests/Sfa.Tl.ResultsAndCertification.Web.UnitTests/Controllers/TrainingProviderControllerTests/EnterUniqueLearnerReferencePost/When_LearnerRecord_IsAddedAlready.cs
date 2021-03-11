@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider;
@@ -29,9 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Any<AddLearnerRecordViewModel>());
-            
-            CacheService.Received(1).SetAsync(string.Concat(CacheKey, Constants.EnterUniqueLearnerNumberAddedAlready),
-                    Arg.Is<LearnerRecordAddedAlreadyViewModel>(x => x.Uln == uln.ToString()), CacheExpiryTime.XSmall);
         }
 
         [Fact]
