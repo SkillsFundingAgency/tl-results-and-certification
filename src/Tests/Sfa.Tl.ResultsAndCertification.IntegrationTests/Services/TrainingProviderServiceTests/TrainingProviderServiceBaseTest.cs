@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             return qualifications;
         }
 
-        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved)
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement = false)
         {
             if (profile == null) return;
 
@@ -128,7 +128,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                     QualificationGradeId = qualificationGrade.Id,
                     IsAchieved = qualificationGrade.IsAllowable
                 });
-            }                        
+            }
+
+            if (seedIndustryPlacement)
+            {
+                var pathway = profile.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+                DbContext.IndustryPlacement.Add(new IndustryPlacement { TqRegistrationPathwayId = pathway.Id, Status = IndustryPlacementStatus.Completed });
+            }
         }
     }
 }
