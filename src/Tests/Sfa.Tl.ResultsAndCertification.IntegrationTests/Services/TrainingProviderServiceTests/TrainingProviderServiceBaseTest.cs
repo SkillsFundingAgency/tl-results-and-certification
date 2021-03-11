@@ -133,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             if (seedIndustryPlacement)
             {
                 var pathway = profile.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
-                DbContext.IndustryPlacement.Add(new IndustryPlacement { TqRegistrationPathwayId = pathway.Id, Status = IndustryPlacementStatus.Completed });
+                IndustryPlacementProvider.CreateQualificationAchieved(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
             }
         }
     }
