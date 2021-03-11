@@ -86,6 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             actualResult.DateofBirth.Should().Be(expectedProfile.DateofBirth);
             actualResult.ProviderName.Should().Be(expectedProviderName);
             actualResult.IsLearnerRegistered.Should().Be(expectedResult.IsLearnerRegistered);
+            actualResult.IsEnglishAndMathsAchieved.Should().Be(expectedResult.IsEnglishAndMathsAchieved);
             actualResult.HasLrsEnglishAndMaths.Should().Be(expectedResult.HasLrsEnglishAndMaths);
             actualResult.HasSendQualification.Should().Be(expectedResult.HasSendQualification);
         }
