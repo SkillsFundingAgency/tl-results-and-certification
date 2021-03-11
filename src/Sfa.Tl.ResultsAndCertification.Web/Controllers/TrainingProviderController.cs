@@ -82,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            return View(new LearnerRecordAddedAlreadyViewModel { Uln = cacheModel.Uln?.EnterUln.ToString() });
+            return View(new LearnerRecordAddedAlreadyViewModel { Uln = cacheModel.Uln?.EnterUln?.ToString() });
         }
 
         [HttpGet]
@@ -96,7 +96,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            return View(new LearnerRecordNotFoundViewModel { Uln = cacheModel.Uln?.EnterUln.ToString() });
+            return View(new LearnerRecordNotFoundViewModel { Uln = cacheModel.Uln?.EnterUln?.ToString() });
         }
 
         [HttpGet]
