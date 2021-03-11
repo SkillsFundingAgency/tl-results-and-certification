@@ -139,7 +139,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-learner-record-check-and-submitt", Name = RouteConstants.AddLearnerRecordCheckAndSubmit)]
+        [Route("add-learner-record-check-and-submit", Name = RouteConstants.AddLearnerRecordCheckAndSubmit)]
         public async Task<IActionResult> AddLearnerRecordCheckAndSubmitAsync()
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);

@@ -63,9 +63,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        public static string Cance_Link_Text {
+        public static string Cancel_Link_Text {
             get {
-                return ResourceManager.GetString("Cance_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Cancel_Link_Text", resourceCulture);
             }
         }
         
