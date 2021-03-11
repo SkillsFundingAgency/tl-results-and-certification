@@ -99,12 +99,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 {
                     new object[] { 9999999999, Provider.WalsallCollege, null }, // Invalid Uln
 
-                    new object[] { 1111111111, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111111, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, HasSendQualification = true, IsLearnerRecordAdded = true } }, // Active
+                    new object[] { 1111111111, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111111, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, HasSendQualification = true, IsEnglishAndMathsAchieved = true,  IsLearnerRecordAdded = true } }, // Active
                     new object[] { 1111111111, Provider.WalsallCollege, null }, // Uln not from WalsallCollege
 
-                    new object[] { 1111111112, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111112, IsLearnerRegistered = true, HasLrsEnglishAndMaths = false, HasSendQualification = false, IsLearnerRecordAdded = false } }, // Withdrawn
-                    new object[] { 1111111113, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = false, HasLrsEnglishAndMaths = true, HasSendQualification = false, IsLearnerRecordAdded = false } }, // Transferred
-                    new object[] { 1111111113, Provider.WalsallCollege, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, HasSendQualification = false, IsLearnerRecordAdded = false } } // Active
+                    new object[] { 1111111112, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111112, IsLearnerRegistered = true, HasLrsEnglishAndMaths = false, HasSendQualification = false, IsEnglishAndMathsAchieved = false, IsLearnerRecordAdded = false } }, // Withdrawn
+                    new object[] { 1111111113, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = false, HasLrsEnglishAndMaths = true, HasSendQualification = false, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } }, // Transferred
+                    new object[] { 1111111113, Provider.WalsallCollege, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, HasSendQualification = false, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } } // Active
                 };
             }
         }
