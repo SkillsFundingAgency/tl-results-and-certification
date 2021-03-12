@@ -54,7 +54,7 @@ jobs:
       - task: AzureCLI@2
         displayName: 'Add function access to Keyvault'
         inputs:
-          azureSubscription: 'S126-TL-Dev-Service-Connection'
+          azureSubscription: ${{ parameters.serviceConnection }}
           scriptType: 'pscore'
           scriptLocation: 'inlineScript'
           inlineScript: |
