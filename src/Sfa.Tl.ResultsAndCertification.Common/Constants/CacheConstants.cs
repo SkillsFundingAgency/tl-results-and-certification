@@ -7,5 +7,7 @@
         public const string UserSessionActivityCacheKey = "UserSessionActivity";
         public const string AssessmentCacheKey = "Assessment";
         public const string ResultCacheKey = "Result";
+
+        public const string TrainingProviderCacheKey = "TrainingProvider";
     }
 }

@@ -97,6 +97,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements and industry placement status.
+        /// </summary>
+        public static string Manage_Learners_Records_Description_Text {
+            get {
+                return ResourceManager.GetString("Manage_Learners_Records_Description_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage learner records.
+        /// </summary>
+        public static string Manage_Learners_Records_Text {
+            get {
+                return ResourceManager.GetString("Manage_Learners_Records_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View your account profile and permissions.
+        /// </summary>
+        public static string Manage_Your_Account_Description_Text {
+            get {
+                return ResourceManager.GetString("Manage_Your_Account_Description_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage your account.
+        /// </summary>
+        public static string Manage_Your_Account_Text {
+            get {
+                return ResourceManager.GetString("Manage_Your_Account_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home page.
         /// </summary>
         public static string Page_Title {

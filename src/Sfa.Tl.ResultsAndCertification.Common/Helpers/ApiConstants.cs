@@ -49,5 +49,8 @@
 
         // DocumentUploadHistory Related Uri's
         public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";
+
+        // TrainingProvider
+        public const string FindLearnerRecordUri = "/api/trainingprovider/FindLearnerRecord/{0}/{1}";
     }
 }

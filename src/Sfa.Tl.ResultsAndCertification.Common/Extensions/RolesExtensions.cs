@@ -1,22 +1,30 @@
-﻿using System.Linq;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System.Linq;
 using System.Security.Claims;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
     public static class RolesExtensions
     {
-        // Policy Names
+        // Awarding Organisation Policy Names
         public const string RequireTLevelsReviewerAccess = "RequireTLevelsReviewerAccess";
         public const string RequireProviderEditorAccess = "RequireProviderEditorAccess";
         public const string RequireRegistrationsEditorAccess = "RequireRegistrationsEditorAccess";
         public const string RequireResultsEditorAccess = "RequireResultsEditorAccess";
 
-        // Roles
+        // Awarding Organisation Roles
         public const string SiteAdministrator = "Site Administrator";
         public const string TlevelsReviewer = "T Levels Reviewer";
         public const string ProvidersEditor = "Providers Editor";
         public const string RegistrationsEditor = "Registrations Editor";
         public const string ResultsEditor = "Results Editor";
+
+        // Training Provider Policy Names
+        public const string RequireLearnerRecordsEditorAccess = "RequireLearnerRecordsEditorAccess";
+
+        // TrainingProvider Roles
+        public const string ProviderAdministrator = "Provider Administrator";
+        public const string LearnerRecordsEditor = "Learner Records Editor";        
 
         public static bool HasAccessToService(this ClaimsPrincipal user)
         {
@@ -60,10 +68,16 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return user.Claims.SingleOrDefault(c => c.Type == CustomClaimTypes.UserId)?.Value;
         }
 
-        public static long GetUkPrn(this ClaimsPrincipal user)
+        public static long GetUkPrn(this ClaimsPrincipal user, bool isProvider = false)
         {
-            var ukprn = user?.Claims?.SingleOrDefault(c => c.Type == CustomClaimTypes.Ukprn)?.Value;
+            var ukprn = isProvider ? user?.Claims?.SingleOrDefault(c => c.Type == CustomClaimTypes.ProviderUkprn)?.Value : user?.Claims?.SingleOrDefault(c => c.Type == CustomClaimTypes.Ukprn)?.Value;
             return !string.IsNullOrWhiteSpace(ukprn) ? long.Parse(ukprn) : 0;
+        }
+
+        public static LoginUserType? GetLoggedInUserType(this ClaimsPrincipal user)
+        {
+            var userType = user.Claims.SingleOrDefault(c => c.Type == CustomClaimTypes.LoginUserType)?.Value;
+            return EnumExtensions.IsValidValue<LoginUserType>(userType) ? EnumExtensions.GetEnum<LoginUserType>(userType) : (LoginUserType?)null;
         }
     }
 }

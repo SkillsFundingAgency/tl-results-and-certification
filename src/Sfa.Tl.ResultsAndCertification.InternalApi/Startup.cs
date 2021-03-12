@@ -165,6 +165,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<ICsvHelperService<ResultCsvRecordRequest, CsvResponseModel<ResultCsvRecordResponse>, ResultCsvRecordResponse>, CsvHelperService<ResultCsvRecordRequest, CsvResponseModel<ResultCsvRecordResponse>, ResultCsvRecordResponse>>();
             services.AddTransient<IBulkResultLoader, BulkResultLoader>();
             services.AddTransient<IResultService, ResultService>();
+
+            // TrainingProvider
+            services.AddTransient<ITrainingProviderService, TrainingProviderService>();
         }
     }
 }

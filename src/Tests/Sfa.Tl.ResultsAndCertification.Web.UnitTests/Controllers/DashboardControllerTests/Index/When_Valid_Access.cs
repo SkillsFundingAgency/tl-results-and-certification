@@ -1,9 +1,11 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Dashboard;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardControllerTests.Index
@@ -14,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardCont
         {
             var httpContext = new ClaimsIdentityBuilder<DashboardController>(Controller)
                 .Add(CustomClaimTypes.HasAccessToService, "true")
+                .Add(CustomClaimTypes.LoginUserType, ((int)LoginUserType.AwardingOrganisation).ToString())
                 .Build()
                 .HttpContext;
 
@@ -27,6 +30,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardCont
             Result.Should().BeOfType<ViewResult>();
             var viewResult = Result as ViewResult;
             viewResult.Should().NotBeNull();
+
+            var model = viewResult.Model as DashboardViewModel;
+            model.Should().NotBeNull();
+            model.IsAoUser.Should().BeTrue();
+            model.IsTrainingProviderUser.Should().BeFalse();
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json.Linq;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Local;
@@ -154,6 +155,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                                 var ukprn = organisation["ukprn"].ToObject<int?>();
                                 var dfeSignInApiClient = ctx.HttpContext.RequestServices.GetService<IDfeSignInApiClient>();
                                 var userInfo = await dfeSignInApiClient.GetUserInfo(organisationId, userId);
+                                var providerUkprn = 10000536;
 
                                 claims.AddRange(new List<Claim>
                                 {
@@ -163,11 +165,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                                     new Claim(ClaimTypes.Surname, ctx.Principal.FindFirst("family_name").Value),
                                     new Claim(ClaimTypes.Email, ctx.Principal.FindFirst("email").Value),
                                     new Claim(CustomClaimTypes.Ukprn, ukprn.HasValue ? ukprn.Value.ToString() : string.Empty),
-                                    new Claim(CustomClaimTypes.OrganisationId, organisationId)
+                                    new Claim(CustomClaimTypes.OrganisationId, organisationId),
+                                    new Claim(CustomClaimTypes.ProviderUkprn, providerUkprn.ToString()),
+                                    new Claim(CustomClaimTypes.LoginUserType, ((int)LoginUserType.AwardingOrganisation).ToString())
                                 });
 
                                 if (userInfo.Roles != null && userInfo.Roles.Any())
                                 {
+                                    claims.Add(new Claim(ClaimTypes.Role, RolesExtensions.ProviderAdministrator));
                                     claims.AddRange(userInfo.Roles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
                                 }
                             }
