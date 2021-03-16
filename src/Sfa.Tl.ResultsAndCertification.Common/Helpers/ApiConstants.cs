@@ -47,7 +47,13 @@
         public const string ChangeResultUri = "/api/result/ChangeResult";
         public const string GetLookupDataUri = "/api/common/GetLookupData/{0}";
 
+        // LoggedIn UserType Related Uri's
+        public const string GetLoggedInUserTypeInfoUri = "/api/common/GetLoggedInUserTypeInfo/{0}";
+        
         // DocumentUploadHistory Related Uri's
         public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";
+
+        // TrainingProvider
+        public const string FindLearnerRecordUri = "/api/trainingprovider/FindLearnerRecord/{0}/{1}";
     }
 }

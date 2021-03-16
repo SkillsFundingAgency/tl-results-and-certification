@@ -99,7 +99,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                 {
                     TlProviderId = tlProvider.Id,
                     TqAwardingOrganisationId = tqAwardingOrganisation.Id,
-                    TqAwardingOrganisation = tqAwardingOrganisation
+                    TqAwardingOrganisation = tqAwardingOrganisation,
+                    IsActive = true
                 };
 
                 if (addToDbContext)

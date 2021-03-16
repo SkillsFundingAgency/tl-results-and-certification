@@ -89,5 +89,8 @@
         public const int SpecialismAssessmentStartInYears = 1;
 
         public const int MaxFileSizeInMb = 5;
+
+        // Other constants
+        public const string NoBorderBottomCssClassName = "tl-no-border-bottom";
     }
 }

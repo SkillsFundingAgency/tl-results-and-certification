@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Lrs.LearnerService.Api.Client;
+﻿using Lrs.LearnerService.Api.Client;
 using Lrs.PersonalLearningRecordService.Api.Client;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +18,6 @@ using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Functions.Services;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 

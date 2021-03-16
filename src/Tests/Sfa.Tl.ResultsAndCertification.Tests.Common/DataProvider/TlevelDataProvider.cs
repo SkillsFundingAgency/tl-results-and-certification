@@ -265,7 +265,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                     TlPathwayId = tlPathway.Id,
                     TlAwardingOrganisaton = tlAwardingOrganisation,
                     TlPathway = tlPathway,
-                    ReviewStatus = (int)tLevelReviewStatus
+                    ReviewStatus = (int)tLevelReviewStatus,
+                    IsActive = true
                 };
 
                 if (addToDbContext)

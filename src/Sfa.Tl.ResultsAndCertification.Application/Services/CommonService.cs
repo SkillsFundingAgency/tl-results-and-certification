@@ -20,16 +20,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IMapper _mapper;
         private readonly IRepository<TlLookup> _tlLookupRepository;
         private readonly IRepository<FunctionLog> _functionLogRepository;
-
+        private readonly ICommonRepository _commonRepository;        
 
         public CommonService(ILogger<CommonService> logger, IMapper mapper,
             IRepository<TlLookup> tlLookupRepository,
-            IRepository<FunctionLog> functionLogRepository)
+            IRepository<FunctionLog> functionLogRepository,
+            ICommonRepository commonRepository)
         {
             _logger = logger;
             _mapper = mapper;
             _tlLookupRepository = tlLookupRepository;
             _functionLogRepository = functionLogRepository;
+            _commonRepository = commonRepository;
         }
 
         public async Task<IEnumerable<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory)
@@ -78,6 +80,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return await _functionLogRepository.UpdateAsync(functionLogEntity) > 0;
             }
             return false;
-        }        
+        }
+
+        public async Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn)
+        {
+            return await _commonRepository.GetLoggedInUserTypeInfoAsync(ukprn);
+        }
     }
 }

@@ -32,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<QualificationGrade> QualificationGrade { get; set; }
         public virtual DbSet<Qualification> Qualification { get; set; }
         public virtual DbSet<QualificationAchieved> QualificationAchieved { get; set; }
+        public virtual DbSet<IndustryPlacement> IndustryPlacement { get; set; }
         public virtual DbSet<FunctionLog> FunctionLog { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

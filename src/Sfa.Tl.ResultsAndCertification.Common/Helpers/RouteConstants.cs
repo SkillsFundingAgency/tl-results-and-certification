@@ -205,5 +205,20 @@
         public const string RenewSessionActivity = "RenewSessionActivity";
         public const string ActivityTimeout = "ActivityTimeout";
         public const string Timeout = "Timeout";
+
+        # region TrainingProvider specific constants
+
+        public const string ManageLearnerRecordsDashboard = "ManageLearnerRecordsDashboard";
+        public const string EnterUniqueLearnerNumber = "EnterUniqueLearnerNumber";
+        public const string SubmitEnterUniqueLearnerNumber = "SubmitEnterUniqueLearnerNumber";
+        public const string EnterUniqueLearnerNumberNotFound = "EnterUniqueLearnerNumberNotFound";
+        public const string EnterUniqueLearnerNumberAddedAlready = "EnterUniqueLearnerNumberAddedAlready";
+        public const string AddIndustryPlacementQuestion = "AddIndustryPlacementQuestion";
+        public const string SubmitIndustryPlacementQuestion = "SubmitIndustryPlacementQuestion";
+        public const string AddLearnerRecordCheckAndSubmit = "AddLearnerRecordCheckAndSubmit";
+
+        //CheckAndSubmit
+
+        # endregion
     }
 }

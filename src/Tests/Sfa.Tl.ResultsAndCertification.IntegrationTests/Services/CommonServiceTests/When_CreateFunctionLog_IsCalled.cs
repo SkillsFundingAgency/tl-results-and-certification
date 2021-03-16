@@ -28,7 +28,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CommonService
             TlLookupRepository = new GenericRepository<TlLookup>(TlLookupRepositoryLogger, DbContext);
             FunctionLogRepositoryLogger = new Logger<GenericRepository<FunctionLog>>(new NullLoggerFactory());
             FunctionLogRepository = new GenericRepository<FunctionLog>(FunctionLogRepositoryLogger, DbContext);
-            CommonService = new CommonService(CommonServiceLogger, CommonMapper, TlLookupRepository, FunctionLogRepository);
+            CommonRepository = new CommonRepository(DbContext);
+
+            CommonService = new CommonService(CommonServiceLogger, CommonMapper, TlLookupRepository, FunctionLogRepository, CommonRepository);
 
             _functionLog = new FunctionLogDetails 
             {

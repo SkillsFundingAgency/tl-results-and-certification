@@ -1,0 +1,51 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.CheckAndSubmitViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+
+@{
+    ViewData["Title"] = @CheckAndSubmit.Page_Title_Add_Learner_Record_Check_And_Submit;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <form class="form" asp-route="">
+            <span class="govuk-caption-xl">@CheckAndSubmit.Page_Caption_Text</span>
+
+            <h1 class="govuk-heading-l">@CheckAndSubmit.Check_And_Submit_Heading_Text</h1>
+            <p class="govuk-body govuk-!-margin-top-3">@CheckAndSubmit.Check_The_Information_Text</p>
+
+            <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@CheckAndSubmit.Learner_Details_Text</h3>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-3">
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+            </dl>
+
+            <hr class="govuk-section-break govuk-section-break--visible">
+
+            <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@CheckAndSubmit.English_And_Maths_Minimum_Standard_Text</h3>
+            <dl class="govuk-summary-list">
+                <vc:summary-item model=Model.SummaryEnglishAndMathsStatus></vc:summary-item>
+                <vc:summary-item model=Model.SummaryWhatsLrsText></vc:summary-item>
+            </dl>
+
+            <hr class="govuk-section-break govuk-section-break--visible">
+
+            <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@CheckAndSubmit.Industry_Placement_Text</h3>
+            <dl class="govuk-summary-list">
+                <vc:summary-item model=Model.SummaryIndustryPlacementStatus></vc:summary-item>
+            </dl>
+
+            <hr class="govuk-section-break govuk-section-break--visible">
+
+            <div class="govuk-button-group govuk-!-margin-top-7">
+                <button id="continueButton" type="submit" class="govuk-button govuk-!-margin-right-5" data-module="govuk-button">@CheckAndSubmit.Submit_Button_Text</button>
+                <a id="cancelLink" class="govuk-link" asp-route="">@CheckAndSubmit.Cancel_Link_Text</a>
+            </div>
+        </form>
+    </div>
+</div>
