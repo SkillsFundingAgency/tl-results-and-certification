@@ -1,0 +1,83 @@
+﻿<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form action="add-learner-q3-ip" method="post" class="form" id="my_radio_box">
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <span class="govuk-caption-xl">Add a new learner T Level record</span>
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                            Has the learner achieved the required minimum standard for English and maths?
+                        </h1>
+                        <span id="uln-hint" class="govuk-hint">
+                            <strong>Learner:</strong> John Smith
+                        </span>
+                    </legend>
+                    <details class="govuk-details" closed="">
+                        <summary class="govuk-details__summary">
+                            <span class="govuk-details__summary-text">
+                                What are the minimum standards?
+                            </span>
+                        </summary>
+                        <div class="govuk-details__text">
+                            <p class="govuk-body">The minimum standards are level 2 qualifications (GCSE or equivalent).</p>
+                            <p class="govuk-body govuk-!-font-weight-bold">If the learner has qualifications from outside England and Wales</p>
+                            <p class="govuk-body">You will need to check the learner's grades are equivalent to a level 2 qualification and have met the minimum standard.</p>
+                            <p class="govuk-body govuk-!-font-weight-bold">If the learner has special educational needs and/or a disability (SEND)</p>
+                            <p class="govuk-body">Entry Level 3 qualifications will meet the minimum standard for English and maths provided the following conditions are met:</p>
+                            <ul class="govuk-list govuk-list--bullet">
+                                <li>
+                                    The learner has an Education, Health and Care (EHC) Plan, a statement of Special Educational Need (SEN) or a Learning Difficulty Assessment (LDA)
+                                </li>
+                                <li>
+                                    Your assessment of the learner shows that even with support, reasonable adjustments or stepping stone qualifications, the learner is not able to achieve a full level 2 qualification because of their learning difficulty or disability
+                                </li>
+                                <li>
+                                    There are no industry specific minimum entry requirements for their chosen T Level.
+                                </li>
+                            </ul>
+                            <p class="govuk-body govuk-!-font-weight-bold">If the learner has SEND and is studying an Entry Level 3 English and Maths qualification at the same time as their T Level</p>
+                            <p class="govuk-body">If the learner has not yet achieved their grade, please select 'Not achieved the minimum standard' and update this record when they have their grade.</p>
+
+                            <p class="govuk-body">You do not need to upload any evidence, but you should hold supporting documentation in your own records.</p>
+                        </div>
+                    </details>
+
+                    <div class="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="result-answer-1" name="result-answer" type="radio" value="Yes">
+                            <label class="govuk-label govuk-radios__label" for="result-answer-1">
+                                Achieved the minimum standard
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="result-answer-2" name="result-answer" type="radio" value="Yes-SEND">
+                            <label class="govuk-label govuk-radios__label" for="result-answer-2">
+                                Achieved the minimum standard - Entry Level 3
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="result-answer-3" name="result-answer" type="radio" value="No">
+                            <label class="govuk-label govuk-radios__label" for="result-answer-3">
+                                Not achieved the minimum standard
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="govuk-inset-text">
+                    <p>
+                        By selecting 'Continue' I declare that:
+                    </p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>
+                            the learner has been assessed by our organisation and meets all the conditions required to adjust the minimum standards
+                        </li>
+                        <li>
+                            the learner has met the minimum standard for English and maths as a SEND learner
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <a class="govuk-button" data-module="govuk-button" asp-route="AddIndustryPlacementQuestion">Continue</a>
+        </form>
+    </div>
+</div>

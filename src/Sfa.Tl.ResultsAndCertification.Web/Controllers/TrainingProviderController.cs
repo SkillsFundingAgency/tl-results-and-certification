@@ -63,8 +63,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(learnerRecord == null || learnerRecord.IsLearnerRegistered == false ? 
                     RouteConstants.EnterUniqueLearnerNumberNotFound : RouteConstants.EnterUniqueLearnerNumberAddedAlready);
             }
-            
+
             await SyncCacheUln(model, learnerRecord);
+            if (!learnerRecord.HasLrsEnglishAndMaths)
+                return RedirectToRoute(RouteConstants.AddEnglishAndMathsQuestion);
+
             if (learnerRecord.HasLrsEnglishAndMaths && !learnerRecord.HasSendQualification)
                 return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
             
@@ -97,6 +100,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(new LearnerRecordNotFoundViewModel { Uln = cacheModel.Uln?.EnterUln?.ToString() });
+        }
+
+        [HttpGet]
+        [Route("add-learner-record-english-and-maths-achievement", Name = RouteConstants.AddEnglishAndMathsQuestion)]
+        public async Task<IActionResult> AddEnglishAndMathsQuestionAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+
+            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            // TODO:
+            return View();
         }
 
         [HttpGet]
