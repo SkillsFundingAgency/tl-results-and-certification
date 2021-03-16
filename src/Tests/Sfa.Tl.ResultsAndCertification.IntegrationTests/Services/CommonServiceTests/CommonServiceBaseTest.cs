@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CommonService
         protected IList<TlLookup> TlLookup;
         protected IRepository<TlLookup> TlLookupRepository;
         protected IRepository<FunctionLog> FunctionLogRepository;
+        protected ICommonRepository CommonRepository;
 
         protected IMapper CommonMapper;
         protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;

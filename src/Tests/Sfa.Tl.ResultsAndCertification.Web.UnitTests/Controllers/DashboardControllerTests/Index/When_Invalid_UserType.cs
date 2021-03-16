@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardCont
         {
             var httpContext = new ClaimsIdentityBuilder<DashboardController>(Controller)
                 .Add(CustomClaimTypes.HasAccessToService, "true")
-                .Add(CustomClaimTypes.LoginUserType, "0")
+                .Add(CustomClaimTypes.LoginUserType, string.Empty)
                 .Build().HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);

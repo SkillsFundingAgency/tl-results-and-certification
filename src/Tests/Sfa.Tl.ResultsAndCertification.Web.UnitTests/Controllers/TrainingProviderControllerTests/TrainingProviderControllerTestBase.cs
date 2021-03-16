@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             providerUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<TrainingProviderController>(Controller)
-               .Add(CustomClaimTypes.ProviderUkprn, providerUkprn.ToString())
+               .Add(CustomClaimTypes.Ukprn, providerUkprn.ToString())
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
                .Build()
                .HttpContext;
