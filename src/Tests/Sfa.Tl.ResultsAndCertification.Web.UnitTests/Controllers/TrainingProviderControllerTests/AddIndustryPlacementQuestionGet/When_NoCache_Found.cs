@@ -23,8 +23,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             cacheResult = new AddLearnerRecordViewModel
             {
                 LearnerRecord = _learnerRecord,
-                Uln = _ulnViewModel
-            };
+                Uln = _ulnViewModel,
+                EnglishAndMathsQuestion = new EnglishAndMathsQuestionViewModel()
+        };
 
             CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(cacheResult);
         }
@@ -49,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.IndustryPlacementStatus.Should().BeNull();
             model.LearnerName.Should().Be(_learnerRecord.Name);
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.EnterUniqueLearnerNumber);
+            model.BackLink.RouteName.Should().Be(RouteConstants.AddEnglishAndMathsQuestion);
         }
     }
 }
