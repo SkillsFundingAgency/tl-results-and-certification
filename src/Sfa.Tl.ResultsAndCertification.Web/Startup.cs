@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
@@ -103,13 +103,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddAuthorization(options =>
             {
                 // Awarding Organisation Access Policies
-                options.AddPolicy(RolesExtensions.RequireTLevelsReviewerAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.TlevelsReviewer));
-                options.AddPolicy(RolesExtensions.RequireProviderEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor));
-                options.AddPolicy(RolesExtensions.RequireRegistrationsEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.RegistrationsEditor));
-                options.AddPolicy(RolesExtensions.RequireResultsEditorAccess, policy => policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ResultsEditor));
+                options.AddPolicy(RolesExtensions.RequireTLevelsReviewerAccess, policy => { policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.TlevelsReviewer); policy.RequireClaim(CustomClaimTypes.LoginUserType, ((int)LoginUserType.AwardingOrganisation).ToString()); });
+                options.AddPolicy(RolesExtensions.RequireProviderEditorAccess, policy => { policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ProvidersEditor); policy.RequireClaim(CustomClaimTypes.LoginUserType, ((int)LoginUserType.AwardingOrganisation).ToString()); });
+                options.AddPolicy(RolesExtensions.RequireRegistrationsEditorAccess, policy => { policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.RegistrationsEditor); policy.RequireClaim(CustomClaimTypes.LoginUserType, ((int)LoginUserType.AwardingOrganisation).ToString()); });
+                options.AddPolicy(RolesExtensions.RequireResultsEditorAccess, policy => { policy.RequireRole(RolesExtensions.SiteAdministrator, RolesExtensions.ResultsEditor); policy.RequireClaim(CustomClaimTypes.LoginUserType, ((int)LoginUserType.AwardingOrganisation).ToString()); });
 
                 // Training Provider Access Policies                
-                options.AddPolicy(RolesExtensions.RequireLearnerRecordsEditorAccess, policy => policy.RequireRole(RolesExtensions.ProviderAdministrator, RolesExtensions.LearnerRecordsEditor));
+                options.AddPolicy(RolesExtensions.RequireLearnerRecordsEditorAccess, policy => { policy.RequireRole(RolesExtensions.ProviderAdministrator, RolesExtensions.LearnerRecordsEditor); policy.RequireClaim(CustomClaimTypes.LoginUserType, ((int)LoginUserType.TrainingProvider).ToString()); });
             });
 
             services.AddWebDataProtection(ResultsAndCertificationConfiguration, _env);
