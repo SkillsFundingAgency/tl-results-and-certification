@@ -85,7 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     options.Scope.Add("openid");
                     options.Scope.Add("email");
                     options.Scope.Add("profile");
-                    options.Scope.Add("organisation");
+                    options.Scope.Add("organisationid");
 
                     // When we expire the session, ensure user is prompted to sign in again at DfE Sign In
                     options.MaxAge = overallSessionTimeout;
@@ -147,33 +147,39 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         {
                             var claims = new List<Claim>();
                             var organisation = JObject.Parse(ctx.Principal.FindFirst("Organisation").Value);
-                            
+
                             if (organisation.HasValues)
                             {
-                                var organisationId = organisation["id"].ToString();
+                                var organisationId = organisation.SelectToken("id").ToString();
                                 var userId = ctx.Principal.FindFirst("sub").Value;
-                                var ukprn = organisation["ukprn"].ToObject<int?>();
+
                                 var dfeSignInApiClient = ctx.HttpContext.RequestServices.GetService<IDfeSignInApiClient>();
-                                var userInfo = await dfeSignInApiClient.GetUserInfo(organisationId, userId);
-                                var providerUkprn = 10000536;
+                                var userInfo = await dfeSignInApiClient.GetDfeSignInUserInfo(organisationId, userId);
 
-                                claims.AddRange(new List<Claim>
+                                if (userInfo.HasAccessToService)
                                 {
-                                    new Claim(CustomClaimTypes.HasAccessToService, ukprn.HasValue ? userInfo.HasAccessToService.ToString() : "false"),
-                                    new Claim(CustomClaimTypes.UserId, userId),
-                                    new Claim(ClaimTypes.GivenName, ctx.Principal.FindFirst("given_name").Value),
-                                    new Claim(ClaimTypes.Surname, ctx.Principal.FindFirst("family_name").Value),
-                                    new Claim(ClaimTypes.Email, ctx.Principal.FindFirst("email").Value),
-                                    new Claim(CustomClaimTypes.Ukprn, ukprn.HasValue ? ukprn.Value.ToString() : string.Empty),
-                                    new Claim(CustomClaimTypes.OrganisationId, organisationId),
-                                    new Claim(CustomClaimTypes.ProviderUkprn, providerUkprn.ToString()),
-                                    new Claim(CustomClaimTypes.LoginUserType, ((int)LoginUserType.AwardingOrganisation).ToString())
-                                });
+                                    var internalApiClient = ctx.HttpContext.RequestServices.GetService<IResultsAndCertificationInternalApiClient>();
+                                    var loggedInUserTypeResponse = await internalApiClient.GetLoggedInUserTypeInfoAsync(userInfo.Ukprn.Value);
 
-                                if (userInfo.Roles != null && userInfo.Roles.Any())
-                                {
-                                    claims.Add(new Claim(ClaimTypes.Role, RolesExtensions.ProviderAdministrator));
-                                    claims.AddRange(userInfo.Roles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
+                                    if (loggedInUserTypeResponse != null && loggedInUserTypeResponse.UserType != LoginUserType.NotSpecified)
+                                    {
+                                        claims.AddRange(new List<Claim>
+                                        {
+                                            new Claim(CustomClaimTypes.UserId, userId),
+                                            new Claim(CustomClaimTypes.OrganisationId, organisationId),
+                                            new Claim(CustomClaimTypes.Ukprn, userInfo.Ukprn.HasValue ? userInfo.Ukprn.Value.ToString() : string.Empty),
+                                            new Claim(ClaimTypes.GivenName, ctx.Principal.FindFirst("given_name").Value),
+                                            new Claim(ClaimTypes.Surname, ctx.Principal.FindFirst("family_name").Value),
+                                            new Claim(ClaimTypes.Email, ctx.Principal.FindFirst("email").Value),
+                                            new Claim(CustomClaimTypes.HasAccessToService, userInfo.HasAccessToService.ToString()),
+                                            new Claim(CustomClaimTypes.LoginUserType, ((int)loggedInUserTypeResponse.UserType).ToString())
+                                        });
+
+                                        if (userInfo.Roles != null && userInfo.Roles.Any())
+                                        {
+                                            claims.AddRange(userInfo.Roles.Select(role => new Claim(ClaimTypes.Role, role.Name)));
+                                        }
+                                    }
                                 }
                             }
                             else

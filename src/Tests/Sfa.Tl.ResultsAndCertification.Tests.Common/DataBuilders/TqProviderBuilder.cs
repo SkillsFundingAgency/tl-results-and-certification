@@ -9,6 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             TqAwardingOrganisationId = 1,
             TlProviderId = 2,
+            IsActive = true,
             CreatedBy = Constants.CreatedByUser,
             CreatedOn = Constants.CreatedOn,
             ModifiedBy = Constants.ModifiedByUser,
@@ -21,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 TqAwardingOrganisationId = 1,
                 TlProviderId = 2,
+                IsActive = true,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -30,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 TqAwardingOrganisationId = 2,
                 TlProviderId = 2,
+                IsActive = true,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -39,6 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 TqAwardingOrganisationId = 3,
                 TlProviderId = 2,
+                IsActive = true,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,

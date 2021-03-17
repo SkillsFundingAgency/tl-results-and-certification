@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
@@ -22,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 TlPathwayId = pathway.Id,
                 TlPathway = pathway,
                 ReviewStatus = 1,
+                IsActive = true,
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
@@ -44,6 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     TlPathwayId = pathway.Id,
                     TlPathway = pathway,
                     ReviewStatus = 1,
+                    IsActive = true,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
                     ModifiedBy = Constants.ModifiedByUser,
@@ -68,6 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     TlPathwayId = pathway.Id,
                     TlPathway = pathway,
                     ReviewStatus = (int)tlevelReviewStatus,
+                    IsActive = true,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
                     ModifiedBy = Constants.ModifiedByUser,

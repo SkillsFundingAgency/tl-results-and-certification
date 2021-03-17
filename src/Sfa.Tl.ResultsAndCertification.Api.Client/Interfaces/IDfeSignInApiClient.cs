@@ -5,6 +5,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 {
     public interface IDfeSignInApiClient
     {
-        Task<DfeUserInfo> GetUserInfo(string organisationId, string userId);
+        Task<DfeUserInfo> GetDfeSignInUserInfo(string organisationId, string userId);
     }
 }

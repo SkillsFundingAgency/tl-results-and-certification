@@ -63,5 +63,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);
+        Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn);
     }
 }

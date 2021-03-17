@@ -254,6 +254,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<FindLearnerRecord>(requestUri);
         }
 
+        public async Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn)
+        {
+            var requestUri = string.Format(ApiConstants.GetLoggedInUserTypeInfoUri, ukprn);
+            return await GetAsync<LoggedInUserTypeInfo>(requestUri);
+        }
+
         #region Private Methods
 
         /// <summary>
