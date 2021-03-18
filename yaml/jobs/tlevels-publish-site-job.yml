@@ -40,7 +40,7 @@ jobs:
       DeployToSlotFlag: true
       ResourceGroupName: '$(ResourceGroupName)'
       SlotName: 'staging'
-      Package: '$(System.ArtifactsDirectory)/appdrop/{{ parameters.package }}'
+      Package: '$(System.ArtifactsDirectory)/appdrop/${{ parameters.package }}'
       UseWebDeploy: true
       RemoveAdditionalFilesFlag: true
 
