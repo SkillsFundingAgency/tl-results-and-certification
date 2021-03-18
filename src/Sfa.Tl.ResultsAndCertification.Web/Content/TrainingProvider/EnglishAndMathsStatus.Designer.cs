@@ -62,15 +62,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Achieved the minimum standard.
-        /// </summary>
-        public static string Achieved {
-            get {
-                return ResourceManager.GetString("Achieved", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Achieved minimum standard.
         /// </summary>
         public static string Achieved_Display_Text {
@@ -80,29 +71,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Achieved the minimum standard with SEND adjustments.
-        /// </summary>
-        public static string Achieved_With_Send {
-            get {
-                return ResourceManager.GetString("Achieved_With_Send", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Achieved minimum standard with SEND adjustments.
         /// </summary>
         public static string Achieved_With_Send_Display_Text {
             get {
                 return ResourceManager.GetString("Achieved_With_Send_Display_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not achieved the minimum standard.
-        /// </summary>
-        public static string Not_Achieved {
-            get {
-                return ResourceManager.GetString("Not_Achieved", resourceCulture);
             }
         }
         
