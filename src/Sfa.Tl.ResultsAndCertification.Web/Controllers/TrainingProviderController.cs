@@ -180,7 +180,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private async Task SyncCacheUln(EnterUlnViewModel model, FindLearnerRecord learnerRecord = null)
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-            if (cacheModel?.Uln != null)
+
+            if (cacheModel?.Uln != null && cacheModel?.Uln?.EnterUln == model.EnterUln)
             {
                 cacheModel.LearnerRecord = learnerRecord;
                 cacheModel.Uln = model;
