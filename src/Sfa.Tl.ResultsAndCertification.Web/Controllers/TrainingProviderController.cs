@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-learner-record-unique-learner-number", Name = RouteConstants.EnterUniqueLearnerNumber)]
         public async Task<IActionResult> EnterUniqueLearnerReferenceAsync()
         {
-            var cacheModel = await _cacheService.GetAndRemoveAsync<AddLearnerRecordViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
             var viewModel = cacheModel?.Uln != null ? cacheModel.Uln : new EnterUlnViewModel();
             return View(viewModel);
         }
