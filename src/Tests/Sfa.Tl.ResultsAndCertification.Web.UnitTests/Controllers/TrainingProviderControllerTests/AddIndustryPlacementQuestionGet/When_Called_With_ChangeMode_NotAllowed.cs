@@ -16,7 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         private EnterUlnViewModel _ulnViewModel;
         private FindLearnerRecord _learnerRecord;
         private EnglishAndMathsQuestionViewModel _englishAndMathsQuestionViewModel;
-        private IndustryPlacementQuestionViewModel _industryPlacementQuestionViewModel;
 
         public override void Given()
         {
@@ -24,7 +23,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = false };
             _ulnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
             _englishAndMathsQuestionViewModel = new EnglishAndMathsQuestionViewModel { LearnerName = _learnerRecord.Name, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved };
-            _industryPlacementQuestionViewModel = new IndustryPlacementQuestionViewModel { LearnerName = _learnerRecord.Name, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
 
             cacheResult = new AddLearnerRecordViewModel
             {
@@ -34,6 +32,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             };
 
             CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(cacheResult);
+        }
+
+        [Fact]
+        public void Then_Expected_Methods_Called()
+        {
+            CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
         }
 
         [Fact]
