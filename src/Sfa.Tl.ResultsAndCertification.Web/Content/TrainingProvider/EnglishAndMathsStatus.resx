@@ -117,20 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Achieved" xml:space="preserve">
-    <value>Achieved the minimum standard</value>
-  </data>
   <data name="Achieved_Display_Text" xml:space="preserve">
     <value>Achieved minimum standard</value>
   </data>
-  <data name="Achieved_With_Send" xml:space="preserve">
-    <value>Achieved the minimum standard with SEND adjustments</value>
-  </data>
   <data name="Achieved_With_Send_Display_Text" xml:space="preserve">
     <value>Achieved minimum standard with SEND adjustments</value>
-  </data>
-  <data name="Not_Achieved" xml:space="preserve">
-    <value>Not achieved the minimum standard</value>
   </data>
   <data name="Not_Achieved_Display_Text" xml:space="preserve">
     <value>Not achieved minimum standard</value>

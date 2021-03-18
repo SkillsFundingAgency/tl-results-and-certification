@@ -168,6 +168,15 @@
   <data name="Inset_Text_Learner_Met_Min_Standards" xml:space="preserve">
     <value>the learner has met the minimum standard for English and maths as a SEND learner</value>
   </data>
+  <data name="Option_Achieved" xml:space="preserve">
+    <value>Achieved the minimum standard</value>
+  </data>
+  <data name="Option_Achieved_With_Send" xml:space="preserve">
+    <value>Achieved the minimum standard with SEND adjustments</value>
+  </data>
+  <data name="Option_Not_Achieved" xml:space="preserve">
+    <value>Not achieved the minimum standard</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Add a new learner record - English and maths achievement page</value>
   </data>

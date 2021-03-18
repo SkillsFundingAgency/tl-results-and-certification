@@ -5,12 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\javascripts\english-maths-question.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Frontend\src\javascripts\user-guide.js" />
   </ItemGroup>
 
 
   <ItemGroup>
     <Folder Include="Frontend\src\stylesheets\css\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\javascripts\english-maths-question.js" />
   </ItemGroup>
 
 
