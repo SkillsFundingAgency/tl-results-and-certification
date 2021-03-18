@@ -218,6 +218,8 @@
         public const string AddIndustryPlacementQuestion = "AddIndustryPlacementQuestion";
         public const string SubmitIndustryPlacementQuestion = "SubmitIndustryPlacementQuestion";
         public const string AddLearnerRecordCheckAndSubmit = "AddLearnerRecordCheckAndSubmit";
+        public const string AddLearnerRecordCancel = "AddLearnerRecordCancel";
+        public const string SubmitLearnerRecordCancel = "SubmitLearnerRecordCancel";
 
         //CheckAndSubmit
 

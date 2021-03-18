@@ -555,6 +555,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>IndustryPlacementStatus.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\LearnerRecordCancel.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LearnerRecordCancel.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\ViewComponents\BackLink.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -968,6 +973,10 @@
     <EmbeddedResource Update="Content\TrainingProvider\IndustryPlacementStatus.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IndustryPlacementStatus.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\LearnerRecordCancel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LearnerRecordCancel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\ViewComponents\BackLink.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
