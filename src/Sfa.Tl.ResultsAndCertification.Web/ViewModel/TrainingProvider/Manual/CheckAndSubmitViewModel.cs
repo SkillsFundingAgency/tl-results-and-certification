@@ -1,11 +1,11 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.CheckAndSubmit;
-using EnglishAndMathsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
+using EnglishAndMathsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
+using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public SummaryItemModel SummaryProvider => new SummaryItemModel { Id = "provider", Title = CheckAndSubmitContent.Title_Provider_Text, Value = LearnerRecordModel.LearnerRecord.ProviderName, NeedBorderBottomLine = false };
         public SummaryItemModel SummaryEnglishAndMathsStatus => new SummaryItemModel { Id = "englishmathsstatus", Title = CheckAndSubmitContent.Title_EnglishAndMaths_Status_Text, Value = GetEnglishAndMathsStatusText, ActionText = GetEnglishAndMathsActionText, RenderActionColumn = !HasLrsEnglishAndMaths, NeedBorderBottomLine = false };
         public SummaryItemModel SummaryWhatsLrsText => new SummaryItemModel { Id = "whatslrstext", Title = "", Value = CheckAndSubmitContent.Whats_Lrs_Text, RenderActionColumn = false, NeedBorderBottomLine = false, IsRawHtml = true };
-        public SummaryItemModel SummaryIndustryPlacementStatus => new SummaryItemModel { Id = "industryplacementstatus", Title = CheckAndSubmitContent.Title_IP_Status_Text, Value = EnumExtensions.GetDisplayName<IndustryPlacementStatus>(LearnerRecordModel?.IndustryPlacementQuestion?.IndustryPlacementStatus), ActionText = CheckAndSubmitContent.Change_Action_Link_Text, RouteName = RouteConstants.AddIndustryPlacementQuestion, RouteAttributes = ChangeLinkRouteAttributes, NeedBorderBottomLine = false };
+        public SummaryItemModel SummaryIndustryPlacementStatus => new SummaryItemModel { Id = "industryplacementstatus", Title = CheckAndSubmitContent.Title_IP_Status_Text, Value = GetIndustryPlacementDisplayText, ActionText = CheckAndSubmitContent.Change_Action_Link_Text, RouteName = RouteConstants.AddIndustryPlacementQuestion, RouteAttributes = ChangeLinkRouteAttributes, NeedBorderBottomLine = false };
 
         public BackLinkModel BackLink => new BackLinkModel { RouteName = RouteConstants.AddIndustryPlacementQuestion };
 
@@ -41,9 +41,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             {
                 return (LearnerRecordModel?.EnglishAndMathsQuestion?.EnglishAndMathsStatus) switch
                 {
-                    EnglishAndMathsStatus.Achieved => EnglishAndMathsContent.Achieved_Display_Text,
-                    EnglishAndMathsStatus.AchievedWithSend => EnglishAndMathsContent.Achieved_With_Send_Display_Text,
-                    EnglishAndMathsStatus.NotAchieved => EnglishAndMathsContent.Not_Achieved_Display_Text,
+                    EnglishAndMathsStatus.Achieved => EnglishAndMathsStatusContent.Achieved_Display_Text,
+                    EnglishAndMathsStatus.AchievedWithSend => EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text,
+                    EnglishAndMathsStatus.NotAchieved => EnglishAndMathsStatusContent.Not_Achieved_Display_Text,
+                    _ => string.Empty,
+                };
+            }
+        }
+
+        private string GetIndustryPlacementDisplayText
+        {
+            get
+            {
+                return (LearnerRecordModel?.IndustryPlacementQuestion?.IndustryPlacementStatus) switch
+                {
+                    IndustryPlacementStatus.Completed => IndustryPlacementStatusContent.Completed_Display_Text,
+                    IndustryPlacementStatus.CompletedWithSpecialConsideration => IndustryPlacementStatusContent.CompletedWithSpecialConsideration_Display_Text,
+                    IndustryPlacementStatus.NotCompleted => IndustryPlacementStatusContent.NotCompleted_Display_Text,
                     _ => string.Empty,
                 };
             }
