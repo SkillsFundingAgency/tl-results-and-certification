@@ -54,6 +54,10 @@ stages:
           sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
           appName: 'uiAppName'
           name: 'Website'
+          dependencies:
+            - DeployInfrastructure
+            - GenerateConfigs
+          package: 'Sfa.Tl.ResultsAndCertification.Web.zip'
 
       - template: ../jobs/tlevels-publish-site-job.yml
         parameters:
@@ -61,8 +65,19 @@ stages:
           sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
           appName: 'internalApiAppName'
           name: 'internalAPI'
+          dependencies:
+            - Publish_Website
+            - DeployInfrastructure
+            - GenerateConfigs
+          package: 'Sfa.Tl.ResultsAndCertification.InternalApi.zip'
+
 
       - template: ../jobs/tlevels-publish-function-job.yml
         parameters:
           serviceConnection: ${{ parameters.serviceConnection }}
           sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
+          dependencies:
+            - DeployInfrastructure
+            - GenerateConfigs
+            - Publish_internalAPI
+          package:  'Sfa.Tl.ResultsAndCertification.Functions.zip'

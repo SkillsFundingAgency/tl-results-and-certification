@@ -3,6 +3,10 @@ parameters:
     type: string
   - name: sharedEnvironmentId
     type: string
+  - name: dependencies
+    type: object
+  - name: package
+    type: string
 jobs:
 - job: PublishFunction
   variables:
@@ -11,9 +15,9 @@ jobs:
   pool:
     name: 'Azure Pipelines'
     vmImage: 'windows-2019'
-  dependsOn: 
-    - DeployInfrastructure
-    - GenerateConfigs
+  dependsOn:
+    - "${{ each dependency in parameters.dependencies }}":
+        - "${{dependency}}"  
   steps:
   - task: DownloadBuildArtifacts@0
     inputs:
@@ -27,5 +31,5 @@ jobs:
       azureSubscription: ${{ parameters.serviceConnection }}
       appType: 'functionApp'
       appName: '$(WorkerFunctionAppName)'
-      package: '$(System.ArtifactsDirectory)/appdrop/Sfa.Tl.ResultsAndCertification.Functions.zip'
+      package: '$(System.ArtifactsDirectory)/appdrop/${{ parameters.package }}'
       deploymentMethod: 'auto'
