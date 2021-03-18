@@ -168,6 +168,15 @@
   <data name="Inset_Text_Learner_Met_Min_Standards" xml:space="preserve">
     <value>the learner has met the minimum standard for English and maths as a SEND learner</value>
   </data>
+  <data name="Inset_Text_NoJs_I_Declare_That" xml:space="preserve">
+    <value>By selecting this option, I declare that:</value>
+  </data>
+  <data name="Inset_Text_NoJs_Learner_Meets_All_Conditions" xml:space="preserve">
+    <value>the learner has been assessed by our organisation and meets all the conditions required</value>
+  </data>
+  <data name="Inset_Text_NoJs_Learner_Met_Minimum_Standard" xml:space="preserve">
+    <value>the learner has met the minimum standard for English and maths as a SEND learner</value>
+  </data>
   <data name="Option_Achieved" xml:space="preserve">
     <value>Achieved the minimum standard</value>
   </data>
