@@ -196,15 +196,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-learner-record-cancel", Name = RouteConstants.SubmitLearnerRecordCancel)]
         public async Task<IActionResult> AddLearnerRecordCancelAsync(LearnerRecordCancelViewModel viewModel)
         {
-            if (viewModel.CancelLearnerRecord == true)
+            if (viewModel.CancelLearnerRecord)
             {
                 await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
                 return RedirectToRoute(RouteConstants.ManageLearnerRecordsDashboard);
             }
             else
-            {
                 return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
-            }
         }
 
 
