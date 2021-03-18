@@ -15,19 +15,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         private AddLearnerRecordViewModel cacheResult;
         private EnterUlnViewModel ulnViewModel;
         private FindLearnerRecord learnerRecord;
-        private EnglishAndMathsQuestionViewModel englishAndMathsQuestionViewModel;
 
         public override void Given()
         {
             learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", IsLearnerRegistered = true, IsLearnerRecordAdded = false };
             ulnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
-            englishAndMathsQuestionViewModel = new EnglishAndMathsQuestionViewModel { EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved };
+            EnglishAndMathsQuestionViewModel = new EnglishAndMathsQuestionViewModel { EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved };
 
             cacheResult = new AddLearnerRecordViewModel
             {
                 LearnerRecord = learnerRecord,
-                Uln = ulnViewModel,
-                EnglishAndMathsQuestion = englishAndMathsQuestionViewModel,
+                Uln = ulnViewModel
             };
 
             CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(cacheResult);

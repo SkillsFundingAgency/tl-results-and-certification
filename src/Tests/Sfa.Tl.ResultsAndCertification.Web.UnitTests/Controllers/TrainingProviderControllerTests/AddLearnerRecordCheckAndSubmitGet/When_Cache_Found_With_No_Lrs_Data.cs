@@ -102,8 +102,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryEnglishAndMathsStatus.NeedBorderBottomLine.Should().BeFalse();
             model.SummaryEnglishAndMathsStatus.RenderActionColumn.Should().BeTrue();
             model.SummaryEnglishAndMathsStatus.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryEnglishAndMathsStatus.RouteName.Should().BeNullOrEmpty();
-            model.SummaryEnglishAndMathsStatus.RouteAttributes.Should().BeNull();            
+            model.SummaryEnglishAndMathsStatus.RouteName.Should().Be(RouteConstants.AddEnglishAndMathsQuestion);
+            model.SummaryEnglishAndMathsStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             // Summary IndustryPlacementStatus
             model.SummaryIndustryPlacementStatus.Should().NotBeNull();

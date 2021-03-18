@@ -11,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         [Required(ErrorMessageResourceType = typeof(ErrorResource.EnglishAndMathsQuestion), ErrorMessageResourceName = "Validation_Select_Is_EnglishMaths_Achieved_Required_Message")]
         public EnglishAndMathsStatus? EnglishAndMathsStatus { get; set; }
         public string LearnerName { get; set; }
-        public virtual BackLinkModel BackLink => new BackLinkModel { RouteName = RouteConstants.EnterUniqueLearnerNumber };
+        public bool IsChangeMode { get; set; }
+        public virtual BackLinkModel BackLink => new BackLinkModel { RouteName = IsChangeMode ? RouteConstants.AddLearnerRecordCheckAndSubmit :  RouteConstants.EnterUniqueLearnerNumber };
     }
 }

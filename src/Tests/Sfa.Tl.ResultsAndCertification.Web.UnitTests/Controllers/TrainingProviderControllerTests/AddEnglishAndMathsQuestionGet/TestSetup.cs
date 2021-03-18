@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
         public async override Task When()
         {
-            Result = await Controller.AddEnglishAndMathsQuestionAsync();
+            Result = await Controller.AddEnglishAndMathsQuestionAsync(IsChangeMode);
         }
     }
 }

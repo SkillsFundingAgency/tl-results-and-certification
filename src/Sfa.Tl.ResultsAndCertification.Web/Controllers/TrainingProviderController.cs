@@ -102,8 +102,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-learner-record-english-and-maths-achievement", Name = RouteConstants.AddEnglishAndMathsQuestion)]
-        public async Task<IActionResult> AddEnglishAndMathsQuestionAsync()
+        [Route("add-learner-record-english-and-maths-achievement/{isChangeMode:bool?}", Name = RouteConstants.AddEnglishAndMathsQuestion)]
+        public async Task<IActionResult> AddEnglishAndMathsQuestionAsync(bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
 
@@ -112,6 +112,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var viewModel = cacheModel?.EnglishAndMathsQuestion == null ? new EnglishAndMathsQuestionViewModel() : cacheModel.EnglishAndMathsQuestion;
             viewModel.LearnerName = cacheModel.LearnerRecord.Name;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowed;
             return View(viewModel);
         }
 
@@ -129,7 +130,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.EnglishAndMathsQuestion = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
+            return RedirectToRoute(model.IsChangeMode ? RouteConstants.AddLearnerRecordCheckAndSubmit : RouteConstants.AddIndustryPlacementQuestion);
         }
 
         [HttpGet]

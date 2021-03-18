@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public SummaryItemModel SummaryLearnerName => new SummaryItemModel { Id = "learnername", Title = CheckAndSubmitContent.Title_Name_Text, Value = LearnerRecordModel.LearnerRecord.Name, NeedBorderBottomLine = false };
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel { Id = "dateofbirth", Title = CheckAndSubmitContent.Title_DateofBirth_Text, Value = LearnerRecordModel.LearnerRecord.DateofBirth.ToShortDateString(), NeedBorderBottomLine = false };
         public SummaryItemModel SummaryProvider => new SummaryItemModel { Id = "provider", Title = CheckAndSubmitContent.Title_Provider_Text, Value = LearnerRecordModel.LearnerRecord.ProviderName, NeedBorderBottomLine = false };
-        public SummaryItemModel SummaryEnglishAndMathsStatus => new SummaryItemModel { Id = "englishmathsstatus", Title = CheckAndSubmitContent.Title_EnglishAndMaths_Status_Text, Value = GetEnglishAndMathsStatusText, ActionText = GetEnglishAndMathsActionText, RenderActionColumn = !HasLrsEnglishAndMaths, NeedBorderBottomLine = false };
+        public SummaryItemModel SummaryEnglishAndMathsStatus => new SummaryItemModel { Id = "englishmathsstatus", Title = CheckAndSubmitContent.Title_EnglishAndMaths_Status_Text, Value = GetEnglishAndMathsStatusText, ActionText = GetEnglishAndMathsActionText, RouteName = GetEnglishAndMathsRouteName, RenderActionColumn = !HasLrsEnglishAndMaths, RouteAttributes = GetEnglishAndMathsRouteAttributes, NeedBorderBottomLine = false };
         public SummaryItemModel SummaryWhatsLrsText => new SummaryItemModel { Id = "whatslrstext", Title = "", Value = CheckAndSubmitContent.Whats_Lrs_Text, RenderActionColumn = false, NeedBorderBottomLine = false, IsRawHtml = true };
         public SummaryItemModel SummaryIndustryPlacementStatus => new SummaryItemModel { Id = "industryplacementstatus", Title = CheckAndSubmitContent.Title_IP_Status_Text, Value = GetIndustryPlacementDisplayText, ActionText = CheckAndSubmitContent.Change_Action_Link_Text, RouteName = RouteConstants.AddIndustryPlacementQuestion, RouteAttributes = ChangeLinkRouteAttributes, NeedBorderBottomLine = false };
 
@@ -35,6 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         private string GetEnglishAndMathsActionText => HasLrsEnglishAndMaths ? string.Empty : CheckAndSubmitContent.Change_Action_Link_Text;
         private string GetEnglishAndMathsStatusText => HasLrsEnglishAndMaths ? LearnerRecordModel.LearnerRecord.IsEnglishAndMathsAchieved ? CheckAndSubmitContent.English_And_Maths_Achieved_Lrs_Text : CheckAndSubmitContent.English_And_Maths_Not_Achieved_Lrs_Text : GetEnglishAndMathsStatusDisplayText;
 
+        private string GetEnglishAndMathsRouteName => HasLrsEnglishAndMaths ? string.Empty : RouteConstants.AddEnglishAndMathsQuestion;
+        private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => HasLrsEnglishAndMaths ? null : ChangeLinkRouteAttributes;
         private string GetEnglishAndMathsStatusDisplayText
         {
             get

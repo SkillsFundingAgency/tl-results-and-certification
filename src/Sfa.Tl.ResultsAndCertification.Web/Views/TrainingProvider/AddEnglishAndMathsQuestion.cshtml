@@ -20,6 +20,7 @@
         <form class="form" id="addEnglishAndMathsForm" asp-route="SubmitAddEnglishAndMathsQuestion">
             <partial name="_ValidationSummary" />
             <input type="hidden" asp-for="LearnerName" value="@Model.LearnerName" />
+            <input type="hidden" asp-for="IsChangeMode" value="@Model.IsChangeMode.ToString()" />
             <div class="govuk-form-group govuk-!-margin-bottom-7">
                 <span class="govuk-caption-xl">@EnglishAndMathsQuestion.Caption_Add_New_Learner</span>
                 <div class="govuk-form-group" sfa-validation-for="EnglishAndMathsStatus" sfa-validation-class="govuk-form-group--error">
@@ -94,7 +95,8 @@
                     </ul>
                 </div>
             </div>
-            <button id="continueButton" class="govuk-button" data-module="govuk-button">@EnglishAndMathsQuestion.Button_Continue</button>
+            @{ var buttonText = Model.IsChangeMode ? EnglishAndMathsQuestion.Change_Button : EnglishAndMathsQuestion.Button_Continue; }
+            <button id="continueButton" class="govuk-button" data-module="govuk-button">@buttonText</button>
         </form>
     </div>
 </div>

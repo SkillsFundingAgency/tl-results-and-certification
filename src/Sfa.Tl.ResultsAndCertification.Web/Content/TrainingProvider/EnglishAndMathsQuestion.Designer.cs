@@ -80,6 +80,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Change_Button {
+            get {
+                return ResourceManager.GetString("Change_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can adjust the minimum standards for English and maths for learners with SEND if the following conditions are met:.
         /// </summary>
         public static string Details_Adjust_Minimum_Standards_For_Send_Learner {
