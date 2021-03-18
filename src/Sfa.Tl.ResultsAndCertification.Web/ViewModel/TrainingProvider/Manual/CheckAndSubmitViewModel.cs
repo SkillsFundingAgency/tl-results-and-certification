@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using System.Collections.Generic;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.CheckAndSubmit;
 using EnglishAndMathsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
 
@@ -20,10 +21,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public SummaryItemModel SummaryProvider => new SummaryItemModel { Id = "provider", Title = CheckAndSubmitContent.Title_Provider_Text, Value = LearnerRecordModel.LearnerRecord.ProviderName, NeedBorderBottomLine = false };
         public SummaryItemModel SummaryEnglishAndMathsStatus => new SummaryItemModel { Id = "englishmathsstatus", Title = CheckAndSubmitContent.Title_EnglishAndMaths_Status_Text, Value = GetEnglishAndMathsStatusText, ActionText = GetEnglishAndMathsActionText, RenderActionColumn = !HasLrsEnglishAndMaths, NeedBorderBottomLine = false };
         public SummaryItemModel SummaryWhatsLrsText => new SummaryItemModel { Id = "whatslrstext", Title = "", Value = CheckAndSubmitContent.Whats_Lrs_Text, RenderActionColumn = false, NeedBorderBottomLine = false, IsRawHtml = true };
-        public SummaryItemModel SummaryIndustryPlacementStatus => new SummaryItemModel { Id = "industryplacementstatus", Title = CheckAndSubmitContent.Title_IP_Status_Text, Value = EnumExtensions.GetDisplayName<IndustryPlacementStatus>(LearnerRecordModel?.IndustryPlacementQuestion?.IndustryPlacementStatus), ActionText = CheckAndSubmitContent.Change_Action_Link_Text, NeedBorderBottomLine = false };
+        public SummaryItemModel SummaryIndustryPlacementStatus => new SummaryItemModel { Id = "industryplacementstatus", Title = CheckAndSubmitContent.Title_IP_Status_Text, Value = EnumExtensions.GetDisplayName<IndustryPlacementStatus>(LearnerRecordModel?.IndustryPlacementQuestion?.IndustryPlacementStatus), ActionText = CheckAndSubmitContent.Change_Action_Link_Text, RouteName = RouteConstants.AddIndustryPlacementQuestion, RouteAttributes = ChangeLinkRouteAttributes, NeedBorderBottomLine = false };
 
         public BackLinkModel BackLink => new BackLinkModel { RouteName = RouteConstants.AddIndustryPlacementQuestion };
 
+        private Dictionary<string, string> ChangeLinkRouteAttributes => new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
         public bool HasLrsEnglishAndMaths => LearnerRecordModel?.LearnerRecord != null && LearnerRecordModel.LearnerRecord.HasLrsEnglishAndMaths;
         private bool IsValidLearnerRecord => LearnerRecordModel?.LearnerRecord != null && LearnerRecordModel.LearnerRecord.IsLearnerRegistered == true && LearnerRecordModel.LearnerRecord.IsLearnerRecordAdded == false;
         private bool IsValidEnglishAndMaths => LearnerRecordModel?.LearnerRecord != null && ((LearnerRecordModel.LearnerRecord.HasLrsEnglishAndMaths == true && LearnerRecordModel.EnglishAndMathsQuestion == null) || (LearnerRecordModel.LearnerRecord.HasLrsEnglishAndMaths == false && LearnerRecordModel.EnglishAndMathsQuestion != null));

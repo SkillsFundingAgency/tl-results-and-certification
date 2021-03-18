@@ -133,8 +133,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("has-learner-completed-industry-placement", Name = RouteConstants.AddIndustryPlacementQuestion)]
-        public async Task<IActionResult> AddIndustryPlacementQuestionAsync()
+        [Route("has-learner-completed-industry-placement/{isChangeMode:bool?}", Name = RouteConstants.AddIndustryPlacementQuestion)]
+        public async Task<IActionResult> AddIndustryPlacementQuestionAsync(bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
 
@@ -143,6 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var viewModel = cacheModel?.IndustryPlacementQuestion == null ? new IndustryPlacementQuestionViewModel() : cacheModel.IndustryPlacementQuestion;
             viewModel.LearnerName = cacheModel.LearnerRecord.Name;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowed;
             return View(viewModel);
         }
 
@@ -159,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.IndustryPlacementQuestion = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-
+            
             return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
         }
 
