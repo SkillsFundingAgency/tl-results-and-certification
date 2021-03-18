@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
@@ -111,8 +110,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            // TODO:
-            return View();
+            var viewModel = cacheModel?.EnglishAndMathsQuestion == null ? new EnglishAndMathsQuestionViewModel() : cacheModel.EnglishAndMathsQuestion;
+            viewModel.LearnerName = cacheModel.LearnerRecord.Name;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-learner-record-english-and-maths-achievement", Name = RouteConstants.SubmitAddEnglishAndMathsQuestion)]
+        public async Task<IActionResult> AddEnglishAndMathsQuestionAsync(EnglishAndMathsQuestionViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+            if (cacheModel?.Uln == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.EnglishAndMathsQuestion = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
         }
 
         [HttpGet]
@@ -121,7 +138,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
 
-            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false)
+            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false || cacheModel?.EnglishAndMathsQuestion == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.IndustryPlacementQuestion == null ? new IndustryPlacementQuestionViewModel() : cacheModel.IndustryPlacementQuestion;

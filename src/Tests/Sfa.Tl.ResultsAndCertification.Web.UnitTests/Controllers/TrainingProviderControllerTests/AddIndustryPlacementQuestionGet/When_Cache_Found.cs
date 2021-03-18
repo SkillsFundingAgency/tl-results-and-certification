@@ -15,18 +15,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         private AddLearnerRecordViewModel cacheResult;
         private EnterUlnViewModel _ulnViewModel;
         private FindLearnerRecord _learnerRecord;
+        private EnglishAndMathsQuestionViewModel _englishAndMathsQuestionViewModel; 
         private IndustryPlacementQuestionViewModel _industryPlacementQuestionViewModel;
 
         public override void Given()
         {
             _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", IsLearnerRegistered = true };
             _ulnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
+            _englishAndMathsQuestionViewModel = new EnglishAndMathsQuestionViewModel();
             _industryPlacementQuestionViewModel = new IndustryPlacementQuestionViewModel { LearnerName = _learnerRecord.Name, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
 
             cacheResult = new AddLearnerRecordViewModel
             {
                 LearnerRecord = _learnerRecord,
                 Uln = _ulnViewModel,
+                EnglishAndMathsQuestion = _englishAndMathsQuestionViewModel,
                 IndustryPlacementQuestion = _industryPlacementQuestionViewModel
             };
 
@@ -53,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.IndustryPlacementStatus.Should().Be(_industryPlacementQuestionViewModel.IndustryPlacementStatus);
             model.LearnerName.Should().Be(_learnerRecord.Name);
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.EnterUniqueLearnerNumber);
+            model.BackLink.RouteName.Should().Be(RouteConstants.AddEnglishAndMathsQuestion);
         }
     }
 }
