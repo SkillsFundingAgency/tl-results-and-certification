@@ -9,25 +9,29 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
 using Xunit;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.CheckAndSubmit;
+using EnglishAndMathsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.AddLearnerRecordCheckAndSubmitGet
 {
-    public class When_Cache_Found : TestSetup
+    public class When_Cache_Found_With_No_Lrs_Data : TestSetup
     {
         private AddLearnerRecordViewModel _cacheResult;
         private EnterUlnViewModel _ulnViewModel;
+        private EnglishAndMathsQuestionViewModel _englishAndMathsViewModel;
         private FindLearnerRecord _learnerRecord;
 
         public override void Given()
         {
-            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Barnsley College (123456789)", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true };
+            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Barnsley College (123456789)", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = false };
             _ulnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
+            _englishAndMathsViewModel = new EnglishAndMathsQuestionViewModel { LearnerName = _learnerRecord.Name, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved };
             IndustryPlacementQuestionViewModel = new IndustryPlacementQuestionViewModel { LearnerName = _learnerRecord.Name, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
 
             _cacheResult = new AddLearnerRecordViewModel
             {
                 LearnerRecord = _learnerRecord,
                 Uln = _ulnViewModel,
+                EnglishAndMathsQuestion = _englishAndMathsViewModel,
                 IndustryPlacementQuestion = IndustryPlacementQuestionViewModel
             };
 
@@ -93,24 +97,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             // Summary EnglishAndMathsStatus           
             model.SummaryEnglishAndMathsStatus.Should().NotBeNull();
             model.SummaryEnglishAndMathsStatus.Title.Should().Be(CheckAndSubmitContent.Title_EnglishAndMaths_Status_Text);
-            model.SummaryEnglishAndMathsStatus.Value.Should().Be(GetMathsAndEnglishText);
+            model.SummaryEnglishAndMathsStatus.Value.Should().Be(EnglishAndMathsContent.Achieved_Display_Text);
             model.SummaryEnglishAndMathsStatus.NeedBorderBottomLine.Should().BeFalse();
-            model.SummaryEnglishAndMathsStatus.RenderActionColumn.Should().BeFalse();
+            model.SummaryEnglishAndMathsStatus.RenderActionColumn.Should().BeTrue();
             model.SummaryEnglishAndMathsStatus.RouteName.Should().BeNullOrEmpty();
-            model.SummaryEnglishAndMathsStatus.ActionText.Should().BeNullOrEmpty();
+            model.SummaryEnglishAndMathsStatus.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
             model.SummaryEnglishAndMathsStatus.RouteName.Should().BeNullOrEmpty();
-            model.SummaryEnglishAndMathsStatus.RouteAttributes.Should().BeNull();
-
-            // Summary WhatsLrsText
-            model.SummaryWhatsLrsText.Should().NotBeNull();
-            model.SummaryWhatsLrsText.Title.Should().BeEmpty();
-            model.SummaryWhatsLrsText.Value.Should().Be(CheckAndSubmitContent.Whats_Lrs_Text);
-            model.SummaryWhatsLrsText.NeedBorderBottomLine.Should().BeFalse();
-            model.SummaryWhatsLrsText.RenderActionColumn.Should().BeFalse();
-            model.SummaryWhatsLrsText.RouteName.Should().BeNullOrEmpty();
-            model.SummaryWhatsLrsText.ActionText.Should().BeNullOrEmpty();
-            model.SummaryWhatsLrsText.RouteName.Should().BeNullOrEmpty();
-            model.SummaryWhatsLrsText.RouteAttributes.Should().BeNull();
+            model.SummaryEnglishAndMathsStatus.RouteAttributes.Should().BeNull();            
 
             // Summary IndustryPlacementStatus
             model.SummaryIndustryPlacementStatus.Should().NotBeNull();
@@ -122,14 +115,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryIndustryPlacementStatus.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
             model.SummaryIndustryPlacementStatus.RouteName.Should().BeNullOrEmpty();
             model.SummaryIndustryPlacementStatus.RouteAttributes.Should().BeNull();
-        }
-
-        private string GetMathsAndEnglishText
-        {
-            get
-            {
-                return _learnerRecord.HasLrsEnglishAndMaths ? _learnerRecord.IsEnglishAndMathsAchieved ? CheckAndSubmitContent.English_And_Maths_Achieved_Lrs_Text : CheckAndSubmitContent.English_And_Maths_Not_Achieved_Lrs_Text : null;
-            }
-        }
+        }        
     }
 }
