@@ -138,7 +138,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
 
-            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false || cacheModel?.EnglishAndMathsQuestion == null)
+            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false || (cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == false && cacheModel?.EnglishAndMathsQuestion == null))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.IndustryPlacementQuestion == null ? new IndustryPlacementQuestionViewModel() : cacheModel.IndustryPlacementQuestion;
@@ -180,7 +180,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private async Task SyncCacheUln(EnterUlnViewModel model, FindLearnerRecord learnerRecord = null)
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-            if (cacheModel?.Uln != null)
+
+            if (cacheModel?.Uln != null && cacheModel?.Uln?.EnterUln == model.EnterUln)
             {
                 cacheModel.LearnerRecord = learnerRecord;
                 cacheModel.Uln = model;
