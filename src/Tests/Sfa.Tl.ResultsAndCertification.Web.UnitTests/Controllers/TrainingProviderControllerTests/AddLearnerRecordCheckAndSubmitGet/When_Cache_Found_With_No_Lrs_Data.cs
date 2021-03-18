@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
+using System.Collections.Generic;
 using Xunit;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.CheckAndSubmit;
 using EnglishAndMathsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
@@ -19,9 +21,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         private EnterUlnViewModel _ulnViewModel;
         private EnglishAndMathsQuestionViewModel _englishAndMathsViewModel;
         private FindLearnerRecord _learnerRecord;
+        private Dictionary<string, string> _routeAttributes;
 
         public override void Given()
         {
+            _routeAttributes = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
             _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Barnsley College (123456789)", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = false };
             _ulnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
             _englishAndMathsViewModel = new EnglishAndMathsQuestionViewModel { LearnerName = _learnerRecord.Name, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved };
@@ -111,10 +115,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryIndustryPlacementStatus.Value.Should().Be(EnumExtensions.GetDisplayName<IndustryPlacementStatus>(_cacheResult.IndustryPlacementQuestion.IndustryPlacementStatus));
             model.SummaryIndustryPlacementStatus.NeedBorderBottomLine.Should().BeFalse();
             model.SummaryIndustryPlacementStatus.RenderActionColumn.Should().BeTrue();
-            model.SummaryIndustryPlacementStatus.RouteName.Should().BeNullOrEmpty();
             model.SummaryIndustryPlacementStatus.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryIndustryPlacementStatus.RouteName.Should().BeNullOrEmpty();
-            model.SummaryIndustryPlacementStatus.RouteAttributes.Should().BeNull();
+            model.SummaryIndustryPlacementStatus.RouteName.Should().Be(RouteConstants.AddIndustryPlacementQuestion);
+            model.SummaryIndustryPlacementStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
         }        
     }
 }
