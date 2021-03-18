@@ -10,16 +10,17 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.AddIndustryPlacementQuestionGet
 {
-    public class When_Cache_Found : TestSetup
+    public class When_Called_With_ChangeMode_NotAllowed : TestSetup
     {
         private AddLearnerRecordViewModel cacheResult;
         private EnterUlnViewModel _ulnViewModel;
         private FindLearnerRecord _learnerRecord;
-        private EnglishAndMathsQuestionViewModel _englishAndMathsQuestionViewModel; 
+        private EnglishAndMathsQuestionViewModel _englishAndMathsQuestionViewModel;
         private IndustryPlacementQuestionViewModel _industryPlacementQuestionViewModel;
 
         public override void Given()
         {
+            IsChangeMode = true;
             _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = false };
             _ulnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
             _englishAndMathsQuestionViewModel = new EnglishAndMathsQuestionViewModel { LearnerName = _learnerRecord.Name, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved };
@@ -29,17 +30,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             {
                 LearnerRecord = _learnerRecord,
                 Uln = _ulnViewModel,
-                EnglishAndMathsQuestion = _englishAndMathsQuestionViewModel,
-                IndustryPlacementQuestion = _industryPlacementQuestionViewModel
+                EnglishAndMathsQuestion = _englishAndMathsQuestionViewModel
             };
 
             CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(cacheResult);
-        }
-
-        [Fact]
-        public void Then_Expected_Methods_Called()
-        {
-            CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
         }
 
         [Fact]
@@ -53,10 +47,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             var model = viewResult.Model as IndustryPlacementQuestionViewModel;
             model.Should().NotBeNull();
-            model.IndustryPlacementStatus.Should().Be(_industryPlacementQuestionViewModel.IndustryPlacementStatus);
+            model.IndustryPlacementStatus.Should().BeNull();
             model.LearnerName.Should().Be(_learnerRecord.Name);
+            model.IsChangeMode.Should().BeFalse();
+
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.AddEnglishAndMathsQuestion);
+            model.BackLink.RouteName.Should().Be(_learnerRecord.HasLrsEnglishAndMaths ? RouteConstants.EnterUniqueLearnerNumber : RouteConstants.AddEnglishAndMathsQuestion);
         }
     }
 }
