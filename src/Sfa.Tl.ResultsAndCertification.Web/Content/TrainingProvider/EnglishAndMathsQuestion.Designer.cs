@@ -215,6 +215,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Achieved the minimum standard.
+        /// </summary>
+        public static string Option_Achieved {
+            get {
+                return ResourceManager.GetString("Option_Achieved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Achieved the minimum standard with SEND adjustments.
+        /// </summary>
+        public static string Option_Achieved_With_Send {
+            get {
+                return ResourceManager.GetString("Option_Achieved_With_Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not achieved the minimum standard.
+        /// </summary>
+        public static string Option_Not_Achieved {
+            get {
+                return ResourceManager.GetString("Option_Not_Achieved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a new learner record - English and maths achievement page.
         /// </summary>
         public static string Page_Title {

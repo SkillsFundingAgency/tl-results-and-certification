@@ -5,12 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\javascripts\english-maths-question.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Frontend\src\javascripts\user-guide.js" />
   </ItemGroup>
 
 
   <ItemGroup>
     <Folder Include="Frontend\src\stylesheets\css\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\javascripts\english-maths-question.js" />
   </ItemGroup>
 
 
@@ -511,11 +520,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>EnglishAndMathsQuestion.resx</DependentUpon>
     </Compile>
-    <Compile Update="Content\TrainingProvider\EnglishAndMathsStatus.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EnglishAndMathsStatus.resx</DependentUpon>
-    </Compile>
     <Compile Update="Content\TrainingProvider\EnterUniqueLearnerReference.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -930,10 +934,6 @@
     <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsQuestion.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EnglishAndMathsQuestion.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsStatus.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EnglishAndMathsStatus.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAddedAlready.resx">
       <LastGenOutput>EnterUniqueLearnerReferenceNotFound.Designer.cs</LastGenOutput>
