@@ -215,6 +215,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to By selecting this option, I declare that:.
+        /// </summary>
+        public static string Inset_Text_NoJs_I_Declare_That {
+            get {
+                return ResourceManager.GetString("Inset_Text_NoJs_I_Declare_That", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the learner has been assessed by our organisation and meets all the conditions required.
+        /// </summary>
+        public static string Inset_Text_NoJs_Learner_Meets_All_Conditions {
+            get {
+                return ResourceManager.GetString("Inset_Text_NoJs_Learner_Meets_All_Conditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the learner has met the minimum standard for English and maths as a SEND learner.
+        /// </summary>
+        public static string Inset_Text_NoJs_Learner_Met_Minimum_Standard {
+            get {
+                return ResourceManager.GetString("Inset_Text_NoJs_Learner_Met_Minimum_Standard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Achieved the minimum standard.
         /// </summary>
         public static string Option_Achieved {
