@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.CheckAndSubmit;
+using EnglishAndMathsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
@@ -30,6 +31,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         private bool IsValidIndustryPlacement => LearnerRecordModel?.IndustryPlacementQuestion != null;        
 
         private string GetEnglishAndMathsActionText => HasLrsEnglishAndMaths ? string.Empty : CheckAndSubmitContent.Change_Action_Link_Text;
-        private string GetEnglishAndMathsStatusText => HasLrsEnglishAndMaths ? LearnerRecordModel.LearnerRecord.IsEnglishAndMathsAchieved ? CheckAndSubmitContent.English_And_Maths_Achieved_Lrs_Text : CheckAndSubmitContent.English_And_Maths_Not_Achieved_Lrs_Text : EnumExtensions.GetDisplayName<EnglishAndMathsStatus>(LearnerRecordModel?.EnglishAndMathsQuestion?.EnglishAndMathsStatus);
+        private string GetEnglishAndMathsStatusText => HasLrsEnglishAndMaths ? LearnerRecordModel.LearnerRecord.IsEnglishAndMathsAchieved ? CheckAndSubmitContent.English_And_Maths_Achieved_Lrs_Text : CheckAndSubmitContent.English_And_Maths_Not_Achieved_Lrs_Text : GetEnglishAndMathsStatusDisplayText;
+
+        private string GetEnglishAndMathsStatusDisplayText
+        {
+            get
+            {
+                return (LearnerRecordModel?.EnglishAndMathsQuestion?.EnglishAndMathsStatus) switch
+                {
+                    EnglishAndMathsStatus.Achieved => EnglishAndMathsContent.Achieved_Display_Text,
+                    EnglishAndMathsStatus.AchievedWithSend => EnglishAndMathsContent.Achieved_With_Send_Display_Text,
+                    EnglishAndMathsStatus.NotAchieved => EnglishAndMathsContent.Not_Achieved_Display_Text,
+                    _ => string.Empty,
+                };
+            }
+        }
     }
 }

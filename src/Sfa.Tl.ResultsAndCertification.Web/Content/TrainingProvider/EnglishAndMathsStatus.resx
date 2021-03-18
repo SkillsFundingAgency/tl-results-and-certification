@@ -120,10 +120,19 @@
   <data name="Achieved" xml:space="preserve">
     <value>Achieved the minimum standard</value>
   </data>
+  <data name="Achieved_Display_Text" xml:space="preserve">
+    <value>Achieved minimum standard</value>
+  </data>
   <data name="Achieved_With_Send" xml:space="preserve">
     <value>Achieved the minimum standard with SEND adjustments</value>
   </data>
+  <data name="Achieved_With_Send_Display_Text" xml:space="preserve">
+    <value>Achieved minimum standard with SEND adjustments</value>
+  </data>
   <data name="Not_Achieved" xml:space="preserve">
     <value>Not achieved the minimum standard</value>
+  </data>
+  <data name="Not_Achieved_Display_Text" xml:space="preserve">
+    <value>Not achieved minimum standard</value>
   </data>
 </root>
