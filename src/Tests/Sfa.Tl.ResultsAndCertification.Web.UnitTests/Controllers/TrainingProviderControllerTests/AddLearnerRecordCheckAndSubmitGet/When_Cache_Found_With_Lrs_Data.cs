@@ -56,7 +56,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryUln.Value.Should().Be(_ulnViewModel.EnterUln);
             model.SummaryUln.NeedBorderBottomLine.Should().BeFalse();
             model.SummaryUln.RenderActionColumn.Should().BeTrue();
-            model.SummaryUln.RouteName.Should().BeNullOrEmpty();
             model.SummaryUln.ActionText.Should().BeNullOrEmpty();
             model.SummaryUln.RouteName.Should().BeNullOrEmpty();
             model.SummaryUln.RouteAttributes.Should().BeNull();
@@ -67,7 +66,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryLearnerName.Value.Should().Be(_learnerRecord.Name);
             model.SummaryLearnerName.NeedBorderBottomLine.Should().BeFalse();
             model.SummaryLearnerName.RenderActionColumn.Should().BeTrue();
-            model.SummaryLearnerName.RouteName.Should().BeNullOrEmpty();
             model.SummaryLearnerName.ActionText.Should().BeNullOrEmpty();
             model.SummaryLearnerName.RouteName.Should().BeNullOrEmpty();
             model.SummaryLearnerName.RouteAttributes.Should().BeNull();
@@ -78,7 +76,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryDateofBirth.Value.Should().Be(_learnerRecord.DateofBirth.ToShortDateString());
             model.SummaryDateofBirth.NeedBorderBottomLine.Should().BeFalse();
             model.SummaryDateofBirth.RenderActionColumn.Should().BeTrue();
-            model.SummaryDateofBirth.RouteName.Should().BeNullOrEmpty();
             model.SummaryDateofBirth.ActionText.Should().BeNullOrEmpty();
             model.SummaryDateofBirth.RouteName.Should().BeNullOrEmpty();
             model.SummaryDateofBirth.RouteAttributes.Should().BeNull();
@@ -89,7 +86,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryProvider.Value.Should().Be(_learnerRecord.ProviderName);
             model.SummaryProvider.NeedBorderBottomLine.Should().BeFalse();
             model.SummaryProvider.RenderActionColumn.Should().BeTrue();
-            model.SummaryProvider.RouteName.Should().BeNullOrEmpty();
             model.SummaryProvider.ActionText.Should().BeNullOrEmpty();
             model.SummaryProvider.RouteName.Should().BeNullOrEmpty();
             model.SummaryProvider.RouteAttributes.Should().BeNull();
@@ -100,7 +96,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryEnglishAndMathsStatus.Value.Should().Be(GetMathsAndEnglishText);
             model.SummaryEnglishAndMathsStatus.NeedBorderBottomLine.Should().BeFalse();
             model.SummaryEnglishAndMathsStatus.RenderActionColumn.Should().BeFalse();
-            model.SummaryEnglishAndMathsStatus.RouteName.Should().BeNullOrEmpty();
             model.SummaryEnglishAndMathsStatus.ActionText.Should().BeNullOrEmpty();
             model.SummaryEnglishAndMathsStatus.RouteName.Should().BeNullOrEmpty();
             model.SummaryEnglishAndMathsStatus.RouteAttributes.Should().BeNull();
@@ -111,7 +106,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryWhatsLrsText.Value.Should().Be(CheckAndSubmitContent.Whats_Lrs_Text);
             model.SummaryWhatsLrsText.NeedBorderBottomLine.Should().BeFalse();
             model.SummaryWhatsLrsText.RenderActionColumn.Should().BeFalse();
-            model.SummaryWhatsLrsText.RouteName.Should().BeNullOrEmpty();
             model.SummaryWhatsLrsText.ActionText.Should().BeNullOrEmpty();
             model.SummaryWhatsLrsText.RouteName.Should().BeNullOrEmpty();
             model.SummaryWhatsLrsText.RouteAttributes.Should().BeNull();
