@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.CheckAndSubmit;
+using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.AddLearnerRecordCheckAndSubmitGet
 {
@@ -113,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             // Summary IndustryPlacementStatus
             model.SummaryIndustryPlacementStatus.Should().NotBeNull();
             model.SummaryIndustryPlacementStatus.Title.Should().Be(CheckAndSubmitContent.Title_IP_Status_Text);
-            model.SummaryIndustryPlacementStatus.Value.Should().Be(EnumExtensions.GetDisplayName<IndustryPlacementStatus>(_cacheResult.IndustryPlacementQuestion.IndustryPlacementStatus));
+            model.SummaryIndustryPlacementStatus.Value.Should().Be(IndustryPlacementStatusContent.Completed_Display_Text);
             model.SummaryIndustryPlacementStatus.NeedBorderBottomLine.Should().BeFalse();
             model.SummaryIndustryPlacementStatus.RenderActionColumn.Should().BeTrue();
             model.SummaryIndustryPlacementStatus.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
