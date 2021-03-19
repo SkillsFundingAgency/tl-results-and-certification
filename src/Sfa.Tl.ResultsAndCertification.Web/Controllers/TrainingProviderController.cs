@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
@@ -176,6 +177,44 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (!viewModel.IsCheckAndSubmitPageValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-learner-record-check-and-submit", Name = RouteConstants.SubmitLearnerRecordCheckAndSubmit)]
+        public async Task<IActionResult> SubmitLearnerRecordCheckAndSubmitAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var response = await _trainingProviderLoader.AddLearnerRecordAsync(User.GetUkPrn(), cacheModel);
+
+            if (!response.IsSuccess)
+            {
+                _logger.LogWarning(LogEvent.AddLearnerRecordFailed, $"Unable to add learner record for UniqueLearnerNumber: {cacheModel.Uln}. Method: SubmitLearnerRecordCheckAndSubmitAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation),
+                new LearnerRecordConfirmationViewModel { Uln = response.Uln, Name = response.Name }, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.LearnerRecordAddedConfirmation);
+        }
+
+        [HttpGet]
+        [Route("learner-record-added-confirmation", Name = RouteConstants.LearnerRecordAddedConfirmation)]
+        public async Task<IActionResult> AddLearnerRecordConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<LearnerRecordConfirmationViewModel>(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read LearnerRecordConfirmationViewModel from redis cache in add learner record confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
 
             return View(viewModel);
         }
