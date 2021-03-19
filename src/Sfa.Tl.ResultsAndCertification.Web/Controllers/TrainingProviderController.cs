@@ -146,6 +146,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = cacheModel?.IndustryPlacementQuestion == null ? new IndustryPlacementQuestionViewModel() : cacheModel.IndustryPlacementQuestion;
             viewModel.LearnerName = cacheModel.LearnerRecord.Name;
             viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowed;
+
+            if (cacheModel?.LearnerRecord.HasLrsEnglishAndMaths == true)
+                viewModel.IsBackLinkToEnterUln = true;
+
             return View(viewModel);
         }
 
