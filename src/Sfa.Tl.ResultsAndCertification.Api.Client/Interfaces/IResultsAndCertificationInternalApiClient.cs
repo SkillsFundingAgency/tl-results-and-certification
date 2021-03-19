@@ -60,6 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         // TraningProvider
         Task<FindLearnerRecord> FindLearnerRecordAsync(long aoUkprn, long uln);
+        Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request);
 
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);

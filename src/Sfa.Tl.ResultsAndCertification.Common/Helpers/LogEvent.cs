@@ -43,5 +43,8 @@
         // Results events
         public const int BulkResultProcessFailed = 6001;
         public const int DownloadResultErrorsFailed = 6002;
+
+        // Training Provider events
+        public const int AddLearnerRecordFailed = 7001;
     }
 }
