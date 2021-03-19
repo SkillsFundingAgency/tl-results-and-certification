@@ -10,19 +10,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_Cache_Found : TestSetup
     {
-        private AddLearnerRecordViewModel cacheResult;
+        private AddLearnerRecordViewModel _cacheResult;
         private FindLearnerRecord _learnerRecord;
 
         public override void Given()
         {
             _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", IsLearnerRegistered = true, IsLearnerRecordAdded = false };
 
-            cacheResult = new AddLearnerRecordViewModel
+            _cacheResult = new AddLearnerRecordViewModel
             {
                 LearnerRecord = _learnerRecord
             };
 
-            CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(cacheResult);
+            CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(_cacheResult);
         }
 
         [Fact]

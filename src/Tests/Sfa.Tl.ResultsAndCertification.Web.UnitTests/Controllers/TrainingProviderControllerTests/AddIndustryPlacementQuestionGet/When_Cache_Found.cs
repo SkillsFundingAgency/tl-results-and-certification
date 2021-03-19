@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_Cache_Found : TestSetup
     {
-        private AddLearnerRecordViewModel cacheResult;
+        private AddLearnerRecordViewModel _cacheResult;
         private EnterUlnViewModel _ulnViewModel;
         private FindLearnerRecord _learnerRecord;
         private EnglishAndMathsQuestionViewModel _englishAndMathsQuestionViewModel; 
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             _englishAndMathsQuestionViewModel = new EnglishAndMathsQuestionViewModel { LearnerName = _learnerRecord.Name, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved };
             _industryPlacementQuestionViewModel = new IndustryPlacementQuestionViewModel { LearnerName = _learnerRecord.Name, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
 
-            cacheResult = new AddLearnerRecordViewModel
+            _cacheResult = new AddLearnerRecordViewModel
             {
                 LearnerRecord = _learnerRecord,
                 Uln = _ulnViewModel,
@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 IndustryPlacementQuestion = _industryPlacementQuestionViewModel
             };
 
-            CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(cacheResult);
+            CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(_cacheResult);
         }
 
         [Fact]
