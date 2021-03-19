@@ -111,13 +111,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 var isPropertyCollectionType = propertyInfo?.PropertyType?.IsGenericType == true && propertyInfo?.PropertyType?.GetGenericTypeDefinition() == typeof(ICollection<>);
                 
                 if (isPropertyCollectionType)
-                {
                     _dbContext.Entry(entity).Collection(p.GetPropertyAccess().Name).IsModified = true;                    
-                }
                 else
-                {
                     _dbContext.Entry(entity).Reference(p.GetPropertyAccess().Name).IsModified = true;
-                }
             });
 
             if(!entityChanged)
