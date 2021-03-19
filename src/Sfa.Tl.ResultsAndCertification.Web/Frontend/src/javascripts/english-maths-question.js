@@ -2,20 +2,19 @@
 
 $(document).ready(function () {
 
-    function ShowDeclarationText(status) {
-        if (status === "AchievedWithSend")
+    var englishMathsRadioOptions = "input[type='radio']";
+
+    function ShowDeclarationText() {
+        var selectedId = $(englishMathsRadioOptions + ":checked").attr('id');
+        if (selectedId === 'status-achieved-send')
             $('#declarationText').removeClass('tl-hide');
         else
             $('#declarationText').addClass('tl-hide');
     }
 
-    var englishMathsRadioOptions = "input[type='radio'][name='EnglishAndMathsStatus']";
-    var status = $(englishMathsRadioOptions + ":checked").val();
-    ShowDeclarationText(status);
-
     $(englishMathsRadioOptions).click(function () {
-        var status = $(englishMathsRadioOptions + ":checked").val();
-        ShowDeclarationText(status);
+        ShowDeclarationText();
     });
 
+    ShowDeclarationText();
 });
