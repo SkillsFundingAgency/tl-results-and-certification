@@ -64,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public SummaryItemModel SummaryWhatsLrsText => new SummaryItemModel 
         { 
             Id = "whatslrstext",
-            Title = "",
+            Title = string.Empty,
             Value = CheckAndSubmitContent.Whats_Lrs_Text,
             RenderActionColumn = false,
             NeedBorderBottomLine = false,
