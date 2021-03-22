@@ -132,11 +132,17 @@
   <data name="English_And_Maths_Achieved_Lrs_Text" xml:space="preserve">
     <value>Achieved (data from Learning Records Service - LRS)</value>
   </data>
+  <data name="English_And_Maths_Action_Hidden_Text" xml:space="preserve">
+    <value> English and maths status</value>
+  </data>
   <data name="English_And_Maths_Minimum_Standard_Text" xml:space="preserve">
     <value>English and maths minimum standard</value>
   </data>
   <data name="English_And_Maths_Not_Achieved_Lrs_Text" xml:space="preserve">
     <value>Not achieved (data from Learning Records Service - LRS)</value>
+  </data>
+  <data name="Industry_Placement_Action_Hidden_Text" xml:space="preserve">
+    <value> industry placement status</value>
   </data>
   <data name="Industry_Placement_Text" xml:space="preserve">
     <value>Industry placement</value>

@@ -196,16 +196,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var response = await _trainingProviderLoader.AddLearnerRecordAsync(User.GetUkPrn(), cacheModel);
 
-            if (!response.IsSuccess)
+            if (response.IsSuccess)
+            {
+                await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation), new LearnerRecordConfirmationViewModel { Uln = response.Uln, Name = response.Name }, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.LearnerRecordAddedConfirmation);
+            }
+            else
             {
                 _logger.LogWarning(LogEvent.AddLearnerRecordFailed, $"Unable to add learner record for UniqueLearnerNumber: {cacheModel.Uln}. Method: SubmitLearnerRecordCheckAndSubmitAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
-            }
-
-            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation),
-                new LearnerRecordConfirmationViewModel { Uln = response.Uln, Name = response.Name }, CacheExpiryTime.XSmall);
-
-            return RedirectToRoute(RouteConstants.LearnerRecordAddedConfirmation);
+            }            
         }
 
         [HttpGet]

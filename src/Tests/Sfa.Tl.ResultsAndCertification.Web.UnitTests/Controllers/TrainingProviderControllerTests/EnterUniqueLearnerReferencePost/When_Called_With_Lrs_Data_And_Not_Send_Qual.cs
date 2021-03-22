@@ -21,14 +21,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             var cacheModel = new AddLearnerRecordViewModel { LearnerRecord = _learnerRecord, Uln = EnterUlnViewModel };
 
-            TrainingProviderLoader.FindLearnerRecordAsync(providerUkprn, _uln).Returns(_learnerRecord);
+            TrainingProviderLoader.FindLearnerRecordAsync(ProviderUkprn, _uln).Returns(_learnerRecord);
             CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(cacheModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            TrainingProviderLoader.Received(1).FindLearnerRecordAsync(providerUkprn, _uln);
+            TrainingProviderLoader.Received(1).FindLearnerRecordAsync(ProviderUkprn, _uln);
             CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Any<AddLearnerRecordViewModel>());
         }

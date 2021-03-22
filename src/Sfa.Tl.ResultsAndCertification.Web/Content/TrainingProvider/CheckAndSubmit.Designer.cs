@@ -106,6 +106,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  English and maths status.
+        /// </summary>
+        public static string English_And_Maths_Action_Hidden_Text {
+            get {
+                return ResourceManager.GetString("English_And_Maths_Action_Hidden_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English and maths minimum standard.
         /// </summary>
         public static string English_And_Maths_Minimum_Standard_Text {
@@ -120,6 +129,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string English_And_Maths_Not_Achieved_Lrs_Text {
             get {
                 return ResourceManager.GetString("English_And_Maths_Not_Achieved_Lrs_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  industry placement status.
+        /// </summary>
+        public static string Industry_Placement_Action_Hidden_Text {
+            get {
+                return ResourceManager.GetString("Industry_Placement_Action_Hidden_Text", resourceCulture);
             }
         }
         

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
@@ -53,22 +54,48 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                     .OrderByDescending(o => o.CreatedOn)
                                     .FirstOrDefaultAsync();
 
-            if (IsValidAddLearnerRecordRequestAsync(pathway, request))
+            if (!IsValidAddLearnerRecordRequest(pathway, request))
                 return new AddLearnerRecordResponse { IsSuccess = false };
 
-            var status = await _tqRegistrationPathwayRepository.UpdateWithSpecifedCollectionsOnlyAsync(pathway, p => p.TqRegistrationProfile, p => p.IndustryPlacements);
+            if(IsValidAddEnglishAndMathsRequest(pathway, request))
+            {
+                pathway.TqRegistrationProfile.IsEnglishAndMathsAchieved = request.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.Achieved || request.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.AchievedWithSend;
+                pathway.TqRegistrationProfile.IsSendLearner = request.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.AchievedWithSend ? true : (bool?)null;
+                pathway.TqRegistrationProfile.IsRcFeed = true;
+                pathway.TqRegistrationProfile.ModifiedBy = request.PerformedBy;
+                pathway.TqRegistrationProfile.ModifiedOn = DateTime.UtcNow;
+            }
+
+            pathway.IndustryPlacements.Add(new IndustryPlacement
+            {
+                TqRegistrationPathwayId = pathway.Id,
+                Status = request.IndustryPlacementStatus,
+                CreatedBy = request.PerformedBy
+            });
+
+            var status = await _tqRegistrationPathwayRepository.UpdateWithSpecifedCollectionsOnlyAsync(pathway, false, p => p.TqRegistrationProfile, p => p.IndustryPlacements);
             return new AddLearnerRecordResponse { Uln = request.Uln, Name = $"{pathway.TqRegistrationProfile.Firstname} {pathway.TqRegistrationProfile.Lastname}", IsSuccess = status > 0 };
         }
 
-        private bool IsValidAddLearnerRecordRequestAsync(TqRegistrationPathway registrationPathway, AddLearnerRecordRequest request)
+        private bool IsValidAddLearnerRecordRequest(TqRegistrationPathway registrationPathway, AddLearnerRecordRequest request)
         {
             if (registrationPathway == null)
                 return false;
 
-            var isValidEnglishAndMaths = !request.HasLrsEnglishAndMaths && registrationPathway.TqRegistrationProfile.IsEnglishAndMathsAchieved == null && registrationPathway.TqRegistrationProfile.IsRcFeed == null;
-            var isValidIndustryPlacement = !registrationPathway.IndustryPlacements.Any();
+            var isValidEnglishAndMaths = (request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus == null) || (!request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus != null);
+            var isValidIndustryPlacement = request.IndustryPlacementStatus != IndustryPlacementStatus.NotSpecified && !registrationPathway.IndustryPlacements.Any();
 
             return isValidEnglishAndMaths && isValidIndustryPlacement;
+        }
+
+        private bool IsValidAddEnglishAndMathsRequest(TqRegistrationPathway registrationPathway, AddLearnerRecordRequest request)
+        {
+            if (registrationPathway == null)
+                return false;
+
+            return  !request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus != null 
+                && registrationPathway.TqRegistrationProfile.IsEnglishAndMathsAchieved == null 
+                && registrationPathway.TqRegistrationProfile.IsRcFeed == null;            
         }
     }
 }

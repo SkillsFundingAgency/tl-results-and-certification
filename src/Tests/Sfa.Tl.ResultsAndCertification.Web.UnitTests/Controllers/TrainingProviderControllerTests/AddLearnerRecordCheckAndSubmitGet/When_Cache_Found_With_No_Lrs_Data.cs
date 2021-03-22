@@ -101,6 +101,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryEnglishAndMathsStatus.Value.Should().Be(EnglishAndMathsContent.Achieved_Display_Text);
             model.SummaryEnglishAndMathsStatus.NeedBorderBottomLine.Should().BeFalse();
             model.SummaryEnglishAndMathsStatus.RenderActionColumn.Should().BeTrue();
+            model.SummaryEnglishAndMathsStatus.RenderHiddenActionText.Should().BeTrue();
+            model.SummaryEnglishAndMathsStatus.HiddenActionText.Should().Be(CheckAndSubmitContent.English_And_Maths_Action_Hidden_Text);
             model.SummaryEnglishAndMathsStatus.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
             model.SummaryEnglishAndMathsStatus.RouteName.Should().Be(RouteConstants.AddEnglishAndMathsQuestion);
             model.SummaryEnglishAndMathsStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
@@ -111,6 +113,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryIndustryPlacementStatus.Value.Should().Be(IndustryPlacementStatusContent.NotCompleted_Display_Text);
             model.SummaryIndustryPlacementStatus.NeedBorderBottomLine.Should().BeFalse();
             model.SummaryIndustryPlacementStatus.RenderActionColumn.Should().BeTrue();
+            model.SummaryIndustryPlacementStatus.RenderHiddenActionText.Should().BeTrue();
+            model.SummaryIndustryPlacementStatus.HiddenActionText.Should().Be(CheckAndSubmitContent.Industry_Placement_Action_Hidden_Text);
             model.SummaryIndustryPlacementStatus.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
             model.SummaryIndustryPlacementStatus.RouteName.Should().Be(RouteConstants.AddIndustryPlacementQuestion);
             model.SummaryIndustryPlacementStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
