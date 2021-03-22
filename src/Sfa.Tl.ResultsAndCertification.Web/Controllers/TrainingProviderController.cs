@@ -249,6 +249,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
         }
 
+        #region Update-Learner
+        [HttpGet]
+        [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SearchLearnerRecord)]
+        public async Task<IActionResult> SearchLearnerRecordAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
+            var viewModel = cacheModel ?? new SearchLearnerRecordViewModel();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SubmitSearchLearnerRecord)]
+        public async Task<IActionResult> SearchLearnerRecordAsync(SearchLearnerRecordViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            return View(viewModel);
+        }
+
+        # endregion
 
         private async Task SyncCacheUln(EnterUlnViewModel model, FindLearnerRecord learnerRecord = null)
         {

@@ -1,0 +1,38 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.SearchLearnerRecordViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+
+@{
+    ViewData["Title"] = SearchLearnerRecord.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <partial name="_ValidationSummary" />
+        <form asp-route="SubmitSearchLearnerRecord">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
+                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
+                            @SearchLearnerRecord.Search_UniqueLearnerNumber_Heading
+                        </h1>
+                    </legend>
+                    <p class="govuk-body">@SearchLearnerRecord.You_Can_View_Update_ParaText</p>
+                    <div class="govuk-form-group" sfa-validation-for="SearchUln" sfa-validation-class="govuk-form-group--error">
+                        <label class="govuk-label" for="searchuln">
+                            @SearchLearnerRecord.Enter_UniqueLearnerNumber_Label
+                        </label>
+                        <span class="govuk-hint">
+                            @SearchLearnerRecord.Uln_Must_10_Digit_Hint
+                        </span>
+                        <input id="searchuln" class="govuk-input govuk-input--width-20" asp-for="SearchUln" maxlength="10">
+                    </div>
+                </fieldset>
+            </div>
+            <button id="searchButton" type="submit" class="govuk-button" data-module="govuk-button">@SearchLearnerRecord.Search_Button</button>
+        </form>
+    </div>
+</div>
