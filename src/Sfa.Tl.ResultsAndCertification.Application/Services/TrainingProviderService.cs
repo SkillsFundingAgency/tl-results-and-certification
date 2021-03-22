@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (!IsValidAddLearnerRecordRequest(pathway, request))
                 return new AddLearnerRecordResponse { IsSuccess = false };
 
-            if(IsValidAddEnglishAndMathsRequest(pathway, request))
+            if (IsValidAddEnglishAndMathsRequest(pathway, request))
             {
                 pathway.TqRegistrationProfile.IsEnglishAndMathsAchieved = request.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.Achieved || request.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.AchievedWithSend;
                 pathway.TqRegistrationProfile.IsSendLearner = request.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.AchievedWithSend ? true : (bool?)null;
@@ -90,12 +90,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private bool IsValidAddEnglishAndMathsRequest(TqRegistrationPathway registrationPathway, AddLearnerRecordRequest request)
         {
-            if (registrationPathway == null)
-                return false;
-
-            return  !request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus != null 
-                && registrationPathway.TqRegistrationProfile.IsEnglishAndMathsAchieved == null 
-                && registrationPathway.TqRegistrationProfile.IsRcFeed == null;            
+            return !request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus != null
+                && registrationPathway.TqRegistrationProfile.IsEnglishAndMathsAchieved == null
+                && registrationPathway.TqRegistrationProfile.IsRcFeed == null;
         }
     }
 }
