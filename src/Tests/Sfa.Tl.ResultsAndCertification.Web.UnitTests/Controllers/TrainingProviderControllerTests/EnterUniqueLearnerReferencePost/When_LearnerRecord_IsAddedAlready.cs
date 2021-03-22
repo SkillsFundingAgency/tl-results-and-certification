@@ -18,13 +18,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         {
             EnterUlnViewModel = new EnterUlnViewModel { EnterUln = uln.ToString() };
             mockResult = new FindLearnerRecord { IsLearnerRegistered = true, IsLearnerRecordAdded = true };
-            TrainingProviderLoader.FindLearnerRecordAsync(providerUkprn, uln).Returns(mockResult);
+            TrainingProviderLoader.FindLearnerRecordAsync(ProviderUkprn, uln).Returns(mockResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            TrainingProviderLoader.Received(1).FindLearnerRecordAsync(providerUkprn, uln);
+            TrainingProviderLoader.Received(1).FindLearnerRecordAsync(ProviderUkprn, uln);
 
             CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Any<AddLearnerRecordViewModel>());
