@@ -565,6 +565,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>LearnerRecordConfirmation.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\SearchLearnerRecord.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SearchLearnerRecord.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\ViewComponents\BackLink.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -986,6 +991,10 @@
     <EmbeddedResource Update="Content\TrainingProvider\LearnerRecordConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LearnerRecordConfirmation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecord.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SearchLearnerRecord.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\ViewComponents\BackLink.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
