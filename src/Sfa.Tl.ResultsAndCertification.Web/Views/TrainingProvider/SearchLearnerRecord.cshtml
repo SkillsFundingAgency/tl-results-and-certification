@@ -25,9 +25,8 @@
                         <label class="govuk-label" for="searchuln">
                             @SearchLearnerRecord.Enter_UniqueLearnerNumber_Label
                         </label>
-                        <span class="govuk-hint">
-                            @SearchLearnerRecord.Uln_Must_10_Digit_Hint
-                        </span>
+                        <span class="govuk-hint">@SearchLearnerRecord.Uln_Must_10_Digit_Hint</span>
+                        <span sfa-validation-for="SearchUln"></span>
                         <input id="searchuln" class="govuk-input govuk-input--width-20" asp-for="SearchUln" maxlength="10">
                     </div>
                 </fieldset>
