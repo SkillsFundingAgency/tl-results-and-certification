@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             return qualifications;
         }
 
-        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement = false)
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false)
         {
             if (profile == null) return;
 
@@ -136,5 +136,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 IndustryPlacementProvider.CreateQualificationAchieved(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
             }
         }
+    }
+
+    public enum Provider
+    {
+        BarsleyCollege = 10000536,
+        WalsallCollege = 10007315
     }
 }

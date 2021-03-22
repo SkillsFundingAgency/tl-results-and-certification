@@ -98,15 +98,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change successful.
-        /// </summary>
-        public static string Result_Changed_Successful_Text {
-            get {
-                return ResourceManager.GetString("Result_Changed_Successful_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ULN.
         /// </summary>
         public static string Uln_Text {
