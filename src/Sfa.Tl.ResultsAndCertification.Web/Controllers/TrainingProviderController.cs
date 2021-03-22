@@ -268,6 +268,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(viewModel);
 
+            // TODO: Async calls to FindLearner.
+
             return View(viewModel);
         }
 

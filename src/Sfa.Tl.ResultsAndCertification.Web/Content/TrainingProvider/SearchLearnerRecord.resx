@@ -132,10 +132,10 @@
   <data name="Uln_Must_10_Digit_Hint" xml:space="preserve">
     <value>ULN must be 10 digits long</value>
   </data>
-  <data name="Uln_Must_Include_NumbersOnly_Validation_Message" xml:space="preserve">
-    <value>ULN must only include numbers</value>
+  <data name="Uln_Not_Valid_Validation_Message" xml:space="preserve">
+    <value>Enter a valid 10-digit ULN</value>
   </data>
-  <data name="Uln_Required_With_10Digit_Validation_Message" xml:space="preserve">
+  <data name="Uln_Required_Validation_Message" xml:space="preserve">
     <value>Enter a ULN with 10 digits</value>
   </data>
   <data name="You_Can_View_Update_ParaText" xml:space="preserve">

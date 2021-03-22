@@ -106,20 +106,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN must only include numbers.
+        ///   Looks up a localized string similar to Enter a valid 10-digit ULN.
         /// </summary>
-        public static string Uln_Must_Include_NumbersOnly_Validation_Message {
+        public static string Uln_Not_Valid_Validation_Message {
             get {
-                return ResourceManager.GetString("Uln_Must_Include_NumbersOnly_Validation_Message", resourceCulture);
+                return ResourceManager.GetString("Uln_Not_Valid_Validation_Message", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Enter a ULN with 10 digits.
         /// </summary>
-        public static string Uln_Required_With_10Digit_Validation_Message {
+        public static string Uln_Required_Validation_Message {
             get {
-                return ResourceManager.GetString("Uln_Required_With_10Digit_Validation_Message", resourceCulture);
+                return ResourceManager.GetString("Uln_Required_Validation_Message", resourceCulture);
             }
         }
         

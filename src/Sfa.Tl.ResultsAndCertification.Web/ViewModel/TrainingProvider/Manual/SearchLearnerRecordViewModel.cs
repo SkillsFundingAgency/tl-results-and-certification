@@ -9,8 +9,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
     public class SearchLearnerRecordViewModel
     {
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.SearchLearnerRecord), ErrorMessageResourceName = "Uln_Required_With_10Digit_Validation_Message")]
-        [RegularExpression(@"^\d{10}$", ErrorMessageResourceType = typeof(ErrorResource.SearchLearnerRecord), ErrorMessageResourceName = "Uln_Must_Include_NumbersOnly_Validation_Message")]
+        [Required(ErrorMessageResourceType = typeof(ErrorResource.SearchLearnerRecord), ErrorMessageResourceName = "Uln_Required_Validation_Message")]
+        [RegularExpression(@"^\d{10}$", ErrorMessageResourceType = typeof(ErrorResource.SearchLearnerRecord), ErrorMessageResourceName = "Uln_Not_Valid_Validation_Message")]
         public string SearchUln { get; set; }
 
         public BreadcrumbModel Breadcrumb
