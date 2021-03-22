@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to manage learner T Level record.
+        ///   Looks up a localized string similar to Back to manage learner T Level records.
         /// </summary>
         public static string Back_To_Manage_Learner_Records_Link_Text {
             get {

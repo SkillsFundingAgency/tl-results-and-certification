@@ -121,7 +121,7 @@
     <value>Add another learner T Level record</value>
   </data>
   <data name="Back_To_Manage_Learner_Records_Link_Text" xml:space="preserve">
-    <value>Back to manage learner T Level record</value>
+    <value>Back to manage learner T Level records</value>
   </data>
   <data name="Learner_TLevel_Record_Added_Successful_Text" xml:space="preserve">
     <value>Learner T Level record added successfully</value>
