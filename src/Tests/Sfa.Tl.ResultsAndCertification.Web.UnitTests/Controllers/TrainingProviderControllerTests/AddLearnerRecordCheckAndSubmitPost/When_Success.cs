@@ -44,6 +44,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         {
             TrainingProviderLoader.Received(1).AddLearnerRecordAsync(ProviderUkprn, AddLearnerRecordViewModel);
             CacheService.Received(1).RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
+            CacheService.Received(1).SetAsync(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation),
+                Arg.Is<LearnerRecordConfirmationViewModel>
+                (x => x.Name == AddLearnerRecordViewModel.LearnerRecord.Name &&
+                      x.Uln == AddLearnerRecordViewModel.LearnerRecord.Uln),
+                 CacheExpiryTime.XSmall);
         }
 
         [Fact]
