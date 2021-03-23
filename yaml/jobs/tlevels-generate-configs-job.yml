@@ -22,6 +22,8 @@ jobs:
       - DeploySQLDatabase
     steps:
       - pwsh: |
+          $DataProtectionKeyVaultKeyId = (Get-AzKeyVaultKey -VaultName $VaultName -Name $DataProtectionKeyVaultKeyName).Id
+          'Write-Host "DataProtectionKeyVaultKeyId : $($DataProtectionKeyVaultKeyId)"'
           'Write-Host "ConfigStorageAccountName variable: $(ConfigStorageAccountName)"'
           'Write-Host "SqlConnectionString variable: $(SqlConnectionString)"'
           'Write-Host "BlobStorageConnectionString variable: $(BlobStorageConnectionString)"'
