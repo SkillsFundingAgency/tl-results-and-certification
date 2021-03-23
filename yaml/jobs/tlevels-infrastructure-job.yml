@@ -49,6 +49,7 @@ jobs:
             -storageAccountContainerArray "$(storageAccountContainerArray)"
             -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
             -learnerGenderTrigger "$(learnerGenderTrigger)"'
+          tags: $tags
           processOutputs: true
 
       - task: AzureCLI@2
