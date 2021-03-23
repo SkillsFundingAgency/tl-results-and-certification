@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             AddLearnerRecordViewModel = new AddLearnerRecordViewModel
             {
                 LearnerRecord = new Models.Contracts.TrainingProvider.FindLearnerRecord { Uln = 1234567890, Name = "Test Name", HasLrsEnglishAndMaths = false },
-                Uln = new ViewModel.TrainingProvider.EnterUlnViewModel { EnterUln = "1234567890" },
+                Uln = new EnterUlnViewModel { EnterUln = "1234567890" },
                 EnglishAndMathsQuestion = new EnglishAndMathsQuestionViewModel { EnglishAndMathsStatus = EnglishAndMathsStatus.AchievedWithSend },
                 IndustryPlacementQuestion = new IndustryPlacementQuestionViewModel { IndustryPlacementStatus = IndustryPlacementStatus.Completed }
             };            
