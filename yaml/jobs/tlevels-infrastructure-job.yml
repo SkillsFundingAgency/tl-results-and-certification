@@ -60,7 +60,7 @@ jobs:
           scriptLocation: 'inlineScript'
           inlineScript: |
             $objectId = az functionapp identity show -n $(armOutputs.armOutput.workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
-            az keyvault set-policy --name $(SharedKeyVaultName) --object-id $objectId --secret-permissions "get" --key-permissions "get" --certificate-permissions "get"
+            az keyvault set-policy --name $(SharedKeyVaultName) --object-id $(objectId) --secret-permissions "get" --key-permissions "get" --certificate-permissions "get"
 
 
      
