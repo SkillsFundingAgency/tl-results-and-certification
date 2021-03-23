@@ -36,7 +36,7 @@ jobs:
                   -azureWebsitesRPObjectId "$(AzureWebsitesRPObjectId)"
                   -keyVaultReadWriteObjectIds "$(KeyVaultReadWriteObjectIds)"
                   -keyVaultFullAccessObjectIds "$(keyVaultFullAccessObjectIds)"'
-                tags: '{"Environment" = "Dev"; "Parent Business" = "Apprenticeships"; "Product" = "T-Levels"; "Service" = "ESFA T Level Service"; "Service Line" = "Professional and Technical Education"; "Service Offering" = "ESFA T Level Service";"Portfolio" = "Education and Skills Funding Agency"}'
+                tags: $tags
                 processOutputs: true
             - pwsh: Write-Host "##vso[task.setvariable variable=SharedResourceGroup;isOutput=true]$(SharedResourceGroup)"
               name: SharedVariables
