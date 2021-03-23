@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private bool IsValidAddLearnerRecordRequest(TqRegistrationPathway registrationPathway, AddLearnerRecordRequest request)
         {
-            if (registrationPathway == null)
+            if (!IsValidPathwayStatus(registrationPathway))
                 return false;
 
             var isValidEnglishAndMaths = (request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus == null) || (!request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus != null);
@@ -93,6 +93,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return !request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus != null
                 && registrationPathway.TqRegistrationProfile.IsEnglishAndMathsAchieved == null
                 && registrationPathway.TqRegistrationProfile.IsRcFeed == null;
+        }
+
+        private bool IsValidPathwayStatus(TqRegistrationPathway registrationPathway)
+        {
+            return registrationPathway?.Status == RegistrationPathwayStatus.Active || registrationPathway?.Status == RegistrationPathwayStatus.Withdrawn;
         }
     }
 }
