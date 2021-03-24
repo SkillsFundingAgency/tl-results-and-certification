@@ -88,7 +88,8 @@
                     </fieldset>
                 </div>
                 <div id="declarationText" class="govuk-inset-text tl-hide">
-                    <p>@EnglishAndMathsQuestion.Inset_Text_I_Declare</p>
+                    @{ var insetTextIDeclare = Model.IsChangeMode ? EnglishAndMathsQuestion.Change_Inset_Text_I_Declare : EnglishAndMathsQuestion.Inset_Text_I_Declare; }
+                    <p>@insetTextIDeclare</p>
                     <ul class="govuk-list govuk-list--bullet">
                         <li>@EnglishAndMathsQuestion.Inset_Text_Learner_Meets_All_Conditions</li>
                         <li>@EnglishAndMathsQuestion.Inset_Text_Learner_Met_Min_Standards</li>

@@ -89,6 +89,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to By selecting &apos;Change&apos; I declare that:.
+        /// </summary>
+        public static string Change_Inset_Text_I_Declare {
+            get {
+                return ResourceManager.GetString("Change_Inset_Text_I_Declare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can adjust the minimum standards for English and maths for learners with SEND if the following conditions are met:.
         /// </summary>
         public static string Details_Adjust_Minimum_Standards_For_Send_Learner {

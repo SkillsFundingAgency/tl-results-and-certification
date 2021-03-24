@@ -126,6 +126,9 @@
   <data name="Change_Button" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="Change_Inset_Text_I_Declare" xml:space="preserve">
+    <value>By selecting 'Change' I declare that:</value>
+  </data>
   <data name="Details_Adjust_Minimum_Standards_For_Send_Learner" xml:space="preserve">
     <value>You can adjust the minimum standards for English and maths for learners with SEND if the following conditions are met:</value>
   </data>
