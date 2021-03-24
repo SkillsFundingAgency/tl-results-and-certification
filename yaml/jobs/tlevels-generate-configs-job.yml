@@ -14,6 +14,8 @@ jobs:
       BlobStorageConnectionString: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.BlobStorageConnectionString'] ]
       RedisCacheConnection: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.RedisConnectionString'] ]
       KeyVaultUri: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedKeyVaultUri'] ]
+      DataProtectionKeyVaultKeyId: $[stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DataprotectionKey.DataProtectionKeyVaultKeyId']]
+
     pool:
       name: "Azure Pipelines"
       vmImage: "windows-2019"
@@ -21,14 +23,13 @@ jobs:
       - DeployInfrastructure
       - DeploySQLDatabase
     steps:
-      - pwsh: |
-          $DataProtectionKeyVaultKeyId = (Get-AzKeyVaultKey -VaultName $VaultName -Name $DataProtectionKeyVaultKeyName).Id
-          'Write-Host "DataProtectionKeyVaultKeyId : $($DataProtectionKeyVaultKeyId)"'
+      - pwsh: |          
           'Write-Host "ConfigStorageAccountName variable: $(ConfigStorageAccountName)"'
           'Write-Host "SqlConnectionString variable: $(SqlConnectionString)"'
           'Write-Host "BlobStorageConnectionString variable: $(BlobStorageConnectionString)"'
           'Write-Host "RedisCacheConnection variable: $(RedisCacheConnection)"'
           'Write-Host "KeyVaultUri variable: $(KeyVaultUri)"'
+          'Write-Host "DataProtectionKeyVaultKeyId : $(DataProtectionKeyVaultKeyId)"'
         name: ShowVariables
 
       - task: DownloadBuildArtifacts@0
