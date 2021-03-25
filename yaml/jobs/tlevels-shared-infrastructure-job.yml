@@ -65,7 +65,7 @@ jobs:
                   $DataProtectionKeyVaultKeyName = (Get-AzKeyVaultKey -VaultName $(armOutputs.armoutput.sharedKeyVaultName) -Name $(DataProtectionKeyVaultKeyName)).Id
                   
                   if (!$DataProtectionKeyVaultKeyName) {
-                      $DataProtectionKeyVaultKeyId = (Add-AzKeyVaultKey -VaultName $vaultName -Name $name -Destination Software).Id
+                      $DataProtectionKeyVaultKeyId = (Add-AzKeyVaultKey -VaultName $(armOutputs.armoutput.sharedKeyVaultName) -Name $(DataProtectionKeyVaultKeyName) -Destination Software).Id
                   }
                   Write-Host "##vso[task.setvariable variable=DataProtectionKeyVaultKeyId;isOutput=true]$DataProtectionKeyVaultKeyId"
                 azurePowerShellVersion: LatestVersion
