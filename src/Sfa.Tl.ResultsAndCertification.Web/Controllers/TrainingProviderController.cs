@@ -41,6 +41,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("add-learner-record-unique-learner", Name = RouteConstants.AddLearnerRecord)]
+        public async Task<IActionResult> AddLearnerRecordAsync()
+        {
+            await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumber);
+        }
+
+        [HttpGet]
         [Route("add-learner-record-unique-learner-number", Name = RouteConstants.EnterUniqueLearnerNumber)]
         public async Task<IActionResult> EnterUniqueLearnerReferenceAsync()
         {
