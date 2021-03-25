@@ -62,11 +62,11 @@ jobs:
                 azureSubscription: ${{ parameters.serviceConnection }}
                 ScriptType: InlineScript
                 Inline: |                  
-                  $DataProtectionKeyVaultKeyId = (Get-AzKeyVaultKey -VaultName $(armOutputs.armoutput.sharedKeyVaultName) -Name $(DataProtectionKeyVaultKeyName)).Id
+                  $KeyId = (Get-AzKeyVaultKey -VaultName $(armOutputs.armoutput.sharedKeyVaultName) -Name $(DataProtectionKeyVaultKeyName)).Id
                   
-                  if (!$DataProtectionKeyVaultKeyId) {
-                      $DataProtectionKeyVaultKeyId = (Add-AzKeyVaultKey -VaultName $(armOutputs.armoutput.sharedKeyVaultName) -Name $(DataProtectionKeyVaultKeyName) -Destination Software).Id
+                  if (!$KeyId) {
+                      $KeyId = (Add-AzKeyVaultKey -VaultName $(armOutputs.armoutput.sharedKeyVaultName) -Name $(DataProtectionKeyVaultKeyName) -Destination Software).Id
                   }
-                  Write-Host "##vso[task.setvariable variable=DataProtectionKeyVaultKeyId;isOutput=true]$($DataProtectionKeyVaultKeyId)"
+                  Write-Host "##vso[task.setvariable variable=DataProtectionKeyVaultKeyId;isOutput=true]$($KeyId)"                  
                 azurePowerShellVersion: LatestVersion
                 pwsh: true

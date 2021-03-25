@@ -23,7 +23,7 @@ jobs:
       - DeployInfrastructure
       - DeploySQLDatabase
     steps:
-      - pwsh: |          
+      - pwsh: |
           'Write-Host "ConfigStorageAccountName variable: $(ConfigStorageAccountName)"'
           'Write-Host "SqlConnectionString variable: $(SqlConnectionString)"'
           'Write-Host "BlobStorageConnectionString variable: $(BlobStorageConnectionString)"'
