@@ -17,4 +17,4 @@ stages:
       steps:
       - pwsh: Write-Host "build Stage" 
     # - template: ../jobs/tlevels-build-application-job.yml
-    # - template: ../jobs/tlevels-build-dacpac-job.yml
+    - template: ../jobs/tlevels-build-dacpac-job.yml
