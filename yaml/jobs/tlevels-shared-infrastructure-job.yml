@@ -67,6 +67,7 @@ jobs:
                   if (!$DataProtectionKeyVaultKeyName) {
                       $DataProtectionKeyVaultKeyId = (Add-AzKeyVaultKey -VaultName $(armOutputs.armoutput.sharedKeyVaultName) -Name $(DataProtectionKeyVaultKeyName) -Destination Software).Id
                   }
-                  Write-Host "##vso[task.setvariable variable=DataProtectionKeyVaultKeyId;isOutput=true]$DataProtectionKeyVaultKeyId"
+                  Write-Host "##vso[task.setvariable variable=DataProtectionKeyVaultKeyId;isOutput=true]$($DataProtectionKeyVaultKeyId)"
+                  Write-Host "DataProtectionKeyVaultKeyId: $($DataProtectionKeyVaultKeyId)"
                 azurePowerShellVersion: LatestVersion
                 pwsh: true
