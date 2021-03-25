@@ -1,6 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.IndustryPlacementQuestionViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
-@using Sfa.Tl.ResultsAndCertification.Common.Enum
+@using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum
 
 @{
     ViewData["Title"] = IndustryPlacementQuestion.Page_Title;
@@ -15,6 +15,7 @@
         <form class="form" asp-route="SubmitIndustryPlacementQuestion">
             <partial name="_ValidationSummary" />
             <input type="hidden" asp-for="LearnerName" value="@Model.LearnerName" />
+            <input type="hidden" asp-for="IsChangeMode" value="@Model.IsChangeMode.ToString()" />
             <div class="govuk-form-group govuk-!-margin-bottom-7">
                 <span class="govuk-caption-xl">@IndustryPlacementQuestion.Add_New_Learner_Caption</span>
                 <div class="govuk-form-group" sfa-validation-for="IndustryPlacementStatus" sfa-validation-class="govuk-form-group--error">
@@ -30,19 +31,19 @@
                         <div class="govuk-radios">
                             <span sfa-validation-for="IndustryPlacementStatus"></span>
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="industryplacementstatus" asp-for="IndustryPlacementStatus" type="radio" value="@IndustryPlacementStatus.Completed">
+                                <input class="govuk-radios__input" id="industryplacementstatus" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.Completed">
                                 <label class="govuk-label govuk-radios__label" for="industryplacementstatus">
                                     @IndustryPlacementQuestion.Yes_Completed_Option_Text
                                 </label>
                             </div>
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="tl-industry-placement-status-wsp" asp-for="IndustryPlacementStatus" type="radio" value="@IndustryPlacementStatus.CompletedWithSpecialConsideration">
+                                <input class="govuk-radios__input" id="tl-industry-placement-status-wsp" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.CompletedWithSpecialConsideration">
                                 <label class="govuk-label govuk-radios__label" for="tl-industry-placement-status-wsp">
                                     @IndustryPlacementQuestion.Yes_Completed_With_Special_Consideration_Option_Text
                                 </label>
                             </div>
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="tl-industry-placement-status-not-comp" asp-for="IndustryPlacementStatus" type="radio" value="@IndustryPlacementStatus.NotCompleted">
+                                <input class="govuk-radios__input" id="tl-industry-placement-status-not-comp" asp-for="IndustryPlacementStatus" type="radio" value="@IpStatus.IndustryPlacementStatus.NotCompleted">
                                 <label class="govuk-label govuk-radios__label" for="tl-industry-placement-status-not-comp">
                                     @IndustryPlacementQuestion.No_Still_To_Be_Completed_Option_Text
                                 </label>
@@ -79,7 +80,8 @@
                     </div>
                 </details>
             </div>
-            <button id="continueButton" class="govuk-button" data-module="govuk-button">@IndustryPlacementQuestion.Continue_Button</button>
+            @{ var buttonText = Model.IsChangeMode ? IndustryPlacementQuestion.Change_Button_Text : IndustryPlacementQuestion.Continue_Button_Text; }
+        <button id="continueButton" class="govuk-button" data-module="govuk-button">@buttonText</button>
         </form>
     </div>
 </div>

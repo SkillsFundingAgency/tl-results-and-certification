@@ -133,11 +133,5 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
             DbContext.SaveChanges();
         }
-    }
-
-    public enum Provider
-    {
-        BarsleyCollege = 10000536,
-        WalsallCollege = 10007315
-    }
+    }    
 }

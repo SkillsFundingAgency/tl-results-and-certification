@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -20,6 +21,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
         {
             return await _internalApiClient.FindLearnerRecordAsync(providerUkprn, uln);
+        }
+
+        public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(long ukprn, AddLearnerRecordViewModel viewModel)
+        {
+            var learnerRecordModel = _mapper.Map<AddLearnerRecordRequest>(viewModel, opt => opt.Items["Ukprn"] = ukprn);
+            return await _internalApiClient.AddLearnerRecordAsync(learnerRecordModel);
         }
     }
 }

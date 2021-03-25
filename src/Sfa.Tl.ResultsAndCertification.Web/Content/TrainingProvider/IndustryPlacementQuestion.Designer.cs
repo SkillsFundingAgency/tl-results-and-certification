@@ -80,11 +80,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Change_Button_Text {
+            get {
+                return ResourceManager.GetString("Change_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
-        public static string Continue_Button {
+        public static string Continue_Button_Text {
             get {
-                return ResourceManager.GetString("Continue_Button", resourceCulture);
+                return ResourceManager.GetString("Continue_Button_Text", resourceCulture);
             }
         }
         

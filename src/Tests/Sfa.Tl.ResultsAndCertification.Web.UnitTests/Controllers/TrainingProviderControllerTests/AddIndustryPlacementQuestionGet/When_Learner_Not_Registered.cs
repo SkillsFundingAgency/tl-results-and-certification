@@ -4,7 +4,6 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
@@ -13,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_Learner_Not_Registered : TestSetup
     {
-        private AddLearnerRecordViewModel cacheResult;
+        private AddLearnerRecordViewModel _cacheResult;
         private EnterUlnViewModel _ulnViewModel;
         private FindLearnerRecord _learnerRecord;
 
@@ -22,13 +21,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", IsLearnerRegistered = false };
             _ulnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
 
-            cacheResult = new AddLearnerRecordViewModel
+            _cacheResult = new AddLearnerRecordViewModel
             {
                 LearnerRecord = _learnerRecord,
                 Uln = _ulnViewModel
             };
 
-            CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(cacheResult);
+            CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(_cacheResult);
         }
         [Fact]
         public void Then_Expected_Methods_Called()

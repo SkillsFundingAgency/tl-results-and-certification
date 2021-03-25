@@ -4,7 +4,6 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
@@ -12,25 +11,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_Cache_Found : TestSetup
     {
-        private AddLearnerRecordViewModel cacheResult;
+        private AddLearnerRecordViewModel _cacheResult;
         private EnterUlnViewModel _ulnViewModel;
         private FindLearnerRecord _learnerRecord;
+        private EnglishAndMathsQuestionViewModel _englishAndMathsQuestionViewModel; 
         private IndustryPlacementQuestionViewModel _industryPlacementQuestionViewModel;
 
         public override void Given()
         {
-            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", IsLearnerRegistered = true };
+            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = false };
             _ulnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
+            _englishAndMathsQuestionViewModel = new EnglishAndMathsQuestionViewModel { LearnerName = _learnerRecord.Name, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved };
             _industryPlacementQuestionViewModel = new IndustryPlacementQuestionViewModel { LearnerName = _learnerRecord.Name, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
 
-            cacheResult = new AddLearnerRecordViewModel
+            _cacheResult = new AddLearnerRecordViewModel
             {
                 LearnerRecord = _learnerRecord,
                 Uln = _ulnViewModel,
+                EnglishAndMathsQuestion = _englishAndMathsQuestionViewModel,
                 IndustryPlacementQuestion = _industryPlacementQuestionViewModel
             };
 
-            CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(cacheResult);
+            CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(_cacheResult);
         }
 
         [Fact]
@@ -53,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.IndustryPlacementStatus.Should().Be(_industryPlacementQuestionViewModel.IndustryPlacementStatus);
             model.LearnerName.Should().Be(_learnerRecord.Name);
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.EnterUniqueLearnerNumber);
+            model.BackLink.RouteName.Should().Be(RouteConstants.AddEnglishAndMathsQuestion);
         }
     }
 }

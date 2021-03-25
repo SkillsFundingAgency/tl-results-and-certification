@@ -114,3 +114,13 @@ body {
         border-bottom: none !important;
     }
 }
+
+input[type="radio"] {
+    + label + noscript > div.show-on-event {
+        display: none;
+    }
+
+    &:checked + label + noscript > div.show-on-event {
+        display: block;
+    }
+ }

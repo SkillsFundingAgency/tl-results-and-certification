@@ -91,6 +91,20 @@ gulp.task('copy-result-upload-js', function () {
         .pipe(gulp.dest(paths.dist.defaultJs));
 });
 
+gulp.task('copy-english-maths-question-js', function () {
+    return src([
+        'Frontend/src/javascripts/english-maths-question.js'
+    ])
+        .pipe(concat('english-maths-question.js'))
+        .pipe(minify({
+            noSource: true,
+            ext: {
+                min: '.min.js'
+            }
+        }))
+        .pipe(gulp.dest(paths.dist.defaultJs));
+});
+
 gulp.task('copy-user-guide-js', function () {
     return src([
         'Frontend/src/javascripts/user-guide.js'

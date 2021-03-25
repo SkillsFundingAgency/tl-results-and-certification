@@ -55,5 +55,6 @@
 
         // TrainingProvider
         public const string FindLearnerRecordUri = "/api/trainingprovider/FindLearnerRecord/{0}/{1}";
+        public const string AddLearnerRecordUri = "/api/trainingprovider/AddLearnerRecord";
     }
 }

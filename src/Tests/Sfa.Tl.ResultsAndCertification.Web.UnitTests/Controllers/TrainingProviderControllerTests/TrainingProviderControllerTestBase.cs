@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         protected TrainingProviderController Controller;
 
         // HttpContext
-        protected int providerUkprn;
+        protected int ProviderUkprn;
         protected Guid UserId;
         protected IHttpContextAccessor HttpContextAccessor;
         protected string CacheKey;
@@ -34,9 +34,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             Logger = Substitute.For<ILogger<TrainingProviderController>>();
             Controller = new TrainingProviderController(TrainingProviderLoader, CacheService, Logger);
 
-            providerUkprn = 1234567890;
+            ProviderUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<TrainingProviderController>(Controller)
-               .Add(CustomClaimTypes.Ukprn, providerUkprn.ToString())
+               .Add(CustomClaimTypes.Ukprn, ProviderUkprn.ToString())
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
                .Build()
                .HttpContext;
