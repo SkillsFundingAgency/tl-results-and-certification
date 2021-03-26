@@ -12,11 +12,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 {
     public class LearnerServiceApiClient : ILearnerServiceApiClient
     {
-        private readonly ILogger<LearnerServiceApiClient> _logger;
+        private readonly ILogger<ILearnerServiceApiClient> _logger;
         private readonly ILearnerPortTypeClient _learnerPortTypeClient;
         private readonly ResultsAndCertificationConfiguration _configuration;
 
-        public LearnerServiceApiClient(ILogger<LearnerServiceApiClient> logger, ILearnerPortTypeClient learnerQueryPortTypeClient, ResultsAndCertificationConfiguration configuration)
+        public LearnerServiceApiClient(ILogger<ILearnerServiceApiClient> logger, ILearnerPortTypeClient learnerQueryPortTypeClient, ResultsAndCertificationConfiguration configuration)
         {
             _logger = logger;
             _learnerPortTypeClient = learnerQueryPortTypeClient;
