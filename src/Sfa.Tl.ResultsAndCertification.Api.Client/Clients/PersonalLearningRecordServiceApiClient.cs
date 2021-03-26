@@ -10,13 +10,15 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 {
-    public class PersonalLearningRecordServiceApiClient : IPersonalLearningRecordApiClient
+    public class PersonalLearningRecordServiceApiClient : IPersonalLearningRecordServiceApiClient
     {
-        private readonly ILogger<ILearnerServiceR9Client> _logger;
+        private readonly ILogger<IPersonalLearningRecordServiceApiClient> _logger;
         private readonly ILearnerServiceR9Client _learnerServiceR9Client;
-        private readonly ResultsAndCertificationConfiguration _configuration;        
+        private readonly ResultsAndCertificationConfiguration _configuration;
 
-        public PersonalLearningRecordServiceApiClient(ILogger<ILearnerServiceR9Client> logger, ILearnerServiceR9Client learnerServiceR9Client, ResultsAndCertificationConfiguration configuration)
+        public PersonalLearningRecordServiceApiClient(ILogger<IPersonalLearningRecordServiceApiClient> logger,
+            ILearnerServiceR9Client learnerServiceR9Client,
+            ResultsAndCertificationConfiguration configuration)
         {
             _logger = logger;
             _learnerServiceR9Client = learnerServiceR9Client;
@@ -35,8 +37,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                     Password = _configuration.LearningRecordServiceSettings.Password
                 };
 
-                var response = await _learnerServiceR9Client.GetLearnerLearningEventsAsync(invokingOrganisation, Constants.LearnerLearningEventsUserType, _configuration.LearningRecordServiceSettings.VendorId, Constants.LrsLanguage, learnerDetails.Uln.ToString(), learnerDetails.Firstname, learnerDetails.Lastname, learnerDetails.DateofBirth.ToString(Constants.LrsDateFormat), null, Constants.LearnerLearningEventsGetType);
-                return response;
+                return await _learnerServiceR9Client.GetLearnerLearningEventsAsync(invokingOrganisation, Constants.LearnerLearningEventsUserType,
+                    _configuration.LearningRecordServiceSettings.VendorId, Constants.LrsLanguage, learnerDetails.Uln.ToString(),
+                    learnerDetails.Firstname, learnerDetails.Lastname, learnerDetails.DateofBirth.ToString(Constants.LrsDateFormat), null,
+                    Constants.LearnerLearningEventsGetType);
             }
             catch (Exception ex)
             {

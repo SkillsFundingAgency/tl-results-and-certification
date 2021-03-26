@@ -3,6 +3,7 @@ using Lrs.PersonalLearningRecordService.Api.Client;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
+using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
@@ -17,14 +18,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PersonalLe
         private GetLearnerLearningEventsResponse _result;
         private GetLearnerLearningEventsResponse _mockHttpResult;
         private RegisteredLearnerDetails _registrationLearnerDetails;        
-        private ILogger<ILearnerServiceR9Client> _logger;
+        private ILogger<IPersonalLearningRecordServiceApiClient> _logger;
         private ILearnerServiceR9Client _learnerServiceR9Client;
         private ResultsAndCertificationConfiguration _configuration;
         private PersonalLearningRecordServiceApiClient _apiClient;
 
         public override void Setup()
         {
-            _logger = Substitute.For<ILogger<ILearnerServiceR9Client>>();
+            _logger = Substitute.For<ILogger<IPersonalLearningRecordServiceApiClient>>();
             _learnerServiceR9Client = Substitute.For<ILearnerServiceR9Client>();
 
             _registrationLearnerDetails = new RegisteredLearnerDetails
