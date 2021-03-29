@@ -32,7 +32,7 @@
         "uiCustomHostName": {
             "type": "string"
         },
-        "certificateName": {
+        "uiCertificateName": {
             "type": "string"
         },
         "internalApiCustomHostname": {
@@ -155,7 +155,7 @@
                 },
                 "parameters": {
                     "keyVaultCertificateName": {
-                        "value": "[parameters('certificateName')]"
+                        "value": "[parameters('uiCertificateName')]"
                     },
                     "keyVaultName": {
                         "value": "[parameters('sharedKeyVaultName')]"
@@ -210,11 +210,15 @@
                             }
                         ]
                     },
+                    "appServiceConnectionStrings": {
+                        "value": [
+                        ]
+                    },
                     "customHostName": {
                         "value": "[parameters('uiCustomHostName')]"
                     },
                     "certificateThumbprint": {
-                        "value": "[reference(concat('ui-app-service-certificate','-',parameters('environmentNameAbbreviation'))).outputs.certificateThumbprint.value]"
+                        "value": "[if(greater(length(parameters('uiCertificateName')), 0), reference(concat('ui-app-service-certificate','-',parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
                     }
                 }
             },
@@ -492,6 +496,6 @@
         "BlobStorageConnectionString": {
             "type": "string",
             "value": "[reference(concat('storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionString.value]"
-        }        
+        }
     }
 }

@@ -44,7 +44,7 @@ jobs:
             -sqlDatabaseTier "$(SQLDatabaseTier)"
             -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"
             -uiCustomHostName "$(UICustomHostName)"
-            -certificateName "$(CertificateName)"
+            -uiCertificateName "$(CertificateName)"
             -functionCertificateName "$(LearningRecordServiceCertificateName)"
             -storageAccountContainerArray "$(storageAccountContainerArray)"
             -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
