@@ -144,8 +144,10 @@
             }
         },
         {
+            "condition": "[greater(length(parameters('uiCustomHostName')), 0)]",
             "apiVersion": "2017-05-10",
             "name": "[concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
+            "resourceGroup": "[resourceGroup().name]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
@@ -218,16 +220,17 @@
                         "value": "[parameters('uiCustomHostName')]"
                     },
                     "certificateThumbprint": {
-                        "value": "[if(greater(length(parameters('uiCertificateName')), 0), reference(concat('ui-app-service-certificate','-',parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
+                        "value": "[if(greater(length(parameters('uiCustomHostname')), 0), reference('ui-app-service-certificate', '2018-11-01').outputs.certificateThumbprint.value, '')]"
                     }
                 }
             },
             "dependsOn": [
-                "[concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation'))]"
+                "[concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
+                "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
             ]
         },
         {
-            "condition": "[greater(length(parameters('internalApiCertificateName')), 0)]",
+            "condition": "[greater(length(parameters('internalApiCustomHostName')), 0)]",
             "apiVersion": "2017-05-10",
             "name": "[concat('internal-api-app-service-certificate','-',parameters('environmentNameAbbreviation'))]",
             "resourceGroup": "[resourceGroup().name]",
@@ -308,7 +311,9 @@
                 }
             },
             "dependsOn": [
-                "[concat('internal-api-app-service-certificate','-', parameters('environmentNameAbbreviation'))]"
+                "[concat('internal-api-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
+                "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
+
             ]
         },
         {
@@ -422,7 +427,12 @@
                         "value": "SystemAssigned"
                     }
                 }
-            }
+            },
+            "dependsOn": [
+                "[concat('function-app-certificate','-', parameters('environmentNameAbbreviation'))]",
+                "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
+
+            ]
         },
         {
             "apiVersion": "2017-05-10",
