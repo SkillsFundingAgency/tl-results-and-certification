@@ -15,10 +15,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
     {
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        private readonly IPersonalLearningRecordApiClient _personalLearningRecordApiClient;
+        private readonly IPersonalLearningRecordServiceApiClient _personalLearningRecordApiClient;
         private readonly ILearnerRecordService _learnerRecordService;
 
-        public PersonalLearningRecordService(IMapper mapper, ILogger<IPersonalLearningRecordService> logger, IPersonalLearningRecordApiClient personalLearningRecordApiClient, ILearnerRecordService learnerRecordService)
+        public PersonalLearningRecordService(IMapper mapper, ILogger<IPersonalLearningRecordService> logger,
+            IPersonalLearningRecordServiceApiClient personalLearningRecordApiClient,
+            ILearnerRecordService learnerRecordService)
         {
             _mapper = mapper;
             _logger = logger;

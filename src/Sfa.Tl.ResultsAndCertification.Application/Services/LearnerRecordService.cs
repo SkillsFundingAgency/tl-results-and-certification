@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             var profilesToUpdate = new List<TqRegistrationProfile>();
-            var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToList(), includeQualificationAchieved: true);
+            var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToList());
 
             learnerRecords.ForEach(learnerRecord =>
             {

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -76,7 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
             return qualifications;
         }
 
-        public LearnerRecordDetails BuildLearnerRecordDetails(TqRegistrationProfile profile, bool seedLearningEvents = true, bool isEnglishAchieved = true, bool isMathsAchieved = true)
+        public LearnerRecordDetails BuildLearnerRecordDetails(TqRegistrationProfile profile, bool seedLearningEvents = true, bool isEnglishAchieved = true, bool isMathsAchieved = true, bool seedGender = true)
         {
             var learnerRecord = new LearnerRecordDetails
             {
@@ -85,6 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.LearnerRecord
                 Firstname = profile.Firstname,
                 Lastname = profile.Lastname,
                 DateofBirth = profile.DateofBirth,
+                Gender = seedGender ? LrsGender.Male.ToString() : null,
                 IsLearnerVerified = true,
                 PerformedBy = profile.CreatedBy
             };

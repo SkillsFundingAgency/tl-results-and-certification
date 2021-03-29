@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
         protected IMapper Mapper;
         protected ILogger<IPersonalLearningRecordService> Logger;
         protected ILearnerRecordService LearnerRecordService;
-        protected IPersonalLearningRecordApiClient PersonalLearningRecordApiClient;
+        protected IPersonalLearningRecordServiceApiClient PersonalLearningRecordApiClient;
         protected Functions.Services.PersonalLearningRecordService Service;
         protected LearnerVerificationAndLearningEventsResponse ActualResult;
 
@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.PersonalLe
         {
             Logger = Substitute.For<ILogger<IPersonalLearningRecordService>>();
             LearnerRecordService = Substitute.For<ILearnerRecordService>();
-            PersonalLearningRecordApiClient = Substitute.For<IPersonalLearningRecordApiClient>();
+            PersonalLearningRecordApiClient = Substitute.For<IPersonalLearningRecordServiceApiClient>();
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
