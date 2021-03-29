@@ -14,5 +14,6 @@
 	CONSTRAINT [PK_Qualification] PRIMARY KEY ([Id]),
 	CONSTRAINT [FK_Qualification_QualificationType] FOREIGN KEY ([QualificationTypeId]) REFERENCES [QualificationType]([Id]),
 	CONSTRAINT [FK_Qualification_TlLookup] FOREIGN KEY ([TlLookupId]) REFERENCES [TlLookup]([Id]),
-	CONSTRAINT Unique_Qualification_Code UNIQUE ([Code])
+	CONSTRAINT Unique_Qualification_Code UNIQUE ([Code]),
+	INDEX IX_Qualification_QualificationTypeId_TlLookupId NONCLUSTERED ([QualificationTypeId], [TlLookupId])
 )

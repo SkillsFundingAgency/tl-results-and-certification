@@ -9,6 +9,5 @@
     [ModifiedBy] NVARCHAR(50) NULL,
 	CONSTRAINT [PK_IndustryPlacement] PRIMARY KEY ([Id]),
 	CONSTRAINT [FK_IndustryPlacement_TqRegistrationPathway] FOREIGN KEY ([TqRegistrationPathwayId]) REFERENCES [TqRegistrationPathway]([Id]),
-	CONSTRAINT IX_Unique_IndustryPlacement UNIQUE ([TqRegistrationPathwayId]),
-	INDEX IX_IndustryPlacement_TqRegistrationPathwayId NONCLUSTERED (TqRegistrationPathwayId)
+	CONSTRAINT IX_Unique_IndustryPlacement UNIQUE ([TqRegistrationPathwayId])	
 )

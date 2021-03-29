@@ -15,5 +15,5 @@
 	CONSTRAINT [PK_TqRegistrationPathway] PRIMARY KEY ([Id]),
 	CONSTRAINT [FK_TqRegistrationPathway_TqRegistrationProfile] FOREIGN KEY ([TqRegistrationProfileId]) REFERENCES [TqRegistrationProfile]([Id]),
 	CONSTRAINT [FK_TqRegistrationPathway_TqProvider] FOREIGN KEY ([TqProviderId]) REFERENCES [TqProvider]([Id]),
-	INDEX IX_TqRegistrationPathway_RegistrationProfileId NONCLUSTERED (TqRegistrationProfileId)
+	INDEX IX_TqRegistrationPathway_RegistrationProfileId NONCLUSTERED ([TqRegistrationProfileId], [TqProviderId])
 )

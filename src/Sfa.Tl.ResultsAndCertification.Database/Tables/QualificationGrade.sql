@@ -10,5 +10,6 @@
     [ModifiedOn] DATETIME2 NULL,
     [ModifiedBy] NVARCHAR(50) NULL,
 	CONSTRAINT [PK_QualificationGrade] PRIMARY KEY ([Id]),
-	CONSTRAINT [FK_QualificationGrade_QualificationType] FOREIGN KEY ([QualificationTypeId]) REFERENCES [QualificationType]([Id])
+	CONSTRAINT [FK_QualificationGrade_QualificationType] FOREIGN KEY ([QualificationTypeId]) REFERENCES [QualificationType]([Id]),
+	INDEX IX_QualificationGrade_QualificationTypeId NONCLUSTERED ([QualificationTypeId])
 )
