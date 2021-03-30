@@ -41,6 +41,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("add-learner-record-unique-learner", Name = RouteConstants.AddLearnerRecord)]
+        public async Task<IActionResult> AddLearnerRecordAsync()
+        {
+            await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumber);
+        }
+
+        [HttpGet]
         [Route("add-learner-record-unique-learner-number", Name = RouteConstants.EnterUniqueLearnerNumber)]
         public async Task<IActionResult> EnterUniqueLearnerReferenceAsync()
         {
@@ -63,8 +71,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(learnerRecord == null || learnerRecord.IsLearnerRegistered == false ? 
                     RouteConstants.EnterUniqueLearnerNumberNotFound : RouteConstants.EnterUniqueLearnerNumberAddedAlready);
             }
-            
+
             await SyncCacheUln(model, learnerRecord);
+            if (!learnerRecord.HasLrsEnglishAndMaths)
+                return RedirectToRoute(RouteConstants.AddEnglishAndMathsQuestion);
+
             if (learnerRecord.HasLrsEnglishAndMaths && !learnerRecord.HasSendQualification)
                 return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
             
@@ -100,16 +111,54 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("has-learner-completed-industry-placement", Name = RouteConstants.AddIndustryPlacementQuestion)]
-        public async Task<IActionResult> AddIndustryPlacementQuestionAsync()
+        [Route("add-learner-record-english-and-maths-achievement/{isChangeMode:bool?}", Name = RouteConstants.AddEnglishAndMathsQuestion)]
+        public async Task<IActionResult> AddEnglishAndMathsQuestionAsync(bool isChangeMode)
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
 
-            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false)
+            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false || cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == true)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = cacheModel?.EnglishAndMathsQuestion == null ? new EnglishAndMathsQuestionViewModel() : cacheModel.EnglishAndMathsQuestion;
+            viewModel.LearnerName = cacheModel.LearnerRecord.Name;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowed;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-learner-record-english-and-maths-achievement", Name = RouteConstants.SubmitAddEnglishAndMathsQuestion)]
+        public async Task<IActionResult> AddEnglishAndMathsQuestionAsync(EnglishAndMathsQuestionViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+            if (cacheModel?.Uln == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.EnglishAndMathsQuestion = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return RedirectToRoute(model.IsChangeMode ? RouteConstants.AddLearnerRecordCheckAndSubmit : RouteConstants.AddIndustryPlacementQuestion);
+        }
+
+        [HttpGet]
+        [Route("has-learner-completed-industry-placement/{isChangeMode:bool?}", Name = RouteConstants.AddIndustryPlacementQuestion)]
+        public async Task<IActionResult> AddIndustryPlacementQuestionAsync(bool isChangeMode)
+        {
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+
+            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false || 
+                (cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == false && cacheModel?.EnglishAndMathsQuestion == null))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.IndustryPlacementQuestion == null ? new IndustryPlacementQuestionViewModel() : cacheModel.IndustryPlacementQuestion;
             viewModel.LearnerName = cacheModel.LearnerRecord.Name;
+            viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowed;
+
+            if (cacheModel?.LearnerRecord.HasLrsEnglishAndMaths == true)
+                viewModel.IsBackLinkToEnterUln = true;
+
             return View(viewModel);
         }
 
@@ -126,7 +175,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.IndustryPlacementQuestion = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-
+            
             return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
         }
 
@@ -144,10 +193,101 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [Route("add-learner-record-check-and-submit", Name = RouteConstants.SubmitLearnerRecordCheckAndSubmit)]
+        public async Task<IActionResult> SubmitLearnerRecordCheckAndSubmitAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var response = await _trainingProviderLoader.AddLearnerRecordAsync(User.GetUkPrn(), cacheModel);
+
+            if (response.IsSuccess)
+            {
+                await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation), new LearnerRecordConfirmationViewModel { Uln = response.Uln, Name = response.Name }, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.LearnerRecordAddedConfirmation);
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.AddLearnerRecordFailed, $"Unable to add learner record for UniqueLearnerNumber: {cacheModel.Uln}. Method: SubmitLearnerRecordCheckAndSubmitAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }            
+        }
+
+        [HttpGet]
+        [Route("learner-record-added-confirmation", Name = RouteConstants.LearnerRecordAddedConfirmation)]
+        public async Task<IActionResult> AddLearnerRecordConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<LearnerRecordConfirmationViewModel>(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read LearnerRecordConfirmationViewModel from redis cache in add learner record confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("add-learner-record-cancel", Name = RouteConstants.AddLearnerRecordCancel)]
+        public async Task<IActionResult> AddLearnerRecordCancelAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+
+            if (cacheModel?.LearnerRecord == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = new LearnerRecordCancelViewModel { LearnerName = cacheModel.LearnerRecord.Name, CancelLearnerRecord = true };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-learner-record-cancel", Name = RouteConstants.SubmitLearnerRecordCancel)]
+        public async Task<IActionResult> AddLearnerRecordCancelAsync(LearnerRecordCancelViewModel viewModel)
+        {
+            if (viewModel.CancelLearnerRecord)
+            {
+                await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
+                return RedirectToRoute(RouteConstants.ManageLearnerRecordsDashboard);
+            }
+            else
+                return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
+        }
+
+        #region Update-Learner
+        [HttpGet]
+        [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SearchLearnerRecord)]
+        public async Task<IActionResult> SearchLearnerRecordAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
+            var viewModel = cacheModel ?? new SearchLearnerRecordViewModel();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SubmitSearchLearnerRecord)]
+        public async Task<IActionResult> SearchLearnerRecordAsync(SearchLearnerRecordViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            // TODO: Async calls to FindLearner.
+
+            return View(viewModel);
+        }
+
+        # endregion
+
         private async Task SyncCacheUln(EnterUlnViewModel model, FindLearnerRecord learnerRecord = null)
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
-            if (cacheModel?.Uln != null)
+
+            if (cacheModel?.Uln != null && cacheModel?.Uln?.EnterUln == model.EnterUln)
             {
                 cacheModel.LearnerRecord = learnerRecord;
                 cacheModel.Uln = model;

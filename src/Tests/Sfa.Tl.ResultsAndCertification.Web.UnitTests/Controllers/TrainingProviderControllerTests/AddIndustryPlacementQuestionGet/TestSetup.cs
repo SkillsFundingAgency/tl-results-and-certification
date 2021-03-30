@@ -5,11 +5,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public abstract class TestSetup : TrainingProviderControllerTestBase
     {
+        protected bool IsChangeMode;
         public IActionResult Result { get; private set; }
 
         public async override Task When()
         {
-            Result = await Controller.AddIndustryPlacementQuestionAsync();
+            Result = await Controller.AddIndustryPlacementQuestionAsync(IsChangeMode);
         }
     }
 }

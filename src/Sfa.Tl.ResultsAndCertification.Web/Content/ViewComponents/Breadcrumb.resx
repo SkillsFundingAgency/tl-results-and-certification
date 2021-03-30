@@ -156,6 +156,9 @@
   <data name="Search_For_Assessments" xml:space="preserve">
     <value>Search for a learner</value>
   </data>
+  <data name="Search_For_Learner" xml:space="preserve">
+    <value>Search for a learner</value>
+  </data>
   <data name="Search_For_Registration" xml:space="preserve">
     <value>Search for a registration</value>
   </data>

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 {
@@ -103,12 +103,21 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             }
         }
 
-        public virtual async Task<int> UpdateWithSpecifedCollectionsOnlyAsync(T entity, params Expression<Func<T, object>>[] properties)
+        public virtual async Task<int> UpdateWithSpecifedCollectionsOnlyAsync(T entity, bool entityChanged = true, params Expression<Func<T, object>>[] properties)
         {
             properties.ToList().ForEach(p =>
             {
-                _dbContext.Entry(entity).Collection(p.GetPropertyAccess().Name).IsModified = true;
+                var propertyInfo = entity.GetType().GetProperties().FirstOrDefault(x => x.Name == p.GetPropertyAccess().Name);
+                var isPropertyCollectionType = propertyInfo?.PropertyType?.IsGenericType == true && propertyInfo?.PropertyType?.GetGenericTypeDefinition() == typeof(ICollection<>);
+                
+                if (isPropertyCollectionType)
+                    _dbContext.Entry(entity).Collection(p.GetPropertyAccess().Name).IsModified = true;                    
+                else
+                    _dbContext.Entry(entity).Reference(p.GetPropertyAccess().Name).IsModified = true;
             });
+
+            if(!entityChanged)
+              _dbContext.Entry(entity).State = EntityState.Unchanged;
 
             try
             {

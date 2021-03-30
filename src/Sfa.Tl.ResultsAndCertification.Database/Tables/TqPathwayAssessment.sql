@@ -14,5 +14,5 @@
 	CONSTRAINT [PK_TqPathwayAssessment] PRIMARY KEY ([Id]),
 	CONSTRAINT [FK_TqPathwayAssessment_TqRegistrationPathway] FOREIGN KEY ([TqRegistrationPathwayId]) REFERENCES [TqRegistrationPathway]([Id]),
 	CONSTRAINT [FK_TqPathwayAssessment_AssessmentSeries] FOREIGN KEY ([AssessmentSeriesId]) REFERENCES [AssessmentSeries]([Id]),
-	INDEX IX_TqPathwayAssessment_TqRegistrationPathwayId NONCLUSTERED (TqRegistrationPathwayId)
+	INDEX IX_TqPathwayAssessment_TqRegistrationPathwayId_AssessmentSeriesId NONCLUSTERED ([TqRegistrationPathwayId],[AssessmentSeriesId])
 )

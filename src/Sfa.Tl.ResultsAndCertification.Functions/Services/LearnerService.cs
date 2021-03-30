@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
         private readonly ILearnerServiceApiClient _learnerServiceApiClient;
         private readonly ILearnerRecordService _learnerRecordService;
 
-        public LearnerService(IMapper mapper, ILogger<IPersonalLearningRecordService> logger, ILearnerServiceApiClient learnerServiceApiClient, ILearnerRecordService learnerRecordService)
+        public LearnerService(IMapper mapper, ILogger<ILearnerService> logger, ILearnerServiceApiClient learnerServiceApiClient, ILearnerRecordService learnerRecordService)
         {
             _mapper = mapper;
             _logger = logger;

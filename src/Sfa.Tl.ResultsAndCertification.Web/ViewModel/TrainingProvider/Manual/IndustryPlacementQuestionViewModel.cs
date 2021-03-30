@@ -13,9 +13,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         
         public string LearnerName { get; set; }
 
-        public virtual BackLinkModel BackLink => new BackLinkModel
-        {
-            RouteName = RouteConstants.EnterUniqueLearnerNumber
-        };
+        public bool IsChangeMode { get; set; }
+
+        public bool IsBackLinkToEnterUln { get; set; }
+
+        public virtual BackLinkModel BackLink => new BackLinkModel 
+        { 
+            RouteName = IsChangeMode ? RouteConstants.AddLearnerRecordCheckAndSubmit :
+                    IsBackLinkToEnterUln ? RouteConstants.EnterUniqueLearnerNumber : RouteConstants.AddEnglishAndMathsQuestion 
+        };       
     }
 }

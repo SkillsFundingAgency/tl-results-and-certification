@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public override void Given()
         {
             EnterUlnViewModel = new EnterUlnViewModel { EnterUln = uln.ToString() };
-            TrainingProviderLoader.FindLearnerRecordAsync(providerUkprn, uln).Returns(mockResult);
+            TrainingProviderLoader.FindLearnerRecordAsync(ProviderUkprn, uln).Returns(mockResult);
 
             mockCacheViewModel = new AddLearnerRecordViewModel { LearnerRecord = mockResult };
             CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(mockCacheViewModel);
@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            TrainingProviderLoader.Received(1).FindLearnerRecordAsync(providerUkprn, uln);
+            TrainingProviderLoader.Received(1).FindLearnerRecordAsync(ProviderUkprn, uln);
             
             CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Any<AddLearnerRecordViewModel>());

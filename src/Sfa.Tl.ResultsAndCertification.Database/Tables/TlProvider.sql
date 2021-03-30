@@ -10,4 +10,5 @@
     [ModifiedOn] DATETIME2 NULL, 
     [ModifiedBy] NVARCHAR(50) NULL,
 	CONSTRAINT [PK_TlProvider] PRIMARY KEY ([Id]),
+    INDEX IX_TlProvider_UkPrn NONCLUSTERED (UkPrn)
 )

@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
                 return client;
             });
-            services.AddTransient<IPersonalLearningRecordApiClient, PersonalLearningRecordServiceApiClient>();
+            services.AddTransient<IPersonalLearningRecordServiceApiClient, PersonalLearningRecordServiceApiClient>();
 
             services.AddTransient<ILearnerPortTypeClient>(learnerClient =>
             {

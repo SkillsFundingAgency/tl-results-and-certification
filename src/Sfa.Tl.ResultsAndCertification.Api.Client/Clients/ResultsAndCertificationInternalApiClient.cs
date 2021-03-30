@@ -248,16 +248,24 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IList<LookupData>>(requestUri);
         }
 
+        // LoggedIn User endpoint
+        public async Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn)
+        {
+            var requestUri = string.Format(ApiConstants.GetLoggedInUserTypeInfoUri, ukprn);
+            return await GetAsync<LoggedInUserTypeInfo>(requestUri);
+        }
+
+        // Training Provider endpoints
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
         {
             var requestUri = string.Format(ApiConstants.FindLearnerRecordUri, providerUkprn, uln);
             return await GetAsync<FindLearnerRecord>(requestUri);
         }
 
-        public async Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn)
+        public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request)
         {
-            var requestUri = string.Format(ApiConstants.GetLoggedInUserTypeInfoUri, ukprn);
-            return await GetAsync<LoggedInUserTypeInfo>(requestUri);
+            var requestUri = ApiConstants.AddLearnerRecordUri;
+            return await PostAsync<AddLearnerRecordRequest, AddLearnerRecordResponse>(requestUri, request);
         }
 
         #region Private Methods
