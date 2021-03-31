@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         [Required(ErrorMessageResourceType = typeof(ErrorResource.EnterUniqueLearnerReference), ErrorMessageResourceName = "Uln_Required_Validation_Message")]
         [RegularExpression(@"^\d{10}$", ErrorMessageResourceType = typeof(ErrorResource.EnterUniqueLearnerReference), ErrorMessageResourceName = "Uln_Not_Valid_Validation_Message")]
         public string EnterUln { get; set; }
-
-        public BackLinkModel BackLink => new BackLinkModel { RouteName = RouteConstants.ManageLearnerRecordsDashboard };
+        public bool IsNavigatedFromSearchLearnerRecordNotAdded { get; set; }
+        public BackLinkModel BackLink => new BackLinkModel { RouteName = IsNavigatedFromSearchLearnerRecordNotAdded ? RouteConstants.SearchLearnerRecordNotAdded : RouteConstants.ManageLearnerRecordsDashboard };
     }
 }

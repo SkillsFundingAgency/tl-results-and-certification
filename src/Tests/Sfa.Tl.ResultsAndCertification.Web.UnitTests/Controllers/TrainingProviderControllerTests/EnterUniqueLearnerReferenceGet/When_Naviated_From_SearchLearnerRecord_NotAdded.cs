@@ -7,16 +7,17 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.EnterUniqueLearnerReferenceGet
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Naviated_From_SearchLearnerRecord_NotAdded : TestSetup
     {
         private EnterUlnViewModel _ulnViewModel;
 
         public override void Given()
         {
+            IsNavigatedFromSearchLearnerRecordNotAdded = true;
             _ulnViewModel = new EnterUlnViewModel { EnterUln = "9895641231" };
             var cacheModel = new AddLearnerRecordViewModel { Uln = _ulnViewModel };
             CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(cacheModel);
-        }        
+        }
 
         [Fact]
         public void Then_Returns_Expected_Results()
@@ -28,8 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             var model = (Result as ViewResult).Model as EnterUlnViewModel;
             model.BackLink.Should().NotBeNull();
             model.EnterUln.Should().Be(_ulnViewModel.EnterUln);
-            model.IsNavigatedFromSearchLearnerRecordNotAdded.Should().BeFalse();
-            model.BackLink.RouteName.Should().Be(RouteConstants.ManageLearnerRecordsDashboard);
+            model.IsNavigatedFromSearchLearnerRecordNotAdded.Should().BeTrue();
+            model.BackLink.RouteName.Should().Be(RouteConstants.SearchLearnerRecordNotAdded);
             model.BackLink.RouteAttributes.Count.Should().Be(0);
         }
     }

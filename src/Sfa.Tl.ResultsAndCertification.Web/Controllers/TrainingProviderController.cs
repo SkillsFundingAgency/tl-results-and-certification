@@ -47,11 +47,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-learner-record-unique-learner-number", Name = RouteConstants.EnterUniqueLearnerNumber)]
-        public async Task<IActionResult> EnterUniqueLearnerReferenceAsync()
+        [Route("add-learner-record-unique-learner-number/{isNavigationFromSearch:bool?}", Name = RouteConstants.EnterUniqueLearnerNumber)]
+        public async Task<IActionResult> EnterUniqueLearnerReferenceAsync(bool isNavigationFromSearch)
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
             var viewModel = cacheModel?.Uln != null ? cacheModel.Uln : new EnterUlnViewModel();
+
+            if (isNavigationFromSearch)
+            {
+                viewModel.IsNavigatedFromSearchLearnerRecordNotAdded = isNavigationFromSearch;
+                var searchCacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
+
+                if (searchCacheModel != null)
+                    viewModel.EnterUln = searchCacheModel.SearchUln;
+            }
+
             return View(viewModel);
         }
 
@@ -66,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (learnerRecord == null || !learnerRecord.IsLearnerRegistered || learnerRecord.IsLearnerRecordAdded)
             {
                 await SyncCacheUln(model);
-                return RedirectToRoute(learnerRecord == null || learnerRecord.IsLearnerRegistered == false ? 
+                return RedirectToRoute(learnerRecord == null || learnerRecord.IsLearnerRegistered == false ?
                     RouteConstants.EnterUniqueLearnerNumberNotFound : RouteConstants.EnterUniqueLearnerNumberAddedAlready);
             }
 
@@ -76,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (learnerRecord.HasLrsEnglishAndMaths && !learnerRecord.HasSendQualification)
                 return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
-            
+
             return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumber);
         }
 
@@ -146,7 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
 
-            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false || 
+            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false ||
                 (cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == false && cacheModel?.EnglishAndMathsQuestion == null))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
@@ -173,7 +183,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.IndustryPlacementQuestion = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
-            
+
             return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
         }
 
@@ -212,7 +222,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 _logger.LogWarning(LogEvent.AddLearnerRecordFailed, $"Unable to add learner record for UniqueLearnerNumber: {cacheModel.Uln}. Method: SubmitLearnerRecordCheckAndSubmitAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
-            }            
+            }
         }
 
         [HttpGet]
@@ -254,7 +264,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
                 return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
-        }        
+        }
 
         #region Update-Learner
         [HttpGet]
