@@ -289,7 +289,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("search-for-registration-ULN-not-found", Name = RouteConstants.SearchLearnerRecordNotAdded)]
+        [Route("search-learner-record-ULN-not-added", Name = RouteConstants.SearchLearnerRecordNotAdded)]
         public async Task<IActionResult> SearchLearnerRecordNotAddedAsync()
         {
             var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
