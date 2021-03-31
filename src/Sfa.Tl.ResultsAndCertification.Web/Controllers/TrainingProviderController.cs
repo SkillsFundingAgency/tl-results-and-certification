@@ -280,8 +280,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.SearchLearnerRecordNotFound);
             }
 
+            if (!learnerRecord.IsLearnerRecordAdded)
+            {
+                model.IsLearnerRegistered = learnerRecord?.IsLearnerRegistered ?? false;
+                model.IsLearnerRecordAdded = learnerRecord?.IsLearnerRecordAdded ?? false;
+
+                await _cacheService.SetAsync(SearchLearnerRecordCacheKey, model);
+                return RedirectToRoute(learnerRecord == null || learnerRecord.IsLearnerRegistered == false ? "" : RouteConstants.SearchLearnerRecordNotAdded);
+            }
+
             return View(model);
         }
+
 
         [HttpGet]
         [Route("search-learner-record-ULN-not-registered", Name = RouteConstants.SearchLearnerRecordNotFound)]
@@ -301,7 +311,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-learner-record-ULN-not-added", Name = RouteConstants.SearchLearnerRecordNotAdded)]
         public async Task<IActionResult> SearchLearnerRecordNotAddedAsync()
         {
-            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(SearchLearnerRecordCacheKey);
 
             if (cacheModel == null || cacheModel.IsLearnerRecordAdded)
             {
