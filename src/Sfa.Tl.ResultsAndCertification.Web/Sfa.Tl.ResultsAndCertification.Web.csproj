@@ -575,6 +575,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SearchLearnerRecordNotAdded.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\SearchLearnerRecordNotFound.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SearchLearnerRecordNotFound.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\ViewComponents\BackLink.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1004,6 +1009,10 @@
     <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecordNotAdded.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SearchLearnerRecordNotAdded.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecordNotFound.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SearchLearnerRecordNotFound.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\ViewComponents\BackLink.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

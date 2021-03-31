@@ -270,7 +270,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SearchLearnerRecord)]
         public async Task<IActionResult> SearchLearnerRecordAsync()
         {
-            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAndRemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
             var viewModel = cacheModel ?? new SearchLearnerRecordViewModel();
             return View(viewModel);
         }
@@ -300,9 +300,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> SearchLearnerRecordNotFoundAsync()
         {
             var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
-            if (cacheModel == null || !cacheModel.IsLearnerRegistered)
+            if (cacheModel == null || (cacheModel != null && cacheModel.IsLearnerRegistered))
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchLearnerRecordViewModel from redis cache in search uln not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchLearnerRecordViewModel from redis cache or IsLearnerRegistered is false in search learner record not registered page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
