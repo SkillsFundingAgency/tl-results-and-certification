@@ -1,0 +1,30 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.LearnerRecordNotFoundViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+
+@{
+    ViewData["Title"] = "Search for a learner - ULN not registered page";
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">
+            ULN (1234567890) has not been registered in this service by an exam board
+        </h1>
+        <p class="govuk-body">
+            You can only update records for learners registered on a T Level course by an exam board (also known as an awarding organisation).
+        </p>
+        <p class="govuk-body">
+            If you think this learner should be registered, please contact the exam board responsible for delivering the T Level.
+        </p>
+        <p>
+            <a id="backButton" class="govuk-button govuk-!-margin-top-6" role="button" asp-route="@Model.BackLink.RouteName">Back to search</a>
+        </p>
+        <p class="govuk-body">
+            <a id="backToManageLearnerLink" asp-route="ManageLearnerRecordsDashboard">Back to manage learner T Level records</a>
+        </p>
+    </div>
+</div>
