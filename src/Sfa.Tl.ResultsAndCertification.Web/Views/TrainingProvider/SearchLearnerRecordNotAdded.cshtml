@@ -1,0 +1,25 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.LearnerRecordNotAddedViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+
+@{
+    ViewData["Title"] = SearchLearnerRecordNotAdded.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">
+            @string.Format(SearchLearnerRecordNotAdded.Uln_Has_Not_Been_Found_Heading, @Model.Uln)
+        </h1>
+        <p class="govuk-body">
+            @SearchLearnerRecordNotAdded.Your_Organisation_Has_Not_Yet_Added_Text
+        </p>
+        <p class="govuk-body">
+            @SearchLearnerRecordNotAdded.Select_Continue_To_Add_Text
+        </p>
+        <p><a id="continueButton" class="govuk-button govuk-!-margin-top-6" role="button" asp-route="@Model.BackLink.RouteName">@SearchLearnerRecordNotAdded.Continue_Button</a></p>
+    </div>
+</div>

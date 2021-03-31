@@ -256,16 +256,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
                 return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
-        }
+        }        
 
         #region Update-Learner
         [HttpGet]
         [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SearchLearnerRecord)]
         public async Task<IActionResult> SearchLearnerRecordAsync()
-        {
+        {           
             var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
             var viewModel = cacheModel ?? new SearchLearnerRecordViewModel();
-
             return View(viewModel);
         }
 
@@ -276,9 +275,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(viewModel);
 
-            // TODO: Async calls to FindLearner.
+            var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), viewModel.SearchUln.ToLong());
+            if (learnerRecord == null || !learnerRecord.IsLearnerRegistered || !learnerRecord.IsLearnerRecordAdded)
+            {
+                viewModel.IsLearnerRegistered = learnerRecord?.IsLearnerRegistered ?? false;
+                viewModel.IsLearnerRecordAdded = learnerRecord?.IsLearnerRecordAdded ?? false;
+
+                await _cacheService.SetAsync(CacheKey, viewModel);
+                return RedirectToRoute(learnerRecord == null || learnerRecord.IsLearnerRegistered == false ? "" : RouteConstants.SearchLearnerRecordNotAdded);
+            }
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("search-for-registration-ULN-not-found", Name = RouteConstants.SearchLearnerRecordNotAdded)]
+        public async Task<IActionResult> SearchLearnerRecordNotAddedAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
+
+            if (cacheModel == null || cacheModel.IsLearnerRecordAdded)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchCriteriaViewModel from redis cache or IsLearnerRecord already added in search learner record not added page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(new LearnerRecordNotAddedViewModel { Uln = cacheModel.SearchUln.ToString() });
         }
 
         # endregion
