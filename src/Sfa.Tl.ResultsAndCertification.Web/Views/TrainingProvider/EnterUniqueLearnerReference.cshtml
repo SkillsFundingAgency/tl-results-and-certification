@@ -11,8 +11,9 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <partial name="_ValidationSummary" />
-        <form asp-route="SubmitEnterUniqueLearnerReference">
+        <partial name="_ValidationSummary" />        
+        <form asp-route="SubmitEnterUniqueLearnerNumber">
+            <input type="hidden" asp-for="IsNavigatedFromSearchLearnerRecordNotAdded" value="@Model.IsNavigatedFromSearchLearnerRecordNotAdded" />
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@EnterUniqueLearnerReference.Add_New_Learner_Caption</span>
                 <div class="govuk-form-group" sfa-validation-for="EnterUln" sfa-validation-class="govuk-form-group--error">
