@@ -305,7 +305,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (cacheModel == null || cacheModel.IsLearnerRecordAdded)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchCriteriaViewModel from redis cache or IsLearnerRecord already added in search learner record not added page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchLearnerRecordViewModel from redis cache or IsLearnerRecord already added in search learner record not added page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(new LearnerRecordNotAddedViewModel { Uln = cacheModel.SearchUln.ToString() });
