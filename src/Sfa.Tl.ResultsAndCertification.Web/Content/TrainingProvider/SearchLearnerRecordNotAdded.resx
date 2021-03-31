@@ -124,7 +124,7 @@
     <value>Search for a learner - ULN not added page</value>
   </data>
   <data name="Select_Continue_To_Add_Text" xml:space="preserve">
-    <value>Select 'Continue' to add a learner T Level record for this ULN</value>
+    <value>Select 'Continue' to add a learner T Level record for this ULN.</value>
   </data>
   <data name="Uln_Has_Not_Been_Found_Heading" xml:space="preserve">
     <value>ULN ({0}) has not been added</value>

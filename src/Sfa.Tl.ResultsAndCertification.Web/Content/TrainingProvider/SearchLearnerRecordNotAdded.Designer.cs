@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select &apos;Continue&apos; to add a learner T Level record for this ULN.
+        ///   Looks up a localized string similar to Select &apos;Continue&apos; to add a learner T Level record for this ULN..
         /// </summary>
         public static string Select_Continue_To_Add_Text {
             get {
