@@ -22,7 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly ILogger _logger;
 
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey); } }
-        private string SearchLearnerRecordCacheKey { get { return string.Concat(CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey), Constants.SearchLearnerRecord); } }
 
         public TrainingProviderController(ITrainingProviderLoader trainingProviderLoader, ICacheService cacheService, ILogger<TrainingProviderController> logger)
         {
@@ -271,7 +270,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SearchLearnerRecord)]
         public async Task<IActionResult> SearchLearnerRecordAsync()
         {
-            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(SearchLearnerRecordCacheKey);
+            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
             var viewModel = cacheModel ?? new SearchLearnerRecordViewModel();
             return View(viewModel);
         }
@@ -284,31 +283,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), model.SearchUln.ToLong());
-            if (learnerRecord == null || !learnerRecord.IsLearnerRegistered)
-            {
-                await _cacheService.SetAsync(SearchLearnerRecordCacheKey, model);
-                return RedirectToRoute(RouteConstants.SearchLearnerRecordNotFound);
-            }
-
-            if (!learnerRecord.IsLearnerRecordAdded)
+            if (learnerRecord == null || !learnerRecord.IsLearnerRegistered || !learnerRecord.IsLearnerRecordAdded)
             {
                 model.IsLearnerRegistered = learnerRecord?.IsLearnerRegistered ?? false;
                 model.IsLearnerRecordAdded = learnerRecord?.IsLearnerRecordAdded ?? false;
 
-                await _cacheService.SetAsync(SearchLearnerRecordCacheKey, model);
-                return RedirectToRoute(learnerRecord == null || learnerRecord.IsLearnerRegistered == false ? "" : RouteConstants.SearchLearnerRecordNotAdded);
+                await _cacheService.SetAsync(CacheKey, model);
+                return RedirectToRoute(learnerRecord == null || learnerRecord.IsLearnerRegistered == false ? RouteConstants.SearchLearnerRecordNotFound : RouteConstants.SearchLearnerRecordNotAdded);
             }
 
             return View(model);
         }
 
-
         [HttpGet]
         [Route("search-learner-record-ULN-not-registered", Name = RouteConstants.SearchLearnerRecordNotFound)]
         public async Task<IActionResult> SearchLearnerRecordNotFoundAsync()
         {
-            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(SearchLearnerRecordCacheKey);
-            if (cacheModel == null)
+            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
+            if (cacheModel == null || !cacheModel.IsLearnerRegistered)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchLearnerRecordViewModel from redis cache in search uln not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -321,7 +313,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("search-learner-record-ULN-not-added", Name = RouteConstants.SearchLearnerRecordNotAdded)]
         public async Task<IActionResult> SearchLearnerRecordNotAddedAsync()
         {
-            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(SearchLearnerRecordCacheKey);
+            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
 
             if (cacheModel == null || cacheModel.IsLearnerRecordAdded)
             {
