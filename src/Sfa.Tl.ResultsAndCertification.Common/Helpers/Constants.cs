@@ -61,6 +61,7 @@
         public const string ChangeResultConfirmationViewModel = "ChangeResultConfirmationViewModel";
         public const string AddLearnerRecordConfirmation = "AddLearnerRecordConfirmation";
         public const string SearchLearnerRecord = "SearchLearnerRecord";
+        public const string SearchLearnerRecordViewModel = "SearchLearnerRecordViewModel";
 
         public const string UserSessionActivityId = "UserSessionActivityId";
 

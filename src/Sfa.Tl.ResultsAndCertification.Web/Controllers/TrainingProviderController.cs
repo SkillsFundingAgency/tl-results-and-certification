@@ -254,7 +254,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
                 return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
-        }
+        }        
 
         #region Update-Learner
         [HttpGet]
@@ -263,7 +263,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(SearchLearnerRecordCacheKey);
             var viewModel = cacheModel ?? new SearchLearnerRecordViewModel();
-
             return View(viewModel);
         }
 
@@ -296,6 +295,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(new SearchLearnerRecordNotFoundViewModel { Uln = cacheModel.SearchUln?.ToString() });
+        }
+
+        [HttpGet]
+        [Route("search-learner-record-ULN-not-added", Name = RouteConstants.SearchLearnerRecordNotAdded)]
+        public async Task<IActionResult> SearchLearnerRecordNotAddedAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
+
+            if (cacheModel == null || cacheModel.IsLearnerRecordAdded)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchCriteriaViewModel from redis cache or IsLearnerRecord already added in search learner record not added page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(new LearnerRecordNotAddedViewModel { Uln = cacheModel.SearchUln.ToString() });
         }
 
         # endregion

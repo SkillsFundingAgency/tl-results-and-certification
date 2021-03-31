@@ -226,6 +226,7 @@
 
         public const string SearchLearnerRecord = "SearchLearnerRecord";
         public const string SubmitSearchLearnerRecord = "SubmitSearchLearnerRecord";
+        public const string SearchLearnerRecordNotAdded = "SearchLearnerRecordNotAdded";
         public const string SearchLearnerRecordNotFound = "SearchLearnerRecordNotFound";
 
         //CheckAndSubmit
