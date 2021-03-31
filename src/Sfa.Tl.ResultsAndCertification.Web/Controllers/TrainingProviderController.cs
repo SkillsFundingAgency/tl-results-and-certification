@@ -21,10 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
 
-        private string CacheKey
-        {
-            get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey); }
-        }
+        private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey); } }
 
         public TrainingProviderController(ITrainingProviderLoader trainingProviderLoader, ICacheService cacheService, ILogger<TrainingProviderController> logger)
         {
@@ -280,22 +277,36 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SubmitSearchLearnerRecord)]
-        public async Task<IActionResult> SearchLearnerRecordAsync(SearchLearnerRecordViewModel viewModel)
+        public async Task<IActionResult> SearchLearnerRecordAsync(SearchLearnerRecordViewModel model)
         {
             if (!ModelState.IsValid)
-                return View(viewModel);
+                return View(model);
 
-            var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), viewModel.SearchUln.ToLong());
+            var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), model.SearchUln.ToLong());
             if (learnerRecord == null || !learnerRecord.IsLearnerRegistered || !learnerRecord.IsLearnerRecordAdded)
             {
-                viewModel.IsLearnerRegistered = learnerRecord?.IsLearnerRegistered ?? false;
-                viewModel.IsLearnerRecordAdded = learnerRecord?.IsLearnerRecordAdded ?? false;
+                model.IsLearnerRegistered = learnerRecord?.IsLearnerRegistered ?? false;
+                model.IsLearnerRecordAdded = learnerRecord?.IsLearnerRecordAdded ?? false;
 
-                await _cacheService.SetAsync(CacheKey, viewModel);
-                return RedirectToRoute(learnerRecord == null || learnerRecord.IsLearnerRegistered == false ? "" : RouteConstants.SearchLearnerRecordNotAdded);
+                await _cacheService.SetAsync(CacheKey, model);
+                return RedirectToRoute(learnerRecord == null || learnerRecord.IsLearnerRegistered == false ? RouteConstants.SearchLearnerRecordNotFound : RouteConstants.SearchLearnerRecordNotAdded);
             }
 
-            return View(viewModel);
+            return View(model);
+        }
+
+        [HttpGet]
+        [Route("search-learner-record-ULN-not-registered", Name = RouteConstants.SearchLearnerRecordNotFound)]
+        public async Task<IActionResult> SearchLearnerRecordNotFoundAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
+            if (cacheModel == null || !cacheModel.IsLearnerRegistered)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchLearnerRecordViewModel from redis cache in search uln not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(new SearchLearnerRecordNotFoundViewModel { Uln = cacheModel.SearchUln?.ToString() });
         }
 
         [HttpGet]
