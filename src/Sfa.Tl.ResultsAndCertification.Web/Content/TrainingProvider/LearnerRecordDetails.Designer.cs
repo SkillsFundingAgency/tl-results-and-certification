@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s Industry placement completion.
+        ///   Looks up a localized string similar to Learner’s industry placement completion.
         /// </summary>
         public static string Learners_Industry_Placement_Completion_Text {
             get {
