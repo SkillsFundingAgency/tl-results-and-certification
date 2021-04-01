@@ -1,0 +1,47 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.LearnerRecordDetailsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+
+@{
+    ViewData["Title"] = LearnerRecordDetails.Page_Title_Text;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <h1 class="govuk-heading-l">@LearnerRecordDetails.Learner_TLevel_Record_Heading_Text</h1>
+        <h2 class="govuk-heading-m">@LearnerRecordDetails.Title_Uln_Text @Model.Uln</h2>
+
+        <dl class="govuk-summary-list">
+            @*<vc:summary-item model=Model.SummaryUln></vc:summary-item>*@
+            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+            <vc:summary-item model=Model.SummaryTLevelCore></vc:summary-item>
+        </dl>
+
+        <hr class="govuk-section-break govuk-section-break--visible">
+
+        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@LearnerRecordDetails.Learners_English_And_Maths_Achievement_Text</h3>
+        <dl class="govuk-summary-list">
+            <vc:summary-item model=Model.SummaryEnglishAndMathsStatus></vc:summary-item>
+            @if (Model.HasLrsEnglishAndMaths)
+            {
+                <vc:summary-item model=Model.SummaryWhatsLrsText></vc:summary-item>
+            }
+        </dl>
+
+        <hr class="govuk-section-break govuk-section-break--visible">
+
+        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@LearnerRecordDetails.Learners_Industry_Placement_Completion_Text</h3>
+        <dl class="govuk-summary-list">
+            <vc:summary-item model=Model.SummaryIndustryPlacementStatus></vc:summary-item>
+        </dl>
+
+        <hr class="govuk-section-break govuk-section-break--visible">
+
+        <p class="govuk-body govuk-!-margin-top-8"><a id="searchAgainLink" class="govuk-link" asp-route="">@LearnerRecordDetails.Search_Again_Link_Text</a></p>
+    </div>
+</div>

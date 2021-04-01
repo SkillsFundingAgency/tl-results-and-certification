@@ -323,6 +323,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(new LearnerRecordNotAddedViewModel { Uln = cacheModel.SearchUln.ToString() });
         }
 
+        [HttpGet]
+        [Route("learner-record-page/{profileId}", Name = RouteConstants.LearnerRecordDetails)]
+        public async Task<IActionResult> LearnerRecordDetailsAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync(User.GetUkPrn(), profileId);
+
+            if (viewModel == null || !viewModel.IsLearnerRecordAdded)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner record not added to view. Method: LearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
         # endregion
 
         private async Task SyncCacheUln(EnterUlnViewModel model, FindLearnerRecord learnerRecord = null)
