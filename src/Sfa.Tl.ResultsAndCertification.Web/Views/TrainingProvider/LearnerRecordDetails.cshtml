@@ -12,16 +12,12 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
         <h1 class="govuk-heading-l">@LearnerRecordDetails.Learner_TLevel_Record_Heading_Text</h1>
-        <h2 class="govuk-heading-m">@LearnerRecordDetails.Title_Uln_Text @Model.Uln</h2>
-
-        <dl class="govuk-summary-list">
-            @*<vc:summary-item model=Model.SummaryUln></vc:summary-item>*@
-            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
-            <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
-            <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
-            <vc:summary-item model=Model.SummaryTLevelCore></vc:summary-item>
-        </dl>
-
+        <h2 class="govuk-heading-m">@string.Format(@LearnerRecordDetails.Uln_Text, @Model.Uln)</h2>
+        <p class="govuk-body">@string.Format(@LearnerRecordDetails.Name_Text, @Model.Name)</p>
+        <p class="govuk-body">@string.Format(@LearnerRecordDetails.DateofBirth_Text, @Model.DateofBirth.ToShortDateString())</p>
+        <p class="govuk-body">@string.Format(@LearnerRecordDetails.Provider_Text, @Model.ProviderName)</p>
+        <p class="govuk-body">@string.Format(@LearnerRecordDetails.TLevel_Core_Text, @Model.PathwayName)</p>
+        
         <hr class="govuk-section-break govuk-section-break--visible">
 
         <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@LearnerRecordDetails.Learners_English_And_Maths_Achievement_Text</h3>

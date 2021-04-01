@@ -26,46 +26,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public int IndustryPlacementId { get; set; }
         public IpStatus? IndustryPlacementStatus { get; set; }
 
-        public SummaryItemModel SummaryUln => new SummaryItemModel
-        {
-            Id = "uln",
-            Title = LearnerRecordDetailsContent.Title_Uln_Text,
-            Value = Uln.ToString(),
-            NeedBorderBottomLine = false
-        };
-
-        public SummaryItemModel SummaryLearnerName => new SummaryItemModel
-        {
-            Id = "learnername",
-            Title = LearnerRecordDetailsContent.Title_Name_Text,
-            Value = Name,
-            NeedBorderBottomLine = false
-        };
-
-        public SummaryItemModel SummaryDateofBirth => new SummaryItemModel
-        {
-            Id = "dateofbirth",
-            Title = LearnerRecordDetailsContent.Title_DateofBirth_Text,
-            Value = DateofBirth.ToShortDateString(),
-            NeedBorderBottomLine = false
-        };
-
-        public SummaryItemModel SummaryProvider => new SummaryItemModel
-        {
-            Id = "provider",
-            Title = LearnerRecordDetailsContent.Title_Provider_Text,
-            Value = ProviderName,
-            NeedBorderBottomLine = false
-        };
-
-        public SummaryItemModel SummaryTLevelCore => new SummaryItemModel
-        {
-            Id = "tlevelcore",
-            Title = LearnerRecordDetailsContent.Title_TLevel_Core_Text,
-            Value = PathwayName,
-            NeedBorderBottomLine = false
-        };
-
         public SummaryItemModel SummaryEnglishAndMathsStatus => new SummaryItemModel
         {
             Id = "englishmathsstatus",
@@ -95,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
             Value = GetIndustryPlacementDisplayText,
             ActionText = LearnerRecordDetailsContent.Update_Action_Link_Text,
-            RouteName = RouteConstants.AddIndustryPlacementQuestion,
+            RouteName = "",
             NeedBorderBottomLine = false,
             RenderHiddenActionText = true,
             HiddenActionText = LearnerRecordDetailsContent.Industry_Placement_Action_Hidden_Text

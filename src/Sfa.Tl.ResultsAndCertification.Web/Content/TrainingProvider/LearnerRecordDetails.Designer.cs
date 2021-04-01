@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date of birth: {0}.
+        /// </summary>
+        public static string DateofBirth_Text {
+            get {
+                return ResourceManager.GetString("DateofBirth_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Achieved minimum standard (data from Learning Records Service - LRS).
         /// </summary>
         public static string English_And_Maths_Achieved_Lrs_Text {
@@ -115,11 +124,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s Industry placement completion.
+        ///   Looks up a localized string similar to Learner’s industry placement completion.
         /// </summary>
         public static string Learners_Industry_Placement_Completion_Text {
             get {
                 return ResourceManager.GetString("Learners_Industry_Placement_Completion_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name: {0}.
+        /// </summary>
+        public static string Name_Text {
+            get {
+                return ResourceManager.GetString("Name_Text", resourceCulture);
             }
         }
         
@@ -129,6 +147,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Page_Title_Text {
             get {
                 return ResourceManager.GetString("Page_Title_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider (UKPRN): {0}.
+        /// </summary>
+        public static string Provider_Text {
+            get {
+                return ResourceManager.GetString("Provider_Text", resourceCulture);
             }
         }
         
@@ -151,15 +178,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date of birth:.
-        /// </summary>
-        public static string Title_DateofBirth_Text {
-            get {
-                return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string Title_EnglishAndMaths_Status_Text {
@@ -178,38 +196,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name:.
+        ///   Looks up a localized string similar to T Level core: {0}.
         /// </summary>
-        public static string Title_Name_Text {
+        public static string TLevel_Core_Text {
             get {
-                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
+                return ResourceManager.GetString("TLevel_Core_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provider (UKPRN):.
+        ///   Looks up a localized string similar to ULN: {0}.
         /// </summary>
-        public static string Title_Provider_Text {
+        public static string Uln_Text {
             get {
-                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to T Level core:.
-        /// </summary>
-        public static string Title_TLevel_Core_Text {
-            get {
-                return ResourceManager.GetString("Title_TLevel_Core_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ULN:.
-        /// </summary>
-        public static string Title_Uln_Text {
-            get {
-                return ResourceManager.GetString("Title_Uln_Text", resourceCulture);
+                return ResourceManager.GetString("Uln_Text", resourceCulture);
             }
         }
         

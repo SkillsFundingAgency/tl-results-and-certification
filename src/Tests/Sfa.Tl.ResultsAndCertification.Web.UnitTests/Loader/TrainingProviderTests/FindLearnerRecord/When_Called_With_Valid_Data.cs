@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
         {
             expectedApiResult = new Models.Contracts.TrainingProvider.FindLearnerRecord
             {
+                ProfileId = 1,
                 Uln = 123456789,
                 Name = "Test user",
                 DateofBirth = DateTime.UtcNow.AddYears(-20),
@@ -31,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
         public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().NotBeNull();
+            ActualResult.ProfileId.Should().Be(expectedApiResult.ProfileId);
             ActualResult.Uln.Should().Be(expectedApiResult.Uln);
             ActualResult.Name.Should().Be(expectedApiResult.Name);
             ActualResult.DateofBirth.Should().Be(expectedApiResult.DateofBirth);

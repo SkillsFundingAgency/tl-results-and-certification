@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DateofBirth_Text" xml:space="preserve">
+    <value>Date of birth: {0}</value>
+  </data>
   <data name="English_And_Maths_Achieved_Lrs_Text" xml:space="preserve">
     <value>Achieved minimum standard (data from Learning Records Service - LRS)</value>
   </data>
@@ -133,13 +136,19 @@
     <value>Learner’s English and maths achievement</value>
   </data>
   <data name="Learners_Industry_Placement_Completion_Text" xml:space="preserve">
-    <value>Learner’s Industry placement completion</value>
+    <value>Learner’s industry placement completion</value>
   </data>
   <data name="Learner_TLevel_Record_Heading_Text" xml:space="preserve">
     <value>Learner T Level record</value>
   </data>
+  <data name="Name_Text" xml:space="preserve">
+    <value>Name: {0}</value>
+  </data>
   <data name="Page_Title_Text" xml:space="preserve">
     <value>Learner T Level record page</value>
+  </data>
+  <data name="Provider_Text" xml:space="preserve">
+    <value>Provider (UKPRN): {0}</value>
   </data>
   <data name="Query_Action_Link_Text" xml:space="preserve">
     <value>Query</value>
@@ -147,26 +156,17 @@
   <data name="Search_Again_Link_Text" xml:space="preserve">
     <value>Search again</value>
   </data>
-  <data name="Title_DateofBirth_Text" xml:space="preserve">
-    <value>Date of birth:</value>
-  </data>
   <data name="Title_EnglishAndMaths_Status_Text" xml:space="preserve">
     <value>Status</value>
   </data>
   <data name="Title_IP_Status_Text" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="Title_Name_Text" xml:space="preserve">
-    <value>Name:</value>
+  <data name="TLevel_Core_Text" xml:space="preserve">
+    <value>T Level core: {0}</value>
   </data>
-  <data name="Title_Provider_Text" xml:space="preserve">
-    <value>Provider (UKPRN):</value>
-  </data>
-  <data name="Title_TLevel_Core_Text" xml:space="preserve">
-    <value>T Level core:</value>
-  </data>
-  <data name="Title_Uln_Text" xml:space="preserve">
-    <value>ULN:</value>
+  <data name="Uln_Text" xml:space="preserve">
+    <value>ULN: {0}</value>
   </data>
   <data name="Update_Action_Link_Text" xml:space="preserve">
     <value>Update</value>
