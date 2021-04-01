@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     public interface ITrainingProviderLoader
     {
         Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln);
-        Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId);
+        Task<LearnerRecordDetailsViewModel> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId);
         Task<AddLearnerRecordResponse> AddLearnerRecordAsync(long aoUkprn, AddLearnerRecordViewModel viewModel);
     }
 }
