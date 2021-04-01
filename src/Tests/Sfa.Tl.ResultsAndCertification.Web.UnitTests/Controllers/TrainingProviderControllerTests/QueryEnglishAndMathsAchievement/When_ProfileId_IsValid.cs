@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.Name.Should().Be(mockresult.Name);
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.SearchLearnerRecord);
+            model.BackLink.RouteName.Should().Be(RouteConstants.LearnerRecordDetails);
             model.BackLink.RouteAttributes.Count.Should().Be(1);
             model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValue);
             routeValue.Should().Be(ProfileId.ToString());
