@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
             _mapper = mapper;
-        }
+        }       
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
         {
@@ -39,6 +39,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                     .FirstOrDefaultAsync();
 
             return _mapper.Map<FindLearnerRecord>(latestPathway);
+        }
+
+        public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId)
+        {
+            var latestPathway = await _tqRegistrationPathwayRepository
+                                    .GetManyAsync(x => x.TqRegistrationProfile.Id == profileId &&
+                                        x.TqProvider.TlProvider.UkPrn == providerUkprn,
+                                        navigationPropertyPath: new Expression<Func<TqRegistrationPathway, object>>[]
+                                        {
+                                            n => n.TqRegistrationProfile,
+                                            n => n.TqProvider.TlProvider,
+                                            n => n.TqProvider.TqAwardingOrganisation.TlPathway,
+                                            n => n.IndustryPlacements
+                                        })
+                                    .Include(x => x.TqRegistrationProfile.QualificationAchieved).ThenInclude(x => x.Qualification)
+                                    .OrderByDescending(o => o.CreatedOn)
+                                    .FirstOrDefaultAsync();
+
+            return _mapper.Map<LearnerRecordDetails>(latestPathway);
         }
 
         public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request)
