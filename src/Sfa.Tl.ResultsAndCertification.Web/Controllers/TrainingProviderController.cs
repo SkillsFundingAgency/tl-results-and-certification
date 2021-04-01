@@ -337,6 +337,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [Route("query-english-and-maths-achievement", Name = RouteConstants.QueryEnglishAndMathsAchievement)]
+        public IActionResult QueryEnglishAndMathsAchievement()
+        {
+            var viewModel = new QueryEnglishAndMathsViewModel();
+            return View(viewModel);
+        }
+
         # endregion
 
         private async Task SyncCacheUln(EnterUlnViewModel model, FindLearnerRecord learnerRecord = null)
