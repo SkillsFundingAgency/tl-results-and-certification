@@ -291,8 +291,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _cacheService.SetAsync(CacheKey, model);
                 return RedirectToRoute(learnerRecord == null || learnerRecord.IsLearnerRegistered == false ? RouteConstants.SearchLearnerRecordNotFound : RouteConstants.SearchLearnerRecordNotAdded);
             }
-
-            return View(model);
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = learnerRecord.ProfileId });
         }
 
         [HttpGet]
@@ -329,9 +328,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync(User.GetUkPrn(), profileId);
 
-            if (viewModel == null || !viewModel.IsLearnerRecordAdded)
+            if (viewModel == null || !viewModel.IsLearnerRegistered || !viewModel.IsLearnerRecordAdded)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner record not added to view. Method: LearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
