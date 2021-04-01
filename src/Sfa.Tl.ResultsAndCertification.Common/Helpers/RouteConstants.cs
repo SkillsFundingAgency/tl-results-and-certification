@@ -229,6 +229,7 @@
         public const string SearchLearnerRecordNotAdded = "SearchLearnerRecordNotAdded";
         public const string SearchLearnerRecordNotFound = "SearchLearnerRecordNotFound";
         public const string LearnerRecordDetails = "LearnerRecordDetails";
+        public const string QueryEnglishAndMathsAchievement = "QueryEnglishAndMathsAchievement";
 
         //CheckAndSubmit
 
