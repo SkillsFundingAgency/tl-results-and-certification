@@ -9,6 +9,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
     {
         public TrainingProviderMapper()
         {
+            CreateMap<LearnerRecordDetails, LearnerRecordDetailsViewModel>();
+
             CreateMap<AddLearnerRecordViewModel, AddLearnerRecordRequest>()
                .ForMember(d => d.Ukprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["Ukprn"]))
                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln.EnterUln))

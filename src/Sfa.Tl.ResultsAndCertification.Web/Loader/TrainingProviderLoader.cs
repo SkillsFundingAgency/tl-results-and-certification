@@ -23,9 +23,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.FindLearnerRecordAsync(providerUkprn, uln);
         }
 
-        public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId)
+        public async Task<LearnerRecordDetailsViewModel> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId)
         {
-            return await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId);
+            var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId);
+            return _mapper.Map<LearnerRecordDetailsViewModel>(response);
         }
 
         public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(long ukprn, AddLearnerRecordViewModel viewModel)
