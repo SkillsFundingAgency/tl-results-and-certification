@@ -300,7 +300,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> SearchLearnerRecordNotFoundAsync()
         {
             var cacheModel = await _cacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey);
-            if (cacheModel == null || (cacheModel != null && cacheModel.IsLearnerRegistered))
+            if (cacheModel == null || cacheModel.IsLearnerRegistered)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchLearnerRecordViewModel from redis cache or IsLearnerRegistered is true in search-learner-record-ULN-not-registered page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -339,10 +339,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("query-english-and-maths-achievement", Name = RouteConstants.QueryEnglishAndMathsAchievement)]
-        public IActionResult QueryEnglishAndMathsAchievement()
+        [Route("query-english-and-maths-achievement/{profileId}", Name = RouteConstants.QueryEnglishAndMathsAchievement)]
+        public async Task<IActionResult> QueryEnglishAndMathsAchievement(int profileId)
         {
-            var viewModel = new QueryEnglishAndMathsViewModel();
+            var learnerDetails = await _trainingProviderLoader.GetLearnerRecordDetailsAsync(User.GetUkPrn(), profileId);
+            if (learnerDetails == null || !learnerDetails.HasLrsEnglishAndMaths)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No learner details are found or no LRS data found. Method: GetLearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            
+            var viewModel = new QueryEnglishAndMathsViewModel { ProfileId = learnerDetails.ProfileId, Name = learnerDetails.Name };
             return View(viewModel);
         }
 

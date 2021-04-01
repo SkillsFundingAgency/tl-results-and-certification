@@ -107,8 +107,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 
         private string GetEnglishAndMathsActionText => HasLrsEnglishAndMaths ? LearnerRecordDetailsContent.Query_Action_Link_Text : string.Empty;
 
-        private string GetEnglishAndMathsRouteName => HasLrsEnglishAndMaths ? string.Empty : string.Empty;
-        private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => HasLrsEnglishAndMaths ? null : new Dictionary<string, string>();
+        private string GetEnglishAndMathsRouteName => HasLrsEnglishAndMaths ? RouteConstants.QueryEnglishAndMathsAchievement : string.Empty;
+        private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => HasLrsEnglishAndMaths ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } : new Dictionary<string, string>();
 
         private string GetIndustryPlacementDisplayText
         {
