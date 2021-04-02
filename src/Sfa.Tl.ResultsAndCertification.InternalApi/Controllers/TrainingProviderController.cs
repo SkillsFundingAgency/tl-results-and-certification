@@ -37,5 +37,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _trainingProviderService.AddLearnerRecordAsync(request);
         }
+
+        [HttpPut]
+        [Route("UpdateLearnerRecord")]
+        public async Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model)
+        {
+            return await _trainingProviderService.UpdateLearnerRecordAsync(model);
+        }
     }
 }

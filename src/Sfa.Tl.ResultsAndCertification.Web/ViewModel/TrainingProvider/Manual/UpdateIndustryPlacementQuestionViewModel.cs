@@ -1,5 +1,4 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System.Collections.Generic;
 
@@ -9,6 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
     {        
         public int ProfileId { get; set; }
         public int RegistrationPathwayId { get; set; }
+        public int IndustryPlacementId { get; set; }
         public bool IsLearnerRecordAdded { get; set; }
 
         public override BackLinkModel BackLink => new BackLinkModel

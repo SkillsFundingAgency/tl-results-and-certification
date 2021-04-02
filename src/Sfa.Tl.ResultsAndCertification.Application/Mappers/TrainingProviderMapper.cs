@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
@@ -37,6 +38,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.IsEnglishAndMathsAchieved, opts => opts.MapFrom(s => s.TqRegistrationProfile.IsEnglishAndMathsAchieved))                
                 .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.TqRegistrationProfile.IsRcFeed == false && s.TqRegistrationProfile.QualificationAchieved.Any()))
                 .ForMember(d => d.HasSendQualification, opts => opts.MapFrom(s => s.TqRegistrationProfile.QualificationAchieved.Any(q => q.Qualification != null && q.Qualification.IsSendQualification)));
+
+            CreateMap<UpdateLearnerRecordRequest, IndustryPlacement>()
+                .ForMember(d => d.Status, opts => opts.MapFrom(s => s.IndustryPlacementStatus))
+                .ForMember(d => d.ModifiedBy, opts => opts.MapFrom(s => s.PerformedBy))
+                .ForMember(d => d.ModifiedOn, opts => opts.MapFrom<DateTimeResolver<UpdateLearnerRecordRequest, IndustryPlacement>>());
         }
     }
 }

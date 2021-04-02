@@ -1,4 +1,4 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
+﻿namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
     public class UpdateLearnerRecordResponse
     {

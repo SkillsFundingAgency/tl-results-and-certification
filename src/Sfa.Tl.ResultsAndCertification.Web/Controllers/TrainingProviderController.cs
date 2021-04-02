@@ -379,7 +379,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (!response.IsModified)
                 return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { viewModel.ProfileId });
-                        
+
+            if (!response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
             return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { viewModel.ProfileId });
         }
 

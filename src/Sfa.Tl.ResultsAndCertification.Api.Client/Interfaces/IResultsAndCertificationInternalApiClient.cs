@@ -62,6 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<FindLearnerRecord> FindLearnerRecordAsync(long aoUkprn, long uln);
         Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null);
         Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request);
+        Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model);
 
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);

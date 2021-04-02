@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(long providerUkprn, AddLearnerRecordViewModel viewModel)
         {
-            var learnerRecordModel = _mapper.Map<AddLearnerRecordRequest>(viewModel, opt => opt.Items["Ukprn"] = providerUkprn);
+            var learnerRecordModel = _mapper.Map<AddLearnerRecordRequest>(viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.AddLearnerRecordAsync(learnerRecordModel);
         }
 
@@ -45,7 +45,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             {
                 return new UpdateLearnerRecordResponse { IsModified = false };
             }
-            return new UpdateLearnerRecordResponse { IsModified = true, IsSuccess = true };
+
+            var request = _mapper.Map<UpdateLearnerRecordRequest>(viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);           
+            var isSuccess = await _internalApiClient.UpdateLearnerRecordAsync(request);
+            return new UpdateLearnerRecordResponse { ProfileId = response.ProfileId, Uln = response.Uln, Name = response.Name, IsModified = true, IsSuccess = isSuccess };
         }
     }
 }
