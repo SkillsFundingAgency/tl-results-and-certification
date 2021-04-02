@@ -5,6 +5,10 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
 using Xunit;
+using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
+using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.LearnerRecordDetailsGet
 {
@@ -17,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             mockresult = new LearnerRecordDetailsViewModel
             {
                 ProfileId = 10,
+                RegistrationPathwayId = 15,
                 Uln = 1235469874,
                 Name = "Test user",
                 DateofBirth = DateTime.UtcNow.AddYears(-20),
@@ -60,6 +65,52 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.IsSendLearner.Should().Be(mockresult.IsSendLearner);
             model.IndustryPlacementId.Should().Be(mockresult.IndustryPlacementId);
             model.IndustryPlacementStatus.Should().Be(mockresult.IndustryPlacementStatus);
+
+            // Summary EnglishAndMathsStatus           
+            model.SummaryEnglishAndMathsStatus.Should().NotBeNull();
+            model.SummaryEnglishAndMathsStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_EnglishAndMaths_Status_Text);
+            model.SummaryEnglishAndMathsStatus.Value.Should().Be(GetMathsAndEnglishText);
+            model.SummaryEnglishAndMathsStatus.NeedBorderBottomLine.Should().BeFalse();
+            model.SummaryEnglishAndMathsStatus.RenderActionColumn.Should().BeTrue();
+            model.SummaryEnglishAndMathsStatus.RenderHiddenActionText.Should().BeTrue();
+            model.SummaryEnglishAndMathsStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.English_And_Maths_Action_Hidden_Text);
+            model.SummaryEnglishAndMathsStatus.ActionText.Should().Be(GetEnglishAndMathsActionText);
+            model.SummaryEnglishAndMathsStatus.RouteName.Should().Be(GetEnglishAndMathsRouteName);
+            model.SummaryEnglishAndMathsStatus.RouteAttributes.Should().BeEquivalentTo(GetEnglishAndMathsRouteAttributes);
+
+            // Summary WhatsLrsText
+            model.SummaryWhatsLrsText.Should().NotBeNull();
+            model.SummaryWhatsLrsText.Title.Should().BeEmpty();
+            model.SummaryWhatsLrsText.Value.Should().Be(LearnerRecordDetailsContent.Whats_Lrs_Text);
+            model.SummaryWhatsLrsText.NeedBorderBottomLine.Should().BeFalse();
+            model.SummaryWhatsLrsText.RenderActionColumn.Should().BeFalse();
+            model.SummaryWhatsLrsText.ActionText.Should().BeNullOrEmpty();
+            model.SummaryWhatsLrsText.RouteName.Should().BeNullOrEmpty();
+            model.SummaryWhatsLrsText.RouteAttributes.Should().BeNull();
+
+            // Summary IndustryPlacementStatus
+            model.SummaryIndustryPlacementStatus.Should().NotBeNull();
+            model.SummaryIndustryPlacementStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_IP_Status_Text);
+            model.SummaryIndustryPlacementStatus.Value.Should().Be(IndustryPlacementStatusContent.Completed_Display_Text);
+            model.SummaryIndustryPlacementStatus.NeedBorderBottomLine.Should().BeFalse();
+            model.SummaryIndustryPlacementStatus.RenderActionColumn.Should().BeTrue();
+            model.SummaryIndustryPlacementStatus.RenderHiddenActionText.Should().BeTrue();
+            model.SummaryIndustryPlacementStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Industry_Placement_Action_Hidden_Text);
+            model.SummaryIndustryPlacementStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Update_Action_Link_Text);
+            model.SummaryIndustryPlacementStatus.RouteName.Should().Be(RouteConstants.UpdateIndustryPlacementQuestion);
+            model.SummaryIndustryPlacementStatus.RouteAttributes.Should().BeEquivalentTo(new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() }, { Constants.PathwayId, mockresult.RegistrationPathwayId.ToString() } });
         }
+
+        private string GetMathsAndEnglishText
+        {
+            get
+            {
+                return mockresult.HasLrsEnglishAndMaths ? mockresult.IsEnglishAndMathsAchieved ? LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text : LearnerRecordDetailsContent.English_And_Maths_Not_Achieved_Lrs_Text : null;
+            }
+        }
+
+        private string GetEnglishAndMathsRouteName => mockresult.HasLrsEnglishAndMaths ? RouteConstants.QueryEnglishAndMathsAchievement : string.Empty;
+        private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => mockresult.HasLrsEnglishAndMaths ? new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } } : new Dictionary<string, string>();
+        private string GetEnglishAndMathsActionText => mockresult.HasLrsEnglishAndMaths ? LearnerRecordDetailsContent.Query_Action_Link_Text : string.Empty;
     }
 }
