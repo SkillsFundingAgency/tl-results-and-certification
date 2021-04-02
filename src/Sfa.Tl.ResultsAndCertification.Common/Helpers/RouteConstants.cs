@@ -232,6 +232,7 @@
         public const string QueryEnglishAndMathsAchievement = "QueryEnglishAndMathsAchievement";
         public const string UpdateIndustryPlacementQuestion = "UpdateIndustryPlacementQuestion";
         public const string SubmitUpdateIndustryPlacementQuestion = "SubmitUpdateIndustryPlacementQuestion";
+        public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";        
 
         //CheckAndSubmit
 

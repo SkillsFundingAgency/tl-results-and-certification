@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_NoData_Found : TestSetup
     {
-        private UpdateLearnerRecordResponse _updateLearnerRecordResponse;
+        private UpdateLearnerRecordResponseViewModel _updateLearnerRecordResponse;
         public override void Given()
         {
             _updateLearnerRecordResponse = null;

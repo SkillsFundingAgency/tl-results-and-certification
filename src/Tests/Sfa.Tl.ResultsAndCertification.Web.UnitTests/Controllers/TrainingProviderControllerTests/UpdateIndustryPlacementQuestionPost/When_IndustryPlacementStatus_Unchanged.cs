@@ -11,10 +11,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_IndustryPlacementStatus_Unchanged : TestSetup
     {
-        private UpdateLearnerRecordResponse _updateLearnerRecordResponse;
+        private UpdateLearnerRecordResponseViewModel _updateLearnerRecordResponse;
         public override void Given()
         {
-            _updateLearnerRecordResponse = new UpdateLearnerRecordResponse
+            _updateLearnerRecordResponse = new UpdateLearnerRecordResponseViewModel
             {
                 ProfileId = 1,
                 IsModified = false

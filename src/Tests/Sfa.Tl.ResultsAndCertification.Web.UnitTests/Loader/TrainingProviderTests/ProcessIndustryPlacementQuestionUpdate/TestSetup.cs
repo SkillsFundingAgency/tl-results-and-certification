@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
         protected long ProviderUkprn;
         protected int ProfileId;
         protected UpdateIndustryPlacementQuestionViewModel ViewModel;
-        protected UpdateLearnerRecordResponse ActualResult { get; set; }
+        protected UpdateLearnerRecordResponseViewModel ActualResult { get; set; }
 
         public async override Task When()
         {

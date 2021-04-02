@@ -383,7 +383,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!response.IsSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { viewModel.ProfileId });
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.IndustryPlacementUpdatedConfirmation), response, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.IndustryPlacementUpdatedConfirmation);
+        }
+
+        [HttpGet]
+        [Route("industry-placement-updated-confirmation", Name = RouteConstants.IndustryPlacementUpdatedConfirmation)]
+        public async Task<IActionResult> IndustryPlacementUpdatedConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<UpdateLearnerRecordResponseViewModel>(string.Concat(CacheKey, Constants.IndustryPlacementUpdatedConfirmation));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read UpdateLearnerRecordResponseViewModel from redis cache in industry placement updated confirmation page. Method: IndustryPlacementUpdatedConfirmationAsync(), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
         }
 
         # endregion

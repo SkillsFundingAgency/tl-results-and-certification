@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AddLearnerRecordAsync(learnerRecordModel);
         }
 
-        public async Task<UpdateLearnerRecordResponse> ProcessIndustryPlacementQuestionUpdateAsync(long providerUkprn, UpdateIndustryPlacementQuestionViewModel viewModel)
+        public async Task<UpdateLearnerRecordResponseViewModel> ProcessIndustryPlacementQuestionUpdateAsync(long providerUkprn, UpdateIndustryPlacementQuestionViewModel viewModel)
         {
             var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, viewModel.ProfileId, viewModel.RegistrationPathwayId);
 
@@ -43,12 +43,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             if (response.IndustryPlacementStatus == viewModel.IndustryPlacementStatus)
             {
-                return new UpdateLearnerRecordResponse { IsModified = false };
+                return new UpdateLearnerRecordResponseViewModel { IsModified = false };
             }
 
             var request = _mapper.Map<UpdateLearnerRecordRequest>(viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);           
             var isSuccess = await _internalApiClient.UpdateLearnerRecordAsync(request);
-            return new UpdateLearnerRecordResponse { ProfileId = response.ProfileId, Uln = response.Uln, Name = response.Name, IsModified = true, IsSuccess = isSuccess };
+            return new UpdateLearnerRecordResponseViewModel { ProfileId = response.ProfileId, Uln = response.Uln, Name = response.Name, IsModified = true, IsSuccess = isSuccess };
         }
     }
 }

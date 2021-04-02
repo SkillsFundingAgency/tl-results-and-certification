@@ -1,6 +1,6 @@
 ﻿namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
-    public class UpdateLearnerRecordResponse
+    public class UpdateLearnerRecordResponseViewModel
     {
         public int ProfileId { get; set; }
         public long Uln { get; set; }
