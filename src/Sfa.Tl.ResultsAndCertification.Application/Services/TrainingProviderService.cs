@@ -41,22 +41,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<FindLearnerRecord>(latestPathway);
         }
 
-        public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId)
+        public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)
         {
-            var latestPathway = await _tqRegistrationPathwayRepository
-                                    .GetManyAsync(x => x.TqRegistrationProfile.Id == profileId &&
-                                        x.TqProvider.TlProvider.UkPrn == providerUkprn,
-                                        navigationPropertyPath: new Expression<Func<TqRegistrationPathway, object>>[]
-                                        {
-                                            n => n.TqRegistrationProfile,
-                                            n => n.TqProvider.TlProvider,
-                                            n => n.TqProvider.TqAwardingOrganisation.TlPathway,
-                                            n => n.IndustryPlacements
-                                        })
-                                    .Include(x => x.TqRegistrationProfile.QualificationAchieved).ThenInclude(x => x.Qualification)
-                                    .OrderByDescending(o => o.CreatedOn)
-                                    .FirstOrDefaultAsync();
+            var latestPathwayQuerable = _tqRegistrationPathwayRepository
+                                        .GetManyAsync(x => x.TqRegistrationProfile.Id == profileId &&
+                                            x.TqProvider.TlProvider.UkPrn == providerUkprn,
+                                            navigationPropertyPath: new Expression<Func<TqRegistrationPathway, object>>[]
+                                            {
+                                                n => n.TqRegistrationProfile,
+                                                n => n.TqProvider.TlProvider,
+                                                n => n.TqProvider.TqAwardingOrganisation.TlPathway,
+                                                n => n.IndustryPlacements
+                                            })
+                                        .Include(x => x.TqRegistrationProfile.QualificationAchieved).ThenInclude(x => x.Qualification)
+                                        .OrderByDescending(o => o.CreatedOn);
 
+            var latestPathway = pathwayId.HasValue ? await latestPathwayQuerable.FirstOrDefaultAsync(p => p.Id == pathwayId) : await latestPathwayQuerable.FirstOrDefaultAsync();
             return _mapper.Map<LearnerRecordDetails>(latestPathway);
         }
 

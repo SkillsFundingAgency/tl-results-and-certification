@@ -12,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
         {
             CreateMap<TqRegistrationPathway, LearnerRecordDetails>()
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.TqRegistrationProfile.Id))
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.TqRegistrationProfile.UniqueLearnerNumber))
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => $"{s.TqRegistrationProfile.Firstname} {s.TqRegistrationProfile.Lastname}"))
                 .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.TqRegistrationProfile.DateofBirth))

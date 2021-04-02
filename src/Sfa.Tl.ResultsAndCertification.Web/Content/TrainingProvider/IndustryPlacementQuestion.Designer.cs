@@ -170,6 +170,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string Update_Button_Text {
+            get {
+                return ResourceManager.GetString("Update_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update learner T Level record.
+        /// </summary>
+        public static string Update_Learner_Caption {
+            get {
+                return ResourceManager.GetString("Update_Learner_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update learner T Level record - Industry placement status page.
+        /// </summary>
+        public static string Update_Page_Title {
+            get {
+                return ResourceManager.GetString("Update_Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select if the learner has completed their industry placement.
         /// </summary>
         public static string Validation_Select_Industry_Placement_Required_Message {

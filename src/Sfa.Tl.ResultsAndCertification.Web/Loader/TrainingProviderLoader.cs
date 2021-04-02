@@ -23,16 +23,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.FindLearnerRecordAsync(providerUkprn, uln);
         }
 
-        public async Task<LearnerRecordDetailsViewModel> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId)
+        public async Task<T> GetLearnerRecordDetailsAsync<T>(long providerUkprn, int profileId, int? pathwayId = null)
         {
-            var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId);
-            return _mapper.Map<LearnerRecordDetailsViewModel>(response);
+            var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
+            return _mapper.Map<T>(response);
         }
 
-        public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(long ukprn, AddLearnerRecordViewModel viewModel)
+        public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(long providerUkprn, AddLearnerRecordViewModel viewModel)
         {
-            var learnerRecordModel = _mapper.Map<AddLearnerRecordRequest>(viewModel, opt => opt.Items["Ukprn"] = ukprn);
+            var learnerRecordModel = _mapper.Map<AddLearnerRecordRequest>(viewModel, opt => opt.Items["Ukprn"] = providerUkprn);
             return await _internalApiClient.AddLearnerRecordAsync(learnerRecordModel);
+        }
+
+        public async Task<UpdateLearnerRecordResponse> ProcessIndustryPlacementQuestionChangeAsync(long providerUkprn, UpdateIndustryPlacementQuestionViewModel viewModel)
+        {
+            var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, viewModel.ProfileId, viewModel.RegistrationPathwayId);
+
+            if (response == null || response.IndustryPlacementStatus == null) return null;
+
+            if (response.IndustryPlacementStatus == viewModel.IndustryPlacementStatus)
+            {
+                return new UpdateLearnerRecordResponse { IsModified = false };
+            }
+            return new UpdateLearnerRecordResponse { IsModified = true, IsSuccess = true };
         }
     }
 }

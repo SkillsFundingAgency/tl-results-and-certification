@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
     public class LearnerRecordDetailsViewModel
     {
         public int ProfileId { get; set; }
+        public int RegistrationPathwayId { get; set; }
         public long Uln { get; set; }
         public string Name { get; set; }
         public DateTime DateofBirth { get; set; }
@@ -55,7 +56,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Title = LearnerRecordDetailsContent.Title_IP_Status_Text,
             Value = GetIndustryPlacementDisplayText,
             ActionText = LearnerRecordDetailsContent.Update_Action_Link_Text,
-            RouteName = "",
+            RouteName = RouteConstants.UpdateIndustryPlacementQuestion,
+            RouteAttributes = GetIPLinkRouteAttributes,
             NeedBorderBottomLine = false,
             RenderHiddenActionText = true,
             HiddenActionText = LearnerRecordDetailsContent.Industry_Placement_Action_Hidden_Text
@@ -69,6 +71,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 
         private string GetEnglishAndMathsRouteName => HasLrsEnglishAndMaths ? RouteConstants.QueryEnglishAndMathsAchievement : string.Empty;
         private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => HasLrsEnglishAndMaths ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } : new Dictionary<string, string>();
+
+        private Dictionary<string, string> GetIPLinkRouteAttributes => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.PathwayId, RegistrationPathwayId.ToString() } };
 
         private string GetIndustryPlacementDisplayText
         {

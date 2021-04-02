@@ -326,7 +326,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("learner-record-page/{profileId}", Name = RouteConstants.LearnerRecordDetails)]
         public async Task<IActionResult> LearnerRecordDetailsAsync(int profileId)
         {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync(User.GetUkPrn(), profileId);
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(User.GetUkPrn(), profileId);
 
             if (viewModel == null || !viewModel.IsLearnerRegistered || !viewModel.IsLearnerRecordAdded)
             {
@@ -341,7 +341,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("query-english-and-maths-achievement/{profileId}", Name = RouteConstants.QueryEnglishAndMathsAchievement)]
         public async Task<IActionResult> QueryEnglishAndMathsAchievement(int profileId)
         {
-            var learnerDetails = await _trainingProviderLoader.GetLearnerRecordDetailsAsync(User.GetUkPrn(), profileId);
+            var learnerDetails = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(User.GetUkPrn(), profileId);
             if (learnerDetails == null || !learnerDetails.HasLrsEnglishAndMaths)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner details are found or no LRS data found. Method: GetLearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
@@ -350,6 +350,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             
             var viewModel = new QueryEnglishAndMathsViewModel { ProfileId = learnerDetails.ProfileId, Name = learnerDetails.Name };
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("update-learner-record-industry-placement-status/{profileId}/{pathwayId}", Name = RouteConstants.UpdateIndustryPlacementQuestion)]
+        public async Task<IActionResult> UpdateIndustryPlacementQuestionAsync(int profileId, int pathwayId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<UpdateIndustryPlacementQuestionViewModel>(User.GetUkPrn(), profileId, pathwayId);
+            if (viewModel == null || !viewModel.IsLearnerRecordAdded || viewModel.IndustryPlacementStatus == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner record not added or industry placement status is null. Method: UpdateIndustryPlacementAsync({User.GetUkPrn()}, {profileId}, {pathwayId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }            
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("update-learner-record-industry-placement-status", Name = RouteConstants.SubmitUpdateIndustryPlacementQuestion)]
+        public async Task<IActionResult> UpdateIndustryPlacementQuestionAsync(UpdateIndustryPlacementQuestionViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            var response = await _trainingProviderLoader.ProcessIndustryPlacementQuestionChangeAsync(User.GetUkPrn(), viewModel);
+
+            if (response == null)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            if (!response.IsModified)
+                return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { viewModel.ProfileId });
+                        
+            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { viewModel.ProfileId });
         }
 
         # endregion

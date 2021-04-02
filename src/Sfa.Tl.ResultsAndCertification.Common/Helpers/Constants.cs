@@ -84,6 +84,7 @@
         public const string WithdrawBackLinkOptionId = "withdrawBackLinkOptionId";
         public const string AssessmentId = "assessmentId";
         public const string ResultId = "resultId";
+        public const string PathwayId = "pathwayId";
 
         // Assessments
         public const int AssessmentEndInYears = 4;

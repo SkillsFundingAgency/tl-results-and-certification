@@ -230,6 +230,8 @@
         public const string SearchLearnerRecordNotFound = "SearchLearnerRecordNotFound";
         public const string LearnerRecordDetails = "LearnerRecordDetails";
         public const string QueryEnglishAndMathsAchievement = "QueryEnglishAndMathsAchievement";
+        public const string UpdateIndustryPlacementQuestion = "UpdateIndustryPlacementQuestion";
+        public const string SubmitUpdateIndustryPlacementQuestion = "SubmitUpdateIndustryPlacementQuestion";
 
         //CheckAndSubmit
 
