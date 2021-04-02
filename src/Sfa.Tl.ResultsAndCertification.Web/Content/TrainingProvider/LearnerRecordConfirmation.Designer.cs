@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN.
+        ///   Looks up a localized string similar to ULN: {0}.
         /// </summary>
         public static string Uln_Text {
             get {

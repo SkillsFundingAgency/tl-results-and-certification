@@ -130,6 +130,6 @@
     <value>Learner record added confirmation page</value>
   </data>
   <data name="Uln_Text" xml:space="preserve">
-    <value>ULN</value>
+    <value>ULN: {0}</value>
   </data>
 </root>
