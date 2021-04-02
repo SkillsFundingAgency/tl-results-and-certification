@@ -339,12 +339,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("query-english-and-maths-achievement/{profileId}", Name = RouteConstants.QueryEnglishAndMathsAchievement)]
-        public async Task<IActionResult> QueryEnglishAndMathsAchievement(int profileId)
+        public async Task<IActionResult> QueryEnglishAndMathsAchievementAsync(int profileId)
         {
             var learnerDetails = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(User.GetUkPrn(), profileId);
             if (learnerDetails == null || !learnerDetails.HasLrsEnglishAndMaths)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No learner details are found or no LRS data found. Method: GetLearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No learner details are found or no LRS data available. Method: GetLearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             

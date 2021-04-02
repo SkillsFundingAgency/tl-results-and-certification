@@ -1,7 +1,10 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using System;
+using System.Linq;
 using Xunit;
+using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTests.GetLearnerRecordDetails
 {
@@ -53,6 +56,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.IsSendLearner.Should().Be(_expectedApiResult.IsSendLearner);
             ActualResult.IndustryPlacementId.Should().Be(_expectedApiResult.IndustryPlacementId);
             ActualResult.IndustryPlacementStatus.Should().Be(_expectedApiResult.IndustryPlacementStatus);
+
+            var englishAndMathsStatus = ActualResult.SummaryEnglishAndMathsStatus;
+            englishAndMathsStatus.Should().NotBeNull();
+            englishAndMathsStatus.Id.Should().Be("englishmathsstatus");
+            englishAndMathsStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_EnglishAndMaths_Status_Text);
+            englishAndMathsStatus.Value.Should().Be(LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text);
+            englishAndMathsStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Query_Action_Link_Text);
+            englishAndMathsStatus.RouteName.Should().Be(RouteConstants.QueryEnglishAndMathsAchievement);
+            englishAndMathsStatus.RouteAttributes.Count().Should().Be(1);
+            englishAndMathsStatus.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileId);
+            profileId.Should().Be(_expectedApiResult.ProfileId.ToString());
+            englishAndMathsStatus.NeedBorderBottomLine.Should().BeFalse();
+            englishAndMathsStatus.RenderHiddenActionText.Should().BeTrue();
+            englishAndMathsStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.English_And_Maths_Action_Hidden_Text);
         }
     }
 }
