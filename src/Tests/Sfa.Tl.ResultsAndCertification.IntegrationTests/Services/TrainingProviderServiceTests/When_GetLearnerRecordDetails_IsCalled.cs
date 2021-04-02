@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System;
@@ -21,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement)> _testCriteriaData;
         private IList<TqRegistrationProfile> _profiles;
+        private LearnerRecordDetails _actualResult;
 
         public override void Given()
         {
@@ -63,16 +65,35 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             return Task.CompletedTask;
         }
 
+        public async Task WhenAsync(long providerUkprn, int profileId, int? pathwayId)
+        {
+            if (_actualResult != null)
+                return;
+
+            _actualResult = await TrainingProviderService.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
+        }
+
         [Theory]
         [MemberData(nameof(Data))]
-        public void Then_Returns_Expected_Results(long uln, Provider provider, bool isTransferedRecord, bool expectedResult)
+        public async Task Then_Returns_Expected_Results(long uln, Provider provider, bool includePathwayId, bool isTransferedRecord, bool expectedResult)
         {
             var profileId = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln)?.Id ?? 0;
-            var actualResult = TrainingProviderService.GetLearnerRecordDetailsAsync((long)provider, profileId).Result;
+            int? pathwayId = null;
+            
+            if(includePathwayId && profileId > 0)
+            {
+                var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
+                var pathway = isTransferedRecord ? profile.TqRegistrationPathways.FirstOrDefault(p => p.Status == RegistrationPathwayStatus.Transferred)
+                : profile.TqRegistrationPathways.FirstOrDefault(p => p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn);
+                
+                pathwayId = pathway.Id;
+            }
+
+            await WhenAsync((long)provider, profileId, pathwayId);
 
             if (expectedResult == false)
             {
-                actualResult.Should().BeNull();
+                _actualResult.Should().BeNull();
                 return;
             }            
 
@@ -98,20 +119,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             var expectedIndustryPlacementId = expectedPathway.IndustryPlacements.FirstOrDefault()?.Id ?? 0;
             var expectedIndustryPlacementStatus = expectedPathway.IndustryPlacements.FirstOrDefault()?.Status ?? null;
 
-            actualResult.Should().NotBeNull();
-            actualResult.ProfileId.Should().Be(expectedProfile.Id);
-            actualResult.Uln.Should().Be(expectedProfile.UniqueLearnerNumber);
-            actualResult.Name.Should().Be($"{expectedProfile.Firstname} {expectedProfile.Lastname}");
-            actualResult.DateofBirth.Should().Be(expectedProfile.DateofBirth);
-            actualResult.ProviderName.Should().Be(expectedProviderName);
-            actualResult.PathwayName.Should().Be(expectedPathwayName);
-            actualResult.IsLearnerRegistered.Should().Be(expectedIsLearnerRegistered);
-            actualResult.IsLearnerRecordAdded.Should().Be(expectedIsLearnerRecordAdded);
-            actualResult.IsEnglishAndMathsAchieved.Should().Be(expectedProfile.IsEnglishAndMathsAchieved ?? false);
-            actualResult.HasLrsEnglishAndMaths.Should().Be(expectedHasLrsEnglishAndMaths);
-            actualResult.IsSendLearner.Should().Be(expectedProfile.IsSendLearner ?? false);
-            actualResult.IndustryPlacementId.Should().Be(expectedIndustryPlacementId);
-            actualResult.IndustryPlacementStatus.Should().Be(expectedIndustryPlacementStatus);
+            _actualResult.Should().NotBeNull();
+            _actualResult.ProfileId.Should().Be(expectedProfile.Id);
+            _actualResult.Uln.Should().Be(expectedProfile.UniqueLearnerNumber);
+            _actualResult.Name.Should().Be($"{expectedProfile.Firstname} {expectedProfile.Lastname}");
+            _actualResult.DateofBirth.Should().Be(expectedProfile.DateofBirth);
+            _actualResult.ProviderName.Should().Be(expectedProviderName);
+            _actualResult.PathwayName.Should().Be(expectedPathwayName);
+            _actualResult.IsLearnerRegistered.Should().Be(expectedIsLearnerRegistered);
+            _actualResult.IsLearnerRecordAdded.Should().Be(expectedIsLearnerRecordAdded);
+            _actualResult.IsEnglishAndMathsAchieved.Should().Be(expectedProfile.IsEnglishAndMathsAchieved ?? false);
+            _actualResult.HasLrsEnglishAndMaths.Should().Be(expectedHasLrsEnglishAndMaths);
+            _actualResult.IsSendLearner.Should().Be(expectedProfile.IsSendLearner ?? false);
+            _actualResult.IndustryPlacementId.Should().Be(expectedIndustryPlacementId);
+            _actualResult.IndustryPlacementStatus.Should().Be(expectedIndustryPlacementStatus);
 
         }
 
@@ -121,14 +142,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             {
                 return new[]
                 {
-                    new object[] { 9999999999, Provider.WalsallCollege, false, false }, // Invalid Uln
+                    new object[] { 9999999999, Provider.WalsallCollege, false, false, false }, // Invalid Uln
 
-                    new object[] { 1111111111, Provider.BarsleyCollege, false, true }, // Active
-                    new object[] { 1111111111, Provider.WalsallCollege, false, false }, // Uln not from WalsallCollege
+                    new object[] { 1111111111, Provider.BarsleyCollege, true, false, true }, // Active
+                    new object[] { 1111111111, Provider.WalsallCollege, false, false, false }, // Uln not from WalsallCollege
 
-                    new object[] { 1111111112, Provider.BarsleyCollege, false, true }, // Withdrawn
-                    new object[] { 1111111113, Provider.BarsleyCollege, true, true }, // Transferred
-                    new object[] { 1111111113, Provider.WalsallCollege, false, true } // Active
+                    new object[] { 1111111112, Provider.BarsleyCollege, true, false, true }, // Withdrawn
+                    new object[] { 1111111113, Provider.BarsleyCollege, false, true, true }, // Transferred
+                    new object[] { 1111111113, Provider.WalsallCollege, true, false, true } // Active
                 };
             }
         }
