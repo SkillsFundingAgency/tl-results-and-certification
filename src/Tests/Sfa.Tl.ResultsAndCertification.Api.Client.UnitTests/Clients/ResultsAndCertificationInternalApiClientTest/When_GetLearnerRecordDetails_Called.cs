@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         // inputs
         private readonly long _providerUkprn = 12345678;
         private readonly int _profileId = 7;
+        private readonly int _pathwayId = 10;
         private readonly long _uln = 987654321;
 
         // results
@@ -58,13 +59,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<LearnerRecordDetails>(_mockApiResponse, string.Format(ApiConstants.GetLearnerRecordDetailsUri, _providerUkprn, _profileId), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<LearnerRecordDetails>(_mockApiResponse, string.Format(ApiConstants.GetLearnerRecordDetailsUri, _providerUkprn, _profileId, _pathwayId), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public async override Task When()
         {
-            _actualResult = await _apiClient.GetLearnerRecordDetailsAsync(_providerUkprn, _profileId);
+            _actualResult = await _apiClient.GetLearnerRecordDetailsAsync(_providerUkprn, _profileId, _pathwayId);
         }
 
         [Fact]
