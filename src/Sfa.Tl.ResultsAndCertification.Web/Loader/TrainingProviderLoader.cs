@@ -35,11 +35,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AddLearnerRecordAsync(learnerRecordModel);
         }
 
-        public async Task<UpdateLearnerRecordResponse> ProcessIndustryPlacementQuestionChangeAsync(long providerUkprn, UpdateIndustryPlacementQuestionViewModel viewModel)
+        public async Task<UpdateLearnerRecordResponse> ProcessIndustryPlacementQuestionUpdateAsync(long providerUkprn, UpdateIndustryPlacementQuestionViewModel viewModel)
         {
             var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, viewModel.ProfileId, viewModel.RegistrationPathwayId);
 
-            if (response == null || response.IndustryPlacementStatus == null) return null;
+            if (response == null || !response.IsLearnerRecordAdded) return null;
 
             if (response.IndustryPlacementStatus == viewModel.IndustryPlacementStatus)
             {

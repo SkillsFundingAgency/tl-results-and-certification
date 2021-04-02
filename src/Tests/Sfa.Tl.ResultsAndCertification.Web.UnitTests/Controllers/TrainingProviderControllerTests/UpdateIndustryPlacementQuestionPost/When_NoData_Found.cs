@@ -23,13 +23,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed
             };
 
-            TrainingProviderLoader.ProcessIndustryPlacementQuestionChangeAsync(ProviderUkprn, UpdateIndustryPlacementQuestionViewModel).Returns(_updateLearnerRecordResponse);
+            TrainingProviderLoader.ProcessIndustryPlacementQuestionUpdateAsync(ProviderUkprn, UpdateIndustryPlacementQuestionViewModel).Returns(_updateLearnerRecordResponse);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            TrainingProviderLoader.Received(1).ProcessIndustryPlacementQuestionChangeAsync(ProviderUkprn, UpdateIndustryPlacementQuestionViewModel);
+            TrainingProviderLoader.Received(1).ProcessIndustryPlacementQuestionUpdateAsync(ProviderUkprn, UpdateIndustryPlacementQuestionViewModel);
         }
 
         [Fact]

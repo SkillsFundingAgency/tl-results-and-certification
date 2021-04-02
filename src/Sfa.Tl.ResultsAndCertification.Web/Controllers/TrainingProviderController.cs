@@ -372,7 +372,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(viewModel);
 
-            var response = await _trainingProviderLoader.ProcessIndustryPlacementQuestionChangeAsync(User.GetUkPrn(), viewModel);
+            var response = await _trainingProviderLoader.ProcessIndustryPlacementQuestionUpdateAsync(User.GetUkPrn(), viewModel);
 
             if (response == null)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
