@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Query English and maths achievement page.
+        ///   Looks up a localized string similar to Query English and maths status page.
         /// </summary>
         public static string Page_Title {
             get {
