@@ -357,9 +357,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> UpdateIndustryPlacementQuestionAsync(int profileId, int pathwayId)
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<UpdateIndustryPlacementQuestionViewModel>(User.GetUkPrn(), profileId, pathwayId);
-            if (viewModel == null || !viewModel.IsLearnerRecordAdded || viewModel.IndustryPlacementStatus == null)
+            if (viewModel == null || !viewModel.IsLearnerRecordAdded)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner record not added or industry placement status is null. Method: UpdateIndustryPlacementAsync({User.GetUkPrn()}, {profileId}, {pathwayId}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner record not added. Method: UpdateIndustryPlacementAsync({User.GetUkPrn()}, {profileId}, {pathwayId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }            
             return View(viewModel);
