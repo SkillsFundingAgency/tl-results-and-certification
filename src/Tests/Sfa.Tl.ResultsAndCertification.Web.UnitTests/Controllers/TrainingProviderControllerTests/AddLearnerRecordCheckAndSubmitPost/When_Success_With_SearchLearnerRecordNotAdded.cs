@@ -10,12 +10,15 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.AddLearnerRecordCheckAndSubmitPost
 {
-    public class When_Success : TestSetup
+    public class When_Success_With_SearchLearnerRecordNotAdded : TestSetup
     {
+        private SearchLearnerRecordViewModel _searchLearnerRecordViewModel;
+
         public override void Given()
         {
+            _searchLearnerRecordViewModel = new SearchLearnerRecordViewModel { SearchUln = "1234567890" };
             LearnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Barnsley College (123456789)", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = false };
-            EnterUlnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
+            EnterUlnViewModel = new EnterUlnViewModel { EnterUln = _searchLearnerRecordViewModel.SearchUln, IsNavigatedFromSearchLearnerRecordNotAdded = true };
             EnglishAndMathsQuestionViewModel = new EnglishAndMathsQuestionViewModel { EnglishAndMathsStatus = EnglishAndMathsStatus.AchievedWithSend };
             IndustryPlacementQuestionViewModel = new IndustryPlacementQuestionViewModel { LearnerName = LearnerRecord.Name, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
 
@@ -34,6 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 Name = LearnerRecord.Name
             };
 
+
+            CacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey).Returns(_searchLearnerRecordViewModel);
             CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey).Returns(AddLearnerRecordViewModel);
             TrainingProviderLoader.AddLearnerRecordAsync(ProviderUkprn, AddLearnerRecordViewModel).Returns(AddLearnerRecordResponse);
         }
@@ -42,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public void Then_Expected_Methods_Called()
         {
             TrainingProviderLoader.Received(1).AddLearnerRecordAsync(ProviderUkprn, AddLearnerRecordViewModel);
-            CacheService.DidNotReceive().RemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
+            CacheService.Received(1).RemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
             CacheService.Received(1).RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
             CacheService.Received(1).SetAsync(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation),
                 Arg.Is<LearnerRecordConfirmationViewModel>
