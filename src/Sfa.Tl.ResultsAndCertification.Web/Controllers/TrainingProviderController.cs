@@ -197,6 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!viewModel.IsCheckAndSubmitPageValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            await _cacheService.SetAsync(CacheKey, viewModel.ResetChangeMode());
             return View(viewModel);
         }
 
@@ -213,6 +214,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (response.IsSuccess)
             {
+                if (cacheModel.Uln.IsNavigatedFromSearchLearnerRecordNotAdded)
+                    await _cacheService.RemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
+
                 await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation), new LearnerRecordConfirmationViewModel { Uln = response.Uln, Name = response.Name }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.LearnerRecordAddedConfirmation);

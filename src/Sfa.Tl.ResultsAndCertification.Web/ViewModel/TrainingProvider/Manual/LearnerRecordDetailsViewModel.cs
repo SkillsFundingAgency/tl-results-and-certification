@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
+using EnglishStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.EnglishAndMathsStatus;
 using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
+using EnglishAndMathsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
@@ -33,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Title = LearnerRecordDetailsContent.Title_EnglishAndMaths_Status_Text,
             Value = GetEnglishAndMathsStatusText,
             ActionText = GetEnglishAndMathsActionText,
-            RouteName = GetEnglishAndMathsRouteName,            
+            RouteName = GetEnglishAndMathsRouteName,
             RouteAttributes = GetEnglishAndMathsRouteAttributes,
             NeedBorderBottomLine = false,
             RenderHiddenActionText = true,
@@ -65,14 +67,50 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 
         private string GetEnglishAndMathsStatusText => HasLrsEnglishAndMaths
             ? (IsEnglishAndMathsAchieved ? LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text : LearnerRecordDetailsContent.English_And_Maths_Not_Achieved_Lrs_Text)
-            : string.Empty;
+            : GetEnglishAndMathsStatusDisplayText;
 
-        private string GetEnglishAndMathsActionText => HasLrsEnglishAndMaths ? LearnerRecordDetailsContent.Query_Action_Link_Text : string.Empty;
+        private string GetEnglishAndMathsActionText => HasLrsEnglishAndMaths ? LearnerRecordDetailsContent.Query_Action_Link_Text : LearnerRecordDetailsContent.Update_Action_Link_Text;
 
         private string GetEnglishAndMathsRouteName => HasLrsEnglishAndMaths ? RouteConstants.QueryEnglishAndMathsAchievement : string.Empty;
         private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => HasLrsEnglishAndMaths ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } : new Dictionary<string, string>();
 
         private Dictionary<string, string> GetIPLinkRouteAttributes => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.PathwayId, RegistrationPathwayId.ToString() } };
+
+        private EnglishStatus? GetEnglishAndMathsStatus
+        {
+            get
+            {
+                if (HasLrsEnglishAndMaths)
+                    return null;
+
+                if (IsEnglishAndMathsAchieved && IsSendLearner)
+                {
+                    return EnglishStatus.AchievedWithSend;
+                }
+                else if (IsEnglishAndMathsAchieved)
+                {
+                    return EnglishStatus.Achieved;
+                }
+                else
+                {
+                    return !IsEnglishAndMathsAchieved ? (EnglishStatus?)EnglishStatus.NotAchieved : null;
+                }
+            }
+        }
+
+        private string GetEnglishAndMathsStatusDisplayText
+        {
+            get
+            {
+                return GetEnglishAndMathsStatus switch
+                {
+                    EnglishStatus.Achieved => EnglishAndMathsStatusContent.Achieved_Display_Text,
+                    EnglishStatus.AchievedWithSend => EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text,
+                    EnglishStatus.NotAchieved => EnglishAndMathsStatusContent.Not_Achieved_Display_Text,
+                    _ => string.Empty,
+                };
+            }
+        }
 
         private string GetIndustryPlacementDisplayText
         {
