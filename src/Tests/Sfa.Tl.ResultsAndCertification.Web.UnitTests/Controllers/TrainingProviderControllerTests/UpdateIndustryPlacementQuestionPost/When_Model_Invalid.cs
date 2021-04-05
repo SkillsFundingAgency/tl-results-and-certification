@@ -4,7 +4,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 using IndustryPlacementQuestionContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementQuestion;
 
-
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.UpdateIndustryPlacementQuestionPost
 {
     public class When_Model_Invalid : TestSetup

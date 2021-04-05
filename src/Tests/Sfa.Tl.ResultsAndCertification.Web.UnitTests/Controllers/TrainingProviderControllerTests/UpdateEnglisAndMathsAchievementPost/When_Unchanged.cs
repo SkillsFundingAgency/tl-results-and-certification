@@ -6,7 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.UpdateIndustryPlacementQuestionPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.UpdateEnglisAndMathsAchievementPost
 {
     public class When_Unchanged : TestSetup
     {
@@ -20,27 +20,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 IsModified = false
             };
 
-            UpdateIndustryPlacementQuestionViewModel = new UpdateIndustryPlacementQuestionViewModel 
-            { 
+            ViewModel = new UpdateEnglishAndMathsQuestionViewModel
+            {
                 ProfileId = 1,
-                IndustryPlacementStatus = IndustryPlacementStatus.Completed
+                EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved
             };
 
-            TrainingProviderLoader.ProcessIndustryPlacementQuestionUpdateAsync(ProviderUkprn, UpdateIndustryPlacementQuestionViewModel).Returns(_updateLearnerRecordResponse);
+            TrainingProviderLoader.ProcessEnglishAndMathsQuestionUpdateAsync(ProviderUkprn, ViewModel).Returns(_updateLearnerRecordResponse);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            TrainingProviderLoader.Received(1).ProcessIndustryPlacementQuestionUpdateAsync(ProviderUkprn, UpdateIndustryPlacementQuestionViewModel);
+            TrainingProviderLoader.Received(1).ProcessEnglishAndMathsQuestionUpdateAsync(ProviderUkprn, ViewModel);
         }
 
         [Fact]
         public void Then_Redirected_To_LearnerRecordDetails()
         {
-            var route = Result as RedirectToRouteResult;
+            var route = Result as RedirectToRouteResult;            
             route.RouteName.Should().Be(RouteConstants.LearnerRecordDetails);
-            route.RouteValues[Constants.ProfileId].Should().Be(UpdateIndustryPlacementQuestionViewModel.ProfileId);
+            route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
         }
     }
 }

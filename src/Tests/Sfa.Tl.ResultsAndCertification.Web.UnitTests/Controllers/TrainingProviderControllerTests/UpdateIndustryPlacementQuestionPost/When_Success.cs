@@ -11,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
     public class When_Success : TestSetup
     {
         private UpdateLearnerRecordResponseViewModel _updateLearnerRecordResponse;
+
         public override void Given()
         {
             _updateLearnerRecordResponse = new UpdateLearnerRecordResponseViewModel

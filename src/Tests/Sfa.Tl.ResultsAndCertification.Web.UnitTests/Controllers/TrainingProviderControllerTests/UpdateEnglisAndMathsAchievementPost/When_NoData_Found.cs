@@ -6,28 +6,29 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.UpdateIndustryPlacementQuestionPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.UpdateEnglisAndMathsAchievementPost
 {
     public class When_NoData_Found : TestSetup
     {
         private UpdateLearnerRecordResponseViewModel _updateLearnerRecordResponse;
+
         public override void Given()
         {
             _updateLearnerRecordResponse = null;
 
-            UpdateIndustryPlacementQuestionViewModel = new UpdateIndustryPlacementQuestionViewModel
+            ViewModel = new UpdateEnglishAndMathsQuestionViewModel
             {
                 ProfileId = 1,
-                IndustryPlacementStatus = IndustryPlacementStatus.Completed
+                EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved
             };
 
-            TrainingProviderLoader.ProcessIndustryPlacementQuestionUpdateAsync(ProviderUkprn, UpdateIndustryPlacementQuestionViewModel).Returns(_updateLearnerRecordResponse);
+            TrainingProviderLoader.ProcessEnglishAndMathsQuestionUpdateAsync(ProviderUkprn, ViewModel).Returns(_updateLearnerRecordResponse);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            TrainingProviderLoader.Received(1).ProcessIndustryPlacementQuestionUpdateAsync(ProviderUkprn, UpdateIndustryPlacementQuestionViewModel);
+            TrainingProviderLoader.Received(1).ProcessEnglishAndMathsQuestionUpdateAsync(ProviderUkprn, ViewModel);
         }
 
         [Fact]
