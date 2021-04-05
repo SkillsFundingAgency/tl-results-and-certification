@@ -232,10 +232,12 @@
         public const string QueryEnglishAndMathsAchievement = "QueryEnglishAndMathsAchievement";
         public const string UpdateIndustryPlacementQuestion = "UpdateIndustryPlacementQuestion";
         public const string SubmitUpdateIndustryPlacementQuestion = "SubmitUpdateIndustryPlacementQuestion";
-        public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";        
+        public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
+        public const string UpdateEnglisAndMathsAchievement = "UpdateEnglisAndMathsAchievement";
+        public const string SubmitUpdateEnglisAndMathsAchievement = "SubmitUpdateEnglisAndMathsAchievement";        
 
         //CheckAndSubmit
 
-        # endregion
+        #endregion
     }
 }

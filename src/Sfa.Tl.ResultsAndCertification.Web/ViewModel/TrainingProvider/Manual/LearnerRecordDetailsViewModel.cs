@@ -71,8 +71,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 
         private string GetEnglishAndMathsActionText => HasLrsEnglishAndMaths ? LearnerRecordDetailsContent.Query_Action_Link_Text : LearnerRecordDetailsContent.Update_Action_Link_Text;
 
-        private string GetEnglishAndMathsRouteName => HasLrsEnglishAndMaths ? RouteConstants.QueryEnglishAndMathsAchievement : string.Empty;
-        private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => HasLrsEnglishAndMaths ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } : new Dictionary<string, string>();
+        private string GetEnglishAndMathsRouteName => HasLrsEnglishAndMaths ? RouteConstants.QueryEnglishAndMathsAchievement : RouteConstants.UpdateEnglisAndMathsAchievement;
+
+        private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } };
 
         private Dictionary<string, string> GetIPLinkRouteAttributes => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.PathwayId, RegistrationPathwayId.ToString() } };
 

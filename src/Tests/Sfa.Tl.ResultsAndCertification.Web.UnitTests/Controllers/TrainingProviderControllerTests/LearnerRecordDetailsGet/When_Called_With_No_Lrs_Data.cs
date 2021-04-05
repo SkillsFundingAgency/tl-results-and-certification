@@ -76,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryEnglishAndMathsStatus.RenderHiddenActionText.Should().BeTrue();
             model.SummaryEnglishAndMathsStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.English_And_Maths_Action_Hidden_Text);
             model.SummaryEnglishAndMathsStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Update_Action_Link_Text);
-            model.SummaryEnglishAndMathsStatus.RouteName.Should().Be(GetEnglishAndMathsRouteName);
+            model.SummaryEnglishAndMathsStatus.RouteName.Should().Be(RouteConstants.UpdateEnglisAndMathsAchievement);
             model.SummaryEnglishAndMathsStatus.RouteAttributes.Should().BeEquivalentTo(GetEnglishAndMathsRouteAttributes);
 
             // Summary WhatsLrsText
@@ -102,7 +102,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryIndustryPlacementStatus.RouteAttributes.Should().BeEquivalentTo(new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() }, { Constants.PathwayId, mockresult.RegistrationPathwayId.ToString() } });
         }
 
-        private string GetEnglishAndMathsRouteName => mockresult.HasLrsEnglishAndMaths ? RouteConstants.QueryEnglishAndMathsAchievement : string.Empty;
-        private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => mockresult.HasLrsEnglishAndMaths ? new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } } : new Dictionary<string, string>();
+        private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } };
     }
 }

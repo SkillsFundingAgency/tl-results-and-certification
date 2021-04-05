@@ -406,6 +406,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [Route("update-learner-record-english-and-maths-achievement/{profileId}", Name = RouteConstants.UpdateEnglisAndMathsAchievement)]
+        public async Task<IActionResult> UpdateEnglisAndMathsAchievementAsync(int profileId)
+        {
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<UpdateEnglishAndMathsQuestionViewModel>(User.GetUkPrn(), profileId);
+            if (viewModel == null || !viewModel.IsLearnerRecordAdded || viewModel.HasLrsEnglishAndMaths || viewModel.EnglishAndMathsStatus == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner record not added or invalid record to show. Method: UpdateEnglisAndMathsAchievementAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("update-learner-record-english-and-maths-achievement", Name = RouteConstants.SubmitUpdateEnglisAndMathsAchievement)]
+        public async Task<IActionResult> UpdateEnglisAndMathsAchievementAsync(UpdateEnglishAndMathsQuestionViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            var response = await _trainingProviderLoader.ProcessEnglishAndMathsQuestionUpdateAsync(User.GetUkPrn(), viewModel);
+
+            if (response == null)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            if (!response.IsModified)
+                return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { viewModel.ProfileId });
+
+            return View(viewModel);
+        }
+
         # endregion
 
         private async Task SyncCacheUln(EnterUlnViewModel model, FindLearnerRecord learnerRecord = null)

@@ -80,6 +80,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update learner T Level record.
+        /// </summary>
+        public static string Caption_Update_Learner_TLevel_Record {
+            get {
+                return ResourceManager.GetString("Caption_Update_Learner_TLevel_Record", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Change_Button {
@@ -301,6 +310,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Text_Learner {
             get {
                 return ResourceManager.GetString("Text_Learner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string Update_Button_Text {
+            get {
+                return ResourceManager.GetString("Update_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By selecting &apos;Update&apos; I declare that:.
+        /// </summary>
+        public static string Update_Inset_Text_I_Declare {
+            get {
+                return ResourceManager.GetString("Update_Inset_Text_I_Declare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update learner T Level record - English and maths achievement page.
+        /// </summary>
+        public static string Update_Page_Title {
+            get {
+                return ResourceManager.GetString("Update_Page_Title", resourceCulture);
             }
         }
         

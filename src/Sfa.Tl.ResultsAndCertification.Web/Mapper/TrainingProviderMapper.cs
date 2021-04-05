@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
@@ -9,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
     {
         public TrainingProviderMapper()
         {
-            CreateMap<LearnerRecordDetails, LearnerRecordDetailsViewModel>()               
+            CreateMap<LearnerRecordDetails, LearnerRecordDetailsViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsEnglishAndMathsAchieved, opts => opts.MapFrom(s => s.IsEnglishAndMathsAchieved))
                .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.HasLrsEnglishAndMaths))
                .ForMember(d => d.IsSendLearner, opts => opts.MapFrom(s => s.IsSendLearner))
-               .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => s.IndustryPlacementId))               
+               .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => s.IndustryPlacementId))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus));
 
             CreateMap<LearnerRecordDetails, UpdateIndustryPlacementQuestionViewModel>()
@@ -32,6 +33,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => s.IndustryPlacementId))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus))
                .ForMember(d => d.IsLearnerRecordAdded, opts => opts.MapFrom(s => s.IsLearnerRecordAdded));
+
+            CreateMap<LearnerRecordDetails, UpdateEnglishAndMathsQuestionViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.Name))
+               .ForMember(d => d.IsLearnerRecordAdded, opts => opts.MapFrom(s => s.IsLearnerRecordAdded))
+               .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.HasLrsEnglishAndMaths))
+               .ForMember(d => d.EnglishAndMathsStatus, opts => opts.MapFrom(s => (s.HasLrsEnglishAndMaths || s.IsLearnerRecordAdded == false) ? (EnglishAndMathsStatus?)null :
+                                                                                    (s.IsEnglishAndMathsAchieved && s.IsSendLearner ? EnglishAndMathsStatus.AchievedWithSend :
+                                                                                    (s.IsEnglishAndMathsAchieved ? EnglishAndMathsStatus.Achieved : EnglishAndMathsStatus.NotAchieved))
+                                                                            ));
 
             CreateMap<AddLearnerRecordViewModel, AddLearnerRecordRequest>()
                .ForMember(d => d.Ukprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
