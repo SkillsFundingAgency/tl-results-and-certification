@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTests.ProcessIndustryPlacementQuestionUpdate
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTests.ProcessEnglishAndMathsQuestionUpdate
 {
     public class When_Called_With_IsLearnerRecordAdded_False : TestSetup
     {
@@ -15,17 +15,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
         {
             ProviderUkprn = 87945612;
             ProfileId = 1;
-            RegistrationPathwayId = 1;
-
-            _expectedApiResult = new LearnerRecordDetails { ProfileId = ProfileId, IsLearnerRecordAdded = false };
-            ViewModel = new UpdateIndustryPlacementQuestionViewModel { ProfileId = ProfileId, RegistrationPathwayId = RegistrationPathwayId, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
-            InternalApiClient.GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId, RegistrationPathwayId).Returns(_expectedApiResult);
+            _expectedApiResult = new LearnerRecordDetails { ProfileId = 1, IsLearnerRecordAdded = false };
+            ViewModel = new UpdateEnglishAndMathsQuestionViewModel { ProfileId = 1, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved };
+            InternalApiClient.GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId).Returns(_expectedApiResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            InternalApiClient.Received(1).GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId, RegistrationPathwayId);
+            InternalApiClient.Received(1).GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId);
         }
 
         [Fact]

@@ -5,19 +5,18 @@ using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTests.ProcessIndustryPlacementQuestionUpdate
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTests.ProcessEnglishAndMathsQuestionUpdate
 {
     public abstract class TestSetup : TrainingProviderLoaderTestBase
     {
         protected long ProviderUkprn;
         protected int ProfileId;
-        protected int RegistrationPathwayId;
-        protected UpdateIndustryPlacementQuestionViewModel ViewModel;
+        protected UpdateEnglishAndMathsQuestionViewModel ViewModel;
         protected UpdateLearnerRecordResponseViewModel ActualResult { get; set; }
 
         public async override Task When()
         {
-            ActualResult = await Loader.ProcessIndustryPlacementQuestionUpdateAsync(ProviderUkprn, ViewModel);
+            ActualResult = await Loader.ProcessEnglishAndMathsQuestionUpdateAsync(ProviderUkprn, ViewModel);
         }
 
         public void CreateMapper()
@@ -27,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 c.AddMaps(typeof(TrainingProviderMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<UpdateIndustryPlacementQuestionViewModel, UpdateLearnerRecordRequest>(HttpContextAccessor) : null);
+                                new UserNameResolver<UpdateEnglishAndMathsQuestionViewModel, UpdateLearnerRecordRequest>(HttpContextAccessor) : null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }

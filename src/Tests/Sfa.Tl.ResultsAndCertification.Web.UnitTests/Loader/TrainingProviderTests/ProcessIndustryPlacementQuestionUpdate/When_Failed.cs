@@ -16,11 +16,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
         {
             CreateMapper();
             ProviderUkprn = 987654321;
+            ProfileId = 1;
+            RegistrationPathwayId = 1;
 
-            _expectedApiResult = new LearnerRecordDetails { ProfileId = 1, Uln = 1234567890, Name = "Test User", IsLearnerRecordAdded = true, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
-            ViewModel = new UpdateIndustryPlacementQuestionViewModel { ProfileId = 1, RegistrationPathwayId = 1, IndustryPlacementId = 0, IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted };
+            _expectedApiResult = new LearnerRecordDetails { ProfileId = ProfileId, Uln = 1234567890, Name = "Test User", IsLearnerRecordAdded = true, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
+            ViewModel = new UpdateIndustryPlacementQuestionViewModel { ProfileId = ProfileId, RegistrationPathwayId = RegistrationPathwayId, IndustryPlacementId = 0, IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted };
 
-            InternalApiClient.GetLearnerRecordDetailsAsync(Arg.Any<long>(), Arg.Any<int>(), Arg.Any<int>()).Returns(_expectedApiResult);
+            InternalApiClient.GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId, RegistrationPathwayId).Returns(_expectedApiResult);
             InternalApiClient.UpdateLearnerRecordAsync(Arg.Is<UpdateLearnerRecordRequest>
                 (x => x.ProfileId == ViewModel.ProfileId &&
                 x.Ukprn == ProviderUkprn &&
@@ -36,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            InternalApiClient.Received(1).GetLearnerRecordDetailsAsync(Arg.Any<long>(), Arg.Any<int>(), Arg.Any<int>());
+            InternalApiClient.Received(1).GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId, RegistrationPathwayId);
             InternalApiClient.Received(1).UpdateLearnerRecordAsync(Arg.Is<UpdateLearnerRecordRequest>
                 (x => x.ProfileId == ViewModel.ProfileId &&
                 x.Ukprn == ProviderUkprn &&

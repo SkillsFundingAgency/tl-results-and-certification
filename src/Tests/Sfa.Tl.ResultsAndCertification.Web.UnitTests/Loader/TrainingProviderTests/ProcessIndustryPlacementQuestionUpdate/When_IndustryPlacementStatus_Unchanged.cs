@@ -13,15 +13,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
 
         public override void Given()
         {
-            _expectedApiResult = new LearnerRecordDetails { ProfileId = 1, IsLearnerRecordAdded = true, IndustryPlacementStatus = IndustryPlacementStatus.Completed  };
-            ViewModel = new UpdateIndustryPlacementQuestionViewModel { ProfileId = 1, RegistrationPathwayId = 1, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
-            InternalApiClient.GetLearnerRecordDetailsAsync(Arg.Any<long>(), Arg.Any<int>(), Arg.Any<int>()).Returns(_expectedApiResult);
+            ProviderUkprn = 987654321;
+            ProfileId = 1;
+            RegistrationPathwayId = 1;
+
+            _expectedApiResult = new LearnerRecordDetails { ProfileId = ProfileId, IsLearnerRecordAdded = true, IndustryPlacementStatus = IndustryPlacementStatus.Completed  };
+            ViewModel = new UpdateIndustryPlacementQuestionViewModel { ProfileId = ProfileId, RegistrationPathwayId = RegistrationPathwayId, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
+            InternalApiClient.GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId, RegistrationPathwayId).Returns(_expectedApiResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            InternalApiClient.Received(1).GetLearnerRecordDetailsAsync(Arg.Any<long>(), Arg.Any<int>(), Arg.Any<int>());
+            InternalApiClient.Received(1).GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId, RegistrationPathwayId);
         }
 
         [Fact]
