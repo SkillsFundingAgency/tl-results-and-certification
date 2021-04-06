@@ -42,6 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 RegistrationPathwayId = 7,
                 IndustryPlacementId = 1,
                 IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                HasIndustryPlacementChanged = true,
                 PerformedBy = "Test User"
             };
         }
