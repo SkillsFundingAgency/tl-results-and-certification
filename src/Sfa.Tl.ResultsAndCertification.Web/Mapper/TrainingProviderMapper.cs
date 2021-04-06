@@ -54,12 +54,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<UpdateIndustryPlacementQuestionViewModel, UpdateLearnerRecordRequest>()
                .ForMember(d => d.Ukprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
+               .ForMember(d => d.Uln, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["uln"]))
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                .ForMember(d => d.IndustryPlacementId, opts => opts.MapFrom(s => s.IndustryPlacementId))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementStatus))
                .ForMember(d => d.HasIndustryPlacementChanged, opts => opts.MapFrom(s => true))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<UpdateIndustryPlacementQuestionViewModel, UpdateLearnerRecordRequest>>());
+
+            CreateMap<UpdateEnglishAndMathsQuestionViewModel, UpdateLearnerRecordRequest>()
+               .ForMember(d => d.Ukprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
+               .ForMember(d => d.Uln, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["uln"]))
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.EnglishAndMathsStatus, opts => opts.MapFrom(s => s.EnglishAndMathsStatus))
+               .ForMember(d => d.HasEnglishAndMathsChanged, opts => opts.MapFrom(s => true))
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<UpdateEnglishAndMathsQuestionViewModel, UpdateLearnerRecordRequest>>());
         }
     }
 }

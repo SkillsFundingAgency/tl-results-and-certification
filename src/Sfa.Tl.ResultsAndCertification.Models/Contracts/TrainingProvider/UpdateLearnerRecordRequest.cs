@@ -6,5 +6,6 @@
         public int RegistrationPathwayId { get; set; }
         public int IndustryPlacementId { get; set; }
         public bool HasIndustryPlacementChanged { get; set; }
+        public bool HasEnglishAndMathsChanged { get; set; }
     }
 }

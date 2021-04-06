@@ -434,8 +434,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!response.IsModified)
                 return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { viewModel.ProfileId });
 
-            return View(viewModel);
+            if (!response.IsSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.EnglishAndMathsAchievementUpdatedConfirmation), response, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.EnglishAndMathsAchievementUpdatedConfirmation);
         }
+
+        [HttpGet]
+        [Route("english-and-maths-achievement-updated-confirmation", Name = RouteConstants.EnglishAndMathsAchievementUpdatedConfirmation)]
+        public async Task<IActionResult> EnglishAndMathsAchievementUpdatedConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<UpdateLearnerRecordResponseViewModel>(string.Concat(CacheKey, Constants.EnglishAndMathsAchievementUpdatedConfirmation));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read UpdateLearnerRecordResponseViewModel from redis cache in english and maths achievement updated confirmation page. Method: EnglishAndMathsAchievementUpdatedConfirmationAsync(), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }        
 
         # endregion
 

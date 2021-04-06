@@ -16,14 +16,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class TrainingProviderService : ITrainingProviderService
     {
+        private readonly IRepository<TqRegistrationProfile> _tqRegistrationProfile;
         private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
-        private readonly IRepository<IndustryPlacement> _industryPlacementRepository;
+        private readonly IRepository<IndustryPlacement> _industryPlacementRepository;        
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public TrainingProviderService(IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
-            IRepository<IndustryPlacement> industryPlacementRepository, IMapper mapper, ILogger<TrainingProviderService> logger)
+        public TrainingProviderService(IRepository<TqRegistrationProfile> tqRegistrationProfile, 
+            IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
+            IRepository<IndustryPlacement> industryPlacementRepository,
+            IMapper mapper, ILogger<TrainingProviderService> logger)
         {
+            _tqRegistrationProfile = tqRegistrationProfile;
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
             _industryPlacementRepository = industryPlacementRepository;
             _mapper = mapper;
@@ -103,39 +107,62 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return new AddLearnerRecordResponse { Uln = request.Uln, Name = $"{pathway.TqRegistrationProfile.Firstname} {pathway.TqRegistrationProfile.Lastname}", IsSuccess = status > 0 };
         }
 
-        public async Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model)
+        public async Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest request)
         {
-            if (model == null || !model.HasIndustryPlacementChanged)
+            if (request == null || (!request.HasEnglishAndMathsChanged && !request.HasIndustryPlacementChanged))
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Model is null or no changes detected to update Learner record for ProfileId = {model.ProfileId}. Method: UpdateLearnerRecordAsync({model})");
+                _logger.LogWarning(LogEvent.NoDataFound, $"Model is null or no changes detected to update Learner record for Uln = {request.Uln}. Method: UpdateLearnerRecordAsync({request})");
                 return false;
             }
 
             bool isSuccess = false;
-            
-            if (model.HasIndustryPlacementChanged)
+
+            if (request.HasEnglishAndMathsChanged)
             {
-                isSuccess = await HandleIndustryPlacementChanges(model);
+                isSuccess = await HandleEnglishAndMathsChanges(request);
+            }
+            else if (request.HasIndustryPlacementChanged)
+            {
+                isSuccess = await HandleIndustryPlacementChanges(request);
             }
 
             return isSuccess;
         }
 
-        private async Task<bool> HandleIndustryPlacementChanges(UpdateLearnerRecordRequest model)
+        private async Task<bool> HandleEnglishAndMathsChanges(UpdateLearnerRecordRequest request)
         {
-            var industryPlacement = await _industryPlacementRepository.GetFirstOrDefaultAsync(ip => ip.Id == model.IndustryPlacementId
-                                                                                        && ip.TqRegistrationPathway.Id == model.RegistrationPathwayId
-                                                                                        && ip.TqRegistrationPathway.TqRegistrationProfileId == model.ProfileId
-                                                                                        && ip.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == model.Ukprn);
-            if (industryPlacement == null)
+            var profile = await _tqRegistrationProfile.GetFirstOrDefaultAsync(p => p.Id == request.ProfileId && p.UniqueLearnerNumber == request.Uln
+                                                                    && p.IsEnglishAndMathsAchieved.HasValue && p.IsRcFeed == true
+                                                                    && p.TqRegistrationPathways.Any(pa => pa.TqProvider.TlProvider.UkPrn == request.Ukprn
+                                                                    && (pa.Status == RegistrationPathwayStatus.Active || pa.Status == RegistrationPathwayStatus.Withdrawn)));
+
+            if (profile == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update Industry Placement for UniqueLearnerNumber = {model.Uln}. Method: HandleIndustryPlacementChanges()");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update English and Maths for Uln = {request.Uln}. Method: HandleEnglishAndMathsChanges({request})");
                 return false;
             }
 
-            _mapper.Map(model, industryPlacement);
-            return await _industryPlacementRepository.UpdateWithSpecifedColumnsOnlyAsync(industryPlacement, ip => ip.Status, ip => ip.ModifiedOn, ip => ip.ModifiedBy) > 0;
+            _mapper.Map(request, profile);
+            return await _tqRegistrationProfile.UpdateWithSpecifedColumnsOnlyAsync(profile, p => p.IsEnglishAndMathsAchieved, p => p.IsSendLearner, p => p.ModifiedOn, p => p.ModifiedBy) > 0;
         }
+
+        private async Task<bool> HandleIndustryPlacementChanges(UpdateLearnerRecordRequest request)
+        {
+            var industryPlacement = await _industryPlacementRepository.GetFirstOrDefaultAsync(ip => ip.Id == request.IndustryPlacementId
+                                                                                    && ip.TqRegistrationPathway.Id == request.RegistrationPathwayId
+                                                                                    && ip.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
+                                                                                    && ip.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == request.Ukprn
+                                                                                    && (ip.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                                                                                    || ip.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn));
+            if (industryPlacement == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update Industry Placement for Uln = {request.Uln}. Method: HandleIndustryPlacementChanges({request})");
+                return false;
+            }
+
+            _mapper.Map(request, industryPlacement);
+            return await _industryPlacementRepository.UpdateWithSpecifedColumnsOnlyAsync(industryPlacement, ip => ip.Status, ip => ip.ModifiedOn, ip => ip.ModifiedBy) > 0;
+        }        
 
         private bool IsValidAddLearnerRecordRequest(TqRegistrationPathway registrationPathway, AddLearnerRecordRequest request)
         {

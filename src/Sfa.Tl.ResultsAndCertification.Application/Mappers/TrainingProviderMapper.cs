@@ -42,7 +42,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             CreateMap<UpdateLearnerRecordRequest, IndustryPlacement>()
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.IndustryPlacementStatus))
                 .ForMember(d => d.ModifiedBy, opts => opts.MapFrom(s => s.PerformedBy))
-                .ForMember(d => d.ModifiedOn, opts => opts.MapFrom<DateTimeResolver<UpdateLearnerRecordRequest, IndustryPlacement>>());
+                .ForMember(d => d.ModifiedOn, opts => opts.MapFrom<DateTimeResolver<UpdateLearnerRecordRequest, IndustryPlacement>>())
+                .ForAllOtherMembers(d => d.Ignore());
+
+            CreateMap<UpdateLearnerRecordRequest, TqRegistrationProfile>()
+                .ForMember(d => d.IsEnglishAndMathsAchieved, opts => opts.MapFrom(s => s.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.Achieved || s.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.AchievedWithSend))
+                .ForMember(d => d.IsSendLearner, opts => opts.MapFrom(s => s.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.AchievedWithSend ? true : (bool?)null))
+                .ForMember(d => d.ModifiedBy, opts => opts.MapFrom(s => s.PerformedBy))
+                .ForMember(d => d.ModifiedOn, opts => opts.MapFrom<DateTimeResolver<UpdateLearnerRecordRequest, TqRegistrationProfile>>())
+                .ForAllOtherMembers(d => d.Ignore());
         }
     }
 }

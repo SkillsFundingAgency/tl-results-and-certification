@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return new UpdateLearnerRecordResponseViewModel { IsModified = false };
             }
 
-            var request = _mapper.Map<UpdateLearnerRecordRequest>(viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);           
+            var request = _mapper.Map<UpdateLearnerRecordRequest>(viewModel, opt => { opt.Items["providerUkprn"] = providerUkprn; opt.Items["uln"] = response.Uln; });
             var isSuccess = await _internalApiClient.UpdateLearnerRecordAsync(request);
             return new UpdateLearnerRecordResponseViewModel { ProfileId = response.ProfileId, Uln = response.Uln, Name = response.Name, IsModified = true, IsSuccess = isSuccess };
         }
@@ -64,8 +64,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             {
                 return new UpdateLearnerRecordResponseViewModel { IsModified = false };
             }
-            
-            return new UpdateLearnerRecordResponseViewModel { ProfileId = response.ProfileId, Uln = response.Uln, Name = response.Name, IsModified = true };
+                        
+            viewModel.HasLrsEnglishAndMaths = response.HasLrsEnglishAndMaths;
+            var request = _mapper.Map<UpdateLearnerRecordRequest>(viewModel, opt => { opt.Items["providerUkprn"] = providerUkprn; opt.Items["uln"] = response.Uln; });
+            var isSuccess = await _internalApiClient.UpdateLearnerRecordAsync(request);
+            return new UpdateLearnerRecordResponseViewModel { ProfileId = response.ProfileId, Uln = response.Uln, Name = response.Name, IsModified = true, IsSuccess = isSuccess };
         }
 
         private EnglishAndMathsStatus? GetEnglishAndMathsStatus(LearnerRecordDetails model)
