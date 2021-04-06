@@ -18,7 +18,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProviderServiceTests
 {
-    public class When_UpdateLearnerRecordAsync_IsCalled : TrainingProviderServiceBaseTest
+    public class When_UpdateLearnerRecordAsync_For_EnglishAndMaths_IsCalled : TrainingProviderServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<(long uln, bool? isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement)> _testCriteriaData;
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             {
                 (1111111111, false, true, true, true, true), // Lrs data and Learner Record added already
                 (1111111112, false, true, false, false, false), // Lrs data and Learner Record not added
-                (1111111113, true, false, false, false, false), // Not from Lrs and Learner Record not added
+                (1111111113, true, false, false, null, false), // Not from Lrs and Learner Record not added
                 (1111111114, true, false, false, true, true), // Not from Lrs and Learner Record added
             };
 
@@ -87,15 +87,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         {
             var expectedProfile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == request.Uln);
             expectedProfile.Should().NotBeNull();
-            
-            var expectedPathway = expectedProfile.TqRegistrationPathways.FirstOrDefault(p => p.Status == RegistrationPathwayStatus.Active || p.Status == RegistrationPathwayStatus.Withdrawn);
-            expectedPathway.Should().NotBeNull();
-
-            var expectedIndustryPlacement = expectedPathway.IndustryPlacements.FirstOrDefault();
 
             request.ProfileId = expectedProfile.Id;
-            request.RegistrationPathwayId = expectedPathway.Id;
-            request.IndustryPlacementId = expectedIndustryPlacement?.Id ?? 0;
 
             await WhenAsync(request);
 
@@ -107,24 +100,24 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             _actualResult.Should().BeTrue();
 
-            var actualPathway = DbContext.TqRegistrationPathway.Where(p => p.TqRegistrationProfile.UniqueLearnerNumber == expectedProfile.UniqueLearnerNumber && p.TqProvider.TlProvider.UkPrn == request.Ukprn)
-                                                                .Include(p => p.IndustryPlacements)
-                                                                .Include(p => p.TqRegistrationProfile)
-                                                                .OrderByDescending(p => p.CreatedOn).FirstOrDefault();
+            var actualProfile = await DbContext.TqRegistrationProfile.FirstOrDefaultAsync(p => p.Id == expectedProfile.Id && p.UniqueLearnerNumber == expectedProfile.UniqueLearnerNumber
+                                                                        && p.IsEnglishAndMathsAchieved.HasValue && p.IsRcFeed == true
+                                                                        && p.TqRegistrationPathways.Any(pa => pa.TqProvider.TlProvider.UkPrn == request.Ukprn
+                                                                        && (pa.Status == RegistrationPathwayStatus.Active || pa.Status == RegistrationPathwayStatus.Withdrawn)));
 
-            actualPathway.Should().NotBeNull();
+            actualProfile.Should().NotBeNull();
 
             // Assert Profile data
 
-            actualPathway.TqRegistrationProfile.Id.Should().Be(expectedProfile.Id);
-            actualPathway.TqRegistrationProfile.UniqueLearnerNumber.Should().Be(expectedProfile.UniqueLearnerNumber);
+            actualProfile.Id.Should().Be(expectedProfile.Id);
+            actualProfile.UniqueLearnerNumber.Should().Be(expectedProfile.UniqueLearnerNumber);
 
-            // Assert IndustryPlacement data
-            actualPathway.IndustryPlacements.Count().Should().Be(1);
-
-            var actualIndustryPlacement = actualPathway.IndustryPlacements.Single();
-            actualIndustryPlacement.TqRegistrationPathwayId.Should().Be(actualPathway.Id);
-            actualIndustryPlacement.Status.Should().Be(request.IndustryPlacementStatus);
+            // Assert EnglishAndMaths data
+            var expectedEnglishAndMathAchieved = request.EnglishAndMathsStatus == EnglishAndMathsStatus.Achieved || request.EnglishAndMathsStatus == EnglishAndMathsStatus.AchievedWithSend;
+            var expectedSendLearner = request.EnglishAndMathsStatus == EnglishAndMathsStatus.AchievedWithSend ? true : (bool?)null;
+            actualProfile.IsEnglishAndMathsAchieved.Should().Be(expectedEnglishAndMathAchieved);
+            actualProfile.IsSendLearner.Should().Be(expectedSendLearner);
+            actualProfile.ModifiedBy.Should().Be(request.PerformedBy);
         }
 
         public static IEnumerable<object[]> Data
@@ -135,23 +128,23 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 {
                     // Invalid Provider Ukprn - return false
                     new object[]
-                    { new UpdateLearnerRecordRequest { Ukprn = 0000000000, Uln = 1111111111, HasIndustryPlacementChanged = true, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerRecordRequest { Ukprn = 0000000000, Uln = 1111111111, HasEnglishAndMathsChanged = true, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, PerformedBy = "Test User" }, false },
 
-                    // Learner Record Added but HasIndustryPlacementChanged set to False - returs false
+                    // Learner Record not Added (LRS data) - return false
                     new object[]
-                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111111, HasIndustryPlacementChanged = false, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111112, HasEnglishAndMathsChanged = true, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, PerformedBy = "Test User" }, false },
 
-                    // Learner Record not Added (LRS data with no industry placement) - return false
+                    // Not from Lrs and Learner Record not added - return false
                     new object[]
-                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111112, HasIndustryPlacementChanged = true, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111113, HasEnglishAndMathsChanged = true, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, PerformedBy = "Test User" }, false },
 
-                    // Not from Lrs and Learner Record added already - return false
+                    // Not from Lrs and Learner Record added but HasEnglishAndMathsChanged set to false - return false
                     new object[]
-                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111113, HasIndustryPlacementChanged = true, IndustryPlacementStatus = IndustryPlacementStatus.Completed, PerformedBy = "Test User" }, false },
+                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111114, HasEnglishAndMathsChanged = false, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved, PerformedBy = "Test User" }, false },
 
-                    // Not from Lrs and Learner Record not added - return true
+                    // Not from Lrs and Learner Record added - return true
                     new object[]
-                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111114, HasIndustryPlacementChanged = true, IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration, PerformedBy = "Test User" }, true }
+                    { new UpdateLearnerRecordRequest { Ukprn = (long)Provider.BarsleyCollege, Uln = 1111111114, HasEnglishAndMathsChanged = true, EnglishAndMathsStatus = EnglishAndMathsStatus.AchievedWithSend, PerformedBy = "Test User" }, true }
                 };
             }
         }
@@ -160,10 +153,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         {
             var mapperConfig = new MapperConfiguration(c =>
             {
-                c.AddMaps(typeof(TrainingProviderMapper).Assembly);
+                c.AddMaps(typeof(TrainingProviderMapper).Assembly);                
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("DateTimeResolver") ?
-                                new DateTimeResolver<UpdateLearnerRecordRequest, IndustryPlacement>(new DateTimeProvider()) :
+                                new DateTimeResolver<UpdateLearnerRecordRequest, TqRegistrationProfile>(new DateTimeProvider()) :
                                 null);
             });
             TrainingProviderMapper = new Mapper(mapperConfig);
