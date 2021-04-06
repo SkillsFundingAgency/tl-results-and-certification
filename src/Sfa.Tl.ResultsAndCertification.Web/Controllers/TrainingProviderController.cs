@@ -75,8 +75,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (learnerRecord == null || !learnerRecord.IsLearnerRegistered || learnerRecord.IsLearnerRecordAdded)
             {
                 await SyncCacheUln(model);
-                return RedirectToRoute(learnerRecord == null || learnerRecord.IsLearnerRegistered == false ?
-                    RouteConstants.EnterUniqueLearnerNumberNotFound : RouteConstants.EnterUniqueLearnerNumberAddedAlready);
+
+                if (learnerRecord == null || learnerRecord.IsLearnerRegistered == false)
+                    return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberNotFound);
+                else
+                    return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberAddedAlready, new { profileId = learnerRecord.ProfileId });
             }
 
             await SyncCacheUln(model, learnerRecord);
@@ -90,8 +93,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-learner-record-ULN-already-added", Name = RouteConstants.EnterUniqueLearnerNumberAddedAlready)]
-        public async Task<IActionResult> EnterUniqueLearnerNumberAddedAlreadyAsync()
+        [Route("add-learner-record-ULN-already-added/{profileId}", Name = RouteConstants.EnterUniqueLearnerNumberAddedAlready)]
+        public async Task<IActionResult> EnterUniqueLearnerNumberAddedAlreadyAsync(int profileId)
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
             if (cacheModel == null)
@@ -100,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            return View(new LearnerRecordAddedAlreadyViewModel { Uln = cacheModel.Uln?.EnterUln?.ToString() });
+            return View(new LearnerRecordAddedAlreadyViewModel { ProfileId = profileId,  Uln = cacheModel.Uln?.EnterUln?.ToString() });
         }
 
         [HttpGet]
