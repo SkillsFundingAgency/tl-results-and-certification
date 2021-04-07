@@ -78,16 +78,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryEnglishAndMathsStatus.RouteName.Should().Be(GetEnglishAndMathsRouteName);
             model.SummaryEnglishAndMathsStatus.RouteAttributes.Should().BeEquivalentTo(GetEnglishAndMathsRouteAttributes);
 
-            // Summary WhatsLrsText
-            model.SummaryWhatsLrsText.Should().NotBeNull();
-            model.SummaryWhatsLrsText.Title.Should().BeEmpty();
-            model.SummaryWhatsLrsText.Value.Should().Be(LearnerRecordDetailsContent.Whats_Lrs_Text);
-            model.SummaryWhatsLrsText.NeedBorderBottomLine.Should().BeFalse();
-            model.SummaryWhatsLrsText.RenderActionColumn.Should().BeFalse();
-            model.SummaryWhatsLrsText.ActionText.Should().BeNullOrEmpty();
-            model.SummaryWhatsLrsText.RouteName.Should().BeNullOrEmpty();
-            model.SummaryWhatsLrsText.RouteAttributes.Should().BeNull();
-
             // Summary IndustryPlacementStatus
             model.SummaryIndustryPlacementStatus.Should().NotBeNull();
             model.SummaryIndustryPlacementStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_IP_Status_Text);
@@ -105,7 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         {
             get
             {
-                return mockresult.HasLrsEnglishAndMaths ? mockresult.IsEnglishAndMathsAchieved ? LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text : LearnerRecordDetailsContent.English_And_Maths_Not_Achieved_Lrs_Text : null;
+                return mockresult.HasLrsEnglishAndMaths ? string.Concat(mockresult.IsEnglishAndMathsAchieved ? LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text : LearnerRecordDetailsContent.English_And_Maths_Not_Achieved_Lrs_Text, LearnerRecordDetailsContent.Whats_Lrs_Text) : null;
             }
         }
 

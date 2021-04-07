@@ -39,16 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             RouteAttributes = GetEnglishAndMathsRouteAttributes,
             NeedBorderBottomLine = false,
             RenderHiddenActionText = true,
-            HiddenActionText = LearnerRecordDetailsContent.English_And_Maths_Action_Hidden_Text
-        };
-
-        public SummaryItemModel SummaryWhatsLrsText => new SummaryItemModel
-        {
-            Id = "whatslrstext",
-            Title = string.Empty,
-            Value = LearnerRecordDetailsContent.Whats_Lrs_Text,
-            RenderActionColumn = false,
-            NeedBorderBottomLine = false,
+            HiddenActionText = LearnerRecordDetailsContent.English_And_Maths_Action_Hidden_Text,
             IsRawHtml = true
         };
 
@@ -66,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         };
 
         private string GetEnglishAndMathsStatusText => HasLrsEnglishAndMaths
-            ? (IsEnglishAndMathsAchieved ? LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text : LearnerRecordDetailsContent.English_And_Maths_Not_Achieved_Lrs_Text)
+            ? string.Concat(IsEnglishAndMathsAchieved ? LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text : LearnerRecordDetailsContent.English_And_Maths_Not_Achieved_Lrs_Text, LearnerRecordDetailsContent.Whats_Lrs_Text) 
             : GetEnglishAndMathsStatusDisplayText;
 
         private string GetEnglishAndMathsActionText => HasLrsEnglishAndMaths ? LearnerRecordDetailsContent.Query_Action_Link_Text : LearnerRecordDetailsContent.Update_Action_Link_Text;

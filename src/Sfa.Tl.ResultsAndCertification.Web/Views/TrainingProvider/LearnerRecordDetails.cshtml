@@ -23,10 +23,6 @@
         <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@LearnerRecordDetails.Learners_English_And_Maths_Achievement_Text</h3>
         <dl class="govuk-summary-list">
             <vc:summary-item model=Model.SummaryEnglishAndMathsStatus></vc:summary-item>
-            @if (Model.HasLrsEnglishAndMaths)
-            {
-                <vc:summary-item model=Model.SummaryWhatsLrsText></vc:summary-item>
-            }
         </dl>
 
         <hr class="govuk-section-break govuk-section-break--visible">

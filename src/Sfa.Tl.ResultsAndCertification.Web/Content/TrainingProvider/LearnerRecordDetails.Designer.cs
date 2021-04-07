@@ -223,15 +223,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;details class=&quot;govuk-details&quot; closed&gt;
-        ///                  &lt;summary class=&quot;govuk-details__summary&quot;&gt;
-        ///                      &lt;span class=&quot;govuk-details__summary-text&quot;&gt;
-        ///                          What&apos;s LRS?
-        ///                      &lt;/span&gt;
-        ///                  &lt;/summary&gt;
-        ///                  &lt;div class=&quot;govuk-details__text&quot;&gt;
-        ///                    &lt;p class=&quot;govuk-body&quot;&gt;The Learning Records Service (LRS) collects data relating to learners&apos; post-14 qualifications, for example, GCSEs.&lt;/p&gt;
-        ///                    &lt;p class=&quot;g [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to &lt;details class=&quot;govuk-details govuk-!-padding-top-4&quot; closed&gt;
+        ///	  &lt;summary class=&quot;govuk-details__summary&quot;&gt;
+        ///		  &lt;span class=&quot;govuk-details__summary-text&quot;&gt;
+        ///			  What&apos;s LRS?
+        ///		  &lt;/span&gt;
+        ///	  &lt;/summary&gt;
+        ///	  &lt;div class=&quot;govuk-details__text&quot;&gt;
+        ///		&lt;p class=&quot;govuk-body&quot;&gt;The Learning Records Service (LRS) collects data relating to learners&apos; post-14 qualifications, for example, GCSEs.&lt;/p&gt;
+        ///		&lt;p class=&quot;govuk-body&quot;&gt;If you think the LRS data is wrong, you must contact the exam board responsible for issuing the learner&apos;s [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Whats_Lrs_Text {
             get {
