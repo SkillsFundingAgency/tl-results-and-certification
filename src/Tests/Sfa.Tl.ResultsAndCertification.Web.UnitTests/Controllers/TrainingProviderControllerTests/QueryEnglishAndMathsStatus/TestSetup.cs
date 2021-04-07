@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.QueryEnglishAndMathsAchievement
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.QueryEnglishAndMathsStatus
 {
     public abstract class TestSetup : TrainingProviderControllerTestBase
     {
@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
         public async override Task When()
         {
-            Result = await Controller.QueryEnglishAndMathsAchievementAsync(ProfileId);
+            Result = await Controller.QueryEnglishAndMathsStatusAsync(ProfileId);
         }
     }
 }

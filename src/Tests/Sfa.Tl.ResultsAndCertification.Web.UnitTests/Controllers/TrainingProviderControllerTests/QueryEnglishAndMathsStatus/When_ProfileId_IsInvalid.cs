@@ -5,19 +5,15 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.QueryEnglishAndMathsAchievement
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.QueryEnglishAndMathsStatus
 {
-    public class When_HasLrsEnglishAndMaths_IsFalse : TestSetup
+    public class When_ProfileId_IsInvalid : TestSetup
     {
-        private LearnerRecordDetailsViewModel mockresult = null;
+        private readonly LearnerRecordDetailsViewModel mockresult = null;
+
         public override void Given()
         {
-            ProfileId = 10;
-            mockresult = new LearnerRecordDetailsViewModel
-            {
-                ProfileId = 10,
-                HasLrsEnglishAndMaths = false,
-            };
+            ProfileId = 0;
             TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(mockresult);
         }
 
