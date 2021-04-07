@@ -345,7 +345,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("query-english-and-maths-achievement/{profileId}", Name = RouteConstants.QueryEnglishAndMathsAchievement)]
+        [Route("query-english-and-maths-status/{profileId}", Name = RouteConstants.QueryEnglishAndMathsStatus)]
         public async Task<IActionResult> QueryEnglishAndMathsAchievementAsync(int profileId)
         {
             var learnerDetails = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(User.GetUkPrn(), profileId);

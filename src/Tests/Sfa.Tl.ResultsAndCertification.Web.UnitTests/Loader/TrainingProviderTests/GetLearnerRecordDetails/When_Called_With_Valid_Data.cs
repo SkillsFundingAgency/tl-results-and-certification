@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             englishAndMathsStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_EnglishAndMaths_Status_Text);
             englishAndMathsStatus.Value.Should().Be(LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text);
             englishAndMathsStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Query_Action_Link_Text);
-            englishAndMathsStatus.RouteName.Should().Be(RouteConstants.QueryEnglishAndMathsAchievement);
+            englishAndMathsStatus.RouteName.Should().Be(RouteConstants.QueryEnglishAndMathsStatus);
             englishAndMathsStatus.RouteAttributes.Count().Should().Be(1);
             englishAndMathsStatus.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileId);
             profileId.Should().Be(_expectedApiResult.ProfileId.ToString());
