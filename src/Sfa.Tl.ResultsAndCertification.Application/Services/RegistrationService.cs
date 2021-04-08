@@ -539,7 +539,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<bool> HandleProviderChanges(ManageRegistration model, RegistrationRecordResponse registrationRecord)
         {
-            var pathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: false);
+            var pathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: false, includeIndustryPlacements: true);
 
             if (pathway == null || pathway.Status != RegistrationPathwayStatus.Active)
             {
@@ -564,7 +564,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     Status = RegistrationPathwayStatus.Active,
                     IsBulkUpload = false,
                     TqRegistrationSpecialisms = MapSpecialisms(registrationRecord.TlSpecialismLarIds, model.PerformedBy, 0, false),
-                    TqPathwayAssessments = MapPathwayAssessmentsAndResults(pathway, true, false, model.PerformedBy),                    
+                    TqPathwayAssessments = MapPathwayAssessmentsAndResults(pathway, true, false, model.PerformedBy),
+                    IndustryPlacements = MapIndustryPlacements(pathway, model.PerformedBy),
                     CreatedBy = model.PerformedBy,
                     CreatedOn = DateTime.UtcNow
                 });
