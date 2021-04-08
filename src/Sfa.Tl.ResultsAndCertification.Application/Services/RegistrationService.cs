@@ -439,7 +439,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model)
         {
-            var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId);
+            var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: true, includeIndustryPlacements: true);
 
             if (tqRegistrationPathway == null || tqRegistrationPathway.Status != RegistrationPathwayStatus.Withdrawn)
             {
@@ -457,6 +457,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 IsBulkUpload = false,
                 TqRegistrationSpecialisms = MapSpecialisms(tqRegistrationPathway.TqRegistrationSpecialisms.Select(s => new KeyValuePair<int, string>(s.TlSpecialismId, null)), model.PerformedBy, 0, false),
                 TqPathwayAssessments = MapPathwayAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),
+                IndustryPlacements = MapIndustryPlacements(tqRegistrationPathway, model.PerformedBy),
                 CreatedBy = model.PerformedBy,
                 CreatedOn = DateTime.UtcNow
             };
@@ -531,7 +532,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<bool> HandleProviderChanges(ManageRegistration model, RegistrationRecordResponse registrationRecord)
         {
-            var pathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, false);
+            var pathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: false);
 
             if (pathway == null || pathway.Status != RegistrationPathwayStatus.Active)
             {
@@ -727,6 +728,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     IsBulkUpload = isBulkUpload,
                     CreatedBy = performedBy,
                 }).ToList()
+            }).ToList();
+        }
+
+        private IList<IndustryPlacement> MapIndustryPlacements(TqRegistrationPathway tqRegistrationPathway, string performedBy)
+        {
+            return tqRegistrationPathway.IndustryPlacements.Select(x => new IndustryPlacement
+            {
+                Status = x.Status,
+                CreatedBy = performedBy
             }).ToList();
         }
 
