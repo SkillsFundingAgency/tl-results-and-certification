@@ -387,7 +387,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 if (registrationDetails == null)
                     return RedirectToRoute(RouteConstants.PageNotFound);
 
-                if (registrationDetails.IsResultExist)
+                if (registrationDetails.IsResultExist || registrationDetails.IsIndustryPlacementExist)
                 {
                     var cannotBeDeletedViewModel = new RegistrationCannotBeDeletedViewModel { ProfileId = registrationDetails.ProfileId };
                     await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel), cannotBeDeletedViewModel, CacheExpiryTime.XSmall);
