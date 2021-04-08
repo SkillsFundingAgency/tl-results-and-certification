@@ -385,6 +385,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
+            var isIndustryPlacementExist = registrationProfile.TqRegistrationPathways.Any(p => p.IndustryPlacements.Any());
+            if (isIndustryPlacementExist)
+            {
+                _logger.LogWarning(LogEvent.RegistrationNotDeleted, $"Unable to delete registration as registration has industry placement exist for ProfileId = {profileId}. Method: DeleteRegistrationByProfileId({aoUkprn}, {profileId})");
+                return false;
+            }
+
             return await _tqRegistrationRepository.DeleteAsync(registrationProfile) > 0;
         }
 

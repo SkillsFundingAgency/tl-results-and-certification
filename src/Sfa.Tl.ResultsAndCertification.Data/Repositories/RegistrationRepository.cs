@@ -45,6 +45,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqRegistrationSpecialisms)
                 .Include(x => x.TqRegistrationPathways)
+                    .ThenInclude(x => x.IndustryPlacements)
+                .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqPathwayAssessments)
                     .ThenInclude(x => x.TqPathwayResults)
                 .FirstOrDefaultAsync();

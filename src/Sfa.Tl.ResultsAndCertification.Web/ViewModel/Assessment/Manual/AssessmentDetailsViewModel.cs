@@ -43,6 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public string SpecialismAssessmentSeries { get; set; }
 
         public bool IsResultExist { get; set; }
+        public bool IsIndustryPlacementExist { get; set; }
 
         public RegistrationPathwayStatus PathwayStatus { get; set; }
 
