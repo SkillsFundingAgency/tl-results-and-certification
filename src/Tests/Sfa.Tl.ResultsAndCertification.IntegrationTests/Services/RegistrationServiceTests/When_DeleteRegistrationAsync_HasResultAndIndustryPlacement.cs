@@ -14,7 +14,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {
-    public class When_DeleteRegistrationAsync_HasResult : RegistrationServiceBaseTest
+    public class When_DeleteRegistrationAsync_HasResultAndIndustryPlacement : RegistrationServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
@@ -25,7 +25,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             { 
                 { 1111111111, RegistrationPathwayStatus.Active }, 
                 { 1111111112, RegistrationPathwayStatus.Withdrawn },
-                { 1111111113, RegistrationPathwayStatus.Active }
+                { 1111111113, RegistrationPathwayStatus.Active },
+                { 1111111114, RegistrationPathwayStatus.Active },
             };
 
             // Seed data
@@ -34,7 +35,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
-            foreach (var registration in _registrations)
+            var industryPlacementUln = 1111111114;
+
+            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != industryPlacementUln))
             {
                 var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
                 var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive);
@@ -53,7 +56,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             }
 
             SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
-            
+            SeedIndustrialPlacementData(industryPlacementUln, addToDbContext: true);
+
             CreateMapper();
 
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
@@ -87,9 +91,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 return new[]
                 {
                     // params { AoUkprn, profileId, expectedResult }
-                    new object[] { 10011881, 1, false }, // PathwayActive + ResultActive
+                    new object[] { 10011881, 1, false }, // PathwayActive  + ResultActive
                     new object[] { 10011881, 2, false }, // PathwayWidrawn + ResultInactive 
-                    new object[] { 10011881, 3, true },  // PathwayActive + ResultInactive
+                    new object[] { 10011881, 3, true },  // PathwayActive  + ResultInactive
+                    new object[] { 10011881, 4, false},  // PathwayActive  + NoResult         + IP_Exist
                 };
             }
         }
@@ -105,6 +110,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, TlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             DbContext.SaveChangesAsync();
-        }        
+        }
+
+        private void SeedIndustrialPlacementData(int uln, bool addToDbContext)
+        {
+            var pathway = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault();
+            IndustryPlacementProvider.CreateQualificationAchieved(DbContext, pathway.Id, IndustryPlacementStatus.Completed, addToDbContext);
+        }
     }
 }
