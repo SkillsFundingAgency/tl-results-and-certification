@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This service is for awarding organisations and providers who deliver T Level qualifications..
+        /// </summary>
+        public static string Caption_This_Section_IsFor {
+            get {
+                return ResourceManager.GetString("Caption_This_Section_IsFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Awarding organisation service roles.
         /// </summary>
         public static string Collapsable_Awarding_Organisation_Service_Roles {
@@ -88,6 +97,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Awarding organisations (also known as exam boards) can use this service to:.
+        /// </summary>
+        public static string Heading_AwardingOrganisation_Can_Use_Service_To {
+            get {
+                return ResourceManager.GetString("Heading_AwardingOrganisation_Can_Use_Service_To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Providers (for example, schools and colleges) can use this service to:.
+        /// </summary>
+        public static string Heading_Provider_Can_Use_Service_To {
+            get {
+                return ResourceManager.GetString("Heading_Provider_Can_Use_Service_To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learner Records Editor .
         /// </summary>
         public static string Learner_Records_Editors_Role {
@@ -102,6 +129,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         public static string Learner_Records_Editors_Role_Info {
             get {
                 return ResourceManager.GetString("Learner_Records_Editors_Role_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage T Level results user guide.
+        /// </summary>
+        public static string Link_Tlevel_Results_UserGuide {
+            get {
+                return ResourceManager.GetString("Link_Tlevel_Results_UserGuide", resourceCulture);
             }
         }
         
@@ -129,6 +165,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You will be signed out if you are inactive for 30 minutes..
+        /// </summary>
+        public static string Para_You_Will_Be_Signed_Out {
+            get {
+                return ResourceManager.GetString("Para_You_Will_Be_Signed_Out", resourceCulture);
             }
         }
         
@@ -259,21 +304,74 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;
-        ///      This service is for awarding organisations and providers who deliver T Level qualifications.
-        ///    &lt;/p&gt;
-        ///
-        ///    &lt;p class=&quot;govuk-body&quot;&gt;Awarding organisations can use this service to:&lt;/p&gt;
-        ///
-        ///    &lt;ul class=&quot;govuk-list govuk-list--bullet&quot;&gt;
-        ///      &lt;li&gt;tell us if T Level details are correct&lt;/li&gt;
-        ///      &lt;li&gt;tell us which T Levels each provider is offering&lt;/li&gt;
-        ///      &lt;li&gt;upload, amend, view, delete and add learner registrations&lt;/li&gt;
-        ///      &lt;li&gt;upload, amend, view, remove and add assessm [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to access the .
         /// </summary>
-        public static string Section_Text {
+        public static string Service_Access_The {
             get {
-                return ResourceManager.GetString("Section_Text", resourceCulture);
+                return ResourceManager.GetString("Service_Access_The", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to add and amend assessment entries.
+        /// </summary>
+        public static string Service_TellUs_Add_Amend_Assessments {
+            get {
+                return ResourceManager.GetString("Service_TellUs_Add_Amend_Assessments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to add and amend learner registrations.
+        /// </summary>
+        public static string Service_TellUs_Add_Amend_Registrations {
+            get {
+                return ResourceManager.GetString("Service_TellUs_Add_Amend_Registrations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to add and amend core component results.
+        /// </summary>
+        public static string Service_TellUs_Add_Amend_Results {
+            get {
+                return ResourceManager.GetString("Service_TellUs_Add_Amend_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tell us if a learner has met the minimum standard for English and maths.
+        /// </summary>
+        public static string Service_TellUs_English_And_Maths_Qualification {
+            get {
+                return ResourceManager.GetString("Service_TellUs_English_And_Maths_Qualification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tell us if a learner has completed their industry placement.
+        /// </summary>
+        public static string Service_TellUs_IndustryPlacement_Status {
+            get {
+                return ResourceManager.GetString("Service_TellUs_IndustryPlacement_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tell us which T Levels each provider is offering.
+        /// </summary>
+        public static string Service_TellUs_Provider_Offering {
+            get {
+                return ResourceManager.GetString("Service_TellUs_Provider_Offering", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tell us if T Level details are correct.
+        /// </summary>
+        public static string Service_TellUs_Tlevel_Details_Correct {
+            get {
+                return ResourceManager.GetString("Service_TellUs_Tlevel_Details_Correct", resourceCulture);
             }
         }
         

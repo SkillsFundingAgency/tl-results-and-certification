@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 { 1111111112, RegistrationPathwayStatus.Active }, 
                 { 1111111113, RegistrationPathwayStatus.Withdrawn },
                 { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active },
             };
 
             // Create mapper
@@ -46,8 +48,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
             var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+            var industryPlacementUln = 1111111115;
 
-            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
+            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111 && x.UniqueLearnerNumber != industryPlacementUln))
             {
                 var hasHitoricData = new List<long> { 1111111112 };
                 var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
@@ -67,6 +70,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
             _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+            SeedIndustyPlacementData(industryPlacementUln);
+
             DbContext.SaveChanges();
 
             AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
@@ -175,6 +180,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 PathwayResultId = expectedPathwayResult?.Id
             };
 
+            var expectedIsIndustryPlacementExist = expectedRegistration.TqRegistrationPathways.FirstOrDefault().IndustryPlacements.Any();
+
             // Assert
             _result.ProfileId.Should().Be(expectedAssessmentDetails.ProfileId);
             _result.Uln.Should().Be(expectedAssessmentDetails.Uln);
@@ -192,6 +199,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             _result.SpecialismAssessmentId.Should().Be(expectedAssessmentDetails.SpecialismAssessmentId);
             _result.Status.Should().Be(expectedAssessmentDetails.Status);
             _result.PathwayResultId.Should().Be(expectedAssessmentDetails.PathwayResultId);
+            _result.IsIndustryPlacementExist.Should().Be(expectedIsIndustryPlacementExist);
         }
 
         public static IEnumerable<object[]> Data
@@ -217,8 +225,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
                     // Uln: 1111111114 - Registration(Active), TqPathwayAssessments(Active), TqResult (Active)
                     new object[] { 10011881, 1111111114, 4, RegistrationPathwayStatus.Active, true },
+
+                    // Uln: 1111111115 - Registration(Active) + IndustryPlacement(Completed)
+                    new object[] { 10011881, 1111111115, 5, RegistrationPathwayStatus.Active, true },
                 };
             }
-        }        
+        }
+
+        private void SeedIndustyPlacementData(int uln)
+        {
+            var pathway = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault();
+            IndustryPlacementProvider.CreateQualificationAchieved(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
+        }
     }
 }

@@ -4,7 +4,29 @@
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">@StartPage.Page_Heading</h1>
 
-        @Html.Raw(@StartPage.Section_Text)
+        <p class="govuk-body">
+            @StartPage.Caption_This_Section_IsFor
+        </p>
+
+        <h2 class="govuk-heading-m">@StartPage.Heading_AwardingOrganisation_Can_Use_Service_To</h2>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@StartPage.Service_TellUs_Tlevel_Details_Correct</li>
+            <li>@StartPage.Service_TellUs_Provider_Offering</li>
+            <li>@StartPage.Service_TellUs_Add_Amend_Registrations</li>
+            <li>@StartPage.Service_TellUs_Add_Amend_Assessments</li>
+            <li>@StartPage.Service_TellUs_Add_Amend_Results</li>
+            <li>@StartPage.Service_Access_The<a class="govuk-link" asp-route="UserGuide">@StartPage.Link_Tlevel_Results_UserGuide</a></li>
+        </ul>
+
+        <h2 class="govuk-heading-m">@StartPage.Heading_Provider_Can_Use_Service_To</h2>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@StartPage.Service_TellUs_English_And_Maths_Qualification</li>
+            <li>@StartPage.Service_TellUs_IndustryPlacement_Status</li>
+        </ul>
+
+        <p class="govuk-body govuk-!-margin-top-7">@StartPage.Para_You_Will_Be_Signed_Out</p>
 
         <a asp-route="SignIn" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-6" data-module="govuk-button">
             @StartPage.Start_Button_Text

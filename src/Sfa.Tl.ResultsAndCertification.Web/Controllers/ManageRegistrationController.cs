@@ -886,7 +886,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("registration-with-result-cannot-be-deleted", Name = RouteConstants.RegistrationCannotBeDeleted)]
+        [Route("registration-cannot-be-deleted", Name = RouteConstants.RegistrationCannotBeDeleted)]
         public async Task<IActionResult> RegistrationCannotBeDeletedAsync()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<RegistrationCannotBeDeletedViewModel>(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel));
