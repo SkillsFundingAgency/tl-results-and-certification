@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             }
 
             SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
-            SeedIndustrialPlacementData(industryPlacementUln, addToDbContext: true);
+            SeedIndustryPlacementData(industryPlacementUln, addToDbContext: true);
 
             CreateMapper();
 
@@ -112,7 +112,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             DbContext.SaveChangesAsync();
         }
 
-        private void SeedIndustrialPlacementData(int uln, bool addToDbContext)
+        private void SeedIndustryPlacementData(int uln, bool addToDbContext)
         {
             var pathway = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault();
             IndustryPlacementProvider.CreateQualificationAchieved(DbContext, pathway.Id, IndustryPlacementStatus.Completed, addToDbContext);
