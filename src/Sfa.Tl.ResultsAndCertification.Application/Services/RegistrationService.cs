@@ -807,6 +807,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         { 
                             Id = idx - ipStartIndex,
                             Status = industryPlacement.Status,
+                            CreatedOn = DateTime.UtcNow,
                             CreatedBy = amendedRegistration.CreatedBy 
                         });
                     }

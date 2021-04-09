@@ -215,11 +215,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     foreach (var industryPlacement in pathway.IndustryPlacements)
                     {
                         // update fk relationship id for newely added records
+                        // take only newly added industry placement record as we are not maintaining history in IP table
+                        // so we don't want to update existing records
                         if (industryPlacement.TqRegistrationPathwayId == 0)
                         {
                             industryPlacement.TqRegistrationPathwayId = pathwayEntity.Id;
-                        }
-                        industryPlacements.Add(industryPlacement);
+                            industryPlacements.Add(industryPlacement);
+                        }                        
                     }
 
                     foreach (var specialism in pathway.TqRegistrationSpecialisms)
