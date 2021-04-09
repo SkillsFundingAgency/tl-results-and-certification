@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
                 { 1111111112, RegistrationPathwayStatus.Active }, 
                 { 1111111113, RegistrationPathwayStatus.Withdrawn },
                 { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active },
             };
 
             /// Registrations seed
@@ -39,8 +41,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
             var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+            var industryPlacementUln = 1111111115;
 
-            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
+            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111 && x.UniqueLearnerNumber != industryPlacementUln))
             {
                 var hasHitoricData = new List<long> { 1111111112 };
                 var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
@@ -60,6 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
 
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
             _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+            SeedIndustyPlacementData(industryPlacementUln);
 
             DbContext.SaveChanges();
 
@@ -178,6 +182,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
                 
                 AssertPathwayResult(actualPathwayResult, expectedPathwayResult);
             }
+
+            // Industry Placement
+            var expectedIndustryPlacement = expectedPathway.IndustryPlacements.FirstOrDefault();
+            var actualIndustryPlacement = actualPathway.IndustryPlacements.FirstOrDefault(); 
+            AssertIndustryPlacement(actualIndustryPlacement, expectedIndustryPlacement);
         }
 
         public static IEnumerable<object[]> Data
@@ -203,8 +212,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
 
                     // Uln: 1111111114 - Registration(Active), TqPathwayAssessments(Active), TqResult (Active)
                     new object[] { 10011881, 1111111114, 4, RegistrationPathwayStatus.Active, true, true },
+
+                    // Uln: 1111111115 - Registration(Active) + Assessment(None) + IndustryPlacement(Completed)
+                    new object[] { 10011881, 1111111115, 5, RegistrationPathwayStatus.Active, false, true }
                 };
             }
+        }
+
+        private void SeedIndustyPlacementData(int uln)
+        {
+            var pathway = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault();
+            IndustryPlacementProvider.CreateQualificationAchieved(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
         }
     }
 }
