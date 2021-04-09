@@ -212,6 +212,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 int pathwayAssessmentStartIndex = Constants.PathwayAssessmentsStartIndex;
                 int pathwayResultStartIndex = Constants.PathwayResultsStartIndex;
+                int ipStartIndex = Constants.IndustryPlacementStartIndex;
 
                 amendedRegistrations.ForEach(amendedRegistration =>
                 {
@@ -246,11 +247,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                             if (response.IsValid)
                             {
-                                var entitiesChangeStatus = PrepareAndAmendRegistrationData(amendedRegistration, pathwaysToAdd, pathwaysToUpdate, pathwayAssessmentStartIndex, pathwayResultStartIndex);
+                                var entitiesChangeStatus = PrepareAndAmendRegistrationData(amendedRegistration, pathwaysToAdd, pathwaysToUpdate, pathwayAssessmentStartIndex, pathwayResultStartIndex, ipStartIndex);
                                 hasBothPathwayAndSpecialismsRecordsChanged = entitiesChangeStatus.Item1;
                                 hasOnlySpecialismsRecordChanged = entitiesChangeStatus.Item2;
                                 pathwayAssessmentStartIndex = entitiesChangeStatus.Item3;
                                 pathwayResultStartIndex = entitiesChangeStatus.Item4;
+                                ipStartIndex = entitiesChangeStatus.Item5;
                             }
                         }
 
@@ -773,7 +775,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
-        private Tuple<bool, bool, int, int> PrepareAndAmendRegistrationData(TqRegistrationProfile amendedRegistration, List<TqRegistrationPathway> pathwaysToAdd, List<TqRegistrationPathway> pathwaysToUpdate, int pathwayAssessmentStartIndex, int pathwayResultStartIndex)
+        private Tuple<bool, bool, int, int, int> PrepareAndAmendRegistrationData(TqRegistrationProfile amendedRegistration, List<TqRegistrationPathway> pathwaysToAdd, List<TqRegistrationPathway> pathwaysToUpdate, int pathwayAssessmentStartIndex, int pathwayResultStartIndex, int ipStartIndex)
         {
             var hasBothPathwayAndSpecialismsRecordsChanged = false;
             var hasOnlySpecialismsRecordChanged = false;
@@ -797,6 +799,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         specialismToUpdate.ModifiedBy = amendedRegistration.CreatedBy;
                         specialismToUpdate.ModifiedOn = DateTime.UtcNow;
                     });
+
+                    // Transfer - Industry Placements
+                    foreach(var (industryPlacement, idx) in pathwayToUpdate.IndustryPlacements.Select((value, i) => (value, i)))
+                    {
+                        associatedPathwayToAdd.IndustryPlacements.Add(new IndustryPlacement 
+                        { 
+                            Id = idx - ipStartIndex,
+                            Status = industryPlacement.Status,
+                            CreatedBy = amendedRegistration.CreatedBy 
+                        });
+                    }
+                    ipStartIndex -= pathwayToUpdate.IndustryPlacements.Count();
 
                     // Transfer - Assessments
                     var pathwayAssessmentsToUpdate = pathwayToUpdate.TqPathwayAssessments.Where(s => s.IsOptedin && s.EndDate == null).ToList();
@@ -887,7 +901,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
             }
-            return new Tuple<bool, bool, int, int>(hasBothPathwayAndSpecialismsRecordsChanged, hasOnlySpecialismsRecordChanged, pathwayAssessmentStartIndex, pathwayResultStartIndex);
+            return new Tuple<bool, bool, int, int, int>(hasBothPathwayAndSpecialismsRecordsChanged, hasOnlySpecialismsRecordChanged, pathwayAssessmentStartIndex, pathwayResultStartIndex, ipStartIndex);
         }
 
         private BulkProcessValidationError GetRegistrationValidationError(long uln, string errorMessage)

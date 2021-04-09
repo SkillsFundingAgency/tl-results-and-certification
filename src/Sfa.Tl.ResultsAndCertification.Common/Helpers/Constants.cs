@@ -78,6 +78,9 @@
         // Results Data Index Constants
         public const int PathwayResultsStartIndex = 100000;
 
+        // Industry Placement Data Index Constants
+        public const int IndustryPlacementStartIndex = 100000;
+
         // Route Attributes
         public const string IsChangeMode = "isChangeMode";
         public const string ProfileId = "profileId";
