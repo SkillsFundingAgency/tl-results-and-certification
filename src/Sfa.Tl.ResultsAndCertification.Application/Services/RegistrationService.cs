@@ -828,6 +828,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             IsOptedin = true,
                             StartDate = DateTime.UtcNow,
                             IsBulkUpload = true,
+                            CreatedOn = DateTime.UtcNow,
                             CreatedBy = amendedRegistration.CreatedBy
                         };
 
@@ -846,6 +847,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                 IsOptedin = true,
                                 StartDate = DateTime.UtcNow,
                                 IsBulkUpload = true,
+                                CreatedOn = DateTime.UtcNow,
                                 CreatedBy = amendedRegistration.CreatedBy
                             };
                             newActiveAssessment.TqPathwayResults.Add(newActiveResult);
