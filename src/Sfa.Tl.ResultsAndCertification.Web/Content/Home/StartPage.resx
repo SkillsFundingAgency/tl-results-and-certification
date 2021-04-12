@@ -144,9 +144,6 @@
   <data name="Link_Tlevel_Results_UserGuide" xml:space="preserve">
     <value>Manage T Level results user guide</value>
   </data>
-  <data name="Manage_Data_Format_User_Guide" xml:space="preserve">
-    <value>T Level data format and rules guides</value>
-  </data>
   <data name="Page_Heading" xml:space="preserve">
     <value>Manage T Level results</value>
   </data>
@@ -161,12 +158,6 @@
   </data>
   <data name="Provider_Administrator_Role_Info" xml:space="preserve">
     <value>– has all roles: Learner Records Editor</value>
-  </data>
-  <data name="Read_The_Text_Part1" xml:space="preserve">
-    <value>You may need to prepare your CSV files for uploading registrations, assessments and results in bulk. Find out more about the technical requirements for each file on our </value>
-  </data>
-  <data name="Read_The_Text_Part2" xml:space="preserve">
-    <value>page.</value>
   </data>
   <data name="Role_Providers_Editor" xml:space="preserve">
     <value>Providers Editor </value>

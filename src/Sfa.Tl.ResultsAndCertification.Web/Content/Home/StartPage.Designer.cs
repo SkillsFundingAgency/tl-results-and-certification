@@ -142,15 +142,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level data format and rules guides.
-        /// </summary>
-        public static string Manage_Data_Format_User_Guide {
-            get {
-                return ResourceManager.GetString("Manage_Data_Format_User_Guide", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Manage T Level results.
         /// </summary>
         public static string Page_Heading {
@@ -192,24 +183,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         public static string Provider_Administrator_Role_Info {
             get {
                 return ResourceManager.GetString("Provider_Administrator_Role_Info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You may need to prepare your CSV files for uploading registrations, assessments and results in bulk. Find out more about the technical requirements for each file on our .
-        /// </summary>
-        public static string Read_The_Text_Part1 {
-            get {
-                return ResourceManager.GetString("Read_The_Text_Part1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to page..
-        /// </summary>
-        public static string Read_The_Text_Part2 {
-            get {
-                return ResourceManager.GetString("Read_The_Text_Part2", resourceCulture);
             }
         }
         
