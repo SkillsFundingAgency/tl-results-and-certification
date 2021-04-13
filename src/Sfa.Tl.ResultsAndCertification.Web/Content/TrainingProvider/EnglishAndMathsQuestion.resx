@@ -123,6 +123,9 @@
   <data name="Caption_Add_New_Learner" xml:space="preserve">
     <value>Add a new learner T Level record</value>
   </data>
+  <data name="Caption_Update_Learner_TLevel_Record" xml:space="preserve">
+    <value>Update learner T Level record</value>
+  </data>
   <data name="Change_Button" xml:space="preserve">
     <value>Change</value>
   </data>
@@ -197,6 +200,15 @@
   </data>
   <data name="Text_Learner" xml:space="preserve">
     <value>Learner</value>
+  </data>
+  <data name="Update_Button_Text" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Update_Inset_Text_I_Declare" xml:space="preserve">
+    <value>By selecting 'Update' I declare that:</value>
+  </data>
+  <data name="Update_Page_Title" xml:space="preserve">
+    <value>Update learner T Level record - English and maths achievement page</value>
   </data>
   <data name="Validation_Select_Is_EnglishMaths_Achieved_Required_Message" xml:space="preserve">
     <value>Select if the learner has achieved the minimum standard</value>

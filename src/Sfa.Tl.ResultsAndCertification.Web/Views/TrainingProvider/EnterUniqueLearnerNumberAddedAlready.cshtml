@@ -16,7 +16,7 @@
         </h1>
         <p class="govuk-body">@EnterUniqueLearnerReferenceAlreadyAdded.Uln_Already_Added_Text</p>
         <p>
-            <a id="continueButton" class="govuk-button govuk-!-margin-top-6" role="button" asp-route="">
+            <a id="continueButton" class="govuk-button govuk-!-margin-top-6" role="button" asp-route="LearnerRecordDetails" asp-route-profileId="@Model.ProfileId">
                 @EnterUniqueLearnerReferenceAlreadyAdded.Continue_Button
             </a>
         </p>

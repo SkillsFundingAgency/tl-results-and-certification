@@ -138,5 +138,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 };
             }
         }
+
+        public AddLearnerRecordViewModel ResetChangeMode()
+        {
+            if(LearnerRecordModel.EnglishAndMathsQuestion != null)
+                LearnerRecordModel.EnglishAndMathsQuestion.IsChangeMode = false;
+            
+            LearnerRecordModel.IndustryPlacementQuestion.IsChangeMode = false;
+            return LearnerRecordModel;
+        }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
@@ -14,13 +16,22 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class TrainingProviderService : ITrainingProviderService
     {
+        private readonly IRepository<TqRegistrationProfile> _tqRegistrationProfile;
         private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
+        private readonly IRepository<IndustryPlacement> _industryPlacementRepository;        
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public TrainingProviderService(IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository, IMapper mapper)
+        public TrainingProviderService(IRepository<TqRegistrationProfile> tqRegistrationProfile, 
+            IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
+            IRepository<IndustryPlacement> industryPlacementRepository,
+            IMapper mapper, ILogger<TrainingProviderService> logger)
         {
+            _tqRegistrationProfile = tqRegistrationProfile;
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
+            _industryPlacementRepository = industryPlacementRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
@@ -39,6 +50,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                     .FirstOrDefaultAsync();
 
             return _mapper.Map<FindLearnerRecord>(latestPathway);
+        }
+
+        public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)
+        {
+            var latestPathwayQuerable = _tqRegistrationPathwayRepository
+                                        .GetManyAsync(x => x.TqRegistrationProfile.Id == profileId &&
+                                            x.TqProvider.TlProvider.UkPrn == providerUkprn,
+                                            navigationPropertyPath: new Expression<Func<TqRegistrationPathway, object>>[]
+                                            {
+                                                n => n.TqRegistrationProfile,
+                                                n => n.TqProvider.TlProvider,
+                                                n => n.TqProvider.TqAwardingOrganisation.TlPathway,
+                                                n => n.IndustryPlacements
+                                            })
+                                        .Include(x => x.TqRegistrationProfile.QualificationAchieved).ThenInclude(x => x.Qualification)
+                                        .OrderByDescending(o => o.CreatedOn);
+
+            var latestPathway = pathwayId.HasValue ? await latestPathwayQuerable.FirstOrDefaultAsync(p => p.Id == pathwayId) : await latestPathwayQuerable.FirstOrDefaultAsync();
+            return _mapper.Map<LearnerRecordDetails>(latestPathway);
         }
 
         public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request)
@@ -76,6 +106,63 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var status = await _tqRegistrationPathwayRepository.UpdateWithSpecifedCollectionsOnlyAsync(pathway, false, p => p.TqRegistrationProfile, p => p.IndustryPlacements);
             return new AddLearnerRecordResponse { Uln = request.Uln, Name = $"{pathway.TqRegistrationProfile.Firstname} {pathway.TqRegistrationProfile.Lastname}", IsSuccess = status > 0 };
         }
+
+        public async Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest request)
+        {
+            if (request == null || (!request.HasEnglishAndMathsChanged && !request.HasIndustryPlacementChanged))
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Model is null or no changes detected to update Learner record for Uln = {request.Uln}. Method: UpdateLearnerRecordAsync({request})");
+                return false;
+            }
+
+            bool isSuccess = false;
+
+            if (request.HasEnglishAndMathsChanged)
+            {
+                isSuccess = await HandleEnglishAndMathsChanges(request);
+            }
+            else if (request.HasIndustryPlacementChanged)
+            {
+                isSuccess = await HandleIndustryPlacementChanges(request);
+            }
+
+            return isSuccess;
+        }
+
+        private async Task<bool> HandleEnglishAndMathsChanges(UpdateLearnerRecordRequest request)
+        {
+            var profile = await _tqRegistrationProfile.GetFirstOrDefaultAsync(p => p.Id == request.ProfileId && p.UniqueLearnerNumber == request.Uln
+                                                                    && p.IsEnglishAndMathsAchieved.HasValue && p.IsRcFeed == true
+                                                                    && p.TqRegistrationPathways.Any(pa => pa.TqProvider.TlProvider.UkPrn == request.Ukprn
+                                                                    && (pa.Status == RegistrationPathwayStatus.Active || pa.Status == RegistrationPathwayStatus.Withdrawn)));
+
+            if (profile == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update English and Maths for Uln = {request.Uln}. Method: HandleEnglishAndMathsChanges({request})");
+                return false;
+            }
+
+            _mapper.Map(request, profile);
+            return await _tqRegistrationProfile.UpdateWithSpecifedColumnsOnlyAsync(profile, p => p.IsEnglishAndMathsAchieved, p => p.IsSendLearner, p => p.ModifiedOn, p => p.ModifiedBy) > 0;
+        }
+
+        private async Task<bool> HandleIndustryPlacementChanges(UpdateLearnerRecordRequest request)
+        {
+            var industryPlacement = await _industryPlacementRepository.GetFirstOrDefaultAsync(ip => ip.Id == request.IndustryPlacementId
+                                                                                    && ip.TqRegistrationPathway.Id == request.RegistrationPathwayId
+                                                                                    && ip.TqRegistrationPathway.TqRegistrationProfileId == request.ProfileId
+                                                                                    && ip.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == request.Ukprn
+                                                                                    && (ip.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                                                                                    || ip.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn));
+            if (industryPlacement == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No record found to update Industry Placement for Uln = {request.Uln}. Method: HandleIndustryPlacementChanges({request})");
+                return false;
+            }
+
+            _mapper.Map(request, industryPlacement);
+            return await _industryPlacementRepository.UpdateWithSpecifedColumnsOnlyAsync(industryPlacement, ip => ip.Status, ip => ip.ModifiedOn, ip => ip.ModifiedBy) > 0;
+        }        
 
         private bool IsValidAddLearnerRecordRequest(TqRegistrationPathway registrationPathway, AddLearnerRecordRequest request)
         {

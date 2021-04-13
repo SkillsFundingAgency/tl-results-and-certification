@@ -21,6 +21,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         { 
             RouteName = IsChangeMode ? RouteConstants.AddLearnerRecordCheckAndSubmit :
                     IsBackLinkToEnterUln ? RouteConstants.EnterUniqueLearnerNumber : RouteConstants.AddEnglishAndMathsQuestion 
-        };       
+        };
     }
 }

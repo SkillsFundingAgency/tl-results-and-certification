@@ -224,11 +224,22 @@
         public const string SubmitLearnerRecordCancel = "SubmitLearnerRecordCancel";
         public const string LearnerRecordAddedConfirmation = "LearnerRecordAddedConfirmation";
 
+        public const string UpdateLearnerRecord = "UpdateLearnerRecord";
         public const string SearchLearnerRecord = "SearchLearnerRecord";
         public const string SubmitSearchLearnerRecord = "SubmitSearchLearnerRecord";
+        public const string SearchLearnerRecordNotAdded = "SearchLearnerRecordNotAdded";
+        public const string SearchLearnerRecordNotFound = "SearchLearnerRecordNotFound";
+        public const string LearnerRecordDetails = "LearnerRecordDetails";
+        public const string QueryEnglishAndMathsStatus = "QueryEnglishAndMathsStatus";
+        public const string UpdateIndustryPlacementQuestion = "UpdateIndustryPlacementQuestion";
+        public const string SubmitUpdateIndustryPlacementQuestion = "SubmitUpdateIndustryPlacementQuestion";
+        public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
+        public const string UpdateEnglisAndMathsAchievement = "UpdateEnglisAndMathsAchievement";
+        public const string SubmitUpdateEnglisAndMathsAchievement = "SubmitUpdateEnglisAndMathsAchievement";
+        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
 
         //CheckAndSubmit
 
-        # endregion
+        #endregion
     }
 }

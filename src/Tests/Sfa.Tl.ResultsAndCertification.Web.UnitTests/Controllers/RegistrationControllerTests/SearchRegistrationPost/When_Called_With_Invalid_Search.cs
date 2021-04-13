@@ -8,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 {
     public class When_Called_With_Invalid_Search : TestSetup
     {
-        private string _searchUln = "12345678";
+        private readonly string _searchUln = "12345678";
         public override void Given()
         {
             SearchRegistrationViewModel = new SearchRegistrationViewModel { SearchUln = _searchUln };

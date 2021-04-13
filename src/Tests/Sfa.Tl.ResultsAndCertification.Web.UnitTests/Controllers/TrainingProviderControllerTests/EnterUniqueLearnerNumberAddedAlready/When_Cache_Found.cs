@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.EnterUniqueLearnerReferenceAddedAlready
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.EnterUniqueLearnerNumberAddedAlready
 {
     public class When_Cache_Found : TestSetup
     {
@@ -14,6 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
         public override void Given()
         {
+            ProfileId = 1;
             mockCache = new AddLearnerRecordViewModel { Uln = new EnterUlnViewModel { EnterUln = uln.ToString() } };
             CacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey)
                 .Returns(mockCache);
@@ -26,6 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             var model = viewResult.Model as LearnerRecordAddedAlreadyViewModel;
 
             model.Should().NotBeNull();
+            model.ProfileId.Should().Be(ProfileId);
             model.Uln.Should().Be(uln.ToString());
 
             model.BackLink.Should().NotBeNull();

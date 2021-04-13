@@ -24,11 +24,25 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return await _trainingProviderService.FindLearnerRecordAsync(providerUkprn, uln);
         }
 
+        [HttpGet]
+        [Route("GetLearnerRecordDetails/{providerUkprn}/{profileId}/{pathwayId:int?}")]
+        public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)
+        {
+            return await _trainingProviderService.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
+        }
+
         [HttpPost]
         [Route("AddLearnerRecord")]
         public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request)
         {
             return await _trainingProviderService.AddLearnerRecordAsync(request);
+        }
+
+        [HttpPut]
+        [Route("UpdateLearnerRecord")]
+        public async Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model)
+        {
+            return await _trainingProviderService.UpdateLearnerRecordAsync(model);
         }
     }
 }

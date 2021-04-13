@@ -18,9 +18,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
     public abstract class TrainingProviderServiceBaseTest : BaseTest<TqRegistrationProfile>
     {
         protected TrainingProviderService TrainingProviderService;
+        protected ILogger<GenericRepository<TqRegistrationProfile>> RegistrationProfileRepositoryLogger;
+        protected IRepository<TqRegistrationProfile> RegistrationProfileRepository;
         protected ILogger<GenericRepository<TqRegistrationPathway>> RegistrationPathwayRepositoryLogger;
         protected IRepository<TqRegistrationPathway> RegistrationPathwayRepository;
+        protected ILogger<GenericRepository<IndustryPlacement>> IndustryPlacementRepositoryLogger;
+        protected IRepository<IndustryPlacement> IndustryPlacementRepository;
         protected IMapper TrainingProviderMapper;
+        protected ILogger<TrainingProviderService> TrainingProviderServiceLogger;
 
         // Data Seed variables
         protected TlAwardingOrganisation TlAwardingOrganisation;

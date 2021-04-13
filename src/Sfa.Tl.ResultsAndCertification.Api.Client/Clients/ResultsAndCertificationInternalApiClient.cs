@@ -262,10 +262,20 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<FindLearnerRecord>(requestUri);
         }
 
+        public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)
+        {
+            var requestUri = string.Format(ApiConstants.GetLearnerRecordDetailsUri, providerUkprn, profileId, pathwayId);
+            return await GetAsync<LearnerRecordDetails>(requestUri);
+        }
+
         public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request)
         {
-            var requestUri = ApiConstants.AddLearnerRecordUri;
-            return await PostAsync<AddLearnerRecordRequest, AddLearnerRecordResponse>(requestUri, request);
+            return await PostAsync<AddLearnerRecordRequest, AddLearnerRecordResponse>(ApiConstants.AddLearnerRecordUri, request);
+        }
+
+        public async Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model)
+        {
+            return await PutAsync<UpdateLearnerRecordRequest, bool>(ApiConstants.UpdateLearnerRecordUri, model);
         }
 
         #region Private Methods

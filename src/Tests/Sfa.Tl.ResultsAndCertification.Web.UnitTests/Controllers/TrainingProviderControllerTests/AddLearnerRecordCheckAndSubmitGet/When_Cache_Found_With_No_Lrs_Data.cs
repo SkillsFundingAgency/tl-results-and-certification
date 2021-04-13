@@ -43,6 +43,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         }
 
         [Fact]
+        public void Then_Expected_Methods_Called()
+        {
+            CacheService.Received(1).SetAsync(CacheKey,
+                Arg.Is<AddLearnerRecordViewModel>
+                (x => x.LearnerRecord == _learnerRecord &&
+                      x.Uln == _ulnViewModel &&
+                      x.EnglishAndMathsQuestion == _englishAndMathsViewModel &&
+                      x.IndustryPlacementQuestion == IndustryPlacementQuestionViewModel));
+        }
+
+        [Fact]
         public void Then_Returns_Expected_Results()
         {
             Result.Should().NotBeNull();
