@@ -273,6 +273,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         #region Update-Learner
+
+        [HttpGet]
+        [Route("update-learner-record", Name = RouteConstants.UpdateLearnerRecord)]
+        public async Task<IActionResult> UpdateLearnerRecordAsync()
+        {
+            await _cacheService.RemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.SearchLearnerRecord);
+        }
+
         [HttpGet]
         [Route("search-learner-record-unique-learner-number", Name = RouteConstants.SearchLearnerRecord)]
         public async Task<IActionResult> SearchLearnerRecordAsync()

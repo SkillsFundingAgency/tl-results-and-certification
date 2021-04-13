@@ -224,6 +224,7 @@
         public const string SubmitLearnerRecordCancel = "SubmitLearnerRecordCancel";
         public const string LearnerRecordAddedConfirmation = "LearnerRecordAddedConfirmation";
 
+        public const string UpdateLearnerRecord = "UpdateLearnerRecord";
         public const string SearchLearnerRecord = "SearchLearnerRecord";
         public const string SubmitSearchLearnerRecord = "SubmitSearchLearnerRecord";
         public const string SearchLearnerRecordNotAdded = "SearchLearnerRecordNotAdded";
