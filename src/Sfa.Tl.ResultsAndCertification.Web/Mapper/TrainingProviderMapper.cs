@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsLearnerRecordAdded, opts => opts.MapFrom(s => s.IsLearnerRecordAdded))
                .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.HasLrsEnglishAndMaths))
                .ForMember(d => d.EnglishAndMathsStatus, opts => opts.MapFrom(s => (s.HasLrsEnglishAndMaths || s.IsLearnerRecordAdded == false) ? (EnglishAndMathsStatus?)null :
-                                                                                    (s.IsEnglishAndMathsAchieved && s.IsSendLearner ? EnglishAndMathsStatus.AchievedWithSend :
+                                                                                    (s.IsEnglishAndMathsAchieved && s.IsSendLearner == true ? EnglishAndMathsStatus.AchievedWithSend :
                                                                                     (s.IsEnglishAndMathsAchieved ? EnglishAndMathsStatus.Achieved : EnglishAndMathsStatus.NotAchieved))
                                                                             ));
 

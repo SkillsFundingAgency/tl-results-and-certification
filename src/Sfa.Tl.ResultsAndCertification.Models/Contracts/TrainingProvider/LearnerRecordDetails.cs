@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public bool IsLearnerRecordAdded { get; set; }
         public bool IsEnglishAndMathsAchieved { get; set; }
         public bool HasLrsEnglishAndMaths { get; set; }
-        public bool IsSendLearner { get; set; }
+        public bool? IsSendLearner { get; set; }
         public int IndustryPlacementId { get; set; }
         public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
     }
