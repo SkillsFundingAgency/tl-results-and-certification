@@ -86,8 +86,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!learnerRecord.HasLrsEnglishAndMaths)
                 return RedirectToRoute(RouteConstants.AddEnglishAndMathsQuestion);
 
-            if (learnerRecord.HasLrsEnglishAndMaths && learnerRecord.HasSendQualification)
-                return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion); 
+            if (learnerRecord.HasLrsEnglishAndMaths && learnerRecord.HasSendQualification) // TODO
+                return RedirectToRoute(RouteConstants.AddEnglishAndMathsLrsQuestion); 
             
             if (learnerRecord.HasLrsEnglishAndMaths && !learnerRecord.HasSendQualification)
                 return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
@@ -159,7 +159,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-learner-record-english-and-maths-achievement-lrs", Name = RouteConstants.AddEnglishAndMathsLrsQuestion)]
         public async Task<IActionResult> AddEnglishAndMathsLrsQuestionAsync()
         {
-            return View();
+            var viewModel = new EnglishAndMathsLrsQuestionViewModel { LearnerName = "Test" };
+            return View(viewModel);
         }
 
         [HttpGet]

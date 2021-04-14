@@ -17,7 +17,7 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <form class="form" id="addEnglishAndMathsForm" asp-route="SubmitAddEnglishAndMathsQuestion">
+        <form class="form" id="addEnglishAndMathsLrsForm" asp-route="SubmitAddEnglishAndMathsQuestion">
             <partial name="_ValidationSummary" />
             <input type="hidden" asp-for="LearnerName" value="@Model.LearnerName" />
             <div class="govuk-form-group govuk-!-margin-bottom-7">
@@ -35,14 +35,14 @@
                         <p class="govuk-body">@EnglishAndMathsLrsQuestion.Para_This_Only_Meets_Minimum_Standard</p>
                         <p class="govuk-body">@EnglishAndMathsLrsQuestion.Para_Must_Declare_Learner_Met_All_Conditions</p>
                         <details class="govuk-details" closed="">
-                            <summary class="govuk-details__summary" style="border-bottom:none">
+                            <summary class="govuk-details__summary">
                                 <span class="govuk-details__summary-text">@EnglishAndMathsLrsQuestion.Details_Component_Link_What_Is_Lrs</span>
                             </summary>
                             <div class="govuk-details__text">
                                 <p class="govuk-body">@EnglishAndMathsLrsQuestion.Para_What_Is_Lrs</p>
                             </div>
                         </details>
-                        <details class="govuk-details" closed="">
+                        <details class="govuk-details" closed>
                             <summary class="govuk-details__summary">
                                 <span class="govuk-details__summary-text">@EnglishAndMathsLrsQuestion.Details_Component_Link_What_Are_Min_Standards</span>
                             </summary>
@@ -80,13 +80,13 @@
                             </div>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="status-not-achieved" type="radio" value="@Status.EnglishAndMathsLrsStatus.NotAchieved">
+                            <input class="govuk-radios__input" id="status-not-achieved" asp-for="EnglishAndMathsStatus" type="radio" value="@Status.EnglishAndMathsLrsStatus.NotAchieved">
                             <label class="govuk-label govuk-radios__label" for="status-not-achieved">
                                 @EnglishAndMathsLrsQuestion.Not_Achieved_Minimum_Standard
                             </label>
                         </div>
                         <div class="govuk-radios__item">
-                            <input class="govuk-radios__input" id="status-lrs-data-wrong" type="radio" value="@Status.EnglishAndMathsLrsStatus.LrsDataWrong">
+                            <input class="govuk-radios__input" id="status-lrs-data-wrong" asp-for="EnglishAndMathsStatus" type="radio" value="@Status.EnglishAndMathsLrsStatus.LrsDataWrong">
                             <label class="govuk-label govuk-radios__label" for="status-lrs-data-wrong">
                                 @EnglishAndMathsLrsQuestion.Lrs_Data_Is_Wrong
                             </label>
@@ -104,7 +104,7 @@
 
                 <p class="govuk-body govuk-!-margin-top-6">@EnglishAndMathsLrsQuestion.Para_We_Review_Your_Answer_Offline</p>
             </div>
-            <button class="govuk-button" data-module="govuk-button">@EnglishAndMathsLrsQuestion.Submit_Button</button>
+            <button id="submitButton" class="govuk-button" data-module="govuk-button">@EnglishAndMathsLrsQuestion.Submit_Button</button>
         </form>
     </div>
 </div>
