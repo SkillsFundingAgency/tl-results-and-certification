@@ -13,9 +13,8 @@ using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.T
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.LearnerRecordDetailsGet
 {
-    public class When_Called_With_No_Lrs_Data : TestSetup
+    public class When_Called_With_No_Lrs_Valid_Data : TestSetup
     {
-        private LearnerRecordDetailsViewModel mockresult = null;
         public override void Given()
         {
             ProfileId = 10;
@@ -31,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 IsLearnerRegistered = true,
                 IsLearnerRecordAdded = true,
                 IsEnglishAndMathsAchieved = true,
-                IsSendLearner = true,
+                IsSendLearner = null,
                 HasLrsEnglishAndMaths = false,
                 IndustryPlacementId = 10,
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed
@@ -70,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             // Summary EnglishAndMathsStatus           
             model.SummaryEnglishAndMathsStatus.Should().NotBeNull();
             model.SummaryEnglishAndMathsStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_EnglishAndMaths_Status_Text);
-            model.SummaryEnglishAndMathsStatus.Value.Should().Be(EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text);
+            model.SummaryEnglishAndMathsStatus.Value.Should().Be(EnglishAndMathsStatusContent.Achieved_Display_Text);
             model.SummaryEnglishAndMathsStatus.NeedBorderBottomLine.Should().BeFalse();
             model.SummaryEnglishAndMathsStatus.RenderActionColumn.Should().BeTrue();
             model.SummaryEnglishAndMathsStatus.RenderHiddenActionText.Should().BeTrue();

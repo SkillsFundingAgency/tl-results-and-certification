@@ -12,8 +12,8 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.LearnerRecordDetailsGet
 {
-    public class When_Called_With_Valid_Data : TestSetup
-    {        
+    public class When_Called_With_Lrs_IsSendLearner_False : TestSetup
+    {
         public override void Given()
         {
             ProfileId = 10;
@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             (Result as ViewResult).Model.Should().NotBeNull();
 
             var model = (Result as ViewResult).Model as LearnerRecordDetailsViewModel;
-                        
+
             model.ProfileId.Should().Be(mockresult.ProfileId);
             model.Uln.Should().Be(mockresult.Uln);
             model.Name.Should().Be(mockresult.Name);
@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.PathwayName.Should().Be(mockresult.PathwayName);
             model.IsLearnerRegistered.Should().Be(mockresult.IsLearnerRegistered);
             model.IsLearnerRecordAdded.Should().Be(mockresult.IsLearnerRecordAdded);
-            model.IsEnglishAndMathsAchieved.Should().Be(mockresult.IsEnglishAndMathsAchieved);            
+            model.IsEnglishAndMathsAchieved.Should().Be(mockresult.IsEnglishAndMathsAchieved);
             model.HasLrsEnglishAndMaths.Should().Be(mockresult.HasLrsEnglishAndMaths);
             model.IsSendLearner.Should().Be(mockresult.IsSendLearner);
             model.IndustryPlacementId.Should().Be(mockresult.IndustryPlacementId);
@@ -93,10 +93,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         private string GetMathsAndEnglishText
         {
             get
-            {                
+            {
                 return mockresult.HasLrsEnglishAndMaths ? string.Concat(GetLrsEnglishAndMathsStatusDisplayText, LearnerRecordDetailsContent.Whats_Lrs_Text) : null;
             }
-        }        
+        }
 
         private string GetEnglishAndMathsRouteName => mockresult.HasLrsEnglishAndMaths ? RouteConstants.QueryEnglishAndMathsStatus : string.Empty;
         private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => mockresult.HasLrsEnglishAndMaths ? new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } } : new Dictionary<string, string>();
