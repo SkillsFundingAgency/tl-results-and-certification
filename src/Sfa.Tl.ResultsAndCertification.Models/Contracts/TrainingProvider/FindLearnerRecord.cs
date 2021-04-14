@@ -14,5 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public bool IsEnglishAndMathsAchieved { get; set; }
         public bool HasSendQualification { get; set; }
         public bool HasLrsEnglishAndMaths { get; set; }
+        public bool IsSendConfirmationRequired { get; set; }
     }
 }

@@ -5,8 +5,8 @@ $(document).ready(function () {
     var englishMathsRadioOptions = "input[type='radio']";
 
     function ShowDeclarationText() {
-        var selectedId = $(englishMathsRadioOptions + ":checked").attr('id');
-        if (selectedId === 'status-achieved-send')
+        var selectedData = $(englishMathsRadioOptions + ":checked").attr('data-declaration');
+        if (selectedData !== null && selectedData === 'true')
             $('#declarationText').removeClass('tl-hide');
         else
             $('#declarationText').addClass('tl-hide');

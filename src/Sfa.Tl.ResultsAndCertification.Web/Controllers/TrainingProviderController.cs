@@ -86,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!learnerRecord.HasLrsEnglishAndMaths)
                 return RedirectToRoute(RouteConstants.AddEnglishAndMathsQuestion);
 
-            if (learnerRecord.HasLrsEnglishAndMaths && learnerRecord.HasSendQualification) // TODO
+            if (learnerRecord.HasLrsEnglishAndMaths && learnerRecord.IsSendConfirmationRequired)
                 return RedirectToRoute(RouteConstants.AddEnglishAndMathsLrsQuestion); 
             
             if (learnerRecord.HasLrsEnglishAndMaths && !learnerRecord.HasSendQualification)
@@ -159,8 +159,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-learner-record-english-and-maths-achievement-lrs", Name = RouteConstants.AddEnglishAndMathsLrsQuestion)]
         public async Task<IActionResult> AddEnglishAndMathsLrsQuestionAsync()
         {
-            var viewModel = new EnglishAndMathsLrsQuestionViewModel { LearnerName = "Test" };
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+
+            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false || cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == true || cacheModel?.LearnerRecord?.IsSendConfirmationRequired == false)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = cacheModel?.EnglishAndMathsLrsQuestion == null ? new EnglishAndMathsLrsQuestionViewModel() : cacheModel.EnglishAndMathsLrsQuestion;
+            viewModel.LearnerName = cacheModel.LearnerRecord.Name;
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-learner-record-english-and-maths-achievement-lrs", Name = RouteConstants.SubmitAddEnglishAndMathsLrsQuestion)]
+        public async Task<IActionResult> AddEnglishAndMathsLrsQuestionAsync(EnglishAndMathsLrsQuestionViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            return View(model);
         }
 
         [HttpGet]

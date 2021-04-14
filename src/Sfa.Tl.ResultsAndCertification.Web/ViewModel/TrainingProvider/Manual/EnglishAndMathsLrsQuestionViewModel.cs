@@ -8,8 +8,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
     public class EnglishAndMathsLrsQuestionViewModel
     {
-        //[Required(ErrorMessageResourceType = typeof(ErrorResource.EnglishAndMathsQuestion), ErrorMessageResourceName = "Validation_Select_Is_EnglishMaths_Achieved_Required_Message")]
-        public EnglishAndMathsLrsStatus? EnglishAndMathsStatus { get; set; }
+        [Required(ErrorMessageResourceType = typeof(ErrorResource.EnglishAndMathsLrsQuestion), ErrorMessageResourceName = "Validation_Select_Is_EnglishMaths_Achieved_Required_Message")]
+        public EnglishAndMathsLrsStatus? EnglishAndMathsLrsStatus { get; set; }
         public string LearnerName { get; set; }
         public virtual BackLinkModel BackLink => new BackLinkModel { RouteName = RouteConstants.EnterUniqueLearnerNumber };
     }
