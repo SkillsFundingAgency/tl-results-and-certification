@@ -63,7 +63,7 @@
         public const string SearchLearnerRecordViewModel = "SearchLearnerRecordViewModel";
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
         public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
-        public const string EnglishAndMathsSendDataConfirmation = "EnglishAndMathsSendDataConfirmation";
+        public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation";
 
         public const string UserSessionActivityId = "UserSessionActivityId";
 

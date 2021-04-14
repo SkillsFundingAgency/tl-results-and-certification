@@ -164,6 +164,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("add-learner-record-english-and-maths-data-confirmation", Name = RouteConstants.AddEnglishAndMathsSendDataConfirmation)]
+        public async Task<IActionResult> AddEnglishAndMathsSendDataConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<LearnerRecordConfirmationViewModel>(string.Concat(CacheKey, Constants.AddEnglishAndMathsSendDataConfirmation));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read LearnerRecordConfirmationViewModel from redis cache in add english and maths send data confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
         [Route("has-learner-completed-industry-placement/{isChangeMode:bool?}", Name = RouteConstants.AddIndustryPlacementQuestion)]
         public async Task<IActionResult> AddIndustryPlacementQuestionAsync(bool isChangeMode)
         {
@@ -477,22 +492,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(viewModel);
-        }
-
-        [HttpGet]
-        [Route("add-learner-record-english-and-maths-data-confirmation", Name = RouteConstants.EnglishAndMathsSendDataConfirmation)]
-        public async Task<IActionResult> EnglishAndMathsSendDataConfirmationAsync()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<LearnerRecordConfirmationViewModel>(string.Concat(CacheKey, Constants.EnglishAndMathsSendDataConfirmation));
-
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read LearnerRecordConfirmationViewModel from redis cache in english and maths send data confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
-        }
+        }               
 
         #endregion
 
