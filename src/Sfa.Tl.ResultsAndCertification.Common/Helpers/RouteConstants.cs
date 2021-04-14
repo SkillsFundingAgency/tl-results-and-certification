@@ -225,6 +225,7 @@
         public const string AddLearnerRecordCancel = "AddLearnerRecordCancel";
         public const string SubmitLearnerRecordCancel = "SubmitLearnerRecordCancel";
         public const string LearnerRecordAddedConfirmation = "LearnerRecordAddedConfirmation";
+        public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation";
 
         public const string UpdateLearnerRecord = "UpdateLearnerRecord";
         public const string SearchLearnerRecord = "SearchLearnerRecord";
@@ -238,9 +239,7 @@
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
         public const string UpdateEnglisAndMathsAchievement = "UpdateEnglisAndMathsAchievement";
         public const string SubmitUpdateEnglisAndMathsAchievement = "SubmitUpdateEnglisAndMathsAchievement";
-        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
-
-        //CheckAndSubmit
+        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";        
 
         #endregion
     }
