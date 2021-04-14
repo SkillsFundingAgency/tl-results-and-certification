@@ -466,9 +466,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(viewModel);
-        }        
+        }
 
-        # endregion
+        [HttpGet]
+        [Route("add-learner-record-english-and-maths-data-confirmation", Name = RouteConstants.EnglishAndMathsSendDataConfirmation)]
+        public async Task<IActionResult> EnglishAndMathsSendDataConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<LearnerRecordConfirmationViewModel>(string.Concat(CacheKey, Constants.EnglishAndMathsSendDataConfirmation));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read LearnerRecordConfirmationViewModel from redis cache in english and maths send data confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        #endregion
 
         private async Task SyncCacheUln(EnterUlnViewModel model, FindLearnerRecord learnerRecord = null)
         {

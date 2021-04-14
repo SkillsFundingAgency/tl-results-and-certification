@@ -1,0 +1,23 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.LearnerRecordConfirmationViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+
+@{
+    ViewData["Title"] = EnglishAndMathsSendDataConfirmation.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">@EnglishAndMathsSendDataConfirmation.English_And_Maths_Data_Submitted_Confirmation_Text</h1>
+            <div class="govuk-panel__body">
+                @Model.Name<br />
+                @string.Format(LearnerRecordConfirmation.Uln_Text, @Model.Uln)
+            </div>
+        </div>
+
+        <p class="govuk-body govuk-!-margin-top-8">@EnglishAndMathsSendDataConfirmation.We_Will_Review_Your_Answer_Offline_Text</p>
+
+        <p class="govuk-!-margin-top-8"><a id="addAnotherLearnerRecordButton" class="govuk-button" role="button" asp-route="EnterUniqueLearnerNumber">@LearnerRecordConfirmation.Add_Another_Learner_TLevel_Record_Button_Text</a></p>
+        <p class="govuk-body"><a id="backToManageLearnerRecordsLink" class="govuk-link" asp-route="ManageLearnerRecordsDashboard">@LearnerRecordConfirmation.Back_To_Manage_Learner_Records_Link_Text</a></p>
+    </div>
+</div>

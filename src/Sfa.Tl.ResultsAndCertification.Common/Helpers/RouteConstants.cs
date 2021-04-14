@@ -237,8 +237,7 @@
         public const string UpdateEnglisAndMathsAchievement = "UpdateEnglisAndMathsAchievement";
         public const string SubmitUpdateEnglisAndMathsAchievement = "SubmitUpdateEnglisAndMathsAchievement";
         public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
-
-        //CheckAndSubmit
+        public const string EnglishAndMathsSendDataConfirmation = "EnglishAndMathsSendDataConfirmation";        
 
         #endregion
     }
