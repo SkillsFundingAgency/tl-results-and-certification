@@ -14,9 +14,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
         
         public override void Given()
         {
+            ProviderUkprn = 9874561231;
+            ProfileId = 1;
+
             _expectedApiResult = new Models.Contracts.TrainingProvider.LearnerRecordDetails
             {
-                ProfileId = 1,
+                ProfileId = ProfileId,
                 Uln = 123456789,
                 Name = "Test user",
                 DateofBirth = DateTime.UtcNow.AddYears(-20),
@@ -30,13 +33,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 IndustryPlacementId = 1,
                 IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed
             };
-            InternalApiClient.GetLearnerRecordDetailsAsync(Arg.Any<long>(), Arg.Any<int>()).Returns(_expectedApiResult);
+            InternalApiClient.GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId).Returns(_expectedApiResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            InternalApiClient.Received(1).GetLearnerRecordDetailsAsync(Arg.Any<long>(), Arg.Any<int>());
+            InternalApiClient.Received(1).GetLearnerRecordDetailsAsync(ProviderUkprn, ProfileId);
         }
 
         [Fact]
@@ -61,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             englishAndMathsStatus.Should().NotBeNull();
             englishAndMathsStatus.Id.Should().Be("englishmathsstatus");
             englishAndMathsStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_EnglishAndMaths_Status_Text);
-            englishAndMathsStatus.Value.Should().Be(string.Concat(LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text, LearnerRecordDetailsContent.Whats_Lrs_Text));
+            englishAndMathsStatus.Value.Should().Be(string.Concat(GetLrsEnglishAndMathsStatusDisplayText, LearnerRecordDetailsContent.Whats_Lrs_Text));
             englishAndMathsStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Query_Action_Link_Text);
             englishAndMathsStatus.RouteName.Should().Be(RouteConstants.QueryEnglishAndMathsStatus);
             englishAndMathsStatus.RouteAttributes.Count().Should().Be(1);

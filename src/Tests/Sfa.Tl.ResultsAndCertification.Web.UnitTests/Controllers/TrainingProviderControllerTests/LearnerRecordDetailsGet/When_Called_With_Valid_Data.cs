@@ -13,8 +13,7 @@ using System.Collections.Generic;
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.LearnerRecordDetailsGet
 {
     public class When_Called_With_Valid_Data : TestSetup
-    {
-        private LearnerRecordDetailsViewModel mockresult = null;
+    {        
         public override void Given()
         {
             ProfileId = 10;
@@ -94,10 +93,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         private string GetMathsAndEnglishText
         {
             get
-            {
-                return mockresult.HasLrsEnglishAndMaths ? string.Concat(mockresult.IsEnglishAndMathsAchieved ? LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text : LearnerRecordDetailsContent.English_And_Maths_Not_Achieved_Lrs_Text, LearnerRecordDetailsContent.Whats_Lrs_Text) : null;
+            {                
+                return mockresult.HasLrsEnglishAndMaths ? string.Concat(GetLrsEnglishAndMathsStatusDisplayText, LearnerRecordDetailsContent.Whats_Lrs_Text) : null;
             }
-        }
+        }        
 
         private string GetEnglishAndMathsRouteName => mockresult.HasLrsEnglishAndMaths ? RouteConstants.QueryEnglishAndMathsStatus : string.Empty;
         private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => mockresult.HasLrsEnglishAndMaths ? new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } } : new Dictionary<string, string>();

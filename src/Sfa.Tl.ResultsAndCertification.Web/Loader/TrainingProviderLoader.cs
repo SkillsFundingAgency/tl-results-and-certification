@@ -76,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (model.HasLrsEnglishAndMaths)
                 return null;
 
-            if (model.IsEnglishAndMathsAchieved && model.IsSendLearner)
+            if (model.IsEnglishAndMathsAchieved && model.IsSendLearner == true)
             {
                 return EnglishAndMathsStatus.AchievedWithSend;
             }
