@@ -25,14 +25,30 @@ trigger:
     include:
     - GrafanaPipeline
 variables:
+  - name: applicationName
+    value: 'resac'
+  - group: platform-global-resac
   - group: platform-grafana-resac
 
+
 stages:
+######################## DEV ##############################################
 - template: ./Application/grafana-build.yml@devopsTemplates
   parameters:
-    applicationId: $(applicationId)
-    purpose: $(purpose)
-    environment: $(environment)
+    serviceId: 's126'
+    environmentId: 'd01'
+    applicationName: $(applicationName)
     SourcePath: $(System.DefaultWorkingDirectory)\tl-results-and-certification\Grafana\Files
-    ServiceConnection: $(ServiceConnection)
-
+    ServiceConnection: $(devServiceConnection)
+    environmentTagName: dev    
+######################## TEST ##############################################
+- template: ./Application/grafana-build.yml@devopsTemplates
+  parameters:
+    serviceId: 's126'
+    environmentId: 't01'
+    applicationName: $(applicationName)
+    SourcePath: $(System.DefaultWorkingDirectory)\tl-results-and-certification\Grafana\Files
+    ServiceConnection: $(testServiceConnection)
+    environmentTagName: test
+    dependencies:
+      - DeployGrafana_d01
