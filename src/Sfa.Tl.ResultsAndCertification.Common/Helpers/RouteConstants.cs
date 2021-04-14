@@ -216,6 +216,7 @@
         public const string EnterUniqueLearnerNumberAddedAlready = "EnterUniqueLearnerNumberAddedAlready";
         public const string AddEnglishAndMathsQuestion = "AddEnglishAndMathsQuestion";
         public const string SubmitAddEnglishAndMathsQuestion = "SubmitAddEnglishAndMathsQuestion";
+        public const string AddEnglishAndMathsLrsQuestion = "AddEnglishAndMathsLrsQuestion";
         public const string AddIndustryPlacementQuestion = "AddIndustryPlacementQuestion";
         public const string SubmitIndustryPlacementQuestion = "SubmitIndustryPlacementQuestion";
         public const string AddLearnerRecordCheckAndSubmit = "AddLearnerRecordCheckAndSubmit";
