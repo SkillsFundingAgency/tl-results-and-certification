@@ -25,7 +25,7 @@ trigger:
     include:
     - GrafanaPipeline
 variables:
-  - group: platform-grafana
+  - group: platform-grafana-resac
 
 stages:
 - template: ./Application/grafana-build.yml@devopsTemplates
