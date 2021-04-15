@@ -213,4 +213,7 @@
   <data name="Text_Learner" xml:space="preserve">
     <value>Learner:</value>
   </data>
+  <data name="Validation_Select_Is_EnglishMaths_Achieved_Required_Message" xml:space="preserve">
+    <value>Select if the learner has achieved the minimum standard</value>
+  </data>
 </root>

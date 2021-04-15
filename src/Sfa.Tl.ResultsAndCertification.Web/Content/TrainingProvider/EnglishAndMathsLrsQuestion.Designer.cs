@@ -348,5 +348,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
                 return ResourceManager.GetString("Text_Learner", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select if the learner has achieved the minimum standard.
+        /// </summary>
+        public static string Validation_Select_Is_EnglishMaths_Achieved_Required_Message {
+            get {
+                return ResourceManager.GetString("Validation_Select_Is_EnglishMaths_Achieved_Required_Message", resourceCulture);
+            }
+        }
     }
 }
