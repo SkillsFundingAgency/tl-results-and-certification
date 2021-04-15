@@ -40,7 +40,8 @@ stages:
     applicationName: $(applicationName)
     SourcePath: $(System.DefaultWorkingDirectory)\tl-results-and-certification\Grafana\Files
     ServiceConnection: $(devServiceConnection)
-    environmentTagName: dev    
+    environmentTagName: dev
+    subsriptionId: 06569d7b-7c7c-4a46-8c95-a3f30c010d39
 ######################## TEST ##############################################
 - template: ./Application/grafana-build.yml@devopsTemplates
   parameters:
@@ -52,3 +53,5 @@ stages:
     environmentTagName: test
     dependencies:
       - DeployGrafana_d01
+    subsriptionId: 1912dd0c-7966-4e52-ae94-0c77f1e7388d
+  
