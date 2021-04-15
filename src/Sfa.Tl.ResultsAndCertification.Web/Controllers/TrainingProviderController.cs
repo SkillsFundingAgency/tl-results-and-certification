@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), model.EnterUln.ToLong());
+            var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), model.EnterUln.ToLong(), evaluateSendConfirmation: true);
             if (learnerRecord == null || !learnerRecord.IsLearnerRegistered || learnerRecord.IsLearnerRecordAdded)
             {
                 await SyncCacheUln(model);

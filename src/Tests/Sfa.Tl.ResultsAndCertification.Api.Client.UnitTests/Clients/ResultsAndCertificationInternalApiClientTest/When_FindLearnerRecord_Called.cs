@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         // inputs
         private readonly long _providerUkprn = 12345678;
         private readonly long _uln = 987654321;
+        private readonly bool _evaluateSendConfirmation = false;
         
         // results
         private FindLearnerRecord _actualResult;
@@ -53,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<FindLearnerRecord>(_mockApiResponse, string.Format(ApiConstants.FindLearnerRecordUri, _providerUkprn, _uln), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<FindLearnerRecord>(_mockApiResponse, string.Format(ApiConstants.FindLearnerRecordUri, _providerUkprn, _uln, _evaluateSendConfirmation), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
