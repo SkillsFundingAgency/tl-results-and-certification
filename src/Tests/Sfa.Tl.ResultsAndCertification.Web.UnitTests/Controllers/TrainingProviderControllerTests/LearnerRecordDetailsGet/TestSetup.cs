@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public int ProfileId { get; set; }
         public IActionResult Result { get; private set; }
         public LearnerRecordDetailsViewModel LearnerRecordDetailsViewModel;
-        protected LearnerRecordDetailsViewModel mockresult = null;
+        protected LearnerRecordDetailsViewModel Mockresult = null;
 
         public async override Task When()
         {
@@ -21,16 +21,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         {
             get
             {
-                if (!mockresult.HasLrsEnglishAndMaths)
+                if (!Mockresult.HasLrsEnglishAndMaths)
                     return null;
 
-                if (mockresult.IsEnglishAndMathsAchieved && mockresult.IsSendLearner == true)
+                if (Mockresult.IsEnglishAndMathsAchieved && Mockresult.IsSendLearner == true)
                 {
                     return LearnerRecordDetailsContent.English_And_Maths_Achieved_With_Send_Lrs_Text;
                 }
                 else
                 {
-                    return mockresult.IsEnglishAndMathsAchieved && !mockresult.IsSendLearner.HasValue
+                    return Mockresult.IsEnglishAndMathsAchieved && !Mockresult.IsSendLearner.HasValue
                         ? LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text
                         : LearnerRecordDetailsContent.English_And_Maths_Not_Achieved_Lrs_Text;
                 }

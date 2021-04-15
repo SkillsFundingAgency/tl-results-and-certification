@@ -46,5 +46,6 @@
 
         // Training Provider events
         public const int AddLearnerRecordFailed = 7001;
+        public const int AddEnglishAndMathsSendDataEmailFailed = 7002;
     }
 }

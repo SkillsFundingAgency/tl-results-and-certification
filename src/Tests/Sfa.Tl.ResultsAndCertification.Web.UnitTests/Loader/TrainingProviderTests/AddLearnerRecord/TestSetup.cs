@@ -25,7 +25,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 c.AddMaps(typeof(TrainingProviderMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<AddLearnerRecordViewModel, AddLearnerRecordRequest>(HttpContextAccessor) : null);
+                                new UserNameResolver<AddLearnerRecordViewModel, AddLearnerRecordRequest>(HttpContextAccessor) : 
+                                type.Name.Contains("UserEmailResolver") ?
+                                (object)new UserEmailResolver<AddLearnerRecordViewModel, AddLearnerRecordRequest>(HttpContextAccessor) : null);
+                
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }
