@@ -11,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
     public class When_LearnerRecord_IsAddedAlready : TestSetup
     {
         private readonly long _uln = 123456789;
+        private readonly bool _evaluteSendConfirmation = true;
         private FindLearnerRecord _mockResult;
         private int _profileId;
 
@@ -19,13 +20,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             _profileId = 1;
             EnterUlnViewModel = new EnterUlnViewModel { EnterUln = _uln.ToString() };
             _mockResult = new FindLearnerRecord { ProfileId = _profileId, IsLearnerRegistered = true, IsLearnerRecordAdded = true };
-            TrainingProviderLoader.FindLearnerRecordAsync(ProviderUkprn, _uln).Returns(_mockResult);
+            TrainingProviderLoader.FindLearnerRecordAsync(ProviderUkprn, _uln, _evaluteSendConfirmation).Returns(_mockResult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            TrainingProviderLoader.Received(1).FindLearnerRecordAsync(ProviderUkprn, _uln);
+            TrainingProviderLoader.Received(1).FindLearnerRecordAsync(ProviderUkprn, _uln, _evaluteSendConfirmation);
 
             CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Any<AddLearnerRecordViewModel>());
