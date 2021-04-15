@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Data;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System;
@@ -7,9 +8,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 {
     public class NotificationDataProvider
     {
-        public static NotificationTemplate CreateNotificationTemplate(ResultsAndCertificationDbContext _dbContext, bool addToDbContext = true)
+        public static NotificationTemplate CreateNotificationTemplate(ResultsAndCertificationDbContext _dbContext, NotificationTemplateName notificationTemplateName = NotificationTemplateName.TlevelDetailsQueried, bool addToDbContext = true)
         {
-            var notificationTemplate = new NotificationTemplateBuilder().Build();
+            var notificationTemplate = new NotificationTemplateBuilder().Build(notificationTemplateName);
 
             if (addToDbContext)
             {
