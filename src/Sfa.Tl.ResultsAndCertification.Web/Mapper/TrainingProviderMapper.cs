@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln.EnterUln))
                .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.LearnerRecord.HasLrsEnglishAndMaths))
                .ForMember(d => d.EnglishAndMathsStatus, opts => opts.MapFrom(s => s.LearnerRecord.HasLrsEnglishAndMaths ? null : s.EnglishAndMathsQuestion.EnglishAndMathsStatus))
-               .ForMember(d => d.EnglishAndMathsLrsStatus, opts => opts.MapFrom(s => s.LearnerRecord.HasLrsEnglishAndMaths && s.EnglishAndMathsLrsQuestion != null ? s.EnglishAndMathsLrsQuestion.EnglishAndMathsStatus : null))
+               .ForMember(d => d.EnglishAndMathsLrsStatus, opts => opts.MapFrom(s => s.LearnerRecord.HasLrsEnglishAndMaths && s.EnglishAndMathsLrsQuestion != null ? s.EnglishAndMathsLrsQuestion.EnglishAndMathsLrsStatus : null))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementQuestion.IndustryPlacementStatus))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddLearnerRecordViewModel, AddLearnerRecordRequest>>())
                .ForMember(d => d.PerformedUserEmail, opts => opts.MapFrom<UserEmailResolver<AddLearnerRecordViewModel, AddLearnerRecordRequest>>());
