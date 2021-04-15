@@ -6,6 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Enum
     {
         [Description("Tlevel Details Queried")]
         TlevelDetailsQueried,
-        LrsSendLearnerDetails,
+        EnglishAndMathsLrsDataQueried,
     }
 }

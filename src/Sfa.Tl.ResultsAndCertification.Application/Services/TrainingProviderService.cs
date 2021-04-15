@@ -92,13 +92,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                     .OrderByDescending(o => o.CreatedOn)
                                     .FirstOrDefaultAsync();
 
-            if (!IsValidAddLearnerRecordRequest(pathway, request))
-                return new AddLearnerRecordResponse { IsSuccess = false };
-
-            var isValidEnglishAndMathsLrsEmailRequest = IsValidEnglishAndMathsLrsEmailRequest(request);
-
             var isSuccess = false;
-            if (isValidEnglishAndMathsLrsEmailRequest)
+
+            if (!IsValidAddLearnerRecordRequest(pathway, request))
+                return new AddLearnerRecordResponse { IsSuccess = isSuccess };
+            
+            if (IsValidEnglishAndMathsLrsEmailRequest(request))
             {
                 isSuccess = await SendEmailAsync(pathway.TqRegistrationProfileId, request);
             }
@@ -219,12 +218,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var tokens = new Dictionary<string, dynamic>
                 {
                     { "profile_id", profileId },
-                    { "english_and_maths_lrs_status", request.EnglishAndMathsStatus.ToString() },
+                    { "english_and_maths_lrs_status", request.EnglishAndMathsLrsStatus.ToString() },
                     { "sender_name", request.PerformedBy },
                     { "sender_email_address", request.PerformedUserEmail }
                 };
 
-            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.LrsSendLearnerDetails.ToString(), _resultsAndCertificationConfiguration.TlevelQueriedSupportEmailAddress, tokens);
+            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.EnglishAndMathsLrsDataQueried.ToString(), _resultsAndCertificationConfiguration.TlevelQueriedSupportEmailAddress, tokens);
         }
     }
 }

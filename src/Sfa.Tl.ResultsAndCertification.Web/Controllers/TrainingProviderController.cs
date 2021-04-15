@@ -176,7 +176,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            return View(model);
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+
+            if (cacheModel?.Uln == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.EnglishAndMathsLrsQuestion = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            var response = await _trainingProviderLoader.AddLearnerRecordAsync(User.GetUkPrn(), cacheModel);
+
+            if (response.IsSuccess)
+            {
+                if (cacheModel.Uln.IsNavigatedFromSearchLearnerRecordNotAdded)
+                    await _cacheService.RemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
+
+                await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddEnglishAndMathsSendDataConfirmation), new LearnerRecordConfirmationViewModel { Uln = response.Uln, Name = response.Name }, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.AddEnglishAndMathsSendDataConfirmation);
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.AddEnglishAndMathsSendDataEmailFailed, $"Unable to send email for English and maths send data for UniqueLearnerNumber: {cacheModel.Uln}. Method: AddEnglishAndMathsLrsQuestionAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }            
         }
 
         [HttpGet]
