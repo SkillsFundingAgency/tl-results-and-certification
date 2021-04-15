@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public override void Given()
         {
             ProfileId = 10;
-            mockresult = new LearnerRecordDetailsViewModel
+            Mockresult = new LearnerRecordDetailsViewModel
             {
                 ProfileId = 10,
                 RegistrationPathwayId = 15,
@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 IndustryPlacementId = 10,
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed
             };
-            TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(mockresult);
+            TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(Mockresult);
         }
 
         [Fact]
@@ -51,19 +51,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             var model = (Result as ViewResult).Model as LearnerRecordDetailsViewModel;
                         
-            model.ProfileId.Should().Be(mockresult.ProfileId);
-            model.Uln.Should().Be(mockresult.Uln);
-            model.Name.Should().Be(mockresult.Name);
-            model.DateofBirth.Should().Be(mockresult.DateofBirth);
-            model.ProviderName.Should().Be(mockresult.ProviderName);
-            model.PathwayName.Should().Be(mockresult.PathwayName);
-            model.IsLearnerRegistered.Should().Be(mockresult.IsLearnerRegistered);
-            model.IsLearnerRecordAdded.Should().Be(mockresult.IsLearnerRecordAdded);
-            model.IsEnglishAndMathsAchieved.Should().Be(mockresult.IsEnglishAndMathsAchieved);            
-            model.HasLrsEnglishAndMaths.Should().Be(mockresult.HasLrsEnglishAndMaths);
-            model.IsSendLearner.Should().Be(mockresult.IsSendLearner);
-            model.IndustryPlacementId.Should().Be(mockresult.IndustryPlacementId);
-            model.IndustryPlacementStatus.Should().Be(mockresult.IndustryPlacementStatus);
+            model.ProfileId.Should().Be(Mockresult.ProfileId);
+            model.Uln.Should().Be(Mockresult.Uln);
+            model.Name.Should().Be(Mockresult.Name);
+            model.DateofBirth.Should().Be(Mockresult.DateofBirth);
+            model.ProviderName.Should().Be(Mockresult.ProviderName);
+            model.PathwayName.Should().Be(Mockresult.PathwayName);
+            model.IsLearnerRegistered.Should().Be(Mockresult.IsLearnerRegistered);
+            model.IsLearnerRecordAdded.Should().Be(Mockresult.IsLearnerRecordAdded);
+            model.IsEnglishAndMathsAchieved.Should().Be(Mockresult.IsEnglishAndMathsAchieved);            
+            model.HasLrsEnglishAndMaths.Should().Be(Mockresult.HasLrsEnglishAndMaths);
+            model.IsSendLearner.Should().Be(Mockresult.IsSendLearner);
+            model.IndustryPlacementId.Should().Be(Mockresult.IndustryPlacementId);
+            model.IndustryPlacementStatus.Should().Be(Mockresult.IndustryPlacementStatus);
 
             // Summary EnglishAndMathsStatus           
             model.SummaryEnglishAndMathsStatus.Should().NotBeNull();
@@ -87,19 +87,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryIndustryPlacementStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Industry_Placement_Action_Hidden_Text);
             model.SummaryIndustryPlacementStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Update_Action_Link_Text);
             model.SummaryIndustryPlacementStatus.RouteName.Should().Be(RouteConstants.UpdateIndustryPlacementQuestion);
-            model.SummaryIndustryPlacementStatus.RouteAttributes.Should().BeEquivalentTo(new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() }, { Constants.PathwayId, mockresult.RegistrationPathwayId.ToString() } });
+            model.SummaryIndustryPlacementStatus.RouteAttributes.Should().BeEquivalentTo(new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() }, { Constants.PathwayId, Mockresult.RegistrationPathwayId.ToString() } });
         }
 
         private string GetMathsAndEnglishText
         {
             get
             {                
-                return mockresult.HasLrsEnglishAndMaths ? string.Concat(GetLrsEnglishAndMathsStatusDisplayText, LearnerRecordDetailsContent.Whats_Lrs_Text) : null;
+                return Mockresult.HasLrsEnglishAndMaths ? string.Concat(GetLrsEnglishAndMathsStatusDisplayText, LearnerRecordDetailsContent.Whats_Lrs_Text) : null;
             }
         }        
 
-        private string GetEnglishAndMathsRouteName => mockresult.HasLrsEnglishAndMaths ? RouteConstants.QueryEnglishAndMathsStatus : string.Empty;
-        private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => mockresult.HasLrsEnglishAndMaths ? new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } } : new Dictionary<string, string>();
-        private string GetEnglishAndMathsActionText => mockresult.HasLrsEnglishAndMaths ? LearnerRecordDetailsContent.Query_Action_Link_Text : string.Empty;
+        private string GetEnglishAndMathsRouteName => Mockresult.HasLrsEnglishAndMaths ? RouteConstants.QueryEnglishAndMathsStatus : string.Empty;
+        private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => Mockresult.HasLrsEnglishAndMaths ? new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } } : new Dictionary<string, string>();
+        private string GetEnglishAndMathsActionText => Mockresult.HasLrsEnglishAndMaths ? LearnerRecordDetailsContent.Query_Action_Link_Text : string.Empty;
     }
 }

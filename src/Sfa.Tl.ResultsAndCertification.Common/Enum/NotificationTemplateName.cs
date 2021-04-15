@@ -5,6 +5,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Enum
     public enum NotificationTemplateName
     {
         [Description("Tlevel Details Queried")]
-        TlevelDetailsQueried
+        TlevelDetailsQueried,
+        LrsSendLearnerDetails,
     }
 }

@@ -9,11 +9,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
-        private readonly LearnerRecordDetailsViewModel mockresult = null;
         public override void Given()
         {
             ProfileId = 0;
-            TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(mockresult);
+            TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(Mockresult);
         }
 
         [Fact]

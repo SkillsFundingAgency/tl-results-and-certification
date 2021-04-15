@@ -28,7 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
         private VerifyTlevelDetails _verifyTlevelDetailsModel;
         private bool _isSuccess;
         private NotificationService _notificationService;
-        private NotificationTemplate _notificationTemplate;
         private IAsyncNotificationClient _notificationsClient;
         private ILogger<NotificationService> _notificationLogger;
 
@@ -105,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
 
         private void SeedNotificationTestData()
         {
-            _notificationTemplate = NotificationDataProvider.CreateNotificationTemplate(DbContext);
+            NotificationDataProvider.CreateNotificationTemplate(DbContext);
             DbContext.SaveChangesAsync();
         }
     }
