@@ -1,0 +1,20 @@
+parameters:
+- name: dependencies
+  type: object
+  default: []
+- name: variableGroups
+  type: object
+stages:
+- stage: build
+  dependsOn: 
+    - '${{ each dependency in parameters.dependencies }}':
+      - '${{dependency}}'
+  variables:
+    - '${{ each variableGroup in parameters.variableGroups }}':
+      - group: '${{variableGroup}}'
+  jobs:
+  #   - job:
+  #     steps:
+  #     - pwsh: Write-Host "build Stage" 
+  - template: ../jobs/tlevels-build-application-job.yml
+  - template: ../jobs/tlevels-build-dacpac-job.yml

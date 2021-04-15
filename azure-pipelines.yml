@@ -5,8 +5,12 @@ trigger:
     include:
       - master
       - feature/*
+    exclude:
+      - feature/lrs-integration
 
-pr: none
+pr: 
+  - master
+  - develop
 
 workspace:
     clean: all

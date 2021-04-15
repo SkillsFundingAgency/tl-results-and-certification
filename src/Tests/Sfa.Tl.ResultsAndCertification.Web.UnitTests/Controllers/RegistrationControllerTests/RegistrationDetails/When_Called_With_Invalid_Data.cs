@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
-        private RegistrationDetailsViewModel mockresult = null;
+        private readonly RegistrationDetailsViewModel mockresult = null;
         public override void Given()
         {         
             RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId).Returns(mockresult);

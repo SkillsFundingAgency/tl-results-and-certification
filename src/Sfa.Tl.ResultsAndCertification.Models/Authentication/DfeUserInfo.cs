@@ -20,7 +20,11 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Authentication
         /// <summary>Gets or sets the email.</summary>
         /// <value>The email.</value>
         public string Email { get; set; }
-        
+
+        /// <summary>Gets or sets the ukprn.</summary>
+        /// <value>The ukprn.</value>
+        public long? Ukprn { get; set; }
+
         /// <summary>Gets or sets the roles.</summary>
         /// <value>The roles.</value>
         public IEnumerable<Role> Roles { get; set; }

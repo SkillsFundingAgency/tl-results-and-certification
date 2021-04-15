@@ -593,11 +593,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("delete-registration/{profileId}", Name = RouteConstants.DeleteRegistration)]
         public async Task<IActionResult> DeleteRegistrationAsync(int profileId)
         {
-            var ulnDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId);
-            if (ulnDetails == null)
+            var registrationDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
+            if (registrationDetails == null || registrationDetails.IsResultExist || registrationDetails.IsIndustryPlacementExist)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = new DeleteRegistrationViewModel { ProfileId = ulnDetails.ProfileId, Uln = ulnDetails.Uln };
+            var viewModel = new DeleteRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln };
             return View(viewModel);
         }
 

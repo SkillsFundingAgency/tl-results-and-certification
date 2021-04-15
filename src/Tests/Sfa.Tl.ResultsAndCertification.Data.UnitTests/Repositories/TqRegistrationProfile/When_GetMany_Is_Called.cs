@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
 
         [Fact]
         public void Then_The_Expected_Number_Of_Paths_Is_Returned() =>
-            _result.Count().Should().Be(4);
+            _result.Count().Should().Be(5);
 
         [Fact]
         public void Then_First_Path_Fields_Have_Expected_Values()
@@ -42,6 +42,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
             result.Firstname.Should().Be(testData.Firstname);
             result.Lastname.Should().Be(testData.Lastname);
             result.DateofBirth.Should().Be(testData.DateofBirth);
+            result.Gender.Should().Be(testData.Gender);
+            result.IsLearnerVerified.Should().Be(testData.IsLearnerVerified);
+            result.IsEnglishAndMathsAchieved.Should().Be(testData.IsEnglishAndMathsAchieved);
+            result.IsSendLearner.Should().Be(testData.IsSendLearner);
+            result.IsRcFeed.Should().Be(testData.IsRcFeed);
             result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
             result.CreatedOn.Should().Be(Constants.CreatedOn);
             result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);

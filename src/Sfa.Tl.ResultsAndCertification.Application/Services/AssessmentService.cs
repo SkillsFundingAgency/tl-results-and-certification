@@ -367,10 +367,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> RemovePathwayAssessmentEntryAsync(RemoveAssessmentEntryRequest model)
         {
-            var pathwayAssessment = await _pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin 
-                                                                                              && pa.EndDate == null && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active 
-                                                                                              && pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn);
-
+            var pathwayAssessment = await _pathwayAssessmentRepository.GetFirstOrDefaultAsync(pa => pa.Id == model.AssessmentId && pa.IsOptedin
+                                                                                              && pa.EndDate == null && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
+                                                                                              && pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn
+                                                                                              && !pa.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null));
             if (pathwayAssessment == null) return false;
 
             pathwayAssessment.IsOptedin = false;
@@ -388,7 +388,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
 
             // 2. Must have an active assessment.
-            return pathwayAssessment.IsOptedin && pathwayAssessment.EndDate == null;
+            var isActiveAssessment = pathwayAssessment.IsOptedin && pathwayAssessment.EndDate == null;
+            if (!isActiveAssessment)
+                return false;
+
+            // 3. Must not have results
+            var hasActiveResult = pathwayAssessment.TqPathwayResults.Any(x => x.IsOptedin && x.EndDate == null);
+            return !hasActiveResult;
         }
 
         private bool IsValidAddAssessmentRequestAsync(TqRegistrationPathway registrationPathway, ComponentType componentType)

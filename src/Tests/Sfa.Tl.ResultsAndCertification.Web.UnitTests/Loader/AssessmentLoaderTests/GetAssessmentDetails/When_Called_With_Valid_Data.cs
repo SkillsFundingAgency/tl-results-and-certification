@@ -26,7 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 SpecialismName = "Specialism1",
                 SpecialismAssessmentSeries = "Autumn 2022",
                 SpecialismAssessmentId = 25,
-                Status = RegistrationPathwayStatus.Active
+                Status = RegistrationPathwayStatus.Active,
+                IsIndustryPlacementExist = true
             };
 
             InternalApiClient.GetAssessmentDetailsAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
@@ -43,11 +44,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.ProviderDisplayName.Should().Be($"{expectedApiResult.ProviderName} ({expectedApiResult.ProviderUkprn})");
             ActualResult.PathwayDisplayName.Should().Be($"{expectedApiResult.PathwayName} ({expectedApiResult.PathwayLarId})");
             ActualResult.PathwayAssessmentSeries.Should().Be(expectedApiResult.PathwayAssessmentSeries);
+            ActualResult.IsResultExist.Should().BeFalse();
 
             var expectedSpecialismDisplayName = !string.IsNullOrWhiteSpace(expectedApiResult.SpecialismLarId) ? $"{expectedApiResult.SpecialismName} ({expectedApiResult.SpecialismLarId})" : null;
             ActualResult.SpecialismDisplayName.Should().Be(expectedSpecialismDisplayName);
             ActualResult.SpecialismAssessmentSeries.Should().Be(expectedApiResult.SpecialismAssessmentSeries);
             ActualResult.PathwayStatus.Should().Be(expectedApiResult.Status);
+            ActualResult.IsIndustryPlacementExist.Should().BeTrue();
         }
     }
 }

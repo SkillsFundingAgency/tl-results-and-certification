@@ -32,6 +32,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
             _result.Firstname.Should().Be(_data.Firstname);
             _result.Lastname.Should().Be(_data.Lastname);
             _result.DateofBirth.Should().Be(_data.DateofBirth);
+            _result.Gender.Should().Be(_data.Gender);
+            _result.IsLearnerVerified.Should().Be(_data.IsLearnerVerified);
+            _result.IsEnglishAndMathsAchieved.Should().Be(_data.IsEnglishAndMathsAchieved);
+            _result.IsSendLearner.Should().Be(_data.IsSendLearner);
+            _result.IsRcFeed.Should().Be(_data.IsRcFeed);
             _result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
             _result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);

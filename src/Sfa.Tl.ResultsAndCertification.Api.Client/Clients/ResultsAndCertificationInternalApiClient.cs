@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -245,6 +246,36 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = string.Format(ApiConstants.GetLookupDataUri, (int)pathwayComponentGrade);
             return await GetAsync<IList<LookupData>>(requestUri);
+        }
+
+        // LoggedIn User endpoint
+        public async Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn)
+        {
+            var requestUri = string.Format(ApiConstants.GetLoggedInUserTypeInfoUri, ukprn);
+            return await GetAsync<LoggedInUserTypeInfo>(requestUri);
+        }
+
+        // Training Provider endpoints
+        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
+        {
+            var requestUri = string.Format(ApiConstants.FindLearnerRecordUri, providerUkprn, uln);
+            return await GetAsync<FindLearnerRecord>(requestUri);
+        }
+
+        public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)
+        {
+            var requestUri = string.Format(ApiConstants.GetLearnerRecordDetailsUri, providerUkprn, profileId, pathwayId);
+            return await GetAsync<LearnerRecordDetails>(requestUri);
+        }
+
+        public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request)
+        {
+            return await PostAsync<AddLearnerRecordRequest, AddLearnerRecordResponse>(ApiConstants.AddLearnerRecordUri, request);
+        }
+
+        public async Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model)
+        {
+            return await PutAsync<UpdateLearnerRecordRequest, bool>(ApiConstants.UpdateLearnerRecordUri, model);
         }
 
         #region Private Methods

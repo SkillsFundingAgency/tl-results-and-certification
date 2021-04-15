@@ -1,0 +1,48 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.LearnerRecordCancelViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+
+@{
+    ViewData["Title"] = LearnerRecordCancel.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">        
+        <form class="form" asp-route="SubmitLearnerRecordCancel">
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                            @LearnerRecordCancel.Page_Heading
+                        </h1>
+                        <span class="govuk-hint">
+                            <strong>@LearnerRecordCancel.Learner_Text</strong> @Model.LearnerName
+                        </span>
+                    </legend>
+                    <p class="govuk-body">
+                        @LearnerRecordCancel.Page_Info_Text
+                    </p>
+                    <div class="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="cancellearnerrecord" asp-for="CancelLearnerRecord" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="cancellearnerrecord">
+                                @LearnerRecordCancel.Cancel_Adding_Learner_Record_Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="cancel-learner-record-no" asp-for="CancelLearnerRecord" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="cancel-learner-record-no">
+                                @LearnerRecordCancel.Cancel_Adding_Learner_Record_No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <p><button id="continueButton" class="govuk-button" data-module="govuk-button">@LearnerRecordCancel.Continue_Button_Text</button></p>
+        </form>
+    </div>
+</div>

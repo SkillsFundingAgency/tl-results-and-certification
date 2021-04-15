@@ -23,7 +23,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
     {
         private readonly IValidator<TImportModel> _validator;
         private readonly IDataParser<TModel> _dataParser;
+#pragma warning disable IDE0052 // Remove unread private members
         private readonly ILogger<CsvHelperService<TImportModel, TResponseModel, TModel>> _logger;
+#pragma warning restore IDE0052 // Remove unread private members
 
         public CsvHelperService(IValidator<TImportModel> validator, 
             IDataParser<TModel> dataParser, 
@@ -136,7 +138,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
 
         private async Task<ValidationResult> ValidateRowAsync(TImportModel importModel)
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             _validator.CascadeMode = CascadeMode.StopOnFirstFailure;
+#pragma warning restore CS0618 // Type or member is obsolete
             return await _validator.ValidateAsync(importModel);
         }
 
@@ -153,7 +157,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
             return new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 HasHeaderRecord = true,
-                PrepareHeaderForMatch = (string header, int index) => header.Trim().ToLower(),
+                PrepareHeaderForMatch = args => args.Header.Trim().ToLower(),
                 DetectColumnCountChanges = true
             };
         }
@@ -165,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 await csv.ReadAsync();
                 csv.ReadHeader();
 
-                var csvFileHeaderColumns = csv.Context.HeaderRecord.Select(x => x.Trim());
+                var csvFileHeaderColumns = csv.HeaderRecord.Select(x => x.Trim());
                 var entityHeaderColumns = properties.Select(x => x.GetCustomAttribute<ColumnAttribute>(false).Name);
 
                 if (entityHeaderColumns.Count() != csvFileHeaderColumns.Count()) return false;

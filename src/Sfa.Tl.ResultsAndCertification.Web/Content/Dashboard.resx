@@ -129,6 +129,18 @@
   <data name="Assessment_Entries_Text" xml:space="preserve">
     <value>Assessment entries</value>
   </data>
+  <data name="Manage_Learners_Records_Description_Text" xml:space="preserve">
+    <value>Add or change your learners' English and maths achievements and industry placement status</value>
+  </data>
+  <data name="Manage_Learners_Records_Text" xml:space="preserve">
+    <value>Manage learner records</value>
+  </data>
+  <data name="Manage_Your_Account_Description_Text" xml:space="preserve">
+    <value>View your account profile and permissions</value>
+  </data>
+  <data name="Manage_Your_Account_Text" xml:space="preserve">
+    <value>Manage your account</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Home page</value>
   </data>

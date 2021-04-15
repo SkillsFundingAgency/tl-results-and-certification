@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Dashboard;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -17,12 +19,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("home", Name = RouteConstants.Home)]
         public IActionResult Index()
         {
-            if (!HttpContext.User.HasAccessToService())
+            var loggedInUserType = HttpContext.User.GetLoggedInUserType();
+
+            if (!HttpContext.User.HasAccessToService() || !loggedInUserType.HasValue)
             {
                 _logger.LogWarning(LogEvent.ServiceAccessDenied, $"Service access denied, User: {User?.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.ServiceAccessDenied);
             }
-            return View();
+
+            var viewModel = new DashboardViewModel { IsAoUser = loggedInUserType == LoginUserType.AwardingOrganisation, IsTrainingProviderUser = loggedInUserType == LoginUserType.TrainingProvider };
+            return View(viewModel);
         }
     }
 }

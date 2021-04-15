@@ -1,0 +1,55 @@
+parameters:
+  - name: baseName
+    type: string
+  - name: serviceConnection
+    type: string
+  - name: sharedEnvironmentId
+    type: string
+  - name: environmentName
+    type: string
+jobs:
+
+  - deployment: DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}
+    displayName: Deploy Shared Infrastructure
+    environment: "${{parameters.environmentName}}"
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - checkout: self
+            - template: ./Infrastructure/steps/deploy-template.yml@devopsTemplates
+              parameters:
+                serviceConnection: ${{ parameters.serviceConnection }}
+                subscriptionId: $(subscriptionId)
+                resourceGroupName: $(SharedResourceGroup)
+                location: 'West Europe'
+                templateFilePath: './azure/tlevels-shared.json'
+                armParameterOverrideString: '-environmentNameAbbreviation "${{parameters.baseName}}" 
+                  -sqlServerAdminUsername "$(SQLServerAdminUsername)"
+                  -sqlServerAdminPassword "$(SQLServerAdminPassword)"
+                  -sqlServerActiveDirectoryAdminLogin "$(SQLServerActiveDirectoryAdminLogin)"
+                  -sqlServerActiveDirectoryAdminObjectId "$(SQLServerActiveDirectoryAdminObjectId)"
+                  -threatDetectionEmailAddress "$(ThreatDetectionEmailAddress)"
+                  -appServicePlanTier "$(AppServicePlanTier)"
+                  -appServicePlanSize "$(AppServicePlanSize)"
+                  -appServicePlanInstances "$(AppServicePlanInstances)"
+                  -azureWebsitesRPObjectId "$(AzureWebsitesRPObjectId)"
+                  -keyVaultReadWriteObjectIds "$(KeyVaultReadWriteObjectIds)"
+                  -keyVaultFullAccessObjectIds "$(keyVaultFullAccessObjectIds)"'
+                processOutputs: true
+            - pwsh: Write-Host "##vso[task.setvariable variable=SharedResourceGroup;isOutput=true]$(SharedResourceGroup)"
+              name: SharedVariables
+
+            - task: AzurePowerShell@5
+              displayName: 'Create Configuration Table'
+              inputs:
+                azureSubscription: ${{ parameters.serviceConnection }}
+                ScriptType: InlineScript
+                Inline: |
+                  $account = Get-AzStorageAccount -ResourceGroupName $(SharedResourceGroup) -Name $(armOutputs.armoutput.configStorageAccountName)
+                  $table = Get-AzStorageTable -Context $account.Context -Name Configuration -ErrorAction SilentlyContinue
+                  if (!$table) {
+                      New-AzStorageTable -Context $account.Context -Name Configuration
+                  }
+                azurePowerShellVersion: LatestVersion
+                pwsh: true

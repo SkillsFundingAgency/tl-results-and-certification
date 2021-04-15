@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingO
             _result.Name.Should().Be(_data.Name);
             _result.DisplayName.Should().Be(_data.DisplayName);
             _result.UkPrn.Should().Be(_data.UkPrn);
-
+            _result.IsActive.Should().Be(_data.IsActive);
             _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().BeEquivalentTo(_data.ModifiedBy);

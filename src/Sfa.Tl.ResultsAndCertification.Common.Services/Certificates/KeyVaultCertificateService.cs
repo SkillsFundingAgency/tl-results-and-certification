@@ -29,11 +29,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Certificates
                 var certificate = new X509Certificate2(Convert.FromBase64String(certificateSecretBundle.Value), (string)null);
                 return certificate;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // TODO: log exception
+                throw;
             }
-            return null;
         }
     }
 }

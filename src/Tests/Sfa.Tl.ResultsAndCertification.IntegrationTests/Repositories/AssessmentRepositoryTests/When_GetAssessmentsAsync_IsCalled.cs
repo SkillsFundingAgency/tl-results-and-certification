@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
         public override void Given()
         {
             AoUkprn = 10011881;
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Active }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Withdrawn } };
+            _ulns = new Dictionary<long, RegistrationPathwayStatus> 
+            { 
+                { 1111111111, RegistrationPathwayStatus.Active }, 
+                { 1111111112, RegistrationPathwayStatus.Active }, 
+                { 1111111113, RegistrationPathwayStatus.Withdrawn },
+                { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active },
+            };
 
             /// Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
@@ -32,23 +40,30 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
             var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+            var industryPlacementUln = 1111111115;
 
-            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111))
+            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111 && x.UniqueLearnerNumber != industryPlacementUln))
             {
                 var hasHitoricData = new List<long> { 1111111112 };
                 var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
                 var isLatestActive = _ulns[registration.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
 
-                tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent));
+                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent);
+                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
 
                 foreach (var pathway in registration.TqRegistrationPathways)
                 {
                     tqSpecialismAssessmentsSeedData.AddRange(GetSpecialismAssessmentsDataToProcess(pathway.TqRegistrationSpecialisms.ToList(), isLatestActive, isHistoricAssessent));
                 }
+                
+                // Build Pathway results
+                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessments, isLatestActive, isHistoricAssessent));
             }
 
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
             _specialismAssessments = SeedSpecialismAssessmentsData(tqSpecialismAssessmentsSeedData, false);
+            SeedIndustyPlacementData(industryPlacementUln);
 
             DbContext.SaveChanges();
 
@@ -111,14 +126,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             }
 
             TqPathwayAssessment expectedPathwayAssessment = null;
+            TqPathwayResult expectedPathwayResult = null;
 
             if (status == RegistrationPathwayStatus.Withdrawn)
             {
                 expectedPathwayAssessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate != null);
+                expectedPathwayResult = expectedPathwayAssessment?.TqPathwayResults.FirstOrDefault(x => x.IsOptedin && x.EndDate != null);
             }
             else
             {
                 expectedPathwayAssessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate == null);
+                expectedPathwayResult = expectedPathwayAssessment?.TqPathwayResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
             }
 
             TqSpecialismAssessment expectedSpecialismAssessment = null;
@@ -139,6 +157,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             var actualSpecialism = actualPathway.TqRegistrationSpecialisms.FirstOrDefault();
             var actualPathwayAssessment = actualPathway.TqPathwayAssessments.FirstOrDefault();
             var actualSpecialismAssessment = actualSpecialism.TqSpecialismAssessments.FirstOrDefault();
+            var actualPathwayResult = actualPathwayAssessment?.TqPathwayResults.FirstOrDefault();
 
             // Assert Registration Pathway
             actualPathway.TqRegistrationProfileId.Should().Be(expectedPathway.TqRegistrationProfileId);
@@ -160,7 +179,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             {
                 AssertPathwayAssessment(actualPathwayAssessment, expectedPathwayAssessment);
                 AssertSpecialismAssessment(actualSpecialismAssessment, expectedSpecialismAssessment);
+                
+                AssertPathwayResult(actualPathwayResult, expectedPathwayResult);
             }
+
+            // Industry Placement
+            var expectedIndustryPlacement = expectedPathway.IndustryPlacements.FirstOrDefault();
+            var actualIndustryPlacement = actualPathway.IndustryPlacements.FirstOrDefault(); 
+            AssertIndustryPlacement(actualIndustryPlacement, expectedIndustryPlacement);
         }
 
         public static IEnumerable<object[]> Data
@@ -183,8 +209,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
 
                     // Uln: 1111111113 - Registration(Withdrawn), TqPathwayAssessments(Withdrawn) and TqSpecialismAssessments(Withdrawn)
                     new object[] { 10011881, 1111111113, 3, RegistrationPathwayStatus.Withdrawn, true, true },
+
+                    // Uln: 1111111114 - Registration(Active), TqPathwayAssessments(Active), TqResult (Active)
+                    new object[] { 10011881, 1111111114, 4, RegistrationPathwayStatus.Active, true, true },
+
+                    // Uln: 1111111115 - Registration(Active) + Assessment(None) + IndustryPlacement(Completed)
+                    new object[] { 10011881, 1111111115, 5, RegistrationPathwayStatus.Active, false, true }
                 };
             }
+        }
+
+        private void SeedIndustyPlacementData(int uln)
+        {
+            var pathway = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault();
+            IndustryPlacementProvider.CreateQualificationAchieved(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
         }
     }
 }

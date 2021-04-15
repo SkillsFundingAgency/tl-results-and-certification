@@ -49,6 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingO
             actualResult.Name.Should().Be(expectedResult.Name);
             actualResult.DisplayName.Should().Be(expectedResult.DisplayName);
             actualResult.UkPrn.Should().Be(expectedResult.UkPrn);
+            actualResult.IsActive.Should().Be(expectedResult.IsActive);
             actualResult.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
             actualResult.CreatedOn.Should().Be(expectedResult.CreatedOn);
             actualResult.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);

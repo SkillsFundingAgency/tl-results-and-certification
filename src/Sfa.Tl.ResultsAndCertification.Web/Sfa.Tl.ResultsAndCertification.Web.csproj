@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\javascripts\english-maths-question.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Frontend\src\javascripts\user-guide.js" />
   </ItemGroup>
 
@@ -15,18 +19,23 @@
 
 
   <ItemGroup>
+    <None Include="wwwroot\javascripts\english-maths-question.js" />
+  </ItemGroup>
+
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
-    <PackageReference Include="IdentityModel" Version="4.5.0" />
-    <PackageReference Include="JWT" Version="7.3.1" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.16.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="IdentityModel" Version="5.0.1" />
+    <PackageReference Include="JWT" Version="8.1.3" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.17.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="3.1.8" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureKeyVault" Version="3.1.10" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureStorage" Version="3.1.10" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureKeyVault" Version="3.1.12" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureStorage" Version="3.1.12" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.8" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
     <PackageReference Include="NWebsec.AspNetCore.Mvc.TagHelpers" Version="3.0.0" />
   </ItemGroup>
@@ -115,6 +124,16 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>VirusUploaded.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Help\Contact.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Contact.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Registration\RegistrationCannotBeDeleted.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RegistrationCannotBeDeleted.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Registration\ReregisterCannotSelectSameCore.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -491,6 +510,96 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ViewAll.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\CheckAndSubmit.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CheckAndSubmit.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\EnglishAndMathsAchievementUpdatedConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EnglishAndMathsAchievementUpdatedConfirmation.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\EnglishAndMathsQuestion.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EnglishAndMathsQuestion.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\EnglishAndMathsStatus.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EnglishAndMathsStatus.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\EnterUniqueLearnerReference.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EnterUniqueLearnerReference.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\Dashboard.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dashboard.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAlreadyAdded.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EnterUniqueLearnerReferenceAlreadyAdded.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\EnterUniqueLearnerReferenceNotFound.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EnterUniqueLearnerReferenceNotFound.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\IndustryPlacementQuestion.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IndustryPlacementQuestion.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\IndustryPlacementStatus.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IndustryPlacementStatus.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\IndustryPlacementUpdatedConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IndustryPlacementUpdatedConfirmation.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\LearnerRecordCancel.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LearnerRecordCancel.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\LearnerRecordConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LearnerRecordConfirmation.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\LearnerRecordDetails.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LearnerRecordDetails.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>QueryEnglishAndMathsStatus.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\SearchLearnerRecord.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SearchLearnerRecord.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\SearchLearnerRecordNotAdded.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SearchLearnerRecordNotAdded.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\TrainingProvider\SearchLearnerRecordNotFound.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SearchLearnerRecordNotFound.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\ViewComponents\BackLink.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -564,6 +673,14 @@
     <EmbeddedResource Update="Content\Error\VirusUploaded.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>VirusUploaded.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Help\Contact.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Contact.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Registration\RegistrationCannotBeDeleted.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegistrationCannotBeDeleted.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\ReregisterCannotSelectSameCore.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -864,6 +981,74 @@
     <EmbeddedResource Update="Content\Tlevel\ViewAll.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ViewAll.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\CheckAndSubmit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CheckAndSubmit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsAchievementUpdatedConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EnglishAndMathsAchievementUpdatedConfirmation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsQuestion.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EnglishAndMathsQuestion.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsStatus.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EnglishAndMathsStatus.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAddedAlready.resx">
+      <LastGenOutput>EnterUniqueLearnerReferenceNotFound.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAlreadyAdded.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EnterUniqueLearnerReferenceAlreadyAdded.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceNotFound.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EnterUniqueLearnerReferenceNotFound.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\IndustryPlacementQuestion.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndustryPlacementQuestion.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\IndustryPlacementStatus.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndustryPlacementStatus.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\IndustryPlacementUpdatedConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndustryPlacementUpdatedConfirmation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\LearnerRecordCancel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LearnerRecordCancel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\LearnerRecordConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LearnerRecordConfirmation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\LearnerRecordDetails.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LearnerRecordDetails.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>QueryEnglishAndMathsStatus.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecord.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SearchLearnerRecord.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecordNotAdded.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SearchLearnerRecordNotAdded.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\SearchLearnerRecordNotFound.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SearchLearnerRecordNotFound.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\ViewComponents\BackLink.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

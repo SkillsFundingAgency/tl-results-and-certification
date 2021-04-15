@@ -10,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         {
             TqRegistrationSpecialisms = new HashSet<TqRegistrationSpecialism>();
             TqPathwayAssessments = new HashSet<TqPathwayAssessment>();
+            IndustryPlacements = new HashSet<IndustryPlacement>();
         }
 
         public int TqRegistrationProfileId { get; set; }
@@ -24,5 +25,6 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public virtual TqRegistrationProfile TqRegistrationProfile { get; set; }
         public virtual ICollection<TqRegistrationSpecialism> TqRegistrationSpecialisms { get; set; }
         public virtual ICollection<TqPathwayAssessment> TqPathwayAssessments { get; set; }
+        public virtual ICollection<IndustryPlacement> IndustryPlacements { get; set; }
     }
 }

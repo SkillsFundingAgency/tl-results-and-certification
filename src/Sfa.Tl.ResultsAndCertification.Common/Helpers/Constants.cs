@@ -8,6 +8,18 @@
         public const string VersionConfigKey = "Version";
         public const string ServiceNameConfigKey = "ServiceName";
 
+        // LearnerRecordService(LRS) Constants
+        public const string LearnerLearningEventsUserType = "LNR";
+        public const string LearnerLearningEventsGetType = "FULL";
+        public const string LearnerLearningEventsNotVerifiedResponseCode = "WSEC0208";
+        public const string LrsLanguage = "ENG";
+        public const string LrsDateFormat = "yyyy-MM-dd";
+        public const string LearnerByULNFindType = "FUL";
+        public const string LearnerByUlnExactMatchResponseCode = "WSRC0004";
+        public const string LrsProfileId = "profileId";
+        public const string LrsResponseCode = "responseCode";
+        public const string FunctionPerformedBy = "System";
+
         // Controller Names
         public const string HomeController = "Home";
         public const string AccountController = "Account";
@@ -36,7 +48,7 @@
         public const string WithdrawRegistrationConfirmationViewModel = "WithdrawRegistrationConfirmationViewModel";
         public const string RejoinRegistrationConfirmationViewModel = "RejoinRegistrationConfirmationViewModel";
         public const string ReregistrationConfirmationViewModel = "ReregistrationConfirmationViewModel";
-
+        public const string RegistrationCannotBeDeletedViewModel = "RegistrationCannotBeDeletedViewModel";
         public const string AssessmentsUploadSuccessfulViewModel = "AssessmentsUploadSuccessfulViewModel";
         public const string AssessmentsSearchCriteria = "AssessmentsSearchCriteria";
         public const string SearchAssessmentsUlnNotFound = "SearchAssessmentsUlnNotFound";
@@ -47,6 +59,10 @@
         public const string ResultsUploadSuccessfulViewModel = "ResultsUploadSuccessfulViewModel";
         public const string ResultConfirmationViewModel = "ResultConfirmationViewModel";
         public const string ChangeResultConfirmationViewModel = "ChangeResultConfirmationViewModel";
+        public const string AddLearnerRecordConfirmation = "AddLearnerRecordConfirmation";
+        public const string SearchLearnerRecordViewModel = "SearchLearnerRecordViewModel";
+        public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
+        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";        
 
         public const string UserSessionActivityId = "UserSessionActivityId";
 
@@ -62,6 +78,9 @@
         // Results Data Index Constants
         public const int PathwayResultsStartIndex = 100000;
 
+        // Industry Placement Data Index Constants
+        public const int IndustryPlacementStartIndex = 100000;
+
         // Route Attributes
         public const string IsChangeMode = "isChangeMode";
         public const string ProfileId = "profileId";
@@ -70,6 +89,7 @@
         public const string WithdrawBackLinkOptionId = "withdrawBackLinkOptionId";
         public const string AssessmentId = "assessmentId";
         public const string ResultId = "resultId";
+        public const string PathwayId = "pathwayId";
 
         // Assessments
         public const int AssessmentEndInYears = 4;
@@ -77,5 +97,8 @@
         public const int SpecialismAssessmentStartInYears = 1;
 
         public const int MaxFileSizeInMb = 5;
+
+        // Other constants
+        public const string NoBorderBottomCssClassName = "tl-no-border-bottom";
     }
 }

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
-using System;
 using System.Collections.Generic;
 using Xunit;
 
