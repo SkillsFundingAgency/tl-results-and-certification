@@ -161,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
 
-            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false || cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == true || cacheModel?.LearnerRecord?.IsSendConfirmationRequired == false)
+            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false || cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == false || cacheModel?.LearnerRecord?.IsSendConfirmationRequired == false)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.EnglishAndMathsLrsQuestion == null ? new EnglishAndMathsLrsQuestionViewModel() : cacheModel.EnglishAndMathsLrsQuestion;
