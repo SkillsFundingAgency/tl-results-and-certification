@@ -549,23 +549,9 @@
                                 "value": "1"
                             }
                         ]
-                    },
-                    // "customHostName": {
-                    //     "value": "[parameters('functionCustomHostname')]"
-                    // },
-                    // "certificateThumbprint": {
-                    //     "value": "[if(greater(length(parameters('functionCertificateName')), 0), reference(concat('function-app-certificate','-',parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
-                    // },
-                    "systemAssignedIdentity": {
-                        "value": "SystemAssigned"
-                    }
+                    }                
                 }
-            }
-            // "dependsOn": [
-            //     "[concat('function-app-certificate','-', parameters('environmentNameAbbreviation'))]",
-            //     "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
-
-            // ]
+            }            
         },
         {
             "apiVersion": "2017-05-10",
