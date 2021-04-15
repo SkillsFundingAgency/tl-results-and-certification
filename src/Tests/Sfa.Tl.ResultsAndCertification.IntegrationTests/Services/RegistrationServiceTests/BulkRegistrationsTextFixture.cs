@@ -119,12 +119,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             DbContext.SaveChanges();
         }
 
-        public TqRegistrationProfile SeedRegistrationData(long uln, TqProvider tqProvider = null, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active, bool isBulkUpload = true)
+        public TqRegistrationProfile SeedRegistrationData(long uln, TqProvider tqProvider = null, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active, bool isBulkUpload = true, bool seedIndustryPlacement = false)
         {
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProviders.First());
-            tqRegistrationPathway.IsBulkUpload = isBulkUpload;            
+
+            if(seedIndustryPlacement)
+            {
+                var industryPlacement = IndustryPlacementProvider.CreateQualificationAchieved(DbContext, new IndustryPlacement { Status = IndustryPlacementStatus.Completed, CreatedBy = "Test User" });
+                tqRegistrationPathway.IndustryPlacements.Add(industryPlacement);
+            }
+
+            tqRegistrationPathway.IsBulkUpload = isBulkUpload;
+
 
             foreach (var specialism in TlSpecialisms)
             {
@@ -146,7 +154,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             }
 
             DbContext.SaveChanges();
-
             return profile;
         }
 

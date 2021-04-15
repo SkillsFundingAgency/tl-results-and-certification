@@ -60,6 +60,10 @@
         public const string ResultConfirmationViewModel = "ResultConfirmationViewModel";
         public const string ChangeResultConfirmationViewModel = "ChangeResultConfirmationViewModel";
         public const string AddLearnerRecordConfirmation = "AddLearnerRecordConfirmation";
+        public const string SearchLearnerRecordViewModel = "SearchLearnerRecordViewModel";
+        public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
+        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
+        public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation";
 
         public const string UserSessionActivityId = "UserSessionActivityId";
 
@@ -75,6 +79,9 @@
         // Results Data Index Constants
         public const int PathwayResultsStartIndex = 100000;
 
+        // Industry Placement Data Index Constants
+        public const int IndustryPlacementStartIndex = 100000;
+
         // Route Attributes
         public const string IsChangeMode = "isChangeMode";
         public const string ProfileId = "profileId";
@@ -83,6 +90,7 @@
         public const string WithdrawBackLinkOptionId = "withdrawBackLinkOptionId";
         public const string AssessmentId = "assessmentId";
         public const string ResultId = "resultId";
+        public const string PathwayId = "pathwayId";
 
         // Assessments
         public const int AssessmentEndInYears = 4;

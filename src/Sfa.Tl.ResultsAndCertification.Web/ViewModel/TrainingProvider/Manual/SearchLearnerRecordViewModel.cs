@@ -13,6 +13,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         [RegularExpression(@"^\d{10}$", ErrorMessageResourceType = typeof(ErrorResource.SearchLearnerRecord), ErrorMessageResourceName = "Uln_Not_Valid_Validation_Message")]
         public string SearchUln { get; set; }
 
+        public bool IsLearnerRegistered { get; set; }
+
+        public bool IsLearnerRecordAdded { get; set; }
+
         public BreadcrumbModel Breadcrumb
         {
             get

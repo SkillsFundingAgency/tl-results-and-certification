@@ -11,7 +11,7 @@
             <h1 class="govuk-panel__title">@LearnerRecordConfirmation.Learner_TLevel_Record_Added_Successful_Text</h1>
             <div class="govuk-panel__body">
                 @Model.Name<br />
-                @LearnerRecordConfirmation.Uln_Text: @Model.Uln
+                @string.Format(LearnerRecordConfirmation.Uln_Text, @Model.Uln)                
             </div>
         </div>
 

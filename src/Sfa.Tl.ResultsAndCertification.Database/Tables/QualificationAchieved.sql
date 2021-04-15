@@ -13,5 +13,5 @@
 	CONSTRAINT [FK_QualificationAchieved_TqRegistrationProfile] FOREIGN KEY ([TqRegistrationProfileId]) REFERENCES [TqRegistrationProfile]([Id]),
 	CONSTRAINT [FK_QualificationAchieved_Qualification] FOREIGN KEY ([QualificationId]) REFERENCES [Qualification]([Id]),
 	CONSTRAINT [FK_QualificationAchieved_QualificationGrade] FOREIGN KEY ([QualificationGradeId]) REFERENCES [QualificationGrade]([Id]),
-	INDEX IX_QualificationAchieved_TqRegistrationProfileId NONCLUSTERED (TqRegistrationProfileId)
+	INDEX IX_QualificationAchieved_ProfileId_QualId_QualGradeId NONCLUSTERED ([TqRegistrationProfileId], [QualificationId], [QualificationGradeId])
 )

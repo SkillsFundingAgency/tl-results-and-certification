@@ -155,6 +155,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                    .Include(x => x.TqRegistrationSpecialisms)
                        .ThenInclude(x => x.TqSpecialismAssessments)
                             .ThenInclude(x => x.AssessmentSeries)
+                    .Include(x => x.IndustryPlacements)
                     .OrderByDescending(o => o.CreatedOn)
                     .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId &&
                            p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&

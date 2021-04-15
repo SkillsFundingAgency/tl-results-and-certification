@@ -4,7 +4,6 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
 using Xunit;
@@ -43,6 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public void Then_Expected_Methods_Called()
         {
             TrainingProviderLoader.Received(1).AddLearnerRecordAsync(ProviderUkprn, AddLearnerRecordViewModel);
+            CacheService.DidNotReceive().RemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
             CacheService.Received(1).RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
             CacheService.Received(1).SetAsync(string.Concat(CacheKey, Constants.AddLearnerRecordConfirmation),
                 Arg.Is<LearnerRecordConfirmationViewModel>

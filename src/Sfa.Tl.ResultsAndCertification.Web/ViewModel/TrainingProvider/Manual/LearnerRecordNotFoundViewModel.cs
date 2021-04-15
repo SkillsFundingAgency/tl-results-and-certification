@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
     {
         public string Uln { get; set; }
 
-        public BackLinkModel BackLink => new BackLinkModel
+        public virtual BackLinkModel BackLink => new BackLinkModel
         {
             RouteName = RouteConstants.EnterUniqueLearnerNumber
         };

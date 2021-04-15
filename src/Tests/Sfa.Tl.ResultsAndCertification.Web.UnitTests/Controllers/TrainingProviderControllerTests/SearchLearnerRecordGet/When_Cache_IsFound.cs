@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public override void Given()
         {
             _cacheModel = new SearchLearnerRecordViewModel { SearchUln = "1234567890" };
-            CacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey).Returns(_cacheModel);
+            CacheService.GetAndRemoveAsync<SearchLearnerRecordViewModel>(CacheKey).Returns(_cacheModel);
         }
 
         [Fact]

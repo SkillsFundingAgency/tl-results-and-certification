@@ -5,6 +5,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
     public class LearnerRecordAddedAlreadyViewModel
     {
+        public int ProfileId { get; set; }
         public string Uln { get; set; }
 
         public BackLinkModel BackLink => new BackLinkModel

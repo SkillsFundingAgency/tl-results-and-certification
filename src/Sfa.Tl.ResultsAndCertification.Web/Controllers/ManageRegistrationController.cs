@@ -387,7 +387,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 if (registrationDetails == null)
                     return RedirectToRoute(RouteConstants.PageNotFound);
 
-                if (registrationDetails.IsResultExist)
+                if (registrationDetails.IsResultExist || registrationDetails.IsIndustryPlacementExist)
                 {
                     var cannotBeDeletedViewModel = new RegistrationCannotBeDeletedViewModel { ProfileId = registrationDetails.ProfileId };
                     await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel), cannotBeDeletedViewModel, CacheExpiryTime.XSmall);
@@ -886,7 +886,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("registration-with-result-cannot-be-deleted", Name = RouteConstants.RegistrationCannotBeDeleted)]
+        [Route("registration-cannot-be-deleted", Name = RouteConstants.RegistrationCannotBeDeleted)]
         public async Task<IActionResult> RegistrationCannotBeDeletedAsync()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<RegistrationCannotBeDeletedViewModel>(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel));

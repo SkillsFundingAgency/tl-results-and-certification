@@ -32,13 +32,14 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return qualificationGrade;
         }
 
-        public static QualificationGrade CreateTlLookup(ResultsAndCertificationDbContext _dbContext, int qualificationTypeId, string grade, bool isAllowable, bool isActive, bool addToDbContext = true)
+        public static QualificationGrade CreateTlLookup(ResultsAndCertificationDbContext _dbContext, int qualificationTypeId, string grade, bool isAllowable, bool isSendGrade, bool isActive, bool addToDbContext = true)
         {
             var qualificationGrade = new QualificationGrade
             {
                 QualificationTypeId = qualificationTypeId,
                 Grade = grade,
                 IsAllowable = isAllowable,
+                IsSendGrade = isSendGrade,
                 IsActive = isActive,
                 CreatedBy = "Test User"
             };

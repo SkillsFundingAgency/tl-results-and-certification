@@ -1,10 +1,13 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Notify.Interfaces;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -21,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement)> _testCriteriaData;
         private IList<TqRegistrationProfile> _profiles;
+        private FindLearnerRecord _actualResult;
 
         public override void Given()
         {
@@ -53,9 +57,29 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             // Create Service
             CreateMapper();
+            RegistrationProfileRepositoryLogger = new Logger<GenericRepository<TqRegistrationProfile>>(new NullLoggerFactory());
+            RegistrationProfileRepository = new GenericRepository<TqRegistrationProfile>(RegistrationProfileRepositoryLogger, DbContext);
+
             RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
             RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
-            TrainingProviderService = new TrainingProviderService(RegistrationPathwayRepository, TrainingProviderMapper);
+
+            IndustryPlacementRepositoryLogger = new Logger<GenericRepository<IndustryPlacement>>(new NullLoggerFactory());
+            IndustryPlacementRepository = new GenericRepository<IndustryPlacement>(IndustryPlacementRepositoryLogger, DbContext);
+
+            TrainingProviderServiceLogger = new Logger<TrainingProviderService>(new NullLoggerFactory());
+
+            NotificationsClient = Substitute.For<IAsyncNotificationClient>();
+            NotificationLogger = new Logger<NotificationService>(new NullLoggerFactory());
+            NotificationTemplateRepositoryLogger = new Logger<GenericRepository<NotificationTemplate>>(new NullLoggerFactory());
+            NotificationTemplateRepository = new GenericRepository<NotificationTemplate>(NotificationTemplateRepositoryLogger, DbContext);
+            NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
+            
+            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
+            {
+                TlevelQueriedSupportEmailAddress = "test@test.com"
+            };
+
+            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, RegistrationPathwayRepository, IndustryPlacementRepository, NotificationService, ResultsAndCertificationConfiguration, TrainingProviderMapper, TrainingProviderServiceLogger);
         }
 
         public override Task When()
@@ -63,15 +87,23 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             return Task.CompletedTask;
         }
 
+        public async Task WhenAsync(long providerUkprn, long uln)
+        {
+            if (_actualResult != null)
+                return;
+
+            _actualResult = await TrainingProviderService.FindLearnerRecordAsync(providerUkprn, uln);
+        }
+
         [Theory]
         [MemberData(nameof(Data))]
-        public void Then_Returns_Expected_Results(long uln, Provider provider, FindLearnerRecord expectedResult)
+        public async Task Then_Returns_Expected_Results(long uln, Provider provider, FindLearnerRecord expectedResult)
         {
-            var actualResult = TrainingProviderService.FindLearnerRecordAsync((long)provider, uln).Result;
+            await WhenAsync((long)provider, uln);
 
             if (expectedResult == null)
             {
-                actualResult.Should().BeNull();
+                _actualResult.Should().BeNull();
                 return;
             }
 
@@ -80,16 +112,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             var expectedProfile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
 
             expectedProfile.Should().NotBeNull();
-            actualResult.Should().NotBeNull();
-            actualResult.Uln.Should().Be(expectedResult.Uln);
-            actualResult.Name.Should().Be($"{expectedProfile.Firstname} {expectedProfile.Lastname}");
-            actualResult.DateofBirth.Should().Be(expectedProfile.DateofBirth);
-            actualResult.ProviderName.Should().Be(expectedProviderName);
-            actualResult.IsLearnerRegistered.Should().Be(expectedResult.IsLearnerRegistered);
-            actualResult.IsEnglishAndMathsAchieved.Should().Be(expectedResult.IsEnglishAndMathsAchieved);
-            actualResult.HasLrsEnglishAndMaths.Should().Be(expectedResult.HasLrsEnglishAndMaths);
-            actualResult.HasSendQualification.Should().Be(expectedResult.HasSendQualification);
-            actualResult.IsLearnerRecordAdded.Should().Be(expectedResult.IsLearnerRecordAdded);
+            _actualResult.Should().NotBeNull();
+            _actualResult.Uln.Should().Be(expectedResult.Uln);
+            _actualResult.Name.Should().Be($"{expectedProfile.Firstname} {expectedProfile.Lastname}");
+            _actualResult.DateofBirth.Should().Be(expectedProfile.DateofBirth);
+            _actualResult.ProviderName.Should().Be(expectedProviderName);
+            _actualResult.IsLearnerRegistered.Should().Be(expectedResult.IsLearnerRegistered);
+            _actualResult.IsEnglishAndMathsAchieved.Should().Be(expectedResult.IsEnglishAndMathsAchieved);
+            _actualResult.HasLrsEnglishAndMaths.Should().Be(expectedResult.HasLrsEnglishAndMaths);
+            _actualResult.HasSendQualification.Should().Be(expectedResult.HasSendQualification);
+            _actualResult.IsLearnerRecordAdded.Should().Be(expectedResult.IsLearnerRecordAdded);
         }
 
         public static IEnumerable<object[]> Data

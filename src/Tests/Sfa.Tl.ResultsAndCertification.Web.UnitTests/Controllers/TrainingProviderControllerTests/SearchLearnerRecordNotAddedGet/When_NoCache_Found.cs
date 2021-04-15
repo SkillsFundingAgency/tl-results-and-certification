@@ -5,15 +5,14 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.EnterUniqueLearnerReferenceAddedAlready
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.SearchLearnerRecordNotAddedGet
 {
     public class When_NoCache_Found : TestSetup
     {
-        private readonly AddLearnerRecordViewModel mockCache = null;
+        private readonly SearchLearnerRecordViewModel mockCache = null;
         public override void Given()
         {
-            CacheService.GetAndRemoveAsync<AddLearnerRecordViewModel>(CacheKey)
-                .Returns(mockCache);
+            CacheService.GetAsync<SearchLearnerRecordViewModel>(CacheKey).Returns(mockCache);
         }
 
         [Fact]
@@ -26,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         [Fact]
         public void Then_Expected_Method_IsCalled()
         {
-            CacheService.Received(1).GetAsync<AddLearnerRecordViewModel>(CacheKey);
+            CacheService.Received(1).GetAsync<SearchLearnerRecordViewModel>(CacheKey);
         }
     }
 }

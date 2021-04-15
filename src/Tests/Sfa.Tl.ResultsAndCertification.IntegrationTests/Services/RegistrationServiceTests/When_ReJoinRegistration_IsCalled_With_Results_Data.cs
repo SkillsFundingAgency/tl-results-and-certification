@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             _bulkRegistrationTestFixture.Uln = 1111111111;
             _bulkRegistrationTestFixture.SeedTestData(EnumAwardingOrganisation.Pearson);            
 
-            var registrationRecord = _bulkRegistrationTestFixture.SeedRegistrationData(_bulkRegistrationTestFixture.Uln, null, RegistrationPathwayStatus.Withdrawn, isBulkUpload: false);
+            var registrationRecord = _bulkRegistrationTestFixture.SeedRegistrationData(_bulkRegistrationTestFixture.Uln, null, RegistrationPathwayStatus.Withdrawn, isBulkUpload: false, seedIndustryPlacement: true);
 
             _bulkRegistrationTestFixture.TqRegistrationProfilesData = new List<TqRegistrationProfile> { registrationRecord };
 
@@ -64,6 +64,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                                                                                                                        .Include(x => x.TqRegistrationPathways)
                                                                                                                             .ThenInclude(x => x.TqPathwayAssessments)
                                                                                                                                 .ThenInclude(x => x.TqPathwayResults)
+                                                                                                                        .Include(x => x.TqRegistrationPathways)
+                                                                                                                            .ThenInclude(x => x.IndustryPlacements)
                                                                                                                        .FirstOrDefault();
             // assert registration profile data
             actualRegistrationProfile.Should().NotBeNull();
@@ -94,6 +96,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var actualActiveResult = actualActiveAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate == null);
             var expectedPreviousResult = expectedPreviousAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
             AssertPathwayResults(actualActiveResult, expectedPreviousResult, isRejoin: true);
+
+            // Assert IndustryPlacement Data
+            var actualActiveIndustryPlacement = actualActivePathway.IndustryPlacements.FirstOrDefault();
+            var expectedPreviousIndustryPlacement = expectedActivePathway.IndustryPlacements.FirstOrDefault();
+
+            actualActiveIndustryPlacement.Status.Should().Be(expectedPreviousIndustryPlacement.Status);
         }
 
         public static void AssertRegistrationPathway(TqRegistrationPathway actualPathway, TqRegistrationPathway expectedPathway, bool assertStatus = true)

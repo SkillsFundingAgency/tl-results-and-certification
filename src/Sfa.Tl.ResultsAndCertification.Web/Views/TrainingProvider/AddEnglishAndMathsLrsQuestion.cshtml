@@ -1,0 +1,114 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.EnglishAndMathsLrsQuestionViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Status = Sfa.Tl.ResultsAndCertification.Common.Enum
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = EnglishAndMathsLrsQuestion.Page_Title;
+}
+
+@section Scripts {
+    <script nws-csp-add-nonce="true" src="~/javascripts/english-maths-question.min.js"></script>
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" id="addEnglishAndMathsLrsForm" asp-route="SubmitAddEnglishAndMathsLrsQuestion">
+            <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="LearnerName" value="@Model.LearnerName" />
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <span class="govuk-caption-xl">@EnglishAndMathsLrsQuestion.Caption_Add_New_Learner</span>
+                <div sfa-validation-for="EnglishAndMathsLrsStatus" sfa-validation-class="govuk-form-group--error">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">@EnglishAndMathsLrsQuestion.Heading_Has_Learner_Completed_EnglishAndMaths</h1>
+                            <span id="uln-hint" class="govuk-hint">
+                                <strong>@EnglishAndMathsLrsQuestion.Text_Learner</strong> @Model.LearnerName
+                            </span>
+                        </legend>
+
+                        <div class="govuk-inset-text govuk-!-margin-top-0">
+                            <p class="govuk-body">@EnglishAndMathsLrsQuestion.Para_Lrs_Shows_Learner_NotAchieved</p>
+                            <p class="govuk-body">@EnglishAndMathsLrsQuestion.Para_This_Only_Meets_Minimum_Standard</p>
+                            <p class="govuk-body">@EnglishAndMathsLrsQuestion.Para_Must_Declare_Learner_Met_All_Conditions</p>
+                            <details class="govuk-details" closed>
+                                <summary class="govuk-details__summary">
+                                    <span class="govuk-details__summary-text">@EnglishAndMathsLrsQuestion.Details_Component_Link_What_Is_Lrs</span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                    <p class="govuk-body">@EnglishAndMathsLrsQuestion.Para_What_Is_Lrs</p>
+                                </div>
+                            </details>
+                            <details class="govuk-details" closed>
+                                <summary class="govuk-details__summary">
+                                    <span class="govuk-details__summary-text">@EnglishAndMathsLrsQuestion.Details_Component_Link_What_Are_Min_Standards</span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                    <p class="govuk-body">@EnglishAndMathsLrsQuestion.Para_Minimum_Standards_Are</p>
+                                    <p class="govuk-body govuk-!-font-weight-bold">@EnglishAndMathsLrsQuestion.Para_If_Learner_Ouside_EnglandWales</p>
+                                    <p class="govuk-body">@EnglishAndMathsLrsQuestion.Para_You_Will_Need_To_Check_Grades</p>
+                                    <p class="govuk-body govuk-!-font-weight-bold">@EnglishAndMathsLrsQuestion.Para_If_Learner_Has_Special_Education</p>
+                                    <p class="govuk-body">@EnglishAndMathsLrsQuestion.Para_Entrylevel3_Qualification_Will_Meet</p>
+                                    <ul class="govuk-list govuk-list--bullet">
+                                        <li>@EnglishAndMathsLrsQuestion.Para_The_Learner_Has_An_Education</li>
+                                        <li>@EnglishAndMathsLrsQuestion.Para_Your_Assessment_Shows_That</li>
+                                        <li>@EnglishAndMathsLrsQuestion.Para_There_Are_No_Industry_Specific_Requirements</li>
+                                    </ul>
+                                    <p class="govuk-body govuk-!-font-weight-bold">@EnglishAndMathsLrsQuestion.Para_If_Learner_Send_And_Entrylevel3</p>
+                                    <p class="govuk-body">@EnglishAndMathsLrsQuestion.Para_If_Learner_Not_Achieved_Grade</p>
+                                    <p class="govuk-body">@EnglishAndMathsLrsQuestion.Para_You_Dont_Need_Upload_Evidence</p>
+                                </div>
+                            </details>
+                        </div>
+
+                        <div class="govuk-radios">
+                            <span sfa-validation-for="EnglishAndMathsLrsStatus"></span>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="englishandmathslrsstatus" data-declaration="true" asp-for="EnglishAndMathsLrsStatus" type="radio" value="@Status.EnglishAndMathsLrsStatus.AchievedWithSend">
+                                <label class="govuk-label govuk-radios__label" for="englishandmathslrsstatus">
+                                    @EnglishAndMathsLrsQuestion.Achieved_Minimum_Standard_With_Send
+                                </label>
+                                <noscript>
+                                    <div class="govuk-!-margin-left-3 govuk-!-margin-top-3">
+                                        <p class="govuk-body">@EnglishAndMathsLrsQuestion.Inset_Text_NoJs_I_Declare_That</p>
+                                        <ul class="govuk-list govuk-list--bullet">
+                                            <li>@EnglishAndMathsLrsQuestion.Inset_Text_NoJs_Learner_Has_Been_Assessed_By_Organisation</li>
+                                            <li>@EnglishAndMathsLrsQuestion.Achieved_Minimum_Standard_With_Send</li>
+                                        </ul>
+                                    </div>
+                                </noscript>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status-not-achieved" asp-for="EnglishAndMathsLrsStatus" type="radio" value="@Status.EnglishAndMathsLrsStatus.NotAchieved">
+                                <label class="govuk-label govuk-radios__label" for="status-not-achieved">
+                                    @EnglishAndMathsLrsQuestion.Not_Achieved_Minimum_Standard
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status-lrs-data-wrong" asp-for="EnglishAndMathsLrsStatus" type="radio" value="@Status.EnglishAndMathsLrsStatus.LrsDataWrong">
+                                <label class="govuk-label govuk-radios__label" for="status-lrs-data-wrong">
+                                    @EnglishAndMathsLrsQuestion.Lrs_Data_Is_Wrong
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div id="declarationText" class="govuk-inset-text tl-hide">
+                    <p>@EnglishAndMathsLrsQuestion.Inset_Text_I_Declare_That</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>@EnglishAndMathsLrsQuestion.Inset_Text_Learner_Has_Been_Assessed_By_Organisation</li>
+                        <li>@EnglishAndMathsLrsQuestion.Inset_Text_Learner_Met_Minimum_Standard</li>
+                    </ul>
+                </div>
+
+                <p class="govuk-body govuk-!-margin-top-6">@EnglishAndMathsLrsQuestion.Para_We_Review_Your_Answer_Offline</p>
+            </div>
+            <button id="submitButton" class="govuk-button" data-module="govuk-button">@EnglishAndMathsLrsQuestion.Submit_Button</button>
+        </form>
+    </div>
+</div>

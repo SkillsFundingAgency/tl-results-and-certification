@@ -15,6 +15,5 @@
     [ModifiedOn] DATETIME2 NULL, 
     [ModifiedBy] NVARCHAR(50) NULL,
 	CONSTRAINT [PK_TqRegistrationProfile] PRIMARY KEY ([Id]),
-	CONSTRAINT Unique_TqRegistrationProfile_Uln UNIQUE ([UniqueLearnerNumber]),
-	INDEX IX_TqRegistrationProfile_Uln NONCLUSTERED (UniqueLearnerNumber)
+	CONSTRAINT Unique_TqRegistrationProfile_Uln UNIQUE ([UniqueLearnerNumber])
 )

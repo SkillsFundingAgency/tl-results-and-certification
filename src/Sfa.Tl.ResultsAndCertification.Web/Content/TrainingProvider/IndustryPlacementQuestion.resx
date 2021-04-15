@@ -153,6 +153,15 @@
   <data name="Select_Yes_Competed_With_Special_Consideration_Text" xml:space="preserve">
     <value>Select 'Yes, completed with special consideration' only if you have made adjustments for learners who were unable to perform to the best of their ability during their placement due to exceptional circumstances. For example:</value>
   </data>
+  <data name="Update_Button_Text" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Update_Learner_Caption" xml:space="preserve">
+    <value>Update learner T Level record</value>
+  </data>
+  <data name="Update_Page_Title" xml:space="preserve">
+    <value>Update learner T Level record - Industry placement status page</value>
+  </data>
   <data name="Validation_Select_Industry_Placement_Required_Message" xml:space="preserve">
     <value>Select if the learner has completed their industry placement</value>
   </data>

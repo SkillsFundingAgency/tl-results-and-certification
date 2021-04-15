@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -18,9 +20,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
     public abstract class TrainingProviderServiceBaseTest : BaseTest<TqRegistrationProfile>
     {
         protected TrainingProviderService TrainingProviderService;
+        protected ILogger<GenericRepository<TqRegistrationProfile>> RegistrationProfileRepositoryLogger;
+        protected IRepository<TqRegistrationProfile> RegistrationProfileRepository;
         protected ILogger<GenericRepository<TqRegistrationPathway>> RegistrationPathwayRepositoryLogger;
         protected IRepository<TqRegistrationPathway> RegistrationPathwayRepository;
+        protected ILogger<GenericRepository<IndustryPlacement>> IndustryPlacementRepositoryLogger;
+        protected IRepository<IndustryPlacement> IndustryPlacementRepository;
         protected IMapper TrainingProviderMapper;
+        protected ILogger<TrainingProviderService> TrainingProviderServiceLogger;
+
+        protected NotificationService NotificationService;
+        protected IAsyncNotificationClient NotificationsClient;
+        protected ILogger<NotificationService> NotificationLogger;
+        protected IRepository<NotificationTemplate> NotificationTemplateRepository;
+        protected ILogger<GenericRepository<NotificationTemplate>> NotificationTemplateRepositoryLogger;
+        protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
 
         // Data Seed variables
         protected TlAwardingOrganisation TlAwardingOrganisation;
@@ -103,12 +117,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             return qualifications;
         }
 
-        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false)
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false, bool? isSendLearner = null)
         {
             if (profile == null) return;
 
             profile.IsRcFeed = isRcFeed;
             profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
+            profile.IsSendLearner = isSendLearner;
 
             if (seedQualificationAchieved)
             {

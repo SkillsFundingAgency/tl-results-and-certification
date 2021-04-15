@@ -21,12 +21,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _logger = logger;
         }
 
-        public async Task<TqRegistrationPathway> GetRegistrationLiteAsync(long aoUkprn, int profileId, bool includeProfile = true)
+        public async Task<TqRegistrationPathway> GetRegistrationLiteAsync(long aoUkprn, int profileId, bool includeProfile = true, bool includeIndustryPlacements = false)
         {
             var pathwayQueryable = _dbContext.TqRegistrationPathway.AsQueryable();
                
             if (includeProfile)
                 pathwayQueryable = pathwayQueryable.Include(p => p.TqRegistrationProfile);
+
+            if(includeIndustryPlacements)
+                pathwayQueryable = pathwayQueryable.Include(p => p.IndustryPlacements);
 
             var registrationPathway = await pathwayQueryable
                 .IncludeFilter(p => p.TqRegistrationSpecialisms.Where(s => s.IsOptedin && (p.Status == RegistrationPathwayStatus.Withdrawn) ? s.EndDate != null : s.EndDate == null))
@@ -45,11 +48,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqRegistrationSpecialisms)
                 .Include(x => x.TqRegistrationPathways)
+                    .ThenInclude(x => x.IndustryPlacements)
+                .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqPathwayAssessments)
                     .ThenInclude(x => x.TqPathwayResults)
                 .FirstOrDefaultAsync();
             return profile;
-        }        
+        }
 
         public async Task<TqRegistrationPathway> GetRegistrationAsync(long aoUkprn, int profileId)
         {
@@ -99,6 +104,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqProvider)
                         .ThenInclude(x => x.TqAwardingOrganisation)
+                .Include(x => x.TqRegistrationPathways)
+                    .ThenInclude(x => x.IndustryPlacements)
                 .ToListAsync();
         }
 
@@ -122,13 +129,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
                             var specialismRegistrations = specialismEntities ?? new List<TqRegistrationSpecialism>();
 
+                            var industryPlacements = new List<IndustryPlacement>();
                             var pathwayAssessments = new List<TqPathwayAssessment>();
-                            var processEntitiesResult = await ProcessRegistrationPathwayEntities(bulkConfig, pathwayRegistrations, specialismRegistrations, pathwayAssessments);
+                            var processEntitiesResult = await ProcessRegistrationPathwayEntities(bulkConfig, pathwayRegistrations, specialismRegistrations, pathwayAssessments, industryPlacements);
 
                             specialismRegistrations = processEntitiesResult.Item1;
                             pathwayAssessments = processEntitiesResult.Item2;
+                            industryPlacements = processEntitiesResult.Item3;
 
                             await ProcessRegistrationSpecialismEntities(specialismRegistrations);
+
+                            await ProcessIndustryPlacements(industryPlacements);
 
                             var pathwayResults = new List <TqPathwayResult>();
                             await ProcessPathwayAssessments(bulkConfig, pathwayAssessments, pathwayResults);
@@ -181,7 +192,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return pathwayRegistrations;
         }
 
-        private async Task<Tuple<List<TqRegistrationSpecialism>, List<TqPathwayAssessment>>> ProcessRegistrationPathwayEntities(BulkConfig bulkConfig, List<TqRegistrationPathway> pathwayRegistrations, List<TqRegistrationSpecialism> specialismRegistrations, List<TqPathwayAssessment> pathwayAssessments)
+        private async Task<Tuple<List<TqRegistrationSpecialism>, List<TqPathwayAssessment>, List<IndustryPlacement>>> ProcessRegistrationPathwayEntities(BulkConfig bulkConfig, List<TqRegistrationPathway> pathwayRegistrations, List<TqRegistrationSpecialism> specialismRegistrations, List<TqPathwayAssessment> pathwayAssessments, List<IndustryPlacement> industryPlacements)
         {
             if (pathwayRegistrations.Count > 0)
             {
@@ -198,7 +209,19 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     {
                         pathwayEntity = pathwayRegistrations.FirstOrDefault(p => p.TqRegistrationProfileId == pathway.TqRegistrationProfileId
                                                                                 && p.TqProviderId == pathway.TqProviderId
-                                                                                && p.Status == Common.Enum.RegistrationPathwayStatus.Active);
+                                                                                && p.Status == RegistrationPathwayStatus.Active);
+                    }
+
+                    foreach (var industryPlacement in pathway.IndustryPlacements)
+                    {
+                        // update fk relationship id for newely added records
+                        // take only newly added industry placement record as we are not maintaining history in IP table
+                        // so we don't want to update existing records
+                        if (industryPlacement.TqRegistrationPathwayId == 0)
+                        {
+                            industryPlacement.TqRegistrationPathwayId = pathwayEntity.Id;
+                            industryPlacements.Add(industryPlacement);
+                        }                        
                     }
 
                     foreach (var specialism in pathway.TqRegistrationSpecialisms)
@@ -223,7 +246,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 });
             }
 
-            return new Tuple<List<TqRegistrationSpecialism>, List<TqPathwayAssessment>>(specialismRegistrations, pathwayAssessments);
+            return new Tuple<List<TqRegistrationSpecialism>, List<TqPathwayAssessment>, List<IndustryPlacement>>(specialismRegistrations, pathwayAssessments, industryPlacements);
         }
 
         private async Task ProcessRegistrationSpecialismEntities(List<TqRegistrationSpecialism> specialismRegistrations)
@@ -267,6 +290,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             pathwayResults = SortUpdateAndInsertOrder(pathwayResults, x => x.Id);
             await _dbContext.BulkInsertOrUpdateAsync(pathwayResults, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
+        }
+
+        private async Task ProcessIndustryPlacements(List<IndustryPlacement> industryPlacements)
+        {
+            if (industryPlacements == null || !industryPlacements.Any())
+                return;
+
+            industryPlacements = SortUpdateAndInsertOrder(industryPlacements, x => x.Id);
+            await _dbContext.BulkInsertOrUpdateAsync(industryPlacements, bulkConfig => { bulkConfig.UseTempDB = true; bulkConfig.BatchSize = 5000; bulkConfig.BulkCopyTimeout = 60; });
         }
 
         private List<T> SortUpdateAndInsertOrder<T>(List<T> entities, Func<T, int> selector) where T : class
