@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), model.EnterUln.ToLong());
+            var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), model.EnterUln.ToLong(), evaluateSendConfirmation: true);
             if (learnerRecord == null || !learnerRecord.IsLearnerRegistered || learnerRecord.IsLearnerRecordAdded)
             {
                 await SyncCacheUln(model);
@@ -161,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
 
-            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false || cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == true || cacheModel?.LearnerRecord?.IsSendConfirmationRequired == false)
+            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false || cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == false || cacheModel?.LearnerRecord?.IsSendConfirmationRequired == false)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = cacheModel?.EnglishAndMathsLrsQuestion == null ? new EnglishAndMathsLrsQuestionViewModel() : cacheModel.EnglishAndMathsLrsQuestion;

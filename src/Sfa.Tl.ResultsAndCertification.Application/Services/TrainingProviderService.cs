@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _logger = logger;
         }
 
-        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
+        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
         {
             var latestPathway = await _tqRegistrationPathwayRepository
                                     .GetManyAsync(x => x.TqRegistrationProfile.UniqueLearnerNumber == uln &&
@@ -58,6 +58,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                     .OrderByDescending(o => o.CreatedOn)
                                     .FirstOrDefaultAsync();
 
+            if (evaluateSendConfirmation == true && latestPathway.TqRegistrationProfile.IsRcFeed == false && 
+                latestPathway.TqRegistrationProfile.IsSendLearner == null)
+            {
+                // Step 1: DB call to send confirmation  - TODO
+                var isSendConfiramtionRequired = false; 
+            }
+
+            // TODO: pass evaluateSendConfirmation result
             return _mapper.Map<FindLearnerRecord>(latestPathway);
         }
 

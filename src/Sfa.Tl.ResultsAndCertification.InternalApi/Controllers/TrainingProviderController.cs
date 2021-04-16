@@ -18,10 +18,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("FindLearnerRecord/{providerUkprn}/{uln}")]
-        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
+        [Route("FindLearnerRecord/{providerUkprn}/{uln}/{evaluateSendConfirmation:bool?}")]
+        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation)
         {
-            return await _trainingProviderService.FindLearnerRecordAsync(providerUkprn, uln);
+            return await _trainingProviderService.FindLearnerRecordAsync(providerUkprn, uln, evaluateSendConfirmation);
         }
 
         [HttpGet]
