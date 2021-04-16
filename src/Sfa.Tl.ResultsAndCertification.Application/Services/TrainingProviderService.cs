@@ -21,14 +21,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRepository<TqRegistrationProfile> _tqRegistrationProfile;
         private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
         private readonly IRepository<IndustryPlacement> _industryPlacementRepository;
+        private readonly ITrainingProviderRepository _trainingProviderRepository;
         private readonly INotificationService _notificationService;
         private readonly ResultsAndCertificationConfiguration _resultsAndCertificationConfiguration;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public TrainingProviderService(IRepository<TqRegistrationProfile> tqRegistrationProfile, 
+        public TrainingProviderService(IRepository<TqRegistrationProfile> tqRegistrationProfile,
             IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
             IRepository<IndustryPlacement> industryPlacementRepository,
+            ITrainingProviderRepository trainingProviderRepository,
             INotificationService notificationService,
             ResultsAndCertificationConfiguration resultsAndCertificationConfiguration,
             IMapper mapper, ILogger<TrainingProviderService> logger)
@@ -36,6 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _tqRegistrationProfile = tqRegistrationProfile;
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
             _industryPlacementRepository = industryPlacementRepository;
+            _trainingProviderRepository = trainingProviderRepository;
             _notificationService = notificationService;
             _resultsAndCertificationConfiguration = resultsAndCertificationConfiguration;
             _mapper = mapper;
@@ -58,15 +61,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                     .OrderByDescending(o => o.CreatedOn)
                                     .FirstOrDefaultAsync();
 
-            if (evaluateSendConfirmation == true && latestPathway.TqRegistrationProfile.IsRcFeed == false && 
-                latestPathway.TqRegistrationProfile.IsSendLearner == null)
-            {
-                // Step 1: DB call to send confirmation  - TODO
-                var isSendConfiramtionRequired = false; 
-            }
+            var isSendConfiramtionRequired = false;
+            if (latestPathway != null && evaluateSendConfirmation == true && latestPathway.TqRegistrationProfile.IsRcFeed == false &&
+                latestPathway.TqRegistrationProfile.IsEnglishAndMathsAchieved == true && latestPathway.TqRegistrationProfile.IsSendLearner == null)
+                isSendConfiramtionRequired = await _trainingProviderRepository.IsSendConfirmationRequiredAsync(latestPathway.TqRegistrationProfileId); 
 
-            // TODO: pass evaluateSendConfirmation result
-            return _mapper.Map<FindLearnerRecord>(latestPathway);
+            return _mapper.Map<FindLearnerRecord>(latestPathway, opt => opt.Items["isSendConfiramtionRequired"] = isSendConfiramtionRequired);
         }
 
         public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)

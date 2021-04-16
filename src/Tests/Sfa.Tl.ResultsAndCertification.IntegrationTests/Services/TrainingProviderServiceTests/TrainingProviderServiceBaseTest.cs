@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         protected IRepository<IndustryPlacement> IndustryPlacementRepository;
         protected IMapper TrainingProviderMapper;
         protected ILogger<TrainingProviderService> TrainingProviderServiceLogger;
-
+        protected ITrainingProviderRepository TrainingProviderRepository;
         protected NotificationService NotificationService;
         protected IAsyncNotificationClient NotificationsClient;
         protected ILogger<NotificationService> NotificationLogger;

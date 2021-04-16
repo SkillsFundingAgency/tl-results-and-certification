@@ -38,7 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.IsLearnerRecordAdded, opts => opts.MapFrom(s => s.TqRegistrationProfile.IsEnglishAndMathsAchieved.HasValue && s.IndustryPlacements.Any()))
                 .ForMember(d => d.IsEnglishAndMathsAchieved, opts => opts.MapFrom(s => s.TqRegistrationProfile.IsEnglishAndMathsAchieved))                
                 .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.TqRegistrationProfile.IsRcFeed == false && s.TqRegistrationProfile.QualificationAchieved.Any()))
-                .ForMember(d => d.HasSendQualification, opts => opts.MapFrom(s => s.TqRegistrationProfile.QualificationAchieved.Any(q => q.Qualification != null && q.Qualification.IsSendQualification)));
+                .ForMember(d => d.HasSendQualification, opts => opts.MapFrom(s => s.TqRegistrationProfile.QualificationAchieved.Any(q => q.Qualification != null && q.Qualification.IsSendQualification)))
+                .ForMember(d => d.IsSendConfirmationRequired, opts => opts.MapFrom((src, dest, destMember, context) => (bool)context.Items["isSendConfiramtionRequired"]));
 
             CreateMap<UpdateLearnerRecordRequest, IndustryPlacement>()
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.IndustryPlacementStatus))

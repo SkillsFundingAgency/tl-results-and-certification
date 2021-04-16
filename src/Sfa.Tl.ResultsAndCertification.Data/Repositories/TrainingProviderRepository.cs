@@ -1,6 +1,9 @@
-﻿using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 {
@@ -13,19 +16,26 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public bool IsSendConfirmationRequiredAsync(int profileId)
+        public async Task<bool> IsSendConfirmationRequiredAsync(int profileId)
         {
-            var achievemnts = from qualAchieved in _dbContext.QualificationAchieved
-                              join qual in _dbContext.Qualification on qualAchieved.QualificationId equals qual.Id
-                              join qualGrade in _dbContext.QualificationGrade on qualAchieved.QualificationGradeId equals qualGrade.Id
-                              join lookup in _dbContext.TlLookup on qual.TlLookupId equals lookup.Id
-                              where qualAchieved.TqRegistrationProfileId == profileId && qualAchieved.IsAchieved && qual.IsActive && qualGrade.IsActive
-                              select new { Subject = lookup.Code, IsSend = qual.IsSendQualification || qualGrade.IsSendGrade };
+            var achievemnts = await (from qualAchieved in _dbContext.QualificationAchieved
+                                     join qual in _dbContext.Qualification on qualAchieved.QualificationId equals qual.Id
+                                     join qualGrade in _dbContext.QualificationGrade on qualAchieved.QualificationGradeId equals qualGrade.Id
+                                     join lookup in _dbContext.TlLookup on qual.TlLookupId equals lookup.Id
+                                     where qualAchieved.TqRegistrationProfileId == profileId && qualAchieved.IsAchieved && qual.IsActive && qualGrade.IsActive
+                                     select new { Subject = lookup.Code, IsSend = qual.IsSendQualification || qualGrade.IsSendGrade })
+                                     .ToListAsync();
 
-            var engSendConfirmationRequired = achievemnts.Where(x => x.Subject == "Eng").All(x => x.IsSend);
-            var mathsSendConfirmationRequired = achievemnts.Where(x => x.Subject == "Math").All(x => x.IsSend);
+            var englishAchievements = achievemnts?.Where(x => x.Subject == "Eng");
+            var mathsAchievements = achievemnts?.Where(x => x.Subject == "Math");
 
-            return engSendConfirmationRequired || mathsSendConfirmationRequired;
+            if (!achievemnts.Any() || !englishAchievements.Any() || !mathsAchievements.Any())
+                throw new Exception();
+
+            var isEngSendConfirmationRequired = englishAchievements.All(x => x.IsSend);
+            var isMathsSendConfirmationRequired = mathsAchievements.All(x => x.IsSend);
+
+            return isEngSendConfirmationRequired || isMathsSendConfirmationRequired;
         }
     }
 }

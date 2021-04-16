@@ -1,7 +1,9 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
 {
     public interface ITrainingProviderRepository
     {
-        public bool IsSendConfirmationRequiredAsync(int profileId);
+        Task<bool> IsSendConfirmationRequiredAsync(int profileId);
     }
 }
