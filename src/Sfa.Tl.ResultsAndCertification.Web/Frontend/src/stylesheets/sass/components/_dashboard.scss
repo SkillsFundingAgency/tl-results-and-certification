@@ -40,11 +40,17 @@
     }
 
     .manage-learner-records-card {
-        min-height: 215px;
+        min-height: 335px;
     }
 
     .training-provider-card {
         min-height: 155px;
+    }
+}
+
+@media screen and (max-width: 983px) and (min-width: 807px) {
+    .manage-learner-records-card {
+        min-height: 285px;
     }
 }
 
@@ -72,7 +78,7 @@
     }
 
     .manage-learner-records-card {
-        min-height: 240px;
+        min-height: 360px;
     }
 }
 

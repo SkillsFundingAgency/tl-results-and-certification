@@ -61,43 +61,79 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new learner record.
+        ///   Looks up a localized string similar to Add a new learner T Level record.
         /// </summary>
-        public static string Card_Link_Add_New_Learner_Record {
+        public static string Card_Heading_Add_New_Learner_TLevel_Record {
             get {
-                return ResourceManager.GetString("Card_Link_Add_New_Learner_Record", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Add_New_Learner_TLevel_Record", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update a learner record.
+        ///   Looks up a localized string similar to Update a learner T Level record.
         /// </summary>
-        public static string Card_Link_Update_Learner_Record {
+        public static string Card_Heading_Update_Learner_TLevel_Record {
             get {
-                return ResourceManager.GetString("Card_Link_Update_Learner_Record", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Update_Learner_TLevel_Record", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new learner record and confirm their English and maths achievements and industry placement status.
+        ///   Looks up a localized string similar to Add a new learner T Level record.
         /// </summary>
-        public static string Card_Text_Add_New_Learner_Record {
+        public static string Card_Link_Add_New_Learner_TLevel_Record {
             get {
-                return ResourceManager.GetString("Card_Text_Add_New_Learner_Record", resourceCulture);
+                return ResourceManager.GetString("Card_Link_Add_New_Learner_TLevel_Record", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for an existing learner record and update their English and maths achievements and industry placement status.
+        ///   Looks up a localized string similar to Update a learner T Level record.
         /// </summary>
-        public static string Card_Text_Update_Learner_Record {
+        public static string Card_Link_Update_Learner_TLevel_Record {
             get {
-                return ResourceManager.GetString("Card_Text_Update_Learner_Record", resourceCulture);
+                return ResourceManager.GetString("Card_Link_Update_Learner_TLevel_Record", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage learner records.
+        ///   Looks up a localized string similar to completed their industry placement.
+        /// </summary>
+        public static string Completed_Their_Industry_Placement_Text {
+            get {
+                return ResourceManager.GetString("Completed_Their_Industry_Placement_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English and maths achievement status.
+        /// </summary>
+        public static string English_And_Maths_Achievement_Status_Text {
+            get {
+                return ResourceManager.GetString("English_And_Maths_Achievement_Status_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to industry placement completion status.
+        /// </summary>
+        public static string Industry_Placement_Completion_Status_Text {
+            get {
+                return ResourceManager.GetString("Industry_Placement_Completion_Status_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to met the minimum standard for English and maths.
+        /// </summary>
+        public static string Met_The_Minimum_Standard_for_English_And_Maths_Text {
+            get {
+                return ResourceManager.GetString("Met_The_Minimum_Standard_for_English_And_Maths_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage learner T Level records.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -106,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add or update records for learners who have been registered on a T Level programme by the awarding organisation..
+        ///   Looks up a localized string similar to Add or update records for learners registered on a T Level course by an exam board (also known as an awarding organisation)..
         /// </summary>
         public static string Page_Info_Text {
             get {
@@ -124,11 +160,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage learner records page.
+        ///   Looks up a localized string similar to Manage learner T Level records page.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for and change an existing:.
+        /// </summary>
+        public static string Search_For_And_Change_An_Existing_Text {
+            get {
+                return ResourceManager.GetString("Search_For_And_Change_An_Existing_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tell us if a learner has:.
+        /// </summary>
+        public static string Tell_Us_If_Learner_Has_Text {
+            get {
+                return ResourceManager.GetString("Tell_Us_If_Learner_Has_Text", resourceCulture);
             }
         }
     }
