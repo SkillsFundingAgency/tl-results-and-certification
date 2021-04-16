@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  English and maths status.
+        ///   Looks up a localized string similar to  English and maths achievement status.
         /// </summary>
         public static string English_And_Maths_Action_Hidden_Text {
             get {
@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  industry placement status.
+        ///   Looks up a localized string similar to  industry placement completion status.
         /// </summary>
         public static string Industry_Placement_Action_Hidden_Text {
             get {

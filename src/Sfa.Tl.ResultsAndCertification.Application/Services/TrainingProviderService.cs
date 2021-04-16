@@ -51,6 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                         {
                                             n => n.TqRegistrationProfile,
                                             n => n.TqProvider.TlProvider,
+                                            n => n.TqProvider.TqAwardingOrganisation.TlPathway,
                                             n => n.IndustryPlacements
                                         })
                                     .Include(x => x.TqRegistrationProfile.QualificationAchieved).ThenInclude(x => x.Qualification)

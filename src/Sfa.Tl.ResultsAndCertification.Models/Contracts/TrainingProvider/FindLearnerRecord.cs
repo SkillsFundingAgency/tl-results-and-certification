@@ -9,6 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public string Name { get; set; }
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
+        public string PathwayName { get; set; }
         public bool IsLearnerRegistered { get; set; }
         public bool IsLearnerRecordAdded { get; set; }
         public bool IsEnglishAndMathsAchieved { get; set; }
