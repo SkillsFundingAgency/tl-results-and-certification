@@ -31,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.TqRegistrationProfile.Id))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.TqRegistrationProfile.UniqueLearnerNumber))
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => $"{s.TqRegistrationProfile.Firstname} {s.TqRegistrationProfile.Lastname}"))
+                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => $"{s.TqProvider.TqAwardingOrganisation.TlPathway.Name} ({s.TqProvider.TqAwardingOrganisation.TlPathway.LarId})"))
                 .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.TqRegistrationProfile.DateofBirth))
                 .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => $"{s.TqProvider.TlProvider.Name} ({s.TqProvider.TlProvider.UkPrn})"))
                 .ForMember(d => d.IsLearnerRegistered, opts => opts.MapFrom(s => s.Status == RegistrationPathwayStatus.Active || s.Status == RegistrationPathwayStatus.Withdrawn))
