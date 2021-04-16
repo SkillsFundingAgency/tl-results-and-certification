@@ -38,18 +38,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<UpdateLearnerRecordResponseViewModel> ProcessIndustryPlacementQuestionUpdateAsync(long providerUkprn, UpdateIndustryPlacementQuestionViewModel viewModel)
         {
-            var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, viewModel.ProfileId, viewModel.RegistrationPathwayId);
+            var learnerRecordDetails = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, viewModel.ProfileId, viewModel.RegistrationPathwayId);
 
-            if (response == null || !response.IsLearnerRecordAdded) return null;
+            if (learnerRecordDetails == null || !learnerRecordDetails.IsLearnerRecordAdded) return null;
 
-            if (response.IndustryPlacementStatus == viewModel.IndustryPlacementStatus)
+            if (learnerRecordDetails.IndustryPlacementStatus == viewModel.IndustryPlacementStatus)
             {
                 return new UpdateLearnerRecordResponseViewModel { IsModified = false };
             }
 
-            var request = _mapper.Map<UpdateLearnerRecordRequest>(viewModel, opt => { opt.Items["providerUkprn"] = providerUkprn; opt.Items["uln"] = response.Uln; });
+            var request = _mapper.Map<UpdateLearnerRecordRequest>(viewModel, opt => { opt.Items["providerUkprn"] = providerUkprn; opt.Items["uln"] = learnerRecordDetails.Uln; });
             var isSuccess = await _internalApiClient.UpdateLearnerRecordAsync(request);
-            return new UpdateLearnerRecordResponseViewModel { ProfileId = response.ProfileId, Uln = response.Uln, Name = response.Name, IsModified = true, IsSuccess = isSuccess };
+            return new UpdateLearnerRecordResponseViewModel { ProfileId = learnerRecordDetails.ProfileId, Uln = learnerRecordDetails.Uln, Name = learnerRecordDetails.Name, IsModified = true, IsSuccess = isSuccess };
         }
 
         public async Task<UpdateLearnerRecordResponseViewModel> ProcessEnglishAndMathsQuestionUpdateAsync(long providerUkprn, UpdateEnglishAndMathsQuestionViewModel viewModel)

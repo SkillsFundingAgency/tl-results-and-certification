@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
+﻿namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
 {
     public interface ITrainingProviderRepository
     {
-        Task<bool> FindProvidersUlnAsync(long providerUkprn, long uln);
+        public bool IsSendConfirmationRequiredAsync(int profileId);
     }
 }
