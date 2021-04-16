@@ -97,20 +97,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements and industry placement status.
+        ///   Looks up a localized string similar to Exam boards, also known as awarding organisations, are responsible for registering each learner onto a T Level course and recording their technical qualification results..
         /// </summary>
-        public static string Manage_Learners_Records_Description_Text {
+        public static string Exams_Board_Text {
             get {
-                return ResourceManager.GetString("Manage_Learners_Records_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Exams_Board_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage learner records.
+        ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements and industry placement completion status.
         /// </summary>
-        public static string Manage_Learners_Records_Text {
+        public static string Manage_Learner_TLevel_Records_Description_Text {
             get {
-                return ResourceManager.GetString("Manage_Learners_Records_Text", resourceCulture);
+                return ResourceManager.GetString("Manage_Learner_TLevel_Records_Description_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage learner T Level records.
+        /// </summary>
+        public static string Manage_Learner_TLevel_Records_Text {
+            get {
+                return ResourceManager.GetString("Manage_Learner_TLevel_Records_Text", resourceCulture);
             }
         }
         
@@ -147,6 +156,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         public static string Providers_Description_Text {
             get {
                 return ResourceManager.GetString("Providers_Description_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Providers, for example, schools and colleges, can use this service to record a T Level learner&apos;s English and maths achievements and industry placement completion. These records will be added to the learner&apos;s T Level registration..
+        /// </summary>
+        public static string Providers_Schools_And_Colleges_Text {
+            get {
+                return ResourceManager.GetString("Providers_Schools_And_Colleges_Text", resourceCulture);
             }
         }
         
