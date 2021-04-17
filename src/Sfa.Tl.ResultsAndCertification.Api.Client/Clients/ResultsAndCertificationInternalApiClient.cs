@@ -256,9 +256,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         }
 
         // Training Provider endpoints
-        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
+        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
         {
-            var requestUri = string.Format(ApiConstants.FindLearnerRecordUri, providerUkprn, uln);
+            var requestUri = string.Format(ApiConstants.FindLearnerRecordUri, providerUkprn, uln, evaluateSendConfirmation);
             return await GetAsync<FindLearnerRecord>(requestUri);
         }
 

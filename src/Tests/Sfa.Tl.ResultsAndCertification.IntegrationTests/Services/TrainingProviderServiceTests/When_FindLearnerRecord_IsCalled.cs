@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 TlevelQueriedSupportEmailAddress = "test@test.com"
             };
 
-            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, RegistrationPathwayRepository, IndustryPlacementRepository, NotificationService, ResultsAndCertificationConfiguration, TrainingProviderMapper, TrainingProviderServiceLogger);
+            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, RegistrationPathwayRepository, IndustryPlacementRepository, TrainingProviderRepository, NotificationService, ResultsAndCertificationConfiguration, TrainingProviderMapper, TrainingProviderServiceLogger);
         }
 
         public override Task When()
@@ -109,6 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             var expectedProvider = TlProviders.FirstOrDefault(p => p.UkPrn == (long)provider);
             var expectedProviderName = expectedProvider != null ? $"{expectedProvider.Name} ({expectedProvider.UkPrn})" : null;
+            var expectedPathwayName = $"{Pathway.Name} ({Pathway.LarId})";
             var expectedProfile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
 
             expectedProfile.Should().NotBeNull();
@@ -117,6 +118,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _actualResult.Name.Should().Be($"{expectedProfile.Firstname} {expectedProfile.Lastname}");
             _actualResult.DateofBirth.Should().Be(expectedProfile.DateofBirth);
             _actualResult.ProviderName.Should().Be(expectedProviderName);
+            _actualResult.PathwayName.Should().Be(expectedPathwayName);
             _actualResult.IsLearnerRegistered.Should().Be(expectedResult.IsLearnerRegistered);
             _actualResult.IsEnglishAndMathsAchieved.Should().Be(expectedResult.IsEnglishAndMathsAchieved);
             _actualResult.HasLrsEnglishAndMaths.Should().Be(expectedResult.HasLrsEnglishAndMaths);

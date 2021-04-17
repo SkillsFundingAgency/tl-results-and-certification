@@ -8,21 +8,20 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTests.AddLearnerRecord
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Called_With_Valid_Lrs_Send_Data : TestSetup
     {
         private AddLearnerRecordResponse _expectedApiResult { get; set; }
 
         public override void Given()
         {
             CreateMapper();
-            ProviderUkprn = 987654321;           
+            ProviderUkprn = 987654321;
 
             AddLearnerRecordViewModel = new AddLearnerRecordViewModel
             {
-                LearnerRecord = new Models.Contracts.TrainingProvider.FindLearnerRecord { Uln = 1234567890, Name = "Test Name", HasLrsEnglishAndMaths = false },
+                LearnerRecord = new Models.Contracts.TrainingProvider.FindLearnerRecord { Uln = 1234567890, Name = "Test Name", HasLrsEnglishAndMaths = true },
                 Uln = new EnterUlnViewModel { EnterUln = "1234567890" },
-                EnglishAndMathsQuestion = new EnglishAndMathsQuestionViewModel { EnglishAndMathsStatus = EnglishAndMathsStatus.AchievedWithSend },
-                IndustryPlacementQuestion = new IndustryPlacementQuestionViewModel { IndustryPlacementStatus = IndustryPlacementStatus.Completed }
+                EnglishAndMathsLrsQuestion = new EnglishAndMathsLrsQuestionViewModel { EnglishAndMathsLrsStatus = EnglishAndMathsLrsStatus.AchievedWithSend },
             };
 
             _expectedApiResult = new AddLearnerRecordResponse { Uln = AddLearnerRecordViewModel.LearnerRecord.Uln, Name = AddLearnerRecordViewModel.LearnerRecord.Name, IsSuccess = true };
@@ -30,9 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             InternalApiClient.AddLearnerRecordAsync(Arg.Is<AddLearnerRecordRequest>(
                     x => x.Uln == AddLearnerRecordViewModel.LearnerRecord.Uln &&
                     x.Ukprn == ProviderUkprn &&
-                    x.EnglishAndMathsStatus == AddLearnerRecordViewModel.EnglishAndMathsQuestion.EnglishAndMathsStatus &&
-                    x.HasLrsEnglishAndMaths == AddLearnerRecordViewModel.LearnerRecord.HasLrsEnglishAndMaths &&
-                    x.IndustryPlacementStatus == AddLearnerRecordViewModel.IndustryPlacementQuestion.IndustryPlacementStatus &&
+                    x.EnglishAndMathsLrsStatus == AddLearnerRecordViewModel.EnglishAndMathsLrsQuestion.EnglishAndMathsLrsStatus &&
                     x.PerformedBy == $"{Givenname} {Surname}" &&
                     x.PerformedUserEmail == Email))
                 .Returns(_expectedApiResult);

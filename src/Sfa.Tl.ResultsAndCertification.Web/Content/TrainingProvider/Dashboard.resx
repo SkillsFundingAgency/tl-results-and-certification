@@ -117,28 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Card_Link_Add_New_Learner_Record" xml:space="preserve">
-    <value>Add a new learner record</value>
+  <data name="Card_Heading_Add_New_Learner_TLevel_Record" xml:space="preserve">
+    <value>Add a new learner T Level record</value>
   </data>
-  <data name="Card_Link_Update_Learner_Record" xml:space="preserve">
-    <value>Update a learner record</value>
+  <data name="Card_Heading_Update_Learner_TLevel_Record" xml:space="preserve">
+    <value>Update a learner T Level record</value>
   </data>
-  <data name="Card_Text_Add_New_Learner_Record" xml:space="preserve">
-    <value>Add a new learner record and confirm their English and maths achievements and industry placement status</value>
+  <data name="Card_Link_Add_New_Learner_TLevel_Record" xml:space="preserve">
+    <value>Add a new learner T Level record</value>
   </data>
-  <data name="Card_Text_Update_Learner_Record" xml:space="preserve">
-    <value>Search for an existing learner record and update their English and maths achievements and industry placement status</value>
+  <data name="Card_Link_Update_Learner_TLevel_Record" xml:space="preserve">
+    <value>Update a learner T Level record</value>
+  </data>
+  <data name="Completed_Their_Industry_Placement_Text" xml:space="preserve">
+    <value>completed their industry placement</value>
+  </data>
+  <data name="English_And_Maths_Achievement_Status_Text" xml:space="preserve">
+    <value>English and maths achievement status</value>
+  </data>
+  <data name="Industry_Placement_Completion_Status_Text" xml:space="preserve">
+    <value>industry placement completion status</value>
+  </data>
+  <data name="Met_The_Minimum_Standard_for_English_And_Maths_Text" xml:space="preserve">
+    <value>met the minimum standard for English and maths</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Manage learner records</value>
+    <value>Manage learner T Level records</value>
   </data>
   <data name="Page_Info_Text" xml:space="preserve">
-    <value>Add or update records for learners who have been registered on a T Level programme by the awarding organisation.</value>
+    <value>Add or update records for learners registered on a T Level course by an exam board (also known as an awarding organisation).</value>
   </data>
   <data name="Page_Inset_Text" xml:space="preserve">
     <value>The information you provide here will be used to calculate overall T Level results and issue certificates and statements of achievement. Please make sure it is correct as it will not be checked by ESFA.</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Manage learner records page</value>
+    <value>Manage learner T Level records page</value>
+  </data>
+  <data name="Search_For_And_Change_An_Existing_Text" xml:space="preserve">
+    <value>Search for and change an existing:</value>
+  </data>
+  <data name="Tell_Us_If_Learner_Has_Text" xml:space="preserve">
+    <value>Tell us if a learner has:</value>
   </data>
 </root>
