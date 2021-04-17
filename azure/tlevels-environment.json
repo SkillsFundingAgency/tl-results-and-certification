@@ -69,7 +69,7 @@
         "uiAppName": "[concat(parameters('resourceNamePrefix'), '-web')]",
         "internalApiAppName": "[concat(parameters('resourceNamePrefix'), '-internal-api')]",
         "appInsightName": "[concat(parameters('resourceNamePrefix'), '-ai')]",
-        "workerFunctionAppName": "[concat(parameters('resourceNamePrefix'), '-func-worker')]",
+        "functionAppName": "[concat(parameters('resourceNamePrefix'), '-func')]",
         "sqlDatabaseName": "[concat(parameters('resourceNamePrefix'), '-sqldb')]",
         "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]"
 
@@ -353,7 +353,7 @@
                 },
                 "parameters": {
                     "functionAppName": {
-                        "value": "[variables('workerFunctionAppName')]"
+                        "value": "[variables('functionAppName')]"
                     },
                     "appServicePlanName": {
                         "value": "[parameters('sharedASPName')]"
