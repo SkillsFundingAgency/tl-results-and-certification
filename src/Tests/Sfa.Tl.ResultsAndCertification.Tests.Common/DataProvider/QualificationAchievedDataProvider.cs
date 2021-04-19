@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return qualificationAchieved;
         }
 
-        public static List<QualificationAchieved> CreateQualificationAchieved(ResultsAndCertificationDbContext _dbContext, List<QualificationAchieved> qualificationAchieved, bool addToDbContext = true)
+        public static IList<QualificationAchieved> CreateQualificationAchieved(ResultsAndCertificationDbContext _dbContext, IList<QualificationAchieved> qualificationAchieved, bool addToDbContext = true)
         {
             if (addToDbContext && qualificationAchieved != null && qualificationAchieved.Count > 0)
             {
