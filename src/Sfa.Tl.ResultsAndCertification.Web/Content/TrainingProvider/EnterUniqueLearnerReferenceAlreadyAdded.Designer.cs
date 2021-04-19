@@ -71,11 +71,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new learner record - ULN already added page.
+        ///   Looks up a localized string similar to Learner:.
+        /// </summary>
+        public static string Learner_Text {
+            get {
+                return ResourceManager.GetString("Learner_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a new learner T Level record - ULN already added page.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select ‘Continue’ to view or update this learner T Level record..
+        /// </summary>
+        public static string Select_Continue_Text {
+            get {
+                return ResourceManager.GetString("Select_Continue_Text", resourceCulture);
             }
         }
         
@@ -89,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have already added a record for this ULN. Select ‘Continue’ to view or update this ULN&apos;s record..
+        ///   Looks up a localized string similar to Your organisation has already added a learner T Level record for this ULN..
         /// </summary>
         public static string Uln_Already_Added_Text {
             get {

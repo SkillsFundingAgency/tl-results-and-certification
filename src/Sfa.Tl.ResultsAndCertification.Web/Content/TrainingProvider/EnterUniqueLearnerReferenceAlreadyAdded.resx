@@ -120,13 +120,19 @@
   <data name="Continue_Button" xml:space="preserve">
     <value>Continue</value>
   </data>
+  <data name="Learner_Text" xml:space="preserve">
+    <value>Learner:</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Add a new learner record - ULN already added page</value>
+    <value>Add a new learner T Level record - ULN already added page</value>
+  </data>
+  <data name="Select_Continue_Text" xml:space="preserve">
+    <value>Select ‘Continue’ to view or update this learner T Level record.</value>
   </data>
   <data name="Uln_Already_Added_Heading" xml:space="preserve">
     <value>ULN ({0}) has already been added</value>
   </data>
   <data name="Uln_Already_Added_Text" xml:space="preserve">
-    <value>You have already added a record for this ULN. Select ‘Continue’ to view or update this ULN's record.</value>
+    <value>Your organisation has already added a learner T Level record for this ULN.</value>
   </data>
 </root>
