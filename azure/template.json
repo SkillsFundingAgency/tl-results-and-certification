@@ -491,7 +491,7 @@
                         "value": "[variables('functionAppName')]"
                     },
                     "appServicePlanName": {
-                        "value": "[parameters('aspInstances')]"
+                        "value": "[variables('appServicePlanName')]"
                     },
                     "appServicePlanResourceGroup": {
                         "value": "[resourceGroup().name]"
