@@ -127,13 +127,13 @@
     <value>Achieved minimum standard for learners with SEND (Data from the Learning Records Service - LRS and provider declaration)</value>
   </data>
   <data name="English_And_Maths_Action_Hidden_Text" xml:space="preserve">
-    <value> English and maths status</value>
+    <value> English and maths achievement status</value>
   </data>
   <data name="English_And_Maths_Not_Achieved_Lrs_Text" xml:space="preserve">
     <value>Not achieved minimum standard (Data from the Learning Records Service - LRS)</value>
   </data>
   <data name="Industry_Placement_Action_Hidden_Text" xml:space="preserve">
-    <value> industry placement status</value>
+    <value> industry placement completion status</value>
   </data>
   <data name="Learners_English_And_Maths_Achievement_Text" xml:space="preserve">
     <value>Learner’s English and maths achievement</value>
@@ -183,7 +183,7 @@
 	  &lt;/summary&gt;
 	  &lt;div class="govuk-details__text"&gt;
 		&lt;p class="govuk-body"&gt;The Learning Records Service (LRS) collects data relating to learners' post-14 qualifications, for example, GCSEs.&lt;/p&gt;
-		&lt;p class="govuk-body"&gt;If you think the LRS data is wrong, you must contact the exam board responsible for issuing the learner's English and maths qualifications. Your organisation's Exams Officer may be able to help.&lt;/p&gt;
+		&lt;p class="govuk-body"&gt;If you think the LRS data is wrong, you must contact the exam board responsible for issuing the learner's English and maths qualifications. Your organisation's Exams Officer may be able to help&lt;/p&gt;
 	  &lt;/div&gt;
 	&lt;/details&gt;</value>
   </data>

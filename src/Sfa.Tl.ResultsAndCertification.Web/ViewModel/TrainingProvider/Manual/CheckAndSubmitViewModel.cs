@@ -46,7 +46,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             Value = LearnerRecordModel.LearnerRecord.ProviderName,
             NeedBorderBottomLine = false 
         };
-        
+
+        public SummaryItemModel SummaryCore => new SummaryItemModel
+        {
+            Id = "core",
+            Title = CheckAndSubmitContent.Title_Core_Text,
+            Value = LearnerRecordModel.LearnerRecord.PathwayName,
+            NeedBorderBottomLine = false
+        };
+
         public SummaryItemModel SummaryEnglishAndMathsStatus => new SummaryItemModel 
         { 
             Id = "englishmathsstatus",

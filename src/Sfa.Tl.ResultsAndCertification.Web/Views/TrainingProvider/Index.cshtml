@@ -32,28 +32,36 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group manage-learner-records-card">
             <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                <a class="govuk-link" asp-route="AddLearnerRecord">
-                    @Dashboard.Card_Link_Add_New_Learner_Record
-                </a>
+                @Dashboard.Card_Heading_Add_New_Learner_TLevel_Record
             </h2>
-
+            <p class="govuk-body">@Dashboard.Tell_Us_If_Learner_Has_Text</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Dashboard.Met_The_Minimum_Standard_for_English_And_Maths_Text
+                <li>@Dashboard.Completed_Their_Industry_Placement_Text</li>
+            </ul>
             <p class="govuk-body">
-                @Dashboard.Card_Text_Add_New_Learner_Record
-            </p>
+                <a class="govuk-link" asp-route="AddLearnerRecord">
+                    @Dashboard.Card_Link_Add_New_Learner_TLevel_Record
+                </a>
+            </p>            
         </div>
     </div>
 
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group manage-learner-records-card">
             <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                <a class="govuk-link" asp-route="UpdateLearnerRecord">
-                    @Dashboard.Card_Link_Update_Learner_Record
-                </a>
+                @Dashboard.Card_Heading_Update_Learner_TLevel_Record
             </h2>
-
+            <p class="govuk-body">@Dashboard.Search_For_And_Change_An_Existing_Text</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Dashboard.English_And_Maths_Achievement_Status_Text
+                <li>@Dashboard.Industry_Placement_Completion_Status_Text</li>
+            </ul>
             <p class="govuk-body">
-                @Dashboard.Card_Text_Update_Learner_Record
-            </p>
+                <a class="govuk-link" asp-route="UpdateLearnerRecord">
+                    @Dashboard.Card_Link_Update_Learner_TLevel_Record
+                </a>
+            </p>            
         </div>
     </div>
 </div>

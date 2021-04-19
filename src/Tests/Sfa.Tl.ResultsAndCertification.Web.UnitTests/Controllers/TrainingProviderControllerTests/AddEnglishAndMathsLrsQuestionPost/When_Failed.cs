@@ -8,7 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.AddLearnerRecordCheckAndSubmitPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.AddEnglishAndMathsLrsQuestionPost
 {
     public class When_Failed : TestSetup
     {
@@ -16,15 +16,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         {
             LearnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Barnsley College (123456789)", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = true };
             EnterUlnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
-            EnglishAndMathsQuestionViewModel = new EnglishAndMathsQuestionViewModel { EnglishAndMathsStatus = EnglishAndMathsStatus.AchievedWithSend };
-            IndustryPlacementQuestionViewModel = new IndustryPlacementQuestionViewModel { LearnerName = LearnerRecord.Name, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
+            EnglishAndMathsLrsQuestionViewModel = new EnglishAndMathsLrsQuestionViewModel { EnglishAndMathsLrsStatus = EnglishAndMathsLrsStatus.AchievedWithSend };
 
             AddLearnerRecordViewModel = new AddLearnerRecordViewModel
             {
                 LearnerRecord = LearnerRecord,
                 Uln = EnterUlnViewModel,
-                EnglishAndMathsQuestion = EnglishAndMathsQuestionViewModel,
-                IndustryPlacementQuestion = IndustryPlacementQuestionViewModel
+                EnglishAndMathsLrsQuestion = EnglishAndMathsLrsQuestionViewModel
             };
 
             AddLearnerRecordResponse = new AddLearnerRecordResponse

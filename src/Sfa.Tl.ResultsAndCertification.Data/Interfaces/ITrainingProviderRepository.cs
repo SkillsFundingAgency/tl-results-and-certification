@@ -4,6 +4,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
 {
     public interface ITrainingProviderRepository
     {
-        Task<bool> FindProvidersUlnAsync(long providerUkprn, long uln);
+        Task<bool> IsSendConfirmationRequiredAsync(int profileId);
     }
 }

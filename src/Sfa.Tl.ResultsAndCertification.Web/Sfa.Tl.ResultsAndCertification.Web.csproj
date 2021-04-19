@@ -991,6 +991,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CheckAndSubmit.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\Dashboard.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsAchievementUpdatedConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EnglishAndMathsAchievementUpdatedConfirmation.Designer.cs</LastGenOutput>

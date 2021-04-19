@@ -115,11 +115,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage learner records.
+        ///   Looks up a localized string similar to Manage learner T Level records.
         /// </summary>
-        public static string Manage_Learner_Records {
+        public static string Manage_Learner_TLevel_Records {
             get {
-                return ResourceManager.GetString("Manage_Learner_Records", resourceCulture);
+                return ResourceManager.GetString("Manage_Learner_TLevel_Records", resourceCulture);
             }
         }
         
