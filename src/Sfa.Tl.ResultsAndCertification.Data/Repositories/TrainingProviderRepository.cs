@@ -34,10 +34,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var englishAchievements = achievemnts?.Where(x => x.Subject == QualificationSubject.English.ToString());
             var mathsAchievements = achievemnts?.Where(x => x.Subject == QualificationSubject.Maths.ToString());
 
-            if (!achievemnts.Any() || !englishAchievements.Any() || !mathsAchievements.Any())
+            if (!englishAchievements.Any() || !mathsAchievements.Any())
             {
-                _logger.LogInformation(LogEvent.UnSupportedMethod, Constants.DataNotSupportedForMethod);
-                throw new Exception(Constants.DataNotSupportedForMethod);
+                var message = $"Data not supported - both English and Maths achievements are expected. Method: IsSendConfirmationRequiredAsync({profileId}), EnglishAchieved: {englishAchievements.Count()}, MathsAchieved: {mathsAchievements.Count()}";
+                _logger.LogInformation(LogEvent.UnSupportedMethod, message);
+                throw new Exception(message);
             }
 
             var isEngSendConfirmationRequired = englishAchievements.All(x => x.IsSend);
