@@ -64,14 +64,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         /// <summary>
         ///   Looks up a localized string similar to Back to search.
         /// </summary>
-        public static string Back_Button {
+        public static string Button_Back_To_Search {
             get {
-                return ResourceManager.GetString("Back_Button", resourceCulture);
+                return ResourceManager.GetString("Button_Back_To_Search", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new learner record - ULN not registered page.
+        ///   Looks up a localized string similar to ULN ({0}) has not been registered in this service by an exam board.
+        /// </summary>
+        public static string Heading_Uln_Not_Registered {
+            get {
+                return ResourceManager.GetString("Heading_Uln_Not_Registered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back to manage learner T Level records.
+        /// </summary>
+        public static string Link_Back_To_Manage_Learner {
+            get {
+                return ResourceManager.GetString("Link_Back_To_Manage_Learner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a new learner T Level record - ULN not registered page.
         /// </summary>
         public static string Page_Title {
             get {
@@ -80,20 +98,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN ({0}) has not been registered by the awarding organisation.
+        ///   Looks up a localized string similar to If you think this learner should be registered, please contact the exam board responsible for delivering the T Level..
         /// </summary>
-        public static string Uln_Cannot_Be_Found_Heading {
+        public static string Para_Please_Contact_ExamBoard {
             get {
-                return ResourceManager.GetString("Uln_Cannot_Be_Found_Heading", resourceCulture);
+                return ResourceManager.GetString("Para_Please_Contact_ExamBoard", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can only add a learner record once the awarding organisation has registered the learner for a T Level. If you think that this learner should have been registered, please contact the awarding organisation..
+        ///   Looks up a localized string similar to You can only add records for learners registered on a T Level course by an exam board (also known as an awarding organisation)..
         /// </summary>
-        public static string Uln_Cannot_Be_Found_Text {
+        public static string Para_You_Can_Only_Update_Registered_Learners {
             get {
-                return ResourceManager.GetString("Uln_Cannot_Be_Found_Text", resourceCulture);
+                return ResourceManager.GetString("Para_You_Can_Only_Update_Registered_Learners", resourceCulture);
             }
         }
     }
