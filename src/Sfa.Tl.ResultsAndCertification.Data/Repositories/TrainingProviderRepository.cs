@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,10 +13,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
     public class TrainingProviderRepository : ITrainingProviderRepository
     {
         protected readonly ResultsAndCertificationDbContext _dbContext;
+        private readonly ILogger<TrainingProviderRepository> _logger;
 
-        public TrainingProviderRepository(ResultsAndCertificationDbContext dbContext)
+        public TrainingProviderRepository(ResultsAndCertificationDbContext dbContext, ILogger<TrainingProviderRepository> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<bool> IsSendConfirmationRequiredAsync(int profileId)
@@ -23,14 +28,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                      join qualGrade in _dbContext.QualificationGrade on qualAchieved.QualificationGradeId equals qualGrade.Id
                                      join lookup in _dbContext.TlLookup on qual.TlLookupId equals lookup.Id
                                      where qualAchieved.TqRegistrationProfileId == profileId && qualAchieved.IsAchieved && qual.IsActive && qualGrade.IsActive
-                                     select new { Subject = lookup.Code, IsSend = qual.IsSendQualification || qualGrade.IsSendGrade })
+                                     select new { Subject = lookup.Value, IsSend = qual.IsSendQualification || qualGrade.IsSendGrade })
                                      .ToListAsync();
 
-            var englishAchievements = achievemnts?.Where(x => x.Subject == "Eng");
-            var mathsAchievements = achievemnts?.Where(x => x.Subject == "Math");
+            var englishAchievements = achievemnts?.Where(x => x.Subject == QualificationSubject.English.ToString());
+            var mathsAchievements = achievemnts?.Where(x => x.Subject == QualificationSubject.Maths.ToString());
 
             if (!achievemnts.Any() || !englishAchievements.Any() || !mathsAchievements.Any())
-                throw new Exception();
+            {
+                _logger.LogInformation(LogEvent.UnSupportedMethod, Constants.DataNotSupportedForMethod);
+                throw new Exception(Constants.DataNotSupportedForMethod);
+            }
 
             var isEngSendConfirmationRequired = englishAchievements.All(x => x.IsSend);
             var isMathsSendConfirmationRequired = mathsAchievements.All(x => x.IsSend);
