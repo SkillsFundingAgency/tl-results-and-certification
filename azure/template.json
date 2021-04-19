@@ -91,10 +91,12 @@
             "defaultValue": "-1"
         },
         "learnerVerificationAndLearningEventsTrigger": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "0 23 15 1-12 *"
         },
         "learnerGenderTrigger": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "0 21 15 1-12 *"
         }
     },
     "variables": {
