@@ -14,7 +14,14 @@
         <h1 class="govuk-heading-l">
             @string.Format(EnterUniqueLearnerReferenceAlreadyAdded.Uln_Already_Added_Heading, Model.Uln)
         </h1>
+
+        <span class="govuk-hint">
+            <strong>@EnterUniqueLearnerReferenceAlreadyAdded.Learner_Text</strong> @Model.LearnerName
+        </span>
+
         <p class="govuk-body">@EnterUniqueLearnerReferenceAlreadyAdded.Uln_Already_Added_Text</p>
+        <p class="govuk-body">@EnterUniqueLearnerReferenceAlreadyAdded.Select_Continue_Text</p>
+
         <p>
             <a id="continueButton" class="govuk-button govuk-!-margin-top-6" role="button" asp-route="LearnerRecordDetails" asp-route-profileId="@Model.ProfileId">
                 @EnterUniqueLearnerReferenceAlreadyAdded.Continue_Button

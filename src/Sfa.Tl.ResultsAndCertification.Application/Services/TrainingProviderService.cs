@@ -197,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var isValidEnglishAndMathsLrsEmailRequest = IsValidEnglishAndMathsLrsEmailRequest(request);
 
-            var isValidEnglishAndMaths = isValidEnglishAndMathsLrsEmailRequest || (request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus == null) 
+            var isValidEnglishAndMaths = isValidEnglishAndMathsLrsEmailRequest || (request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus == null)
                 || (!request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus != null && request.EnglishAndMathsLrsStatus == null);
 
             var isValidIndustryPlacement = request.IndustryPlacementStatus != IndustryPlacementStatus.NotSpecified && !registrationPathway.IndustryPlacements.Any();

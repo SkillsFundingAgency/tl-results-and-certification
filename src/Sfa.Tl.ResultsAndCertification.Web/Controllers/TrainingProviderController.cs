@@ -74,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), model.EnterUln.ToLong(), evaluateSendConfirmation: true);
             if (learnerRecord == null || !learnerRecord.IsLearnerRegistered || learnerRecord.IsLearnerRecordAdded)
             {
-                await SyncCacheUln(model);
+                await SyncCacheUln(model, learnerRecord);
 
                 if (learnerRecord == null || learnerRecord.IsLearnerRegistered == false)
                     return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberNotFound);
@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            return View(new LearnerRecordAddedAlreadyViewModel { ProfileId = profileId,  Uln = cacheModel.Uln?.EnterUln?.ToString() });
+            return View(new LearnerRecordAddedAlreadyViewModel { ProfileId = profileId,  Uln = cacheModel.Uln?.EnterUln?.ToString(), LearnerName = cacheModel?.LearnerRecord?.Name });
         }
 
         [HttpGet]
