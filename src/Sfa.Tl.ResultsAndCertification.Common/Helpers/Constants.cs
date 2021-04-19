@@ -101,8 +101,5 @@
 
         // Other constants
         public const string NoBorderBottomCssClassName = "tl-no-border-bottom";
-
-        // Log messages
-        public const string DataNotSupportedForMethod = "Data is not valid to support the method.";
     }
 }
