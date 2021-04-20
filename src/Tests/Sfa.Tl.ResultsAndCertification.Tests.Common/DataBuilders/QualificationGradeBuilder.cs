@@ -71,6 +71,18 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     CreatedOn = Constants.CreatedOn,
                     ModifiedBy = Constants.ModifiedByUser,
                     ModifiedOn = Constants.ModifiedOn
+                },
+                new QualificationGrade
+                {
+                    Grade = "E",
+                    QualificationTypeId = qualificationType.Id,
+                    IsAllowable = false,
+                    IsSendGrade = true,
+                    IsActive = true,
+                    CreatedBy = Constants.CreatedByUser,
+                    CreatedOn = Constants.CreatedOn,
+                    ModifiedBy = Constants.ModifiedByUser,
+                    ModifiedOn = Constants.ModifiedOn
                 }
             };
             return qualificationGrades;
