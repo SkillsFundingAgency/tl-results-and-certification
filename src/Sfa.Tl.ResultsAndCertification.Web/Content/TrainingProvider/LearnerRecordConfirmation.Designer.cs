@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner record added confirmation page.
+        ///   Looks up a localized string similar to Learner T Level record added confirmation page.
         /// </summary>
         public static string Page_Title {
             get {
