@@ -104,15 +104,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
 
         public void SeedQualificationData()
         {
-            var _qualTypes = new QualificationTypeBuilder().BuildList();
-            QualificationTypeDataProvider.CreateTlLookupList(DbContext, _qualTypes, true);
+            var qualTypes = new QualificationTypeBuilder().BuildList();
+            QualificationTypeDataProvider.CreateTlLookupList(DbContext, qualTypes, true);
 
-            var _quals = new QualificationBuilder().BuildList();
-            QualificationDataProvider.CreateQualificationList(DbContext, _quals, true);
+            var qualifications = new QualificationBuilder().BuildList();
+            QualificationDataProvider.CreateQualificationList(DbContext, qualifications, true);
 
-            var _qualGrades = new QualificationGradeBuilder().BuildList();
-            _qualGrades.ToList().ForEach(x => x.QualificationTypeId = 4);
-            QualificationGradeDataProvider.CreateTlLookupList(DbContext, _qualGrades, true);
+            var qualGrades = new QualificationGradeBuilder().BuildList();
+            qualGrades.ToList().ForEach(x => x.QualificationTypeId = 4);
+            QualificationGradeDataProvider.CreateTlLookupList(DbContext, qualGrades, true);
         }
 
         public class SeedUlnQualifications
