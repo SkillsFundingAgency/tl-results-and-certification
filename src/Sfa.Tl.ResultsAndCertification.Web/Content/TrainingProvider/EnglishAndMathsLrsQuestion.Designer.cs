@@ -179,7 +179,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add English and maths achievement page.
+        ///   Looks up a localized string similar to Add a new learner T Level record - English and maths achievement page.
         /// </summary>
         public static string Page_Title {
             get {

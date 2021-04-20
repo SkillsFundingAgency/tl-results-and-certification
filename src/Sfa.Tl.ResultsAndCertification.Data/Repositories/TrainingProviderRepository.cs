@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                      join qual in _dbContext.Qualification on qualAchieved.QualificationId equals qual.Id
                                      join qualGrade in _dbContext.QualificationGrade on qualAchieved.QualificationGradeId equals qualGrade.Id
                                      join lookup in _dbContext.TlLookup on qual.TlLookupId equals lookup.Id
-                                     where qualAchieved.TqRegistrationProfileId == profileId && qualAchieved.IsAchieved && qual.IsActive && qualGrade.IsActive
+                                     where qualAchieved.TqRegistrationProfileId == profileId && qualAchieved.IsAchieved 
                                      select new { Subject = lookup.Value, IsSend = qual.IsSendQualification || qualGrade.IsSendGrade })
                                      .ToListAsync();
 
