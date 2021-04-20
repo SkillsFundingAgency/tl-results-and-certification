@@ -193,7 +193,7 @@
     <value>Achieved the minimum standard</value>
   </data>
   <data name="Option_Achieved_With_Send" xml:space="preserve">
-    <value>Achieved the minimum standard with SEND adjustments</value>
+    <value>Achieved the minimum standard for learners with SEND</value>
   </data>
   <data name="Option_Not_Achieved" xml:space="preserve">
     <value>Not achieved the minimum standard</value>
