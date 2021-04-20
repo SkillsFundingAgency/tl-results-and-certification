@@ -32,7 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             {
                 { 1111111111, RegistrationPathwayStatus.Active },
                 { 1111111112, RegistrationPathwayStatus.Withdrawn },
-                { 1111111113, RegistrationPathwayStatus.Active }
+                { 1111111113, RegistrationPathwayStatus.Active },
+                { 1111111114, RegistrationPathwayStatus.Active }
             };
 
             _testCriteriaData = new List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement)>
@@ -40,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 (1111111111, false, true, true, true, true), // Lrs data with Send Qualification + IP
                 (1111111112, true, false, false, false, false), // Not from Lrs
                 (1111111113, false, true, false, true, false), // Lrs data without Send Qualification
+                (1111111114, false, true, true, true, false), // Lrs data with Send Qualification
             };
 
             // Registrations seed
@@ -63,6 +65,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             RegistrationPathwayRepositoryLogger = new Logger<GenericRepository<TqRegistrationPathway>>(new NullLoggerFactory());
             RegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(RegistrationPathwayRepositoryLogger, DbContext);
 
+            TrainingProviderRepositoryLogger = new Logger<TrainingProviderRepository>(new NullLoggerFactory());
+            TrainingProviderRepository = new TrainingProviderRepository(DbContext, TrainingProviderRepositoryLogger);
+            
             IndustryPlacementRepositoryLogger = new Logger<GenericRepository<IndustryPlacement>>(new NullLoggerFactory());
             IndustryPlacementRepository = new GenericRepository<IndustryPlacement>(IndustryPlacementRepositoryLogger, DbContext);
 
@@ -87,19 +92,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(long providerUkprn, long uln)
+        public async Task WhenAsync(long providerUkprn, long uln, bool isSendConfirmationRequired)
         {
             if (_actualResult != null)
                 return;
 
-            _actualResult = await TrainingProviderService.FindLearnerRecordAsync(providerUkprn, uln);
+            _actualResult = await TrainingProviderService.FindLearnerRecordAsync(providerUkprn, uln, isSendConfirmationRequired);
         }
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(long uln, Provider provider, FindLearnerRecord expectedResult)
+        public async Task Then_Returns_Expected_Results(long uln, Provider provider, bool isSendConfirmationRequired, FindLearnerRecord expectedResult)
         {
-            await WhenAsync((long)provider, uln);
+            await WhenAsync((long)provider, uln, isSendConfirmationRequired);
 
             if (expectedResult == null)
             {
@@ -124,6 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _actualResult.HasLrsEnglishAndMaths.Should().Be(expectedResult.HasLrsEnglishAndMaths);
             _actualResult.HasSendQualification.Should().Be(expectedResult.HasSendQualification);
             _actualResult.IsLearnerRecordAdded.Should().Be(expectedResult.IsLearnerRecordAdded);
+            _actualResult.IsSendConfirmationRequired.Should().Be(expectedResult.IsSendConfirmationRequired);
         }
 
         public static IEnumerable<object[]> Data
@@ -132,14 +138,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             {
                 return new[]
                 {
-                    new object[] { 9999999999, Provider.WalsallCollege, null }, // Invalid Uln
+                    new object[] { 9999999999, Provider.WalsallCollege, false, null }, // Invalid Uln
 
-                    new object[] { 1111111111, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111111, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, HasSendQualification = true, IsEnglishAndMathsAchieved = true,  IsLearnerRecordAdded = true } }, // Active
-                    new object[] { 1111111111, Provider.WalsallCollege, null }, // Uln not from WalsallCollege
+                    new object[] { 1111111111, Provider.BarsleyCollege, false, new FindLearnerRecord { Uln = 1111111111, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, HasSendQualification = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = true } }, // Active
+                    new object[] { 1111111111, Provider.WalsallCollege, false, null }, // Uln not from WalsallCollege
 
-                    new object[] { 1111111112, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111112, IsLearnerRegistered = true, HasLrsEnglishAndMaths = false, HasSendQualification = false, IsEnglishAndMathsAchieved = false, IsLearnerRecordAdded = false } }, // Withdrawn
-                    new object[] { 1111111113, Provider.BarsleyCollege, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = false, HasLrsEnglishAndMaths = true, HasSendQualification = false, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } }, // Transferred
-                    new object[] { 1111111113, Provider.WalsallCollege, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, HasSendQualification = false, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } } // Active
+                    new object[] { 1111111112, Provider.BarsleyCollege, false, new FindLearnerRecord { Uln = 1111111112, IsLearnerRegistered = true, HasLrsEnglishAndMaths = false, HasSendQualification = false, IsEnglishAndMathsAchieved = false, IsLearnerRecordAdded = false } }, // Withdrawn
+                    new object[] { 1111111113, Provider.BarsleyCollege, false, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = false, HasLrsEnglishAndMaths = true, HasSendQualification = false, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } }, // Transferred
+                    new object[] { 1111111113, Provider.WalsallCollege, false, new FindLearnerRecord { Uln = 1111111113, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, HasSendQualification = false, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false } }, // Active
+                    
+                    new object[] { 1111111114, Provider.BarsleyCollege, true, new FindLearnerRecord { Uln = 1111111114, IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, HasSendQualification = true, IsEnglishAndMathsAchieved = true, IsLearnerRecordAdded = false, IsSendConfirmationRequired = true } }
                 };
             }
         }
