@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 latestPathway.TqRegistrationProfile.IsEnglishAndMathsAchieved == true && latestPathway.TqRegistrationProfile.IsSendLearner == null)
                 isSendConfiramtionRequired = await _trainingProviderRepository.IsSendConfirmationRequiredAsync(latestPathway.TqRegistrationProfileId); 
 
-            return _mapper.Map<FindLearnerRecord>(latestPathway, opt => opt.Items["isSendConfiramtionRequired"] = isSendConfiramtionRequired);
+            return _mapper.Map<FindLearnerRecord>(latestPathway, opt => opt.Items["isSendConfirmationRequired"] = isSendConfiramtionRequired);
         }
 
         public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)
