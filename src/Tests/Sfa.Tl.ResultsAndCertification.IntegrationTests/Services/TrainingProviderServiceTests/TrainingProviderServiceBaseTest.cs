@@ -133,26 +133,23 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng" && e.IsSendQualification == isSendQualification);
                 var mathQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Math");                
 
-                var engQualifcationGrades = engQual.QualificationType.QualificationGrades;
-                var mathsQualifcationGrades = mathQual.QualificationType.QualificationGrades;
-
-                var qualification = Qualifications.FirstOrDefault(q => q.IsSendQualification == isSendQualification && q.TlLookup.Code == "Eng");
-                var qualificationGrade = qualification.QualificationType.QualificationGrades.FirstOrDefault(g => g.IsAllowable);
+                var engQualifcationGrade = engQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved);
+                var mathsQualifcationGrade = mathQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved); 
 
                 profile.QualificationAchieved.Add(new QualificationAchieved
                 {
                     TqRegistrationProfileId = profile.Id,
                     QualificationId = engQual.Id,
-                    QualificationGradeId = engQualifcationGrades.FirstOrDefault().Id,
-                    IsAchieved = qualificationGrade.IsAllowable
+                    QualificationGradeId = engQualifcationGrade.Id,
+                    IsAchieved = engQualifcationGrade.IsAllowable
                 });
 
                 profile.QualificationAchieved.Add(new QualificationAchieved
                 {
                     TqRegistrationProfileId = profile.Id,
                     QualificationId = mathQual.Id,
-                    QualificationGradeId = mathsQualifcationGrades.FirstOrDefault().Id,
-                    IsAchieved = qualificationGrade.IsAllowable
+                    QualificationGradeId = mathsQualifcationGrade.Id,
+                    IsAchieved = mathsQualifcationGrade.IsAllowable
                 });
             }
 
