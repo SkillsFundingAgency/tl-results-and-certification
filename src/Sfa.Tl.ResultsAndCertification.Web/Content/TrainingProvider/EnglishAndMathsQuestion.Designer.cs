@@ -107,16 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can adjust the minimum standards for English and maths for learners with SEND if the following conditions are met:.
-        /// </summary>
-        public static string Details_Adjust_Minimum_Standards_For_Send_Learner {
-            get {
-                return ResourceManager.GetString("Details_Adjust_Minimum_Standards_For_Send_Learner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You will need to check the learner&apos;s grades are equal to a full level 2 qualification and have met the minimum standard..
+        ///   Looks up a localized string similar to You will need to check the learner&apos;s grades are equivalent to a level 2 qualification and have met the minimum standard..
         /// </summary>
         public static string Details_Check_Grades_Equal_To_Level2 {
             get {
@@ -152,7 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The minimum standards are full level 2 qualifications (GCSE or equivalent)..
+        ///   Looks up a localized string similar to The minimum standards are level 2 qualifications (GCSE or equivalent)..
         /// </summary>
         public static string Details_Standards_Are_Level2 {
             get {
@@ -188,6 +179,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no industry specific minimum entry requirements for their chosen T Level.
+        /// </summary>
+        public static string Details_There_Are_No_Industry_Specific_Minimum_Entry_Requirements {
+            get {
+                return ResourceManager.GetString("Details_There_Are_No_Industry_Specific_Minimum_Entry_Requirements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to What are the minimum standards?.
         /// </summary>
         public static string Details_What_Are_Minimum_Standards {
@@ -197,11 +197,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your assessment of the learner shows that even with support, reasonable adjustments or stepping stone qualifications, the learner is not able to achieve a full level 2 qualification because of their learning difficulty or disability.
+        ///   Looks up a localized string similar to Your assessment of the learner shows that even with support, reasonable adjustments or stepping stone qualifications, the learner is not able to achieve a level 2 qualification because of their learning difficulty or disability.
         /// </summary>
         public static string Details_Your_Assessment_Shows_With_Support {
             get {
                 return ResourceManager.GetString("Details_Your_Assessment_Shows_With_Support", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entry Level 3 qualifications will meet the minimum standard for English and maths provided the following conditions are met:.
+        /// </summary>
+        public static string Entry_Level3_Qualifications_Minimum_Standards_For_Send_Learner {
+            get {
+                return ResourceManager.GetString("Entry_Level3_Qualifications_Minimum_Standards_For_Send_Learner", resourceCulture);
             }
         }
         
@@ -224,7 +233,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to the learner has been assessed by our organisation and meets all the conditions required to adjust the minimum standards.
+        ///   Looks up a localized string similar to the learner has been assessed by our organisation and meets all the conditions required.
         /// </summary>
         public static string Inset_Text_Learner_Meets_All_Conditions {
             get {
@@ -296,7 +305,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new learner record - English and maths achievement page.
+        ///   Looks up a localized string similar to Add a new learner T Level record - English and maths achievement page.
         /// </summary>
         public static string Page_Title {
             get {
@@ -305,7 +314,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner.
+        ///   Looks up a localized string similar to Learner:.
         /// </summary>
         public static string Text_Learner {
             get {

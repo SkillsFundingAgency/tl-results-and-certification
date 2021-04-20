@@ -525,6 +525,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>EnglishAndMathsLrsQuestion.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\EnglishAndMathsQuestion.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EnglishAndMathsQuestion.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\TrainingProvider\EnglishAndMathsSendDataConfirmation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
