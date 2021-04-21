@@ -106,6 +106,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Achieved minimum standard for learners with SEND (Data from the Learning Records Service - LRS and provider declaration).
+        /// </summary>
+        public static string English_And_Maths_Achieved_With_Send_Lrs_Text {
+            get {
+                return ResourceManager.GetString("English_And_Maths_Achieved_With_Send_Lrs_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  English and maths achievement status.
         /// </summary>
         public static string English_And_Maths_Action_Hidden_Text {
