@@ -83,16 +83,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             await SyncCacheUln(model, learnerRecord);
-            if (!learnerRecord.HasLrsEnglishAndMaths)
+
+            if (learnerRecord.HasLrsEnglishAndMaths)
+                return RedirectToRoute(learnerRecord.IsSendConfirmationRequired ?  RouteConstants.AddEnglishAndMathsLrsQuestion : RouteConstants.AddIndustryPlacementQuestion);
+            else
                 return RedirectToRoute(RouteConstants.AddEnglishAndMathsQuestion);
-
-            if (learnerRecord.HasLrsEnglishAndMaths && learnerRecord.IsSendConfirmationRequired)
-                return RedirectToRoute(RouteConstants.AddEnglishAndMathsLrsQuestion); 
-            
-            if (learnerRecord.HasLrsEnglishAndMaths && !learnerRecord.HasSendQualification)
-                return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
-
-            return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumber);
         }
 
         [HttpGet]

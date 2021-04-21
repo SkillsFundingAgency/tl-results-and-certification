@@ -21,7 +21,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 IsLearnerRegistered = true,
                 IsLearnerRecordAdded = true,
                 IsEnglishAndMathsAchieved = true,
-                HasSendQualification = true,
                 HasLrsEnglishAndMaths = true
             };
 
@@ -40,7 +39,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.IsLearnerRegistered.Should().Be(expectedApiResult.IsLearnerRegistered);
             ActualResult.IsLearnerRecordAdded.Should().Be(expectedApiResult.IsLearnerRecordAdded);
             ActualResult.IsEnglishAndMathsAchieved.Should().Be(expectedApiResult.IsEnglishAndMathsAchieved);
-            ActualResult.HasSendQualification.Should().Be(expectedApiResult.HasSendQualification);
             ActualResult.HasLrsEnglishAndMaths.Should().Be(expectedApiResult.HasLrsEnglishAndMaths);
         }
     }
