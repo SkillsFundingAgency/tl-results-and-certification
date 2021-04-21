@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.EnterUniqueLearnerReferencePost
 {
-    public class When_Called_With_Lrs_Data_And_Not_Send_Qual : TestSetup
+    public class When_LearnerRecord_HasLrsData_SendConfirmationNotRequired : TestSetup
     {       
         private FindLearnerRecord _learnerRecord;
         private readonly long _uln = 9874561236;
@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
         public override void Given()
         {
-            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", IsLearnerRegistered = true, HasLrsEnglishAndMaths = true };
+            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", IsLearnerRegistered = true, HasLrsEnglishAndMaths = true, IsSendConfirmationRequired = false };
             EnterUlnViewModel = new EnterUlnViewModel { EnterUln = _uln.ToString() };
 
             var cacheModel = new AddLearnerRecordViewModel { LearnerRecord = _learnerRecord, Uln = EnterUlnViewModel };
