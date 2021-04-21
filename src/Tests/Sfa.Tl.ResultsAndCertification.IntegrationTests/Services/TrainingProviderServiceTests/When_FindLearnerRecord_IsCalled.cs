@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
     public class When_FindLearnerRecord_IsCalled : TrainingProviderServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
-        private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement)> _testCriteriaData;
+        private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, bool? isSendLearner)> _testCriteriaData;
         private IList<TqRegistrationProfile> _profiles;
         private FindLearnerRecord _actualResult;
 
@@ -36,12 +36,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 { 1111111114, RegistrationPathwayStatus.Active }
             };
 
-            _testCriteriaData = new List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement)>
+            _testCriteriaData = new List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, bool? isSendLearner)>
             {
-                (1111111111, false, true, true, true, true), // Lrs data with Send Qualification + IP
-                (1111111112, true, false, false, false, false), // Not from Lrs
-                (1111111113, false, true, false, true, false), // Lrs data without Send Qualification
-                (1111111114, false, true, true, true, false), // Lrs data with Send Qualification
+                (1111111111, false, true, true, true, true, true), // Lrs data with Send Qualification + IP
+                (1111111112, true, false, false, false, false, null), // Not from Lrs
+                (1111111113, false, true, false, true, false, null), // Lrs data without Send Qualification
+                (1111111114, false, true, true, true, false, null), // Lrs data with Send Qualification
             };
 
             // Registrations seed
@@ -49,10 +49,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _profiles = SeedRegistrationsData(_ulns, TqProvider);
             TransferRegistration(1111111113, Provider.WalsallCollege);
 
-            foreach (var (uln, isRcFeed, seedQualificationAchieved, isSendQualification, isEngishAndMathsAchieved, seedIndustryPlacement) in _testCriteriaData)
+            foreach (var (uln, isRcFeed, seedQualificationAchieved, isSendQualification, isEngishAndMathsAchieved, seedIndustryPlacement, isSendLearner) in _testCriteriaData)
             {
                 var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
-                BuildLearnerRecordCriteria(profile, isRcFeed, seedQualificationAchieved, isSendQualification, isEngishAndMathsAchieved, seedIndustryPlacement);
+                BuildLearnerRecordCriteria(profile, isRcFeed, seedQualificationAchieved, isSendQualification, isEngishAndMathsAchieved, seedIndustryPlacement, isSendLearner);
             }
 
             DbContext.SaveChanges();
@@ -127,6 +127,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _actualResult.IsLearnerRegistered.Should().Be(expectedResult.IsLearnerRegistered);
             _actualResult.IsEnglishAndMathsAchieved.Should().Be(expectedResult.IsEnglishAndMathsAchieved);
             _actualResult.HasLrsEnglishAndMaths.Should().Be(expectedResult.HasLrsEnglishAndMaths);
+            _actualResult.IsSendLearner.Should().Be(expectedProfile.IsSendLearner);
             _actualResult.IsLearnerRecordAdded.Should().Be(expectedResult.IsLearnerRecordAdded);
             _actualResult.IsSendConfirmationRequired.Should().Be(expectedResult.IsSendConfirmationRequired);
         }

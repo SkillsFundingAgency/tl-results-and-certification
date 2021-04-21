@@ -132,6 +132,9 @@
   <data name="English_And_Maths_Achieved_Lrs_Text" xml:space="preserve">
     <value>Achieved minimum standard (Data from the Learning Records Service - LRS)</value>
   </data>
+  <data name="English_And_Maths_Achieved_With_Send_Lrs_Text" xml:space="preserve">
+    <value>Achieved minimum standard for learners with SEND (Data from the Learning Records Service - LRS and provider declaration)</value>
+  </data>
   <data name="English_And_Maths_Action_Hidden_Text" xml:space="preserve">
     <value> English and maths achievement status</value>
   </data>

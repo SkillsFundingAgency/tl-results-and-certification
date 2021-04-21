@@ -111,14 +111,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 
         private string GetEnglishAndMathsActionText => HasLrsEnglishAndMaths ? string.Empty : CheckAndSubmitContent.Change_Action_Link_Text;
 
-        private string GetEnglishAndMathsStatusText => HasLrsEnglishAndMaths
-            ? (LearnerRecordModel.LearnerRecord.IsEnglishAndMathsAchieved ? CheckAndSubmitContent.English_And_Maths_Achieved_Lrs_Text : CheckAndSubmitContent.English_And_Maths_Not_Achieved_Lrs_Text)
-            : GetEnglishAndMathsStatusDisplayText;
+        private string GetEnglishAndMathsStatusText => HasLrsEnglishAndMaths ? GetLrsEnglishAndMathsStatusDisplayText : GetEnglishAndMathsStatusDisplayText;
 
         private string GetEnglishAndMathsRouteName => HasLrsEnglishAndMaths ? string.Empty : RouteConstants.AddEnglishAndMathsQuestion;
         
         private Dictionary<string, string> GetEnglishAndMathsRouteAttributes => HasLrsEnglishAndMaths ? null : ChangeLinkRouteAttributes;
-        
+
+        private string GetLrsEnglishAndMathsStatusDisplayText
+        {
+            get
+            {
+                if (!HasLrsEnglishAndMaths)
+                    return null;
+
+                if (LearnerRecordModel?.LearnerRecord?.IsEnglishAndMathsAchieved == true && LearnerRecordModel?.LearnerRecord?.IsSendLearner == true)
+                {
+                    return CheckAndSubmitContent.English_And_Maths_Achieved_With_Send_Lrs_Text;
+                }
+                else
+                {
+                    return LearnerRecordModel?.LearnerRecord?.IsEnglishAndMathsAchieved == true && LearnerRecordModel?.LearnerRecord?.IsSendLearner == null
+                        ? CheckAndSubmitContent.English_And_Maths_Achieved_Lrs_Text
+                        : CheckAndSubmitContent.English_And_Maths_Not_Achieved_Lrs_Text;
+                }
+            }
+        }
+
         private string GetEnglishAndMathsStatusDisplayText
         {
             get
