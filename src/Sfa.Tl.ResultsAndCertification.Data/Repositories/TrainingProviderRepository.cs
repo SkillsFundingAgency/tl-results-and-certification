@@ -38,10 +38,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                        {
                                            ProfileId = tqProfile.Id,
                                            Uln = tqProfile.UniqueLearnerNumber,
-                                           Name = $"{tqProfile.Firstname} {tqProfile.Lastname}",
-                                           PathwayName = $"{tlPathway.Name} ({tlPathway.LarId})",
+                                           Name = tqProfile.Firstname + " " + tqProfile.Lastname,
+                                           PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",
                                            DateofBirth = tqProfile.DateofBirth,
-                                           ProviderName = $"{tlProvider.Name} ({tlProvider.UkPrn})",
+                                           ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
                                            IsLearnerRegistered = tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn,
                                            IsLearnerRecordAdded = tqProfile.IsEnglishAndMathsAchieved.HasValue && industryPlacements.Any(),
                                            IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
