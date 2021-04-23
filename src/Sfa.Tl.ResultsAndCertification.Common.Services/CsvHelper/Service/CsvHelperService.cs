@@ -138,9 +138,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
 
         private async Task<ValidationResult> ValidateRowAsync(TImportModel importModel)
         {
-#pragma warning disable CS0618 // Type or member is obsolete
-            _validator.CascadeMode = CascadeMode.StopOnFirstFailure;
-#pragma warning restore CS0618 // Type or member is obsolete
             return await _validator.ValidateAsync(importModel);
         }
 

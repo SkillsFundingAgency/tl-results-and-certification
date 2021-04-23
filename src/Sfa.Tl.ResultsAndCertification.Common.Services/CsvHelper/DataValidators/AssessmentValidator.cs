@@ -11,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
         {
             // Uln
             RuleFor(r => r.Uln)
+                .Cascade(CascadeMode.Stop)
                 .Required()
                 .MustBeNumberWithLength(10);
 
@@ -19,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .MustBeNumberWithLength(8)
                 .WithMessage(ValidationMessages.CorecodeMustBeDigitsOnly)
                 .When(x => !string.IsNullOrEmpty(x.CoreCode));
+
             RuleFor(r => r.CoreCode)
                 .Required()
                 .WithMessage(ValidationMessages.CorecodeRequired)
