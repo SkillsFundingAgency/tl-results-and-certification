@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return qualificationType;
         }
 
-        public static QualificationType CreateTlLookup(ResultsAndCertificationDbContext _dbContext, QualificationType qualificationType, bool addToDbContext = true)
+        public static QualificationType CreateQualificationType(ResultsAndCertificationDbContext _dbContext, QualificationType qualificationType, bool addToDbContext = true)
         {
             if (qualificationType == null)
             {
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return qualificationType;
         }
 
-        public static QualificationType CreateTlLookup(ResultsAndCertificationDbContext _dbContext, string name, string subTitle, bool isActive, bool addToDbContext = true)
+        public static QualificationType CreateQualificationType(ResultsAndCertificationDbContext _dbContext, string name, string subTitle, bool isActive, bool addToDbContext = true)
         {
             var qualificationType = new QualificationType
             {
@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return qualificationType;
         }
 
-        public static IList<QualificationType> CreateTlLookupList(ResultsAndCertificationDbContext _dbContext, IList<QualificationType> qualificationType = null, bool addToDbContext = true)
+        public static IList<QualificationType> CreateQualificationTypeList(ResultsAndCertificationDbContext _dbContext, IList<QualificationType> qualificationType = null, bool addToDbContext = true)
         {
             if (qualificationType == null)
                 qualificationType = new QualificationTypeBuilder().BuildList();
