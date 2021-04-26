@@ -55,7 +55,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
 
             // Specialism
             RuleFor(r => r.Specialism)
-                .Cascade(CascadeMode.Stop)
                 .MustBeStringWithLength(8)
                 .When(x => !string.IsNullOrEmpty(x.Specialism));
         }
