@@ -20,12 +20,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
         protected TlPathway Pathway;
         protected TlSpecialism Specialism;
         protected TqAwardingOrganisation TqAwardingOrganisation;
+        protected IEnumerable<TlProvider> TlProviders;
         protected TlProvider TlProvider;
         protected TqProvider TqProvider;
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
         protected IList<TqProvider> TqProviders;
+        protected IList<Qualification> Qualifications;
 
         // Dependencies.
         protected ILogger<TrainingProviderRepository> TraningProviderRepositoryLogger;
@@ -38,8 +40,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             Pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, Route);
             Specialism = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, Pathway).First();
             TqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Pathway, TlAwardingOrganisation);
+            TlProviders = ProviderDataProvider.CreateTlProviders(DbContext);
             TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
-            TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
+            TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProviders.First());
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
@@ -65,6 +68,46 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
 
             DbContext.SaveChanges();
             return profile;
+        }
+
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false, bool? isSendLearner = null)
+        {
+            if (profile == null) return;
+
+            profile.IsRcFeed = isRcFeed;
+            profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
+            profile.IsSendLearner = isSendLearner;
+
+            if (seedQualificationAchieved)
+            {
+                var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng" && e.IsSendQualification == isSendQualification);
+                var mathQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Math");
+
+                var engQualifcationGrade = engQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved);
+                var mathsQualifcationGrade = mathQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved);
+
+                profile.QualificationAchieved.Add(new QualificationAchieved
+                {
+                    TqRegistrationProfileId = profile.Id,
+                    QualificationId = engQual.Id,
+                    QualificationGradeId = engQualifcationGrade.Id,
+                    IsAchieved = engQualifcationGrade.IsAllowable
+                });
+
+                profile.QualificationAchieved.Add(new QualificationAchieved
+                {
+                    TqRegistrationProfileId = profile.Id,
+                    QualificationId = mathQual.Id,
+                    QualificationGradeId = mathsQualifcationGrade.Id,
+                    IsAchieved = mathsQualifcationGrade.IsAllowable
+                });
+            }
+
+            if (seedIndustryPlacement)
+            {
+                var pathway = profile.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+                IndustryPlacementProvider.CreateQualificationAchieved(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
+            }
         }
 
         public void SeedProfileAndQualification(List<SeedUlnQualifications> seedUlnQualifications)
@@ -102,17 +145,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             }
         }
 
-        public void SeedQualificationData()
+        public IList<Qualification> SeedQualificationData()
         {
-            var qualTypes = new QualificationTypeBuilder().BuildList();
-            QualificationTypeDataProvider.CreateTlLookupList(DbContext, qualTypes, true);
+            var qualificationsList = new QualificationBuilder().BuildList();
+            var qualifications = QualificationDataProvider.CreateQualificationList(DbContext, qualificationsList);
 
-            var qualifications = new QualificationBuilder().BuildList();
-            QualificationDataProvider.CreateQualificationList(DbContext, qualifications, true);
+            foreach (var qual in qualifications)
+            {
+                qual.QualificationType.QualificationGrades = new QualificationGradeBuilder().BuildList(qual.QualificationType);
+            }
 
-            var qualGrades = new QualificationGradeBuilder().BuildList();
-            qualGrades.ToList().ForEach(x => x.QualificationTypeId = 4);
-            QualificationGradeDataProvider.CreateTlLookupList(DbContext, qualGrades, true);
+            return qualifications;
         }
 
         public class SeedUlnQualifications
@@ -121,5 +164,34 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             public bool HasSendQualification { get; set; }
             public bool HasSendGrade { get; set; }
         }
+
+
+        public void TransferRegistration(TqRegistrationProfile profile, Provider transferTo)
+        {
+            var toProvider = DbContext.TlProvider.FirstOrDefault(x => x.UkPrn == (long)transferTo);
+            var transferToTqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, toProvider, true);
+
+            foreach (var pathway in profile.TqRegistrationPathways)
+            {
+                pathway.Status = RegistrationPathwayStatus.Transferred;
+                pathway.EndDate = DateTime.UtcNow;
+
+                foreach (var specialism in pathway.TqRegistrationSpecialisms)
+                {
+                    specialism.IsOptedin = true;
+                    specialism.EndDate = DateTime.UtcNow;
+                }
+            }
+
+            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, profile, transferToTqProvider);
+            var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
+            DbContext.SaveChanges();
+        }
+    }
+
+    public enum Provider
+    {
+        BarsleyCollege = 10000536,
+        WalsallCollege = 10007315
     }
 }
