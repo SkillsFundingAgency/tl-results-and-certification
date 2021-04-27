@@ -121,7 +121,7 @@
     <value>Achieved minimum standard</value>
   </data>
   <data name="Achieved_With_Send_Display_Text" xml:space="preserve">
-    <value>Achieved minimum standard with SEND adjustments</value>
+    <value>Achieved minimum standard for learners with SEND</value>
   </data>
   <data name="Not_Achieved_Display_Text" xml:space="preserve">
     <value>Not achieved minimum standard</value>

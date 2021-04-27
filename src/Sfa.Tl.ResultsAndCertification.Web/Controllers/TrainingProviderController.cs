@@ -71,10 +71,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), model.EnterUln.ToLong());
+            var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), model.EnterUln.ToLong(), evaluateSendConfirmation: true);
             if (learnerRecord == null || !learnerRecord.IsLearnerRegistered || learnerRecord.IsLearnerRecordAdded)
             {
-                await SyncCacheUln(model);
+                await SyncCacheUln(model, learnerRecord);
 
                 if (learnerRecord == null || learnerRecord.IsLearnerRegistered == false)
                     return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumberNotFound);
@@ -83,13 +83,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             await SyncCacheUln(model, learnerRecord);
-            if (!learnerRecord.HasLrsEnglishAndMaths)
+
+            if (learnerRecord.HasLrsEnglishAndMaths)
+                return RedirectToRoute(learnerRecord.IsSendConfirmationRequired ?  RouteConstants.AddEnglishAndMathsLrsQuestion : RouteConstants.AddIndustryPlacementQuestion);
+            else
                 return RedirectToRoute(RouteConstants.AddEnglishAndMathsQuestion);
-
-            if (learnerRecord.HasLrsEnglishAndMaths && !learnerRecord.HasSendQualification)
-                return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
-
-            return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumber);
         }
 
         [HttpGet]
@@ -103,7 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            return View(new LearnerRecordAddedAlreadyViewModel { ProfileId = profileId,  Uln = cacheModel.Uln?.EnterUln?.ToString() });
+            return View(new LearnerRecordAddedAlreadyViewModel { ProfileId = profileId,  Uln = cacheModel.Uln?.EnterUln?.ToString(), LearnerName = cacheModel?.LearnerRecord?.Name });
         }
 
         [HttpGet]
@@ -150,6 +148,68 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return RedirectToRoute(model.IsChangeMode ? RouteConstants.AddLearnerRecordCheckAndSubmit : RouteConstants.AddIndustryPlacementQuestion);
+        }
+
+        [HttpGet]
+        [Route("add-learner-record-english-and-maths-achievement-lrs", Name = RouteConstants.AddEnglishAndMathsLrsQuestion)]
+        public async Task<IActionResult> AddEnglishAndMathsLrsQuestionAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+
+            if (cacheModel?.LearnerRecord == null || cacheModel?.Uln == null || cacheModel?.LearnerRecord.IsLearnerRegistered == false || cacheModel?.LearnerRecord?.HasLrsEnglishAndMaths == false || cacheModel?.LearnerRecord?.IsSendConfirmationRequired == false)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = cacheModel?.EnglishAndMathsLrsQuestion == null ? new EnglishAndMathsLrsQuestionViewModel() : cacheModel.EnglishAndMathsLrsQuestion;
+            viewModel.LearnerName = cacheModel.LearnerRecord.Name;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-learner-record-english-and-maths-achievement-lrs", Name = RouteConstants.SubmitAddEnglishAndMathsLrsQuestion)]
+        public async Task<IActionResult> AddEnglishAndMathsLrsQuestionAsync(EnglishAndMathsLrsQuestionViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<AddLearnerRecordViewModel>(CacheKey);
+
+            if (cacheModel?.Uln == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.EnglishAndMathsLrsQuestion = model;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            var response = await _trainingProviderLoader.AddLearnerRecordAsync(User.GetUkPrn(), cacheModel);
+
+            if (response.IsSuccess)
+            {
+                if (cacheModel.Uln.IsNavigatedFromSearchLearnerRecordNotAdded)
+                    await _cacheService.RemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
+
+                await _cacheService.RemoveAsync<AddLearnerRecordViewModel>(CacheKey);
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddEnglishAndMathsSendDataConfirmation), new LearnerRecordConfirmationViewModel { Uln = response.Uln, Name = response.Name }, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.AddEnglishAndMathsSendDataConfirmation);
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.AddEnglishAndMathsSendDataEmailFailed, $"Unable to send email for English and maths send data for UniqueLearnerNumber: {cacheModel.Uln}. Method: AddEnglishAndMathsLrsQuestionAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }            
+        }
+
+        [HttpGet]
+        [Route("add-learner-record-english-and-maths-data-confirmation", Name = RouteConstants.AddEnglishAndMathsSendDataConfirmation)]
+        public async Task<IActionResult> AddEnglishAndMathsSendDataConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<LearnerRecordConfirmationViewModel>(string.Concat(CacheKey, Constants.AddEnglishAndMathsSendDataConfirmation));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read LearnerRecordConfirmationViewModel from redis cache in add english and maths send data confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -466,9 +526,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(viewModel);
-        }        
+        }               
 
-        # endregion
+        #endregion
 
         private async Task SyncCacheUln(EnterUlnViewModel model, FindLearnerRecord learnerRecord = null)
         {

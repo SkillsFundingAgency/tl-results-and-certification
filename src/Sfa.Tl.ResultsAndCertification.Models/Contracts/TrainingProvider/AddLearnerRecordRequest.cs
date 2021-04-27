@@ -8,7 +8,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public long Uln { get; set; }
         public bool HasLrsEnglishAndMaths { get; set; }
         public EnglishAndMathsStatus? EnglishAndMathsStatus { get; set; }
+        public EnglishAndMathsLrsStatus? EnglishAndMathsLrsStatus { get; set; }
         public IndustryPlacementStatus IndustryPlacementStatus { get; set; }
         public string PerformedBy { get; set; }
+        public string PerformedUserEmail { get; set; }        
     }
 }

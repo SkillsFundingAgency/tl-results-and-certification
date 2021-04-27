@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsLearnerRecordAdded, opts => opts.MapFrom(s => s.IsLearnerRecordAdded))
                .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.HasLrsEnglishAndMaths))
                .ForMember(d => d.EnglishAndMathsStatus, opts => opts.MapFrom(s => (s.HasLrsEnglishAndMaths || s.IsLearnerRecordAdded == false) ? (EnglishAndMathsStatus?)null :
-                                                                                    (s.IsEnglishAndMathsAchieved && s.IsSendLearner ? EnglishAndMathsStatus.AchievedWithSend :
+                                                                                    (s.IsEnglishAndMathsAchieved && s.IsSendLearner == true ? EnglishAndMathsStatus.AchievedWithSend :
                                                                                     (s.IsEnglishAndMathsAchieved ? EnglishAndMathsStatus.Achieved : EnglishAndMathsStatus.NotAchieved))
                                                                             ));
 
@@ -49,8 +49,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln.EnterUln))
                .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.LearnerRecord.HasLrsEnglishAndMaths))
                .ForMember(d => d.EnglishAndMathsStatus, opts => opts.MapFrom(s => s.LearnerRecord.HasLrsEnglishAndMaths ? null : s.EnglishAndMathsQuestion.EnglishAndMathsStatus))
+               .ForMember(d => d.EnglishAndMathsLrsStatus, opts => opts.MapFrom(s => s.LearnerRecord.HasLrsEnglishAndMaths && s.EnglishAndMathsLrsQuestion != null ? s.EnglishAndMathsLrsQuestion.EnglishAndMathsLrsStatus : null))
                .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => s.IndustryPlacementQuestion.IndustryPlacementStatus))
-               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddLearnerRecordViewModel, AddLearnerRecordRequest>>());
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddLearnerRecordViewModel, AddLearnerRecordRequest>>())
+               .ForMember(d => d.PerformedUserEmail, opts => opts.MapFrom<UserEmailResolver<AddLearnerRecordViewModel, AddLearnerRecordRequest>>());
 
             CreateMap<UpdateIndustryPlacementQuestionViewModel, UpdateLearnerRecordRequest>()
                .ForMember(d => d.Ukprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))

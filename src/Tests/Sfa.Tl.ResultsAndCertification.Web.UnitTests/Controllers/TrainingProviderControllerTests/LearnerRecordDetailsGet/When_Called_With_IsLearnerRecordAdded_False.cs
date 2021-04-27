@@ -9,17 +9,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_Called_With_IsLearnerRecordAdded_False : TestSetup
     {
-        private LearnerRecordDetailsViewModel mockresult = null;
         public override void Given()
         {
             ProfileId = 10;
-            mockresult = new LearnerRecordDetailsViewModel
+            Mockresult = new LearnerRecordDetailsViewModel
             {
                 ProfileId = 10,
                 IsLearnerRegistered = true,
                 IsLearnerRecordAdded = false
             };
-            TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(mockresult);
+            TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(Mockresult);
         }
 
         [Fact]

@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public override void Given()
         {
             _routeAttributes = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
-            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Barnsley College (123456789)", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true };
+            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Barnsley College (123456789)", PathwayName = "Digital Services (1234786)", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true, IsSendLearner = true };
             _ulnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
             IndustryPlacementQuestionViewModel = new IndustryPlacementQuestionViewModel { LearnerName = _learnerRecord.Name, IndustryPlacementStatus = IndustryPlacementStatus.Completed };
 
@@ -99,6 +99,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryProvider.RouteName.Should().BeNullOrEmpty();
             model.SummaryProvider.RouteAttributes.Should().BeNull();
 
+            // Summary Core
+            model.SummaryCore.Should().NotBeNull();
+            model.SummaryCore.Title.Should().Be(CheckAndSubmitContent.Title_Core_Text);
+            model.SummaryCore.Value.Should().Be(_learnerRecord.PathwayName);
+            model.SummaryCore.NeedBorderBottomLine.Should().BeFalse();
+            model.SummaryCore.RenderActionColumn.Should().BeTrue();
+            model.SummaryCore.ActionText.Should().BeNullOrEmpty();
+            model.SummaryCore.RouteName.Should().BeNullOrEmpty();
+            model.SummaryCore.RouteAttributes.Should().BeNull();
+
             // Summary EnglishAndMathsStatus           
             model.SummaryEnglishAndMathsStatus.Should().NotBeNull();
             model.SummaryEnglishAndMathsStatus.Title.Should().Be(CheckAndSubmitContent.Title_EnglishAndMaths_Status_Text);
@@ -138,7 +148,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         {
             get
             {
-                return _learnerRecord.HasLrsEnglishAndMaths ? _learnerRecord.IsEnglishAndMathsAchieved ? CheckAndSubmitContent.English_And_Maths_Achieved_Lrs_Text : CheckAndSubmitContent.English_And_Maths_Not_Achieved_Lrs_Text : null;
+                return _learnerRecord.HasLrsEnglishAndMaths ? GetLrsEnglishAndMathsStatusDisplayText : null;
+            }
+        }
+
+        private string GetLrsEnglishAndMathsStatusDisplayText
+        {
+            get
+            {
+                
+                if (_learnerRecord.IsEnglishAndMathsAchieved == true && _learnerRecord.IsSendLearner == true)
+                {
+                    return CheckAndSubmitContent.English_And_Maths_Achieved_With_Send_Lrs_Text;
+                }
+                else
+                {
+                    return _learnerRecord.IsEnglishAndMathsAchieved == true && _learnerRecord.IsSendLearner == null
+                        ? CheckAndSubmitContent.English_And_Maths_Achieved_Lrs_Text
+                        : CheckAndSubmitContent.English_And_Maths_Not_Achieved_Lrs_Text;
+                }
             }
         }
     }

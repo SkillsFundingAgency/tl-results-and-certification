@@ -121,16 +121,19 @@
     <value>Date of birth: {0}</value>
   </data>
   <data name="English_And_Maths_Achieved_Lrs_Text" xml:space="preserve">
-    <value>Achieved minimum standard (data from Learning Records Service - LRS)</value>
+    <value>Achieved minimum standard (Data from the Learning Records Service - LRS)</value>
+  </data>
+  <data name="English_And_Maths_Achieved_With_Send_Lrs_Text" xml:space="preserve">
+    <value>Achieved minimum standard for learners with SEND (Data from the Learning Records Service - LRS and provider declaration)</value>
   </data>
   <data name="English_And_Maths_Action_Hidden_Text" xml:space="preserve">
-    <value> English and maths status</value>
+    <value> English and maths achievement status</value>
   </data>
   <data name="English_And_Maths_Not_Achieved_Lrs_Text" xml:space="preserve">
-    <value>Not achieved minimum standard (data from Learning Records Service - LRS)</value>
+    <value>Not achieved minimum standard (Data from the Learning Records Service - LRS)</value>
   </data>
   <data name="Industry_Placement_Action_Hidden_Text" xml:space="preserve">
-    <value> industry placement status</value>
+    <value> industry placement completion status</value>
   </data>
   <data name="Learners_English_And_Maths_Achievement_Text" xml:space="preserve">
     <value>Learner’s English and maths achievement</value>

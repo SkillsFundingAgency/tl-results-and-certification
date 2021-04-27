@@ -2,10 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Notify.Interfaces;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -20,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
     public class When_GetLearnerRecordDetails_IsCalled : TrainingProviderServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
-        private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement)> _testCriteriaData;
+        private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, bool? isSendLearner)> _testCriteriaData;
         private IList<TqRegistrationProfile> _profiles;
         private LearnerRecordDetails _actualResult;
 
@@ -33,11 +36,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 { 1111111113, RegistrationPathwayStatus.Active }
             };
 
-            _testCriteriaData = new List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement)>
+            _testCriteriaData = new List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, bool? isSendLearner)>
             {
-                (1111111111, false, true, true, true, true), // Lrs data with Send Qualification + IP
-                (1111111112, true, false, false, false, false), // Not from Lrs
-                (1111111113, false, true, false, true, false), // Lrs data without Send Qualification
+                (1111111111, false, true, true, true, true, true), // Lrs data with Send Qualification + IP
+                (1111111112, true, false, false, false, false, null), // Not from Lrs
+                (1111111113, false, true, false, true, false, false), // Lrs data without Send Qualification
             };
 
             // Registrations seed
@@ -45,10 +48,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _profiles = SeedRegistrationsData(_ulns, TqProvider);
             TransferRegistration(1111111113, Provider.WalsallCollege);
 
-            foreach (var (uln, isRcFeed, seedQualificationAchieved, isSendQualification, isEngishAndMathsAchieved, seedIndustryPlacement) in _testCriteriaData)
+            foreach (var (uln, isRcFeed, seedQualificationAchieved, isSendQualification, isEngishAndMathsAchieved, seedIndustryPlacement, isSendLearner) in _testCriteriaData)
             {
                 var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
-                BuildLearnerRecordCriteria(profile, isRcFeed, seedQualificationAchieved, isSendQualification, isEngishAndMathsAchieved, seedIndustryPlacement);
+                BuildLearnerRecordCriteria(profile, isRcFeed, seedQualificationAchieved, isSendQualification, isEngishAndMathsAchieved, seedIndustryPlacement, isSendLearner);
             }
 
             DbContext.SaveChanges();
@@ -64,9 +67,23 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             IndustryPlacementRepositoryLogger = new Logger<GenericRepository<IndustryPlacement>>(new NullLoggerFactory());
             IndustryPlacementRepository = new GenericRepository<IndustryPlacement>(IndustryPlacementRepositoryLogger, DbContext);
 
+            TrainingProviderRepositoryLogger = new Logger<TrainingProviderRepository>(new NullLoggerFactory());
+            TrainingProviderRepository = new TrainingProviderRepository(DbContext, TrainingProviderRepositoryLogger);
+
             TrainingProviderServiceLogger = new Logger<TrainingProviderService>(new NullLoggerFactory());
 
-            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, RegistrationPathwayRepository, IndustryPlacementRepository, TrainingProviderMapper, TrainingProviderServiceLogger);
+            NotificationsClient = Substitute.For<IAsyncNotificationClient>();
+            NotificationLogger = new Logger<NotificationService>(new NullLoggerFactory());
+            NotificationTemplateRepositoryLogger = new Logger<GenericRepository<NotificationTemplate>>(new NullLoggerFactory());
+            NotificationTemplateRepository = new GenericRepository<NotificationTemplate>(NotificationTemplateRepositoryLogger, DbContext);
+            NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
+
+            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
+            {
+                TlevelQueriedSupportEmailAddress = "test@test.com"
+            };
+
+            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, RegistrationPathwayRepository, IndustryPlacementRepository, TrainingProviderRepository, NotificationService, ResultsAndCertificationConfiguration, TrainingProviderMapper, TrainingProviderServiceLogger);
         }
 
         public override Task When()
@@ -139,7 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _actualResult.IsLearnerRecordAdded.Should().Be(expectedIsLearnerRecordAdded);
             _actualResult.IsEnglishAndMathsAchieved.Should().Be(expectedProfile.IsEnglishAndMathsAchieved ?? false);
             _actualResult.HasLrsEnglishAndMaths.Should().Be(expectedHasLrsEnglishAndMaths);
-            _actualResult.IsSendLearner.Should().Be(expectedProfile.IsSendLearner ?? false);
+            _actualResult.IsSendLearner.Should().Be(expectedProfile.IsSendLearner);
             _actualResult.IndustryPlacementId.Should().Be(expectedIndustryPlacementId);
             _actualResult.IndustryPlacementStatus.Should().Be(expectedIndustryPlacementStatus);
 

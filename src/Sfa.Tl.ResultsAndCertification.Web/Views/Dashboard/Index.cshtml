@@ -13,6 +13,15 @@
                 @Dashboard.Section_Heading_Text
             </h1>
         </div>
+        @if (Model?.IsTrainingProviderUser == true)
+        {
+            <p class="govuk-body">
+                @Dashboard.Providers_Schools_And_Colleges_Text
+            </p>
+            <p class="govuk-body">
+                @Dashboard.Exams_Board_Text
+            </p>
+        }
     </div>
 </div>
 
@@ -133,13 +142,13 @@
                 <p class="govuk-body">
                     <h2 class="govuk-heading-m">
                         <a class="govuk-link" asp-route="ManageLearnerRecordsDashboard">
-                            @Dashboard.Manage_Learners_Records_Text
+                            @Dashboard.Manage_Learner_TLevel_Records_Text
                         </a>
                     </h2>
                 </p>
 
                 <p class="govuk-body">
-                    @Dashboard.Manage_Learners_Records_Description_Text
+                    @Dashboard.Manage_Learner_TLevel_Records_Description_Text
                 </p>
             </div>
         </div>

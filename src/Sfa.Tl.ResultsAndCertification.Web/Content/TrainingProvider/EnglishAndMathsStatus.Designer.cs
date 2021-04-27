@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Achieved minimum standard with SEND adjustments.
+        ///   Looks up a localized string similar to Achieved minimum standard for learners with SEND.
         /// </summary>
         public static string Achieved_With_Send_Display_Text {
             get {

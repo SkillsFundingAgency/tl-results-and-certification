@@ -132,11 +132,8 @@
   <data name="Change_Inset_Text_I_Declare" xml:space="preserve">
     <value>By selecting 'Change' I declare that:</value>
   </data>
-  <data name="Details_Adjust_Minimum_Standards_For_Send_Learner" xml:space="preserve">
-    <value>You can adjust the minimum standards for English and maths for learners with SEND if the following conditions are met:</value>
-  </data>
   <data name="Details_Check_Grades_Equal_To_Level2" xml:space="preserve">
-    <value>You will need to check the learner's grades are equal to a full level 2 qualification and have met the minimum standard.</value>
+    <value>You will need to check the learner's grades are equivalent to a level 2 qualification and have met the minimum standard.</value>
   </data>
   <data name="Details_Do_Not_Need_Evidence_Upload" xml:space="preserve">
     <value>You do not need to upload any evidence, but you should hold supporting documentation in your own records.</value>
@@ -148,7 +145,7 @@
     <value>The learner has an Education, Health and Care (EHC) Plan, a statement of Special Educational Need (SEN) or a Learning Difficulty Assessment (LDA)</value>
   </data>
   <data name="Details_Standards_Are_Level2" xml:space="preserve">
-    <value>The minimum standards are full level 2 qualifications (GCSE or equivalent).</value>
+    <value>The minimum standards are level 2 qualifications (GCSE or equivalent).</value>
   </data>
   <data name="Details_SubHeading_If_Outside_England_Wales" xml:space="preserve">
     <value>If the learner has qualifications from outside England and Wales</value>
@@ -159,11 +156,17 @@
   <data name="Details_SubHeading_If_Send_Learner" xml:space="preserve">
     <value>If the learner has special educational needs and/or a disability (SEND)</value>
   </data>
+  <data name="Details_There_Are_No_Industry_Specific_Minimum_Entry_Requirements" xml:space="preserve">
+    <value>There are no industry specific minimum entry requirements for their chosen T Level</value>
+  </data>
   <data name="Details_What_Are_Minimum_Standards" xml:space="preserve">
     <value>What are the minimum standards?</value>
   </data>
   <data name="Details_Your_Assessment_Shows_With_Support" xml:space="preserve">
-    <value>Your assessment of the learner shows that even with support, reasonable adjustments or stepping stone qualifications, the learner is not able to achieve a full level 2 qualification because of their learning difficulty or disability</value>
+    <value>Your assessment of the learner shows that even with support, reasonable adjustments or stepping stone qualifications, the learner is not able to achieve a level 2 qualification because of their learning difficulty or disability</value>
+  </data>
+  <data name="Entry_Level3_Qualifications_Minimum_Standards_For_Send_Learner" xml:space="preserve">
+    <value>Entry Level 3 qualifications will meet the minimum standard for English and maths provided the following conditions are met:</value>
   </data>
   <data name="Heading_Has_Learner_Completed_EnglishAndMaths" xml:space="preserve">
     <value>Has the learner achieved the required minimum standard for English and maths?</value>
@@ -172,7 +175,7 @@
     <value>By selecting 'Continue' I declare that:</value>
   </data>
   <data name="Inset_Text_Learner_Meets_All_Conditions" xml:space="preserve">
-    <value>the learner has been assessed by our organisation and meets all the conditions required to adjust the minimum standards</value>
+    <value>the learner has been assessed by our organisation and meets all the conditions required</value>
   </data>
   <data name="Inset_Text_Learner_Met_Min_Standards" xml:space="preserve">
     <value>the learner has met the minimum standard for English and maths as a SEND learner</value>
@@ -190,16 +193,16 @@
     <value>Achieved the minimum standard</value>
   </data>
   <data name="Option_Achieved_With_Send" xml:space="preserve">
-    <value>Achieved the minimum standard with SEND adjustments</value>
+    <value>Achieved the minimum standard for learners with SEND</value>
   </data>
   <data name="Option_Not_Achieved" xml:space="preserve">
     <value>Not achieved the minimum standard</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Add a new learner record - English and maths achievement page</value>
+    <value>Add a new learner T Level record - English and maths achievement page</value>
   </data>
   <data name="Text_Learner" xml:space="preserve">
-    <value>Learner</value>
+    <value>Learner:</value>
   </data>
   <data name="Update_Button_Text" xml:space="preserve">
     <value>Update</value>

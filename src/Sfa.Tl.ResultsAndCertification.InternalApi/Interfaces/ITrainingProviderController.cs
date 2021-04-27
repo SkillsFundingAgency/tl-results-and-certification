@@ -5,7 +5,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
 {
     public interface ITrainingProviderController
     {
-        Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln);
+        Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation);
         Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null);
         Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model);
     }

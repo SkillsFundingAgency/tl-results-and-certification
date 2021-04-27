@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         // inputs
         private readonly long _providerUkprn = 12345678;
         private readonly long _uln = 987654321;
+        private readonly bool _evaluateSendConfirmation = false;
         
         // results
         private FindLearnerRecord _actualResult;
@@ -46,14 +47,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 IsLearnerRegistered = true,
                 IsLearnerRecordAdded = false,
                 IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = true,
-                HasSendQualification = false
+                HasLrsEnglishAndMaths = true
             };
         }
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<FindLearnerRecord>(_mockApiResponse, string.Format(ApiConstants.FindLearnerRecordUri, _providerUkprn, _uln), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<FindLearnerRecord>(_mockApiResponse, string.Format(ApiConstants.FindLearnerRecordUri, _providerUkprn, _uln, _evaluateSendConfirmation), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
@@ -73,7 +73,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.IsLearnerRegistered.Should().Be(_mockApiResponse.IsLearnerRegistered);
             _actualResult.IsLearnerRecordAdded.Should().Be(_mockApiResponse.IsLearnerRecordAdded);
             _actualResult.IsEnglishAndMathsAchieved.Should().Be(_mockApiResponse.IsEnglishAndMathsAchieved);
-            _actualResult.HasSendQualification.Should().Be(_mockApiResponse.HasSendQualification);
             _actualResult.HasLrsEnglishAndMaths.Should().Be(_mockApiResponse.HasLrsEnglishAndMaths);
         }
     }

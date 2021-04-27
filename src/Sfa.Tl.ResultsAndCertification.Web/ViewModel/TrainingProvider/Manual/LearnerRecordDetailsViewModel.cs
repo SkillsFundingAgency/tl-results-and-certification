@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool IsLearnerRecordAdded { get; set; }
         public bool IsEnglishAndMathsAchieved { get; set; }
         public bool HasLrsEnglishAndMaths { get; set; }
-        public bool IsSendLearner { get; set; }
+        public bool? IsSendLearner { get; set; }
         public int IndustryPlacementId { get; set; }
         public IpStatus? IndustryPlacementStatus { get; set; }
 
@@ -56,9 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             HiddenActionText = LearnerRecordDetailsContent.Industry_Placement_Action_Hidden_Text
         };
 
-        private string GetEnglishAndMathsStatusText => HasLrsEnglishAndMaths
-            ? string.Concat(IsEnglishAndMathsAchieved ? LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text : LearnerRecordDetailsContent.English_And_Maths_Not_Achieved_Lrs_Text, LearnerRecordDetailsContent.Whats_Lrs_Text) 
-            : GetEnglishAndMathsStatusDisplayText;
+        private string GetEnglishAndMathsStatusText => HasLrsEnglishAndMaths ? string.Concat(GetLrsEnglishAndMathsStatusDisplayText, LearnerRecordDetailsContent.Whats_Lrs_Text) : GetEnglishAndMathsStatusDisplayText;
 
         private string GetEnglishAndMathsActionText => HasLrsEnglishAndMaths ? LearnerRecordDetailsContent.Query_Action_Link_Text : LearnerRecordDetailsContent.Update_Action_Link_Text;
 
@@ -75,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 if (HasLrsEnglishAndMaths)
                     return null;
 
-                if (IsEnglishAndMathsAchieved && IsSendLearner)
+                if (IsEnglishAndMathsAchieved && IsSendLearner == true)
                 {
                     return EnglishStatus.AchievedWithSend;
                 }
@@ -86,6 +84,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 else
                 {
                     return !IsEnglishAndMathsAchieved ? (EnglishStatus?)EnglishStatus.NotAchieved : null;
+                }
+            }
+        }
+
+        private string GetLrsEnglishAndMathsStatusDisplayText
+        {
+            get
+            {
+                if (!HasLrsEnglishAndMaths)
+                    return null;
+
+                if (IsEnglishAndMathsAchieved && IsSendLearner == true)
+                {
+                    return LearnerRecordDetailsContent.English_And_Maths_Achieved_With_Send_Lrs_Text;
+                }
+                else
+                {
+                    return IsEnglishAndMathsAchieved && !IsSendLearner.HasValue
+                        ? LearnerRecordDetailsContent.English_And_Maths_Achieved_Lrs_Text
+                        : LearnerRecordDetailsContent.English_And_Maths_Not_Achieved_Lrs_Text;
                 }
             }
         }
@@ -127,7 +145,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                     BreadcrumbItems = new List<BreadcrumbItem>
                     {
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Manage_Learner_Records, RouteName = RouteConstants.ManageLearnerRecordsDashboard },
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Manage_Learner_TLevel_Records, RouteName = RouteConstants.ManageLearnerRecordsDashboard },
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_For_Learner, RouteName = RouteConstants.SearchLearnerRecord },
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Learner_TLevel_Record }
                     }

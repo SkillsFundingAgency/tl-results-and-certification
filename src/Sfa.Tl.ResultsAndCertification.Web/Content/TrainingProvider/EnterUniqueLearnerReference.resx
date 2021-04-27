@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Add_New_Learner_Caption" xml:space="preserve">
-    <value>Add a new learner record</value>
+    <value>Add a new learner T Level record</value>
   </data>
   <data name="Continue_Button" xml:space="preserve">
     <value>Continue</value>
@@ -127,18 +127,18 @@
     <value>Enter the Unique Learner Number (ULN)</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Add a new learner record - Enter Unique Learner Number page</value>
+    <value>Add a new learner T Level record - Enter Unique Learner Number page</value>
   </data>
   <data name="Uln_Must_10_Digit_Hint" xml:space="preserve">
     <value>ULN must be 10 digits long</value>
   </data>
   <data name="Uln_Not_Valid_Validation_Message" xml:space="preserve">
-    <value>Enter a valid ULN</value>
+    <value>Enter a valid 10-digit ULN</value>
   </data>
   <data name="Uln_Required_Validation_Message" xml:space="preserve">
-    <value>Enter a ULN</value>
+    <value>Enter a ULN with 10 digits</value>
   </data>
   <data name="You_Can_Enter_Only_Registered_Learner_Text" xml:space="preserve">
-    <value>You can only add records for learners who have been registered on a T Level programme by an awarding organisation.</value>
+    <value>You can only add T Level records for learners registered on a T Level course by an exam board (also known as an awarding organisation).</value>
   </data>
 </root>

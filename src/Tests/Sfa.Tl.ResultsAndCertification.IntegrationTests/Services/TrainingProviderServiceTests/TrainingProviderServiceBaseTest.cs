@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -26,6 +28,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         protected IRepository<IndustryPlacement> IndustryPlacementRepository;
         protected IMapper TrainingProviderMapper;
         protected ILogger<TrainingProviderService> TrainingProviderServiceLogger;
+        protected ITrainingProviderRepository TrainingProviderRepository;
+        protected ILogger<TrainingProviderRepository> TrainingProviderRepositoryLogger;
+        protected NotificationService NotificationService;
+        protected IAsyncNotificationClient NotificationsClient;
+        protected ILogger<NotificationService> NotificationLogger;
+        protected IRepository<NotificationTemplate> NotificationTemplateRepository;
+        protected ILogger<GenericRepository<NotificationTemplate>> NotificationTemplateRepositoryLogger;
+        protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
 
         // Data Seed variables
         protected TlAwardingOrganisation TlAwardingOrganisation;
@@ -58,7 +68,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProviders.First());
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
-            PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();            
+            PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+            NotificationDataProvider.CreateNotificationTemplate(DbContext, NotificationTemplateName.EnglishAndMathsLrsDataQueried);
+
             DbContext.SaveChangesAsync();
 
             Qualifications = SeedQualificationsData();
@@ -108,30 +120,36 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             return qualifications;
         }
 
-        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false)
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false, bool? isSendLearner = null)
         {
             if (profile == null) return;
 
             profile.IsRcFeed = isRcFeed;
             profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
+            profile.IsSendLearner = isSendLearner;
 
             if (seedQualificationAchieved)
             {
-                var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng");
+                var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng" && e.IsSendQualification == isSendQualification);
                 var mathQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Math");                
 
-                var engQualifcationGrades = engQual.QualificationType.QualificationGrades;
-                var mathsQualifcationGrades = mathQual.QualificationType.QualificationGrades;
-
-                var qualification = Qualifications.FirstOrDefault(q => q.IsSendQualification == isSendQualification);
-                var qualificationGrade = qualification.QualificationType.QualificationGrades.FirstOrDefault(g => g.IsAllowable);
+                var engQualifcationGrade = engQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved);
+                var mathsQualifcationGrade = mathQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved); 
 
                 profile.QualificationAchieved.Add(new QualificationAchieved
                 {
                     TqRegistrationProfileId = profile.Id,
-                    QualificationId = qualification.Id,
-                    QualificationGradeId = qualificationGrade.Id,
-                    IsAchieved = qualificationGrade.IsAllowable
+                    QualificationId = engQual.Id,
+                    QualificationGradeId = engQualifcationGrade.Id,
+                    IsAchieved = engQualifcationGrade.IsAllowable
+                });
+
+                profile.QualificationAchieved.Add(new QualificationAchieved
+                {
+                    TqRegistrationProfileId = profile.Id,
+                    QualificationId = mathQual.Id,
+                    QualificationGradeId = mathsQualifcationGrade.Id,
+                    IsAchieved = mathsQualifcationGrade.IsAllowable
                 });
             }
 

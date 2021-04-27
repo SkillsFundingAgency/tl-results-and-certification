@@ -44,10 +44,11 @@
                                 <p class="govuk-body govuk-!-font-weight-bold">@EnglishAndMathsQuestion.Details_SubHeading_If_Outside_England_Wales</p>
                                 <p class="govuk-body">@EnglishAndMathsQuestion.Details_Check_Grades_Equal_To_Level2</p>
                                 <p class="govuk-body govuk-!-font-weight-bold">@EnglishAndMathsQuestion.Details_SubHeading_If_Send_Learner</p>
-                                <p class="govuk-body">@EnglishAndMathsQuestion.Details_Adjust_Minimum_Standards_For_Send_Learner</p>
+                                <p class="govuk-body">@EnglishAndMathsQuestion.Entry_Level3_Qualifications_Minimum_Standards_For_Send_Learner</p>
                                 <ul class="govuk-list govuk-list--bullet">
                                     <li>@EnglishAndMathsQuestion.Details_Learner_Has_Education_Health_Care</li>
                                     <li>@EnglishAndMathsQuestion.Details_Your_Assessment_Shows_With_Support</li>
+                                    <li>@EnglishAndMathsQuestion.Details_There_Are_No_Industry_Specific_Minimum_Entry_Requirements</li>
                                 </ul>
                                 <p class="govuk-body govuk-!-font-weight-bold">@EnglishAndMathsQuestion.Details_SubHeading_If_Send_EntryLevel3</p>
                                 <p class="govuk-body">@EnglishAndMathsQuestion.Details_If_Grade_Not_Achieved_Yet</p>
@@ -64,7 +65,7 @@
                                 </label>
                             </div>
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="status-achieved-send" asp-for="EnglishAndMathsStatus" type="radio" value="@Status.EnglishAndMathsStatus.AchievedWithSend">
+                                <input class="govuk-radios__input" id="status-achieved-send" data-declaration="true" asp-for="EnglishAndMathsStatus" type="radio" value="@Status.EnglishAndMathsStatus.AchievedWithSend">
                                 <label class="govuk-label govuk-radios__label" for="status-achieved-send">
                                     @EnglishAndMathsQuestion.Option_Achieved_With_Send
                                 </label>

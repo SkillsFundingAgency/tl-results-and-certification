@@ -6,8 +6,10 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -18,57 +20,44 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     {
         private readonly IRepository<TqRegistrationProfile> _tqRegistrationProfile;
         private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
-        private readonly IRepository<IndustryPlacement> _industryPlacementRepository;        
+        private readonly IRepository<IndustryPlacement> _industryPlacementRepository;
+        private readonly ITrainingProviderRepository _trainingProviderRepository;
+        private readonly INotificationService _notificationService;
+        private readonly ResultsAndCertificationConfiguration _resultsAndCertificationConfiguration;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public TrainingProviderService(IRepository<TqRegistrationProfile> tqRegistrationProfile, 
+        public TrainingProviderService(IRepository<TqRegistrationProfile> tqRegistrationProfile,
             IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
             IRepository<IndustryPlacement> industryPlacementRepository,
+            ITrainingProviderRepository trainingProviderRepository,
+            INotificationService notificationService,
+            ResultsAndCertificationConfiguration resultsAndCertificationConfiguration,
             IMapper mapper, ILogger<TrainingProviderService> logger)
         {
             _tqRegistrationProfile = tqRegistrationProfile;
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
             _industryPlacementRepository = industryPlacementRepository;
+            _trainingProviderRepository = trainingProviderRepository;
+            _notificationService = notificationService;
+            _resultsAndCertificationConfiguration = resultsAndCertificationConfiguration;
             _mapper = mapper;
             _logger = logger;
         }
 
-        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln)
-        {
-            var latestPathway = await _tqRegistrationPathwayRepository
-                                    .GetManyAsync(x => x.TqRegistrationProfile.UniqueLearnerNumber == uln &&
-                                        x.TqProvider.TlProvider.UkPrn == providerUkprn,
-                                        navigationPropertyPath: new Expression<Func<TqRegistrationPathway, object>>[]
-                                        {
-                                            n => n.TqRegistrationProfile,
-                                            n => n.TqProvider.TlProvider,
-                                            n => n.IndustryPlacements
-                                        })
-                                    .Include(x => x.TqRegistrationProfile.QualificationAchieved).ThenInclude(x => x.Qualification)
-                                    .OrderByDescending(o => o.CreatedOn)
-                                    .FirstOrDefaultAsync();
+        public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
+        {            
+            var latestPathway = await _trainingProviderRepository.FindLearnerRecordAsync(providerUkprn, uln);
 
-            return _mapper.Map<FindLearnerRecord>(latestPathway);
+            if (latestPathway != null && evaluateSendConfirmation == true && latestPathway.IsRcFeed == false && latestPathway.IsEnglishAndMathsAchieved == true && latestPathway.IsSendLearner == null)
+                latestPathway.IsSendConfirmationRequired = await _trainingProviderRepository.IsSendConfirmationRequiredAsync(latestPathway.ProfileId);
+
+            return latestPathway;
         }
 
         public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)
         {
-            var latestPathwayQuerable = _tqRegistrationPathwayRepository
-                                        .GetManyAsync(x => x.TqRegistrationProfile.Id == profileId &&
-                                            x.TqProvider.TlProvider.UkPrn == providerUkprn,
-                                            navigationPropertyPath: new Expression<Func<TqRegistrationPathway, object>>[]
-                                            {
-                                                n => n.TqRegistrationProfile,
-                                                n => n.TqProvider.TlProvider,
-                                                n => n.TqProvider.TqAwardingOrganisation.TlPathway,
-                                                n => n.IndustryPlacements
-                                            })
-                                        .Include(x => x.TqRegistrationProfile.QualificationAchieved).ThenInclude(x => x.Qualification)
-                                        .OrderByDescending(o => o.CreatedOn);
-
-            var latestPathway = pathwayId.HasValue ? await latestPathwayQuerable.FirstOrDefaultAsync(p => p.Id == pathwayId) : await latestPathwayQuerable.FirstOrDefaultAsync();
-            return _mapper.Map<LearnerRecordDetails>(latestPathway);
+            return await _trainingProviderRepository.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
         }
 
         public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request)
@@ -84,27 +73,36 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                     .OrderByDescending(o => o.CreatedOn)
                                     .FirstOrDefaultAsync();
 
+            var isSuccess = false;
+
             if (!IsValidAddLearnerRecordRequest(pathway, request))
-                return new AddLearnerRecordResponse { IsSuccess = false };
-
-            if (IsValidAddEnglishAndMathsRequest(pathway, request))
+                return new AddLearnerRecordResponse { IsSuccess = isSuccess };
+            
+            if (IsValidEnglishAndMathsLrsEmailRequest(request))
             {
-                pathway.TqRegistrationProfile.IsEnglishAndMathsAchieved = request.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.Achieved || request.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.AchievedWithSend;
-                pathway.TqRegistrationProfile.IsSendLearner = request.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.AchievedWithSend ? true : (bool?)null;
-                pathway.TqRegistrationProfile.IsRcFeed = true;
-                pathway.TqRegistrationProfile.ModifiedBy = request.PerformedBy;
-                pathway.TqRegistrationProfile.ModifiedOn = DateTime.UtcNow;
+                isSuccess = await SendEmailAsync(pathway.TqRegistrationProfileId, request);
             }
-
-            pathway.IndustryPlacements.Add(new IndustryPlacement
+            else
             {
-                TqRegistrationPathwayId = pathway.Id,
-                Status = request.IndustryPlacementStatus,
-                CreatedBy = request.PerformedBy
-            });
+                if (IsValidAddEnglishAndMathsRequest(pathway, request))
+                {
+                    pathway.TqRegistrationProfile.IsEnglishAndMathsAchieved = request.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.Achieved || request.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.AchievedWithSend;
+                    pathway.TqRegistrationProfile.IsSendLearner = request.EnglishAndMathsStatus.Value == EnglishAndMathsStatus.AchievedWithSend ? true : (bool?)null;
+                    pathway.TqRegistrationProfile.IsRcFeed = true;
+                    pathway.TqRegistrationProfile.ModifiedBy = request.PerformedBy;
+                    pathway.TqRegistrationProfile.ModifiedOn = DateTime.UtcNow;
+                }
 
-            var status = await _tqRegistrationPathwayRepository.UpdateWithSpecifedCollectionsOnlyAsync(pathway, false, p => p.TqRegistrationProfile, p => p.IndustryPlacements);
-            return new AddLearnerRecordResponse { Uln = request.Uln, Name = $"{pathway.TqRegistrationProfile.Firstname} {pathway.TqRegistrationProfile.Lastname}", IsSuccess = status > 0 };
+                pathway.IndustryPlacements.Add(new IndustryPlacement
+                {
+                    TqRegistrationPathwayId = pathway.Id,
+                    Status = request.IndustryPlacementStatus,
+                    CreatedBy = request.PerformedBy
+                });
+
+                isSuccess = await _tqRegistrationPathwayRepository.UpdateWithSpecifedCollectionsOnlyAsync(pathway, false, p => p.TqRegistrationProfile, p => p.IndustryPlacements) > 0;
+            }
+            return new AddLearnerRecordResponse { Uln = request.Uln, Name = $"{pathway.TqRegistrationProfile.Firstname} {pathway.TqRegistrationProfile.Lastname}", IsSuccess = isSuccess };
         }
 
         public async Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest request)
@@ -169,10 +167,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (!IsValidPathwayStatus(registrationPathway))
                 return false;
 
-            var isValidEnglishAndMaths = (request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus == null) || (!request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus != null);
+            var isValidEnglishAndMathsLrsEmailRequest = IsValidEnglishAndMathsLrsEmailRequest(request);
+
+            var isValidEnglishAndMaths = isValidEnglishAndMathsLrsEmailRequest || (request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus == null)
+                || (!request.HasLrsEnglishAndMaths && request.EnglishAndMathsStatus != null && request.EnglishAndMathsLrsStatus == null);
+
             var isValidIndustryPlacement = request.IndustryPlacementStatus != IndustryPlacementStatus.NotSpecified && !registrationPathway.IndustryPlacements.Any();
 
-            return isValidEnglishAndMaths && isValidIndustryPlacement;
+            return isValidEnglishAndMathsLrsEmailRequest ? isValidEnglishAndMaths : isValidEnglishAndMaths && isValidIndustryPlacement;
+        }
+
+        private bool IsValidEnglishAndMathsLrsEmailRequest(AddLearnerRecordRequest request)
+        {
+            return request != null && request.HasLrsEnglishAndMaths && request.EnglishAndMathsLrsStatus != null && request.EnglishAndMathsStatus == null;
         }
 
         private bool IsValidAddEnglishAndMathsRequest(TqRegistrationPathway registrationPathway, AddLearnerRecordRequest request)
@@ -185,6 +192,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private bool IsValidPathwayStatus(TqRegistrationPathway registrationPathway)
         {
             return registrationPathway?.Status == RegistrationPathwayStatus.Active || registrationPathway?.Status == RegistrationPathwayStatus.Withdrawn;
+        }
+
+        private async Task<bool> SendEmailAsync(int profileId, AddLearnerRecordRequest request)
+        {
+            var tokens = new Dictionary<string, dynamic>
+                {
+                    { "profile_id", profileId },
+                    { "english_and_maths_lrs_status", request.EnglishAndMathsLrsStatus.ToString() },
+                    { "sender_name", request.PerformedBy },
+                    { "sender_email_address", request.PerformedUserEmail }
+                };
+
+            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.EnglishAndMathsLrsDataQueried.ToString(), _resultsAndCertificationConfiguration.TlevelQueriedSupportEmailAddress, tokens);
         }
     }
 }

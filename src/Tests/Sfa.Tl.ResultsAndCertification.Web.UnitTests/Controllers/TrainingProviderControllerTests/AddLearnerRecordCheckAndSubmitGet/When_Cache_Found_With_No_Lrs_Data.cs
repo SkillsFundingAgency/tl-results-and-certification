@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
@@ -26,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public override void Given()
         {
             _routeAttributes = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
-            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Barnsley College (123456789)", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = false };
+            _learnerRecord = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Barnsley College (123456789)", PathwayName = "Digital Services (1234786)", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = false };
             _ulnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
             _englishAndMathsViewModel = new EnglishAndMathsQuestionViewModel { LearnerName = _learnerRecord.Name, EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved };
             IndustryPlacementQuestionViewModel = new IndustryPlacementQuestionViewModel { LearnerName = _learnerRecord.Name, IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted };
@@ -104,6 +103,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryProvider.ActionText.Should().BeNullOrEmpty();
             model.SummaryProvider.RouteName.Should().BeNullOrEmpty();
             model.SummaryProvider.RouteAttributes.Should().BeNull();
+
+            // Summary Core
+            model.SummaryCore.Should().NotBeNull();
+            model.SummaryCore.Title.Should().Be(CheckAndSubmitContent.Title_Core_Text);
+            model.SummaryCore.Value.Should().Be(_learnerRecord.PathwayName);
+            model.SummaryCore.NeedBorderBottomLine.Should().BeFalse();
+            model.SummaryCore.RenderActionColumn.Should().BeTrue();
+            model.SummaryCore.ActionText.Should().BeNullOrEmpty();
+            model.SummaryCore.RouteName.Should().BeNullOrEmpty();
+            model.SummaryCore.RouteAttributes.Should().BeNull();
 
             // Summary EnglishAndMathsStatus           
             model.SummaryEnglishAndMathsStatus.Should().NotBeNull();

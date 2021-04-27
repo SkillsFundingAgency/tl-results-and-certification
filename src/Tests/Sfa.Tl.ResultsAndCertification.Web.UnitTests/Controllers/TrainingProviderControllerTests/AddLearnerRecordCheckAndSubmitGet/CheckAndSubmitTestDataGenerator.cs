@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class CheckAndSubmitTestDataGenerator : IEnumerable<object[]>
     {
-        private static readonly FindLearnerRecord _learnersRecordValid = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Barnsley College (123456789)", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true };
+        private static readonly FindLearnerRecord _learnersRecordValid = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Barnsley College (123456789)", PathwayName = "Digital Services (1234786)", IsLearnerRegistered = true, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true };
         private static readonly EnterUlnViewModel _ulnViewModel = new EnterUlnViewModel { EnterUln = "1234567890" };
         private static readonly EnglishAndMathsQuestionViewModel _englishAndMathsViewModel = new EnglishAndMathsQuestionViewModel {  EnglishAndMathsStatus = EnglishAndMathsStatus.Achieved };
         private static readonly FindLearnerRecord _learnersRecordInvalidLearnerNotRegistered = new FindLearnerRecord { Uln = 1234567890, Name = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Barnsley College (123456789)", IsLearnerRegistered = false, IsLearnerRecordAdded = false, HasLrsEnglishAndMaths = true, IsEnglishAndMathsAchieved = true };

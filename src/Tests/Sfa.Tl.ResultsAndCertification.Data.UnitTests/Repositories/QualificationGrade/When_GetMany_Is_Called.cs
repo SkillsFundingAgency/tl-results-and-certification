@@ -40,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Qualificati
             result.Id.Should().Be(1);
             result.Grade.Should().Be(testData.Grade);
             result.IsAllowable.Should().Be(testData.IsAllowable);
+            result.IsSendGrade.Should().Be(testData.IsSendGrade);
             result.IsActive.Should().Be(testData.IsActive);
             result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
             result.CreatedOn.Should().Be(Constants.CreatedOn);

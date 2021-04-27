@@ -33,7 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                     x.EnglishAndMathsStatus == AddLearnerRecordViewModel.EnglishAndMathsQuestion.EnglishAndMathsStatus &&
                     x.HasLrsEnglishAndMaths == AddLearnerRecordViewModel.LearnerRecord.HasLrsEnglishAndMaths &&
                     x.IndustryPlacementStatus == AddLearnerRecordViewModel.IndustryPlacementQuestion.IndustryPlacementStatus &&
-                    x.PerformedBy == $"{Givenname} {Surname}"))
+                    x.PerformedBy == $"{Givenname} {Surname}" &&
+                    x.PerformedUserEmail == Email))
                 .Returns(_expectedApiResult);
 
             Loader = new TrainingProviderLoader(InternalApiClient, Mapper);
