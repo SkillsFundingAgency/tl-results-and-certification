@@ -28,6 +28,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<TqSpecialismAssessment> TqSpecialismAssessment { get; set; }        
         public virtual DbSet<TqPathwayResult> TqPathwayResult { get; set; }
 
+        public virtual DbSet<QualificationType> QualificationType { get; set; }
+        public virtual DbSet<QualificationGrade> QualificationGrade { get; set; }
+        public virtual DbSet<Qualification> Qualification { get; set; }
+        public virtual DbSet<QualificationAchieved> QualificationAchieved { get; set; }
+        public virtual DbSet<IndustryPlacement> IndustryPlacement { get; set; }
+        public virtual DbSet<FunctionLog> FunctionLog { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ////This will singularize all table names

@@ -88,6 +88,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learner T Level record.
+        /// </summary>
+        public static string Learner_TLevel_Record {
+            get {
+                return ResourceManager.GetString("Learner_TLevel_Record", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learner&apos;s assessment entries.
         /// </summary>
         public static string Learners_Assessment_entries {
@@ -102,6 +111,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Learners_Results {
             get {
                 return ResourceManager.GetString("Learners_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage learner T Level records.
+        /// </summary>
+        public static string Manage_Learner_TLevel_Records {
+            get {
+                return ResourceManager.GetString("Manage_Learner_TLevel_Records", resourceCulture);
             }
         }
         
@@ -165,6 +183,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Search_For_Assessments {
             get {
                 return ResourceManager.GetString("Search_For_Assessments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for a learner.
+        /// </summary>
+        public static string Search_For_Learner {
+            get {
+                return ResourceManager.GetString("Search_For_Learner", resourceCulture);
             }
         }
         

@@ -205,5 +205,42 @@
         public const string RenewSessionActivity = "RenewSessionActivity";
         public const string ActivityTimeout = "ActivityTimeout";
         public const string Timeout = "Timeout";
+
+        # region TrainingProvider specific constants
+
+        public const string ManageLearnerRecordsDashboard = "ManageLearnerRecordsDashboard";
+        public const string AddLearnerRecord = "AddLearnerRecord";
+        public const string EnterUniqueLearnerNumber = "EnterUniqueLearnerNumber";
+        public const string SubmitEnterUniqueLearnerNumber = "SubmitEnterUniqueLearnerNumber";
+        public const string EnterUniqueLearnerNumberNotFound = "EnterUniqueLearnerNumberNotFound";
+        public const string EnterUniqueLearnerNumberAddedAlready = "EnterUniqueLearnerNumberAddedAlready";
+        public const string AddEnglishAndMathsQuestion = "AddEnglishAndMathsQuestion";
+        public const string SubmitAddEnglishAndMathsQuestion = "SubmitAddEnglishAndMathsQuestion";
+        public const string AddEnglishAndMathsLrsQuestion = "AddEnglishAndMathsLrsQuestion";
+        public const string SubmitAddEnglishAndMathsLrsQuestion = "SubmitAddEnglishAndMathsLrsQuestion";
+        public const string AddIndustryPlacementQuestion = "AddIndustryPlacementQuestion";
+        public const string SubmitIndustryPlacementQuestion = "SubmitIndustryPlacementQuestion";
+        public const string AddLearnerRecordCheckAndSubmit = "AddLearnerRecordCheckAndSubmit";
+        public const string SubmitLearnerRecordCheckAndSubmit = "SubmitLearnerRecordCheckAndSubmit";
+        public const string AddLearnerRecordCancel = "AddLearnerRecordCancel";
+        public const string SubmitLearnerRecordCancel = "SubmitLearnerRecordCancel";
+        public const string LearnerRecordAddedConfirmation = "LearnerRecordAddedConfirmation";
+        public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation";
+
+        public const string UpdateLearnerRecord = "UpdateLearnerRecord";
+        public const string SearchLearnerRecord = "SearchLearnerRecord";
+        public const string SubmitSearchLearnerRecord = "SubmitSearchLearnerRecord";
+        public const string SearchLearnerRecordNotAdded = "SearchLearnerRecordNotAdded";
+        public const string SearchLearnerRecordNotFound = "SearchLearnerRecordNotFound";
+        public const string LearnerRecordDetails = "LearnerRecordDetails";
+        public const string QueryEnglishAndMathsStatus = "QueryEnglishAndMathsStatus";
+        public const string UpdateIndustryPlacementQuestion = "UpdateIndustryPlacementQuestion";
+        public const string SubmitUpdateIndustryPlacementQuestion = "SubmitUpdateIndustryPlacementQuestion";
+        public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
+        public const string UpdateEnglisAndMathsAchievement = "UpdateEnglisAndMathsAchievement";
+        public const string SubmitUpdateEnglisAndMathsAchievement = "SubmitUpdateEnglisAndMathsAchievement";
+        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";        
+
+        #endregion
     }
 }

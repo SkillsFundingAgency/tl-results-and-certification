@@ -14,5 +14,5 @@
 	CONSTRAINT [PK_TqSpecialismAssessment] PRIMARY KEY ([Id]),
 	CONSTRAINT [FK_TqSpecialismAssessment_TqRegistrationSpecialism] FOREIGN KEY ([TqRegistrationSpecialismId]) REFERENCES [TqRegistrationSpecialism]([Id]),
 	CONSTRAINT [FK_TqSpecialismAssessment_AssessmentSeries] FOREIGN KEY ([AssessmentSeriesId]) REFERENCES [AssessmentSeries]([Id]),
-	INDEX IX_TqSpecialismAssessment_TqRegistrationSpecialismId NONCLUSTERED (TqRegistrationSpecialismId)
+	INDEX IX_TqSpecialismAssessment_TqRegistrationSpecialismId_AssessmentSeriesId NONCLUSTERED ([TqRegistrationSpecialismId], [AssessmentSeriesId])
 )

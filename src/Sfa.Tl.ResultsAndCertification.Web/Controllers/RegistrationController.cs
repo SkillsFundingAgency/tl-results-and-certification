@@ -594,7 +594,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> DeleteRegistrationAsync(int profileId)
         {
             var registrationDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
-            if (registrationDetails == null || registrationDetails.IsResultExist)
+            if (registrationDetails == null || registrationDetails.IsResultExist || registrationDetails.IsIndustryPlacementExist)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = new DeleteRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln };

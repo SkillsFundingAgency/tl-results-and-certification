@@ -1,0 +1,14 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "LearnerVerificationAndLearningEventsTrigger": "0 23 15 1-12 *",
+    "LearnerGenderTrigger": "0 21 15 1-12 *",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "BlobStorageConnectionString": "UseDevelopmentStorage=true;",
+    "ConfigurationStorageConnectionString": "UseDevelopmentStorage=true;",
+    "EnvironmentName": "LOCAL",
+    "ServiceName": "Sfa.Tl.ResultsAndCertification",
+    "Version": "1.0"
+  }
+}

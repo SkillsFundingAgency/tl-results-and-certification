@@ -132,6 +132,12 @@
   <data name="Learners_Results" xml:space="preserve">
     <value>Learner's results</value>
   </data>
+  <data name="Learner_TLevel_Record" xml:space="preserve">
+    <value>Learner T Level record</value>
+  </data>
+  <data name="Manage_Learner_TLevel_Records" xml:space="preserve">
+    <value>Manage learner T Level records</value>
+  </data>
   <data name="Provider_Find_Provider" xml:space="preserve">
     <value>Find a provider</value>
   </data>
@@ -151,6 +157,9 @@
     <value>Results</value>
   </data>
   <data name="Search_For_Assessments" xml:space="preserve">
+    <value>Search for a learner</value>
+  </data>
+  <data name="Search_For_Learner" xml:space="preserve">
     <value>Search for a learner</value>
   </data>
   <data name="Search_For_Registration" xml:space="preserve">

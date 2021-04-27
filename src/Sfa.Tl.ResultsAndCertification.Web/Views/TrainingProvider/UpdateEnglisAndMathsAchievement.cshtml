@@ -1,0 +1,102 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual.UpdateEnglishAndMathsQuestionViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Status = Sfa.Tl.ResultsAndCertification.Common.Enum
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = EnglishAndMathsQuestion.Update_Page_Title;
+}
+
+@section Scripts {
+    <script nws-csp-add-nonce="true" src="~/javascripts/english-maths-question.min.js"></script>
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" id="addEnglishAndMathsForm" asp-route="SubmitUpdateEnglisAndMathsAchievement">
+            <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="LearnerName" value="@Model.LearnerName" />
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <span class="govuk-caption-xl">@EnglishAndMathsQuestion.Caption_Update_Learner_TLevel_Record</span>
+                <div class="govuk-form-group" sfa-validation-for="EnglishAndMathsStatus" sfa-validation-class="govuk-form-group--error">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                                @EnglishAndMathsQuestion.Heading_Has_Learner_Completed_EnglishAndMaths
+                            </h1>
+                            <span id="uln-hint" class="govuk-hint">
+                                <strong> @EnglishAndMathsQuestion.Text_Learner</strong> @Model.LearnerName
+                            </span>
+                        </legend>
+                        <details class="govuk-details" closed>
+                            <summary class="govuk-details__summary">
+                                <span class="govuk-details__summary-text">
+                                    @EnglishAndMathsQuestion.Details_What_Are_Minimum_Standards
+                                </span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p class="govuk-body">@EnglishAndMathsQuestion.Details_Standards_Are_Level2</p>
+                                <p class="govuk-body govuk-!-font-weight-bold">@EnglishAndMathsQuestion.Details_SubHeading_If_Outside_England_Wales</p>
+                                <p class="govuk-body">@EnglishAndMathsQuestion.Details_Check_Grades_Equal_To_Level2</p>
+                                <p class="govuk-body govuk-!-font-weight-bold">@EnglishAndMathsQuestion.Details_SubHeading_If_Send_Learner</p>
+                                <p class="govuk-body">@EnglishAndMathsQuestion.Entry_Level3_Qualifications_Minimum_Standards_For_Send_Learner</p>
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>@EnglishAndMathsQuestion.Details_Learner_Has_Education_Health_Care</li>
+                                    <li>@EnglishAndMathsQuestion.Details_Your_Assessment_Shows_With_Support</li>
+                                    <li>@EnglishAndMathsQuestion.Details_There_Are_No_Industry_Specific_Minimum_Entry_Requirements</li>
+                                </ul>
+                                <p class="govuk-body govuk-!-font-weight-bold">@EnglishAndMathsQuestion.Details_SubHeading_If_Send_EntryLevel3</p>
+                                <p class="govuk-body">@EnglishAndMathsQuestion.Details_If_Grade_Not_Achieved_Yet</p>
+                                <p class="govuk-body">@EnglishAndMathsQuestion.Details_Do_Not_Need_Evidence_Upload</p>
+                            </div>
+                        </details>
+
+                        <div class="govuk-radios">
+                            <span sfa-validation-for="EnglishAndMathsStatus"></span>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="englishandmathsstatus" asp-for="EnglishAndMathsStatus" type="radio" value="@Status.EnglishAndMathsStatus.Achieved">
+                                <label class="govuk-label govuk-radios__label" for="englishandmathsstatus">
+                                    @EnglishAndMathsQuestion.Option_Achieved
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status-achieved-send" data-declaration="true" asp-for="EnglishAndMathsStatus" type="radio" value="@Status.EnglishAndMathsStatus.AchievedWithSend">
+                                <label class="govuk-label govuk-radios__label" for="status-achieved-send">
+                                    @EnglishAndMathsQuestion.Option_Achieved_With_Send
+                                </label>
+                                <noscript>
+                                    <div class="govuk-!-margin-left-3 govuk-!-margin-top-3 show-on-event">
+                                        <p class="govuk-body">@EnglishAndMathsQuestion.Inset_Text_NoJs_I_Declare_That</p>
+                                        <ul class="govuk-list govuk-list--bullet">
+                                            <li>@EnglishAndMathsQuestion.Inset_Text_NoJs_Learner_Meets_All_Conditions</li>
+                                            <li>@EnglishAndMathsQuestion.Inset_Text_NoJs_Learner_Met_Minimum_Standard</li>
+                                        </ul>
+                                    </div>
+                                </noscript>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status-not-achieved" asp-for="EnglishAndMathsStatus" type="radio" value="@Status.EnglishAndMathsStatus.NotAchieved">
+                                <label class="govuk-label govuk-radios__label" for="status-not-achieved">
+                                    @EnglishAndMathsQuestion.Option_Not_Achieved
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div id="declarationText" class="govuk-inset-text tl-hide">
+                    <p>@EnglishAndMathsQuestion.Update_Inset_Text_I_Declare</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>@EnglishAndMathsQuestion.Inset_Text_Learner_Meets_All_Conditions</li>
+                        <li>@EnglishAndMathsQuestion.Inset_Text_Learner_Met_Min_Standards</li>
+                    </ul>
+                </div>
+            </div>
+            <button id="updateButton" class="govuk-button" data-module="govuk-button">@EnglishAndMathsQuestion.Update_Button_Text</button>
+        </form>
+    </div>
+</div>

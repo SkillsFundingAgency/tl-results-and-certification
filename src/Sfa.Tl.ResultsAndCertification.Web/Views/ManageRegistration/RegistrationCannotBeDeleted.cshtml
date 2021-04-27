@@ -18,7 +18,18 @@
                     @RegistrationCannotBeDeleted.Heading
                 </label>
             </h1>
-            <p class="govuk-body">@RegistrationCannotBeDeleted.Has_Result_Text</p>
+            <p class="govuk-body">@RegistrationCannotBeDeleted.Para_Can_Not_Be_Deleted_Because</p>
+
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@RegistrationCannotBeDeleted.Item_Results_Added </li>
+                <li>@RegistrationCannotBeDeleted.Item_Industry_Placement_Added</li>
+                <li>@RegistrationCannotBeDeleted.Item_Both_Of_Them</li>
+            </ul>
+
+            <p class="govuk-body">@RegistrationCannotBeDeleted.Para_Check_Trying_The_Correct_Registration</p>
+            <p class="govuk-body">@RegistrationCannotBeDeleted.Para_If_Not_Have_Core_Results</p>
+            <p class="govuk-body">@RegistrationCannotBeDeleted.Para_If_No_Industry_Placement_Contact_Provider</p>
+
         </div>
         <p>
             <a class="govuk-button" id="backButton" role="button" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">

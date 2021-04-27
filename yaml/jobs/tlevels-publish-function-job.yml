@@ -1,0 +1,31 @@
+parameters:
+  - name: serviceConnection
+    type: string
+  - name: sharedEnvironmentId
+    type: string
+jobs:
+- job: PublishFunction
+  variables:
+    WorkerFunctionAppName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.WorkerFunctionAppName'] ]
+
+  pool:
+    name: 'Azure Pipelines'
+    vmImage: 'windows-2019'
+  dependsOn: 
+    - DeployInfrastructure
+    - GenerateConfigs
+  steps:
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      buildType: 'current'
+      downloadType: 'single'
+      artifactName: 'appdrop'
+      downloadPath: '$(System.ArtifactsDirectory)'
+  
+  - task: AzureFunctionApp@1
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      appType: 'functionApp'
+      appName: '$(WorkerFunctionAppName)'
+      package: '$(System.ArtifactsDirectory)/appdrop/Sfa.Tl.ResultsAndCertification.Functions.zip'
+      deploymentMethod: 'auto'

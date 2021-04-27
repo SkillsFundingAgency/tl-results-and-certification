@@ -8,13 +8,20 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public TqRegistrationProfile()
         {
             TqRegistrationPathways = new HashSet<TqRegistrationPathway>();
+            QualificationAchieved = new HashSet<QualificationAchieved>();
         }
 
         public long UniqueLearnerNumber { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public DateTime DateofBirth { get; set; }
+        public string Gender { get; set; }
+        public bool? IsLearnerVerified { get; set; }
+        public bool? IsEnglishAndMathsAchieved { get; set; }
+        public bool? IsSendLearner { get; set; }
+        public bool? IsRcFeed { get; set; }
 
         public virtual ICollection<TqRegistrationPathway> TqRegistrationPathways { get; set; }
+        public virtual ICollection<QualificationAchieved> QualificationAchieved { get; set; }
     }
 }

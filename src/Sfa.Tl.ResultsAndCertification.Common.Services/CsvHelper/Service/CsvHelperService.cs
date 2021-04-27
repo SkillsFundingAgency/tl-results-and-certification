@@ -23,7 +23,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
     {
         private readonly IValidator<TImportModel> _validator;
         private readonly IDataParser<TModel> _dataParser;
+#pragma warning disable IDE0052 // Remove unread private members
         private readonly ILogger<CsvHelperService<TImportModel, TResponseModel, TModel>> _logger;
+#pragma warning restore IDE0052 // Remove unread private members
 
         public CsvHelperService(IValidator<TImportModel> validator, 
             IDataParser<TModel> dataParser, 
@@ -136,7 +138,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
 
         private async Task<ValidationResult> ValidateRowAsync(TImportModel importModel)
         {
-            _validator.CascadeMode = CascadeMode.StopOnFirstFailure;
             return await _validator.ValidateAsync(importModel);
         }
 

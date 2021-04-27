@@ -27,6 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.PathwayResultId, opts =>
                                 opts.MapFrom(s => s.TqPathwayAssessments.Any() && s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.Any() ?
                                 s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.FirstOrDefault().Id : (int?)null))
+                .ForMember(d => d.IsIndustryPlacementExist, opts => opts.MapFrom(s => s.IndustryPlacements.Any()))
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status));
 
             CreateMap<AssessmentSeries, AvailableAssessmentSeries>()

@@ -62,6 +62,12 @@
     text-align: right !important;
 }
 
+// Margin classes
+
+.hard-margin-top {
+    margin-top: 0px !important;
+}
+
 
 // Generic float classes
 
@@ -75,6 +81,10 @@
 
 .tl-hide {
     display: none;
+}
+
+.tl-no-border-bottom {
+    border-bottom: none !important;
 }
 
 body {
@@ -104,3 +114,13 @@ body {
         border-bottom: none !important;
     }
 }
+
+input[type="radio"] {
+    + label + noscript > div.show-on-event {
+        display: none;
+    }
+
+    &:checked + label + noscript > div.show-on-event {
+        display: block;
+    }
+ }

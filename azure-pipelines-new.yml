@@ -1,0 +1,22 @@
+resources:
+  repositories:
+    - repository: self
+      persistCredentials: true
+      clean: true
+
+    - repository: devopsTemplates
+      type: github
+      endpoint: DfE-Digital
+      name: DFE-Digital/operations-devops-pipeline-templates
+
+trigger:
+  branches:
+    include:    
+    - feature/lrs-integration
+     
+pr: none
+
+variables:
+  applicationName: resac
+stages:
+  - template: ./yaml/stages/tlevels-master-stage.yml

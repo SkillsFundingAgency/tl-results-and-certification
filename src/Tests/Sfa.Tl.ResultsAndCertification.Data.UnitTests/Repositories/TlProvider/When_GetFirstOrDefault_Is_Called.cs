@@ -40,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlProvider
             _result.Name.Should().Be(expectedResult.Name);
             _result.DisplayName.Should().Be(expectedResult.DisplayName);
             _result.UkPrn.Should().Be(expectedResult.UkPrn);
+            _result.IsActive.Should().Be(expectedResult.IsActive);
             _result.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
             _result.CreatedOn.Should().Be(expectedResult.CreatedOn);
             _result.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);

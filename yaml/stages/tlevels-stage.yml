@@ -1,0 +1,69 @@
+parameters:
+- name: stageName
+  type: string
+- name: dependencies
+  type: object
+- name: environmentName
+  type: string
+- name: environmentId
+  type: string
+- name: sharedEnvironmentId
+  type: string
+- name: serviceConnection
+  type: string
+- name: applicationName
+  type: string
+stages:
+- stage: Deploy_${{parameters.environmentId}}
+  dependsOn: 
+    - '${{ each dependency in parameters.dependencies }}':
+      - '${{dependency}}'
+  variables:
+    - group: platform-global-${{parameters.applicationName}}
+    - group: platform-${{parameters.environmentName}}
+    - group: platform-${{parameters.environmentName}}-${{parameters.applicationName}}
+    - name: BaseName
+      value: "s126${{parameters.environmentId}}-${{parameters.applicationName}}-${{parameters.environmentName}}"
+    - name: ResourceGroupName
+      value: '$(BaseName)'
+    - name: EnvironmentName
+      value: ${{ parameters.environmentName }} 
+      
+      
+  displayName: '${{parameters.environmentName}} [${{parameters.environmentId}}] deployment'
+  jobs:  
+  - template: ../jobs/tlevels-infrastructure-job.yml
+    parameters:
+      BaseName: $(BaseName)
+      serviceConnection: ${{ parameters.serviceConnection }}
+      sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
+      environmentName: ${{parameters.environmentName}}
+  
+  - template: ../jobs/tlevels-publish-dacpac-job.yml
+    parameters:
+      serviceConnection: ${{ parameters.serviceConnection }}
+      sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
+
+  - template: ../jobs/tlevels-generate-configs-job.yml
+    parameters:
+      serviceConnection: ${{ parameters.serviceConnection }}
+      sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
+
+  - template: ../jobs/tlevels-publish-site-job.yml
+    parameters:
+      serviceConnection: ${{ parameters.serviceConnection }}
+      sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
+      appName: 'uiAppName'
+      name: 'Website'
+  
+  - template: ../jobs/tlevels-publish-site-job.yml
+    parameters:
+      serviceConnection: ${{ parameters.serviceConnection }}
+      sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
+      appName: 'internalApiAppName'
+      name: 'internalAPI'
+  
+  - template: ../jobs/tlevels-publish-function-job.yml
+    parameters:
+      serviceConnection: ${{ parameters.serviceConnection }}
+      sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}

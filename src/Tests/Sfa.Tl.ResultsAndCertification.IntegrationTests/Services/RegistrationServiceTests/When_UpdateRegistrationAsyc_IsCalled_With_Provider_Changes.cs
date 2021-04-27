@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -33,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             // Seed Tlevel data for pearson
             _uln = 1111111111;
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
-            _tqRegistrationProfile = SeedRegistrationData(_uln);
+            _tqRegistrationProfile = SeedRegistrationData(_uln, true);
 
             var pathwayAssessments = SeedPathwayAssessmentsData(GetPathwayAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.ToList(), isBulkUpload: false));
 
@@ -102,6 +103,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                                                                                                                            .Include(x => x.TqRegistrationPathways)
                                                                                                                                 .ThenInclude(x => x.TqPathwayAssessments)
                                                                                                                                     .ThenInclude(x => x.TqPathwayResults)
+                                                                                                                           .Include(x => x.TqRegistrationPathways)
+                                                                                                                                .ThenInclude(x => x.IndustryPlacements)
                                                                                                                            .FirstOrDefault();
 
                 // assert registration profile data
@@ -148,6 +151,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 var actualTransferredResult = actualTransferredAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
                 var expectedTransferredResult = expectedTransferredAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
                 AssertPathwayResults(actualTransferredResult, expectedTransferredResult);
+
+                // Assert IndustryPlacement Data
+                var actualActiveIndustryPlacement = activePathway.IndustryPlacements.FirstOrDefault();
+                var expectedPreviousIndustryPlacement = expectedTransferredPathway.IndustryPlacements.FirstOrDefault();
+
+                actualActiveIndustryPlacement.Status.Should().Be(expectedPreviousIndustryPlacement.Status);
             }
         }
 
@@ -185,11 +194,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             DbContext.SaveChangesAsync();
         }
 
-        private TqRegistrationProfile SeedRegistrationData(long uln)
+        private TqRegistrationProfile SeedRegistrationData(long uln, bool seedIndustryPlacement = false)
         {
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProviders.First());
+
+            if (seedIndustryPlacement)
+            {
+                var industryPlacement = IndustryPlacementProvider.CreateQualificationAchieved(DbContext, new IndustryPlacement { Status = IndustryPlacementStatus.Completed, CreatedBy = "Test User" });
+                tqRegistrationPathway.IndustryPlacements.Add(industryPlacement);
+            }
 
             foreach (var specialism in Specialisms)
             {

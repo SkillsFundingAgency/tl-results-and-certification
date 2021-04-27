@@ -1,0 +1,38 @@
+parameters:
+- name: stageName
+  type: string
+- name: dependencies
+  type: object
+- name: environmentName
+  type: string
+- name: sharedEnvironmentId
+  type: string
+- name: serviceConnection
+  type: string
+- name: applicationName
+  type: string
+
+stages:
+- stage: DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}
+  dependsOn: 
+    - '${{ each dependency in parameters.dependencies }}':
+      - '${{dependency}}'
+  variables:
+    - group: platform-global-${{parameters.applicationName}}
+    - group: platform-${{parameters.environmentName}}
+    - group: platform-${{parameters.environmentName}}-${{parameters.applicationName}}
+    - name: SharedBaseName
+      value: "s126${{parameters.sharedEnvironmentId}}-${{parameters.applicationName}}"
+    - name: SharedResourceGroup
+      value: '$(SharedBaseName)-shared'
+    - name: SharedSQLServerName
+      value: '$(SharedBaseName)-shared-sqlsvr'  
+      
+  displayName: '${{parameters.environmentName}} [${{parameters.sharedEnvironmentId}}] Shared' 
+  jobs:
+  - template: ../jobs/tlevels-shared-infrastructure-job.yml
+    parameters:
+      baseName: $(SharedBaseName)
+      serviceConnection: ${{ parameters.serviceConnection }}
+      sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
+      environmentName: ${{parameters.environmentName}}

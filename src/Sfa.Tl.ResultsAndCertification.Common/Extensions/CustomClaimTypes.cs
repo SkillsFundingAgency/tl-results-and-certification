@@ -31,5 +31,10 @@
         /// The user identifier
         /// </summary>
         public const string UserId = "http://schemas.microsoft.com/ws/2008/06/identity/claims/userid";
+
+        /// <summary>
+        /// The user type
+        /// </summary>
+        public const string LoginUserType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/loginusertype";      
     }
 }

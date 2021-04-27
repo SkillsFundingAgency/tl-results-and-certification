@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 {
     public class AssessmentRepository : GenericRepository<TqPathwayAssessment>, IAssessmentRepository
     {
-        private ILogger<AssessmentRepository> _logger;
+        private readonly ILogger<AssessmentRepository> _logger;
 
         public AssessmentRepository(ILogger<AssessmentRepository> logger, ResultsAndCertificationDbContext dbContext) : base(logger, dbContext)
         {
@@ -155,6 +155,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                    .Include(x => x.TqRegistrationSpecialisms)
                        .ThenInclude(x => x.TqSpecialismAssessments)
                             .ThenInclude(x => x.AssessmentSeries)
+                    .Include(x => x.IndustryPlacements)
                     .OrderByDescending(o => o.CreatedOn)
                     .FirstOrDefaultAsync(p => p.TqRegistrationProfile.Id == profileId &&
                            p.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn &&

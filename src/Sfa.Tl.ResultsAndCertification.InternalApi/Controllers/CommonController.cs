@@ -25,5 +25,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _commonService.GetLookupDataAsync(lookupCategory);
         }
+
+        [HttpGet]
+        [Route("GetLoggedInUserTypeInfo/{ukprn}")]
+        public async Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn)
+        {
+            return await _commonService.GetLoggedInUserTypeInfoAsync(ukprn);
+        }
     }
 }

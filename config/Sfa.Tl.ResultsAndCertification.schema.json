@@ -6,7 +6,7 @@
     "SqlConnectionString": {
       "minLength": 1,
       "type": "string",
-      "environmentVariable": "SQLServiceAccountConnectionString"
+      "environmentVariable": "SqlConnectionString"
     },
     "IntTestSqlConnectionString": {
       "minLength": 1,
@@ -32,6 +32,10 @@
     "FeedbackEmailAddress": {
       "type": "string",
       "environmentVariable": "FeedbackEmailAddress"
+    },
+	"KeyVaultUri": {
+      "type": "string",
+      "environmentVariable": "KeyVaultUri"
     },
     "RedisSettings": {
       "properties": {
@@ -234,6 +238,44 @@
         "ClientId"
       ],
       "type": "object"
+    },
+	"LearningRecordServiceSettings": {
+      "properties": {
+        "VendorId": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "LearningRecordServiceVendorId"
+        },
+        "Ukprn": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "LearningRecordServiceUkprn"
+        },
+        "Username": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "LearningRecordServiceUsername"
+        },
+        "Password": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "LearningRecordServicePassword"
+        },
+        "CertificateName": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "LearningRecordServiceCertificateName"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "VendorId",
+        "Ukprn",
+        "Username",
+        "Password",
+		"CertificateName"
+      ],
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -244,11 +286,13 @@
     "TlevelQueriedSupportEmailAddress",
     "TechnicalSupportEmailAddress",
     "FeedbackEmailAddress",
+	"KeyVaultUri",
     "RedisSettings",
-    "BlobStorageSettings",
+	"BlobStorageSettings",
     "DataProtectionSettings",
     "DfeSignInSettings",
-    "ResultsAndCertificationInternalApiSettings"
+    "ResultsAndCertificationInternalApiSettings",
+	"LearningRecordServiceSettings"
   ],
   "type": "object"
 }

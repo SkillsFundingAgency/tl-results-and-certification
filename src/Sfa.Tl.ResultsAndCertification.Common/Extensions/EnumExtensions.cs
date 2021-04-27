@@ -17,6 +17,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
                             ?.GetName() ?? enumValue.ToString();
         }
 
+        public static T GetEnum<T>(object value) where T : System.Enum
+        {
+            return (T)(value.ToString().IsInt() ? value.ToString().ToInt() : value);
+        }
+
         public static string GetDisplayName<T>(object value) where T : System.Enum
         {
             return IsValidValue<T>(value) ? ((T)(value.ToString().IsInt() ? value.ToString().ToInt() : value)).GetDisplayName() : null;
@@ -29,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 
         public static bool IsValidValue<T>(object value) where T : System.Enum
         {
-            return value != null ? System.Enum.IsDefined(typeof(T), value.ToString().IsInt() ? value.ToString().ToInt() : value) : false;
+            return value != null && System.Enum.IsDefined(typeof(T), value.ToString().IsInt() ? value.ToString().ToInt() : value);
         }
 
         public static bool IsValidDisplayName<T>(object value) where T : System.Enum
