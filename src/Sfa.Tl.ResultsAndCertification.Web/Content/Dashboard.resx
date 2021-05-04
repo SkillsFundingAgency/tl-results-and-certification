@@ -150,6 +150,12 @@
   <data name="Providers_Description_Text" xml:space="preserve">
     <value>Tell us which T Levels each provider is offering</value>
   </data>
+  <data name="Providers_Manage_Postal_Address_Heading" xml:space="preserve">
+    <value>Manage your organisation’s postal address</value>
+  </data>
+  <data name="Providers_Manage_Postal_Address_Text" xml:space="preserve">
+    <value>Add or update the address you want certificates and statements of achievement sent to</value>
+  </data>
   <data name="Providers_Schools_And_Colleges_Text" xml:space="preserve">
     <value>Providers, for example, schools and colleges, can use this service to record a T Level learner's English and maths achievements and industry placement completion. These records will be added to the learner's T Level registration.</value>
   </data>
