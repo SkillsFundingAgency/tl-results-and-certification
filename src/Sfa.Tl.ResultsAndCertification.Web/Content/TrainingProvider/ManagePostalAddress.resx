@@ -117,76 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Assessment_Dashboard" xml:space="preserve">
-    <value>Assessment entries</value>
+  <data name="Add_Address_Before_Request_Certificate_Inset_Text" xml:space="preserve">
+    <value>You need to add your organisation's postal address before you can request a certificate or statement of achievement.</value>
   </data>
-  <data name="Contact" xml:space="preserve">
-    <value>Contact us</value>
+  <data name="Add_Address_Before_Request_Certificate_Text" xml:space="preserve">
+    <value>This is where we will send certificates and statements of achievement.</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
+  <data name="Button_Add_Address" xml:space="preserve">
+    <value>Add address</value>
   </data>
-  <data name="Learners_Assessment_entries" xml:space="preserve">
-    <value>Learner's assessment entries</value>
-  </data>
-  <data name="Learners_Results" xml:space="preserve">
-    <value>Learner's results</value>
-  </data>
-  <data name="Learner_TLevel_Record" xml:space="preserve">
-    <value>Learner T Level record</value>
-  </data>
-  <data name="Manage_Learner_TLevel_Records" xml:space="preserve">
-    <value>Manage learner T Level records</value>
-  </data>
-  <data name="Manage_Postal_Address" xml:space="preserve">
+  <data name="Manage_Postal_Address_Heading" xml:space="preserve">
     <value>Manage your organisation’s postal address</value>
   </data>
-  <data name="Provider_Find_Provider" xml:space="preserve">
-    <value>Find a provider</value>
-  </data>
-  <data name="Provider_Tlevels" xml:space="preserve">
-    <value>Provider’s T Levels</value>
-  </data>
-  <data name="Provider_Your_Providers" xml:space="preserve">
-    <value>Your providers</value>
-  </data>
-  <data name="Registration_Dashboard" xml:space="preserve">
-    <value>Registrations</value>
-  </data>
-  <data name="Registration_Details" xml:space="preserve">
-    <value>Registration details</value>
-  </data>
-  <data name="Result_Dashboard" xml:space="preserve">
-    <value>Results</value>
-  </data>
-  <data name="Search_For_Assessments" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
-  <data name="Search_For_Learner" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
-  <data name="Search_For_Registration" xml:space="preserve">
-    <value>Search for a registration</value>
-  </data>
-  <data name="Search_For_Results" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
-  <data name="Tlevel_Details" xml:space="preserve">
-    <value>T Level details</value>
-  </data>
-  <data name="Tlevel_Review_Select" xml:space="preserve">
-    <value>Review T Levels</value>
-  </data>
-  <data name="Tlevel_ViewAll" xml:space="preserve">
-    <value>Your T Levels</value>
-  </data>
-  <data name="Upload_Assessments_File" xml:space="preserve">
-    <value>Upload assessment entries file</value>
-  </data>
-  <data name="Upload_Registrations_File" xml:space="preserve">
-    <value>Upload registrations file</value>
-  </data>
-  <data name="Upload_Results_File" xml:space="preserve">
-    <value>Upload results file</value>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Manage your organisation's postal address page</value>
   </data>
 </root>

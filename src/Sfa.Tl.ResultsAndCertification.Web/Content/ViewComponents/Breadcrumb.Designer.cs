@@ -124,6 +124,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage your organisation’s postal address.
+        /// </summary>
+        public static string Manage_Postal_Address {
+            get {
+                return ResourceManager.GetString("Manage_Postal_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Find a provider.
         /// </summary>
         public static string Provider_Find_Provider {

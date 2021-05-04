@@ -590,6 +590,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>LearnerRecordDetails.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\TrainingProvider\ManagePostalAddress.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ManagePostalAddress.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1059,6 +1064,10 @@
     <EmbeddedResource Update="Content\TrainingProvider\LearnerRecordDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LearnerRecordDetails.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\TrainingProvider\ManagePostalAddress.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ManagePostalAddress.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

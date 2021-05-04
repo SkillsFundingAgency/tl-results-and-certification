@@ -239,7 +239,8 @@
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
         public const string UpdateEnglisAndMathsAchievement = "UpdateEnglisAndMathsAchievement";
         public const string SubmitUpdateEnglisAndMathsAchievement = "SubmitUpdateEnglisAndMathsAchievement";
-        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";        
+        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
+        public const string ManagePostalAddress = "ManagePostalAddress";
 
         #endregion
     }
