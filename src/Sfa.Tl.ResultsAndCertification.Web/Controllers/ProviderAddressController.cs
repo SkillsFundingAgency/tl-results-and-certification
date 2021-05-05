@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -25,6 +25,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await Task.CompletedTask;
                 return false;
             }
+        }
+
+        [HttpGet]
+        [Route("add-postal-address-postcode", Name = RouteConstants.AddAddressPostcode)]
+        public async Task<IActionResult> AddAddressPostcodeAsync()
+        {
+            await Task.CompletedTask;
+            return View(new AddAddressPostcodeViewModel());
+        }
+
+        [HttpPost]
+        [Route("add-postal-address-postcode", Name = RouteConstants.SubmitAddAddressPostcode)]
+        public async Task<IActionResult> AddAddressPostcodeAsync(AddAddressPostcodeViewModel viewModel)
+        {
+            // TODO:
+            await Task.CompletedTask;
+            return View(viewModel);
         }
     }
 }

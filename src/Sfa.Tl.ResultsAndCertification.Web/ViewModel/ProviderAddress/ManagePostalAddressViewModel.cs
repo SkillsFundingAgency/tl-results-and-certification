@@ -3,7 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using System.Collections.Generic;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
+namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 {
     public class ManagePostalAddressViewModel
     {

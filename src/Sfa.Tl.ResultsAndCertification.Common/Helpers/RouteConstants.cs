@@ -241,6 +241,8 @@
         public const string SubmitUpdateEnglisAndMathsAchievement = "SubmitUpdateEnglisAndMathsAchievement";
         public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
         public const string ManagePostalAddress = "ManagePostalAddress";
+        public const string AddAddressPostcode = "AddAddressPostcode";
+        public const string SubmitAddAddressPostcode = "SubmitAddAddressPostcode";
 
         #endregion
     }
