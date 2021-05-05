@@ -43,9 +43,7 @@ steps:
   inputs:
     command: restore
     projects: 'src/Sfa.Tl.ResultsAndCertification.sln'
-    noCache: true
-    feedsToUse: config
-    nugetConfigPath: src/NuGet.config
+    noCache: true    
 
 - task: DotNetCoreCLI@2
   displayName: dotnet build
