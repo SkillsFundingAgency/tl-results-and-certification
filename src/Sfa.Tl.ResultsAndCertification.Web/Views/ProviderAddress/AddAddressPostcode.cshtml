@@ -11,10 +11,12 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
+        <partial name="_ValidationSummary" />
         <form asp-route="SubmitAddAddressPostcode">
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@AddAddressPostcode.Caption_Add_Address</span>
-                <fieldset class="govuk-fieldset">
+                @*TODO: below fieldset with different class used in prototype *@
+                <div class="govuk-form-group" sfa-validation-for="Postcode" sfa-validation-class="govuk-form-group--error">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                         <h1 class="govuk-fieldset__heading">
                             @AddAddressPostcode.Heading_What_Is_Your_Address
@@ -24,9 +26,10 @@
                         <label class="govuk-label  govuk-!-font-size-24 govuk-!-font-weight-bold govuk-!-margin-top-3" for="address-postcode">
                             @AddAddressPostcode.Label_Enter_Postcode
                         </label>
-                        <input class="govuk-input govuk-input--width-10" id="address-postcode" name="address-postcode" type="text">
+                        <span sfa-validation-for="Postcode"></span>
+                        <input class="govuk-input govuk-input--width-10" id="postcode" asp-for="Postcode">
                     </div>
-                </fieldset>
+                </div>
             </div>
             <button id="findAddressButton" type="submit" class="govuk-button" data-module="govuk-button">@AddAddressPostcode.Button_Find_Address</button>
         </form>

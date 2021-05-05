@@ -135,4 +135,10 @@
   <data name="Page_Title" xml:space="preserve">
     <value>Add your organisation's postal address page</value>
   </data>
+  <data name="Validation_Enter_Postcode" xml:space="preserve">
+    <value>Enter your postcode</value>
+  </data>
+  <data name="Validation_Enter_Valid_Postcode" xml:space="preserve">
+    <value>Enter a valid UK postcode</value>
+  </data>
 </root>

@@ -37,11 +37,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("add-postal-address-postcode", Name = RouteConstants.SubmitAddAddressPostcode)]
-        public async Task<IActionResult> AddAddressPostcodeAsync(AddAddressPostcodeViewModel viewModel)
+        public async Task<IActionResult> AddAddressPostcodeAsync(AddAddressPostcodeViewModel model)
         {
-            // TODO:
+            if (!ModelState.IsValid)
+                return View(model);
+
             await Task.CompletedTask;
-            return View(viewModel);
+            return View(model);
         }
     }
 }

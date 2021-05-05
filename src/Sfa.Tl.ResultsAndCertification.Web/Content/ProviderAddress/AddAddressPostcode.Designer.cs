@@ -113,5 +113,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your postcode.
+        /// </summary>
+        public static string Validation_Enter_Postcode {
+            get {
+                return ResourceManager.GetString("Validation_Enter_Postcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid UK postcode.
+        /// </summary>
+        public static string Validation_Enter_Valid_Postcode {
+            get {
+                return ResourceManager.GetString("Validation_Enter_Valid_Postcode", resourceCulture);
+            }
+        }
     }
 }
