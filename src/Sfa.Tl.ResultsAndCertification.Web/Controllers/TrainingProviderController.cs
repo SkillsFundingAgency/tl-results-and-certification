@@ -528,23 +528,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        [Route("manage-postal-address", Name = RouteConstants.ManagePostalAddress)]
-        public async Task<IActionResult> ManagePostalAddressAsync()
-        {
-            var isAlreadyAdded = await FindPostalAddress();
-            if (isAlreadyAdded)
-                return View(); //TODO: redirect to ShowAddressPage.
-
-            return View(new ManagePostalAddressViewModel());
-
-            static async Task<bool> FindPostalAddress()
-            {
-                await Task.CompletedTask;
-                return false;
-            }
-        }
-
         #endregion
 
         private async Task SyncCacheUln(EnterUlnViewModel model, FindLearnerRecord learnerRecord = null)
