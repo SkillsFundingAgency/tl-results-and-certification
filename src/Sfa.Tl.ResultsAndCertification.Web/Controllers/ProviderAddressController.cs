@@ -45,5 +45,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await Task.CompletedTask;
             return View(model);
         }
+
+        [HttpGet]
+        [Route("add-postal-address-select ", Name = RouteConstants.AddAddressSelect)]
+        public async Task<IActionResult> AddAddressSelectAsync()
+        {
+            await Task.CompletedTask;
+            return View(new AddAddressPostcodeViewModel());
+        }
     }
 }

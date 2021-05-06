@@ -1,0 +1,59 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress.AddAddressSelectViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress
+
+@{
+    ViewData["Title"] = AddAddressSelect.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <partial name="_ValidationSummary" />
+        <form asp-route="">
+            <div class="govuk-form-group">
+                <span class="govuk-caption-xl">@AddAddressSelect.Caption_Add_Address</span>
+                <div class="govuk-form-group" sfa-validation-for="SelectedAddressUdprn" sfa-validation-class="govuk-form-group--error">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading">
+                                @AddAddressSelect.Heading_What_Is_Your_Address
+                            </h1>
+                        </legend>
+
+                        <p class="govuk-body-l govuk-!-font-weight-bold govuk-!-margin-top-3 govuk-!-margin-bottom-3">@AddAddressSelect.Postcode_Label</p>
+                        <p class="govuk-body-m govuk-!-font-weight-bold "><a class="govuk-body govuk-!-margin-left-3" asp-route="">@AddAddressSelect.Change_Link_Text</a></p>
+
+                        <div class="govuk-form-group govuk-!-margin-top-6">
+                            <label class="govuk-label govuk-label--m" for="selectedaddressudprn">@AddAddressSelect.Select_An_Address_Label</label>
+                            <span sfa-validation-for="SelectedAddressUdprn"></span>
+                            <select class="govuk-select" id="selectedaddressudprn" asp-for="SelectedAddressUdprn" asp-items="Model.AddressSelectList">
+                                <option>@string.Format(@AddAddressSelect.Address_Found_Text, Model.AddressCount)</option>
+                            </select>
+                        </div>
+
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="departmentname">@AddAddressSelect.Department_Label</label>
+                            <input class="govuk-input  govuk-!-width-one-half" id="departmentname" asp-for="DepartmentName" />
+                        </div>
+
+                        <details class="govuk-details govuk-!-margin-top-6 govuk-!-margin-bottom-0" data-module="govuk-details" closed>
+                            <summary class="govuk-details__summary">
+                                <span class="govuk-details__summary-text">
+                                    @AddAddressSelect.I_Cant_Find_My_Organisations_Address_In_The_List_Text
+                                </span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p class="govuk-body">@AddAddressSelect.Para_If_You_Cant_Find_The_Address_In_The_List_Text</p>
+                                <p class="govuk-body">@AddAddressSelect.Para_If_You_Still_Cant_Find_The_Address_You_Can_Text <a class="govuk-link" asp-route="">@AddAddressSelect.Add_It_Manually_Link_Text</a>.</p>
+                            </div>
+                        </details>
+                    </fieldset>
+                </div>
+            </div>
+            <button id="continueButton" type="submit" class="govuk-button" data-module="govuk-button">@AddAddressSelect.Continue_Button_Text</button>
+        </form>
+    </div>
+</div>

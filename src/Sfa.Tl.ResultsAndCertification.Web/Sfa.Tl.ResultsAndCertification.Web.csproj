@@ -135,6 +135,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AddAddressPostcode.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\ProviderAddress\AddAddressSelect.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddAddressSelect.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\RegistrationCannotBeDeleted.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -701,6 +706,10 @@
     <EmbeddedResource Update="Content\ProviderAddress\AddAddressPostcode.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AddAddressPostcode.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ProviderAddress\AddAddressSelect.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddAddressSelect.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\RegistrationCannotBeDeleted.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
