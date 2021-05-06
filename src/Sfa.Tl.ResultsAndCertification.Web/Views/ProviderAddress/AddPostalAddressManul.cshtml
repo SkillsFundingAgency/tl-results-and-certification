@@ -1,0 +1,55 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress.AddPostalAddressManualViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress
+
+@{
+    ViewData["Title"] = AddPostalAddressManual.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <partial name="_ValidationSummary" />
+        <form asp-route="SubmitAddPostalAddressManul">
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <span class="govuk-caption-xl">Add address</span>
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">@AddPostalAddressManual.Heading_What_Is_Your_Address</h1>
+                    </legend>
+                    <p class="govuk-body-m">This must be a business address.</p>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="Department">@AddPostalAddressManual.Label_Department</label>
+                        <input id="department" class="govuk-input govuk-!-width-two-thirds" asp-for="Department" type="text" maxlength="100">
+                    </div>
+
+                    <div class="govuk-form-group" sfa-validation-for="AddressLine1" sfa-validation-class="govuk-form-group--error">
+                        <label class="govuk-label" for="addressLine1">@AddPostalAddressManual.Label_Building_And_Street<span class="govuk-visually-hidden">@AddPostalAddressManual.HiddenText_Line1_Of_2</span></label>
+                        <span sfa-validation-for="AddressLine1"></span>
+                        <input id="addressline1" class="govuk-input" asp-for="AddressLine1" type="text" autocomplete="on" maxlength="255">
+                    </div>
+
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="addressLine2"><span class="govuk-visually-hidden">@AddPostalAddressManual.HiddenText_Line2_Of_2</span></label>
+                        <input id="addressline2" class="govuk-input" asp-for="AddressLine2" type="text" autocomplete="on" maxlength="255">
+                    </div>
+
+                    <div class="govuk-form-group" sfa-validation-for="Town" sfa-validation-class="govuk-form-group--error">
+                        <label class="govuk-label" for="town">@AddPostalAddressManual.Label_Town_Or_City</label>
+                        <span sfa-validation-for="Town"></span>
+                        <input id="town" class="govuk-input govuk-!-width-two-thirds" asp-for="Town" type="text" autocomplete="on" maxlength="100">
+                    </div>
+
+                    <div class="govuk-form-group" sfa-validation-for="Postcode" sfa-validation-class="govuk-form-group--error">
+                        <label class="govuk-label" for="postcode">@AddPostalAddressManual.Label_Postcode</label>
+                        <span sfa-validation-for="Postcode"></span>
+                        <input id="postcode" class="govuk-input govuk-input--width-10" asp-for="Postcode" type="text" autocomplete="on" maxlength="8">
+                    </div>
+                </fieldset>
+            </div>
+            <button class="govuk-button" role="button">@AddPostalAddressManual.Button_Continue</button>
+        </form>
+    </div>
+</div>

@@ -47,6 +47,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("add-postal-address-manual", Name = RouteConstants.AddPostalAddressManul)]
+        public async Task<IActionResult> AddPostalAddressManulAsync()
+        {
+            await Task.CompletedTask;
+            return View(new AddPostalAddressManualViewModel());
+        }
+
+        [HttpPost]
+        [Route("add-postal-address-manual", Name = RouteConstants.SubmitAddPostalAddressManul)]
+        public async Task<IActionResult> AddPostalAddressManulAsync(AddPostalAddressManualViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            await Task.CompletedTask;
+            return View(model);
+        }
+
+        [HttpGet]
         [Route("add-postal-address-select ", Name = RouteConstants.AddAddressSelect)]
         public async Task<IActionResult> AddAddressSelectAsync()
         {
