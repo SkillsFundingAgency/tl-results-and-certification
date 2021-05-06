@@ -243,6 +243,7 @@
         public const string ManagePostalAddress = "ManagePostalAddress";
         public const string AddAddressPostcode = "AddAddressPostcode";
         public const string SubmitAddAddressPostcode = "SubmitAddAddressPostcode";
+        public const string AddPostalAddressManul = "AddPostalAddressManul";
 
         #endregion
     }

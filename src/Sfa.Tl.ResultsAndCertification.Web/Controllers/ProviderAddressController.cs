@@ -45,5 +45,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await Task.CompletedTask;
             return View(model);
         }
+
+        [HttpGet]
+        [Route("add-postal-address-manual", Name = RouteConstants.AddPostalAddressManul)]
+        public async Task<IActionResult> AddPostalAddressManulAsync()
+        {
+            await Task.CompletedTask;
+            return View(new AddPostalAddressManualViewModel());
+        }
     }
 }
