@@ -159,5 +159,41 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress {
                 return ResourceManager.GetString("Para_Must_Be_A_Business_Address", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your building and street.
+        /// </summary>
+        public static string Validation_Enter_Building_And_Street {
+            get {
+                return ResourceManager.GetString("Validation_Enter_Building_And_Street", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your postcode.
+        /// </summary>
+        public static string Validation_Enter_Postcode {
+            get {
+                return ResourceManager.GetString("Validation_Enter_Postcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your town or city.
+        /// </summary>
+        public static string Validation_Enter_Town_Or_City {
+            get {
+                return ResourceManager.GetString("Validation_Enter_Town_Or_City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid UK postcode.
+        /// </summary>
+        public static string Validation_Enter_Valid_Postcode {
+            get {
+                return ResourceManager.GetString("Validation_Enter_Valid_Postcode", resourceCulture);
+            }
+        }
     }
 }
