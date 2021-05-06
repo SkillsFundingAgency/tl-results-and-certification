@@ -2,7 +2,7 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress
 
 @{
-    ViewData["Title"] = AddAddressPostcode.Page_Title;
+    ViewData["Title"] = AddPostalAddressManual.Page_Title;
 }
 
 @section NavigationBar {
@@ -17,48 +17,47 @@
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                         <h1 class="govuk-fieldset__heading">
-                            What is your organisation's postal address?
+                            @AddPostalAddressManual.Heading_What_Is_Your_Address
                         </h1>
                     </legend>
                     <p class="govuk-body-m">This must be a business address.</p>
                     <div class="govuk-form-group">
                         <label class="govuk-label " for="dept-name">
-                            Department (optional)
+                            @AddPostalAddressManual.Label_Department
                         </label>
                         <input class="govuk-input  govuk-!-width-two-thirds" asp-for="Department" type="text">
                     </div>
 
                     <div class="govuk-form-group">
                         <label class="govuk-label" for="AddressLine1">
-                            Building and street <span class="govuk-visually-hidden">line 1 of 2</span>
+                            @AddPostalAddressManual.Label_Building_And_Street<span class="govuk-visually-hidden">@AddPostalAddressManual.HiddenText_Line1_Of_2</span>
                         </label>
                         <input class="govuk-input" asp-for="AddressLine1" type="text" autocomplete="on">
                     </div>
 
                     <div class="govuk-form-group">
                         <label class="govuk-label" for="AddressLine2">
-                            <span class="govuk-visually-hidden">Building and street line 2 of 2</span>
+                            <span class="govuk-visually-hidden">@AddPostalAddressManual.HiddenText_Line2_Of_2</span>
                         </label>
                         <input class="govuk-input" asp-for="AddressLine2" type="text" autocomplete="on">
                     </div>
 
                     <div class="govuk-form-group">
                         <label class="govuk-label" for="Town">
-                            Town or city
+                            @AddPostalAddressManual.Label_Town_Or_City
                         </label>
                         <input class="govuk-input govuk-!-width-two-thirds" asp-for="Town" type="text" autocomplete="on">
                     </div>
 
                     <div class="govuk-form-group">
                         <label class="govuk-label" for="Postcode">
-                            Postcode
+                            @AddPostalAddressManual.Label_Postcode
                         </label>
                         <input class="govuk-input govuk-input--width-10" asp-for="Postcode" type="text" autocomplete="on" maxlength="8">
                     </div>
-
                 </fieldset>
             </div>
-            <button class="govuk-button" role="button">Continue</button>
+            <button class="govuk-button" role="button">@AddPostalAddressManual.Button_Continue</button>
         </form>
     </div>
 </div>
