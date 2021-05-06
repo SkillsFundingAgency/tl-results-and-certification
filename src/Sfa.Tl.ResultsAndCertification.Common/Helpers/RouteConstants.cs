@@ -244,6 +244,7 @@
         public const string AddAddressPostcode = "AddAddressPostcode";
         public const string SubmitAddAddressPostcode = "SubmitAddAddressPostcode";
         public const string AddPostalAddressManul = "AddPostalAddressManul";
+        public const string SubmitAddPostalAddressManul = "SubmitAddPostalAddressManul";
 
         #endregion
     }
