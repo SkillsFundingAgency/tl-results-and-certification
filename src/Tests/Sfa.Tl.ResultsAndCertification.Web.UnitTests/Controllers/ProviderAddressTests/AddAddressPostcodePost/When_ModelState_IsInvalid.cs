@@ -7,7 +7,7 @@ using AddAddressContent = Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAdd
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddressTests.AddAddressPostcodePost
 {
-    public class When_ViewModel_IsInvalid : TestSetup
+    public class When_ModelState_IsInvalid : TestSetup
     {
         public override void Given() 
         {
