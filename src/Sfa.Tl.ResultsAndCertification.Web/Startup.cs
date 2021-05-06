@@ -74,6 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<ITokenServiceClient, TokenServiceClient>();
             services.AddTransient<ISessionService, SessionService>();
             services.AddHttpClient<IResultsAndCertificationInternalApiClient, ResultsAndCertificationInternalApiClient>();
+            services.AddHttpClient<IOrdnanceSurveyApiClient, OrdnanceSurveyApiClient>();            
             services.AddHttpClient<IDfeSignInApiClient, DfeSignInApiClient>();
 
             var builder = services.AddMvc(config =>
