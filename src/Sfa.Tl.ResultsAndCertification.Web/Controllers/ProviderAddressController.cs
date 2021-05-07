@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var cacheModel = new AddAddressCheckAndSubmitViewModel { Department = model.Department, AddressLine1 = model.AddressLine1, AddressLine2 = model.AddressLine2, Town = model.Town, Postcode = model.Postcode, IsManual = true };
+            var cacheModel = new AddProviderAddressViewModel { Manual = model, AddAddressPostcode = null, AddAddressSelect = null };
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return RedirectToRoute(RouteConstants.AddAddressCheckAndSubmit);
@@ -90,14 +90,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-postal-address-check-and-submit", Name = RouteConstants.AddAddressCheckAndSubmit)]
         public async Task<IActionResult> AddAddressCheckAndSubmitAsync()
         {
-            var cacheModel = await _cacheService.GetAsync<AddAddressCheckAndSubmitViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAsync<AddProviderAddressViewModel>(CacheKey);
             if (cacheModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read AddAddressCheckAndSubmitViewModel from redis cache in address check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read AddProviderAddressViewModel from redis cache in address check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            return View(cacheModel);
+            var model = new AddAddressCheckAndSubmitViewModel { ProviderAddress = cacheModel };
+            if (!model.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(model);
         }
 
         [HttpGet]

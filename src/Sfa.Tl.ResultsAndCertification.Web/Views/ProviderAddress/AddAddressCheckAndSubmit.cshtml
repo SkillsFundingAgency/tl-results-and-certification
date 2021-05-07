@@ -17,58 +17,15 @@
         <p class="govuk-body govuk-!-margin-top-3">@CheckAndSubmit.Para_Check_Address_Is_Correct</p>
 
         <dl class="govuk-summary-list">
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key" style="border-bottom:none">
-                    @CheckAndSubmit.Summary_Department
-                </dt>
-                <dd class="govuk-summary-list__value" style="border-bottom:none">
-                    <p class="govuk-body"></p>
-                </dd>
-                <dd class="govuk-summary-list__actions" style="border-bottom:none">
-                    <a class="govuk-body govuk-!-font-size-19, govuk-link" href="add-address-select-address">
-                        @CheckAndSubmit.Link_Change_Address
-                    </a>
-                </dd>
-            </div>
+            <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
+            <vc:summary-item model=Model.SummaryAddressLine1></vc:summary-item>
 
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key" style="border-bottom:none">
-                    @CheckAndSubmit.Summary_Building_And_Street
-                </dt>
-                <dd class="govuk-summary-list__value" style="border-bottom:none">
-                    <p class="govuk-body">@Model.AddressLine1</p>
-                    @if (!string.IsNullOrWhiteSpace(@Model.AddressLine2))
-                    {
-                        <p class="govuk-body">@Model.AddressLine2</p>
-                    }
-                </dd>
-                <dd class="govuk-summary-list__actions" style="border-bottom:none">
-                </dd>
-            </div>
-
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key" style="border-bottom:none">  @*TODO: borderstyles*@
-                    @CheckAndSubmit.Summary_Town_Or_City
-                </dt>
-                <dd class="govuk-summary-list__value" style="border-bottom:none">
-                    <p class="govuk-body">@Model.Town</p>
-                </dd>
-                <dd class="govuk-summary-list__actions" style="border-bottom:none">
-
-                </dd>
-            </div>
-
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key" style="border-bottom:none">
-                    @CheckAndSubmit.Summary_Postcode
-                </dt>
-                <dd class="govuk-summary-list__value" style="border-bottom:none">
-                    <p class="govuk-body">@Model.Postcode</p>
-                </dd>
-                <dd class="govuk-summary-list__actions" style="border-bottom:none">
-                    @*TODO: What is this for?*@
-                </dd>
-            </div>
+            @if (!string.IsNullOrWhiteSpace(Model.SummaryAddressLine2.Value))
+            {
+                <vc:summary-item model=Model.SummaryAddressLine2></vc:summary-item>
+            }
+            <vc:summary-item model=Model.SummaryTown></vc:summary-item>
+            <vc:summary-item model=Model.SummaryPostcode></vc:summary-item>
         </dl>
 
         <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-6">
