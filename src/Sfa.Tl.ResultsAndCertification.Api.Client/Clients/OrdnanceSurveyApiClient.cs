@@ -25,18 +25,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public async Task<PostcodeLookupResult> GetAddressesByPostcode(string postcode)
         {
-            try
-            {
-                var searchResponse = await _httpClient.GetAsync(string.Format(ApiConstants.SearchAddressByPostcodeUri, postcode, _configuration.OrdnanceSurveyApiSettings.PlacesApiKey));
-
-                searchResponse.EnsureSuccessStatusCode();
-
-                return await searchResponse.Content.ReadAsAsync<PostcodeLookupResult>();
-            }
-            catch
-            {
-                return null;
-            }
+            var searchResponse = await _httpClient.GetAsync(string.Format(ApiConstants.SearchAddressByPostcodeUri, postcode, _configuration.OrdnanceSurveyApiSettings.PlacesApiKey));
+            searchResponse.EnsureSuccessStatusCode();
+            return await searchResponse.Content.ReadAsAsync<PostcodeLookupResult>();
         }
     }
 }

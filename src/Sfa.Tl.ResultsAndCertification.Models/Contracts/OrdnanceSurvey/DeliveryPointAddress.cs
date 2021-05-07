@@ -4,6 +4,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.OrdnanceSurvey
 {
     public class DeliveryPointAddress
     {
+        [JsonProperty("udprn")]
+        public string Udprn { get; set; }
+
         [JsonProperty("address")]
         public string FormattedAddress { get; set; }
         
