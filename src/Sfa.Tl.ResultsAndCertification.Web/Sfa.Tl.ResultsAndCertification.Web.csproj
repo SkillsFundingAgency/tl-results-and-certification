@@ -145,6 +145,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AddAddressSelect.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\ProviderAddress\CheckAndSubmit.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CheckAndSubmit.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\RegistrationCannotBeDeleted.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -719,6 +724,10 @@
     <EmbeddedResource Update="Content\ProviderAddress\AddAddressSelect.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AddAddressSelect.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ProviderAddress\CheckAndSubmit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CheckAndSubmit.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\RegistrationCannotBeDeleted.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

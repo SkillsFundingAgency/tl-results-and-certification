@@ -79,8 +79,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            await Task.CompletedTask;
-            return View(model);
+            var cacheModel = new AddAddressCheckAndSubmitViewModel { Department = model.Department, AddressLine1 = model.AddressLine1, AddressLine2 = model.AddressLine2, Town = model.Town, Postcode = model.Postcode, IsManual = true };
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return RedirectToRoute(RouteConstants.AddAddressCheckAndSubmit);
+        }
+
+        [HttpGet]
+        [Route("add-postal-address-check-and-submit", Name = RouteConstants.AddAddressCheckAndSubmit)]
+        public async Task<IActionResult> AddAddressCheckAndSubmitAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<AddAddressCheckAndSubmitViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read AddAddressCheckAndSubmitViewModel from redis cache in address check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(cacheModel);
         }
 
         [HttpGet]

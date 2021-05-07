@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _configuration = configuration;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _httpClient.BaseAddress = new Uri(configuration.OrdnanceSurveyApiSettings.PlacesApiBaseUri.TrimEnd('/'));
+            //_httpClient.BaseAddress = new Uri(configuration.OrdnanceSurveyApiSettings.PlacesApiBaseUri.TrimEnd('/'));
         }
 
         public async Task<PostcodeLookupResult> GetAddressesByPostcode(string postcode)
