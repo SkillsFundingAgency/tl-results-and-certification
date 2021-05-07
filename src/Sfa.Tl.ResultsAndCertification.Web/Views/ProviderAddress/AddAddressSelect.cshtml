@@ -12,10 +12,11 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
         <partial name="_ValidationSummary" />
-        <form asp-route="">
+        <form asp-route="SubmitAddAddressSelect" novalidate>
+            <input type="hidden" asp-for="Postcode" value="@Model.Postcode" />
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@AddAddressSelect.Caption_Add_Address</span>
-                <div class="govuk-form-group" sfa-validation-for="SelectedAddressUdprn" sfa-validation-class="govuk-form-group--error">
+                <div class="govuk-form-group">
                     <fieldset class="govuk-fieldset">
                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                             <h1 class="govuk-fieldset__heading">
@@ -26,11 +27,11 @@
                         <p class="govuk-body-l govuk-!-font-weight-bold govuk-!-margin-top-3 govuk-!-margin-bottom-3">@AddAddressSelect.Postcode_Label</p>
                         <p class="govuk-body"><strong>@Model.Postcode</strong><a class="govuk-link govuk-!-margin-left-3" asp-route="AddAddressPostcode" asp-route-showPostcode="false">@AddAddressSelect.Change_Link_Text</a></p>
 
-                        <div class="govuk-form-group govuk-!-margin-top-6">
+                        <div class="govuk-form-group govuk-!-margin-top-6" sfa-validation-for="SelectedAddressUdprn" sfa-validation-class="govuk-form-group--error">
                             <label class="govuk-label govuk-label--m" for="selectedaddressudprn">@AddAddressSelect.Select_An_Address_Label</label>
                             <span sfa-validation-for="SelectedAddressUdprn"></span>
                             <select class="govuk-select" id="selectedaddressudprn" asp-for="SelectedAddressUdprn" asp-items="@Model.AddressSelectList">
-                                <option>@string.Format(@AddAddressSelect.Address_Found_Text, Model.AddressCount)</option>
+                                <option value="">@string.Format(@AddAddressSelect.Address_Found_Text, Model.AddressSelectList?.Count ?? 0)</option>
                             </select>
                         </div>
 

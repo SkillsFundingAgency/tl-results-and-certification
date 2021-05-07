@@ -101,18 +101,40 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-postal-address-select ", Name = RouteConstants.AddAddressSelect)]
+        [Route("add-postal-address-select", Name = RouteConstants.AddAddressSelect)]
         public async Task<IActionResult> AddAddressSelectAsync()
         {
             var cacheModel = await _cacheService.GetAsync<AddProviderAddressViewModel>(CacheKey);
-            if (cacheModel == null)
+            if (cacheModel?.AddAddressPostcode == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read AddProviderAddressViewModel from redis cache in add address select page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             var viewModel = await _providerAddressLoader.GetAddressesByPostcodeAsync(cacheModel.AddAddressPostcode.Postcode);
             viewModel.Postcode = cacheModel.AddAddressPostcode.Postcode;
+            
+            cacheModel.AddAddressSelect = viewModel;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-postal-address-select", Name = RouteConstants.SubmitAddAddressSelect)]
+        public async Task<IActionResult> AddAddressSelectAsync(AddAddressSelectViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var cacheModel = await _cacheService.GetAsync<AddProviderAddressViewModel>(CacheKey);
+
+            if (cacheModel?.AddAddressPostcode == null || cacheModel?.AddAddressSelect == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.AddAddressSelect.SelectedAddressUdprn = model.SelectedAddressUdprn;
+            cacheModel.AddAddressSelect.DepartmentName = model.DepartmentName;
+
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            return RedirectToRoute(RouteConstants.AddAddressCheckAndSubmit);
         }
     }
 }
