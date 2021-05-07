@@ -17,9 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         public string Town { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ErrorResource.AddPostalAddressManual), ErrorMessageResourceName = "Validation_Enter_Postcode")]
-        [RegularExpression("^(([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))(\\s?)?[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$",
-            ErrorMessageResourceType = typeof(ErrorResource.AddPostalAddressManual),
-            ErrorMessageResourceName = "Validation_Enter_Valid_Postcode")]
+        [RegularExpression(Constants.PostcodeValidationRegex, ErrorMessageResourceType = typeof(ErrorResource.AddPostalAddressManual), ErrorMessageResourceName = "Validation_Enter_Valid_Postcode")]
         public string Postcode { get; set; }
 
         public virtual BackLinkModel BackLink => new BackLinkModel
