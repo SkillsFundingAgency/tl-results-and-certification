@@ -5,9 +5,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 {
     public class AddPostalAddressManualViewModel : AddAddressBaseViewModel
     {
+        public bool IsFromSelectAddress { get; set; }
+
         public virtual BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = RouteConstants.AddAddressPostcode
+            RouteName = IsFromSelectAddress ? RouteConstants.AddAddressSelect : RouteConstants.AddAddressPostcode
         };
     }
 }

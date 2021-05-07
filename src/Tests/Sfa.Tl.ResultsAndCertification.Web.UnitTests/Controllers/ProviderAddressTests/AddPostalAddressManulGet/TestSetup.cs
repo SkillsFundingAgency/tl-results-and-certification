@@ -5,11 +5,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
 {
     public abstract class TestSetup : ProviderAddressControllerTestBase
     {
+        public bool IsFromSelectAddress { get; set; }
         public IActionResult Result { get; private set; }
 
         public async override Task When()
         {
-            Result = await Controller.AddPostalAddressManulAsync();
+            Result = await Controller.AddPostalAddressManulAsync(IsFromSelectAddress);
         }
     }
 }
