@@ -170,6 +170,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<IResultLoader, ResultLoader>();
             services.AddTransient<IDocumentLoader, DocumentLoader>();
             services.AddTransient<ITrainingProviderLoader, TrainingProviderLoader>();
+            services.AddTransient<IProviderAddressLoader, ProviderAddressLoader>();
         }
     }
 }

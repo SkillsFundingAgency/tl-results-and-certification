@@ -16,7 +16,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 
         public int AddressCount { get; set; }
 
+        public string Postcode { get; set; }
+
         public IList<SelectListItem> AddressSelectList { get; set; }
+
+        public IList<AddressViewModel> Addresses { get; set; }
 
         public BackLinkModel BackLink => new BackLinkModel
         {

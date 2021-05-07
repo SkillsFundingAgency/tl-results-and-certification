@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using System.Threading.Tasks;
 
@@ -10,6 +14,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     [Authorize(Policy = RolesExtensions.RequireLearnerRecordsEditorAccess)]
     public class ProviderAddressController : Controller
     {
+        private readonly IProviderAddressLoader _providerAddressLoader;
+        private readonly ICacheService _cacheService;
+        private readonly ILogger _logger;
+
+        private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.ProviderAddressCacheKey); } }
+
+        public ProviderAddressController(IProviderAddressLoader providerAddressLoader, ICacheService cacheService, ILogger<ProviderAddressController> logger)
+        {
+            _providerAddressLoader = providerAddressLoader;
+            _cacheService = cacheService;
+            _logger = logger;
+        }
+
         [HttpGet]
         [Route("manage-postal-address", Name = RouteConstants.ManagePostalAddress)]
         public async Task<IActionResult> ManagePostalAddressAsync()
@@ -42,8 +59,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            await Task.CompletedTask;
-            return View(model);
+            var cacheModel = new AddProviderAddressViewModel { AddAddressPostcode = model };
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            return RedirectToRoute(RouteConstants.AddAddressSelect);
         }
 
         [HttpGet]
@@ -69,8 +87,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-postal-address-select ", Name = RouteConstants.AddAddressSelect)]
         public async Task<IActionResult> AddAddressSelectAsync()
         {
-            await Task.CompletedTask;
-            return View(new AddAddressPostcodeViewModel());
+            var cacheModel = await _cacheService.GetAsync<AddProviderAddressViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read AddProviderAddressViewModel from redis cache in add address select page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            var viewModel = await _providerAddressLoader.GetAddressesByPostcodeAsync(cacheModel.AddAddressPostcode.Postcode);
+            viewModel.Postcode = cacheModel.AddAddressPostcode.Postcode;
+            return View(viewModel);
         }
     }
 }
