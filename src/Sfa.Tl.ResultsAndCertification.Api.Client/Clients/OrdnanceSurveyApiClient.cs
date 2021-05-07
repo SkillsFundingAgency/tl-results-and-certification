@@ -20,12 +20,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _configuration = configuration;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _httpClient.BaseAddress = new Uri(configuration.OrdnanceSurveyApiSettings.PlacesApiBaseUri.TrimEnd('/'));
+            _httpClient.BaseAddress = configuration.OrdnanceSurveyApiSettings?.PlacesApiBaseUri != null ? new Uri(configuration.OrdnanceSurveyApiSettings.PlacesApiBaseUri.TrimEnd('/')) : null;
         }
 
         public async Task<PostcodeLookupResult> GetAddressesByPostcode(string postcode)
         {
-            var searchResponse = await _httpClient.GetAsync(string.Format(ApiConstants.SearchAddressByPostcodeUri, postcode, _configuration.OrdnanceSurveyApiSettings.PlacesApiKey));
+            var searchResponse = await _httpClient.GetAsync(string.Format(ApiConstants.SearchAddressByPostcodeUri, postcode, _configuration.OrdnanceSurveyApiSettings?.PlacesApiKey));
             searchResponse.EnsureSuccessStatusCode();
             return await searchResponse.Content.ReadAsAsync<PostcodeLookupResult>();
         }
