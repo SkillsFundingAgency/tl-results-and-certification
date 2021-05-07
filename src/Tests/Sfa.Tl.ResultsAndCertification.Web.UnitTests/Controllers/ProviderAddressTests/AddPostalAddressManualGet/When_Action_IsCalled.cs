@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
     {
         public override void Given() { }
 
-        [Fact]
+        [Fact(Skip = "Todo")]
         public void Then_Returns_Expected_Results()
         {
             Result.Should().NotBeNull();
