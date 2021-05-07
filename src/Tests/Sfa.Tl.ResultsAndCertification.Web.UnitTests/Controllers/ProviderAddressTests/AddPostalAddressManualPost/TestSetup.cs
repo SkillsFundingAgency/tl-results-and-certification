@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
 
         public async override Task When()
         {
-            Result = await Controller.AddPostalAddressManulAsync(ViewModel);
+            Result = await Controller.AddPostalAddressManualAsync(ViewModel);
         }
     }
 }

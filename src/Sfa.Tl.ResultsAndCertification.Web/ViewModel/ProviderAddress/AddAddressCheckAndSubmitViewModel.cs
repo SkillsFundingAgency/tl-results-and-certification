@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 
         public BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = IsManual ? RouteConstants.AddPostalAddressManul : RouteConstants.AddAddressSelect
+            RouteName = IsManual ? RouteConstants.AddPostalAddressManual : RouteConstants.AddAddressSelect
         };
     }
 }

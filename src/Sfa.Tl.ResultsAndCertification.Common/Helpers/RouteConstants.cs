@@ -243,8 +243,8 @@
         public const string ManagePostalAddress = "ManagePostalAddress";
         public const string AddAddressPostcode = "AddAddressPostcode";
         public const string SubmitAddAddressPostcode = "SubmitAddAddressPostcode";
-        public const string AddPostalAddressManul = "AddPostalAddressManul";
-        public const string SubmitAddPostalAddressManul = "SubmitAddPostalAddressManul";
+        public const string AddPostalAddressManual = "AddPostalAddressManual";
+        public const string SubmitAddPostalAddressManual = "SubmitAddPostalAddressManual";
         public const string AddAddressSelect = "AddAddressSelect";
         public const string AddAddressCheckAndSubmit = "AddAddressCheckAndSubmit";
 

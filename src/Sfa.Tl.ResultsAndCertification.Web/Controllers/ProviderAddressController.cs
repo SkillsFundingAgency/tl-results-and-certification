@@ -66,16 +66,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-postal-address-manual/{isFromSelectAddress:bool?}", Name = RouteConstants.AddPostalAddressManul)]
-        public async Task<IActionResult> AddPostalAddressManulAsync(bool isFromSelectAddress)
+        [Route("add-postal-address-manual/{isFromSelectAddress:bool?}", Name = RouteConstants.AddPostalAddressManual)]
+        public async Task<IActionResult> AddPostalAddressManualAsync(bool isFromSelectAddress)
         {
             await Task.CompletedTask;
             return View(new AddPostalAddressManualViewModel { IsFromSelectAddress = isFromSelectAddress });
         }
 
         [HttpPost]
-        [Route("add-postal-address-manual", Name = RouteConstants.SubmitAddPostalAddressManul)]
-        public async Task<IActionResult> AddPostalAddressManulAsync(AddPostalAddressManualViewModel model)
+        [Route("add-postal-address-manual", Name = RouteConstants.SubmitAddPostalAddressManual)]
+        public async Task<IActionResult> AddPostalAddressManualAsync(AddPostalAddressManualViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
