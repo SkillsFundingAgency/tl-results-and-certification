@@ -11,30 +11,33 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-        <span class="govuk-caption-xl">@CheckAndSubmit.Caption_Add_Address</span>
 
-        <h1 class="govuk-heading-l">@CheckAndSubmit.Heading_Check_And_Submit</h1>
-        <p class="govuk-body govuk-!-margin-top-3">@CheckAndSubmit.Para_Check_Address_Is_Correct</p>
+        <form asp-route="SubmitAddAddressCheckAndSubmit">
+            <span class="govuk-caption-xl">@CheckAndSubmit.Caption_Add_Address</span>
 
-        <dl class="govuk-summary-list">
-            <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
-            <vc:summary-item model=Model.SummaryAddressLine1></vc:summary-item>
+            <h1 class="govuk-heading-l">@CheckAndSubmit.Heading_Check_And_Submit</h1>
+            <p class="govuk-body govuk-!-margin-top-3">@CheckAndSubmit.Para_Check_Address_Is_Correct</p>
 
-            @if (!string.IsNullOrWhiteSpace(Model.SummaryAddressLine2.Value))
-            {
-                <vc:summary-item model=Model.SummaryAddressLine2></vc:summary-item>
-            }
-            <vc:summary-item model=Model.SummaryTown></vc:summary-item>
-            <vc:summary-item model=Model.SummaryPostcode></vc:summary-item>
-        </dl>
+            <dl class="govuk-summary-list">
+                <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
+                <vc:summary-item model=Model.SummaryAddressLine1></vc:summary-item>
 
-        <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-6">
+                @if (!string.IsNullOrWhiteSpace(Model.SummaryAddressLine2.Value))
+                {
+                    <vc:summary-item model=Model.SummaryAddressLine2></vc:summary-item>
+                }
+                <vc:summary-item model=Model.SummaryTown></vc:summary-item>
+                <vc:summary-item model=Model.SummaryPostcode></vc:summary-item>
+            </dl>
 
-        <p class="govuk-inset-text">@CheckAndSubmit.Inset_Declaration_Confirmation</p>
+            <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-6">
 
-        <div class="govuk-button-group govuk-!-margin-top-7">
-            <a class="govuk-button govuk-!-margin-right-5" role="button" href="add-address-confirmation">@CheckAndSubmit.Button_Submit</a>
-            <a class="govuk-link" href="cancel-address">@CheckAndSubmit.Link_Cancel</a>
-        </div>
+            <p class="govuk-inset-text">@CheckAndSubmit.Inset_Declaration_Confirmation</p>
+
+            <div class="govuk-button-group govuk-!-margin-top-7">
+                <button id="submitButton" class="govuk-button govuk-!-margin-right-5" role="button">@CheckAndSubmit.Button_Submit</button>
+                <a class="govuk-link" asp-route="DevInprogress">@CheckAndSubmit.Link_Cancel</a>
+            </div>
+        </form>
     </div>
 </div>

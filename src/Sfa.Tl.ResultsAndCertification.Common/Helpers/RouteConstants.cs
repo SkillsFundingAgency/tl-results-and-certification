@@ -247,6 +247,7 @@
         public const string SubmitAddPostalAddressManual = "SubmitAddPostalAddressManual";
         public const string AddAddressSelect = "AddAddressSelect";
         public const string AddAddressCheckAndSubmit = "AddAddressCheckAndSubmit";
+        public const string SubmitAddAddressCheckAndSubmit = "SubmitAddAddressCheckAndSubmit";
 
         #endregion
     }

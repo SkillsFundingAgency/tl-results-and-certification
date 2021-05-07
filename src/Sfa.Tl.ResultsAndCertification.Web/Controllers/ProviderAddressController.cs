@@ -104,6 +104,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [Route("add-postal-address-check-and-submit", Name = RouteConstants.SubmitAddAddressCheckAndSubmit)]
+        public async Task<IActionResult> SubmitAddAddressCheckAndSubmitAsync()
+        {
+            await Task.CompletedTask;
+            return RedirectToRoute("DevInprogress");
+        }
+
         [HttpGet]
         [Route("add-postal-address-select ", Name = RouteConstants.AddAddressSelect)]
         public async Task<IActionResult> AddAddressSelectAsync()
@@ -117,6 +125,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = await _providerAddressLoader.GetAddressesByPostcodeAsync(cacheModel.AddAddressPostcode.Postcode);
             viewModel.Postcode = cacheModel.AddAddressPostcode.Postcode;
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("Dev-inprogress", Name = "DevInprogress")]
+        public async Task<IActionResult> DevInprogress()
+        {
+            return View();
         }
     }
 }
