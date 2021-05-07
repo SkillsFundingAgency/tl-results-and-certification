@@ -13,6 +13,7 @@
     <div class="govuk-grid-column-three-quarters">
         <partial name="_ValidationSummary" />
         <form asp-route="SubmitAddPostalAddressManual">
+            <input type="hidden" asp-for="IsFromSelectAddress" />
             <div class="govuk-form-group govuk-!-margin-bottom-7">
                 <span class="govuk-caption-xl">@AddPostalAddressManual.Caption_Add_Address</span>
                 <fieldset class="govuk-fieldset">

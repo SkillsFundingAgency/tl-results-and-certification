@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using System.Collections.Generic;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress.CheckAndSubmit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
@@ -11,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         public bool IsValid { get { return true; } }  /*TODO*/
         private bool IsManual { get { return true; } } /*TODO*/
         private string RouteNavigatedFrom { get { return IsManual ? RouteConstants.AddPostalAddressManual : RouteConstants.AddAddressSelect; } }
+        private Dictionary<string, string> IsFromSelectAddress => new Dictionary<string, string> { { Constants.IsFromSelectAddress, "true" } };
 
         public SummaryItemModel SummaryDepartment => new SummaryItemModel
         {
@@ -20,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
             NeedBorderBottomLine = false,
 
             ActionText = CheckAndSubmitContent.Link_Change_Address,
-            RouteName = RouteNavigatedFrom,
+            RouteName = RouteNavigatedFrom
         };
 
         public SummaryItemModel SummaryAddressLine1 => new SummaryItemModel
@@ -55,6 +57,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
             NeedBorderBottomLine = false
         };
 
-        public BackLinkModel BackLink => new BackLinkModel { RouteName = RouteNavigatedFrom };
+        public BackLinkModel BackLink => new BackLinkModel
+        {
+            RouteName = RouteNavigatedFrom,
+            RouteAttributes = ProviderAddress.Manual.IsFromSelectAddress ? IsFromSelectAddress : null
+        };
     }
 }

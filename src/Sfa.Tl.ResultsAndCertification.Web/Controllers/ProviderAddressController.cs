@@ -66,11 +66,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("add-address-manually/{isFromSelectAddress:bool?}", Name = RouteConstants.AddAddressManually)]
+        public async Task<IActionResult> AddAddressManuallyAsync(bool isFromSelectAddress)
+        {
+            // Fresh start -> Clear all manual data.
+            var cacheModel = await _cacheService.GetAsync<AddProviderAddressViewModel>(CacheKey);
+            if (cacheModel != null)
+            {
+                cacheModel.Manual = null;
+                await _cacheService.SetAsync(CacheKey, cacheModel);
+            }
+
+            if (isFromSelectAddress)
+                return RedirectToRoute(RouteConstants.AddPostalAddressManual, new { isFromSelectAddress });
+            else
+                return RedirectToRoute(RouteConstants.AddPostalAddressManual);
+        }
+
+        [HttpGet]
         [Route("add-postal-address-manual/{isFromSelectAddress:bool?}", Name = RouteConstants.AddPostalAddressManual)]
         public async Task<IActionResult> AddPostalAddressManualAsync(bool isFromSelectAddress)
         {
-            await Task.CompletedTask;
-            return View(new AddPostalAddressManualViewModel { IsFromSelectAddress = isFromSelectAddress });
+            var cacheModel = await _cacheService.GetAsync<AddProviderAddressViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = cacheModel.Manual ?? new AddPostalAddressManualViewModel();
+            viewModel.IsFromSelectAddress = isFromSelectAddress;
+            cacheModel.Manual = viewModel;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -80,7 +106,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var cacheModel = new AddProviderAddressViewModel { Manual = model, AddAddressPostcode = null, AddAddressSelect = null };
+            var cacheModel = await _cacheService.GetAsync<AddProviderAddressViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            cacheModel.AddAddressPostcode = null;
+            cacheModel.AddAddressSelect = null;
+            cacheModel.Manual = model;
+            
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return RedirectToRoute(RouteConstants.AddAddressCheckAndSubmit);
