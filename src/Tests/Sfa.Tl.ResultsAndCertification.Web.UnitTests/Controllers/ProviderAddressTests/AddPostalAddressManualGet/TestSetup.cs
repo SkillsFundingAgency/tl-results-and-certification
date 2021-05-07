@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddressTests.AddPostalAddressManulGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddressTests.AddPostalAddressManualGet
 {
     public abstract class TestSetup : ProviderAddressControllerTestBase
     {
@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
 
         public async override Task When()
         {
-            Result = await Controller.AddPostalAddressManulAsync(IsFromSelectAddress);
+            Result = await Controller.AddPostalAddressManualAsync(IsFromSelectAddress);
         }
     }
 }

@@ -12,7 +12,7 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
         <partial name="_ValidationSummary" />
-        <form asp-route="SubmitAddPostalAddressManul">
+        <form asp-route="SubmitAddPostalAddressManual">
             <div class="govuk-form-group govuk-!-margin-bottom-7">
                 <span class="govuk-caption-xl">@AddPostalAddressManual.Caption_Add_Address</span>
                 <fieldset class="govuk-fieldset">
@@ -21,18 +21,18 @@
                     </legend>
                     <p class="govuk-body-m">@AddPostalAddressManual.Para_Must_Be_A_Business_Address</p>
                     <div class="govuk-form-group">
-                        <label class="govuk-label" for="Department">@AddPostalAddressManual.Label_Department</label>
+                        <label class="govuk-label" for="department">@AddPostalAddressManual.Label_Department</label>
                         <input id="department" class="govuk-input govuk-!-width-two-thirds" asp-for="Department" type="text" maxlength="100">
                     </div>
 
                     <div class="govuk-form-group" sfa-validation-for="AddressLine1" sfa-validation-class="govuk-form-group--error">
-                        <label class="govuk-label" for="addressLine1">@AddPostalAddressManual.Label_Building_And_Street<span class="govuk-visually-hidden">@AddPostalAddressManual.HiddenText_Line1_Of_2</span></label>
+                        <label class="govuk-label" for="addressline1">@AddPostalAddressManual.Label_Building_And_Street<span class="govuk-visually-hidden">@AddPostalAddressManual.HiddenText_Line1_Of_2</span></label>
                         <span sfa-validation-for="AddressLine1"></span>
                         <input id="addressline1" class="govuk-input" asp-for="AddressLine1" type="text" autocomplete="on" maxlength="255">
                     </div>
 
                     <div class="govuk-form-group">
-                        <label class="govuk-label" for="addressLine2"><span class="govuk-visually-hidden">@AddPostalAddressManual.HiddenText_Line2_Of_2</span></label>
+                        <label class="govuk-label" for="addressline2"><span class="govuk-visually-hidden">@AddPostalAddressManual.HiddenText_Line2_Of_2</span></label>
                         <input id="addressline2" class="govuk-input" asp-for="AddressLine2" type="text" autocomplete="on" maxlength="255">
                     </div>
 
@@ -49,7 +49,7 @@
                     </div>
                 </fieldset>
             </div>
-            <button class="govuk-button" role="button">@AddPostalAddressManual.Button_Continue</button>
+            <button id="continueButton" class="govuk-button" role="button">@AddPostalAddressManual.Button_Continue</button>
         </form>
     </div>
 </div>
