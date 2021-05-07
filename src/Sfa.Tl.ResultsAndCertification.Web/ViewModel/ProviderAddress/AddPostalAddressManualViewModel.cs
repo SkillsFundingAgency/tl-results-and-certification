@@ -22,9 +22,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
             ErrorMessageResourceName = "Validation_Enter_Valid_Postcode")]
         public string Postcode { get; set; }
 
+        public bool IsFromSelectAddress { get; set; }
+
         public virtual BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = RouteConstants.AddAddressPostcode
+            RouteName = IsFromSelectAddress ? RouteConstants.AddAddressSelect : RouteConstants.AddAddressPostcode
         };
     }
 }

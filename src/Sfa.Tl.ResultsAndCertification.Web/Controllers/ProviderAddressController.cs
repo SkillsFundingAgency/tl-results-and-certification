@@ -45,11 +45,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-postal-address-postcode", Name = RouteConstants.AddAddressPostcode)]
-        public async Task<IActionResult> AddAddressPostcodeAsync()
+        [Route("add-postal-address-postcode/{showPostcode:bool?}", Name = RouteConstants.AddAddressPostcode)]
+        public async Task<IActionResult> AddAddressPostcodeAsync(bool showPostcode = true)
         {
-            await Task.CompletedTask;
-            return View(new AddAddressPostcodeViewModel());
+            var cacheModel = await _cacheService.GetAsync<AddProviderAddressViewModel>(CacheKey);
+            var viewModel = new AddAddressPostcodeViewModel { Postcode = showPostcode && cacheModel?.AddAddressPostcode != null ? cacheModel.AddAddressPostcode.Postcode : null };
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -65,11 +66,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-postal-address-manual", Name = RouteConstants.AddPostalAddressManul)]
-        public async Task<IActionResult> AddPostalAddressManulAsync()
+        [Route("add-postal-address-manual/{isFromSelectAddress:bool?}", Name = RouteConstants.AddPostalAddressManul)]
+        public async Task<IActionResult> AddPostalAddressManulAsync(bool isFromSelectAddress)
         {
             await Task.CompletedTask;
-            return View(new AddPostalAddressManualViewModel());
+            return View(new AddPostalAddressManualViewModel { IsFromSelectAddress = isFromSelectAddress });
         }
 
         [HttpPost]
