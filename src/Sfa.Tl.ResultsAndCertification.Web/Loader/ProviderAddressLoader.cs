@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             try
             {
-                var response = await _ordnanceSurveyApiClient.GetAddressesByPostcode(postcode);
+                var response = await _ordnanceSurveyApiClient.GetAddressesByPostcodeAsync(postcode);
                 return _mapper.Map<AddAddressSelectViewModel>(response);
             }
             catch
@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             try
             {
-                var response = await _ordnanceSurveyApiClient.GetAddressByUprn(uprn);
+                var response = await _ordnanceSurveyApiClient.GetAddressByUprnAsync(uprn);
                 return _mapper.Map<AddressViewModel>(response?.AddressResult?.FirstOrDefault());
             }
             catch

@@ -23,14 +23,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _httpClient.BaseAddress = configuration.OrdnanceSurveyApiSettings?.BaseUri != null ? new Uri(configuration.OrdnanceSurveyApiSettings.BaseUri.TrimEnd('/')) : null;
         }
 
-        public async Task<PostcodeLookupResult> GetAddressesByPostcode(string postcode)
+        public async Task<PostcodeLookupResult> GetAddressesByPostcodeAsync(string postcode)
         {
             var searchResponse = await _httpClient.GetAsync(string.Format(ApiConstants.SearchAddressByPostcodeUri, postcode, _configuration.OrdnanceSurveyApiSettings?.PlacesKey));
             searchResponse.EnsureSuccessStatusCode();
             return await searchResponse.Content.ReadAsAsync<PostcodeLookupResult>();
         }
 
-        public async Task<PostcodeLookupResult> GetAddressByUprn(long uprn)
+        public async Task<PostcodeLookupResult> GetAddressByUprnAsync(long uprn)
         {
             var searchResponse = await _httpClient.GetAsync(string.Format(ApiConstants.GetAddressByUprnUri, uprn, _configuration.OrdnanceSurveyApiSettings?.PlacesKey));
             searchResponse.EnsureSuccessStatusCode();

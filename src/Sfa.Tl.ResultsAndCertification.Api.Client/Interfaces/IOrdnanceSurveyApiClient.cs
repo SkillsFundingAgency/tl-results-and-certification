@@ -5,7 +5,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 {
     public interface IOrdnanceSurveyApiClient
     {
-        Task<PostcodeLookupResult> GetAddressesByPostcode(string postcode);
-        Task<PostcodeLookupResult> GetAddressByUprn(long uprn);
+        Task<PostcodeLookupResult> GetAddressesByPostcodeAsync(string postcode);
+        Task<PostcodeLookupResult> GetAddressByUprnAsync(long uprn);
     }
 }
