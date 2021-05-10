@@ -2,7 +2,6 @@
 {
     public class AddAddressViewModel
     {
-        //public bool IsManual { get; set; }
         public AddAddressPostcodeViewModel AddAddressPostcode { get; set; }
         public AddAddressSelectViewModel AddAddressSelect { get; set; }
         public AddAddressManualViewModel AddAddressManual { get; set; }
