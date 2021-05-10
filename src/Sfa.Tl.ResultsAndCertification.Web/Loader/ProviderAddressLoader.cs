@@ -2,6 +2,8 @@
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -27,6 +29,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             catch
             {
                 return new AddAddressSelectViewModel();
+            }
+        }
+
+        public async Task<AddressViewModel> GetAddressByUprn(long uprn)
+        {
+            try
+            {
+                var response = await _ordnanceSurveyApiClient.GetAddressByUprn(uprn);
+                return _mapper.Map<AddressViewModel>(response?.AddressResult?.FirstOrDefault());
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
     }

@@ -239,6 +239,21 @@
       ],
       "type": "object"
     },
+	"OrdnanceSurveyApiSettings": {
+      "properties": {
+        "BaseUri": {          
+          "type": "string",
+          "environmentVariable": "OrdnanceSurveyApiBaseUri"
+        },
+        "PlacesKey": {          
+          "type": "string",
+          "environmentVariable": "OrdnanceSurveyPlacesApiPlacesKey"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
 	"LearningRecordServiceSettings": {
       "properties": {
         "VendorId": {

@@ -27,10 +27,10 @@
                         <p class="govuk-body-l govuk-!-font-weight-bold govuk-!-margin-top-3 govuk-!-margin-bottom-3">@AddAddressSelect.Postcode_Label</p>
                         <p class="govuk-body"><strong>@Model.Postcode</strong><a class="govuk-link govuk-!-margin-left-3" asp-route="AddAddressPostcode" asp-route-showPostcode="false">@AddAddressSelect.Change_Link_Text</a></p>
 
-                        <div class="govuk-form-group govuk-!-margin-top-6" sfa-validation-for="SelectedAddressUdprn" sfa-validation-class="govuk-form-group--error">
+                        <div class="govuk-form-group govuk-!-margin-top-6" sfa-validation-for="SelectedAddressUprn" sfa-validation-class="govuk-form-group--error">
                             <label class="govuk-label govuk-label--m" for="selectedaddressudprn">@AddAddressSelect.Select_An_Address_Label</label>
-                            <span sfa-validation-for="SelectedAddressUdprn"></span>
-                            <select class="govuk-select" id="selectedaddressudprn" asp-for="SelectedAddressUdprn" asp-items="@Model.AddressSelectList">
+                            <span sfa-validation-for="SelectedAddressUprn"></span>
+                            <select class="govuk-select" id="selectedaddressudprn" asp-for="SelectedAddressUprn" asp-items="@Model.AddressSelectList">
                                 <option value="">@string.Format(@AddAddressSelect.Address_Found_Text, Model.AddressSelectList?.Count ?? 0)</option>
                             </select>
                         </div>

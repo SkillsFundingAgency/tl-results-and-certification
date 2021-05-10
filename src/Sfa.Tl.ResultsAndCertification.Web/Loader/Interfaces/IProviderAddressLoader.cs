@@ -6,5 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     public interface IProviderAddressLoader
     {
         Task<AddAddressSelectViewModel> GetAddressesByPostcodeAsync(string postcode);
+        Task<AddressViewModel> GetAddressByUprn(long uprn);
     }
 }
