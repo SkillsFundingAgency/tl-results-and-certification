@@ -10,9 +10,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
     {
         public AddProviderAddressViewModel ProviderAddress { get; set; }
         public bool IsValid { get { return true; } }  /*TODO*/
-        private bool IsManual { get { return true; } } /*TODO*/
-        private string RouteNavigatedFrom { get { return IsManual ? RouteConstants.AddPostalAddressManual : RouteConstants.AddAddressSelect; } }
-        private Dictionary<string, string> IsFromSelectAddress => new Dictionary<string, string> { { Constants.IsFromSelectAddress, "true" } };
+        public bool IsManual { get { return true; } }
+
+        private (string, Dictionary<string, string>) BackRoute
+        {
+            get
+            {
+                return ProviderAddress.IsManual ?
+                    (RouteConstants.AddPostalAddressManual, new Dictionary<string, string> { { Constants.IsFromSelectAddress, ProviderAddress.Manual.IsFromSelectAddress.ToString() } })
+                    : (RouteConstants.AddAddressSelect, null);
+            }
+        }
 
         public SummaryItemModel SummaryDepartment => new SummaryItemModel
         {
@@ -22,7 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
             NeedBorderBottomLine = false,
 
             ActionText = CheckAndSubmitContent.Link_Change_Address,
-            RouteName = RouteNavigatedFrom
+            RouteName = BackRoute.Item1,
+            RouteAttributes = BackRoute.Item2
         };
 
         public SummaryItemModel SummaryAddressLine1 => new SummaryItemModel
@@ -59,8 +68,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 
         public BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = RouteNavigatedFrom,
-            RouteAttributes = ProviderAddress.Manual.IsFromSelectAddress ? IsFromSelectAddress : null
+            RouteName = BackRoute.Item1,
+            RouteAttributes = BackRoute.Item2
         };
     }
 }

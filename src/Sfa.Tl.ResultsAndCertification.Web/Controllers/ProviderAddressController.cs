@@ -35,6 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (isAlreadyAdded)
                 return View(); //TODO: redirect to ShowAddressPage.
 
+            await _cacheService.RemoveAsync<AddProviderAddressViewModel>(CacheKey);
             return View(new ManagePostalAddressViewModel());
 
             static async Task<bool> FindPostalAddress()
@@ -116,7 +117,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             cacheModel.Manual = model;
-            
+            cacheModel.IsManual = true;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return RedirectToRoute(RouteConstants.AddAddressCheckAndSubmit);
@@ -180,6 +181,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             cacheModel.AddAddressSelect.SelectedAddressUdprn = model.SelectedAddressUdprn;
             cacheModel.AddAddressSelect.DepartmentName = model.DepartmentName;
+            cacheModel.IsManual = false;
 
             await _cacheService.SetAsync(CacheKey, cacheModel);
             return RedirectToRoute(RouteConstants.AddAddressCheckAndSubmit);
