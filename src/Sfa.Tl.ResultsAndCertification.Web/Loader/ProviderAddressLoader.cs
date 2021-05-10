@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using System;
@@ -12,11 +14,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
     {
         private readonly IOrdnanceSurveyApiClient _ordnanceSurveyApiClient;
         private readonly IMapper _mapper;
+        private readonly ILogger<ProviderAddressLoader> _logger;
 
-        public ProviderAddressLoader(IOrdnanceSurveyApiClient ordnanceSurveyApiClient, IMapper mapper)
+        public ProviderAddressLoader(IOrdnanceSurveyApiClient ordnanceSurveyApiClient, IMapper mapper, ILogger<ProviderAddressLoader> logger)
         {
             _ordnanceSurveyApiClient = ordnanceSurveyApiClient;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<AddAddressSelectViewModel> GetAddressesByPostcodeAsync(string postcode)
@@ -26,21 +30,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 var response = await _ordnanceSurveyApiClient.GetAddressesByPostcodeAsync(postcode);
                 return _mapper.Map<AddAddressSelectViewModel>(response);
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogWarning(LogEvent.UnableToGetAddressFromOrdnanceSurvey, ex, $"Unable to get addresses by postcode from Ordnance Survey. Postcode={postcode}, ErrorMessage={ex.Message}");
                 return new AddAddressSelectViewModel();
             }
         }
 
-        public async Task<AddressViewModel> GetAddressByUprn(long uprn)
+        public async Task<AddressViewModel> GetAddressByUprnAsync(long uprn)
         {
             try
             {
                 var response = await _ordnanceSurveyApiClient.GetAddressByUprnAsync(uprn);
                 return _mapper.Map<AddressViewModel>(response?.AddressResult?.FirstOrDefault());
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogWarning(LogEvent.UnableToGetAddressFromOrdnanceSurvey, ex, $"Unable to get address by uprn from Ordnance Survey. Uprn={uprn}, ErrorMessage={ex.Message}");
                 return null;
             }
         }

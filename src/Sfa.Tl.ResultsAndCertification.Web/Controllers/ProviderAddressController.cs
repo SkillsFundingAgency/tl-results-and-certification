@@ -189,7 +189,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            var selectedAddress = await _providerAddressLoader.GetAddressByUprn(model.SelectedAddressUprn.Value);
+            var selectedAddress = await _providerAddressLoader.GetAddressByUprnAsync(model.SelectedAddressUprn.Value);
 
             if (selectedAddress == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
