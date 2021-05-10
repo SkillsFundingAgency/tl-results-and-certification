@@ -8,17 +8,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 {
     public class AddAddressCheckAndSubmitViewModel
     {
-        public AddAddressViewModel ProviderAddress { get; set; }
-        public bool IsValid { get { return true; } }  /*TODO*/
-        public bool IsManual { get { return ProviderAddress.AddAddressManual != null; } }
-
-        private (string, Dictionary<string, string>) BackRoute
+        private bool IsManual { get { return ProviderAddress.AddAddressManual != null; } }
+        private (string, Dictionary<string, string>) PreviousRoute
         {
             get
             {
                 return IsManual ?
                     (RouteConstants.AddPostalAddressManual, new Dictionary<string, string> { { Constants.IsFromSelectAddress, ProviderAddress.AddAddressManual.IsFromSelectAddress.ToString() } })
                     : (RouteConstants.AddAddressSelect, null);
+            }
+        }
+
+        public AddAddressViewModel ProviderAddress { get; set; }
+        public bool IsValid
+        {
+            get
+            {
+                return ProviderAddress != null &&
+                    (IsManual ? ProviderAddress.AddAddressSelect == null : ProviderAddress.AddAddressPostcode != null && ProviderAddress.AddAddressSelect != null);
             }
         }
 
@@ -30,8 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
             NeedBorderBottomLine = false,
 
             ActionText = CheckAndSubmitContent.Link_Change_Address,
-            RouteName = BackRoute.Item1,
-            RouteAttributes = BackRoute.Item2
+            RouteName = PreviousRoute.Item1,
+            RouteAttributes = PreviousRoute.Item2
         };
 
         public SummaryItemModel SummaryAddressLine1 => new SummaryItemModel
@@ -68,8 +75,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 
         public BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = BackRoute.Item1,
-            RouteAttributes = BackRoute.Item2
+            RouteName = PreviousRoute.Item1,
+            RouteAttributes = PreviousRoute.Item2
         };
     }
 }
