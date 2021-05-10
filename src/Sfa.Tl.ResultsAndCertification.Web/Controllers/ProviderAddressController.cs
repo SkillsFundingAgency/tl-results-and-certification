@@ -76,6 +76,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 cacheModel.Manual = null;
                 await _cacheService.SetAsync(CacheKey, cacheModel);
             }
+            else
+            {
+                cacheModel = new AddProviderAddressViewModel();
+                await _cacheService.SetAsync(CacheKey, cacheModel);
+            }
 
             if (isFromSelectAddress)
                 return RedirectToRoute(RouteConstants.AddPostalAddressManual, new { isFromSelectAddress });
@@ -110,8 +115,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            cacheModel.AddAddressPostcode = null;
-            cacheModel.AddAddressSelect = null;
             cacheModel.Manual = model;
             
             await _cacheService.SetAsync(CacheKey, cacheModel);
@@ -186,6 +189,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("Dev-inprogress", Name = "DevInprogress")]
         public async Task<IActionResult> DevInprogress()
         {
+            await Task.CompletedTask;
             return View();
         }
     }

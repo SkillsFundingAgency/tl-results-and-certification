@@ -42,7 +42,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             model.Postcode.Should().BeNull();
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AddAddressPostcode);
-            model.BackLink.RouteAttributes.Count.Should().Be(0);
+            model.BackLink.RouteAttributes.Count.Should().Be(1);
+            model.BackLink.RouteAttributes.TryGetValue(Constants.ShowPostcode, out string routeValue);
+            routeValue.Should().Be("false");
         }
     }
 }
