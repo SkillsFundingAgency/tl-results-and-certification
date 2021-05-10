@@ -19,7 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
         public void Then_Returns_Expected_Results()
         {
             Result.Should().NotBeNull();
-            Result.Should().NotBeNull();
             (Result as ViewResult).Model.Should().NotBeNull();
 
             Controller.ViewData.ModelState.ContainsKey(nameof(AddAddressPostcodeViewModel.Postcode)).Should().BeTrue();

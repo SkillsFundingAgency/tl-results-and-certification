@@ -189,14 +189,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
             }
 
-            var selectedAddress = await _providerAddressLoader.GetAddressByUprnAsync(model.SelectedAddressUprn.Value);
-
-            if (selectedAddress == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
             var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
 
             if (cacheModel?.AddAddressPostcode == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var selectedAddress = await _providerAddressLoader.GetAddressByUprnAsync(model.SelectedAddressUprn.Value);
+
+            if (selectedAddress == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             model.SelectedAddress = selectedAddress;
