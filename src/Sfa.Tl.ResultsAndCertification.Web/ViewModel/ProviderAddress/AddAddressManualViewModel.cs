@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 {
-    public class AddPostalAddressManualViewModel : AddAddressBaseViewModel
+    public class AddAddressManualViewModel : AddAddressBaseViewModel
     {
         public bool IsFromSelectAddress { get; set; }
 

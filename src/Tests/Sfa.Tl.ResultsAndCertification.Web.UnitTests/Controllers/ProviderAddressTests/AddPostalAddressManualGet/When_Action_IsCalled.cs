@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             Result.Should().NotBeNull();
             (Result as ViewResult).Model.Should().NotBeNull();
 
-            var model = (Result as ViewResult).Model as AddPostalAddressManualViewModel;
+            var model = (Result as ViewResult).Model as AddAddressManualViewModel;
 
             model.Should().NotBeNull();
             model.Department.Should().BeNull();

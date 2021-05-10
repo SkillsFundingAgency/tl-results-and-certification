@@ -8,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
     {
         public IActionResult Result { get; private set; }
 
-        public AddPostalAddressManualViewModel ViewModel;
+        public AddAddressManualViewModel ViewModel;
 
         public async override Task When()
         {

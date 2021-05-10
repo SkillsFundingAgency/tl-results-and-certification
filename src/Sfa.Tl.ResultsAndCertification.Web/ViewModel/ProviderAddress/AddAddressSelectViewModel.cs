@@ -18,8 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 
         public IList<SelectListItem> AddressSelectList { get; set; }
 
-        //public IList<AddressViewModel> Addresses { get; set; }
-
         public AddressViewModel SelectedAddress { get; set; }
 
         public BackLinkModel BackLink => new BackLinkModel

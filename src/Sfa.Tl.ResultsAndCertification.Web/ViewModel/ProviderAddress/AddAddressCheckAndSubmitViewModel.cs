@@ -8,16 +8,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 {
     public class AddAddressCheckAndSubmitViewModel
     {
-        public AddProviderAddressViewModel ProviderAddress { get; set; }
+        public AddAddressViewModel ProviderAddress { get; set; }
         public bool IsValid { get { return true; } }  /*TODO*/
-        public bool IsManual { get { return true; } }
+        public bool IsManual { get { return ProviderAddress.AddAddressManual != null; } }
 
         private (string, Dictionary<string, string>) BackRoute
         {
             get
             {
-                return ProviderAddress.IsManual ?
-                    (RouteConstants.AddPostalAddressManual, new Dictionary<string, string> { { Constants.IsFromSelectAddress, ProviderAddress.Manual.IsFromSelectAddress.ToString() } })
+                return IsManual ?
+                    (RouteConstants.AddPostalAddressManual, new Dictionary<string, string> { { Constants.IsFromSelectAddress, ProviderAddress.AddAddressManual.IsFromSelectAddress.ToString() } })
                     : (RouteConstants.AddAddressSelect, null);
             }
         }
@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         {
             Id = "department",
             Title = CheckAndSubmitContent.Summary_Department,
-            Value = IsManual ? ProviderAddress.Manual.Department : "TODO-Dept",
+            Value = IsManual ? ProviderAddress.AddAddressManual.Department : ProviderAddress.AddAddressSelect.DepartmentName,
             NeedBorderBottomLine = false,
 
             ActionText = CheckAndSubmitContent.Link_Change_Address,
@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         {
             Id = "addressline1",
             Title = CheckAndSubmitContent.Summary_Building_And_Street,
-            Value = IsManual ? ProviderAddress.Manual.AddressLine1 : "TODO-Address1",
+            Value = IsManual ? ProviderAddress.AddAddressManual.AddressLine1 : ProviderAddress.AddAddressSelect.SelectedAddress.AddressLine1,
             NeedBorderBottomLine = false
         };
 
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         {
             Id = "addressline2",
             Title = string.Empty,
-            Value = IsManual ? ProviderAddress.Manual.AddressLine2 : "TODO-Address2",
+            Value = IsManual ? ProviderAddress.AddAddressManual.AddressLine2 : ProviderAddress.AddAddressSelect.SelectedAddress.AddressLine2,
             NeedBorderBottomLine = false
         };
 
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         {
             Id = "town",
             Title = CheckAndSubmitContent.Summary_Town_Or_City,
-            Value = IsManual ? ProviderAddress.Manual.Town : "TODO-town",
+            Value = IsManual ? ProviderAddress.AddAddressManual.Town : ProviderAddress.AddAddressSelect.SelectedAddress.Town,
             NeedBorderBottomLine = false
         };
 
@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         {
             Id = "postcode",
             Title = CheckAndSubmitContent.Summary_Postcode,
-            Value = IsManual ? ProviderAddress.Manual.Postcode : "TODO-postcode",
+            Value = IsManual ? ProviderAddress.AddAddressManual.Postcode : ProviderAddress.AddAddressSelect.SelectedAddress.Postcode,
             NeedBorderBottomLine = false
         };
 

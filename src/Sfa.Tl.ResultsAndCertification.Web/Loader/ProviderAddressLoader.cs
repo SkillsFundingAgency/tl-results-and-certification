@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 var response = await _ordnanceSurveyApiClient.GetAddressByUprn(uprn);
                 return _mapper.Map<AddressViewModel>(response?.AddressResult?.FirstOrDefault());
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }

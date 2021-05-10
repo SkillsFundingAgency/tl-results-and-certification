@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (isAlreadyAdded)
                 return View(); //TODO: redirect to ShowAddressPage.
 
-            await _cacheService.RemoveAsync<AddProviderAddressViewModel>(CacheKey);
+            await _cacheService.RemoveAsync<AddAddressViewModel>(CacheKey);
             return View(new ManagePostalAddressViewModel());
 
             static async Task<bool> FindPostalAddress()
@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-postal-address-postcode/{showPostcode:bool?}", Name = RouteConstants.AddAddressPostcode)]
         public async Task<IActionResult> AddAddressPostcodeAsync(bool showPostcode = true)
         {
-            var cacheModel = await _cacheService.GetAsync<AddProviderAddressViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
             var viewModel = new AddAddressPostcodeViewModel { Postcode = showPostcode && cacheModel?.AddAddressPostcode != null ? cacheModel.AddAddressPostcode.Postcode : null };
             return View(viewModel);
         }
@@ -62,32 +62,63 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var cacheModel = new AddProviderAddressViewModel { AddAddressPostcode = model };
+            var cacheModel = new AddAddressViewModel { AddAddressPostcode = model };
             await _cacheService.SetAsync(CacheKey, cacheModel);
             return RedirectToRoute(RouteConstants.AddAddressSelect);
+        }
+
+        [HttpGet]
+        [Route("add-address-manually/{isFromSelectAddress:bool?}", Name = RouteConstants.AddAddressManually)]
+        public async Task<IActionResult> AddAddressManuallyAsync(bool isFromSelectAddress)
+        {
+            // Fresh start -> Clear all manual data.
+            var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
+            if (cacheModel != null)
+            {
+                cacheModel.AddAddressManual = null;
+                await _cacheService.SetAsync(CacheKey, cacheModel);
+            }
+            else
+            {
+                cacheModel = new AddAddressViewModel();
+                await _cacheService.SetAsync(CacheKey, cacheModel);
+            }
+
+            if (isFromSelectAddress)
+                return RedirectToRoute(RouteConstants.AddPostalAddressManual, new { isFromSelectAddress });
+            else
+                return RedirectToRoute(RouteConstants.AddPostalAddressManual);
         }
 
         [HttpGet]
         [Route("add-postal-address-manual/{isFromSelectAddress:bool?}", Name = RouteConstants.AddPostalAddressManual)]
         public async Task<IActionResult> AddPostalAddressManualAsync(bool isFromSelectAddress)
         {
-            await Task.CompletedTask;
-            return View(new AddPostalAddressManualViewModel { IsFromSelectAddress = isFromSelectAddress });
+            var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = cacheModel.AddAddressManual ?? new AddAddressManualViewModel();
+            viewModel.IsFromSelectAddress = isFromSelectAddress;
+            cacheModel.AddAddressManual = viewModel;
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [Route("add-postal-address-manual", Name = RouteConstants.SubmitAddPostalAddressManual)]
-        public async Task<IActionResult> AddPostalAddressManualAsync(AddPostalAddressManualViewModel model)
+        public async Task<IActionResult> AddPostalAddressManualAsync(AddAddressManualViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            var cacheModel = await _cacheService.GetAsync<AddProviderAddressViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
             if (cacheModel == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            cacheModel.Manual = model;
-            cacheModel.IsManual = true;
+            cacheModel.AddAddressSelect = null; 
+            cacheModel.AddAddressManual = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return RedirectToRoute(RouteConstants.AddAddressCheckAndSubmit);
@@ -97,7 +128,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-postal-address-check-and-submit", Name = RouteConstants.AddAddressCheckAndSubmit)]
         public async Task<IActionResult> AddAddressCheckAndSubmitAsync()
         {
-            var cacheModel = await _cacheService.GetAsync<AddProviderAddressViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
             if (cacheModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read AddProviderAddressViewModel from redis cache in address check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
@@ -123,14 +154,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-postal-address-select", Name = RouteConstants.AddAddressSelect)]
         public async Task<IActionResult> AddAddressSelectAsync()
         {
-            var cacheModel = await _cacheService.GetAsync<AddProviderAddressViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
             if (cacheModel?.AddAddressPostcode == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read AddProviderAddressViewModel from redis cache in add address select page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            var viewModel = await _providerAddressLoader.GetAddressesByPostcodeAsync(cacheModel.AddAddressPostcode.Postcode);
-            viewModel.Postcode = cacheModel.AddAddressPostcode.Postcode;
+
+            var addresses = await _providerAddressLoader.GetAddressesByPostcodeAsync(cacheModel.AddAddressPostcode.Postcode);
+            AddAddressSelectViewModel viewModel;
+
+            if (cacheModel.AddAddressSelect != null)
+            {
+                viewModel = cacheModel.AddAddressSelect;
+                viewModel.AddressSelectList = addresses.AddressSelectList;
+            }
+            else
+            {
+                addresses.Postcode = cacheModel.AddAddressPostcode.Postcode;
+                viewModel = addresses;
+            }
+
             return View(viewModel);
         }
 
@@ -150,14 +194,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (selectedAddress == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var cacheModel = await _cacheService.GetAsync<AddProviderAddressViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
 
             if (cacheModel?.AddAddressPostcode == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             model.SelectedAddress = selectedAddress;
             cacheModel.AddAddressSelect = model;
-            cacheModel.IsManual = false;
+            cacheModel.AddAddressManual = null;
             await _cacheService.SetAsync(CacheKey, cacheModel);
             return RedirectToRoute(RouteConstants.AddAddressCheckAndSubmit);
         }
@@ -166,6 +210,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("Dev-inprogress", Name = "DevInprogress")]
         public async Task<IActionResult> DevInprogress()
         {
+            await Task.CompletedTask;
             return View();
         }
     }

@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
     {
         public override void Given()
         {
-            ViewModel = new AddPostalAddressManualViewModel
+            ViewModel = new AddAddressManualViewModel
             { 
                 AddressLine1 = "38",
                 AddressLine2 = "Street Line",
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
                 Department = "Finanace",
             };
 
-            Controller.ModelState.AddModelError(nameof(AddPostalAddressManualViewModel.Postcode), AddAddressContent.AddPostalAddressManual.Validation_Enter_Postcode);
+            Controller.ModelState.AddModelError(nameof(AddAddressManualViewModel.Postcode), AddAddressContent.AddPostalAddressManual.Validation_Enter_Postcode);
         }
 
         [Fact]
@@ -29,11 +29,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             Result.Should().NotBeNull();
             (Result as ViewResult).Model.Should().NotBeNull();
 
-            Controller.ViewData.ModelState.ContainsKey(nameof(AddPostalAddressManualViewModel.Postcode)).Should().BeTrue();
-            var modelState = Controller.ViewData.ModelState[nameof(AddPostalAddressManualViewModel.Postcode)];
+            Controller.ViewData.ModelState.ContainsKey(nameof(AddAddressManualViewModel.Postcode)).Should().BeTrue();
+            var modelState = Controller.ViewData.ModelState[nameof(AddAddressManualViewModel.Postcode)];
             modelState.Errors[0].ErrorMessage.Should().Be(AddAddressContent.AddPostalAddressManual.Validation_Enter_Postcode);
 
-            var model = (Result as ViewResult).Model as AddPostalAddressManualViewModel;
+            var model = (Result as ViewResult).Model as AddAddressManualViewModel;
             
             model.Department.Should().Be(ViewModel.Department);
             model.AddressLine1.Should().Be(ViewModel.AddressLine1);
