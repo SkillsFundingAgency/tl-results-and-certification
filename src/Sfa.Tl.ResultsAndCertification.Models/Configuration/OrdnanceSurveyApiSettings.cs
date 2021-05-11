@@ -2,7 +2,7 @@
 {
     public class OrdnanceSurveyApiSettings
     {
-        public string BaseUri { get; set; }
+        public string PlacesUri { get; set; }
         public string PlacesKey { get; set; }
     }
 }

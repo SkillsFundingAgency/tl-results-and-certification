@@ -2,7 +2,6 @@
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.OrdnanceSurvey;
-using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -20,21 +19,25 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _configuration = configuration;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _httpClient.BaseAddress = configuration.OrdnanceSurveyApiSettings?.BaseUri != null ? new Uri(configuration.OrdnanceSurveyApiSettings.BaseUri.TrimEnd('/')) : null;
         }
 
         public async Task<PostcodeLookupResult> GetAddressesByPostcodeAsync(string postcode)
         {
-            var searchResponse = await _httpClient.GetAsync(string.Format(ApiConstants.SearchAddressByPostcodeUri, postcode, _configuration.OrdnanceSurveyApiSettings?.PlacesKey));
+            var searchResponse = await _httpClient.GetAsync(FormatPlacesRequestUri(string.Format(ApiConstants.SearchAddressByPostcodeUri, postcode, _configuration.OrdnanceSurveyApiSettings?.PlacesKey)));
             searchResponse.EnsureSuccessStatusCode();
             return await searchResponse.Content.ReadAsAsync<PostcodeLookupResult>();
         }
 
         public async Task<PostcodeLookupResult> GetAddressByUprnAsync(long uprn)
         {
-            var searchResponse = await _httpClient.GetAsync(string.Format(ApiConstants.GetAddressByUprnUri, uprn, _configuration.OrdnanceSurveyApiSettings?.PlacesKey));
+            var searchResponse = await _httpClient.GetAsync(FormatPlacesRequestUri(string.Format(ApiConstants.GetAddressByUprnUri, uprn, _configuration.OrdnanceSurveyApiSettings?.PlacesKey)));
             searchResponse.EnsureSuccessStatusCode();
             return await searchResponse.Content.ReadAsAsync<PostcodeLookupResult>();
+        }
+
+        private string FormatPlacesRequestUri(string requestUri)
+        {
+            return !string.IsNullOrWhiteSpace(requestUri) ? $"{_configuration.OrdnanceSurveyApiSettings.PlacesUri.TrimEnd('/')}{requestUri}" : null;
         }
     }
 }

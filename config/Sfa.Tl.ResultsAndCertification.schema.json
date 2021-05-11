@@ -241,9 +241,9 @@
     },
 	"OrdnanceSurveyApiSettings": {
       "properties": {
-        "BaseUri": {          
+        "PlacesUri": {          
           "type": "string",
-          "environmentVariable": "OrdnanceSurveyApiBaseUri"
+          "environmentVariable": "OrdnanceSurveyApiPlacesUri"
         },
         "PlacesKey": {          
           "type": "string",

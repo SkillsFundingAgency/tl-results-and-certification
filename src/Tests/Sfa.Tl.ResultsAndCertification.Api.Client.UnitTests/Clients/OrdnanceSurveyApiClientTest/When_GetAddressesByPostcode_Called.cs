@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.OrdnanceSu
         {
             _configuration = new ResultsAndCertificationConfiguration
             {
-                OrdnanceSurveyApiSettings = new OrdnanceSurveyApiSettings { BaseUri = "http://os.api.com", PlacesKey = "test" }
+                OrdnanceSurveyApiSettings = new OrdnanceSurveyApiSettings { PlacesUri = "http://os.api.com", PlacesKey = "test" }
             };
 
             _mockHttpResult = new PostcodeLookupResult

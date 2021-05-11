@@ -60,7 +60,7 @@
         public const string UpdateLearnerRecordUri = "/api/trainingprovider/UpdateLearnerRecord";
 
         // Ordinance Survery Uri's
-        public const string SearchAddressByPostcodeUri = "/search/places/v1/postcode?postcode={0}&key={1}";
-        public const string GetAddressByUprnUri = "/search/places/v1/uprn?uprn={0}&key={1}";
+        public const string SearchAddressByPostcodeUri = "/postcode?postcode={0}&key={1}";
+        public const string GetAddressByUprnUri = "/uprn?uprn={0}&key={1}";
     }
 }
