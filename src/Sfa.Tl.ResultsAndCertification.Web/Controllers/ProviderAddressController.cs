@@ -99,8 +99,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var viewModel = cacheModel.AddAddressManual ?? new AddAddressManualViewModel();
             viewModel.IsFromSelectAddress = isFromSelectAddress;
-            cacheModel.AddAddressManual = viewModel;
-            await _cacheService.SetAsync(CacheKey, cacheModel);
 
             return View(viewModel);
         }
