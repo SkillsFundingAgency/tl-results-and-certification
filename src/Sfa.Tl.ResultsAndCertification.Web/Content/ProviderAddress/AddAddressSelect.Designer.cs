@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I can’t find my organisation’s address in the list.
+        ///   Looks up a localized string similar to I can’t find my organisation’s address.
         /// </summary>
         public static string I_Cant_Find_My_Organisations_Address_In_The_List_Text {
             get {

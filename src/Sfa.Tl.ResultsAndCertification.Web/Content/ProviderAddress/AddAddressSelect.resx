@@ -139,7 +139,7 @@
     <value>What is your organisation's postal address?</value>
   </data>
   <data name="I_Cant_Find_My_Organisations_Address_In_The_List_Text" xml:space="preserve">
-    <value>I can’t find my organisation’s address in the list</value>
+    <value>I can’t find my organisation’s address</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Add your organisation's postal address - Select your organisation's address page</value>
