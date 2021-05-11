@@ -5,11 +5,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
 {
     public abstract class TestSetup : ProviderAddressControllerTestBase
     {
+        public bool ShowPostcode { get; set; } = true;
         public IActionResult Result { get; private set; }
 
         public async override Task When()
         {
-            Result = await Controller.AddAddressPostcodeAsync();
+            Result = await Controller.AddAddressPostcodeAsync(ShowPostcode);
         }
     }
 }
