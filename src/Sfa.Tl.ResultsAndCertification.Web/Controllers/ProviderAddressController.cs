@@ -71,7 +71,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-address-manually/{isFromSelectAddress:bool?}", Name = RouteConstants.AddAddressManually)]
         public async Task<IActionResult> AddAddressManuallyAsync(bool isFromSelectAddress)
         {
-            // Fresh start -> Clear all manual data.
             var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
             if (cacheModel != null)
             {
