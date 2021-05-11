@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -47,6 +46,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("add-address", Name = RouteConstants.AddAddress)]
+        public async Task<IActionResult> AddAddressAsync()
+        {
+            await _cacheService.RemoveAsync<AddAddressViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AddAddressPostcode);
+        }
+
+        [HttpGet]
         [Route("add-postal-address-postcode/{showPostcode:bool?}", Name = RouteConstants.AddAddressPostcode)]
         public async Task<IActionResult> AddAddressPostcodeAsync(bool showPostcode = true)
         {
@@ -72,21 +79,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddAddressManuallyAsync(bool isFromSelectAddress)
         {
             var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
+            
             if (cacheModel != null)
-            {
                 cacheModel.AddAddressManual = null;
-                await _cacheService.SetAsync(CacheKey, cacheModel);
-            }
             else
-            {
                 cacheModel = new AddAddressViewModel();
-                await _cacheService.SetAsync(CacheKey, cacheModel);
-            }
-
-            if (isFromSelectAddress)
-                return RedirectToRoute(RouteConstants.AddPostalAddressManual, new { isFromSelectAddress });
-            else
-                return RedirectToRoute(RouteConstants.AddPostalAddressManual);
+            
+            await _cacheService.SetAsync(CacheKey, cacheModel);
+            return RedirectToRoute(RouteConstants.AddPostalAddressManual, isFromSelectAddress ? new { isFromSelectAddress } : null);
         }
 
         [HttpGet]
