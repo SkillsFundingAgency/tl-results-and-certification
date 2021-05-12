@@ -248,7 +248,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("add-postal-address-cancel", Name = RouteConstants.SubmitAddAddressCancel)]
-        public async Task<IActionResult> AddAddressConfirmationAsync(AddAddressCancelViewModel viewModel)
+        public async Task<IActionResult> AddAddressCancelAsync(AddAddressCancelViewModel viewModel)
         {
             if (viewModel.CancelAddAddress)
             {
