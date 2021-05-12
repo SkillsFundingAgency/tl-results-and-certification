@@ -7,5 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     {
         Task<AddAddressSelectViewModel> GetAddressesByPostcodeAsync(string postcode);
         Task<AddressViewModel> GetAddressByUprnAsync(long uprn);
+        Task<bool> AddAddressAsync(long providerUkprn, AddAddressViewModel viewModel);
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
@@ -122,32 +123,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-postal-address-check-and-submit", Name = RouteConstants.AddAddressCheckAndSubmit)]
-        public async Task<IActionResult> AddAddressCheckAndSubmitAsync()
-        {
-            var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
-            if (cacheModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read AddProviderAddressViewModel from redis cache in address check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            var model = new AddAddressCheckAndSubmitViewModel { ProviderAddress = cacheModel };
-            if (!model.IsValid)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return View(model);
-        }
-
-        [HttpPost]
-        [Route("add-postal-address-check-and-submit", Name = RouteConstants.SubmitAddAddressCheckAndSubmit)]
-        public async Task<IActionResult> SubmitAddAddressCheckAndSubmitAsync()
-        {
-            await Task.CompletedTask;
-            return RedirectToRoute("DevInprogress");
-        }
-
-        [HttpGet]
         [Route("add-postal-address-select", Name = RouteConstants.AddAddressSelect)]
         public async Task<IActionResult> AddAddressSelectAsync()
         {
@@ -178,7 +153,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [HttpPost]
         [Route("add-postal-address-select", Name = RouteConstants.SubmitAddAddressSelect)]
         public async Task<IActionResult> AddAddressSelectAsync(AddAddressSelectViewModel model)
-        { 
+        {
             if (!ModelState.IsValid)
             {
                 var addressViewModel = await _providerAddressLoader.GetAddressesByPostcodeAsync(model.Postcode);
@@ -204,10 +179,58 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("Dev-inprogress", Name = "DevInprogress")]
-        public async Task<IActionResult> DevInprogress()
+        [Route("add-postal-address-check-and-submit", Name = RouteConstants.AddAddressCheckAndSubmit)]
+        public async Task<IActionResult> AddAddressCheckAndSubmitAsync()
         {
-            await Task.CompletedTask;
+            var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read AddProviderAddressViewModel from redis cache in address check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var model = new AddAddressCheckAndSubmitViewModel { ProviderAddress = cacheModel };
+            if (!model.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("add-postal-address-check-and-submit", Name = RouteConstants.SubmitAddAddressCheckAndSubmit)]
+        public async Task<IActionResult> SubmitAddAddressCheckAndSubmitAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
+
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var isSuccess = await _providerAddressLoader.AddAddressAsync(User.GetUkPrn(), cacheModel);
+
+            if (isSuccess)
+            {
+                await _cacheService.RemoveAsync<AddAddressViewModel>(CacheKey);
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.AddAddressConfirmation), true, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.AddAddressConfirmation);
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.AddAddressFailed, $"Unable to add address for provider ukprn: {User.GetUkPrn()}. Method: SubmitAddAddressCheckAndSubmitAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+        }
+
+        [HttpGet]
+        [Route("add-postal-address-confirmation ", Name = RouteConstants.AddAddressConfirmation)]
+        public async Task<IActionResult> AddAddressConfirmationAsync()
+        {
+            var isAddressAdded = await _cacheService.GetAndRemoveAsync<bool?>(string.Concat(CacheKey, Constants.AddAddressConfirmation));
+
+            if (isAddressAdded == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read value from redis cache in add addressconfirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
             return View();
         }
     }
