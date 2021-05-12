@@ -33,7 +33,7 @@
       "type": "string",
       "environmentVariable": "FeedbackEmailAddress"
     },
-    "KeyVaultUri": {
+	  "KeyVaultUri": {
       "type": "string",
       "environmentVariable": "KeyVaultUri"
     },
@@ -50,7 +50,27 @@
         "CacheConnection"
       ],
       "type": "object"
-    },    
+    },
+    "BlobStorageSettings": {
+      "properties": {
+        "AccountName": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "BlobStorageAccountName"
+        },
+        "AccountKey": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "BlobStorageAccountKey"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "AccountName",
+        "AccountKey"
+      ],
+      "type": "object"
+    },
     "DataProtectionSettings": {
       "properties": {
         "ContainerName": {
@@ -219,8 +239,7 @@
       ],
       "type": "object"
     },
-    "LearningRecordServiceSettings": {
-	"OrdnanceSurveyApiSettings": {
+	  "OrdnanceSurveyApiSettings": {
       "properties": {
         "PlacesUri": {          
           "type": "string",
@@ -235,7 +254,7 @@
       "required": [],
       "type": "object"
     },
-	"LearningRecordServiceSettings": {
+	  "LearningRecordServiceSettings": {
       "properties": {
         "VendorId": {
           "minLength": 1,
@@ -269,7 +288,7 @@
         "Ukprn",
         "Username",
         "Password",
-        "CertificateName"
+		    "CertificateName"
       ],
       "type": "object"
     }
@@ -282,12 +301,13 @@
     "TlevelQueriedSupportEmailAddress",
     "TechnicalSupportEmailAddress",
     "FeedbackEmailAddress",
-    "KeyVaultUri",
-    "RedisSettings",    
+	  "KeyVaultUri",
+    "RedisSettings",
+	  "BlobStorageSettings",
     "DataProtectionSettings",
     "DfeSignInSettings",
     "ResultsAndCertificationInternalApiSettings",
-    "LearningRecordServiceSettings"
+	  "LearningRecordServiceSettings"
   ],
   "type": "object"
 }
