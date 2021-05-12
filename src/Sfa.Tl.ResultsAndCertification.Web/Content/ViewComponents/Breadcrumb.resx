@@ -138,6 +138,9 @@
   <data name="Manage_Learner_TLevel_Records" xml:space="preserve">
     <value>Manage learner T Level records</value>
   </data>
+  <data name="Manage_Postal_Address" xml:space="preserve">
+    <value>Manage your organisation’s postal address</value>
+  </data>
   <data name="Provider_Find_Provider" xml:space="preserve">
     <value>Find a provider</value>
   </data>

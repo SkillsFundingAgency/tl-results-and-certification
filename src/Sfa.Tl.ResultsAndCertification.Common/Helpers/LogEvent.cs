@@ -47,5 +47,11 @@
         public const int AddLearnerRecordFailed = 7001;
         public const int AddEnglishAndMathsSendDataEmailFailed = 7002;
         public const int UnSupportedMethod = 7003;
+
+        // Ordnance Survey events
+        public const int UnableToGetAddressFromOrdnanceSurvey = 8001;
+
+        // Provider Address events
+        public const int AddAddressFailed = 9001;
     }
 }

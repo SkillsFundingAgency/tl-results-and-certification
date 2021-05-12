@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Add_New_Learner_Caption" xml:space="preserve">
-    <value>Add a new learner record</value>
+    <value>Add a new learner T Level record</value>
   </data>
   <data name="Bereavement_Text" xml:space="preserve">
     <value>bereavement</value>
@@ -133,13 +133,13 @@
     <value>Has the learner completed their industry placement?</value>
   </data>
   <data name="Learner_Text" xml:space="preserve">
-    <value>Learner</value>
+    <value>Learner:</value>
   </data>
   <data name="No_Still_To_Be_Completed_Option_Text" xml:space="preserve">
     <value>No, still to be completed</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Add a new learner record - Has learner completed industry placement page</value>
+    <value>Add a new learner T Level record - Industry placement status page</value>
   </data>
   <data name="Personal_Or_Family_Problems_Text" xml:space="preserve">
     <value>personal or family problems</value>
@@ -151,7 +151,7 @@
     <value>safeguarding issues</value>
   </data>
   <data name="Select_Yes_Competed_With_Special_Consideration_Text" xml:space="preserve">
-    <value>Select 'Yes, completed with special consideration' only if you have made adjustments for learners who were unable to perform to the best of their ability during their placement due to exceptional circumstances. For example:</value>
+    <value>Select 'Yes, completed with special consideration' only for learners who were unable to perform to the best of their ability during their placement due to exceptional circumstances. For example:</value>
   </data>
   <data name="Update_Button_Text" xml:space="preserve">
     <value>Update</value>

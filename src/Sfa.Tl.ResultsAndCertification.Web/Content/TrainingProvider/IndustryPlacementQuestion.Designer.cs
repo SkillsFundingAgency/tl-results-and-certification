@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new learner record.
+        ///   Looks up a localized string similar to Add a new learner T Level record.
         /// </summary>
         public static string Add_New_Learner_Caption {
             get {
@@ -107,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner.
+        ///   Looks up a localized string similar to Learner:.
         /// </summary>
         public static string Learner_Text {
             get {
@@ -125,7 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new learner record - Has learner completed industry placement page.
+        ///   Looks up a localized string similar to Add a new learner T Level record - Industry placement status page.
         /// </summary>
         public static string Page_Title {
             get {
@@ -161,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select &apos;Yes, completed with special consideration&apos; only if you have made adjustments for learners who were unable to perform to the best of their ability during their placement due to exceptional circumstances. For example:.
+        ///   Looks up a localized string similar to Select &apos;Yes, completed with special consideration&apos; only for learners who were unable to perform to the best of their ability during their placement due to exceptional circumstances. For example:.
         /// </summary>
         public static string Select_Yes_Competed_With_Special_Consideration_Text {
             get {

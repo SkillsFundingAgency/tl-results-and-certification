@@ -10,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Local;
 using System;
 using System.Collections.Generic;
@@ -159,7 +160,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                                 if (userInfo.HasAccessToService)
                                 {
                                     var internalApiClient = ctx.HttpContext.RequestServices.GetService<IResultsAndCertificationInternalApiClient>();
-                                    var loggedInUserTypeResponse = await internalApiClient.GetLoggedInUserTypeInfoAsync(userInfo.Ukprn.Value);
+                                    var loggedInUserTypeResponse = userInfo.Ukprn.Value == 1
+                                                                    ? new LoggedInUserTypeInfo { Ukprn = userInfo.Ukprn.Value, UserType = LoginUserType.AwardingOrganisation }
+                                                                    : await internalApiClient.GetLoggedInUserTypeInfoAsync(userInfo.Ukprn.Value);
 
                                     if (loggedInUserTypeResponse != null && loggedInUserTypeResponse.UserType != LoginUserType.NotSpecified)
                                     {

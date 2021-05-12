@@ -220,6 +220,22 @@
       "type": "object"
     },
     "LearningRecordServiceSettings": {
+	"OrdnanceSurveyApiSettings": {
+      "properties": {
+        "PlacesUri": {          
+          "type": "string",
+          "environmentVariable": "OrdnanceSurveyApiPlacesUri"
+        },
+        "PlacesKey": {          
+          "type": "string",
+          "environmentVariable": "OrdnanceSurveyPlacesApiPlacesKey"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+	"LearningRecordServiceSettings": {
       "properties": {
         "VendorId": {
           "minLength": 1,

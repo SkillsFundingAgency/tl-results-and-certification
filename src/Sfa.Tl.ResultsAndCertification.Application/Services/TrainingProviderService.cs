@@ -46,46 +46,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         }
 
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
-        {
-            var latestPathway = await _tqRegistrationPathwayRepository
-                                    .GetManyAsync(x => x.TqRegistrationProfile.UniqueLearnerNumber == uln &&
-                                        x.TqProvider.TlProvider.UkPrn == providerUkprn,
-                                        navigationPropertyPath: new Expression<Func<TqRegistrationPathway, object>>[]
-                                        {
-                                            n => n.TqRegistrationProfile,
-                                            n => n.TqProvider.TlProvider,
-                                            n => n.TqProvider.TqAwardingOrganisation.TlPathway,
-                                            n => n.IndustryPlacements
-                                        })
-                                    .Include(x => x.TqRegistrationProfile.QualificationAchieved).ThenInclude(x => x.Qualification)
-                                    .OrderByDescending(o => o.CreatedOn)
-                                    .FirstOrDefaultAsync();
+        {            
+            var latestPathway = await _trainingProviderRepository.FindLearnerRecordAsync(providerUkprn, uln);
 
-            var isSendConfiramtionRequired = false;
-            if (latestPathway != null && evaluateSendConfirmation == true && latestPathway.TqRegistrationProfile.IsRcFeed == false &&
-                latestPathway.TqRegistrationProfile.IsEnglishAndMathsAchieved == true && latestPathway.TqRegistrationProfile.IsSendLearner == null)
-                isSendConfiramtionRequired = await _trainingProviderRepository.IsSendConfirmationRequiredAsync(latestPathway.TqRegistrationProfileId); 
+            if (latestPathway != null && evaluateSendConfirmation == true && latestPathway.IsRcFeed == false && latestPathway.IsEnglishAndMathsAchieved == true && latestPathway.IsSendLearner == null)
+                latestPathway.IsSendConfirmationRequired = await _trainingProviderRepository.IsSendConfirmationRequiredAsync(latestPathway.ProfileId);
 
-            return _mapper.Map<FindLearnerRecord>(latestPathway, opt => opt.Items["isSendConfiramtionRequired"] = isSendConfiramtionRequired);
+            return latestPathway;
         }
 
         public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)
         {
-            var latestPathwayQuerable = _tqRegistrationPathwayRepository
-                                        .GetManyAsync(x => x.TqRegistrationProfile.Id == profileId &&
-                                            x.TqProvider.TlProvider.UkPrn == providerUkprn,
-                                            navigationPropertyPath: new Expression<Func<TqRegistrationPathway, object>>[]
-                                            {
-                                                n => n.TqRegistrationProfile,
-                                                n => n.TqProvider.TlProvider,
-                                                n => n.TqProvider.TqAwardingOrganisation.TlPathway,
-                                                n => n.IndustryPlacements
-                                            })
-                                        .Include(x => x.TqRegistrationProfile.QualificationAchieved).ThenInclude(x => x.Qualification)
-                                        .OrderByDescending(o => o.CreatedOn);
-
-            var latestPathway = pathwayId.HasValue ? await latestPathwayQuerable.FirstOrDefaultAsync(p => p.Id == pathwayId) : await latestPathwayQuerable.FirstOrDefaultAsync();
-            return _mapper.Map<LearnerRecordDetails>(latestPathway);
+            return await _trainingProviderRepository.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
         }
 
         public async Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request)

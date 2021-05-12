@@ -98,6 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                 var tqProvider = new TqProvider
                 {
                     TlProviderId = tlProvider.Id,
+                    TlProvider = tlProvider,
                     TqAwardingOrganisationId = tqAwardingOrganisation.Id,
                     TqAwardingOrganisation = tqAwardingOrganisation,
                     IsActive = true

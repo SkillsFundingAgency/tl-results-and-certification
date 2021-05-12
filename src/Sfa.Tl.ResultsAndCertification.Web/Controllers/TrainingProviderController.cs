@@ -83,16 +83,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             await SyncCacheUln(model, learnerRecord);
-            if (!learnerRecord.HasLrsEnglishAndMaths)
+
+            if (learnerRecord.HasLrsEnglishAndMaths)
+                return RedirectToRoute(learnerRecord.IsSendConfirmationRequired ? RouteConstants.AddEnglishAndMathsLrsQuestion : RouteConstants.AddIndustryPlacementQuestion);
+            else
                 return RedirectToRoute(RouteConstants.AddEnglishAndMathsQuestion);
-
-            if (learnerRecord.HasLrsEnglishAndMaths && learnerRecord.IsSendConfirmationRequired)
-                return RedirectToRoute(RouteConstants.AddEnglishAndMathsLrsQuestion); 
-            
-            if (learnerRecord.HasLrsEnglishAndMaths && !learnerRecord.HasSendQualification)
-                return RedirectToRoute(RouteConstants.AddIndustryPlacementQuestion);
-
-            return RedirectToRoute(RouteConstants.EnterUniqueLearnerNumber);
         }
 
         [HttpGet]
@@ -106,7 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            return View(new LearnerRecordAddedAlreadyViewModel { ProfileId = profileId,  Uln = cacheModel.Uln?.EnterUln?.ToString(), LearnerName = cacheModel?.LearnerRecord?.Name });
+            return View(new LearnerRecordAddedAlreadyViewModel { ProfileId = profileId, Uln = cacheModel.Uln?.EnterUln?.ToString(), LearnerName = cacheModel?.LearnerRecord?.Name });
         }
 
         [HttpGet]
@@ -199,7 +194,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 _logger.LogWarning(LogEvent.AddEnglishAndMathsSendDataEmailFailed, $"Unable to send email for English and maths send data for UniqueLearnerNumber: {cacheModel.Uln}. Method: AddEnglishAndMathsLrsQuestionAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
-            }            
+            }
         }
 
         [HttpGet]
@@ -428,7 +423,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner details are found or no LRS data available. Method: GetLearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            
+
             var viewModel = new QueryEnglishAndMathsViewModel { ProfileId = learnerDetails.ProfileId, Name = learnerDetails.Name };
             return View(viewModel);
         }
@@ -442,7 +437,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner record not added. Method: UpdateIndustryPlacementAsync({User.GetUkPrn()}, {profileId}, {pathwayId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
-            }            
+            }
             return View(viewModel);
         }
 
@@ -531,7 +526,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(viewModel);
-        }               
+        }
 
         #endregion
 

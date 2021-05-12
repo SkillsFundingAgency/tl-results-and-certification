@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.EnterUniqueLearnerReferencePost
 {
-    public class When_LearnerRecord_HasNoLrs_EngMaths : TestSetup
+    public class When_Learner_HasLrsData_IsFalse : TestSetup
     {
         private readonly long uln = 123456789;
         private readonly bool _evaluteSendConfirmation = true;

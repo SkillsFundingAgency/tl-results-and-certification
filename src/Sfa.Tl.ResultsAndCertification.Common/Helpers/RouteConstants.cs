@@ -239,8 +239,19 @@
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
         public const string UpdateEnglisAndMathsAchievement = "UpdateEnglisAndMathsAchievement";
         public const string SubmitUpdateEnglisAndMathsAchievement = "SubmitUpdateEnglisAndMathsAchievement";
-        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";        
-
+        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
+        public const string ManagePostalAddress = "ManagePostalAddress";
+        public const string AddAddress = "AddAddress";
+        public const string AddAddressPostcode = "AddAddressPostcode";
+        public const string SubmitAddAddressPostcode = "SubmitAddAddressPostcode";
+        public const string AddAddressManually = "AddAddressManually";
+        public const string AddPostalAddressManual = "AddPostalAddressManual";
+        public const string SubmitAddPostalAddressManual = "SubmitAddPostalAddressManual";
+        public const string AddAddressSelect = "AddAddressSelect";
+        public const string SubmitAddAddressSelect = "SubmitAddAddressSelect";
+        public const string AddAddressCheckAndSubmit = "AddAddressCheckAndSubmit";
+        public const string SubmitAddAddressCheckAndSubmit = "SubmitAddAddressCheckAndSubmit";
+        public const string AddAddressConfirmation = "AddAddressConfirmation";
         #endregion
     }
 }

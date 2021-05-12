@@ -11,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
         {
             // Uln
             RuleFor(r => r.Uln)
+                .Cascade(CascadeMode.Stop)
                 .Required()
                 .MustBeNumberWithLength(10);
 

@@ -29,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         protected IMapper TrainingProviderMapper;
         protected ILogger<TrainingProviderService> TrainingProviderServiceLogger;
         protected ITrainingProviderRepository TrainingProviderRepository;
+        protected ILogger<TrainingProviderRepository> TrainingProviderRepositoryLogger;
         protected NotificationService NotificationService;
         protected IAsyncNotificationClient NotificationsClient;
         protected ILogger<NotificationService> NotificationLogger;
@@ -129,21 +130,26 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             if (seedQualificationAchieved)
             {
-                var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng");
+                var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng" && e.IsSendQualification == isSendQualification);
                 var mathQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Math");                
 
-                var engQualifcationGrades = engQual.QualificationType.QualificationGrades;
-                var mathsQualifcationGrades = mathQual.QualificationType.QualificationGrades;
-
-                var qualification = Qualifications.FirstOrDefault(q => q.IsSendQualification == isSendQualification);
-                var qualificationGrade = qualification.QualificationType.QualificationGrades.FirstOrDefault(g => g.IsAllowable);
+                var engQualifcationGrade = engQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved);
+                var mathsQualifcationGrade = mathQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved); 
 
                 profile.QualificationAchieved.Add(new QualificationAchieved
                 {
                     TqRegistrationProfileId = profile.Id,
-                    QualificationId = qualification.Id,
-                    QualificationGradeId = qualificationGrade.Id,
-                    IsAchieved = qualificationGrade.IsAllowable
+                    QualificationId = engQual.Id,
+                    QualificationGradeId = engQualifcationGrade.Id,
+                    IsAchieved = engQualifcationGrade.IsAllowable
+                });
+
+                profile.QualificationAchieved.Add(new QualificationAchieved
+                {
+                    TqRegistrationProfileId = profile.Id,
+                    QualificationId = mathQual.Id,
+                    QualificationGradeId = mathsQualifcationGrade.Id,
+                    IsAchieved = mathsQualifcationGrade.IsAllowable
                 });
             }
 

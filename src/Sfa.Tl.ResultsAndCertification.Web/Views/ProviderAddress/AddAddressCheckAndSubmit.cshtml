@@ -1,0 +1,43 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress.AddAddressCheckAndSubmitViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress
+
+@{
+    ViewData["Title"] = CheckAndSubmit.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+
+        <form asp-route="SubmitAddAddressCheckAndSubmit">
+            <span class="govuk-caption-xl">@CheckAndSubmit.Caption_Add_Address</span>
+
+            <h1 class="govuk-heading-l">@CheckAndSubmit.Heading_Check_And_Submit</h1>
+            <p class="govuk-body govuk-!-margin-top-3">@CheckAndSubmit.Para_Check_Address_Is_Correct</p>
+
+            <dl class="govuk-summary-list">
+                <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
+                <vc:summary-item model=Model.SummaryAddressLine1></vc:summary-item>
+
+                @if (!string.IsNullOrWhiteSpace(Model.SummaryAddressLine2.Value))
+                {
+                    <vc:summary-item model=Model.SummaryAddressLine2></vc:summary-item>
+                }
+                <vc:summary-item model=Model.SummaryTown></vc:summary-item>
+                <vc:summary-item model=Model.SummaryPostcode></vc:summary-item>
+            </dl>
+
+            <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-6">
+
+            <p class="govuk-inset-text">@CheckAndSubmit.Inset_Declaration_Confirmation</p>
+
+            <div class="govuk-button-group govuk-!-margin-top-7">
+                <button id="submitButton" class="govuk-button govuk-!-margin-right-5" role="button" type="submit">@CheckAndSubmit.Button_Submit</button>
+                <a id="cancelLink" class="govuk-link govuk-body" asp-route="DevInprogress">@CheckAndSubmit.Link_Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

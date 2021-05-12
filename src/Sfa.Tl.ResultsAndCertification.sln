@@ -33,11 +33,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertificat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests\Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.csproj", "{18FDF69D-CBBA-4876-8042-48936052771A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{BFACF837-370F-4AB5-AAD4-6779E67BAF6C}"
-	ProjectSection(SolutionItems) = preProject
-		Nuget.config = Nuget.config
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.Common.Services", "Sfa.Tl.ResultsAndCertification.Common.Services\Sfa.Tl.ResultsAndCertification.Common.Services.csproj", "{0F338528-DE83-4D4D-95C3-6FCA1A435B2E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests", "Tests\Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests\Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.csproj", "{564E8E93-820F-448D-8381-82914D0CA733}"

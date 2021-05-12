@@ -47,8 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 IsLearnerRegistered = true,
                 IsLearnerRecordAdded = false,
                 IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = true,
-                HasSendQualification = false
+                HasLrsEnglishAndMaths = true
             };
         }
 
@@ -74,7 +73,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.IsLearnerRegistered.Should().Be(_mockApiResponse.IsLearnerRegistered);
             _actualResult.IsLearnerRecordAdded.Should().Be(_mockApiResponse.IsLearnerRecordAdded);
             _actualResult.IsEnglishAndMathsAchieved.Should().Be(_mockApiResponse.IsEnglishAndMathsAchieved);
-            _actualResult.HasSendQualification.Should().Be(_mockApiResponse.HasSendQualification);
             _actualResult.HasLrsEnglishAndMaths.Should().Be(_mockApiResponse.HasLrsEnglishAndMaths);
         }
     }
