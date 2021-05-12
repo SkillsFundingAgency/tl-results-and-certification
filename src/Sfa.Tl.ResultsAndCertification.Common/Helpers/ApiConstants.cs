@@ -62,5 +62,8 @@
         // Ordinance Survery Uri's
         public const string SearchAddressByPostcodeUri = "/postcode?postcode={0}&key={1}";
         public const string GetAddressByUprnUri = "/uprn?uprn={0}&key={1}";
+
+        // ProviderAddress Uri's
+        public const string AddAddressUri = "/api/provideraddress/AddAddress";
     }
 }
