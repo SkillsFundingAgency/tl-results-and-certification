@@ -221,12 +221,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-postal-address-confirmation ", Name = RouteConstants.AddAddressConfirmation)]
+        [Route("add-postal-address-confirmation", Name = RouteConstants.AddAddressConfirmation)]
         public async Task<IActionResult> AddAddressConfirmationAsync()
         {
-            var isAddressAdded = await _cacheService.GetAndRemoveAsync<bool?>(string.Concat(CacheKey, Constants.AddAddressConfirmation));
+            var isAddressAdded = await _cacheService.GetAndRemoveAsync<bool>(string.Concat(CacheKey, Constants.AddAddressConfirmation));
 
-            if (isAddressAdded == null)
+            if (!isAddressAdded)
             {
                 _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read value from redis cache in add addressconfirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
