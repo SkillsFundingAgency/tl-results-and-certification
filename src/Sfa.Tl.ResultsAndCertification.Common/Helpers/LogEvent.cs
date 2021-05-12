@@ -50,5 +50,8 @@
 
         // Ordnance Survey events
         public const int UnableToGetAddressFromOrdnanceSurvey = 8001;
+
+        // Provider Address events
+        public const int AddAddressFailed = 9001;
     }
 }

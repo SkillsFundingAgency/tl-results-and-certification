@@ -64,7 +64,7 @@
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
         public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
         public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation";
-
+        public const string AddAddressConfirmation = "AddAddressConfirmation";
         public const string UserSessionActivityId = "UserSessionActivityId";
 
         // Registration Data Index Constants
