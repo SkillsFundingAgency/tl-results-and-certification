@@ -233,5 +233,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        [Route("add-postal-address-cancel", Name = RouteConstants.AddAddressCancel)]
+        public async Task<IActionResult> AddAddressCancelAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = new AddAddressCancelViewModel();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("add-postal-address-cancel", Name = RouteConstants.SubmitAddAddressCancel)]
+        public async Task<IActionResult> AddAddressCancelAsync(AddAddressCancelViewModel viewModel)
+        {
+            if (viewModel.CancelAddAddress)
+            {
+                await _cacheService.RemoveAsync<AddAddressViewModel>(CacheKey);
+                return RedirectToRoute(RouteConstants.Home);
+            }
+            else
+                return RedirectToRoute(RouteConstants.AddAddressCheckAndSubmit);
+        }
     }
 }
