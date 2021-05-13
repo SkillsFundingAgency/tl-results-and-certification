@@ -25,15 +25,6 @@ jobs:
         packageType: sdk
         version: $(dotnetVersion)
         installationPath: $(Agent.ToolsDirectory)/dotnet
-
-    - task: DotNetCoreCLI@2
-      displayName: Restore
-      inputs:
-        command: restore
-        projects: 'src/**/*.csproj'
-        noCache: false
-        feedsToUse: config
-        nugetConfigPath: src/NuGet.config
     
     - task: Npm@1
       displayName: 'npm install'
@@ -48,13 +39,22 @@ jobs:
         targets: default
     
     - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: 'src/Sfa.Tl.ResultsAndCertification.sln' #'src/**/*.csproj'
+        noCache: true
+        feedsToUse: config
+        nugetConfigPath: src/NuGet.config
+    
+    - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
         projects: 'src/**/*.csproj'
         arguments: '--configuration $(buildConfiguration)  --no-restore'        
     
     - task: DotNetCoreCLI@2
-      displayName: Test
+      displayName: Unit Tests
       inputs:
         command: test
         projects: '**/*.UnitTests.csproj'
@@ -73,7 +73,6 @@ jobs:
         publishWebProjects: false
         projects: '**/*.IntegrationTests.csproj'
         arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
-
     
     - task: DotNetCoreCLI@2
       displayName: 'Publish Website'
@@ -99,6 +98,7 @@ jobs:
           config/**
         targetFolder: '$(build.artifactstagingdirectory)/publish'
         overWrite: true
+    
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact'
       inputs:
