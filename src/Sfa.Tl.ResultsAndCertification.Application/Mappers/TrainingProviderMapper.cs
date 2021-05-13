@@ -3,7 +3,6 @@ using Sfa.Tl.ResultsAndCertification.Application.Mappers.Resolver;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
-using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 {

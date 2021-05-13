@@ -130,6 +130,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Contact.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\ProviderAddress\AddAddressCancel.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddAddressCancel.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\ProviderAddress\AddAddressConfirmation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -717,6 +722,10 @@
     <EmbeddedResource Update="Content\Help\Contact.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Contact.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ProviderAddress\AddAddressCancel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddAddressCancel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\ProviderAddress\AddAddressConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

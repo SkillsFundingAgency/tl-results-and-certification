@@ -252,6 +252,9 @@
         public const string AddAddressCheckAndSubmit = "AddAddressCheckAndSubmit";
         public const string SubmitAddAddressCheckAndSubmit = "SubmitAddAddressCheckAndSubmit";
         public const string AddAddressConfirmation = "AddAddressConfirmation";
+        public const string AddAddressCancel = "AddAddressCancel";
+        public const string SubmitAddAddressCancel = "SubmitAddAddressCancel";
+
         #endregion
     }
 }
