@@ -2,7 +2,7 @@ jobs:
 - job: 'CodeBuild'
   pool:
       name: 'Azure Pipelines'
-      vmImage: 'windows-latest'
+      vmImage: 'vs2017-win2016' #'windows-latest'
   workspace:
     clean: all
   steps:        
@@ -58,7 +58,7 @@ jobs:
       inputs:
         command: test
         projects: '**/*.UnitTests.csproj'
-        arguments: '--configuration $(buildConfiguration)'
+        arguments: '--configuration $(buildConfiguration) --no-build'
     
     # - task: DotNetCoreCLI@2
     #   displayName: Integration Tests
@@ -66,6 +66,14 @@ jobs:
     #     command: test
     #     projects: '**/*.Web.IntegrationTests.csproj'
     #     arguments: '--configuration $(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      displayName: Integration Tests
+      inputs:
+        command: publish
+        publishWebProjects: false
+        projects: '**/*.IntegrationTests.csproj'
+        arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
+
     
     - task: DotNetCoreCLI@2
       displayName: 'Publish Website'
