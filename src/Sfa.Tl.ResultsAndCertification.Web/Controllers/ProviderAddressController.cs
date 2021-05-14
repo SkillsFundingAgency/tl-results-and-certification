@@ -134,8 +134,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             var addresses = await _providerAddressLoader.GetAddressesByPostcodeAsync(cacheModel.AddAddressPostcode.Postcode);
+            if (addresses.AddressSelectList.Count == 0)
+                return RedirectToRoute(RouteConstants.AddAddressNotFound);
+            
             AddAddressSelectViewModel viewModel;
-
             if (cacheModel.AddAddressSelect != null)
             {
                 viewModel = cacheModel.AddAddressSelect;
@@ -257,6 +259,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
                 return RedirectToRoute(RouteConstants.AddAddressCheckAndSubmit);
+        }
+
+        [HttpGet]
+        [Route("add-postal-address-no-addresses-found", Name = RouteConstants.AddAddressNotFound)]
+        public async Task<IActionResult> AddAddressNotFoundAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
+            if (cacheModel?.AddAddressPostcode == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var model = new AddAddressNotFoundViewModel { Postcode = cacheModel.AddAddressPostcode.Postcode };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("add-postal-address-no-addresses-found", Name = RouteConstants.SubmitAddAddressNotFound)]
+        public async Task<IActionResult> SubmitAddAddressNotFoundAsync()
+        {
+            await _cacheService.RemoveAsync<AddAddressViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AddAddressPostcode);
         }
     }
 }
