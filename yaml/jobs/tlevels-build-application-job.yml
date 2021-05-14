@@ -19,12 +19,12 @@ jobs:
         runtime: 'core'
         updateAssemblyInfo: true
     
-    - task: UseDotNet@2
-      displayName: 'Use .NET Core SDK $(dotnetVersion)'
-      inputs:
-        packageType: sdk
-        version: $(dotnetVersion)
-        installationPath: $(Agent.ToolsDirectory)/dotnet
+    # - task: UseDotNet@2
+    #   displayName: 'Use .NET Core SDK $(dotnetVersion)'
+    #   inputs:
+    #     packageType: sdk
+    #     version: $(dotnetVersion)
+    #     installationPath: $(Agent.ToolsDirectory)/dotnet
     
     - task: Npm@1
       displayName: 'npm install'
