@@ -9,6 +9,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 {
     public class AddAddressSelectViewModel
     {
+        public AddAddressSelectViewModel()
+        {
+            AddressSelectList = new List<SelectListItem>();
+        }
+
         [Required(ErrorMessageResourceType = typeof(ErrorResource.AddAddressSelect), ErrorMessageResourceName = "Validation_Select_Your_Address_From_The_List")]
         public long? SelectedAddressUprn { get; set; }
 

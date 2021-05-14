@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
         private static Uri GetDataProtectionBlobTokenUri(ResultsAndCertificationConfiguration config)
         {
-            var cloudStorageAccount = CloudStorageAccount.Parse(config.BlobStorageConnectionString);
+            var cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(config.BlobStorageSettings.AccountName, config.BlobStorageSettings.AccountKey), useHttps: true);
             var blobClient = cloudStorageAccount.CreateCloudBlobClient();
             var container = blobClient.GetContainerReference(config.DataProtectionSettings.ContainerName);
             var blob = container.GetBlockBlobReference(config.DataProtectionSettings.BlobName);

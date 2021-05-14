@@ -140,6 +140,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AddAddressConfirmation.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\ProviderAddress\AddAddressNotFound.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddAddressNotFound.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\ProviderAddress\AddAddressPostcode.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -730,6 +735,10 @@
     <EmbeddedResource Update="Content\ProviderAddress\AddAddressConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AddAddressConfirmation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ProviderAddress\AddAddressNotFound.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddAddressNotFound.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\ProviderAddress\AddAddressPostcode.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

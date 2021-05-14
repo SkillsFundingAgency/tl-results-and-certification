@@ -11,6 +11,14 @@
         public RedisSettings RedisSettings { get; set; }
 
         /// <summary>
+        /// Gets or sets the BLOB storage settings.
+        /// </summary>
+        /// <value>
+        /// The BLOB storage settings.
+        /// </value>
+        public BlobStorageSettings BlobStorageSettings { get; set; }
+
+        /// <summary>
         /// Gets or sets the data protection settings.
         /// </summary>
         /// <value>
