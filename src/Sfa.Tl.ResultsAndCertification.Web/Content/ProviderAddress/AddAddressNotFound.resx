@@ -121,10 +121,10 @@
     <value>Try another postcode</value>
   </data>
   <data name="Heading_No_Address_Found" xml:space="preserve">
-    <value>No addresses found for </value>
+    <value>No addresses found for {0}</value>
   </data>
   <data name="Link_Add_Address_Manually" xml:space="preserve">
-    <value>add your address manually.</value>
+    <value>add your address manually</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Add your organisation's postal address - No addresses found page</value>

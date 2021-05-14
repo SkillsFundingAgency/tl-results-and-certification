@@ -13,10 +13,10 @@
     <div class="govuk-grid-column-two-thirds">
         <form asp-route="SubmitAddAddressNotFound">
 
-            <h1 class="govuk-heading-xl">@AddAddressNotFound.Heading_No_Address_Found@Model.Postcode</h1>
+            <h1 class="govuk-heading-xl">@string.Format(@AddAddressNotFound.Heading_No_Address_Found, @Model.Postcode)</h1>
             <p class="govuk-body">@AddAddressNotFound.Para_Check_It_Is_Correct</p>
             <p class="govuk-body">@AddAddressNotFound.Para_Check_Copied_Entire_Postcode</p>
-            <p class="govuk-body">@AddAddressNotFound.Para_If_Postcode_Correct<a asp-route="AddAddressManually" asp-route-isFromSelectAddress="true">@AddAddressNotFound.Link_Add_Address_Manually</a></p>
+            <p class="govuk-body">@AddAddressNotFound.Para_If_Postcode_Correct<a class="govuk-link" asp-route="AddAddressManually" asp-route-isFromSelectAddress="true">@AddAddressNotFound.Link_Add_Address_Manually</a>.</p>
 
             <button type="submit" id="tryAnotherButton" class="govuk-button" data-module="govuk-button">@AddAddressNotFound.Button_Try_Another_Postcode</button>
         </form>
