@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddAddressPostcodeAsync(bool showPostcode = true)
         {
             var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
-            var viewModel = new AddAddressPostcodeViewModel { Postcode = showPostcode && cacheModel?.AddAddressPostcode != null ? cacheModel.AddAddressPostcode.Postcode : null, IsFromNoAddressFound = cacheModel?.AddAddressPostcode?.IsFromNoAddressFound == true };
+            var viewModel = new AddAddressPostcodeViewModel { Postcode = showPostcode && cacheModel?.AddAddressPostcode != null ? cacheModel.AddAddressPostcode.Postcode : null };
             return View(viewModel);
         }
 
@@ -277,14 +277,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-postal-address-no-addresses-found", Name = RouteConstants.SubmitAddAddressNotFound)]
         public async Task<IActionResult> SubmitAddAddressNotFoundAsync()
         {
-            var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
-            if (cacheModel?.AddAddressPostcode == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            cacheModel.AddAddressPostcode.IsFromNoAddressFound = true;
-            await _cacheService.SetAsync(CacheKey, cacheModel);
-
-            return RedirectToRoute(RouteConstants.AddAddressPostcode, new { showPostcode = false });
+            await _cacheService.RemoveAsync<AddAddressViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AddAddressPostcode);
         }
     }
 }
