@@ -33,7 +33,7 @@
       "type": "string",
       "environmentVariable": "FeedbackEmailAddress"
     },
-	  "KeyVaultUri": {
+	"KeyVaultUri": {
       "type": "string",
       "environmentVariable": "KeyVaultUri"
     },
@@ -239,7 +239,7 @@
       ],
       "type": "object"
     },
-	  "OrdnanceSurveyApiSettings": {
+	"OrdnanceSurveyApiSettings": {
       "properties": {
         "PlacesUri": {          
           "type": "string",
@@ -254,7 +254,7 @@
       "required": [],
       "type": "object"
     },
-	  "LearningRecordServiceSettings": {
+	"LearningRecordServiceSettings": {
       "properties": {
         "VendorId": {
           "minLength": 1,
@@ -288,7 +288,7 @@
         "Ukprn",
         "Username",
         "Password",
-		    "CertificateName"
+		"CertificateName"
       ],
       "type": "object"
     }
@@ -301,13 +301,13 @@
     "TlevelQueriedSupportEmailAddress",
     "TechnicalSupportEmailAddress",
     "FeedbackEmailAddress",
-	  "KeyVaultUri",
+	"KeyVaultUri",
     "RedisSettings",
-	  "BlobStorageSettings",
+	"BlobStorageSettings",
     "DataProtectionSettings",
     "DfeSignInSettings",
     "ResultsAndCertificationInternalApiSettings",
-	  "LearningRecordServiceSettings"
+	"LearningRecordServiceSettings"
   ],
   "type": "object"
 }

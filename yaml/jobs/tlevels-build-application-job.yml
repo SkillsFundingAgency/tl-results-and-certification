@@ -25,6 +25,15 @@ jobs:
     #     packageType: sdk
     #     version: $(dotnetVersion)
     #     installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: 'src/Sfa.Tl.ResultsAndCertification.sln' #'src/**/*.csproj'
+        noCache: true
+        feedsToUse: config
+        nugetConfigPath: src/NuGet.config
     
     - task: Npm@1
       displayName: 'npm install'
@@ -37,15 +46,6 @@ jobs:
       inputs:
         gulpFile: src/Sfa.Tl.ResultsAndCertification.Web/gulpfile.js
         targets: default
-    
-    - task: DotNetCoreCLI@2
-      displayName: Restore
-      inputs:
-        command: restore
-        projects: 'src/Sfa.Tl.ResultsAndCertification.sln' #'src/**/*.csproj'
-        noCache: true
-        feedsToUse: config
-        nugetConfigPath: src/NuGet.config
     
     - task: DotNetCoreCLI@2
       displayName: Build
