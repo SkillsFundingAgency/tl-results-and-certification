@@ -22,6 +22,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<bool> AddAddressAsync(AddAddressRequest request)
         {
             return await _providerAddressService.AddAddressAsync(request);
-        }        
+        }
+
+        [HttpGet]
+        [Route("GetAddress")]
+        public async Task<Address> GetAddressAsync(long providerUkprn)
+        {
+            return await _providerAddressService.GetAddressAsync(providerUkprn);
+        }
     }
 }

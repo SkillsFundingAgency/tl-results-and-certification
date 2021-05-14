@@ -37,5 +37,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var providerAddress = _mapper.Map<TlProviderAddress>(request, opt => opt.Items["providerId"] = tlProvider.Id);
             return await _tlProviderAddress.CreateAsync(providerAddress) > 0;            
         }
+
+        public async Task<Address> GetAddressAsync(long providerUkprn)
+        {
+            var address = await _tlProviderAddress.GetFirstOrDefaultAsync(pa => pa.TlProvider.UkPrn == providerUkprn && pa.IsActive, pa => pa, pa => pa.CreatedOn, false);
+            return _mapper.Map<Address>(address);
+        }
     }
 }
