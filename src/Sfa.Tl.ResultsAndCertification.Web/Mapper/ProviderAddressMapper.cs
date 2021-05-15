@@ -24,8 +24,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.Udprn, opts => opts.MapFrom(s => s.DeliveryPointAddress.Uprn))
                 .ForMember(d => d.FormattedAddress, opts => opts.MapFrom(s => s.DeliveryPointAddress.FormattedAddress))
                 .ForMember(d => d.OrganisationName, opts => opts.MapFrom(s => s.DeliveryPointAddress.OrganisationName))
-                .ForMember(d => d.AddressLine1, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.DeliveryPointAddress.BuildingName) ? s.DeliveryPointAddress.BuildingName : string.Join(", ", s.DeliveryPointAddress.BuildingAndThroughfare)))
-                .ForMember(d => d.AddressLine2, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.DeliveryPointAddress.BuildingName) ? string.Join(", ", s.DeliveryPointAddress.BuildingAndThroughfare) : null))
+                .ForMember(d => d.AddressLine1, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.DeliveryPointAddress.FormattedBuildingName) ? s.DeliveryPointAddress.FormattedBuildingName : s.DeliveryPointAddress.FormattedBuildingNumberAndThroughfare))
+                .ForMember(d => d.AddressLine2, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.DeliveryPointAddress.FormattedBuildingName) ? s.DeliveryPointAddress.FormattedBuildingNumberAndThroughfare : null))
                 .ForMember(d => d.Town, opts => opts.MapFrom(s => s.DeliveryPointAddress.Town))
                 .ForMember(d => d.Postcode, opts => opts.MapFrom(s => s.DeliveryPointAddress.Postcode))
                 .ForAllOtherMembers(d => d.Ignore());

@@ -73,10 +73,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.OrdnanceSu
 
             actualResult.Uprn.Should().Be(expectedResult.Uprn);
             actualResult.FormattedAddress.Should().Be(expectedResult.FormattedAddress);
-            actualResult.OrganisationName.Should().Be(expectedResult.OrganisationName);
+            actualResult.OrganisationName.Should().Be(expectedResult.OrganisationName);            
             actualResult.BuildingName.Should().Be(expectedResult.BuildingName);
+            actualResult.FormattedBuildingName.Should().Be(expectedResult.BuildingName);
             actualResult.BuildingNumber.Should().Be(expectedResult.BuildingNumber);
             actualResult.ThroughfareName.Should().Be(expectedResult.ThroughfareName);
+            actualResult.FormattedBuildingNumberAndThroughfare.Should().Be($"{expectedResult.BuildingNumber}, {expectedResult.ThroughfareName}");
             actualResult.Town.Should().Be(expectedResult.Town);
             actualResult.Postcode.Should().Be(expectedResult.Postcode);
         }

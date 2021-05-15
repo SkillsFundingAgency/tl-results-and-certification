@@ -14,6 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.OrdnanceSurvey
 
         [JsonProperty("organisation_name")]
         public string OrganisationName { get; set; }
+                
+        [JsonProperty("sub_building_name")]
+        public string SubBuildingName { get; set; }
 
         [JsonProperty("building_name")]
         public string BuildingName { get; set; }
@@ -31,12 +34,15 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.OrdnanceSurvey
         public string Postcode { get; set; }
 
         [JsonIgnore]
-        public IEnumerable<string> BuildingAndThroughfare
-        {
-            get
-            {
-                return new string[] { BuildingNumber, ThroughfareName }.Where(x => !string.IsNullOrWhiteSpace(x));
-            }
-        }
+        public string FormattedBuildingName => string.Join(", ", SubBuildingAndBuildingName);
+        
+        [JsonIgnore]
+        public string FormattedBuildingNumberAndThroughfare => string.Join(", ", BuildingNumberAndThroughfare);
+        
+        [JsonIgnore]
+        public IEnumerable<string> SubBuildingAndBuildingName => new string[] { SubBuildingName, BuildingName }.Where(x => !string.IsNullOrWhiteSpace(x));
+
+        [JsonIgnore]
+        public IEnumerable<string> BuildingNumberAndThroughfare => new string[] { BuildingNumber, ThroughfareName }.Where(x => !string.IsNullOrWhiteSpace(x));
     }
 }

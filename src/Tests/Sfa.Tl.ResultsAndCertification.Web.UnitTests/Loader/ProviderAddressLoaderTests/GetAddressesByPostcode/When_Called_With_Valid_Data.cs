@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderAddressLoa
                        DeliveryPointAddress = new DeliveryPointAddress
                        {
                            Uprn = "1234567895",
-                           FormattedAddress = "Test line 1, Test line 2, Test town, xx1 1xx",
+                           FormattedAddress = "Test org name, Test building name, Test line 1, Test line 2, Test town, xx1 1xx",
                            OrganisationName = "Test org name",
                            BuildingName = "Test building name",
                            BuildingNumber = "Test line 1",
