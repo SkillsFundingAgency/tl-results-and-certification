@@ -47,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlProviderA
             actualResult.Should().NotBeNull();
             actualResult.Id.Should().Be(1);
             actualResult.DepartmentName.Should().Be(expectedResult.DepartmentName);
+            actualResult.OrganisationName.Should().Be(expectedResult.OrganisationName);
             actualResult.AddressLine1.Should().Be(expectedResult.AddressLine1);
             actualResult.AddressLine2.Should().Be(expectedResult.AddressLine2);
             actualResult.Town.Should().Be(expectedResult.Town);

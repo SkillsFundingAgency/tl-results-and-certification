@@ -38,8 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.OrdnanceSu
                        {
                            Uprn = "1234567895",
                            FormattedAddress = "Test line 1, Test line 2, Test town, xx1 1xx",
-                           AddressLine1 = "Test line 1",
-                           AddressLine2 = "Test line 2",
+                           BuildingNumber = "Test line 1",
+                           ThroughfareName = "Test line 2",
                            Town = "Test town",
                            Postcode = "xx1 1xx"
                        }
@@ -71,8 +71,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.OrdnanceSu
 
             actualResult.Uprn.Should().Be(expectedResult.Uprn);
             actualResult.FormattedAddress.Should().Be(expectedResult.FormattedAddress);
-            actualResult.AddressLine1.Should().Be(expectedResult.AddressLine1);
-            actualResult.AddressLine2.Should().Be(expectedResult.AddressLine2);
+            actualResult.BuildingNumber.Should().Be(expectedResult.BuildingNumber);
+            actualResult.ThroughfareName.Should().Be(expectedResult.ThroughfareName);
             actualResult.Town.Should().Be(expectedResult.Town);
             actualResult.Postcode.Should().Be(expectedResult.Postcode);
         }

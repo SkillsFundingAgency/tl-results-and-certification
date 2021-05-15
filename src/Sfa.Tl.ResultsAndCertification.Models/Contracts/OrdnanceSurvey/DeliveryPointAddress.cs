@@ -9,12 +9,18 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.OrdnanceSurvey
 
         [JsonProperty("address")]
         public string FormattedAddress { get; set; }
-        
+
+        [JsonProperty("organisation_name")]
+        public string OrganisationName { get; set; }
+
+        [JsonProperty("building_name")]
+        public string BuildingName { get; set; }
+
         [JsonProperty("building_number")]
-        public string AddressLine1 { get; set; }
+        public string BuildingNumber { get; set; }
         
         [JsonProperty("thoroughfare_name")]
-        public string AddressLine2 { get; set; }
+        public string ThroughfareName { get; set; }
         
         [JsonProperty("post_town")]
         public string Town { get; set; }

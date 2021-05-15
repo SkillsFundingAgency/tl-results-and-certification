@@ -23,8 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<AddressResult, AddressViewModel>()
                 .ForMember(d => d.Udprn, opts => opts.MapFrom(s => s.DeliveryPointAddress.Uprn))
                 .ForMember(d => d.FormattedAddress, opts => opts.MapFrom(s => s.DeliveryPointAddress.FormattedAddress))
-                .ForMember(d => d.AddressLine1, opts => opts.MapFrom(s => s.DeliveryPointAddress.AddressLine1))
-                .ForMember(d => d.AddressLine2, opts => opts.MapFrom(s => s.DeliveryPointAddress.AddressLine2))
+                .ForMember(d => d.AddressLine1, opts => opts.MapFrom(s => s.DeliveryPointAddress.BuildingNumber))
+                .ForMember(d => d.AddressLine2, opts => opts.MapFrom(s => s.DeliveryPointAddress.ThroughfareName))
                 .ForMember(d => d.Town, opts => opts.MapFrom(s => s.DeliveryPointAddress.Town))
                 .ForMember(d => d.Postcode, opts => opts.MapFrom(s => s.DeliveryPointAddress.Postcode))
                 .ForAllOtherMembers(d => d.Ignore());
