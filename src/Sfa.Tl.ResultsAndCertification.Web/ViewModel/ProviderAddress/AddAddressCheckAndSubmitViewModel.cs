@@ -41,6 +41,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
             RouteAttributes = PreviousRoute.Item2
         };
 
+        public SummaryItemModel SummaryOrganisationName => new SummaryItemModel
+        {
+            Id = "organisationname",
+            Title = CheckAndSubmitContent.Summary_OrganisationName,
+            Value = IsManual ? ProviderAddress.AddAddressManual.OrganisationName : ProviderAddress.AddAddressSelect.SelectedAddress.OrganisationName,
+            NeedBorderBottomLine = false
+        };
+
         public SummaryItemModel SummaryAddressLine1 => new SummaryItemModel
         {
             Id = "addressline1",

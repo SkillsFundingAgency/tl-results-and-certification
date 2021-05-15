@@ -138,6 +138,9 @@
   <data name="Label_Department" xml:space="preserve">
     <value>Department (optional)</value>
   </data>
+  <data name="Label_Organisation" xml:space="preserve">
+    <value>Organisation's name (optional)</value>
+  </data>
   <data name="Label_Postcode" xml:space="preserve">
     <value>Postcode</value>
   </data>

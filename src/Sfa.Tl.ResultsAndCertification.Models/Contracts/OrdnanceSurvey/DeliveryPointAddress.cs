@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.OrdnanceSurvey
 {
@@ -29,11 +31,11 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.OrdnanceSurvey
         public string Postcode { get; set; }
 
         [JsonIgnore]
-        public string[] BuildingAndThroughfare
+        public IEnumerable<string> BuildingAndThroughfare
         {
             get
             {
-                return new[] { BuildingNumber, ThroughfareName };
+                return new string[] { BuildingNumber, ThroughfareName }.Where(x => !string.IsNullOrWhiteSpace(x));
             }
         }
     }

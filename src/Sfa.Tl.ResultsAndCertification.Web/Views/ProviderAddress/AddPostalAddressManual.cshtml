@@ -26,6 +26,11 @@
                         <input id="departmentname" class="govuk-input govuk-!-width-two-thirds" asp-for="DepartmentName" type="text" maxlength="100">
                     </div>
 
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="organisationname">@AddPostalAddressManual.Label_Organisation</label>
+                        <input id="organisationname" class="govuk-input govuk-!-width-two-thirds" asp-for="OrganisationName" type="text" maxlength="100">
+                    </div>
+
                     <div class="govuk-form-group" sfa-validation-for="AddressLine1" sfa-validation-class="govuk-form-group--error">
                         <label class="govuk-label" for="addressline1">@AddPostalAddressManual.Label_Building_And_Street<span class="govuk-visually-hidden">@AddPostalAddressManual.HiddenText_Line1_Of_2</span></label>
                         <span sfa-validation-for="AddressLine1"></span>

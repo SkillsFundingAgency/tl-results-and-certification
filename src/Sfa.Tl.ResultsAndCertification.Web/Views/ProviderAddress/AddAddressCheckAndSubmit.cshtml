@@ -20,6 +20,7 @@
 
             <dl class="govuk-summary-list">
                 <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
+                <vc:summary-item model=Model.SummaryOrganisationName></vc:summary-item>
                 <vc:summary-item model=Model.SummaryAddressLine1></vc:summary-item>
 
                 @if (!string.IsNullOrWhiteSpace(Model.SummaryAddressLine2.Value))
