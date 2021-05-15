@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
         {
             _manualAddress = new AddAddressManualViewModel
             {
-                Department = "Finance",
+                DepartmentName = "Finance",
                 AddressLine1 = "50",
                 AddressLine2 = "Street",
                 Town = "Coventry",
@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
 
             // Department
             model.SummaryDepartment.Title.Should().Be(CheckAndSubmitContent.Summary_Department);
-            model.SummaryDepartment.Value.Should().Be(_manualAddress.Department);
+            model.SummaryDepartment.Value.Should().Be(_manualAddress.DepartmentName);
             model.SummaryDepartment.ActionText.Should().Be(CheckAndSubmitContent.Link_Change_Address);
             model.SummaryDepartment.RouteName.Should().BeEquivalentTo(RouteConstants.AddPostalAddressManual);
             model.SummaryDepartment.RouteAttributes.Should().NotBeNull();

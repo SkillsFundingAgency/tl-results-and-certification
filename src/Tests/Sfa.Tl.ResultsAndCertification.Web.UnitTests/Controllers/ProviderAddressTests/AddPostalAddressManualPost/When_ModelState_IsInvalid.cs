@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
                 AddressLine1 = "38",
                 AddressLine2 = "Street Line",
                 Town = "Birmingham",
-                Department = "Finanace",
+                DepartmentName = "Finanace",
             };
 
             Controller.ModelState.AddModelError(nameof(AddAddressManualViewModel.Postcode), AddAddressContent.AddPostalAddressManual.Validation_Enter_Postcode);
@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
 
             var model = (Result as ViewResult).Model as AddAddressManualViewModel;
             
-            model.Department.Should().Be(ViewModel.Department);
+            model.DepartmentName.Should().Be(ViewModel.DepartmentName);
             model.AddressLine1.Should().Be(ViewModel.AddressLine1);
             model.AddressLine2.Should().Be(ViewModel.AddressLine2);
             model.Town.Should().Be(ViewModel.Town);

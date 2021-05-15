@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         {
             Id = "department",
             Title = CheckAndSubmitContent.Summary_Department,
-            Value = IsManual ? ProviderAddress.AddAddressManual.Department : ProviderAddress.AddAddressSelect.DepartmentName,
+            Value = IsManual ? ProviderAddress.AddAddressManual.DepartmentName : ProviderAddress.AddAddressSelect.DepartmentName,
             NeedBorderBottomLine = false,
 
             ActionText = CheckAndSubmitContent.Link_Change_Address,

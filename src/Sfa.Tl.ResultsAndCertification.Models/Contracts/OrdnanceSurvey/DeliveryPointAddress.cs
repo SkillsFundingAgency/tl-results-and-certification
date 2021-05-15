@@ -27,5 +27,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.OrdnanceSurvey
         
         [JsonProperty("postcode")]
         public string Postcode { get; set; }
+
+        [JsonIgnore]
+        public string[] BuildingAndThroughfare
+        {
+            get
+            {
+                return new[] { BuildingNumber, ThroughfareName };
+            }
+        }
     }
 }

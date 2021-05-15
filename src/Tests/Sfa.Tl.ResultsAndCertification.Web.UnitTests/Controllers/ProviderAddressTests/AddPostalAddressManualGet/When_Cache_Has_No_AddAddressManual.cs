@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             
             model.Should().NotBeNull();
             
-            model.Department.Should().BeNull();
+            model.DepartmentName.Should().BeNull();
             model.AddressLine1.Should().BeNull();
             model.AddressLine1.Should().BeNull();
             model.Town.Should().BeNull();

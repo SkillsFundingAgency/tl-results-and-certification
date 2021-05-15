@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             
             _addressManual = new AddAddressManualViewModel
             {
-                Department = "Finance",
+                DepartmentName = "Finance",
                 AddressLine1 = "50",
                 AddressLine2 = "Street",
                 Town = "Coventry",
@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             var model = viewResult.Model as AddAddressManualViewModel;
             model.Should().NotBeNull();
 
-            model.Department.Should().Be(_addressManual.Department);
+            model.DepartmentName.Should().Be(_addressManual.DepartmentName);
             model.AddressLine1.Should().Be(_addressManual.AddressLine1);
             model.AddressLine1.Should().Be(_addressManual.AddressLine1);
             model.Town.Should().Be(_addressManual.Town);

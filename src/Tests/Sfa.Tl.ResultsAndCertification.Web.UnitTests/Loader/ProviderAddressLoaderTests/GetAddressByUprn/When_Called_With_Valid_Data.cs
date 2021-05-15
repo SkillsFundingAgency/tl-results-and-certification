@@ -24,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderAddressLoa
                        {
                            Uprn = "1234567895",
                            FormattedAddress = "Test line 1, Test line 2, Test town, xx1 1xx",
+                           BuildingName = "Test building",
                            BuildingNumber = "Test line 1",
                            ThroughfareName = "Test line 2",
                            Town = "Test town",
@@ -51,8 +52,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderAddressLoa
 
             actualResult.Udprn.Should().Be(expectedResult.Uprn);
             actualResult.FormattedAddress.Should().Be(expectedResult.FormattedAddress);
-            actualResult.AddressLine1.Should().Be(expectedResult.BuildingNumber);
-            actualResult.AddressLine2.Should().Be(expectedResult.ThroughfareName);
+            actualResult.AddressLine1.Should().Be(expectedResult.BuildingName);
+            actualResult.AddressLine2.Should().Be($"{expectedResult.BuildingNumber}, {expectedResult.ThroughfareName}");
             actualResult.Town.Should().Be(expectedResult.Town);
             actualResult.Postcode.Should().Be(expectedResult.Postcode);
         }

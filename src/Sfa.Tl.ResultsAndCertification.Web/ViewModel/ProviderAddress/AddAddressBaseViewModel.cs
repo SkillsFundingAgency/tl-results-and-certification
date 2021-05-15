@@ -6,7 +6,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 {
     public abstract class AddAddressBaseViewModel
     {
-        public string Department { get; set; }
+        public string DepartmentName { get; set; }
+        public string OrganisationName { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ErrorResource.AddPostalAddressManual), ErrorMessageResourceName = "Validation_Enter_Building_And_Street")]
         public string AddressLine1 { get; set; }
