@@ -57,6 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderAddre
             if(expectedResult)
             {
                 actualAddress.DepartmentName.Should().Be(request.DepartmentName);
+                actualAddress.OrganisationName.Should().Be(request.OrganisationName);
                 actualAddress.AddressLine1.Should().Be(request.AddressLine1);
                 actualAddress.AddressLine2.Should().Be(request.AddressLine2);
                 actualAddress.Town.Should().Be(request.Town);
@@ -72,12 +73,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderAddre
                 {                    
                     new object[]
                     {
-                        new AddAddressRequest { Ukprn = 00000000, DepartmentName = "Test Dept", AddressLine1 = "Line1", AddressLine2 = "Line2", Town = "town", Postcode = "xx1 1yy", PerformedBy = "Test User" },
+                        new AddAddressRequest { Ukprn = 00000000, DepartmentName = "Test Dept", OrganisationName = "Test Org name", AddressLine1 = "Line1", AddressLine2 = "Line2", Town = "town", Postcode = "xx1 1yy", PerformedBy = "Test User" },
                         false
                     },
                     new object[]
                     {
-                        new AddAddressRequest { Ukprn = (long)Provider.BarsleyCollege, DepartmentName = "Test Dept", AddressLine1 = "Line1", AddressLine2 = "Line2", Town = "town", Postcode = "xx1 1yy", PerformedBy = "Test User" },
+                        new AddAddressRequest { Ukprn = (long)Provider.BarsleyCollege, DepartmentName = "Test Dept", OrganisationName = "Test Org name", AddressLine1 = "Line1", AddressLine2 = "Line2", Town = "town", Postcode = "xx1 1yy", PerformedBy = "Test User" },
                         true
                     },
                 };

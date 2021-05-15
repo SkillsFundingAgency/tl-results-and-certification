@@ -16,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             ViewModel = new AddAddressManualViewModel
             {
                 DepartmentName = "Finance",
+                OrganisationName = "Org name",
                 AddressLine1 = "50",
                 AddressLine2 = "Street",
                 Town = "Coventry",
@@ -37,6 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
                 x.AddAddressSelect == null &&
                 x.AddAddressManual != null &&
                 x.AddAddressManual.DepartmentName == ViewModel.DepartmentName &&
+                x.AddAddressManual.OrganisationName == ViewModel.OrganisationName &&
                 x.AddAddressManual.AddressLine1 == ViewModel.AddressLine1 &&
                 x.AddAddressManual.AddressLine2 == ViewModel.AddressLine2 &&
                 x.AddAddressManual.Town == ViewModel.Town &&

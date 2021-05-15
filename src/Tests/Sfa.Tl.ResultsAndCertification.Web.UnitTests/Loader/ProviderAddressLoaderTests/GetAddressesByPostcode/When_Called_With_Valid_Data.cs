@@ -24,6 +24,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderAddressLoa
                        {
                            Uprn = "1234567895",
                            FormattedAddress = "Test line 1, Test line 2, Test town, xx1 1xx",
+                           OrganisationName = "Test org name",
+                           BuildingName = "Test building name",
                            BuildingNumber = "Test line 1",
                            ThroughfareName = "Test line 2",
                            Town = "Test town",

@@ -28,6 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             {
                 Udprn = _uprn.ToString(),
                 FormattedAddress = "5, Test road, Test town, xx1 1yy",
+                DepartmentName = "Dept name",
+                OrganisationName = "Org name",
                 AddressLine1 = "5",
                 AddressLine2 = "Test road",
                 Town = "Test town",

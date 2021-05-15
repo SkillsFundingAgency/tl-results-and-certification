@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderAddressLoaderTests.GetAddressByUprn
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Called_With_NoBuildingNumber : TestSetup
     {
         private PostcodeLookupResult _expectedApiResult;
 
@@ -24,8 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderAddressLoa
                        {
                            Uprn = "1234567895",
                            FormattedAddress = "Test line 1, Test line 2, Test town, xx1 1xx",
-                           OrganisationName = "Test org name",
-                           BuildingName = "Test building name",
+                           OrganisationName = "Test org name",                          
                            BuildingNumber = "Test line 1",
                            ThroughfareName = "Test line 2",
                            Town = "Test town",
@@ -54,8 +53,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderAddressLoa
             actualResult.Udprn.Should().Be(expectedResult.Uprn);
             actualResult.FormattedAddress.Should().Be(expectedResult.FormattedAddress);
             actualResult.OrganisationName.Should().Be(expectedResult.OrganisationName);
-            actualResult.AddressLine1.Should().Be(expectedResult.BuildingName);
-            actualResult.AddressLine2.Should().Be($"{expectedResult.BuildingNumber}, {expectedResult.ThroughfareName}");
+            actualResult.AddressLine1.Should().Be($"{expectedResult.BuildingNumber}, {expectedResult.ThroughfareName}");
+            actualResult.AddressLine2.Should().BeNullOrWhiteSpace();
             actualResult.Town.Should().Be(expectedResult.Town);
             actualResult.Postcode.Should().Be(expectedResult.Postcode);
         }
