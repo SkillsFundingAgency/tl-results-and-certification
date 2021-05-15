@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAddress")]
+        [Route("GetAddress/{providerUkprn}")]
         public async Task<Address> GetAddressAsync(long providerUkprn)
         {
             return await _providerAddressService.GetAddressAsync(providerUkprn);

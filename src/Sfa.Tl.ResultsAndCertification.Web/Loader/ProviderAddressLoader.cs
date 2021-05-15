@@ -59,5 +59,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var addressRequest = _mapper.Map<AddAddressRequest>(viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);
             return await _internalApiClient.AddAddressAsync(addressRequest);
         }
+
+        public async Task<T> GetAddressAsync<T>(long providerUkprn)
+        {
+            var response = await _internalApiClient.GetAddressAsync(providerUkprn);
+            return _mapper.Map<T>(response);
+        }
     }
 }

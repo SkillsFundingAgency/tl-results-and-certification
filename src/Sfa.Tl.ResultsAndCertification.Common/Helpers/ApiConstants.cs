@@ -65,5 +65,6 @@
 
         // ProviderAddress Uri's
         public const string AddAddressUri = "/api/provideraddress/AddAddress";
+        public const string GetAddressUri = "/api/provideraddress/GetAddress/{0}";
     }
 }

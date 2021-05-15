@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.ManagePostalAddress", typeof(ManagePostalAddress).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress.ManagePostalAddress", typeof(ManagePostalAddress).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,11 +70,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is where we will send certificates and statements of achievement..
+        ///   Looks up a localized string similar to Building and street.
         /// </summary>
-        public static string Add_Address_Before_Request_Certificate_Text {
+        public static string BuildingAndStreet_Label {
             get {
-                return ResourceManager.GetString("Add_Address_Before_Request_Certificate_Text", resourceCulture);
+                return ResourceManager.GetString("BuildingAndStreet_Label", resourceCulture);
             }
         }
         
@@ -88,6 +88,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change address.
+        /// </summary>
+        public static string Button_Change_Address {
+            get {
+                return ResourceManager.GetString("Button_Change_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department.
+        /// </summary>
+        public static string Department_Label {
+            get {
+                return ResourceManager.GetString("Department_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage your organisation’s postal address.
         /// </summary>
         public static string Manage_Postal_Address_Heading {
@@ -97,11 +115,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Organisation’s name.
+        /// </summary>
+        public static string OrganisationName_Label {
+            get {
+                return ResourceManager.GetString("OrganisationName_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage your organisation&apos;s postal address page.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Postcode.
+        /// </summary>
+        public static string Postcode_Label {
+            get {
+                return ResourceManager.GetString("Postcode_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is where we will send certificates and statements of achievement..
+        /// </summary>
+        public static string This_Is_Where_We_Will_Send_Certificates_Text {
+            get {
+                return ResourceManager.GetString("This_Is_Where_We_Will_Send_Certificates_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Town or city.
+        /// </summary>
+        public static string Town_Label {
+            get {
+                return ResourceManager.GetString("Town_Label", resourceCulture);
             }
         }
     }

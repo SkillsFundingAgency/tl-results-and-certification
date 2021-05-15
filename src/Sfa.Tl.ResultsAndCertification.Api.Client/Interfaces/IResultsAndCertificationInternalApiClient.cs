@@ -67,6 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         // ProviderAddress
         Task<bool> AddAddressAsync(AddAddressRequest request);
+        Task<Address> GetAddressAsync(long providerUkprn);
 
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);

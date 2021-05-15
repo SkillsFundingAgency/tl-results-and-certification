@@ -39,6 +39,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.Town, opts => opts.MapFrom(s => s.AddAddressSelect != null ? s.AddAddressSelect.SelectedAddress.Town : s.AddAddressManual.Town))
                .ForMember(d => d.Postcode, opts => opts.MapFrom(s => s.AddAddressSelect != null ? s.AddAddressSelect.SelectedAddress.Postcode : s.AddAddressManual.Postcode))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AddAddressViewModel, AddAddressRequest>>());
+
+            CreateMap<Address, ManagePostalAddressViewModel>()
+                .ForMember(d => d.DepartmentName, opts => opts.MapFrom(s => s.DepartmentName))
+                .ForMember(d => d.OrganisationName, opts => opts.MapFrom(s => s.OrganisationName))
+                .ForMember(d => d.AddressLine1, opts => opts.MapFrom(s => s.AddressLine1))
+                .ForMember(d => d.AddressLine2, opts => opts.MapFrom(s => s.AddressLine2))
+                .ForMember(d => d.Town, opts => opts.MapFrom(s => s.Town))
+                .ForMember(d => d.Postcode, opts => opts.MapFrom(s => s.Postcode))
+                .ForAllOtherMembers(d => d.Ignore());
         }
     }
 }

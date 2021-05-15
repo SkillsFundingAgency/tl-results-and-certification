@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 
             CreateMap<TlProviderAddress, Address>()
                 .ForMember(d => d.DepartmentName, opts => opts.MapFrom(s => s.DepartmentName))
+                .ForMember(d => d.OrganisationName, opts => opts.MapFrom(s => s.OrganisationName))
                 .ForMember(d => d.AddressLine1, opts => opts.MapFrom(s => s.AddressLine1))
                 .ForMember(d => d.AddressLine2, opts => opts.MapFrom(s => s.AddressLine2))
                 .ForMember(d => d.Town, opts => opts.MapFrom(s => s.Town))

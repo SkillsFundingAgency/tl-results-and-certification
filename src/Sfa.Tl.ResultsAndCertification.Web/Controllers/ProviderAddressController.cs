@@ -32,19 +32,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("manage-postal-address", Name = RouteConstants.ManagePostalAddress)]
         public async Task<IActionResult> ManagePostalAddressAsync()
         {
-            var isAlreadyAdded = await FindPostalAddress();
-            if (isAlreadyAdded)
-                return View(); //TODO: redirect to ShowAddressPage.
+            var viewModel = await _providerAddressLoader.GetAddressAsync<ManagePostalAddressViewModel>(User.GetUkPrn());
+            if (viewModel == null)
+                viewModel = new ManagePostalAddressViewModel();
 
             await _cacheService.RemoveAsync<AddAddressViewModel>(CacheKey);
-            return View(new ManagePostalAddressViewModel());
-
-            static async Task<bool> FindPostalAddress()
-            {
-                await Task.CompletedTask;
-                return false;
-            }
-        }
+            return View(viewModel);
+        }        
 
         [HttpGet]
         [Route("add-address", Name = RouteConstants.AddAddress)]
@@ -279,6 +273,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             await _cacheService.RemoveAsync<AddAddressViewModel>(CacheKey);
             return RedirectToRoute(RouteConstants.AddAddressPostcode);
-        }
+        }        
     }
 }

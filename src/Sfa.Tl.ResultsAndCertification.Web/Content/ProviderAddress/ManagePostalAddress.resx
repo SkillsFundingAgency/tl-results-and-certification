@@ -120,16 +120,34 @@
   <data name="Add_Address_Before_Request_Certificate_Inset_Text" xml:space="preserve">
     <value>You need to add your organisation's postal address before you can request a certificate or statement of achievement.</value>
   </data>
-  <data name="Add_Address_Before_Request_Certificate_Text" xml:space="preserve">
-    <value>This is where we will send certificates and statements of achievement.</value>
+  <data name="BuildingAndStreet_Label" xml:space="preserve">
+    <value>Building and street</value>
   </data>
   <data name="Button_Add_Address" xml:space="preserve">
     <value>Add address</value>
   </data>
+  <data name="Button_Change_Address" xml:space="preserve">
+    <value>Change address</value>
+  </data>
+  <data name="Department_Label" xml:space="preserve">
+    <value>Department</value>
+  </data>
   <data name="Manage_Postal_Address_Heading" xml:space="preserve">
     <value>Manage your organisation’s postal address</value>
   </data>
+  <data name="OrganisationName_Label" xml:space="preserve">
+    <value>Organisation’s name</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Manage your organisation's postal address page</value>
+  </data>
+  <data name="Postcode_Label" xml:space="preserve">
+    <value>Postcode</value>
+  </data>
+  <data name="This_Is_Where_We_Will_Send_Certificates_Text" xml:space="preserve">
+    <value>This is where we will send certificates and statements of achievement.</value>
+  </data>
+  <data name="Town_Label" xml:space="preserve">
+    <value>Town or city</value>
   </data>
 </root>

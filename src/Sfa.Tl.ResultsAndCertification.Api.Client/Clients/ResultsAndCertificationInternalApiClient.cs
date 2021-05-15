@@ -285,6 +285,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<AddAddressRequest, bool>(ApiConstants.AddAddressUri, request);
         }
 
+        public async Task<Address> GetAddressAsync(long providerUkprn)
+        {
+            var requestUri = string.Format(ApiConstants.GetAddressUri, providerUkprn);
+            return await GetAsync<Address>(requestUri);
+        }
+
         #region Private Methods
 
         /// <summary>
