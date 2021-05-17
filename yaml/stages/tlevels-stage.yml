@@ -1,4 +1,6 @@
 parameters:
+  - name: environmentTagName
+    type: string
   - name: stageName
     type: string
   - name: dependencies
@@ -28,6 +30,8 @@ stages:
         value: "$(BaseName)"
       - name: EnvironmentName
         value: ${{ parameters.environmentName }}
+      - name: environmentTagName
+        value: ${{parameters.environmentTagName}}
 
     displayName: "${{parameters.environmentName}} [${{parameters.environmentId}}] deployment"
     jobs:
