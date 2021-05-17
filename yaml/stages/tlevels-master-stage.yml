@@ -7,6 +7,7 @@ stages:
 ######################## DEV ##############################################
   - template: tlevels-shared-stage.yml
     parameters:
+      environmentTagName: Dev
       stageName: Dev
       dependencies:
         - build
@@ -17,6 +18,7 @@ stages:
     
   - template: tlevels-stage.yml
     parameters:
+      environmentTagName: Dev
       stageName: Dev
       dependencies:
         - DeploySharedInfrastructure_d01
@@ -28,6 +30,7 @@ stages:
 ######################## TEST ##############################################
   - template: tlevels-shared-stage.yml
     parameters:
+      environmentTagName: Test
       stageName: Test
       dependencies:
         - build
@@ -38,6 +41,7 @@ stages:
     
   - template: tlevels-stage.yml
     parameters:
+      environmentTagName: Test
       stageName: Test
       dependencies:
         - DeploySharedInfrastructure_t01
@@ -50,6 +54,7 @@ stages:
 ######################## Pre Prod ##############################################
   - template: tlevels-shared-stage.yml
     parameters:
+      environmentTagName: PreProd
       stageName: PreProd
       dependencies:
         - DeploySharedInfrastructure_t01
@@ -61,6 +66,7 @@ stages:
     
   - template: tlevels-stage.yml
     parameters:
+      environmentTagName: PreProd
       stageName: PreProd
       dependencies:
         - DeploySharedInfrastructure_p02
@@ -73,6 +79,7 @@ stages:
 ########################## Prod ##############################################
   - template: tlevels-shared-stage.yml
     parameters:
+      environmentTagName: Prod
       stageName: Prod
       dependencies:
         - DeploySharedInfrastructure_p02
@@ -84,6 +91,7 @@ stages:
     
   - template: tlevels-stage.yml
     parameters:
+      environmentTagName: Prod
       stageName: Prod
       dependencies:
         - DeploySharedInfrastructure_p01
