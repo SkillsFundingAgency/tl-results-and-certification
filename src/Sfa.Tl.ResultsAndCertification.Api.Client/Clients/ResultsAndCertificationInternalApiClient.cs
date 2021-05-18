@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
@@ -276,6 +277,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         public async Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model)
         {
             return await PutAsync<UpdateLearnerRecordRequest, bool>(ApiConstants.UpdateLearnerRecordUri, model);
+        }
+
+        // Provider Address endpoints
+        public async Task<bool> AddAddressAsync(AddAddressRequest request)
+        {
+            return await PostAsync<AddAddressRequest, bool>(ApiConstants.AddAddressUri, request);
+        }
+
+        public async Task<Address> GetAddressAsync(long providerUkprn)
+        {
+            var requestUri = string.Format(ApiConstants.GetAddressUri, providerUkprn);
+            return await GetAsync<Address>(requestUri);
         }
 
         #region Private Methods

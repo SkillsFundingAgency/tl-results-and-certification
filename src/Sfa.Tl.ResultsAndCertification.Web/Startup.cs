@@ -74,6 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<ITokenServiceClient, TokenServiceClient>();
             services.AddTransient<ISessionService, SessionService>();
             services.AddHttpClient<IResultsAndCertificationInternalApiClient, ResultsAndCertificationInternalApiClient>();
+            services.AddHttpClient<IOrdnanceSurveyApiClient, OrdnanceSurveyApiClient>();            
             services.AddHttpClient<IDfeSignInApiClient, DfeSignInApiClient>();
 
             var builder = services.AddMvc(config =>
@@ -169,6 +170,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<IResultLoader, ResultLoader>();
             services.AddTransient<IDocumentLoader, DocumentLoader>();
             services.AddTransient<ITrainingProviderLoader, TrainingProviderLoader>();
+            services.AddTransient<IProviderAddressLoader, ProviderAddressLoader>();
         }
     }
 }

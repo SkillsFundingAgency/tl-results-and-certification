@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             return new Domain.Models.TlProvider
             {
-                UkPrn = 10011221,
+                UkPrn = 10000536,
                 Name = "Barnsley College",
                 DisplayName = "Barnsley College",
                 IsActive = true,

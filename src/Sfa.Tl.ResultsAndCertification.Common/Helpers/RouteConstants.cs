@@ -15,7 +15,7 @@
         public const string Home = "Home";
 
         // Tlevel
-        public const string Tlevels = "Tlevels";        
+        public const string Tlevels = "Tlevels";
         public const string YourTlevels = "YourTlevels";
         public const string TlevelDetails = "TlevelDetails";
         public const string SelectTlevel = "SelectTlevel";
@@ -102,7 +102,7 @@
         public const string SubmitAmendWithdrawRegistration = "SubmitAmendWithdrawRegistration";
         public const string RejoinRegistration = "RejoinRegistration";
         public const string SubmitRejoinRegistration = "SubmitRejoinRegistration";
-        public const string RejoinRegistrationConfirmation = "RejoinRegistrationConfirmation";        
+        public const string RejoinRegistrationConfirmation = "RejoinRegistrationConfirmation";
 
         // Reregister
         public const string ReregisterProvider = "ReregisterProvider";
@@ -125,7 +125,7 @@
         public const string SubmitSearchRegistration = "SubmitSearchRegistration";
         public const string SearchRegistrationNotFound = "SearchRegistrationNotFound";
         public const string RegistrationDetails = "RegistrationDetails";
-                
+
         // Cancel Registration
         public const string DeleteRegistration = "DeleteRegistration";
         public const string SubmitDeleteRegistration = "SubmitDeleteRegistration";
@@ -239,7 +239,23 @@
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
         public const string UpdateEnglisAndMathsAchievement = "UpdateEnglisAndMathsAchievement";
         public const string SubmitUpdateEnglisAndMathsAchievement = "SubmitUpdateEnglisAndMathsAchievement";
-        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";        
+        public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
+        public const string ManagePostalAddress = "ManagePostalAddress";
+        public const string AddAddress = "AddAddress";
+        public const string AddAddressPostcode = "AddAddressPostcode";
+        public const string SubmitAddAddressPostcode = "SubmitAddAddressPostcode";
+        public const string AddAddressManually = "AddAddressManually";
+        public const string AddPostalAddressManual = "AddPostalAddressManual";
+        public const string SubmitAddPostalAddressManual = "SubmitAddPostalAddressManual";
+        public const string AddAddressSelect = "AddAddressSelect";
+        public const string SubmitAddAddressSelect = "SubmitAddAddressSelect";
+        public const string AddAddressCheckAndSubmit = "AddAddressCheckAndSubmit";
+        public const string SubmitAddAddressCheckAndSubmit = "SubmitAddAddressCheckAndSubmit";
+        public const string AddAddressConfirmation = "AddAddressConfirmation";
+        public const string AddAddressCancel = "AddAddressCancel";
+        public const string SubmitAddAddressCancel = "SubmitAddAddressCancel";
+        public const string AddAddressNotFound = "AddAddressNotFound";
+        public const string SubmitAddAddressNotFound = "SubmitAddAddressNotFound";
 
         #endregion
     }

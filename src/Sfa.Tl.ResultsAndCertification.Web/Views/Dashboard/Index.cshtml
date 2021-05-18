@@ -136,7 +136,7 @@
     @if (Model?.IsTrainingProviderUser == true)
     {
         <!-- Providers Dashboard -->
-        <!-- BLOCK 1 Manage Learning Records -->
+        <!-- BLOCK: Manage Learning Records -->
         <div class="govuk-grid-column-one-half">
             <div class="govuk-form-group training-provider-card">
                 <p class="govuk-body">
@@ -153,7 +153,23 @@
             </div>
         </div>
 
-        <!-- BLOCK 2 Manage Your Account -->
+        <!-- BLOCK: Manage Postal Address -->
+        <div class="govuk-grid-column-one-half">
+            <div class="govuk-form-group training-provider-card">
+                <p class="govuk-body">
+                    <h2 class="govuk-heading-m">
+                        <a class="govuk-link" asp-route="ManagePostalAddress">
+                            @Dashboard.Providers_Manage_Postal_Address_Heading
+                        </a>
+                    </h2>
+                </p>
+                <p class="govuk-body">
+                    @Dashboard.Providers_Manage_Postal_Address_Text
+                </p>
+            </div>
+        </div>
+
+        <!-- BLOCK: Manage Your Account -->
         <div class="govuk-grid-column-one-half">
             <div class="govuk-form-group training-provider-card">
                 <p class="govuk-body">

@@ -64,7 +64,7 @@
         public const string IndustryPlacementUpdatedConfirmation = "IndustryPlacementUpdatedConfirmation";
         public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
         public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation";
-
+        public const string AddAddressConfirmation = "AddAddressConfirmation";
         public const string UserSessionActivityId = "UserSessionActivityId";
 
         // Registration Data Index Constants
@@ -91,6 +91,8 @@
         public const string AssessmentId = "assessmentId";
         public const string ResultId = "resultId";
         public const string PathwayId = "pathwayId";
+        public const string IsFromSelectAddress = "isFromSelectAddress";
+        public const string ShowPostcode = "showPostcode";
 
         // Assessments
         public const int AssessmentEndInYears = 4;
@@ -101,5 +103,6 @@
 
         // Other constants
         public const string NoBorderBottomCssClassName = "tl-no-border-bottom";
+        public const string PostcodeValidationRegex = "^(([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))(\\s?)?[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$";
     }
 }

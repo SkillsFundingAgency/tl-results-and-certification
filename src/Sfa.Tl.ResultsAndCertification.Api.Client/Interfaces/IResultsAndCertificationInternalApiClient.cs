@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null);
         Task<AddLearnerRecordResponse> AddLearnerRecordAsync(AddLearnerRecordRequest request);
         Task<bool> UpdateLearnerRecordAsync(UpdateLearnerRecordRequest model);
+
+        // ProviderAddress
+        Task<bool> AddAddressAsync(AddAddressRequest request);
+        Task<Address> GetAddressAsync(long providerUkprn);
 
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);
