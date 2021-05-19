@@ -1,0 +1,20 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement.PostalAddressMissingViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
+
+@{
+    ViewData["Title"] = PostalAddressMissing.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <h1 class="govuk-heading-l">@PostalAddressMissing.Heading_Tell_Us_Org_Postal_Address</h1>
+        <p class="govuk-body govuk-!-margin-top-3">@PostalAddressMissing.Para_Before_Request_SOA_You_Must_Tell_Us</p>
+
+        <p><a id="addAddressButton" asp-route="AddAddressPostcode" asp-route-showPostcode="false" class="govuk-button" role="button">@PostalAddressMissing.Button_Add_Address</a></p>
+        <a id="backtoHomeLink" asp-route="Home" class="govuk-link govuk-body">@PostalAddressMissing.Link_Back_To_Home</a>
+    </div>
+</div>
