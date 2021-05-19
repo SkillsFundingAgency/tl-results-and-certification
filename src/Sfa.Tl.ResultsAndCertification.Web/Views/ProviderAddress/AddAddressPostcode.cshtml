@@ -13,6 +13,7 @@
     <div class="govuk-grid-column-three-quarters">
         <partial name="_ValidationSummary" />
         <form asp-route="SubmitAddAddressPostcode">
+            <input type="hidden" asp-for="@Model.IsFromMissingAddress"/>
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@AddAddressPostcode.Caption_Add_Address</span>
                 <div class="govuk-form-group" sfa-validation-for="Postcode" sfa-validation-class="govuk-form-group--error">
