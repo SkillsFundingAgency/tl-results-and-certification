@@ -262,7 +262,8 @@
 
         public const string RequestStatementOfAchievement = "RequestStatementOfAchievement";
         public const string StatementsOfAchievementNotAvailable = "StatementsOfAchievementNotAvailable";
-
+        public const string PostalAddressMissing = "PostalAddressMissing";
+        
         #endregion
     }
 }
