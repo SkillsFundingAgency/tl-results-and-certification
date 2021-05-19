@@ -36,15 +36,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("request-statement-of-achievement", Name = RouteConstants.RequestStatementOfAchievement)]
         public async Task<IActionResult> RequestStatementOfAchievementAsync()
         {
-            var address = await _providerAddress.GetAddressAsync<Address>(User.GetUkPrn());
-            if (address == null)
-                return RedirectToRoute(RouteConstants.PostalAddressMissing);
-
             var viewModel = new RequestStatementOfAchievementViewModel { SoaAvailableDate = _configuration.SoaAvailableDate };
 
             if (!viewModel.IsSoaAvailable)
             {
                 return RedirectToRoute(RouteConstants.StatementsOfAchievementNotAvailable);
+            }
+            else
+            {
+                var address = await _providerAddress.GetAddressAsync<Address>(User.GetUkPrn());
+                if (address == null)
+                    return RedirectToRoute(RouteConstants.PostalAddressMissing);
             }
             return View();
         }

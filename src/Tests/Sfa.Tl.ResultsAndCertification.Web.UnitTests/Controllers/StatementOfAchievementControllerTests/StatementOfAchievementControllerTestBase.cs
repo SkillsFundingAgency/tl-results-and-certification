@@ -31,7 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
             ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration { SoaAvailableDate = "10/08/2021".ToDateTime() };
             CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<StatementOfAchievementController>>();
-            Controller = new StatementOfAchievementController(ResultsAndCertificationConfiguration, Logger);
+            ProviderAddressLoader = Substitute.For<IProviderAddressLoader>();
+            Controller = new StatementOfAchievementController(ProviderAddressLoader, ResultsAndCertificationConfiguration, Logger);
             
             ProviderUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<StatementOfAchievementController>(Controller)
