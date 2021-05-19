@@ -178,6 +178,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request statement of achievement.
+        /// </summary>
+        public static string Providers_Request_Statement_Of_Achievement_Heading {
+            get {
+                return ResourceManager.GetString("Providers_Request_Statement_Of_Achievement_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learners who withdraw from their T Level course must be issued with a statement of achievement.
+        /// </summary>
+        public static string Providers_Request_Statement_Of_Achievement_Text {
+            get {
+                return ResourceManager.GetString("Providers_Request_Statement_Of_Achievement_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Providers, for example, schools and colleges, can use this service to record a T Level learner&apos;s English and maths achievements and industry placement completion. These records will be added to the learner&apos;s T Level registration..
         /// </summary>
         public static string Providers_Schools_And_Colleges_Text {
