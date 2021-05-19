@@ -235,6 +235,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Content\StatementOfAchievement\NotAvailable.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>NotAvailable.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Timeout\TimeoutConfirmation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -811,6 +816,10 @@
     <EmbeddedResource Update="Content\Result\UploadUnsuccessful.resx">
       <LastGenOutput>UploadUnsuccessful.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\NotAvailable.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>NotAvailable.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Timeout\TimeoutConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

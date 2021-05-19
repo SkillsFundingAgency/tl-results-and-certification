@@ -256,6 +256,12 @@
         public const string SubmitAddAddressCancel = "SubmitAddAddressCancel";
         public const string AddAddressNotFound = "AddAddressNotFound";
         public const string SubmitAddAddressNotFound = "SubmitAddAddressNotFound";
+        #endregion
+
+        #region Statement of achievement
+
+        public const string RequestStatementOfAchievement = "RequestStatementOfAchievement";
+        public const string StatementsOfAchievementNotAvailable = "StatementsOfAchievementNotAvailable";
 
         #endregion
     }
