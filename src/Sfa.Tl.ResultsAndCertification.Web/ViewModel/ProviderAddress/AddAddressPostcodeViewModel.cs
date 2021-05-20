@@ -11,11 +11,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         [RegularExpression(Constants.PostcodeValidationRegex, ErrorMessageResourceType = typeof(ErrorResource.AddPostalAddressManual), ErrorMessageResourceName = "Validation_Enter_Valid_Postcode")]
         public string Postcode { get; set; }
 
-        public bool IsFromMissingAddress { get; set; }
+        public bool IsFromAddressMissing { get; set; }
 
         public virtual BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = IsFromMissingAddress ? RouteConstants.PostalAddressMissing : RouteConstants.ManagePostalAddress
+            RouteName = IsFromAddressMissing ? RouteConstants.PostalAddressMissing : RouteConstants.ManagePostalAddress
         };
     }
 }

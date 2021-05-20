@@ -13,7 +13,7 @@
     <div class="govuk-grid-column-three-quarters">
         <partial name="_ValidationSummary" />
         <form asp-route="SubmitAddAddressPostcode">
-            <input type="hidden" asp-for="@Model.IsFromMissingAddress"/>
+            <input type="hidden" asp-for="@Model.IsFromAddressMissing"/>
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@AddAddressPostcode.Caption_Add_Address</span>
                 <div class="govuk-form-group" sfa-validation-for="Postcode" sfa-validation-class="govuk-form-group--error">
@@ -36,6 +36,6 @@
             <button id="findAddressButton" type="submit" class="govuk-button" data-module="govuk-button">@AddAddressPostcode.Button_Find_Address</button>
         </form>
 
-        <p class="govuk-body"><a class="govuk-link" asp-route="AddAddressManually">@AddAddressPostcode.Link_Add_Address_Manually</a></p>
+        <p class="govuk-body"><a class="govuk-link" asp-route="AddAddressManually" asp-route-isFromSelectAddress="false" asp-route-isFromAddressMissing="@Model.IsFromAddressMissing">@AddAddressPostcode.Link_Add_Address_Manually</a></p>
     </div>
 </div>

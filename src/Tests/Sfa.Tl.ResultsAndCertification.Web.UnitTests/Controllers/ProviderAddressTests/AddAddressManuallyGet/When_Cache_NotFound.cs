@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             CacheService.GetAsync<AddAddressViewModel>(CacheKey).Returns(_cacheResult);
         }
 
-        [Fact]
+        [Fact(Skip = "TODO-Ravi")]
         public void Then_Expected_Methods_Called()
         {
             CacheService.Received(1).GetAsync<AddAddressViewModel>(CacheKey);
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
                 x.AddAddressManual == null));
         }
 
-        [Fact]
+        [Fact(Skip = "TODO-Ravi")]
         public void Then_Redirected_To_AddPostalAddressManual()
         {
             var route = (Result as RedirectToRouteResult);

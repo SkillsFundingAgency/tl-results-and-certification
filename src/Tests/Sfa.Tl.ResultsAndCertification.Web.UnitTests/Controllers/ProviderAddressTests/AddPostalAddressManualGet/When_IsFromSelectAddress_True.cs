@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             model.IsFromSelectAddress.Should().Be(true);
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AddAddressSelect);
-            model.BackLink.RouteAttributes.Should().BeNull();
+            model.BackLink.RouteAttributes.Should().BeEmpty();
         }
     }
 }

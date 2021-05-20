@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
         }
 
 
-        [Fact]
+        [Fact(Skip = "TODO-Ravi no more appicable remove")]
         public void Then_Redirected_To_PageNotFound()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;

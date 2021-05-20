@@ -6,11 +6,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
     public abstract class TestSetup : ProviderAddressControllerTestBase
     {
         public bool IsFromSelectAddress { get; set; }
+        public bool IsFromAddressMissing { get; set; }
+
         public IActionResult Result { get; private set; }
 
         public async override Task When()
         {
-            Result = await Controller.AddPostalAddressManualAsync(IsFromSelectAddress);
+            Result = await Controller.AddPostalAddressManualAsync(IsFromSelectAddress, IsFromAddressMissing);
         }
     }
 }

@@ -8,10 +8,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
     {
         public bool IsFromSelectAddress { get; set; }
 
-        public virtual BackLinkModel BackLink => new BackLinkModel
+        public bool IsFromAddressMissing { get; set; }
+
+        public virtual BackLinkModel BackLink
         {
-            RouteName = IsFromSelectAddress ? RouteConstants.AddAddressSelect : RouteConstants.AddAddressPostcode,
-            RouteAttributes = IsFromSelectAddress ? null : new Dictionary<string, string> { { Constants.ShowPostcode, "false" } }
-        };
+            get
+            {
+                var routeAttributes = new Dictionary<string, string>();
+                if (!IsFromSelectAddress)
+                    routeAttributes.Add(Constants.ShowPostcode, "false");
+                if (IsFromAddressMissing)
+                    routeAttributes.Add(Constants.IsAddressMissing, "true");
+
+                return new BackLinkModel
+                {
+                    RouteName = IsFromSelectAddress ? RouteConstants.AddAddressSelect : RouteConstants.AddAddressPostcode,
+                    //RouteAttributes = IsFromSelectAddress ? null : new Dictionary<string, string> { { Constants.ShowPostcode, "false" } }
+                    RouteAttributes = routeAttributes
+                };
+            }
+        }
     }
 }
