@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
+using System;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -36,15 +37,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("request-statement-of-achievement", Name = RouteConstants.RequestStatementOfAchievement)]
         public async Task<IActionResult> RequestStatementOfAchievementAsync()
         {
-            var viewModel = new RequestStatementOfAchievementViewModel { SoaAvailableDate = _configuration.SoaAvailableDate };
-            if (!viewModel.IsSoaAvailable)
+            if (!IsSoaAvailable())
                 return RedirectToRoute(RouteConstants.StatementsOfAchievementNotAvailable);
 
-            var address = await _providerAddress.GetAddressAsync<Address>(User.GetUkPrn());
-            if (address == null)
+            if (!await IsAddressAvailable())
                 return RedirectToRoute(RouteConstants.PostalAddressMissing);
 
-            return View(viewModel);
+            return View(new RequestStatementOfAchievementViewModel());
         }
 
         [HttpGet]
@@ -53,6 +52,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = new PostalAddressMissingViewModel();
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("request-statement-of-achievement-unique-learner-number", Name = RouteConstants.RequestSoaUniqueLearnerNumber)]
+        public async Task<IActionResult> RequestSoaUniqueLearnerNumberAsync()
+        {
+            if (!IsSoaAvailable() || !await IsAddressAvailable())
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = new RequestSoaUniqueLearnerNumberViewModel();
+            return View(viewModel);
+        }
+        
+        [HttpPost]
+        [Route("request-statement-of-achievement-unique-learner-number", Name = RouteConstants.SubmitRequestSoaUniqueLearnerNumber)]
+        public async Task<IActionResult> RequestSoaUniqueLearnerNumberAsync(RequestSoaUniqueLearnerNumberViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            await Task.CompletedTask;
+            return RedirectToRoute(RouteConstants.RequestSoaUniqueLearnerNumber);
+        }
+
+        private bool IsSoaAvailable()
+        {
+            return _configuration.SoaAvailableDate == null || DateTime.UtcNow.Date >= _configuration.SoaAvailableDate?.Date;
+        }
+
+        private async Task<bool> IsAddressAvailable()
+        {
+            return await _providerAddress.GetAddressAsync<Address>(User.GetUkPrn()) != null;
         }
     }
 }

@@ -263,7 +263,9 @@
         public const string RequestStatementOfAchievement = "RequestStatementOfAchievement";
         public const string StatementsOfAchievementNotAvailable = "StatementsOfAchievementNotAvailable";
         public const string PostalAddressMissing = "PostalAddressMissing";
-        
+        public const string RequestSoaUniqueLearnerNumber = "RequestSoaUniqueLearnerNumber";
+        public const string SubmitRequestSoaUniqueLearnerNumber = "SubmitRequestSoaUniqueLearnerNumber";
+
         #endregion
     }
 }

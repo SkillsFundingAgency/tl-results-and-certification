@@ -178,6 +178,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request statement of achievement.
+        /// </summary>
+        public static string Request_Statement_Of_Achievement {
+            get {
+                return ResourceManager.GetString("Request_Statement_Of_Achievement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Results.
         /// </summary>
         public static string Result_Dashboard {
