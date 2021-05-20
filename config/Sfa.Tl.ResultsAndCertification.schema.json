@@ -288,7 +288,7 @@
         "Ukprn",
         "Username",
         "Password",
-		"CertificateName"
+		    "CertificateName"
       ],
       "type": "object"
     }
@@ -301,13 +301,13 @@
     "TlevelQueriedSupportEmailAddress",
     "TechnicalSupportEmailAddress",
     "FeedbackEmailAddress",
-	"KeyVaultUri",
+	  "KeyVaultUri",
     "RedisSettings",
-	"BlobStorageSettings",
+  	"BlobStorageSettings",
     "DataProtectionSettings",
     "DfeSignInSettings",
     "ResultsAndCertificationInternalApiSettings",
-	"LearningRecordServiceSettings"
+	  "LearningRecordServiceSettings"
   ],
   "type": "object"
 }
