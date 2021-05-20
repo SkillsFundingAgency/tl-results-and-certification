@@ -52,13 +52,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("add-postal-address-postcode/{showPostcode:bool?}/{isFromMissingAddress?}", Name = RouteConstants.AddAddressPostcode)]
         public async Task<IActionResult> AddAddressPostcodeAsync(bool showPostcode = true, bool isFromMissingAddress = false)
         {
+            var viewModel = new AddAddressPostcodeViewModel();
             var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
-            var viewModel = new AddAddressPostcodeViewModel
+            if (cacheModel?.AddAddressPostcode == null)
             {
-                Postcode = showPostcode && cacheModel?.AddAddressPostcode != null ? cacheModel.AddAddressPostcode.Postcode : null,
-                IsFromMissingAddress = (bool)(cacheModel?.AddAddressPostcode != null ? cacheModel?.AddAddressPostcode.IsFromMissingAddress : isFromMissingAddress)
-            };
+                viewModel.IsFromMissingAddress = isFromMissingAddress;
+                cacheModel = new AddAddressViewModel { AddAddressPostcode = viewModel };
+            }
+            else
+            {
+                viewModel.Postcode = showPostcode ? cacheModel.AddAddressPostcode?.Postcode : null;
+                viewModel.IsFromMissingAddress = (bool)cacheModel.AddAddressPostcode?.IsFromMissingAddress;
+                cacheModel.AddAddressPostcode = viewModel;
+            }
 
+            await _cacheService.SetAsync(CacheKey, cacheModel);
             return View(viewModel);
         }
 
