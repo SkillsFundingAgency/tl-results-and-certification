@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (address == null)
                 return RedirectToRoute(RouteConstants.PostalAddressMissing);
 
-            return View();
+            return View(viewModel);
         }
 
         [HttpGet]
