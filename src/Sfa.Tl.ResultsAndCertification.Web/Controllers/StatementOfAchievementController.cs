@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("postal-address-missing", Name = RouteConstants.PostalAddressMissing)]
-        public IActionResult PostalAddressMissingAsync()
+        public IActionResult PostalAddressMissing()
         {
             var viewModel = new PostalAddressMissingViewModel();
             return View(viewModel);
