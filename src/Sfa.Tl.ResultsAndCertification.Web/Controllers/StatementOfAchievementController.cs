@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         private bool IsSoaAvailable()
         {
-            return _configuration.SoaAvailableDate == null || DateTime.UtcNow.Date >= _configuration.SoaAvailableDate?.Date;
+            return _configuration.SoaAvailableDate == null || DateTime.UtcNow.Date >= _configuration.SoaAvailableDate.Value.Date;
         }
 
         private async Task<bool> IsAddressAvailable()
