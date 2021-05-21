@@ -14,6 +14,7 @@
         <partial name="_ValidationSummary" />
         <form asp-route="SubmitAddPostalAddressManual">
             <input type="hidden" asp-for="IsFromSelectAddress" />
+            <input type="hidden" asp-for="IsFromAddressMissing" />
             <div class="govuk-form-group govuk-!-margin-bottom-7">
                 <span class="govuk-caption-xl">@AddPostalAddressManual.Caption_Add_Address</span>
                 <fieldset class="govuk-fieldset">
