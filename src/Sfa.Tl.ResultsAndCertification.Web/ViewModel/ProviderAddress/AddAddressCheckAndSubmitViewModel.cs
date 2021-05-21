@@ -14,15 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         {
             get
             {
-                var routeAttributes = new Dictionary<string, string>();
-                if (IsManual)
-                {
-                    routeAttributes.Add(Constants.IsFromSelectAddress, ProviderAddress.AddAddressManual.IsFromSelectAddress.ToString());
-                    if (ProviderAddress.AddAddressManual.IsFromAddressMissing)
-                        routeAttributes.Add(Constants.IsAddressMissing, ProviderAddress.AddAddressManual.IsFromAddressMissing.ToString());
-                }
-
-                return IsManual ? (RouteConstants.AddPostalAddressManual, routeAttributes) : (RouteConstants.AddAddressSelect, null);
+                return IsManual ?
+                    (RouteConstants.AddPostalAddressManual, new Dictionary<string, string> { { Constants.IsFromSelectAddress, ProviderAddress.AddAddressManual.IsFromSelectAddress.ToString() } })
+                    : (RouteConstants.AddAddressSelect, null);
             }
         }
 

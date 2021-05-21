@@ -13,16 +13,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
 
         public override void Given()
         {
+            IsFromSelectAddress = true;
+            IsFromAddressMissing = true;
+
             _cacheResult = null;
             CacheService.GetAsync<AddAddressViewModel>(CacheKey).Returns(_cacheResult);
         }
 
 
-        [Fact(Skip = "TODO-Ravi no more appicable remove")]
-        public void Then_Redirected_To_PageNotFound()
+        [Fact]
+        public void Then_Returns_Expected_Results()
         {
-            var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.PageNotFound);
+            Result.Should().NotBeNull();
+            Result.Should().BeOfType(typeof(ViewResult));
+
+            var viewResult = Result as ViewResult;
+            viewResult.Model.Should().BeOfType(typeof(AddAddressManualViewModel));
+
+            var model = viewResult.Model as AddAddressManualViewModel;
+            model.Should().NotBeNull();
+
+            model.IsFromSelectAddress.Should().Be(IsFromSelectAddress);
+            model.IsFromAddressMissing.Should().Be(IsFromAddressMissing);
+
+            model.BackLink.Should().NotBeNull();
+            model.BackLink.RouteAttributes.Count.Should().Be(1);
+            model.BackLink.RouteAttributes[Constants.IsAddressMissing].Should().Be("true");
         }
     }
 }

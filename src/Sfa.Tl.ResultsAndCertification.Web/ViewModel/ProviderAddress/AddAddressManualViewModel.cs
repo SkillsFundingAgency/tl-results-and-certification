@@ -23,7 +23,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
                 return new BackLinkModel
                 {
                     RouteName = IsFromSelectAddress ? RouteConstants.AddAddressSelect : RouteConstants.AddAddressPostcode,
-                    //RouteAttributes = IsFromSelectAddress ? null : new Dictionary<string, string> { { Constants.ShowPostcode, "false" } }
                     RouteAttributes = routeAttributes
                 };
             }

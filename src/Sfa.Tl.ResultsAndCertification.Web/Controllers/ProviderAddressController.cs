@@ -79,11 +79,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddAddressManuallyAsync(bool isFromSelectAddress, bool isFromAddressMissing)
         {
             var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
-
             if (cacheModel != null)
+            {
                 cacheModel.AddAddressManual = null;
-            // TODO: Ravi - what to do if null comes?
-            await _cacheService.SetAsync(CacheKey, cacheModel);
+                await _cacheService.SetAsync(CacheKey, cacheModel);
+            }
+
             return RedirectToRoute(RouteConstants.AddPostalAddressManual, new { isFromSelectAddress, isFromAddressMissing });
         }
 
@@ -94,8 +95,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
             
             var viewModel = cacheModel?.AddAddressManual ?? new AddAddressManualViewModel();
-            viewModel.IsFromSelectAddress = isFromSelectAddress;
-            viewModel.IsFromAddressMissing = isFromAddressMissing;
+            viewModel.IsFromSelectAddress = cacheModel?.AddAddressManual == null ? isFromSelectAddress : cacheModel.AddAddressManual.IsFromSelectAddress;
+            viewModel.IsFromAddressMissing = cacheModel?.AddAddressManual == null ? isFromAddressMissing : cacheModel.AddAddressManual.IsFromAddressMissing;
 
             return View(viewModel);
         }

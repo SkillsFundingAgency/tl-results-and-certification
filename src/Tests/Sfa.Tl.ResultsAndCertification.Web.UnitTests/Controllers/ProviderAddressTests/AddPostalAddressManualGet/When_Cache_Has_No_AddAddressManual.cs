@@ -14,6 +14,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
         public override void Given()
         {
             IsFromSelectAddress = false;
+            IsFromAddressMissing = true;
+
             _cacheResult = new AddAddressViewModel();
             CacheService.GetAsync<AddAddressViewModel>(CacheKey).Returns(_cacheResult);
         }
@@ -44,7 +46,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             model.Town.Should().BeNull();
             model.Postcode.Should().BeNull();
             model.IsFromSelectAddress.Should().Be(IsFromSelectAddress);
-            
+            model.IsFromAddressMissing.Should().Be(IsFromAddressMissing);
+
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AddAddressPostcode);
             model.BackLink.RouteAttributes.Should().NotBeNull();

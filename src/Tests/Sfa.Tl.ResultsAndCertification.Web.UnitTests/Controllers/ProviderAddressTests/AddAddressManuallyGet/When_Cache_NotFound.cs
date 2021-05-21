@@ -13,27 +13,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
 
         public override void Given()
         {
+            IsFromAddressMissing = true;
+            IsFromSelectAddress = true;
+
             _cacheResult = null;
             CacheService.GetAsync<AddAddressViewModel>(CacheKey).Returns(_cacheResult);
         }
 
-        [Fact(Skip = "TODO-Ravi")]
+        [Fact]
         public void Then_Expected_Methods_Called()
         {
             CacheService.Received(1).GetAsync<AddAddressViewModel>(CacheKey);
-
-            CacheService.Received(1).SetAsync(CacheKey,
-                Arg.Is<AddAddressViewModel>
-                (x => x != null &&
-                x.AddAddressManual == null));
+            CacheService.DidNotReceive().SetAsync(Arg.Any<string>(), Arg.Any<AddAddressViewModel>());
         }
 
-        [Fact(Skip = "TODO-Ravi")]
+        [Fact]
         public void Then_Redirected_To_AddPostalAddressManual()
         {
             var route = (Result as RedirectToRouteResult);
             route.RouteName.Should().Be(RouteConstants.AddPostalAddressManual);
-            route.RouteValues.Should().BeNull();
+            route.RouteValues.Should().HaveCount(2);
+            route.RouteValues[Constants.IsFromSelectAddress].Should().Be(true);
+            route.RouteValues[Constants.IsAddressMissing].Should().Be(true);
         }
     }
 }
