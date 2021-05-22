@@ -99,6 +99,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> RequestSoaUlnNotWithdrawnAsync()
         {
             var viewModel = await _statementOfAchievementLoader.FindSoaLearnerRecordAsync<RequestSoaUlnNotWithdrawnViewModel>(User.GetUkPrn(), 123456789);
+
+            if(viewModel == null || viewModel.IsWithdrawn)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
             return View(viewModel);
         }
 

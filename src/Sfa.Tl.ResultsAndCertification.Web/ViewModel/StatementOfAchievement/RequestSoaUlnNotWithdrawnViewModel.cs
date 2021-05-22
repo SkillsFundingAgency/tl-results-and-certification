@@ -10,10 +10,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
     public class RequestSoaUlnNotWithdrawnViewModel
     {
         public long Uln { get; set; }
-        public string Name { get; set; }
+        public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
         public string TLevelTitle { get; set; }
+        public bool IsWithdrawn { get; set; }
 
         public SummaryItemModel SummaryUln => new SummaryItemModel
         {
@@ -26,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "learnername",
             Title = RequestSoaUlnNotWithdrawnContent.Title_Name_Text,
-            Value = Name
+            Value = LearnerName
         };
 
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel

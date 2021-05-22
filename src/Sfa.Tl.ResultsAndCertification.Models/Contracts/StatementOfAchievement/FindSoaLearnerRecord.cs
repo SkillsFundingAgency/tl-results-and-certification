@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
     {
         public int ProfileId { get; set; }
         public long Uln { get; set; }
-        public string Name { get; set; }
+        public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
         public string TlevelTitle { get; set; }
