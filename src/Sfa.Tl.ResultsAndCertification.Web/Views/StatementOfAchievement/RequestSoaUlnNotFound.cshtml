@@ -2,7 +2,7 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
 
 @{
-    ViewData["Title"] = "TODO";
+    ViewData["Title"] = RequestSoaUlnNotFound.Page_Title;
 }
 
 @section NavigationBar {
@@ -14,19 +14,19 @@
         <div class="govuk-form-group">
             <h1 class="govuk-label-wrapper">
                 <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6">
-                    ULN (@Model.Uln) has not been registered in this service by an exam board
+                    @string.Format(RequestSoaUlnNotFound.Heading_Uln_Not_Registered, Model.Uln)
                 </label>
             </h1>
             <p class="govuk-body">
-                You can only request a statement of achievement for a learner registered on a T Level course by an exam board (also known as an awarding organisation).
+                @RequestSoaUlnNotFound.Para_You_Can_Only_Request_For_Registered_Learner
             </p>
             <p class="govuk-body">
-                If you think this learner should be registered, please contact the exam board responsible for delivering the T Level.
+                @RequestSoaUlnNotFound.Para_If_You_Think_Registered_Contact_Exam_Board
             </p>
         </div>
         <p class="govuk-body">
-            <a class="govuk-button" role="button" href="tlevels-dashboard">
-                Back to Home
+            <a id="buttonHome" class="govuk-button" role="button" asp-route="Home">
+                @RequestSoaUlnNotFound.Button_Back_To_Home
             </a>
         </p>
     </div>
