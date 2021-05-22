@@ -61,8 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!IsSoaAvailable() || !await IsAddressAvailable())
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            var viewModel = new RequestSoaUniqueLearnerNumberViewModel();
-            return View(viewModel);
+            return View(new RequestSoaUniqueLearnerNumberViewModel());
         }
         
         [HttpPost]
