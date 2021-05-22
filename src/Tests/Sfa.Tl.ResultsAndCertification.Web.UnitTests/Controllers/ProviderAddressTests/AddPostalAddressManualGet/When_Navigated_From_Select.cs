@@ -7,14 +7,14 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddressTests.AddPostalAddressManualGet
 {
-    public class When_CacheFound_Navigated_From_Postcode : TestSetup
+    public class When_Navigated_From_Select : TestSetup
     {
         private AddAddressViewModel _cacheResult;
         private AddAddressManualViewModel _addressManual;
 
         public override void Given()
         {
-            IsFromSelectAddress = true;
+            IsFromSelectAddress = false;
             IsFromAddressMissing = false;
 
             _addressManual = new AddAddressManualViewModel
@@ -64,8 +64,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             model.IsFromAddressMissing.Should().Be(IsFromAddressMissing);
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.AddAddressSelect);
-            model.BackLink.RouteAttributes.Count.Should().Be(0);
+            model.BackLink.RouteName.Should().Be(RouteConstants.AddAddressPostcode);
+            model.BackLink.RouteAttributes.Count.Should().Be(1);
+            model.BackLink.RouteAttributes[Constants.ShowPostcode].Should().Be("false");
         }
     }
 }

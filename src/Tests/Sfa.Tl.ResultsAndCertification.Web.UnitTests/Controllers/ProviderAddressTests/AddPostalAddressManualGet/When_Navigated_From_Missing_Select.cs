@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddressTests.AddPostalAddressManualGet
 {
-    public class When_CacheFound_Navigated_From_Missing_Select : TestSetup
+    public class When_Navigated_From_Missing_Select : TestSetup
     {
         private AddAddressViewModel _cacheResult;
         private AddAddressManualViewModel _addressManual;
