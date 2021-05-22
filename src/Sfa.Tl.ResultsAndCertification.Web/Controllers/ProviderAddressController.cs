@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("add-postal-address-postcode/{showPostcode:bool?}/{isFromAddressMissing?}", Name = RouteConstants.AddAddressPostcode)]
+        [Route("add-postal-address-postcode/{showPostcode:bool?}/{isFromAddressMissing:bool?}", Name = RouteConstants.AddAddressPostcode)]
         public async Task<IActionResult> AddAddressPostcodeAsync(bool showPostcode = true, bool isFromAddressMissing = false)
         {
             var cacheModel = await _cacheService.GetAsync<AddAddressViewModel>(CacheKey);
