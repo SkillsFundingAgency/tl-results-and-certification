@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
@@ -289,6 +290,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = string.Format(ApiConstants.GetAddressUri, providerUkprn);
             return await GetAsync<Address>(requestUri);
+        }
+
+        // Provider Statement Of Achievement endpoints
+        public async Task<FindSoaLearnerRecord> FindSoaLearnerRecordAsync(long providerUkprn, long uln)
+        {
+            var requestUri = string.Format(ApiConstants.FindSoaLearnerRecordUri, providerUkprn, uln);
+            return await GetAsync<FindSoaLearnerRecord>(requestUri);
         }
 
         #region Private Methods

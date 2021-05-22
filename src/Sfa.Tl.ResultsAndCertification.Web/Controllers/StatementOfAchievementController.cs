@@ -15,12 +15,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     [Authorize(Policy = RolesExtensions.RequireLearnerRecordsEditorAccess)]
     public class StatementOfAchievementController : Controller
     {
+        private readonly IStatementOfAchievementLoader _statementOfAchievementLoader;
         private readonly IProviderAddressLoader _providerAddress;
         ResultsAndCertificationConfiguration _configuration;
         private readonly ILogger _logger;
 
-        public StatementOfAchievementController(IProviderAddressLoader providerAddress, ResultsAndCertificationConfiguration configuration, ILogger<StatementOfAchievementController> logger)
+        public StatementOfAchievementController(IStatementOfAchievementLoader statementOfAchievementLoader, IProviderAddressLoader providerAddress, ResultsAndCertificationConfiguration configuration, ILogger<StatementOfAchievementController> logger)
         {
+            _statementOfAchievementLoader = statementOfAchievementLoader;
             _providerAddress = providerAddress;
             _configuration = configuration;
             _logger = logger;
@@ -96,8 +98,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("request-statement-of-achievement-ULN-not-withdrawn", Name = RouteConstants.RequestSoaUlnNotWithdrawn)]
         public async Task<IActionResult> RequestSoaUlnNotWithdrawnAsync()
         {
-            await Task.CompletedTask;
-            return View(new RequestSoaUlnNotWithdrawnViewModel());
+            var viewModel = await _statementOfAchievementLoader.FindSoaLearnerRecordAsync<RequestSoaUlnNotWithdrawnViewModel>(User.GetUkPrn(), 123456789);
+            return View(viewModel);
         }
 
         private bool IsSoaAvailable()

@@ -15,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
     public abstract class StatementOfAchievementControllerTestBase : BaseTest<StatementOfAchievementController>
     {
         // Dependencies
+        protected IStatementOfAchievementLoader StatementOfAchievementLoader;
         protected IProviderAddressLoader ProviderAddressLoader;
         protected ICacheService CacheService;
         protected ILogger<StatementOfAchievementController> Logger;
@@ -31,8 +32,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
             ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration { SoaAvailableDate = "10/08/2021".ToDateTime() };
             CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<StatementOfAchievementController>>();
+            StatementOfAchievementLoader = Substitute.For<IStatementOfAchievementLoader>();
             ProviderAddressLoader = Substitute.For<IProviderAddressLoader>();
-            Controller = new StatementOfAchievementController(ProviderAddressLoader, ResultsAndCertificationConfiguration, Logger);
+            Controller = new StatementOfAchievementController(StatementOfAchievementLoader, ProviderAddressLoader, ResultsAndCertificationConfiguration, Logger);
             
             ProviderUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<StatementOfAchievementController>(Controller)
