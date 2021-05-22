@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 {
     public interface IStatementOfAchievementLoader
     {
-        Task<T> FindSoaLearnerRecordAsync<T>(long providerUkprn, long uln);
+        Task<FindSoaLearnerRecord> FindSoaLearnerRecordAsync(long providerUkprn, long uln);
     }
 }

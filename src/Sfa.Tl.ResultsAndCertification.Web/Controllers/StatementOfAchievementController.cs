@@ -65,13 +65,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(new RequestSoaUniqueLearnerNumberViewModel());
         }
-        
+
         [HttpPost]
         [Route("request-statement-of-achievement-unique-learner-number", Name = RouteConstants.SubmitRequestSoaUniqueLearnerNumber)]
         public async Task<IActionResult> RequestSoaUniqueLearnerNumberAsync(RequestSoaUniqueLearnerNumberViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
+
+            var viewModel = await _statementOfAchievementLoader.FindSoaLearnerRecordAsync(User.GetUkPrn(), 123456789);
+
+            // TODO : Save RequestSoaUniqueLearnerNumberViewModel to cache
+
+            if (viewModel == null)
+            {
+                // TODO: Save RequestSoaUlnNotFoundViewModel to cache
+                var mdoel = new RequestSoaUlnNotFoundViewModel { Uln = model.SearchUln };
+                // save to cache
+            }
+            else if (!viewModel.IsNotWithdrawn)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            else if (viewModel.IsNotWithdrawn)
+            {
+                // TODO: Save RequestSoaUlnNotWithdrawnViewModel to cache
+                return RedirectToRoute(RouteConstants.RequestSoaUlnNotWithdrawn);
+            }
 
             await Task.CompletedTask;
             return RedirectToRoute(RouteConstants.RequestSoaUniqueLearnerNumber);
@@ -81,14 +101,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("request-statement-of-achievement-ULN-not-registered", Name = RouteConstants.RequestSoaUlnNotFound)]
         public async Task<IActionResult> RequestSoaUlnNotFoundAsync()
         {
-            //var cacheModel = await _cacheService.GetAsync<RequestSoaUniqueLearnerNumberViewModel>(CacheKey);
+            //var cacheModel = await _cacheService.GetAsync<RequestSoaUlnNotFoundViewModel>(CacheKey);
             //if (cacheModel == null)
             //{
-            //    _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read RequestSoaUniqueLearnerNumberViewModel from redis cache in enter uln not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+            //    _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read RequestSoaUlnNotFoundViewModel from redis cache in enter uln not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
             //    return RedirectToRoute(RouteConstants.PageNotFound);
             //}
 
-            //return View(new RequestSoaUlnNotFoundViewModel { Uln = cacheModel.Uln?.EnterUln?.ToString() });
+            //return View(cacheModel);
 
             await Task.CompletedTask;
             return View(new RequestSoaUlnNotFoundViewModel { Uln = "1234567890" });
@@ -98,12 +118,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("request-statement-of-achievement-ULN-not-withdrawn", Name = RouteConstants.RequestSoaUlnNotWithdrawn)]
         public async Task<IActionResult> RequestSoaUlnNotWithdrawnAsync()
         {
-            var viewModel = await _statementOfAchievementLoader.FindSoaLearnerRecordAsync<RequestSoaUlnNotWithdrawnViewModel>(User.GetUkPrn(), 123456789);
-
-            if(viewModel == null || viewModel.IsWithdrawn)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return View(viewModel);
+            await Task.CompletedTask;
+            return View(new RequestSoaUlnNotWithdrawnViewModel());
         }
 
         private bool IsSoaAvailable()

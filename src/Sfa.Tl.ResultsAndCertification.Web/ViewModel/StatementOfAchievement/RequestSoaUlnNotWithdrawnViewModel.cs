@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
         public string TLevelTitle { get; set; }
-        public bool IsWithdrawn { get; set; }
+        public bool IsNotWithdrawn { get; set; }
 
         public SummaryItemModel SummaryUln => new SummaryItemModel
         {

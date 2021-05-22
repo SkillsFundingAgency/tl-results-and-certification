@@ -10,8 +10,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
-        public string TlevelTitle { get; set; }
+        public string TlevelTitle { get; set; }        
         public RegistrationPathwayStatus Status { get; set; }
-        public bool IsLearnerRegistered { get; set; }
+        public bool IsLearnerRegistered => Status == RegistrationPathwayStatus.Active || Status == RegistrationPathwayStatus.Withdrawn;
+
+        public bool IsNotWithdrawn => Status == RegistrationPathwayStatus.Active;
     }
 }

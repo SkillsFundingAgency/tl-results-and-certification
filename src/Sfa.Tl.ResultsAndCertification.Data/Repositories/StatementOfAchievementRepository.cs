@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using System.Collections.Generic;
@@ -29,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                           join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
                                           join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                           orderby tqPathway.CreatedOn descending
-                                          where tqProfile.UniqueLearnerNumber == uln && tlProvider.UkPrn == providerUkprn
+                                          where tqProfile.UniqueLearnerNumber == uln && tlProvider.UkPrn == providerUkprn 
                                           select new FindSoaLearnerRecord
                                           {
                                               ProfileId = tqProfile.Id,

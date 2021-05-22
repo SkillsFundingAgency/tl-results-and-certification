@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System.Threading.Tasks;
 
@@ -16,10 +17,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<T> FindSoaLearnerRecordAsync<T>(long providerUkprn, long uln)
+        public async Task<FindSoaLearnerRecord> FindSoaLearnerRecordAsync(long providerUkprn, long uln)
         {
-            var response = await _internalApiClient.FindSoaLearnerRecordAsync(providerUkprn, uln);
-            return _mapper.Map<T>(response);
+            return await _internalApiClient.FindSoaLearnerRecordAsync(providerUkprn, uln);            
         }
     }
 }
