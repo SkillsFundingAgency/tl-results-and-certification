@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
             Logger = Substitute.For<ILogger<StatementOfAchievementController>>();
             StatementOfAchievementLoader = Substitute.For<IStatementOfAchievementLoader>();
             ProviderAddressLoader = Substitute.For<IProviderAddressLoader>();
-            Controller = new StatementOfAchievementController(StatementOfAchievementLoader, ProviderAddressLoader, ResultsAndCertificationConfiguration, Logger);
+            Controller = new StatementOfAchievementController(StatementOfAchievementLoader, ProviderAddressLoader, CacheService, ResultsAndCertificationConfiguration, Logger);
             
             ProviderUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<StatementOfAchievementController>(Controller)

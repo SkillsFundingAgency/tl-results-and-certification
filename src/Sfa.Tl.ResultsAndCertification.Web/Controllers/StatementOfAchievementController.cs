@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
@@ -17,13 +19,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     {
         private readonly IStatementOfAchievementLoader _statementOfAchievementLoader;
         private readonly IProviderAddressLoader _providerAddress;
+        private readonly ICacheService _cacheService;
         ResultsAndCertificationConfiguration _configuration;
         private readonly ILogger _logger;
 
-        public StatementOfAchievementController(IStatementOfAchievementLoader statementOfAchievementLoader, IProviderAddressLoader providerAddress, ResultsAndCertificationConfiguration configuration, ILogger<StatementOfAchievementController> logger)
+        private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.SoaCacheKey); } }
+
+        public StatementOfAchievementController(IStatementOfAchievementLoader statementOfAchievementLoader, IProviderAddressLoader providerAddress, ICacheService cacheService, ResultsAndCertificationConfiguration configuration, ILogger<StatementOfAchievementController> logger)
         {
             _statementOfAchievementLoader = statementOfAchievementLoader;
             _providerAddress = providerAddress;
+            _cacheService = cacheService;
             _configuration = configuration;
             _logger = logger;
         }
@@ -63,7 +69,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!IsSoaAvailable() || !await IsAddressAvailable())
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            return View(new RequestSoaUniqueLearnerNumberViewModel());
+            var cacheModel = await _cacheService.GetAsync<RequestSoaUniqueLearnerNumberViewModel>(CacheKey);
+            var viewModel = cacheModel ?? new RequestSoaUniqueLearnerNumberViewModel();
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -74,14 +83,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             var viewModel = await _statementOfAchievementLoader.FindSoaLearnerRecordAsync(User.GetUkPrn(), 123456789);
-
-            // TODO : Save RequestSoaUniqueLearnerNumberViewModel to cache
-
+            await _cacheService.SetAsync(CacheKey, model);
             if (viewModel == null)
             {
-                // TODO: Save RequestSoaUlnNotFoundViewModel to cache
-                var mdoel = new RequestSoaUlnNotFoundViewModel { Uln = model.SearchUln };
-                // save to cache
+                await _cacheService.SetAsync(CacheKey, new RequestSoaUlnNotFoundViewModel { Uln = model.SearchUln });
+                return RedirectToRoute(RouteConstants.RequestSoaUlnNotFound);
             }
             else if (!viewModel.IsNotWithdrawn)
             {
@@ -101,17 +107,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("request-statement-of-achievement-ULN-not-registered", Name = RouteConstants.RequestSoaUlnNotFound)]
         public async Task<IActionResult> RequestSoaUlnNotFoundAsync()
         {
-            //var cacheModel = await _cacheService.GetAsync<RequestSoaUlnNotFoundViewModel>(CacheKey);
-            //if (cacheModel == null)
-            //{
-            //    _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read RequestSoaUlnNotFoundViewModel from redis cache in enter uln not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-            //    return RedirectToRoute(RouteConstants.PageNotFound);
-            //}
+            var cacheModel = await _cacheService.GetAndRemoveAsync<RequestSoaUlnNotFoundViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read RequestSoaUlnNotFoundViewModel from redis cache in request soa uln not registered page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
 
-            //return View(cacheModel);
-
-            await Task.CompletedTask;
-            return View(new RequestSoaUlnNotFoundViewModel { Uln = "1234567890" });
+            return View(cacheModel);
         }
 
         [HttpGet]
