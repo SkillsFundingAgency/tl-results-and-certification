@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
@@ -26,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         protected Guid UserId;
         protected IHttpContextAccessor HttpContextAccessor;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
+        protected string CacheKey;
 
         public override void Setup()
         {
@@ -45,6 +48,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             HttpContextAccessor.HttpContext.Returns(httpContext);
+            
+            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.SoaCacheKey);
         }
     }
 }

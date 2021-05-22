@@ -82,9 +82,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var viewModel = await _statementOfAchievementLoader.FindSoaLearnerRecordAsync(User.GetUkPrn(), 123456789);
+            var viewModel = await _statementOfAchievementLoader.FindSoaLearnerRecordAsync(User.GetUkPrn(), model.SearchUln.ToLong());
             await _cacheService.SetAsync(CacheKey, model);
-            if (viewModel == null)
+            
+            if (viewModel == null || !viewModel.IsLearnerRegistered)
             {
                 await _cacheService.SetAsync(CacheKey, new RequestSoaUlnNotFoundViewModel { Uln = model.SearchUln });
                 return RedirectToRoute(RouteConstants.RequestSoaUlnNotFound);
@@ -107,7 +108,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("request-statement-of-achievement-ULN-not-registered", Name = RouteConstants.RequestSoaUlnNotFound)]
         public async Task<IActionResult> RequestSoaUlnNotFoundAsync()
         {
-            var cacheModel = await _cacheService.GetAndRemoveAsync<RequestSoaUlnNotFoundViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAsync<RequestSoaUlnNotFoundViewModel>(CacheKey);
             if (cacheModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read RequestSoaUlnNotFoundViewModel from redis cache in request soa uln not registered page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
