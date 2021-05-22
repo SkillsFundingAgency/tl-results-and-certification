@@ -82,25 +82,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var viewModel = await _statementOfAchievementLoader.FindSoaLearnerRecordAsync(User.GetUkPrn(), model.SearchUln.ToLong());
+            var soaLearnerRecord = await _statementOfAchievementLoader.FindSoaLearnerRecordAsync(User.GetUkPrn(), model.SearchUln.ToLong());
             await _cacheService.SetAsync(CacheKey, model);
             
-            if (viewModel == null || !viewModel.IsLearnerRegistered)
+            if (soaLearnerRecord == null || !soaLearnerRecord.IsLearnerRegistered)
             {
                 await _cacheService.SetAsync(CacheKey, new RequestSoaUlnNotFoundViewModel { Uln = model.SearchUln });
                 return RedirectToRoute(RouteConstants.RequestSoaUlnNotFound);
             }
-            else if (!viewModel.IsNotWithdrawn)
+            else if (soaLearnerRecord.IsNotWithdrawn)
             {
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            else if (viewModel.IsNotWithdrawn)
-            {
-                // TODO: Save RequestSoaUlnNotWithdrawnViewModel to cache
+                await _cacheService.SetAsync(CacheKey, new RequestSoaUlnNotWithdrawnViewModel { Uln = soaLearnerRecord.Uln, LearnerName = soaLearnerRecord.LearnerName, DateofBirth = soaLearnerRecord.DateofBirth, ProviderName = soaLearnerRecord.ProviderName, TLevelTitle = soaLearnerRecord.TlevelTitle });
                 return RedirectToRoute(RouteConstants.RequestSoaUlnNotWithdrawn);
             }
-
-            await Task.CompletedTask;
             return RedirectToRoute(RouteConstants.RequestSoaUniqueLearnerNumber);
         }
 
@@ -108,13 +102,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("request-statement-of-achievement-ULN-not-registered", Name = RouteConstants.RequestSoaUlnNotFound)]
         public async Task<IActionResult> RequestSoaUlnNotFoundAsync()
         {
-            var cacheModel = await _cacheService.GetAsync<RequestSoaUlnNotFoundViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAndRemoveAsync<RequestSoaUlnNotFoundViewModel>(CacheKey);
             if (cacheModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read RequestSoaUlnNotFoundViewModel from redis cache in request soa uln not registered page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
             return View(cacheModel);
         }
 
@@ -122,8 +115,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("request-statement-of-achievement-ULN-not-withdrawn", Name = RouteConstants.RequestSoaUlnNotWithdrawn)]
         public async Task<IActionResult> RequestSoaUlnNotWithdrawnAsync()
         {
-            await Task.CompletedTask;
-            return View(new RequestSoaUlnNotWithdrawnViewModel());
+            var cacheModel = await _cacheService.GetAndRemoveAsync<RequestSoaUlnNotWithdrawnViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read RequestSoaUlnNotWithdrawnViewModel from redis cache in request soa uln not withdrawn page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(cacheModel);
         }
 
         private bool IsSoaAvailable()
