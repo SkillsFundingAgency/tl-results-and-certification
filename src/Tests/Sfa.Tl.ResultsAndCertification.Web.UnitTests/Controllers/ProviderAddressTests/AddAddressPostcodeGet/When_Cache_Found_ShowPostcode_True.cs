@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
         public override void Given()
         {
             ShowPostcode = true;
-            _postcodeViewModel = new AddAddressPostcodeViewModel { Postcode = "xx1 1yy" };
+            _postcodeViewModel = new AddAddressPostcodeViewModel { Postcode = "xx1 1yy", IsFromAddressMissing = true };
             _cacheResult = new AddAddressViewModel
             {
                 AddAddressPostcode = _postcodeViewModel
@@ -42,8 +42,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             var model = viewResult.Model as AddAddressPostcodeViewModel;
             model.Should().NotBeNull();
             model.Postcode.Should().Be(_cacheResult.AddAddressPostcode.Postcode);
+            model.IsFromAddressMissing.Should().BeTrue();
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.ManagePostalAddress);
+            model.BackLink.RouteName.Should().Be(RouteConstants.PostalAddressMissing);
             model.BackLink.RouteAttributes.Should().BeEmpty();
         }
     }
