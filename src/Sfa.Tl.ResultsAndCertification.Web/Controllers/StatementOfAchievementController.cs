@@ -92,6 +92,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(new RequestSoaUlnNotFoundViewModel { Uln = "1234567890" });
         }
 
+        [HttpGet]
+        [Route("request-statement-of-achievement-ULN-not-withdrawn", Name = RouteConstants.RequestSoaUlnNotWithdrawn)]
+        public async Task<IActionResult> RequestSoaUlnNotWithdrawnAsync()
+        {
+            await Task.CompletedTask;
+            return View(new RequestSoaUlnNotWithdrawnViewModel());
+        }
+
         private bool IsSoaAvailable()
         {
             return _configuration.SoaAvailableDate == null || DateTime.UtcNow.Date >= _configuration.SoaAvailableDate.Value.Date;
