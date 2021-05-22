@@ -1,0 +1,33 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement.RequestSoaUlnNotFoundViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
+
+@{
+    ViewData["Title"] = "TODO";
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper">
+                <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6">
+                    ULN (@Model.Uln) has not been registered in this service by an exam board
+                </label>
+            </h1>
+            <p class="govuk-body">
+                You can only request a statement of achievement for a learner registered on a T Level course by an exam board (also known as an awarding organisation).
+            </p>
+            <p class="govuk-body">
+                If you think this learner should be registered, please contact the exam board responsible for delivering the T Level.
+            </p>
+        </div>
+        <p class="govuk-body">
+            <a class="govuk-button" role="button" href="tlevels-dashboard">
+                Back to Home
+            </a>
+        </p>
+    </div>
+</div>

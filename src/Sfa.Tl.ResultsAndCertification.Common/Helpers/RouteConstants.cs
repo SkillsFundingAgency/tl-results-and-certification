@@ -265,6 +265,7 @@
         public const string PostalAddressMissing = "PostalAddressMissing";
         public const string RequestSoaUniqueLearnerNumber = "RequestSoaUniqueLearnerNumber";
         public const string SubmitRequestSoaUniqueLearnerNumber = "SubmitRequestSoaUniqueLearnerNumber";
+        public const string RequestSoaUlnNotFound = "RequestSoaUlnNotFound";
 
         #endregion
     }

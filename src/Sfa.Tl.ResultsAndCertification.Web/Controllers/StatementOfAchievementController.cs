@@ -76,6 +76,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.RequestSoaUniqueLearnerNumber);
         }
 
+        [HttpGet]
+        [Route("request-statement-of-achievement-ULN-not-registered", Name = RouteConstants.RequestSoaUlnNotFound)]
+        public async Task<IActionResult> RequestSoaUlnNotFoundAsync()
+        {
+            //var cacheModel = await _cacheService.GetAsync<RequestSoaUniqueLearnerNumberViewModel>(CacheKey);
+            //if (cacheModel == null)
+            //{
+            //    _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read RequestSoaUniqueLearnerNumberViewModel from redis cache in enter uln not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+            //    return RedirectToRoute(RouteConstants.PageNotFound);
+            //}
+
+            //return View(new RequestSoaUlnNotFoundViewModel { Uln = cacheModel.Uln?.EnterUln?.ToString() });
+
+            await Task.CompletedTask;
+            return View(new RequestSoaUlnNotFoundViewModel { Uln = "1234567890" });
+        }
+
         private bool IsSoaAvailable()
         {
             return _configuration.SoaAvailableDate == null || DateTime.UtcNow.Date >= _configuration.SoaAvailableDate.Value.Date;
