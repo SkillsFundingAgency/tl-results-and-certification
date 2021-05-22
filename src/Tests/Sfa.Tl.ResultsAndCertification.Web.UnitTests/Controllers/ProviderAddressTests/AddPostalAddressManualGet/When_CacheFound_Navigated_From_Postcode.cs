@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using Xunit;
 
@@ -63,6 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             model.IsFromAddressMissing.Should().Be(IsFromAddressMissing);
 
             model.BackLink.Should().NotBeNull();
+            model.BackLink.RouteName.Should().Be(RouteConstants.AddAddressSelect);
             model.BackLink.RouteAttributes.Count.Should().Be(0);
         }
     }

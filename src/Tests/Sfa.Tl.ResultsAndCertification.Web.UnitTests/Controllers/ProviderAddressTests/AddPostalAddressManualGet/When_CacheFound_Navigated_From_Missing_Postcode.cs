@@ -64,6 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             model.IsFromAddressMissing.Should().Be(IsFromAddressMissing);
 
             model.BackLink.Should().NotBeNull();
+            model.BackLink.RouteName.Should().Be(RouteConstants.AddAddressPostcode);
             model.BackLink.RouteAttributes.Count.Should().Be(2);
             model.BackLink.RouteAttributes[Constants.IsAddressMissing].Should().Be("true");
             model.BackLink.RouteAttributes[Constants.ShowPostcode].Should().Be("false");
