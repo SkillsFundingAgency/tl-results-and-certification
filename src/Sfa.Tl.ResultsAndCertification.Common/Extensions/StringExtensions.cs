@@ -7,6 +7,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
     public static class StringExtensions
     {
+        public static string ToDobFormat(this DateTime value)
+        {
+            return value.ToString("dd MMMM yyyy");
+        }
+
         public static bool IsDateTimeWithFormat(this string value)
         {
             return DateTime.TryParseExact(value, "ddMMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);

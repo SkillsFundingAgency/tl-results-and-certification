@@ -245,6 +245,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PostalAddressMissing.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestSoaUlnNotWithdrawn.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestSoaUlnNotWithdrawn.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\StatementOfAchievement\RequestStatementOfAchievement.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -839,6 +844,10 @@
     <EmbeddedResource Update="Content\StatementOfAchievement\PostalAddressMissing.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PostalAddressMissing.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaUlnNotWithdrawn.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestSoaUlnNotWithdrawn.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\StatementOfAchievement\RequestStatementOfAchievement.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
