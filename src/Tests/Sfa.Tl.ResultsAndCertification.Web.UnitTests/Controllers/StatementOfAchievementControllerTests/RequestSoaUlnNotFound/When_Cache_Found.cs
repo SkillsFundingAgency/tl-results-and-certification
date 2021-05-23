@@ -10,13 +10,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
     public class When_Cache_Found : TestSetup
     {
         private readonly long uln = 1234567890;
-        private RequestSoaUlnNotFoundViewModel mockCache = null;
+        private RequestSoaUlnNotFoundViewModel _mockCache = null;
 
         public override void Given()
         {
-            mockCache = new RequestSoaUlnNotFoundViewModel { Uln = uln.ToString() };
-            CacheService.GetAsync<RequestSoaUlnNotFoundViewModel>(CacheKey)
-                .Returns(mockCache);
+            _mockCache = new RequestSoaUlnNotFoundViewModel { Uln = uln.ToString() };
+            CacheService.GetAndRemoveAsync<RequestSoaUlnNotFoundViewModel>(CacheKey).Returns(_mockCache);
         }
 
         [Fact]
@@ -36,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).GetAsync<RequestSoaUlnNotFoundViewModel>(CacheKey);
+            CacheService.Received(1).GetAndRemoveAsync<RequestSoaUlnNotFoundViewModel>(CacheKey);
         }
     }
 }

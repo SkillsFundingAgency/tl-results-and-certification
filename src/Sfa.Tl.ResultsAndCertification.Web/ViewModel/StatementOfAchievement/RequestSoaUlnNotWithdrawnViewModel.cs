@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             Value = ProviderName
         };
 
-        public SummaryItemModel SummaryCore => new SummaryItemModel
+        public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel
         {
             Id = "tleveltitle",
             Title = RequestSoaUlnNotWithdrawnContent.Title_TLevel_Text,

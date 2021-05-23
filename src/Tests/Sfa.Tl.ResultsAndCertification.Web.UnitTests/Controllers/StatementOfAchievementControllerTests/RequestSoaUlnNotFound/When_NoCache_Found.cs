@@ -9,11 +9,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 {
     public class When_NoCache_Found : TestSetup
     {
-        private readonly RequestSoaUlnNotFoundViewModel mockCache = null;
+        private readonly RequestSoaUlnNotFoundViewModel _mockCache = null;
         public override void Given()
         {
-            CacheService.GetAndRemoveAsync<RequestSoaUlnNotFoundViewModel>(CacheKey)
-                .Returns(mockCache);
+            CacheService.GetAndRemoveAsync<RequestSoaUlnNotFoundViewModel>(CacheKey).Returns(_mockCache);
         }
 
         [Fact]
@@ -26,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         [Fact]
         public void Then_Expected_Method_IsCalled()
         {
-            CacheService.Received(1).GetAsync<RequestSoaUlnNotFoundViewModel>(CacheKey);
+            CacheService.Received(1).GetAndRemoveAsync<RequestSoaUlnNotFoundViewModel>(CacheKey);
         }
     }
 }
