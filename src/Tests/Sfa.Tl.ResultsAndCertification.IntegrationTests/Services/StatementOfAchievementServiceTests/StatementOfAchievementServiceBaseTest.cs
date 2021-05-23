@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
@@ -10,25 +13,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.StatementOfAchievementRepositoryTests
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAchievementServiceTests
 {
-    public abstract class StatementOfAchievementRepositoryBaseTest : BaseTest<TlProvider>
+    public abstract class StatementOfAchievementServiceBaseTest : BaseTest<TlProvider>
     {
-        // Seed objects.
+        protected StatementOfAchievementService StatementOfAchievementService;
+       
+        protected IMapper TrainingProviderMapper;
+        protected ILogger<StatementOfAchievementService> StatementOfAchievementServiceLogger;
+        protected IStatementOfAchievementRepository StatementOfAchievementRepository;
+        protected ILogger<StatementOfAchievementRepository> StatementOfAchievementRepositoryLogger;
+
+        // Data Seed variables
         protected TlAwardingOrganisation TlAwardingOrganisation;
         protected TlRoute Route;
         protected TlPathway Pathway;
         protected TlSpecialism Specialism;
         protected TqAwardingOrganisation TqAwardingOrganisation;
-        protected IEnumerable<TlProvider> TlProviders;
-        protected TlProvider TlProvider;
         protected TqProvider TqProvider;
-        protected IList<TlLookup> TlLookup;
+        protected IEnumerable<TlProvider> TlProviders;
         protected IList<TqProvider> TqProviders;
 
-        // Dependencies.
-        protected ILogger<StatementOfAchievementRepository> StatementOfAchievementRepositoryLogger;
-        protected IStatementOfAchievementRepository StatementOfAchievementRepository;
+        protected virtual void CreateMapper()
+        {
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ProviderAddressMapper).Assembly));
+            TrainingProviderMapper = new Mapper(mapperConfig);
+        }
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
@@ -38,24 +48,31 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             Specialism = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, Pathway).First();
             TqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Pathway, TlAwardingOrganisation);
             TlProviders = ProviderDataProvider.CreateTlProviders(DbContext);
-            TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProviders.First());
-            TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
-
             DbContext.SaveChangesAsync();
         }
 
-        public TqRegistrationProfile SeedRegistrationDataByStatus(long uln, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active, TqProvider tqProvider = null)
+        public List<TqRegistrationProfile> SeedRegistrationsData(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null)
         {
-            var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
+            var profiles = new List<TqRegistrationProfile>();
+
+            foreach (var uln in ulns)
+            {
+                profiles.Add(SeedRegistrationData(uln.Key, uln.Value, tqProvider));
+            }
+            return profiles;
+        }
+
+        public TqRegistrationProfile SeedRegistrationData(long uln, RegistrationPathwayStatus status = RegistrationPathwayStatus.Active, TqProvider tqProvider = null)
+        {
+            var profile = new TqRegistrationProfileBuilder().BuildListWithoutLrsData().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProviders.First());
-            tqRegistrationPathway.Status = status;
-
             var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
 
-            if (status == RegistrationPathwayStatus.Withdrawn)
+            if (status == RegistrationPathwayStatus.Withdrawn || status == RegistrationPathwayStatus.Transferred)
             {
+                tqRegistrationPathway.Status = status;
                 tqRegistrationPathway.EndDate = DateTime.UtcNow.AddDays(-1);
                 tqRegistrationSpecialism.IsOptedin = true;
                 tqRegistrationSpecialism.EndDate = DateTime.UtcNow.AddDays(-1);
@@ -63,28 +80,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
 
             DbContext.SaveChanges();
             return profile;
-        }
-
-        public void TransferRegistration(TqRegistrationProfile profile, Provider transferTo)
-        {
-            var toProvider = DbContext.TlProvider.FirstOrDefault(x => x.UkPrn == (long)transferTo);
-            var transferToTqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, toProvider, true);
-
-            foreach (var pathway in profile.TqRegistrationPathways)
-            {
-                pathway.Status = RegistrationPathwayStatus.Transferred;
-                pathway.EndDate = DateTime.UtcNow;
-
-                foreach (var specialism in pathway.TqRegistrationSpecialisms)
-                {
-                    specialism.IsOptedin = true;
-                    specialism.EndDate = DateTime.UtcNow;
-                }
-            }
-
-            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, profile, transferToTqProvider);
-            var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
-            DbContext.SaveChanges();
         }
     }
 
