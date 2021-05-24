@@ -97,6 +97,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _cacheService.SetAsync(CacheKey, new RequestSoaUlnNotWithdrawnViewModel { Uln = soaLearnerRecord.Uln, LearnerName = soaLearnerRecord.LearnerName, DateofBirth = soaLearnerRecord.DateofBirth, ProviderName = soaLearnerRecord.ProviderName, TLevelTitle = soaLearnerRecord.TlevelTitle }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.RequestSoaUlnNotWithdrawn);
             }
+            else if (!soaLearnerRecord.IsIndustryPlacementAdded)
+            {
+                await _cacheService.SetAsync(CacheKey, new RequestSoaNotAvailableNoIpStatusViewModel { Uln = soaLearnerRecord.Uln, LearnerName = soaLearnerRecord.LearnerName, DateofBirth = soaLearnerRecord.DateofBirth, ProviderName = soaLearnerRecord.ProviderName, TLevelTitle = soaLearnerRecord.TlevelTitle }, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.RequestSoaNotAvailableNoIpStatus);
+            }
             return RedirectToRoute(RouteConstants.RequestSoaUniqueLearnerNumber);
         }
 
@@ -121,6 +126,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read RequestSoaUlnNotWithdrawnViewModel from redis cache in request soa uln not withdrawn page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(cacheModel);
+        }
+
+        [HttpGet]
+        [Route("/request-statement-of-achievement-not-available-no-ip-status", Name = RouteConstants.RequestSoaNotAvailableNoIpStatus)]
+        public async Task<IActionResult> RequestSoaNotAvailableNoIpStatusAsync()
+        {
+            var cacheModel = await _cacheService.GetAndRemoveAsync<RequestSoaNotAvailableNoIpStatusViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read RequestSoaNotAvailableNoIpStatusViewModel from redis cache in request soa not available no ip status page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

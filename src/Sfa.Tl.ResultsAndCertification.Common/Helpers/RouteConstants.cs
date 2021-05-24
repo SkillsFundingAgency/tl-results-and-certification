@@ -267,6 +267,7 @@
         public const string SubmitRequestSoaUniqueLearnerNumber = "SubmitRequestSoaUniqueLearnerNumber";
         public const string RequestSoaUlnNotFound = "RequestSoaUlnNotFound";
         public const string RequestSoaUlnNotWithdrawn = "RequestSoaUlnNotWithdrawn";
+        public const string RequestSoaNotAvailableNoIpStatus = "RequestSoaNotAvailableNoIpStatus";        
 
         #endregion
     }
