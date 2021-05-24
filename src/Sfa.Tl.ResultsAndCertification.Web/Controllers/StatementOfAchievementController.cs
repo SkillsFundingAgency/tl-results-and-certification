@@ -86,7 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var soaLearnerRecord = await _statementOfAchievementLoader.FindSoaLearnerRecordAsync(User.GetUkPrn(), model.SearchUln.ToLong());
             await _cacheService.SetAsync(CacheKey, model);
-            
+
             if (soaLearnerRecord == null || !soaLearnerRecord.IsLearnerRegistered)
             {
                 await _cacheService.SetAsync(CacheKey, new RequestSoaUlnNotFoundViewModel { Uln = model.SearchUln }, CacheExpiryTime.XSmall);
@@ -102,6 +102,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _cacheService.SetAsync(CacheKey, new RequestSoaNotAvailableNoIpStatusViewModel { Uln = soaLearnerRecord.Uln, LearnerName = soaLearnerRecord.LearnerName, DateofBirth = soaLearnerRecord.DateofBirth, ProviderName = soaLearnerRecord.ProviderName, TLevelTitle = soaLearnerRecord.TlevelTitle }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.RequestSoaNotAvailableNoIpStatus);
             }
+            else if (!soaLearnerRecord.IsCoreResultAvailable && !soaLearnerRecord.IsIndustryPlacementCompleted)
+            {
+                await _cacheService.SetAsync(CacheKey, new RequestSoaNotAvailableNoResultsViewModel { Uln = soaLearnerRecord.Uln, LearnerName = soaLearnerRecord.LearnerName, DateofBirth = soaLearnerRecord.DateofBirth, ProviderName = soaLearnerRecord.ProviderName, TLevelTitle = soaLearnerRecord.TlevelTitle }, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.RequestSoaNotAvailableNoResults);
+            }
+
             return RedirectToRoute(RouteConstants.RequestSoaUniqueLearnerNumber);
         }
 
