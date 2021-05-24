@@ -232,6 +232,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Statement of achievement not available.
+        /// </summary>
+        public static string Statement_Of_Achievement_Not_Available {
+            get {
+                return ResourceManager.GetString("Statement_Of_Achievement_Not_Available", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to T Level details.
         /// </summary>
         public static string Tlevel_Details {

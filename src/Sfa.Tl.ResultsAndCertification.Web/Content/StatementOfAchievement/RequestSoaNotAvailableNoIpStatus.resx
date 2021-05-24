@@ -117,82 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Assessment_Dashboard" xml:space="preserve">
-    <value>Assessment entries</value>
+  <data name="Add_Learner_Tlevel_Record_Button" xml:space="preserve">
+    <value>Add learner T Level record</value>
   </data>
-  <data name="Contact" xml:space="preserve">
-    <value>Contact us</value>
+  <data name="Heading_Statement_Of_Achievement_Not_Available" xml:space="preserve">
+    <value>Statement of achievement not available - we need more information</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
+  <data name="No_Industry_Placement_Status_Has_Been_Recorded" xml:space="preserve">
+    <value>No industry placement status has been recorded for this learner so you cannot request a statement of achievement.</value>
   </data>
-  <data name="Learners_Assessment_entries" xml:space="preserve">
-    <value>Learner's assessment entries</value>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Request statement of achievement - Statement of achievement not available page</value>
   </data>
-  <data name="Learners_Results" xml:space="preserve">
-    <value>Learner's results</value>
+  <data name="Title_DateofBirth_Text" xml:space="preserve">
+    <value>Date of birth</value>
   </data>
-  <data name="Learner_TLevel_Record" xml:space="preserve">
-    <value>Learner T Level record</value>
+  <data name="Title_Name_Text" xml:space="preserve">
+    <value>Name</value>
   </data>
-  <data name="Manage_Learner_TLevel_Records" xml:space="preserve">
-    <value>Manage learner T Level records</value>
+  <data name="Title_Provider_Text" xml:space="preserve">
+    <value>Provider (UKPRN)</value>
   </data>
-  <data name="Manage_Postal_Address" xml:space="preserve">
-    <value>Manage your organisation’s postal address</value>
+  <data name="Title_TLevel_Text" xml:space="preserve">
+    <value>T Level title</value>
   </data>
-  <data name="Provider_Find_Provider" xml:space="preserve">
-    <value>Find a provider</value>
+  <data name="Title_Uln_Text" xml:space="preserve">
+    <value>ULN</value>
   </data>
-  <data name="Provider_Tlevels" xml:space="preserve">
-    <value>Provider’s T Levels</value>
-  </data>
-  <data name="Provider_Your_Providers" xml:space="preserve">
-    <value>Your providers</value>
-  </data>
-  <data name="Registration_Dashboard" xml:space="preserve">
-    <value>Registrations</value>
-  </data>
-  <data name="Registration_Details" xml:space="preserve">
-    <value>Registration details</value>
-  </data>
-  <data name="Request_Statement_Of_Achievement" xml:space="preserve">
-    <value>Request statement of achievement</value>
-  </data>
-  <data name="Result_Dashboard" xml:space="preserve">
-    <value>Results</value>
-  </data>
-  <data name="Search_For_Assessments" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
-  <data name="Search_For_Learner" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
-  <data name="Search_For_Registration" xml:space="preserve">
-    <value>Search for a registration</value>
-  </data>
-  <data name="Search_For_Results" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
-  <data name="Statement_Of_Achievement_Not_Available" xml:space="preserve">
-    <value>Statement of achievement not available</value>
-  </data>
-  <data name="Tlevel_Details" xml:space="preserve">
-    <value>T Level details</value>
-  </data>
-  <data name="Tlevel_Review_Select" xml:space="preserve">
-    <value>Review T Levels</value>
-  </data>
-  <data name="Tlevel_ViewAll" xml:space="preserve">
-    <value>Your T Levels</value>
-  </data>
-  <data name="Upload_Assessments_File" xml:space="preserve">
-    <value>Upload assessment entries file</value>
-  </data>
-  <data name="Upload_Registrations_File" xml:space="preserve">
-    <value>Upload registrations file</value>
-  </data>
-  <data name="Upload_Results_File" xml:space="preserve">
-    <value>Upload results file</value>
+  <data name="You_Must_Add_Learner_Tlevel_Record" xml:space="preserve">
+    <value>You must add a learner T Level record to tell us if this learner has completed an industry placement.</value>
   </data>
 </root>
