@@ -28,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                           join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
                                           join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                           orderby tqPathway.CreatedOn descending
+                                          let industryPlacements = _dbContext.IndustryPlacement.Where(p => p.TqRegistrationPathwayId == tqPathway.Id)
                                           where tqProfile.UniqueLearnerNumber == uln && tlProvider.UkPrn == providerUkprn 
                                           select new FindSoaLearnerRecord
                                           {
@@ -37,7 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                               DateofBirth = tqProfile.DateofBirth,
                                               ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
                                               TlevelTitle = tlPathway.TlevelTitle,
-                                              Status = tqPathway.Status
+                                              Status = tqPathway.Status,
+                                              IsIndustryPlacementAdded = industryPlacements.Any()
                                           })
                                 .FirstOrDefaultAsync();
             return soaLearnerRecord;
