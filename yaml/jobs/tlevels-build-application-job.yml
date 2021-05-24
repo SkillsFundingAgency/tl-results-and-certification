@@ -60,15 +60,15 @@ jobs:
         projects: '**/*.UnitTests.csproj'
         arguments: '--configuration $(buildConfiguration) --no-build'
     
-    - task: DotNetCoreCLI@2
-      displayName: Integration Tests
-      inputs:
-        command: test
-        projects: '**/*.IntegrationTests.csproj'
-        arguments: '--configuration $(buildConfiguration)'
+    # - task: DotNetCoreCLI@2
+    #   displayName: Integration Tests
+    #   inputs:
+    #     command: test
+    #     projects: '**/*.IntegrationTests.csproj'
+    #     arguments: '--configuration $(buildConfiguration)'
 
     - task: DotNetCoreCLI@2
-      displayName: Publish Integration Tests
+      displayName: Integration Tests
       inputs:
         command: publish
         publishWebProjects: false
