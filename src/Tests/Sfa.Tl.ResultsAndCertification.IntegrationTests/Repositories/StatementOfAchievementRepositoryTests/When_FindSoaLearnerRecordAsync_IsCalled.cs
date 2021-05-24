@@ -57,11 +57,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(long uln, Provider provider, RegistrationPathwayStatus expectedStatus, bool hasResult)
+        public async Task Then_Returns_Expected_Results(long uln, Provider provider, RegistrationPathwayStatus expectedStatus, bool isRecordFound)
         {
             await WhenAsync((long)provider, uln);
 
-            if (hasResult == false)
+            if (isRecordFound == false)
             {
                 _actualResult.Should().BeNull();
                 return;
@@ -71,6 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             var expectedProviderName = expectedProvider != null ? $"{expectedProvider.Name} ({expectedProvider.UkPrn})" : null;
             var expectedTlevelTitle = Pathway.TlevelTitle;
             var expectedProfile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
+            var expectedIsLearnerRegistered = expectedStatus == RegistrationPathwayStatus.Active || expectedStatus == RegistrationPathwayStatus.Withdrawn;
 
             expectedProfile.Should().NotBeNull();
             _actualResult.Should().NotBeNull();
@@ -80,6 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             _actualResult.ProviderName.Should().Be(expectedProviderName);
             _actualResult.TlevelTitle.Should().Be(expectedTlevelTitle);
             _actualResult.Status.Should().Be(expectedStatus);
+            _actualResult.IsLearnerRegistered.Should().Be(expectedIsLearnerRegistered);
         }
 
         public static IEnumerable<object[]> Data
