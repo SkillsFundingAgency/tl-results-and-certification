@@ -146,6 +146,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(cacheModel);
         }
 
+        [HttpGet]
+        [Route("request-statement-of-achievement-not-available-no-results", Name = RouteConstants.RequestSoaNotAvailableNoResults)]
+        public async Task<IActionResult> RequestSoaNotAvailableNoResultsAsync()
+        {
+            var cacheModel = await _cacheService.GetAndRemoveAsync<RequestSoaNotAvailableNoResultsViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read RequestSoaNotAvailableNoResultsViewModel from redis cache in request soa not available no results page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(cacheModel);
+        }
+
         private bool IsSoaAvailable()
         {
             return _configuration.SoaAvailableDate == null || DateTime.UtcNow.Date >= _configuration.SoaAvailableDate.Value.Date;
