@@ -52,6 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!await IsAddressAvailable())
                 return RedirectToRoute(RouteConstants.PostalAddressMissing);
 
+            await _cacheService.RemoveAsync<RequestSoaUniqueLearnerNumberViewModel>(CacheKey);
             return View(new RequestStatementOfAchievementViewModel());
         }
 

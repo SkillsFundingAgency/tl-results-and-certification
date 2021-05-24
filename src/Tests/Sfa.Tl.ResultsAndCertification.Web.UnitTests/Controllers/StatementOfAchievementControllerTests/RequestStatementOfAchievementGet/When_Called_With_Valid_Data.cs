@@ -32,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         public void Then_Expected_Methods_Called()
         {
             ProviderAddressLoader.Received(1).GetAddressAsync<Address>(ProviderUkprn);
+            CacheService.Received(1).RemoveAsync<RequestSoaUniqueLearnerNumberViewModel>(CacheKey);
         }
 
         [Fact]
