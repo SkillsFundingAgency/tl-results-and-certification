@@ -70,6 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.ProviderName.Should().Be(_mockApiResponse.ProviderName);
             _actualResult.TlevelTitle.Should().Be(_mockApiResponse.TlevelTitle);
             _actualResult.Status.Should().Be(_mockApiResponse.Status);
+            _actualResult.IsLearnerRegistered.Should().BeFalse();
         }
     }
 }
