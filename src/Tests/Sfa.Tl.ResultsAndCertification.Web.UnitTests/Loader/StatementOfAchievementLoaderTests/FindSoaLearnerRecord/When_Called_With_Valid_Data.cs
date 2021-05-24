@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             ActualResult.ProviderName.Should().Be(_expectedApiResult.ProviderName);
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.TlevelTitle);
             ActualResult.Status.Should().Be(_expectedApiResult.Status);
-            ActualResult.IsLearnerRegistered.Should().BeFalse();
+            ActualResult.IsLearnerRegistered.Should().BeTrue();
         }
     }
 }
