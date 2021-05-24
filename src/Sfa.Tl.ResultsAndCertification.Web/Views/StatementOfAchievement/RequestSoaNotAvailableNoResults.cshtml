@@ -2,7 +2,7 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
 
 @{
-    ViewData["Title"] = "Todo";
+    ViewData["Title"] = RequestSoaNotAvailableNoResults.Page_Title;
 }
 
 @section NavigationBar {
@@ -12,68 +12,32 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
 
-        <h1 class="govuk-heading-l">Statement of achievement not available - minimum requirements not met</h1>
+        <h1 class="govuk-heading-l">@RequestSoaNotAvailableNoResults.Page_Title</h1>
 
         <div class="govuk-inset-text">
-            <p class="govuk-body">Our records show:</p>
+            <p class="govuk-body">@RequestSoaNotAvailableNoResults.InsetText_Our_Record_Show</p>
             <ul class="govuk-list govuk-list--bullet">
-                <li>this learner has not completed an industry placement</li>
-                <li>this learner has not received a core component result</li>
+                <li>@RequestSoaNotAvailableNoResults.InsetText_Learner_Not_Completed_Industry_Placement</li>
+                <li>@RequestSoaNotAvailableNoResults.InsetText_Learner_Not_Received_Core_Results</li>
             </ul>
-            <p class="govuk-body">If the learner has completed an industry placement, you must <a class="govuk-link" href="result-entries1.html">update their learner T Level record</a></p>
-            <p class="govuk-body">If the learner has completed a technical qualification component, contact the exam board and ask them to add the result.</p>
+            <p class="govuk-body">@RequestSoaNotAvailableNoResults.InsetText_Para_If_learner_Completed_Industry_Placement 
+                <a class="govuk-link" href="result-entries1.html">@RequestSoaNotAvailableNoResults.InsetText_Link_Update_Tlevel_Record</a>.
+            </p>
+            <p class="govuk-body">@RequestSoaNotAvailableNoResults.InsetText_Para_If_Learner_Completed_Core_Contact_Board</p>
         </div>
 
         <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-7 govuk-!-margin-top-7">
 
         <dl class="govuk-summary-list govuk-summary-list--no-border">
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    ULN
-                </dt>
-                <dd class="govuk-summary-list__value">
-
-                </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Name
-                </dt>
-                <dd class="govuk-summary-list__value">
-
-                </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Date of birth
-                </dt>
-                <dd class="govuk-summary-list__value">
-
-                </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Provider(UKPRN)
-                </dt>
-                <dd class="govuk-summary-list__value">
-
-                </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    T Level Title
-                </dt>
-                <dd class="govuk-summary-list__value">
-
-                </dd>
-            </div>
+            <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+            <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
         </dl>
 
         <p class="govuk-body">
-            <a class="govuk-button" role="button" href="tlevels-dashboard">
-                Back to Home
-
-            </a>
+            <a id="backButton" class="govuk-button" role="button" asp-route="Home">@RequestSoaNotAvailableNoResults.Button_Back_To_Home</a>
         </p>
     </div>
 </div>
