@@ -77,6 +77,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             var expectedProviderName = expectedProvider != null ? $"{expectedProvider.Name} ({expectedProvider.UkPrn})" : null;
             var expectedTlevelTitle = Pathway.TlevelTitle;
             var expectedProfile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
+            var expectedIsLearnerRegistered = expectedStatus == RegistrationPathwayStatus.Active || expectedStatus == RegistrationPathwayStatus.Withdrawn;
+
 
             expectedProfile.Should().NotBeNull();
             _actualResult.Should().NotBeNull();
@@ -86,6 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             _actualResult.ProviderName.Should().Be(expectedProviderName);
             _actualResult.TlevelTitle.Should().Be(expectedTlevelTitle);
             _actualResult.Status.Should().Be(expectedStatus);
+            _actualResult.IsLearnerRegistered.Should().Be(expectedIsLearnerRegistered);
         }
 
         public static IEnumerable<object[]> Data
