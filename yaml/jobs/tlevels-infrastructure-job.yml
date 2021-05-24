@@ -59,7 +59,7 @@ jobs:
           scriptType: 'pscore'
           scriptLocation: 'inlineScript'
           inlineScript: |
-            $functionAppObjectId = az functionapp identity show -n $(armOutputs.armOutput.workerFunctionAppName) -g $(ResourceGroupName) --query "principalId"
+            $functionAppObjectId = az functionapp identity show -n $(armOutputs.armOutput.functionAppName) -g $(ResourceGroupName) --query "principalId"
             Write-Host $functionAppObjectId
             az keyvault set-policy --name $(SharedKeyVaultName) --object-id $functionAppObjectId --secret-permissions "get" --key-permissions "get" --certificate-permissions "get"
 

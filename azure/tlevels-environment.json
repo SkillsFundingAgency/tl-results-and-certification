@@ -499,9 +499,9 @@
             "type": "string",
             "value": "[variables('internalApiAppName')]"
         },
-        "workerFunctionAppName": {
+        "functionAppName": {
             "type": "string",
-            "value": "[variables('workerFunctionAppName')]"
+            "value": "[variables('functionAppName')]"
         },
         "BlobStorageConnectionString": {
             "type": "string",

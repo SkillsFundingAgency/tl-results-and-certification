@@ -10,7 +10,7 @@ parameters:
 jobs:
 - job: PublishFunction
   variables:
-    WorkerFunctionAppName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.WorkerFunctionAppName'] ]
+    functionAppName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.functionAppName'] ]
 
   pool:
     name: 'Azure Pipelines'
@@ -30,6 +30,6 @@ jobs:
     inputs:
       azureSubscription: ${{ parameters.serviceConnection }}
       appType: 'functionApp'
-      appName: '$(WorkerFunctionAppName)'
+      appName: '$(functionAppName)'
       package: '$(System.ArtifactsDirectory)/appdrop/${{ parameters.package }}'
       deploymentMethod: 'auto'
