@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using System;
 using Xunit;
 
@@ -19,7 +20,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 DateofBirth = DateTime.UtcNow.AddYears(-20),
                 ProviderName = "Barsley College (54678945)",
                 TlevelTitle = "Title",
-                Status = Common.Enum.RegistrationPathwayStatus.Active
+                Status = Common.Enum.RegistrationPathwayStatus.Active,
+                IsIndustryPlacementAdded = true, 
+                IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
+                HasPathwayResult = true
             };
 
             InternalApiClient.FindSoaLearnerRecordAsync(ProviderUkprn, Uln).Returns(_expectedApiResult);
@@ -37,6 +41,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.TlevelTitle);
             ActualResult.Status.Should().Be(_expectedApiResult.Status);
             ActualResult.IsLearnerRegistered.Should().BeTrue();
+            ActualResult.IsIndustryPlacementAdded.Should().Be(_expectedApiResult.IsIndustryPlacementAdded);
+            ActualResult.IndustryPlacementStatus.Should().Be(_expectedApiResult.IndustryPlacementStatus);
+            ActualResult.HasPathwayResult.Should().Be(_expectedApiResult.HasPathwayResult);
         }
     }
 }

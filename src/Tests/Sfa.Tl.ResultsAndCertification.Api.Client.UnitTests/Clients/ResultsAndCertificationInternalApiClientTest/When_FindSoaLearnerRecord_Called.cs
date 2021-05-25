@@ -2,6 +2,7 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
@@ -45,7 +46,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 DateofBirth = DateTime.UtcNow.AddYears(30),
                 ProviderName = "Barnsley College (123456789)",
                 TlevelTitle = "Title",
-                Status = Common.Enum.RegistrationPathwayStatus.Active
+                Status = RegistrationPathwayStatus.Active,
+                IsIndustryPlacementAdded = true,
+                IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                HasPathwayResult = true
             };
         }
 
@@ -70,7 +74,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.ProviderName.Should().Be(_mockApiResponse.ProviderName);
             _actualResult.TlevelTitle.Should().Be(_mockApiResponse.TlevelTitle);
             _actualResult.Status.Should().Be(_mockApiResponse.Status);
-            _actualResult.IsLearnerRegistered.Should().BeTrue();
+            _actualResult.IsLearnerRegistered.Should().Be(_mockApiResponse.IsLearnerRegistered);
+            _actualResult.IsIndustryPlacementAdded.Should().Be(_mockApiResponse.IsIndustryPlacementAdded);
+            _actualResult.IndustryPlacementStatus.Should().Be(_mockApiResponse.IndustryPlacementStatus);
+            _actualResult.HasPathwayResult.Should().Be(_mockApiResponse.HasPathwayResult);
         }
     }
 }
