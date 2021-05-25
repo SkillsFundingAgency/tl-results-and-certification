@@ -102,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _cacheService.SetAsync(CacheKey, new RequestSoaNotAvailableNoIpStatusViewModel { Uln = soaLearnerRecord.Uln, LearnerName = soaLearnerRecord.LearnerName, DateofBirth = soaLearnerRecord.DateofBirth, ProviderName = soaLearnerRecord.ProviderName, TLevelTitle = soaLearnerRecord.TlevelTitle }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.RequestSoaNotAvailableNoIpStatus);
             }
-            else if (!soaLearnerRecord.IsCoreResultAvailable && !soaLearnerRecord.IsIndustryPlacementCompleted)
+            else if (soaLearnerRecord.HasPathwayResult == false && !soaLearnerRecord.IsIndustryPlacementCompleted)
             {
                 await _cacheService.SetAsync(CacheKey, new RequestSoaNotAvailableNoResultsViewModel { Uln = soaLearnerRecord.Uln, LearnerName = soaLearnerRecord.LearnerName, DateofBirth = soaLearnerRecord.DateofBirth, ProviderName = soaLearnerRecord.ProviderName, TLevelTitle = soaLearnerRecord.TlevelTitle }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.RequestSoaNotAvailableNoResults);

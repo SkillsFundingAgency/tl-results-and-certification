@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using System.Collections.Generic;
@@ -39,7 +40,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                               ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
                                               TlevelTitle = tlPathway.TlevelTitle,
                                               Status = tqPathway.Status,
-                                              IsIndustryPlacementAdded = industryPlacements.Any()
+                                              IsIndustryPlacementAdded = industryPlacements.Any(),
+                                              IndustryPlacementStatus = industryPlacements.Any() ? industryPlacements.OrderByDescending(x => x.CreatedBy).FirstOrDefault().Status : IndustryPlacementStatus.CompletedWithSpecialConsideration,
+                                              HasPathwayResult = _dbContext.TqPathwayAssessment.FirstOrDefault(x => x.TqRegistrationPathwayId == tqPathway.Id && tqPathway.Status == RegistrationPathwayStatus.Withdrawn).TqPathwayResults.Any(x => x.IsOptedin && x.EndDate != null)
                                           })
                                 .FirstOrDefaultAsync();
             return soaLearnerRecord;
