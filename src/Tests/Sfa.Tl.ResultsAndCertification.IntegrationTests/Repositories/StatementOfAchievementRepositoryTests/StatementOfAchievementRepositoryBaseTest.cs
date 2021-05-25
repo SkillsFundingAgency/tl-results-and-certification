@@ -82,9 +82,28 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
                 }
             }
 
+            var industryPlacement = profile.TqRegistrationPathways.FirstOrDefault()?.IndustryPlacements?.FirstOrDefault();
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, profile, transferToTqProvider);
             var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
             DbContext.SaveChanges();
+
+            if(industryPlacement != null)
+                IndustryPlacementProvider.CreateIndustryPlacement(DbContext, tqRegistrationPathway.Id, industryPlacement.Status);
+
+            DbContext.SaveChanges();
+        }
+
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false)
+        {
+            if (profile == null) return;
+
+            profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
+
+            if (seedIndustryPlacement)
+            {
+                var pathway = profile.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+                IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
+            }
         }
     }
 

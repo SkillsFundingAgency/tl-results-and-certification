@@ -81,6 +81,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             DbContext.SaveChanges();
             return profile;
         }
+
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false)
+        {
+            if (profile == null) return;
+
+            profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
+
+            if (seedIndustryPlacement)
+            {
+                var pathway = profile.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+                IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
+            }
+        }
     }
 
     public enum Provider

@@ -16,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private IList<TqRegistrationProfile> _profiles;
         private FindSoaLearnerRecord _actualResult;
+        private List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement)> _testCriteriaData;
 
         public override void Given()
         {
@@ -24,7 +25,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             {
                 { 1111111111, RegistrationPathwayStatus.Active },
                 { 1111111112, RegistrationPathwayStatus.Withdrawn },
-                { 1111111113, RegistrationPathwayStatus.Active }
+                { 1111111113, RegistrationPathwayStatus.Active },
+                { 1111111114, RegistrationPathwayStatus.Withdrawn }
+            };
+
+            _testCriteriaData = new List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement)>
+            {
+                (1111111111, true, true), // EnglishAndMaths + IP
+                (1111111112, true, false), // EnglishAndMaths + No IP
+                (1111111113, false, true), // EnglishAndMaths + IP
+                (1111111114, true, true) // EnglishAndMaths + IP
             };
 
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
@@ -32,6 +42,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             foreach (var uln in _ulns)
             {
                 _profiles.Add(SeedRegistrationDataByStatus(uln.Key, uln.Value, TqProvider));
+            }            
+
+            foreach (var (uln, isEngishAndMathsAchieved, seedIndustryPlacement) in _testCriteriaData)
+            {
+                var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
+                BuildLearnerRecordCriteria(profile, isEngishAndMathsAchieved, seedIndustryPlacement);
             }
 
             TransferRegistration(_profiles.FirstOrDefault(p => p.UniqueLearnerNumber == 1111111113), Provider.WalsallCollege);
@@ -57,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(long uln, Provider provider, RegistrationPathwayStatus expectedStatus, bool isRecordFound)
+        public async Task Then_Returns_Expected_Results(long uln, Provider provider, RegistrationPathwayStatus expectedStatus, bool isIpAdded, bool isRecordFound)
         {
             await WhenAsync((long)provider, uln);
 
@@ -82,6 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             _actualResult.TlevelTitle.Should().Be(expectedTlevelTitle);
             _actualResult.Status.Should().Be(expectedStatus);
             _actualResult.IsLearnerRegistered.Should().Be(expectedIsLearnerRegistered);
+            _actualResult.IsIndustryPlacementAdded.Should().Be(isIpAdded);
         }
 
         public static IEnumerable<object[]> Data
@@ -90,12 +107,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             {
                 return new[]
                 {
-                    new object[] { 9999999999, Provider.WalsallCollege, null, false }, // Invalid Uln
-                    new object[] { 1111111111, Provider.BarsleyCollege, RegistrationPathwayStatus.Active, true }, // Active
-                    new object[] { 1111111111, Provider.WalsallCollege, null, false }, // Uln not from WalsallCollege
-                    new object[] { 1111111112, Provider.BarsleyCollege, RegistrationPathwayStatus.Withdrawn, true }, // Withdrawn
-                    new object[] { 1111111113, Provider.BarsleyCollege, RegistrationPathwayStatus.Transferred, true }, // Transferred
-                    new object[] { 1111111113, Provider.WalsallCollege, RegistrationPathwayStatus.Active, true } // Active
+                    new object[] { 9999999999, Provider.WalsallCollege, null, false, false }, // Invalid Uln
+                    new object[] { 1111111111, Provider.BarsleyCollege, RegistrationPathwayStatus.Active, true, true }, // Active
+                    new object[] { 1111111111, Provider.WalsallCollege, null, false, false }, // Uln not from WalsallCollege
+                    new object[] { 1111111112, Provider.BarsleyCollege, RegistrationPathwayStatus.Withdrawn, false, true }, // Withdrawn
+                    new object[] { 1111111113, Provider.BarsleyCollege, RegistrationPathwayStatus.Transferred, true, true }, // Transferred
+                    new object[] { 1111111113, Provider.WalsallCollege, RegistrationPathwayStatus.Active, true, true }, // Active
+                    new object[] { 1111111114, Provider.BarsleyCollege, RegistrationPathwayStatus.Withdrawn, true, true } // Withdrawn
                 };
             }
         }
