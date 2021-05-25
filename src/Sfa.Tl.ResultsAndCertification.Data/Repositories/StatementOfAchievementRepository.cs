@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using System.Collections.Generic;
@@ -30,7 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                           join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                           orderby tqPathway.CreatedOn descending
                                           let industryPlacements = _dbContext.IndustryPlacement.Where(p => p.TqRegistrationPathwayId == tqPathway.Id)
-                                          where tqProfile.UniqueLearnerNumber == uln && tlProvider.UkPrn == providerUkprn 
+                                          let pathwayResults = _dbContext.TqPathwayAssessment.Join(_dbContext.TqPathwayResult, pa => pa.Id, pr => pr.TqPathwayAssessmentId, (pa, pr) => new { pa, pr }).Where(x => x.pa.TqRegistrationPathwayId == tqPathway.Id && x.pa.IsOptedin && x.pr.IsOptedin)
+                                          where tqProfile.UniqueLearnerNumber == uln && tlProvider.UkPrn == providerUkprn
                                           select new FindSoaLearnerRecord
                                           {
                                               ProfileId = tqProfile.Id,
@@ -41,8 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                               TlevelTitle = tlPathway.TlevelTitle,
                                               Status = tqPathway.Status,
                                               IsIndustryPlacementAdded = industryPlacements.Any(),
-                                              IndustryPlacementStatus = industryPlacements.Any() ? industryPlacements.OrderByDescending(x => x.CreatedBy).FirstOrDefault().Status : IndustryPlacementStatus.CompletedWithSpecialConsideration,
-                                              HasPathwayResult = _dbContext.TqPathwayAssessment.FirstOrDefault(x => x.TqRegistrationPathwayId == tqPathway.Id && tqPathway.Status == RegistrationPathwayStatus.Withdrawn).TqPathwayResults.Any(x => x.IsOptedin && x.EndDate != null)
+                                              IndustryPlacementStatus = industryPlacements.FirstOrDefault().Status,
+                                              HasPathwayResult = pathwayResults.Any()
                                           })
                                 .FirstOrDefaultAsync();
             return soaLearnerRecord;
