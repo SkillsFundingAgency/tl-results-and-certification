@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private IList<TqRegistrationProfile> _profiles;
         private FindSoaLearnerRecord _actualResult;
-        private List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement)> _testCriteriaData;
+        private List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, IndustryPlacementStatus ipStatus)> _testCriteriaData;
 
         public override void Given()
         {
@@ -29,12 +29,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
                 { 1111111114, RegistrationPathwayStatus.Withdrawn }
             };
 
-            _testCriteriaData = new List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement)>
+            IndustryPlacementStatus? na = null; // not applicable
+            _testCriteriaData = new List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, IndustryPlacementStatus ipStatus)>
             {
-                (1111111111, true, true), // EnglishAndMaths + IP
-                (1111111112, true, false), // EnglishAndMaths + No IP
-                (1111111113, false, true), // EnglishAndMaths + IP
-                (1111111114, true, true) // EnglishAndMaths + IP
+                (1111111111, true, true, IndustryPlacementStatus.Completed), // EnglishAndMaths + IP
+                (1111111112, true, false, IndustryPlacementStatus.NotSpecified), // EnglishAndMaths + No IP
+                (1111111113, false, true, IndustryPlacementStatus.CompletedWithSpecialConsideration), // EnglishAndMaths + IP
+                (1111111114, true, true, IndustryPlacementStatus.NotCompleted) // EnglishAndMaths + IP
             };
 
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
@@ -44,10 +45,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
                 _profiles.Add(SeedRegistrationDataByStatus(uln.Key, uln.Value, TqProvider));
             }            
 
-            foreach (var (uln, isEngishAndMathsAchieved, seedIndustryPlacement) in _testCriteriaData)
+            foreach (var (uln, isEngishAndMathsAchieved, seedIndustryPlacement, ipStatus) in _testCriteriaData)
             {
                 var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
-                BuildLearnerRecordCriteria(profile, isEngishAndMathsAchieved, seedIndustryPlacement);
+                BuildLearnerRecordCriteria(profile, isEngishAndMathsAchieved, seedIndustryPlacement, ipStatus);
             }
 
             TransferRegistration(_profiles.FirstOrDefault(p => p.UniqueLearnerNumber == 1111111113), Provider.WalsallCollege);
@@ -88,6 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             var expectedTlevelTitle = Pathway.TlevelTitle;
             var expectedProfile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var expectedIsLearnerRegistered = expectedStatus == RegistrationPathwayStatus.Active || expectedStatus == RegistrationPathwayStatus.Withdrawn;
+            var expecedIpStatus = _testCriteriaData.FirstOrDefault(x => x.uln == expectedProfile.UniqueLearnerNumber).ipStatus;
 
             expectedProfile.Should().NotBeNull();
             _actualResult.Should().NotBeNull();
@@ -99,6 +101,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             _actualResult.Status.Should().Be(expectedStatus);
             _actualResult.IsLearnerRegistered.Should().Be(expectedIsLearnerRegistered);
             _actualResult.IsIndustryPlacementAdded.Should().Be(isIpAdded);
+            _actualResult.IndustryPlacementStatus.Should().Be(expecedIpStatus);
+
+            var expectedIsIndustryPlacementCompleted = expecedIpStatus == IndustryPlacementStatus.Completed || expecedIpStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration;
+            _actualResult.IsIndustryPlacementCompleted.Should().Be(expectedIsIndustryPlacementCompleted);
         }
 
         public static IEnumerable<object[]> Data
