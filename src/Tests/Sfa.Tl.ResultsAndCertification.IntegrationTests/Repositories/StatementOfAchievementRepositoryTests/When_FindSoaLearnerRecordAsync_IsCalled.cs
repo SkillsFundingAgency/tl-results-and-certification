@@ -30,7 +30,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
                 { 1111111114, RegistrationPathwayStatus.Withdrawn }
             };
 
-            IndustryPlacementStatus? na = null; // not applicable
             _testCriteriaData = new List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, IndustryPlacementStatus ipStatus)>
             {
                 (1111111111, true, true, IndustryPlacementStatus.Completed), // EnglishAndMaths + IP
