@@ -31,9 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
 
         // Validation properties
         public RegistrationPathwayStatus Status { get; set; }
-        public bool IsIndustryPlacementAdded { get; set; }
-        public bool? HasPathwayResult { get; set; }
 
+        public bool? HasPathwayResult => !string.IsNullOrWhiteSpace(PathwayGrade);
+        public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IndustryPlacementStatus.NotSpecified;
         public bool IsLearnerRegistered => Status == RegistrationPathwayStatus.Active || Status == RegistrationPathwayStatus.Withdrawn;
         public bool IsNotWithdrawn => Status == RegistrationPathwayStatus.Active;
         public bool IsIndustryPlacementCompleted => IndustryPlacementStatus == IndustryPlacementStatus.Completed || IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration;
