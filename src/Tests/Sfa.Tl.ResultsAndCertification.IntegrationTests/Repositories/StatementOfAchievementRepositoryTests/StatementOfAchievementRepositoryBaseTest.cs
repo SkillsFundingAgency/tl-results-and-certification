@@ -26,6 +26,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
         protected IList<TlLookup> TlLookup;
         protected IList<TqProvider> TqProviders;
 
+        protected IList<AssessmentSeries> AssessmentSeries;
+        protected List<TqPathwayAssessment> TqPathwayAssessment;
+
         // Dependencies.
         protected ILogger<StatementOfAchievementRepository> StatementOfAchievementRepositoryLogger;
         protected IStatementOfAchievementRepository StatementOfAchievementRepository;
@@ -40,6 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             TlProviders = ProviderDataProvider.CreateTlProviders(DbContext);
             TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProviders.First());
+            AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
 
             DbContext.SaveChangesAsync();
@@ -87,7 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
             DbContext.SaveChanges();
 
-            if(industryPlacement != null)
+            if (industryPlacement != null)
                 IndustryPlacementProvider.CreateIndustryPlacement(DbContext, tqRegistrationPathway.Id, industryPlacement.Status);
 
             DbContext.SaveChanges();
@@ -105,6 +109,73 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
                 IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, ipStatus);
             }
         }
+        
+        public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
+        {
+            var tqPathwayAssessments = new List<TqPathwayAssessment>();
+
+            foreach (var (pathwayRegistration, index) in pathwayRegistrations.Select((value, i) => (value, i)))
+            {
+                if (isHistorical)
+                {
+                    // Historical record
+                    var pathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index], isBulkUpload);
+                    pathwayAssessment.IsOptedin = false;
+                    pathwayAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                    var tqPathwayAssessmentHistorical = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, pathwayAssessment);
+                    tqPathwayAssessments.Add(tqPathwayAssessmentHistorical);
+                }
+
+                var activePathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index], isBulkUpload);
+                var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, activePathwayAssessment);
+                if (!seedPathwayAssessmentsAsActive)
+                {
+                    tqPathwayAssessment.IsOptedin = pathwayRegistration.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
+                    tqPathwayAssessment.EndDate = DateTime.UtcNow;
+                }
+
+                tqPathwayAssessments.Add(tqPathwayAssessment);
+            }
+            return tqPathwayAssessments;
+        }
+        
+        public List<TqPathwayResult> GetPathwayResultDataToProcess(TqPathwayAssessment pathwayAssessment, bool seedPathwayResultsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
+        {
+            var tqPathwayResults = new List<TqPathwayResult>();
+
+            if (isHistorical)
+            {
+                // Historical record
+                var pathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, isBulkUpload: isBulkUpload);
+                pathwayResult.IsOptedin = false;
+                pathwayResult.EndDate = DateTime.UtcNow.AddDays(-1);
+
+                var tqPathwayResultHistorical = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, pathwayResult);
+                tqPathwayResults.Add(tqPathwayResultHistorical);
+            }
+
+            var activePathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, isBulkUpload: isBulkUpload);
+            var tqPathwayResult = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, activePathwayResult);
+            if (!seedPathwayResultsAsActive)
+            {
+                tqPathwayResult.IsOptedin = pathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
+                tqPathwayResult.EndDate = DateTime.UtcNow;
+            }
+
+            tqPathwayResults.Add(tqPathwayResult);
+            return tqPathwayResults;
+        }
+        
+        public List<TqPathwayAssessment> SeedPathwayAssessmentsData(List<TqPathwayAssessment> pathwayAssessments, bool saveChanges = true)
+        {
+            TqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessments(DbContext, pathwayAssessments);
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return TqPathwayAssessment;
+        }
+
     }
 
     public enum Provider
