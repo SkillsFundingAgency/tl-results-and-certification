@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
         private IList<TqRegistrationProfile> _profiles;
         private FindSoaLearnerRecord _actualResult;
         private List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, IndustryPlacementStatus ipStatus)> _testCriteriaData;
+        private List<long> _profilesWithResults;
 
         public override void Given()
         {
@@ -29,7 +30,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
                 { 1111111114, RegistrationPathwayStatus.Withdrawn }
             };
 
-            IndustryPlacementStatus? na = null; // not applicable
             _testCriteriaData = new List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, IndustryPlacementStatus ipStatus)>
             {
                 (1111111111, true, true, IndustryPlacementStatus.Completed), // EnglishAndMaths + IP
@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             foreach (var uln in _ulns)
             {
                 _profiles.Add(SeedRegistrationDataByStatus(uln.Key, uln.Value, TqProvider));
-            }            
+            }
 
             foreach (var (uln, isEngishAndMathsAchieved, seedIndustryPlacement, ipStatus) in _testCriteriaData)
             {
@@ -54,6 +54,31 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             TransferRegistration(_profiles.FirstOrDefault(p => p.UniqueLearnerNumber == 1111111113), Provider.WalsallCollege);
 
             DbContext.SaveChanges();
+
+            // Seed Assessments And Results
+            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+
+            _profilesWithResults = new List<long> { 1111111111, 1111111112 };
+            foreach (var profile in _profiles.Where(x => _profilesWithResults.Contains(x.UniqueLearnerNumber)))
+            {
+                var isLatestActive = _ulns[profile.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
+                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(profile.TqRegistrationPathways.ToList(), isLatestActive);
+                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
+                
+                // Seed Pathway results
+                foreach (var assessment in pathwayAssessments)
+                {
+                    var hasHitoricData = new List<long> { 1111111112 };
+                    var isHistoricAssessent = hasHitoricData.Any(x => x == profile.UniqueLearnerNumber);
+                    var isLatestActiveResult = !isHistoricAssessent;
+
+                    var tqPathwayResultSeedData = GetPathwayResultDataToProcess(assessment, isLatestActiveResult, isHistoricAssessent);
+                    tqPathwayResultsSeedData.AddRange(tqPathwayResultSeedData);
+                }
+            }
+
+            SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
 
             // Test class.
             StatementOfAchievementRepository = new StatementOfAchievementRepository(DbContext, StatementOfAchievementRepositoryLogger);
@@ -90,6 +115,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             var expectedProfile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var expectedIsLearnerRegistered = expectedStatus == RegistrationPathwayStatus.Active || expectedStatus == RegistrationPathwayStatus.Withdrawn;
             var expecedIpStatus = _testCriteriaData.FirstOrDefault(x => x.uln == expectedProfile.UniqueLearnerNumber).ipStatus;
+            var expectedIsIndustryPlacementCompleted = expecedIpStatus == IndustryPlacementStatus.Completed || expecedIpStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration;
+            var expectedHasResult = _profilesWithResults.Contains(expectedProfile.UniqueLearnerNumber);
 
             expectedProfile.Should().NotBeNull();
             _actualResult.Should().NotBeNull();
@@ -102,9 +129,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             _actualResult.IsLearnerRegistered.Should().Be(expectedIsLearnerRegistered);
             _actualResult.IsIndustryPlacementAdded.Should().Be(isIpAdded);
             _actualResult.IndustryPlacementStatus.Should().Be(expecedIpStatus);
-
-            var expectedIsIndustryPlacementCompleted = expecedIpStatus == IndustryPlacementStatus.Completed || expecedIpStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration;
             _actualResult.IsIndustryPlacementCompleted.Should().Be(expectedIsIndustryPlacementCompleted);
+            _actualResult.HasPathwayResult.Should().Be(expectedHasResult);
         }
 
         public static IEnumerable<object[]> Data
