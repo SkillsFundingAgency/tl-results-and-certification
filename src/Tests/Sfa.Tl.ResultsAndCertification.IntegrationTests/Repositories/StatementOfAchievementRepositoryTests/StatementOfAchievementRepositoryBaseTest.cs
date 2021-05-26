@@ -93,7 +93,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             DbContext.SaveChanges();
         }
 
-        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false)
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false, IndustryPlacementStatus ipStatus = IndustryPlacementStatus.Completed)
         {
             if (profile == null) return;
 
@@ -102,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             if (seedIndustryPlacement)
             {
                 var pathway = profile.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
-                IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
+                IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, ipStatus);
             }
         }
     }
