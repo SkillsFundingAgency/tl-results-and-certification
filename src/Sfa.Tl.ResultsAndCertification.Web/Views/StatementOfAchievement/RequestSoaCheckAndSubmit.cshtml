@@ -65,37 +65,19 @@
 
         <div class="govuk-grid-row check-submit-change">
             <div class="govuk-grid-column-three-quarters">
-                <h2 class="govuk-heading-m">Learner's T level component achievements</h2>
+                <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Tlevel_Component_Achievements</h2>
             </div>
             <div class="govuk-grid-column-one-quarter">
-                <a class="app-float-right" href="request-statement-of-achievement-change-learner-components">
-                    Change
-                    <span class="govuk-visually-hidden"> learner's t level component achievements</span>
+                <a class="app-float-right govuk-body govuk-link" href="request-statement-of-achievement-change-learner-components">
+                    @RequestSoaCheckAndSubmit.Link_Change_Component_Achievements
+                    <span class="govuk-visually-hidden">@RequestSoaCheckAndSubmit.Hidden_Text_Change_Component_Achievements</span>
                 </a>
             </div>
         </div>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    English and maths
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    Achieved minimum standard
-                </dd>
-
-            </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Industry placement
-                </dt>
-                <dd class="govuk-summary-list__value">
-
-                    Not completed
-
-                </dd>
-
-            </div>
+            <vc:summary-item model=Model.SummaryEnglishAndMaths></vc:summary-item>
+            <vc:summary-item model=Model.SummaryIndustryPlacement></vc:summary-item>
         </dl>
 
         <div class="govuk-grid-row check-submit-change">

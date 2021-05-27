@@ -116,11 +116,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learner’s T Level component achievements.
+        /// </summary>
+        public static string Heading_Learner_Tlevel_Component_Achievements {
+            get {
+                return ResourceManager.GetString("Heading_Learner_Tlevel_Component_Achievements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Now send your request.
         /// </summary>
         public static string Heading_Now_Send_Your_Request {
             get {
                 return ResourceManager.GetString("Heading_Now_Send_Your_Request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to learner’s T Level component achievements.
+        /// </summary>
+        public static string Hidden_Text_Change_Component_Achievements {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Change_Component_Achievements", resourceCulture);
             }
         }
         
@@ -166,6 +184,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static string Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back {
             get {
                 return ResourceManager.GetString("Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Link_Change_Component_Achievements {
+            get {
+                return ResourceManager.GetString("Link_Change_Component_Achievements", resourceCulture);
             }
         }
         
@@ -229,6 +256,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static string Title_DateofBirth_Text {
             get {
                 return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English and maths.
+        /// </summary>
+        public static string Title_English_And_Maths_Text {
+            get {
+                return ResourceManager.GetString("Title_English_And_Maths_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Industry placement.
+        /// </summary>
+        public static string Title_Industry_Placement_Text {
+            get {
+                return ResourceManager.GetString("Title_Industry_Placement_Text", resourceCulture);
             }
         }
         

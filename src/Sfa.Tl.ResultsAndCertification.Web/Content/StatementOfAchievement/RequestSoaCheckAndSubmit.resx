@@ -135,8 +135,14 @@
   <data name="Heading_Learner_Technical_Qualification" xml:space="preserve">
     <value>Learner’s technical qualification details</value>
   </data>
+  <data name="Heading_Learner_Tlevel_Component_Achievements" xml:space="preserve">
+    <value>Learner’s T Level component achievements</value>
+  </data>
   <data name="Heading_Now_Send_Your_Request" xml:space="preserve">
     <value>Now send your request</value>
+  </data>
+  <data name="Hidden_Text_Change_Component_Achievements" xml:space="preserve">
+    <value>learner’s T Level component achievements</value>
   </data>
   <data name="Incorrect_Learner_Registration_Details" xml:space="preserve">
     <value>Incorrect learner registration details?</value>
@@ -152,6 +158,9 @@
   </data>
   <data name="Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back" xml:space="preserve">
     <value>Once the exam board has updated these details, you can come back and request a statement of achievement.</value>
+  </data>
+  <data name="Link_Change_Component_Achievements" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Request statement of achievement – Check the learner’s details page</value>
@@ -173,6 +182,12 @@
   </data>
   <data name="Title_DateofBirth_Text" xml:space="preserve">
     <value>Date of birth</value>
+  </data>
+  <data name="Title_English_And_Maths_Text" xml:space="preserve">
+    <value>English and maths</value>
+  </data>
+  <data name="Title_Industry_Placement_Text" xml:space="preserve">
+    <value>Industry placement</value>
   </data>
   <data name="Title_Name_Text" xml:space="preserve">
     <value>Name</value>

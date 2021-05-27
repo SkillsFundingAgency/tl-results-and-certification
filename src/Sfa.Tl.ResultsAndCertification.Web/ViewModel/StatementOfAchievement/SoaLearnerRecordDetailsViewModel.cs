@@ -96,6 +96,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             //TODO: Conditional text when no grade is available. 
         };
 
+        public SummaryItemModel SummaryEnglishAndMaths => new SummaryItemModel
+        {
+            Id = "englishandmaths",
+            Title = RequestSoaCheckAndSubmitContent.Title_English_And_Maths_Text,
+            Value = "TODO-DevInprogress", /*TODO*/
+        };
+
+        public SummaryItemModel SummaryIndustryPlacement => new SummaryItemModel
+        {
+            Id = "industryplacement",
+            Title = RequestSoaCheckAndSubmitContent.Title_Industry_Placement_Text,
+            Value = IndustryPlacementStatus.ToString(), /*TODO*/
+        };
+
+
         public BreadcrumbModel Breadcrumb
         {
             get
