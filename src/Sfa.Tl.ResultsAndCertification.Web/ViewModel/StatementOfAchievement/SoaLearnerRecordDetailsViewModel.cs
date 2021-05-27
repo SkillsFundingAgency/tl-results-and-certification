@@ -72,6 +72,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             Value = ProviderName
         };
 
+        public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel
+        {
+            Id = "tleveltitle",
+            Title = RequestSoaCheckAndSubmitContent.Title_Tlevel_Title_Text,
+            Value = TlevelTitle
+        };
+
+        public SummaryItemModel SummaryCoreCode => new SummaryItemModel
+        {
+            Id = "corecode",
+            Title = RequestSoaCheckAndSubmitContent.Title_Core_Code_Text,
+            Value = $"<p class='govuk-body'>{PathwayName}</p> <p class='govuk-body'>{RequestSoaCheckAndSubmitContent.Label_Grade}{PathwayGrade}</p>",
+            IsRawHtml = true
+        };
+
+        public SummaryItemModel SummarySpecialismCode => new SummaryItemModel
+        {
+            Id = "specialismcode",
+            Title = RequestSoaCheckAndSubmitContent.Title_Occupational_Specialism_Text,
+            Value = $"<p class='govuk-body'>{SpecialismName}</p> <p class='govuk-body'>{RequestSoaCheckAndSubmitContent.Label_Grade}{SpecialismGrade}</p>",
+            IsRawHtml = true
+            //TODO: Conditional text when no grade is available. 
+        };
+
         public BreadcrumbModel Breadcrumb
         {
             get

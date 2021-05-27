@@ -132,11 +132,20 @@
   <data name="Heading_Learner_Registration_Details" xml:space="preserve">
     <value>Learner’s registration details</value>
   </data>
+  <data name="Heading_Learner_Technical_Qualification" xml:space="preserve">
+    <value>Learner’s technical qualification details</value>
+  </data>
   <data name="Heading_Now_Send_Your_Request" xml:space="preserve">
     <value>Now send your request</value>
   </data>
   <data name="Incorrect_Learner_Registration_Details" xml:space="preserve">
     <value>Incorrect learner registration details?</value>
+  </data>
+  <data name="Incorrect_Technical_Qualifications" xml:space="preserve">
+    <value>Incorrect technical qualification details?</value>
+  </data>
+  <data name="Label_Grade" xml:space="preserve">
+    <value>Grade: </value>
   </data>
   <data name="Learner_Details_Section_If_Learner_Details_Are_Wrong" xml:space="preserve">
     <value>If the learner’s registration details are wrong, you must tell the exam board that registered the learner into our service.</value>
@@ -153,14 +162,29 @@
   <data name="Para_Please_Check_Data_Is_Correct" xml:space="preserve">
     <value>Please check this data is correct or make any changes before submitting your request.</value>
   </data>
+  <data name="Tech_Qualification_Section_Come_Back_When_Exam_Board_Updated" xml:space="preserve">
+    <value>Once the exam board has updated these details, you can come back and request a statement of achievement.</value>
+  </data>
+  <data name="Tech_Qualification_Section_If_Details_Are_Wrong_Contact_Exam_Board" xml:space="preserve">
+    <value>If the learner’s technical qualification details are wrong, you must contact the exam board and ask them to update our service with the correct information.</value>
+  </data>
+  <data name="Title_Core_Code_Text" xml:space="preserve">
+    <value>Core (code)</value>
+  </data>
   <data name="Title_DateofBirth_Text" xml:space="preserve">
     <value>Date of birth</value>
   </data>
   <data name="Title_Name_Text" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Title_Occupational_Specialism_Text" xml:space="preserve">
+    <value>Occupational specialism (code)</value>
+  </data>
   <data name="Title_Provider_Text" xml:space="preserve">
     <value>Provider (UKPRN)</value>
+  </data>
+  <data name="Title_Tlevel_Title_Text" xml:space="preserve">
+    <value>T Level title</value>
   </data>
   <data name="Title_Uln_Text" xml:space="preserve">
     <value>ULN</value>

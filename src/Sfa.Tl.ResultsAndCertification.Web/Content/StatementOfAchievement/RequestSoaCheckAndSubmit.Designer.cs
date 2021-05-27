@@ -107,6 +107,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learner’s technical qualification details.
+        /// </summary>
+        public static string Heading_Learner_Technical_Qualification {
+            get {
+                return ResourceManager.GetString("Heading_Learner_Technical_Qualification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Now send your request.
         /// </summary>
         public static string Heading_Now_Send_Your_Request {
@@ -121,6 +130,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static string Incorrect_Learner_Registration_Details {
             get {
                 return ResourceManager.GetString("Incorrect_Learner_Registration_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incorrect technical qualification details?.
+        /// </summary>
+        public static string Incorrect_Technical_Qualifications {
+            get {
+                return ResourceManager.GetString("Incorrect_Technical_Qualifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grade: .
+        /// </summary>
+        public static string Label_Grade {
+            get {
+                return ResourceManager.GetString("Label_Grade", resourceCulture);
             }
         }
         
@@ -170,6 +197,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Once the exam board has updated these details, you can come back and request a statement of achievement..
+        /// </summary>
+        public static string Tech_Qualification_Section_Come_Back_When_Exam_Board_Updated {
+            get {
+                return ResourceManager.GetString("Tech_Qualification_Section_Come_Back_When_Exam_Board_Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If the learner’s technical qualification details are wrong, you must contact the exam board and ask them to update our service with the correct information..
+        /// </summary>
+        public static string Tech_Qualification_Section_If_Details_Are_Wrong_Contact_Exam_Board {
+            get {
+                return ResourceManager.GetString("Tech_Qualification_Section_If_Details_Are_Wrong_Contact_Exam_Board", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core (code).
+        /// </summary>
+        public static string Title_Core_Code_Text {
+            get {
+                return ResourceManager.GetString("Title_Core_Code_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of birth.
         /// </summary>
         public static string Title_DateofBirth_Text {
@@ -188,11 +242,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Occupational specialism (code).
+        /// </summary>
+        public static string Title_Occupational_Specialism_Text {
+            get {
+                return ResourceManager.GetString("Title_Occupational_Specialism_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Provider (UKPRN).
         /// </summary>
         public static string Title_Provider_Text {
             get {
                 return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level title.
+        /// </summary>
+        public static string Title_Tlevel_Title_Text {
+            get {
+                return ResourceManager.GetString("Title_Tlevel_Title_Text", resourceCulture);
             }
         }
         
