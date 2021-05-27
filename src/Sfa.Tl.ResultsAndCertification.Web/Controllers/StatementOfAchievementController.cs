@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using System;
@@ -108,7 +109,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.RequestSoaNotAvailableNoResults);
             }
 
-            return RedirectToRoute(RouteConstants.RequestSoaUniqueLearnerNumber);
+            await _cacheService.SetAsync(CacheKey, soaLearnerRecord);
+            return RedirectToRoute(RouteConstants.RequestSoaCheckAndSubmit);
         }
 
         [HttpGet]
@@ -163,6 +165,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(cacheModel);
+        }
+
+        [HttpGet]
+        [Route("request-statement-of-achievement-check-and-submit", Name = RouteConstants.RequestSoaCheckAndSubmit)]
+        public async Task<IActionResult> RequestSoaCheckAndSubmitAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<FindSoaLearnerRecord>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read FindSoaLearnerRecord from redis cache in request soa check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = await _statementOfAchievementLoader.GetSoaLearnerRecordDetailsAsync(User.GetUkPrn(), cacheModel.ProfileId);
+            return View(viewModel);
         }
 
         private bool IsSoaAvailable()

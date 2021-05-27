@@ -1,0 +1,176 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement.SoaLearnerRecordDetailsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
+
+@{
+    ViewData["Title"] = RequestSoaCheckAndSubmit.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+        <span class="govuk-caption-xl">@RequestSoaCheckAndSubmit.Caption_Request_Soa</span>
+        <h1 class="govuk-heading-xl">@RequestSoaCheckAndSubmit.Heading_Check_Learner_Details</h1>
+        <p class="govuk-body, govuk-!-margin-bottom-9">@RequestSoaCheckAndSubmit.Para_Please_Check_Data_Is_Correct</p>
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-three-quarters">
+                <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Registration_Details</h2>
+            </div>
+        </div>
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+            <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+        </dl>
+
+        <details class="govuk-details govuk-!-margin-bottom-9" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">@RequestSoaCheckAndSubmit.Incorrect_Learner_Registration_Details</span>
+            </summary>
+            <div class="govuk-details__text">
+                @RequestSoaCheckAndSubmit.Section_If_Learner_Details_Are_Wrong
+                <br><br> @*TODO: Revise required*@
+                @RequestSoaCheckAndSubmit.Section_Once_Exam_Board_Updated_You_Can_Come_Back
+            </div>
+        </details>
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-three-quarters">
+                <h2 class="govuk-heading-m">Learner's technical qualification details</h2>
+            </div>
+        </div>
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    T level title
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Design, Surveying and Planning for Construction
+                </dd>
+
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Core (code)
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <p>Design, Surveying and Planning for Construction (60358300)</p>
+                    <p>Grade: A</p>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Specialism (code)
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <p>Building Services Design (ZTLOS003)</p>
+                    <p>Grade: None</p>
+                </dd>
+            </div>
+        </dl>
+
+        <details class="govuk-details govuk-!-margin-bottom-9" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                    Incorrect technical qualification details?
+                </span>
+            </summary>
+            <div class="govuk-details__text">
+                If the learner’s technical qualification details are wrong, you must contact the exam board and ask them to update our service with the correct information.<br><br> Once the exam board has updated these details, you can come back and request a statement of achievement.
+            </div>
+        </details>
+
+        <div class="govuk-grid-row check-submit-change">
+            <div class="govuk-grid-column-three-quarters">
+                <h2 class="govuk-heading-m">Learner's T level component achievements</h2>
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+                <a class="app-float-right" href="request-statement-of-achievement-change-learner-components">
+                    Change
+                    <span class="govuk-visually-hidden"> learner's t level component achievements</span>
+                </a>
+            </div>
+        </div>
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    English and maths
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    Achieved minimum standard
+                </dd>
+
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Industry placement
+                </dt>
+                <dd class="govuk-summary-list__value">
+
+                    Not completed
+
+                </dd>
+
+            </div>
+        </dl>
+
+        <div class="govuk-grid-row check-submit-change">
+            <div class="govuk-grid-column-three-quarters">
+                <h2 class="govuk-heading-m">Your organisation's postal address</h2>
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+                <a class="app-float-right" href="request-statement-of-achievement-change-postal-address">
+                    Change
+                    <span class="govuk-visually-hidden"> organisation postal address</span>
+                </a>
+            </div>
+        </div>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Department
+                </dt>
+
+                <dd class="govuk-summary-list__value">
+
+                    Exams Office
+
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Organisation's address
+                </dt>
+
+                <dd class="govuk-summary-list__value">
+                    Barnsley Academy
+                    <br>Main Block
+                    <br>Farm Rd
+                    <br>Barnsley
+                    <br>S70 3DL
+                </dd>
+
+            </div>
+        </dl>
+
+        <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Now_Send_Your_Request</h2>
+        <p>@RequestSoaCheckAndSubmit.Para_By_Submitting_You_Are_Confirming_That</p>
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                    <div class="govuk-button-group">
+                        <button class="govuk-button" data-module="govuk-button">@RequestSoaCheckAndSubmit.Button_Accept_And_Send_Request</button>
+                        <a class="govuk-link" href="request-statement-of-achievement-cancel">@RequestSoaCheckAndSubmit.Button_Cancel</a>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
