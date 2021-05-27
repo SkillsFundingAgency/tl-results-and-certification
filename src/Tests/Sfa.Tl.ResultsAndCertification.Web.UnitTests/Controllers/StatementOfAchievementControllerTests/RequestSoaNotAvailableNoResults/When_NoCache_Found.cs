@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaNotAvailableNotResults;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaNotAvailableNotResults
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaNotAvailableNoResults
 {
     public class When_NoCache_Found : TestSetup
     {
@@ -14,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         public override void Given()
         {
             CacheService.GetAndRemoveAsync<RequestSoaNotAvailableNoResultsViewModel>(CacheKey).Returns(_mockCache);
-        }       
+        }
 
         [Fact]
         public void Then_Expected_Method_IsCalled()

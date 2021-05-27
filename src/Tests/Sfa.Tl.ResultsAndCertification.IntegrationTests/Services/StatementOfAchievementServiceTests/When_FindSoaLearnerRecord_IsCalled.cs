@@ -21,7 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private IList<TqRegistrationProfile> _profiles;
         private FindSoaLearnerRecord _actualResult;
-        private List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement)> _testCriteriaData;
+        private List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, IndustryPlacementStatus ipStatus)> _testCriteriaData;
+        private List<long> _profilesWithResults;
 
         public override void Given()
         {
@@ -33,28 +34,54 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
                 { 1111111114, RegistrationPathwayStatus.Active }
             };
 
-            _testCriteriaData = new List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement)>
+            _testCriteriaData = new List<(long uln, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, IndustryPlacementStatus ipStatus)>
             {
-                (1111111111, true, true), // EnglishAndMaths + IP
-                (1111111112, true, false), // EnglishAndMaths + No IP
-                (1111111113, false, true), // EnglishAndMaths + IP
-                (1111111114, true, true) // EnglishAndMaths + IP
+                (1111111111, true, true, IndustryPlacementStatus.Completed), // EnglishAndMaths + IP
+                (1111111112, true, false, IndustryPlacementStatus.NotSpecified), // EnglishAndMaths + No IP
+                (1111111113, false, true, IndustryPlacementStatus.CompletedWithSpecialConsideration), // EnglishAndMaths + IP
+                (1111111114, true, true, IndustryPlacementStatus.NotCompleted) // EnglishAndMaths + IP
             };
 
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
-            
+
             _profiles = SeedRegistrationsData(_ulns, TqProvider);
 
-            foreach (var (uln, isEngishAndMathsAchieved, seedIndustryPlacement) in _testCriteriaData)
+            foreach (var (uln, isEngishAndMathsAchieved, seedIndustryPlacement, ipStatus) in _testCriteriaData)
             {
                 var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
-                BuildLearnerRecordCriteria(profile, isEngishAndMathsAchieved, seedIndustryPlacement);
+                BuildLearnerRecordCriteria(profile, isEngishAndMathsAchieved, seedIndustryPlacement, ipStatus);
             }
 
             DbContext.SaveChanges();
 
-            TransferRegistration(1111111113, Provider.WalsallCollege);            
+            TransferRegistration(1111111113, Provider.WalsallCollege);
+
+            // Seed Assessments And Results
+            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+
+            _profilesWithResults = new List<long> { 1111111111, 1111111112 };
+            foreach (var profile in _profiles.Where(x => _profilesWithResults.Contains(x.UniqueLearnerNumber)))
+            {
+                var isLatestActive = _ulns[profile.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
+                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(profile.TqRegistrationPathways.ToList(), isLatestActive);
+                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
+
+                // Seed Pathway results
+                foreach (var assessment in pathwayAssessments)
+                {
+                    var hasHitoricData = new List<long> { 1111111112 };
+                    var isHistoricAssessent = hasHitoricData.Any(x => x == profile.UniqueLearnerNumber);
+                    var isLatestActiveResult = !isHistoricAssessent;
+
+                    var tqPathwayResultSeedData = GetPathwayResultDataToProcess(assessment, isLatestActiveResult, isHistoricAssessent);
+                    tqPathwayResultsSeedData.AddRange(tqPathwayResultSeedData);
+                }
+            }
+
+            SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
+
 
             CreateMapper();
 
@@ -95,7 +122,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             var expectedTlevelTitle = Pathway.TlevelTitle;
             var expectedProfile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var expectedIsLearnerRegistered = expectedStatus == RegistrationPathwayStatus.Active || expectedStatus == RegistrationPathwayStatus.Withdrawn;
-
+            var expecedIpStatus = _testCriteriaData.FirstOrDefault(x => x.uln == expectedProfile.UniqueLearnerNumber).ipStatus;
+            var expectedIsIndustryPlacementCompleted = expecedIpStatus == IndustryPlacementStatus.Completed || expecedIpStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration;
+            var expectedHasResult = _profilesWithResults.Contains(expectedProfile.UniqueLearnerNumber);
 
             expectedProfile.Should().NotBeNull();
             _actualResult.Should().NotBeNull();
@@ -107,6 +136,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             _actualResult.Status.Should().Be(expectedStatus);
             _actualResult.IsLearnerRegistered.Should().Be(expectedIsLearnerRegistered);
             _actualResult.IsIndustryPlacementAdded.Should().Be(isIpAdded);
+            _actualResult.IndustryPlacementStatus.Should().Be(expecedIpStatus);
+            _actualResult.IsIndustryPlacementCompleted.Should().Be(expectedIsIndustryPlacementCompleted);
+            _actualResult.HasPathwayResult.Should().Be(expectedHasResult);
         }
 
         public static IEnumerable<object[]> Data
