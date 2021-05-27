@@ -299,6 +299,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<FindSoaLearnerRecord>(requestUri);
         }
 
+        public async Task<SoaLearnerRecordDetails> GetSoaLearnerRecordDetailsAsync(long providerUkprn, int profileId)
+        {
+            var requestUri = string.Format(ApiConstants.GetSoaLearnerRecordDetailsUri, providerUkprn, profileId);
+            return await GetAsync<SoaLearnerRecordDetails>(requestUri);
+        }
+
         #region Private Methods
 
         /// <summary>
