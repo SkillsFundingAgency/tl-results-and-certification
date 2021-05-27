@@ -14,7 +14,7 @@
 
         <span class="govuk-caption-xl">@RequestSoaCheckAndSubmit.Caption_Request_Soa</span>
         <h1 class="govuk-heading-xl">@RequestSoaCheckAndSubmit.Heading_Check_Learner_Details</h1>
-        <p class="govuk-body, govuk-!-margin-bottom-9">@RequestSoaCheckAndSubmit.Para_Please_Check_Data_Is_Correct</p>
+        <p class="govuk-body govuk-!-margin-bottom-9">@RequestSoaCheckAndSubmit.Para_Please_Check_Data_Is_Correct</p>
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-three-quarters">
@@ -34,9 +34,9 @@
                 <span class="govuk-details__summary-text">@RequestSoaCheckAndSubmit.Incorrect_Learner_Registration_Details</span>
             </summary>
             <div class="govuk-details__text">
-                @RequestSoaCheckAndSubmit.Section_If_Learner_Details_Are_Wrong
+                @RequestSoaCheckAndSubmit.Learner_Details_Section_If_Learner_Details_Are_Wrong
                 <br><br> @*TODO: Revise required*@
-                @RequestSoaCheckAndSubmit.Section_Once_Exam_Board_Updated_You_Can_Come_Back
+                @RequestSoaCheckAndSubmit.Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back
             </div>
         </details>
 
@@ -162,13 +162,14 @@
         </dl>
 
         <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Now_Send_Your_Request</h2>
-        <p>@RequestSoaCheckAndSubmit.Para_By_Submitting_You_Are_Confirming_That</p>
+        <p class="govuk-body">@RequestSoaCheckAndSubmit.Para_By_Submitting_You_Are_Confirming_That</p>
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
                     <div class="govuk-button-group">
                         <button class="govuk-button" data-module="govuk-button">@RequestSoaCheckAndSubmit.Button_Accept_And_Send_Request</button>
-                        <a class="govuk-link" href="request-statement-of-achievement-cancel">@RequestSoaCheckAndSubmit.Button_Cancel</a>
+                        <a class="govuk-link govuk-body" href="request-statement-of-achievement-cancel">@RequestSoaCheckAndSubmit.Button_Cancel</a>
+                        @*TODO: Cancel link not aligned*@
                     </div>
             </div>
         </div>

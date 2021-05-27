@@ -125,6 +125,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If the learner’s registration details are wrong, you must tell the exam board that registered the learner into our service..
+        /// </summary>
+        public static string Learner_Details_Section_If_Learner_Details_Are_Wrong {
+            get {
+                return ResourceManager.GetString("Learner_Details_Section_If_Learner_Details_Are_Wrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Once the exam board has updated these details, you can come back and request a statement of achievement..
+        /// </summary>
+        public static string Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back {
+            get {
+                return ResourceManager.GetString("Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Request statement of achievement – Check the learner’s details page.
         /// </summary>
         public static string Page_Title {
@@ -148,24 +166,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static string Para_Please_Check_Data_Is_Correct {
             get {
                 return ResourceManager.GetString("Para_Please_Check_Data_Is_Correct", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to If the learner’s registration details are wrong, you must tell the exam board that registered the learner into our service..
-        /// </summary>
-        public static string Section_If_Learner_Details_Are_Wrong {
-            get {
-                return ResourceManager.GetString("Section_If_Learner_Details_Are_Wrong", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Once the exam board has updated these details, you can come back and request a statement of achievement..
-        /// </summary>
-        public static string Section_Once_Exam_Board_Updated_You_Can_Come_Back {
-            get {
-                return ResourceManager.GetString("Section_Once_Exam_Board_Updated_You_Can_Come_Back", resourceCulture);
             }
         }
         

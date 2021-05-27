@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Request_Statement_Of_Achievement, RouteName = RouteConstants.RequestStatementOfAchievement },
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_For_Learner, RouteName = RouteConstants.RequestSoaUniqueLearnerNumber },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Statement_Of_Achievement_Not_Available }
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Check_Learner_Details }
                     }
                 };
             }

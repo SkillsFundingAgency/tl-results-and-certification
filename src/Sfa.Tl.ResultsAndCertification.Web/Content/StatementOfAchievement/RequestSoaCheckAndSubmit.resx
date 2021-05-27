@@ -138,6 +138,12 @@
   <data name="Incorrect_Learner_Registration_Details" xml:space="preserve">
     <value>Incorrect learner registration details?</value>
   </data>
+  <data name="Learner_Details_Section_If_Learner_Details_Are_Wrong" xml:space="preserve">
+    <value>If the learner’s registration details are wrong, you must tell the exam board that registered the learner into our service.</value>
+  </data>
+  <data name="Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back" xml:space="preserve">
+    <value>Once the exam board has updated these details, you can come back and request a statement of achievement.</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Request statement of achievement – Check the learner’s details page</value>
   </data>
@@ -146,12 +152,6 @@
   </data>
   <data name="Para_Please_Check_Data_Is_Correct" xml:space="preserve">
     <value>Please check this data is correct or make any changes before submitting your request.</value>
-  </data>
-  <data name="Section_If_Learner_Details_Are_Wrong" xml:space="preserve">
-    <value>If the learner’s registration details are wrong, you must tell the exam board that registered the learner into our service.</value>
-  </data>
-  <data name="Section_Once_Exam_Board_Updated_You_Can_Come_Back" xml:space="preserve">
-    <value>Once the exam board has updated these details, you can come back and request a statement of achievement.</value>
   </data>
   <data name="Title_DateofBirth_Text" xml:space="preserve">
     <value>Date of birth</value>
