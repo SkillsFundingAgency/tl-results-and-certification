@@ -6,5 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
     public interface IStatementOfAchievementController
     {
         Task<FindSoaLearnerRecord> FindSoaLearnerRecordAsync(long providerUkprn, long uln);
+        Task<SoaLearnerRecordDetails> GetSoaLearnerRecordDetailsAsync(long providerUkprn, int profileId);
     }
 }

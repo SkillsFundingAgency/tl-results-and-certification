@@ -24,5 +24,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return await _statementOfAchievementRepository.FindSoaLearnerRecordAsync(providerUkprn, uln);
         }
+
+        public async Task<SoaLearnerRecordDetails> GetSoaLearnerRecordDetailsAsync(long providerUkprn, int profileId)
+        {
+            return await _statementOfAchievementRepository.GetSoaLearnerRecordDetailsAsync(providerUkprn, profileId);
+        }
     }
 }
