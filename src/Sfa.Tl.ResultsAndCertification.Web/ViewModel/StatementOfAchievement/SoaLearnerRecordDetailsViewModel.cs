@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using RequestSoaCheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaCheckAndSubmit;
 
@@ -110,6 +111,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             Value = IndustryPlacementStatus.ToString(), /*TODO*/
         };
 
+        public SummaryItemModel SummaryDepartment => new SummaryItemModel
+        {
+            Id = "department",
+            Title = RequestSoaCheckAndSubmitContent.Title_Department_Text,
+            Value = ProviderAddress.DepartmentName
+        };
+
+        public SummaryItemModel SummaryAddress => new SummaryItemModel
+        {
+            Id = "address",
+            Title = RequestSoaCheckAndSubmitContent.Title_Organisation_Address_Text,
+            Value = $"<p class='govuk-body'>{_formatedAddress}</p>",
+            IsRawHtml = true
+        };
 
         public BreadcrumbModel Breadcrumb
         {
@@ -128,5 +143,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             }
         }
 
+        private string _formatedAddress
+        {
+            get
+            {
+                var addressLines = new List<string> { ProviderAddress.OrganisationName, ProviderAddress.AddressLine1, ProviderAddress.AddressLine2, ProviderAddress.Town, ProviderAddress.Postcode };
+                return string.Join("<br>", addressLines.Where(x => x != null));
+            }
+        }
     }
 }

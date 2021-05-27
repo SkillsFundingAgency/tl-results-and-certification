@@ -134,11 +134,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your organisation’s postal address.
+        /// </summary>
+        public static string Heading_Your_Organisation_Address {
+            get {
+                return ResourceManager.GetString("Heading_Your_Organisation_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to learner’s T Level component achievements.
         /// </summary>
         public static string Hidden_Text_Change_Component_Achievements {
             get {
                 return ResourceManager.GetString("Hidden_Text_Change_Component_Achievements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to organisation’s postal address.
+        /// </summary>
+        public static string Hidden_Text_Change_Organisation_Address {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Change_Organisation_Address", resourceCulture);
             }
         }
         
@@ -193,6 +211,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static string Link_Change_Component_Achievements {
             get {
                 return ResourceManager.GetString("Link_Change_Component_Achievements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Link_Change_Organisation_Address {
+            get {
+                return ResourceManager.GetString("Link_Change_Organisation_Address", resourceCulture);
             }
         }
         
@@ -260,6 +287,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Department.
+        /// </summary>
+        public static string Title_Department_Text {
+            get {
+                return ResourceManager.GetString("Title_Department_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English and maths.
         /// </summary>
         public static string Title_English_And_Maths_Text {
@@ -292,6 +328,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static string Title_Occupational_Specialism_Text {
             get {
                 return ResourceManager.GetString("Title_Occupational_Specialism_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Organisation’s address.
+        /// </summary>
+        public static string Title_Organisation_Address_Text {
+            get {
+                return ResourceManager.GetString("Title_Organisation_Address_Text", resourceCulture);
             }
         }
         

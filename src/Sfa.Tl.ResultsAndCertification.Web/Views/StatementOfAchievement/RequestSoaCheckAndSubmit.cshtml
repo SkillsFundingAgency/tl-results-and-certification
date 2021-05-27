@@ -82,41 +82,18 @@
 
         <div class="govuk-grid-row check-submit-change">
             <div class="govuk-grid-column-three-quarters">
-                <h2 class="govuk-heading-m">Your organisation's postal address</h2>
+                <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Your_Organisation_Address</h2>
             </div>
             <div class="govuk-grid-column-one-quarter">
-                <a class="app-float-right" href="request-statement-of-achievement-change-postal-address">
-                    Change
-                    <span class="govuk-visually-hidden"> organisation postal address</span>
+                <a class="app-float-right govuk-body govuk-link" href="request-statement-of-achievement-change-postal-address">
+                    @RequestSoaCheckAndSubmit.Link_Change_Organisation_Address
+                    <span class="govuk-visually-hidden">@RequestSoaCheckAndSubmit.Hidden_Text_Change_Organisation_Address</span>
                 </a>
             </div>
         </div>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Department
-                </dt>
-
-                <dd class="govuk-summary-list__value">
-
-                    Exams Office
-
-                </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    Organisation's address
-                </dt>
-
-                <dd class="govuk-summary-list__value">
-                    Barnsley Academy
-                    <br>Main Block
-                    <br>Farm Rd
-                    <br>Barnsley
-                    <br>S70 3DL
-                </dd>
-
-            </div>
+            <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
+            <vc:summary-item model=Model.SummaryAddress></vc:summary-item>
         </dl>
 
         <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Now_Send_Your_Request</h2>
