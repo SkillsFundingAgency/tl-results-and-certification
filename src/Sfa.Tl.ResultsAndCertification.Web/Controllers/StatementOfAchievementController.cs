@@ -104,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else if (soaLearnerRecord.HasPathwayResult == false && !soaLearnerRecord.IsIndustryPlacementCompleted)
             {
-                await _cacheService.SetAsync(CacheKey, new RequestSoaNotAvailableNoResultsViewModel { Uln = soaLearnerRecord.Uln, LearnerName = soaLearnerRecord.LearnerName, DateofBirth = soaLearnerRecord.DateofBirth, ProviderName = soaLearnerRecord.ProviderName, TLevelTitle = soaLearnerRecord.TlevelTitle }, CacheExpiryTime.XSmall);
+                await _cacheService.SetAsync(CacheKey, new RequestSoaNotAvailableNoResultsViewModel { ProfileId = soaLearnerRecord.ProfileId, Uln = soaLearnerRecord.Uln, LearnerName = soaLearnerRecord.LearnerName, DateofBirth = soaLearnerRecord.DateofBirth, ProviderName = soaLearnerRecord.ProviderName, TLevelTitle = soaLearnerRecord.TlevelTitle }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.RequestSoaNotAvailableNoResults);
             }
 

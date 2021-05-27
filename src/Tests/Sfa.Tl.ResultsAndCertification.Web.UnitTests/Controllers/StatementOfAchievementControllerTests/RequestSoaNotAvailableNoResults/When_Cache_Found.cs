@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
         public override void Given()
         {
-            _mockCache = new RequestSoaNotAvailableNoResultsViewModel { Uln = 1234567891, LearnerName = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Provider (1234567)", TLevelTitle = "Title" };
+            _mockCache = new RequestSoaNotAvailableNoResultsViewModel { ProfileId = 11, Uln = 1234567891, LearnerName = "Test Name", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Provider (1234567)", TLevelTitle = "Title" };
             CacheService.GetAndRemoveAsync<RequestSoaNotAvailableNoResultsViewModel>(CacheKey).Returns(_mockCache);
         }
 
@@ -34,6 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
             var model = viewResult.Model as RequestSoaNotAvailableNoResultsViewModel;
 
             model.Should().NotBeNull();
+            model.ProfileId.Should().Be(_mockCache.ProfileId);
             model.Uln.Should().Be(_mockCache.Uln);
             model.LearnerName.Should().Be(_mockCache.LearnerName);
             model.DateofBirth.Should().Be(_mockCache.DateofBirth);

@@ -17,6 +17,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             TlevelTitleLabel = RequestSoaNotAvailableNoResultsContent.Title_TLevel_Text;
         }
 
+        public int ProfileId { get; set; }
+
         public BreadcrumbModel Breadcrumb
         {
             get
