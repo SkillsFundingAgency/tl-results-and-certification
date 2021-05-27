@@ -1,10 +1,10 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
+namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 {
-    public class SoaLearnerRecordDetails
+    public class SoaLearnerRecordDetailsViewModel
     {
         //Learner's registration details
         public int ProfileId { get; set; }
@@ -27,15 +27,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
         public IndustryPlacementStatus IndustryPlacementStatus { get; set; }
 
         // Provider Organisation's postal address
-        public Address ProviderAddress { get; set; }
+        public AddressViewModel ProviderAddress { get; set; }
 
         // Validation properties
-        public RegistrationPathwayStatus Status { get; set; }
-
-        public bool HasPathwayResult => !string.IsNullOrWhiteSpace(PathwayGrade);
-        public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IndustryPlacementStatus.NotSpecified;
-        public bool IsLearnerRegistered => Status == RegistrationPathwayStatus.Active || Status == RegistrationPathwayStatus.Withdrawn;
-        public bool IsNotWithdrawn => Status == RegistrationPathwayStatus.Active;
-        public bool IsIndustryPlacementCompleted => IndustryPlacementStatus == IndustryPlacementStatus.Completed || IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration;
+        public bool HasPathwayResult { get; set; }
+        public bool IsIndustryPlacementAdded { get; set; }
+        public bool IsLearnerRegistered { get; set; }
+        public bool IsNotWithdrawn { get; set; }
+        public bool IsIndustryPlacementCompleted { get; set; }
     }
 }
