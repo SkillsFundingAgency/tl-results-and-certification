@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
+using RequestSoaCheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaCheckAndSubmit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
@@ -19,8 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
                .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade))
-               .ForMember(d => d.SpecialismName, opts => opts.MapFrom(s => s.SpecialismName))
-               .ForMember(d => d.SpecialismGrade, opts => opts.MapFrom(s => s.SpecialismGrade))
+               .ForMember(d => d.SpecialismName, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.SpecialismName) ? s.SpecialismName : RequestSoaCheckAndSubmitContent.Not_Specified))
+               .ForMember(d => d.SpecialismGrade, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.SpecialismGrade) ? s.SpecialismGrade : RequestSoaCheckAndSubmitContent.None))
                .ForMember(d => d.IsEnglishAndMathsAchieved, opts => opts.MapFrom(s => s.IsEnglishAndMathsAchieved))
                .ForMember(d => d.HasLrsEnglishAndMaths, opts => opts.MapFrom(s => s.HasLrsEnglishAndMaths))
                .ForMember(d => d.IsSendLearner, opts => opts.MapFrom(s => s.IsSendLearner))

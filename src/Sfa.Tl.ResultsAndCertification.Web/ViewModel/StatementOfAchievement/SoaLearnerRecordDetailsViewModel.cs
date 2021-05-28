@@ -92,9 +92,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "specialismcode",
             Title = RequestSoaCheckAndSubmitContent.Title_Occupational_Specialism_Text,
-            Value = $"<p class='govuk-body'>{SpecialismName}</p> <p class='govuk-body'>{RequestSoaCheckAndSubmitContent.Label_Grade}{SpecialismGrade}</p>",
+            Value = string.Format(RequestSoaCheckAndSubmitContent.Occupational_Specialism_Value, SpecialismName, SpecialismGrade),
             IsRawHtml = true
-            //TODO: Conditional text when no grade is available. 
         };
 
         public SummaryItemModel SummaryEnglishAndMaths => new SummaryItemModel
@@ -148,7 +147,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             get
             {
                 var addressLines = new List<string> { ProviderAddress.OrganisationName, ProviderAddress.AddressLine1, ProviderAddress.AddressLine2, ProviderAddress.Town, ProviderAddress.Postcode };
-                return string.Join("<br>", addressLines.Where(x => x != null));
+                return string.Join("<br>", addressLines.Where(x => !string.IsNullOrWhiteSpace(x)));
             }
         }
     }

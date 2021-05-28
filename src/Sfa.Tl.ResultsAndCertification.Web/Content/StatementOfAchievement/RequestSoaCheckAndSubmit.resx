@@ -171,6 +171,15 @@
   <data name="Link_Change_Organisation_Address" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Not_Specified" xml:space="preserve">
+    <value>Not specified</value>
+  </data>
+  <data name="Occupational_Specialism_Value" xml:space="preserve">
+    <value>&lt;p class='govuk-body'&gt;{0}&lt;/p&gt; &lt;p class='govuk-body'&gt;Grade: {1}&lt;/p&gt;</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Request statement of achievement – Check the learner’s details page</value>
   </data>

@@ -224,6 +224,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string None {
+            get {
+                return ResourceManager.GetString("None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not specified.
+        /// </summary>
+        public static string Not_Specified {
+            get {
+                return ResourceManager.GetString("Not_Specified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p class=&apos;govuk-body&apos;&gt;{0}&lt;/p&gt; &lt;p class=&apos;govuk-body&apos;&gt;Grade: {1}&lt;/p&gt;.
+        /// </summary>
+        public static string Occupational_Specialism_Value {
+            get {
+                return ResourceManager.GetString("Occupational_Specialism_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Request statement of achievement – Check the learner’s details page.
         /// </summary>
         public static string Page_Title {
