@@ -143,7 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to learner’s T Level component achievements.
+        ///   Looks up a localized string similar to  learner’s T Level component achievements.
         /// </summary>
         public static string Hidden_Text_Change_Component_Achievements {
             get {
@@ -152,7 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to organisation’s postal address.
+        ///   Looks up a localized string similar to  organisation’s postal address.
         /// </summary>
         public static string Hidden_Text_Change_Organisation_Address {
             get {

@@ -145,10 +145,10 @@
     <value>Your organisation’s postal address</value>
   </data>
   <data name="Hidden_Text_Change_Component_Achievements" xml:space="preserve">
-    <value>learner’s T Level component achievements</value>
+    <value> learner’s T Level component achievements</value>
   </data>
   <data name="Hidden_Text_Change_Organisation_Address" xml:space="preserve">
-    <value>organisation’s postal address</value>
+    <value> organisation’s postal address</value>
   </data>
   <data name="Html_Line_Break" xml:space="preserve">
     <value>&lt;br&gt;</value>
