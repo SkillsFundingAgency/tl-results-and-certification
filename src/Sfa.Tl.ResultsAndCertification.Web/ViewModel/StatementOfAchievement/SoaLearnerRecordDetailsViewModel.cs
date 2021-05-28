@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using RequestSoaCheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaCheckAndSubmit;
 
@@ -72,6 +73,59 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             Value = ProviderName
         };
 
+        public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel
+        {
+            Id = "tleveltitle",
+            Title = RequestSoaCheckAndSubmitContent.Title_Tlevel_Title_Text,
+            Value = TlevelTitle
+        };
+
+        public SummaryItemModel SummaryCoreCode => new SummaryItemModel
+        {
+            Id = "corecode",
+            Title = RequestSoaCheckAndSubmitContent.Title_Core_Code_Text,
+            Value = $"<p class='govuk-body'>{PathwayName}</p> <p class='govuk-body'>{RequestSoaCheckAndSubmitContent.Label_Grade}{PathwayGrade}</p>",
+            IsRawHtml = true
+        };
+
+        public SummaryItemModel SummarySpecialismCode => new SummaryItemModel
+        {
+            Id = "specialismcode",
+            Title = RequestSoaCheckAndSubmitContent.Title_Occupational_Specialism_Text,
+            Value = $"<p class='govuk-body'>{SpecialismName}</p> <p class='govuk-body'>{RequestSoaCheckAndSubmitContent.Label_Grade}{SpecialismGrade}</p>",
+            IsRawHtml = true
+            //TODO: Conditional text when no grade is available. 
+        };
+
+        public SummaryItemModel SummaryEnglishAndMaths => new SummaryItemModel
+        {
+            Id = "englishandmaths",
+            Title = RequestSoaCheckAndSubmitContent.Title_English_And_Maths_Text,
+            Value = "TODO-DevInprogress", /*TODO*/
+        };
+
+        public SummaryItemModel SummaryIndustryPlacement => new SummaryItemModel
+        {
+            Id = "industryplacement",
+            Title = RequestSoaCheckAndSubmitContent.Title_Industry_Placement_Text,
+            Value = IndustryPlacementStatus.ToString(), /*TODO*/
+        };
+
+        public SummaryItemModel SummaryDepartment => new SummaryItemModel
+        {
+            Id = "department",
+            Title = RequestSoaCheckAndSubmitContent.Title_Department_Text,
+            Value = ProviderAddress.DepartmentName
+        };
+
+        public SummaryItemModel SummaryAddress => new SummaryItemModel
+        {
+            Id = "address",
+            Title = RequestSoaCheckAndSubmitContent.Title_Organisation_Address_Text,
+            Value = $"<p class='govuk-body'>{_formatedAddress}</p>",
+            IsRawHtml = true
+        };
+
         public BreadcrumbModel Breadcrumb
         {
             get
@@ -83,11 +137,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Request_Statement_Of_Achievement, RouteName = RouteConstants.RequestStatementOfAchievement },
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_For_Learner, RouteName = RouteConstants.RequestSoaUniqueLearnerNumber },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Statement_Of_Achievement_Not_Available }
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Check_Learner_Details }
                     }
                 };
             }
         }
 
+        private string _formatedAddress
+        {
+            get
+            {
+                var addressLines = new List<string> { ProviderAddress.OrganisationName, ProviderAddress.AddressLine1, ProviderAddress.AddressLine2, ProviderAddress.Town, ProviderAddress.Postcode };
+                return string.Join("<br>", addressLines.Where(x => x != null));
+            }
+        }
     }
 }

@@ -120,6 +120,9 @@
   <data name="Assessment_Dashboard" xml:space="preserve">
     <value>Assessment entries</value>
   </data>
+  <data name="Check_Learner_Details" xml:space="preserve">
+    <value>Check the learner’s details</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Contact us</value>
   </data>

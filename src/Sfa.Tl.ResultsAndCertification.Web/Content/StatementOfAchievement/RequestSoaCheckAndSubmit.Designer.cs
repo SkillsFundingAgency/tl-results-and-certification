@@ -107,6 +107,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learner’s technical qualification details.
+        /// </summary>
+        public static string Heading_Learner_Technical_Qualification {
+            get {
+                return ResourceManager.GetString("Heading_Learner_Technical_Qualification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner’s T Level component achievements.
+        /// </summary>
+        public static string Heading_Learner_Tlevel_Component_Achievements {
+            get {
+                return ResourceManager.GetString("Heading_Learner_Tlevel_Component_Achievements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Now send your request.
         /// </summary>
         public static string Heading_Now_Send_Your_Request {
@@ -116,11 +134,92 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your organisation’s postal address.
+        /// </summary>
+        public static string Heading_Your_Organisation_Address {
+            get {
+                return ResourceManager.GetString("Heading_Your_Organisation_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to learner’s T Level component achievements.
+        /// </summary>
+        public static string Hidden_Text_Change_Component_Achievements {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Change_Component_Achievements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to organisation’s postal address.
+        /// </summary>
+        public static string Hidden_Text_Change_Organisation_Address {
+            get {
+                return ResourceManager.GetString("Hidden_Text_Change_Organisation_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incorrect learner registration details?.
         /// </summary>
         public static string Incorrect_Learner_Registration_Details {
             get {
                 return ResourceManager.GetString("Incorrect_Learner_Registration_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incorrect technical qualification details?.
+        /// </summary>
+        public static string Incorrect_Technical_Qualifications {
+            get {
+                return ResourceManager.GetString("Incorrect_Technical_Qualifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grade: .
+        /// </summary>
+        public static string Label_Grade {
+            get {
+                return ResourceManager.GetString("Label_Grade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If the learner’s registration details are wrong, you must tell the exam board that registered the learner into our service..
+        /// </summary>
+        public static string Learner_Details_Section_If_Learner_Details_Are_Wrong {
+            get {
+                return ResourceManager.GetString("Learner_Details_Section_If_Learner_Details_Are_Wrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Once the exam board has updated these details, you can come back and request a statement of achievement..
+        /// </summary>
+        public static string Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back {
+            get {
+                return ResourceManager.GetString("Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Link_Change_Component_Achievements {
+            get {
+                return ResourceManager.GetString("Link_Change_Component_Achievements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Link_Change_Organisation_Address {
+            get {
+                return ResourceManager.GetString("Link_Change_Organisation_Address", resourceCulture);
             }
         }
         
@@ -152,20 +251,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If the learner’s registration details are wrong, you must tell the exam board that registered the learner into our service..
+        ///   Looks up a localized string similar to Once the exam board has updated these details, you can come back and request a statement of achievement..
         /// </summary>
-        public static string Section_If_Learner_Details_Are_Wrong {
+        public static string Tech_Qualification_Section_Come_Back_When_Exam_Board_Updated {
             get {
-                return ResourceManager.GetString("Section_If_Learner_Details_Are_Wrong", resourceCulture);
+                return ResourceManager.GetString("Tech_Qualification_Section_Come_Back_When_Exam_Board_Updated", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Once the exam board has updated these details, you can come back and request a statement of achievement..
+        ///   Looks up a localized string similar to If the learner’s technical qualification details are wrong, you must contact the exam board and ask them to update our service with the correct information..
         /// </summary>
-        public static string Section_Once_Exam_Board_Updated_You_Can_Come_Back {
+        public static string Tech_Qualification_Section_If_Details_Are_Wrong_Contact_Exam_Board {
             get {
-                return ResourceManager.GetString("Section_Once_Exam_Board_Updated_You_Can_Come_Back", resourceCulture);
+                return ResourceManager.GetString("Tech_Qualification_Section_If_Details_Are_Wrong_Contact_Exam_Board", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core (code).
+        /// </summary>
+        public static string Title_Core_Code_Text {
+            get {
+                return ResourceManager.GetString("Title_Core_Code_Text", resourceCulture);
             }
         }
         
@@ -179,6 +287,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Department.
+        /// </summary>
+        public static string Title_Department_Text {
+            get {
+                return ResourceManager.GetString("Title_Department_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English and maths.
+        /// </summary>
+        public static string Title_English_And_Maths_Text {
+            get {
+                return ResourceManager.GetString("Title_English_And_Maths_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Industry placement.
+        /// </summary>
+        public static string Title_Industry_Placement_Text {
+            get {
+                return ResourceManager.GetString("Title_Industry_Placement_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Title_Name_Text {
@@ -188,11 +323,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Occupational specialism (code).
+        /// </summary>
+        public static string Title_Occupational_Specialism_Text {
+            get {
+                return ResourceManager.GetString("Title_Occupational_Specialism_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Organisation’s address.
+        /// </summary>
+        public static string Title_Organisation_Address_Text {
+            get {
+                return ResourceManager.GetString("Title_Organisation_Address_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Provider (UKPRN).
         /// </summary>
         public static string Title_Provider_Text {
             get {
                 return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level title.
+        /// </summary>
+        public static string Title_Tlevel_Title_Text {
+            get {
+                return ResourceManager.GetString("Title_Tlevel_Title_Text", resourceCulture);
             }
         }
         
