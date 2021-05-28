@@ -16,11 +16,7 @@
         <h1 class="govuk-heading-xl">@RequestSoaCheckAndSubmit.Heading_Check_Learner_Details</h1>
         <p class="govuk-body govuk-!-margin-bottom-9">@RequestSoaCheckAndSubmit.Para_Please_Check_Data_Is_Correct</p>
 
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-three-quarters">
-                <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Registration_Details</h2>
-            </div>
-        </div>
+        <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Registration_Details</h2>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-4">
             <vc:summary-item model=Model.SummaryUln></vc:summary-item>
@@ -40,11 +36,7 @@
             </div>
         </details>
 
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-three-quarters">
-                <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Technical_Qualification</h2>
-            </div>
-        </div>
+        <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Technical_Qualification</h2>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-4">
             <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
@@ -63,16 +55,14 @@
             </div>
         </details>
 
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-three-quarters">
-                <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Tlevel_Component_Achievements</h2>
-            </div>
-            <div class="govuk-grid-column-one-quarter">
-                <a class="app-float-right govuk-body govuk-link" href="request-statement-of-achievement-change-learner-components">
-                    @RequestSoaCheckAndSubmit.Link_Change_Component_Achievements
-                    <span class="govuk-visually-hidden">@RequestSoaCheckAndSubmit.Hidden_Text_Change_Component_Achievements</span>
-                </a>
-            </div>
+        <div class="govuk-grid-column-three-quarters govuk-!-padding-left-0 soa-details">
+            <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Tlevel_Component_Achievements</h2>
+        </div>
+        <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0 soa-details">
+            <a class="govuk-body govuk-link float--right" href="request-statement-of-achievement-change-learner-components">
+                @RequestSoaCheckAndSubmit.Link_Change_Component_Achievements
+                <span class="govuk-visually-hidden">@RequestSoaCheckAndSubmit.Hidden_Text_Change_Component_Achievements</span>
+            </a>
         </div>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
@@ -80,17 +70,16 @@
             <vc:summary-item model=Model.SummaryIndustryPlacement></vc:summary-item>
         </dl>
 
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-three-quarters">
-                <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Your_Organisation_Address</h2>
-            </div>
-            <div class="govuk-grid-column-one-quarter">
-                <a class="app-float-right govuk-body govuk-link" href="request-statement-of-achievement-change-postal-address">
-                    @RequestSoaCheckAndSubmit.Link_Change_Organisation_Address
-                    <span class="govuk-visually-hidden">@RequestSoaCheckAndSubmit.Hidden_Text_Change_Organisation_Address</span>
-                </a>
-            </div>
+        <div class="govuk-grid-column-three-quarters govuk-!-padding-left-0 soa-details">
+            <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Your_Organisation_Address</h2>
         </div>
+        <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0 soa-details">
+            <a class="govuk-body govuk-link float--right" href="request-statement-of-achievement-change-postal-address">
+                @RequestSoaCheckAndSubmit.Link_Change_Organisation_Address
+                <span class="govuk-visually-hidden">@RequestSoaCheckAndSubmit.Hidden_Text_Change_Organisation_Address</span>
+            </a>
+        </div>
+
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
             <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
             <vc:summary-item model=Model.SummaryAddress></vc:summary-item>
@@ -99,13 +88,9 @@
         <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Now_Send_Your_Request</h2>
         <p class="govuk-body">@RequestSoaCheckAndSubmit.Para_By_Submitting_You_Are_Confirming_That</p>
 
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-full">
-                <div class="govuk-button-group">
-                    <button class="govuk-button" data-module="govuk-button">@RequestSoaCheckAndSubmit.Button_Accept_And_Send_Request</button>
-                    <a class="govuk-link govuk-body" href="request-statement-of-achievement-cancel">@RequestSoaCheckAndSubmit.Button_Cancel</a>
-                </div>
-            </div>
+        <div class="govuk-button-group">
+            <button class="govuk-button" data-module="govuk-button">@RequestSoaCheckAndSubmit.Button_Accept_And_Send_Request</button>
+            <a class="govuk-link govuk-body" href="request-statement-of-achievement-cancel">@RequestSoaCheckAndSubmit.Button_Cancel</a>
         </div>
     </div>
 </div>
