@@ -10,6 +10,7 @@ using System.Linq;
 using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using RequestSoaCheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaCheckAndSubmit;
+using EnglishAndMathsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
@@ -102,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "englishandmaths",
             Title = RequestSoaCheckAndSubmitContent.Title_English_And_Maths_Text,
-            Value = "TODO-DevInprogress", /*TODO*/
+            Value = GetEnglishAndMathsStatusDisplayText
         };
 
         public SummaryItemModel SummaryIndustryPlacement => new SummaryItemModel
@@ -162,6 +163,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
                     IpStatus.Completed => IndustryPlacementStatusContent.Completed_Display_Text,
                     IpStatus.CompletedWithSpecialConsideration => IndustryPlacementStatusContent.CompletedWithSpecialConsideration_Display_Text,
                     IpStatus.NotCompleted => IndustryPlacementStatusContent.NotCompleted_Display_Text,
+                    _ => string.Empty,
+                };
+            }
+        }
+
+        private string GetEnglishAndMathsStatusDisplayText
+        {
+            get
+            {
+                return (HasLrsEnglishAndMaths, IsEnglishAndMathsAchieved, IsSendLearner == true) switch
+                {
+                    (true, false, false) => EnglishAndMathsStatusContent.Lrs_Not_Achieved_Display_Text,
+                    (true, true, false) => EnglishAndMathsStatusContent.Lrs_Achieved_Display_Text,
+                    (true, true, true) => EnglishAndMathsStatusContent.Lrs_Achieved_With_Send_Display_Text,
+                    (false, false, false) => EnglishAndMathsStatusContent.Not_Achieved_Display_Text,
+                    (false, true, false) => EnglishAndMathsStatusContent.Achieved_Display_Text,
+                    (false, true, true) => EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text,
                     _ => string.Empty,
                 };
             }
