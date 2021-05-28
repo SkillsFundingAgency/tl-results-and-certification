@@ -9,16 +9,16 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using System;
 using Xunit;
+using System.Collections.Generic;
+using System.Linq;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaCheckAndSubmit;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using EnglishAndMathsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaCheckAndSubmit
 {
-    public class When_Cache_Found : TestSetup
+    public class When_ViewModel_Has_LrsEnglishAndMaths : TestSetup
     {
         private FindSoaLearnerRecord _mockFindSoaLearnerRecord = null;
         private SoaLearnerRecordDetailsViewModel _mockLearnerDetails;
@@ -44,10 +44,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 SpecialismName = "Building Services Design (ZTLOS003)",
                 SpecialismGrade = "None",
 
-                IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = false,
-                IsSendLearner = true,
-                IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                IsEnglishAndMathsAchieved = false,
+                HasLrsEnglishAndMaths = true,
+                IsSendLearner = false,
+                IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
 
                 HasPathwayResult = true,
                 IsNotWithdrawn = false,
@@ -122,11 +122,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
             // EnglishAndMaths
             model.SummaryEnglishAndMaths.Title.Should().Be(CheckAndSubmitContent.Title_English_And_Maths_Text);
-            model.SummaryEnglishAndMaths.Value.Should().Be(EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text);
+            model.SummaryEnglishAndMaths.Value.Should().Be(EnglishAndMathsStatusContent.Lrs_Not_Achieved_Display_Text);
 
             // Industry Placement
             model.SummaryIndustryPlacement.Title.Should().Be(CheckAndSubmitContent.Title_Industry_Placement_Text);
-            model.SummaryIndustryPlacement.Value.Should().Be(IndustryPlacementStatusContent.Completed_Display_Text);
+            model.SummaryIndustryPlacement.Value.Should().Be(IndustryPlacementStatusContent.CompletedWithSpecialConsideration_Display_Text);
 
             // Department
             model.SummaryDepartment.Title.Should().Be(CheckAndSubmitContent.Title_Department_Text);
