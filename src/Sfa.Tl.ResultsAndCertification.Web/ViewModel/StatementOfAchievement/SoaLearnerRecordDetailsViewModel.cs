@@ -17,6 +17,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 {
     public class SoaLearnerRecordDetailsViewModel
     {
+        public bool IsValid { get { return IsLearnerRegistered && !IsNotWithdrawn && IsIndustryPlacementAdded && !(HasPathwayResult == false && !IsIndustryPlacementCompleted); } }
+
         //Learner's registration details
         public int ProfileId { get; set; }
         public long Uln { get; set; }
@@ -46,7 +48,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public bool IsLearnerRegistered { get; set; }
         public bool IsNotWithdrawn { get; set; }
         public bool IsIndustryPlacementCompleted { get; set; }
-
 
         public SummaryItemModel SummaryUln => new SummaryItemModel
         {
@@ -87,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "corecode",
             Title = RequestSoaCheckAndSubmitContent.Title_Core_Code_Text,
-            Value = $"<p class='govuk-body'>{PathwayName}</p> <p class='govuk-body'>{RequestSoaCheckAndSubmitContent.Label_Grade}{PathwayGrade}</p>",
+            Value = string.Format(RequestSoaCheckAndSubmitContent.Core_Code_Value, PathwayName, PathwayGrade),
             IsRawHtml = true
         };
 
@@ -103,14 +104,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "englishandmaths",
             Title = RequestSoaCheckAndSubmitContent.Title_English_And_Maths_Text,
-            Value = GetEnglishAndMathsStatusDisplayText
+            Value = _getEnglishAndMathsStatusDisplayText
         };
 
         public SummaryItemModel SummaryIndustryPlacement => new SummaryItemModel
         {
             Id = "industryplacement",
             Title = RequestSoaCheckAndSubmitContent.Title_Industry_Placement_Text,
-            Value = GetIndustryPlacementDisplayText
+            Value = _getIndustryPlacementDisplayText
         };
 
         public SummaryItemModel SummaryDepartment => new SummaryItemModel
@@ -154,7 +155,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             }
         }
 
-        private string GetIndustryPlacementDisplayText
+        private string _getIndustryPlacementDisplayText
         {
             get
             {
@@ -168,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             }
         }
 
-        private string GetEnglishAndMathsStatusDisplayText
+        private string _getEnglishAndMathsStatusDisplayText
         {
             get
             {
@@ -177,6 +178,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
                     (true, false, false) => EnglishAndMathsStatusContent.Lrs_Not_Achieved_Display_Text,
                     (true, true, false) => EnglishAndMathsStatusContent.Lrs_Achieved_Display_Text,
                     (true, true, true) => EnglishAndMathsStatusContent.Lrs_Achieved_With_Send_Display_Text,
+                    
                     (false, false, false) => EnglishAndMathsStatusContent.Not_Achieved_Display_Text,
                     (false, true, false) => EnglishAndMathsStatusContent.Achieved_Display_Text,
                     (false, true, true) => EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text,

@@ -179,6 +179,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             var viewModel = await _statementOfAchievementLoader.GetSoaLearnerRecordDetailsAsync(User.GetUkPrn(), cacheModel.ProfileId);
+            if (!viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
             return View(viewModel);
         }
 

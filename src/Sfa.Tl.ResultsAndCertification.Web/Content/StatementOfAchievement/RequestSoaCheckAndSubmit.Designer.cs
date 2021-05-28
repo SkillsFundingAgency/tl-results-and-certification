@@ -89,6 +89,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p class=&apos;govuk-body&apos;&gt;{0}&lt;/p&gt; &lt;p class=&apos;govuk-body&apos;&gt;Grade: {1}&lt;/p&gt;.
+        /// </summary>
+        public static string Core_Code_Value {
+            get {
+                return ResourceManager.GetString("Core_Code_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check the learner&apos;s details before sending your request.
         /// </summary>
         public static string Heading_Check_Learner_Details {
@@ -184,15 +193,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static string Incorrect_Technical_Qualifications {
             get {
                 return ResourceManager.GetString("Incorrect_Technical_Qualifications", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Grade: .
-        /// </summary>
-        public static string Label_Grade {
-            get {
-                return ResourceManager.GetString("Label_Grade", resourceCulture);
             }
         }
         

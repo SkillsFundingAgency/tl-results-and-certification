@@ -126,6 +126,9 @@
   <data name="Caption_Request_Soa" xml:space="preserve">
     <value>Request statement of achievement</value>
   </data>
+  <data name="Core_Code_Value" xml:space="preserve">
+    <value>&lt;p class='govuk-body'&gt;{0}&lt;/p&gt; &lt;p class='govuk-body'&gt;Grade: {1}&lt;/p&gt;</value>
+  </data>
   <data name="Heading_Check_Learner_Details" xml:space="preserve">
     <value>Check the learner's details before sending your request</value>
   </data>
@@ -158,9 +161,6 @@
   </data>
   <data name="Incorrect_Technical_Qualifications" xml:space="preserve">
     <value>Incorrect technical qualification details?</value>
-  </data>
-  <data name="Label_Grade" xml:space="preserve">
-    <value>Grade: </value>
   </data>
   <data name="Learner_Details_Section_If_Learner_Details_Are_Wrong" xml:space="preserve">
     <value>If the learner’s registration details are wrong, you must tell the exam board that registered the learner into our service.</value>
