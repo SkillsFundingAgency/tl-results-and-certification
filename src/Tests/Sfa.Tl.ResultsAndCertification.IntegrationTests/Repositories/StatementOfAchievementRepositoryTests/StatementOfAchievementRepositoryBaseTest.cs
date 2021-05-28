@@ -21,13 +21,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
         protected TlSpecialism Specialism;
         protected TqAwardingOrganisation TqAwardingOrganisation;
         protected IEnumerable<TlProvider> TlProviders;
-        protected TlProvider TlProvider;
+        //protected TlProvider TlProvider;
         protected TqProvider TqProvider;
         protected IList<TlLookup> TlLookup;
         protected IList<TqProvider> TqProviders;
 
         protected IList<AssessmentSeries> AssessmentSeries;
         protected List<TqPathwayAssessment> TqPathwayAssessment;
+        protected IList<Qualification> Qualifications;
 
         // Dependencies.
         protected ILogger<StatementOfAchievementRepository> StatementOfAchievementRepositoryLogger;
@@ -41,10 +42,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             Specialism = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, Pathway).First();
             TqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, Pathway, TlAwardingOrganisation);
             TlProviders = ProviderDataProvider.CreateTlProviders(DbContext);
-            TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
+            //TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProviders.First());
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
+
+            foreach (var provider in TlProviders)
+            {
+                TlProviderAddressDataProvider.CreateTlProviderAddress(DbContext, new TlProviderAddressBuilder().Build(provider));
+            }
 
             DbContext.SaveChangesAsync();
         }
@@ -109,7 +115,47 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
                 IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, ipStatus);
             }
         }
-        
+
+        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false, bool? isSendLearner = null, IndustryPlacementStatus ipStatus = IndustryPlacementStatus.Completed)
+        {
+            if (profile == null) return;
+
+            profile.IsRcFeed = isRcFeed;
+            profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
+            profile.IsSendLearner = isSendLearner;
+
+            if (seedQualificationAchieved)
+            {
+                var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng" && e.IsSendQualification == isSendQualification);
+                var mathQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Math");
+
+                var engQualifcationGrade = engQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved);
+                var mathsQualifcationGrade = mathQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved);
+
+                profile.QualificationAchieved.Add(new QualificationAchieved
+                {
+                    TqRegistrationProfileId = profile.Id,
+                    QualificationId = engQual.Id,
+                    QualificationGradeId = engQualifcationGrade.Id,
+                    IsAchieved = engQualifcationGrade.IsAllowable
+                });
+
+                profile.QualificationAchieved.Add(new QualificationAchieved
+                {
+                    TqRegistrationProfileId = profile.Id,
+                    QualificationId = mathQual.Id,
+                    QualificationGradeId = mathsQualifcationGrade.Id,
+                    IsAchieved = mathsQualifcationGrade.IsAllowable
+                });
+            }
+
+            if (seedIndustryPlacement)
+            {
+                var pathway = profile.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+                IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, ipStatus);
+            }
+        }
+
         public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
         {
             var tqPathwayAssessments = new List<TqPathwayAssessment>();
@@ -139,7 +185,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             }
             return tqPathwayAssessments;
         }
-        
+
         public List<TqPathwayResult> GetPathwayResultDataToProcess(TqPathwayAssessment pathwayAssessment, bool seedPathwayResultsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
         {
             var tqPathwayResults = new List<TqPathwayResult>();
@@ -166,7 +212,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             tqPathwayResults.Add(tqPathwayResult);
             return tqPathwayResults;
         }
-        
+
         public List<TqPathwayAssessment> SeedPathwayAssessmentsData(List<TqPathwayAssessment> pathwayAssessments, bool saveChanges = true)
         {
             TqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessments(DbContext, pathwayAssessments);
@@ -176,6 +222,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             return TqPathwayAssessment;
         }
 
+        public IList<Qualification> SeedQualificationData()
+        {
+            var qualificationsList = new QualificationBuilder().BuildList();
+            var qualifications = QualificationDataProvider.CreateQualificationList(DbContext, qualificationsList);
+
+            foreach (var qual in qualifications)
+            {
+                qual.QualificationType.QualificationGrades = new QualificationGradeBuilder().BuildList(qual.QualificationType);
+            }
+
+            return qualifications;
+        }
     }
 
     public enum Provider
