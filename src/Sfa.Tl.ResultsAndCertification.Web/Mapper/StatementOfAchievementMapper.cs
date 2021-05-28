@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
-               .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade))
+               .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.PathwayGrade) ? s.PathwayGrade : RequestSoaCheckAndSubmitContent.None))
                .ForMember(d => d.SpecialismName, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.SpecialismName) ? s.SpecialismName : RequestSoaCheckAndSubmitContent.Not_Specified))
                .ForMember(d => d.SpecialismGrade, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.SpecialismGrade) ? s.SpecialismGrade : RequestSoaCheckAndSubmitContent.None))
                .ForMember(d => d.IsEnglishAndMathsAchieved, opts => opts.MapFrom(s => s.IsEnglishAndMathsAchieved))

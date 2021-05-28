@@ -7,8 +7,10 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using RequestSoaCheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaCheckAndSubmit;
+using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 {
@@ -107,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "industryplacement",
             Title = RequestSoaCheckAndSubmitContent.Title_Industry_Placement_Text,
-            Value = IndustryPlacementStatus.ToString(), /*TODO*/
+            Value = GetIndustryPlacementDisplayText
         };
 
         public SummaryItemModel SummaryDepartment => new SummaryItemModel
@@ -121,7 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "address",
             Title = RequestSoaCheckAndSubmitContent.Title_Organisation_Address_Text,
-            Value = $"<p class='govuk-body'>{_formatedAddress}</p>",
+            Value = string.Format(RequestSoaCheckAndSubmitContent.Organisation_Address_Value, _formatedAddress),
             IsRawHtml = true
         };
 
@@ -147,7 +149,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             get
             {
                 var addressLines = new List<string> { ProviderAddress.OrganisationName, ProviderAddress.AddressLine1, ProviderAddress.AddressLine2, ProviderAddress.Town, ProviderAddress.Postcode };
-                return string.Join("<br>", addressLines.Where(x => !string.IsNullOrWhiteSpace(x)));
+                return string.Join(RequestSoaCheckAndSubmitContent.Html_Line_Break, addressLines.Where(x => !string.IsNullOrWhiteSpace(x)));
+            }
+        }
+
+        private string GetIndustryPlacementDisplayText
+        {
+            get
+            {
+                return IndustryPlacementStatus switch
+                {
+                    IpStatus.Completed => IndustryPlacementStatusContent.Completed_Display_Text,
+                    IpStatus.CompletedWithSpecialConsideration => IndustryPlacementStatusContent.CompletedWithSpecialConsideration_Display_Text,
+                    IpStatus.NotCompleted => IndustryPlacementStatusContent.NotCompleted_Display_Text,
+                    _ => string.Empty,
+                };
             }
         }
     }

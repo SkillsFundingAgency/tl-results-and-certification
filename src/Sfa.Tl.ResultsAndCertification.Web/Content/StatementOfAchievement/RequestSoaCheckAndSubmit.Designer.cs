@@ -161,6 +161,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;br&gt;.
+        /// </summary>
+        public static string Html_Line_Break {
+            get {
+                return ResourceManager.GetString("Html_Line_Break", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incorrect learner registration details?.
         /// </summary>
         public static string Incorrect_Learner_Registration_Details {
@@ -247,6 +256,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static string Occupational_Specialism_Value {
             get {
                 return ResourceManager.GetString("Occupational_Specialism_Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p class=&apos;govuk-body&apos;&gt;{0}&lt;/p&gt;.
+        /// </summary>
+        public static string Organisation_Address_Value {
+            get {
+                return ResourceManager.GetString("Organisation_Address_Value", resourceCulture);
             }
         }
         
