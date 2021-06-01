@@ -2,24 +2,25 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaCheckAndSubmit
 {
-    public class When_NoCache_Found : TestSetup
+    public class When_ViewModel_IsNull : TestSetup
     {
-        private readonly FindSoaLearnerRecord _mockCache = null;
+        private readonly SoaLearnerRecordDetailsViewModel _mockLearnerDetails = null;
 
         public override void Given()
         {
-            CacheService.GetAsync<FindSoaLearnerRecord>(CacheKey).Returns(_mockCache);
+            ProfileId = 11;
+            StatementOfAchievementLoader.GetSoaLearnerRecordDetailsAsync(ProviderUkprn, ProfileId).Returns(_mockLearnerDetails);
         }
 
         [Fact]
-        public void Then_Expected_Method_IsCalled()
+        public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).GetAsync<FindSoaLearnerRecord>(CacheKey);
+            StatementOfAchievementLoader.Received(1).GetSoaLearnerRecordDetailsAsync(ProviderUkprn, ProfileId);
         }
 
         [Fact]

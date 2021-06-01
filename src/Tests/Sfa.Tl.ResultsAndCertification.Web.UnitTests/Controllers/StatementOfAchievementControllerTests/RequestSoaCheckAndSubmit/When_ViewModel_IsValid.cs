@@ -4,7 +4,6 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using System;
@@ -20,19 +19,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 {
     public class When_ViewModel_IsValid : TestSetup
     {
-        private FindSoaLearnerRecord _mockFindSoaLearnerRecord = null;
         private SoaLearnerRecordDetailsViewModel _mockLearnerDetails;
         private AddressViewModel _address;
 
         public override void Given()
         {
-            _mockFindSoaLearnerRecord = new FindSoaLearnerRecord { ProfileId = 11 };
-            CacheService.GetAsync<FindSoaLearnerRecord>(CacheKey).Returns(_mockFindSoaLearnerRecord);
-
+            ProfileId = 11;
             _address = new AddressViewModel { DepartmentName = "Operations", OrganisationName = "College Ltd", AddressLine1 = "10, House", AddressLine2 = "Street", Town = "Birmingham", Postcode = "B1 1AA" };
             _mockLearnerDetails = new SoaLearnerRecordDetailsViewModel
             {
-                ProfileId = _mockFindSoaLearnerRecord.ProfileId,
+                ProfileId = ProfileId,
                 Uln = 1234567890,
                 LearnerName = "John Smith",
                 DateofBirth = DateTime.Now.AddYears(-20),
@@ -58,14 +54,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 ProviderAddress = _address,
             };
 
-            StatementOfAchievementLoader.GetSoaLearnerRecordDetailsAsync(ProviderUkprn, _mockFindSoaLearnerRecord.ProfileId).Returns(_mockLearnerDetails);
+            StatementOfAchievementLoader.GetSoaLearnerRecordDetailsAsync(ProviderUkprn, ProfileId).Returns(_mockLearnerDetails);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).GetAsync<FindSoaLearnerRecord>(CacheKey);
-            StatementOfAchievementLoader.Received(1).GetSoaLearnerRecordDetailsAsync(ProviderUkprn, _mockFindSoaLearnerRecord.ProfileId);
+            StatementOfAchievementLoader.Received(1).GetSoaLearnerRecordDetailsAsync(ProviderUkprn, ProfileId);
         }
 
         [Fact]

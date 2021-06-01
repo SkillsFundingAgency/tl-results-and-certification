@@ -8,7 +8,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using System;
@@ -108,9 +107,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _cacheService.SetAsync(CacheKey, new RequestSoaNotAvailableNoResultsViewModel { ProfileId = soaLearnerRecord.ProfileId, Uln = soaLearnerRecord.Uln, LearnerName = soaLearnerRecord.LearnerName, DateofBirth = soaLearnerRecord.DateofBirth, ProviderName = soaLearnerRecord.ProviderName, TLevelTitle = soaLearnerRecord.TlevelTitle }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.RequestSoaNotAvailableNoResults);
             }
-
-            await _cacheService.SetAsync(CacheKey, soaLearnerRecord);
-            return RedirectToRoute(RouteConstants.RequestSoaCheckAndSubmit);
+            else
+            {
+                await _cacheService.SetAsync(CacheKey, soaLearnerRecord);
+                return RedirectToRoute(RouteConstants.RequestSoaCheckAndSubmit, new { profileId = soaLearnerRecord.ProfileId });
+            }
         }
 
         [HttpGet]
@@ -168,18 +169,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("request-statement-of-achievement-check-and-submit", Name = RouteConstants.RequestSoaCheckAndSubmit)]
-        public async Task<IActionResult> RequestSoaCheckAndSubmitAsync()
+        [Route("request-statement-of-achievement-check-and-submit/{profileId}", Name = RouteConstants.RequestSoaCheckAndSubmit)]
+        public async Task<IActionResult> RequestSoaCheckAndSubmitAsync(int profileId)
         {
-            var cacheModel = await _cacheService.GetAsync<FindSoaLearnerRecord>(CacheKey);
-            if (cacheModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read FindSoaLearnerRecord from redis cache in request soa check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            var viewModel = await _statementOfAchievementLoader.GetSoaLearnerRecordDetailsAsync(User.GetUkPrn(), cacheModel.ProfileId);
-            if (!viewModel.IsValid)
+            var viewModel = await _statementOfAchievementLoader.GetSoaLearnerRecordDetailsAsync(User.GetUkPrn(), profileId);
+            if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
