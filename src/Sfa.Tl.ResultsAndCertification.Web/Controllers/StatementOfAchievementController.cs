@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly IStatementOfAchievementLoader _statementOfAchievementLoader;
         private readonly IProviderAddressLoader _providerAddress;
         private readonly ICacheService _cacheService;
-        ResultsAndCertificationConfiguration _configuration;
+        private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly ILogger _logger;
 
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.SoaCacheKey); } }

@@ -129,7 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
             // Address
             model.SummaryAddress.Title.Should().Be(CheckAndSubmitContent.Title_Organisation_Address_Text);
-            model.SummaryAddress.Value.Should().Be(string.Format(CheckAndSubmitContent.Organisation_Address_Value, _formatedAddress));
+            model.SummaryAddress.Value.Should().Be(string.Format(CheckAndSubmitContent.Organisation_Address_Value, FormatedAddress));
 
             // Breadcrum 
             model.Breadcrumb.Should().NotBeNull();
@@ -145,7 +145,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
             model.Breadcrumb.BreadcrumbItems[3].RouteName.Should().BeNull();
         }
 
-        private string _formatedAddress
+        private string FormatedAddress
         {
             get
             {

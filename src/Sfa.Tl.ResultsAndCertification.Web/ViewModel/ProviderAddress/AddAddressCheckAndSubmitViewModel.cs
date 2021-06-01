@@ -7,9 +7,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 {
     public class AddAddressCheckAndSubmitViewModel
     {
-        private bool _isManual => ProviderAddress.AddAddressManual != null;
-
-        private string _previousRoute => _isManual ? RouteConstants.AddPostalAddressManual : RouteConstants.AddAddressSelect;
+        private bool IsManual => ProviderAddress.AddAddressManual != null;
+        private string PreviousRoute => IsManual ? RouteConstants.AddPostalAddressManual : RouteConstants.AddAddressSelect;
 
         public AddAddressViewModel ProviderAddress { get; set; }
         public bool IsValid
@@ -17,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
             get
             {
                 return ProviderAddress != null &&
-                    (_isManual ? ProviderAddress.AddAddressSelect == null : ProviderAddress.AddAddressPostcode != null && ProviderAddress.AddAddressSelect != null);
+                    (IsManual ? ProviderAddress.AddAddressSelect == null : ProviderAddress.AddAddressPostcode != null && ProviderAddress.AddAddressSelect != null);
             }
         }
 
@@ -25,18 +24,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         {
             Id = "department",
             Title = CheckAndSubmitContent.Summary_Department,
-            Value = _isManual ? ProviderAddress.AddAddressManual.DepartmentName : ProviderAddress.AddAddressSelect.DepartmentName,
+            Value = IsManual ? ProviderAddress.AddAddressManual.DepartmentName : ProviderAddress.AddAddressSelect.DepartmentName,
             NeedBorderBottomLine = false,
 
             ActionText = CheckAndSubmitContent.Link_Change_Address,
-            RouteName = _previousRoute,
+            RouteName = PreviousRoute,
         };
 
         public SummaryItemModel SummaryOrganisationName => new SummaryItemModel
         {
             Id = "organisationname",
             Title = CheckAndSubmitContent.Summary_OrganisationName,
-            Value = _isManual ? ProviderAddress.AddAddressManual.OrganisationName : ProviderAddress.AddAddressSelect.SelectedAddress.OrganisationName,
+            Value = IsManual ? ProviderAddress.AddAddressManual.OrganisationName : ProviderAddress.AddAddressSelect.SelectedAddress.OrganisationName,
             NeedBorderBottomLine = false
         };
 
@@ -44,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         {
             Id = "addressline1",
             Title = CheckAndSubmitContent.Summary_Building_And_Street,
-            Value = _isManual ? ProviderAddress.AddAddressManual.AddressLine1 : ProviderAddress.AddAddressSelect.SelectedAddress.AddressLine1,
+            Value = IsManual ? ProviderAddress.AddAddressManual.AddressLine1 : ProviderAddress.AddAddressSelect.SelectedAddress.AddressLine1,
             NeedBorderBottomLine = false
         };
 
@@ -52,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         {
             Id = "addressline2",
             Title = string.Empty,
-            Value = _isManual ? ProviderAddress.AddAddressManual.AddressLine2 : ProviderAddress.AddAddressSelect.SelectedAddress.AddressLine2,
+            Value = IsManual ? ProviderAddress.AddAddressManual.AddressLine2 : ProviderAddress.AddAddressSelect.SelectedAddress.AddressLine2,
             NeedBorderBottomLine = false
         };
 
@@ -60,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         {
             Id = "town",
             Title = CheckAndSubmitContent.Summary_Town_Or_City,
-            Value = _isManual ? ProviderAddress.AddAddressManual.Town : ProviderAddress.AddAddressSelect.SelectedAddress.Town,
+            Value = IsManual ? ProviderAddress.AddAddressManual.Town : ProviderAddress.AddAddressSelect.SelectedAddress.Town,
             NeedBorderBottomLine = false
         };
 
@@ -68,10 +67,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
         {
             Id = "postcode",
             Title = CheckAndSubmitContent.Summary_Postcode,
-            Value = _isManual ? ProviderAddress.AddAddressManual.Postcode : ProviderAddress.AddAddressSelect.SelectedAddress.Postcode,
+            Value = IsManual ? ProviderAddress.AddAddressManual.Postcode : ProviderAddress.AddAddressSelect.SelectedAddress.Postcode,
             NeedBorderBottomLine = false
         };
 
-        public BackLinkModel BackLink => new BackLinkModel { RouteName = _previousRoute };
+        public BackLinkModel BackLink => new BackLinkModel { RouteName = PreviousRoute };
     }
 }

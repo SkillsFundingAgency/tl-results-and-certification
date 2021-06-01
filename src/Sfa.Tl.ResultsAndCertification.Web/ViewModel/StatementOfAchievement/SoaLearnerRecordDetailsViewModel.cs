@@ -104,14 +104,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "englishandmaths",
             Title = RequestSoaCheckAndSubmitContent.Title_English_And_Maths_Text,
-            Value = _getEnglishAndMathsStatusDisplayText
+            Value = GetEnglishAndMathsStatusDisplayText
         };
 
         public SummaryItemModel SummaryIndustryPlacement => new SummaryItemModel
         {
             Id = "industryplacement",
             Title = RequestSoaCheckAndSubmitContent.Title_Industry_Placement_Text,
-            Value = _getIndustryPlacementDisplayText
+            Value = GetIndustryPlacementDisplayText
         };
 
         public SummaryItemModel SummaryDepartment => new SummaryItemModel
@@ -125,7 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "address",
             Title = RequestSoaCheckAndSubmitContent.Title_Organisation_Address_Text,
-            Value = string.Format(RequestSoaCheckAndSubmitContent.Organisation_Address_Value, _formatedAddress),
+            Value = string.Format(RequestSoaCheckAndSubmitContent.Organisation_Address_Value, FormatedAddress),
             IsRawHtml = true
         };
 
@@ -146,7 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             }
         }
 
-        private string _formatedAddress
+        private string FormatedAddress
         {
             get
             {
@@ -155,7 +155,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             }
         }
 
-        private string _getIndustryPlacementDisplayText
+        private string GetIndustryPlacementDisplayText
         {
             get
             {
@@ -169,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             }
         }
 
-        private string _getEnglishAndMathsStatusDisplayText
+        private string GetEnglishAndMathsStatusDisplayText
         {
             get
             {
