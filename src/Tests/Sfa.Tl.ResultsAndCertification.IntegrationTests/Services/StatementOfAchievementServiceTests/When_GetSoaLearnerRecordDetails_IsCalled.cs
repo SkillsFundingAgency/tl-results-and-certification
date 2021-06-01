@@ -1,4 +1,7 @@
 ﻿using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -83,7 +86,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
 
             TransferRegistration(1111111113, Provider.WalsallCollege);
 
+            StatementOfAchievementRepositoryLogger = new Logger<StatementOfAchievementRepository>(new NullLoggerFactory());
             StatementOfAchievementRepository = new StatementOfAchievementRepository(DbContext, StatementOfAchievementRepositoryLogger);
+            StatementOfAchievementServiceLogger = new Logger<StatementOfAchievementService>(new NullLoggerFactory());
+
+            StatementOfAchievementService = new StatementOfAchievementService(StatementOfAchievementRepository, TrainingProviderMapper, StatementOfAchievementServiceLogger);
         }
 
         public override Task When()
@@ -98,7 +105,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
 
             var profileId = _profiles.FirstOrDefault(x => x.UniqueLearnerNumber == uln)?.Id ?? 0;
 
-            _actualResult = await StatementOfAchievementRepository.GetSoaLearnerRecordDetailsAsync(providerUkprn, profileId);
+            _actualResult = await StatementOfAchievementService.GetSoaLearnerRecordDetailsAsync(providerUkprn, profileId);
         }
 
         [Theory]
