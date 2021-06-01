@@ -64,6 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             ActualResult.HasLrsEnglishAndMaths.Should().Be(_expectedApiResult.HasLrsEnglishAndMaths);
             ActualResult.IsSendLearner.Should().Be(_expectedApiResult.IsSendLearner);
             ActualResult.IndustryPlacementStatus.Should().Be(_expectedApiResult.IndustryPlacementStatus);
+            ActualResult.ProviderAddress.Should().BeEquivalentTo(_address);
 
             // validation properties
             ActualResult.HasPathwayResult.Should().BeTrue();
