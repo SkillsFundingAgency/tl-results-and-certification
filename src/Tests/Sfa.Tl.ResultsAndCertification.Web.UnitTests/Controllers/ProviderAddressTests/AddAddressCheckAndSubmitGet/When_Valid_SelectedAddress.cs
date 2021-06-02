@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             // Back link 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AddAddressSelect);
-            model.BackLink.RouteAttributes.Should().BeNull();
+            model.BackLink.RouteAttributes.Count.Should().Be(0);
         }
     }
 }

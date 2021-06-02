@@ -7,28 +7,19 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddressTests.AddPostalAddressManualGet
 {
-    public class When_IsFromSelectAddress_True : TestSetup
+    public class When_NoCache_Navigated_From_Bookmark : TestSetup
     {
         private AddAddressViewModel _cacheResult;
-        private AddAddressPostcodeViewModel _postcodeViewModel;
 
         public override void Given()
         {
-            IsFromSelectAddress = true;
-            _postcodeViewModel = new AddAddressPostcodeViewModel { Postcode = "xx1 1yy" };
-            _cacheResult = new AddAddressViewModel
-            {
-                AddAddressPostcode = _postcodeViewModel
-            };
+            IsFromSelectAddress = false;
+            IsFromAddressMissing = false;
 
+            _cacheResult = null;
             CacheService.GetAsync<AddAddressViewModel>(CacheKey).Returns(_cacheResult);
         }
 
-        [Fact]
-        public void Then_Expected_Methods_Called()
-        {
-            CacheService.Received(1).GetAsync<AddAddressViewModel>(CacheKey);
-        }
 
         [Fact]
         public void Then_Returns_Expected_Results()
@@ -41,10 +32,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
 
             var model = viewResult.Model as AddAddressManualViewModel;
             model.Should().NotBeNull();
-            model.IsFromSelectAddress.Should().Be(true);
+
+            model.IsFromSelectAddress.Should().Be(IsFromSelectAddress);
+            model.IsFromAddressMissing.Should().Be(IsFromAddressMissing);
+
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.AddAddressSelect);
-            model.BackLink.RouteAttributes.Should().BeNull();
+            model.BackLink.RouteName.Should().Be(RouteConstants.AddAddressPostcode);
+            model.BackLink.RouteAttributes.Count.Should().Be(1);
+            model.BackLink.RouteAttributes[Constants.ShowPostcode].Should().Be("false");
         }
     }
 }

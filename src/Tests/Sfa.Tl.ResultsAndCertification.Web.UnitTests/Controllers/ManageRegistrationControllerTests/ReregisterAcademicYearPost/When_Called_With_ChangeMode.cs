@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         private ReregisterSpecialismViewModel _reregisterSpecialismViewModel;
         private PathwaySpecialismsViewModel _pathwaySpecialismsViewModel;
         private ReregisterAcademicYearViewModel _reregisterAcademicYearViewModel;
-        private string _coreCode = "12345678";
+        private readonly string _coreCode = "12345678";
         private string _selectedAcademicYear;
 
         public override void Given()

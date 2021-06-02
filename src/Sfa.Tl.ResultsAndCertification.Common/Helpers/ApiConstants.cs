@@ -66,5 +66,9 @@
         // ProviderAddress Uri's
         public const string AddAddressUri = "/api/provideraddress/AddAddress";
         public const string GetAddressUri = "/api/provideraddress/GetAddress/{0}";
+
+        // Provider Statement Of Achievement Uri's
+        public const string FindSoaLearnerRecordUri = "/api/statementofachievement/FindSoaLearnerRecord/{0}/{1}";
+        public const string GetSoaLearnerRecordDetailsUri = "/api/statementofachievement/GetSoaLearnerRecordDetails/{0}/{1}";
     }
 }

@@ -93,6 +93,7 @@
         public const string PathwayId = "pathwayId";
         public const string IsFromSelectAddress = "isFromSelectAddress";
         public const string ShowPostcode = "showPostcode";
+        public const string IsAddressMissing = "isFromAddressMissing";
 
         // Assessments
         public const int AssessmentEndInYears = 4;

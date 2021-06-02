@@ -8,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 {
     public class IndustryPlacementProvider
     {
-        public static IndustryPlacement CreateQualificationAchieved(ResultsAndCertificationDbContext _dbContext, bool addToDbContext = true)
+        public static IndustryPlacement CreateIndustryPlacement(ResultsAndCertificationDbContext _dbContext, bool addToDbContext = true)
         {
             var industryPlacement = new IndustryPlacementBuilder().Build();
 
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return industryPlacement;
         }
 
-        public static IndustryPlacement CreateQualificationAchieved(ResultsAndCertificationDbContext _dbContext, IndustryPlacement industryPlacement, bool addToDbContext = true)
+        public static IndustryPlacement CreateIndustryPlacement(ResultsAndCertificationDbContext _dbContext, IndustryPlacement industryPlacement, bool addToDbContext = true)
         {
             if (industryPlacement == null)
             {
@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return industryPlacement;
         }
 
-        public static IndustryPlacement CreateQualificationAchieved(ResultsAndCertificationDbContext _dbContext, int tqRegistrationPathwayId, IndustryPlacementStatus status, bool addToDbContext = true)
+        public static IndustryPlacement CreateIndustryPlacement(ResultsAndCertificationDbContext _dbContext, int tqRegistrationPathwayId, IndustryPlacementStatus status, bool addToDbContext = true)
         {
             var qualificationAchieved = new IndustryPlacement
             {
@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return qualificationAchieved;
         }
 
-        public static List<IndustryPlacement> CreateQualificationAchieved(ResultsAndCertificationDbContext _dbContext, List<IndustryPlacement> industryPlacement, bool addToDbContext = true)
+        public static List<IndustryPlacement> CreateIndustryPlacement(ResultsAndCertificationDbContext _dbContext, List<IndustryPlacement> industryPlacement, bool addToDbContext = true)
         {
             if (addToDbContext && industryPlacement != null && industryPlacement.Count > 0)
             {

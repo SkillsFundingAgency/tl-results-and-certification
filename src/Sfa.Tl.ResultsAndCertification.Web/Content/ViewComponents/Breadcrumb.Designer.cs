@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check the learner’s details.
+        /// </summary>
+        public static string Check_Learner_Details {
+            get {
+                return ResourceManager.GetString("Check_Learner_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact us.
         /// </summary>
         public static string Contact {
@@ -178,6 +187,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request statement of achievement.
+        /// </summary>
+        public static string Request_Statement_Of_Achievement {
+            get {
+                return ResourceManager.GetString("Request_Statement_Of_Achievement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Results.
         /// </summary>
         public static string Result_Dashboard {
@@ -219,6 +237,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Search_For_Results {
             get {
                 return ResourceManager.GetString("Search_For_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Statement of achievement not available.
+        /// </summary>
+        public static string Statement_Of_Achievement_Not_Available {
+            get {
+                return ResourceManager.GetString("Statement_Of_Achievement_Not_Available", resourceCulture);
             }
         }
         

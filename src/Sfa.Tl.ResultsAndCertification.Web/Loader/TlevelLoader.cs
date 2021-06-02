@@ -76,15 +76,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var tlevelDetails = await _internalApiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
             return _mapper.Map<TlevelQueryViewModel>(tlevelDetails);
         }
-
-        private static IEnumerable<YourTlevelViewModel> FilterTlevelsByStatus(IEnumerable<AwardingOrganisationPathwayStatus> tLevels, TlevelReviewStatus status)
-        {
-            return tLevels?.Where(x => x.StatusId == (int)status)
-                           .Select(x => new YourTlevelViewModel
-                           {
-                                PathwayId = x.PathwayId,
-                                TlevelTitle = x.TlevelTitle
-                           });
-        }
     }
 }

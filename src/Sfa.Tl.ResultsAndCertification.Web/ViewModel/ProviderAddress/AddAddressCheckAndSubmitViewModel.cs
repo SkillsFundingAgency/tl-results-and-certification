@@ -1,23 +1,14 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
-using System.Collections.Generic;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress.CheckAndSubmit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
 {
     public class AddAddressCheckAndSubmitViewModel
     {
-        private bool IsManual { get { return ProviderAddress.AddAddressManual != null; } }
-        private (string, Dictionary<string, string>) PreviousRoute
-        {
-            get
-            {
-                return IsManual ?
-                    (RouteConstants.AddPostalAddressManual, new Dictionary<string, string> { { Constants.IsFromSelectAddress, ProviderAddress.AddAddressManual.IsFromSelectAddress.ToString() } })
-                    : (RouteConstants.AddAddressSelect, null);
-            }
-        }
+        private bool IsManual => ProviderAddress.AddAddressManual != null;
+        private string PreviousRoute => IsManual ? RouteConstants.AddPostalAddressManual : RouteConstants.AddAddressSelect;
 
         public AddAddressViewModel ProviderAddress { get; set; }
         public bool IsValid
@@ -37,8 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
             NeedBorderBottomLine = false,
 
             ActionText = CheckAndSubmitContent.Link_Change_Address,
-            RouteName = PreviousRoute.Item1,
-            RouteAttributes = PreviousRoute.Item2
+            RouteName = PreviousRoute,
         };
 
         public SummaryItemModel SummaryOrganisationName => new SummaryItemModel
@@ -81,10 +71,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress
             NeedBorderBottomLine = false
         };
 
-        public BackLinkModel BackLink => new BackLinkModel
-        {
-            RouteName = PreviousRoute.Item1,
-            RouteAttributes = PreviousRoute.Item2
-        };
+        public BackLinkModel BackLink => new BackLinkModel { RouteName = PreviousRoute };
     }
 }

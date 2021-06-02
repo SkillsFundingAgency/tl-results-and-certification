@@ -41,8 +41,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
         {
             var route = (Result as RedirectToRouteResult);
             route.RouteName.Should().Be(RouteConstants.AddPostalAddressManual);
-            route.RouteValues.Count.Should().Be(1);
-            route.RouteValues["isFromSelectAddress"].Should().Be(true);
+            route.RouteValues.Count.Should().Be(2);
+            route.RouteValues[Constants.IsFromSelectAddress].Should().Be(true);
+            route.RouteValues[Constants.IsAddressMissing].Should().Be(false);
         }
     }
 }

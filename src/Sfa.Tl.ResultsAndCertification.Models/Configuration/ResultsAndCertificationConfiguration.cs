@@ -1,4 +1,6 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
+﻿using System;
+
+namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
 {
     public class ResultsAndCertificationConfiguration
     {
@@ -81,6 +83,8 @@
         /// The feedback email address.
         /// </value>
         public string FeedbackEmailAddress { get; set; }
+
+        public DateTime? SoaAvailableDate { get; set; }
 
         /// <summary>
         /// Gets or sets the dfe sign in settings.

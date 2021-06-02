@@ -33,6 +33,10 @@
       "type": "string",
       "environmentVariable": "FeedbackEmailAddress"
     },
+	"SoaAvailableDate": {
+      "type": "string",
+      "environmentVariable": "SoaAvailableDate"
+    },
 	"KeyVaultUri": {
       "type": "string",
       "environmentVariable": "KeyVaultUri"

@@ -9,13 +9,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
 {
     public class When_NoCache_Found_ShowPostcode_True : TestSetup
     {
-        private AddAddressViewModel _cacheResult;
+        private AddAddressViewModel _cacheResult = null;
 
         public override void Given()
         {
             ShowPostcode = true;
-            _cacheResult = new AddAddressViewModel();
-
+            IsFromAddressMissing = true;
             CacheService.GetAsync<AddAddressViewModel>(CacheKey).Returns(_cacheResult);
         }
 
@@ -37,8 +36,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             var model = viewResult.Model as AddAddressPostcodeViewModel;
             model.Should().NotBeNull();
             model.Postcode.Should().BeNull();
+            model.IsFromAddressMissing.Should().BeTrue();
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.ManagePostalAddress);
+            model.BackLink.RouteName.Should().Be(RouteConstants.PostalAddressMissing);
             model.BackLink.RouteAttributes.Should().BeEmpty();
         }
     }

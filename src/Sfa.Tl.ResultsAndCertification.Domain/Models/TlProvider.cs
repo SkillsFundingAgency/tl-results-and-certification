@@ -7,6 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public TlProvider()
         {
             TqProviders = new HashSet<TqProvider>();
+            TlProviderAddresses = new HashSet<TlProviderAddress>();
         }
 
         public long UkPrn { get; set; }
@@ -15,5 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public bool IsActive { get; set; }
 
         public virtual ICollection<TqProvider> TqProviders { get; set; }
+        public virtual ICollection<TlProviderAddress> TlProviderAddresses { get; set; }
     }
 }

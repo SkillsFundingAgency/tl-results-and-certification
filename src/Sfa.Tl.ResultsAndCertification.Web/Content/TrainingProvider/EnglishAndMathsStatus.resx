@@ -123,6 +123,15 @@
   <data name="Achieved_With_Send_Display_Text" xml:space="preserve">
     <value>Achieved minimum standard for learners with SEND</value>
   </data>
+  <data name="Lrs_Achieved_Display_Text" xml:space="preserve">
+    <value>Achieved minimum standard (Data from the Learning Records Service - LRS)</value>
+  </data>
+  <data name="Lrs_Achieved_With_Send_Display_Text" xml:space="preserve">
+    <value>Achieved minimum standard for learners with SEND (Data from the Learning Records Service - LRS and provider declaration)</value>
+  </data>
+  <data name="Lrs_Not_Achieved_Display_Text" xml:space="preserve">
+    <value>Not achieved minimum standard (Data from the Learning Records Service - LRS)</value>
+  </data>
   <data name="Not_Achieved_Display_Text" xml:space="preserve">
     <value>Not achieved minimum standard</value>
   </data>

@@ -120,6 +120,9 @@
   <data name="Assessment_Dashboard" xml:space="preserve">
     <value>Assessment entries</value>
   </data>
+  <data name="Check_Learner_Details" xml:space="preserve">
+    <value>Check the learner’s details</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Contact us</value>
   </data>
@@ -156,6 +159,9 @@
   <data name="Registration_Details" xml:space="preserve">
     <value>Registration details</value>
   </data>
+  <data name="Request_Statement_Of_Achievement" xml:space="preserve">
+    <value>Request statement of achievement</value>
+  </data>
   <data name="Result_Dashboard" xml:space="preserve">
     <value>Results</value>
   </data>
@@ -170,6 +176,9 @@
   </data>
   <data name="Search_For_Results" xml:space="preserve">
     <value>Search for a learner</value>
+  </data>
+  <data name="Statement_Of_Achievement_Not_Available" xml:space="preserve">
+    <value>Statement of achievement not available</value>
   </data>
   <data name="Tlevel_Details" xml:space="preserve">
     <value>T Level details</value>

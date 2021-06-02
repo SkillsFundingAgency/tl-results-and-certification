@@ -1,0 +1,44 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement.RequestSoaNotAvailableNoResultsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
+
+@{
+    ViewData["Title"] = RequestSoaNotAvailableNoResults.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+
+        <h1 class="govuk-heading-l">@RequestSoaNotAvailableNoResults.Heading_Soa_Not_Available_Min_Requirements_Not_Met</h1>
+
+        <div class="govuk-inset-text">
+            <p class="govuk-body">@RequestSoaNotAvailableNoResults.InsetText_Our_Record_Show</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@RequestSoaNotAvailableNoResults.InsetText_Learner_Not_Completed_Industry_Placement</li>
+                <li>@RequestSoaNotAvailableNoResults.InsetText_Learner_Not_Received_Core_Results</li>
+            </ul>
+            <p class="govuk-body">
+                @RequestSoaNotAvailableNoResults.InsetText_Para_If_learner_Completed_Industry_Placement
+                <a class="govuk-link" asp-route="LearnerRecordDetails" asp-route-profileId="@Model.ProfileId">@RequestSoaNotAvailableNoResults.InsetText_Link_Update_Tlevel_Record</a>.
+            </p>
+            <p class="govuk-body">@RequestSoaNotAvailableNoResults.InsetText_Para_If_Learner_Completed_Core_Contact_Board</p>
+        </div>
+
+        <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-7 govuk-!-margin-top-7">
+
+        <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+            <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+        </dl>
+
+        <p class="govuk-body">
+            <a id="backButton" class="govuk-button" role="button" asp-route="Home">@RequestSoaNotAvailableNoResults.Button_Back_To_Home</a>
+        </p>
+    </div>
+</div>

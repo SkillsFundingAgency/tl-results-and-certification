@@ -7,22 +7,19 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddressTests.AddPostalAddressManualGet
 {
-    public class When_Cache_Has_No_AddAddressManual : TestSetup
+    public class When_NoCache_Navigated_From_Postcode : TestSetup
     {
         private AddAddressViewModel _cacheResult;
 
         public override void Given()
         {
             IsFromSelectAddress = false;
-            _cacheResult = new AddAddressViewModel();
+            IsFromAddressMissing = true;
+
+            _cacheResult = null;
             CacheService.GetAsync<AddAddressViewModel>(CacheKey).Returns(_cacheResult);
         }
 
-        [Fact]
-        public void Then_Expected_Methods_Called()
-        {
-            CacheService.Received(1).GetAsync<AddAddressViewModel>(CacheKey);
-        }
 
         [Fact]
         public void Then_Returns_Expected_Results()
@@ -34,22 +31,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             viewResult.Model.Should().BeOfType(typeof(AddAddressManualViewModel));
 
             var model = viewResult.Model as AddAddressManualViewModel;
-            
             model.Should().NotBeNull();
-            
-            model.DepartmentName.Should().BeNull();
-            model.OrganisationName.Should().BeNull();
-            model.AddressLine1.Should().BeNull();
-            model.AddressLine1.Should().BeNull();
-            model.Town.Should().BeNull();
-            model.Postcode.Should().BeNull();
+
             model.IsFromSelectAddress.Should().Be(IsFromSelectAddress);
-            
+            model.IsFromAddressMissing.Should().Be(IsFromAddressMissing);
+
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AddAddressPostcode);
-            model.BackLink.RouteAttributes.Should().NotBeNull();
-            model.BackLink.RouteAttributes.TryGetValue(Constants.ShowPostcode, out string showPostcode);
-            showPostcode.Should().Be("false");
+            model.BackLink.RouteAttributes.Count.Should().Be(2);
+            model.BackLink.RouteAttributes[Constants.IsAddressMissing].Should().Be("true");
+            model.BackLink.RouteAttributes[Constants.ShowPostcode].Should().Be("false");
         }
     }
 }

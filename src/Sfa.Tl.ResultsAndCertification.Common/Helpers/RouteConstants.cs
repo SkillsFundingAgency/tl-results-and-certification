@@ -256,7 +256,20 @@
         public const string SubmitAddAddressCancel = "SubmitAddAddressCancel";
         public const string AddAddressNotFound = "AddAddressNotFound";
         public const string SubmitAddAddressNotFound = "SubmitAddAddressNotFound";
+        #endregion
 
+        #region Statement of achievement
+
+        public const string RequestStatementOfAchievement = "RequestStatementOfAchievement";
+        public const string StatementsOfAchievementNotAvailable = "StatementsOfAchievementNotAvailable";
+        public const string PostalAddressMissing = "PostalAddressMissing";
+        public const string RequestSoaUniqueLearnerNumber = "RequestSoaUniqueLearnerNumber";
+        public const string SubmitRequestSoaUniqueLearnerNumber = "SubmitRequestSoaUniqueLearnerNumber";
+        public const string RequestSoaUlnNotFound = "RequestSoaUlnNotFound";
+        public const string RequestSoaUlnNotWithdrawn = "RequestSoaUlnNotWithdrawn";
+        public const string RequestSoaNotAvailableNoIpStatus = "RequestSoaNotAvailableNoIpStatus";
+        public const string RequestSoaNotAvailableNoResults = "RequestSoaNotAvailableNoResults";
+        public const string RequestSoaCheckAndSubmit = "RequestSoaCheckAndSubmit";
         #endregion
     }
 }
