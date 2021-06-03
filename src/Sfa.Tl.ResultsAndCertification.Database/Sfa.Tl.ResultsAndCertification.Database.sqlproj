@@ -60,6 +60,7 @@
     <Folder Include="PostDeployment" />
     <Folder Include="PreDeployment" />
     <Folder Include="Indexes" />
+    <Folder Include="Sequences" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\TqAwardingOrganisation.sql" />
@@ -96,6 +97,10 @@
     <None Include="PostDeployment\SeedQualificationType.sql" />
     <Build Include="Tables\IndustryPlacement.sql" />
     <Build Include="Tables\TlProviderAddress.sql" />
+    <Build Include="Tables\Batch.sql" />
+    <Build Include="Tables\PrintBatchItem.sql" />
+    <Build Include="Tables\PrintCertificate.sql" />
+    <Build Include="Sequences\CertificateNumber.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />
