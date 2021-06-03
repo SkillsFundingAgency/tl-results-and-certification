@@ -99,8 +99,7 @@
     <Build Include="Tables\TlProviderAddress.sql" />
     <Build Include="Tables\Batch.sql" />
     <Build Include="Tables\PrintBatchItem.sql" />
-    <Build Include="Tables\PrintCertificate.sql" />
-    <Build Include="Sequences\CertificateNumber.sql" />
+    <Build Include="Tables\PrintCertificate.sql" />    
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />
