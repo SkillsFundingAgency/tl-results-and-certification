@@ -1,0 +1,51 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement.RequestSoaCancelViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
+
+@{
+    ViewData["Title"] = RequestSoaCancel.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="SubmitRequestSoaCancel">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="LearnerName" />
+            <partial name="_ValidationSummary" />
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <span class="govuk-caption-xl">@RequestSoaCancel.Caption_Request_Statement_Of_Achievement</span>
+                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                            @RequestSoaCancel.Heading_Are_You_Sure_To_Cancel
+                        </h1>
+                    </legend>
+
+                    <span id="uln-hint" class="govuk-hint">
+                        <strong>@RequestSoaCancel.Hint_Learner_Name</strong> @Model.LearnerName
+                    </span>
+
+                    <div class="govuk-radios" sfa-validation-for="CancelRequest" sfa-validation-class="govuk-form-group--error">
+                        <span sfa-validation-for="CancelRequest"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="cancelrequest" asp-for="CancelRequest" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="cancelrequest">
+                                @RequestSoaCancel.Radio_Button_Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="cancelrequest-no" asp-for="CancelRequest" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="cancelrequest-no">
+                                @RequestSoaCancel.Radio_Button_No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button class="govuk-button govuk-!-margin-top-3" data-module="govuk-button">@RequestSoaCancel.Button_Continue</button>
+        </form>
+    </div>
+</div>

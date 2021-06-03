@@ -245,6 +245,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PostalAddressMissing.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestSoaCancel.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestSoaCancel.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\StatementOfAchievement\RequestSoaCheckAndSubmit.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -864,6 +869,10 @@
     <EmbeddedResource Update="Content\StatementOfAchievement\PostalAddressMissing.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PostalAddressMissing.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaCancel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestSoaCancel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaCheckAndSubmit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
