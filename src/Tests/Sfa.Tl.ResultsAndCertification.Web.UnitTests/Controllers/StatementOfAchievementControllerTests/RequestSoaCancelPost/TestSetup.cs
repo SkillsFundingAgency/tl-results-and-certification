@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         public async override Task When()
         {
             await Task.CompletedTask;
-            Result = Controller.RequestSoaCancelAsync(ViewModel);
+            Result = Controller.RequestSoaCancel(ViewModel);
         }
     }
 }

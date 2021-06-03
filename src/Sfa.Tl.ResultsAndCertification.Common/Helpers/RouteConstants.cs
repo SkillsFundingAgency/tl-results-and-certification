@@ -271,6 +271,7 @@
         public const string RequestSoaNotAvailableNoResults = "RequestSoaNotAvailableNoResults";
         public const string RequestSoaCheckAndSubmit = "RequestSoaCheckAndSubmit";
         public const string RequestSoaCancel = "RequestSoaCancel";
+        public const string RequestSoaChangeComponentAchievements = "RequestSoaChangeComponentAchievements";
         #endregion
     }
 }
