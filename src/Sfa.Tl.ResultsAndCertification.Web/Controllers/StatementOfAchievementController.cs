@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using System;
@@ -177,6 +178,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("request-statement-of-achievement-cancel", Name = RouteConstants.RequestSoaCancel)]
+        public async Task<IActionResult> RequestSoaCancelAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<FindSoaLearnerRecord>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read FindSoaLearnerRecord from redis cache in canel soa request page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var viewModel = new RequestSoaCancelViewModel { ProfileId = cacheModel.ProfileId, LearnerName = cacheModel.LearnerName };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("request-statement-of-achievement-cancel", Name = RouteConstants.RequestSoaCancel)]
+        public async Task<IActionResult> RequestSoaCancelAsync(RequestSoaCancelViewModel viewModel)
+        {
+            await Task.CompletedTask;
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            return viewModel.CancelRequest.Value
+                ? RedirectToRoute(RouteConstants.Home)
+                : RedirectToRoute(RouteConstants.RequestSoaCheckAndSubmit, new { profileId = viewModel.ProfileId });
         }
 
         private bool IsSoaAvailable()

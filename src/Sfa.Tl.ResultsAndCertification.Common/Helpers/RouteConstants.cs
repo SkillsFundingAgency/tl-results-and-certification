@@ -270,6 +270,7 @@
         public const string RequestSoaNotAvailableNoIpStatus = "RequestSoaNotAvailableNoIpStatus";
         public const string RequestSoaNotAvailableNoResults = "RequestSoaNotAvailableNoResults";
         public const string RequestSoaCheckAndSubmit = "RequestSoaCheckAndSubmit";
+        public const string RequestSoaCancel = "RequestSoaCancel";
         #endregion
     }
 }
