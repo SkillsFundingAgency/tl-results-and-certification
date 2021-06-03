@@ -197,9 +197,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("request-statement-of-achievement-cancel", Name = RouteConstants.RequestSoaCancel)]
-        public async Task<IActionResult> RequestSoaCancelAsync(RequestSoaCancelViewModel viewModel)
+        public IActionResult RequestSoaCancelAsync(RequestSoaCancelViewModel viewModel)
         {
-            await Task.CompletedTask;
             if (!ModelState.IsValid)
                 return View(viewModel);
 
