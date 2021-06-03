@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Domain.Models
@@ -10,8 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
             PrintBatchItems = new HashSet<PrintBatchItem>();
         }
 
-        public int Type { get; set; }
-        public int Status { get; set; }
+        public BatchType Type { get; set; }
+        public BatchStatus Status { get; set; }
         public string Errors { get; set; }
         public DateTime? RunOn { get; set; }
         public DateTime? StatusChangedOn { get; set; }

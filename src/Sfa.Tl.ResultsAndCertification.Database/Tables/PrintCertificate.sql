@@ -9,7 +9,7 @@
     [Type] INT NOT NULL,
     [LearningDetails] NVARCHAR(MAX) NULL,
     [DisplaySnapshot] NVARCHAR(MAX) NULL,
-    [Status] INT NULL,
+    [Status] INT NOT NULL,
     [Reason] NVARCHAR(256) NULL,
     [TrackingId] NVARCHAR(100) NULL,
     [StatusChangedOn] DATETIME2 NULL,
