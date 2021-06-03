@@ -1,11 +1,11 @@
 ﻿CREATE TABLE [dbo].[PrintCertificate]
 (
 	[Id] INT IDENTITY(1,1) NOT NULL,
-    [PrintBatchItemId] INT NOT NULL,    
+    [PrintBatchItemId] INT NOT NULL,
+    [TqRegistrationPathwayId] INT NOT NULL,
     [CertificateNumber] AS FORMAT([Id], '0000000#'),
     [Uln] BIGINT NOT NULL,
-    [LearnerName] NVARCHAR(256) NOT NULL,
-    [TqRegistrationPathwayId] INT NOT NULL,
+    [LearnerName] NVARCHAR(256) NOT NULL,    
     [Type] INT NOT NULL,
     [LearningDetails] NVARCHAR(MAX) NULL,
     [DisplaySnapshot] NVARCHAR(MAX) NULL,
