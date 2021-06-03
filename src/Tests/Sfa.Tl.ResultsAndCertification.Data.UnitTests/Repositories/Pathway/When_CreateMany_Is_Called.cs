@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
         }
 
         [Fact]
-        public void Then_Two_Record_Should_Have_Been_Created()
+        public void Then_Expected_Record_Should_Have_Been_Created()
         {
             var result = Repository.GetManyAsync();
             result.Count().Should().Be(2);

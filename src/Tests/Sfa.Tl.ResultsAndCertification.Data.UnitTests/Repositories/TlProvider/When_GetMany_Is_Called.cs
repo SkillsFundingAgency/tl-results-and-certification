@@ -33,13 +33,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlProvider
 
 
         [Fact]
-        public void Then_The_Expected_Number_Of_Paths_Is_Returned()
+        public void Then_The_Expected_Number_Of_Records_Are_Returned()
         {
             _result.Count().Should().Be(4);
         }
 
         [Fact]
-        public void Then_EntityFields_Are_As_Expected()
+        public void Then_First_Record_Fields_Have_Expected_Values()
         {
             var expectedResult = _data.FirstOrDefault();
             var actualResult = _result.FirstOrDefault();

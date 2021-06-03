@@ -36,13 +36,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
 
 
         [Fact]
-        public void Then_The_Expected_Number_Of_Paths_Is_Returned()
+        public void Then_The_Expected_Number_Of_Records_Are_Returned()
         {
             _result.Count().Should().Be(2);
         }
 
         [Fact]
-        public void Then_EntityFields_Are_As_Expected()
+        public void Then_First_Record_Fields_Have_Expected_Values()
         {
             var expectedResult = _data.FirstOrDefault();
             var actualResult = _result.FirstOrDefault();
@@ -50,12 +50,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
             expectedResult.Should().NotBeNull();
             actualResult.Should().NotBeNull();
             actualResult.Id.Should().Be(1);
-            actualResult.Name.Should().BeEquivalentTo(expectedResult.Name);
-            actualResult.LarId.Should().BeEquivalentTo(expectedResult.LarId);
+            actualResult.Name.Should().Be(expectedResult.Name);
+            actualResult.LarId.Should().Be(expectedResult.LarId);
             actualResult.TlRouteId.Should().Be(expectedResult.TlRouteId);
-            actualResult.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
+            actualResult.CreatedBy.Should().Be(expectedResult.CreatedBy);
             actualResult.CreatedOn.Should().Be(expectedResult.CreatedOn);
-            actualResult.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
+            actualResult.ModifiedBy.Should().Be(expectedResult.ModifiedBy);
             actualResult.ModifiedOn.Should().Be(expectedResult.ModifiedOn);
         }
     }

@@ -39,9 +39,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AwardingOrg
             
             _result.TlPathway.Id.Should().Be(expectedResult.Id);
             _result.TlPathway.Name.Should().Be(expectedResult.Name);
-            _result.TlPathway.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
+            _result.TlPathway.CreatedBy.Should().Be(expectedResult.CreatedBy);
             _result.TlPathway.CreatedOn.Should().Be(expectedResult.CreatedOn);
-            _result.TlPathway.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
+            _result.TlPathway.ModifiedBy.Should().Be(expectedResult.ModifiedBy);
             _result.TlPathway.ModifiedOn.Should().Be(expectedResult.ModifiedOn);
 
             var expectedAwardingOrg = _data.TlAwardingOrganisaton;

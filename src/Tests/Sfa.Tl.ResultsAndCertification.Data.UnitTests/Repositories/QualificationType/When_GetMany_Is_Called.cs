@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Qualificati
         }
 
         [Fact]
-        public void Then_The_Expected_Number_Of_Records_Is_Returned() =>
+        public void Then_The_Expected_Number_Of_Records_Are_Returned() =>
             _result.Count().Should().Be(_data.Count);
 
         [Fact]
@@ -40,9 +40,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Qualificati
             result.Id.Should().Be(1);
             result.Name.Should().Be(testData.Name);
             result.IsActive.Should().Be(testData.IsActive);            
-            result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
+            result.CreatedBy.Should().Be(Constants.CreatedByUser);
             result.CreatedOn.Should().Be(Constants.CreatedOn);
-            result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);
+            result.ModifiedBy.Should().Be(Constants.ModifiedByUser);
             result.ModifiedOn.Should().Be(Constants.ModifiedOn);
         }
     }
