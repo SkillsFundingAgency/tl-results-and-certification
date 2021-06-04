@@ -43,13 +43,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             {
                 ProfileId = _profileId,
                 Uln = _uln,
-                LearnerName = "Test User",
+                Firstname = "Test",
+                Lastname = "User",
                 DateofBirth = DateTime.UtcNow.AddYears(30),
-                ProviderName = "Barnsley College (123456789)",
+                ProviderName = "Barnsley College",
+                ProviderUkprn = 123456789,
                 TlevelTitle = "Title",
                 PathwayName = "Design",
+                PathwayCode = "8631254",
                 PathwayGrade = "A",
                 SpecialismName = "Specialism",
+                SpecialismCode = "123456",
                 SpecialismGrade = "",
                 IsEnglishAndMathsAchieved = true,
                 HasLrsEnglishAndMaths = true,
@@ -77,13 +81,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.Should().NotBeNull();
             _actualResult.ProfileId.Should().Be(_mockApiResponse.ProfileId);
             _actualResult.Uln.Should().Be(_mockApiResponse.Uln);
-            _actualResult.LearnerName.Should().Be(_mockApiResponse.LearnerName);
+            _actualResult.Firstname.Should().Be(_mockApiResponse.Firstname);
+            _actualResult.Lastname.Should().Be(_mockApiResponse.Lastname);
             _actualResult.DateofBirth.Should().Be(_mockApiResponse.DateofBirth);
             _actualResult.ProviderName.Should().Be(_mockApiResponse.ProviderName);
+            _actualResult.ProviderUkprn.Should().Be(_mockApiResponse.ProviderUkprn);
             _actualResult.TlevelTitle.Should().Be(_mockApiResponse.TlevelTitle);
             _actualResult.PathwayName.Should().Be(_mockApiResponse.PathwayName);
+            _actualResult.PathwayCode.Should().Be(_mockApiResponse.PathwayCode);
             _actualResult.PathwayGrade.Should().Be(_mockApiResponse.PathwayGrade);
             _actualResult.SpecialismName.Should().Be(_mockApiResponse.SpecialismName);
+            _actualResult.SpecialismCode.Should().Be(_mockApiResponse.SpecialismCode);
             _actualResult.SpecialismGrade.Should().Be(_mockApiResponse.SpecialismGrade);
             _actualResult.IsEnglishAndMathsAchieved.Should().Be(_mockApiResponse.IsEnglishAndMathsAchieved);
             _actualResult.HasLrsEnglishAndMaths.Should().Be(_mockApiResponse.HasLrsEnglishAndMaths);

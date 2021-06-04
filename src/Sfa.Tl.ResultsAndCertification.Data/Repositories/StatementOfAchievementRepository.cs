@@ -66,15 +66,19 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                           {
                                               ProfileId = tqProfile.Id,
                                               Uln = tqProfile.UniqueLearnerNumber,
-                                              LearnerName = tqProfile.Firstname + " " + tqProfile.Lastname,
+                                              Firstname = tqProfile.Firstname,
+                                              Lastname = tqProfile.Lastname,
                                               DateofBirth = tqProfile.DateofBirth,
-                                              ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
-
+                                              ProviderName = tlProvider.Name,
+                                              ProviderUkprn = tlProvider.UkPrn,
                                               TlevelTitle = tlPathway.TlevelTitle,
-                                              PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",
+                                              
+                                              PathwayName = tlPathway.Name,
+                                              PathwayCode = tlPathway.LarId,
                                               PathwayGrade = pathwayResults.OrderByDescending(r => r.pr.CreatedOn).FirstOrDefault().pr.TlLookup.Value,
-                                              SpecialismName = specialism.TlSpecialism.Name + " (" + specialism.TlSpecialism.LarId + ")",
-
+                                              SpecialismName = specialism.TlSpecialism.Name,
+                                              SpecialismCode = specialism.TlSpecialism.LarId,
+                                              
                                               IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
                                               IsSendLearner = tqProfile.IsSendLearner,
                                               HasLrsEnglishAndMaths = tqProfile.IsRcFeed == false,

@@ -24,13 +24,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
+        public string ProviderDisplayName { get; set; }
         public string ProviderName { get; set; }
+        public long ProviderUkprn { get; set; }
 
         //Learner's technical qualification details
         public string TlevelTitle { get; set; }
+        public string PathwayDisplayName { get; set; }
         public string PathwayName { get; set; }
+        public string PathwayCode { get; set; }
         public string PathwayGrade { get; set; }
+        public string SpecialismDisplayName { get; set; }
         public string SpecialismName { get; set; }
+        public string SpecialismCode { get; set; }
         public string SpecialismGrade { get; set; }
 
         //Learner's T level component achievements
@@ -74,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "providername",
             Title = RequestSoaCheckAndSubmitContent.Title_Provider_Text,
-            Value = ProviderName
+            Value = ProviderDisplayName
         };
 
         public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel
@@ -88,7 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "corecode",
             Title = RequestSoaCheckAndSubmitContent.Title_Core_Code_Text,
-            Value = string.Format(RequestSoaCheckAndSubmitContent.Core_Code_Value, PathwayName, PathwayGrade),
+            Value = string.Format(RequestSoaCheckAndSubmitContent.Core_Code_Value, PathwayDisplayName, PathwayGrade),
             IsRawHtml = true
         };
 
@@ -96,7 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "specialismcode",
             Title = RequestSoaCheckAndSubmitContent.Title_Occupational_Specialism_Text,
-            Value = string.Format(RequestSoaCheckAndSubmitContent.Occupational_Specialism_Value, SpecialismName, SpecialismGrade),
+            Value = string.Format(RequestSoaCheckAndSubmitContent.Occupational_Specialism_Value, SpecialismDisplayName, SpecialismGrade),
             IsRawHtml = true
         };
 
