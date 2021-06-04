@@ -16,10 +16,9 @@
         <p class="govuk-body">@ChangeComponentAchievements.Para_You_Need_To_Update_Learner_Details</p>
         <p class="govuk-body">@ChangeComponentAchievements.Para_Come_Back_To_Request_Soa</p>
         <p class="govuk-body">
-            <a class="govuk-button govuk-!-margin-top-6" role="button" asp-route="LearnerRecordDetails" asp-route-profileId="@Model.ProfileId">
+            <a id="manageTlevelRecordButton" class="govuk-button govuk-!-margin-top-6" role="button" asp-route="LearnerRecordDetails" asp-route-profileId="@Model.ProfileId">
                 @ChangeComponentAchievements.Button_Manage_Tlevel_Record
             </a>
-            @*TODO: above link should be change to form button, so that cache can be cleared if exits*@
         </p>
     </div>
 </div>

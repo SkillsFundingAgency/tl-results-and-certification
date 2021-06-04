@@ -31,7 +31,7 @@
             </summary>
             <div class="govuk-details__text">
                 @RequestSoaCheckAndSubmit.Learner_Details_Section_If_Learner_Details_Are_Wrong
-                <br><br> @*TODO: Revise required*@
+                <br><br>
                 @RequestSoaCheckAndSubmit.Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back
             </div>
         </details>
@@ -59,7 +59,7 @@
             <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Tlevel_Component_Achievements</h2>
         </div>
         <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0 soa-details">
-            <a class="govuk-body govuk-link float--right" asp-route="RequestSoaChangeComponentAchievements">
+            <a class="govuk-body govuk-link float--right" asp-route="RequestSoaChangeComponentAchievements" asp-route-profileId="@Model.ProfileId">
                 @RequestSoaCheckAndSubmit.Link_Change_Component_Achievements
                 <span class="govuk-visually-hidden">@RequestSoaCheckAndSubmit.Hidden_Text_Change_Component_Achievements</span>
             </a>
@@ -89,8 +89,8 @@
         <p class="govuk-body">@RequestSoaCheckAndSubmit.Para_By_Submitting_You_Are_Confirming_That</p>
 
         <div class="govuk-button-group">
-            <button class="govuk-button" data-module="govuk-button">@RequestSoaCheckAndSubmit.Button_Accept_And_Send_Request</button>
-            <a class="govuk-link govuk-body" asp-route="RequestSoaCancel">@RequestSoaCheckAndSubmit.Button_Cancel</a>
+            <button id="acceptAndSendButton" class="govuk-button" data-module="govuk-button">@RequestSoaCheckAndSubmit.Button_Accept_And_Send_Request</button>
+            <a id="cancelLink" class="govuk-link govuk-body" asp-route="RequestSoaCancel" asp-route-profileId="@Model.ProfileId">@RequestSoaCheckAndSubmit.Button_Cancel</a>
         </div>
     </div>
 </div>

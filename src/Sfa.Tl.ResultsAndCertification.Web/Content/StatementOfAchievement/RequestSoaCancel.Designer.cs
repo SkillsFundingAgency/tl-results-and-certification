@@ -125,7 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to cancel this request?.
+        ///   Looks up a localized string similar to Select yes if you want to cancel this request.
         /// </summary>
         public static string Validation_Message {
             get {

@@ -110,7 +110,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                await _cacheService.SetAsync(CacheKey, soaLearnerRecord);
+                await _cacheService.RemoveAsync<FindSoaLearnerRecord>(CacheKey);
                 return RedirectToRoute(RouteConstants.RequestSoaCheckAndSubmit, new { profileId = soaLearnerRecord.ProfileId });
             }
         }
@@ -181,22 +181,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("request-statement-of-achievement-cancel", Name = RouteConstants.RequestSoaCancel)]
-        public async Task<IActionResult> RequestSoaCancelAsync()
+        [Route("request-statement-of-achievement-cancel/{profileId}", Name = RouteConstants.RequestSoaCancel)]
+        public async Task<IActionResult> RequestSoaCancelAsync(int profileId)
         {
-            var cacheModel = await _cacheService.GetAsync<FindSoaLearnerRecord>(CacheKey);
-            if (cacheModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read FindSoaLearnerRecord from redis cache in canel soa request page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+            var learnerDetails = await _statementOfAchievementLoader.GetSoaLearnerRecordDetailsAsync(User.GetUkPrn(), profileId);
+            if (learnerDetails == null || !learnerDetails.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-            }
 
-            var viewModel = new RequestSoaCancelViewModel { ProfileId = cacheModel.ProfileId, LearnerName = cacheModel.LearnerName };
+            var viewModel = new RequestSoaCancelViewModel { ProfileId = learnerDetails.ProfileId, LearnerName = learnerDetails.LearnerName };
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("request-statement-of-achievement-cancel", Name = RouteConstants.RequestSoaCancel)]
+        [Route("request-statement-of-achievement-cancel", Name = RouteConstants.SubmitRequestSoaCancel)]
         public IActionResult RequestSoaCancel(RequestSoaCancelViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -208,17 +205,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("request-statement-of-achievement-change-learner-components", Name = RouteConstants.RequestSoaChangeComponentAchievements)]
-        public async Task<IActionResult> ChangeComponentAchievementAsync()
+        [Route("request-statement-of-achievement-change-learner-components/{profileId}", Name = RouteConstants.RequestSoaChangeComponentAchievements)]
+        public IActionResult ChangeComponentAchievement(int profileId)
         {
-            var cacheModel = await _cacheService.GetAsync<FindSoaLearnerRecord>(CacheKey);
-            if (cacheModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read FindSoaLearnerRecord from redis cache in change component achievement page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            var viewModel = new ChangeComponentAchievementsViewModel { ProfileId = cacheModel.ProfileId };
+            var viewModel = new ChangeComponentAchievementsViewModel { ProfileId = profileId };
             return View(viewModel);
         }
 
