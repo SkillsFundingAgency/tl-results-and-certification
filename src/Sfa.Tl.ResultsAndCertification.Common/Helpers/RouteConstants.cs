@@ -273,6 +273,7 @@
         public const string RequestSoaCancel = "RequestSoaCancel";
         public const string SubmitRequestSoaCancel = "SubmitRequestSoaCancel";
         public const string RequestSoaChangeComponentAchievements = "RequestSoaChangeComponentAchievements";
+        public const string RequestSoaChangePostalAddress = "RequestSoaChangePostalAddress";
         #endregion
     }
 }

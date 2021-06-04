@@ -212,6 +212,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [Route("request-statement-of-achievement-change-postal-address/{profileId}", Name = RouteConstants.RequestSoaChangePostalAddress)]
+        public IActionResult ChangePostalAddress(int profileId)
+        {
+            var viewModel = new ChangePostalAddressViewModel { ProfileId = profileId };
+            return View(viewModel);
+        }
+
         private bool IsSoaAvailable()
         {
             return _configuration.SoaAvailableDate == null || DateTime.UtcNow.Date >= _configuration.SoaAvailableDate.Value.Date;

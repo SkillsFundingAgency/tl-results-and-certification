@@ -74,7 +74,7 @@
             <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Your_Organisation_Address</h2>
         </div>
         <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0 soa-details">
-            <a class="govuk-body govuk-link float--right" href="request-statement-of-achievement-change-postal-address">
+            <a class="govuk-body govuk-link float--right" asp-route="RequestSoaChangePostalAddress" asp-route-profileId="@Model.ProfileId">
                 @RequestSoaCheckAndSubmit.Link_Change_Organisation_Address
                 <span class="govuk-visually-hidden">@RequestSoaCheckAndSubmit.Hidden_Text_Change_Organisation_Address</span>
             </a>
