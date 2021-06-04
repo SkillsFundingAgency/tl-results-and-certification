@@ -101,7 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
             // ProviderName
             model.SummaryProvider.Title.Should().Be(CheckAndSubmitContent.Title_Provider_Text);
-            model.SummaryProvider.Value.Should().Be(_mockLearnerDetails.ProviderName);
+            model.SummaryProvider.Value.Should().Be(_mockLearnerDetails.ProviderDisplayName);
 
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(CheckAndSubmitContent.Title_Tlevel_Title_Text);
@@ -109,11 +109,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
             // CoreCode
             model.SummaryCoreCode.Title.Should().Be(CheckAndSubmitContent.Title_Core_Code_Text);
-            model.SummaryCoreCode.Value.Should().Be(string.Format(CheckAndSubmitContent.Core_Code_Value, _mockLearnerDetails.PathwayName, _mockLearnerDetails.PathwayGrade));
+            model.SummaryCoreCode.Value.Should().Be(string.Format(CheckAndSubmitContent.Core_Code_Value, _mockLearnerDetails.PathwayDisplayName, _mockLearnerDetails.PathwayGrade));
 
             // SpecialismCode
             model.SummarySpecialismCode.Title.Should().Be(CheckAndSubmitContent.Title_Occupational_Specialism_Text);
-            model.SummarySpecialismCode.Value.Should().Be(string.Format(CheckAndSubmitContent.Occupational_Specialism_Value, _mockLearnerDetails.SpecialismName, _mockLearnerDetails.SpecialismGrade));
+            model.SummarySpecialismCode.Value.Should().Be(string.Format(CheckAndSubmitContent.Occupational_Specialism_Value, _mockLearnerDetails.SpecialismDisplayName, _mockLearnerDetails.SpecialismGrade));
 
             // EnglishAndMaths
             model.SummaryEnglishAndMaths.Title.Should().Be(CheckAndSubmitContent.Title_English_And_Maths_Text);

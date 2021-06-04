@@ -9,15 +9,19 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
         //Learner's registration details
         public int ProfileId { get; set; }
         public long Uln { get; set; }
-        public string LearnerName { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
+        public long ProviderUkprn { get; set; }
 
         //Learner's technical qualification details
         public string TlevelTitle { get; set; }
         public string PathwayName { get; set; }
+        public string PathwayCode { get; set; }
         public string PathwayGrade { get; set; }
         public string SpecialismName { get; set; }
+        public string SpecialismCode { get; set; }
         public string SpecialismGrade { get; set; }
 
         //Learner's T level component achievements

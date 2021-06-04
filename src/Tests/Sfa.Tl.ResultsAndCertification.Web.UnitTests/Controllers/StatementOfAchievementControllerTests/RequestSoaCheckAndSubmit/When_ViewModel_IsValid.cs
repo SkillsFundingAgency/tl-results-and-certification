@@ -32,12 +32,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 Uln = 1234567890,
                 LearnerName = "John Smith",
                 DateofBirth = DateTime.Now.AddYears(-20),
+                ProviderDisplayName = "Barsley College (569874567)",
                 ProviderName = "Barsley College",
+                ProviderUkprn = 569874567,
 
                 TlevelTitle = "Design, Surveying and Planning for Construction",
-                PathwayName = "Design, Surveying and Planning for Construction(60358300)",
+                PathwayDisplayName = "Design, Surveying and Planning for Construction (60358300)",
+                PathwayName = "Design, Surveying and Planning for Construction",
+                PathwayCode = "60358300",
                 PathwayGrade = "A*",
-                SpecialismName = "Building Services Design (ZTLOS003)",
+                SpecialismDisplayName = "Building Services Design (ZTLOS003)",
+                SpecialismName = "Building Services Design",
+                SpecialismCode = "ZTLOS003",
                 SpecialismGrade = "None",
 
                 IsEnglishAndMathsAchieved = true,
@@ -74,12 +80,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
             model.Uln.Should().Be(_mockLearnerDetails.Uln);
             model.LearnerName.Should().Be(_mockLearnerDetails.LearnerName);
             model.DateofBirth.Should().Be(_mockLearnerDetails.DateofBirth);
+            model.ProviderDisplayName.Should().Be(_mockLearnerDetails.ProviderDisplayName);
             model.ProviderName.Should().Be(_mockLearnerDetails.ProviderName);
-            
+            model.ProviderUkprn.Should().Be(_mockLearnerDetails.ProviderUkprn);
+
             model.TlevelTitle.Should().Be(_mockLearnerDetails.TlevelTitle);
+            model.PathwayDisplayName.Should().Be(_mockLearnerDetails.PathwayDisplayName);
             model.PathwayName.Should().Be(_mockLearnerDetails.PathwayName);
+            model.PathwayCode.Should().Be(_mockLearnerDetails.PathwayCode);
             model.PathwayGrade.Should().Be(_mockLearnerDetails.PathwayGrade);
+            model.SpecialismDisplayName.Should().Be(_mockLearnerDetails.SpecialismDisplayName);
             model.SpecialismName.Should().Be(_mockLearnerDetails.SpecialismName);
+            model.SpecialismCode.Should().Be(_mockLearnerDetails.SpecialismCode);
             model.SpecialismGrade.Should().Be(_mockLearnerDetails.SpecialismGrade);
 
             model.IsEnglishAndMathsAchieved.Should().Be(_mockLearnerDetails.IsEnglishAndMathsAchieved);
@@ -101,7 +113,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
             // ProviderName
             model.SummaryProvider.Title.Should().Be(CheckAndSubmitContent.Title_Provider_Text);
-            model.SummaryProvider.Value.Should().Be(_mockLearnerDetails.ProviderName);
+            model.SummaryProvider.Value.Should().Be(_mockLearnerDetails.ProviderDisplayName);
 
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(CheckAndSubmitContent.Title_Tlevel_Title_Text);
@@ -109,11 +121,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
             // CoreCode
             model.SummaryCoreCode.Title.Should().Be(CheckAndSubmitContent.Title_Core_Code_Text);
-            model.SummaryCoreCode.Value.Should().Be(string.Format(CheckAndSubmitContent.Core_Code_Value, _mockLearnerDetails.PathwayName, _mockLearnerDetails.PathwayGrade));
+            model.SummaryCoreCode.Value.Should().Be(string.Format(CheckAndSubmitContent.Core_Code_Value, _mockLearnerDetails.PathwayDisplayName, _mockLearnerDetails.PathwayGrade));
 
             // SpecialismCode
             model.SummarySpecialismCode.Title.Should().Be(CheckAndSubmitContent.Title_Occupational_Specialism_Text);
-            model.SummarySpecialismCode.Value.Should().Be(string.Format(CheckAndSubmitContent.Occupational_Specialism_Value, _mockLearnerDetails.SpecialismName, _mockLearnerDetails.SpecialismGrade));
+            model.SummarySpecialismCode.Value.Should().Be(string.Format(CheckAndSubmitContent.Occupational_Specialism_Value, _mockLearnerDetails.SpecialismDisplayName, _mockLearnerDetails.SpecialismGrade));
 
             // EnglishAndMaths
             model.SummaryEnglishAndMaths.Title.Should().Be(CheckAndSubmitContent.Title_English_And_Maths_Text);

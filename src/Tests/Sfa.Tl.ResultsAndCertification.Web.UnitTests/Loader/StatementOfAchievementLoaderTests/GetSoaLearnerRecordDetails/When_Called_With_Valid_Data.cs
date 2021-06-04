@@ -21,14 +21,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             {
                 ProfileId = 99,
                 Uln = 1234567890,
-                LearnerName = "John Smith",
+                Firstname = "John",
+                Lastname = "Smith",
                 DateofBirth = DateTime.Now.AddYears(-20),
                 ProviderName = "Barsley College",
+                ProviderUkprn = 879456123,
 
                 TlevelTitle = "Design, Surveying and Planning for Construction",
-                PathwayName = "Design, Surveying and Planning for Construction(60358300)",
+                PathwayName = "Design, Surveying and Planning for Construction",
+                PathwayCode = "60358300",
                 PathwayGrade = "A*",
-                SpecialismName = "Building Services Design (ZTLOS003)",
+                SpecialismName = "Building Services Design",
+                SpecialismCode = "ZTLOS003",
                 SpecialismGrade = "None",
 
                 IsEnglishAndMathsAchieved = false,
@@ -37,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
 
                 ProviderAddress = _address,
-                Status = RegistrationPathwayStatus.Withdrawn,
+                Status = RegistrationPathwayStatus.Withdrawn
             };
 
             InternalApiClient.GetSoaLearnerRecordDetailsAsync(ProviderUkprn, ProfileId).Returns(_expectedApiResult);
@@ -50,14 +54,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             ActualResult.Should().NotBeNull();
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
             ActualResult.Uln.Should().Be(_expectedApiResult.Uln);
-            ActualResult.LearnerName.Should().Be(_expectedApiResult.LearnerName);
+            ActualResult.LearnerName.Should().Be($"{_expectedApiResult.Firstname} {_expectedApiResult.Lastname}");
             ActualResult.DateofBirth.Should().Be(_expectedApiResult.DateofBirth);
+            ActualResult.ProviderDisplayName.Should().Be($"{_expectedApiResult.ProviderName} ({_expectedApiResult.ProviderUkprn})");
             ActualResult.ProviderName.Should().Be(_expectedApiResult.ProviderName);
+            ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.ProviderUkprn);
 
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.TlevelTitle);
+            ActualResult.PathwayDisplayName.Should().Be($"{_expectedApiResult.PathwayName} ({_expectedApiResult.PathwayCode})");
             ActualResult.PathwayName.Should().Be(_expectedApiResult.PathwayName);
+            ActualResult.PathwayCode.Should().Be(_expectedApiResult.PathwayCode);
             ActualResult.PathwayGrade.Should().Be(_expectedApiResult.PathwayGrade);
+            ActualResult.SpecialismDisplayName.Should().Be($"{_expectedApiResult.SpecialismName} ({_expectedApiResult.SpecialismCode})");
             ActualResult.SpecialismName.Should().Be(_expectedApiResult.SpecialismName);
+            ActualResult.SpecialismCode.Should().Be(_expectedApiResult.SpecialismCode);
             ActualResult.SpecialismGrade.Should().Be(_expectedApiResult.SpecialismGrade);
 
             ActualResult.IsEnglishAndMathsAchieved.Should().Be(_expectedApiResult.IsEnglishAndMathsAchieved);
