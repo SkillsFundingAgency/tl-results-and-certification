@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                     {
                         new PrintBatchItem
                         {
-                            TlProviderAddressId = m.PostalAddressId,
+                            TlProviderAddressId = m.AddressId,
                             CreatedBy = m.PerformedBy,
                             PrintCertificates = context.Mapper.Map<IList<PrintCertificate>>(m)
                         }
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                         {
                             Uln = m.Uln,
                             LearnerName = m.LearnerName,
-                            TqRegistrationPathwayId = m.TqRegistrationPathwayId,
+                            TqRegistrationPathwayId = m.RegistrationPathwayId,
                             Type = PrintCertificateType.StatementOfAchievement,
                             LearningDetails = JsonConvert.SerializeObject(m.LearningDetails),
                             DisplaySnapshot = JsonConvert.SerializeObject(m.SoaPrintingDetails),

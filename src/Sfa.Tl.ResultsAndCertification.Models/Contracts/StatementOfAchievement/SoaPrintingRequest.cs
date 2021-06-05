@@ -2,8 +2,8 @@
 {
     public class SoaPrintingRequest
     {
-        public int PostalAddressId { get; set; }
-        public int TqRegistrationPathwayId { get; set; }
+        public int AddressId { get; set; }
+        public int RegistrationPathwayId { get; set; }
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public LearningDetails LearningDetails { get; set; }

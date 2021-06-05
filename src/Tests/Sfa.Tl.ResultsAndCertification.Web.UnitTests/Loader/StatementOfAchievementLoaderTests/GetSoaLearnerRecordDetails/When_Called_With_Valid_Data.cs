@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
 
         public override void Given()
         {
-            _address = new Address { DepartmentName = "Operations", OrganisationName = "College Ltd", AddressLine1 = "10, House", AddressLine2 = "Street", Town = "Birmingham", Postcode = "B1 1AA" };
+            _address = new Address { AddressId = 1, DepartmentName = "Operations", OrganisationName = "College Ltd", AddressLine1 = "10, House", AddressLine2 = "Street", Town = "Birmingham", Postcode = "B1 1AA" };
 
             _expectedApiResult = new SoaLearnerRecordDetails
             {
@@ -28,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 ProviderUkprn = 879456123,
 
                 TlevelTitle = "Design, Surveying and Planning for Construction",
+                RegistrationPathwayId = 1,
                 PathwayName = "Design, Surveying and Planning for Construction",
                 PathwayCode = "60358300",
                 PathwayGrade = "A*",
@@ -61,6 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.ProviderUkprn);
 
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.TlevelTitle);
+            ActualResult.RegistrationPathwayId.Should().Be(_expectedApiResult.RegistrationPathwayId);
             ActualResult.PathwayDisplayName.Should().Be($"{_expectedApiResult.PathwayName} ({_expectedApiResult.PathwayCode})");
             ActualResult.PathwayName.Should().Be(_expectedApiResult.PathwayName);
             ActualResult.PathwayCode.Should().Be(_expectedApiResult.PathwayCode);

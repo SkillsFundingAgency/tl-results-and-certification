@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
 
         //Learner's technical qualification details
         public string TlevelTitle { get; set; }
+        public int RegistrationPathwayId { get; set; }
         public string PathwayName { get; set; }
         public string PathwayCode { get; set; }
         public string PathwayGrade { get; set; }

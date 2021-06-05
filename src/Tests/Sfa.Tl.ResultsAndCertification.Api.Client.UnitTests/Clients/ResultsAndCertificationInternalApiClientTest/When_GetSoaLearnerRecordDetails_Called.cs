@@ -49,6 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ProviderName = "Barnsley College",
                 ProviderUkprn = 123456789,
                 TlevelTitle = "Title",
+                RegistrationPathwayId = 11,
                 PathwayName = "Design",
                 PathwayCode = "8631254",
                 PathwayGrade = "A",
@@ -59,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 HasLrsEnglishAndMaths = true,
                 IsSendLearner = false,
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed,
-                ProviderAddress = new Models.Contracts.ProviderAddress.Address { OrganisationName = "Org", DepartmentName = "Dept", AddressLine1 = "Line1", AddressLine2 = "Line2", Town = "Town", Postcode = "xx1 1yy" },
+                ProviderAddress = new Models.Contracts.ProviderAddress.Address { AddressId = 1, OrganisationName = "Org", DepartmentName = "Dept", AddressLine1 = "Line1", AddressLine2 = "Line2", Town = "Town", Postcode = "xx1 1yy" },
                 Status = RegistrationPathwayStatus.Active
             };
         }
@@ -84,6 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.Firstname.Should().Be(_mockApiResponse.Firstname);
             _actualResult.Lastname.Should().Be(_mockApiResponse.Lastname);
             _actualResult.DateofBirth.Should().Be(_mockApiResponse.DateofBirth);
+            _actualResult.RegistrationPathwayId.Should().Be(_mockApiResponse.RegistrationPathwayId);
             _actualResult.ProviderName.Should().Be(_mockApiResponse.ProviderName);
             _actualResult.ProviderUkprn.Should().Be(_mockApiResponse.ProviderUkprn);
             _actualResult.TlevelTitle.Should().Be(_mockApiResponse.TlevelTitle);

@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
         public string CoreGrade { get; set; }
         public string Specialism { get; set; }
         public string SpecialismGrade { get; set; }
-        public string EnglishandMaths { get; set; }
+        public string EnglishAndMaths { get; set; }
         public string IndustryPlacement { get; set; }
         public Address ProviderAddress { get; set; }
     }

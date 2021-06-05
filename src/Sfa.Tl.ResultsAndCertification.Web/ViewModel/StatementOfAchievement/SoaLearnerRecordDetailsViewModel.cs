@@ -30,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 
         //Learner's technical qualification details
         public string TlevelTitle { get; set; }
+        public int RegistrationPathwayId { get; set; }
         public string PathwayDisplayName { get; set; }
         public string PathwayName { get; set; }
         public string PathwayCode { get; set; }
@@ -161,7 +162,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             }
         }
 
-        private string GetIndustryPlacementDisplayText
+        public string GetIndustryPlacementDisplayText
         {
             get
             {
@@ -175,7 +176,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             }
         }
 
-        private string GetEnglishAndMathsStatusDisplayText
+        public string GetEnglishAndMathsStatusDisplayText
         {
             get
             {
