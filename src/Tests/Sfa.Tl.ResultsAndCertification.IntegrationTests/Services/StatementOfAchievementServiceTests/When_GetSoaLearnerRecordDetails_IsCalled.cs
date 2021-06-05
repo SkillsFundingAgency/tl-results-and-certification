@@ -90,7 +90,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             StatementOfAchievementRepository = new StatementOfAchievementRepository(DbContext, StatementOfAchievementRepositoryLogger);
             StatementOfAchievementServiceLogger = new Logger<StatementOfAchievementService>(new NullLoggerFactory());
 
-            StatementOfAchievementService = new StatementOfAchievementService(StatementOfAchievementRepository, TrainingProviderMapper, StatementOfAchievementServiceLogger);
+            BatchRepositoryLogger = new Logger<GenericRepository<Batch>>(new NullLoggerFactory());
+            BatchRepository = new GenericRepository<Batch>(BatchRepositoryLogger, DbContext);
+
+            StatementOfAchievementService = new StatementOfAchievementService(StatementOfAchievementRepository, BatchRepository, TrainingProviderMapper, StatementOfAchievementServiceLogger);
         }
 
         public override Task When()
