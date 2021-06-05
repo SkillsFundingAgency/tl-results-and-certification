@@ -28,5 +28,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetSoaLearnerRecordDetailsAsync(providerUkprn, profileId);
             return _mapper.Map<SoaLearnerRecordDetailsViewModel>(response);
         }
+
+        public async Task<SoaPrintingResponse> CreateSoaPrintingRequestAsync(long providerUkprn, SoaLearnerRecordDetailsViewModel viewModel)
+        {
+            var request = _mapper.Map<SoaPrintingRequest>(viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);
+            return await _internalApiClient.CreateSoaPrintingRequestAsync(request);
+        }
     }
 }

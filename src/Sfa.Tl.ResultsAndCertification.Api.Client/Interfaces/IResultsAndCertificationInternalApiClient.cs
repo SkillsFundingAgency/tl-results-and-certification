@@ -73,6 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         // Provider Statement Of Achievement
         Task<FindSoaLearnerRecord> FindSoaLearnerRecordAsync(long providerUkprn, long uln);
         Task<SoaLearnerRecordDetails> GetSoaLearnerRecordDetailsAsync(long providerUkprn, int profileId);
+        Task<SoaPrintingResponse> CreateSoaPrintingRequestAsync(SoaPrintingRequest request);
 
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);
