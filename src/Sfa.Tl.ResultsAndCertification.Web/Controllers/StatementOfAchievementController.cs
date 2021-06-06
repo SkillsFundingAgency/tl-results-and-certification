@@ -180,6 +180,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [Route("request-statement-of-achievement-check-and-submit", Name = RouteConstants.SubmitRequestSoaCheckAndSubmit)]
+        public async Task<IActionResult> SubmitRequestSoaCheckAndSubmitAsync(SoaLearnerRecordDetailsViewModel viewModel)
+        {
+            var soaDetails = await _statementOfAchievementLoader.GetSoaLearnerRecordDetailsAsync(User.GetUkPrn(), viewModel.ProfileId);
+            if (soaDetails == null || !soaDetails.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var response = await _statementOfAchievementLoader.CreateSoaPrintingRequestAsync(User.GetUkPrn(), soaDetails);
+
+            if (response.IsSuccess)
+            {
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RequestSoaConfirmation), new SoaConfirmationViewModel { Uln = response.Uln, Name = response.LearnerName }, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.RequestSoaConfirmation);
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.AddLearnerRecordFailed, $"Unable to request statement of achievement for UniqueLearnerNumber: {viewModel.Uln}. Method: SubmitRequestSoaCheckAndSubmitAsync, Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+        }
+
+        [HttpGet]
+        [Route("request-statement-of-achievement-confirmation", Name = RouteConstants.RequestSoaConfirmation)]
+        public async Task<IActionResult> RequestSoaConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<SoaConfirmationViewModel>(string.Concat(CacheKey, Constants.RequestSoaConfirmation));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read SoaConfirmationViewModel from redis cache in request soa confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
         [HttpGet]
         [Route("request-statement-of-achievement-cancel/{profileId}", Name = RouteConstants.RequestSoaCancel)]
         public async Task<IActionResult> RequestSoaCancelAsync(int profileId)

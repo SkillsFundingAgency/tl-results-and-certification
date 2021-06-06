@@ -260,6 +260,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>RequestSoaCheckAndSubmit.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestSoaConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestSoaConfirmation.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\StatementOfAchievement\RequestSoaNotAvailableNoIpStatus.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -886,6 +891,10 @@
     <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaCheckAndSubmit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RequestSoaCheckAndSubmit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestSoaConfirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaNotAvailableNoResults.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

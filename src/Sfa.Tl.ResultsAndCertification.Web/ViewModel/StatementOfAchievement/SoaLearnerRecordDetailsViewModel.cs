@@ -125,7 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "department",
             Title = RequestSoaCheckAndSubmitContent.Title_Department_Text,
-            Value = ProviderAddress.DepartmentName
+            Value = ProviderAddress?.DepartmentName
         };
 
         public SummaryItemModel SummaryAddress => new SummaryItemModel
@@ -157,7 +157,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             get
             {
-                var addressLines = new List<string> { ProviderAddress.OrganisationName, ProviderAddress.AddressLine1, ProviderAddress.AddressLine2, ProviderAddress.Town, ProviderAddress.Postcode };
+                var addressLines = new List<string> { ProviderAddress?.OrganisationName, ProviderAddress?.AddressLine1, ProviderAddress?.AddressLine2, ProviderAddress?.Town, ProviderAddress?.Postcode };
                 return string.Join(RequestSoaCheckAndSubmitContent.Html_Line_Break, addressLines.Where(x => !string.IsNullOrWhiteSpace(x)));
             }
         }
