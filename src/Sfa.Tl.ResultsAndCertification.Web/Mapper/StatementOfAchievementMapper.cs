@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
@@ -68,9 +70,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.Date, opts => opts.MapFrom(s => DateTime.UtcNow.ToSoaFormat()))
                 .ForMember(d => d.Core, opts => opts.MapFrom(s => s.PathwayName))
                 .ForMember(d => d.CoreGrade, opts => opts.MapFrom(s => s.PathwayCode))
-                .ForMember(d => d.OccupationalSpecialism, opts => opts.MapFrom(s => s))                
-                .ForMember(d => d.IndustryPlacement, opts => opts.MapFrom(s => s.GetIndustryPlacementDisplayText))
-                .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => s.GetEnglishAndMathsStatusDisplayText));
+                .ForMember(d => d.OccupationalSpecialism, opts => opts.MapFrom(s => s))
+                .ForMember(d => d.IndustryPlacement, opts => opts.MapFrom(s => (s.IndustryPlacementStatus == IndustryPlacementStatus.Completed || s.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration) ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted))
+                .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => s.IsEnglishAndMathsAchieved ? Constants.EnglishAndMathsMet : Constants.EnglishAndMathsNotMet));
 
             CreateMap<SoaLearnerRecordDetailsViewModel, IList<OccupationalSpecialismDetails>>()
                 .ConstructUsing((m, context) =>
@@ -80,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                         new OccupationalSpecialismDetails
                         {
                             Specialism = m.SpecialismName,
-                            Grade = m.SpecialismCode
+                            Grade = m.SpecialismGrade
                         }
                     };
                 });
