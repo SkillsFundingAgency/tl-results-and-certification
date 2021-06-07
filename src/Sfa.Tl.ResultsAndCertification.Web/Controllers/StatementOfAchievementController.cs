@@ -257,6 +257,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [Route("request-statement-of-achievement-already-requested", Name = RouteConstants.RequestSoaAlreadySubmitted)]
+        public IActionResult RequestSoaAlreadySubmittedAsync()
+        {
+            var viewModel = new RequestSoaAlreadySubmittedViewModel();
+            return View(viewModel);
+        }
+
         private bool IsSoaAvailable()
         {
             return _configuration.SoaAvailableDate == null || DateTime.UtcNow.Date >= _configuration.SoaAvailableDate.Value.Date;
