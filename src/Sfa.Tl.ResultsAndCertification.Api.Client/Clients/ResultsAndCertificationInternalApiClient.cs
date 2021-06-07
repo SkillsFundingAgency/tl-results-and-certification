@@ -305,6 +305,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<SoaLearnerRecordDetails>(requestUri);
         }
 
+        public async Task<SoaPrintingResponse> CreateSoaPrintingRequestAsync(SoaPrintingRequest request)
+        {
+            return await PostAsync<SoaPrintingRequest, SoaPrintingResponse>(ApiConstants.CreateSoaPrintingRequestUri, request);
+        }
+
         #region Private Methods
 
         /// <summary>

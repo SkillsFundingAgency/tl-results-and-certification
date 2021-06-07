@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         public override void Given()
         {
             ProfileId = 11;
-            _address = new AddressViewModel { DepartmentName = "Operations", OrganisationName = "College Ltd", AddressLine1 = "10, House", AddressLine2 = "Street", Town = "Birmingham", Postcode = "B1 1AA" };
+            _address = new AddressViewModel { AddressId = 1, DepartmentName = "Operations", OrganisationName = "College Ltd", AddressLine1 = "10, House", AddressLine2 = "Street", Town = "Birmingham", Postcode = "B1 1AA" };
             _mockLearnerDetails = new SoaLearnerRecordDetailsViewModel
             {
                 ProfileId = ProfileId,
@@ -37,6 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 ProviderUkprn = 569874567,
 
                 TlevelTitle = "Design, Surveying and Planning for Construction",
+                RegistrationPathwayId = 1,
                 PathwayDisplayName = "Design, Surveying and Planning for Construction (60358300)",
                 PathwayName = "Design, Surveying and Planning for Construction",
                 PathwayCode = "60358300",
@@ -85,6 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
             model.ProviderUkprn.Should().Be(_mockLearnerDetails.ProviderUkprn);
 
             model.TlevelTitle.Should().Be(_mockLearnerDetails.TlevelTitle);
+            model.RegistrationPathwayId.Should().Be(_mockLearnerDetails.RegistrationPathwayId);
             model.PathwayDisplayName.Should().Be(_mockLearnerDetails.PathwayDisplayName);
             model.PathwayName.Should().Be(_mockLearnerDetails.PathwayName);
             model.PathwayCode.Should().Be(_mockLearnerDetails.PathwayCode);

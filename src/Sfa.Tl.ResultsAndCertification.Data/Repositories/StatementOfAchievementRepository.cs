@@ -72,7 +72,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                               ProviderName = tlProvider.Name,
                                               ProviderUkprn = tlProvider.UkPrn,
                                               TlevelTitle = tlPathway.TlevelTitle,
-                                              
+
+                                              RegistrationPathwayId = tqPathway.Id,
                                               PathwayName = tlPathway.Name,
                                               PathwayCode = tlPathway.LarId,
                                               PathwayGrade = pathwayResults.OrderByDescending(r => r.pr.CreatedOn).FirstOrDefault().pr.TlLookup.Value,
@@ -88,6 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                                                             .OrderByDescending(pa => pa.CreatedOn)
                                                                                             .Select(address => new Address
                                                                                             {
+                                                                                                AddressId = address.Id,
                                                                                                 DepartmentName = address.DepartmentName,
                                                                                                 OrganisationName = address.OrganisationName,
                                                                                                 AddressLine1 = address.AddressLine1,

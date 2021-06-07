@@ -90,7 +90,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             StatementOfAchievementRepository = new StatementOfAchievementRepository(DbContext, StatementOfAchievementRepositoryLogger);
             StatementOfAchievementServiceLogger = new Logger<StatementOfAchievementService>(new NullLoggerFactory());
 
-            StatementOfAchievementService = new StatementOfAchievementService(StatementOfAchievementRepository, TrainingProviderMapper, StatementOfAchievementServiceLogger);
+            BatchRepositoryLogger = new Logger<GenericRepository<Batch>>(new NullLoggerFactory());
+            BatchRepository = new GenericRepository<Batch>(BatchRepositoryLogger, DbContext);
+
+            StatementOfAchievementService = new StatementOfAchievementService(StatementOfAchievementRepository, BatchRepository, TrainingProviderMapper, StatementOfAchievementServiceLogger);
         }
 
         public override Task When()
@@ -133,7 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             var expectedHasResult = _profilesWithResults.Contains(expectedProfile.UniqueLearnerNumber);
             var expectedHasLrsEnglishAndMaths = expectedProfile.IsRcFeed == false && expectedProfile.QualificationAchieved.Any();
             var providerAddress = expectedProvider?.TlProviderAddresses?.OrderByDescending(ad => ad.CreatedOn)?.FirstOrDefault();
-            var expectedProviderAddress = new Address { OrganisationName = providerAddress?.OrganisationName, DepartmentName = providerAddress?.DepartmentName, AddressLine1 = providerAddress?.AddressLine1, AddressLine2 = providerAddress?.AddressLine2, Town = providerAddress?.Town, Postcode = providerAddress?.Postcode };
+            var expectedProviderAddress = new Address { AddressId = providerAddress?.Id ?? 0, OrganisationName = providerAddress?.OrganisationName, DepartmentName = providerAddress?.DepartmentName, AddressLine1 = providerAddress?.AddressLine1, AddressLine2 = providerAddress?.AddressLine2, Town = providerAddress?.Town, Postcode = providerAddress?.Postcode };
 
             var expectedPathway = (expectedStatus == RegistrationPathwayStatus.Withdrawn || expectedStatus == RegistrationPathwayStatus.Transferred)
                 ? expectedProfile.TqRegistrationPathways.FirstOrDefault(p => p.Status == expectedStatus && p.EndDate != null)
@@ -165,6 +168,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             _actualResult.ProviderUkprn.Should().Be(expectedProviderUkprn);
             _actualResult.TlevelTitle.Should().Be(expectedTlevelTitle);
 
+            _actualResult.RegistrationPathwayId.Should().Be(expectedPathway.Id);
             _actualResult.PathwayName.Should().Be(expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.Name);
             _actualResult.PathwayCode.Should().Be(expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId);
             _actualResult.PathwayGrade.Should().Be(expectedPathwayGrade);

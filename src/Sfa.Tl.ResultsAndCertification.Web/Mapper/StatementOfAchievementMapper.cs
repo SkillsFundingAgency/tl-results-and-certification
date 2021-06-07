@@ -1,8 +1,14 @@
 ﻿using AutoMapper;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
+using System;
+using System.Collections.Generic;
 using RequestSoaCheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaCheckAndSubmit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
@@ -20,6 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
+               .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayCode})"))
                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
                .ForMember(d => d.PathwayCode, opts => opts.MapFrom(s => s.PathwayCode))
@@ -40,12 +47,59 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsIndustryPlacementCompleted, opts => opts.MapFrom(s => s.IsIndustryPlacementCompleted));
 
             CreateMap<Address, AddressViewModel>()
+                .ForMember(d => d.AddressId, opts => opts.MapFrom(s => s.AddressId))
                 .ForMember(d => d.DepartmentName, opts => opts.MapFrom(s => s.DepartmentName))
                 .ForMember(d => d.OrganisationName, opts => opts.MapFrom(s => s.OrganisationName))
                 .ForMember(d => d.AddressLine1, opts => opts.MapFrom(s => s.AddressLine1))
                 .ForMember(d => d.AddressLine2, opts => opts.MapFrom(s => s.AddressLine2))
                 .ForMember(d => d.Town, opts => opts.MapFrom(s => s.Town))
-                .ForMember(d => d.Postcode, opts => opts.MapFrom(s => s.Postcode));
+                .ForMember(d => d.Postcode, opts => opts.MapFrom(s => s.Postcode))
+                .ReverseMap();
+
+            CreateMap<SoaLearnerRecordDetailsViewModel, SoaPrintingRequest>()
+                .ForMember(d => d.AddressId, opts => opts.MapFrom(s => s.ProviderAddress.AddressId))
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => s.LearnerName))
+                .ForMember(d => d.LearningDetails, opts => opts.MapFrom(s => s))
+                .ForMember(d => d.SoaPrintingDetails, opts => opts.MapFrom(s => s))
+                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<SoaLearnerRecordDetailsViewModel, SoaPrintingRequest>>());
+
+            CreateMap<SoaLearnerRecordDetailsViewModel, LearningDetails>()
+                .ForMember(d => d.TLevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
+                .ForMember(d => d.Date, opts => opts.MapFrom(s => DateTime.UtcNow.ToSoaFormat()))
+                .ForMember(d => d.Core, opts => opts.MapFrom(s => s.PathwayName))
+                .ForMember(d => d.CoreGrade, opts => opts.MapFrom(s => s.PathwayCode))
+                .ForMember(d => d.OccupationalSpecialism, opts => opts.MapFrom(s => s))
+                .ForMember(d => d.IndustryPlacement, opts => opts.MapFrom(s => (s.IndustryPlacementStatus == IndustryPlacementStatus.Completed || s.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration) ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted))
+                .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => s.IsEnglishAndMathsAchieved ? Constants.EnglishAndMathsMet : Constants.EnglishAndMathsNotMet));
+
+            CreateMap<SoaLearnerRecordDetailsViewModel, IList<OccupationalSpecialismDetails>>()
+                .ConstructUsing((m, context) =>
+                {
+                    return new List<OccupationalSpecialismDetails>
+                    {
+                        new OccupationalSpecialismDetails
+                        {
+                            Specialism = m.SpecialismName,
+                            Grade = m.SpecialismGrade
+                        }
+                    };
+                });
+
+            CreateMap<SoaLearnerRecordDetailsViewModel, SoaPrintingDetails>()
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.Name, opts => opts.MapFrom(s => s.LearnerName))
+                .ForMember(d => d.Dateofbirth, opts => opts.MapFrom(s => s.DateofBirth.ToDobFormat()))
+                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
+                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
+                .ForMember(d => d.Core, opts => opts.MapFrom(s => s.PathwayName))
+                .ForMember(d => d.CoreGrade, opts => opts.MapFrom(s => s.PathwayCode))
+                .ForMember(d => d.Specialism, opts => opts.MapFrom(s => s.SpecialismName))
+                .ForMember(d => d.SpecialismGrade, opts => opts.MapFrom(s => s.SpecialismGrade))
+                .ForMember(d => d.IndustryPlacement, opts => opts.MapFrom(s => s.GetIndustryPlacementDisplayText))
+                .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => s.GetEnglishAndMathsStatusDisplayText))
+                .ForMember(d => d.ProviderAddress, opts => opts.MapFrom(s => s.ProviderAddress));
         }
     }
 }

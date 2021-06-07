@@ -8,5 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     {
         Task<FindSoaLearnerRecord> FindSoaLearnerRecordAsync(long providerUkprn, long uln);
         Task<SoaLearnerRecordDetailsViewModel> GetSoaLearnerRecordDetailsAsync(long providerUkprn, int profileId);
+        Task<SoaPrintingResponse> CreateSoaPrintingRequestAsync(long providerUkprn, SoaLearnerRecordDetailsViewModel viewModel);
     }
 }

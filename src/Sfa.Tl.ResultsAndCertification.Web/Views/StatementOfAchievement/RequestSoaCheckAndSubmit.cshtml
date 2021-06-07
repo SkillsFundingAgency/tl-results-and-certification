@@ -11,86 +11,88 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
+        <form class="form" asp-route="SubmitRequestSoaCheckAndSubmit">
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <span class="govuk-caption-xl">@RequestSoaCheckAndSubmit.Caption_Request_Soa</span>
+            <h1 class="govuk-heading-xl">@RequestSoaCheckAndSubmit.Heading_Check_Learner_Details</h1>
+            <p class="govuk-body govuk-!-margin-bottom-9">@RequestSoaCheckAndSubmit.Para_Please_Check_Data_Is_Correct</p>
 
-        <span class="govuk-caption-xl">@RequestSoaCheckAndSubmit.Caption_Request_Soa</span>
-        <h1 class="govuk-heading-xl">@RequestSoaCheckAndSubmit.Heading_Check_Learner_Details</h1>
-        <p class="govuk-body govuk-!-margin-bottom-9">@RequestSoaCheckAndSubmit.Para_Please_Check_Data_Is_Correct</p>
+            <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Registration_Details</h2>
 
-        <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Registration_Details</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+            </dl>
 
-        <dl class="govuk-summary-list govuk-!-margin-bottom-4">
-            <vc:summary-item model=Model.SummaryUln></vc:summary-item>
-            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
-            <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
-            <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
-        </dl>
+            <details class="govuk-details govuk-!-margin-bottom-9" data-module="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">@RequestSoaCheckAndSubmit.Incorrect_Learner_Registration_Details</span>
+                </summary>
+                <div class="govuk-details__text">
+                    @RequestSoaCheckAndSubmit.Learner_Details_Section_If_Learner_Details_Are_Wrong
+                    <br><br>
+                    @RequestSoaCheckAndSubmit.Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back
+                </div>
+            </details>
 
-        <details class="govuk-details govuk-!-margin-bottom-9" data-module="govuk-details">
-            <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">@RequestSoaCheckAndSubmit.Incorrect_Learner_Registration_Details</span>
-            </summary>
-            <div class="govuk-details__text">
-                @RequestSoaCheckAndSubmit.Learner_Details_Section_If_Learner_Details_Are_Wrong
-                <br><br>
-                @RequestSoaCheckAndSubmit.Learner_Details_Section_Once_Exam_Board_Updated_You_Can_Come_Back
+            <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Technical_Qualification</h2>
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCoreCode></vc:summary-item>
+                <vc:summary-item model=Model.SummarySpecialismCode></vc:summary-item>
+            </dl>
+
+            <details class="govuk-details govuk-!-margin-bottom-9" data-module="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">@RequestSoaCheckAndSubmit.Incorrect_Technical_Qualifications</span>
+                </summary>
+                <div class="govuk-details__text">
+                    @RequestSoaCheckAndSubmit.Tech_Qualification_Section_If_Details_Are_Wrong_Contact_Exam_Board
+                    <br><br>
+                    @RequestSoaCheckAndSubmit.Tech_Qualification_Section_Come_Back_When_Exam_Board_Updated
+                </div>
+            </details>
+
+            <div class="govuk-grid-column-three-quarters govuk-!-padding-left-0 soa-details">
+                <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Tlevel_Component_Achievements</h2>
             </div>
-        </details>
-
-        <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Technical_Qualification</h2>
-
-        <dl class="govuk-summary-list govuk-!-margin-bottom-4">
-            <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
-            <vc:summary-item model=Model.SummaryCoreCode></vc:summary-item>
-            <vc:summary-item model=Model.SummarySpecialismCode></vc:summary-item>
-        </dl>
-
-        <details class="govuk-details govuk-!-margin-bottom-9" data-module="govuk-details">
-            <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">@RequestSoaCheckAndSubmit.Incorrect_Technical_Qualifications</span>
-            </summary>
-            <div class="govuk-details__text">
-                @RequestSoaCheckAndSubmit.Tech_Qualification_Section_If_Details_Are_Wrong_Contact_Exam_Board
-                <br><br>
-                @RequestSoaCheckAndSubmit.Tech_Qualification_Section_Come_Back_When_Exam_Board_Updated
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0 soa-details">
+                <a class="govuk-body govuk-link float--right" asp-route="RequestSoaChangeComponentAchievements" asp-route-profileId="@Model.ProfileId">
+                    @RequestSoaCheckAndSubmit.Link_Change_Component_Achievements
+                    <span class="govuk-visually-hidden">@RequestSoaCheckAndSubmit.Hidden_Text_Change_Component_Achievements</span>
+                </a>
             </div>
-        </details>
 
-        <div class="govuk-grid-column-three-quarters govuk-!-padding-left-0 soa-details">
-            <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Learner_Tlevel_Component_Achievements</h2>
-        </div>
-        <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0 soa-details">
-            <a class="govuk-body govuk-link float--right" asp-route="RequestSoaChangeComponentAchievements" asp-route-profileId="@Model.ProfileId">
-                @RequestSoaCheckAndSubmit.Link_Change_Component_Achievements
-                <span class="govuk-visually-hidden">@RequestSoaCheckAndSubmit.Hidden_Text_Change_Component_Achievements</span>
-            </a>
-        </div>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                <vc:summary-item model=Model.SummaryEnglishAndMaths></vc:summary-item>
+                <vc:summary-item model=Model.SummaryIndustryPlacement></vc:summary-item>
+            </dl>
 
-        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-            <vc:summary-item model=Model.SummaryEnglishAndMaths></vc:summary-item>
-            <vc:summary-item model=Model.SummaryIndustryPlacement></vc:summary-item>
-        </dl>
+            <div class="govuk-grid-column-three-quarters govuk-!-padding-left-0 soa-details">
+                <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Your_Organisation_Address</h2>
+            </div>
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0 soa-details">
+                <a class="govuk-body govuk-link float--right" asp-route="RequestSoaChangePostalAddress" asp-route-profileId="@Model.ProfileId">
+                    @RequestSoaCheckAndSubmit.Link_Change_Organisation_Address
+                    <span class="govuk-visually-hidden">@RequestSoaCheckAndSubmit.Hidden_Text_Change_Organisation_Address</span>
+                </a>
+            </div>
 
-        <div class="govuk-grid-column-three-quarters govuk-!-padding-left-0 soa-details">
-            <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Your_Organisation_Address</h2>
-        </div>
-        <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0 soa-details">
-            <a class="govuk-body govuk-link float--right" asp-route="RequestSoaChangePostalAddress" asp-route-profileId="@Model.ProfileId">
-                @RequestSoaCheckAndSubmit.Link_Change_Organisation_Address
-                <span class="govuk-visually-hidden">@RequestSoaCheckAndSubmit.Hidden_Text_Change_Organisation_Address</span>
-            </a>
-        </div>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
+                <vc:summary-item model=Model.SummaryAddress></vc:summary-item>
+            </dl>
 
-        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-            <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
-            <vc:summary-item model=Model.SummaryAddress></vc:summary-item>
-        </dl>
+            <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Now_Send_Your_Request</h2>
+            <p class="govuk-body">@RequestSoaCheckAndSubmit.Para_By_Submitting_You_Are_Confirming_That</p>
 
-        <h2 class="govuk-heading-m">@RequestSoaCheckAndSubmit.Heading_Now_Send_Your_Request</h2>
-        <p class="govuk-body">@RequestSoaCheckAndSubmit.Para_By_Submitting_You_Are_Confirming_That</p>
-
-        <div class="govuk-button-group">
-            <button id="acceptAndSendButton" class="govuk-button" data-module="govuk-button">@RequestSoaCheckAndSubmit.Button_Accept_And_Send_Request</button>
-            <a id="cancelLink" class="govuk-link govuk-body" asp-route="RequestSoaCancel" asp-route-profileId="@Model.ProfileId">@RequestSoaCheckAndSubmit.Button_Cancel</a>
-        </div>
+            <div class="govuk-button-group">
+                <button id="acceptAndSendButton" class="govuk-button" data-module="govuk-button">@RequestSoaCheckAndSubmit.Button_Accept_And_Send_Request</button>
+                <a id="cancelLink" class="govuk-link govuk-body" asp-route="RequestSoaCancel" asp-route-profileId="@Model.ProfileId">@RequestSoaCheckAndSubmit.Button_Cancel</a>
+            </div>
+        </form>
     </div>
 </div>

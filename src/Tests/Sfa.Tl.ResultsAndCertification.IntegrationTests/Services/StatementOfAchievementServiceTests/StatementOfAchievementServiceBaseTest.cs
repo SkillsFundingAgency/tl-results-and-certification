@@ -23,6 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
         protected ILogger<StatementOfAchievementService> StatementOfAchievementServiceLogger;
         protected IStatementOfAchievementRepository StatementOfAchievementRepository;
         protected ILogger<StatementOfAchievementRepository> StatementOfAchievementRepositoryLogger;
+        protected IRepository<Batch> BatchRepository;
+        protected ILogger<GenericRepository<Batch>> BatchRepositoryLogger;
 
         // Data Seed variables
         protected TlAwardingOrganisation TlAwardingOrganisation;

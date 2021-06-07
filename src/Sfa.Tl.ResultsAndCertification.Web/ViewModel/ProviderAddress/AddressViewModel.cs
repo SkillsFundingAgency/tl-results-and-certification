@@ -2,6 +2,7 @@
 {
     public class AddressViewModel
     {
+        public int AddressId {get;set;}
         public string Udprn { get; set; }
         public string FormattedAddress { get; set; }
         public string DepartmentName { get; set; }

@@ -30,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 
         //Learner's technical qualification details
         public string TlevelTitle { get; set; }
+        public int RegistrationPathwayId { get; set; }
         public string PathwayDisplayName { get; set; }
         public string PathwayName { get; set; }
         public string PathwayCode { get; set; }
@@ -124,7 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "department",
             Title = RequestSoaCheckAndSubmitContent.Title_Department_Text,
-            Value = ProviderAddress.DepartmentName
+            Value = ProviderAddress?.DepartmentName
         };
 
         public SummaryItemModel SummaryAddress => new SummaryItemModel
@@ -156,12 +157,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             get
             {
-                var addressLines = new List<string> { ProviderAddress.OrganisationName, ProviderAddress.AddressLine1, ProviderAddress.AddressLine2, ProviderAddress.Town, ProviderAddress.Postcode };
+                var addressLines = new List<string> { ProviderAddress?.OrganisationName, ProviderAddress?.AddressLine1, ProviderAddress?.AddressLine2, ProviderAddress?.Town, ProviderAddress?.Postcode };
                 return string.Join(RequestSoaCheckAndSubmitContent.Html_Line_Break, addressLines.Where(x => !string.IsNullOrWhiteSpace(x)));
             }
         }
 
-        private string GetIndustryPlacementDisplayText
+        public string GetIndustryPlacementDisplayText
         {
             get
             {
@@ -175,7 +176,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             }
         }
 
-        private string GetEnglishAndMathsStatusDisplayText
+        public string GetEnglishAndMathsStatusDisplayText
         {
             get
             {

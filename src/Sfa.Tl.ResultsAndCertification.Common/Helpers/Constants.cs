@@ -65,7 +65,8 @@
         public const string EnglishAndMathsAchievementUpdatedConfirmation = "EnglishAndMathsAchievementUpdatedConfirmation";
         public const string AddEnglishAndMathsSendDataConfirmation = "AddEnglishAndMathsSendDataConfirmation";
         public const string AddAddressConfirmation = "AddAddressConfirmation";
-        public const string UserSessionActivityId = "UserSessionActivityId";
+        public const string RequestSoaConfirmation = "RequestSoaConfirmation";
+        public const string UserSessionActivityId = "UserSessionActivityId";        
 
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 100000;
@@ -101,6 +102,14 @@
         public const int SpecialismAssessmentStartInYears = 1;
 
         public const int MaxFileSizeInMb = 5;
+
+
+        // Printing Constants
+        public const string IndustryPlacementCompleted = "Completed";
+        public const string IndustryPlacementNotCompleted = "Not completed";
+        public const string EnglishAndMathsMet = "Met";
+        public const string EnglishAndMathsNotMet = "Not met";
+
 
         // Other constants
         public const string NoBorderBottomCssClassName = "tl-no-border-bottom";
