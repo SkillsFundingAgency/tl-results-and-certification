@@ -2,6 +2,7 @@
 {
     public class SoaPrintingRequest
     {
+        public long ProviderUkprn { get; set; }
         public int AddressId { get; set; }
         public int RegistrationPathwayId { get; set; }
         public long Uln { get; set; }

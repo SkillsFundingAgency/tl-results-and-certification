@@ -5,6 +5,7 @@
         NotSpecified = 0,
         Created = 1,
         Delivered = 2,
-        NotDelivered = 3
+        NotDelivered = 3,
+        Error = 4
     }
 }

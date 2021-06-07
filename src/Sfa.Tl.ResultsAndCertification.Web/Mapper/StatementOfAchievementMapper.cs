@@ -58,6 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ReverseMap();
 
             CreateMap<SoaLearnerRecordDetailsViewModel, SoaPrintingRequest>()
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["providerUkprn"]))
                 .ForMember(d => d.AddressId, opts => opts.MapFrom(s => s.ProviderAddress.AddressId))
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
