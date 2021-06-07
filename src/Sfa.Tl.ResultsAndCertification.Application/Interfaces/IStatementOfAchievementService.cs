@@ -8,5 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<FindSoaLearnerRecord> FindSoaLearnerRecordAsync(long providerUkprn, long uln);
         Task<SoaLearnerRecordDetails> GetSoaLearnerRecordDetailsAsync(long providerUkprn, int profileId);
         Task<SoaPrintingResponse> CreateSoaPrintingRequestAsync(SoaPrintingRequest request);
+        Task<PrintRequestSnapshot> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId);
     }
 }

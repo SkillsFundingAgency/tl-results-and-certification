@@ -37,5 +37,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _statementOfAchievementService.CreateSoaPrintingRequestAsync(request);
         }
+
+        [HttpGet]
+        [Route("GetSoaLearnerRecordDetails/{providerUkprn}/{profileId}/{pathwayId}")]
+        public async Task<PrintRequestSnapshot> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId)
+        {
+            return await _statementOfAchievementService.GetPrintRequestSnapshotAsync(providerUkprn, profileId, pathwayId);
+        }
     }
 }

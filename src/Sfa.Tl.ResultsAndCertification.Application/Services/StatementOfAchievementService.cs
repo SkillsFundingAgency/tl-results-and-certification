@@ -39,5 +39,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var result = await _batchRepository.CreateAsync(soaBatchRequest);
             return new SoaPrintingResponse { Uln = request.Uln, LearnerName = request.LearnerName, IsSuccess = result > 0 };
         }
+
+        public async Task<PrintRequestSnapshot> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId)
+        {
+            return await _statementOfAchievementRepository.GetPrintRequestSnapshotAsync(providerUkprn, profileId, pathwayId);
+        }
     }
 }

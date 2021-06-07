@@ -44,7 +44,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsIndustryPlacementAdded, opts => opts.MapFrom(s => s.IsIndustryPlacementAdded))
                .ForMember(d => d.IsLearnerRegistered, opts => opts.MapFrom(s => s.IsLearnerRegistered))
                .ForMember(d => d.IsNotWithdrawn, opts => opts.MapFrom(s => s.IsNotWithdrawn))
-               .ForMember(d => d.IsIndustryPlacementCompleted, opts => opts.MapFrom(s => s.IsIndustryPlacementCompleted));
+               .ForMember(d => d.IsIndustryPlacementCompleted, opts => opts.MapFrom(s => s.IsIndustryPlacementCompleted))
+               .ForMember(d => d.LastRequestedOn, opts => opts.MapFrom(s => s.LastRequestedOn));
 
             CreateMap<Address, AddressViewModel>()
                 .ForMember(d => d.AddressId, opts => opts.MapFrom(s => s.AddressId))
@@ -102,6 +103,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.IndustryPlacement, opts => opts.MapFrom(s => s.GetIndustryPlacementDisplayText))
                 .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => s.GetEnglishAndMathsStatusDisplayText))
                 .ForMember(d => d.ProviderAddress, opts => opts.MapFrom(s => s.ProviderAddress));
+
+            CreateMap<PrintRequestSnapshot, RequestSoaSubmittedAlreadyViewModel>(); // TODO:
         }
     }
 }
