@@ -240,6 +240,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ChangeComponentAchievements.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\StatementOfAchievement\ChangePostalAddress.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ChangePostalAddress.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\StatementOfAchievement\NotAvailable.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -870,6 +875,10 @@
     <EmbeddedResource Update="Content\StatementOfAchievement\ChangeComponentAchievements.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ChangeComponentAchievements.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\ChangePostalAddress.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ChangePostalAddress.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\StatementOfAchievement\NotAvailable.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
