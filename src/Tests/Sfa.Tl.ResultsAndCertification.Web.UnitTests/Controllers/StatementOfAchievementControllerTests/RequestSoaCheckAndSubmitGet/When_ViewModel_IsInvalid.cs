@@ -8,7 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaCheckAndSubmit
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaCheckAndSubmitGet
 {
     public class When_ViewModel_IsInvalid : TestSetup
     {
