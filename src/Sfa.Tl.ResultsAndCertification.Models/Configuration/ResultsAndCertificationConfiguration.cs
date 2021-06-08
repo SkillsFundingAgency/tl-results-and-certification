@@ -85,6 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public string FeedbackEmailAddress { get; set; }
 
         public DateTime? SoaAvailableDate { get; set; }
+        public int SoaRerequestInDays { get; set; }
 
         /// <summary>
         /// Gets or sets the dfe sign in settings.

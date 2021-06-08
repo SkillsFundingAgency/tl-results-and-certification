@@ -18,8 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
     public class SoaLearnerRecordDetailsViewModel
     {
         public bool IsValid { get { return IsLearnerRegistered && !IsNotWithdrawn && IsIndustryPlacementAdded && !(HasPathwayResult == false && !IsIndustryPlacementCompleted); } }
-        public bool IsRequestedAlready { get { return LastRequestedOn.HasValue && LastRequestedOn >=  DateTime.Now.AddDays(-28); } } 
-        // TODO: above -28 need to be dynamic from config. 
 
         //Learner's registration details
         public int ProfileId { get; set; }
@@ -29,6 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public string ProviderDisplayName { get; set; }
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
+        public DateTime? LastRequestedDate { get; set; }
 
         //Learner's technical qualification details
         public string TlevelTitle { get; set; }
@@ -41,7 +40,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public string SpecialismName { get; set; }
         public string SpecialismCode { get; set; }
         public string SpecialismGrade { get; set; }
-        public DateTime? LastRequestedOn { get; set; }
 
         //Learner's T level component achievements
         public bool IsEnglishAndMathsAchieved { get; set; }
@@ -188,13 +186,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
                     (true, false, false) => EnglishAndMathsStatusContent.Lrs_Not_Achieved_Display_Text,
                     (true, true, false) => EnglishAndMathsStatusContent.Lrs_Achieved_Display_Text,
                     (true, true, true) => EnglishAndMathsStatusContent.Lrs_Achieved_With_Send_Display_Text,
-                    
+
                     (false, false, false) => EnglishAndMathsStatusContent.Not_Achieved_Display_Text,
                     (false, true, false) => EnglishAndMathsStatusContent.Achieved_Display_Text,
                     (false, true, true) => EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text,
                     _ => string.Empty,
                 };
             }
+        }
+
+        public bool IsSoaRequestedAlready(int reRequestAllowedInDays)
+        {
+            return LastRequestedDate.HasValue && LastRequestedDate > DateTime.Now.AddDays(-reRequestAllowedInDays);
         }
     }
 }

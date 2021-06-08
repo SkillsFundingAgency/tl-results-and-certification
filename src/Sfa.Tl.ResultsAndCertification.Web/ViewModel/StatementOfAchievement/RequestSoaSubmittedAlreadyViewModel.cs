@@ -1,11 +1,152 @@
-﻿using System;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using RequestSoaCheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaCheckAndSubmit;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+// TODO: new content file. 
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 {
     public class RequestSoaSubmittedAlreadyViewModel
     {
+        public DateTime? RequestedOn { get; set; }
+        public string RequestedBy { get; set; }
+        public RegistrationPathwayStatus PathwayStatus { get; set; }
+
+        //Learner's registration details
+        public int ProfileId { get; set; }
+        public long Uln { get; set; }
+        public string LearnerName { get; set; }
+        public DateTime DateofBirth { get; set; }
+        public string ProviderDisplayName { get; set; }
+
+        //Learner's technical qualification details
+        public string TlevelTitle { get; set; }
+        public string PathwayDisplayName { get; set; }
+        public string PathwayGrade { get; set; }
+        public string SpecialismDisplayName { get; set; }
+        public string SpecialismGrade { get; set; }
+
+        //Learner's T level component achievements
+        public string EnglishAndMathsStatus { get; set; }
+        public string IndustryPlacementStatus { get; set; }
+
+        // Provider Organisation's postal address
+        public AddressViewModel ProviderAddress { get; set; }
+
+        public SummaryItemModel SummaryUln => new SummaryItemModel
+        {
+            Id = "uln",
+            Title = RequestSoaCheckAndSubmitContent.Title_Uln_Text,
+            Value = Uln.ToString()
+        };
+
+        public SummaryItemModel SummaryLearnerName => new SummaryItemModel
+        {
+            Id = "learnername",
+            Title = RequestSoaCheckAndSubmitContent.Title_Name_Text,
+            Value = LearnerName
+        };
+
+        public SummaryItemModel SummaryDateofBirth => new SummaryItemModel
+        {
+            Id = "dateofbirth",
+            Title = RequestSoaCheckAndSubmitContent.Title_DateofBirth_Text,
+            Value = DateofBirth.ToDobFormat()
+        };
+
+        public SummaryItemModel SummaryProvider => new SummaryItemModel
+        {
+            Id = "providername",
+            Title = RequestSoaCheckAndSubmitContent.Title_Provider_Text,
+            Value = ProviderDisplayName
+        };
+
+        public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel
+        {
+            Id = "tleveltitle",
+            Title = RequestSoaCheckAndSubmitContent.Title_Tlevel_Title_Text,
+            Value = TlevelTitle
+        };
+
+        public SummaryItemModel SummaryCoreCode => new SummaryItemModel
+        {
+            Id = "corecode",
+            Title = RequestSoaCheckAndSubmitContent.Title_Core_Code_Text,
+            Value = string.Format(RequestSoaCheckAndSubmitContent.Core_Code_Value, PathwayDisplayName, PathwayGrade),
+            IsRawHtml = true
+        };
+
+        public SummaryItemModel SummarySpecialismCode => new SummaryItemModel
+        {
+            Id = "specialismcode",
+            Title = RequestSoaCheckAndSubmitContent.Title_Occupational_Specialism_Text,
+            Value = string.Format(RequestSoaCheckAndSubmitContent.Occupational_Specialism_Value, SpecialismDisplayName, SpecialismGrade),
+            IsRawHtml = true
+        };
+
+        public SummaryItemModel SummaryEnglishAndMaths => new SummaryItemModel
+        {
+            Id = "englishandmaths",
+            Title = RequestSoaCheckAndSubmitContent.Title_English_And_Maths_Text,
+            Value = EnglishAndMathsStatus
+        };
+
+        public SummaryItemModel SummaryIndustryPlacement => new SummaryItemModel
+        {
+            Id = "industryplacement",
+            Title = RequestSoaCheckAndSubmitContent.Title_Industry_Placement_Text,
+            Value = IndustryPlacementStatus
+        };
+
+        public SummaryItemModel SummaryAddress => new SummaryItemModel
+        {
+            Id = "address",
+            Title = RequestSoaCheckAndSubmitContent.Title_Organisation_Address_Text,
+            Value = string.Format(RequestSoaCheckAndSubmitContent.Organisation_Address_Value, FormatedAddress),
+            IsRawHtml = true
+        };
+
+        public BreadcrumbModel Breadcrumb
+        {
+            get
+            {
+                return new BreadcrumbModel
+                {
+                    BreadcrumbItems = new List<BreadcrumbItem>
+                    {
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Request_Statement_Of_Achievement, RouteName = RouteConstants.RequestStatementOfAchievement },
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_For_Learner, RouteName = RouteConstants.RequestSoaUniqueLearnerNumber },
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.StatementOfAchievementRequested }
+                    }
+                };
+            }
+        }
+        
+        public bool IsValid(int requestAllowedInDays)
+        {
+            return PathwayStatus == RegistrationPathwayStatus.Withdrawn && !IsSoaRequestedAlready(requestAllowedInDays);
+        }
+
+        private bool IsSoaRequestedAlready(int reRequestAllowedInDays)
+        {
+            return RequestedOn.HasValue && RequestedOn > DateTime.Now.AddDays(-reRequestAllowedInDays);
+        }
+
+        private string FormatedAddress
+        {
+            get
+            {
+                var addressLines = new List<string> { ProviderAddress?.OrganisationName, ProviderAddress?.AddressLine1, ProviderAddress?.AddressLine2, ProviderAddress?.Town, ProviderAddress?.Postcode };
+                return string.Join(RequestSoaCheckAndSubmitContent.Html_Line_Break, addressLines.Where(x => !string.IsNullOrWhiteSpace(x)));
+            }
+        }
     }
 }

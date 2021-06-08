@@ -177,6 +177,9 @@
   <data name="Search_For_Results" xml:space="preserve">
     <value>Search for a learner</value>
   </data>
+  <data name="StatementOfAchievementRequested" xml:space="preserve">
+    <value>Statement of achievement requested</value>
+  </data>
   <data name="Statement_Of_Achievement_Not_Available" xml:space="preserve">
     <value>Statement of achievement not available</value>
   </data>
