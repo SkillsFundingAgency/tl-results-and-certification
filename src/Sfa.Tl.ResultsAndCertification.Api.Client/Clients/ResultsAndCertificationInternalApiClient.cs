@@ -401,23 +401,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         /// <value>
         /// The microsoft date format settings.
         /// </value>
-        private static JsonSerializerSettings MicrosoftDateFormatSettings
-        {
-            get
-            {
-                return new JsonSerializerSettings
-                {
-                    DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
-                };
-            }
-        }
-
-        /// <summary>
-        /// Gets the microsoft date format settings.
-        /// </summary>
-        /// <value>
-        /// The microsoft date format settings.
-        /// </value>
         private static JsonSerializerSettings IsoDateFormatSettings
         {
             get

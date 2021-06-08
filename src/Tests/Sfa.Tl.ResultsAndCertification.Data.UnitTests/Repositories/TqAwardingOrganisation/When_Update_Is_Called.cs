@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AwardingOrg
     {
         private TqAwardingOrganisation _result;
         private TqAwardingOrganisation _data;
-        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
+        private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
         private const string ModifiedBy = "Modified User Updated";
 
         public override void Given()

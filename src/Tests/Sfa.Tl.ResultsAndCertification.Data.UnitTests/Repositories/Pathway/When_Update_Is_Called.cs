@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
     {
         private TlPathway _result;
         private TlPathway _data;
-        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
+        private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
 
         private const string PathwayName = "Pathway Updated";
         private const string LarId = "999";

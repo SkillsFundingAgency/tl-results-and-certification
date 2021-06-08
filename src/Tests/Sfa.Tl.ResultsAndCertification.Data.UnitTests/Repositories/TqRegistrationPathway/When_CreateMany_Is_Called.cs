@@ -8,8 +8,7 @@ using Xunit;
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrationPathway
 {
     public class When_CreateMany_Is_Called : BaseTest<Domain.Models.TqRegistrationPathway>
-    {
-        private int _result;
+    {        
         private IList<Domain.Models.TqRegistrationPathway> _data;
 
         public override void Given()
@@ -19,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
 
         public async override Task When()
         {
-            _result = await Repository.CreateManyAsync(_data);
+            await Repository.CreateManyAsync(_data);
         }
 
         [Fact]

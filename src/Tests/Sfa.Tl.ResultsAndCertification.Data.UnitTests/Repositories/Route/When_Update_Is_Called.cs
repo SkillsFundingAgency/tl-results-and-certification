@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Route
     {
         private TlRoute _result;
         private TlRoute _data;
-        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
+        private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
         private const string UpdateRouteName = "Route Updated";
         private const string ModifiedUserName = "Route Updated";
 

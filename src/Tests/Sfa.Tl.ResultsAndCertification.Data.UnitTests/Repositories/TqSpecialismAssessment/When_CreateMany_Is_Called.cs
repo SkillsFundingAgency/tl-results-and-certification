@@ -8,8 +8,7 @@ using Xunit;
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqSpecialismAssessment
 {
     public class When_CreateMany_Is_Called : BaseTest<Domain.Models.TqSpecialismAssessment>
-    {
-        private int _result;
+    {        
         private IList<Domain.Models.TqSpecialismAssessment> _data;
 
         public override void Given()
@@ -19,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqSpecialis
 
         public async override Task When()
         {
-            _result = await Repository.CreateManyAsync(_data);
+            await Repository.CreateManyAsync(_data);
         }
 
         [Fact]

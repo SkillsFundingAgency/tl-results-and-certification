@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
     {
         private TlSpecialism _result;
         private IEnumerable<TlSpecialism> _data;
-        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Ncfe;
+        private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Ncfe;
 
         public override void Given()
         {

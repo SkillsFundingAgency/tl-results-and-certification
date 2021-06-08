@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        private AddLearnerRecordResponse _expectedApiResult { get; set; }
+        private AddLearnerRecordResponse _expectedApiResult;
 
         public override void Given()
         {

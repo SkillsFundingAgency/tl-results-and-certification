@@ -118,7 +118,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             expectedProfile.Should().NotBeNull();
 
             var expectedProvider = TlProviders.FirstOrDefault(p => p.UkPrn == (long)provider);
-            var expectedProviderName = expectedProvider != null ? expectedProvider.Name : null;
+            var expectedProviderName = expectedProvider?.Name;
             var expectedProviderUkprn = expectedProvider != null ? expectedProvider.UkPrn : (long?)null;
             var expectedTlevelTitle = Pathway.TlevelTitle;
             var expectedIsLearnerRegistered = expectedStatus == RegistrationPathwayStatus.Active || expectedStatus == RegistrationPathwayStatus.Withdrawn;

@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingO
     {
         private Domain.Models.TlAwardingOrganisation _result;
         private Domain.Models.TlAwardingOrganisation _data;
-        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
+        private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
 
         private const string ModifiedBy = "Modified User Updated";
 

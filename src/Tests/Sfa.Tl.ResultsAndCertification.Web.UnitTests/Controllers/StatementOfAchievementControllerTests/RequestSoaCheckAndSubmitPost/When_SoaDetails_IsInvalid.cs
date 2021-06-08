@@ -16,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
         public override void Given()
         {
+            _mockLearnerDetails = null;
             ProfileId = 11;
             SoaLearnerRecordDetailsViewModel = new SoaLearnerRecordDetailsViewModel
             {

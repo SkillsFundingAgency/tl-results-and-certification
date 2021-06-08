@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Route
     {
         private IEnumerable<TlRoute> _result;
         private IList<TlRoute> _data;
-        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
+        private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
 
         public override void Given()
         {

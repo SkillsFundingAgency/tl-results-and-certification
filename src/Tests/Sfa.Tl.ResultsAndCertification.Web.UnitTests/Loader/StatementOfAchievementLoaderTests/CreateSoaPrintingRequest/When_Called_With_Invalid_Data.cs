@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
-        private SoaPrintingResponse _expectedApiResult { get; set; }
+        private SoaPrintingResponse _expectedApiResult;
 
         public override void Given()
         {
