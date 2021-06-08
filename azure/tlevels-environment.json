@@ -71,6 +71,7 @@
         "appInsightName": "[concat(parameters('resourceNamePrefix'), '-ai')]",
         "functionAppName": "[concat(parameters('resourceNamePrefix'), '-func')]",
         "sqlDatabaseName": "[concat(parameters('resourceNamePrefix'), '-sqldb')]",
+        "IntTestSQLDatabaseName": "[concat(parameters('resourceNamePrefix'), '-inttest-sqldb')]",
         "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]"
 
     },
@@ -448,6 +449,33 @@
                 "parameters": {
                     "databaseName": {
                         "value": "[variables('sqlDatabaseName')]"
+                    },
+                    "sqlServerName": {
+                        "value": "[parameters('sharedSQLServerName')]"
+                    },
+                    "databaseSkuName": {
+                        "value": "[parameters('sqlDatabaseSkuName')]"
+                    },
+                    "databaseTier": {
+                        "value": "[parameters('sqlDatabaseTier')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[concat('inttest-sql-database','-', parameters('environmentNameAbbreviation'))]",
+            "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'sql-database.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "databaseName": {
+                        "value": "[variables('IntTestSQLDatabaseName')]"
                     },
                     "sqlServerName": {
                         "value": "[parameters('sharedSQLServerName')]"
