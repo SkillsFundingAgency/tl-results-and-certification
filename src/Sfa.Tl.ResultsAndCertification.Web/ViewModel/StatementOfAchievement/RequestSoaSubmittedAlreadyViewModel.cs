@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 {
-    public class RequestSoaAlreadySubmittedViewModel
+    public class RequestSoaSubmittedAlreadyViewModel
     {
     }
 }

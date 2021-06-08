@@ -18,6 +18,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
     public class SoaLearnerRecordDetailsViewModel
     {
         public bool IsValid { get { return IsLearnerRegistered && !IsNotWithdrawn && IsIndustryPlacementAdded && !(HasPathwayResult == false && !IsIndustryPlacementCompleted); } }
+        public bool IsRequestedAlready { get { return LastRequestedOn.HasValue && LastRequestedOn >=  DateTime.Now.AddDays(-28); } } 
+        // TODO: above -28 need to be dynamic from config. 
 
         //Learner's registration details
         public int ProfileId { get; set; }
@@ -39,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public string SpecialismName { get; set; }
         public string SpecialismCode { get; set; }
         public string SpecialismGrade { get; set; }
+        public DateTime? LastRequestedOn { get; set; }
 
         //Learner's T level component achievements
         public bool IsEnglishAndMathsAchieved { get; set; }

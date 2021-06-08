@@ -310,6 +310,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<SoaPrintingRequest, SoaPrintingResponse>(ApiConstants.CreateSoaPrintingRequestUri, request);
         }
 
+        public async Task<PrintRequestSnapshot> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId)
+        {
+            var requestUri = string.Format(ApiConstants.GetPrintRequestSnapshotUri, providerUkprn, profileId, pathwayId);
+            return await GetAsync<PrintRequestSnapshot>(requestUri);
+        }
+
         #region Private Methods
 
         /// <summary>

@@ -177,6 +177,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            if (viewModel.IsRequestedAlready)
+                return RedirectToRoute(RouteConstants.RequestSoaSubmittedAlready, new { ProfileId = profileId, PathwayId = viewModel.RegistrationPathwayId });
+
             return View(viewModel);
         }
 
@@ -258,10 +261,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("request-statement-of-achievement-already-requested", Name = RouteConstants.RequestSoaAlreadySubmitted)]
-        public IActionResult RequestSoaAlreadySubmittedAsync()
+        [Route("request-statement-of-achievement-already-requested/{profileId}/{pathwayId}", Name = RouteConstants.RequestSoaSubmittedAlready)]
+        public async Task<IActionResult> RequestSoaSubmittedAlreadyAsync(int profileId, int pathwayId)
         {
-            var viewModel = new RequestSoaAlreadySubmittedViewModel();
+            var viewModel = await _statementOfAchievementLoader.GetPrintRequestSnapshotAsync(User.GetUkPrn(), profileId, pathwayId);
             return View(viewModel);
         }
 

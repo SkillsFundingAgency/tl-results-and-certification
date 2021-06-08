@@ -61,6 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                           let ipRecord = _dbContext.IndustryPlacement.FirstOrDefault(ip => ip.TqRegistrationPathwayId == tqPathway.Id)
                                           let pathwayResults = _dbContext.TqPathwayAssessment.Join(_dbContext.TqPathwayResult, pa => pa.Id, pr => pr.TqPathwayAssessmentId, (pa, pr) => new { pa, pr }).Where(x => x.pa.TqRegistrationPathwayId == tqPathway.Id && x.pa.IsOptedin && x.pr.IsOptedin)
                                           let specialism = _dbContext.TqRegistrationSpecialism.FirstOrDefault(s => s.TqRegistrationPathwayId == tqPathway.Id && s.IsOptedin)
+                                          let printRequest = _dbContext.PrintCertificate.OrderByDescending(o => o.CreatedOn).FirstOrDefault(c => c.Uln == tqProfile.UniqueLearnerNumber && c.TqRegistrationPathwayId == tqPathway.Id)
                                           where tqProfile.Id == profileId && tlProvider.UkPrn == providerUkprn
                                           select new SoaLearnerRecordDetails
                                           {
@@ -97,10 +98,37 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                                                                 Town = address.Town,
                                                                                                 Postcode = address.Postcode
                                                                                             }).FirstOrDefault(),
-                                              Status = tqPathway.Status
+                                              Status = tqPathway.Status,
+
+                                              LastRequestedOn = printRequest.CreatedOn
                                           })
                                 .FirstOrDefaultAsync();
             return soaLearnerRecord;
+        }
+
+        public async Task<PrintRequestSnapshot> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId)
+        {
+            var printRequest = await (from printCert in _dbContext.PrintCertificate
+             join tqPathway in _dbContext.TqRegistrationPathway on printCert.TqRegistrationPathwayId equals tqPathway.Id
+             join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
+             join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
+             join tlProvider in _dbContext.TlProvider on tqProvider.TlProviderId equals tlProvider.Id
+             where
+                 tlProvider.UkPrn == providerUkprn &&
+                 printCert.Uln == tqProfile.UniqueLearnerNumber &&
+                 printCert.TqRegistrationPathwayId == pathwayId &&
+                 tqProfile.Id == profileId
+             select new PrintRequestSnapshot
+             {
+                 ProfileId = tqProfile.Id,
+                 Status = tqPathway.Status,
+                 RequestDetails = printCert.DisplaySnapshot,
+                 RequestedDate = printCert.CreatedOn,
+             })
+            .OrderByDescending(x => x.RequestedDate)
+            .FirstOrDefaultAsync();
+
+            return printRequest;
         }
     }
 }

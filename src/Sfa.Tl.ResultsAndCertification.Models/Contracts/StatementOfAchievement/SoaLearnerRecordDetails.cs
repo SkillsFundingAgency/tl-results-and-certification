@@ -42,5 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
         public bool IsLearnerRegistered => Status == RegistrationPathwayStatus.Active || Status == RegistrationPathwayStatus.Withdrawn;
         public bool IsNotWithdrawn => Status == RegistrationPathwayStatus.Active;
         public bool IsIndustryPlacementCompleted => IndustryPlacementStatus == IndustryPlacementStatus.Completed || IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration;
+
+        public DateTime? LastRequestedOn { get; set; }
     }
 }
