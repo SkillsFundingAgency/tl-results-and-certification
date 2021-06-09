@@ -33,11 +33,15 @@
       "type": "string",
       "environmentVariable": "FeedbackEmailAddress"
     },
-	"SoaAvailableDate": {
+    "SoaAvailableDate": {
       "type": "string",
       "environmentVariable": "SoaAvailableDate"
     },
-	"KeyVaultUri": {
+    "SoaRerequestInDays": {
+      "type": "integer",
+      "environmentVariable": "SoaRerequestInDays"
+    },
+    "KeyVaultUri": {
       "type": "string",
       "environmentVariable": "KeyVaultUri"
     },
@@ -243,13 +247,13 @@
       ],
       "type": "object"
     },
-	"OrdnanceSurveyApiSettings": {
+    "OrdnanceSurveyApiSettings": {
       "properties": {
-        "PlacesUri": {          
+        "PlacesUri": {
           "type": "string",
           "environmentVariable": "OrdnanceSurveyApiPlacesUri"
         },
-        "PlacesKey": {          
+        "PlacesKey": {
           "type": "string",
           "environmentVariable": "OrdnanceSurveyPlacesApiPlacesKey"
         }
@@ -258,7 +262,7 @@
       "required": [],
       "type": "object"
     },
-	"LearningRecordServiceSettings": {
+    "LearningRecordServiceSettings": {
       "properties": {
         "VendorId": {
           "minLength": 1,
@@ -292,7 +296,7 @@
         "Ukprn",
         "Username",
         "Password",
-		"CertificateName"
+        "CertificateName"
       ],
       "type": "object"
     }

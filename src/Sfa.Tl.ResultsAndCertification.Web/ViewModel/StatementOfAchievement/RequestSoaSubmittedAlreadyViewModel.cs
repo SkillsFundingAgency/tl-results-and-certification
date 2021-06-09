@@ -15,71 +15,52 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 {
     public class RequestSoaSubmittedAlreadyViewModel
     {
-        public DateTime? RequestedOn { get; set; }
-        public string RequestedBy { get; set; }
+        public RequestSnapshotDetails SnapshotDetails { get; set; }
         public RegistrationPathwayStatus PathwayStatus { get; set; }
-
-        //Learner's registration details
-        public int ProfileId { get; set; }
-        public long Uln { get; set; }
-        public string LearnerName { get; set; }
-        public DateTime DateofBirth { get; set; }
-        public string ProviderDisplayName { get; set; }
-
-        //Learner's technical qualification details
-        public string TlevelTitle { get; set; }
-        public string PathwayDisplayName { get; set; }
-        public string PathwayGrade { get; set; }
-        public string SpecialismDisplayName { get; set; }
-        public string SpecialismGrade { get; set; }
-
-        //Learner's T level component achievements
-        public string EnglishAndMathsStatus { get; set; }
-        public string IndustryPlacementStatus { get; set; }
-
-        // Provider Organisation's postal address
-        public AddressViewModel ProviderAddress { get; set; }
+        public string RequestedBy { get; set; }
+        public DateTime RequestedOn { get; set; }
+        public string RequestedDate { get { return RequestedOn.ToDobFormat(); } }
 
         public SummaryItemModel SummaryUln => new SummaryItemModel
         {
             Id = "uln",
             Title = RequestSoaCheckAndSubmitContent.Title_Uln_Text,
-            Value = Uln.ToString()
+            Value = SnapshotDetails.Uln.ToString()
         };
 
         public SummaryItemModel SummaryLearnerName => new SummaryItemModel
         {
             Id = "learnername",
             Title = RequestSoaCheckAndSubmitContent.Title_Name_Text,
-            Value = LearnerName
+            Value = SnapshotDetails.Name
         };
 
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel
         {
             Id = "dateofbirth",
             Title = RequestSoaCheckAndSubmitContent.Title_DateofBirth_Text,
-            Value = DateofBirth.ToDobFormat()
+            Value = SnapshotDetails.Dateofbirth.ToDobFormat()
         };
 
         public SummaryItemModel SummaryProvider => new SummaryItemModel
         {
             Id = "providername",
             Title = RequestSoaCheckAndSubmitContent.Title_Provider_Text,
-            Value = ProviderDisplayName
+            Value = SnapshotDetails.ProviderName
         };
 
         public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel
         {
             Id = "tleveltitle",
             Title = RequestSoaCheckAndSubmitContent.Title_Tlevel_Title_Text,
-            Value = TlevelTitle
+            Value = SnapshotDetails.TlevelTitle
         };
 
         public SummaryItemModel SummaryCoreCode => new SummaryItemModel
         {
             Id = "corecode",
             Title = RequestSoaCheckAndSubmitContent.Title_Core_Code_Text,
-            Value = string.Format(RequestSoaCheckAndSubmitContent.Core_Code_Value, PathwayDisplayName, PathwayGrade),
+            Value = string.Format(RequestSoaCheckAndSubmitContent.Core_Code_Value, SnapshotDetails.Core, SnapshotDetails.CoreGrade),
             IsRawHtml = true
         };
 
@@ -87,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "specialismcode",
             Title = RequestSoaCheckAndSubmitContent.Title_Occupational_Specialism_Text,
-            Value = string.Format(RequestSoaCheckAndSubmitContent.Occupational_Specialism_Value, SpecialismDisplayName, SpecialismGrade),
+            Value = string.Format(RequestSoaCheckAndSubmitContent.Occupational_Specialism_Value, SnapshotDetails.Specialism, SnapshotDetails.SpecialismGrade),
             IsRawHtml = true
         };
 
@@ -95,14 +76,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "englishandmaths",
             Title = RequestSoaCheckAndSubmitContent.Title_English_And_Maths_Text,
-            Value = EnglishAndMathsStatus
+            Value = SnapshotDetails.EnglishAndMaths
         };
 
         public SummaryItemModel SummaryIndustryPlacement => new SummaryItemModel
         {
             Id = "industryplacement",
             Title = RequestSoaCheckAndSubmitContent.Title_Industry_Placement_Text,
-            Value = IndustryPlacementStatus
+            Value = SnapshotDetails.IndustryPlacement
+        };
+
+        public SummaryItemModel SummaryDepartment => new SummaryItemModel
+        {
+            Id = "department",
+            Title = RequestSoaCheckAndSubmitContent.Title_Department_Text,
+            Value = SnapshotDetails.ProviderAddress?.DepartmentName
         };
 
         public SummaryItemModel SummaryAddress => new SummaryItemModel
@@ -132,21 +120,45 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         
         public bool IsValid(int requestAllowedInDays)
         {
-            return PathwayStatus == RegistrationPathwayStatus.Withdrawn && !IsSoaRequestedAlready(requestAllowedInDays);
+            return PathwayStatus == RegistrationPathwayStatus.Withdrawn && IsSoaRequestedAlready(requestAllowedInDays);
         }
 
         private bool IsSoaRequestedAlready(int reRequestAllowedInDays)
         {
-            return RequestedOn.HasValue && RequestedOn > DateTime.Now.AddDays(-reRequestAllowedInDays);
+            return RequestedOn > DateTime.Now.AddDays(-reRequestAllowedInDays);
         }
 
         private string FormatedAddress
         {
             get
             {
-                var addressLines = new List<string> { ProviderAddress?.OrganisationName, ProviderAddress?.AddressLine1, ProviderAddress?.AddressLine2, ProviderAddress?.Town, ProviderAddress?.Postcode };
+                var addressLines = new List<string> { SnapshotDetails.ProviderAddress?.OrganisationName, SnapshotDetails.ProviderAddress?.AddressLine1, SnapshotDetails.ProviderAddress?.AddressLine2, SnapshotDetails.ProviderAddress?.Town, SnapshotDetails.ProviderAddress?.Postcode };
                 return string.Join(RequestSoaCheckAndSubmitContent.Html_Line_Break, addressLines.Where(x => !string.IsNullOrWhiteSpace(x)));
             }
         }
+    }
+
+    public class RequestSnapshotDetails 
+    {
+        //Learner's registration details
+        public int ProfileId { get; set; }
+        public long Uln { get; set; }
+        public string Name { get; set; }
+        public DateTime Dateofbirth { get; set; }
+        public string ProviderName { get; set; }
+
+        //Learner's technical qualification details
+        public string TlevelTitle { get; set; }
+        public string Core { get; set; }
+        public string CoreGrade { get; set; }
+        public string Specialism { get; set; }
+        public string SpecialismGrade { get; set; }
+
+        //Learner's T level component achievements
+        public string EnglishAndMaths { get; set; }
+        public string IndustryPlacement { get; set; }
+
+        // Provider Organisation's postal address
+        public AddressViewModel ProviderAddress { get; set; }
     }
 }

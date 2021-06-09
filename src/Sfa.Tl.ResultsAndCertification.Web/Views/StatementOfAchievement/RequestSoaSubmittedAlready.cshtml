@@ -6,7 +6,7 @@
 }
 
 @section NavigationBar {
-    @*<vc:back-link model=Model.BackLink></vc:back-link>*@
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
 <div class="govuk-grid-row">
@@ -14,12 +14,10 @@
 
         <h1 class="govuk-heading-xl">Statement of achievement has already been requested</h1>
         <div class="govuk-inset-text">
-            <p class="govuk-body">Date requested: 12 December 2021</p>
-            <p class="govuk-body">Requested by: Jane Doe</p>
+            <p class="govuk-body">Date requested: @Model.RequestedDate</p>
+            <p class="govuk-body">Requested by: @Model.RequestedBy</p>
             <p class="govuk-body">A request has already been submitted for this learner. If you don't receive the statement of achievement after three weeks, <a href="https://manage-tlevel-results.tlevels.gov.uk/contact-us">contact us</a> or submit a new request.</p>
-
         </div>
-
 
         <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-7 govuk-!-margin-top-7">
 
@@ -30,130 +28,36 @@
             <h2 class="govuk-heading-m">Learner's details</h2>
 
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        ULN
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-
-                    </dd>
-
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Name
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-
-                    </dd>
-
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Date of birth
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-
-                    </dd>
-
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Provider (UKPRN)
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-
-                    </dd>
-                </div>
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
             </dl>
 
             <h2 class="govuk-heading-m">Learner's technical qualification details</h2>
 
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        T level title
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-
-                    </dd>
-
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Core (code)
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        <p></p>
-                        <p></p>
-                    </dd>
-
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Specialism (code)
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        <p></p>
-                        <p></p>
-                    </dd>
-
-                </div>
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCoreCode></vc:summary-item>
+                <vc:summary-item model=Model.SummarySpecialismCode></vc:summary-item>
             </dl>
 
             <h2 class="govuk-heading-m">Learner's T level component achievements</h2>
 
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        English and maths
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-
-                    </dd>
-
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Industry placement
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-
-                    </dd>
-
-                </div>
-
+                <vc:summary-item model=Model.SummaryEnglishAndMaths></vc:summary-item>
+                <vc:summary-item model=Model.SummaryIndustryPlacement></vc:summary-item>
             </dl>
 
             <h2 class="govuk-heading-m">Your organisation's postal address</h2>
 
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Department
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        Exams Office
-                    </dd>
-
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        Organisation's address
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        <p></p>
-                        <p>Barnsley Academy</p>
-                        <p>Farm Rd</p>
-                        <p>Barnsley</p>
-                        <p>S70 3DL</p>
-                    </dd>
-                </div>
-
+                <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
+                <vc:summary-item model=Model.SummaryAddress></vc:summary-item>
             </dl>
 
             <p class="govuk-body">
-                <a class="govuk-button" role="button" href="tlevels-dashboard">
+                <a id="backToHomeButton" class="govuk-button" role="button" asp-route="Home">
                     Back to Home
                 </a>
             </p>

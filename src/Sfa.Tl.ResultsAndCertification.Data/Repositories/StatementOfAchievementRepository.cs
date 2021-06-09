@@ -121,9 +121,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
              select new PrintRequestSnapshot
              {
                  ProfileId = tqProfile.Id,
-                 Status = tqPathway.Status,
+                 RegistrationPathwayStatus = tqPathway.Status,
                  RequestDetails = printCert.DisplaySnapshot,
                  RequestedDate = printCert.CreatedOn,
+                 RequestedBy = printCert.CreatedBy
              })
             .OrderByDescending(x => x.RequestedDate)
             .FirstOrDefaultAsync();

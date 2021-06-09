@@ -7,7 +7,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
     {
         public int ProfileId { get; set; }
         public string RequestDetails { get; set; }
-        public RegistrationPathwayStatus Status { get; set; }
+        public RegistrationPathwayStatus RegistrationPathwayStatus { get; set; }
         public DateTime RequestedDate { get; set; }
+        public string RequestedBy { get; set; }
     }
 }

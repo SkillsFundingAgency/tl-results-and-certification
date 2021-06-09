@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -105,7 +106,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => s.GetEnglishAndMathsStatusDisplayText))
                 .ForMember(d => d.ProviderAddress, opts => opts.MapFrom(s => s.ProviderAddress));
 
-            CreateMap<PrintRequestSnapshot, RequestSoaSubmittedAlreadyViewModel>(); // TODO:
+            CreateMap<PrintRequestSnapshot, RequestSoaSubmittedAlreadyViewModel>()
+                .ForMember(d => d.RequestedOn, opts => opts.MapFrom(s => s.RequestedDate.ToDobFormat()))
+                .ForMember(d => d.RequestedBy, opts => opts.MapFrom(s => s.RequestedBy))
+                .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus))
+                .ForMember(d => d.SnapshotDetails, opts => opts.MapFrom(s => JsonConvert.DeserializeObject<RequestSnapshotDetails>(s.RequestDetails)));
         }
     }
 }

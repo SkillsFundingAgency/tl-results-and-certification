@@ -265,7 +265,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> RequestSoaSubmittedAlreadyAsync(int profileId, int pathwayId)
         {
             var viewModel = await _statementOfAchievementLoader.GetPrintRequestSnapshotAsync(User.GetUkPrn(), profileId, pathwayId);
-            if (!viewModel.IsValid(_configuration.SoaRerequestInDays))
+            if (viewModel == null || !viewModel.IsValid(_configuration.SoaRerequestInDays))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
