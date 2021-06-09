@@ -37,16 +37,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         public async override Task When() { await Task.CompletedTask; }
 
         [Theory]
-        // Below second param represent LastRequested Date. 0 -> Today, -1  -> Yesterday and so on. 
-        [InlineData(1, 0)]  
-        [InlineData(1, -1)]
-        [InlineData(1, -2)]
-        [InlineData(2, 0)]
-        [InlineData(2, -1)]
-        [InlineData(2, -2)]
-        [InlineData(21, -20)]
-        [InlineData(21, -21)]
-        public async Task Then_Redirected_To_RequestSoaAlreadySubmitted(int reRequestAllowedInDays, int lastRequested_InDays)
+        // Param 1 represents config value - SoaRerequestInDays
+        // Param 2 represents LastRequested Date. 0 -> Today, -1 -> Yesterday and so on. 
+        // Param 3 represents isAlreadyRequested
+        [InlineData(0, 0, false)]
+        [InlineData(1, 0, true)]  
+        [InlineData(1, -1, false)]
+        [InlineData(2, 0, true)]
+        [InlineData(2, -1, true)]
+        [InlineData(2, -2, false)]
+        [InlineData(21, -20, true)]
+        [InlineData(21, -21, false)]
+        public async Task Then_Redirected_To_RequestSoaAlreadySubmitted(int reRequestAllowedInDays, int lastRequested_InDays, bool isAlreadyRequested)
         {
             // inputs
             _mockLearnerDetails.LastPrintRequestedDate = DateTime.Today.AddDays(lastRequested_InDays);
@@ -58,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
             // Then
             Expected_Methods_AreCalled();
 
-            if (reRequestAllowedInDays + lastRequested_InDays > 0)
+            if (isAlreadyRequested)
             {
                 var routeName = (_result as RedirectToRouteResult).RouteName;
                 routeName.Should().Be(RouteConstants.RequestSoaAlreadySubmitted);
