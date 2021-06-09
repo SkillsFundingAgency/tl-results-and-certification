@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using System;
@@ -177,8 +178,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            if (viewModel.IsSoaRequestedAlready(_configuration.SoaRerequestInDays))
-                return RedirectToRoute(RouteConstants.RequestSoaSubmittedAlready, new { ProfileId = profileId, PathwayId = viewModel.RegistrationPathwayId });
+            if (CommonHelper.IsSoaAlreadyRequested(_configuration.SoaRerequestInDays, viewModel.LastPrintRequestedDate))
+                return RedirectToRoute(RouteConstants.RequestSoaAlreadySubmitted, new { ProfileId = profileId, PathwayId = viewModel.RegistrationPathwayId });
 
             return View(viewModel);
         }
@@ -261,8 +262,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("request-statement-of-achievement-already-requested/{profileId}/{pathwayId}", Name = RouteConstants.RequestSoaSubmittedAlready)]
-        public async Task<IActionResult> RequestSoaSubmittedAlreadyAsync(int profileId, int pathwayId)
+        [Route("request-statement-of-achievement-already-requested/{profileId}/{pathwayId}", Name = RouteConstants.RequestSoaAlreadySubmitted)]
+        public async Task<IActionResult> RequestSoaAlreadySubmittedAsync(int profileId, int pathwayId)
         {
             var viewModel = await _statementOfAchievementLoader.GetPrintRequestSnapshotAsync(User.GetUkPrn(), profileId, pathwayId);
             if (viewModel == null || !viewModel.IsValid(_configuration.SoaRerequestInDays))

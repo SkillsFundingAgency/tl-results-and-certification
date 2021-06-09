@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                               PathwayGrade = pathwayResults.OrderByDescending(r => r.pr.CreatedOn).FirstOrDefault().pr.TlLookup.Value,
                                               SpecialismName = specialism.TlSpecialism.Name,
                                               SpecialismCode = specialism.TlSpecialism.LarId,
-                                              
+
                                               IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
                                               IsSendLearner = tqProfile.IsSendLearner,
                                               HasLrsEnglishAndMaths = tqProfile.IsRcFeed == false,
@@ -109,26 +109,24 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<PrintRequestSnapshot> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId)
         {
             var printRequest = await (from printCert in _dbContext.PrintCertificate
-             join tqPathway in _dbContext.TqRegistrationPathway on printCert.TqRegistrationPathwayId equals tqPathway.Id
-             join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
-             join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
-             join tlProvider in _dbContext.TlProvider on tqProvider.TlProviderId equals tlProvider.Id
-             where
-                 tlProvider.UkPrn == providerUkprn &&
-                 printCert.Uln == tqProfile.UniqueLearnerNumber &&
-                 printCert.TqRegistrationPathwayId == pathwayId &&
-                 tqProfile.Id == profileId
-             select new PrintRequestSnapshot
-             {
-                 ProfileId = tqProfile.Id,
-                 RegistrationPathwayStatus = tqPathway.Status,
-                 RequestDetails = printCert.DisplaySnapshot,
-                 RequestedDate = printCert.CreatedOn,
-                 RequestedBy = printCert.CreatedBy
-             })
-            .OrderByDescending(x => x.RequestedDate)
-            .FirstOrDefaultAsync();
-
+                                      join tqPathway in _dbContext.TqRegistrationPathway on printCert.TqRegistrationPathwayId equals tqPathway.Id
+                                      join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
+                                      join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
+                                      join tlProvider in _dbContext.TlProvider on tqProvider.TlProviderId equals tlProvider.Id
+                                      where
+                                          tlProvider.UkPrn == providerUkprn &&
+                                          tqProfile.Id == profileId &&
+                                          printCert.Uln == tqProfile.UniqueLearnerNumber &&
+                                          printCert.TqRegistrationPathwayId == pathwayId
+                                      orderby printCert.CreatedOn descending
+                                      select new PrintRequestSnapshot
+                                      {
+                                          RegistrationPathwayStatus = tqPathway.Status,
+                                          RequestDetails = printCert.DisplaySnapshot,
+                                          RequestedOn = printCert.CreatedOn,
+                                          RequestedBy = printCert.CreatedBy
+                                      })
+                                .FirstOrDefaultAsync();
             return printRequest;
         }
     }

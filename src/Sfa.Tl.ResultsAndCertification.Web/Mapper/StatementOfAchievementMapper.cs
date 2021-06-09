@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsLearnerRegistered, opts => opts.MapFrom(s => s.IsLearnerRegistered))
                .ForMember(d => d.IsNotWithdrawn, opts => opts.MapFrom(s => s.IsNotWithdrawn))
                .ForMember(d => d.IsIndustryPlacementCompleted, opts => opts.MapFrom(s => s.IsIndustryPlacementCompleted))
-               .ForMember(d => d.LastRequestedDate, opts => opts.MapFrom(s => s.LastRequestedOn));
+               .ForMember(d => d.LastPrintRequestedDate, opts => opts.MapFrom(s => s.LastRequestedOn));
 
             CreateMap<Address, AddressViewModel>()
                 .ForMember(d => d.AddressId, opts => opts.MapFrom(s => s.AddressId))
@@ -107,10 +107,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ProviderAddress, opts => opts.MapFrom(s => s.ProviderAddress));
 
             CreateMap<PrintRequestSnapshot, RequestSoaSubmittedAlreadyViewModel>()
-                .ForMember(d => d.RequestedOn, opts => opts.MapFrom(s => s.RequestedDate.ToDobFormat()))
+                .ForMember(d => d.RequestedOn, opts => opts.MapFrom(s => s.RequestedOn.ToDobFormat()))
                 .ForMember(d => d.RequestedBy, opts => opts.MapFrom(s => s.RequestedBy))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus))
-                .ForMember(d => d.SnapshotDetails, opts => opts.MapFrom(s => JsonConvert.DeserializeObject<RequestSnapshotDetails>(s.RequestDetails)));
+                .ForMember(d => d.SnapshotDetails, opts => opts.MapFrom(s => JsonConvert.DeserializeObject<SoaPrintingDetails>(s.RequestDetails)));
         }
     }
 }

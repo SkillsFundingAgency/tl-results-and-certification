@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public string ProviderDisplayName { get; set; }
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
-        public DateTime? LastRequestedDate { get; set; }
+        public DateTime? LastPrintRequestedDate { get; set; }
 
         //Learner's technical qualification details
         public string TlevelTitle { get; set; }
@@ -197,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 
         public bool IsSoaRequestedAlready(int reRequestAllowedInDays)
         {
-            return LastRequestedDate.HasValue && LastRequestedDate > DateTime.Now.AddDays(-reRequestAllowedInDays);
+            return LastPrintRequestedDate.HasValue && LastPrintRequestedDate > DateTime.Now.AddDays(-reRequestAllowedInDays);
         }
     }
 }

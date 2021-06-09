@@ -3,18 +3,19 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using SoaRequestedAlreadyContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaSubmittedAlready;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 {
     public class RequestSoaSubmittedAlreadyViewModel
     {
-        public RequestSnapshotDetails SnapshotDetails { get; set; }
+        public SoaPrintingDetails SnapshotDetails { get; set; }
         public RegistrationPathwayStatus PathwayStatus { get; set; }
         public string RequestedBy { get; set; }
         public DateTime RequestedOn { get; set; }
@@ -38,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "dateofbirth",
             Title = SoaRequestedAlreadyContent.Title_DateofBirth_Text,
-            Value = SnapshotDetails.Dateofbirth.ToDobFormat()
+            Value = SnapshotDetails.Dateofbirth
         };
 
         public SummaryItemModel SummaryProvider => new SummaryItemModel
@@ -119,12 +120,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         
         public bool IsValid(int requestAllowedInDays)
         {
-            return PathwayStatus == RegistrationPathwayStatus.Withdrawn && IsSoaRequestedAlready(requestAllowedInDays);
-        }
-
-        private bool IsSoaRequestedAlready(int reRequestAllowedInDays)
-        {
-            return RequestedOn > DateTime.Now.AddDays(-reRequestAllowedInDays);
+            return PathwayStatus == RegistrationPathwayStatus.Withdrawn && CommonHelper.IsSoaAlreadyRequested(requestAllowedInDays, RequestedOn);
         }
 
         private string FormatedAddress
@@ -135,29 +131,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
                 return string.Join(SoaRequestedAlreadyContent.Html_Line_Break, addressLines.Where(x => !string.IsNullOrWhiteSpace(x)));
             }
         }
-    }
-
-    public class RequestSnapshotDetails 
-    {
-        //Learner's registration details
-        public int ProfileId { get; set; }
-        public long Uln { get; set; }
-        public string Name { get; set; }
-        public DateTime Dateofbirth { get; set; }
-        public string ProviderName { get; set; }
-
-        //Learner's technical qualification details
-        public string TlevelTitle { get; set; }
-        public string Core { get; set; }
-        public string CoreGrade { get; set; }
-        public string Specialism { get; set; }
-        public string SpecialismGrade { get; set; }
-
-        //Learner's T level component achievements
-        public string EnglishAndMaths { get; set; }
-        public string IndustryPlacement { get; set; }
-
-        // Provider Organisation's postal address
-        public AddressViewModel ProviderAddress { get; set; }
     }
 }
