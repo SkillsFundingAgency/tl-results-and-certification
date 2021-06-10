@@ -215,15 +215,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return profile != null && (profile.IsRcFeed == null || profile.IsRcFeed.Value == false);
         }
-        
+
         private async Task<List<TqRegistrationProfile>> GetRegistrationProfilesByIds(HashSet<int> profileIds, bool includeQualificationAchieved = false)
         {
-            var registrationQueryable = _tqRegistrationRepository.GetManyAsync(p => profileIds.Contains(p.Id));
-
-            if (includeQualificationAchieved)
-                registrationQueryable.Include(p => p.QualificationAchieved);
-
-            return await registrationQueryable.ToListAsync();
+            return includeQualificationAchieved
+                ? await _tqRegistrationRepository.GetManyAsync(p => profileIds.Contains(p.Id), p => p.QualificationAchieved).ToListAsync()
+                : await _tqRegistrationRepository.GetManyAsync(p => profileIds.Contains(p.Id)).ToListAsync();
         }
 
         private async Task<List<Qualification>> GetAllQualifications()
