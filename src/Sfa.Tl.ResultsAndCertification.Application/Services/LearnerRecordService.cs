@@ -61,7 +61,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var profilesAndQualsToUpdate = new List<TqRegistrationProfile>();
             var qualifications = await GetAllQualifications();
-            var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToHashSet(), includeQualificationAchieved: true);
+            //var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToHashSet(), includeQualificationAchieved: true);
+            var registrationProfiles = await _tqRegistrationRepository.GetRegistrationProfilesByIdsAsync(learnerRecords.Select(x => x.ProfileId).ToHashSet(), includeQualificationAchieved: true);
 
             learnerRecords.ForEach(learnerRecord =>
             {
@@ -99,7 +100,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             var profilesToUpdate = new List<TqRegistrationProfile>();
-            var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToHashSet());
+            //var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToHashSet());
+            var registrationProfiles = await _tqRegistrationRepository.GetRegistrationProfilesByIdsAsync(learnerRecords.Select(x => x.ProfileId).ToHashSet());
 
             learnerRecords.ForEach(learnerRecord =>
             {
@@ -216,11 +218,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return profile != null && (profile.IsRcFeed == null || profile.IsRcFeed.Value == false);
         }
 
-        private async Task<List<TqRegistrationProfile>> GetRegistrationProfilesByIds(HashSet<int> profileIds, bool includeQualificationAchieved = false)
+        private async Task<IList<TqRegistrationProfile>> GetRegistrationProfilesByIds(HashSet<int> profileIds, bool includeQualificationAchieved = false)
         {
-            return includeQualificationAchieved
-                ? await _tqRegistrationRepository.GetManyAsync(p => profileIds.Contains(p.Id), p => p.QualificationAchieved).ToListAsync()
-                : await _tqRegistrationRepository.GetManyAsync(p => profileIds.Contains(p.Id)).ToListAsync();
+            var registrationQueryable = _tqRegistrationRepository.GetManyAsync(p => profileIds.Contains(p.Id));
+
+            if (includeQualificationAchieved)
+                registrationQueryable.Include(p => p.QualificationAchieved);
+
+            return await registrationQueryable.ToListAsync();
         }
 
         private async Task<List<Qualification>> GetAllQualifications()

@@ -87,6 +87,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return regPathway;
         }
 
+        public async Task<IList<TqRegistrationProfile>> GetRegistrationProfilesByIdsAsync(HashSet<int> profileIds, bool includeQualificationAchieved = false)
+        {
+            var profileQueryable = _dbContext.TqRegistrationProfile.Where(x => profileIds.Contains(x.Id)).AsQueryable();
+
+            if (includeQualificationAchieved)
+                profileQueryable = profileQueryable.Include(p => p.QualificationAchieved);
+
+            return await profileQueryable.ToListAsync();
+        }
+
         #region Bulk Registration
 
         public async Task<IList<TqRegistrationProfile>> GetRegistrationProfilesAsync(IList<TqRegistrationProfile> registrations)
