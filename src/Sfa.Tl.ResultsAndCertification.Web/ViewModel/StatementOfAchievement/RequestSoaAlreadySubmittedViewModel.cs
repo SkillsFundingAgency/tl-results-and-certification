@@ -6,14 +6,14 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SoaRequestedAlreadyContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaSubmittedAlready;
+using SoaRequestedAlreadyContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaAlreadySubmitted;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 {
-    public class RequestSoaSubmittedAlreadyViewModel
+    public class RequestSoaAlreadySubmittedViewModel
     {
         public SoaPrintingDetails SnapshotDetails { get; set; }
         public RegistrationPathwayStatus PathwayStatus { get; set; }

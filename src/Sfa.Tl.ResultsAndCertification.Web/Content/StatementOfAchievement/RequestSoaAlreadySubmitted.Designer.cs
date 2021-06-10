@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class RequestSoaSubmittedAlready {
+    public class RequestSoaAlreadySubmitted {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal RequestSoaSubmittedAlready() {
+        internal RequestSoaAlreadySubmitted() {
         }
         
         /// <summary>
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaSubmi" +
-                            "ttedAlready", typeof(RequestSoaSubmittedAlready).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaAlrea" +
+                            "dySubmitted", typeof(RequestSoaAlreadySubmitted).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -170,7 +170,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to or submit a new request..
+        ///   Looks up a localized string similar to  or submit a new request..
         /// </summary>
         public static string Inset_Para_Submit_New_Request {
             get {

@@ -1,29 +1,29 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement.RequestSoaSubmittedAlreadyViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement.RequestSoaAlreadySubmittedViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
 
 @{
-    ViewData["Title"] = RequestSoaSubmittedAlready.Page_Title;
+    ViewData["Title"] = RequestSoaAlreadySubmitted.Page_Title;
 }
 
 @section NavigationBar {
     <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
-}
+}`
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
 
-        <h1 class="govuk-heading-xl">@RequestSoaSubmittedAlready.Heading_Soa_Already_Requested</h1>
+        <h1 class="govuk-heading-xl">@RequestSoaAlreadySubmitted.Heading_Soa_Already_Requested</h1>
         <div class="govuk-inset-text">
-            <p class="govuk-body">@string.Format(RequestSoaSubmittedAlready.Inset_Date_Requested, Model.RequestedDate)</p>
-            <p class="govuk-body">@string.Format(RequestSoaSubmittedAlready.Inset_Requested_By, Model.RequestedBy)</p>
-            <p class="govuk-body">@RequestSoaSubmittedAlready.Inset_Para_Contact_Us_After_Three_Weeks<a id="contactUsLink" class="govuk-link" asp-route="Contact">@RequestSoaSubmittedAlready.Inset_Para_Contact_Us_Link</a>@RequestSoaSubmittedAlready.Inset_Para_Submit_New_Request</p>
+            <p class="govuk-body">@string.Format(RequestSoaAlreadySubmitted.Inset_Date_Requested, Model.RequestedDate)</p>
+            <p class="govuk-body">@string.Format(RequestSoaAlreadySubmitted.Inset_Requested_By, Model.RequestedBy)</p>
+            <p class="govuk-body">@RequestSoaAlreadySubmitted.Inset_Para_Contact_Us_After_Three_Weeks<a id="contactUsLink" class="govuk-link" asp-route="Contact">@RequestSoaAlreadySubmitted.Inset_Para_Contact_Us_Link</a>@RequestSoaAlreadySubmitted.Inset_Para_Submit_New_Request</p>
         </div>
 
         <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-7 govuk-!-margin-top-7">
-        <h1 class="govuk-heading-l">@RequestSoaSubmittedAlready.Heading_Soa_Details</h1>
+        <h1 class="govuk-heading-l">@RequestSoaAlreadySubmitted.Heading_Soa_Details</h1>
 
 
-        <h2 class="govuk-heading-m">@RequestSoaSubmittedAlready.Heading_Learner_Details</h2>
+        <h2 class="govuk-heading-m">@RequestSoaAlreadySubmitted.Heading_Learner_Details</h2>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
             <vc:summary-item model=Model.SummaryUln></vc:summary-item>
@@ -32,7 +32,7 @@
             <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
         </dl>
 
-        <h2 class="govuk-heading-m">@RequestSoaSubmittedAlready.Heading_Learner_Technical_Qualification</h2>
+        <h2 class="govuk-heading-m">@RequestSoaAlreadySubmitted.Heading_Learner_Technical_Qualification</h2>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
             <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
@@ -40,14 +40,14 @@
             <vc:summary-item model=Model.SummarySpecialismCode></vc:summary-item>
         </dl>
 
-        <h2 class="govuk-heading-m">@RequestSoaSubmittedAlready.Heading_Learner_Tlevel_Component_Achievements</h2>
+        <h2 class="govuk-heading-m">@RequestSoaAlreadySubmitted.Heading_Learner_Tlevel_Component_Achievements</h2>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
             <vc:summary-item model=Model.SummaryEnglishAndMaths></vc:summary-item>
             <vc:summary-item model=Model.SummaryIndustryPlacement></vc:summary-item>
         </dl>
 
-        <h2 class="govuk-heading-m">@RequestSoaSubmittedAlready.Heading_Your_Organisation_Address</h2>
+        <h2 class="govuk-heading-m">@RequestSoaAlreadySubmitted.Heading_Your_Organisation_Address</h2>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
             <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
@@ -55,7 +55,7 @@
         </dl>
 
         <p class="govuk-body">
-            <a id="backToHomeButton" class="govuk-button" role="button" asp-route="Home">@RequestSoaSubmittedAlready.Button_Back_To_Home</a>
+            <a id="backToHomeButton" class="govuk-button" role="button" asp-route="Home">@RequestSoaAlreadySubmitted.Button_Back_To_Home</a>
         </p>
     </div>
 </div>

@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 {
     public class When_ViewModel_IsNull : TestSetup
     {
-        private readonly RequestSoaSubmittedAlreadyViewModel _mockLearnerDetails = null;
+        private readonly RequestSoaAlreadySubmittedViewModel _mockLearnerDetails = null;
 
         public override void Given()
         {

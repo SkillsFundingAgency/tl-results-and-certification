@@ -35,10 +35,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.CreateSoaPrintingRequestAsync(request);
         }
 
-        public async Task<RequestSoaSubmittedAlreadyViewModel> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId)
+        public async Task<RequestSoaAlreadySubmittedViewModel> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId)
         {
             var response = await _internalApiClient.GetPrintRequestSnapshotAsync(providerUkprn, profileId, pathwayId);
-            return _mapper.Map<RequestSoaSubmittedAlreadyViewModel>(response);
+            return _mapper.Map<RequestSoaAlreadySubmittedViewModel>(response);
         }
     }
 }

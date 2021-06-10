@@ -10,12 +10,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 {
     public class When_ViewModel_IsInvalid : TestSetup
     {
-        private RequestSoaSubmittedAlreadyViewModel _mockLearnerDetails;
+        private RequestSoaAlreadySubmittedViewModel _mockLearnerDetails;
 
         public override void Given()
         {
             ProfileId = 11;
-            _mockLearnerDetails = new RequestSoaSubmittedAlreadyViewModel
+            _mockLearnerDetails = new RequestSoaAlreadySubmittedViewModel
             {
                 PathwayStatus = RegistrationPathwayStatus.Active
             };

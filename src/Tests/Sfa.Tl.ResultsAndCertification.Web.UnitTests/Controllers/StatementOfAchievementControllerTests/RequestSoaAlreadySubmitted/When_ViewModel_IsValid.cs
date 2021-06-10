@@ -10,7 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using System;
 using System.Collections.Generic;
 using Xunit;
-using ContentAlreadyRequested = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaSubmittedAlready;
+using ContentAlreadyRequested = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaAlreadySubmitted;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using System.Linq;
 
@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 {
     public class When_ViewModel_IsValid : TestSetup
     {
-        private RequestSoaSubmittedAlreadyViewModel _mockLearnerDetails;
+        private RequestSoaAlreadySubmittedViewModel _mockLearnerDetails;
         private Address _address;
         private SoaPrintingDetails _soaPrintDetails;
 
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 ProviderAddress = _address
             };
 
-            _mockLearnerDetails = new RequestSoaSubmittedAlreadyViewModel
+            _mockLearnerDetails = new RequestSoaAlreadySubmittedViewModel
             {
                 PathwayStatus = RegistrationPathwayStatus.Withdrawn,
                 RequestedOn = DateTime.Today,
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as RequestSoaSubmittedAlreadyViewModel;
+            var model = viewResult.Model as RequestSoaAlreadySubmittedViewModel;
 
             model.Should().NotBeNull();
             model.PathwayStatus.Should().Be(_mockLearnerDetails.PathwayStatus);

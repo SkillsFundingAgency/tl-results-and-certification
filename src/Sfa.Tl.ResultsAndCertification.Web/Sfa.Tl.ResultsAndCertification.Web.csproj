@@ -255,6 +255,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PostalAddressMissing.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestSoaAlreadySubmitted.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestSoaAlreadySubmitted.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\StatementOfAchievement\RequestSoaCancel.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -279,11 +284,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>RequestSoaNotAvailableNoResults.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\StatementOfAchievement\RequestSoaSubmittedAlready.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>RequestSoaSubmittedAlready.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\StatementOfAchievement\RequestSoaUlnNotFound.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -898,6 +898,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PostalAddressMissing.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaAlreadySubmitted.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestSoaAlreadySubmitted.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaCancel.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RequestSoaCancel.Designer.cs</LastGenOutput>
@@ -913,10 +917,6 @@
     <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaNotAvailableNoResults.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RequestSoaNotAvailableNoResults.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaSubmittedAlready.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>RequestSoaSubmittedAlready.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaUlnNotFound.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

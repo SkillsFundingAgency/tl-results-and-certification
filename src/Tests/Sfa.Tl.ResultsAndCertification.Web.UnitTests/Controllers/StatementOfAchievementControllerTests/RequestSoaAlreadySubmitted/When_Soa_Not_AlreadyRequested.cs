@@ -11,13 +11,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 {
     public class When_Soa_Not_AlreadyRequested : TestSetup
     {
-        private RequestSoaSubmittedAlreadyViewModel _mockLearnerDetails;
+        private RequestSoaAlreadySubmittedViewModel _mockLearnerDetails;
 
         public override void Given()
         {
             ProfileId = 11;
             ResultsAndCertificationConfiguration.SoaRerequestInDays = 21;
-            _mockLearnerDetails = new RequestSoaSubmittedAlreadyViewModel
+            _mockLearnerDetails = new RequestSoaAlreadySubmittedViewModel
             {
                 PathwayStatus = RegistrationPathwayStatus.Withdrawn,
                 RequestedOn = DateTime.Today.AddMonths(-1)

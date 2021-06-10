@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => s.GetEnglishAndMathsStatusDisplayText))
                 .ForMember(d => d.ProviderAddress, opts => opts.MapFrom(s => s.ProviderAddress));
 
-            CreateMap<PrintRequestSnapshot, RequestSoaSubmittedAlreadyViewModel>()
+            CreateMap<PrintRequestSnapshot, RequestSoaAlreadySubmittedViewModel>()
                 .ForMember(d => d.RequestedOn, opts => opts.MapFrom(s => s.RequestedOn.ToDobFormat()))
                 .ForMember(d => d.RequestedBy, opts => opts.MapFrom(s => s.RequestedBy))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus))
