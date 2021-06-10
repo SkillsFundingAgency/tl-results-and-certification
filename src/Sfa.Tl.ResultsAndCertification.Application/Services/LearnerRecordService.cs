@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var profilesAndQualsToUpdate = new List<TqRegistrationProfile>();
             var qualifications = await GetAllQualifications();
-            var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToList(), includeQualificationAchieved: true);
+            var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToHashSet(), includeQualificationAchieved: true);
 
             learnerRecords.ForEach(learnerRecord =>
             {
@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             var profilesToUpdate = new List<TqRegistrationProfile>();
-            var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToList());
+            var registrationProfiles = await GetRegistrationProfilesByIds(learnerRecords.Select(x => x.ProfileId).ToHashSet());
 
             learnerRecords.ForEach(learnerRecord =>
             {
@@ -124,7 +124,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return new LearnerGenderResponse { IsSuccess = true, LrsCount = learnerRecords.Count(), ModifiedCount = profilesToUpdate.Count(), SavedCount = 0 };
             }
         }
-
 
         private static void ProcessLearningEvents(List<Qualification> qualifications, LearnerRecordDetails learnerRecord)
         {
@@ -217,7 +216,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return profile != null && (profile.IsRcFeed == null || profile.IsRcFeed.Value == false);
         }
         
-        private async Task<List<TqRegistrationProfile>> GetRegistrationProfilesByIds(List<int> profileIds, bool includeQualificationAchieved = false)
+        private async Task<List<TqRegistrationProfile>> GetRegistrationProfilesByIds(HashSet<int> profileIds, bool includeQualificationAchieved = false)
         {
             var registrationQueryable = _tqRegistrationRepository.GetManyAsync(p => profileIds.Contains(p.Id));
 
