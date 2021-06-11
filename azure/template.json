@@ -476,6 +476,26 @@
                 "internal-api-app-insights"
             ]
         },
+		{
+            "apiVersion": "2017-05-10",
+            "name": "func-app-insights",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'application-insights.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appInsightsName": {
+                        "value": "[variables('functionAppName')]"
+                    },
+                    "attachedService": {
+                        "value": "[variables('functionAppName')]"
+                    }
+                }
+            }
+        },
         {
             "apiVersion": "2017-05-10",
             "name": "function-app",
@@ -516,7 +536,7 @@
                             },
                             {
                                 "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                                "value": "[reference('api-app-insights').outputs.InstrumentationKey.value]"
+                                "value": "[reference('func-app-insights').outputs.InstrumentationKey.value]"
                             },
                             {
                                 "name": "BlobStorageConnectionString",
