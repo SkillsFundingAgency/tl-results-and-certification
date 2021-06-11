@@ -3,8 +3,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +13,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
 {
     public class When_GetPrintRequestSnapshotAsync_IsCalled : StatementOfAchievementRepositoryBaseTest
     {
-        private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private PrintRequestSnapshot _actualResult;
 
         // Seed data variables
         private IList<TqRegistrationProfile> _profiles;
-        private List<TqRegistrationPathway> _registrationPathways;
         private IList<PrintCertificate> _printCertificates;
 
         public override void Given()
         {
             _profiles = new List<TqRegistrationProfile>();
-            _ulns = new Dictionary<long, RegistrationPathwayStatus>
+            var ulns = new Dictionary<long, RegistrationPathwayStatus>
             {
                 { 1111111111, RegistrationPathwayStatus.Withdrawn },
                 { 1111111112, RegistrationPathwayStatus.Withdrawn }
@@ -34,11 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
 
             // Seed Registrations
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
-            foreach (var uln in _ulns)
+
+            foreach (var uln in ulns)
                 _profiles.Add(SeedRegistrationDataByStatus(uln.Key, uln.Value, TqProvider));
 
-            // Seed PrintCertificate
-            SeedPrintCertificates();
+            // Seed PrintCertificate            
+            _printCertificates = SeedPrintCertificates(_profiles.Select(x => x.TqRegistrationPathways.FirstOrDefault()).ToList());
 
             StatementOfAchievementRepository = new StatementOfAchievementRepository(DbContext, StatementOfAchievementRepositoryLogger);
         }
@@ -53,8 +50,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             if (_actualResult != null)
                 return;
 
-            var profileId = _profiles.FirstOrDefault(x => x.UniqueLearnerNumber == uln)?.Id ?? 0;
-            int pathwayId = profileId != 0 ? _registrationPathways.First(x => x.TqRegistrationProfileId == profileId).TqRegistrationProfileId : 0;
+            var profile = _profiles.FirstOrDefault(x => x.UniqueLearnerNumber == uln);
+            var profileId = profile?.Id ?? 0;
+            int pathwayId = profile?.TqRegistrationPathways?.FirstOrDefault(x => x.TqRegistrationProfileId == profileId)?.TqRegistrationProfileId ?? 0;
 
             _actualResult = await StatementOfAchievementRepository.GetPrintRequestSnapshotAsync(providerUkprn, profileId, pathwayId);
         }
@@ -71,12 +69,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
                 return;
             }
 
-            var expectedProfile = _printCertificates.FirstOrDefault(x => x.Uln == uln);
+            var expectedPrintCertificate = _printCertificates.FirstOrDefault(x => x.Uln == uln);
 
-            _actualResult.RegistrationPathwayStatus.Should().Be(expectedProfile.TqRegistrationPathway.Status);
-            _actualResult.RequestDetails.Should().Be(expectedProfile.DisplaySnapshot);
-            _actualResult.RequestedOn.Should().Be(expectedProfile.CreatedOn);
-            _actualResult.RequestedBy.Should().Be(expectedProfile.CreatedBy);
+            expectedPrintCertificate.Should().NotBeNull();
+            _actualResult.RegistrationPathwayStatus.Should().Be(expectedPrintCertificate.TqRegistrationPathway.Status);
+            _actualResult.RequestDetails.Should().Be(expectedPrintCertificate.DisplaySnapshot);
+            _actualResult.RequestedOn.Should().Be(expectedPrintCertificate.CreatedOn);
+            _actualResult.RequestedBy.Should().Be(expectedPrintCertificate.CreatedBy);
         }
 
         public static IEnumerable<object[]> Data
@@ -92,14 +91,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
                     new object[] { 1111111112, Provider.WalsallCollege, false },
                 };
             }
-        }
-
-        private void SeedPrintCertificates()
-        {
-            _registrationPathways = _profiles.Select(x => x.TqRegistrationPathways.FirstOrDefault()).ToList();
-            var printCertificates = new PrintCertificateBuilder().BuildList(_registrationPathways);
-            _printCertificates = PrintCertificateDataProvider.CreatePrintCertificate(DbContext, printCertificates);
-            DbContext.SaveChangesAsync();
         }
     }
 }

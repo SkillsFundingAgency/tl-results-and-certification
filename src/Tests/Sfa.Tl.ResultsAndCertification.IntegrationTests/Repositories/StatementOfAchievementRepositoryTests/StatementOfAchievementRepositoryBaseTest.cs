@@ -234,6 +234,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
 
             return qualifications;
         }
+
+        public IList<PrintCertificate> SeedPrintCertificates(IList<TqRegistrationPathway> tqRegistrationPathway)
+        {
+            var printCertificates = PrintCertificateDataProvider.CreatePrintCertificate(DbContext, new PrintCertificateBuilder().BuildList(tqRegistrationPathway));
+            DbContext.SaveChanges();
+            return printCertificates;
+        }
     }
 
     public enum Provider
