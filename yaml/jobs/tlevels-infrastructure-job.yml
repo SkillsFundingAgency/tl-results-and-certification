@@ -46,7 +46,6 @@ jobs:
             -uiCustomHostName "$(UICustomHostName)"
             -uiCertificateName "$(CertificateName)"
             -internalApiCustomHostname "$(InternalApiCustomHostname)"
-            #-functionCustomHostname "$(FunctionCustomHostname)"
             -functionCertificateName "$(LearningRecordServiceCertificateName)"
             -storageAccountContainerArray "$(storageAccountContainerArray)"
             -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
