@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         {
             StatementOfAchievementLoader.Received(1).FindSoaLearnerRecordAsync(ProviderUkprn, ViewModel.SearchUln.ToLong());
             CacheService.Received(1).SetAsync(CacheKey, ViewModel);
-            CacheService.Received(1).RemoveAsync<FindSoaLearnerRecord>(CacheKey);
+            CacheService.Received(1).RemoveAsync<RequestSoaUniqueLearnerNumberViewModel>(CacheKey);
         }
 
         [Fact]

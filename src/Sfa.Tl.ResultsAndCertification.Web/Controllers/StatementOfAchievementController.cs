@@ -111,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                await _cacheService.RemoveAsync<FindSoaLearnerRecord>(CacheKey);
+                await _cacheService.RemoveAsync<RequestSoaUniqueLearnerNumberViewModel>(CacheKey);
                 return RedirectToRoute(RouteConstants.RequestSoaCheckAndSubmit, new { profileId = soaLearnerRecord.ProfileId });
             }
         }
