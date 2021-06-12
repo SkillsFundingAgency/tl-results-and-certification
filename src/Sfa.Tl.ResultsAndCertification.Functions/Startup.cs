@@ -21,7 +21,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Linq;
 using System.Reflection;
-using System.ServiceModel;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 namespace Sfa.Tl.ResultsAndCertification.Functions
