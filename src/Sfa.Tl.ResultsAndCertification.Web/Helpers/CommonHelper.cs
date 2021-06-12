@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
 
         public static bool IsSoaAlreadyRequested(int reRequestAllowedInDays, DateTime? requestedDate)
         {
-            return requestedDate.HasValue && DateTime.UtcNow < requestedDate.Value.AddDays(reRequestAllowedInDays);
+            return requestedDate.HasValue && DateTime.Today < requestedDate.Value.Date.AddDays(reRequestAllowedInDays);
         }
     }
 }
