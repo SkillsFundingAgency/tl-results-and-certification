@@ -14,23 +14,25 @@ using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Functions;
+using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Functions.Services;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.ServiceModel;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
     public class Startup : FunctionsStartup
     {
-        protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
+        private ResultsAndCertificationConfiguration _configuration;
         
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            ResultsAndCertificationConfiguration = ConfigurationLoader.Load(
+            _configuration = ConfigurationLoader.Load(
                Environment.GetEnvironmentVariable(Constants.EnvironmentNameConfigKey),
                Environment.GetEnvironmentVariable(Constants.ConfigurationStorageConnectionStringConfigKey),
                Environment.GetEnvironmentVariable(Constants.VersionConfigKey),
@@ -43,11 +45,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         {
             //Inject DbContext
             services.AddDbContext<ResultsAndCertificationDbContext>(options =>
-                options.UseSqlServer(ResultsAndCertificationConfiguration.SqlConnectionString,
+                options.UseSqlServer(_configuration.SqlConnectionString,
                     builder => builder.UseNetTopologySuite()
                                       .EnableRetryOnFailure()), ServiceLifetime.Transient);
 
-            services.AddSingleton(ResultsAndCertificationConfiguration);
+            services.AddSingleton(_configuration);
             Assembly[] assemblies = new Assembly[] { typeof(Startup).Assembly, typeof(Startup).Assembly.GetReferencedAssemblies().Where(a => a.FullName.Contains("Sfa.Tl.ResultsAndCertification.Application")).Select(Assembly.Load).FirstOrDefault() };
             services.AddAutoMapper(assemblies);
             services.AddHttpContextAccessor();
@@ -72,11 +74,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
         private void RegisterApiClients(IServiceCollection services)
         {
-            var lrsCertificate = CertificateService.GetLearningRecordServiceCertificate(ResultsAndCertificationConfiguration).GetAwaiter().GetResult();
+            var lrsCertificate = CertificateService.GetLearningRecordServiceCertificate(_configuration).GetAwaiter().GetResult();
 
             services.AddTransient<ILearnerServiceR9Client>(learnerClient =>
             {
                 var client = new LearnerServiceR9Client();
+                client.Endpoint.Address = CommonHelper.GetLrsEndpointAddress(_configuration.LearningRecordServiceSettings.BaseUri, ApiConstants.PlrServiceUri);
                 client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
                 return client;
             });
@@ -85,6 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<ILearnerPortTypeClient>(learnerClient =>
             {
                 var client = new LearnerPortTypeClient();
+                client.Endpoint.Address = CommonHelper.GetLrsEndpointAddress(_configuration.LearningRecordServiceSettings.BaseUri, ApiConstants.LearnerServiceUri);
                 client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
                 return client;
             });

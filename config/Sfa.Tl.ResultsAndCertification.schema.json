@@ -264,6 +264,11 @@
     },
     "LearningRecordServiceSettings": {
       "properties": {
+		"BaseUri": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "LearningRecordServiceBaseUri"
+        },
         "VendorId": {
           "minLength": 1,
           "type": "string",
@@ -292,6 +297,7 @@
       },
       "additionalProperties": false,
       "required": [
+	    "BaseUri",
         "VendorId",
         "Ukprn",
         "Username",

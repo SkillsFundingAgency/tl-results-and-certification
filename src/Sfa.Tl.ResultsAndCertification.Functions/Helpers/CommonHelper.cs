@@ -2,12 +2,12 @@
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
+using System.ServiceModel;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.Helpers
 {
     public static class CommonHelper
     {
-
         public static FunctionLogDetails CreateFunctionLogRequest(string functionName)
         {
             return new FunctionLogDetails
@@ -29,5 +29,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Helpers
             }
             return functionLogDetails;
         }
+
+        public static EndpointAddress GetLrsEndpointAddress(string baseUri, string endpointName)
+        {
+            return new EndpointAddress(new Uri($"{baseUri?.TrimEnd('/')}{endpointName}"));
+        }        
     }
 }

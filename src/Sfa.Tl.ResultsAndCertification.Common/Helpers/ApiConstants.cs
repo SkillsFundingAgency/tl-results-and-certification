@@ -72,5 +72,10 @@
         public const string GetSoaLearnerRecordDetailsUri = "/api/statementofachievement/GetSoaLearnerRecordDetails/{0}/{1}";
         public const string CreateSoaPrintingRequestUri = "/api/statementofachievement/CreateSoaPrintingRequest";
         public const string GetPrintRequestSnapshotUri = "/api/statementofachievement/GetPrintRequestSnapshot/{0}/{1}/{2}";
+
+
+        //LRS Api Uri's
+        public const string LearnerServiceUri = "/LearnerService.svc";
+        public const string PlrServiceUri = "/LearnerServiceR9.svc";
     }
 }
