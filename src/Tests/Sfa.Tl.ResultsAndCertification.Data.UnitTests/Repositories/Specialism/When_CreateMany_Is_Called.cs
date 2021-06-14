@@ -11,9 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
 {
     public class When_CreateMany_Is_Called : BaseTest<TlSpecialism>
     {
-        private IList<TlSpecialism> _data;
-        private int _result;
-        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Ncfe;
+        private IList<TlSpecialism> _data;        
+        private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Ncfe;
 
         public override void Given()
         {
@@ -22,11 +21,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
 
         public async override Task When()
         {
-            _result = await Repository.CreateManyAsync(_data);
+            await Repository.CreateManyAsync(_data);
         }
 
         [Fact]
-        public void Then_Two_Record_Should_Have_Been_Created() 
+        public void Then_Expected_Record_Should_Have_Been_Created() 
         {
             var result = Repository.GetManyAsync();
             result.Count().Should().Be(_data.Count());

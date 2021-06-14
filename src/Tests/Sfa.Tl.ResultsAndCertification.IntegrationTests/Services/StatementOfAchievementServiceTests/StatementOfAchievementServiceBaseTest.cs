@@ -23,6 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
         protected ILogger<StatementOfAchievementService> StatementOfAchievementServiceLogger;
         protected IStatementOfAchievementRepository StatementOfAchievementRepository;
         protected ILogger<StatementOfAchievementRepository> StatementOfAchievementRepositoryLogger;
+        protected IRepository<Batch> BatchRepository;
+        protected ILogger<GenericRepository<Batch>> BatchRepositoryLogger;
 
         // Data Seed variables
         protected TlAwardingOrganisation TlAwardingOrganisation;
@@ -40,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
 
         protected virtual void CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ProviderAddressMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(StatementOfAchievementMapper).Assembly));
             TrainingProviderMapper = new Mapper(mapperConfig);
         }
 
@@ -168,7 +170,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
                 var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, activePathwayAssessment);
                 if (!seedPathwayAssessmentsAsActive)
                 {
-                    tqPathwayAssessment.IsOptedin = pathwayRegistration.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
+                    tqPathwayAssessment.IsOptedin = pathwayRegistration.Status == RegistrationPathwayStatus.Withdrawn;
                     tqPathwayAssessment.EndDate = DateTime.UtcNow;
                 }
 
@@ -196,7 +198,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             var tqPathwayResult = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, activePathwayResult);
             if (!seedPathwayResultsAsActive)
             {
-                tqPathwayResult.IsOptedin = pathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
+                tqPathwayResult.IsOptedin = pathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn;
                 tqPathwayResult.EndDate = DateTime.UtcNow;
             }
 
@@ -227,6 +229,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             return qualifications;
         }
 
+        public IList<PrintCertificate> SeedPrintCertificates(IList<TqRegistrationPathway> tqRegistrationPathway)
+        {
+            var printCertificates = PrintCertificateDataProvider.CreatePrintCertificate(DbContext, new PrintCertificateBuilder().BuildList(tqRegistrationPathway));
+            DbContext.SaveChanges();
+            return printCertificates;
+        }
     }
 
     public enum Provider

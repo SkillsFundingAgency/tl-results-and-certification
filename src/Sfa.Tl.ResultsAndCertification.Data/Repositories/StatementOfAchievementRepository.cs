@@ -61,19 +61,25 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                           let ipRecord = _dbContext.IndustryPlacement.FirstOrDefault(ip => ip.TqRegistrationPathwayId == tqPathway.Id)
                                           let pathwayResults = _dbContext.TqPathwayAssessment.Join(_dbContext.TqPathwayResult, pa => pa.Id, pr => pr.TqPathwayAssessmentId, (pa, pr) => new { pa, pr }).Where(x => x.pa.TqRegistrationPathwayId == tqPathway.Id && x.pa.IsOptedin && x.pr.IsOptedin)
                                           let specialism = _dbContext.TqRegistrationSpecialism.FirstOrDefault(s => s.TqRegistrationPathwayId == tqPathway.Id && s.IsOptedin)
+                                          let printRequest = _dbContext.PrintCertificate.OrderByDescending(o => o.CreatedOn).FirstOrDefault(c => c.Uln == tqProfile.UniqueLearnerNumber && c.TqRegistrationPathwayId == tqPathway.Id)
                                           where tqProfile.Id == profileId && tlProvider.UkPrn == providerUkprn
                                           select new SoaLearnerRecordDetails
                                           {
                                               ProfileId = tqProfile.Id,
                                               Uln = tqProfile.UniqueLearnerNumber,
-                                              LearnerName = tqProfile.Firstname + " " + tqProfile.Lastname,
+                                              Firstname = tqProfile.Firstname,
+                                              Lastname = tqProfile.Lastname,
                                               DateofBirth = tqProfile.DateofBirth,
-                                              ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
-
+                                              ProviderName = tlProvider.Name,
+                                              ProviderUkprn = tlProvider.UkPrn,
                                               TlevelTitle = tlPathway.TlevelTitle,
-                                              PathwayName = tlPathway.Name + " (" + tlPathway.LarId + ")",
+
+                                              RegistrationPathwayId = tqPathway.Id,
+                                              PathwayName = tlPathway.Name,
+                                              PathwayCode = tlPathway.LarId,
                                               PathwayGrade = pathwayResults.OrderByDescending(r => r.pr.CreatedOn).FirstOrDefault().pr.TlLookup.Value,
-                                              SpecialismName = specialism.TlSpecialism.Name + " (" + specialism.TlSpecialism.LarId + ")",
+                                              SpecialismName = specialism.TlSpecialism.Name,
+                                              SpecialismCode = specialism.TlSpecialism.LarId,
 
                                               IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
                                               IsSendLearner = tqProfile.IsSendLearner,
@@ -84,6 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                                                             .OrderByDescending(pa => pa.CreatedOn)
                                                                                             .Select(address => new Address
                                                                                             {
+                                                                                                AddressId = address.Id,
                                                                                                 DepartmentName = address.DepartmentName,
                                                                                                 OrganisationName = address.OrganisationName,
                                                                                                 AddressLine1 = address.AddressLine1,
@@ -91,10 +98,36 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                                                                 Town = address.Town,
                                                                                                 Postcode = address.Postcode
                                                                                             }).FirstOrDefault(),
-                                              Status = tqPathway.Status
+                                              Status = tqPathway.Status,
+
+                                              LastRequestedOn = printRequest.CreatedOn
                                           })
                                 .FirstOrDefaultAsync();
             return soaLearnerRecord;
+        }
+
+        public async Task<PrintRequestSnapshot> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId)
+        {
+            var printRequest = await (from printCert in _dbContext.PrintCertificate
+                                      join tqPathway in _dbContext.TqRegistrationPathway on printCert.TqRegistrationPathwayId equals tqPathway.Id
+                                      join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
+                                      join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
+                                      join tlProvider in _dbContext.TlProvider on tqProvider.TlProviderId equals tlProvider.Id
+                                      where
+                                          tlProvider.UkPrn == providerUkprn &&
+                                          tqProfile.Id == profileId &&
+                                          printCert.Uln == tqProfile.UniqueLearnerNumber &&
+                                          printCert.TqRegistrationPathwayId == pathwayId
+                                      orderby printCert.CreatedOn descending
+                                      select new PrintRequestSnapshot
+                                      {
+                                          RegistrationPathwayStatus = tqPathway.Status,
+                                          RequestDetails = printCert.DisplaySnapshot,
+                                          RequestedOn = printCert.CreatedOn,
+                                          RequestedBy = printCert.CreatedBy
+                                      })
+                                .FirstOrDefaultAsync();
+            return printRequest;
         }
     }
 }

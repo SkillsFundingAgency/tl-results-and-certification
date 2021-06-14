@@ -305,6 +305,17 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<SoaLearnerRecordDetails>(requestUri);
         }
 
+        public async Task<SoaPrintingResponse> CreateSoaPrintingRequestAsync(SoaPrintingRequest request)
+        {
+            return await PostAsync<SoaPrintingRequest, SoaPrintingResponse>(ApiConstants.CreateSoaPrintingRequestUri, request);
+        }
+
+        public async Task<PrintRequestSnapshot> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId)
+        {
+            var requestUri = string.Format(ApiConstants.GetPrintRequestSnapshotUri, providerUkprn, profileId, pathwayId);
+            return await GetAsync<PrintRequestSnapshot>(requestUri);
+        }
+
         #region Private Methods
 
         /// <summary>
@@ -388,23 +399,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var json = JsonConvert.SerializeObject(content, IsoDateFormatSettings);
             return new StringContent(json, Encoding.UTF8, "application/json");
-        }
-
-        /// <summary>
-        /// Gets the microsoft date format settings.
-        /// </summary>
-        /// <value>
-        /// The microsoft date format settings.
-        /// </value>
-        private static JsonSerializerSettings MicrosoftDateFormatSettings
-        {
-            get
-            {
-                return new JsonSerializerSettings
-                {
-                    DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
-                };
-            }
         }
 
         /// <summary>

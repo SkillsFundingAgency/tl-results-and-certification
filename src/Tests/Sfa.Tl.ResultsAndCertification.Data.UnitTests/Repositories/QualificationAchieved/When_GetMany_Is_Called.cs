@@ -42,9 +42,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Qualificati
             result.QualificationId.Should().Be(testData.QualificationId);
             result.QualificationGradeId.Should().Be(testData.QualificationGradeId);
             result.IsAchieved.Should().Be(testData.IsAchieved);
-            result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
+            result.CreatedBy.Should().Be(Constants.CreatedByUser);
             result.CreatedOn.Should().Be(Constants.CreatedOn);
-            result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);
+            result.ModifiedBy.Should().Be(Constants.ModifiedByUser);
             result.ModifiedOn.Should().Be(Constants.ModifiedOn);
         }
     }

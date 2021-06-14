@@ -250,6 +250,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Statement of achievement requested.
+        /// </summary>
+        public static string StatementOfAchievementRequested {
+            get {
+                return ResourceManager.GetString("StatementOfAchievementRequested", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to T Level details.
         /// </summary>
         public static string Tlevel_Details {

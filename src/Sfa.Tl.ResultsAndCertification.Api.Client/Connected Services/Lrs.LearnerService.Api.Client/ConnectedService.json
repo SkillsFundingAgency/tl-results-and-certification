@@ -1,9 +1,9 @@
 ﻿{
   "ProviderId": "Microsoft.VisualStudio.ConnectedService.Wcf",
-  "Version": "15.0.40203.910",  
+  "Version": "15.0.40203.910",
   "ExtendedData": {
     "inputs": [
-      "https://cmp-ws.dev.lrs.education.gov.uk/LearnerService.svc"
+      "https://ws.lrs.education.gov.uk/LearnerService.svc"
     ],
     "collectionTypes": [
       "System.Array",

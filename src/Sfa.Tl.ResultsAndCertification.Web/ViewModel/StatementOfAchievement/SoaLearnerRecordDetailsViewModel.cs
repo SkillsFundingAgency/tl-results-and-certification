@@ -24,13 +24,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
+        public string ProviderDisplayName { get; set; }
         public string ProviderName { get; set; }
+        public long ProviderUkprn { get; set; }
+        public DateTime? LastPrintRequestedDate { get; set; }
 
         //Learner's technical qualification details
         public string TlevelTitle { get; set; }
+        public int RegistrationPathwayId { get; set; }
+        public string PathwayDisplayName { get; set; }
         public string PathwayName { get; set; }
+        public string PathwayCode { get; set; }
         public string PathwayGrade { get; set; }
+        public string SpecialismDisplayName { get; set; }
         public string SpecialismName { get; set; }
+        public string SpecialismCode { get; set; }
         public string SpecialismGrade { get; set; }
 
         //Learner's T level component achievements
@@ -74,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "providername",
             Title = RequestSoaCheckAndSubmitContent.Title_Provider_Text,
-            Value = ProviderName
+            Value = ProviderDisplayName
         };
 
         public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel
@@ -88,7 +96,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "corecode",
             Title = RequestSoaCheckAndSubmitContent.Title_Core_Code_Text,
-            Value = string.Format(RequestSoaCheckAndSubmitContent.Core_Code_Value, PathwayName, PathwayGrade),
+            Value = string.Format(RequestSoaCheckAndSubmitContent.Core_Code_Value, PathwayDisplayName, PathwayGrade),
             IsRawHtml = true
         };
 
@@ -96,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "specialismcode",
             Title = RequestSoaCheckAndSubmitContent.Title_Occupational_Specialism_Text,
-            Value = string.Format(RequestSoaCheckAndSubmitContent.Occupational_Specialism_Value, SpecialismName, SpecialismGrade),
+            Value = string.Format(RequestSoaCheckAndSubmitContent.Occupational_Specialism_Value, SpecialismDisplayName, SpecialismGrade),
             IsRawHtml = true
         };
 
@@ -118,7 +126,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "department",
             Title = RequestSoaCheckAndSubmitContent.Title_Department_Text,
-            Value = ProviderAddress.DepartmentName
+            Value = ProviderAddress?.DepartmentName
         };
 
         public SummaryItemModel SummaryAddress => new SummaryItemModel
@@ -150,12 +158,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             get
             {
-                var addressLines = new List<string> { ProviderAddress.OrganisationName, ProviderAddress.AddressLine1, ProviderAddress.AddressLine2, ProviderAddress.Town, ProviderAddress.Postcode };
+                var addressLines = new List<string> { ProviderAddress?.OrganisationName, ProviderAddress?.AddressLine1, ProviderAddress?.AddressLine2, ProviderAddress?.Town, ProviderAddress?.Postcode };
                 return string.Join(RequestSoaCheckAndSubmitContent.Html_Line_Break, addressLines.Where(x => !string.IsNullOrWhiteSpace(x)));
             }
         }
 
-        private string GetIndustryPlacementDisplayText
+        public string GetIndustryPlacementDisplayText
         {
             get
             {
@@ -169,7 +177,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             }
         }
 
-        private string GetEnglishAndMathsStatusDisplayText
+        public string GetEnglishAndMathsStatusDisplayText
         {
             get
             {
@@ -178,13 +186,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
                     (true, false, false) => EnglishAndMathsStatusContent.Lrs_Not_Achieved_Display_Text,
                     (true, true, false) => EnglishAndMathsStatusContent.Lrs_Achieved_Display_Text,
                     (true, true, true) => EnglishAndMathsStatusContent.Lrs_Achieved_With_Send_Display_Text,
-                    
+
                     (false, false, false) => EnglishAndMathsStatusContent.Not_Achieved_Display_Text,
                     (false, true, false) => EnglishAndMathsStatusContent.Achieved_Display_Text,
                     (false, true, true) => EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text,
                     _ => string.Empty,
                 };
             }
+        }
+
+        public bool IsSoaRequestedAlready(int reRequestAllowedInDays)
+        {
+            return LastPrintRequestedDate.HasValue && LastPrintRequestedDate > DateTime.Now.AddDays(-reRequestAllowedInDays);
         }
     }
 }

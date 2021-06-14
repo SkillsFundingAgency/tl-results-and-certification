@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Qualificati
             _result.QualificationId.Should().Be(_data.QualificationId);
             _result.QualificationGradeId.Should().Be(_data.QualificationGradeId);
             _result.IsAchieved.Should().Be(_data.IsAchieved);
-            _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
+            _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);
             _result.ModifiedOn.Should().Be(_data.ModifiedOn);

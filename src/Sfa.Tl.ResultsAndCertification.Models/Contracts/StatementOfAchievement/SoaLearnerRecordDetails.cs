@@ -9,15 +9,20 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
         //Learner's registration details
         public int ProfileId { get; set; }
         public long Uln { get; set; }
-        public string LearnerName { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
+        public long ProviderUkprn { get; set; }
 
         //Learner's technical qualification details
         public string TlevelTitle { get; set; }
+        public int RegistrationPathwayId { get; set; }
         public string PathwayName { get; set; }
+        public string PathwayCode { get; set; }
         public string PathwayGrade { get; set; }
         public string SpecialismName { get; set; }
+        public string SpecialismCode { get; set; }
         public string SpecialismGrade { get; set; }
 
         //Learner's T level component achievements
@@ -37,5 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
         public bool IsLearnerRegistered => Status == RegistrationPathwayStatus.Active || Status == RegistrationPathwayStatus.Withdrawn;
         public bool IsNotWithdrawn => Status == RegistrationPathwayStatus.Active;
         public bool IsIndustryPlacementCompleted => IndustryPlacementStatus == IndustryPlacementStatus.Completed || IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration;
+
+        public DateTime? LastRequestedOn { get; set; }
     }
 }

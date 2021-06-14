@@ -90,7 +90,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             StatementOfAchievementRepository = new StatementOfAchievementRepository(DbContext, StatementOfAchievementRepositoryLogger);
             StatementOfAchievementServiceLogger = new Logger<StatementOfAchievementService>(new NullLoggerFactory());
 
-            StatementOfAchievementService = new StatementOfAchievementService(StatementOfAchievementRepository, TrainingProviderMapper, StatementOfAchievementServiceLogger);
+            BatchRepositoryLogger = new Logger<GenericRepository<Batch>>(new NullLoggerFactory());
+            BatchRepository = new GenericRepository<Batch>(BatchRepositoryLogger, DbContext);
+
+            StatementOfAchievementService = new StatementOfAchievementService(StatementOfAchievementRepository, BatchRepository, TrainingProviderMapper, StatementOfAchievementServiceLogger);
         }
 
         public override Task When()
@@ -124,7 +127,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             expectedProfile.Should().NotBeNull();
 
             var expectedProvider = TlProviders.FirstOrDefault(p => p.UkPrn == (long)provider);
-            var expectedProviderName = expectedProvider != null ? $"{expectedProvider.Name} ({expectedProvider.UkPrn})" : null;
+            var expectedProviderName = expectedProvider?.Name;
+            var expectedProviderUkprn = expectedProvider != null ? expectedProvider.UkPrn : (long?)null;
             var expectedTlevelTitle = Pathway.TlevelTitle;
             var expectedIsLearnerRegistered = expectedStatus == RegistrationPathwayStatus.Active || expectedStatus == RegistrationPathwayStatus.Withdrawn;
             var expecedIpStatus = _testCriteriaData.FirstOrDefault(x => x.uln == expectedProfile.UniqueLearnerNumber).ipStatus;
@@ -132,7 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
             var expectedHasResult = _profilesWithResults.Contains(expectedProfile.UniqueLearnerNumber);
             var expectedHasLrsEnglishAndMaths = expectedProfile.IsRcFeed == false && expectedProfile.QualificationAchieved.Any();
             var providerAddress = expectedProvider?.TlProviderAddresses?.OrderByDescending(ad => ad.CreatedOn)?.FirstOrDefault();
-            var expectedProviderAddress = new Address { OrganisationName = providerAddress?.OrganisationName, DepartmentName = providerAddress?.DepartmentName, AddressLine1 = providerAddress?.AddressLine1, AddressLine2 = providerAddress?.AddressLine2, Town = providerAddress?.Town, Postcode = providerAddress?.Postcode };
+            var expectedProviderAddress = new Address { AddressId = providerAddress?.Id ?? 0, OrganisationName = providerAddress?.OrganisationName, DepartmentName = providerAddress?.DepartmentName, AddressLine1 = providerAddress?.AddressLine1, AddressLine2 = providerAddress?.AddressLine2, Town = providerAddress?.Town, Postcode = providerAddress?.Postcode };
 
             var expectedPathway = (expectedStatus == RegistrationPathwayStatus.Withdrawn || expectedStatus == RegistrationPathwayStatus.Transferred)
                 ? expectedProfile.TqRegistrationPathways.FirstOrDefault(p => p.Status == expectedStatus && p.EndDate != null)
@@ -152,24 +156,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
                 ? (expectedPathwayAssessment?.TqPathwayResults?.FirstOrDefault(x => x.IsOptedin && x.EndDate != null))
                 : (expectedPathwayAssessment?.TqPathwayResults?.FirstOrDefault(x => x.IsOptedin && x.EndDate == null));
 
-            var expectedPathwayName = $"{expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.Name} ({expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId})";
             var expectedPathwayGrade = expectedPathwayResult?.TlLookup.Value;
-
-            var expectedSpecialismName = $"{expectedSpecialim.TlSpecialism.Name} ({expectedSpecialim.TlSpecialism.LarId })";
 
             _actualResult.Should().NotBeNull();
             _actualResult.ProfileId.Should().Be(expectedProfile.Id);
             _actualResult.Uln.Should().Be(uln);
-            _actualResult.LearnerName.Should().Be($"{expectedProfile.Firstname} {expectedProfile.Lastname}");
+            _actualResult.Firstname.Should().Be(expectedProfile.Firstname);
+            _actualResult.Lastname.Should().Be(expectedProfile.Lastname);
             _actualResult.DateofBirth.Should().Be(expectedProfile.DateofBirth);
             _actualResult.ProviderName.Should().Be(expectedProviderName);
+            _actualResult.ProviderUkprn.Should().Be(expectedProviderUkprn);
             _actualResult.TlevelTitle.Should().Be(expectedTlevelTitle);
 
-            _actualResult.PathwayName.Should().Be(expectedPathwayName);
+            _actualResult.RegistrationPathwayId.Should().Be(expectedPathway.Id);
+            _actualResult.PathwayName.Should().Be(expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.Name);
+            _actualResult.PathwayCode.Should().Be(expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId);
             _actualResult.PathwayGrade.Should().Be(expectedPathwayGrade);
-            _actualResult.SpecialismName.Should().Be(expectedSpecialismName);
+            _actualResult.SpecialismName.Should().Be(expectedSpecialim.TlSpecialism.Name);
+            _actualResult.SpecialismCode.Should().Be(expectedSpecialim.TlSpecialism.LarId);
             _actualResult.SpecialismGrade.Should().BeNull();
-
 
             _actualResult.IsEnglishAndMathsAchieved.Should().Be(expectedProfile.IsEnglishAndMathsAchieved ?? false);
             _actualResult.IsSendLearner.Should().Be(expectedProfile.IsSendLearner);

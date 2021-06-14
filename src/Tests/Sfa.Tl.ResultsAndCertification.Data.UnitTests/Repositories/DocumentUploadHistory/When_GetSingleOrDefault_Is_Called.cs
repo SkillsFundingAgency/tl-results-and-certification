@@ -29,14 +29,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.DocumentUpl
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
             _result.TlAwardingOrganisationId.Should().Be(_data.TlAwardingOrganisationId);
-            _result.BlobFileName.Should().BeEquivalentTo(_data.BlobFileName);
+            _result.BlobFileName.Should().Be(_data.BlobFileName);
             _result.BlobUniqueReference.Should().Be(_data.BlobUniqueReference);
             _result.DocumentType.Should().Be(_data.DocumentType);
             _result.FileType.Should().Be(_data.FileType);
             _result.Status.Should().Be(_data.Status);
-            _result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
+            _result.CreatedBy.Should().Be(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
-            _result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);
+            _result.ModifiedBy.Should().Be(Constants.ModifiedByUser);
             _result.ModifiedOn.Should().Be(Constants.ModifiedOn);
         }
     }

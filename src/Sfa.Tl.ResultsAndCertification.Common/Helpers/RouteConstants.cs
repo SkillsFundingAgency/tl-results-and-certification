@@ -270,6 +270,14 @@
         public const string RequestSoaNotAvailableNoIpStatus = "RequestSoaNotAvailableNoIpStatus";
         public const string RequestSoaNotAvailableNoResults = "RequestSoaNotAvailableNoResults";
         public const string RequestSoaCheckAndSubmit = "RequestSoaCheckAndSubmit";
+        public const string SubmitRequestSoaCheckAndSubmit = "SubmitRequestSoaCheckAndSubmit";
+        public const string RequestSoaConfirmation = "RequestSoaConfirmation";
+        public const string RequestSoaCancel = "RequestSoaCancel";
+        public const string SubmitRequestSoaCancel = "SubmitRequestSoaCancel";
+        public const string RequestSoaChangeComponentAchievements = "RequestSoaChangeComponentAchievements";
+        public const string RequestSoaChangePostalAddress = "RequestSoaChangePostalAddress";
+        public const string RequestSoaAlreadySubmitted = "RequestSoaAlreadySubmitted";
+
         #endregion
     }
 }

@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
             _result.IsEnglishAndMathsAchieved.Should().Be(_data.IsEnglishAndMathsAchieved);
             _result.IsSendLearner.Should().Be(_data.IsSendLearner);
             _result.IsRcFeed.Should().Be(_data.IsRcFeed);
-            _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
+            _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);
             _result.ModifiedOn.Should().Be(_data.ModifiedOn);

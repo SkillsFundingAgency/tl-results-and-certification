@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaCheckAndSubmit
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAchievementControllerTests.RequestSoaCancelGet
 {
     public abstract class TestSetup : StatementOfAchievementControllerTestBase
     {
@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
         public async override Task When()
         {
-            Result = await Controller.RequestSoaCheckAndSubmitAsync(ProfileId);
+            Result = await Controller.RequestSoaCancelAsync(ProfileId);
         }
     }
 }

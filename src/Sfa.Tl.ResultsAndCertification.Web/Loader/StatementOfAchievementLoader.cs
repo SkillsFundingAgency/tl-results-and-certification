@@ -20,13 +20,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public async Task<FindSoaLearnerRecord> FindSoaLearnerRecordAsync(long providerUkprn, long uln)
         {
-            return await _internalApiClient.FindSoaLearnerRecordAsync(providerUkprn, uln);            
+            return await _internalApiClient.FindSoaLearnerRecordAsync(providerUkprn, uln);
         }
 
         public async Task<SoaLearnerRecordDetailsViewModel> GetSoaLearnerRecordDetailsAsync(long providerUkprn, int profileId)
         {
             var response = await _internalApiClient.GetSoaLearnerRecordDetailsAsync(providerUkprn, profileId);
             return _mapper.Map<SoaLearnerRecordDetailsViewModel>(response);
+        }
+
+        public async Task<SoaPrintingResponse> CreateSoaPrintingRequestAsync(long providerUkprn, SoaLearnerRecordDetailsViewModel viewModel)
+        {
+            var request = _mapper.Map<SoaPrintingRequest>(viewModel, opt => opt.Items["providerUkprn"] = providerUkprn);
+            return await _internalApiClient.CreateSoaPrintingRequestAsync(request);
+        }
+
+        public async Task<RequestSoaAlreadySubmittedViewModel> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId)
+        {
+            var response = await _internalApiClient.GetPrintRequestSnapshotAsync(providerUkprn, profileId, pathwayId);
+            return _mapper.Map<RequestSoaAlreadySubmittedViewModel>(response);
         }
     }
 }

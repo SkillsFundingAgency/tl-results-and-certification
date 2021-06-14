@@ -37,8 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Notificatio
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
             _result.TemplateId.Should().Be(_data.TemplateId);
-            _result.TemplateName.Should().BeEquivalentTo(_data.TemplateName);
-            _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
+            _result.TemplateName.Should().Be(_data.TemplateName);
+            _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);
             _result.ModifiedOn.Should().Be(_data.ModifiedOn);
