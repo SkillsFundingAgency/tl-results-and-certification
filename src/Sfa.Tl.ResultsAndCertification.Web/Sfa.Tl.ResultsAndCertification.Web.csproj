@@ -130,6 +130,41 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Contact.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\ProviderAddress\AddAddressCancel.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddAddressCancel.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\ProviderAddress\AddAddressConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddAddressConfirmation.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\ProviderAddress\AddAddressNotFound.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddAddressNotFound.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\ProviderAddress\AddAddressPostcode.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddAddressPostcode.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\ProviderAddress\AddPostalAddressManual.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddPostalAddressManual.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\ProviderAddress\AddAddressSelect.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AddAddressSelect.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\ProviderAddress\CheckAndSubmit.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CheckAndSubmit.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Registration\RegistrationCannotBeDeleted.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -199,6 +234,76 @@
       <DependentUpon>UploadUnsuccessful.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\ChangeComponentAchievements.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ChangeComponentAchievements.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\ChangePostalAddress.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ChangePostalAddress.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\NotAvailable.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>NotAvailable.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\PostalAddressMissing.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PostalAddressMissing.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestSoaAlreadySubmitted.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestSoaAlreadySubmitted.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestSoaCancel.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestSoaCancel.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestSoaCheckAndSubmit.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestSoaCheckAndSubmit.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestSoaConfirmation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestSoaConfirmation.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestSoaNotAvailableNoIpStatus.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestSoaNotAvailableNoIpStatus.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestSoaNotAvailableNoResults.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestSoaNotAvailableNoResults.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestSoaUlnNotFound.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestSoaUlnNotFound.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestSoaUlnNotWithdrawn.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestSoaUlnNotWithdrawn.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestStatementOfAchievement.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestStatementOfAchievement.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\StatementOfAchievement\RequestSoaUniqueLearnerNumber.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestSoaUniqueLearnerNumber.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Timeout\TimeoutConfirmation.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -590,6 +695,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>LearnerRecordDetails.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\ProviderAddress\ManagePostalAddress.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ManagePostalAddress.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -688,6 +798,34 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Contact.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Content\ProviderAddress\AddAddressCancel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddAddressCancel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ProviderAddress\AddAddressConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddAddressConfirmation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ProviderAddress\AddAddressNotFound.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddAddressNotFound.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ProviderAddress\AddAddressPostcode.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddAddressPostcode.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ProviderAddress\AddPostalAddressManual.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddPostalAddressManual.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ProviderAddress\AddAddressSelect.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AddAddressSelect.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ProviderAddress\CheckAndSubmit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CheckAndSubmit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Registration\RegistrationCannotBeDeleted.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RegistrationCannotBeDeleted.Designer.cs</LastGenOutput>
@@ -743,6 +881,58 @@
     <EmbeddedResource Update="Content\Result\UploadUnsuccessful.resx">
       <LastGenOutput>UploadUnsuccessful.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\ChangeComponentAchievements.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ChangeComponentAchievements.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\ChangePostalAddress.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ChangePostalAddress.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\NotAvailable.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>NotAvailable.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\PostalAddressMissing.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PostalAddressMissing.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaAlreadySubmitted.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestSoaAlreadySubmitted.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaCancel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestSoaCancel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaCheckAndSubmit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestSoaCheckAndSubmit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaConfirmation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestSoaConfirmation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaNotAvailableNoResults.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestSoaNotAvailableNoResults.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaUlnNotFound.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestSoaUlnNotFound.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaUlnNotWithdrawn.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestSoaUlnNotWithdrawn.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\RequestStatementOfAchievement.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestStatementOfAchievement.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\StatementOfAchievement\RequestSoaUniqueLearnerNumber.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestSoaUniqueLearnerNumber.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Timeout\TimeoutConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1059,6 +1249,10 @@
     <EmbeddedResource Update="Content\TrainingProvider\LearnerRecordDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LearnerRecordDetails.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\ProviderAddress\ManagePostalAddress.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ManagePostalAddress.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\TrainingProvider\QueryEnglishAndMathsStatus.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

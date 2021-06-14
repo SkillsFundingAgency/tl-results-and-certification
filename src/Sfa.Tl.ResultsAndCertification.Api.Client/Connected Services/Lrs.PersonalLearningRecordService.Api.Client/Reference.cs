@@ -2462,7 +2462,7 @@ namespace Lrs.PersonalLearningRecordService.Api.Client
         {
             if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_ILearnerServiceR9))
             {
-                return new System.ServiceModel.EndpointAddress("https://cmp-ws.dev.lrs.education.gov.uk/LearnerServiceR9.svc");
+                return new System.ServiceModel.EndpointAddress("https://ws.lrs.education.gov.uk/LearnerServiceR9.svc");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }

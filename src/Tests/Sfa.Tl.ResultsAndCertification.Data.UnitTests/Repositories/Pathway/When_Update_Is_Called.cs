@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
     {
         private TlPathway _result;
         private TlPathway _data;
-        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
+        private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
 
         private const string PathwayName = "Pathway Updated";
         private const string LarId = "999";
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
             _result.Name.Should().BeEquivalentTo(_data.Name);
-            _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
+            _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);
             _result.ModifiedOn.Should().Be(_data.ModifiedOn);

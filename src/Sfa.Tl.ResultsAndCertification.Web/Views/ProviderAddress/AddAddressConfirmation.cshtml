@@ -1,0 +1,19 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress
+
+@{
+    ViewData["Title"] = AddAddressConfirmation.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">@AddAddressConfirmation.Organisation_Postal_Address_Added_Successful_Text</h1>
+        </div>
+
+        <p class="govuk-body">@AddAddressConfirmation.Certificates_And_Statements_Of_Achievement_Will_Be_Sent_Text</p>
+        <p class="govuk-body">@AddAddressConfirmation.You_Can_Now_Continue_To_Request_Soa_Text</p>
+
+        <p class="govuk-!-margin-top-6"><a id="requestSoaButton" class="govuk-button" role="button" asp-route="RequestStatementOfAchievement">@AddAddressConfirmation.Request_Statement_Of_Achievement_Button_Text</a></p>
+        <p class="govuk-body"><a id="backToHome" class="govuk-link" asp-route="Home">@AddAddressConfirmation.Back_To_Home_Link_Text</a></p>
+    </div>
+</div>

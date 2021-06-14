@@ -1,0 +1,21 @@
+﻿@inject Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper.IWebConfigurationService ConfigurationService
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement.NotAvailableViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
+
+@{
+    ViewData["Title"] = NotAvailable.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <h1 class="govuk-heading-l">@NotAvailable.Heading_Text</h1>
+
+        <p class="govuk-body govuk-!-margin-top-3">@string.Format(NotAvailable.It_Is_Too_Early_To_Request_Text, Model.SoaAvailableDate?.ToString("dd MMMM yyyy"))</p>
+
+        <p><a id="backButton" class="govuk-button" role="button" data-module="govuk-button" asp-route="Home">@NotAvailable.Back_To_Home_Button</a></p>
+    </div>
+</div>

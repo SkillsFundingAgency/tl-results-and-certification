@@ -14,6 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<TlAwardingOrganisation> TlAwardingOrganisation { get; set; }
         public virtual DbSet<TlPathway> TlPathway { get; set; }
         public virtual DbSet<TlProvider> TlProvider { get; set; }
+        public virtual DbSet<TlProviderAddress> TlProviderAddress { get; set; }
         public virtual DbSet<TlRoute> TlRoute { get; set; }
         public virtual DbSet<TlSpecialism> TlSpecialism { get; set; }
         public virtual DbSet<TqAwardingOrganisation> TqAwardingOrganisation { get; set; }
@@ -34,6 +35,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<QualificationAchieved> QualificationAchieved { get; set; }
         public virtual DbSet<IndustryPlacement> IndustryPlacement { get; set; }
         public virtual DbSet<FunctionLog> FunctionLog { get; set; }
+        public virtual DbSet<Batch> Batch { get; set; }
+        public virtual DbSet<PrintBatchItem> PrintBatchItem { get; set; }
+        public virtual DbSet<PrintCertificate> PrintCertificate { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

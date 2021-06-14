@@ -1,0 +1,23 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
+
+@{
+    ViewData["Title"] = ChangePostalAddress.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-xl">@ChangePostalAddress.Caption_Request_Statement_Of_Achievement</span>
+        <h1 class="govuk-heading-l">@ChangePostalAddress.Heading_Change_Org_Postal_Address</h1>
+        <p class="govuk-body">@ChangePostalAddress.Para_You_Need_To_Change_Via_Manage_Postal_Address</p>
+        <p class="govuk-body">@ChangePostalAddress.Para_Come_Back_To_Request_Soa</p>
+        <p class="govuk-body">
+            <a id="changeAddressButton" class="govuk-button govuk-!-margin-top-6" role="button" asp-route="ManagePostalAddress">
+                @ChangePostalAddress.Button_Change_Address
+            </a>
+        </p>
+    </div>
+</div>

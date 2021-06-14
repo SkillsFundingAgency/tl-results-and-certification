@@ -32,12 +32,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Specialism
         {
             _result.Should().NotBeNull();
             _result.Id.Should().Be(_data.Id);          
-            _result.Name.Should().BeEquivalentTo(_data.Name);
-            _result.LarId.Should().BeEquivalentTo(_data.LarId);
+            _result.Name.Should().Be(_data.Name);
+            _result.LarId.Should().Be(_data.LarId);
             _result.TlPathwayId.Should().Be(_data.TlPathwayId);
-            _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
+            _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
-            _result.ModifiedBy.Should().BeEquivalentTo(_data.ModifiedBy);
+            _result.ModifiedBy.Should().Be(_data.ModifiedBy);
             _result.ModifiedOn.Should().Be(_data.ModifiedOn);
         }
     }

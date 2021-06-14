@@ -9,5 +9,7 @@
         public const string ResultCacheKey = "Result";
 
         public const string TrainingProviderCacheKey = "TrainingProvider";
+        public const string ProviderAddressCacheKey = "ProviderAddress";
+        public const string SoaCacheKey = "StatementOfAchievement";
     }
 }

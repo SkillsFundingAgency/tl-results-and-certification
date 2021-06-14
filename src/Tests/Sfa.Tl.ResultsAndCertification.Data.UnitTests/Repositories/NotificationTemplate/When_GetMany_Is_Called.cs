@@ -27,11 +27,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Notificatio
         }
 
         [Fact]
-        public void Then_The_Expected_Number_Of_Paths_Is_Returned() =>
+        public void Then_The_Expected_Number_Of_Records_Are_Returned() =>
             _result.Count().Should().Be(2);
 
         [Fact]
-        public void Then_First_Path_Fields_Have_Expected_Values()
+        public void Then_First_Record_Fields_Have_Expected_Values()
         {
             var testData = _data.FirstOrDefault();
             var result = _result.FirstOrDefault();
@@ -39,10 +39,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Notificatio
             result.Should().NotBeNull();
             result.Id.Should().Be(1);
             result.TemplateId.Should().Be(testData.TemplateId);
-            result.TemplateName.Should().BeEquivalentTo(testData.TemplateName);
-            result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
+            result.TemplateName.Should().Be(testData.TemplateName);
+            result.CreatedBy.Should().Be(Constants.CreatedByUser);
             result.CreatedOn.Should().Be(Constants.CreatedOn);
-            result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);
+            result.ModifiedBy.Should().Be(Constants.ModifiedByUser);
             result.ModifiedOn.Should().Be(Constants.ModifiedOn);
         }
     }

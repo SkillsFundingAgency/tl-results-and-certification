@@ -1,0 +1,43 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress.AddAddressCancelViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress
+
+@{
+    ViewData["Title"] = AddAddressCancel.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="SubmitAddAddressCancel">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <span class="govuk-caption-l">@AddAddressCancel.Caption_Add_Address</span>
+                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                            @AddAddressCancel.Heading_Are_You_Sure_To_Cancel
+                        </h1>
+                    </legend>
+
+                    <div class="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="canceladdaddress" asp-for="CancelAddAddress" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="canceladdaddress">
+                                @AddAddressCancel.Radio_Option_Yes_Cancel
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="canceladdaddress-no" asp-for="CancelAddAddress" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="canceladdaddress-no">
+                                @AddAddressCancel.Radio_Option_No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continueButton" class="govuk-button govuk-!-margin-top-3" data-module="govuk-button" type="submit">@AddAddressCancel.Button_Continue</button>
+        </form>
+    </div>
+</div>

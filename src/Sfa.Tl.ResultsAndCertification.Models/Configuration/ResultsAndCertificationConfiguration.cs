@@ -1,4 +1,6 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
+﻿using System;
+
+namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
 {
     public class ResultsAndCertificationConfiguration
     {
@@ -82,6 +84,9 @@
         /// </value>
         public string FeedbackEmailAddress { get; set; }
 
+        public DateTime? SoaAvailableDate { get; set; }
+        public int SoaRerequestInDays { get; set; }
+
         /// <summary>
         /// Gets or sets the dfe sign in settings.
         /// </summary>
@@ -99,13 +104,20 @@
         public ResultsAndCertificationInternalApiSettings ResultsAndCertificationInternalApiSettings { get; set; }
 
         /// <summary>
+        /// Gets or sets the ordnance survey API settings.
+        /// </summary>
+        /// <value>
+        /// The ordnance survey API settings.
+        /// </value>
+        public OrdnanceSurveyApiSettings OrdnanceSurveyApiSettings { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this instance is dev.
         /// </summary>
         /// <value>
         ///   <c>true</c> if this instance is dev; otherwise, <c>false</c>.
         /// </value>
         public bool IsDevevelopment { get; set; }
-
 
         /// <summary>
         /// Gets or sets a value indicating whether [bypass dfe sign in].

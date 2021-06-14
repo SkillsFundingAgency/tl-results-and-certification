@@ -33,9 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.FunctionLog
             _result.EndDate.Should().Be(_data.EndDate);
             _result.Status.Should().Be(_data.Status);
             _result.Message.Should().Be(_data.Message);
-            _result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
+            _result.CreatedBy.Should().Be(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
-            _result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);
+            _result.ModifiedBy.Should().Be(Constants.ModifiedByUser);
             _result.ModifiedOn.Should().Be(Constants.ModifiedOn);
         }
     }

@@ -9,6 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.TagHelpers
     [HtmlTargetElement("div", Attributes = ValidationClassName)]
     [HtmlTargetElement("div", Attributes = ValidationForAttributeName + "," + ValidationClassName)]
     [HtmlTargetElement("input", Attributes = ValidationForAttributeName + "," + ValidationClassName)]
+    [HtmlTargetElement("select", Attributes = ValidationForAttributeName + "," + ValidationClassName)]
     [HtmlTargetElement("fieldset", Attributes = ValidationForAttributeName + "," + ValidationClassName)]
     public class ValidationClassTagHelper : TagHelper
     {

@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients
 
             NumberOfCalls++;
 
-            var requestKey = request.RequestUri.AbsolutePath + responseContent;
+            var requestKey = System.Web.HttpUtility.UrlDecode(request.RequestUri.PathAndQuery) + responseContent;
 
             if (_httpResponses.ContainsKey(requestKey))
             {

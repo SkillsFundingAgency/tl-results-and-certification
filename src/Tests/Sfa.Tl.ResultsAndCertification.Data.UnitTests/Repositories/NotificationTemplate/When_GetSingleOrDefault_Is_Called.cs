@@ -29,10 +29,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Notificatio
             _result.Should().NotBeNull();
             _result.Id.Should().Be(1);
             _result.TemplateId.Should().Be(_data.TemplateId);
-            _result.TemplateName.Should().BeEquivalentTo(_data.TemplateName);
-            _result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
+            _result.TemplateName.Should().Be(_data.TemplateName);
+            _result.CreatedBy.Should().Be(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
-            _result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);
+            _result.ModifiedBy.Should().Be(Constants.ModifiedByUser);
             _result.ModifiedOn.Should().Be(Constants.ModifiedOn);
         }
     }

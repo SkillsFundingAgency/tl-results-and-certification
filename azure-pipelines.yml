@@ -43,9 +43,7 @@ steps:
   inputs:
     command: restore
     projects: 'src/Sfa.Tl.ResultsAndCertification.sln'
-    noCache: true
-    feedsToUse: config
-    nugetConfigPath: src/NuGet.config
+    noCache: true    
 
 - task: DotNetCoreCLI@2
   displayName: dotnet build
@@ -83,6 +81,14 @@ steps:
     publishWebProjects: false
     projects: 'src/Sfa.Tl.ResultsAndCertification.Web/Sfa.Tl.ResultsAndCertification.Web.csproj'
     arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore  --no-build'   
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish Function App'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: 'src/Sfa.Tl.ResultsAndCertification.Functions/Sfa.Tl.ResultsAndCertification.Functions.csproj'
+    arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
 
 - task: VSBuild@1
   displayName: 'Build DACPAC'

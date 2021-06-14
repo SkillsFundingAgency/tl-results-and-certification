@@ -58,5 +58,24 @@
         public const string GetLearnerRecordDetailsUri = "/api/trainingprovider/GetLearnerRecordDetails/{0}/{1}/{2}";
         public const string AddLearnerRecordUri = "/api/trainingprovider/AddLearnerRecord";
         public const string UpdateLearnerRecordUri = "/api/trainingprovider/UpdateLearnerRecord";
+
+        // Ordinance Survery Uri's
+        public const string SearchAddressByPostcodeUri = "/postcode?postcode={0}&key={1}";
+        public const string GetAddressByUprnUri = "/uprn?uprn={0}&key={1}";
+
+        // ProviderAddress Uri's
+        public const string AddAddressUri = "/api/provideraddress/AddAddress";
+        public const string GetAddressUri = "/api/provideraddress/GetAddress/{0}";
+
+        // Provider Statement Of Achievement Uri's
+        public const string FindSoaLearnerRecordUri = "/api/statementofachievement/FindSoaLearnerRecord/{0}/{1}";
+        public const string GetSoaLearnerRecordDetailsUri = "/api/statementofachievement/GetSoaLearnerRecordDetails/{0}/{1}";
+        public const string CreateSoaPrintingRequestUri = "/api/statementofachievement/CreateSoaPrintingRequest";
+        public const string GetPrintRequestSnapshotUri = "/api/statementofachievement/GetPrintRequestSnapshot/{0}/{1}/{2}";
+
+
+        //LRS Api Uri's
+        public const string LearnerServiceUri = "/LearnerService.svc";
+        public const string PlrServiceUri = "/LearnerServiceR9.svc";
     }
 }

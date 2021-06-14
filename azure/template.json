@@ -89,6 +89,14 @@
         "serverlessAutoPauseDelay": {
             "type": "string",
             "defaultValue": "-1"
+        },
+        "learnerVerificationAndLearningEventsTrigger": {
+            "type": "string",
+            "defaultValue": "0 23 15 1-12 *"
+        },
+        "learnerGenderTrigger": {
+            "type": "string",
+            "defaultValue": "0 21 15 1-12 *"
         }
     },
     "variables": {
@@ -98,6 +106,7 @@
         "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
         "uiAppServiceName": "[concat(variables('resourceNamePrefix'),'-as')]",
         "apiAppServiceName": "[concat(variables('resourceNamePrefix'),'api-as')]",
+        "functionAppName": "[concat(variables('resourceNamePrefix'), '-func')]",
         "internalApiAppServiceName": "[concat(variables('resourceNamePrefix'),'intapi-as')]",
         "databaseName": "[concat(variables('resourceNamePrefix'),'-db')]",
         "intTestdatabaseName": "[concat(variables('resourceNamePrefix'),'-inttest','-db')]"
@@ -467,6 +476,108 @@
                 "internal-api-app-insights"
             ]
         },
+		{
+            "apiVersion": "2017-05-10",
+            "name": "func-app-insights",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'application-insights.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appInsightsName": {
+                        "value": "[variables('functionAppName')]"
+                    },
+                    "attachedService": {
+                        "value": "[variables('functionAppName')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "function-app",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'function-app.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "functionAppName": {
+                        "value": "[variables('functionAppName')]"
+                    },
+                    "appServicePlanName": {
+                        "value": "[variables('appServicePlanName')]"
+                    },
+                    "appServicePlanResourceGroup": {
+                        "value": "[resourceGroup().name]"
+                    },
+                    "functionAppAppSettings": {
+                        "value": [
+                            {
+                                "name": "EnvironmentName",
+                                "value": "[toUpper(parameters('environmentName'))]"
+                            },
+                            {
+                                "name": "ConfigurationStorageConnectionString",
+                                "value": "[parameters('configurationStorageConnectionString')]"
+                            },
+                            {
+                                "name": "Version",
+                                "value": "1.0"
+                            },
+                            {
+                                "name": "ServiceName",
+                                "value": "Sfa.Tl.ResultsAndCertification"
+                            },
+                            {
+                                "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                                "value": "[reference('func-app-insights').outputs.InstrumentationKey.value]"
+                            },
+                            {
+                                "name": "BlobStorageConnectionString",
+                                "value": "[reference('storage-account').outputs.storageConnectionString.value]"
+                            },
+                            {
+                                "name": "AzureWebJobsStorage",
+                                "value": "[reference('storage-account').outputs.storageConnectionString.value]"
+                            },
+                            {
+                                "name": "AzureWebJobsDashboard",
+                                "value": "[reference('storage-account').outputs.storageConnectionString.value]"
+                            },
+                            {
+                                "name": "WEBSITE_TIME_ZONE",
+                                "value": "GMT Standard Time"
+                            },
+                            {
+                                "name": "FUNCTIONS_EXTENSION_VERSION",
+                                "value": "~3"
+                            },
+                            {
+                                "name": "LearnerVerificationAndLearningEventsTrigger",
+                                "value": "[parameters('learnerVerificationAndLearningEventsTrigger')]"
+                            },
+                            {
+                                "name": "LearnerGenderTrigger",
+                                "value": "[parameters('learnerGenderTrigger')]"
+                            },
+                            {
+                                "name": "WEBSITE_LOAD_CERTIFICATES",
+                                "value": "1"
+                            }
+                        ]
+                    },
+                    "systemAssignedIdentity": {
+                        "value": "SystemAssigned"
+                    }
+                }
+            }
+        },
         {
             "apiVersion": "2017-05-10",
             "name": "sql-database",
@@ -537,6 +648,10 @@
         "ApiAppServiceName": {
             "type": "string",
             "value": "[variables('apiAppServiceName')]"
+        },
+        "FunctionAppName": {
+            "type": "string",
+            "value": "[variables('FunctionAppName')]"
         },
         "InternalApiAppServiceName": {
             "type": "string",
