@@ -45,12 +45,12 @@ jobs:
             -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"
             -uiCustomHostName "$(UICustomHostName)"
             -uiCertificateName "$(CertificateName)"
-            -internalApiCustomHostname "$(InternalApiCustomHostname)"
+            #-internalApiCustomHostname "$(InternalApiCustomHostname)"
             -functionCertificateName "$(LearningRecordServiceCertificateName)"
             -storageAccountContainerArray "$(storageAccountContainerArray)"
             -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
             -learnerGenderTrigger "$(learnerGenderTrigger)"'
-          tags: $(Tags)
+          tags: $(Tags) 
           processOutputs: true
 
       - task: AzureCLI@2
