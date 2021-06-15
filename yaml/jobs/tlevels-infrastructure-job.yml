@@ -45,7 +45,6 @@ jobs:
             -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"
             -uiCustomHostName "$(UICustomHostName)"
             -uiCertificateName "$(CertificateName)"
-            #-internalApiCustomHostname "$(InternalApiCustomHostname)"
             -functionCertificateName "$(LearningRecordServiceCertificateName)"
             -storageAccountContainerArray "$(storageAccountContainerArray)"
             -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
