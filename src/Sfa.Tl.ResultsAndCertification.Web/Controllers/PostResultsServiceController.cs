@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
-    //[Authorize(Policy = RolesExtensions.RequireLearnerRecordsEditorAccess)] // TODO
+    [Authorize(Policy = RolesExtensions.RequireReviewsAndAppealsEditorAccess)]
     public class PostResultsServiceController : Controller
     {
 
