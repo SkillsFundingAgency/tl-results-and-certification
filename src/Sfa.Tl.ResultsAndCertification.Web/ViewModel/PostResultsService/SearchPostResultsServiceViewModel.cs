@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                     BreadcrumbItems = new List<BreadcrumbItem>
                     {
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Reviews_And_Appeals, RouteName = RouteConstants.StartReviewAndAppeals },
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Reviews_And_Appeals, RouteName = RouteConstants.StartReviewsAndAppeals },
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Search_For_Learner }
                     }
                 };
