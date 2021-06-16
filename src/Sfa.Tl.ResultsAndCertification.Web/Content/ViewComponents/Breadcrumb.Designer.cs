@@ -205,6 +205,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reviews and appeals.
+        /// </summary>
+        public static string Reviews_And_Appeals {
+            get {
+                return ResourceManager.GetString("Reviews_And_Appeals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for a learner.
         /// </summary>
         public static string Search_For_Assessments {

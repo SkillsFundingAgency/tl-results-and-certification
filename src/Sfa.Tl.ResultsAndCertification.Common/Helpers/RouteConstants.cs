@@ -282,6 +282,7 @@
 
         #region Post Results Service
         public const string StartReviewAndAppeals = "StartReviewAndAppeals";
+        public const string SearchPostResultsService = "SearchPostResultsService";
         #endregion
     }
 }
