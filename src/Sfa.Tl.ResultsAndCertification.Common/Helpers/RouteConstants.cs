@@ -279,5 +279,9 @@
         public const string RequestSoaAlreadySubmitted = "RequestSoaAlreadySubmitted";
 
         #endregion
+
+        #region Post Results Service
+        public const string StartReviewAndAppeals = "StartReviewAndAppeals";
+        #endregion
     }
 }
