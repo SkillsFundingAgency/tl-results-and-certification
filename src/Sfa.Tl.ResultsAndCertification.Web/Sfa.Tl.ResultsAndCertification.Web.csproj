@@ -130,6 +130,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Contact.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\PostResultsService\PostResultsServiceUlnNotFound.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PostResultsServiceUlnNotFound.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\PostResultsService\SearchPostResultsService.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -807,6 +812,10 @@
     <EmbeddedResource Update="Content\Help\Contact.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Contact.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\PostResultsService\PostResultsServiceUlnNotFound.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PostResultsServiceUlnNotFound.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\PostResultsService\SearchPostResultsService.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

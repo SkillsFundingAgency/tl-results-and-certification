@@ -34,7 +34,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(model);
 
             await Task.CompletedTask;
+            if (model.SearchUln == "9999999999") // TODO: 
+                return RedirectToRoute(RouteConstants.PostResultServiceUlnNotFound);
+
             return View(new SearchPostResultsServiceViewModel());
+        }
+
+        [HttpGet]
+        [Route("no-learner-found", Name = RouteConstants.PostResultServiceUlnNotFound)]
+        public async Task<IActionResult> PostResultServiceUlnNotFoundAsync()
+        {
+            await Task.CompletedTask;
+            var viewModel = new PostResultServiceUlnNotFoundViewModel { Uln = "9999999999" };
+            return View(viewModel);
         }
     }
 }
