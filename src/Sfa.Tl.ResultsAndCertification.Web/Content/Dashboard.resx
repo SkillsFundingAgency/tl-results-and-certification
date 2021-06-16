@@ -180,6 +180,12 @@
   <data name="Results_Text" xml:space="preserve">
     <value>Results</value>
   </data>
+  <data name="Reviews_And_Appeals_Description_Text" xml:space="preserve">
+    <value>Let us know when a learner has requested a review or has appealed a grade</value>
+  </data>
+  <data name="Reviews_And_Appeals_Text" xml:space="preserve">
+    <value>Reviews and appeals</value>
+  </data>
   <data name="Section_Heading_Text" xml:space="preserve">
     <value>Manage T Level results</value>
   </data>
