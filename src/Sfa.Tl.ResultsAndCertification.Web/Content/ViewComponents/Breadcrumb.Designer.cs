@@ -241,6 +241,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reviews and appeals.
+        /// </summary>
+        public static string StartReviewsAndAppeals {
+            get {
+                return ResourceManager.GetString("StartReviewsAndAppeals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Statement of achievement not available.
         /// </summary>
         public static string Statement_Of_Achievement_Not_Available {

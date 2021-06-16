@@ -1,0 +1,33 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.StartReviewsAndAppealsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+
+@{
+    ViewData["Title"] = StartReviewsAndAppeals.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">@StartReviewsAndAppeals.Heading_Review_And_Appeal</h1>
+
+        <p class="govuk-body">@StartReviewsAndAppeals.Para_You_Must_Tell_Component_Under_Review_Or_Appealed</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@StartReviewsAndAppeals.Bullet_Item_Appealed_For_Grade_2021 </li>
+            <li>@StartReviewsAndAppeals.Bullet_Item_Request_A_Review</li>
+            <li>@StartReviewsAndAppeals.Bullet_Item_Appaled_A_Review_Decision</li>
+        </ul>
+
+        <p class="govuk-body">@StartReviewsAndAppeals.Para_While_Review_We_Cannot</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@StartReviewsAndAppeals.Bullet_Item_Calculate_Overall_Result</li>
+            <li>@StartReviewsAndAppeals.Bullet_Item_Issue_Certificate</li>
+        </ul>
+
+        <div class="govuk-inset-text">@StartReviewsAndAppeals.Inset_It_Is_Only_Possible_Record_Appeal_At_The_Moment</div>
+        <a id="continueButton" class="govuk-button govuk-!-margin-top-6" role="button" href="#">Continue</a>
+    </div>
+</div>
