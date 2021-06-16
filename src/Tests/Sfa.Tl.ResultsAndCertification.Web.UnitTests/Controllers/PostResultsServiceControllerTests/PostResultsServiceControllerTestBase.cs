@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
@@ -11,6 +15,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
     public abstract class PostResultsServiceControllerTestBase : BaseTest<PostResultsServiceController>
     {
         // Dependencies
+        protected ICacheService CacheService;
+        protected ILogger<PostResultsServiceController> Logger;
         protected PostResultsServiceController Controller;
 
         // HttpContext
@@ -21,7 +27,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public override void Setup()
         {
-            Controller = new PostResultsServiceController();
+            CacheService = Substitute.For<ICacheService>();
+            Logger = Substitute.For<ILogger<PostResultsServiceController>>();
+
+            Controller = new PostResultsServiceController(CacheService, Logger);
 
             ProviderUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<PostResultsServiceController>(Controller)
@@ -32,6 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             HttpContextAccessor.HttpContext.Returns(httpContext);
+
+            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.PrsCacheKey);
         }
     }
 }
