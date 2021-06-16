@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.PrsCacheKey); } }
 
-        public PostResultsServiceController(IPostResultsServiceLoader postResultsServiceLoader, ICacheService cacheService, ILogger logger)
+        public PostResultsServiceController(IPostResultsServiceLoader postResultsServiceLoader, ICacheService cacheService, ILogger<PostResultsServiceController> logger)
         {
             _postResultsServiceLoader = postResultsServiceLoader;
             _cacheService = cacheService;
@@ -50,8 +50,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            await Task.CompletedTask;
-            if (model.SearchUln == "9999999999")
+            var prsLearnerRecord = await _postResultsServiceLoader.FindPrsLearnerRecordAsync(User.GetUkPrn(), model.SearchUln.ToLong());
+            await _cacheService.SetAsync(CacheKey, model);
+
+            if (prsLearnerRecord == null || !prsLearnerRecord.IsValid)
             {
                 await _cacheService.SetAsync(CacheKey, new PostResultServiceUlnNotFoundViewModel { Uln = model.SearchUln }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PostResultServiceUlnNotFound);
