@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
     public class RequestSoaUniqueLearnerNumberViewModel
     {
         [Required(ErrorMessageResourceType = typeof(ErrorResource.RequestSoaUniqueLearnerNumber), ErrorMessageResourceName = "Uln_Required_Validation_Message")]
-        [RegularExpression(@"^\d{10}$", ErrorMessageResourceType = typeof(ErrorResource.RequestSoaUniqueLearnerNumber), ErrorMessageResourceName = "Uln_Not_Valid_Validation_Message")]
+        [RegularExpression(Constants.UlnValidationRegex, ErrorMessageResourceType = typeof(ErrorResource.RequestSoaUniqueLearnerNumber), ErrorMessageResourceName = "Uln_Not_Valid_Validation_Message")]
         public string SearchUln { get; set; }
 
         public BreadcrumbModel Breadcrumb

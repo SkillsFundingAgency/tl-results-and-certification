@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
     public class SearchLearnerRecordViewModel
     {
         [Required(ErrorMessageResourceType = typeof(ErrorResource.SearchLearnerRecord), ErrorMessageResourceName = "Uln_Required_Validation_Message")]
-        [RegularExpression(@"^\d{10}$", ErrorMessageResourceType = typeof(ErrorResource.SearchLearnerRecord), ErrorMessageResourceName = "Uln_Not_Valid_Validation_Message")]
+        [RegularExpression(Constants.UlnValidationRegex, ErrorMessageResourceType = typeof(ErrorResource.SearchLearnerRecord), ErrorMessageResourceName = "Uln_Not_Valid_Validation_Message")]
         public string SearchUln { get; set; }
 
         public bool IsLearnerRegistered { get; set; }
