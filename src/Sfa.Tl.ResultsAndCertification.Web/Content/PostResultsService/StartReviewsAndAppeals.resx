@@ -132,6 +132,9 @@
   <data name="Bullet_Item_Request_A_Review" xml:space="preserve">
     <value>requested a review</value>
   </data>
+  <data name="Button_Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
   <data name="Heading_Review_And_Appeal" xml:space="preserve">
     <value>Reviews and appeals</value>
   </data>

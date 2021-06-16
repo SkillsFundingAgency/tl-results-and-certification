@@ -107,6 +107,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Continue.
+        /// </summary>
+        public static string Button_Continue {
+            get {
+                return ResourceManager.GetString("Button_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reviews and appeals.
         /// </summary>
         public static string Heading_Review_And_Appeal {
