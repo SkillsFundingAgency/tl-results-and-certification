@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests
@@ -15,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
     public abstract class PostResultsServiceControllerTestBase : BaseTest<PostResultsServiceController>
     {
         // Dependencies
+        protected IPostResultsServiceLoader Loader;
         protected ICacheService CacheService;
         protected ILogger<PostResultsServiceController> Logger;
         protected PostResultsServiceController Controller;
@@ -27,10 +29,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public override void Setup()
         {
+            Loader = Substitute.For<IPostResultsServiceLoader>();
             CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<PostResultsServiceController>>();
 
-            Controller = new PostResultsServiceController(CacheService, Logger);
+            Controller = new PostResultsServiceController(Loader, CacheService, Logger);
 
             ProviderUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<PostResultsServiceController>(Controller)

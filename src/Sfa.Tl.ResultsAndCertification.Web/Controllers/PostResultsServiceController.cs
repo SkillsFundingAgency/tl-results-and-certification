@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Threading.Tasks;
 
@@ -14,13 +15,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     [Authorize(Policy = RolesExtensions.RequireReviewsAndAppealsEditorAccess)]
     public class PostResultsServiceController : Controller
     {
+        private readonly IPostResultsServiceLoader _postResultsServiceLoader;
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
 
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.PrsCacheKey); } }
 
-        public PostResultsServiceController(ICacheService cacheService, ILogger logger)
+        public PostResultsServiceController(IPostResultsServiceLoader postResultsServiceLoader, ICacheService cacheService, ILogger logger)
         {
+            _postResultsServiceLoader = postResultsServiceLoader;
             _cacheService = cacheService;
             _logger = logger;
         }
