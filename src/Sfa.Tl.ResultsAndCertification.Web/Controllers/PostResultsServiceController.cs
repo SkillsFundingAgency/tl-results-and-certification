@@ -25,5 +25,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await Task.CompletedTask;
             return View(new SearchPostResultsServiceViewModel());
         }
+
+        [HttpPost]
+        [Route("reviews-and-appeals-search-learner", Name = RouteConstants.SubmitSearchPostResultsService)]
+        public async Task<IActionResult> SearchPostResultsServiceAsync(SearchPostResultsServiceViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            await Task.CompletedTask;
+            return View(new SearchPostResultsServiceViewModel());
+        }
     }
 }
