@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("reviews-and-appeals", Name = RouteConstants.StartReviewsAndAppeals)]
-        public IActionResult StartReviewsAndAppealsAsync()
+        public IActionResult StartReviewsAndAppeals()
         {
             return View(new StartReviewsAndAppealsViewModel());
         }
