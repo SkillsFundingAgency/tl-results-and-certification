@@ -81,7 +81,7 @@
                 </details>
             </div>
             @{ var buttonText = Model.IsChangeMode ? IndustryPlacementQuestion.Change_Button_Text : IndustryPlacementQuestion.Continue_Button_Text; }
-        <button id="continueButton" class="govuk-button" data-module="govuk-button">@buttonText</button>
+        <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@buttonText</button>
         </form>
     </div>
 </div>

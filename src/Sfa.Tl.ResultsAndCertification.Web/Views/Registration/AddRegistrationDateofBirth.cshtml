@@ -31,7 +31,7 @@
             </div>
             <p>
                 @{ var buttonText = Model.IsChangeMode ? @DateofBirth.Change_Button_Text : @DateofBirth.Continue_Button_Text; }
-                <button type="submit" class="govuk-button" data-module="govuk-button">@buttonText</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@buttonText</button>
             </p>
         </form>
     </div>

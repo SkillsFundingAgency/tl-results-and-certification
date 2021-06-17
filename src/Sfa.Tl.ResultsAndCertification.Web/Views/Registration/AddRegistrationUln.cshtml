@@ -20,7 +20,7 @@
             </div>
             <p>
                 @{ var buttonText = Model.IsChangeMode ? @UlnRegistration.Change_Button_Label : @UlnRegistration.Continue_Button_Label; }
-                <button type="submit" class="govuk-button" data-module="govuk-button">@buttonText</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@buttonText</button>
             </p>
         </form>
     </div>
