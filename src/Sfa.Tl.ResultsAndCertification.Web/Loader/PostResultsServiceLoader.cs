@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -16,10 +16,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _internalApiClient = internalApiClient;
             _mapper = mapper;
         }
-        
-        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln)
+
+        public async Task<FindPrsLearnerRecordViewModel> FindPrsLearnerRecordAsync(long aoUkprn, long uln)
         {
-            return await _internalApiClient.FindPrsLearnerRecordAsync(aoUkprn, uln);
+            var prsLearner = await _internalApiClient.FindPrsLearnerRecordAsync(aoUkprn, uln);
+            return _mapper.Map<FindPrsLearnerRecordViewModel>(prsLearner);
         }
     }
 }

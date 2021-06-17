@@ -30,8 +30,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("reviews-and-appeals", Name = RouteConstants.StartReviewsAndAppeals)]
-        public IActionResult StartReviewsAndAppeals()
+        public async Task<IActionResult> StartReviewsAndAppealsAsync()
         {
+            await _cacheService.RemoveAsync<SearchPostResultsServiceViewModel>(CacheKey);
             return View(new StartReviewsAndAppealsViewModel());
         }
 

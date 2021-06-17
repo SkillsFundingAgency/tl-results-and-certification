@@ -7,10 +7,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
     {
         public IActionResult Result { get; private set; }
 
-        public override Task When()
+        public override async Task When()
         {
-            Result = Controller.StartReviewsAndAppeals();
-            return Task.CompletedTask;
+            Result = await Controller.StartReviewsAndAppealsAsync();
         }
     }
 }

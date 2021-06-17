@@ -1,9 +1,9 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using System;
 
-namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
+namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
-    public class FindPrsLearnerRecord
+    public class FindPrsLearnerRecordViewModel
     {
         public int ProfileId { get; set; }
         public long Uln { get; set; }
@@ -12,5 +12,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public string ProviderName { get; set; }
         public string TlevelTitle { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
+
+        public bool IsValid => Status == RegistrationPathwayStatus.Active;
+        public bool IsWithdrawn => Status == RegistrationPathwayStatus.Withdrawn;
     }
 }
