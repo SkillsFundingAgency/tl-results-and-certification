@@ -60,7 +60,7 @@ jobs:
     displayName: 'Stop Staging Slot: $(FunctionAppName)'
     inputs:
       azureSubscription: ${{ parameters.serviceConnection }}
-      Action: 'Start Azure App Service'
+      Action: 'Stop Azure App Service'
       WebAppName: '$(FunctionAppName)'
       SpecifySlotOrASE: true
       ResourceGroupName: '$(ResourceGroupName)'
