@@ -53,11 +53,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var prsLearnerRecord = await _postResultsServiceLoader.FindPrsLearnerRecordAsync(User.GetUkPrn(), model.SearchUln.ToLong());
             await _cacheService.SetAsync(CacheKey, model);
 
-            if (prsLearnerRecord == null || !prsLearnerRecord.IsValid)
+            if (prsLearnerRecord == null)
             {
                 await _cacheService.SetAsync(CacheKey, new PostResultServiceUlnNotFoundViewModel { Uln = model.SearchUln }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PostResultServiceUlnNotFound);
             }
+            if(prsLearnerRecord.IsWithdrawn)
+                // TODO: withdrawn
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(new SearchPostResultsServiceViewModel());
         }

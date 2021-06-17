@@ -14,5 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public RegistrationPathwayStatus Status { get; set; }
 
         public bool IsValid => Status == RegistrationPathwayStatus.Active;
+        public bool IsWithdrawn => Status == RegistrationPathwayStatus.Withdrawn;
     }
 }

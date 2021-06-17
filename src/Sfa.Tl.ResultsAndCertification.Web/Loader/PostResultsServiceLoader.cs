@@ -19,9 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         
         public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln)
         {
-            // await _internalApiClient.FindPrsLearnerRecordAsync(aoUkprn, uln);
-            await Task.CompletedTask;
-            return new FindPrsLearnerRecord { Uln = 1234567890, Status = Common.Enum.RegistrationPathwayStatus.Active };
+            return await _internalApiClient.FindPrsLearnerRecordAsync(aoUkprn, uln);
         }
     }
 }
