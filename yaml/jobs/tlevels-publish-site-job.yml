@@ -45,6 +45,7 @@ jobs:
       RemoveAdditionalFilesFlag: true
 
   - task: AzureAppServiceManage@0
+    displayName: 'Start staging Slot: $(webAppName)'
     inputs:
       azureSubscription: ${{ parameters.serviceConnection }}
       Action: 'Start Azure App Service'
@@ -63,10 +64,10 @@ jobs:
       SourceSlot: staging
   
   - task: AzureAppServiceManage@0
-    displayName: 'Delete swap Slot: $(webAppName)'
+    displayName: 'Stop staging Slot: $(webAppName)'
     inputs:
       azureSubscription: ${{ parameters.serviceConnection }}
-      Action: 'Delete Slot'
+      Action: 'Stop Azure App Service'
       WebAppName: '$(webAppName)'
       ResourceGroupName: '$(ResourceGroupName)'
       Slot: 'staging'
