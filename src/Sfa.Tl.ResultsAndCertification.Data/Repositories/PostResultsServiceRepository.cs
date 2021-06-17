@@ -2,8 +2,6 @@
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,8 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<TqRegistrationPathway> FindPrsLearnerRecordAsync(long aoUkprn, long uln)
         {
-            await Task.CompletedTask;
-
             var regPathway = await _dbContext.TqRegistrationPathway
                 .Include(x => x.TqRegistrationProfile)
                 .Include(x => x.TqProvider)
