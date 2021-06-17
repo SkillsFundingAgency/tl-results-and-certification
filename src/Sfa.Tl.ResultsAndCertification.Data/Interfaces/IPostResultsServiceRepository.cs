@@ -1,10 +1,10 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
+﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
 {
     public interface IPostResultsServiceRepository
     {
-        Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln);
+        Task<TqRegistrationPathway> FindPrsLearnerRecordAsync(long aoUkprn, long uln);
     }
 }

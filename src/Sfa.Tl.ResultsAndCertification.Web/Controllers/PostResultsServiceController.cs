@@ -39,8 +39,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("reviews-and-appeals-search-learner", Name = RouteConstants.SearchPostResultsService)]
         public async Task<IActionResult> SearchPostResultsServiceAsync()
         {
-            await Task.CompletedTask;
-            return View(new SearchPostResultsServiceViewModel());
+            var cacheModel = await _cacheService.GetAsync<SearchPostResultsServiceViewModel>(CacheKey);
+            var viewModel = cacheModel ?? new SearchPostResultsServiceViewModel();
+
+            return View(viewModel);
         }
 
         [HttpPost]
