@@ -65,7 +65,7 @@
         }
     },
     "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/operations-devops-deployment/master/ArmTemplates/",
+        "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/operations-devops-deployment/reasc-staging-slot/ArmTemplates/",
         "uiAppName": "[concat(parameters('resourceNamePrefix'), '-web')]",
         "internalApiAppName": "[concat(parameters('resourceNamePrefix'), '-internal-api')]",
         "appInsightName": "[concat(parameters('resourceNamePrefix'), '-ai')]",
