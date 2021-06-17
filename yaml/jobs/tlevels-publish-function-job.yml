@@ -62,5 +62,6 @@ jobs:
       azureSubscription: ${{ parameters.serviceConnection }}
       Action: 'Start Azure App Service'
       WebAppName: '$(FunctionAppName)'
+      SpecifySlotOrASE: true
       ResourceGroupName: '$(ResourceGroupName)'
       Slot: 'staging'
