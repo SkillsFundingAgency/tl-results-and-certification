@@ -19,9 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln)
         {
-            var registrationPathway = await _postResultsServiceRepository.FindPrsLearnerRecordAsync(aoUkprn, uln);
-            return _mapper.Map<FindPrsLearnerRecord>(registrationPathway);
+            return await _postResultsServiceRepository.FindPrsLearnerRecordAsync(aoUkprn, uln);
         }
     }
-
 }
