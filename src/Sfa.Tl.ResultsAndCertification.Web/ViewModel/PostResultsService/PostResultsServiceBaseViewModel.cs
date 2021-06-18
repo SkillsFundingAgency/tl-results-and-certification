@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
@@ -13,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string Lastname { get; set; }        
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
-        public string ProviderUkprn { get; set; }
+        public long ProviderUkprn { get; set; }
         public string TLevelTitle { get; set; }
 
         protected string UlnLabel { get; set; }
@@ -63,7 +64,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public virtual BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = RouteConstants.SearchPostResultsService
+            RouteName = RouteConstants.SearchPostResultsService,
+            RouteAttributes = new Dictionary<string, string> { { Constants.PopulateUln, true.ToString() } }
         };
     }
 }

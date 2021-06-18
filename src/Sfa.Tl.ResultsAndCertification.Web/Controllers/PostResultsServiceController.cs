@@ -63,7 +63,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else if (prsLearnerRecord.IsWithdrawn)
             {
-                await _cacheService.SetAsync(CacheKey, new PostResultsServiceUlnWithdrawnViewModel { Uln = prsLearnerRecord.Uln, DateofBirth = prsLearnerRecord.DateofBirth, TLevelTitle = prsLearnerRecord.TlevelTitle }, CacheExpiryTime.XSmall);
+                await _cacheService.SetAsync(CacheKey, new PostResultsServiceUlnWithdrawnViewModel
+                {
+                    Uln = prsLearnerRecord.Uln,
+                    Firstname = prsLearnerRecord.Firstname,
+                    Lastname = prsLearnerRecord.Lastname,
+                    DateofBirth = prsLearnerRecord.DateofBirth,
+                    ProviderName = prsLearnerRecord.ProviderName,
+                    ProviderUkprn = prsLearnerRecord.ProviderUkprn,
+                    TLevelTitle = prsLearnerRecord.TlevelTitle
+                }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PostResultsServiceUlnWithdrawn);
             }
 
