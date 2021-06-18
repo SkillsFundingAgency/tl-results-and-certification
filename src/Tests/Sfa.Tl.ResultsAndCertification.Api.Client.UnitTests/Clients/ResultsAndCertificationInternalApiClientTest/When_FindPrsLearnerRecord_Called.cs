@@ -42,9 +42,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             {
                 ProfileId = 11,
                 Uln = _uln,
-                LearnerName = "Test User",
+                Firstname = "John",
+                Lastname = "Smith",
                 DateofBirth = DateTime.UtcNow.AddYears(30),
-                ProviderName = "Barnsley College (123456789)",
+                ProviderName = "Barnsley College",
+                ProviderUkprn = 123456789,
                 TlevelTitle = "Title",
                 Status = RegistrationPathwayStatus.Active,
             };
@@ -66,9 +68,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         {
             _actualResult.Should().NotBeNull();
             _actualResult.Uln.Should().Be(_mockApiResponse.Uln);
-            _actualResult.LearnerName.Should().Be(_mockApiResponse.LearnerName);
+            _actualResult.Firstname.Should().Be(_mockApiResponse.Firstname);
+            _actualResult.Lastname.Should().Be(_mockApiResponse.Lastname);
             _actualResult.DateofBirth.Should().Be(_mockApiResponse.DateofBirth);
             _actualResult.ProviderName.Should().Be(_mockApiResponse.ProviderName);
+            _actualResult.ProviderUkprn.Should().Be(_mockApiResponse.ProviderUkprn);
             _actualResult.TlevelTitle.Should().Be(_mockApiResponse.TlevelTitle);
             _actualResult.Status.Should().Be(_mockApiResponse.Status);
         }
