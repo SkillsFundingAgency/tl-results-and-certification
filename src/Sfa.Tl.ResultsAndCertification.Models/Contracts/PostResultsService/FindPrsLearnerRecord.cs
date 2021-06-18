@@ -12,5 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public string ProviderName { get; set; }
         public string TlevelTitle { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
+
+        public bool IsWithdrawn => Status == RegistrationPathwayStatus.Withdrawn;
     }
 }

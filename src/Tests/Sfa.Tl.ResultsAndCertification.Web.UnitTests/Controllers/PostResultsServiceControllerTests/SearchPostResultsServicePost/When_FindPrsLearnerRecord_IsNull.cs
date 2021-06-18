@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using Xunit;
 
@@ -10,12 +11,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_FindPrsLearnerRecord_IsNull : TestSetup
     {
-        private readonly FindPrsLearnerRecordViewModel _findPrsLearnerViewModel = null;
+        private readonly FindPrsLearnerRecord _findPrsLearner = null;
 
         public override void Given()
         {
             ViewModel = new SearchPostResultsServiceViewModel { SearchUln = "1234567891" };
-            Loader.FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong()).Returns(_findPrsLearnerViewModel);
+            Loader.FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong()).Returns(_findPrsLearner);
         }
 
         [Fact]
