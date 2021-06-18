@@ -10,6 +10,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
+        public long ProviderUkprn { get; set; }
+        public string ProviderDisplayName { get; set; }
         public string TlevelTitle { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
 

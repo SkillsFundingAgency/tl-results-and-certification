@@ -61,9 +61,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _cacheService.SetAsync(CacheKey, new PostResultServiceUlnNotFoundViewModel { Uln = model.SearchUln }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PostResultServiceUlnNotFound);
             }
-            if(prsLearnerRecord.IsWithdrawn)
-                // TODO: withdrawn
-                return RedirectToRoute(RouteConstants.PageNotFound);
+            else if (prsLearnerRecord.IsWithdrawn)
+            {
+                await _cacheService.SetAsync(CacheKey, new PostResultsServiceUlnWithdrawnViewModel { Uln = prsLearnerRecord.Uln, DateofBirth = prsLearnerRecord.DateofBirth, ProviderName = prsLearnerRecord.ProviderDisplayName, TLevelTitle = prsLearnerRecord.TlevelTitle }, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.PostResultsServiceUlnWithdrawn);
+            }
 
             return View(new SearchPostResultsServiceViewModel());
         }
@@ -76,6 +78,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PostResultServiceUlnNotFoundViewModel from redis cache in request Prs Uln not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(cacheModel);
+        }
+
+        [HttpGet]
+        [Route("reviews-and-appeals-learner-withdrawn", Name = RouteConstants.PostResultsServiceUlnWithdrawn)]
+        public async Task<IActionResult> PostResultsServiceUlnWithdrawnAsync()
+        {
+            var cacheModel = await _cacheService.GetAndRemoveAsync<PostResultsServiceUlnWithdrawnViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PostResultsServiceUlnWithdrawnViewModel from redis cache in post results service uln withdrawn page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

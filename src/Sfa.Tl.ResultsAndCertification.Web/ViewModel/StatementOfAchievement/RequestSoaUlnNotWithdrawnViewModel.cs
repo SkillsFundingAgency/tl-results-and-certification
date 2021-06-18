@@ -12,7 +12,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             ProviderNameLabel = RequestSoaUlnNotWithdrawnContent.Title_Provider_Text;
             TlevelTitleLabel = RequestSoaUlnNotWithdrawnContent.Title_TLevel_Text;
         }
-
-        public bool IsNotWithdrawn { get; set; }
     }
 }
