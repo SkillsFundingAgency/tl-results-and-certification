@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         protected PostResultsServiceController Controller;
 
         // HttpContext
-        protected int ProviderUkprn;
+        protected int AoUkprn;
         protected Guid UserId;
         protected IHttpContextAccessor HttpContextAccessor;
         protected string CacheKey;
@@ -35,9 +35,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             Controller = new PostResultsServiceController(Loader, CacheService, Logger);
 
-            ProviderUkprn = 1234567890;
+            AoUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<PostResultsServiceController>(Controller)
-               .Add(CustomClaimTypes.Ukprn, ProviderUkprn.ToString())
+               .Add(CustomClaimTypes.Ukprn, AoUkprn.ToString())
                .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
                .Build()
                .HttpContext;

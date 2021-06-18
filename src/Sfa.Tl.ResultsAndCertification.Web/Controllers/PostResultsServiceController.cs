@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (prsLearnerRecord == null)
             {
-                await _cacheService.SetAsync(CacheKey, new PostResultServiceUlnNotFoundViewModel { Uln = model.SearchUln }, CacheExpiryTime.XSmall);
+                await _cacheService.SetAsync(CacheKey, new PostResultsServiceUlnNotFoundViewModel { Uln = model.SearchUln }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PostResultServiceUlnNotFound);
             }
             else if (prsLearnerRecord.IsWithdrawn)
@@ -71,10 +71,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("no-learner-found", Name = RouteConstants.PostResultServiceUlnNotFound)]
+        [Route("reviews-and-appeals-uln-not-found", Name = RouteConstants.PostResultServiceUlnNotFound)]
         public async Task<IActionResult> PostResultServiceUlnNotFoundAsync()
         {
-            var cacheModel = await _cacheService.GetAndRemoveAsync<PostResultServiceUlnNotFoundViewModel>(CacheKey);
+            var cacheModel = await _cacheService.GetAndRemoveAsync<PostResultsServiceUlnNotFoundViewModel>(CacheKey);
             if (cacheModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PostResultServiceUlnNotFoundViewModel from redis cache in request Prs Uln not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
