@@ -7,7 +7,7 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.SearchPostResultsServiceGet
 {
-    public class When_Action_Called : TestSetup
+    public class When_Cache_IsNull : TestSetup
     {
         public override void Given() { }
 
