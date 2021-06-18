@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
-    public class PostResultServiceUlnNotFoundViewModel
+    public class PostResultsServiceUlnNotFoundViewModel
     {
         public string Uln { get; set; }
 

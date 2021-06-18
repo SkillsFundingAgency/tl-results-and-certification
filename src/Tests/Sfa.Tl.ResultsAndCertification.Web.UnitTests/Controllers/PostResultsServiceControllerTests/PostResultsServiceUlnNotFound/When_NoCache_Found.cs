@@ -9,10 +9,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_NoCache_Found : TestSetup
     {
-        private readonly PostResultServiceUlnNotFoundViewModel _mockCache = null;
+        private readonly PostResultsServiceUlnNotFoundViewModel _mockCache = null;
         public override void Given()
         {
-            CacheService.GetAndRemoveAsync<PostResultServiceUlnNotFoundViewModel>(CacheKey).Returns(_mockCache);
+            CacheService.GetAndRemoveAsync<PostResultsServiceUlnNotFoundViewModel>(CacheKey).Returns(_mockCache);
         }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         [Fact]
         public void Then_Expected_Method_IsCalled()
         {
-            CacheService.Received(1).GetAndRemoveAsync<PostResultServiceUlnNotFoundViewModel>(CacheKey);
+            CacheService.Received(1).GetAndRemoveAsync<PostResultsServiceUlnNotFoundViewModel>(CacheKey);
         }
     }
 }
