@@ -37,11 +37,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-search-learner", Name = RouteConstants.SearchPostResultsService)]
-        public async Task<IActionResult> SearchPostResultsServiceAsync()
+        [Route("reviews-and-appeals-search-learner/{populateUln:bool?}", Name = RouteConstants.SearchPostResultsService)]
+        public async Task<IActionResult> SearchPostResultsServiceAsync(bool populateUln)
         {
             var cacheModel = await _cacheService.GetAsync<SearchPostResultsServiceViewModel>(CacheKey);
-            var viewModel = cacheModel ?? new SearchPostResultsServiceViewModel();
+            var viewModel = cacheModel != null && populateUln ? cacheModel : new SearchPostResultsServiceViewModel();
 
             return View(viewModel);
         }

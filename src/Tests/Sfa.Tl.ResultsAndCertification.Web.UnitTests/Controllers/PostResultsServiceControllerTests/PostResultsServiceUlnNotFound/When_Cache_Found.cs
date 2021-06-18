@@ -29,7 +29,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.SearchPostResultsService);
-            model.BackLink.RouteAttributes.Should().BeEmpty();
+            model.BackLink.RouteAttributes.Count.Should().Be(1);
+            model.BackLink.RouteAttributes.TryGetValue(Constants.PopulateUln, out string routeValue);
+            routeValue.Should().Be(true.ToString());
         }
 
         [Fact]

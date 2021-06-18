@@ -95,6 +95,7 @@
         public const string IsFromSelectAddress = "isFromSelectAddress";
         public const string ShowPostcode = "showPostcode";
         public const string IsAddressMissing = "isFromAddressMissing";
+        public const string PopulateUln = "populateUln";
 
         // Assessments
         public const int AssessmentEndInYears = 4;
