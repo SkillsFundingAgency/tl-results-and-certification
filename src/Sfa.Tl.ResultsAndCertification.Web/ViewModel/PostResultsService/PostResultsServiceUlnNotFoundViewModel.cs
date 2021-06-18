@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public virtual BackLinkModel BackLink => new BackLinkModel 
         { 
             RouteName = RouteConstants.SearchPostResultsService, 
-            RouteAttributes = new Dictionary<string, string> { { Sfa.Tl.ResultsAndCertification.Common.Helpers.Constants.PopulateUln, true.ToString() } }
+            RouteAttributes = new Dictionary<string, string> { { Constants.PopulateUln, true.ToString() } }
         };
     }
 }
