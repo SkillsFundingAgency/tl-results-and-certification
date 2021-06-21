@@ -76,9 +76,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PostResultsServiceUlnWithdrawn);
             }
 
-            return View(new SearchPostResultsServiceViewModel());
+            return RedirectToRoute(RouteConstants.PrsReviewsAndAppealsStatus, new { profileId = prsLearnerRecord.ProfileId });
         }
-
+        
         [HttpGet]
         [Route("reviews-and-appeals-uln-not-found", Name = RouteConstants.PostResultsServiceUlnNotFound)]
         public async Task<IActionResult> PostResultsServiceUlnNotFoundAsync()
@@ -105,6 +105,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(cacheModel);
+        }
+
+        [HttpGet]
+        [Route("reviews-and-appeals-learner-status/{profileId}", Name=RouteConstants.PrsReviewsAndAppealsStatus)]
+        public async Task<IActionResult> PrsReviewsAndAppealsStatusAsync(int profileId)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync(User.GetUkPrn(), profileId);
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
         }
     }
 }

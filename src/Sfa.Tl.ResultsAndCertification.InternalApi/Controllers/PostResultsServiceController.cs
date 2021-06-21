@@ -23,5 +23,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _postResultsServiceService.FindPrsLearnerRecordAsync(aoUkprn, uln);
         }
+
+        [HttpGet]
+        [Route("GetPrsLearnerDetails/{aoUkprn}/{profileId}")]
+        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId)
+        {
+            return await _postResultsServiceService.GetPrsLearnerDetailsAsync(aoUkPrn, profileId);
+        }
     }
 }
