@@ -287,6 +287,7 @@
         public const string SubmitSearchPostResultsService = "SubmitSearchPostResultsService";
         public const string PostResultsServiceUlnNotFound = "PostResultServiceUlnNotFound";
         public const string PostResultsServiceUlnWithdrawn = "PostResultsServiceUlnWithdrawn";
+        public const string PrsReviewsAndAppealsStatus = "PrsReviewsAndAppealsStatus";
         public const string PostResultsServiceAppealCoreGrade = "PostResultsServiceAppealCoreGrade";
 
         #endregion

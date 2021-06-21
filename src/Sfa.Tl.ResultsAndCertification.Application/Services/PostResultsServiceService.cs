@@ -21,5 +21,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return await _postResultsServiceRepository.FindPrsLearnerRecordAsync(aoUkprn, uln);
         }
+
+        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId)
+        {
+            // TODO
+            await Task.CompletedTask;
+            return new PrsLearnerDetails();
+        }
     }
 }

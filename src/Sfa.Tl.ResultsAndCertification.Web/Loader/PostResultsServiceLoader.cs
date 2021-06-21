@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -21,5 +22,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             return await _internalApiClient.FindPrsLearnerRecordAsync(aoUkprn, uln);
         }
+
+        public async Task<PrsLearnerDetailsViewModel> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId)
+        {
+            PrsLearnerDetails prsLearnerDetails = await _internalApiClient.GetPrsLearnerDetailsAsync(aoUkprn, profileId);
+            return _mapper.Map<PrsLearnerDetailsViewModel>(prsLearnerDetails);
+       }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
@@ -6,6 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
     {
         public PostResultsServiceMapper()
         {
+            CreateMap<PrsLearnerDetails, PrsLearnerDetailsViewModel>();
         }
     }
 }
