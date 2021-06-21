@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         [Fact]
         public void Then_Expected_Methods_IsCalled()
         {
-            CacheService.Received(1).RemoveAsync<SearchPostResultsServiceViewModel>(CacheKey);
+            CacheService.Received(1).RemoveAsync<PrsSearchLearnerViewModel>(CacheKey);
         }
     }
 }

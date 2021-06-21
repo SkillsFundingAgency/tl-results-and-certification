@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
-    public abstract class PostResultsServiceBaseViewModel
+    public abstract class PrsBaseViewModel
     {
         public long Uln { get; set; }
         public string Firstname { get; set; }
@@ -64,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public virtual BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = RouteConstants.SearchPostResultsService,
+            RouteName = RouteConstants.PrsSearchLearner,
             RouteAttributes = new Dictionary<string, string> { { Constants.PopulateUln, true.ToString() } }
         };
     }

@@ -8,7 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.SearchPostResultsServicePost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsSearchLearnerPost
 {
     public class When_Uln_IsWithdrawn : TestSetup
     {
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Status = Common.Enum.RegistrationPathwayStatus.Withdrawn
             };
 
-            ViewModel = new SearchPostResultsServiceViewModel { SearchUln = _findPrsLearner.Uln.ToString() };
+            ViewModel = new PrsSearchLearnerViewModel { SearchUln = _findPrsLearner.Uln.ToString() };
             Loader.FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong()).Returns(_findPrsLearner);
         }
 
@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             Loader.Received(1).FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong());
             CacheService.Received(1).SetAsync(CacheKey, ViewModel);
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PostResultsServiceUlnWithdrawnViewModel>(x =>
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsUlnWithdrawnViewModel>(x =>
                     x.Uln == _findPrsLearner.Uln &&
                     x.Firstname == _findPrsLearner.Firstname &&
                     x.Lastname == _findPrsLearner.Lastname &&
@@ -50,10 +50,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         }
 
         [Fact]
-        public void Then_Redirected_To_PostResultsServiceUlnWithdrawn()
+        public void Then_Redirected_To_PrsUlnWithdrawn()
         {
             var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.PostResultsServiceUlnWithdrawn);
+            route.RouteName.Should().Be(RouteConstants.PrsUlnWithdrawn);
         }
     }
 }
