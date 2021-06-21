@@ -119,8 +119,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-appeal-grade", Name = RouteConstants.PostResultsServiceAppealCoreGrade)]
-        public async Task<IActionResult> PostResultsServiceAppealCoreGradeAsync()
+        [Route("reviews-and-appeals-appeal-grade", Name = RouteConstants.PrsAppealCoreGrade)]
+        public async Task<IActionResult> PrsAppealCoreGradeAsync()
         {
             await Task.CompletedTask;
             return View(new AppealCoreGradeViewModel());

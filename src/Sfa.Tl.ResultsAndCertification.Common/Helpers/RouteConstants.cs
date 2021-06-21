@@ -288,7 +288,7 @@
         public const string PostResultsServiceUlnNotFound = "PostResultServiceUlnNotFound";
         public const string PostResultsServiceUlnWithdrawn = "PostResultsServiceUlnWithdrawn";
         public const string PrsReviewsAndAppealsStatus = "PrsReviewsAndAppealsStatus";
-        public const string PostResultsServiceAppealCoreGrade = "PostResultsServiceAppealCoreGrade";
+        public const string PrsAppealCoreGrade = "PrsAppealCoreGrade";
 
         #endregion
     }

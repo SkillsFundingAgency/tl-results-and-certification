@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using AppealCoreGradeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.AppealCoreGrade;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
@@ -20,6 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public long CoreCode { get; set; }
         public string CoreAssessmentSeries { get; set; }
         public string CoreGrade { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(AppealCoreGradeContent), ErrorMessageResourceName = "Validation_Message")]
+        public bool? AppealGrade { get; set; }
 
         private string LearnerName => $"{Firstname} {Lastname}";
         private string CoreDisplayName => $"{CoreName}<br/>({CoreCode})";
@@ -69,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public virtual BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = RouteConstants.SearchPostResultsService,
+            RouteName = RouteConstants.PrsReviewsAndAppealsStatus,
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
         };
     }
