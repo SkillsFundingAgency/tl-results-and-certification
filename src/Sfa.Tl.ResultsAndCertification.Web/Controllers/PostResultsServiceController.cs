@@ -106,5 +106,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(cacheModel);
         }
+
+        [HttpGet]
+        [Route("reviews-and-appeals-appeal-grade", Name = RouteConstants.PostResultsServiceAppealCoreGrade)]
+        public async Task<IActionResult> PostResultsServiceAppealCoreGradeAsync()
+        {
+            await Task.CompletedTask;
+            return View(new AppealCoreGradeViewModel());
+        }
     }
 }
