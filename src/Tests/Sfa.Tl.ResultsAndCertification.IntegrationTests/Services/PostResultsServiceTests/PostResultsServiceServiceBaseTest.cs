@@ -37,7 +37,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
         protected List<TqPathwayAssessment> TqPathwayAssessment;
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
-        protected IList<Qualification> Qualifications;
 
         protected virtual void CreateMapper()
         {
@@ -93,59 +92,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
 
             DbContext.SaveChanges();
             return profile;
-        }
-
-        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false, IndustryPlacementStatus ipStatus = IndustryPlacementStatus.Completed)
-        {
-            if (profile == null) return;
-
-            profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
-
-            if (seedIndustryPlacement)
-            {
-                var pathway = profile.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
-                IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, ipStatus);
-            }
-        }
-
-        public void BuildLearnerRecordCriteria(TqRegistrationProfile profile, bool? isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool? isEngishAndMathsAchieved, bool seedIndustryPlacement = false, bool? isSendLearner = null, IndustryPlacementStatus ipStatus = IndustryPlacementStatus.Completed)
-        {
-            if (profile == null) return;
-
-            profile.IsRcFeed = isRcFeed;
-            profile.IsEnglishAndMathsAchieved = isEngishAndMathsAchieved;
-            profile.IsSendLearner = isSendLearner;
-
-            if (seedQualificationAchieved)
-            {
-                var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng" && e.IsSendQualification == isSendQualification);
-                var mathQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Math");
-
-                var engQualifcationGrade = engQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved);
-                var mathsQualifcationGrade = mathQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved);
-
-                profile.QualificationAchieved.Add(new QualificationAchieved
-                {
-                    TqRegistrationProfileId = profile.Id,
-                    QualificationId = engQual.Id,
-                    QualificationGradeId = engQualifcationGrade.Id,
-                    IsAchieved = engQualifcationGrade.IsAllowable
-                });
-
-                profile.QualificationAchieved.Add(new QualificationAchieved
-                {
-                    TqRegistrationProfileId = profile.Id,
-                    QualificationId = mathQual.Id,
-                    QualificationGradeId = mathsQualifcationGrade.Id,
-                    IsAchieved = mathsQualifcationGrade.IsAllowable
-                });
-            }
-
-            if (seedIndustryPlacement)
-            {
-                var pathway = profile.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
-                IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, ipStatus);
-            }
         }
 
         public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
@@ -212,27 +158,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                 DbContext.SaveChanges();
 
             return TqPathwayAssessment;
-        }
-
-
-        public IList<Qualification> SeedQualificationData()
-        {
-            var qualificationsList = new QualificationBuilder().BuildList();
-            var qualifications = QualificationDataProvider.CreateQualificationList(DbContext, qualificationsList);
-
-            foreach (var qual in qualifications)
-            {
-                qual.QualificationType.QualificationGrades = new QualificationGradeBuilder().BuildList(qual.QualificationType);
-            }
-
-            return qualifications;
-        }
-
-        public IList<PrintCertificate> SeedPrintCertificates(IList<TqRegistrationPathway> tqRegistrationPathway)
-        {
-            var printCertificates = PrintCertificateDataProvider.CreatePrintCertificate(DbContext, new PrintCertificateBuilder().BuildList(tqRegistrationPathway));
-            DbContext.SaveChanges();
-            return printCertificates;
         }
     }
 
