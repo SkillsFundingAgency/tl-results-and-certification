@@ -6,18 +6,18 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using Xunit;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.SearchPostResultsServiceGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsSearchLearnerGet
 {
-    public class When_PopulateUln_IsFalse : TestSetup
+    public class When_PopulateUln_IsTrue : TestSetup
     {
-        private SearchPostResultsServiceViewModel cacheSearchPrsViewModel;
+        private PrsSearchLearnerViewModel cacheSearchPrsViewModel;
 
         public override void Given() 
         {
-            PopulateUln = false;
-            cacheSearchPrsViewModel = new SearchPostResultsServiceViewModel { SearchUln = "123465790" };
+            PopulateUln = true;
+            cacheSearchPrsViewModel = new PrsSearchLearnerViewModel { SearchUln = "123465790" };
             
-            CacheService.GetAsync<SearchPostResultsServiceViewModel>(CacheKey)
+            CacheService.GetAsync<PrsSearchLearnerViewModel>(CacheKey)
                 .Returns(cacheSearchPrsViewModel);
         }
 
@@ -27,11 +27,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             Result.Should().BeOfType(typeof(ViewResult));
 
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(SearchPostResultsServiceViewModel));
+            viewResult.Model.Should().BeOfType(typeof(PrsSearchLearnerViewModel));
 
-            var model = viewResult.Model as SearchPostResultsServiceViewModel;
+            var model = viewResult.Model as PrsSearchLearnerViewModel;
             model.Should().NotBeNull();
-            model.SearchUln.Should().BeNullOrEmpty();
+            model.SearchUln.Should().Be(cacheSearchPrsViewModel.SearchUln);
 
             // Breadcrumb
             model.Breadcrumb.Should().NotBeNull();

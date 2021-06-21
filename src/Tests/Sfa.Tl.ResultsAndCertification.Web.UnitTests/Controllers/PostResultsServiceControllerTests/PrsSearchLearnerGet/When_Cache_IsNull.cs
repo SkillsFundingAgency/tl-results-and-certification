@@ -1,25 +1,15 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using Xunit;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.SearchPostResultsServiceGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsSearchLearnerGet
 {
-    public class When_PopulateUln_IsTrue : TestSetup
+    public class When_Cache_IsNull : TestSetup
     {
-        private SearchPostResultsServiceViewModel cacheSearchPrsViewModel;
-
-        public override void Given() 
-        {
-            PopulateUln = true;
-            cacheSearchPrsViewModel = new SearchPostResultsServiceViewModel { SearchUln = "123465790" };
-            
-            CacheService.GetAsync<SearchPostResultsServiceViewModel>(CacheKey)
-                .Returns(cacheSearchPrsViewModel);
-        }
+        public override void Given() { }
 
         [Fact]
         public void Then_Returns_Expected_Results()
@@ -27,11 +17,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             Result.Should().BeOfType(typeof(ViewResult));
 
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(SearchPostResultsServiceViewModel));
+            viewResult.Model.Should().BeOfType(typeof(PrsSearchLearnerViewModel));
 
-            var model = viewResult.Model as SearchPostResultsServiceViewModel;
+            var model = viewResult.Model as PrsSearchLearnerViewModel;
             model.Should().NotBeNull();
-            model.SearchUln.Should().Be(cacheSearchPrsViewModel.SearchUln);
+            model.SearchUln.Should().BeNullOrEmpty();
 
             // Breadcrumb
             model.Breadcrumb.Should().NotBeNull();

@@ -7,10 +7,10 @@ using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsServ
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
-    public class SearchPostResultsServiceViewModel
+    public class PrsSearchLearnerViewModel
     {
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.SearchPostResultsService), ErrorMessageResourceName = "Uln_Required_Validation_Message")]
-        [RegularExpression(Constants.UlnValidationRegex, ErrorMessageResourceType = typeof(ErrorResource.SearchPostResultsService), ErrorMessageResourceName = "Uln_Not_Valid_Validation_Message")]
+        [Required(ErrorMessageResourceType = typeof(ErrorResource.PrsSearchLearner), ErrorMessageResourceName = "Uln_Required_Validation_Message")]
+        [RegularExpression(Constants.UlnValidationRegex, ErrorMessageResourceType = typeof(ErrorResource.PrsSearchLearner), ErrorMessageResourceName = "Uln_Not_Valid_Validation_Message")]
         public string SearchUln { get; set; }
 
         public BreadcrumbModel Breadcrumb

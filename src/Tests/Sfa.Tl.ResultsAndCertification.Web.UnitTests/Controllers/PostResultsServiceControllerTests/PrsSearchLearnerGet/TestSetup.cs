@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.SearchPostResultsServiceGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsSearchLearnerGet
 {
     public abstract class TestSetup : PostResultsServiceControllerTestBase
     {
@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public async override Task When()
         {
-            Result = await Controller.SearchPostResultsServiceAsync(PopulateUln);
+            Result = await Controller.PrsSearchLearnerAsync(PopulateUln);
         }
     }
 }

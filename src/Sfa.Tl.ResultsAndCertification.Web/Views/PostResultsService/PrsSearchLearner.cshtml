@@ -1,8 +1,8 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.SearchPostResultsServiceViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsSearchLearnerViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
 
 @{
-    ViewData["Title"] = SearchPostResultsService.Page_Title;
+    ViewData["Title"] = PrsSearchLearner.Page_Title;
 }
 
 @section NavigationBar {
@@ -12,26 +12,26 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <partial name="_ValidationSummary" />
-        <form asp-route="SubmitSearchPostResultsService">
+        <form asp-route="SubmitPrsSearchLearner">
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
                         <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
-                            @SearchPostResultsService.Heading_Search_For_A_Learner
+                            @PrsSearchLearner.Heading_Search_For_A_Learner
                         </h1>
                     </legend>
-                    <p class="govuk-body">@SearchPostResultsService.Search_For_The_Learner_Who_Requested_Review_Or_Appeal</p>
+                    <p class="govuk-body">@PrsSearchLearner.Search_For_The_Learner_Who_Requested_Review_Or_Appeal</p>
                     <div class="govuk-form-group" sfa-validation-for="SearchUln" sfa-validation-class="govuk-form-group--error">
                         <label class="govuk-label" for="searchuln">
-                            @SearchPostResultsService.Enter_The_Unique_Learner_Number
+                            @PrsSearchLearner.Enter_The_Unique_Learner_Number
                         </label>
-                        <span class="govuk-hint">@SearchPostResultsService.Uln_Must_10_Digit_Hint</span>
+                        <span class="govuk-hint">@PrsSearchLearner.Uln_Must_10_Digit_Hint</span>
                         <span sfa-validation-for="SearchUln"></span>
                         <input id="searchuln" class="govuk-input govuk-input--width-10" asp-for="SearchUln" maxlength="10">
                     </div>
                 </fieldset>
             </div>
-            <button id="searchButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@SearchPostResultsService.Search_Button</button>
+            <button id="searchButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsSearchLearner.Search_Button</button>
         </form>
     </div>
 </div>
