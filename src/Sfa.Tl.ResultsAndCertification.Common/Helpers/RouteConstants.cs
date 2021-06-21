@@ -285,9 +285,9 @@
         public const string StartReviewsAndAppeals = "StartReviewsAndAppeals";
         public const string SearchPostResultsService = "SearchPostResultsService";
         public const string SubmitSearchPostResultsService = "SubmitSearchPostResultsService";
-        public const string PostResultsServiceUlnNotFound = "PostResultServiceUlnNotFound";
+        public const string PrsUlnNotFound = "PrsUlnNotFound";
         public const string PostResultsServiceUlnWithdrawn = "PostResultsServiceUlnWithdrawn";
-        public const string PrsReviewsAndAppealsStatus = "PrsReviewsAndAppealsStatus";
+        public const string PrsLearnerDetails = "PrsLearnerDetails";
         public const string PrsAppealCoreGrade = "PrsAppealCoreGrade";
 
         #endregion

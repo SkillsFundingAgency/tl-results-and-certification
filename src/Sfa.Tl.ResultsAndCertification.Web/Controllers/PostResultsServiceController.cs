@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (prsLearnerRecord == null)
             {
                 await _cacheService.SetAsync(CacheKey, new PostResultsServiceUlnNotFoundViewModel { Uln = model.SearchUln }, CacheExpiryTime.XSmall);
-                return RedirectToRoute(RouteConstants.PostResultsServiceUlnNotFound);
+                return RedirectToRoute(RouteConstants.PrsUlnNotFound);
             }
             else if (prsLearnerRecord.IsWithdrawn)
             {
@@ -76,12 +76,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PostResultsServiceUlnWithdrawn);
             }
 
-            return RedirectToRoute(RouteConstants.PrsReviewsAndAppealsStatus, new { profileId = prsLearnerRecord.ProfileId });
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId });
         }
-        
+
         [HttpGet]
-        [Route("reviews-and-appeals-uln-not-found", Name = RouteConstants.PostResultsServiceUlnNotFound)]
-        public async Task<IActionResult> PostResultsServiceUlnNotFoundAsync()
+        [Route("reviews-and-appeals-uln-not-found", Name = RouteConstants.PrsUlnNotFound)]
+        public async Task<IActionResult> PrsUlnNotFoundAsync()
         {
             var cacheModel = await _cacheService.GetAndRemoveAsync<PostResultsServiceUlnNotFoundViewModel>(CacheKey);
             if (cacheModel == null)
@@ -108,8 +108,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-learner-status/{profileId}", Name=RouteConstants.PrsReviewsAndAppealsStatus)]
-        public async Task<IActionResult> PrsReviewsAndAppealsStatusAsync(int profileId)
+        [Route("reviews-and-appeals-learner-status/{profileId}", Name = RouteConstants.PrsLearnerDetails)]
+        public async Task<IActionResult> PrsLearnerDetailsAsync(int profileId)
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync(User.GetUkPrn(), profileId);
             if (viewModel == null || !viewModel.IsValid)
