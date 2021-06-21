@@ -104,7 +104,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                     new object[] { 1111111111, AwardingOrganisation.Pearson, true }, // Active 
                     new object[] { 1111111111, AwardingOrganisation.Ncfe, false },
                     new object[] { 1111111112, AwardingOrganisation.Pearson, true }, // Withdrawn
-                    new object[] { 1111111113, AwardingOrganisation.Pearson, true }, // Withdrawn
                     new object[] { 1111111113, AwardingOrganisation.Pearson, true }
                 };
             }

@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public async override Task When()
         {
-            Result = await Controller.PostResultServiceUlnNotFoundAsync();
+            Result = await Controller.PostResultsServiceUlnNotFoundAsync();
         }
     }
 }

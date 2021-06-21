@@ -285,7 +285,7 @@
         public const string StartReviewsAndAppeals = "StartReviewsAndAppeals";
         public const string SearchPostResultsService = "SearchPostResultsService";
         public const string SubmitSearchPostResultsService = "SubmitSearchPostResultsService";
-        public const string PostResultServiceUlnNotFound = "PostResultServiceUlnNotFound";
+        public const string PostResultsServiceUlnNotFound = "PostResultServiceUlnNotFound";
         public const string PostResultsServiceUlnWithdrawn = "PostResultsServiceUlnWithdrawn";
 
         #endregion
