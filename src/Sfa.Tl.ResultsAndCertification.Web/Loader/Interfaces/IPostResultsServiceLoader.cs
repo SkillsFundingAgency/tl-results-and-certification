@@ -7,6 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     public interface IPostResultsServiceLoader
     {
         Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln);
-        Task<PrsLearnerDetailsViewModel> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId);
+        Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId);
     }
 }
