@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public void Then_Redirected_To_PostResultServiceUlnNotFound()
         {
             var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.PostResultServiceUlnNotFound);
+            route.RouteName.Should().Be(RouteConstants.PostResultsServiceUlnNotFound);
         }
     }
 }
