@@ -1,0 +1,23 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsUlnNotFoundViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+
+@{
+    ViewData["Title"] = @PrsUlnNotFound.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">@string.Format(@PrsUlnNotFound.Heading_Uln_Not_Found, Model.Uln)</h1>
+        <p class="govuk-body">@PrsUlnNotFound.Para_We_Cannot_Find_Uln_Provided</p>
+        <p class="govuk-body">@PrsUlnNotFound.Para_Check_You_Have_Entered_Correct</p>
+
+        <div class="govuk-button-group govuk-!-margin-top-6">
+            <a id="buttonSearchAgain" class="govuk-button" role="button" data-module="govuk-button" asp-route="SearchPostResultsService">@PrsUlnNotFound.Button_Search_Again</a>
+            <a id="buttonBackToHome" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="Home">@PrsUlnNotFound.Button_Back_To_Home</a>
+        </div>
+    </div>
+</div>

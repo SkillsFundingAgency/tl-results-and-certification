@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             Loader.Received(1).FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong());
             CacheService.Received(1).SetAsync(CacheKey, ViewModel);
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PostResultsServiceUlnNotFoundViewModel>(x =>
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsUlnNotFoundViewModel>(x =>
                     x.Uln == ViewModel.SearchUln),
                     Common.Enum.CacheExpiryTime.XSmall);
         }

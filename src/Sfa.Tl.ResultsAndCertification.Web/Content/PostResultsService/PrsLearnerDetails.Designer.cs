@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class PostResultsServiceUlnNotFound {
+    public class PrsLearnerDetails {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal PostResultsServiceUlnNotFound() {
+        internal PrsLearnerDetails() {
         }
         
         /// <summary>
@@ -39,8 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PostResultsServiceU" +
-                            "lnNotFound", typeof(PostResultsServiceUlnNotFound).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsLearnerDetails", typeof(PrsLearnerDetails).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,56 +61,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to home.
-        /// </summary>
-        public static string Button_Back_To_Home {
-            get {
-                return ResourceManager.GetString("Button_Back_To_Home", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search again.
-        /// </summary>
-        public static string Button_Search_Again {
-            get {
-                return ResourceManager.GetString("Button_Search_Again", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unique Learner Number (ULN) {0} not found.
-        /// </summary>
-        public static string Heading_Uln_Not_Found {
-            get {
-                return ResourceManager.GetString("Heading_Uln_Not_Found", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ULN not found.
+        ///   Looks up a localized string similar to todo.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Check that you’ve entered the correct ULN. If you have, you will need to contact your organisation’s registrations editor for help..
-        /// </summary>
-        public static string Para_Check_You_Have_Entered_Correct {
-            get {
-                return ResourceManager.GetString("Para_Check_You_Have_Entered_Correct", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to We cannot find a learner for the ULN you provided. This might be because the ULN is wrong or that they are not registered with us..
-        /// </summary>
-        public static string Para_We_Cannot_Find_Uln_Provided {
-            get {
-                return ResourceManager.GetString("Para_We_Cannot_Find_Uln_Provided", resourceCulture);
             }
         }
     }

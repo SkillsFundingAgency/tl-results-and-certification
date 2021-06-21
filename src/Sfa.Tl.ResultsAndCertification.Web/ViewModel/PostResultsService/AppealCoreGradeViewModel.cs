@@ -73,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public virtual BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = RouteConstants.PrsReviewsAndAppealsStatus,
+            RouteName = RouteConstants.PrsLearnerDetails,
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
         };
     }

@@ -5,24 +5,24 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PostResultsServiceUlnNotFound
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsUlnNotFoundAsync
 {
     public class When_Cache_Found : TestSetup
     {
         private readonly long uln = 1234567890;
-        private PostResultsServiceUlnNotFoundViewModel _mockCache = null;
+        private PrsUlnNotFoundViewModel _mockCache = null;
 
         public override void Given()
         {
-            _mockCache = new PostResultsServiceUlnNotFoundViewModel { Uln = uln.ToString() };
-            CacheService.GetAndRemoveAsync<PostResultsServiceUlnNotFoundViewModel>(CacheKey).Returns(_mockCache);
+            _mockCache = new PrsUlnNotFoundViewModel { Uln = uln.ToString() };
+            CacheService.GetAndRemoveAsync<PrsUlnNotFoundViewModel>(CacheKey).Returns(_mockCache);
         }
 
         [Fact]
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as PostResultsServiceUlnNotFoundViewModel;
+            var model = viewResult.Model as PrsUlnNotFoundViewModel;
 
             model.Should().NotBeNull();
             model.Uln.Should().Be(uln.ToString());
@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).GetAndRemoveAsync<PostResultsServiceUlnNotFoundViewModel>(CacheKey);
+            CacheService.Received(1).GetAndRemoveAsync<PrsUlnNotFoundViewModel>(CacheKey);
         }
     }
 }
