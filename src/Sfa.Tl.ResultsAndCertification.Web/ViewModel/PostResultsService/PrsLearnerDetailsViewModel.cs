@@ -8,7 +8,7 @@ using PrsLearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Post
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
-    public class PrsLearnerDetailsViewModel : PostResultsServiceBaseViewModel
+    public class PrsLearnerDetailsViewModel : PrsBaseViewModel
     {
         public PrsLearnerDetailsViewModel()
         {
