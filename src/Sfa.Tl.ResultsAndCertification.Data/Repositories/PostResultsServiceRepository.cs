@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                           join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
                                           orderby tqPathway.CreatedOn descending
                                           where
-                                            tlAo.UkPrn == aoUkprn && tqProfile.UniqueLearnerNumber == uln && 
+                                            tlAo.UkPrn == aoUkprn && tqProfile.UniqueLearnerNumber == uln &&
                                             (tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn)
                                           select new FindPrsLearnerRecord
                                           {
@@ -43,6 +43,33 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                           })
                                           .FirstOrDefaultAsync();
             return prsLearnerRecord;
+        }
+
+        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId)
+        {
+            await Task.CompletedTask;
+            return new PrsLearnerDetails
+            {
+                ProfileId = 1,
+                Uln = 1234567890,
+                Firstname = "John",
+                Lastname = "Smith",
+                DateofBirth = System.DateTime.Today.AddYears(-20),
+                Status = RegistrationPathwayStatus.Active,
+
+                ProviderName = "Barsely College",
+                ProviderUkprn = 9876543210,
+
+                TlevelTitle = "Tlevel in Childcare",
+                PathwayName = "Childcare",
+                PathwayCode = 1212121212,
+
+                AssessmentPeriod = "Summer 2021",
+                PathwayResultId = 99,
+                PathwayGrade = "B",
+                PathwayGradeLastUpdatedOn = System.DateTime.Today.AddDays(-15),
+                PathwayGradeLastUpdatedBy = "Barsley User"
+            };
         }
     }
 }

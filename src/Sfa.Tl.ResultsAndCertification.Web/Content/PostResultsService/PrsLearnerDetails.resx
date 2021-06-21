@@ -117,7 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Button_Search_Again" xml:space="preserve">
+    <value>Search again</value>
+  </data>
+  <data name="Heading_Core" xml:space="preserve">
+    <value>Core (code): {0}</value>
+  </data>
+  <data name="Heading_Learner_Component_Grades_Status" xml:space="preserve">
+    <value>Learner’s component grades status</value>
+  </data>
+  <data name="Heading_Learner_Details" xml:space="preserve">
+    <value>Learner's details</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>todo</value>
+    <value>Learner’s component grades status</value>
+  </data>
+  <data name="Title_Assessment_Period" xml:space="preserve">
+    <value>Exam Period</value>
+  </data>
+  <data name="Title_DateofBirth_Text" xml:space="preserve">
+    <value>Date of birth</value>
+  </data>
+  <data name="Title_Name_Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Title_Pathway_Grade" xml:space="preserve">
+    <value>Grade</value>
+  </data>
+  <data name="Title_Pathway_Grade_LastUpdatedBy" xml:space="preserve">
+    <value>Updated by</value>
+  </data>
+  <data name="Title_Pathway_Grade_LastUpdatedOn" xml:space="preserve">
+    <value>Last updated</value>
+  </data>
+  <data name="Title_Provider_Text" xml:space="preserve">
+    <value>Provider &lt;br/&gt; (UKPRN)</value>
+  </data>
+  <data name="Title_TLevel_Text" xml:space="preserve">
+    <value>T Level</value>
+  </data>
+  <data name="Title_Uln_Text" xml:space="preserve">
+    <value>ULN</value>
   </data>
 </root>

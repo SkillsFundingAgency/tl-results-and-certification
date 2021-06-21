@@ -24,9 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId)
         {
-            // TODO
-            await Task.CompletedTask;
-            return new PrsLearnerDetails();
+            return await _postResultsServiceRepository.GetPrsLearnerDetailsAsync(aoUkPrn, profileId);
         }
     }
 }

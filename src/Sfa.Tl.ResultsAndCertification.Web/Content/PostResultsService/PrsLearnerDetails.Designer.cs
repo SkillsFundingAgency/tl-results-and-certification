@@ -61,11 +61,128 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to todo.
+        ///   Looks up a localized string similar to Search again.
+        /// </summary>
+        public static string Button_Search_Again {
+            get {
+                return ResourceManager.GetString("Button_Search_Again", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core (code): {0}.
+        /// </summary>
+        public static string Heading_Core {
+            get {
+                return ResourceManager.GetString("Heading_Core", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner’s component grades status.
+        /// </summary>
+        public static string Heading_Learner_Component_Grades_Status {
+            get {
+                return ResourceManager.GetString("Heading_Learner_Component_Grades_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner&apos;s details.
+        /// </summary>
+        public static string Heading_Learner_Details {
+            get {
+                return ResourceManager.GetString("Heading_Learner_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner’s component grades status.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exam Period.
+        /// </summary>
+        public static string Title_Assessment_Period {
+            get {
+                return ResourceManager.GetString("Title_Assessment_Period", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of birth.
+        /// </summary>
+        public static string Title_DateofBirth_Text {
+            get {
+                return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Title_Name_Text {
+            get {
+                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grade.
+        /// </summary>
+        public static string Title_Pathway_Grade {
+            get {
+                return ResourceManager.GetString("Title_Pathway_Grade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated by.
+        /// </summary>
+        public static string Title_Pathway_Grade_LastUpdatedBy {
+            get {
+                return ResourceManager.GetString("Title_Pathway_Grade_LastUpdatedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last updated.
+        /// </summary>
+        public static string Title_Pathway_Grade_LastUpdatedOn {
+            get {
+                return ResourceManager.GetString("Title_Pathway_Grade_LastUpdatedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider &lt;br/&gt; (UKPRN).
+        /// </summary>
+        public static string Title_Provider_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level.
+        /// </summary>
+        public static string Title_TLevel_Text {
+            get {
+                return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ULN.
+        /// </summary>
+        public static string Title_Uln_Text {
+            get {
+                return ResourceManager.GetString("Title_Uln_Text", resourceCulture);
             }
         }
     }
