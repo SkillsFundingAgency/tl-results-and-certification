@@ -1,0 +1,39 @@
+  jobs:
+  
+  - job: 'Integration Test'
+    pool:
+      name: 'Azure Pipelines'
+      vmImage: 'windows-2019'
+    workspace:
+      clean: all
+    steps:
+    - task: SqlAzureDacpacDeployment@1
+      displayName: 'Azure SQL Dacpac - Integration Test'
+      inputs:
+        azureSubscription: ${{ parameters.serviceConnection }}
+        ServerName: '$(SharedSqlServerFQDN)'
+        DatabaseName: '$(IntTestDatabaseName)'
+        SqlUsername: '$(SharedSqlServerUsername)'
+        SqlPassword: '$(SharedSqlServerPassword)'
+        DacpacFile: '$(System.ArtifactsDirectory)/sqldrop/src/Sfa.Tl.ResultsAndCertification.Database/bin/Release/Sfa.Tl.ResultsAndCertification.Database.dacpac'
+        AdditionalArguments: '/v:environment=$(environment)ssmsssssmsIntegration'
+    
+    - task: ExtractFiles@1
+      displayName: 'Extract Integration test files '
+      inputs:
+        archiveFilePatterns: '$(System.DefaultWorkingDirectory)/appdrop/config/Sfa.Tl.ResultsAndCertification.IntegrationTests.zip'
+        destinationFolder: '$(Agent.TempDirectory)\IntegrationTests'
+
+    - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
+      displayName: 'Tokenization: Transform file *.json'
+      inputs:
+        SourcePath: '$(Agent.TempDirectory)\IntegrationTests\'
+        TargetFileNames: '*.json'
+
+    - task: VSTest@2
+      displayName: 'Run Integration tests'
+      inputs:
+        testAssemblyVer2: '**\Sfa.Tl.ResultsAndCertification.IntegrationTests.dll'
+        searchFolder: '$(Agent.TempDirectory)\IntegrationTests'
+        runInParallel: false
+        failOnMinTestsNotRun: false

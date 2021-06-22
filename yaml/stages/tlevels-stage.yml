@@ -52,6 +52,13 @@ stages:
           serviceConnection: ${{ parameters.serviceConnection }}
           sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
 
+      - template: ../jobs/tlevels-integrationtest-job.yml
+        parameters:
+          serviceConnection: ${{ parameters.serviceConnection }}
+          sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
+          dependencies:
+            - DeploySQLDatabase
+
       - template: ../jobs/tlevels-publish-site-job.yml
         parameters:
           serviceConnection: ${{ parameters.serviceConnection }}
