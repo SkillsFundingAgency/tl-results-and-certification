@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -64,11 +65,18 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 PathwayName = "Childcare",
                 PathwayCode = 1212121212,
 
-                AssessmentPeriod = "Summer 2021",
-                PathwayResultId = 99,
-                PathwayGrade = "B",
-                PathwayGradeLastUpdatedOn = System.DateTime.Today.AddDays(-15),
-                PathwayGradeLastUpdatedBy = "Barsley User"
+                AssessmentResults = new List<AssessmentResult>
+                {
+                    new AssessmentResult
+                    {
+                        PathwayAssessmentId = 1,
+                        PathwayAssessmentSeries = "Summer 2021",
+                        PathwayResultId = 99,
+                        PathwayGrade = "B",
+                        PathwayGradeLastUpdatedOn = System.DateTime.Today.AddDays(-15),
+                        PathwayGradeLastUpdatedBy = "Barsley User"
+                    }
+                }
             };
         }
     }

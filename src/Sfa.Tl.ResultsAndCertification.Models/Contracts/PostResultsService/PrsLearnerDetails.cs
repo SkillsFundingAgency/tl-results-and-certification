@@ -1,10 +1,16 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using System;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
 {
     public class PrsLearnerDetails
     {
+        public PrsLearnerDetails()
+        {
+            AssessmentResults = new List<AssessmentResult>();
+        }
+
         // Registration
         public int ProfileId { get; set; }
         public long Uln { get; set; }
@@ -19,7 +25,11 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public string TlevelTitle { get; set; }
         public string PathwayName { get; set; }
         public int PathwayCode { get; set; }
-        public string AssessmentPeriod { get; set; }
+        public IEnumerable<AssessmentResult> AssessmentResults { get; set; }
+
+        // TODO: Following are tobe removed. 
+        public int PathwayAssessmentId { get; set; }
+        public string PathwayAssessmentSeries { get; set; }
         public int PathwayResultId { get; set; }
         public string PathwayGrade { get; set; }
         public DateTime PathwayGradeLastUpdatedOn { get; set; }
