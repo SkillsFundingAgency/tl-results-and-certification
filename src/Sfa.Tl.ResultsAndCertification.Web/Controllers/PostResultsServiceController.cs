@@ -119,15 +119,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-appeal-grade/{profileId}/{coreResultId}", Name = RouteConstants.PrsAppealCoreGrade)]
-        public async Task<IActionResult> PrsAppealCoreGradeAsync(int profileId, int coreResultId)
+        [Route("reviews-and-appeals-appeal-grade/{profileId}/{pathwayResultId}", Name = RouteConstants.PrsAppealCoreGrade)]
+        public async Task<IActionResult> PrsAppealCoreGradeAsync(int profileId, int pathwayResultId)
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(User.GetUkPrn(), profileId);
 
-            if (viewModel == null || viewModel.CoreResultId != coreResultId)
+            if (viewModel == null || viewModel.PathwayResultId != pathwayResultId)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            viewModel.CoreResultId = coreResultId;
+            viewModel.PathwayResultId = pathwayResultId;
             return View(viewModel);
         }
     }
