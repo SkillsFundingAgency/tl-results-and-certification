@@ -12,21 +12,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
     public class AppealCoreGradeViewModel
     {
         public int ProfileId { get; set; }
-        public int CoreResultId { get; set; }
+        public int PathwayResultId { get; set; }
         public long Uln { get; set; }
+        public string LearnerName { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public DateTime DateofBirth { get; set; }
-        public string CoreName { get; set; }
-        public long CoreCode { get; set; }
-        public string CoreAssessmentSeries { get; set; }
-        public string CoreGrade { get; set; }
+        public string PathwayDisplayName { get; set; }
+        public string PathwayAssessmentSeries { get; set; }
+        public string PathwayGrade { get; set; }
+        public bool HasPathwayResult { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(AppealCoreGradeContent), ErrorMessageResourceName = "Validation_Message")]
         public bool? AppealGrade { get; set; }
-
-        private string LearnerName => $"{Firstname} {Lastname}";
-        private string CoreDisplayName => $"{CoreName}<br/>({CoreCode})";
 
         public SummaryItemModel SummaryUln => new SummaryItemModel
         {
@@ -53,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             Id = "core",
             Title = AppealCoreGradeContent.Title_Core_Text,
-            Value = CoreDisplayName,
+            Value = PathwayDisplayName,
             IsRawHtml = true
         };
 
@@ -61,14 +59,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             Id = "coreexamperiod",
             Title = AppealCoreGradeContent.Title_ExamPeriod_Text,
-            Value = CoreAssessmentSeries
+            Value = PathwayAssessmentSeries
         };
 
         public SummaryItemModel SummaryCoreGrade => new SummaryItemModel
         {
             Id = "coregrade",
             Title = AppealCoreGradeContent.Title_Grade_Text,
-            Value = CoreGrade
+            Value = PathwayGrade
         };
 
         public virtual BackLinkModel BackLink => new BackLinkModel

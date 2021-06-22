@@ -289,6 +289,7 @@
         public const string PrsUlnWithdrawn = "PrsUlnWithdrawn";
         public const string PrsLearnerDetails = "PrsLearnerDetails";
         public const string PrsAppealCoreGrade = "PrsAppealCoreGrade";
+        public const string SubmitPrsAppealCoreGrade = "SubmitPrsAppealCoreGrade";
 
         #endregion
     }

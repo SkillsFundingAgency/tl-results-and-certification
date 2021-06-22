@@ -119,16 +119,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-appeal-grade/{profileId}/{coreResultId}", Name = RouteConstants.PrsAppealCoreGrade)]
-        public async Task<IActionResult> PrsAppealCoreGradeAsync(int profileId, int coreResultId)
+        [Route("reviews-and-appeals-appeal-grade/{profileId}/{resultId}", Name = RouteConstants.PrsAppealCoreGrade)]
+        public async Task<IActionResult> PrsAppealCoreGradeAsync(int profileId, int resultId)
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(User.GetUkPrn(), profileId);
 
-            if (viewModel == null || viewModel.CoreResultId != coreResultId)
+            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.HasPathwayResult)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            viewModel.CoreResultId = coreResultId;
+            viewModel.PathwayResultId = resultId;
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("reviews-and-appeals-appeal-grade", Name = RouteConstants.SubmitPrsAppealCoreGrade)]
+        public async Task<IActionResult> PrsAppealCoreGradeAsync(AppealCoreGradeViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            await Task.CompletedTask;
+
+            return model.AppealGrade.Value
+                ? RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId })
+                : RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
         }
     }
 }
