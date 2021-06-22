@@ -1,6 +1,6 @@
   jobs:
   
-  - job: 'Integration Test'
+  - job: 'IntegrationTest'
     pool:
       name: 'Azure Pipelines'
       vmImage: 'windows-2019'
