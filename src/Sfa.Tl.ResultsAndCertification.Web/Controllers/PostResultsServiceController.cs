@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     DateofBirth = prsLearnerRecord.DateofBirth,
                     ProviderName = prsLearnerRecord.ProviderName,
                     ProviderUkprn = prsLearnerRecord.ProviderUkprn,
-                    TLevelTitle = prsLearnerRecord.TlevelTitle
+                    TlevelTitle = prsLearnerRecord.TlevelTitle
                 }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PrsUlnWithdrawn);
             }

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Action_Link_Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
   <data name="Button_Search_Again" xml:space="preserve">
     <value>Search again</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="Heading_Learner_Details" xml:space="preserve">
     <value>Learner's details</value>
+  </data>
+  <data name="Hidden_Action_Text_Grade" xml:space="preserve">
+    <value> grade</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Learner’s component grades status</value>

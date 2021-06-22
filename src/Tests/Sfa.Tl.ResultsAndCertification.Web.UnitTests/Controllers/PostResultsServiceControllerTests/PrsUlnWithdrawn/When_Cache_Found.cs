@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public override void Given()
         {
-            _mockCache = new PrsUlnWithdrawnViewModel { Uln = uln, Firstname = "Test", Lastname = "User", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Provider", ProviderUkprn = 985647841, TLevelTitle = "Title" };
+            _mockCache = new PrsUlnWithdrawnViewModel { Uln = uln, Firstname = "Test", Lastname = "User", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Provider", ProviderUkprn = 985647841, TlevelTitle = "Title" };
             CacheService.GetAndRemoveAsync<PrsUlnWithdrawnViewModel>(CacheKey).Returns(_mockCache);
         }
 
@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.DateofBirth.Should().Be(_mockCache.DateofBirth);
             model.ProviderName.Should().Be(_mockCache.ProviderName);
             model.ProviderUkprn.Should().Be(_mockCache.ProviderUkprn);
-            model.TLevelTitle.Should().Be(_mockCache.TLevelTitle);
+            model.TlevelTitle.Should().Be(_mockCache.TlevelTitle);
 
             // Uln
             model.SummaryUln.Title.Should().Be(PrsUlnWithdrawnContent.Title_Uln_Text);
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(PrsUlnWithdrawnContent.Title_TLevel_Text);
-            model.SummaryTlevelTitle.Value.Should().Be(_mockCache.TLevelTitle);
+            model.SummaryTlevelTitle.Value.Should().Be(_mockCache.TlevelTitle);
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsSearchLearner);
