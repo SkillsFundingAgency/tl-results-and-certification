@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
-        public string TLevelTitle { get; set; }
+        public string TlevelTitle { get; set; }
 
         protected string UlnLabel { get; set; }
         protected string LearnerNameLabel { get; set; }
@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             Id = "tleveltitle",
             Title = TlevelTitleLabel,
-            Value = TLevelTitle
+            Value = TlevelTitle
         };
 
         public virtual BackLinkModel BackLink => new BackLinkModel

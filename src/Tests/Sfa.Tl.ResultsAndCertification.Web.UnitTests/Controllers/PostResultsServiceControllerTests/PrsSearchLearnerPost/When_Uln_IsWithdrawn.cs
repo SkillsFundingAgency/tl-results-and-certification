@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                     x.DateofBirth == _findPrsLearner.DateofBirth &&
                     x.ProviderName == _findPrsLearner.ProviderName &&
                     x.ProviderUkprn == _findPrsLearner.ProviderUkprn &&
-                    x.TLevelTitle == _findPrsLearner.TlevelTitle),
+                    x.TlevelTitle == _findPrsLearner.TlevelTitle),
                     Common.Enum.CacheExpiryTime.XSmall);
         }
 
