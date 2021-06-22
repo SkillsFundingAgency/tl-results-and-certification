@@ -6,6 +6,10 @@
       vmImage: 'windows-2019'
     workspace:
       clean: all
+    dependsOn:
+    - DeployInfrastructure 
+    - DeploySQLDatabase
+
     steps:
     - task: SqlAzureDacpacDeployment@1
       displayName: 'Azure SQL Dacpac - Integration Test'
