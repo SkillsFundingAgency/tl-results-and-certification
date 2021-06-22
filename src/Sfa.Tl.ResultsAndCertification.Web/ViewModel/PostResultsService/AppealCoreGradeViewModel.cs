@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string PathwayDisplayName { get; set; }
         public string PathwayAssessmentSeries { get; set; }
         public string PathwayGrade { get; set; }
+        public bool HasPathwayResult { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(AppealCoreGradeContent), ErrorMessageResourceName = "Validation_Message")]
         public bool? AppealGrade { get; set; }
