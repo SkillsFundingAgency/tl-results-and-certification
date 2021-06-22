@@ -6,6 +6,8 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Threading.Tasks;
@@ -17,14 +19,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     {
         private readonly IPostResultsServiceLoader _postResultsServiceLoader;
         private readonly ICacheService _cacheService;
+        private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly ILogger _logger;
 
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.PrsCacheKey); } }
 
-        public PostResultsServiceController(IPostResultsServiceLoader postResultsServiceLoader, ICacheService cacheService, ILogger<PostResultsServiceController> logger)
+        public PostResultsServiceController(IPostResultsServiceLoader postResultsServiceLoader, ICacheService cacheService, ResultsAndCertificationConfiguration configuration, ILogger<PostResultsServiceController> logger)
         {
             _postResultsServiceLoader = postResultsServiceLoader;
             _cacheService = cacheService;
+            _configuration = configuration;
             _logger = logger;
         }
 
@@ -124,7 +128,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(User.GetUkPrn(), profileId);
 
-            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.HasPathwayResult)
+            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.HasPathwayResult || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             viewModel.PathwayResultId = resultId;

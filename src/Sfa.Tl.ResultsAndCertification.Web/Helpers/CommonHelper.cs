@@ -13,5 +13,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
         {
             return requestedDate.HasValue && DateTime.Today < requestedDate.Value.Date.AddDays(reRequestAllowedInDays);
         }
+
+        public static bool IsAppealsAllowed(DateTime? appealsEndDate)
+        {
+            return appealsEndDate.HasValue && DateTime.Today <= appealsEndDate.Value;
+        }
     }
 }
