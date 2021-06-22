@@ -20,7 +20,7 @@
         SqlUsername: '$(SharedSqlServerUsername)'
         SqlPassword: '$(SharedSqlServerPassword)'
         DacpacFile: '$(System.ArtifactsDirectory)/sqldrop/src/Sfa.Tl.ResultsAndCertification.Database/bin/Release/Sfa.Tl.ResultsAndCertification.Database.dacpac'
-        AdditionalArguments: '/v:environment=$(environment)ssmsssssmsIntegration'
+        AdditionalArguments: '/v:environment=$(environment)Integration'
     
     - task: ExtractFiles@1
       displayName: 'Extract Integration test files '
