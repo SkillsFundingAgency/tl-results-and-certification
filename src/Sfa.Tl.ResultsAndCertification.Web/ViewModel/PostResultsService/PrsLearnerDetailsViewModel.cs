@@ -50,6 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             ActionText = PrsLearnerDetailsContent.Action_Link_Update,
             RouteName = RouteConstants.PrsAppealCoreGrade,
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.ResultId, PathwayResultId.ToString() } },
+            HiddenActionText = PrsLearnerDetailsContent.Hidden_Action_Text_Grade
         };
 
         public SummaryItemModel SummaryPathwayGradeLastUpdatedOn => new SummaryItemModel

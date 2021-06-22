@@ -106,6 +106,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  grade.
+        /// </summary>
+        public static string Hidden_Action_Text_Grade {
+            get {
+                return ResourceManager.GetString("Hidden_Action_Text_Grade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learner’s component grades status.
         /// </summary>
         public static string Page_Title {
