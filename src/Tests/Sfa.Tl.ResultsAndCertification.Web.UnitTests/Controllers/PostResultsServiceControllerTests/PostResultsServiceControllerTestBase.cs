@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         protected PostResultsServiceController Controller;
 
         // HttpContext
-        protected int AoUkprn;
+        protected long AoUkprn;
         protected Guid UserId;
         protected IHttpContextAccessor HttpContextAccessor;
         protected string CacheKey;

@@ -23,8 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         protected string ProviderNameLabel { get; set; }
         protected string TlevelTitleLabel { get; set; }
 
-        private string LearnerName => $"{Firstname} {Lastname}";
-        private string ProviderDisplayName => $"{ProviderName}<br/>({ProviderUkprn})";
+        public string LearnerName => $"{Firstname} {Lastname}";
+        public string ProviderDisplayName => $"{ProviderName}<br/>({ProviderUkprn})";
 
         public SummaryItemModel SummaryUln => new SummaryItemModel
         {

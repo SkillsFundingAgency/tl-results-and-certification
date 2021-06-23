@@ -33,10 +33,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string PathwayGradeLastUpdatedOn { get; set; }
         public string PathwayGradeLastUpdatedBy { get; set; }
 
-        public SummaryItemModel SummaryAssessmentPeriod => new SummaryItemModel
+        public SummaryItemModel SummaryAssessmentSeries => new SummaryItemModel
         {
             Id = "assessmentperiod",
-            Title = PrsLearnerDetailsContent.Title_Assessment_Period,
+            Title = PrsLearnerDetailsContent.Title_Assessment_Series,
             Value = PathwayAssessmentSeries,
             NeedBorderBottomLine = true
         };
