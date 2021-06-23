@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string PathwayAssessmentSeries { get; set; }
         public int PathwayResultId { get; set; }
         public string PathwayGrade { get; set; }
-        public DateTime PathwayGradeLastUpdatedOn { get; set; }
+        public string PathwayGradeLastUpdatedOn { get; set; }
         public string PathwayGradeLastUpdatedBy { get; set; }
 
         public SummaryItemModel SummaryAssessmentPeriod => new SummaryItemModel
@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             Id = "pathwaygradeupdatedon",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade_LastUpdatedOn,
-            Value = PathwayGradeLastUpdatedOn.ToDobFormat(),
+            Value = PathwayGradeLastUpdatedOn,
             NeedBorderBottomLine = true
         };
 

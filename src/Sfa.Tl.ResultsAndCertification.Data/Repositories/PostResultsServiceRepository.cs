@@ -73,17 +73,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                PathwayName = tlPathway.Name,
                                                PathwayCode = tlPathway.LarId,
                                                AssessmentResults = from pAssessment in _dbContext.TqPathwayAssessment.Where(x => x.IsOptedin && x.EndDate == null && x.TqRegistrationPathwayId == tqPathway.Id)
-                                                                   join pResult in _dbContext.TqPathwayResult.Where(x => x.IsOptedin && x.EndDate == null)
-                                                                   on pAssessment.Id equals pResult.TqPathwayAssessmentId into resultGroup
-                                                                   from tlR in resultGroup.DefaultIfEmpty()
+                                                                   join pResult in _dbContext.TqPathwayResult.Where(x => x.IsOptedin && x.EndDate == null) on pAssessment.Id equals pResult.TqPathwayAssessmentId into resultGroup
+                                                                   from result in resultGroup.DefaultIfEmpty()
                                                                    select new AssessmentResult
                                                                    {
                                                                        PathwayAssessmentId = pAssessment.Id,
                                                                        PathwayAssessmentSeries = pAssessment.AssessmentSeries.Name,
-                                                                       PathwayResultId = tlR.Id,
-                                                                       PathwayGrade = tlR.TlLookup.Value,
-                                                                       PathwayGradeLastUpdatedBy = tlR.CreatedBy,
-                                                                       PathwayGradeLastUpdatedOn = tlR.CreatedOn
+                                                                       PathwayResultId = result.Id,
+                                                                       PathwayGrade = result.TlLookup.Value,
+                                                                       PathwayGradeLastUpdatedBy = result.CreatedBy,
+                                                                       PathwayGradeLastUpdatedOn = result.CreatedOn
                                                                    }
                                            })
                                           .FirstOrDefaultAsync();
