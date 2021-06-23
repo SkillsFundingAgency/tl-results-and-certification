@@ -1,5 +1,10 @@
+  parameters:
+  - name: serviceConnection
+    type: string
+  - name: sharedEnvironmentId
+    type: string
+
   jobs:
-  
   - job: 'IntegrationTest'
     pool:
       name: 'Azure Pipelines'
@@ -11,6 +16,13 @@
     - DeploySQLDatabase
 
     steps:
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'sqldrop'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
     - task: SqlAzureDacpacDeployment@1
       displayName: 'Azure SQL Dacpac - Integration Test'
       inputs:
