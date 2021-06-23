@@ -19,11 +19,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status))
                 .ForMember(d => d.PathwayTitle, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayCode})"))
-                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
-                .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayCode))
-                .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
-                .ForMember(d => d.PathwayGradeLastUpdatedOn, opts => opts.MapFrom(s => s.PathwayGradeLastUpdatedOn))
-                .ForMember(d => d.PathwayGradeLastUpdatedBy, opts => opts.MapFrom(s => s.PathwayGradeLastUpdatedBy));
+                //.ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
+                //.ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade))
+                //.ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
+                //.ForMember(d => d.PathwayGradeLastUpdatedOn, opts => opts.MapFrom(s => s.PathwayGradeLastUpdatedOn))
+                //.ForMember(d => d.PathwayGradeLastUpdatedBy, opts => opts.MapFrom(s => s.PathwayGradeLastUpdatedBy));
+                ;
 
             CreateMap<PrsLearnerDetails, AppealCoreGradeViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
