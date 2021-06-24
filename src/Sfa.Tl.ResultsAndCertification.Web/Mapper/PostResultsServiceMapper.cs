@@ -2,7 +2,6 @@
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
-using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
