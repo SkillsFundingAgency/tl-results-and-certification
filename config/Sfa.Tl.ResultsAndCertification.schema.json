@@ -41,6 +41,10 @@
       "type": "integer",
       "environmentVariable": "SoaRerequestInDays"
     },
+	"AppealsEndDate": {
+      "type": "string",
+      "environmentVariable": "AppealsEndDate"
+    },
     "KeyVaultUri": {
       "type": "string",
       "environmentVariable": "KeyVaultUri"
