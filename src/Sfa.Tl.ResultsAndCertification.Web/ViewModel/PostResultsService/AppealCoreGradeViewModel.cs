@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
     {
         public int ProfileId { get; set; }
         public int PathwayResultId { get; set; }
+        public int PathwayAssessmentId { get; set; }
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public string Firstname { get; set; }
@@ -72,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public virtual BackLinkModel BackLink => new BackLinkModel
         {
             RouteName = RouteConstants.PrsLearnerDetails,
-            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }
+            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() } }
         };
     }
 }

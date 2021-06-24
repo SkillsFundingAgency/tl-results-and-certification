@@ -19,7 +19,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public string TlevelTitle { get; set; }
         public string PathwayName { get; set; }
         public string PathwayCode { get; set; }
-        //public IEnumerable<AssessmentResult> AssessmentResults { get; set; }
 
         public int PathwayAssessmentId { get; set; }
         public string PathwayAssessmentSeries { get; set; }

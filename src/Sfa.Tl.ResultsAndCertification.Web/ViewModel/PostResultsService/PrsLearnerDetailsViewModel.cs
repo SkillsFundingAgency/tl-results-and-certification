@@ -1,9 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
-using System;
 using System.Collections.Generic;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using PrsLearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsLearnerDetails;
@@ -27,6 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string PathwayTitle { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
 
+        public int PathwayAssessmentId { get; set; }
         public string PathwayAssessmentSeries { get; set; }
         public int PathwayResultId { get; set; }
         public string PathwayGrade { get; set; }
@@ -49,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
             ActionText = PrsLearnerDetailsContent.Action_Link_Update,
             RouteName = RouteConstants.PrsAppealCoreGrade,
-            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.ResultId, PathwayResultId.ToString() } },
+            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() }, { Constants.ResultId, PathwayResultId.ToString() } },
             HiddenActionText = PrsLearnerDetailsContent.Hidden_Action_Text_Grade
         };
 

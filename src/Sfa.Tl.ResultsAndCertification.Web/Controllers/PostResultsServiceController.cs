@@ -123,10 +123,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-appeal-grade/{profileId}/{resultId}", Name = RouteConstants.PrsAppealCoreGrade)]
-        public async Task<IActionResult> PrsAppealCoreGradeAsync(int profileId, int resultId)
+        [Route("reviews-and-appeals-appeal-grade/{profileId}/{assessmentId}/{resultId}", Name = RouteConstants.PrsAppealCoreGrade)]
+        public async Task<IActionResult> PrsAppealCoreGradeAsync(int profileId, int assessmentId, int resultId)
         {
-            var viewModel = await _postResultsServiceLoader.GetPrsAppealCoreGradeDetailsAsync(User.GetUkPrn(), profileId, resultId);
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(User.GetUkPrn(), profileId, assessmentId);
 
             if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.HasPathwayResult || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
                 return RedirectToRoute(RouteConstants.PageNotFound);
