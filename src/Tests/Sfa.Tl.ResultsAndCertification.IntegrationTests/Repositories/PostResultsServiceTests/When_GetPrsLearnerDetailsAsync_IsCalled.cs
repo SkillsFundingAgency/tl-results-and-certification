@@ -122,13 +122,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
             {
                 return new[]
                 {
-                    //new object[] { 9999999999, AwardingOrganisation.Pearson, null, null, false }, // Invalid Uln
-                    //new object[] { 1111111111, AwardingOrganisation.Ncfe,  null, null, false },   // Invalid for Ncfe
-                    new object[] { 1111111111, AwardingOrganisation.Pearson, true, true, true },  // First Assessment with Result and another without Result
-                    new object[] { 1111111112, AwardingOrganisation.Pearson, true, true, true }, // One Assessment with Result
-                    new object[] { 1111111113, AwardingOrganisation.Pearson, true, false, true }, // Assessment Only
-                    //new object[] { 1111111114, AwardingOrganisation.Pearson, null, null, false }, // Invalid - because of Withdrawn
-                    new object[] { 1111111115, AwardingOrganisation.Pearson, false, false, true } // No Assessment
+                    new object[] { 9999999999, AwardingOrganisation.Pearson, null, null, false }, // Invalid Uln
+                    new object[] { 1111111111, AwardingOrganisation.Ncfe,  null, null, false },   // Invalid for Ncfe
+                    //new object[] { 1111111111, AwardingOrganisation.Pearson, true, true, true },  // First Assessment with Result and another without Result
+                    //new object[] { 1111111112, AwardingOrganisation.Pearson, true, true, true }, // One Assessment with Result
+                    //new object[] { 1111111113, AwardingOrganisation.Pearson, true, false, true }, // Assessment Only
+                    new object[] { 1111111114, AwardingOrganisation.Pearson, null, null, false }, // Invalid - because of Withdrawn
+                    //new object[] { 1111111115, AwardingOrganisation.Pearson, false, false, true } // No Assessment
                 };
             }
         }

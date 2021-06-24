@@ -39,15 +39,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             Loader.Received(1).FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong());
             CacheService.Received(1).SetAsync(CacheKey, ViewModel);
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsUlnWithdrawnViewModel>(x =>
-                    x.Uln == _findPrsLearner.Uln &&
-                    x.Firstname == _findPrsLearner.Firstname &&
-                    x.Lastname == _findPrsLearner.Lastname &&
-                    x.DateofBirth == _findPrsLearner.DateofBirth &&
-                    x.ProviderName == _findPrsLearner.ProviderName &&
-                    x.ProviderUkprn == _findPrsLearner.ProviderUkprn &&
-                    x.TlevelTitle == _findPrsLearner.TlevelTitle),
-                    Common.Enum.CacheExpiryTime.XSmall);
         }
 
         [Fact]

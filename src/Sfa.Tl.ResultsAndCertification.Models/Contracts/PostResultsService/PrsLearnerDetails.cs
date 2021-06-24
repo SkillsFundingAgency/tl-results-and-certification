@@ -26,5 +26,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public string PathwayName { get; set; }
         public string PathwayCode { get; set; }
         public IEnumerable<AssessmentResult> AssessmentResults { get; set; }
+
+        public int PathwayAssessmentId { get; set; }
+        public string PathwayAssessmentSeries { get; set; }
+        public int PathwayResultId { get; set; }
+        public string PathwayGrade { get; set; }
+        public DateTime PathwayGradeLastUpdatedOn { get; set; }
+        public string PathwayGradeLastUpdatedBy { get; set; }
+
+        public bool HasPathwayResult => !string.IsNullOrWhiteSpace(PathwayGrade);
     }
 }
