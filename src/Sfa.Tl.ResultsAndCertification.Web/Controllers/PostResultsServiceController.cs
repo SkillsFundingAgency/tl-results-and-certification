@@ -112,7 +112,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-learner-status/{profileId}/{assessmentSeriesId}", Name = RouteConstants.PrsLearnerDetails)]
+        [Route("reviews-and-appeals-learner-status/{profileId}/{assessmentId}", Name = RouteConstants.PrsLearnerDetails)]
         public async Task<IActionResult> PrsLearnerDetailsAsync(int profileId, int assessmentId)
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(User.GetUkPrn(), profileId, assessmentId);
