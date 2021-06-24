@@ -126,9 +126,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         /// <summary>
         ///   Looks up a localized string similar to Exam Period.
         /// </summary>
-        public static string Title_Assessment_Period {
+        public static string Title_Assessment_Series {
             get {
-                return ResourceManager.GetString("Title_Assessment_Period", resourceCulture);
+                return ResourceManager.GetString("Title_Assessment_Series", resourceCulture);
             }
         }
         
