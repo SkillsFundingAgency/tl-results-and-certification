@@ -7,10 +7,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
     {
         public IActionResult Result { get; private set; }
         public int ProfileId { get; set; }
+        public int AssessmentSeriesId { get; set; }
 
         public async override Task When()
         {
-            Result = await Controller.PrsLearnerDetailsAsync(ProfileId);
+            Result = await Controller.PrsLearnerDetailsAsync(ProfileId, AssessmentSeriesId);
         }
     }
 }

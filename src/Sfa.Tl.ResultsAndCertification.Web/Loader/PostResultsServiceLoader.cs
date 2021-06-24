@@ -23,15 +23,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.FindPrsLearnerRecordAsync(aoUkprn, uln);
         }
 
-        public async Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId)
+        public async Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId, int assessmentSeriesId)
         {
-            var prsLearnerDetails = await _internalApiClient.GetPrsLearnerDetailsAsync(aoUkprn, profileId);
+            var prsLearnerDetails = await _internalApiClient.GetPrsLearnerDetailsAsync(aoUkprn, profileId, assessmentSeriesId);
             return _mapper.Map<T>(prsLearnerDetails);
         }
 
         public async Task<AppealCoreGradeViewModel> GetPrsAppealCoreGradeDetailsAsync(long aoUkprn, int profileId, int resultId)
         {
-            var prsLearnerDetails = await _internalApiClient.GetPrsLearnerDetailsAsync(aoUkprn, profileId);
+            var prsLearnerDetails = await _internalApiClient.GetPrsLearnerDetailsAsync(aoUkprn, profileId, 1); // TODO:
             return _mapper.Map<AppealCoreGradeViewModel>(prsLearnerDetails, opt => opt.Items["pathwayResultId"] = resultId);
         }
     }

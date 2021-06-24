@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         // Post Results Service 
         Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln);
-        Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId);
+        Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentSeriesId);
 
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);

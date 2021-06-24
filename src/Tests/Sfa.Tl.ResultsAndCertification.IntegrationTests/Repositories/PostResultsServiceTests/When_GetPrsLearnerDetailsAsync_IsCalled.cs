@@ -84,7 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
                 return;
 
             var profileId = 20;
-            _actualResult = await PostResultsServiceRepository.GetPrsLearnerDetailsAsync(aoUkprn, profileId);
+            _actualResult = await PostResultsServiceRepository.GetPrsLearnerDetailsAsync(aoUkprn, profileId, 1); //TODO
         }
 
         [Theory]

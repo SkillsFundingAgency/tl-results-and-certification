@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         // inputs
         private readonly long _aoUkprn = 12345678;
         private readonly int _profileId = 99;
+        private readonly int _assessmentSeriesId = 1;
 
         // results
         private PrsLearnerDetails _actualResult;
@@ -72,13 +73,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<PrsLearnerDetails>(_mockApiResponse, string.Format(ApiConstants.GetPrsLearnerDetailsUri, _aoUkprn, _profileId), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<PrsLearnerDetails>(_mockApiResponse, string.Format(ApiConstants.GetPrsLearnerDetailsUri, _aoUkprn, _profileId, _assessmentSeriesId), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public async override Task When()
         {
-            _actualResult = await _apiClient.GetPrsLearnerDetailsAsync(_aoUkprn, _profileId);
+            _actualResult = await _apiClient.GetPrsLearnerDetailsAsync(_aoUkprn, _profileId, _assessmentSeriesId);
         }
 
         [Fact]

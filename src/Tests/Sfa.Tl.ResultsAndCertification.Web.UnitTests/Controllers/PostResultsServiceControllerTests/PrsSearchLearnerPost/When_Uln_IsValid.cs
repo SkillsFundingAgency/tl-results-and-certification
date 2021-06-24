@@ -46,8 +46,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             var route = Result as RedirectToRouteResult;
             route.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);
-            route.RouteValues.Count.Should().Be(1);
+            route.RouteValues.Count.Should().Be(2);
             route.RouteValues[Constants.ProfileId].Should().Be(_profileId);
+            route.RouteValues[Constants.AssessmentSeriesId].Should().Be(1);
         }
     }
 }

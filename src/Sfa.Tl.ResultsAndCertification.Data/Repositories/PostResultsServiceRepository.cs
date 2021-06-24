@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return prsLearnerRecord;
         }
 
-        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId)
+        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentSeriesId)
         {
 
             var prsLearnerdetails = await (from tqPathway in _dbContext.TqRegistrationPathway
@@ -56,9 +56,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                            join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
                                            join tlAo in _dbContext.TlAwardingOrganisation on tqAo.TlAwardingOrganisatonId equals tlAo.Id
                                            join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
+                                           join pAssessment in _dbContext.TqPathwayAssessment on tqPathway.Id equals pAssessment.TqRegistrationPathwayId
+                                           join pResult in _dbContext.TqPathwayResult on pAssessment.Id equals pResult.TqPathwayAssessmentId
                                            orderby tqPathway.CreatedOn descending
                                            where
-                                            tlAo.UkPrn == aoUkprn && tqProfile.Id == profileId && tqPathway.Status == RegistrationPathwayStatus.Active
+                                            tlAo.UkPrn == aoUkprn && tqProfile.Id == profileId && tqPathway.Status == RegistrationPathwayStatus.Active &&
+                                            pAssessment.AssessmentSeriesId == 1 && pAssessment.IsOptedin && pAssessment.EndDate == null &&
+                                            pResult.IsOptedin && pResult.EndDate == null
                                            select new PrsLearnerDetails
                                            {
                                                ProfileId = tqProfile.Id,
@@ -72,18 +76,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                Status = tqPathway.Status,
                                                PathwayName = tlPathway.Name,
                                                PathwayCode = tlPathway.LarId,
-                                               AssessmentResults = from pAssessment in _dbContext.TqPathwayAssessment.Where(x => x.IsOptedin && x.EndDate == null && x.TqRegistrationPathwayId == tqPathway.Id)
-                                                                   join pResult in _dbContext.TqPathwayResult.Where(x => x.IsOptedin && x.EndDate == null) on pAssessment.Id equals pResult.TqPathwayAssessmentId into resultGroup
-                                                                   from result in resultGroup.DefaultIfEmpty()
-                                                                   select new AssessmentResult
-                                                                   {
-                                                                       PathwayAssessmentId = pAssessment.Id,
-                                                                       PathwayAssessmentSeries = pAssessment.AssessmentSeries.Name,
-                                                                       PathwayResultId = result.Id,
-                                                                       PathwayGrade = result.TlLookup.Value,
-                                                                       PathwayGradeLastUpdatedBy = result.CreatedBy,
-                                                                       PathwayGradeLastUpdatedOn = result.CreatedOn
-                                                                   }
+                                               PathwayAssessmentId = pAssessment.Id,
+                                               PathwayAssessmentSeries = pAssessment.AssessmentSeries.Name,
+                                               PathwayResultId = pResult.Id,
+                                               PathwayGrade = pResult.TlLookup.Value,
+                                               PathwayGradeLastUpdatedBy = pResult.CreatedBy,
+                                               PathwayGradeLastUpdatedOn = pResult.CreatedOn
                                            })
                                           .FirstOrDefaultAsync();
             return prsLearnerdetails;
