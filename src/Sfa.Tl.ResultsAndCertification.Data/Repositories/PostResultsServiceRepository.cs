@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return prsLearnerRecord;
         }
 
-        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId)
+        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentSeriesId)
         {
 
             var prsLearnerdetails = await (from tqPathway in _dbContext.TqRegistrationPathway

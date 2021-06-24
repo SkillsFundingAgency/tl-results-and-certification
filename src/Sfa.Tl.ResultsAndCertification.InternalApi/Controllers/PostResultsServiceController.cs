@@ -25,10 +25,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetPrsLearnerDetails/{aoUkprn}/{profileId}")]
-        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId)
+        [Route("GetPrsLearnerDetails/{aoUkprn}/{profileId}/{assessmentSeriesId}")]
+        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId, int assessmentSeriesId)
         {
-            return await _postResultsServiceService.GetPrsLearnerDetailsAsync(aoUkPrn, profileId);
+            return await _postResultsServiceService.GetPrsLearnerDetailsAsync(aoUkPrn, profileId, assessmentSeriesId);
         }
     }
 }

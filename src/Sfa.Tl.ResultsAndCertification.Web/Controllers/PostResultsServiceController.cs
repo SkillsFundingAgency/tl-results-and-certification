@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PrsUlnWithdrawn);
             }
 
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId });
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId, assessmentSeriesId = 1 });
         }
 
         [HttpGet]
@@ -112,10 +112,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-learner-status/{profileId}", Name = RouteConstants.PrsLearnerDetails)]
-        public async Task<IActionResult> PrsLearnerDetailsAsync(int profileId)
+        [Route("reviews-and-appeals-learner-status/{profileId}/{assessmentSeriesId}", Name = RouteConstants.PrsLearnerDetails)]
+        public async Task<IActionResult> PrsLearnerDetailsAsync(int profileId, int assessmentSeriesId)
         {
-            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(User.GetUkPrn(), profileId);
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(User.GetUkPrn(), profileId, assessmentSeriesId);
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
