@@ -1,16 +1,10 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using System;
-using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
 {
     public class PrsLearnerDetails
     {
-        public PrsLearnerDetails()
-        {
-            AssessmentResults = new List<AssessmentResult>();
-        }
-
         // Registration
         public int ProfileId { get; set; }
         public long Uln { get; set; }
@@ -25,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public string TlevelTitle { get; set; }
         public string PathwayName { get; set; }
         public string PathwayCode { get; set; }
-        public IEnumerable<AssessmentResult> AssessmentResults { get; set; }
+        //public IEnumerable<AssessmentResult> AssessmentResults { get; set; }
 
         public int PathwayAssessmentId { get; set; }
         public string PathwayAssessmentSeries { get; set; }

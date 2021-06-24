@@ -90,7 +90,6 @@
         public const string ChangeStatusId = "changeStatusId";
         public const string WithdrawBackLinkOptionId = "withdrawBackLinkOptionId";
         public const string AssessmentId = "assessmentId";
-        public const string AssessmentSeriesId = "assessmentSeriesId";
         public const string ResultId = "resultId";
         public const string PathwayId = "pathwayId";
         public const string IsFromSelectAddress = "isFromSelectAddress";

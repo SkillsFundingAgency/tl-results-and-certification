@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return prsLearnerRecord;
         }
 
-        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentSeriesId)
+        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentId)
         {
 
             var prsLearnerdetails = await (from tqPathway in _dbContext.TqRegistrationPathway
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                            orderby tqPathway.CreatedOn descending
                                            where
                                             tlAo.UkPrn == aoUkprn && tqProfile.Id == profileId && tqPathway.Status == RegistrationPathwayStatus.Active &&
-                                            pAssessment.AssessmentSeriesId == 1 && pAssessment.IsOptedin && pAssessment.EndDate == null &&
+                                            pAssessment.Id == assessmentId && pAssessment.IsOptedin && pAssessment.EndDate == null &&
                                             pResult.IsOptedin && pResult.EndDate == null
                                            select new PrsLearnerDetails
                                            {

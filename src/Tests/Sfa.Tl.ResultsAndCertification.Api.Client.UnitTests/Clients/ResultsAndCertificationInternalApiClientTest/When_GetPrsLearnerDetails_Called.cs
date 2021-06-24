@@ -7,8 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -56,18 +54,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 PathwayName = "Childcare",
                 PathwayCode = "12121212",
 
-                AssessmentResults = new List<AssessmentResult>
-                {
-                    new AssessmentResult
-                    {
-                        PathwayAssessmentId = 1,
-                        PathwayAssessmentSeries = "Summer 2021",
-                        PathwayResultId = 99,
-                        PathwayGrade = "B",
-                        PathwayGradeLastUpdatedOn = System.DateTime.Today.AddDays(-15),
-                        PathwayGradeLastUpdatedBy = "Barsley User"
-                    }
-                }
+                PathwayAssessmentId = 1,
+                PathwayAssessmentSeries = "Summer 2021",
+                PathwayResultId = 99,
+                PathwayGrade = "B",
+                PathwayGradeLastUpdatedOn = System.DateTime.Today.AddDays(-15),
+                PathwayGradeLastUpdatedBy = "Barsley User"
             };
         }
 
@@ -97,19 +89,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.TlevelTitle.Should().Be(_mockApiResponse.TlevelTitle);
             _actualResult.PathwayName.Should().Be(_mockApiResponse.PathwayName);
             _actualResult.PathwayCode.Should().Be(_mockApiResponse.PathwayCode);
-
-            _actualResult.AssessmentResults.Should().NotBeEmpty();
-            _actualResult.AssessmentResults.Count().Should().Be(1);
-
-            var _actualAssessmentResult = _actualResult.AssessmentResults.FirstOrDefault();
-            var _expecctedAssessmentResult = _mockApiResponse.AssessmentResults.FirstOrDefault();
-
-            _actualAssessmentResult.PathwayAssessmentId.Should().Be(_expecctedAssessmentResult.PathwayAssessmentId);
-            _actualAssessmentResult.PathwayAssessmentSeries.Should().Be(_expecctedAssessmentResult.PathwayAssessmentSeries);
-            _actualAssessmentResult.PathwayResultId.Should().Be(_expecctedAssessmentResult.PathwayResultId);
-            _actualAssessmentResult.PathwayGrade.Should().Be(_expecctedAssessmentResult.PathwayGrade);
-            _actualAssessmentResult.PathwayGradeLastUpdatedOn.Should().Be(_expecctedAssessmentResult.PathwayGradeLastUpdatedOn);
-            _actualAssessmentResult.PathwayGradeLastUpdatedBy.Should().Be(_expecctedAssessmentResult.PathwayGradeLastUpdatedBy);
+            _actualResult.PathwayAssessmentId.Should().Be(_mockApiResponse.PathwayAssessmentId);
+            _actualResult.PathwayAssessmentSeries.Should().Be(_mockApiResponse.PathwayAssessmentSeries);
+            _actualResult.PathwayResultId.Should().Be(_mockApiResponse.PathwayResultId);
+            _actualResult.PathwayGrade.Should().Be(_mockApiResponse.PathwayGrade);
+            _actualResult.PathwayGradeLastUpdatedOn.Should().Be(_mockApiResponse.PathwayGradeLastUpdatedOn);
+            _actualResult.PathwayGradeLastUpdatedBy.Should().Be(_mockApiResponse.PathwayGradeLastUpdatedBy);
         }
     }
 }

@@ -3,8 +3,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,16 +19,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
         private List<long> _profilesWithResults;
 
         private PrsLearnerDetails _actualResult;
+        private List<TqPathwayAssessment> _tqPathwayAssessmentsSeedData;
 
         public override void Given()
         {
             _profiles = new List<TqRegistrationProfile>();
             _ulns = new Dictionary<long, RegistrationPathwayStatus>
             {
-                { 1111111111, RegistrationPathwayStatus.Active },   // First Assessment with Result and another without Result
-                { 1111111112, RegistrationPathwayStatus.Active },   // One Assessment with Result
-                { 1111111113, RegistrationPathwayStatus.Active },   // Assessment Only
-                { 1111111114, RegistrationPathwayStatus.Withdrawn },// Assessment Only + Withdrawn
+                { 1111111111, RegistrationPathwayStatus.Active },   // Assessment + Result
+                { 1111111112, RegistrationPathwayStatus.Active },   // Assessment + Result (with history)
+                { 1111111113, RegistrationPathwayStatus.Withdrawn },// Assessment + Result (Withdrawn)
+                { 1111111114, RegistrationPathwayStatus.Active },   // Assessmet Only 
                 { 1111111115, RegistrationPathwayStatus.Active },   // No Assessment
             };
 
@@ -43,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
             DbContext.SaveChanges();
 
             // Seed Assessments And Results
-            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            _tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
 
             _profilesWithAssessment = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114 };
@@ -51,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
             {
                 var isLatestActive = _ulns[profile.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
                 var pathwayAssessments = GetPathwayAssessmentsDataToProcess(profile.TqRegistrationPathways.ToList(), isLatestActive);
-                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
+                _tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
 
                 // Seed Pathway results
                 _profilesWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
@@ -65,9 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
                 }
             }
 
-            // Add additional assessment to ULN - 1111111111
-            tqPathwayAssessmentsSeedData.Add(AddAssessmentFor(1111111111));
-            SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
+            SeedPathwayAssessmentsData(_tqPathwayAssessmentsSeedData, true);
 
             // Test class.
             PostResultsServiceRepository = new PostResultsServiceRepository(DbContext);
@@ -80,16 +77,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
 
         public async Task WhenAsync(long aoUkprn, long uln)
         {
-            if (_actualResult != null)
-                return;
-
-            var profileId = 20;
-            _actualResult = await PostResultsServiceRepository.GetPrsLearnerDetailsAsync(aoUkprn, profileId, 1); //TODO
+            var profileId = _profiles.FirstOrDefault(x => x.UniqueLearnerNumber == uln).Id;
+            var assessmentId = _tqPathwayAssessmentsSeedData.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln)?.Id;
+            _actualResult = await PostResultsServiceRepository.GetPrsLearnerDetailsAsync(aoUkprn, profileId, assessmentId ?? 0);
         }
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(long uln, AwardingOrganisation ao, bool hasAssessment, bool hasResult, bool isRecordFound)
+        public async Task Then_Returns_Expected_Results(long uln, AwardingOrganisation ao, bool isRecordFound)
         {
             await WhenAsync((long)ao, uln);
 
@@ -114,6 +109,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
             var expctedProvider = expectedTqAwardingOrganisation.TqProviders.FirstOrDefault().TlProvider;
             _actualResult.ProviderUkprn.Should().Be(expctedProvider.UkPrn);
             _actualResult.ProviderName.Should().Be(expctedProvider.Name);
+
+            var expectedAssessment = expectedPathway.TqPathwayAssessments.FirstOrDefault();
+            _actualResult.PathwayAssessmentSeries.Should().Be(expectedAssessment.AssessmentSeries.Name);
+
+            var expectedResult = expectedAssessment.TqPathwayResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
+            _actualResult.PathwayGrade.Should().Be(expectedResult.TlLookup.Value);
+            _actualResult.PathwayGradeLastUpdatedBy.Should().Be(expectedResult.CreatedBy);
+            _actualResult.PathwayGradeLastUpdatedOn.Should().Be(expectedResult.CreatedOn);
         }
 
         public static IEnumerable<object[]> Data
@@ -122,22 +125,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
             {
                 return new[]
                 {
-                    new object[] { 9999999999, AwardingOrganisation.Pearson, null, null, false }, // Invalid Uln
-                    new object[] { 1111111111, AwardingOrganisation.Ncfe,  null, null, false },   // Invalid for Ncfe
-                    //new object[] { 1111111111, AwardingOrganisation.Pearson, true, true, true },  // First Assessment with Result and another without Result
-                    //new object[] { 1111111112, AwardingOrganisation.Pearson, true, true, true }, // One Assessment with Result
-                    //new object[] { 1111111113, AwardingOrganisation.Pearson, true, false, true }, // Assessment Only
-                    new object[] { 1111111114, AwardingOrganisation.Pearson, null, null, false }, // Invalid - because of Withdrawn
-                    //new object[] { 1111111115, AwardingOrganisation.Pearson, false, false, true } // No Assessment
+                    new object[] { 1111111111, AwardingOrganisation.Ncfe,  false },     // Invalid for Ncfe
+                    new object[] { 1111111111, AwardingOrganisation.Pearson, true },   // Assessment + Result
+                    new object[] { 1111111112, AwardingOrganisation.Pearson, true },  // Assessment + Result (with history)
+                    new object[] { 1111111113, AwardingOrganisation.Pearson, false }, // Assessment + Result (Withdrawn)
+                    new object[] { 1111111114, AwardingOrganisation.Pearson, false }, // Assessmet Only 
+                    new object[] { 1111111115, AwardingOrganisation.Pearson, false } // No Assessment
                 };
             }
-        }
-
-        private TqPathwayAssessment AddAssessmentFor(long uln)
-        {
-            var activePathwayAssessment = new TqPathwayAssessmentBuilder().Build(_profiles.FirstOrDefault(x => x.UniqueLearnerNumber == uln)
-                .TqRegistrationPathways.FirstOrDefault(), AssessmentSeries[1]);
-            return PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, activePathwayAssessment);
         }
     }
 }

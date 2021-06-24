@@ -27,16 +27,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PathwayGradeLastUpdatedOn, opts => opts.MapFrom(s => s.PathwayGradeLastUpdatedOn.ToDobFormat()))
                 .ForMember(d => d.PathwayGradeLastUpdatedBy, opts => opts.MapFrom(s => s.PathwayGradeLastUpdatedBy));
 
-            CreateMap<PrsLearnerDetails, AppealCoreGradeViewModel>()
-               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
-               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
-               .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
-               .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
-               .ForMember(d => d.PathwayResultId, opts => opts.MapFrom((src, dest, destMember, context) => src.AssessmentResults.FirstOrDefault(r => r.PathwayResultId == (int)context.Items["pathwayResultId"])?.PathwayResultId))
-               .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom((src, dest, destMember, context) => src.AssessmentResults.FirstOrDefault(r => r.PathwayResultId == (int)context.Items["pathwayResultId"])?.PathwayAssessmentSeries))
-               .ForMember(d => d.PathwayGrade, opts => opts.MapFrom((src, dest, destMember, context) => src.AssessmentResults.FirstOrDefault(r => r.PathwayResultId == (int)context.Items["pathwayResultId"])?.PathwayGrade))
-               .ForMember(d => d.HasPathwayResult, opts => opts.MapFrom((src, dest, destMember, context) => src.AssessmentResults.FirstOrDefault(r => r.PathwayResultId == (int)context.Items["pathwayResultId"])?.HasPathwayResult));
+            CreateMap<PrsLearnerDetails, AppealCoreGradeViewModel>();
+               //.ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               //.ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+               //.ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
+               //.ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+               //.ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
+               //.ForMember(d => d.PathwayResultId, opts => opts.MapFrom((src, dest, destMember, context) => src.AssessmentResults.FirstOrDefault(r => r.PathwayResultId == (int)context.Items["pathwayResultId"])?.PathwayResultId))
+               //.ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom((src, dest, destMember, context) => src.AssessmentResults.FirstOrDefault(r => r.PathwayResultId == (int)context.Items["pathwayResultId"])?.PathwayAssessmentSeries))
+               //.ForMember(d => d.PathwayGrade, opts => opts.MapFrom((src, dest, destMember, context) => src.AssessmentResults.FirstOrDefault(r => r.PathwayResultId == (int)context.Items["pathwayResultId"])?.PathwayGrade))
+               //.ForMember(d => d.HasPathwayResult, opts => opts.MapFrom((src, dest, destMember, context) => src.AssessmentResults.FirstOrDefault(r => r.PathwayResultId == (int)context.Items["pathwayResultId"])?.HasPathwayResult));
         }
     }
 }
