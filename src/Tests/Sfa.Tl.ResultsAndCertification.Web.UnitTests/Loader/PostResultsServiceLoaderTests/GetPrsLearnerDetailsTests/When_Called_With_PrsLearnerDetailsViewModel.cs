@@ -2,12 +2,14 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.GetPrsLearnerDetailsTests
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetailsTests
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Called_With_PrsLearnerDetailsViewModel : TestSetup
     {
         private Models.Contracts.PostResultsService.PrsLearnerDetails _expectedApiResult;
 
@@ -36,6 +38,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.GetPrsLearnerDetai
             };
 
             InternalApiClient.GetPrsLearnerDetailsAsync(AoUkprn, ProfileId, AssessmentId).Returns(_expectedApiResult);
+        }
+
+        public async override Task When()
+        {
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId, AssessmentId);
         }
 
         [Fact]

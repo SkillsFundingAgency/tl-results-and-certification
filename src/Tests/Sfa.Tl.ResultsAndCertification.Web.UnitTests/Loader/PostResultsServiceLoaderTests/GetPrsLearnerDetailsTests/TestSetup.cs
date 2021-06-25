@@ -1,8 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
-using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.GetPrsLearnerDetailsTests
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetailsTests
 {
     public abstract class TestSetup : PostResultsServiceLoaderTestBase
     {
@@ -11,10 +10,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.GetPrsLearnerDetai
         protected int AssessmentId;
 
         protected PrsLearnerDetailsViewModel ActualResult { get; set; }
-
-        public async override Task When()
-        {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId, AssessmentId);
-        }
     }
 }
