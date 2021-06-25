@@ -26,7 +26,5 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public string PathwayGrade { get; set; }
         public DateTime PathwayGradeLastUpdatedOn { get; set; }
         public string PathwayGradeLastUpdatedBy { get; set; }
-
-        public bool HasPathwayResult => !string.IsNullOrWhiteSpace(PathwayGrade);
     }
 }

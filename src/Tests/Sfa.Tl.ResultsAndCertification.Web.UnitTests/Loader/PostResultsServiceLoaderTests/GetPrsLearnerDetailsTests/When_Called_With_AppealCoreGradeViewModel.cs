@@ -57,7 +57,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.PathwayDisplayName.Should().Be($"{_expectedApiResult.PathwayName}<br/>({_expectedApiResult.PathwayCode})");
             ActualResult.PathwayAssessmentSeries.Should().Be(_expectedApiResult.PathwayAssessmentSeries);
             ActualResult.PathwayGrade.Should().Be(_expectedApiResult.PathwayGrade);
-            ActualResult.HasPathwayResult.Should().Be(_expectedApiResult.HasPathwayResult);
         }
     }
 }
