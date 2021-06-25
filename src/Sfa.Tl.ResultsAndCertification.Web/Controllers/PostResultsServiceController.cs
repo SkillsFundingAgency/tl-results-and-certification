@@ -139,7 +139,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> PrsAppealCoreGradeAsync(AppealCoreGradeViewModel model)
         {
             if (!ModelState.IsValid)
-                return View(model);
+            {
+                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
+                return View(prsDetails);
+            }
 
             await Task.CompletedTask;
 
