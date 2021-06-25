@@ -128,7 +128,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(User.GetUkPrn(), profileId, assessmentId);
 
-            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.HasPathwayResult || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
+            if (viewModel == null || viewModel.PathwayResultId != resultId || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);

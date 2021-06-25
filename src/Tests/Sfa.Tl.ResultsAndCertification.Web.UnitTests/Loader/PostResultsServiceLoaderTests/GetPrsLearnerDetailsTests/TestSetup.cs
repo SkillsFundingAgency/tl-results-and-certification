@@ -7,8 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
     {
         protected long AoUkprn;
         protected int ProfileId;
-        protected int AssessmentId;
-
-        protected PrsLearnerDetailsViewModel ActualResult { get; set; }
+        protected int AssessmentId;        
     }
 }

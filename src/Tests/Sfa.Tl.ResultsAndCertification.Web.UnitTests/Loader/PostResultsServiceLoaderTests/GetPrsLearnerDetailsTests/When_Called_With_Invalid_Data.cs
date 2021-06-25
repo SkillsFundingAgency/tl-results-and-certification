@@ -9,6 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
     public class When_Called_With_Invalid_Data : TestSetup
     {
         private Models.Contracts.PostResultsService.PrsLearnerDetails expectedApiResult;
+        protected PrsLearnerDetailsViewModel ActualResult { get; set; }
 
         public override void Given()
         {

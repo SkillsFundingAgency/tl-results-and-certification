@@ -6,6 +6,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public abstract class TestSetup : PostResultsServiceControllerTestBase
     {
+        public int ProfileId { get; set; }
+        public int AssessmentId { get; set; }
+        public int ResultId { get; set; }
         public IActionResult Result { get; private set; }
         public AppealCoreGradeViewModel ViewModel { get; set; }
 
