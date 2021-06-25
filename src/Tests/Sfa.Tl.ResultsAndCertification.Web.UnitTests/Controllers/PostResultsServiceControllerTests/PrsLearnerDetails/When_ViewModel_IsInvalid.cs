@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public override void Given()
         {
             ProfileId = 11;
-            AssessmentSeriesId = 1;
+            AssessmentId = 1;
 
             _mockLearnerDetails = new PrsLearnerDetailsViewModel
             {
@@ -24,13 +24,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Status = RegistrationPathwayStatus.Withdrawn
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId, AssessmentSeriesId).Returns(_mockLearnerDetails);
+            Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_mockLearnerDetails);
         }
 
         [Fact]
         public void Then_Expected_Method_IsCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId, AssessmentSeriesId);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId, AssessmentId);
         }
 
         [Fact]

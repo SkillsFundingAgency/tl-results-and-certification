@@ -36,15 +36,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             Id = "assessmentperiod",
             Title = PrsLearnerDetailsContent.Title_Assessment_Series,
-            Value = PathwayAssessmentSeries,
-            NeedBorderBottomLine = true
+            Value = PathwayAssessmentSeries
         };
         public SummaryItemModel SummaryPathwayGrade => new SummaryItemModel
         {
             Id = "pathwaygrade",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade,
             Value = PathwayGrade,
-            NeedBorderBottomLine = true,
 
             ActionText = PrsLearnerDetailsContent.Action_Link_Update,
             RouteName = RouteConstants.PrsAppealCoreGrade,
@@ -56,16 +54,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             Id = "pathwaygradeupdatedon",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade_LastUpdatedOn,
-            Value = PathwayGradeLastUpdatedOn,
-            NeedBorderBottomLine = true
+            Value = PathwayGradeLastUpdatedOn
         };
 
         public SummaryItemModel SummaryPathwayGradeLastUpdatedBy => new SummaryItemModel
         {
             Id = "pathwaygradeupdatedby",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade_LastUpdatedBy,
-            Value = PathwayGradeLastUpdatedBy,
-            NeedBorderBottomLine = true
+            Value = PathwayGradeLastUpdatedBy
         };
 
         public BreadcrumbModel Breadcrumb
