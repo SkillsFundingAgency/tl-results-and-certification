@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -9,9 +10,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResultsServiceTests
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsServiceTests
 {
-    public class When_GetPrsLearnerDetailsAsync_IsCalled : PostResultsServiceRepositoryBaseTest
+    public class When_GetPrsLearnerDetailsAsync_IsCalled : PostResultsServiceServiceBaseTest
     {
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private IList<TqRegistrationProfile> _profiles;
@@ -21,7 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
 
         public override void Given()
         {
-            _profiles = new List<TqRegistrationProfile>();
             _ulns = new Dictionary<long, RegistrationPathwayStatus>
             {
                 { 1111111111, RegistrationPathwayStatus.Active },   // Assessment + Result
@@ -34,9 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
 
-            foreach (var uln in _ulns)
-                _profiles.Add(SeedRegistrationDataByStatus(uln.Key, uln.Value, TqProvider));
-
+            _profiles = SeedRegistrationsData(_ulns, TqProvider);
             DbContext.SaveChanges();
 
             // Seed Assessments And Results
@@ -65,7 +63,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
             SeedPathwayAssessmentsData(_tqPathwayAssessmentsSeedData, true);
 
             // Test class.
+            CreateMapper();
             PostResultsServiceRepository = new PostResultsServiceRepository(DbContext);
+            PostResultsServiceService = new PostResultsServiceService(PostResultsServiceRepository, PostResultsServiceMapper);
         }
 
         public override Task When()
@@ -100,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
 
             var expectedPathway = expectedProfile.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault(x => x.Status == RegistrationPathwayStatus.Active);
             _actualResult.Status.Should().Be(expectedPathway.Status);
-            
+
             var expectedTqAwardingOrganisation = expectedPathway.TqProvider.TqAwardingOrganisation;
             _actualResult.TlevelTitle.Should().Be(expectedTqAwardingOrganisation.TlPathway.TlevelTitle);
 
@@ -111,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
             var expctedProvider = expectedTqAwardingOrganisation.TqProviders.FirstOrDefault().TlProvider;
             _actualResult.ProviderUkprn.Should().Be(expctedProvider.UkPrn);
             _actualResult.ProviderName.Should().Be(expctedProvider.Name);
-            
+
             var expectedAssessment = expectedPathway.TqPathwayAssessments.FirstOrDefault();
             _actualResult.PathwayAssessmentSeries.Should().Be(expectedAssessment.AssessmentSeries.Name);
 
