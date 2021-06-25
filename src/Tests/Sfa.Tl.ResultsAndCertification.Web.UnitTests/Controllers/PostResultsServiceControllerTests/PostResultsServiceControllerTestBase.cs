@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             Loader = Substitute.For<IPostResultsServiceLoader>();
             CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<PostResultsServiceController>>();
-            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration();
+            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration { AppealsEndDate = DateTime.UtcNow.AddDays(7) };
 
             Controller = new PostResultsServiceController(Loader, CacheService, ResultsAndCertificationConfiguration, Logger);
 

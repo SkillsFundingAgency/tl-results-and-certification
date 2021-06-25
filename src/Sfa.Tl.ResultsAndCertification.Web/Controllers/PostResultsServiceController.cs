@@ -144,8 +144,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await Task.CompletedTask;
 
             return model.AppealGrade.Value
-                ? RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId })
-                : RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId });
+                ? RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId })
+                : RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
         }
     }
 }
