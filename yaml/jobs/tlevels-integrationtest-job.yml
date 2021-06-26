@@ -32,8 +32,8 @@
         azureSubscription: ${{ parameters.serviceConnection }}
         ServerName: '$(SharedSqlServerFQDN)'
         DatabaseName: '$(IntTestDatabaseName)'
-        SqlUsername: '$(SharedSqlServerUsername)'
-        SqlPassword: '$(SharedSqlServerPassword)'
+        SqlUsername: '$(SQLServerAdminUsername)'
+        SqlPassword: '$(SQLServerAdminPassword)'
         DacpacFile: '$(System.ArtifactsDirectory)\sqldrop\src\Sfa.Tl.ResultsAndCertification.Database\bin\Release\Sfa.Tl.ResultsAndCertification.Database.dacpac'
         AdditionalArguments: '/v:environment=$(environment)Integration'
     
