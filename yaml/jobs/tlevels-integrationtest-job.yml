@@ -40,7 +40,7 @@
     - task: ExtractFiles@1
       displayName: 'Extract Integration test files '
       inputs:
-        archiveFilePatterns: '$(System.DefaultWorkingDirectory)\appdrop\config\Sfa.Tl.ResultsAndCertification.IntegrationTests.zip'
+        archiveFilePatterns: '$(System.ArtifactsDirectory)/appdrop/config/Sfa.Tl.ResultsAndCertification.IntegrationTests.zip'
         destinationFolder: '$(Agent.TempDirectory)\IntegrationTests'
 
     - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
