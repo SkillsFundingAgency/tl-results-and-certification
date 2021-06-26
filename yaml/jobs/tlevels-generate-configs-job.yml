@@ -33,6 +33,7 @@ jobs:
           'Write-Host "RedisCacheConnection variable: $(RedisCacheConnection)"'
           'Write-Host "KeyVaultUri variable: $(KeyVaultUri)"'
           'Write-Host "DataProtectionKeyVaultKeyId : $(DataProtectionKeyVaultKeyId)"'
+          'Write-Host "IntTestSQLServiceAccountConnectionString : $(IntTestSQLServiceAccountConnectionString)"'
         name: ShowVariables
 
       - task: DownloadBuildArtifacts@0
