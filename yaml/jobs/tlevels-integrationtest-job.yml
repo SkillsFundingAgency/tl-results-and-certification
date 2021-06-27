@@ -37,10 +37,17 @@
         DacpacFile: '$(System.ArtifactsDirectory)\sqldrop\src\Sfa.Tl.ResultsAndCertification.Database\bin\Release\Sfa.Tl.ResultsAndCertification.Database.dacpac'
         AdditionalArguments: '/v:environment=$(environment)Integration'
     
+    - task: DownloadBuildArtifacts@0
+      inputs:
+          buildType: "current"
+          downloadType: "single"
+          artifactName: "appdrop"
+          downloadPath: "$(System.ArtifactsDirectory)"
+
     - task: ExtractFiles@1
       displayName: 'Extract Integration test files '
       inputs:
-        archiveFilePatterns: '**/Sfa.Tl.ResultsAndCertification.IntegrationTests.zip'
+        archiveFilePatterns: '$(System.ArtifactsDirectory)\appdrop\Sfa.Tl.ResultsAndCertification.IntegrationTests.zip'
         destinationFolder: '$(Agent.TempDirectory)\IntegrationTests'
 
     - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
