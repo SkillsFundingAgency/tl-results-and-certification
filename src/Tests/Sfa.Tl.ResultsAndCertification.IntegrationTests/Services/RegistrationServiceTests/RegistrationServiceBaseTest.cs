@@ -32,6 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected TqProvider TqProvider;
         protected IList<TlProvider> TlProviders;
         protected IList<TqProvider> TqProviders;
+        protected IList<TlLookup> TlLookup;
+        protected IList<Qualification> Qualifications;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IProviderRepository ProviderRepository;
         protected IRegistrationRepository RegistrationRepository;
@@ -176,6 +178,44 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 DbContext.SaveChanges();
 
             return tqPathwayResults;
+        }
+
+        public void SeedQualificationAchievedData(TqRegistrationProfile profile)
+        {
+            var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng");
+            var mathQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Math");
+
+            var engQualifcationGrade = engQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable);
+            var mathsQualifcationGrade = mathQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable);
+
+            profile.QualificationAchieved.Add(new QualificationAchieved
+            {
+                TqRegistrationProfileId = profile.Id,
+                QualificationId = engQual.Id,
+                QualificationGradeId = engQualifcationGrade.Id,
+                IsAchieved = engQualifcationGrade.IsAllowable
+            });
+
+            profile.QualificationAchieved.Add(new QualificationAchieved
+            {
+                TqRegistrationProfileId = profile.Id,
+                QualificationId = mathQual.Id,
+                QualificationGradeId = mathsQualifcationGrade.Id,
+                IsAchieved = mathsQualifcationGrade.IsAllowable
+            });
+            DbContext.SaveChanges();
+        }
+
+        public IList<Qualification> SeedQualificationData()
+        {
+            var qualificationsList = new QualificationBuilder().BuildList();
+            var qualifications = QualificationDataProvider.CreateQualificationList(DbContext, qualificationsList);
+
+            foreach (var qual in qualifications)
+            {
+                qual.QualificationType.QualificationGrades = new QualificationGradeBuilder().BuildList(qual.QualificationType);
+            }
+            return qualifications;
         }
 
         public static void AssertRegistrationPathway(TqRegistrationPathway actualPathway, TqRegistrationPathway expectedPathway, bool assertStatus = true)
