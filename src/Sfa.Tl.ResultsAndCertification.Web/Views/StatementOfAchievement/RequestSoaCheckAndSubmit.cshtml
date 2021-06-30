@@ -90,7 +90,7 @@
             <p class="govuk-body">@RequestSoaCheckAndSubmit.Para_By_Submitting_You_Are_Confirming_That</p>
 
             <div class="govuk-button-group">
-                <button id="acceptAndSendButton" class="govuk-button" data-module="govuk-button">@RequestSoaCheckAndSubmit.Button_Accept_And_Send_Request</button>
+                <button id="acceptAndSendButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@RequestSoaCheckAndSubmit.Button_Accept_And_Send_Request</button>
                 <a id="cancelLink" class="govuk-link govuk-body" asp-route="RequestSoaCancel" asp-route-profileId="@Model.ProfileId">@RequestSoaCheckAndSubmit.Button_Cancel</a>
             </div>
         </form>

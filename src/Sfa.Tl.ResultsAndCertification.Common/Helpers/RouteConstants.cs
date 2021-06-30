@@ -279,5 +279,18 @@
         public const string RequestSoaAlreadySubmitted = "RequestSoaAlreadySubmitted";
 
         #endregion
+
+        #region Post Results Service
+
+        public const string StartReviewsAndAppeals = "StartReviewsAndAppeals";
+        public const string PrsSearchLearner = "PrsSearchLearner";
+        public const string SubmitPrsSearchLearner = "SubmitPrsSearchLearner";
+        public const string PrsUlnNotFound = "PrsUlnNotFound";
+        public const string PrsUlnWithdrawn = "PrsUlnWithdrawn";
+        public const string PrsLearnerDetails = "PrsLearnerDetails";
+        public const string PrsAppealCoreGrade = "PrsAppealCoreGrade";
+        public const string SubmitPrsAppealCoreGrade = "SubmitPrsAppealCoreGrade";
+
+        #endregion
     }
 }
