@@ -12,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 TlProvider = tlProvider ?? new TlProviderBuilder().Build(),
                 DepartmentName = "Exams Office",
+                OrganisationName = "Org name1",
                 AddressLine1 = "Test Line 1",
                 AddressLine2 = "Test Line 2",
                 Town = "Test Town",
@@ -30,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 TlProvider = tlProvider ?? new TlProviderBuilder().Build(),
                 DepartmentName = "Exams Office",
+                OrganisationName = "Org name1",
                 AddressLine1 = "Test Line 1",
                 AddressLine2 = "Test Line 2",
                 Town = "Test Town",
@@ -44,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 TlProvider = tlProvider ?? new TlProviderBuilder().Build(),
                 DepartmentName = "Test Office",
+                OrganisationName = "Org name2",
                 AddressLine1 = "Line 1",
                 AddressLine2 = "Line 2",
                 Town = "Town",

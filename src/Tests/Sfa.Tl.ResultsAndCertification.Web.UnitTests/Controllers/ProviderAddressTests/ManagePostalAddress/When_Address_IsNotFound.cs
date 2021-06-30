@@ -11,7 +11,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
 {
     public class When_Address_IsNotFound : TestSetup
     {
-        public override void Given() { }
+        private ManagePostalAddressViewModel _mockResult;
+        public override void Given()
+        {
+            _mockResult = null;
+            ProviderAddressLoader.GetAddressAsync<ManagePostalAddressViewModel>(ProviderUkprn).Returns(_mockResult);
+        }
+
+        [Fact]
+        public void Then_Expected_Methods_AreCalled()
+        {
+            ProviderAddressLoader.Received(1).GetAddressAsync<ManagePostalAddressViewModel>(ProviderUkprn);
+            CacheService.Received(1).RemoveAsync<AddAddressViewModel>(string.Concat(CacheKey));
+        }
 
         [Fact]
         public void Then_Returns_Expected_Results()
@@ -22,18 +34,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             var model = (Result as ViewResult).Model as ManagePostalAddressViewModel;
 
             model.Should().NotBeNull();
+            model.DepartmentName.Should().BeNull();
+            model.OrganisationName.Should().BeNull();
+            model.AddressLine1.Should().BeNull();
+            model.AddressLine2.Should().BeNull();
+            model.Town.Should().BeNull();
+            model.Postcode.Should().BeNull();
+            model.HasAddress.Should().BeFalse();
+
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Count().Should().Be(2);
             model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
             model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
             model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Manage_Postal_Address);
-        }
-
-        [Fact]
-        public void Then_Expected_Methods_AreCalled()
-        {
-            CacheService.Received(1).RemoveAsync<AddAddressViewModel>(string.Concat(CacheKey));
-        }
+        }        
     }
 }

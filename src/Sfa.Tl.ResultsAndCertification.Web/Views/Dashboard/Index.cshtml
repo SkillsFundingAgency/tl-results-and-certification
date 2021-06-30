@@ -115,6 +115,23 @@
             </div>
         </div>
 
+        <!-- BLOCK 6 – Reviews and appeals -->
+        <div class="govuk-grid-column-one-half">
+            <div class="govuk-form-group card">
+                <p class="govuk-body">
+                    <h2 class="govuk-heading-m">
+                        <a id="reviewsAndAppealsLink" class="govuk-link" asp-route="StartReviewsAndAppeals">
+                            @Dashboard.Reviews_And_Appeals_Text
+                        </a>
+                    </h2>
+                </p>
+
+                <p class="govuk-body">
+                    @Dashboard.Reviews_And_Appeals_Description_Text
+                </p>
+            </div>
+        </div>
+
         <!-- BLOCK 6 Account -->
         <div class="govuk-grid-column-one-half">
             <div class="govuk-form-group card">
@@ -149,6 +166,22 @@
 
                 <p class="govuk-body">
                     @Dashboard.Manage_Learner_TLevel_Records_Description_Text
+                </p>
+            </div>
+        </div>
+
+        <!-- BLOCK: Request statement of achievement -->
+        <div class="govuk-grid-column-one-half">
+            <div class="govuk-form-group training-provider-card">
+                <p class="govuk-body">
+                    <h2 class="govuk-heading-m">
+                        <a class="govuk-link" asp-route="RequestStatementOfAchievement">
+                            @Dashboard.Providers_Request_Statement_Of_Achievement_Heading
+                        </a>
+                    </h2>
+                </p>
+                <p class="govuk-body">
+                    @Dashboard.Providers_Request_Statement_Of_Achievement_Text
                 </p>
             </div>
         </div>

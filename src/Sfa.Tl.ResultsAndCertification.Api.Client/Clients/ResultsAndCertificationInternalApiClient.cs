@@ -4,7 +4,9 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
@@ -285,6 +287,51 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<AddAddressRequest, bool>(ApiConstants.AddAddressUri, request);
         }
 
+        public async Task<Address> GetAddressAsync(long providerUkprn)
+        {
+            var requestUri = string.Format(ApiConstants.GetAddressUri, providerUkprn);
+            return await GetAsync<Address>(requestUri);
+        }
+
+        // Provider Statement Of Achievement endpoints
+        public async Task<FindSoaLearnerRecord> FindSoaLearnerRecordAsync(long providerUkprn, long uln)
+        {
+            var requestUri = string.Format(ApiConstants.FindSoaLearnerRecordUri, providerUkprn, uln);
+            return await GetAsync<FindSoaLearnerRecord>(requestUri);
+        }
+
+        public async Task<SoaLearnerRecordDetails> GetSoaLearnerRecordDetailsAsync(long providerUkprn, int profileId)
+        {
+            var requestUri = string.Format(ApiConstants.GetSoaLearnerRecordDetailsUri, providerUkprn, profileId);
+            return await GetAsync<SoaLearnerRecordDetails>(requestUri);
+        }
+
+        public async Task<SoaPrintingResponse> CreateSoaPrintingRequestAsync(SoaPrintingRequest request)
+        {
+            return await PostAsync<SoaPrintingRequest, SoaPrintingResponse>(ApiConstants.CreateSoaPrintingRequestUri, request);
+        }
+
+        public async Task<PrintRequestSnapshot> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId)
+        {
+            var requestUri = string.Format(ApiConstants.GetPrintRequestSnapshotUri, providerUkprn, profileId, pathwayId);
+            return await GetAsync<PrintRequestSnapshot>(requestUri);
+        }
+
+        #region PRS
+        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln)
+        {
+            var requestUri = string.Format(ApiConstants.FindPrsLearnerRecordUri, aoUkprn, uln);
+            return await GetAsync<FindPrsLearnerRecord>(requestUri);
+        }
+
+        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentId)
+        {
+            var requestUri = string.Format(ApiConstants.GetPrsLearnerDetailsUri, aoUkprn, profileId, assessmentId);
+            return await GetAsync<PrsLearnerDetails>(requestUri);
+        }
+
+        #endregion 
+
         #region Private Methods
 
         /// <summary>
@@ -368,23 +415,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var json = JsonConvert.SerializeObject(content, IsoDateFormatSettings);
             return new StringContent(json, Encoding.UTF8, "application/json");
-        }
-
-        /// <summary>
-        /// Gets the microsoft date format settings.
-        /// </summary>
-        /// <value>
-        /// The microsoft date format settings.
-        /// </value>
-        private static JsonSerializerSettings MicrosoftDateFormatSettings
-        {
-            get
-            {
-                return new JsonSerializerSettings
-                {
-                    DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
-                };
-            }
         }
 
         /// <summary>

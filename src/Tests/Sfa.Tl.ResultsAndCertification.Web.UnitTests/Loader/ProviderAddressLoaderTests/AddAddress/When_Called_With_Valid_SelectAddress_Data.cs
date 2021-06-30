@@ -21,12 +21,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderAddressLoa
             AddAddressViewModel = new AddAddressViewModel
             {
                 AddAddressPostcode = new AddAddressPostcodeViewModel { Postcode = "xx1 1yy" },
-                AddAddressSelect = new AddAddressSelectViewModel { SelectedAddressUprn = 123456789, SelectedAddress = new AddressViewModel { AddressLine1 = "Line1", AddressLine2 = "Line2", Town = "town", Postcode = "xx1 1yy" } }
+                AddAddressSelect = new AddAddressSelectViewModel { SelectedAddressUprn = 123456789, SelectedAddress = new AddressViewModel { DepartmentName ="Dept name", OrganisationName = "Org name", AddressLine1 = "Line1", AddressLine2 = "Line2", Town = "town", Postcode = "xx1 1yy" } }
             };
 
             InternalApiClient.AddAddressAsync(Arg.Is<AddAddressRequest>(
                     x => x.Ukprn == ProviderUkprn &&
                     x.DepartmentName == AddAddressViewModel.AddAddressSelect.DepartmentName &&
+                    x.OrganisationName == AddAddressViewModel.AddAddressSelect.SelectedAddress.OrganisationName &&
                     x.AddressLine1 == AddAddressViewModel.AddAddressSelect.SelectedAddress.AddressLine1 &&
                     x.AddressLine2 == AddAddressViewModel.AddAddressSelect.SelectedAddress.AddressLine2 &&
                     x.Town == AddAddressViewModel.AddAddressSelect.SelectedAddress.Town &&

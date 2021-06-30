@@ -33,7 +33,19 @@
       "type": "string",
       "environmentVariable": "FeedbackEmailAddress"
     },
-	"KeyVaultUri": {
+    "SoaAvailableDate": {
+      "type": "string",
+      "environmentVariable": "SoaAvailableDate"
+    },
+    "SoaRerequestInDays": {
+      "type": "integer",
+      "environmentVariable": "SoaRerequestInDays"
+    },
+	"AppealsEndDate": {
+      "type": "string",
+      "environmentVariable": "AppealsEndDate"
+    },
+    "KeyVaultUri": {
       "type": "string",
       "environmentVariable": "KeyVaultUri"
     },
@@ -239,13 +251,13 @@
       ],
       "type": "object"
     },
-	"OrdnanceSurveyApiSettings": {
+    "OrdnanceSurveyApiSettings": {
       "properties": {
-        "PlacesUri": {          
+        "PlacesUri": {
           "type": "string",
           "environmentVariable": "OrdnanceSurveyApiPlacesUri"
         },
-        "PlacesKey": {          
+        "PlacesKey": {
           "type": "string",
           "environmentVariable": "OrdnanceSurveyPlacesApiPlacesKey"
         }
@@ -254,8 +266,13 @@
       "required": [],
       "type": "object"
     },
-	"LearningRecordServiceSettings": {
+    "LearningRecordServiceSettings": {
       "properties": {
+		"BaseUri": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "LearningRecordServiceBaseUri"
+        },
         "VendorId": {
           "minLength": 1,
           "type": "string",
@@ -284,6 +301,7 @@
       },
       "additionalProperties": false,
       "required": [
+	    "BaseUri",
         "VendorId",
         "Ukprn",
         "Username",

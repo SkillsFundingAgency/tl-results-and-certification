@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
         public override void Given()
         {
             AddAddressPostcode = new AddAddressPostcodeViewModel { Postcode = "xx1 1yy" };
-            AddAddressSelect = new AddAddressSelectViewModel { SelectedAddressUprn = 123456789, SelectedAddress = new AddressViewModel { AddressLine1 = "Line1", AddressLine2 = "Line2", Town = "town", Postcode = "xx1 1yy" } };
+            AddAddressSelect = new AddAddressSelectViewModel { SelectedAddressUprn = 123456789, SelectedAddress = new AddressViewModel { OrganisationName = "Org name", AddressLine1 = "Line1", AddressLine2 = "Line2", Town = "town", Postcode = "xx1 1yy" } };
 
             AddAddressViewModel = new AddAddressViewModel
             {

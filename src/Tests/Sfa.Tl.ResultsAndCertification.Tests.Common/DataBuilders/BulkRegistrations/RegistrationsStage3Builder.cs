@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 FirstName = "First 1",
                 LastName = "Last 1",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
-                ProviderUkprn = 10011221, // valid provider
+                ProviderUkprn = 10000536, // valid provider
                 AcademicYear = DateTime.Now.Year,
                 CoreCode = "10123456", // correct core code
                 SpecialismCodes = new List<string> { "10123456", "10123457" }  // correct specialisms
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 FirstName = "First 2",
                 LastName = "Last 2",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
-                ProviderUkprn = 10011221,  // valid provider
+                ProviderUkprn = 10000536,  // valid provider
                 AcademicYear = DateTime.Now.Year,
                 CoreCode = "10123456", // valid core code
                 SpecialismCodes = new List<string> { "10123456", "10123457" } // correct specialisms
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 FirstName = "First 3",
                 LastName = "Last 3",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
-                ProviderUkprn = 10011221, // valid providerr
+                ProviderUkprn = 10000536, // valid providerr
                 AcademicYear = DateTime.Now.Year,
                 CoreCode = "10123456", // correct core code
                 SpecialismCodes = new List<string> { "10123456", "10123457" } // invalid specialisms
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 FirstName = "First 2",
                 LastName = "Last 2",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
-                ProviderUkprn = 10011221,  // valid provider
+                ProviderUkprn = 10000536,  // valid provider
                 AcademicYear = DateTime.Now.Year,
                 CoreCode = "10123333", // invalid core code
                 SpecialismCodes = new List<string> { "10123456", "10123457" } // correct specialisms
@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 FirstName = "First 3",
                 LastName = "Last 3",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
-                ProviderUkprn = 10011221, // valid providerr
+                ProviderUkprn = 10000536, // valid providerr
                 AcademicYear = DateTime.Now.Year,
                 CoreCode = "10123456", // correct core code
                 SpecialismCodes = new List<string> { "99999999", "10123457" } // invalid specialisms

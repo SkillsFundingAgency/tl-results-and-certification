@@ -3,7 +3,7 @@
 
 <div class="govuk-summary-list__row @Model.BorderBottomCssClass">
     <dt class="govuk-summary-list__key @Model.BorderBottomCssClass">
-        @Model?.Title
+        @Html.Raw(@Model?.Title)
     </dt>
 
     <dd class="govuk-summary-list__value @Model.BorderBottomCssClass">

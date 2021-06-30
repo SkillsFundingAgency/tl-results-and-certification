@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AwardingOrg
     {
         private IEnumerable<TqAwardingOrganisation> _result;
         private IList<TqAwardingOrganisation> _data;
-        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
+        private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
 
         public override void Given()
         {
@@ -52,9 +52,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AwardingOrg
             actualResult.TlAwardingOrganisatonId.Should().Be(expectedResult.TlAwardingOrganisatonId);
             actualResult.TlPathwayId.Should().Be(expectedResult.TlPathwayId);
             actualResult.IsActive.Should().Be(expectedResult.IsActive);
-            actualResult.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
+            actualResult.CreatedBy.Should().Be(expectedResult.CreatedBy);
             actualResult.CreatedOn.Should().Be(expectedResult.CreatedOn);
-            actualResult.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
+            actualResult.ModifiedBy.Should().Be(expectedResult.ModifiedBy);
             actualResult.ModifiedOn.Should().Be(expectedResult.ModifiedOn);
         }
     }

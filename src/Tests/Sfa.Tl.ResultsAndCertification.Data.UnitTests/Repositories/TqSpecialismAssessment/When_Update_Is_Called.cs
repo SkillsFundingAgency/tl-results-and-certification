@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqSpecialis
             _result.StartDate.Should().Be(_data.StartDate);
             _result.IsOptedin.Should().Be(_data.IsOptedin);
             _result.IsBulkUpload.Should().Be(_data.IsBulkUpload);
-            _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
+            _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);
             _result.ModifiedOn.Should().Be(_data.ModifiedOn);

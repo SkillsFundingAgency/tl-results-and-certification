@@ -3,6 +3,7 @@
 	[Id] INT IDENTITY(1,1) NOT NULL,
     [TlProviderId] INT NOT NULL, 
     [DepartmentName] NVARCHAR(100) NULL, 
+    [OrganisationName] NVARCHAR(100) NULL,
     [AddressLine1] NVARCHAR(256) NOT NULL,
     [AddressLine2] NVARCHAR(256) NULL,
     [Town] NVARCHAR(100) NOT NULL,

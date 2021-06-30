@@ -115,6 +115,16 @@ body {
     }
 }
 
+@media screen and (max-width: 640px) {
+    .soa-details {
+        margin-bottom: 20px;
+
+        .float--right {
+            float: none !important;
+        }
+    }    
+}
+
 input[type="radio"] {
     + label + noscript > div.show-on-event {
         display: none;

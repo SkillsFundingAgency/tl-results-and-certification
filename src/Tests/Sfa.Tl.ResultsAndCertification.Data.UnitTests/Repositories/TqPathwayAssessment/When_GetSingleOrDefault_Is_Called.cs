@@ -33,9 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqPathwayAs
             _result.StartDate.Should().Be(_data.StartDate);
             _result.IsOptedin.Should().Be(_data.IsOptedin);
             _result.IsBulkUpload.Should().Be(_data.IsBulkUpload);
-            _result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
+            _result.CreatedBy.Should().Be(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
-            _result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);
+            _result.ModifiedBy.Should().Be(Constants.ModifiedByUser);
             _result.ModifiedOn.Should().Be(Constants.ModifiedOn);
         }
     }

@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AssessmentS
             _result.Year.Should().Be(_data.Year);
             _result.StartDate.Should().Be(_data.StartDate);
             _result.EndDate.Should().Be(_data.EndDate);
-            _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
+            _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);
             _result.ModifiedOn.Should().Be(_data.ModifiedOn);

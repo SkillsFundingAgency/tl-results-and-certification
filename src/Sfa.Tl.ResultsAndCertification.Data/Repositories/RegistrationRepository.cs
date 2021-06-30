@@ -45,13 +45,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         {
             var profile = await _dbContext.TqRegistrationProfile
                 .Where(x => x.Id == profileId && x.TqRegistrationPathways.Any(pw => pw.Status == RegistrationPathwayStatus.Active && pw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn))
+                .Include(x => x.QualificationAchieved)
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqRegistrationSpecialisms)
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.IndustryPlacements)
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqPathwayAssessments)
-                    .ThenInclude(x => x.TqPathwayResults)
+                    .ThenInclude(x => x.TqPathwayResults)                
                 .FirstOrDefaultAsync();
             return profile;
         }
@@ -85,6 +86,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             
             regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(predicate).ToList();
             return regPathway;
+        }
+
+        public async Task<IList<TqRegistrationProfile>> GetRegistrationProfilesByIdsAsync(HashSet<int> profileIds, bool includeQualificationAchieved = false)
+        {
+            var profileQueryable = _dbContext.TqRegistrationProfile.Where(x => profileIds.Contains(x.Id)).AsQueryable();
+
+            if (includeQualificationAchieved)
+                profileQueryable = profileQueryable.Include(p => p.QualificationAchieved);
+
+            return await profileQueryable.ToListAsync();
         }
 
         #region Bulk Registration

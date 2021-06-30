@@ -6,5 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface IProviderAddressService
     {
         Task<bool> AddAddressAsync(AddAddressRequest request);
+        Task<Address> GetAddressAsync(long providerUkprn);
     }
 }

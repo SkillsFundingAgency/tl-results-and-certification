@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.DocumentUpl
         }
 
         [Fact]
-        public void Then_Two_Records_Should_Have_Been_Created() =>
+        public void Then_Expected_Records_Should_Have_Been_Created() =>
             _result.Should().Be(2);
     }
 }

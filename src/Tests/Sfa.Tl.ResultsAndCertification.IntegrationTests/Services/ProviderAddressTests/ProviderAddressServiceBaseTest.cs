@@ -5,8 +5,10 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderAddressTests
 {
@@ -33,13 +35,27 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderAddre
         protected virtual void SeedTestData()
         {
             TlProviders = ProviderDataProvider.CreateTlProviders(DbContext);
-            DbContext.SaveChangesAsync();
+            DbContext.SaveChanges();
+        }
+
+        protected IList<TlProviderAddress> SeedProviderAddress()
+        {
+            var addressess = TlProviderAddressDataProvider.CreateTlProviderAddress(DbContext, new TlProviderAddressBuilder().BuildList(TlProviders.First()));
+            DbContext.SaveChanges();
+            return addressess;
+        }
+
+        protected TlProviderAddress AddProviderAddress(TlProviderAddress tlProviderAddress)
+        {
+            var address = TlProviderAddressDataProvider.CreateTlProviderAddress(DbContext, tlProviderAddress);
+            DbContext.SaveChanges();
+            return address;
         }
     }
+
     public enum Provider
     {
         BarsleyCollege = 10000536,
         WalsallCollege = 10007315
     }
-
 }

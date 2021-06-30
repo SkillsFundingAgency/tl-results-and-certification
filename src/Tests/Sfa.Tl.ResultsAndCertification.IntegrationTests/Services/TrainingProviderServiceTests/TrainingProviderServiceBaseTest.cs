@@ -156,7 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             if (seedIndustryPlacement)
             {
                 var pathway = profile.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
-                IndustryPlacementProvider.CreateQualificationAchieved(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
+                IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
             }
         }
     }

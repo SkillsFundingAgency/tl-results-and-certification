@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
     public class SearchRegistrationViewModel
     {
         [Required(ErrorMessageResourceType = typeof(ErrorResource.SearchRegistration), ErrorMessageResourceName = "Uln_Required_Validation_Message")]
-        [RegularExpression(@"^\d{10}$", ErrorMessageResourceType = typeof(ErrorResource.SearchRegistration), ErrorMessageResourceName = "Uln_Not_Valid_Validation_Message")]
+        [RegularExpression(Constants.UlnValidationRegex, ErrorMessageResourceType = typeof(ErrorResource.SearchRegistration), ErrorMessageResourceName = "Uln_Not_Valid_Validation_Message")]
         public string SearchUln { get; set; }
 
         public BreadcrumbModel Breadcrumb

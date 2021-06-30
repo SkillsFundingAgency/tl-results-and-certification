@@ -10,5 +10,7 @@
 
         public const string TrainingProviderCacheKey = "TrainingProvider";
         public const string ProviderAddressCacheKey = "ProviderAddress";
+        public const string SoaCacheKey = "StatementOfAchievement";
+        public const string PrsCacheKey = "PostResultsService";
     }
 }

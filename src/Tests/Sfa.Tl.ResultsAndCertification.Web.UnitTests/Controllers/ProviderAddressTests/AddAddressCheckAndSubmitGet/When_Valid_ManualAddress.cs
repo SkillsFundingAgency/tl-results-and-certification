@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
-using System.Collections.Generic;
 using Xunit;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress.CheckAndSubmit;
 
@@ -13,13 +12,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
     {
         private AddAddressViewModel _cacheResult;
         private AddAddressManualViewModel _manualAddress;
-        private Dictionary<string, string> _routeAttributes;
 
         public override void Given()
         {
             _manualAddress = new AddAddressManualViewModel
             {
-                Department = "Finance",
+                DepartmentName = "Finance",
+                OrganisationName = "Org name",
                 AddressLine1 = "50",
                 AddressLine2 = "Street",
                 Town = "Coventry",
@@ -35,7 +34,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             };
 
             CacheService.GetAsync<AddAddressViewModel>(CacheKey).Returns(_cacheResult);
-            _routeAttributes = new Dictionary<string, string> { { Constants.IsFromSelectAddress, _cacheResult.AddAddressManual.IsFromSelectAddress.ToString() } };
         }
 
         [Fact]
@@ -60,12 +58,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
 
             // Department
             model.SummaryDepartment.Title.Should().Be(CheckAndSubmitContent.Summary_Department);
-            model.SummaryDepartment.Value.Should().Be(_manualAddress.Department);
+            model.SummaryDepartment.Value.Should().Be(_manualAddress.DepartmentName);
             model.SummaryDepartment.ActionText.Should().Be(CheckAndSubmitContent.Link_Change_Address);
             model.SummaryDepartment.RouteName.Should().BeEquivalentTo(RouteConstants.AddPostalAddressManual);
-            model.SummaryDepartment.RouteAttributes.Should().NotBeNull();
-            model.SummaryDepartment.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
-            model.SummaryDepartment.NeedBorderBottomLine.Should().Be(false);
+            model.SummaryDepartment.RouteAttributes.Should().BeNull();
+
+            // Organisation Name
+            model.SummaryOrganisationName.Title.Should().Be(CheckAndSubmitContent.Summary_OrganisationName);
+            model.SummaryOrganisationName.Value.Should().Be(_manualAddress.OrganisationName);
+            model.SummaryOrganisationName.NeedBorderBottomLine.Should().Be(false);
 
             // AddressLine1
             model.SummaryAddressLine1.Title.Should().Be(CheckAndSubmitContent.Summary_Building_And_Street);
@@ -90,8 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             // Back link 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AddPostalAddressManual);
-            model.BackLink.RouteAttributes.Should().NotBeNull();
-            model.BackLink.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            model.BackLink.RouteAttributes.Count.Should().Be(0);
         }
     }
 }

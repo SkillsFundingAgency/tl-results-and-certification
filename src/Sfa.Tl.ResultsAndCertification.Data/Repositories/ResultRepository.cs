@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 {
     public class ResultRepository : GenericRepository<TqPathwayAssessment>, IResultRepository
     {
-        private ILogger<ResultRepository> _logger;
+        private readonly ILogger<ResultRepository> _logger;
 
         public ResultRepository(ILogger<ResultRepository> logger, ResultsAndCertificationDbContext dbContext) : base(logger, dbContext)
         {

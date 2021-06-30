@@ -7,10 +7,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
     {
         public IActionResult Result { get; private set; }
         public bool IsFromSelectAddress { get; set; }
+        public bool IsFromAddressMissing { get; set; }
 
         public async override Task When()
         {
-            Result = await Controller.AddAddressManuallyAsync(IsFromSelectAddress);
+            Result = await Controller.AddAddressManuallyAsync(IsFromSelectAddress, IsFromAddressMissing);
         }
     }
 }

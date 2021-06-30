@@ -20,6 +20,7 @@
 
             <dl class="govuk-summary-list">
                 <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
+                <vc:summary-item model=Model.SummaryOrganisationName></vc:summary-item>
                 <vc:summary-item model=Model.SummaryAddressLine1></vc:summary-item>
 
                 @if (!string.IsNullOrWhiteSpace(Model.SummaryAddressLine2.Value))
@@ -35,7 +36,7 @@
             <p class="govuk-inset-text">@CheckAndSubmit.Inset_Declaration_Confirmation</p>
 
             <div class="govuk-button-group govuk-!-margin-top-7">
-                <button id="submitButton" class="govuk-button govuk-!-margin-right-5" role="button" type="submit">@CheckAndSubmit.Button_Submit</button>
+                <button id="submitButton" class="govuk-button govuk-!-margin-right-5" role="button" type="submit" data-prevent-double-click="true">@CheckAndSubmit.Button_Submit</button>
                 <a id="cancelLink" class="govuk-link govuk-body" asp-route="AddAddressCancel">@CheckAndSubmit.Link_Cancel</a>
             </div>
         </form>

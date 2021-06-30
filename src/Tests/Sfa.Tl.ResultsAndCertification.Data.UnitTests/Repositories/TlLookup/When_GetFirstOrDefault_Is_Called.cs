@@ -34,9 +34,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlLookup
             _result.Value.Should().Be(_data.Value);
             _result.IsActive.Should().Be(_data.IsActive);
             _result.SortOrder.Should().Be(_data.SortOrder);
-            _result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
+            _result.CreatedBy.Should().Be(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
-            _result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);
+            _result.ModifiedBy.Should().Be(Constants.ModifiedByUser);
             _result.ModifiedOn.Should().Be(Constants.ModifiedOn);
         }
     }

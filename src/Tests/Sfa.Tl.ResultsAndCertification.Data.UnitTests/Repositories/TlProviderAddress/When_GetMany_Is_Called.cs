@@ -33,13 +33,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlProviderA
 
 
         [Fact]
-        public void Then_The_Expected_Number_Of_Results_Is_Returned()
+        public void Then_The_Expected_Number_Of_Results_Are_Returned()
         {
             _result.Count().Should().Be(_data.Count);
         }
 
         [Fact]
-        public void Then_EntityFields_Are_As_Expected()
+        public void Then_First_Record_Fields_Have_Expected_Values()
         {
             var expectedResult = _data.FirstOrDefault();
             var actualResult = _result.FirstOrDefault();
@@ -47,14 +47,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlProviderA
             actualResult.Should().NotBeNull();
             actualResult.Id.Should().Be(1);
             actualResult.DepartmentName.Should().Be(expectedResult.DepartmentName);
+            actualResult.OrganisationName.Should().Be(expectedResult.OrganisationName);
             actualResult.AddressLine1.Should().Be(expectedResult.AddressLine1);
             actualResult.AddressLine2.Should().Be(expectedResult.AddressLine2);
             actualResult.Town.Should().Be(expectedResult.Town);
             actualResult.Postcode.Should().Be(expectedResult.Postcode);
             actualResult.IsActive.Should().Be(expectedResult.IsActive);
-            actualResult.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
+            actualResult.CreatedBy.Should().Be(expectedResult.CreatedBy);
             actualResult.CreatedOn.Should().Be(expectedResult.CreatedOn);
-            actualResult.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
+            actualResult.ModifiedBy.Should().Be(expectedResult.ModifiedBy);
             actualResult.ModifiedOn.Should().Be(expectedResult.ModifiedOn);
         }
     }

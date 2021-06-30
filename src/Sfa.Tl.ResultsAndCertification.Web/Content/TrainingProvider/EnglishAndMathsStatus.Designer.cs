@@ -80,6 +80,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Achieved minimum standard (Data from the Learning Records Service - LRS).
+        /// </summary>
+        public static string Lrs_Achieved_Display_Text {
+            get {
+                return ResourceManager.GetString("Lrs_Achieved_Display_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Achieved minimum standard for learners with SEND (Data from the Learning Records Service - LRS and provider declaration).
+        /// </summary>
+        public static string Lrs_Achieved_With_Send_Display_Text {
+            get {
+                return ResourceManager.GetString("Lrs_Achieved_With_Send_Display_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not achieved minimum standard (Data from the Learning Records Service - LRS).
+        /// </summary>
+        public static string Lrs_Not_Achieved_Display_Text {
+            get {
+                return ResourceManager.GetString("Lrs_Not_Achieved_Display_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not achieved minimum standard.
         /// </summary>
         public static string Not_Achieved_Display_Text {

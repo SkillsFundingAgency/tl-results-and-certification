@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingO
     {
         private Domain.Models.TlAwardingOrganisation _result;
         private Domain.Models.TlAwardingOrganisation _data;
-        private EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
+        private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
 
         public override void Given()
         {
@@ -33,9 +33,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlAwardingO
             _result.DisplayName.Should().Be(_data.DisplayName);
             _result.UkPrn.Should().Be(_data.UkPrn);
             _result.IsActive.Should().Be(_data.IsActive);
-            _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
+            _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
-            _result.ModifiedBy.Should().BeEquivalentTo(_data.ModifiedBy);
+            _result.ModifiedBy.Should().Be(_data.ModifiedBy);
             _result.ModifiedOn.Should().Be(_data.ModifiedOn);
         }
     }

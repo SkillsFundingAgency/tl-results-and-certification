@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
     public class TimeoutController : Controller
     {
-        public readonly ResultsAndCertificationConfiguration _configuration;
+        private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly ICacheService _cacheService;
 
         private string CacheKey

@@ -20,12 +20,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderAddressLoa
 
             AddAddressViewModel = new AddAddressViewModel
             {
-                AddAddressManual = new AddAddressManualViewModel { Department = "Test", AddressLine1 = "Line1", AddressLine2 = "Line2", Town = "town", Postcode = "xx1 1yy" }
+                AddAddressManual = new AddAddressManualViewModel { DepartmentName = "Test", OrganisationName ="Org name", AddressLine1 = "Line1", AddressLine2 = "Line2", Town = "town", Postcode = "xx1 1yy" }
             };
 
             InternalApiClient.AddAddressAsync(Arg.Is<AddAddressRequest>(
                     x => x.Ukprn == ProviderUkprn &&
-                    x.DepartmentName == AddAddressViewModel.AddAddressManual.Department &&
+                    x.DepartmentName == AddAddressViewModel.AddAddressManual.DepartmentName &&
+                    x.OrganisationName == AddAddressViewModel.AddAddressManual.OrganisationName &&
                     x.AddressLine1 == AddAddressViewModel.AddAddressManual.AddressLine1 &&
                     x.AddressLine2 == AddAddressViewModel.AddAddressManual.AddressLine2 &&
                     x.Town == AddAddressViewModel.AddAddressManual.Town &&

@@ -14,6 +14,7 @@
         <partial name="_ValidationSummary" />
         <form asp-route="SubmitAddPostalAddressManual">
             <input type="hidden" asp-for="IsFromSelectAddress" />
+            <input type="hidden" asp-for="IsFromAddressMissing" />
             <div class="govuk-form-group govuk-!-margin-bottom-7">
                 <span class="govuk-caption-xl">@AddPostalAddressManual.Caption_Add_Address</span>
                 <fieldset class="govuk-fieldset">
@@ -22,8 +23,13 @@
                     </legend>
                     <p class="govuk-body-m">@AddPostalAddressManual.Para_Must_Be_A_Business_Address</p>
                     <div class="govuk-form-group">
-                        <label class="govuk-label" for="department">@AddPostalAddressManual.Label_Department</label>
-                        <input id="department" class="govuk-input govuk-!-width-two-thirds" asp-for="Department" type="text" maxlength="100">
+                        <label class="govuk-label" for="departmentname">@AddPostalAddressManual.Label_Department</label>
+                        <input id="departmentname" class="govuk-input govuk-!-width-two-thirds" asp-for="DepartmentName" type="text" maxlength="100">
+                    </div>
+
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="organisationname">@AddPostalAddressManual.Label_Organisation</label>
+                        <input id="organisationname" class="govuk-input govuk-!-width-two-thirds" asp-for="OrganisationName" type="text" maxlength="100">
                     </div>
 
                     <div class="govuk-form-group" sfa-validation-for="AddressLine1" sfa-validation-class="govuk-form-group--error">
@@ -50,7 +56,7 @@
                     </div>
                 </fieldset>
             </div>
-            <button id="continueButton" class="govuk-button" role="button">@AddPostalAddressManual.Button_Continue</button>
+            <button id="continueButton" class="govuk-button" role="button" data-prevent-double-click="true">@AddPostalAddressManual.Button_Continue</button>
         </form>
     </div>
 </div>

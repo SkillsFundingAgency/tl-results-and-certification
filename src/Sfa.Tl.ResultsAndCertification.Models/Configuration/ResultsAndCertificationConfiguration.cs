@@ -1,4 +1,6 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
+﻿using System;
+
+namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
 {
     public class ResultsAndCertificationConfiguration
     {
@@ -81,6 +83,30 @@
         /// The feedback email address.
         /// </value>
         public string FeedbackEmailAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the soa available date.
+        /// </summary>
+        /// <value>
+        /// The soa available date.
+        /// </value>
+        public DateTime? SoaAvailableDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the soa rerequest in days.
+        /// </summary>
+        /// <value>
+        /// The soa rerequest in days.
+        /// </value>
+        public int SoaRerequestInDays { get; set; }
+
+        /// <summary>
+        /// Gets or sets the appeals end date.
+        /// </summary>
+        /// <value>
+        /// The appeals end date.
+        /// </value>
+        public DateTime? AppealsEndDate { get; set; }
 
         /// <summary>
         /// Gets or sets the dfe sign in settings.

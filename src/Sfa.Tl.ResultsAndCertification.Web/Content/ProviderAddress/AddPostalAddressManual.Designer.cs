@@ -125,6 +125,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Organisation&apos;s name (optional).
+        /// </summary>
+        public static string Label_Organisation {
+            get {
+                return ResourceManager.GetString("Label_Organisation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Postcode.
         /// </summary>
         public static string Label_Postcode {

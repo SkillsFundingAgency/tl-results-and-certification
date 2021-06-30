@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No addresses found for .
+        ///   Looks up a localized string similar to No addresses found for {0}.
         /// </summary>
         public static string Heading_No_Address_Found {
             get {
@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to add your address manually..
+        ///   Looks up a localized string similar to add your address manually.
         /// </summary>
         public static string Link_Add_Address_Manually {
             get {

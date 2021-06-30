@@ -35,12 +35,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TlProviderA
             _result.Should().NotBeNull();
             _result.Id.Should().Be(_data.Id);
             _result.DepartmentName.Should().Be(_data.DepartmentName);
+            _result.OrganisationName.Should().Be(_data.OrganisationName);
             _result.AddressLine1.Should().Be(_data.AddressLine1);
             _result.AddressLine2.Should().Be(_data.AddressLine2);
             _result.Town.Should().Be(_data.Town);
             _result.Postcode.Should().Be(_data.Postcode);
             _result.IsActive.Should().Be(_data.IsActive);
-            _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
+            _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);
             _result.ModifiedOn.Should().Be(_data.ModifiedOn);

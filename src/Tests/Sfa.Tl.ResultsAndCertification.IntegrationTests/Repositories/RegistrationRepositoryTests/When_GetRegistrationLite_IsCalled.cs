@@ -150,7 +150,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Registrat
         private void SeedIndustyPlacementData(long uln)
         {
             var pathway = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault();
-            IndustryPlacementProvider.CreateQualificationAchieved(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
+            IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, IndustryPlacementStatus.Completed);
         }
 
         private TqRegistrationPathway GetExpectedRegistrationPathway(long uln)

@@ -202,7 +202,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             if (seedIndustryPlacement)
             {
-                var industryPlacement = IndustryPlacementProvider.CreateQualificationAchieved(DbContext, new IndustryPlacement { Status = IndustryPlacementStatus.Completed, CreatedBy = "Test User" });
+                var industryPlacement = IndustryPlacementProvider.CreateIndustryPlacement(DbContext, new IndustryPlacement { Status = IndustryPlacementStatus.Completed, CreatedBy = "Test User" });
                 tqRegistrationPathway.IndustryPlacements.Add(industryPlacement);
             }
 

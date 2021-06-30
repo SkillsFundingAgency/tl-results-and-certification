@@ -147,6 +147,9 @@
   <data name="Summary_Department" xml:space="preserve">
     <value>Department</value>
   </data>
+  <data name="Summary_OrganisationName" xml:space="preserve">
+    <value>Organisation's Name</value>
+  </data>
   <data name="Summary_Postcode" xml:space="preserve">
     <value>Postcode</value>
   </data>

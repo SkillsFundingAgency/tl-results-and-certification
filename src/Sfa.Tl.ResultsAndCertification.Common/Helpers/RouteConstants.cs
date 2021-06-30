@@ -256,6 +256,40 @@
         public const string SubmitAddAddressCancel = "SubmitAddAddressCancel";
         public const string AddAddressNotFound = "AddAddressNotFound";
         public const string SubmitAddAddressNotFound = "SubmitAddAddressNotFound";
+        #endregion
+
+        #region Statement of achievement
+
+        public const string RequestStatementOfAchievement = "RequestStatementOfAchievement";
+        public const string StatementsOfAchievementNotAvailable = "StatementsOfAchievementNotAvailable";
+        public const string PostalAddressMissing = "PostalAddressMissing";
+        public const string RequestSoaUniqueLearnerNumber = "RequestSoaUniqueLearnerNumber";
+        public const string SubmitRequestSoaUniqueLearnerNumber = "SubmitRequestSoaUniqueLearnerNumber";
+        public const string RequestSoaUlnNotFound = "RequestSoaUlnNotFound";
+        public const string RequestSoaUlnNotWithdrawn = "RequestSoaUlnNotWithdrawn";
+        public const string RequestSoaNotAvailableNoIpStatus = "RequestSoaNotAvailableNoIpStatus";
+        public const string RequestSoaNotAvailableNoResults = "RequestSoaNotAvailableNoResults";
+        public const string RequestSoaCheckAndSubmit = "RequestSoaCheckAndSubmit";
+        public const string SubmitRequestSoaCheckAndSubmit = "SubmitRequestSoaCheckAndSubmit";
+        public const string RequestSoaConfirmation = "RequestSoaConfirmation";
+        public const string RequestSoaCancel = "RequestSoaCancel";
+        public const string SubmitRequestSoaCancel = "SubmitRequestSoaCancel";
+        public const string RequestSoaChangeComponentAchievements = "RequestSoaChangeComponentAchievements";
+        public const string RequestSoaChangePostalAddress = "RequestSoaChangePostalAddress";
+        public const string RequestSoaAlreadySubmitted = "RequestSoaAlreadySubmitted";
+
+        #endregion
+
+        #region Post Results Service
+
+        public const string StartReviewsAndAppeals = "StartReviewsAndAppeals";
+        public const string PrsSearchLearner = "PrsSearchLearner";
+        public const string SubmitPrsSearchLearner = "SubmitPrsSearchLearner";
+        public const string PrsUlnNotFound = "PrsUlnNotFound";
+        public const string PrsUlnWithdrawn = "PrsUlnWithdrawn";
+        public const string PrsLearnerDetails = "PrsLearnerDetails";
+        public const string PrsAppealCoreGrade = "PrsAppealCoreGrade";
+        public const string SubmitPrsAppealCoreGrade = "SubmitPrsAppealCoreGrade";
 
         #endregion
     }

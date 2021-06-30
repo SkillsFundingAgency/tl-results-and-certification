@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
         {
             _addressSelected = new AddressViewModel
             {
+                OrganisationName = "Org name",
                 AddressLine1 = "50",
                 AddressLine2 = "Street",
                 Town = "Coventry",
@@ -69,6 +70,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             model.SummaryDepartment.RouteAttributes.Should().BeNull();
             model.SummaryDepartment.NeedBorderBottomLine.Should().Be(false);
 
+            // Organisation Name
+            model.SummaryOrganisationName.Title.Should().Be(CheckAndSubmitContent.Summary_OrganisationName);
+            model.SummaryOrganisationName.Value.Should().Be(_addressSelected.OrganisationName);
+            model.SummaryOrganisationName.NeedBorderBottomLine.Should().Be(false);
+
             // AddressLine1
             model.SummaryAddressLine1.Title.Should().Be(CheckAndSubmitContent.Summary_Building_And_Street);
             model.SummaryAddressLine1.Value.Should().Be(_addressSelected.AddressLine1);
@@ -92,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderAddre
             // Back link 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AddAddressSelect);
-            model.BackLink.RouteAttributes.Should().BeNull();
+            model.BackLink.RouteAttributes.Count.Should().Be(0);
         }
     }
 }

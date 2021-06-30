@@ -58,6 +58,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, true);
             SeedIndustryPlacementData(industryPlacementUln, addToDbContext: true);
 
+            foreach (var profile in _registrations)
+            {
+                SeedQualificationAchievedData(profile);
+            }
+
             CreateMapper();
 
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
@@ -109,13 +114,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, TlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
+            TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
+            Qualifications = SeedQualificationData();
             DbContext.SaveChangesAsync();
         }
 
         private void SeedIndustryPlacementData(int uln, bool addToDbContext)
         {
             var pathway = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault();
-            IndustryPlacementProvider.CreateQualificationAchieved(DbContext, pathway.Id, IndustryPlacementStatus.Completed, addToDbContext);
+            IndustryPlacementProvider.CreateIndustryPlacement(DbContext, pathway.Id, IndustryPlacementStatus.Completed, addToDbContext);
         }
     }
 }

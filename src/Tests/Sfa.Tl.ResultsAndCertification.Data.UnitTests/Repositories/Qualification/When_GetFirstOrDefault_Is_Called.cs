@@ -35,9 +35,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Qualificati
             _result.Title.Should().Be(_data.Title);
             _result.IsSendQualification.Should().Be(_data.IsSendQualification);
             _result.IsActive.Should().Be(_data.IsActive);
-            _result.CreatedBy.Should().BeEquivalentTo(Constants.CreatedByUser);
+            _result.CreatedBy.Should().Be(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
-            _result.ModifiedBy.Should().BeEquivalentTo(Constants.ModifiedByUser);
+            _result.ModifiedBy.Should().Be(Constants.ModifiedByUser);
             _result.ModifiedOn.Should().Be(Constants.ModifiedOn);
         }
     }

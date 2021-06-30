@@ -1,0 +1,34 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement.RequestSoaUniqueLearnerNumberViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
+
+@{
+    ViewData["Title"] = RequestSoaUniqueLearnerNumber.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <partial name="_ValidationSummary" />
+        <form asp-route="SubmitRequestStatementOfAchievementUniqueLearnerNumber">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl ">
+                        <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-5">
+                            @RequestSoaUniqueLearnerNumber.Heading_Search_For_A_Learner
+                        </h1>
+                    </legend>
+                    <p class="govuk-body">@RequestSoaUniqueLearnerNumber.Enter_The_Unique_Learner_Number</p>
+                    <div class="govuk-form-group" sfa-validation-for="SearchUln" sfa-validation-class="govuk-form-group--error">
+                        <span class="govuk-hint">@RequestSoaUniqueLearnerNumber.Uln_Must_10_Digit_Hint</span>
+                        <span sfa-validation-for="SearchUln"></span>
+                        <input id="searchuln" class="govuk-input govuk-input--width-10" asp-for="SearchUln" maxlength="10">
+                    </div>
+                </fieldset>
+            </div>
+            <button id="searchButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@RequestSoaUniqueLearnerNumber.Search_Button</button>
+        </form>
+    </div>
+</div>

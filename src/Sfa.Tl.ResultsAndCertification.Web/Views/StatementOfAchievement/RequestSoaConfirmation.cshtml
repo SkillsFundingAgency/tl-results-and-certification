@@ -1,0 +1,28 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement.SoaConfirmationViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
+
+@{
+    ViewData["Title"] = RequestSoaConfirmation.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">@RequestSoaConfirmation.Statement_Of_Achievement_Requested_Successful_Text</h1>
+            <div class="govuk-panel__body">
+                @Model.Name
+            </div>
+            <div class="govuk-panel__body">
+                @string.Format(RequestSoaConfirmation.Uln_Text, @Model.Uln)
+            </div>
+        </div>
+
+        <h2 class="govuk-heading-m">@RequestSoaConfirmation.What_Happens_Next_Text</h2>
+        <p class="govuk-body">@RequestSoaConfirmation.Soa_Will_be_Sent_To_You_Text</p>
+        <p class="govuk-body">@RequestSoaConfirmation.If_You_Dont_Receive_The_Soa_After_Three_Weeks_Text <a class="govuk-link" asp-route="Contact">@RequestSoaConfirmation.Contact_Us_Text</a> @RequestSoaConfirmation.Submit_New_Request_Text</p>
+
+        <p class="govuk-body">
+            <a id="backToHomeButton" class="govuk-button" role="button" asp-route="Home">@RequestSoaConfirmation.Back_To_Home_Text</a>
+        </p>
+    </div>
+</div>

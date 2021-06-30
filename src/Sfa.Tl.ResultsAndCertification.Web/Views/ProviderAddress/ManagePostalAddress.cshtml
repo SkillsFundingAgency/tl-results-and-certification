@@ -1,5 +1,5 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress.ManagePostalAddressViewModel
-@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
+@using Sfa.Tl.ResultsAndCertification.Web.Content.ProviderAddress
 
 @{
     ViewData["Title"] = ManagePostalAddress.Page_Title;
@@ -12,10 +12,30 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
         <h1 class="govuk-heading-l">@ManagePostalAddress.Manage_Postal_Address_Heading</h1>
-        <p class="govuk-body-m">@ManagePostalAddress.Add_Address_Before_Request_Certificate_Text</p>
-        <p class="govuk-inset-text">@ManagePostalAddress.Add_Address_Before_Request_Certificate_Inset_Text</p>
+        <p class="govuk-body-m">@ManagePostalAddress.This_Is_Where_We_Will_Send_Certificates_Text</p>
+        @if (Model?.HasAddress == true)
+        {
+            <dl class="govuk-summary-list">
+                <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
+                <vc:summary-item model=Model.SummaryOrganisationName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryAddressLine1></vc:summary-item>
+
+                @if (!string.IsNullOrWhiteSpace(Model.SummaryAddressLine2.Value))
+                {
+                    <vc:summary-item model=Model.SummaryAddressLine2></vc:summary-item>
+                }
+                <vc:summary-item model=Model.SummaryTown></vc:summary-item>
+                <vc:summary-item model=Model.SummaryPostcode></vc:summary-item>
+            </dl>
+        }
+        else
+        {
+            <p class="govuk-inset-text">@ManagePostalAddress.Add_Address_Before_Request_Certificate_Inset_Text</p>
+        }
+
         <p class="govuk-body">
-            <a id="addAddressButton" class="govuk-button" role="button" asp-route="AddAddress">@ManagePostalAddress.Button_Add_Address</a>
+            @{ var buttonText = Model.HasAddress ? ManagePostalAddress.Button_Change_Address : ManagePostalAddress.Button_Add_Address; }
+            <a id="addAddressButton" class="govuk-button" role="button" asp-route="AddAddress">@buttonText</a>
         </p>
     </div>
 </div>

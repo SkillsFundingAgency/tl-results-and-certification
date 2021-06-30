@@ -1,0 +1,33 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement.RequestSoaUlnNotFoundViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
+
+@{
+    ViewData["Title"] = RequestSoaUlnNotFound.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+            <h1 class="govuk-label-wrapper">
+                <label class="govuk-label govuk-label--l govuk-!-margin-bottom-6">
+                    @string.Format(RequestSoaUlnNotFound.Heading_Uln_Not_Registered, Model.Uln)
+                </label>
+            </h1>
+            <p class="govuk-body">
+                @RequestSoaUlnNotFound.Para_You_Can_Only_Request_For_Registered_Learner
+            </p>
+            <p class="govuk-body">
+                @RequestSoaUlnNotFound.Para_If_You_Think_Registered_Contact_Exam_Board
+            </p>
+        </div>
+        <p class="govuk-body">
+            <a id="buttonHome" class="govuk-button" role="button" asp-route="Home">
+                @RequestSoaUlnNotFound.Button_Back_To_Home
+            </a>
+        </p>
+    </div>
+</div>

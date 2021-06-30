@@ -1,0 +1,35 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement.RequestStatementOfAchievementViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement
+
+@{
+    ViewData["Title"] = RequestStatementOfAchievement.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <h1 class="govuk-heading-l">@RequestStatementOfAchievement.Heading_Request_Soa</h1>
+
+        <p class="govuk-body">@RequestStatementOfAchievement.You_Must_Use_This_Service_To_Request_Soa</p>
+
+        <p class="govuk-body govuk-!-margin-bottom-6">@RequestStatementOfAchievement.The_Statement_Of_Achievement_Will_Show</p>
+
+        <p><a id="continueButton" class="govuk-button" role="button" asp-route="RequestSoaUniqueLearnerNumber">@RequestStatementOfAchievement.Continu_Button</a></p>
+
+        <h2 class="govuk-heading-m">@RequestStatementOfAchievement.Before_You_Start</h2>
+
+        <ol class="govuk-list govuk-list--number govuk-list-number--spaced">
+            <li>@RequestStatementOfAchievement.Tell_The_Exam_Board</li>
+            <li>
+                @RequestStatementOfAchievement.Use_The_Manage_Learner_TLevel_Records_Part_Of_This_Service
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>@RequestStatementOfAchievement.English_And_Maths_Achievements</li>
+                    <li>@RequestStatementOfAchievement.Industry_Placement_Completion_Status</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+</div>
