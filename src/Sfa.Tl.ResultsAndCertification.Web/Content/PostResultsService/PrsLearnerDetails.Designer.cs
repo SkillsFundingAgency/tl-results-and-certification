@@ -70,6 +70,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} status has been updated.
+        /// </summary>
+        public static string Banner_Content {
+            get {
+                return ResourceManager.GetString("Banner_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        public static string Banner_Title_Success {
+            get {
+                return ResourceManager.GetString("Banner_Title_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search again.
         /// </summary>
         public static string Button_Search_Again {

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
@@ -37,6 +39,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
                .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade));
+
+            CreateMap<AppealCoreGradeViewModel, AppealGradeRequest>()
+               .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.AssessentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
+               .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.PathwayResultId))
+               .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Core))
+               .ForMember(d => d.AoUkprn, opts => opts.MapFrom(s => s.PathwayResultId))
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AppealCoreGradeViewModel, AppealGradeRequest>>());
         }
     }
 }

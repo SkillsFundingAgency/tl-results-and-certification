@@ -119,6 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            viewModel.ShowSuccessBanner = await _cacheService.GetAndRemoveAsync<bool>(CacheKey);
             return View(viewModel);
         }
 
@@ -138,17 +139,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("reviews-and-appeals-appeal-grade", Name = RouteConstants.SubmitPrsAppealCoreGrade)]
         public async Task<IActionResult> PrsAppealCoreGradeAsync(AppealCoreGradeViewModel model)
         {
+            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
             if (!ModelState.IsValid)
-            {
-                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
                 return View(prsDetails);
-            }
 
-            await Task.CompletedTask;
+            if (prsDetails == null) // && TODO check Current Prs status should be Null
+                return RedirectToRoute(RouteConstants.PageNotFound);
 
-            return model.AppealGrade.Value
-                ? RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId })
-                : RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
+            if (model.AppealGrade == false)
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
+
+            bool isSuccess = await _postResultsServiceLoader.AppealCoreGradeAsync(User.GetUkPrn(), model);
+            if (!isSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            await _cacheService.SetAsync(CacheKey, true, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
         }
     }
 }

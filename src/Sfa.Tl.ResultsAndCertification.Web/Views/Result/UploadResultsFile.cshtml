@@ -35,7 +35,7 @@
                     <input class="govuk-file-upload" id="file" asp-for="File" type="file" accept=".csv">
                 </div>
                 <button id="uploadResultsButton" class="govuk-button tl-show-on-js-only" data-module="govuk-button" type="submit" data-prevent-double-click="true">@Upload.Upload_File_Button_Text</button>
-                <partial name="~/Views/Result/Partials/_uploadResultNoScriptSubmit.cshtml" />
+                <partial name="~/Views/Result/Partials/_uploadResultNoScriptSubmit.cshtml" model="new PathwaySpecialismsViewModel { }" />
             </form>
         </div>
     </div>

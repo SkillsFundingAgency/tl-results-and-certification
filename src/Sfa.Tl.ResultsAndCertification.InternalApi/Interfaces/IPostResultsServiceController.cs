@@ -7,5 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
     {
         Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln);
         Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId, int assessmentId);
+        Task<bool> AppealGradeAsync(AppealGradeRequest request);
     }
 }

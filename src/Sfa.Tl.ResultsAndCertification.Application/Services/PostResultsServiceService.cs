@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using System.Threading.Tasks;
@@ -25,6 +26,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId, int assessmentId)
         {
             return await _postResultsServiceRepository.GetPrsLearnerDetailsAsync(aoUkPrn, profileId, assessmentId);
+        }
+
+        public async Task<bool> AppealGradeAsync(AppealGradeRequest request)
+        {
+            await Task.CompletedTask;
+            return true;
         }
     }
 }

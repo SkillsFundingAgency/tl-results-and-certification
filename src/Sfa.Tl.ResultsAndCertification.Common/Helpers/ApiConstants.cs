@@ -76,6 +76,7 @@
         // Post Results Service Uri's
         public const string FindPrsLearnerRecordUri = "/api/postresultsservice/FindPrsLearnerRecord/{0}/{1}";
         public const string GetPrsLearnerDetailsUri = "/api/postresultsservice/GetPrsLearnerDetails/{0}/{1}/{2}";
+        public const string AppealGradeUri = "/api/postresultsservice/AppealGrade";
 
         //LRS Api Uri's
         public const string LearnerServiceUri = "/LearnerService.svc";

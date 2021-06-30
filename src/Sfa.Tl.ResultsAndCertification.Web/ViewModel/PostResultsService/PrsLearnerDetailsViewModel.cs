@@ -31,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string PathwayGrade { get; set; }
         public string PathwayGradeLastUpdatedOn { get; set; }
         public string PathwayGradeLastUpdatedBy { get; set; }
+        public bool? ShowSuccessBanner { get; set; }
 
         public SummaryItemModel SummaryAssessmentSeries => new SummaryItemModel
         {
