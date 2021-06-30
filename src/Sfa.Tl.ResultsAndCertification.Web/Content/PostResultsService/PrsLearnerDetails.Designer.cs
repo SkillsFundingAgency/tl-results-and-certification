@@ -72,9 +72,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         /// <summary>
         ///   Looks up a localized string similar to {0} status has been updated.
         /// </summary>
-        public static string Banner_Content {
+        public static string Banner_Message {
             get {
-                return ResourceManager.GetString("Banner_Content", resourceCulture);
+                return ResourceManager.GetString("Banner_Message", resourceCulture);
             }
         }
         

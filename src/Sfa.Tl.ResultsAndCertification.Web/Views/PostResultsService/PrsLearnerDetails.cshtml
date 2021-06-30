@@ -11,22 +11,7 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-
-        @if (Model.ShowSuccessBanner == true)
-        {
-            <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-                <div class="govuk-notification-banner__header">
-                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-                        @PrsLearnerDetails.Banner_Title_Success
-                    </h2>
-                </div>
-                <div class="govuk-notification-banner__content">
-                    <h3 class="govuk-notification-banner__heading">
-                        @string.Format(PrsLearnerDetails.Banner_Content, string.Format(PrsLearnerDetails.Heading_Core, Model.PathwayTitle))
-                    </h3>
-                </div>
-            </div>
-        }
+        <vc:notification-banner model="@Model.SuccessBanner"></vc:notification-banner>
 
         <h1 class="govuk-heading-l">@PrsLearnerDetails.Heading_Learner_Component_Grades_Status</h1>
         <h2 class="govuk-heading-m govuk-!-margin-top-7">@PrsLearnerDetails.Heading_Learner_Details</h2>

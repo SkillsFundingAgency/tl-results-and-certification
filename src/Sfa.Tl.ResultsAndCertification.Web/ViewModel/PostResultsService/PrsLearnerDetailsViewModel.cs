@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
@@ -31,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string PathwayGrade { get; set; }
         public string PathwayGradeLastUpdatedOn { get; set; }
         public string PathwayGradeLastUpdatedBy { get; set; }
-        public bool? ShowSuccessBanner { get; set; }
+        public NotificationBannerModel SuccessBanner { get; set; }
 
         public SummaryItemModel SummaryAssessmentSeries => new SummaryItemModel
         {
