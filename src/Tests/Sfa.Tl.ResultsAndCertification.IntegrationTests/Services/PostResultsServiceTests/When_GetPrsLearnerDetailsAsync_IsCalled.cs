@@ -1,4 +1,6 @@
 ﻿using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
@@ -62,10 +64,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
 
             SeedPathwayAssessmentsData(_tqPathwayAssessmentsSeedData, true);
 
-            // Test class.
+            // Test class and dependencies
             CreateMapper();
             PostResultsServiceRepository = new PostResultsServiceRepository(DbContext);
-            PostResultsServiceService = new PostResultsServiceService(PostResultsServiceRepository, PostResultsServiceMapper);
+            var pathwayResultRepositoryLogger = new Logger<GenericRepository<TqPathwayResult>>(new NullLoggerFactory());
+            PathwayResultsRepository = new GenericRepository<TqPathwayResult>(pathwayResultRepositoryLogger, DbContext);
+            PostResultsServiceServiceLogger = new Logger<PostResultsServiceService>(new NullLoggerFactory());
+
+            PostResultsServiceService = new PostResultsServiceService(PostResultsServiceRepository, PathwayResultsRepository, PostResultsServiceMapper, PostResultsServiceServiceLogger);
         }
 
         public override Task When()

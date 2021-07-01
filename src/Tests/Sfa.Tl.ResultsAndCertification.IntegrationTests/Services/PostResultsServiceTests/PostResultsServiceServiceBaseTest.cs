@@ -4,7 +4,6 @@ using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
@@ -19,11 +18,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
     {
         protected PostResultsServiceService PostResultsServiceService;
 
+        protected IPostResultsServiceRepository PostResultsServiceRepository;
+        protected IRepository<TqPathwayResult> PathwayResultsRepository;
         protected IMapper PostResultsServiceMapper;
         protected ILogger<PostResultsServiceService> PostResultsServiceServiceLogger;
-        protected IPostResultsServiceRepository PostResultsServiceRepository;
-        protected ILogger<PostResultsServiceRepository> PostResultsServiceRepositoryLogger;
-        protected ILogger<GenericRepository<Batch>> BatchRepositoryLogger;
 
         // Data Seed variables
         protected TlAwardingOrganisation TlAwardingOrganisation;
