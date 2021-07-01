@@ -148,7 +148,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(prsDetails);
 
-            if (prsDetails == null) // && TODO check Current Prs status should be Null
+            if (prsDetails == null) // && TODO: check Current Prs status should be Null -> TLRC: 3480
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (model.AppealGrade == false)
