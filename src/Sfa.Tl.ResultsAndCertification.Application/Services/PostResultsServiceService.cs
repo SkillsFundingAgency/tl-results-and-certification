@@ -68,11 +68,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (request.PrsStatus > 0)
             {
+                var resultLookupId = request.PrsStatus == PrsStatus.UnderReview || request.PrsStatus == PrsStatus.BeingAppealed ? existingPathwayResult.TlLookupId : request.ResultLookupId;
                 pathwayResultsToUpdate.Add(new TqPathwayResult
                 {
                     TqPathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
-                    TlLookupId = existingPathwayResult.TlLookupId,
-                    //PrsStatus = request.PrsStatus,
+                    TlLookupId = resultLookupId,
+                    PrsStatus = request.PrsStatus,
                     IsOptedin = true,
                     StartDate = DateTime.UtcNow,
                     EndDate = null,

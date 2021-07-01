@@ -3,7 +3,9 @@
     public enum PrsStatus
     {
         NotSpecified = 0,
-        BeingAppealed = 1,
-        Final = 2
+        UnderReview = 1,
+        Reviewed = 2,
+        BeingAppealed = 3,
+        Final = 4
     };
 }
