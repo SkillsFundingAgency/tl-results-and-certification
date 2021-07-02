@@ -166,11 +166,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             // step 1: 
             var viewModel = new PrsPathwayGradeCheckAndSubmitViewModel 
-            { 
-                PathwayAssessmentId = 8005,
-                PathwayResultId = 111, // Test
-
+            {
                 ProfileId = 2020,
+                AssessmentId = 8005,
+                OldGrade = "B",
+                NewGrade = "C",
                 
                 Uln = 1234567890,
                 Firstname = "John",
@@ -182,7 +182,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 ProviderUkprn = 9876543210,
 
                 TlevelTitle = "Tlevel in Childcare",
-                //PathwayTitle = "Childcare (12121212)",
+                PathwayName = "Childcare (12121212)",
 
                 //PathwayAssessmentSeries = "Summer 2021",
                 //PathwayGrade = "B",
