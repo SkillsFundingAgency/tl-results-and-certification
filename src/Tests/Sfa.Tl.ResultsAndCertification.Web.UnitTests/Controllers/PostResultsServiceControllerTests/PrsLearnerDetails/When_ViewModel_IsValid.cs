@@ -85,7 +85,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.PathwayPrsStatus.Should().Be(_mockLearnerDetails.PathwayPrsStatus);
             model.PathwayGradeLastUpdatedOn.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedOn);
             model.PathwayGradeLastUpdatedBy.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedBy);
-            model.SuccessBanner.Should().Be(_notificationBanner.Message);
+            model.SuccessBanner.Should().NotBeNull();
+            model.SuccessBanner.Message.Should().Be(_notificationBanner.Message);
 
             // Uln
             model.SummaryUln.Title.Should().Be(LearnerDetailsContent.Title_Uln_Text);
