@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsLearnerDetails;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using PrsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsLearnerDetails
 {
@@ -39,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayResultId = 99,
                 PathwayGrade = "B",
+                PathwayPrsStatus = PrsStatus.BeingAppealed,
                 PathwayGradeLastUpdatedOn = DateTime.Today.AddDays(-15).ToString(),
                 PathwayGradeLastUpdatedBy = "Barsley User"
             };
@@ -74,6 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.PathwayAssessmentSeries.Should().Be(_mockLearnerDetails.PathwayAssessmentSeries);
             model.PathwayResultId.Should().Be(_mockLearnerDetails.PathwayResultId);
             model.PathwayGrade.Should().Be(_mockLearnerDetails.PathwayGrade);
+            model.PathwayPrsStatus.Should().Be(_mockLearnerDetails.PathwayPrsStatus);
             model.PathwayGradeLastUpdatedOn.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedOn);
             model.PathwayGradeLastUpdatedBy.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedBy);
 
@@ -101,21 +104,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.SummaryAssessmentSeries.Title.Should().Be(LearnerDetailsContent.Title_Assessment_Series);
             model.SummaryAssessmentSeries.Value.Should().Be(_mockLearnerDetails.PathwayAssessmentSeries);
             model.SummaryAssessmentSeries.NeedBorderBottomLine.Should().BeTrue();
+            model.SummaryAssessmentSeries.RenderEmptyRowForValue2.Should().Be(IsValidPathwayPrsStatus);
 
             // Pathway Grade
             model.SummaryPathwayGrade.Title.Should().Be(LearnerDetailsContent.Title_Pathway_Grade);
             model.SummaryPathwayGrade.Value.Should().Be(_mockLearnerDetails.PathwayGrade);
+            model.SummaryPathwayGrade.Value2.Should().Be(GetPrsStatusDisplayText);
             model.SummaryPathwayGrade.NeedBorderBottomLine.Should().BeTrue();
+            model.SummaryAssessmentSeries.RenderEmptyRowForValue2.Should().Be(IsValidPathwayPrsStatus);
 
             // Pathway grade last updated on
             model.SummaryPathwayGradeLastUpdatedOn.Title.Should().Be(LearnerDetailsContent.Title_Pathway_Grade_LastUpdatedOn);
             model.SummaryPathwayGradeLastUpdatedOn.Value.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedOn);
             model.SummaryPathwayGradeLastUpdatedOn.NeedBorderBottomLine.Should().BeTrue();
+            model.SummaryAssessmentSeries.RenderEmptyRowForValue2.Should().Be(IsValidPathwayPrsStatus);
 
             // Pathway grade last updated by
             model.SummaryPathwayGradeLastUpdatedBy.Title.Should().Be(LearnerDetailsContent.Title_Pathway_Grade_LastUpdatedBy);
             model.SummaryPathwayGradeLastUpdatedBy.Value.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedBy);
             model.SummaryPathwayGradeLastUpdatedBy.NeedBorderBottomLine.Should().BeTrue();
+            model.SummaryAssessmentSeries.RenderEmptyRowForValue2.Should().Be(IsValidPathwayPrsStatus);
 
             // Breadcrum 
             model.Breadcrumb.Should().NotBeNull();
@@ -129,6 +137,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.Breadcrumb.BreadcrumbItems[2].RouteName.Should().Be(RouteConstants.PrsSearchLearner);
             model.Breadcrumb.BreadcrumbItems[3].DisplayName.Should().Be(BreadcrumbContent.Prs_Learner_Component_Grade_Status);
             model.Breadcrumb.BreadcrumbItems[3].RouteName.Should().BeNull();
+        }
+
+        private bool IsValidPathwayPrsStatus => _mockLearnerDetails.PathwayPrsStatus.HasValue && _mockLearnerDetails.PathwayPrsStatus != PrsStatus.NotSpecified;
+
+        private string GetPrsStatusDisplayText
+        {
+            get
+            {
+                return _mockLearnerDetails.PathwayPrsStatus switch
+                {
+                    PrsStatus.BeingAppealed => string.Format(LearnerDetailsContent.PrsStatus_Display_Html, Constants.PurpleTagClassName, PrsStatusContent.Being_Appealed_Display_Text),
+                    PrsStatus.Final => string.Format(LearnerDetailsContent.PrsStatus_Display_Html, Constants.RedTagClassName, PrsStatusContent.Final_Display_Text),
+                    _ => string.Empty,
+                };
+            }
         }
     }
 }
