@@ -12,7 +12,6 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Threading.Tasks;
-using PrsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsLearnerDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -159,6 +158,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
             
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
+        }
+
+        [HttpGet]
+        [Route("check-result-change-appeal-2021", Name = RouteConstants.PrsPathwayGradeCheckAndSubmit)]
+        public async Task<IActionResult> PrsPathwayGradeCheckAndSubmitAsync()
+        {
+            // step 1: 
+            var viewModel = new PrsPathwayGradeCheckAndSubmitViewModel 
+            { 
+                PathwayAssessmentId = 8005,
+                PathwayResultId = 111, // Test
+
+                ProfileId = 2020,
+                
+                Uln = 1234567890,
+                Firstname = "John",
+                Lastname = "Smith",
+                DateofBirth = System.DateTime.Today.AddYears(-20),
+                //Status = RegistrationPathwayStatus.Active,
+
+                ProviderName = "Barsely College",
+                ProviderUkprn = 9876543210,
+
+                TlevelTitle = "Tlevel in Childcare",
+                //PathwayTitle = "Childcare (12121212)",
+
+                //PathwayAssessmentSeries = "Summer 2021",
+                //PathwayGrade = "B",
+                //PathwayPrsStatus = PrsStatus.BeingAppealed,
+                //PathwayGradeLastUpdatedOn = DateTime.Today.AddDays(-15).ToString(),
+                //PathwayGradeLastUpdatedBy = "Barsley User"
+            };
+
+            await _cacheService.SetAsync(CacheKey, viewModel);
+
+            // step 2:
+            var cacheModel = await _cacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
         }
     }
 }

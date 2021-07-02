@@ -1,0 +1,110 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsPathwayGradeCheckAndSubmitViewModel
+@*@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService*@
+
+@{
+    ViewData["Title"] = "TODO";
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">
+            Check and submit
+        </h1>
+        <p class="govuk-body govuk-!-margin-bottom-9">Check the information is correct before submitting the grade.</p>
+
+        <form action="confirm-result-change-appeal-2021" method="post" class="form">
+            <h2 class="govuk-heading-m">Learner's details</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Name
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        Danny Waldron
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        ULN
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        0987654321
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Date of birth
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        24 December 2002
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Provider (UKPRN)
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        Barnsley College <br>
+                        (10000536)
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        T Level
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        T Level in  Design, Surveying and Planning for Construction
+
+                    </dd>
+                </div>
+            </dl>
+
+            <h2 class="govuk-heading-m">Core (code): Design, Surveying and Planning (60358300)</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Old grade
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        C
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="">
+                        </a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        New grade
+                    </dt>
+
+                    <dd class="govuk-summary-list__value">
+
+                        C
+
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="change-core-result-appeal-2021">
+                            Change<span class="govuk-visually-hidden"> grade</span>
+                        </a>
+                    </dd>
+                </div>
+            </dl>
+
+            <p class="govuk-inset-text">Selecting 'Submit' will update the grade and mean the grade is no longer being appealed</p>
+
+            <div class="govuk-button-group">
+                <button class="govuk-button" data-module="govuk-button">
+                    Submit
+                </button>
+
+                <a class="govuk-link" href="cancel-appeal-2021">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

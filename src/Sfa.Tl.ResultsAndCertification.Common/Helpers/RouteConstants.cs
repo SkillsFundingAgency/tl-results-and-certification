@@ -290,6 +290,7 @@
         public const string PrsLearnerDetails = "PrsLearnerDetails";
         public const string PrsAppealCoreGrade = "PrsAppealCoreGrade";
         public const string SubmitPrsAppealCoreGrade = "SubmitPrsAppealCoreGrade";
+        public const string PrsPathwayGradeCheckAndSubmit = "PrsPathwayGradeCheckAndSubmit";
 
         #endregion
     }
