@@ -20,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem
         public string HiddenActionText { get; set; }
         public string HiddenValueText { get; set; }
 
+        public bool RenderEmptyRowForValue2 { get; set; }
         public bool RenderActionColumn { get; set; } = true;
         public bool IsRawHtml { get; set; } = false;
         public bool NeedBorderBottomLine { get; set; } = true;
