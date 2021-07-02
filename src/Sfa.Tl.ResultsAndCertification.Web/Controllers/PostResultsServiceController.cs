@@ -122,9 +122,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
-            if (viewModel.SuccessBanner != null)
-                viewModel.SuccessBanner.Message = string.Format(PrsContent.Banner_Message, string.Format(PrsContent.Heading_Core, viewModel.PathwayTitle));
-
             return View(viewModel);
         }
 
@@ -158,7 +155,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!isSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            await _cacheService.SetAsync(CacheKey, new NotificationBannerModel(), CacheExpiryTime.XSmall);
+            var notificationBanner = new NotificationBannerModel { Message = prsDetails.SuccessBannerMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+            
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
         }
     }

@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
+using AppealCoreGradeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.AppealCoreGrade;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealCoreGradePost
 {
@@ -26,7 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Uln = 1234567890,
                 LearnerName = "John Smith",
                 DateofBirth = DateTime.Today.AddYears(-20),
-                PathwayDisplayName = "Childcare<br/>(12121212)",
+                PathwayName = "Childcare",
+                PathwayCode = "12121212",
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayGrade = "B",
                 HasPathwayResult = true
@@ -59,6 +61,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.PathwayAssessmentSeries.Should().Be(_appealCoreGradeViewModel.PathwayAssessmentSeries);
             model.PathwayGrade.Should().Be(_appealCoreGradeViewModel.PathwayGrade);
             model.HasPathwayResult.Should().Be(_appealCoreGradeViewModel.HasPathwayResult);
+            model.PathwayDisplayName.Should().Be($"{_appealCoreGradeViewModel.PathwayName}<br/>({_appealCoreGradeViewModel.PathwayCode})");
+            model.SuccessBannerMessage.Should().Be(string.Format(AppealCoreGradeContent.Banner_Message, $"{_appealCoreGradeViewModel.PathwayName} ({_appealCoreGradeViewModel.PathwayCode})"));
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);

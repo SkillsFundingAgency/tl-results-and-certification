@@ -120,9 +120,6 @@
   <data name="Action_Link_Update" xml:space="preserve">
     <value>Update</value>
   </data>
-  <data name="Banner_Message" xml:space="preserve">
-    <value>{0} status has been updated</value>
-  </data>
   <data name="Banner_Title_Success" xml:space="preserve">
     <value>Success</value>
   </data>
