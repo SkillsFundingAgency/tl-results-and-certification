@@ -10,12 +10,14 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsLearnerDetails;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using PrsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsStatus;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsLearnerDetails
 {
     public class When_ViewModel_IsValid : TestSetup
     {
         private PrsLearnerDetailsViewModel _mockLearnerDetails;
+        private NotificationBannerModel _notificationBanner;
 
         public override void Given()
         {
@@ -45,13 +47,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 PathwayGradeLastUpdatedBy = "Barsley User"
             };
 
+            _notificationBanner = new NotificationBannerModel { Message = "Updated Successfully." };
+
             Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_mockLearnerDetails);
+            CacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey).Returns(_notificationBanner);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
             Loader.Received(1).GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId, AssessmentId);
+            CacheService.Received(1).GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
         }
 
         [Fact]
@@ -79,6 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.PathwayPrsStatus.Should().Be(_mockLearnerDetails.PathwayPrsStatus);
             model.PathwayGradeLastUpdatedOn.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedOn);
             model.PathwayGradeLastUpdatedBy.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedBy);
+            model.SuccessBanner.Should().Be(_notificationBanner.Message);
 
             // Uln
             model.SummaryUln.Title.Should().Be(LearnerDetailsContent.Title_Uln_Text);

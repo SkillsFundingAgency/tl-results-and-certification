@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using Xunit;
 
@@ -21,6 +23,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 .Returns(mockLoderResponse);
 
             Loader.AppealCoreGradeAsync(AoUkprn, ViewModel).Returns(appealGradeResponse);
+        }
+
+        [Fact]
+        public void Then_Expected_Methods_AreCalled()
+        {
+            Loader.Received(1).GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.PathwayAssessmentId);
+            Loader.Received(1).AppealCoreGradeAsync(AoUkprn, ViewModel);
+            CacheService.DidNotReceive().SetAsync(Arg.Any<string>(), Arg.Any<NotificationBannerModel>(), Arg.Any<CacheExpiryTime>());
         }
 
         [Fact]
