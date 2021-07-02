@@ -142,6 +142,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;strong class=&quot;govuk-tag {0}&quot;&gt;{1}&lt;/strong&gt;.
+        /// </summary>
+        public static string PrsStatus_Display_Html {
+            get {
+                return ResourceManager.GetString("PrsStatus_Display_Html", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exam Period.
         /// </summary>
         public static string Title_Assessment_Series {

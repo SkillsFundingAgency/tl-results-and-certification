@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using PrsLearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsLearnerDetails;
+using PrsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
@@ -30,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string PathwayAssessmentSeries { get; set; }
         public int PathwayResultId { get; set; }
         public string PathwayGrade { get; set; }
+        public PrsStatus? PathwayPrsStatus { get; set; }
         public string PathwayGradeLastUpdatedOn { get; set; }
         public string PathwayGradeLastUpdatedBy { get; set; }
         public NotificationBannerModel SuccessBanner { get; set; }
@@ -38,14 +40,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             Id = "assessmentperiod",
             Title = PrsLearnerDetailsContent.Title_Assessment_Series,
-            Value = PathwayAssessmentSeries
+            Value = PathwayAssessmentSeries,
+            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus
         };
         public SummaryItemModel SummaryPathwayGrade => new SummaryItemModel
         {
             Id = "pathwaygrade",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade,
             Value = PathwayGrade,
-
+            Value2 = GetPrsStatusDisplayText,
+            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus,
             ActionText = PrsLearnerDetailsContent.Action_Link_Update,
             RouteName = RouteConstants.PrsAppealCoreGrade,
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() }, { Constants.ResultId, PathwayResultId.ToString() } },
@@ -56,14 +60,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             Id = "pathwaygradeupdatedon",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade_LastUpdatedOn,
-            Value = PathwayGradeLastUpdatedOn
+            Value = PathwayGradeLastUpdatedOn,
+            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus
         };
 
         public SummaryItemModel SummaryPathwayGradeLastUpdatedBy => new SummaryItemModel
         {
             Id = "pathwaygradeupdatedby",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade_LastUpdatedBy,
-            Value = PathwayGradeLastUpdatedBy
+            Value = PathwayGradeLastUpdatedBy,
+            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus
         };
 
         public BreadcrumbModel Breadcrumb
@@ -82,5 +88,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 };
             }
         }
+
+        private bool IsValidPathwayPrsStatus => PathwayPrsStatus.HasValue && PathwayPrsStatus != PrsStatus.NotSpecified;
+
+        private string GetPrsStatusDisplayText
+        {
+            get
+            {
+                return PathwayPrsStatus switch
+                {
+                    PrsStatus.BeingAppealed => FormatPrsStatusDisplayHtml(Constants.PurpleTagClassName, PrsStatusContent.Being_Appealed_Display_Text),
+                    PrsStatus.Final => FormatPrsStatusDisplayHtml(Constants.RedTagClassName, PrsStatusContent.Final_Display_Text),
+                    _ => string.Empty,
+                };
+            }
+        }
+
+        private string FormatPrsStatusDisplayHtml(string tagClassName, string statusText) => string.Format(PrsLearnerDetailsContent.PrsStatus_Display_Html, tagClassName, statusText);
     }
 }

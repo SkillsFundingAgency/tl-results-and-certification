@@ -80,6 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                PathwayAssessmentSeries = pAssessment.AssessmentSeries.Name,
                                                PathwayResultId = pResult.Id,
                                                PathwayGrade = pResult.TlLookup.Value,
+                                               PathwayPrsStatus = pResult.PrsStatus,
                                                PathwayGradeLastUpdatedBy = pResult.CreatedBy,
                                                PathwayGradeLastUpdatedOn = pResult.CreatedOn
                                            })
