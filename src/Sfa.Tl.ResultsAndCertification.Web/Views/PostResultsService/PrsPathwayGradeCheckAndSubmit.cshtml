@@ -14,7 +14,7 @@
         <h1 class="govuk-heading-l">@PrsPathwayGradeCheckAndSubmit.Heading_Check_And_Submit</h1>
         <p class="govuk-body govuk-!-margin-bottom-9">@PrsPathwayGradeCheckAndSubmit.Para_Check_Information_Is_Correct</p>
 
-        <form action="confirm-result-change-appeal-2021" method="post" class="form">
+        <form class="form" asp-route="">
             <h2 class="govuk-heading-m">Learner's details</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
                 <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
@@ -31,10 +31,9 @@
             </dl>
 
             <p class="govuk-inset-text">@PrsPathwayGradeCheckAndSubmit.Inset_Select_Submit_Updates_Grade</p>
-
             <div class="govuk-button-group">
-                <button class="govuk-button" data-module="govuk-button">@PrsPathwayGradeCheckAndSubmit.Button_Submit</button>
-                <a class="govuk-link" href="cancel-appeal-2021">@PrsPathwayGradeCheckAndSubmit.Cancel_Link</a>
+                <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsPathwayGradeCheckAndSubmit.Button_Submit</button>
+                <a id="cancelLink" class="govuk-link" asp-route="">@PrsPathwayGradeCheckAndSubmit.Cancel_Link</a>
             </div>
         </form>
     </div>

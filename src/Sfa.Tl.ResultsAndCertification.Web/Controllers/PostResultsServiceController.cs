@@ -156,7 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var notificationBanner = new NotificationBannerModel { Message = prsDetails.SuccessBannerMessage };
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
-            
+
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
         }
 
@@ -164,14 +164,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("check-result-change-appeal-2021", Name = RouteConstants.PrsPathwayGradeCheckAndSubmit)]
         public async Task<IActionResult> PrsPathwayGradeCheckAndSubmitAsync()
         {
-            // step 1: 
-            var viewModel = new PrsPathwayGradeCheckAndSubmitViewModel 
+            // Step 1: 
+            var viewModel = new PrsPathwayGradeCheckAndSubmitViewModel
             {
                 ProfileId = 2020,
                 AssessmentId = 8005,
                 OldGrade = "B",
                 NewGrade = "C",
-                
+
                 Uln = 1234567890,
                 Firstname = "John",
                 Lastname = "Smith",
@@ -190,13 +190,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 //PathwayGradeLastUpdatedOn = DateTime.Today.AddDays(-15).ToString(),
                 //PathwayGradeLastUpdatedBy = "Barsley User"
             };
-
             await _cacheService.SetAsync(CacheKey, viewModel);
 
-            // step 2:
+            // Step 2:
             var cacheModel = await _cacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
             if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsPathwayGradeCheckAndSubmitViewModel from redis cache in prs outcome check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
+            }
 
             return View(viewModel);
         }

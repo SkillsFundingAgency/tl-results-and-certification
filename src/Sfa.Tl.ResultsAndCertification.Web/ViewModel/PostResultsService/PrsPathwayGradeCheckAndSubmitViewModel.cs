@@ -17,7 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             TlevelTitleLabel = CheckAndSubmitContent.Title_TLevel_Text;
         }
 
-
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
         public string PathwayName { get; set; }
