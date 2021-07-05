@@ -40,7 +40,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
                .ForMember(d => d.PathwayCode, opts => opts.MapFrom(s => s.PathwayCode))
                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
-               .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade));
+               .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade))
+               .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus));
             
             CreateMap<AppealCoreGradeViewModel, AppealGradeRequest>()
                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))

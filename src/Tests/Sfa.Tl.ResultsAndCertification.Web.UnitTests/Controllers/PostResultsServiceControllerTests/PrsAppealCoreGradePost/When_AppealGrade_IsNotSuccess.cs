@@ -11,18 +11,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_AppealGrade_IsNotSuccess : TestSetup
     {
-        private AppealCoreGradeViewModel mockLoderResponse;
-        private readonly bool appealGradeResponse = false;
+        private AppealCoreGradeViewModel _mockLoderResponse;
+        private readonly bool _appealGradeResponse = false;
 
         public override void Given()
         {
             ViewModel = new AppealCoreGradeViewModel { ProfileId = 1, PathwayAssessmentId = 11, AppealGrade = true };
 
-            mockLoderResponse = new AppealCoreGradeViewModel();
+            _mockLoderResponse = new AppealCoreGradeViewModel();
             Loader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.PathwayAssessmentId)
-                .Returns(mockLoderResponse);
+                .Returns(_mockLoderResponse);
 
-            Loader.AppealCoreGradeAsync(AoUkprn, ViewModel).Returns(appealGradeResponse);
+            Loader.AppealCoreGradeAsync(AoUkprn, ViewModel).Returns(_appealGradeResponse);
         }
 
         [Fact]

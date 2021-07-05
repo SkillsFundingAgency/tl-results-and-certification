@@ -9,13 +9,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_PrsLearnerDetails_Notfound : TestSetup
     {
-        private readonly AppealCoreGradeViewModel mockLoderResponse = null;
+        private readonly AppealCoreGradeViewModel _mockLoderResponse = null;
 
         public override void Given()
         {
             ViewModel = new AppealCoreGradeViewModel { ProfileId = 1, PathwayAssessmentId = 11, AppealGrade = false };
             Loader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.PathwayAssessmentId)
-                .Returns(mockLoderResponse);
+                .Returns(_mockLoderResponse);
         }
 
         [Fact]

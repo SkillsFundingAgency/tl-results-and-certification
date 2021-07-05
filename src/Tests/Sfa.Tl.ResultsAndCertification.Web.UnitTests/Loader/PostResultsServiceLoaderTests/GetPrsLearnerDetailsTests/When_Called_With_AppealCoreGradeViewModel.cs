@@ -32,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 PathwayName = "Childcare Education",
                 PathwayGrade = "A*",
                 PathwayResultId = 77,
+                PathwayPrsStatus = null,
                 PathwayGradeLastUpdatedBy = "Barsley User",
                 PathwayGradeLastUpdatedOn = DateTime.Today
             };
@@ -57,6 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.PathwayDisplayName.Should().Be($"{_expectedApiResult.PathwayName}<br/>({_expectedApiResult.PathwayCode})");
             ActualResult.PathwayAssessmentSeries.Should().Be(_expectedApiResult.PathwayAssessmentSeries);
             ActualResult.PathwayGrade.Should().Be(_expectedApiResult.PathwayGrade);
+            ActualResult.PathwayPrsStatus.Should().Be(_expectedApiResult.PathwayPrsStatus);
         }
     }
 }

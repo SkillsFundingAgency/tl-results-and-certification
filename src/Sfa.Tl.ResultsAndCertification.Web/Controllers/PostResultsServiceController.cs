@@ -130,7 +130,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(User.GetUkPrn(), profileId, assessmentId);
 
-            if (viewModel == null || viewModel.PathwayResultId != resultId || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
+            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid  || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
@@ -144,7 +144,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(prsDetails);
 
-            if (prsDetails == null) // && TODO: check Current Prs status should be Null -> TLRC: 3480
+            if (prsDetails == null || !prsDetails.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (model.AppealGrade == false)

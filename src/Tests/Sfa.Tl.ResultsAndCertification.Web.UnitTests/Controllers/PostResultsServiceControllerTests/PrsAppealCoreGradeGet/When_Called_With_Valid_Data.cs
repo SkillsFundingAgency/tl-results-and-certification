@@ -31,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 PathwayName = "Childcare",
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayGrade = "B",
+                PathwayPrsStatus = null,
                 HasPathwayResult = true
             };
 
