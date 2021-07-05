@@ -62,7 +62,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PathwayCode, opts => opts.MapFrom(s => s.PathwayCode))
                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
-               .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade));
+               .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade))
+               .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus));
         }
     }
 }
