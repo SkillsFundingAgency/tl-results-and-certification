@@ -79,7 +79,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public virtual BackLinkModel BackLink => new BackLinkModel
         {
             RouteName = RouteConstants.PrsAppealOutcomePathwayGrade,
-            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() }, { Constants.ResultId, PathwayResultId.ToString() } }
+            RouteAttributes = new Dictionary<string, string> 
+            { 
+                { Constants.ProfileId, ProfileId.ToString() },
+                { Constants.AssessmentId, PathwayAssessmentId.ToString() },
+                { Constants.ResultId, PathwayResultId.ToString() },
+                { Constants.AppealOutcomeTypeId, ((int)AppealOutcomeType.UpdateGrade).ToString() }
+            }
         };
     }
 }

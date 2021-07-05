@@ -162,14 +162,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-appeal-outcome-grade/{profileId}/{assessmentId}/{resultId}", Name = RouteConstants.PrsAppealOutcomePathwayGrade)]
-        public async Task<IActionResult> PrsAppealOutcomePathwayGradeAsync(int profileId, int assessmentId, int resultId)
+        [Route("reviews-and-appeals-appeal-outcome-grade/{profileId}/{assessmentId}/{resultId}/{outcomeTypeId:int?}", Name = RouteConstants.PrsAppealOutcomePathwayGrade)]
+        public async Task<IActionResult> PrsAppealOutcomePathwayGradeAsync(int profileId, int assessmentId, int resultId, int? outcomeTypeId)
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealOutcomePathwayGradeViewModel>(User.GetUkPrn(), profileId, assessmentId);
 
             if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
+            viewModel.SetOutcomeType(outcomeTypeId);
             return View(viewModel);
         }
 
@@ -240,7 +241,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
                 return RedirectToRoute(RouteConstants.PageNotFound);
-
+            
             return View(viewModel);
         }
 
