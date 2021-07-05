@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PathwayCode, opts => opts.MapFrom(s => s.PathwayCode))
                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
                .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade));
-            
+
             CreateMap<AppealCoreGradeViewModel, AppealGradeRequest>()
                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
@@ -63,6 +63,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
                .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade));
+
+            CreateMap<PrsLearnerDetails, PrsLearnerDetails>(); // TODO: review required.
         }
     }
 }

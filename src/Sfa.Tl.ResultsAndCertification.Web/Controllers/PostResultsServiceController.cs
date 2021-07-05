@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
@@ -183,8 +184,35 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (model.AppealOutcome == AppealOutcomeType.SameGrade)
             {
-                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
+                var prsLearnerDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsLearnerDetails>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
+                var checkAndSubmitViewModel = new PrsPathwayGradeCheckAndSubmitViewModel
+                {
+                    ProfileId = prsLearnerDetails.ProfileId,
+                    AssessmentId = prsLearnerDetails.PathwayAssessmentId,
+                    ResultId = prsLearnerDetails.PathwayResultId,
+
+                    Uln = prsLearnerDetails.Uln,
+                    Firstname = prsLearnerDetails.Firstname,
+                    Lastname = prsLearnerDetails.Lastname,
+                    DateofBirth = prsDetails.DateofBirth,
+
+                    ProviderName = prsLearnerDetails.ProviderName,
+                    ProviderUkprn = prsLearnerDetails.ProviderUkprn,
+
+                    TlevelTitle = prsLearnerDetails.TlevelTitle,
+                    PathwayName = prsLearnerDetails.PathwayName,
+                    PathwayCode = prsLearnerDetails.PathwayCode,
+                    
+                    OldGrade = prsLearnerDetails.PathwayGrade,
+                    NewGrade = prsLearnerDetails.PathwayGrade,
+
+                    IsGradeChanged = false,
+                };
+                await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
+
+                return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
             }
+
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
         }
 
@@ -192,39 +220,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("check-result-change-appeal-2021", Name = RouteConstants.PrsPathwayGradeCheckAndSubmit)]
         public async Task<IActionResult> PrsPathwayGradeCheckAndSubmitAsync()
         {
-            // Step 1: 
-            var viewModel = new PrsPathwayGradeCheckAndSubmitViewModel
+            var viewModel = await _cacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
+            if (viewModel == null)
             {
-                ProfileId = 2020,
-                AssessmentId = 8005,
-                OldGrade = "B",
-                NewGrade = "C",
-
-                Uln = 1234567890,
-                Firstname = "John",
-                Lastname = "Smith",
-                DateofBirth = System.DateTime.Today.AddYears(-20),
-                //Status = RegistrationPathwayStatus.Active,
-
-                ProviderName = "Barsely College",
-                ProviderUkprn = 9876543210,
-
-                TlevelTitle = "Tlevel in Childcare",
-                PathwayName = "Childcare (12121212)",
-
-                //PathwayAssessmentSeries = "Summer 2021",
-                //PathwayGrade = "B",
-                //PathwayPrsStatus = PrsStatus.BeingAppealed,
-                //PathwayGradeLastUpdatedOn = DateTime.Today.AddDays(-15).ToString(),
-                //PathwayGradeLastUpdatedBy = "Barsley User"
-            };
-            await _cacheService.SetAsync(CacheKey, viewModel);
-
-            // Step 2:
-            var cacheModel = await _cacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
-            if (cacheModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsPathwayGradeCheckAndSubmitViewModel from redis cache in prs outcome check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsPathwayGradeCheckAndSubmitViewModel from redis cache in Prs outcome check and submit page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
