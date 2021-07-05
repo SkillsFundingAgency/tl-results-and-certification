@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> AppealGradeAsync(AppealGradeRequest request)
         {
-            if (request.ComponentType != ComponentType.Core)
+            if (request.ComponentType != ComponentType.Core || request.PrsStatus == PrsStatus.NotSpecified)
                 return false;
 
             var existingPathwayResult = await _pathwayResultRepository.GetFirstOrDefaultAsync(pr => pr.Id == request.ResultId && pr.EndDate == null && pr.IsOptedin
@@ -66,21 +66,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             pathwayResultsToUpdate.Add(existingPathwayResult);
 
-            if (request.PrsStatus > 0)
+            var resultLookupId = request.PrsStatus == PrsStatus.UnderReview || request.PrsStatus == PrsStatus.BeingAppealed ? existingPathwayResult.TlLookupId : request.ResultLookupId;
+            pathwayResultsToUpdate.Add(new TqPathwayResult
             {
-                var resultLookupId = request.PrsStatus == PrsStatus.UnderReview || request.PrsStatus == PrsStatus.BeingAppealed ? existingPathwayResult.TlLookupId : request.ResultLookupId;
-                pathwayResultsToUpdate.Add(new TqPathwayResult
-                {
-                    TqPathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
-                    TlLookupId = resultLookupId,
-                    PrsStatus = request.PrsStatus,
-                    IsOptedin = true,
-                    StartDate = DateTime.UtcNow,
-                    EndDate = null,
-                    IsBulkUpload = false,
-                    CreatedBy = request.PerformedBy
-                });
-            }
+                TqPathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
+                TlLookupId = resultLookupId,
+                PrsStatus = request.PrsStatus,
+                IsOptedin = true,
+                StartDate = DateTime.UtcNow,
+                EndDate = null,
+                IsBulkUpload = false,
+                CreatedBy = request.PerformedBy
+            });
 
             return await _pathwayResultRepository.UpdateManyAsync(pathwayResultsToUpdate) > 0;
         }

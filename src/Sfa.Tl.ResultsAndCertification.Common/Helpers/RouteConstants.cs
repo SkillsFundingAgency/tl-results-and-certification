@@ -292,6 +292,7 @@
         public const string SubmitPrsAppealCoreGrade = "SubmitPrsAppealCoreGrade";
         public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";
         public const string SubmitPrsAppealOutcomePathwayGrade = "SubmitPrsAppealOutcomePathwayGrade";
+        public const string PrsPathwayGradeCheckAndSubmit = "PrsPathwayGradeCheckAndSubmit";
 
         #endregion
     }
