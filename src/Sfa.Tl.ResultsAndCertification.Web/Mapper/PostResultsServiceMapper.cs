@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PathwayCode, opts => opts.MapFrom(s => s.PathwayCode))
                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
                .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade));
-
+            
             CreateMap<AppealCoreGradeViewModel, AppealGradeRequest>()
                .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
                 .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
@@ -51,6 +51,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => PrsStatus.BeingAppealed))
                .ForMember(d => d.AoUkprn, opts => opts.MapFrom(s => s.PathwayResultId))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AppealCoreGradeViewModel, AppealGradeRequest>>());
+
+            CreateMap<PrsLearnerDetails, AppealOutcomePathwayGradeViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
+               .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
+               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
+               .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+               .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
+               .ForMember(d => d.PathwayCode, opts => opts.MapFrom(s => s.PathwayCode))
+               .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
+               .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
+               .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade));
         }
     }
 }
