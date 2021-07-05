@@ -51,8 +51,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Value2 = GetPrsStatusDisplayText,
             RenderEmptyRowForValue2 = IsValidPathwayPrsStatus,
             ActionText = PrsLearnerDetailsContent.Action_Link_Update,
-            RouteName = RouteConstants.PrsAppealCoreGrade,
-            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() }, { Constants.ResultId, PathwayResultId.ToString() } },
+            RouteName = GetUpdatePathwayGradeRouteName,
+            RouteAttributes = GetUpdatePathwayGradeRouteAttributes,
             HiddenActionText = PrsLearnerDetailsContent.Hidden_Action_Text_Grade
         };
 
@@ -105,5 +105,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         }
 
         private string FormatPrsStatusDisplayHtml(string tagClassName, string statusText) => string.Format(PrsLearnerDetailsContent.PrsStatus_Display_Html, tagClassName, statusText);
+
+        private string GetUpdatePathwayGradeRouteName
+        {
+            get
+            {
+                return PathwayPrsStatus switch
+                {
+                    PrsStatus.BeingAppealed => RouteConstants.PrsAppealOutcomePathwayGrade,                    
+                    _ => RouteConstants.PrsAppealCoreGrade,
+                };
+            }
+        }
+
+        private Dictionary<string, string> GetUpdatePathwayGradeRouteAttributes
+        {
+            get
+            {
+                return PathwayPrsStatus switch
+                {
+                    PrsStatus.BeingAppealed => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() }, { Constants.ResultId, PathwayResultId.ToString() } },
+                    _ => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() }, { Constants.ResultId, PathwayResultId.ToString() } },
+                };
+            }
+        }
     }
 }
