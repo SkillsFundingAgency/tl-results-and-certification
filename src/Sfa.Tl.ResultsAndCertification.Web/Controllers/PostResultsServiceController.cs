@@ -131,7 +131,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(User.GetUkPrn(), profileId, assessmentId);
 
-            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid  || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
+            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
@@ -177,37 +177,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("reviews-and-appeals-appeal-outcome-grade", Name = RouteConstants.SubmitPrsAppealOutcomePathwayGrade)]
         public async Task<IActionResult> PrsAppealOutcomePathwayGradeAsync(AppealOutcomePathwayGradeViewModel model)
         {
-            var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealOutcomePathwayGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
-
             if (!ModelState.IsValid)
+            {
+                var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealOutcomePathwayGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
                 return View(prsDetails);
+            }
 
             if (model.AppealOutcome == AppealOutcomeType.SameGrade)
             {
-                var prsLearnerDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsLearnerDetails>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
-                var checkAndSubmitViewModel = new PrsPathwayGradeCheckAndSubmitViewModel
-                {
-                    ProfileId = prsLearnerDetails.ProfileId,
-                    AssessmentId = prsLearnerDetails.PathwayAssessmentId,
-                    ResultId = prsLearnerDetails.PathwayResultId,
-
-                    Uln = prsLearnerDetails.Uln,
-                    Firstname = prsLearnerDetails.Firstname,
-                    Lastname = prsLearnerDetails.Lastname,
-                    DateofBirth = prsDetails.DateofBirth,
-
-                    ProviderName = prsLearnerDetails.ProviderName,
-                    ProviderUkprn = prsLearnerDetails.ProviderUkprn,
-
-                    TlevelTitle = prsLearnerDetails.TlevelTitle,
-                    PathwayName = prsLearnerDetails.PathwayName,
-                    PathwayCode = prsLearnerDetails.PathwayCode,
-                    
-                    OldGrade = prsLearnerDetails.PathwayGrade,
-                    NewGrade = prsLearnerDetails.PathwayGrade,
-
-                    IsGradeChanged = false,
-                };
+                var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsPathwayGradeCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
+                checkAndSubmitViewModel.NewGrade = checkAndSubmitViewModel.OldGrade;
                 await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
 
                 return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
@@ -217,7 +196,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("check-result-change-appeal-2021", Name = RouteConstants.PrsPathwayGradeCheckAndSubmit)]
+        [Route("reviews-and-appeals-check-and-submit", Name = RouteConstants.PrsPathwayGradeCheckAndSubmit)]
         public async Task<IActionResult> PrsPathwayGradeCheckAndSubmitAsync()
         {
             var viewModel = await _cacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
