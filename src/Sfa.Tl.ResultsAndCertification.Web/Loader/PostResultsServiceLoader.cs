@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -26,6 +29,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId, int assessementId)
         {
             var prsLearnerDetails = await _internalApiClient.GetPrsLearnerDetailsAsync(aoUkprn, profileId, assessementId);
+
+            if (typeof(T) == typeof(AppealUpdatePathwayGradeViewModel))
+            {
+                var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
+                return _mapper.Map<T>(prsLearnerDetails, opt => opt.Items["grades"] = grades);
+            }
+            else
             return _mapper.Map<T>(prsLearnerDetails);
         }
 
