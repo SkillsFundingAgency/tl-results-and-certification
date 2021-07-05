@@ -19,13 +19,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
+        public string PathwayTitle { get; set; }
         public int ResultId { get; set; }
-        public string PathwayName { get; set; }
-        public string PathwayCode { get; internal set; }
         public string OldGrade { get; set; }
         public string NewGrade { get; set; }
-        public string PathwayTitle { get { return string.Format(CheckAndSubmitContent.Heading_Pathway_Title, $"{PathwayName} ({PathwayCode})"); } }
-        public bool IsGradeChanged { get; set; }
+        public bool IsGradeChanged { get { return OldGrade.Equals(NewGrade); } }
 
         public SummaryItemModel SummaryOldGrade => new SummaryItemModel
         {
