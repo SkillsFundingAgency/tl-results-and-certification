@@ -17,13 +17,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             TlevelTitleLabel = CheckAndSubmitContent.Title_TLevel_Text;
         }
 
-
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
+        public int ResultId { get; set; }
         public string PathwayName { get; set; }
+        public string PathwayCode { get; internal set; }
         public string OldGrade { get; set; }
         public string NewGrade { get; set; }
-        public string PathwayTitle { get { return string.Format(CheckAndSubmitContent.Heading_Pathway_Title, PathwayName); } }
+        public string PathwayTitle { get { return string.Format(CheckAndSubmitContent.Heading_Pathway_Title, $"{PathwayName} ({PathwayCode})"); } }
+        public bool IsGradeChanged { get; set; }
 
         public SummaryItemModel SummaryOldGrade => new SummaryItemModel
         {
@@ -38,16 +40,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Title = CheckAndSubmitContent.Title_New_Grade,
             Value = NewGrade,
             ActionText = CheckAndSubmitContent.Change_Link,
-            RouteName = "TODO",
-            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }}, 
-            HiddenActionText = CheckAndSubmitContent.Change_Link_Hidden_Text
+            HiddenActionText = CheckAndSubmitContent.Change_Link_Hidden_Text, 
+            RouteName = "TODO-NextStory",
+            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
         };
 
         public override BackLinkModel BackLink => new BackLinkModel
         {
-            // TODO: conditional route 
-            RouteName = RouteConstants.PrsSearchLearner,
-            RouteAttributes = new Dictionary<string, string> { { Constants.PopulateUln, true.ToString() } }
+            // TODO: next story to use -> IsGradeChanged
+            RouteName = RouteConstants.PrsAppealOutcomePathwayGrade,
+            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() }, { Constants.ResultId, ResultId.ToString() } }
         };
     }
 }
