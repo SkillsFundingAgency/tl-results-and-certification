@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsLearnerDetails
 {
-    public class When_ViewModel_IsValid : TestSetup
+    public class When_PrsStatus_Is_BeingAppealed : TestSetup
     {
         private PrsLearnerDetailsViewModel _mockLearnerDetails;
         private NotificationBannerModel _notificationBanner;
@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayResultId = 99,
                 PathwayGrade = "B",
-                PathwayPrsStatus = null,
+                PathwayPrsStatus = PrsStatus.BeingAppealed,
                 PathwayGradeLastUpdatedOn = DateTime.Today.AddDays(-15).ToString(),
                 PathwayGradeLastUpdatedBy = "Barsley User"
             };
