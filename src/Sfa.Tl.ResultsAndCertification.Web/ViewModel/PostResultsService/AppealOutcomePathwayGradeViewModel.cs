@@ -6,7 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using AppealCoreGradeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.AppealCoreGrade;
+using AppealOutcomePathwayGradeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.AppealOutcomePathwayGrade;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string PathwayGrade { get; set; }
         public PrsStatus? PathwayPrsStatus { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(AppealCoreGradeContent), ErrorMessageResourceName = "Validation_Message")]
+        [Required(ErrorMessageResourceType = typeof(AppealOutcomePathwayGradeContent), ErrorMessageResourceName = "Validation_Message")]
         public AppealOutcomeType? AppealOutcome { get; set; }
 
         public bool IsValid => PathwayPrsStatus == PrsStatus.BeingAppealed;
@@ -33,28 +33,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public SummaryItemModel SummaryUln => new SummaryItemModel
         {
             Id = "uln",
-            Title = AppealCoreGradeContent.Title_Uln_Text,
+            Title = AppealOutcomePathwayGradeContent.Title_Uln_Text,
             Value = Uln.ToString()
         };
 
         public SummaryItemModel SummaryLearnerName => new SummaryItemModel
         {
             Id = "learnername",
-            Title = AppealCoreGradeContent.Title_Name_Text,
+            Title = AppealOutcomePathwayGradeContent.Title_Name_Text,
             Value = LearnerName
         };
 
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel
         {
             Id = "dateofbirth",
-            Title = AppealCoreGradeContent.Title_DateofBirth_Text,
+            Title = AppealOutcomePathwayGradeContent.Title_DateofBirth_Text,
             Value = DateofBirth.ToDobFormat()
         };
 
         public SummaryItemModel SummaryCore => new SummaryItemModel
         {
             Id = "core",
-            Title = AppealCoreGradeContent.Title_Core_Text,
+            Title = AppealOutcomePathwayGradeContent.Title_Core_Text,
             Value = PathwayDisplayName,
             IsRawHtml = true
         };
@@ -62,14 +62,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public SummaryItemModel SummaryCoreExamPeriod => new SummaryItemModel
         {
             Id = "coreexamperiod",
-            Title = AppealCoreGradeContent.Title_ExamPeriod_Text,
+            Title = AppealOutcomePathwayGradeContent.Title_ExamPeriod_Text,
             Value = PathwayAssessmentSeries
         };
 
         public SummaryItemModel SummaryCoreGrade => new SummaryItemModel
         {
             Id = "coregrade",
-            Title = AppealCoreGradeContent.Title_Grade_Text,
+            Title = AppealOutcomePathwayGradeContent.Title_Grade_Text,
             Value = PathwayGrade
         };
 
