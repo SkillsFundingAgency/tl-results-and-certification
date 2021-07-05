@@ -1,0 +1,58 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.AppealUpdatePathwayGradeViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+
+@{
+    ViewData["Title"] = AppealUpdatePathwayGrade.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="SubmitPrsAppealUpdatePathwayGrade">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="PathwayAssessmentId" />
+            <input type="hidden" asp-for="PathwayResultId" />
+
+            <partial name="_ValidationSummary" />
+
+            <h1 class="govuk-heading-l">@AppealUpdatePathwayGrade.Heading_Select_Core_Component_Grade</h1>
+
+            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-9 govuk-!-margin-top-7">
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCore></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCoreExamPeriod></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCoreGrade></vc:summary-item>
+            </dl>
+
+            <div class="govuk-form-group" sfa-validation-for="SelectedGradeCode" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-fieldset__heading">
+                            @AppealUpdatePathwayGrade.What_Is_The_New_Core_Component_Grade
+                        </h2>
+                    </legend>
+
+                    <div class="govuk-radios">
+                        <span sfa-validation-for="SelectedGradeCode"></span>
+                        @foreach (var grade in Model?.Grades?.Select((value, i) => (value, i)))
+                        {
+                            var elementId = (grade.i > 0) ? "selectedgradecode-" + grade.i : "selectedgradecode";
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="@elementId" type="radio" asp-for="@Model.SelectedGradeCode" value="@Model.Grades[grade.i].Code">
+                                <label class="govuk-label govuk-radios__label" for="@elementId">
+                                    @grade.value.Value
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continueButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AppealUpdatePathwayGrade.Button_Continue</button>
+        </form>
+    </div>
+</div>

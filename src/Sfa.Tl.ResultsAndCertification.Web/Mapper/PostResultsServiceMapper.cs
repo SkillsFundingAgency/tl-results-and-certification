@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
@@ -65,6 +67,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
                .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade))
                .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus));
+
+            CreateMap<PrsLearnerDetails, AppealUpdatePathwayGradeViewModel>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
+               .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
+               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+               .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
+               .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+               .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
+               .ForMember(d => d.PathwayCode, opts => opts.MapFrom(s => s.PathwayCode))
+               .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
+               .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
+               .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade))
+               .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus))
+               .ForMember(d => d.Grades, opts => opts.MapFrom((src, dest, destMember, context) => (IList<LookupData>)context.Items["grades"]));
 
             CreateMap<PrsLearnerDetails, PrsLearnerDetails>(); // TODO: review required.
         }
