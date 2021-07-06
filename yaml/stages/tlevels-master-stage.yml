@@ -54,8 +54,8 @@ stages:
 ######################## Pre Prod ##############################################
   - template: tlevels-shared-stage.yml
     parameters:
-      environmentTagName: PreProd
-      stageName: PreProd
+      environmentTagName: Pre-Prod
+      stageName: Pre-Prod
       dependencies:
         - DeploySharedInfrastructure_t01
         - Deploy_t01
@@ -66,8 +66,8 @@ stages:
     
   - template: tlevels-stage.yml
     parameters:
-      environmentTagName: PreProd
-      stageName: PreProd
+      environmentTagName: Pre-Prod
+      stageName: Pre-Prod
       dependencies:
         - DeploySharedInfrastructure_p02
       environmentName: pp

@@ -3,7 +3,9 @@
     type: string
   - name: sharedEnvironmentId
     type: string
-
+  - name: environmentName
+    type: string
+  
   jobs:
   - job: 'IntegrationTest'
     pool:
@@ -14,7 +16,8 @@
     dependsOn:
     - DeployInfrastructure 
     - DeploySQLDatabase
-    
+    condition: eq('${{ parameters.environmentName }}', 'dev', 'tst'))
+
     variables:
       SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
 
