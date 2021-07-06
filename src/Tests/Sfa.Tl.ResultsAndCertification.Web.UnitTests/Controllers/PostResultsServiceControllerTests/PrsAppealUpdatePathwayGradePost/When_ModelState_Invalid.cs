@@ -74,13 +74,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsAppealOutcomePathwayGrade);
-            model.BackLink.RouteAttributes.Count.Should().Be(3);
+            model.BackLink.RouteAttributes.Count.Should().Be(4);
             model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileIdRouteValue);
             profileIdRouteValue.Should().Be(ProfileId.ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.AssessmentId, out string assessmentIdRouteValue);
             assessmentIdRouteValue.Should().Be(AssessmentId.ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.ResultId, out string resultIdRouteValue);
             resultIdRouteValue.Should().Be(ResultId.ToString());
+            model.BackLink.RouteAttributes.TryGetValue(Constants.AppealOutcomeTypeId, out string outcomeTypeIdRouteValue);
+            outcomeTypeIdRouteValue.Should().Be(((int)AppealOutcomeType.UpdateGrade).ToString());
 
             Controller.ViewData.ModelState.Should().ContainSingle();
             Controller.ViewData.ModelState.ContainsKey(nameof(AppealUpdatePathwayGradeViewModel.SelectedGradeCode)).Should().BeTrue();

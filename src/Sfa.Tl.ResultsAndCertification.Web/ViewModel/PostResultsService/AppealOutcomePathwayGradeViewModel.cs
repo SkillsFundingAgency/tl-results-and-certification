@@ -78,5 +78,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             RouteName = RouteConstants.PrsLearnerDetails,
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() } }
         };
+
+        public void SetOutcomeType(int? outcomeTypeId)
+        {            
+            AppealOutcome = EnumExtensions.IsValidValue<AppealOutcomeType>(outcomeTypeId) ? (AppealOutcomeType?)outcomeTypeId : null;
+        }
     }
 }
