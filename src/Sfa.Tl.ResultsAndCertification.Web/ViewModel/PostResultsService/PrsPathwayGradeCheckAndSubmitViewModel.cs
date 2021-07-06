@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
@@ -56,7 +57,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
-                { Constants.ResultId, ResultId.ToString() }
+                { Constants.ResultId, ResultId.ToString() },
+                { Constants.AppealOutcomeTypeId, ((int)AppealOutcomeType.SameGrade).ToString() }
             }
         };
     }

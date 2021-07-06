@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
@@ -189,6 +188,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsPathwayGradeCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
                 checkAndSubmitViewModel.NewGrade = checkAndSubmitViewModel.OldGrade;
+                checkAndSubmitViewModel.IsGradeChanged = false;
                 await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
 
                 return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
