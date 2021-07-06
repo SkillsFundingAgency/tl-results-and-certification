@@ -242,6 +242,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsPathwayGradeCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
             checkAndSubmitViewModel.NewGrade = model.Grades?.FirstOrDefault(x => x.Code == model.SelectedGradeCode)?.Value;
+
+            if(string.IsNullOrWhiteSpace(checkAndSubmitViewModel.NewGrade))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
             checkAndSubmitViewModel.IsGradeChanged = true;
             await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
 
