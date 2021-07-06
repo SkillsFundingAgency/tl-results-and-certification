@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProviderUkprn = 87654321,
                 NewGrade = newGrade,
                 OldGrade = previousGrade,
-                IsGradeChanged = false,
+                IsGradeChanged = true,
 
                 ProfileId = 1,
                 AssessmentId = 2,
