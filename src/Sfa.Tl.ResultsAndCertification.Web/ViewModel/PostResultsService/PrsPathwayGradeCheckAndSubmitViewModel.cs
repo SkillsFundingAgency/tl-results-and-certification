@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public int ResultId { get; set; }
         public string OldGrade { get; set; }
         public string NewGrade { get; set; }
-        public bool IsGradeChanged { get { return OldGrade.Equals(NewGrade); } }
+        public bool IsGradeChanged { get; set; }
 
         public SummaryItemModel SummaryOldGrade => new SummaryItemModel
         {
@@ -38,16 +38,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Title = CheckAndSubmitContent.Title_New_Grade,
             Value = NewGrade,
             ActionText = CheckAndSubmitContent.Change_Link,
-            HiddenActionText = CheckAndSubmitContent.Change_Link_Hidden_Text, 
+            HiddenActionText = CheckAndSubmitContent.Change_Link_Hidden_Text,
             RouteName = "TODO-NextStory",
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
         };
 
         public override BackLinkModel BackLink => new BackLinkModel
         {
-            // TODO: next story to use -> IsGradeChanged
-            RouteName = RouteConstants.PrsAppealOutcomePathwayGrade,
-            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() }, { Constants.ResultId, ResultId.ToString() } }
+            RouteName = IsGradeChanged ? RouteConstants.PrsAppealUpdatePathwayGrade : RouteConstants.PrsAppealOutcomePathwayGrade,
+            RouteAttributes = IsGradeChanged ? new Dictionary<string, string>
+            {
+                { Constants.ProfileId, ProfileId.ToString() },
+                { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ResultId, ResultId.ToString() },
+                { Constants.IsBack, true.ToString() },
+            } : new Dictionary<string, string>
+            {
+                { Constants.ProfileId, ProfileId.ToString() },
+                { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ResultId, ResultId.ToString() }
+            }
         };
     }
 }

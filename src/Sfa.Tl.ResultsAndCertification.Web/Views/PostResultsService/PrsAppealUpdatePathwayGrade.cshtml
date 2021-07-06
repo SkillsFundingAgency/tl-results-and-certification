@@ -47,6 +47,8 @@
                                 <label class="govuk-label govuk-radios__label" for="@elementId">
                                     @grade.value.Value
                                 </label>
+                                <input type="hidden" asp-for="@Model.Grades[grade.i].Code" />
+                                <input type="hidden" asp-for="@Model.Grades[grade.i].Value" />
                             </div>
                         }
                     </div>
