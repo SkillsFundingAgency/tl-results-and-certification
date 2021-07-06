@@ -47,7 +47,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             // TODO: next story to use -> IsGradeChanged
             RouteName = RouteConstants.PrsAppealOutcomePathwayGrade,
-            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() }, { Constants.ResultId, ResultId.ToString() } }
+            RouteAttributes = new Dictionary<string, string> 
+            { 
+                { Constants.ProfileId, ProfileId.ToString() }, 
+                { Constants.AssessmentId, AssessmentId.ToString() }, 
+                { Constants.ResultId, ResultId.ToString() },
+                { Constants.IsGradeChanged, IsGradeChanged.ToString() }
+            }
         };
     }
 }

@@ -96,6 +96,7 @@
         public const string ShowPostcode = "showPostcode";
         public const string IsAddressMissing = "isFromAddressMissing";
         public const string PopulateUln = "populateUln";
+        public const string IsGradeChanged = "isGradeChanged";
 
         // Assessments
         public const int AssessmentEndInYears = 4;
