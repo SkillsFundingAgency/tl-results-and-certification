@@ -40,20 +40,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Value = NewGrade,
             ActionText = CheckAndSubmitContent.Change_Link,
             HiddenActionText = CheckAndSubmitContent.Change_Link_Hidden_Text,
-            RouteName = "TODO-NextStory",
-            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
+            RouteName = RouteConstants.PrsAppealUpdatePathwayGrade,
+            RouteAttributes = RouteParametersOfUpdateGradePage
         };
 
         public override BackLinkModel BackLink => new BackLinkModel
         {
             RouteName = IsGradeChanged ? RouteConstants.PrsAppealUpdatePathwayGrade : RouteConstants.PrsAppealOutcomePathwayGrade,
-            RouteAttributes = IsGradeChanged ? new Dictionary<string, string>
-            {
-                { Constants.ProfileId, ProfileId.ToString() },
-                { Constants.AssessmentId, AssessmentId.ToString() },
-                { Constants.ResultId, ResultId.ToString() },
-                { Constants.IsBack, true.ToString() },
-            } : new Dictionary<string, string>
+            RouteAttributes = IsGradeChanged ? RouteParametersOfUpdateGradePage 
+            : new Dictionary<string, string>
             {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, AssessmentId.ToString() },
@@ -61,5 +56,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 { Constants.AppealOutcomeTypeId, ((int)AppealOutcomeType.SameGrade).ToString() }
             }
         };
+
+        private Dictionary<string, string> RouteParametersOfUpdateGradePage
+        {
+            get
+            {
+                return new Dictionary<string, string>
+                {
+                    { Constants.ProfileId, ProfileId.ToString() },
+                    { Constants.AssessmentId, AssessmentId.ToString() },
+                    { Constants.ResultId, ResultId.ToString() },
+                    { Constants.IsBack, true.ToString() }
+                };
+            }
+        }
     }
 }

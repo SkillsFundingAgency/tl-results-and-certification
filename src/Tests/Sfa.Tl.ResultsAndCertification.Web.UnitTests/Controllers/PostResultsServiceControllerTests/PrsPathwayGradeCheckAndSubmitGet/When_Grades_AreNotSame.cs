@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
+using System.Collections.Generic;
 using Xunit;
 using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsPathwayGradeCheckAndSubmit;
 
@@ -89,6 +90,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             // New Grade
             model.SummaryNewGrade.Title.Should().Be(LearnerDetailsContent.Title_New_Grade);
             model.SummaryNewGrade.Value.Should().Be(_mockCache.NewGrade);
+            model.SummaryNewGrade.ActionText.Should().Be(LearnerDetailsContent.Change_Link);
+            model.SummaryNewGrade.HiddenActionText.Should().Be(LearnerDetailsContent.Change_Link_Hidden_Text);
+            model.SummaryNewGrade.RouteName.Should().Be(RouteConstants.PrsAppealUpdatePathwayGrade);
+            model.SummaryNewGrade.RouteAttributes.Should().BeEquivalentTo(RouteParametersOfUpdateGradePage);
 
             // Backlink
             model.BackLink.Should().NotBeNull();
@@ -102,6 +107,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             routeResultId.Should().Be(_mockCache.ResultId.ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.IsBack, out string routeIsBack);
             routeIsBack.Should().Be(true.ToString());
+        }
+
+        [Fact]
+        public void Then_Expected_Methods_AreCalled()
+        {
+            CacheService.Received(1).GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
+        }
+
+        private Dictionary<string, string> RouteParametersOfUpdateGradePage
+        {
+            get
+            {
+                return new Dictionary<string, string>
+                {
+                    { Constants.ProfileId, _mockCache.ProfileId.ToString() },
+                    { Constants.AssessmentId, _mockCache.AssessmentId.ToString() },
+                    { Constants.ResultId, _mockCache.ResultId.ToString() },
+                    { Constants.IsBack, true.ToString() }
+                };
+            }
         }
     }
 }
