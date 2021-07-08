@@ -23,7 +23,6 @@ jobs:
     dependsOn:
       - DeployInfrastructure
       - DeploySQLDatabase
-      - IntegrationTest
 
     steps:
       - pwsh: |
