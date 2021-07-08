@@ -15,7 +15,7 @@ jobs:
       RedisCacheConnection: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.RedisConnectionString'] ]
       KeyVaultUri: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedKeyVaultUri'] ]
       DataProtectionKeyVaultKeyId: $[stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DataprotectionKey.DataProtectionKeyVaultKeyId']]
-      IntTestSQLServiceAccountConnectionString: $[ dependencies.IntegrationTest.outputs['IntTestSqlVariables.IntTestSQLServiceAccountConnectionString'] ]
+      # IntTestSQLServiceAccountConnectionString: $[ dependencies.IntegrationTest.outputs['IntTestSqlVariables.IntTestSQLServiceAccountConnectionString'] ]
 
     pool:
       name: "Azure Pipelines"
