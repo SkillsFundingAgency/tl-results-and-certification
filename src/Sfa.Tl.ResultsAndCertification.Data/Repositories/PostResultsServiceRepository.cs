@@ -40,7 +40,14 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                               ProviderName = tlProvider.Name,
                                               ProviderUkprn = tlProvider.UkPrn,
                                               TlevelTitle = tlPathway.TlevelTitle,
-                                              Status = tqPathway.Status
+                                              Status = tqPathway.Status,
+                                              PathwayAssessments = _dbContext.TqPathwayAssessment.Where(a => a.IsOptedin && a.EndDate == null)
+                                                                  .Select(x => new PrsAssessment 
+                                                                  { 
+                                                                      AssessmentId = x.Id,
+                                                                      SeriesName = x.AssessmentSeries.Name,
+                                                                      HasResult = x.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null)
+                                                                  })
                                           })
                                           .FirstOrDefaultAsync();
             return prsLearnerRecord;
