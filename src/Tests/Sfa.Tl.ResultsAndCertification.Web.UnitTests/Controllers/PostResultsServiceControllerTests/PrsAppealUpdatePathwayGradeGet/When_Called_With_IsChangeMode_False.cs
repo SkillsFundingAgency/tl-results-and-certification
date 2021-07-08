@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealUpdatePathwayGradeGet
 {
-    public class When_Called_With_IsBack_True : TestSetup
+    public class When_Called_With_IsChangeMode_False : TestSetup
     {
         private AppealUpdatePathwayGradeViewModel _appealUpdatePathwayGradeViewModel;
         private PrsPathwayGradeCheckAndSubmitViewModel _prsCheckAndSubmitViewModel;
@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             ProfileId = 1;
             AssessmentId = 7;
             ResultId = 9;
-            IsBack = true;
+            IsChangeMode = false;
 
             _grades = new List<LookupViewModel> { new LookupViewModel { Id = 1, Code = "C1", Value = "V1" }, new LookupViewModel { Id = 2, Code = "C2", Value = "V2" } };
             _appealUpdatePathwayGradeViewModel = new AppealUpdatePathwayGradeViewModel
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Grades = _grades
             };
 
-            _prsCheckAndSubmitViewModel = new PrsPathwayGradeCheckAndSubmitViewModel { NewGrade = "V2" };
+            _prsCheckAndSubmitViewModel = null;
             CacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey).Returns(_prsCheckAndSubmitViewModel);
             Loader.GetPrsLearnerDetailsAsync<AppealUpdatePathwayGradeViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_appealUpdatePathwayGradeViewModel);
         }
@@ -73,8 +73,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.PathwayAssessmentSeries.Should().Be(_appealUpdatePathwayGradeViewModel.PathwayAssessmentSeries);
             model.PathwayGrade.Should().Be(_appealUpdatePathwayGradeViewModel.PathwayGrade);
             model.PathwayPrsStatus.Should().Be(_appealUpdatePathwayGradeViewModel.PathwayPrsStatus);
-            model.SelectedGradeCode.Should().Be(_grades.FirstOrDefault(g => g.Value == _prsCheckAndSubmitViewModel.NewGrade).Code);
+            model.SelectedGradeCode.Should().BeNull();
             model.Grades.Should().BeEquivalentTo(_appealUpdatePathwayGradeViewModel.Grades);
+            model.IsChangeMode.Should().BeFalse();
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsAppealOutcomePathwayGrade);

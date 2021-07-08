@@ -46,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public void Then_Expected_Methods_AreCalled()
         {
             Loader.Received(1).GetPrsLearnerDetailsAsync<AppealUpdatePathwayGradeViewModel>(AoUkprn, ProfileId, AssessmentId);
+            CacheService.Received(1).GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
         }
 
         [Fact]
@@ -69,6 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.PathwayPrsStatus.Should().Be(_appealUpdatePathwayGradeViewModel.PathwayPrsStatus);
             model.SelectedGradeCode.Should().Be(_appealUpdatePathwayGradeViewModel.SelectedGradeCode);
             model.Grades.Should().BeEquivalentTo(_appealUpdatePathwayGradeViewModel.Grades);
+            model.IsChangeMode.Should().BeFalse();
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsAppealOutcomePathwayGrade);

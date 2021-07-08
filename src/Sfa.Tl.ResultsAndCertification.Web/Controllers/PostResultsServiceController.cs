@@ -184,6 +184,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(prsDetails);
             }
 
+            await _cacheService.RemoveAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
+            
             if (model.AppealOutcome == AppealOutcomeType.SameGrade)
             {
                 var checkAndSubmitViewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsPathwayGradeCheckAndSubmitViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
@@ -214,19 +216,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("reviews-and-appeals-appeal-update-grade/{profileId}/{assessmentId}/{resultId}/{isback:bool?}", Name = RouteConstants.PrsAppealUpdatePathwayGrade)]
-        public async Task<IActionResult> PrsAppealUpdatePathwayGradeAsync(int profileId, int assessmentId, int resultId, bool isBack = false)
+        [Route("reviews-and-appeals-appeal-update-grade/{profileId}/{assessmentId}/{resultId}/{isChangeMode:bool?}", Name = RouteConstants.PrsAppealUpdatePathwayGrade)]
+        public async Task<IActionResult> PrsAppealUpdatePathwayGradeAsync(int profileId, int assessmentId, int resultId, bool isChangeMode = false)
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealUpdatePathwayGradeViewModel>(User.GetUkPrn(), profileId, assessmentId);
 
             if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
                 return RedirectToRoute(RouteConstants.PageNotFound);
-            
-            if(isBack)
-            {
-                var checkAndSubmitDetails = await _cacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
+
+            var checkAndSubmitDetails = await _cacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
+            if (checkAndSubmitDetails != null && !isChangeMode)
                 viewModel.SelectedGradeCode = viewModel.Grades?.FirstOrDefault(g => g.Value == checkAndSubmitDetails?.NewGrade)?.Code;
-            }
+
+            viewModel.IsChangeMode = isChangeMode;
             return View(viewModel);
         }
 
@@ -237,6 +239,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
             {
                 var prsDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealUpdatePathwayGradeViewModel>(User.GetUkPrn(), model.ProfileId, model.PathwayAssessmentId);
+                prsDetails.IsChangeMode = model.IsChangeMode;
                 return View(prsDetails);
             }
 

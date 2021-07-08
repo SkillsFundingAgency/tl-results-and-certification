@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                     { Constants.ProfileId, _mockCache.ProfileId.ToString() },
                     { Constants.AssessmentId, _mockCache.AssessmentId.ToString() },
                     { Constants.ResultId, _mockCache.ResultId.ToString() },
-                    { Constants.IsBack, true.ToString() }
+                    { Constants.IsChangeMode, true.ToString() }
                 };
             }
         }

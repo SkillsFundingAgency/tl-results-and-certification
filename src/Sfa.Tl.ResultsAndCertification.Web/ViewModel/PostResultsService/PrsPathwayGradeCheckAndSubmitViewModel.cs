@@ -41,13 +41,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             ActionText = CheckAndSubmitContent.Change_Link,
             HiddenActionText = CheckAndSubmitContent.Change_Link_Hidden_Text,
             RouteName = RouteConstants.PrsAppealUpdatePathwayGrade,
-            RouteAttributes = RouteParametersOfUpdateGradePage
+            RouteAttributes = new Dictionary<string, string>
+            {
+                { Constants.ProfileId, ProfileId.ToString() },
+                { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ResultId, ResultId.ToString() },
+                { Constants.IsChangeMode, true.ToString() }
+            }
         };
 
         public override BackLinkModel BackLink => new BackLinkModel
         {
             RouteName = IsGradeChanged ? RouteConstants.PrsAppealUpdatePathwayGrade : RouteConstants.PrsAppealOutcomePathwayGrade,
-            RouteAttributes = IsGradeChanged ? RouteParametersOfUpdateGradePage 
+            RouteAttributes = IsGradeChanged ? new Dictionary<string, string>
+            {
+                { Constants.ProfileId, ProfileId.ToString() },
+                { Constants.AssessmentId, AssessmentId.ToString() },
+                { Constants.ResultId, ResultId.ToString() },
+                { Constants.IsChangeMode, false.ToString() }
+            }
             : new Dictionary<string, string>
             {
                 { Constants.ProfileId, ProfileId.ToString() },
@@ -56,19 +68,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 { Constants.AppealOutcomeTypeId, ((int)AppealOutcomeType.SameGrade).ToString() }
             }
         };
-
-        private Dictionary<string, string> RouteParametersOfUpdateGradePage
-        {
-            get
-            {
-                return new Dictionary<string, string>
-                {
-                    { Constants.ProfileId, ProfileId.ToString() },
-                    { Constants.AssessmentId, AssessmentId.ToString() },
-                    { Constants.ResultId, ResultId.ToString() },
-                    { Constants.IsBack, true.ToString() }
-                };
-            }
-        }
     }
 }

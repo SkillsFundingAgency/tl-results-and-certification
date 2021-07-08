@@ -9,11 +9,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
         public int ResultId { get; set; }
-        public bool IsBack { get; set; }
+        public bool IsChangeMode { get; set; }
 
         public async override Task When()
         {
-            Result = await Controller.PrsAppealUpdatePathwayGradeAsync(ProfileId, AssessmentId, ResultId, IsBack);
+            Result = await Controller.PrsAppealUpdatePathwayGradeAsync(ProfileId, AssessmentId, ResultId, IsChangeMode);
         }
     }
 }

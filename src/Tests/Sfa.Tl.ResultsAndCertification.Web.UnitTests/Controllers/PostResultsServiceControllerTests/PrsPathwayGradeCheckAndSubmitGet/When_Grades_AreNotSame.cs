@@ -105,8 +105,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             routeAssessmentId.Should().Be(_mockCache.AssessmentId.ToString());
             model.BackLink.RouteAttributes.TryGetValue(Constants.ResultId, out string routeResultId);
             routeResultId.Should().Be(_mockCache.ResultId.ToString());
-            model.BackLink.RouteAttributes.TryGetValue(Constants.IsBack, out string routeIsBack);
-            routeIsBack.Should().Be(true.ToString());
+            model.BackLink.RouteAttributes.TryGetValue(Constants.IsChangeMode, out string routeIsChangeMode);
+            routeIsChangeMode.Should().Be(false.ToString());
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                     { Constants.ProfileId, _mockCache.ProfileId.ToString() },
                     { Constants.AssessmentId, _mockCache.AssessmentId.ToString() },
                     { Constants.ResultId, _mockCache.ResultId.ToString() },
-                    { Constants.IsBack, true.ToString() }
+                    { Constants.IsChangeMode, true.ToString() }
                 };
             }
         }

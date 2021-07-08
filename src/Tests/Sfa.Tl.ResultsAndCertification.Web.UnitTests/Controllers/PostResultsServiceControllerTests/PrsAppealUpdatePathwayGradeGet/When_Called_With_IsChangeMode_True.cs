@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealUpdatePathwayGradeGet
 {
-    public class When_Called_With_IsBack_False : TestSetup
+    public class When_Called_With_IsChangeMode_True : TestSetup
     {
         private AppealUpdatePathwayGradeViewModel _appealUpdatePathwayGradeViewModel;
         private PrsPathwayGradeCheckAndSubmitViewModel _prsCheckAndSubmitViewModel;
@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             ProfileId = 1;
             AssessmentId = 7;
             ResultId = 9;
-            IsBack = true;
+            IsChangeMode = true;
 
             _grades = new List<LookupViewModel> { new LookupViewModel { Id = 1, Code = "C1", Value = "V1" }, new LookupViewModel { Id = 2, Code = "C2", Value = "V2" } };
             _appealUpdatePathwayGradeViewModel = new AppealUpdatePathwayGradeViewModel
@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Grades = _grades
             };
 
-            _prsCheckAndSubmitViewModel = null;
+            _prsCheckAndSubmitViewModel = new PrsPathwayGradeCheckAndSubmitViewModel { NewGrade = "V2" };
             CacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey).Returns(_prsCheckAndSubmitViewModel);
             Loader.GetPrsLearnerDetailsAsync<AppealUpdatePathwayGradeViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_appealUpdatePathwayGradeViewModel);
         }
@@ -75,18 +75,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.PathwayPrsStatus.Should().Be(_appealUpdatePathwayGradeViewModel.PathwayPrsStatus);
             model.SelectedGradeCode.Should().BeNull();
             model.Grades.Should().BeEquivalentTo(_appealUpdatePathwayGradeViewModel.Grades);
+            model.IsChangeMode.Should().BeTrue();
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.PrsAppealOutcomePathwayGrade);
-            model.BackLink.RouteAttributes.Count.Should().Be(4);
-            model.BackLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string profileIdRouteValue);
-            profileIdRouteValue.Should().Be(ProfileId.ToString());
-            model.BackLink.RouteAttributes.TryGetValue(Constants.AssessmentId, out string assessmentIdRouteValue);
-            assessmentIdRouteValue.Should().Be(AssessmentId.ToString());
-            model.BackLink.RouteAttributes.TryGetValue(Constants.ResultId, out string resultIdRouteValue);
-            resultIdRouteValue.Should().Be(ResultId.ToString());
-            model.BackLink.RouteAttributes.TryGetValue(Constants.AppealOutcomeTypeId, out string outcomeTypeIdRouteValue);
-            outcomeTypeIdRouteValue.Should().Be(((int)AppealOutcomeType.UpdateGrade).ToString());
+            model.BackLink.RouteName.Should().Be(RouteConstants.PrsPathwayGradeCheckAndSubmit);
+            model.BackLink.RouteAttributes.Should().BeNull();
         }
     }
 }

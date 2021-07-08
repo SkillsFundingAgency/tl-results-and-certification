@@ -30,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string SelectedGradeCode { get; set; }
 
         public List<LookupViewModel> Grades { get; set; }
+        public bool IsChangeMode { get; set; }
 
         public bool IsValid => PathwayPrsStatus == PrsStatus.BeingAppealed;
 
@@ -78,9 +79,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public virtual BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = RouteConstants.PrsAppealOutcomePathwayGrade,
-            RouteAttributes = new Dictionary<string, string> 
-            { 
+            RouteName = IsChangeMode ? RouteConstants.PrsPathwayGradeCheckAndSubmit : RouteConstants.PrsAppealOutcomePathwayGrade,
+            RouteAttributes = IsChangeMode ? null 
+            : new Dictionary<string, string>
+            {
                 { Constants.ProfileId, ProfileId.ToString() },
                 { Constants.AssessmentId, PathwayAssessmentId.ToString() },
                 { Constants.ResultId, PathwayResultId.ToString() },
