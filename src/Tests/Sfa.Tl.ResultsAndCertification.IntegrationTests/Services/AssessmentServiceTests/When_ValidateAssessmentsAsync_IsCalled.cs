@@ -145,6 +145,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
                  // 5. Valid Row
                 new AssessmentCsvRecordResponse { RowNum = 5, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "Summer 2021" },
+                new AssessmentCsvRecordResponse { RowNum = 6, Uln = 1111111114, CoreCode = "10123456", CoreAssessmentEntry = "SUMMER 2021" },
             };
         }
     }

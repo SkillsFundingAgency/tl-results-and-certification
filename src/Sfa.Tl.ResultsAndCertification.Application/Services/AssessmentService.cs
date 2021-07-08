@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 var validationErrors = new List<BulkProcessValidationError>();
                 // 3. Core Code is incorrect
-                if (!string.IsNullOrEmpty(assessment.CoreCode))
+                if (!string.IsNullOrWhiteSpace(assessment.CoreCode))
                 {
                     var isValidCoreCode = dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.LarId.Equals(assessment.CoreCode, StringComparison.InvariantCultureIgnoreCase);
                     if (!isValidCoreCode)
@@ -77,7 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 4. Specialism Code is incorrect
-                if (!string.IsNullOrEmpty(assessment.SpecialismCode))
+                if (!string.IsNullOrWhiteSpace(assessment.SpecialismCode))
                 {
                     var isValidSpecialismCode = dbRegistration.TqRegistrationSpecialisms.Any(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
                     if (!isValidSpecialismCode)
@@ -85,7 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 5. Core assessment entry must be no more than 4 years after the starting academic year
-                if (!string.IsNullOrEmpty(assessment.CoreAssessmentEntry))
+                if (!string.IsNullOrWhiteSpace(assessment.CoreAssessmentEntry))
                 {
                     var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
                     if (!isSeriesFound)
@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 6. Specialism assessment entry must be between one and 4 years after the starting academic year
-                if (!string.IsNullOrEmpty(assessment.SpecialismAssessmentEntry))
+                if (!string.IsNullOrWhiteSpace(assessment.SpecialismAssessmentEntry))
                 {
                     var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
                     if (!isSeriesFound)
@@ -119,8 +119,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var registrationSpecialism = dbRegistration.TqRegistrationSpecialisms
                                                     .FirstOrDefault(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
                     
-                    var csvCoreSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.CoreAssessmentEntry));
-                    var csvSpecialismSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.SpecialismAssessmentEntry));
+                    var csvCoreSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                    var csvSpecialismSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
 
                     response.Add(new AssessmentRecordResponse
                     {
