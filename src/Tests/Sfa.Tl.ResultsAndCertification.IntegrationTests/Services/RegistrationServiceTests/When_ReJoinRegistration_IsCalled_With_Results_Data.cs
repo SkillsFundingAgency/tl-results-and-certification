@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var _pathwayAssessments = _bulkRegistrationTestFixture.SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
 
             // Results seed
-            _bulkRegistrationTestFixture.SeedPathwayResultsData(_bulkRegistrationTestFixture.GetPathwayResultsDataToProcess(_pathwayAssessments, seedPathwayResultsAsActive: false, isHistorical: true, isBulkUpload: false));
+            _bulkRegistrationTestFixture.SeedPathwayResultsData(_bulkRegistrationTestFixture.GetPathwayResultsDataToProcess(_pathwayAssessments, seedPathwayResultsAsActive: false, isHistorical: false, isBulkUpload: false));
         }
 
         [Fact]
