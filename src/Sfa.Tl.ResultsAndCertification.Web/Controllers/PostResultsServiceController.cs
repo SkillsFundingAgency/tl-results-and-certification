@@ -81,6 +81,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PrsUlnWithdrawn);
             }
+            else if (!prsLearnerRecord.IsAssessmentEntryRegistered)
+            {
+                await _cacheService.SetAsync(CacheKey, new PrsNoAssessmentEntryViewModel
+                {
+                    Uln = prsLearnerRecord.Uln,
+                    Firstname = prsLearnerRecord.Firstname,
+                    Lastname = prsLearnerRecord.Lastname,
+                    DateofBirth = prsLearnerRecord.DateofBirth,
+                    ProviderName = prsLearnerRecord.ProviderName,
+                    ProviderUkprn = prsLearnerRecord.ProviderUkprn,
+                    TlevelTitle = prsLearnerRecord.TlevelTitle
+                }, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.PrsNoAssessmentEntry);
+            }
 
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId, assessmentId = 1 }); // TODO: temporarily redirected to assessmentId
         }
@@ -253,6 +267,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
 
             return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
+        }
+
+        [HttpGet]
+        [Route("reviews-and-appeals-no-assessment-entry", Name = RouteConstants.PrsNoAssessmentEntry)]
+        public async Task<IActionResult> PrsNoAssessmentEntryAsync()
+        {
+            var cacheModel = await _cacheService.GetAndRemoveAsync<PrsNoAssessmentEntryViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsNoAssessmentEntryViewModel from redis cache in post results service no assessment entry page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(cacheModel);
         }
     }
 }

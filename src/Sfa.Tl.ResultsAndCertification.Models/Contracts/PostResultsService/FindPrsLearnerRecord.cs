@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
 {
@@ -24,6 +25,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public bool IsWithdrawn => Status == RegistrationPathwayStatus.Withdrawn;
 
         public IEnumerable<PrsAssessment> PathwayAssessments { get; set; }
+
+        public bool IsAssessmentEntryRegistered { get { return PathwayAssessments.Count() > 0; } }
     }
 
     public class PrsAssessment

@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsSearchLearnerPost
 {
-    public class When_Uln_IsValid : TestSetup
+    public class When_Uln_HasNoAssessments : TestSetup
     {
         private FindPrsLearnerRecord _findPrsLearner = null;
         private readonly int _profileId = 1;
@@ -29,10 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProviderUkprn = 7894561231,
                 TlevelTitle = "Title",
                 Status = Common.Enum.RegistrationPathwayStatus.Active,
-                PathwayAssessments = new List<PrsAssessment> 
-                {
-                    new PrsAssessment { AssessmentId = 11, SeriesName = "Summer 2021", HasResult = true }
-                }
+                PathwayAssessments = new List<PrsAssessment>()
             };
 
             ViewModel = new PrsSearchLearnerViewModel { SearchUln = _findPrsLearner.Uln.ToString() };
@@ -44,16 +41,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             Loader.Received(1).FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong());
             CacheService.Received(1).SetAsync(CacheKey, ViewModel);
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsNoAssessmentEntryViewModel>(x =>
+                    x.Uln == _findPrsLearner.Uln &&
+                    x.Firstname == _findPrsLearner.Firstname &&
+                    x.Lastname == _findPrsLearner.Lastname &&
+                    x.DateofBirth == _findPrsLearner.DateofBirth &&
+                    x.ProviderName == _findPrsLearner.ProviderName &&
+                    x.ProviderUkprn == _findPrsLearner.ProviderUkprn &&
+                    x.TlevelTitle == _findPrsLearner.TlevelTitle),
+                    Common.Enum.CacheExpiryTime.XSmall);
         }
 
         [Fact]
-        public void Then_Redirected_To_PrsLearnerDetails()
+        public void Then_Redirected_To_PrsNoAssessmentEntry()
         {
             var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);
-            route.RouteValues.Count.Should().Be(2);
-            route.RouteValues[Constants.ProfileId].Should().Be(_profileId);
-            route.RouteValues[Constants.AssessmentId].Should().Be(1);
+            route.RouteName.Should().Be(RouteConstants.PrsNoAssessmentEntry);
         }
     }
 }
