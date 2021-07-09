@@ -23,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
+            CacheService.Received(1).RemoveAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
             Loader.Received(1).GetPrsLearnerDetailsAsync<PrsPathwayGradeCheckAndSubmitViewModel>(AoUkprn, ProfileId, AssessmentId);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsPathwayGradeCheckAndSubmitViewModel>(x => x.OldGrade == x.NewGrade && x.IsGradeChanged == false));
         }
