@@ -8,6 +8,8 @@ using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -20,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         // inputs
         private readonly long _aoUkprn = 12345678;
         private readonly long _uln = 987654321;
+        private IList<PrsAssessment> _pathwayAssessments;
 
         // results
         private FindPrsLearnerRecord _actualResult;
@@ -38,6 +41,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
             };
 
+            _pathwayAssessments = new List<PrsAssessment>
+            {
+                new PrsAssessment { AssessmentId = 11, SeriesName = "Summer 2021", HasResult = true },
+                new PrsAssessment { AssessmentId = 12, SeriesName = "Autumn 2021", HasResult = true }
+            };
             _mockApiResponse = new FindPrsLearnerRecord
             {
                 ProfileId = 11,
@@ -48,7 +56,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ProviderName = "Barnsley College",
                 ProviderUkprn = 123456789,
                 TlevelTitle = "Title",
-                Status = RegistrationPathwayStatus.Active,
+                Status = RegistrationPathwayStatus.Active                ,
+                PathwayAssessments = _pathwayAssessments
             };
         }
 
@@ -75,6 +84,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.ProviderUkprn.Should().Be(_mockApiResponse.ProviderUkprn);
             _actualResult.TlevelTitle.Should().Be(_mockApiResponse.TlevelTitle);
             _actualResult.Status.Should().Be(_mockApiResponse.Status);
+            _actualResult.IsAssessmentEntryRegistered.Should().BeTrue();
+            _actualResult.PathwayAssessments.Should().NotBeEmpty();
+            _actualResult.PathwayAssessments.Count().Should().Be(_pathwayAssessments.Count());
+
+            for (int i = 0; i < _pathwayAssessments.Count(); i++)
+            {
+                _actualResult.PathwayAssessments.ElementAt(i).AssessmentId.Should().Be(_pathwayAssessments[i].AssessmentId);
+                _actualResult.PathwayAssessments.ElementAt(i).SeriesName.Should().Be(_pathwayAssessments[i].SeriesName);
+                _actualResult.PathwayAssessments.ElementAt(i).HasResult.Should().Be(_pathwayAssessments[i].HasResult);
+            }
         }
     }
 }
