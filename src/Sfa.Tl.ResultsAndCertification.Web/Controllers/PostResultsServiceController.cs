@@ -81,7 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PrsUlnWithdrawn);
             }
-            else if (!prsLearnerRecord.IsAssessmentEntryRegistered)
+            else if (prsLearnerRecord.NoAssessmentEntryRegistered)
             {
                 await _cacheService.SetAsync(CacheKey, new PrsNoAssessmentEntryViewModel
                 {
@@ -95,8 +95,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PrsNoAssessmentEntry);
             }
+            else if (prsLearnerRecord.NoGradeRegistered)
+            {
+                await _cacheService.SetAsync(CacheKey, new PrsNoGradeRegisteredViewModel
+                {
+                    ProfileId = prsLearnerRecord.ProfileId,
+                    Uln = prsLearnerRecord.Uln,
+                    Firstname = prsLearnerRecord.Firstname,
+                    Lastname = prsLearnerRecord.Lastname,
+                    DateofBirth = prsLearnerRecord.DateofBirth,
+                    ProviderName = prsLearnerRecord.ProviderName,
+                    ProviderUkprn = prsLearnerRecord.ProviderUkprn,
+                    TlevelTitle = prsLearnerRecord.TlevelTitle,
+                    AssessmentSeries = prsLearnerRecord.PathwayAssessments.First().SeriesName
+                }, CacheExpiryTime.XSmall);
+                return RedirectToRoute(RouteConstants.PrsNoGradeRegistered);
+            }
 
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId, assessmentId = 1 }); // TODO: temporarily redirected to assessmentId
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId, assessmentId = prsLearnerRecord.PathwayAssessments.FirstOrDefault().AssessmentId });
         }
 
         [HttpGet]
@@ -277,6 +293,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (cacheModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsNoAssessmentEntryViewModel from redis cache in post results service no assessment entry page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(cacheModel);
+        }
+
+        [HttpGet]
+        [Route("reviews-and-appeals-no-registered-grades", Name = RouteConstants.PrsNoGradeRegistered)]
+        public async Task<IActionResult> PrsNoGradeRegisteredAsync()
+        {
+            var cacheModel = await _cacheService.GetAndRemoveAsync<PrsNoGradeRegisteredViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read PrsNoGradeRegisteredViewModel from redis cache in post results service no grade registered page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

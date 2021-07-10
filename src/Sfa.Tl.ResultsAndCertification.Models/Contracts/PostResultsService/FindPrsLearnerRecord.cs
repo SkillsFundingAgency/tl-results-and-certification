@@ -21,18 +21,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public string ProviderName { get; set; }
         public string TlevelTitle { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
-
-        public bool IsWithdrawn => Status == RegistrationPathwayStatus.Withdrawn;
-
         public IEnumerable<PrsAssessment> PathwayAssessments { get; set; }
 
-        public bool IsAssessmentEntryRegistered { get { return PathwayAssessments.Count() > 0; } }
-    }
-
-    public class PrsAssessment
-    {
-        public int AssessmentId { get; set; }
-        public string SeriesName { get; set; }
-        public bool HasResult { get; set; }
-    }
+        public bool IsWithdrawn => Status == RegistrationPathwayStatus.Withdrawn;
+        public bool NoAssessmentEntryRegistered { get { return PathwayAssessments.Count() == 0; } }
+        public bool NoGradeRegistered { get { return PathwayAssessments.Count() == 1 && !PathwayAssessments.Any(x => x.HasResult); } }
+    }    
 }
