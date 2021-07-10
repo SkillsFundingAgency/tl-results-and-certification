@@ -38,7 +38,7 @@
         SqlUsername: '$(SQLServerAdminUsername)'
         SqlPassword: '$(SQLServerAdminPassword)'
         DacpacFile: '$(System.ArtifactsDirectory)\sqldrop\src\Sfa.Tl.ResultsAndCertification.Database\bin\Release\Sfa.Tl.ResultsAndCertification.Database.dacpac'
-        AdditionalArguments: '/v:environment=$(environment)Integration'
+        AdditionalArguments: '/v:environment=DevIntegration'
     
     - task: DownloadBuildArtifacts@0
       inputs:

@@ -28,7 +28,7 @@ stages:
     - name: SharedResourceGroup
       value: '$(SharedBaseName)-shared'
     - name: SharedSQLServerName
-      value: '$(SharedBaseName)-shared-sqlsvr'
+      value: '$(SharedBaseName)-shared-sql'
     - name: environmentTagName
       value: ${{parameters.environmentTagName}}  
       
