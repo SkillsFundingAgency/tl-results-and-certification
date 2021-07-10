@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsSearchLearnerPost
@@ -53,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             route.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);
             route.RouteValues.Count.Should().Be(2);
             route.RouteValues[Constants.ProfileId].Should().Be(_profileId);
-            route.RouteValues[Constants.AssessmentId].Should().Be(1);
+            route.RouteValues[Constants.AssessmentId].Should().Be(_findPrsLearner.PathwayAssessments.FirstOrDefault().AssessmentId);
         }
     }
 }
