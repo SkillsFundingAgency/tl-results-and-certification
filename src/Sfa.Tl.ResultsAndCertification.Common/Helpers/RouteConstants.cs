@@ -297,6 +297,7 @@
         public const string SubmitPrsAppealUpdatePathwayGrade = "SubmitPrsAppealUpdatePathwayGrade";
         public const string PrsNoAssessmentEntry = "PrsNoAssessmentEntry";
         public const string PrsNoGradeRegistered = "PrsNoGradeRegistered";
+        public const string PrsSelectAssessmentSeries = "PrsSelectAssessmentSeries";
 
         #endregion
     }

@@ -111,6 +111,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PrsNoGradeRegistered);
             }
+            else if (prsLearnerRecord.HasMultipleAssessments)
+            {
+                // TODO: TLRC-3727
+                return RedirectToRoute(RouteConstants.PrsSelectAssessmentSeries);
+            }
 
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId, assessmentId = prsLearnerRecord.PathwayAssessments.FirstOrDefault().AssessmentId });
         }
@@ -311,6 +316,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(cacheModel);
+        }
+
+        [HttpGet]
+        [Route("reviews-and-appeals-select-exam-period", Name = RouteConstants.PrsSelectAssessmentSeries)]
+        public async Task<IActionResult> PrsSelectAssessmentSeriesAsync()
+        {
+            ViewBag.Heading = "Development to be done part of - TLRC-3727 ";
+            await Task.CompletedTask;
+            return View();
         }
     }
 }
