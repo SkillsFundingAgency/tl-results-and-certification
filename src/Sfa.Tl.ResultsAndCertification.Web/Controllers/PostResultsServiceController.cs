@@ -69,46 +69,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else if (prsLearnerRecord.IsWithdrawn)
             {
-                await _cacheService.SetAsync(CacheKey, new PrsUlnWithdrawnViewModel
-                {
-                    Uln = prsLearnerRecord.Uln,
-                    Firstname = prsLearnerRecord.Firstname,
-                    Lastname = prsLearnerRecord.Lastname,
-                    DateofBirth = prsLearnerRecord.DateofBirth,
-                    ProviderName = prsLearnerRecord.ProviderName,
-                    ProviderUkprn = prsLearnerRecord.ProviderUkprn,
-                    TlevelTitle = prsLearnerRecord.TlevelTitle
-                }, CacheExpiryTime.XSmall);
+                var prsUlnWithdrawnViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsUlnWithdrawnViewModel>(prsLearnerRecord);
+                await _cacheService.SetAsync(CacheKey, prsUlnWithdrawnViewModel, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PrsUlnWithdrawn);
             }
             else if (prsLearnerRecord.NoAssessmentEntryRegistered)
             {
-                await _cacheService.SetAsync(CacheKey, new PrsNoAssessmentEntryViewModel
-                {
-                    Uln = prsLearnerRecord.Uln,
-                    Firstname = prsLearnerRecord.Firstname,
-                    Lastname = prsLearnerRecord.Lastname,
-                    DateofBirth = prsLearnerRecord.DateofBirth,
-                    ProviderName = prsLearnerRecord.ProviderName,
-                    ProviderUkprn = prsLearnerRecord.ProviderUkprn,
-                    TlevelTitle = prsLearnerRecord.TlevelTitle
-                }, CacheExpiryTime.XSmall);
+                var prsNoAssessmentEntryViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsNoAssessmentEntryViewModel>(prsLearnerRecord);
+                await _cacheService.SetAsync(CacheKey, prsNoAssessmentEntryViewModel, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PrsNoAssessmentEntry);
             }
             else if (prsLearnerRecord.SingleAssessmentWithNoGrade)
             {
-                await _cacheService.SetAsync(CacheKey, new PrsNoGradeRegisteredViewModel
-                {
-                    ProfileId = prsLearnerRecord.ProfileId,
-                    Uln = prsLearnerRecord.Uln,
-                    Firstname = prsLearnerRecord.Firstname,
-                    Lastname = prsLearnerRecord.Lastname,
-                    DateofBirth = prsLearnerRecord.DateofBirth,
-                    ProviderName = prsLearnerRecord.ProviderName,
-                    ProviderUkprn = prsLearnerRecord.ProviderUkprn,
-                    TlevelTitle = prsLearnerRecord.TlevelTitle,
-                    AssessmentSeries = prsLearnerRecord.PathwayAssessments.First().SeriesName
-                }, CacheExpiryTime.XSmall);
+                var prsNoGradeViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsNoGradeRegisteredViewModel>(prsLearnerRecord);
+                await _cacheService.SetAsync(CacheKey, prsNoGradeViewModel, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PrsNoGradeRegistered);
             }
             else if (prsLearnerRecord.HasMultipleAssessments)

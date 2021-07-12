@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Collections.Generic;
+using System.Linq;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsPathwayGradeCheckAndSubmit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
@@ -97,6 +98,35 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
                 .ForMember(d => d.OldGrade, opts => opts.MapFrom(s => s.PathwayGrade))
                 .ForMember(d => d.PathwayTitle, opts => opts.MapFrom(s => string.Format(CheckAndSubmitContent.Heading_Pathway_Title, $"{s.PathwayName} ({s.PathwayCode})")));
+
+            CreateMap<FindPrsLearnerRecord, PrsUlnWithdrawnViewModel>()
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
+                .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
+                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
+                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle));
+
+            CreateMap<FindPrsLearnerRecord, PrsNoAssessmentEntryViewModel>()
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
+                .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
+                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
+                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle));
+
+            CreateMap<FindPrsLearnerRecord, PrsNoGradeRegisteredViewModel>()
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
+                .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
+                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
+                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
+                .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessments.FirstOrDefault().SeriesName));
         }
     }
 }

@@ -13,7 +13,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_Uln_HasNoAssessments : TestSetup
     {
-        private FindPrsLearnerRecord _findPrsLearner = null;
+        private FindPrsLearnerRecord _findPrsLearner;
+        private PrsNoAssessmentEntryViewModel _prsNoAssessmentEntryViewModel;
         private readonly int _profileId = 1;
 
         public override void Given()
@@ -32,8 +33,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 PathwayAssessments = new List<PrsAssessment>()
             };
 
+            _prsNoAssessmentEntryViewModel = new PrsNoAssessmentEntryViewModel
+            {
+                Uln = _findPrsLearner.Uln,
+                Firstname = _findPrsLearner.Firstname,
+                Lastname = _findPrsLearner.Lastname,
+                DateofBirth = _findPrsLearner.DateofBirth,
+                ProviderName = _findPrsLearner.ProviderName,
+                ProviderUkprn = _findPrsLearner.ProviderUkprn,
+                TlevelTitle = _findPrsLearner.TlevelTitle
+            };
+
             ViewModel = new PrsSearchLearnerViewModel { SearchUln = _findPrsLearner.Uln.ToString() };
             Loader.FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong()).Returns(_findPrsLearner);
+            Loader.TransformLearnerDetailsTo<PrsNoAssessmentEntryViewModel>(_findPrsLearner).Returns(_prsNoAssessmentEntryViewModel);
         }
 
         [Fact]
@@ -41,6 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             Loader.Received(1).FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong());
             CacheService.Received(1).SetAsync(CacheKey, ViewModel);
+            Loader.Received(1).TransformLearnerDetailsTo<PrsNoAssessmentEntryViewModel>(_findPrsLearner);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsNoAssessmentEntryViewModel>(x =>
                     x.Uln == _findPrsLearner.Uln &&
                     x.Firstname == _findPrsLearner.Firstname &&

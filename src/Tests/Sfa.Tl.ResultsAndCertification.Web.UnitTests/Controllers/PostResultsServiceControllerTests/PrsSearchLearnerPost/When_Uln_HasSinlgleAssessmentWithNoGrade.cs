@@ -12,9 +12,10 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsSearchLearnerPost
 {
-    public class When_Uln_HasNoGrade : TestSetup
+    public class When_Uln_HasSinlgleAssessmentWithNoGrade : TestSetup
     {
-        private FindPrsLearnerRecord _findPrsLearner = null;
+        private FindPrsLearnerRecord _findPrsLearner;
+        private PrsNoGradeRegisteredViewModel _prsNoGradeRegisteredViewModel;
         private readonly int _profileId = 1;
 
         public override void Given()
@@ -36,8 +37,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 }
             };
 
+            _prsNoGradeRegisteredViewModel = new PrsNoGradeRegisteredViewModel
+            {
+                ProfileId = _findPrsLearner.ProfileId,
+                Uln = _findPrsLearner.Uln,
+                Firstname = _findPrsLearner.Firstname,
+                Lastname = _findPrsLearner.Lastname,
+                DateofBirth = _findPrsLearner.DateofBirth,
+                ProviderName = _findPrsLearner.ProviderName,
+                ProviderUkprn = _findPrsLearner.ProviderUkprn,
+                TlevelTitle = _findPrsLearner.TlevelTitle,
+                AssessmentSeries = _findPrsLearner.PathwayAssessments.First().SeriesName
+            };
+
             ViewModel = new PrsSearchLearnerViewModel { SearchUln = _findPrsLearner.Uln.ToString() };
             Loader.FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong()).Returns(_findPrsLearner);
+            Loader.TransformLearnerDetailsTo<PrsNoGradeRegisteredViewModel>(_findPrsLearner).Returns(_prsNoGradeRegisteredViewModel);
         }
 
         [Fact]
@@ -45,6 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             Loader.Received(1).FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong());
             CacheService.Received(1).SetAsync(CacheKey, ViewModel);
+            Loader.Received(1).TransformLearnerDetailsTo<PrsNoGradeRegisteredViewModel>(_findPrsLearner);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsNoGradeRegisteredViewModel>(x =>
                     x.ProfileId == _findPrsLearner.ProfileId &&
                     x.Uln == _findPrsLearner.Uln &&
