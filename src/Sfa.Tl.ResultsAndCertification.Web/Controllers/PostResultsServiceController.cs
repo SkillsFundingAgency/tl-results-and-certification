@@ -95,7 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.PrsNoAssessmentEntry);
             }
-            else if (prsLearnerRecord.NoGradeRegistered)
+            else if (prsLearnerRecord.SingleAssessmentWithNoGrade)
             {
                 await _cacheService.SetAsync(CacheKey, new PrsNoGradeRegisteredViewModel
                 {

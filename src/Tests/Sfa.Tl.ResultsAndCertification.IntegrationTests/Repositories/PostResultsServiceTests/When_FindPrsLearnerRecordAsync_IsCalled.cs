@@ -41,7 +41,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
 
             // Seed Assessments And Results
             _tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
-            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
 
             var profilesWithAssessment = new List<long> { 1111111112, 1111111113, 1111111114 };
             foreach (var profile in _profiles.Where(x => profilesWithAssessment.Contains(x.UniqueLearnerNumber)))
@@ -58,8 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
                     var hasHistoricResult = hasHitoricData.Any(x => x == profile.UniqueLearnerNumber);
                     var prsStatus = profilesWithResults.FirstOrDefault(p => p.Item1 == assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
                     var seedPathwayResultsAsActive = assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber != 1111111112;
-                    var tqPathwayResultSeedData = GetPathwayResultDataToProcess(assessment, seedPathwayResultsAsActive, hasHistoricResult, prsStatus);
-                    tqPathwayResultsSeedData.AddRange(tqPathwayResultSeedData);
+                    GetPathwayResultDataToProcess(assessment, seedPathwayResultsAsActive, hasHistoricResult, prsStatus);
                 }
             }
 
@@ -149,11 +147,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
                 return new[]
                 {
                     new object[] { 9999999999, AwardingOrganisation.Pearson, false }, // Invalid Uln
-                    new object[] { 1111111111, AwardingOrganisation.Pearson, true }, // Active 
+                    new object[] { 1111111111, AwardingOrganisation.Pearson, true }, // Active + No Assessments
                     new object[] { 1111111111, AwardingOrganisation.Ncfe, false },
                     new object[] { 1111111112, AwardingOrganisation.Pearson, true }, // Withdrawn
-                    new object[] { 1111111113, AwardingOrganisation.Pearson, true },
-                    new object[] { 1111111114, AwardingOrganisation.Pearson, true }
+                    new object[] { 1111111113, AwardingOrganisation.Pearson, true }, // Active + Single Assessment
+                    new object[] { 1111111114, AwardingOrganisation.Pearson, true } // Active + Multiple Assessments
                 };
             }
         }

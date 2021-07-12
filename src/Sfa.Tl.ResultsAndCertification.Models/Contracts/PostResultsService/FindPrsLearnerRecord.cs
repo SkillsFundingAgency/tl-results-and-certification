@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
 
         public bool IsWithdrawn => Status == RegistrationPathwayStatus.Withdrawn;
         public bool NoAssessmentEntryRegistered { get { return PathwayAssessments.Count() == 0; } }
-        public bool NoGradeRegistered { get { return PathwayAssessments.Count() == 1 && !PathwayAssessments.Any(x => x.HasResult); } }
+        public bool SingleAssessmentWithNoGrade { get { return PathwayAssessments.Count() == 1 && !PathwayAssessments.Any(x => x.HasResult); } }
         public bool HasMultipleAssessments { get { return PathwayAssessments.Count() > 1; } }
     }
 }
