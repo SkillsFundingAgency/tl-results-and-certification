@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xunit;
 using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsPathwayGradeCheckAndSubmit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetailsTests
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetails
 {
     public class When_Called_With_PrsPathwayGradeCheckAndSubmitViewModel : TestSetup
     {

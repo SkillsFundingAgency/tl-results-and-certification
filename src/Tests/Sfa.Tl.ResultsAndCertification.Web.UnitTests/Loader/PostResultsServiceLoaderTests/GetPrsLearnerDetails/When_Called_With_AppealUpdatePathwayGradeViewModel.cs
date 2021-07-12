@@ -1,19 +1,25 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetailsTests
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetails
 {
-    public class When_Called_With_AppealCoreGradeViewModel : TestSetup
+    public class When_Called_With_AppealUpdatePathwayGradeViewModel : TestSetup
     {
         private Models.Contracts.PostResultsService.PrsLearnerDetails _expectedApiResult;
-        protected AppealCoreGradeViewModel ActualResult { get; set; }
+        private IList<LookupData> _expectedApiLookupData;
+        protected AppealUpdatePathwayGradeViewModel ActualResult { get; set; }
+
         public override void Given()
         {
+            _expectedApiLookupData = new List<LookupData> { new LookupData { Id = 1, Code = "PCG1", Value = "A*" } };
+
             _expectedApiResult = new Models.Contracts.PostResultsService.PrsLearnerDetails
             {
                 ProfileId = 1,
@@ -32,17 +38,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 PathwayName = "Childcare Education",
                 PathwayGrade = "A*",
                 PathwayResultId = 77,
-                PathwayPrsStatus = null,
+                PathwayPrsStatus = PrsStatus.BeingAppealed,
                 PathwayGradeLastUpdatedBy = "Barsley User",
-                PathwayGradeLastUpdatedOn = DateTime.Today
+                PathwayGradeLastUpdatedOn = DateTime.Today,
             };
 
+            InternalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade).Returns(_expectedApiLookupData);
             InternalApiClient.GetPrsLearnerDetailsAsync(AoUkprn, ProfileId, AssessmentId).Returns(_expectedApiResult);
         }
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId);
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<AppealUpdatePathwayGradeViewModel>(AoUkprn, ProfileId, AssessmentId);
+        }
+
+        [Fact]
+        public void Then_Recieved_Call_To_GetLookupData()
+        {
+            InternalApiClient.Received(1).GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
         }
 
         [Fact]
@@ -55,10 +68,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.Uln.Should().Be(_expectedApiResult.Uln);
             ActualResult.LearnerName.Should().Be($"{_expectedApiResult.Firstname} {_expectedApiResult.Lastname}");
             ActualResult.DateofBirth.Should().Be(_expectedApiResult.DateofBirth);
+            ActualResult.PathwayName.Should().Be(_expectedApiResult.PathwayName);
+            ActualResult.PathwayCode.Should().Be(_expectedApiResult.PathwayCode);
             ActualResult.PathwayDisplayName.Should().Be($"{_expectedApiResult.PathwayName}<br/>({_expectedApiResult.PathwayCode})");
             ActualResult.PathwayAssessmentSeries.Should().Be(_expectedApiResult.PathwayAssessmentSeries);
             ActualResult.PathwayGrade.Should().Be(_expectedApiResult.PathwayGrade);
             ActualResult.PathwayPrsStatus.Should().Be(_expectedApiResult.PathwayPrsStatus);
+            ActualResult.Grades.Should().BeEquivalentTo(_expectedApiLookupData);
         }
     }
 }

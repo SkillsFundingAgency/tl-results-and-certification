@@ -1,25 +1,21 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetailsTests
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetails
 {
-    public class When_Called_With_AppealUpdatePathwayGradeViewModel : TestSetup
+    public class When_Called_With_PrsLearnerDetailsViewModel : TestSetup
     {
         private Models.Contracts.PostResultsService.PrsLearnerDetails _expectedApiResult;
-        private IList<LookupData> _expectedApiLookupData;
-        protected AppealUpdatePathwayGradeViewModel ActualResult { get; set; }
+        protected PrsLearnerDetailsViewModel ActualResult { get; set; }
 
         public override void Given()
         {
-            _expectedApiLookupData = new List<LookupData> { new LookupData { Id = 1, Code = "PCG1", Value = "A*" } };
-
             _expectedApiResult = new Models.Contracts.PostResultsService.PrsLearnerDetails
             {
                 ProfileId = 1,
@@ -40,22 +36,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 PathwayResultId = 77,
                 PathwayPrsStatus = PrsStatus.BeingAppealed,
                 PathwayGradeLastUpdatedBy = "Barsley User",
-                PathwayGradeLastUpdatedOn = DateTime.Today,
+                PathwayGradeLastUpdatedOn = DateTime.Today
             };
 
-            InternalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade).Returns(_expectedApiLookupData);
             InternalApiClient.GetPrsLearnerDetailsAsync(AoUkprn, ProfileId, AssessmentId).Returns(_expectedApiResult);
         }
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<AppealUpdatePathwayGradeViewModel>(AoUkprn, ProfileId, AssessmentId);
-        }
-
-        [Fact]
-        public void Then_Recieved_Call_To_GetLookupData()
-        {
-            InternalApiClient.Received(1).GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId, AssessmentId);
         }
 
         [Fact]
@@ -63,18 +52,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
         {
             ActualResult.Should().NotBeNull();
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
-            ActualResult.PathwayAssessmentId.Should().Be(_expectedApiResult.PathwayAssessmentId);
-            ActualResult.PathwayResultId.Should().Be(_expectedApiResult.PathwayResultId);
             ActualResult.Uln.Should().Be(_expectedApiResult.Uln);
-            ActualResult.LearnerName.Should().Be($"{_expectedApiResult.Firstname} {_expectedApiResult.Lastname}");
+            ActualResult.Firstname.Should().Be(_expectedApiResult.Firstname);
+            ActualResult.Lastname.Should().Be(_expectedApiResult.Lastname);
             ActualResult.DateofBirth.Should().Be(_expectedApiResult.DateofBirth);
-            ActualResult.PathwayName.Should().Be(_expectedApiResult.PathwayName);
-            ActualResult.PathwayCode.Should().Be(_expectedApiResult.PathwayCode);
-            ActualResult.PathwayDisplayName.Should().Be($"{_expectedApiResult.PathwayName}<br/>({_expectedApiResult.PathwayCode})");
+            ActualResult.ProviderName.Should().Be(_expectedApiResult.ProviderName);
+            ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.ProviderUkprn);
+            ActualResult.TlevelTitle.Should().Be(_expectedApiResult.TlevelTitle);
+            ActualResult.Status.Should().Be(_expectedApiResult.Status);
+
+            ActualResult.PathwayAssessmentId.Should().Be(_expectedApiResult.PathwayAssessmentId);
             ActualResult.PathwayAssessmentSeries.Should().Be(_expectedApiResult.PathwayAssessmentSeries);
+            ActualResult.PathwayTitle.Should().Be($"{_expectedApiResult.PathwayName} ({_expectedApiResult.PathwayCode})");
             ActualResult.PathwayGrade.Should().Be(_expectedApiResult.PathwayGrade);
-            ActualResult.PathwayPrsStatus.Should().Be(_expectedApiResult.PathwayPrsStatus);
-            ActualResult.Grades.Should().BeEquivalentTo(_expectedApiLookupData);
+            ActualResult.PathwayResultId.Should().Be(_expectedApiResult.PathwayResultId);
+            ActualResult.PathwayPrsStatus.Should().Be(_expectedApiResult.PathwayPrsStatus);            
+            ActualResult.PathwayGradeLastUpdatedBy.Should().Be(_expectedApiResult.PathwayGradeLastUpdatedBy);
+            ActualResult.PathwayGradeLastUpdatedOn.Should().Be(_expectedApiResult.PathwayGradeLastUpdatedOn.ToDobFormat());
         }
     }
 }

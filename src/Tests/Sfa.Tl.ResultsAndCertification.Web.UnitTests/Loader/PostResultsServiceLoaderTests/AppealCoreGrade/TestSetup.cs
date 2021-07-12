@@ -1,7 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.AppealCoreGradeTests
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.AppealCoreGrade
 {
     public abstract class TestSetup : PostResultsServiceLoaderTestBase
     {
