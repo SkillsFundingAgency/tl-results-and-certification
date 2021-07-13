@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Data;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System;
@@ -33,13 +34,14 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return pathwayResult;
         }
 
-        public static TqPathwayResult CreateTqPathwayResult(ResultsAndCertificationDbContext _dbContext, int tqPathwayAssessmentId, int tlLookupId, DateTime startDate, bool addToDbContext = true)
+        public static TqPathwayResult CreateTqPathwayResult(ResultsAndCertificationDbContext _dbContext, int tqPathwayAssessmentId, int tlLookupId, DateTime startDate, PrsStatus? prsStatus, bool addToDbContext = true)
         {
             var pathwayResult = new TqPathwayResult
             {
                 TqPathwayAssessmentId = tqPathwayAssessmentId,
                 TlLookupId = tlLookupId,
                 StartDate = startDate,
+                PrsStatus = prsStatus,
                 IsOptedin = true,
                 IsBulkUpload = false
             };

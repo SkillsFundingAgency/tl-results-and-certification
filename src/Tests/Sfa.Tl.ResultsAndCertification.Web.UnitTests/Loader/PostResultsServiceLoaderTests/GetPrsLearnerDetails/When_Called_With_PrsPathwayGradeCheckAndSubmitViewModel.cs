@@ -1,19 +1,18 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsPathwayGradeCheckAndSubmit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetailsTests
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.GetPrsLearnerDetails
 {
-    public class When_Called_With_PrsLearnerDetailsViewModel : TestSetup
+    public class When_Called_With_PrsPathwayGradeCheckAndSubmitViewModel : TestSetup
     {
         private Models.Contracts.PostResultsService.PrsLearnerDetails _expectedApiResult;
-        protected PrsLearnerDetailsViewModel ActualResult { get; set; }
-
+        protected PrsPathwayGradeCheckAndSubmitViewModel ActualResult { get; set; }
         public override void Given()
         {
             _expectedApiResult = new Models.Contracts.PostResultsService.PrsLearnerDetails
@@ -34,6 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 PathwayName = "Childcare Education",
                 PathwayGrade = "A*",
                 PathwayResultId = 77,
+                PathwayPrsStatus = null,
                 PathwayGradeLastUpdatedBy = "Barsley User",
                 PathwayGradeLastUpdatedOn = DateTime.Today
             };
@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsLearnerDetailsViewModel>(AoUkprn, ProfileId, AssessmentId);
+            ActualResult = await Loader.GetPrsLearnerDetailsAsync<PrsPathwayGradeCheckAndSubmitViewModel>(AoUkprn, ProfileId, AssessmentId);
         }
 
         [Fact]
@@ -51,6 +51,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
         {
             ActualResult.Should().NotBeNull();
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
+            ActualResult.AssessmentId.Should().Be(_expectedApiResult.PathwayAssessmentId);
+            ActualResult.ResultId.Should().Be(_expectedApiResult.PathwayResultId);
             ActualResult.Uln.Should().Be(_expectedApiResult.Uln);
             ActualResult.Firstname.Should().Be(_expectedApiResult.Firstname);
             ActualResult.Lastname.Should().Be(_expectedApiResult.Lastname);
@@ -58,15 +60,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.ProviderName.Should().Be(_expectedApiResult.ProviderName);
             ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.ProviderUkprn);
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.TlevelTitle);
-            ActualResult.Status.Should().Be(_expectedApiResult.Status);
-
-            ActualResult.PathwayAssessmentId.Should().Be(_expectedApiResult.PathwayAssessmentId);
-            ActualResult.PathwayAssessmentSeries.Should().Be(_expectedApiResult.PathwayAssessmentSeries);
-            ActualResult.PathwayTitle.Should().Be($"{_expectedApiResult.PathwayName} ({_expectedApiResult.PathwayCode})");
-            ActualResult.PathwayGrade.Should().Be(_expectedApiResult.PathwayGrade);
-            ActualResult.PathwayResultId.Should().Be(_expectedApiResult.PathwayResultId);
-            ActualResult.PathwayGradeLastUpdatedBy.Should().Be(_expectedApiResult.PathwayGradeLastUpdatedBy);
-            ActualResult.PathwayGradeLastUpdatedOn.Should().Be(_expectedApiResult.PathwayGradeLastUpdatedOn.ToDobFormat());
+            ActualResult.OldGrade.Should().Be(_expectedApiResult.PathwayGrade);
+            ActualResult.PathwayTitle.Should().Be(string.Format(CheckAndSubmitContent.Heading_Pathway_Title, $"{_expectedApiResult.PathwayName} ({_expectedApiResult.PathwayCode})"));
         }
     }
 }

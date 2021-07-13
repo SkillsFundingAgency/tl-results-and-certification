@@ -96,6 +96,7 @@
         public const string ShowPostcode = "showPostcode";
         public const string IsAddressMissing = "isFromAddressMissing";
         public const string PopulateUln = "populateUln";
+        public const string AppealOutcomeTypeId = "outcomeTypeId";
 
         // Assessments
         public const int AssessmentEndInYears = 4;
@@ -114,6 +115,8 @@
 
         // Other constants
         public const string NoBorderBottomCssClassName = "tl-no-border-bottom";
+        public const string PurpleTagClassName = "govuk-tag--purple";
+        public const string RedTagClassName = "govuk-tag--red";
         public const string PostcodeValidationRegex = "^(([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))(\\s?)?[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$";
         public const string UlnValidationRegex = @"^\d{10}$";
     }

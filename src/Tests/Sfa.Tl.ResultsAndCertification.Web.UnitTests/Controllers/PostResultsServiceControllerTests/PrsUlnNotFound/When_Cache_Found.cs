@@ -9,12 +9,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_Cache_Found : TestSetup
     {
-        private readonly long uln = 1234567890;
+        private readonly long _uln = 1234567890;
         private PrsUlnNotFoundViewModel _mockCache = null;
 
         public override void Given()
         {
-            _mockCache = new PrsUlnNotFoundViewModel { Uln = uln.ToString() };
+            _mockCache = new PrsUlnNotFoundViewModel { Uln = _uln.ToString() };
             CacheService.GetAndRemoveAsync<PrsUlnNotFoundViewModel>(CacheKey).Returns(_mockCache);
         }
 
@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             var model = viewResult.Model as PrsUlnNotFoundViewModel;
 
             model.Should().NotBeNull();
-            model.Uln.Should().Be(uln.ToString());
+            model.Uln.Should().Be(_uln.ToString());
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.PrsSearchLearner);

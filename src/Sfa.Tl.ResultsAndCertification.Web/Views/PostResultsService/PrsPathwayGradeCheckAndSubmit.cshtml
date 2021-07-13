@@ -1,0 +1,40 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsPathwayGradeCheckAndSubmitViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+
+@{
+    ViewData["Title"] = PrsPathwayGradeCheckAndSubmit.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">@PrsPathwayGradeCheckAndSubmit.Heading_Check_And_Submit</h1>
+        <p class="govuk-body govuk-!-margin-bottom-9">@PrsPathwayGradeCheckAndSubmit.Para_Check_Information_Is_Correct</p>
+
+        <form class="form" asp-route="">
+            <h2 class="govuk-heading-m">@PrsPathwayGradeCheckAndSubmit.Heading_Learner_Details </h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+            </dl>
+
+            <h2 class="govuk-heading-m">@Model.PathwayTitle</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                <vc:summary-item model=Model.SummaryOldGrade></vc:summary-item>
+                <vc:summary-item model=Model.SummaryNewGrade></vc:summary-item>
+            </dl>
+
+            <p class="govuk-inset-text">@PrsPathwayGradeCheckAndSubmit.Inset_Select_Submit_Updates_Grade</p>
+            <div class="govuk-button-group">
+                <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsPathwayGradeCheckAndSubmit.Button_Submit</button>
+                <a id="cancelLink" class="govuk-link" asp-route="">@PrsPathwayGradeCheckAndSubmit.Cancel_Link</a>
+            </div>
+        </form>
+    </div>
+</div>

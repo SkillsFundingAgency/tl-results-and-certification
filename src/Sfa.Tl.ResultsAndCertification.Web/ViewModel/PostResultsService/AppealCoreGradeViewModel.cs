@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
@@ -17,13 +18,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
-        public string PathwayDisplayName { get; set; }
+        public string PathwayName { get; set; }
+        public string PathwayCode { get; set; }
+        public string PathwayDisplayName { get { return $"{PathwayName}<br/>({PathwayCode})"; } }
+        public string SuccessBannerMessage { get { return string.Format(AppealCoreGradeContent.Banner_Message, $"{PathwayName} ({PathwayCode})"); } }
         public string PathwayAssessmentSeries { get; set; }
         public string PathwayGrade { get; set; }
+        public PrsStatus? PathwayPrsStatus { get; set; }
         public bool HasPathwayResult { get; set; }
-
+        
         [Required(ErrorMessageResourceType = typeof(AppealCoreGradeContent), ErrorMessageResourceName = "Validation_Message")]
         public bool? AppealGrade { get; set; }
+
+        public bool IsValid => PathwayPrsStatus == null;
 
         public SummaryItemModel SummaryUln => new SummaryItemModel
         {

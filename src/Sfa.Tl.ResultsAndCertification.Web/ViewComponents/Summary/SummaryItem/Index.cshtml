@@ -25,10 +25,13 @@
         }
     </dd>
 
-    @if (!string.IsNullOrEmpty(Model.Value2))
+    @if (!string.IsNullOrWhiteSpace(Model.Value2) || Model?.RenderEmptyRowForValue2 == true)
     {
         <dd class="govuk-summary-list__value @Model.BorderBottomCssClass">
-            <p class="govuk-body">@Model?.Value2</p>
+            @if (!string.IsNullOrWhiteSpace(Model.Value2))
+            {
+                <p class="govuk-body">@Html.Raw(Model?.Value2)</p>
+            }
         </dd>
     }
 

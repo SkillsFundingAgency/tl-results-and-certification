@@ -120,6 +120,9 @@
   <data name="Action_Link_Update" xml:space="preserve">
     <value>Update</value>
   </data>
+  <data name="Banner_Title_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
   <data name="Button_Search_Again" xml:space="preserve">
     <value>Search again</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Learner’s component grades status</value>
+  </data>
+  <data name="PrsStatus_Display_Html" xml:space="preserve">
+    <value>&lt;strong class="govuk-tag {0}"&gt;{1}&lt;/strong&gt;</value>
   </data>
   <data name="Title_Assessment_Series" xml:space="preserve">
     <value>Exam Period</value>

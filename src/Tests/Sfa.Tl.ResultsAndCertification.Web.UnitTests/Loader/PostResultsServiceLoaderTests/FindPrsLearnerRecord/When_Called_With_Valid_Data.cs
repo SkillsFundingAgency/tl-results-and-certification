@@ -1,7 +1,10 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.FindPrsLearnerRecord
@@ -9,9 +12,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
     public class When_Called_With_Valid_Data : TestSetup
     {
         private Models.Contracts.PostResultsService.FindPrsLearnerRecord _expectedApiResult;
+        private IList<PrsAssessment> _pathwayAssessments;
 
         public override void Given()
         {
+            _pathwayAssessments = new List<PrsAssessment>
+            {
+                new PrsAssessment { AssessmentId = 11, SeriesName = "Summer 2021", HasResult = true },
+                new PrsAssessment { AssessmentId = 12, SeriesName = "Autumn 2021", HasResult = true }
+            };
             _expectedApiResult = new Models.Contracts.PostResultsService.FindPrsLearnerRecord
             {
                 ProfileId = 1,
@@ -22,9 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 ProviderName = "Barsley College",
                 ProviderUkprn = 54678945,
                 TlevelTitle = "Title",
-                Status = RegistrationPathwayStatus.Active
+                Status = RegistrationPathwayStatus.Active,
+                PathwayAssessments = _pathwayAssessments
             };
-
             InternalApiClient.FindPrsLearnerRecordAsync(AoUkprn, Uln).Returns(_expectedApiResult);
         }
 
@@ -41,6 +50,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.ProviderUkprn);
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.TlevelTitle);
             ActualResult.Status.Should().Be(_expectedApiResult.Status);
+
+            ActualResult.NoAssessmentEntryRegistered.Should().BeFalse();
+            ActualResult.SingleAssessmentWithNoGrade.Should().BeFalse();
+            ActualResult.HasMultipleAssessments.Should().BeTrue();
+            ActualResult.PathwayAssessments.Should().NotBeEmpty();
+            ActualResult.PathwayAssessments.Count().Should().Be(_pathwayAssessments.Count());
+
+            for (int i = 0; i < _pathwayAssessments.Count(); i++)
+            {
+                ActualResult.PathwayAssessments.ElementAt(i).AssessmentId.Should().Be(_pathwayAssessments[i].AssessmentId);
+                ActualResult.PathwayAssessments.ElementAt(i).SeriesName.Should().Be(_pathwayAssessments[i].SeriesName);
+                ActualResult.PathwayAssessments.ElementAt(i).HasResult.Should().Be(_pathwayAssessments[i].HasResult);
+            }
         }
     }
 }

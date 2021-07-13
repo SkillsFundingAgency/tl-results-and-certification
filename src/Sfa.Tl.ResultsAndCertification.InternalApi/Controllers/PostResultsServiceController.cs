@@ -30,5 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _postResultsServiceService.GetPrsLearnerDetailsAsync(aoUkPrn, profileId, assessmentId);
         }
+
+        [HttpPost]
+        [Route("AppealGrade")]
+        public async Task<bool> AppealGradeAsync(AppealGradeRequest request)
+        {
+            return await _postResultsServiceService.AppealGradeAsync(request);
+        }
     }
 }

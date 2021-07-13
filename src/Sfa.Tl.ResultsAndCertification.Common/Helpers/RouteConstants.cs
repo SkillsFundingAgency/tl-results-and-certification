@@ -290,6 +290,14 @@
         public const string PrsLearnerDetails = "PrsLearnerDetails";
         public const string PrsAppealCoreGrade = "PrsAppealCoreGrade";
         public const string SubmitPrsAppealCoreGrade = "SubmitPrsAppealCoreGrade";
+        public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";
+        public const string SubmitPrsAppealOutcomePathwayGrade = "SubmitPrsAppealOutcomePathwayGrade";
+        public const string PrsPathwayGradeCheckAndSubmit = "PrsPathwayGradeCheckAndSubmit";
+        public const string PrsAppealUpdatePathwayGrade = "PrsAppealUpdatePathwayGrade";
+        public const string SubmitPrsAppealUpdatePathwayGrade = "SubmitPrsAppealUpdatePathwayGrade";
+        public const string PrsNoAssessmentEntry = "PrsNoAssessmentEntry";
+        public const string PrsNoGradeRegistered = "PrsNoGradeRegistered";
+        public const string PrsSelectAssessmentSeries = "PrsSelectAssessmentSeries";
 
         #endregion
     }

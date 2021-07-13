@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Security.Claims;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests
@@ -34,10 +37,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 }))
             });
 
-            InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(PostResultsServiceMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddMaps(typeof(ResultMapper).Assembly);
+                c.ConstructServicesUsing(type =>
+                            type.Name.Contains("UserNameResolver") ?
+                                new UserNameResolver<AppealCoreGradeViewModel, AppealGradeRequest>(HttpContextAccessor) : null);
+            });
             Mapper = new AutoMapper.Mapper(mapperConfig);
+
+            InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
             Loader = new PostResultsServiceLoader(InternalApiClient, Mapper);
         }
     }
