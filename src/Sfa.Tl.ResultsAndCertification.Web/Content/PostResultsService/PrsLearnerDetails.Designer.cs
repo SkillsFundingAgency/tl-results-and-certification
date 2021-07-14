@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s component grades status.
+        ///   Looks up a localized string similar to Learner’s component grade status.
         /// </summary>
         public static string Heading_Learner_Component_Grades_Status {
             get {
@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s component grades status.
+        ///   Looks up a localized string similar to Learner’s component grade status.
         /// </summary>
         public static string Page_Title {
             get {
