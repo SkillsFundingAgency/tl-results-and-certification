@@ -42,6 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                               TlevelTitle = tlPathway.TlevelTitle,
                                               Status = tqPathway.Status,
                                               PathwayAssessments = _dbContext.TqPathwayAssessment.Where(a => a.TqRegistrationPathwayId == tqPathway.Id && a.IsOptedin && a.EndDate == null)
+                                                                  .OrderByDescending(o => o.AssessmentSeriesId)
                                                                   .Select(x => new PrsAssessment 
                                                                   { 
                                                                       AssessmentId = x.Id,

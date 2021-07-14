@@ -1,1 +1,52 @@
-﻿<h1> @ViewBag.Heading </h1>
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsSelectAssessmentSeriesViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+
+@{
+    ViewData["Title"] = PrsSelectAssessmentSeries.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" asp-route="SubmitPrsSelectAssessmentSeries">
+            <input type="hidden" asp-for="Uln" />
+            <partial name="_ValidationSummary" />
+
+            <h1 class="govuk-heading-l">@PrsSelectAssessmentSeries.Heading_Selecct_Exam_Period</h1>
+            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-9 govuk-!-margin-top-7">
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+            </dl>
+
+            <div class="govuk-form-group" sfa-validation-for="SelectedAssessmentSeries" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h2 class="govuk-fieldset__heading">@PrsSelectAssessmentSeries.Heading_Which_Exam_Period_Is_The_Component</h2>
+                    </legend>
+                    <div class="govuk-hint">@PrsSelectAssessmentSeries.Hint_There_Is_More_Than_One_Exam_Available</div>
+
+                    <div class="govuk-radios">
+                        <span sfa-validation-for="SelectedAssessmentSeries"></span>
+                        @foreach (var grade in Model?.AssessmentSerieses?.Select((value, i) => (value, i)))
+                        {
+                            var elementId = (grade.i > 0) ? "selectedassessmentseries-" + grade.i : "selectedassessmentseries";
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="@elementId" type="radio" asp-for="@Model.SelectedAssessmentSeries" value="@Model.AssessmentSerieses[grade.i].AssessmentId">
+                                <label class="govuk-label govuk-radios__label" for="@elementId">@grade.value.SeriesName</label>
+                            </div>
+                        }
+
+                    </div>
+                </fieldset>
+
+            </div>
+            <button id="submitButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsSelectAssessmentSeries.Button_Submit</button>
+        </form>
+    </div>
+</div>
