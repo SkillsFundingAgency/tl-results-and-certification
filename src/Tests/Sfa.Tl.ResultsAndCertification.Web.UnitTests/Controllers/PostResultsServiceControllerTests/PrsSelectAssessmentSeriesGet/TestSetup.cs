@@ -5,11 +5,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public abstract class TestSetup : PostResultsServiceControllerTestBase
     {
+        public int ProfileId { get; set; }
         public IActionResult Result { get; private set; }
 
         public async override Task When()
         {
-            Result = await Controller.PrsSelectAssessmentSeriesAsync();
+            Result = await Controller.PrsSelectAssessmentSeriesAsync(ProfileId);
         }
     }
 }
