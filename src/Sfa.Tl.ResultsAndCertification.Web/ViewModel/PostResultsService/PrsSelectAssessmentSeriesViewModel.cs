@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         }
 
         [Required(ErrorMessageResourceType = typeof(SelectSeriesContent), ErrorMessageResourceName = "Validation_Message")]
-        public int? SelectedAssessmentSeries { get; set; }
+        public int? SelectedAssessmentId { get; set; }
 
         public IList<PrsAssessment> AssessmentSerieses { get; set; }  
     }

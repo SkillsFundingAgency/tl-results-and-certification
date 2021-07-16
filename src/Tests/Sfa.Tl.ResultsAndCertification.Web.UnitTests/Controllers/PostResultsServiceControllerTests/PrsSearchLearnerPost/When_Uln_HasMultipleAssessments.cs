@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProviderName = _findPrsLearner.ProviderName,
                 ProviderUkprn = _findPrsLearner.ProviderUkprn,
                 TlevelTitle = _findPrsLearner.TlevelTitle,
-                SelectedAssessmentSeries = null,
+                SelectedAssessmentId = null,
                 AssessmentSerieses = _findPrsLearner.PathwayAssessments.ToList()
             };
 
@@ -59,18 +59,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             Loader.Received(1).FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong());
             CacheService.Received(1).SetAsync(CacheKey, ViewModel);
-            Loader.Received(1).TransformLearnerDetailsTo<PrsSelectAssessmentSeriesViewModel>(_findPrsLearner);
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsSelectAssessmentSeriesViewModel>(x =>
-                    x.Uln == _findPrsLearner.Uln &&
-                    x.Firstname == _findPrsLearner.Firstname &&
-                    x.Lastname == _findPrsLearner.Lastname &&
-                    x.DateofBirth == _findPrsLearner.DateofBirth &&
-                    x.ProviderName == _findPrsLearner.ProviderName &&
-                    x.ProviderUkprn == _findPrsLearner.ProviderUkprn &&
-                    x.TlevelTitle == _findPrsLearner.TlevelTitle &&
-                    x.SelectedAssessmentSeries == null &&
-                    x.AssessmentSerieses.Count() == _findPrsLearner.PathwayAssessments.Count()),
-                    Common.Enum.CacheExpiryTime.XSmall);
         }
 
         [Fact]
