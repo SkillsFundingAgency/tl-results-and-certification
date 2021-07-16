@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln, int? profileId = null)
+        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null)
         {
             return await _internalApiClient.FindPrsLearnerRecordAsync(aoUkprn, uln, profileId);
         }

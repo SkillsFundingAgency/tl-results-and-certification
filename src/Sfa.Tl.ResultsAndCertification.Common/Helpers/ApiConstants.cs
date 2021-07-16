@@ -74,7 +74,8 @@
         public const string GetPrintRequestSnapshotUri = "/api/statementofachievement/GetPrintRequestSnapshot/{0}/{1}/{2}";
 
         // Post Results Service Uri's
-        public const string FindPrsLearnerRecordUri = "/api/postresultsservice/FindPrsLearnerRecord/{0}/{1}/{2}";
+        public const string FindPrsLearnerRecordUri = "/api/postresultsservice/FindPrsLearnerRecord/{0}/{1}";
+        public const string FindPrsLearnerRecordByProfileIdUri = "/api/postresultsservice/FindPrsLearnerRecordByProfileId/{0}/{1}";
         public const string GetPrsLearnerDetailsUri = "/api/postresultsservice/GetPrsLearnerDetails/{0}/{1}/{2}";
         public const string AppealGradeUri = "/api/postresultsservice/AppealGrade";
 
