@@ -318,7 +318,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(prsSelectAssessmentSeriesViewModel);
             }
 
-            var isSelectedSeriesHasResult = prsLearnerRecord.PathwayAssessments.Any(x => x.AssessmentId == model.SelectedAssessmentSeries && x.HasResult);
+            var isSelectedSeriesHasResult = prsLearnerRecord.PathwayAssessments.Any(x => x.AssessmentId == model.SelectedAssessmentId && x.HasResult);
             if (!isSelectedSeriesHasResult)
             {
                 var prsNoGradeViewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsNoGradeRegisteredViewModel>(prsLearnerRecord);
@@ -326,7 +326,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PrsNoGradeRegistered);
             }
 
-            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId, assessmentId = model.SelectedAssessmentSeries });
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId, assessmentId = model.SelectedAssessmentId });
         }
     }
 }

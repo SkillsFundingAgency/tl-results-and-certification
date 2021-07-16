@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         public override void Given()
         {
             var selectedAssessmentId = 22;
-            ViewModel = new PrsSelectAssessmentSeriesViewModel { Uln = 1234567890, SelectedAssessmentSeries = selectedAssessmentId };
+            ViewModel = new PrsSelectAssessmentSeriesViewModel { Uln = 1234567890, SelectedAssessmentId = selectedAssessmentId };
             _findPrsLearnerRecordRecord = new FindPrsLearnerRecord
             {
                 ProfileId = 1,

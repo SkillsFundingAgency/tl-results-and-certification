@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.ProviderName.Should().Be(_mockCache.ProviderName);
             model.ProviderUkprn.Should().Be(_mockCache.ProviderUkprn);
             model.TlevelTitle.Should().Be(_mockCache.TlevelTitle);
-            model.SelectedAssessmentSeries.Should().BeNull();
+            model.SelectedAssessmentId.Should().BeNull();
             model.AssessmentSerieses.Count().Should().Be(_mockCache.AssessmentSerieses.Count());
 
             foreach (var actual in model.AssessmentSerieses.Select((value, i) => (value, i)))

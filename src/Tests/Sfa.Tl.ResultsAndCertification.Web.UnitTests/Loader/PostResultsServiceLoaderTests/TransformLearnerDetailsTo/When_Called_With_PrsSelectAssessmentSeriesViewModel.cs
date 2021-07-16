@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.ProviderName.Should().Be(FindPrsLearnerRecord.ProviderName);
             ActualResult.ProviderUkprn.Should().Be(FindPrsLearnerRecord.ProviderUkprn);
             ActualResult.TlevelTitle.Should().Be(FindPrsLearnerRecord.TlevelTitle);
-            ActualResult.SelectedAssessmentSeries.Should().BeNull();
+            ActualResult.SelectedAssessmentId.Should().BeNull();
             ActualResult.AssessmentSerieses.Count().Should().Be(FindPrsLearnerRecord.PathwayAssessments.Count());
 
             var expectedAssessment = FindPrsLearnerRecord.PathwayAssessments.ToList();

@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProviderName = _findPrsLearner.ProviderName,
                 ProviderUkprn = _findPrsLearner.ProviderUkprn,
                 TlevelTitle = _findPrsLearner.TlevelTitle,
-                SelectedAssessmentSeries = null,
+                SelectedAssessmentId = null,
                 AssessmentSerieses = _findPrsLearner.PathwayAssessments.ToList()
             };
 
@@ -68,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                     x.ProviderName == _findPrsLearner.ProviderName &&
                     x.ProviderUkprn == _findPrsLearner.ProviderUkprn &&
                     x.TlevelTitle == _findPrsLearner.TlevelTitle &&
-                    x.SelectedAssessmentSeries == null &&
+                    x.SelectedAssessmentId == null &&
                     x.AssessmentSerieses.Count() == _findPrsLearner.PathwayAssessments.Count()),
                     Common.Enum.CacheExpiryTime.XSmall);
         }

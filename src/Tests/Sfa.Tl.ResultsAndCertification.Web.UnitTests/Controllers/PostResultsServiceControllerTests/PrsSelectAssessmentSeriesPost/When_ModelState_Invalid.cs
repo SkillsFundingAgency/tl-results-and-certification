@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public override void Given()
         {
-            ViewModel = new PrsSelectAssessmentSeriesViewModel { Uln = 1234567890, SelectedAssessmentSeries = null };
+            ViewModel = new PrsSelectAssessmentSeriesViewModel { Uln = 1234567890, SelectedAssessmentId = null };
             
             _findPrsLearnerRecord = new FindPrsLearnerRecord
             {
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             };
             Loader.TransformLearnerDetailsTo<PrsSelectAssessmentSeriesViewModel>(_findPrsLearnerRecord).Returns(_prsSelectAssessmentSeriesViewModel);
 
-            Controller.ModelState.AddModelError("SelectedAssessmentSeries", SelectAssessmentContent.Validation_Message);
+            Controller.ModelState.AddModelError("SelectedAssessmentId", SelectAssessmentContent.Validation_Message);
         }
 
         [Fact]
@@ -74,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.ProviderName.Should().Be(_prsSelectAssessmentSeriesViewModel.ProviderName);
             model.ProviderUkprn.Should().Be(_prsSelectAssessmentSeriesViewModel.ProviderUkprn);
             model.TlevelTitle.Should().Be(_prsSelectAssessmentSeriesViewModel.TlevelTitle);
-            model.SelectedAssessmentSeries.Should().BeNull();
+            model.SelectedAssessmentId.Should().BeNull();
             model.AssessmentSerieses.Count().Should().Be(_prsSelectAssessmentSeriesViewModel.AssessmentSerieses.Count());
 
             model.BackLink.Should().NotBeNull();
@@ -84,9 +84,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             routeValue.Should().Be(true.ToString());
 
             Controller.ViewData.ModelState.Should().ContainSingle();
-            Controller.ViewData.ModelState.ContainsKey(nameof(PrsSelectAssessmentSeriesViewModel.SelectedAssessmentSeries)).Should().BeTrue();
+            Controller.ViewData.ModelState.ContainsKey(nameof(PrsSelectAssessmentSeriesViewModel.SelectedAssessmentId)).Should().BeTrue();
 
-            var modelState = Controller.ViewData.ModelState[nameof(PrsSelectAssessmentSeriesViewModel.SelectedAssessmentSeries)];
+            var modelState = Controller.ViewData.ModelState[nameof(PrsSelectAssessmentSeriesViewModel.SelectedAssessmentId)];
             modelState.Errors[0].ErrorMessage.Should().Be(SelectAssessmentContent.Validation_Message);
         }
 

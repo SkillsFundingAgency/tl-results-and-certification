@@ -24,7 +24,7 @@
                 <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
             </dl>
 
-            <div class="govuk-form-group" sfa-validation-for="SelectedAssessmentSeries" sfa-validation-class="govuk-form-group--error">
+            <div class="govuk-form-group" sfa-validation-for="SelectedAssessmentId" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                         <h2 class="govuk-fieldset__heading">@PrsSelectAssessmentSeries.Heading_Which_Exam_Period_Is_The_Component</h2>
@@ -32,12 +32,12 @@
                     <div class="govuk-hint">@PrsSelectAssessmentSeries.Hint_There_Is_More_Than_One_Exam_Available</div>
 
                     <div class="govuk-radios">
-                        <span sfa-validation-for="SelectedAssessmentSeries"></span>
+                        <span sfa-validation-for="SelectedAssessmentId"></span>
                         @foreach (var grade in Model?.AssessmentSerieses?.Select((value, i) => (value, i)))
                         {
-                            var elementId = (grade.i > 0) ? "selectedassessmentseries-" + grade.i : "selectedassessmentseries";
+                            var elementId = (grade.i > 0) ? "selectedassessmentid-" + grade.i : "selectedassessmentid";
                             <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="@elementId" type="radio" asp-for="@Model.SelectedAssessmentSeries" value="@Model.AssessmentSerieses[grade.i].AssessmentId">
+                                <input class="govuk-radios__input" id="@elementId" type="radio" asp-for="@Model.SelectedAssessmentId" value="@Model.AssessmentSerieses[grade.i].AssessmentId">
                                 <label class="govuk-label govuk-radios__label" for="@elementId">@grade.value.SeriesName</label>
                             </div>
                         }
