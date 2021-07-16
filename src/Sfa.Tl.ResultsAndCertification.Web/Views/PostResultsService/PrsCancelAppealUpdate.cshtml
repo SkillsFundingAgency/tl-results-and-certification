@@ -1,0 +1,46 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsCancelAppealUpdateViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+
+@{
+    ViewData["Title"] = PrsCancelAppealUpdate.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="SubmitPrsCancelAppealUpdate">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="AssessmentId" />
+            <partial name="_ValidationSummary" />
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">
+                            @PrsCancelAppealUpdate.Heading_Are_You_Sure_To_Cancel
+                        </h1>
+                    </legend>
+
+                    <div class="govuk-radios" sfa-validation-for="CancelRequest" sfa-validation-class="govuk-form-group--error">
+                        <span sfa-validation-for="CancelRequest"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="cancelrequest" asp-for="CancelRequest" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="cancelrequest">
+                                @PrsCancelAppealUpdate.Radio_Button_Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="cancelrequest-no" asp-for="CancelRequest" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="cancelrequest-no">
+                                @PrsCancelAppealUpdate.Radio_Button_No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continueButton" class="govuk-button govuk-!-margin-top-3" data-module="govuk-button" data-prevent-double-click="true">@PrsCancelAppealUpdate.Button_Continue</button>
+        </form>
+    </div>
+</div>

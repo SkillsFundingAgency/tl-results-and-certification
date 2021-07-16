@@ -299,6 +299,8 @@
         public const string PrsNoGradeRegistered = "PrsNoGradeRegistered";
         public const string PrsSelectAssessmentSeries = "PrsSelectAssessmentSeries";
         public const string SubmitPrsSelectAssessmentSeries = "SubmitPrsSelectAssessmentSeries";
+        public const string PrsCancelAppealUpdate = "PrsCancelAppealUpdate";
+        public const string SubmitPrsCancelAppealUpdate = "SubmitPrsCancelAppealUpdate";
 
         #endregion
     }
