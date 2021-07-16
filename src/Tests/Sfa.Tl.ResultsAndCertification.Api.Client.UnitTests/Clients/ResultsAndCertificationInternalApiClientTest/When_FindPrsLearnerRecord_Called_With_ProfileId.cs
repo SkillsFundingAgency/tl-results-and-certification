@@ -17,11 +17,11 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_FindPrsLearnerRecord_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_FindPrsLearnerRecord_Called_With_ProfileId : BaseTest<ResultsAndCertificationInternalApiClient>
     {
         // inputs
         private readonly long _aoUkprn = 12345678;
-        private readonly long _uln = 987654321;
+        private readonly int _profileId = 87654321;
         private IList<PrsAssessment> _pathwayAssessments;
 
         // results
@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _mockApiResponse = new FindPrsLearnerRecord
             {
                 ProfileId = 11,
-                Uln = _uln,
+                Uln = _profileId,
                 Firstname = "John",
                 Lastname = "Smith",
                 DateofBirth = DateTime.UtcNow.AddYears(30),
@@ -63,13 +63,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<FindPrsLearnerRecord>(_mockApiResponse, string.Format(ApiConstants.FindPrsLearnerRecordUri, _aoUkprn, _uln), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<FindPrsLearnerRecord>(_mockApiResponse, string.Format(ApiConstants.FindPrsLearnerRecordByProfileIdUri, _aoUkprn, _profileId), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public async override Task When()
         {
-            _actualResult = await _apiClient.FindPrsLearnerRecordAsync(_aoUkprn, _uln);
+            _actualResult = await _apiClient.FindPrsLearnerRecordAsync(_aoUkprn, null, _profileId);
         }
 
         [Fact]
