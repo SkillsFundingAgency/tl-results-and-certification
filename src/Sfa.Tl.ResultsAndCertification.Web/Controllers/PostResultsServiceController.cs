@@ -328,5 +328,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId, assessmentId = model.SelectedAssessmentSeries });
         }
+
+        [HttpGet]
+        [Route("reviews-and-appeals-cancel-appeal-update", Name = RouteConstants.PrsCancelAppealUpdate)]
+        public async Task<IActionResult> PrsCancelAppealUpdateAsync()
+        {
+            var cacheModel = await _cacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
+
+            if (cacheModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            var viewModel = new PrsCancelAppealUpdateViewModel { ProfileId = cacheModel.ProfileId, AssessmentId = cacheModel.AssessmentId };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("reviews-and-appeals-cancel-appeal-update", Name = RouteConstants.SubmitPrsCancelAppealUpdate)]
+        public async Task<IActionResult> PrsCancelAppealUpdateAsync(PrsCancelAppealUpdateViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            if (viewModel.CancelRequest.Value)
+            {
+                await _cacheService.RemoveAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = viewModel.ProfileId, assessmentId = viewModel.AssessmentId });
+            }
+            else
+                return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
+        }
     }
 }
