@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln, int? profileId = null)
+        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null)
         {
             var prsQuery = from tqPathway in _dbContext.TqRegistrationPathway
                            join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id

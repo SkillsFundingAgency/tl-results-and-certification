@@ -295,7 +295,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("select-exam-period/{profileId}", Name = RouteConstants.PrsSelectAssessmentSeries)]
         public async Task<IActionResult> PrsSelectAssessmentSeriesAsync(int profileId)
         {
-            var prsLearner = await _postResultsServiceLoader.FindPrsLearnerRecordAsync(User.GetUkPrn(), 0, profileId); // TODO: Uln param.
+            var prsLearner = await _postResultsServiceLoader.FindPrsLearnerRecordAsync(User.GetUkPrn(), null, profileId);
             if (prsLearner == null || !prsLearner.HasMultipleAssessments)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 

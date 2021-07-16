@@ -318,9 +318,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         }
 
         #region PRS
-        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln, int? profileId = null)
+        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null)
         {
-            var requestUri = string.Format(ApiConstants.FindPrsLearnerRecordUri, aoUkprn, uln, profileId);
+            var requestUri = uln != null ? 
+                string.Format(ApiConstants.FindPrsLearnerRecordUri, aoUkprn, uln) :
+                string.Format(ApiConstants.FindPrsLearnerRecordByProfileIdUri, aoUkprn, profileId);
+
             return await GetAsync<FindPrsLearnerRecord>(requestUri);
         }
 
