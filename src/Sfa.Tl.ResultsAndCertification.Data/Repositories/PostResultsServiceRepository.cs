@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                            })
                            };
 
-            bool searchByUlnPredicate() => uln > 0;
+            bool searchByUlnPredicate() => uln != null;
             prsQuery = searchByUlnPredicate() ? prsQuery.Where(x => x.Uln == uln) : prsQuery.Where(x => x.ProfileId == profileId);
 
             return await prsQuery.FirstOrDefaultAsync();
