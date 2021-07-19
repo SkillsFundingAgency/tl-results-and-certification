@@ -351,7 +351,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = viewModel.ProfileId, assessmentId = viewModel.AssessmentId });
             }
             else
-                return RedirectToRoute(RouteConstants.AddLearnerRecordCheckAndSubmit);
+                return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
         }
     }
 }

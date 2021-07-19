@@ -14,10 +14,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         }
 
         [Fact]
-        public void Then_Redirected_To_AddLearnerRecordCheckAndSubmit()
+        public void Then_Redirected_To_PrsPathwayGradeCheckAndSubmit()
         {
             var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.AddLearnerRecordCheckAndSubmit);
+            route.RouteName.Should().Be(RouteConstants.PrsPathwayGradeCheckAndSubmit);
             route.RouteValues.Should().BeNull();
         }
     }
