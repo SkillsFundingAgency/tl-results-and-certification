@@ -9,6 +9,7 @@
         public const int ServiceAccessDenied = 1004;
         public const int FileStreamNotFound = 1005;
         public const int RecordExists = 1006;
+        public const int StateChanged = 1007;
 
         public const int ConfirmationPageFailed = 1020;
         public const int UploadSuccessfulPageFailed = 1021;
