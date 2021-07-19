@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.WithdrawRegistrationPost
 {
-    public class When_Withdraw_Success : TestSetup
+    public class When_Called_With_OutstandignPathwayPrsActivities : TestSetup
     {
         private AssessmentDetailsViewModel _mockresult = null;
         private WithdrawRegistrationResponse _mockResponse = null;
@@ -17,10 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public override void Given()
         {
-            _mockresult = new AssessmentDetailsViewModel { Uln = 1234567890, ProfileId = ProfileId, PathwayStatus = _registrationPathwayStatus };
-            RegistrationLoader.GetRegistrationAssessmentAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(_mockresult);
-
-
             ViewModel.CanWithdraw = true;
             ViewModel.ProfileId = ProfileId;
             _mockResponse = new WithdrawRegistrationResponse
@@ -30,6 +26,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                 IsSuccess = true,
                 IsRequestFromProviderAndCorePage = false
             };
+
+            _mockresult = new AssessmentDetailsViewModel { Uln = 1234567890, ProfileId = ProfileId, PathwayStatus = _registrationPathwayStatus, HasAnyOutstandingPathwayPrsActivities = true };
+            RegistrationLoader.GetRegistrationAssessmentAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(_mockresult);
             RegistrationLoader.WithdrawRegistrationAsync(AoUkprn, ViewModel).Returns(_mockResponse);
         }
 
@@ -37,14 +36,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         public void Then_Expected_Methods_Called()
         {
             RegistrationLoader.Received(1).GetRegistrationAssessmentAsync(AoUkprn, ProfileId, _registrationPathwayStatus);
-            RegistrationLoader.Received(1).WithdrawRegistrationAsync(AoUkprn, ViewModel);
         }
 
         [Fact]
-        public void Then_Redirected_To_WithdrawRegistrationConfirmation()
+        public void Then_Redirected_To_PageNotFound()
         {
-            var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.WithdrawRegistrationConfirmation);
+            var actualRouteName = (Result as RedirectToRouteResult).RouteName;
+            actualRouteName.Should().Be(RouteConstants.PageNotFound);
         }
     }
 }

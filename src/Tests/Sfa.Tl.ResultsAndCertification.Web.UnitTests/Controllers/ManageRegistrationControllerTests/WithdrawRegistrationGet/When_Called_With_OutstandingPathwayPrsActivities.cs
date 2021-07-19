@@ -8,14 +8,14 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.WithdrawRegistrationGet
 {
-    public class When_Not_Active_Status : TestSetup
+    public class When_Called_With_OutstandingPathwayPrsActivities : TestSetup
     {
         private AssessmentDetailsViewModel _mockresult = null;
         private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Active;
 
         public override void Given()
         {
-            _mockresult = new AssessmentDetailsViewModel { Uln = 1234567890, ProfileId = ProfileId, PathwayStatus = RegistrationPathwayStatus.Withdrawn };
+            _mockresult = new AssessmentDetailsViewModel { Uln = 1234567890, ProfileId = ProfileId, PathwayStatus = _registrationPathwayStatus, HasAnyOutstandingPathwayPrsActivities = true };
             RegistrationLoader.GetRegistrationAssessmentAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(_mockresult);
         }
 
