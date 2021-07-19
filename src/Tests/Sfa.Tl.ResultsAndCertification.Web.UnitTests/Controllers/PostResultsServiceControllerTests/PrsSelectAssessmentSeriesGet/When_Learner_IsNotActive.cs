@@ -1,18 +1,21 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsSelectAssessmentSeriesGet
 {
-    public class When_NoCache_Found : TestSetup
+    public class When_Learner_IsNotActive : TestSetup
     {
-        private readonly PrsSelectAssessmentSeriesViewModel _mockCache = null;
+        private FindPrsLearnerRecord _findPrsLearner;
         public override void Given()
         {
-            CacheService.GetAndRemoveAsync<PrsSelectAssessmentSeriesViewModel>(CacheKey).Returns(_mockCache);
+            ProfileId = 1;
+            _findPrsLearner = new FindPrsLearnerRecord { Status = RegistrationPathwayStatus.Withdrawn };
+            Loader.FindPrsLearnerRecordAsync(AoUkprn, null, ProfileId).Returns(_findPrsLearner);
         }
 
         [Fact]
@@ -22,10 +25,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             routeName.Should().Be(RouteConstants.PageNotFound);
         }
 
-        [Fact(Skip = "Ravi:todo")]
+        [Fact]
         public void Then_Expected_Method_IsCalled()
         {
-            CacheService.Received(1).GetAndRemoveAsync<PrsSelectAssessmentSeriesViewModel>(CacheKey);
+            Loader.Received(1).FindPrsLearnerRecordAsync(AoUkprn, null, ProfileId);
         }
     }
 }

@@ -296,7 +296,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> PrsSelectAssessmentSeriesAsync(int profileId)
         {
             var prsLearner = await _postResultsServiceLoader.FindPrsLearnerRecordAsync(User.GetUkPrn(), null, profileId);
-            if (prsLearner == null || !prsLearner.HasMultipleAssessments)
+            if (prsLearner == null || prsLearner.Status != RegistrationPathwayStatus.Active || !prsLearner.HasMultipleAssessments)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = _postResultsServiceLoader.TransformLearnerDetailsTo<PrsSelectAssessmentSeriesViewModel>(prsLearner);
