@@ -62,6 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.TlevelTitle);
             ActualResult.OldGrade.Should().Be(_expectedApiResult.PathwayGrade);
             ActualResult.PathwayTitle.Should().Be(string.Format(CheckAndSubmitContent.Heading_Pathway_Title, $"{_expectedApiResult.PathwayName} ({_expectedApiResult.PathwayCode})"));
+            ActualResult.PathwayAssessmentSeries.Should().Be(_expectedApiResult.PathwayAssessmentSeries);
         }
     }
 }
