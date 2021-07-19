@@ -26,6 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string NewGrade { get; set; }
         public bool IsGradeChanged { get; set; }
         public string PathwayAssessmentSeries { get; set; }
+        public string SuccessBannerMessage { get { return string.Format(CheckAndSubmitContent.Success_Banner_Message, PathwayTitle); } }
+
         public SummaryItemModel SummaryOldGrade => new SummaryItemModel
         {
             Id = "oldGrade",

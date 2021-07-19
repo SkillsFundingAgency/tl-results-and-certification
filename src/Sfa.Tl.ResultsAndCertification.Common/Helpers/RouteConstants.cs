@@ -294,6 +294,7 @@
         public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";
         public const string SubmitPrsAppealOutcomePathwayGrade = "SubmitPrsAppealOutcomePathwayGrade";
         public const string PrsPathwayGradeCheckAndSubmit = "PrsPathwayGradeCheckAndSubmit";
+        public const string SubmitPrsPathwayGradeCheckAndSubmit = "SubmitPrsPathwayGradeCheckAndSubmit";
         public const string PrsAppealUpdatePathwayGrade = "PrsAppealUpdatePathwayGrade";
         public const string SubmitPrsAppealUpdatePathwayGrade = "SubmitPrsAppealUpdatePathwayGrade";
         public const string PrsNoAssessmentEntry = "PrsNoAssessmentEntry";

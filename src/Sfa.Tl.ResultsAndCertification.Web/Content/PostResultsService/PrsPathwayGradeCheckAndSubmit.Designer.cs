@@ -152,6 +152,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Core (code): {0} grade is final.
+        /// </summary>
+        public static string Success_Banner_Message {
+            get {
+                return ResourceManager.GetString("Success_Banner_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of birth.
         /// </summary>
         public static string Title_DateofBirth_Text {

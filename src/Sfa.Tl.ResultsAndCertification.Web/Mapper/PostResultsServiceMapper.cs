@@ -56,6 +56,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => PrsStatus.BeingAppealed))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<AppealCoreGradeViewModel, AppealGradeRequest>>());
 
+            CreateMap<PrsPathwayGradeCheckAndSubmitViewModel, AppealGradeRequest>()
+               .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.AssessentId, opts => opts.MapFrom(s => s.AssessmentId))
+               .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.ResultId))
+               .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => ComponentType.Core))
+               .ForMember(d => d.PrsStatus, opts => opts.MapFrom(s => PrsStatus.Final))
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<PrsPathwayGradeCheckAndSubmitViewModel, AppealGradeRequest>>());
+
             CreateMap<PrsLearnerDetails, AppealOutcomePathwayGradeViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))

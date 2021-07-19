@@ -9,6 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null);
         Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId, int assessmentId);
         Task<bool> AppealCoreGradeAsync(long aoUkprn, AppealCoreGradeViewModel model);
+        Task<bool> AppealCoreGradeAsync(long aoUkprn, PrsPathwayGradeCheckAndSubmitViewModel model); 
         T TransformLearnerDetailsTo<T>(FindPrsLearnerRecord prsLearnerRecord);
     }
 }

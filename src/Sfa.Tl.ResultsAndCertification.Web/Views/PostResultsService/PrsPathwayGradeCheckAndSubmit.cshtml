@@ -14,7 +14,13 @@
         <h1 class="govuk-heading-l">@PrsPathwayGradeCheckAndSubmit.Heading_Check_And_Submit</h1>
         <p class="govuk-body govuk-!-margin-bottom-9">@PrsPathwayGradeCheckAndSubmit.Para_Check_Information_Is_Correct</p>
 
-        <form class="form" asp-route="">
+        <form class="form" asp-route="SubmitPrsPathwayGradeCheckAndSubmit">
+            <input type="hidden" asp-for="@Model.ProfileId" />
+            <input type="hidden" asp-for="@Model.AssessmentId" />
+            <input type="hidden" asp-for="@Model.ResultId" />
+            <input type="hidden" asp-for="@Model.NewGrade" />
+            <input type="hidden" asp-for="@Model.PathwayTitle" />
+
             <h2 class="govuk-heading-m">@PrsPathwayGradeCheckAndSubmit.Heading_Learner_Details </h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
                 <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
@@ -33,7 +39,7 @@
 
             <p class="govuk-inset-text">@PrsPathwayGradeCheckAndSubmit.Inset_Select_Submit_Updates_Grade</p>
             <div class="govuk-button-group">
-                <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsPathwayGradeCheckAndSubmit.Button_Submit</button>
+                <button id="submitButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsPathwayGradeCheckAndSubmit.Button_Submit</button>
                 <a id="cancelLink" class="govuk-link" asp-route="PrsCancelAppealUpdate">@PrsPathwayGradeCheckAndSubmit.Cancel_Link</a>
             </div>
         </form>
