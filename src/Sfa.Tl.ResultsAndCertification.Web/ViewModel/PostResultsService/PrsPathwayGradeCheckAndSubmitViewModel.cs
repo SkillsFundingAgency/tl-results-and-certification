@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string OldGrade { get; set; }
         public string NewGrade { get; set; }
         public bool IsGradeChanged { get; set; }
-
+        public string PathwayAssessmentSeries { get; set; }
         public string SuccessBannerMessage { get { return string.Format(CheckAndSubmitContent.Success_Banner_Message, PathwayTitle); } }
 
         public SummaryItemModel SummaryOldGrade => new SummaryItemModel
@@ -50,6 +50,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 { Constants.ResultId, ResultId.ToString() },
                 { Constants.IsChangeMode, true.ToString() }
             }
+        };
+
+        public SummaryItemModel SummaryCoreExamPeriod => new SummaryItemModel
+        {
+            Id = "coreexamperiod",
+            Title = CheckAndSubmitContent.Title_ExamPeriod_Text,
+            Value = PathwayAssessmentSeries
         };
 
         public override BackLinkModel BackLink => new BackLinkModel
