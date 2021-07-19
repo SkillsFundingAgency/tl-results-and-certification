@@ -97,7 +97,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
                 .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
                 .ForMember(d => d.OldGrade, opts => opts.MapFrom(s => s.PathwayGrade))
-                .ForMember(d => d.PathwayTitle, opts => opts.MapFrom(s => string.Format(CheckAndSubmitContent.Heading_Pathway_Title, $"{s.PathwayName} ({s.PathwayCode})")));
+                .ForMember(d => d.PathwayTitle, opts => opts.MapFrom(s => string.Format(CheckAndSubmitContent.Heading_Pathway_Title, $"{s.PathwayName} ({s.PathwayCode})")))
+                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries));
 
             CreateMap<FindPrsLearnerRecord, PrsUlnWithdrawnViewModel>()
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))

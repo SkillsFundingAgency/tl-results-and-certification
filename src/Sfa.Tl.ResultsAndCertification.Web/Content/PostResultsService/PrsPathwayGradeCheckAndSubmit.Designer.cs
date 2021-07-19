@@ -161,6 +161,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exam Period.
+        /// </summary>
+        public static string Title_ExamPeriod_Text {
+            get {
+                return ResourceManager.GetString("Title_ExamPeriod_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Title_Name_Text {

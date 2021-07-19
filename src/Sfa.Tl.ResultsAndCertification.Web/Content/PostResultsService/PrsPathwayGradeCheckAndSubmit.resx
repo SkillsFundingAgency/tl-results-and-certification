@@ -150,6 +150,9 @@
   <data name="Title_DateofBirth_Text" xml:space="preserve">
     <value>Date of birth</value>
   </data>
+  <data name="Title_ExamPeriod_Text" xml:space="preserve">
+    <value>Exam Period</value>
+  </data>
   <data name="Title_Name_Text" xml:space="preserve">
     <value>Name</value>
   </data>
