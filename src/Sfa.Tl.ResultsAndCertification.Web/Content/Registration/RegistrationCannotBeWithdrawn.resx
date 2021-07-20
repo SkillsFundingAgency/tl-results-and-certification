@@ -133,6 +133,6 @@
     <value>If you think this is incorrect please speak to your organisation’s result editor.</value>
   </data>
   <data name="Para_This_Registration_Has_A_Grade" xml:space="preserve">
-    <value>This registration has a grade which is being appealed so cannot be withdrawn at the moment</value>
+    <value>This registration has a grade which is being appealed so cannot be withdrawn at the moment.</value>
   </data>
 </root>

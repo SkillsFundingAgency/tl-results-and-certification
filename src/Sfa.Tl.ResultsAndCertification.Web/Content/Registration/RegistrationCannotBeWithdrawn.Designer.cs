@@ -107,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This registration has a grade which is being appealed so cannot be withdrawn at the moment.
+        ///   Looks up a localized string similar to This registration has a grade which is being appealed so cannot be withdrawn at the moment..
         /// </summary>
         public static string Para_This_Registration_Has_A_Grade {
             get {
