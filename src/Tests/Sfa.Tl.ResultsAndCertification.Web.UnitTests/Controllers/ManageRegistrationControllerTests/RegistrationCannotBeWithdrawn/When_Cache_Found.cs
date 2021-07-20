@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as RegistrationCannotBeDeletedViewModel;
+            var model = viewResult.Model as RegistrationCannotBeWithdrawnViewModel;
 
             model.Should().NotBeNull();
             model.ProfileId.Should().Be(ViewModel.ProfileId);
