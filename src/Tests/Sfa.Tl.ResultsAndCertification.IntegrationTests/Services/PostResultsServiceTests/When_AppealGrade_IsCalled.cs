@@ -29,7 +29,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             CreateMapper();
 
             // Parameters
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Withdrawn }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Active } };
+            _ulns = new Dictionary<long, RegistrationPathwayStatus> 
+            { 
+                { 1111111111, RegistrationPathwayStatus.Withdrawn }, 
+                { 1111111112, RegistrationPathwayStatus.Active }, 
+                { 1111111113, RegistrationPathwayStatus.Active },
+                { 1111111114, RegistrationPathwayStatus.Active },
+            };
 
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
@@ -50,12 +56,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
 
             // Results seed
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+            var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, PrsStatus.BeingAppealed) };
             foreach (var assessment in _pathwayAssessments)
             {
                 var inactiveResultUlns = new List<long> { 1111111112 };
                 var isLatestResultActive = !inactiveResultUlns.Any(x => x == assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber);
 
-                tqPathwayResultsSeedData.AddRange(GetPathwayResultDataToProcess(assessment, isLatestResultActive, false));
+                var prsStatus = profilesWithResults.FirstOrDefault(p => p.Item1 == assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
+                tqPathwayResultsSeedData.AddRange(GetPathwayResultDataToProcess(assessment, isLatestResultActive, false, prsStatus));
             }
             _pathwayResults = SeedPathwayResultsData(tqPathwayResultsSeedData);
 
@@ -129,7 +137,23 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                     // valid request with Active result - returns true
                     new object[]
                     { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
-                      true }
+                      true },
+
+                    // Below are the tests to check if request has valid new grade in the cycle. 
+                    // CurrentStatus is Null -> Requesting Final
+                    new object[]
+                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final },
+                      false },
+
+                    // CurrentStatus is BeingAppeal -> Requesting Final
+                    new object[]
+                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final },
+                      true },
+
+                    // CurrentStatus is BeingAppeal -> Requesting Reviewed
+                    new object[]
+                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Reviewed },
+                      false },
                 };
             }
         }

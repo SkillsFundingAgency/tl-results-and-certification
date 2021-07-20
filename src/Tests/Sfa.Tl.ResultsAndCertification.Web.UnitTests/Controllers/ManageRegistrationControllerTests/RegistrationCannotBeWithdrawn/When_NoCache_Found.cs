@@ -24,7 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         [Fact]
         public void Then_Redirected_To_PageNotFound()
         {
-            // Controller
             var routeName = (Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.PageNotFound);
         }

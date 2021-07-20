@@ -42,13 +42,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                TlevelTitle = tlPathway.TlevelTitle,
                                Status = tqPathway.Status,
                                PathwayAssessments = _dbContext.TqPathwayAssessment.Where(a => a.TqRegistrationPathwayId == tqPathway.Id && a.IsOptedin && a.EndDate == null)
-                                                           .OrderByDescending(o => o.AssessmentSeriesId)
-                                                           .Select(x => new PrsAssessment
-                                                           {
-                                                               AssessmentId = x.Id,
-                                                               SeriesName = x.AssessmentSeries.Name,
-                                                               HasResult = x.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null)
-                                                           })
+                                                    .OrderByDescending(o => o.AssessmentSeriesId)
+                                                    .Select(x => new PrsAssessment
+                                                    {
+                                                        AssessmentId = x.Id,
+                                                        SeriesName = x.AssessmentSeries.Name,
+                                                        HasResult = x.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null)
+                                                    })
                            };
 
             bool searchByUlnPredicate() => uln != null;
