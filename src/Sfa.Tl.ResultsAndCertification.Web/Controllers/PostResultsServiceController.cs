@@ -259,7 +259,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!isSuccess)
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            var notificationBanner = new NotificationBannerModel { Message = model.SuccessBannerMessage };  // TODO: Banner Content 
+            var notificationBanner = new NotificationBannerModel { Message = model.SuccessBannerMessage };
             await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.AssessmentId });
