@@ -45,6 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             _tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
 
             var profilesWithAssessment = new List<long> { 1111111112, 1111111113, 1111111114 };
+            var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, null) };
             foreach (var profile in _profiles.Where(x => profilesWithAssessment.Contains(x.UniqueLearnerNumber)))
             {
                 var isLatestActive = _ulns[profile.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
@@ -52,7 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                 _tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
 
                 // Seed Pathway results
-                var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, null) };
                 foreach (var assessment in pathwayAssessments.Where(x => profilesWithResults.Any(p => p.Item1 == x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber)))
                 {
                     var hasHitoricData = new List<long> { 1111111113 };
