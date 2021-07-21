@@ -180,7 +180,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var existingPathwayResult = existingPathwayResultsFromDb.FirstOrDefault(existingPathwayResult => existingPathwayResult.TqPathwayAssessmentId == amendedPathwayResult.TqPathwayAssessmentId);
                     if (existingPathwayResult != null)
                     {
-                        var isAppealDatePassed = DateTime.Today > existingPathwayResult.TqPathwayAssessment.AssessmentSeries.EndDate.Date; // TODO:
+                        var isAppealDatePassed = DateTime.Today > existingPathwayResult.TqPathwayAssessment.AssessmentSeries.AppealEndDate.Date;
                         if (isAppealDatePassed || existingPathwayResult.PrsStatus == PrsStatus.Final)
                         {
                             response.ValidationErrors.Add(GetResultValidationError(existingPathwayResult.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.ResultIsInFinal));
