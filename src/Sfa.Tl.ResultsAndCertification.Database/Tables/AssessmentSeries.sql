@@ -6,6 +6,7 @@
 	[Year] INT NOT NULL,
 	[StartDate] DATETIME NOT NULL,
 	[EndDate] DATETIME NOT NULL,
+	[AppealEndDate] DATETIME NOT NULL,
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 
     [ModifiedOn] DATETIME2 NULL, 
