@@ -71,5 +71,6 @@
 
         // Results - Bulk stage 4 validations
         public const string ResultCannotBeInBeingAppealedStatus = "This learner's results cannot be changed because they are appealing a grade. Please remove this learner and try again.";
+        public const string ResultIsInFinal = "This learner's grade is now final. Please remove this learner and try again.";
     }
 }

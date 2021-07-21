@@ -175,13 +175,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (hasAnyMatchedPathwayResultsToProcess)
             {
                 amendedPathwayResults = matchedPathwayResults.Except(unchangedPathwayResults, pathwayResultComparer).ToList();
-
                 amendedPathwayResults.ForEach(amendedPathwayResult =>
                 {
                     var existingPathwayResult = existingPathwayResultsFromDb.FirstOrDefault(existingPathwayResult => existingPathwayResult.TqPathwayAssessmentId == amendedPathwayResult.TqPathwayAssessmentId);
-
                     if (existingPathwayResult != null)
                     {
+                        var isAppealDatePassed = DateTime.Today > existingPathwayResult.TqPathwayAssessment.AssessmentSeries.EndDate.Date; // TODO:
+                        if (isAppealDatePassed || existingPathwayResult.PrsStatus == PrsStatus.Final)
+                        {
+                            response.ValidationErrors.Add(GetResultValidationError(existingPathwayResult.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.ResultIsInFinal));
+                            return;
+                        }
+
                         // Validation: Result should not be in BeingAppealed Status.
                         if (existingPathwayResult.PrsStatus == PrsStatus.BeingAppealed)
                         {
