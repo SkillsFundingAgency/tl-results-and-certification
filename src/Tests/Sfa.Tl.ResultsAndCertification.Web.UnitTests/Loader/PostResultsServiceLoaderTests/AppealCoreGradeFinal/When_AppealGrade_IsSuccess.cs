@@ -11,6 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 {
     public class When_AppealGrade_IsSuccess : TestSetup
     {
+        private int _newGradeLookupId;
+
         public override void Given()
         {
             ViewModel = new PrsPathwayGradeCheckAndSubmitViewModel
@@ -21,7 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 NewGrade = "A"
             };
 
-            var lookupGrades = new List<LookupData> { new LookupData { Id = 11, Code = "A", Value = "A" } };
+            _newGradeLookupId = 11;
+            var lookupGrades = new List<LookupData> { new LookupData { Id = _newGradeLookupId, Code = "A", Value = "A" } };
             InternalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade).
                 Returns(lookupGrades);
 
@@ -31,6 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                 x.ResultId == ViewModel.ResultId &&
                                 x.ComponentType == ComponentType.Core &&
                                 x.PrsStatus == PrsStatus.Final &&
+                                x.ResultLookupId == _newGradeLookupId &&
                                 x.AoUkprn == AoUkprn &&
                                 x.PerformedBy == $"{Givenname} {Surname}"
                                 ))
@@ -53,6 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                 x.ResultId == ViewModel.ResultId &&
                                 x.ComponentType == ComponentType.Core &&
                                 x.PrsStatus == PrsStatus.Final &&
+                                x.ResultLookupId == _newGradeLookupId &&
                                 x.AoUkprn == AoUkprn &&
                                 x.PerformedBy == $"{Givenname} {Surname}"
                                 ));

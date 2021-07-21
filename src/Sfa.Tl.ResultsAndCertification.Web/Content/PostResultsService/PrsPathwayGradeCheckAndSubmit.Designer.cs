@@ -152,7 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Core (code): {0} grade is final.
+        ///   Looks up a localized string similar to {0} grade is final.
         /// </summary>
         public static string Success_Banner_Message {
             get {

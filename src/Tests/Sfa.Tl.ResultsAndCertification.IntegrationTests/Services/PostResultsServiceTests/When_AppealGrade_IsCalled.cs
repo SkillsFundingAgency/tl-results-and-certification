@@ -29,10 +29,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             CreateMapper();
 
             // Parameters
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> 
-            { 
-                { 1111111111, RegistrationPathwayStatus.Withdrawn }, 
-                { 1111111112, RegistrationPathwayStatus.Active }, 
+            _ulns = new Dictionary<long, RegistrationPathwayStatus>
+            {
+                { 1111111111, RegistrationPathwayStatus.Withdrawn },
+                { 1111111112, RegistrationPathwayStatus.Active },
                 { 1111111113, RegistrationPathwayStatus.Active },
                 { 1111111114, RegistrationPathwayStatus.Active },
             };
@@ -106,6 +106,30 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
 
             // Assert
             _actualResult.Should().Be(expectedResult);
+
+            if (assessment != null)
+            {
+                var latestResult = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessmentId == assessment.Id && x.IsOptedin && x.EndDate == null);
+                if (expectedResult == true)
+                {
+                    latestResult.PrsStatus.Should().Be(request.PrsStatus);
+
+                    if (request.ResultLookupId > 0)
+                    {
+                        var expectedGrade = DbContext.TlLookup.FirstOrDefault(x => x.Id == request.ResultLookupId).Value;
+                        latestResult.TlLookup.Value.Should().Be(expectedGrade);
+                    }
+                }
+                else
+                {
+                    var previousResult = _pathwayResults.FirstOrDefault(x => x.TqPathwayAssessmentId == assessment.Id && x.IsOptedin && x.EndDate == null);
+                    if (previousResult != null)
+                    {
+                        latestResult.PrsStatus.Should().Be(previousResult.PrsStatus);
+                        latestResult.TlLookup.Value.Should().Be(previousResult.TlLookup.Value);
+                    }
+                }
+            }
         }
 
         public static IEnumerable<object[]> Data
@@ -114,7 +138,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             {
                 return new[]
                 {
-                     // Result not-found - returns false
+                    //Result not-found - returns false
                     new object[]
                     { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 999, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.BeingAppealed },
                       false },
@@ -142,17 +166,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                     // Below are the tests to check if request has valid new grade in the cycle. 
                     // CurrentStatus is Null -> Requesting Final
                     new object[]
-                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final },
+                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
                       false },
 
                     // CurrentStatus is BeingAppeal -> Requesting Final
                     new object[]
-                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final },
+                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Final, ResultLookupId = 3 },
                       true },
 
                     // CurrentStatus is BeingAppeal -> Requesting Reviewed
                     new object[]
-                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Reviewed },
+                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Reviewed, ResultLookupId = 3 },
                       false },
                 };
             }

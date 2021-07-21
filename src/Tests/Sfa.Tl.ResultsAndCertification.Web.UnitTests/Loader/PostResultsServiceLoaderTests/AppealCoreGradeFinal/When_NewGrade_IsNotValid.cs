@@ -24,17 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             var lookupGrades = new List<LookupData> { new LookupData { Id = 11, Code = "A", Value = "A" } };
             InternalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade).
                 Returns(lookupGrades);
-
-            InternalApiClient.AppealGradeAsync(Arg.Is<AppealGradeRequest>(x =>
-                                x.ProfileId == ViewModel.ProfileId &&
-                                x.AssessentId == ViewModel.AssessmentId &&
-                                x.ResultId == ViewModel.ResultId &&
-                                x.ComponentType == ComponentType.Core &&
-                                x.PrsStatus == PrsStatus.Final &&
-                                x.AoUkprn == AoUkprn &&
-                                x.PerformedBy == $"{Givenname} {Surname}"
-                                ))
-                .Returns(true);
         }
 
         [Fact]

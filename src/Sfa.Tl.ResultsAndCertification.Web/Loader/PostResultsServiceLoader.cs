@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             
             // Assign new grade lookup id
             var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
-            var newGrade = grades.FirstOrDefault(x => x.Value == model.NewGrade);
+            var newGrade = grades.FirstOrDefault(x => x.Value.Equals(model.NewGrade, StringComparison.InvariantCultureIgnoreCase));
             if (newGrade == null)
                 return false;
             request.ResultLookupId = newGrade.Id;

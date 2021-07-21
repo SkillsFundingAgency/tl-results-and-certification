@@ -148,7 +148,7 @@
     <value>Check the information is correct before submitting the grade.</value>
   </data>
   <data name="Success_Banner_Message" xml:space="preserve">
-    <value>Core (code): {0} grade is final</value>
+    <value>{0} grade is final</value>
   </data>
   <data name="Title_DateofBirth_Text" xml:space="preserve">
     <value>Date of birth</value>
