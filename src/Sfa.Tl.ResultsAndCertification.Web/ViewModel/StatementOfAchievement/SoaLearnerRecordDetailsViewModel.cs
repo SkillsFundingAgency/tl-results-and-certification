@@ -181,17 +181,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             get
             {
-                return (HasLrsEnglishAndMaths, IsEnglishAndMathsAchieved, IsSendLearner == true) switch
+                if (HasLrsEnglishAndMaths)
                 {
-                    (true, false, false) => EnglishAndMathsStatusContent.Lrs_Not_Achieved_Display_Text,
-                    (true, true, false) => EnglishAndMathsStatusContent.Lrs_Achieved_Display_Text,
-                    (true, true, true) => EnglishAndMathsStatusContent.Lrs_Achieved_With_Send_Display_Text,
-
-                    (false, false, false) => EnglishAndMathsStatusContent.Not_Achieved_Display_Text,
-                    (false, true, false) => EnglishAndMathsStatusContent.Achieved_Display_Text,
-                    (false, true, true) => EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text,
-                    _ => string.Empty,
-                };
+                    if (IsEnglishAndMathsAchieved && IsSendLearner == true)
+                    {
+                        return EnglishAndMathsStatusContent.Lrs_Achieved_With_Send_Display_Text;
+                    }
+                    else
+                    {
+                        return IsEnglishAndMathsAchieved && !IsSendLearner.HasValue
+                            ? EnglishAndMathsStatusContent.Lrs_Achieved_Display_Text
+                            : EnglishAndMathsStatusContent.Lrs_Not_Achieved_Display_Text;
+                    }
+                }
+                else
+                {
+                    if (IsEnglishAndMathsAchieved && IsSendLearner == true)
+                    {
+                        return EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text;
+                    }
+                    else if (IsEnglishAndMathsAchieved)
+                    {
+                        return EnglishAndMathsStatusContent.Achieved_Display_Text;
+                    }
+                    else
+                    {
+                        return !IsEnglishAndMathsAchieved ? EnglishAndMathsStatusContent.Not_Achieved_Display_Text : string.Empty;
+                    }
+                }
             }
         }
 
