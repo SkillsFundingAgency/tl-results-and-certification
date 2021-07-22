@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using ResultDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultDetails;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 {
@@ -26,33 +27,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public string PathwayResult { get; set; }
         public int PathwayResultId { get; set; }
         public RegistrationPathwayStatus PathwayStatus { get; set; }
+        public PrsStatus? PathwayPrsStatus { get; set; }
 
         public bool IsValid { get { return PathwayAssessmentId != 0; } }
+        private bool IsValidPathwayPrsStatus => PathwayPrsStatus.HasValue && PathwayPrsStatus != PrsStatus.NotSpecified;
         public bool IsCoreAssessmentEntryAdded { get { return !string.IsNullOrEmpty(PathwayAssessmentSeries); } }
-        private string PathwayResultActionText { get { return !string.IsNullOrWhiteSpace(PathwayResult) ? ResultDetailsContent.Change_Result_Action_Link_Text : ResultDetailsContent.Add_Result_Action_Link_Text; } }
-        private string PathwayResultText { get { return !string.IsNullOrWhiteSpace(PathwayResult) ? PathwayResult : ResultDetailsContent.Not_Received_Text; } }
-        private string PathwayAddResultRoute { get { return !string.IsNullOrWhiteSpace(PathwayResult) ? RouteConstants.ChangeCoreResult : RouteConstants.AddCoreResult; } }
-        private Dictionary<string, string> PathwayResultRouteAttributes { get { return new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() } }; } }
-        private string PathwayActionHiddenText { get { return string.IsNullOrWhiteSpace(PathwayResult) ? ResultDetailsContent.Hidden_Action_Text_For_Core : ResultDetailsContent.Hidden_Action_Text_Core; } }
-
+        
         public SummaryItemModel SummaryAssessmentSeries => new SummaryItemModel
         {
             Id = "assessmentperiod",
             Title = ResultDetailsContent.Title_Assessment_Series,
-            Value = PathwayAssessmentSeries
+            Value = PathwayAssessmentSeries,
+            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus,
+            RenderActionColumn = !IsValidPathwayPrsStatus
         };
 
         public SummaryItemModel SummaryPathwayGrade => new SummaryItemModel
         {
             Id = "pathwaygrade",
             Title = ResultDetailsContent.Title_Pathway_Grade,
-            Value = PathwayResultText, 
-            ActionText = PathwayResultActionText,
-            RouteName = PathwayAddResultRoute,
-            HiddenValueText = ResultDetailsContent.Hidden_Value_Text_For,
-            HiddenActionText = PathwayActionHiddenText,
-            RouteAttributes = PathwayResultRouteAttributes,
-            RenderHiddenActionText = true
+            Value = PathwayResultText,
+            Value2 = IsValidPathwayPrsStatus ? CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus) : null,
+            Value2CustomCssClass = IsValidPathwayPrsStatus ? Constants.TagFloatRightClassName : null,
+            RenderActionColumn = !IsValidPathwayPrsStatus,
+            ActionText = IsValidPathwayPrsStatus ? CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus) : PathwayResultActionText,
+            RouteName = IsValidPathwayPrsStatus ? null : PathwayAddResultRoute,
+            HiddenValueText = IsValidPathwayPrsStatus ? null : ResultDetailsContent.Hidden_Value_Text_For,
+            HiddenActionText = IsValidPathwayPrsStatus ? null : PathwayActionHiddenText,
+            RouteAttributes = IsValidPathwayPrsStatus ? null : PathwayResultRouteAttributes
         };
 
         public BreadcrumbModel Breadcrumb
@@ -71,5 +73,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
                 };
             }
         }
+
+        private string PathwayResultActionText { get { return !string.IsNullOrWhiteSpace(PathwayResult) ? ResultDetailsContent.Change_Result_Action_Link_Text : ResultDetailsContent.Add_Result_Action_Link_Text; } }
+        private string PathwayResultText { get { return !string.IsNullOrWhiteSpace(PathwayResult) ? PathwayResult : ResultDetailsContent.Not_Received_Text; } }
+        private string PathwayAddResultRoute { get { return !string.IsNullOrWhiteSpace(PathwayResult) ? RouteConstants.ChangeCoreResult : RouteConstants.AddCoreResult; } }
+        private Dictionary<string, string> PathwayResultRouteAttributes { get { return new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() } }; } }
+        private string PathwayActionHiddenText { get { return string.IsNullOrWhiteSpace(PathwayResult) ? ResultDetailsContent.Hidden_Action_Text_For_Core : ResultDetailsContent.Hidden_Action_Text_Core; } }
+
     }
 }

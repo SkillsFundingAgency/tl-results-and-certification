@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
@@ -48,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Id = "pathwaygrade",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade,
             Value = PathwayGrade,
-            Value2 = GetPrsStatusDisplayText,
+            Value2 = CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus),
             RenderEmptyRowForValue2 = IsValidPathwayPrsStatus,
             ActionText = PrsLearnerDetailsContent.Action_Link_Update,
             RouteName = GetUpdatePathwayGradeRouteName,
@@ -90,21 +91,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         }
 
         private bool IsValidPathwayPrsStatus => PathwayPrsStatus.HasValue && PathwayPrsStatus != PrsStatus.NotSpecified;
-
-        private string GetPrsStatusDisplayText
-        {
-            get
-            {
-                return PathwayPrsStatus switch
-                {
-                    PrsStatus.BeingAppealed => FormatPrsStatusDisplayHtml(Constants.PurpleTagClassName, PrsStatusContent.Being_Appealed_Display_Text),
-                    PrsStatus.Final => FormatPrsStatusDisplayHtml(Constants.RedTagClassName, PrsStatusContent.Final_Display_Text),
-                    _ => string.Empty,
-                };
-            }
-        }
-
-        private string FormatPrsStatusDisplayHtml(string tagClassName, string statusText) => string.Format(PrsLearnerDetailsContent.PrsStatus_Display_Html, tagClassName, statusText);
 
         private string GetUpdatePathwayGradeRouteName
         {

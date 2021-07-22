@@ -47,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
                 .ForMember(d => d.PathwayResult, opts => opts.MapFrom(s => s.PathwayResult))
                 .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
+                .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Status));
 
             CreateMap<ManageCoreResultViewModel, AddResultRequest>()

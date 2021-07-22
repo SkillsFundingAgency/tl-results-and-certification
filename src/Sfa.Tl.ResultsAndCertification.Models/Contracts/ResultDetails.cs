@@ -25,6 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public string PathwayResultCode { get; set; }
         public string PathwayResult { get; set; }
 
+        public PrsStatus? PathwayPrsStatus { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
     }
 }
