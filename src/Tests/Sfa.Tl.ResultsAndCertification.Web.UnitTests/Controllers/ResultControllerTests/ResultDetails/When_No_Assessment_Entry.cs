@@ -2,16 +2,22 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System;
+using System.Collections.Generic;
 using Xunit;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using ResultDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ResultDetails
 {
-    public class When_Called_With_Withdrawn_Status_Data : TestSetup
+    public class When_No_Assessment_Entry : TestSetup
     {
         private ResultDetailsViewModel _mockResult = null;
+        private Dictionary<string, string> _routeAttributes;
+
         public override void Given()
         {
             _mockResult = new ResultDetailsViewModel
@@ -25,14 +31,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 ProviderUkprn = 1234567891,
                 TlevelTitle = "Tlevel title",
                 PathwayDisplayName = "Pathway (7654321)",
-                PathwayAssessmentSeries = "Summer 2021",
-                PathwayAssessmentId = 11,
-                PathwayResult = "A",
-                PathwayResultId = 123,
-                PathwayStatus = RegistrationPathwayStatus.Withdrawn
+                PathwayStatus = RegistrationPathwayStatus.Active
             };
 
-            ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(_mockResult);
+            _routeAttributes = new Dictionary<string, string>
+            {
+                { Constants.ProfileId, ProfileId.ToString() },
+                { Constants.AssessmentId, _mockResult.PathwayAssessmentId.ToString() }
+            };
+
+            ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_mockResult);
+        }
+
+        [Fact]
+        public void Then_Expected_Methods_AreCalled()
+        {
+            ResultLoader.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active);
         }
 
         [Fact]

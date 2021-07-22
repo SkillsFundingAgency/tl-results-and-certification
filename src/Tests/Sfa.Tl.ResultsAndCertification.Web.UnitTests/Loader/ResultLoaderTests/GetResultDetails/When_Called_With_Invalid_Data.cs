@@ -13,6 +13,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
         }
 
         [Fact]
+        public void Then_Expected_Methods_AreCalled()
+        {
+            InternalApiClient.Received(1).GetResultDetailsAsync(AoUkprn, ProfileId);
+        }
+
+        [Fact]
         public void Then_Returns_Expected_Results()
         {
             ActualResult.Should().BeNull();

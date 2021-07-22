@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         {
             // Parameters
             AoUkprn = 10011881;
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Active }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Withdrawn } };
+            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Active }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Withdrawn }, { 1111111114, RegistrationPathwayStatus.Active } };
 
             // Create mapper
             CreateMapper();
@@ -46,8 +46,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), isLatestActive, isHistoricAssessent));
             }
 
-            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
-            DbContext.SaveChanges();
+            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
+
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+
+            foreach (var assessment in _pathwayAssessments)
+            {
+                var inactiveResultUlns = new List<long> { 1111111112 };
+                var isLatestResultActive = !inactiveResultUlns.Any(x => x == assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber);
+
+                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(new List<TqPathwayAssessment> { assessment }, isLatestResultActive, false));
+            }
+
+            SeedPathwayResultsData(tqPathwayResultsSeedData);
+
+            //DbContext.SaveChanges();
 
             PathwayResultRepositoryLogger = new Logger<GenericRepository<TqPathwayResult>>(new NullLoggerFactory());
             PathwayResultRepository = new GenericRepository<TqPathwayResult>(PathwayResultRepositoryLogger, DbContext);
@@ -128,27 +141,56 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             else
             {
                 expectedPathwayAssessment = _pathwayAssessments.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.IsOptedin && x.EndDate == null);
-            }            
+            }
 
-            var expectedAssessmentDetails = new ResultDetails
+            TqPathwayResult expectedPathwayResult = null;
+
+            if (status == RegistrationPathwayStatus.Withdrawn)
+            {
+                expectedPathwayResult = expectedPathwayAssessment?.TqPathwayResults.FirstOrDefault(x => x.TqPathwayAssessmentId == expectedPathwayAssessment.Id && x.IsOptedin && x.EndDate != null);
+            }
+            else
+            {
+                expectedPathwayResult = expectedPathwayAssessment?.TqPathwayResults.FirstOrDefault(x => x.TqPathwayAssessmentId == expectedPathwayAssessment.Id && x.IsOptedin && x.EndDate == null);
+            }
+
+            var expectedResultDetails = new ResultDetails
             {
                 ProfileId = expectedRegistration.Id,
                 Uln = expectedRegistration.UniqueLearnerNumber,
                 Firstname = expectedRegistration.Firstname,
                 Lastname = expectedRegistration.Lastname,
+                DateofBirth = expectedRegistration.DateofBirth,
+                ProviderName = expectedPathway.TqProvider.TlProvider.Name,
                 ProviderUkprn = expectedPathway.TqProvider.TlProvider.UkPrn,
-                ProviderName = expectedPathway.TqProvider.TlProvider.Name,                
+                TlevelTitle = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
+                PathwayLarId = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                PathwayName = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
+                PathwayAssessmentSeries = expectedPathwayAssessment?.AssessmentSeries?.Name,
+                PathwayAssessmentId = expectedPathwayAssessment?.Id,
+                PathwayResultId = expectedPathwayResult?.Id,
+                PathwayResult = expectedPathwayResult?.TlLookup?.Value,
+                PathwayResultCode = expectedPathwayResult?.TlLookup?.Code,
                 Status = expectedPathway.Status
             };
 
             // Assert
-            _result.ProfileId.Should().Be(expectedAssessmentDetails.ProfileId);
-            _result.Uln.Should().Be(expectedAssessmentDetails.Uln);
-            _result.Firstname.Should().Be(expectedAssessmentDetails.Firstname);
-            _result.Lastname.Should().Be(expectedAssessmentDetails.Lastname);
-            _result.ProviderUkprn.Should().Be(expectedAssessmentDetails.ProviderUkprn);
-            _result.ProviderName.Should().Be(expectedAssessmentDetails.ProviderName);           
-            _result.Status.Should().Be(expectedAssessmentDetails.Status);
+            _result.ProfileId.Should().Be(expectedResultDetails.ProfileId);
+            _result.Uln.Should().Be(expectedResultDetails.Uln);
+            _result.Firstname.Should().Be(expectedResultDetails.Firstname);
+            _result.Lastname.Should().Be(expectedResultDetails.Lastname);
+            _result.DateofBirth.Should().Be(expectedResultDetails.DateofBirth);
+            _result.ProviderName.Should().Be(expectedResultDetails.ProviderName);
+            _result.ProviderUkprn.Should().Be(expectedResultDetails.ProviderUkprn);
+            _result.TlevelTitle.Should().Be(expectedResultDetails.TlevelTitle);
+            _result.PathwayLarId.Should().Be(expectedResultDetails.PathwayLarId);
+            _result.PathwayName.Should().Be(expectedResultDetails.PathwayName);
+            _result.PathwayAssessmentSeries.Should().Be(expectedResultDetails.PathwayAssessmentSeries);
+            _result.PathwayAssessmentId.Should().Be(expectedResultDetails.PathwayAssessmentId);
+            _result.PathwayResultId.Should().Be(expectedResultDetails.PathwayResultId);
+            _result.PathwayResult.Should().Be(expectedResultDetails.PathwayResult);
+            _result.PathwayResultCode.Should().Be(expectedResultDetails.PathwayResultCode);
+            _result.Status.Should().Be(expectedResultDetails.Status);
         }
 
         public static IEnumerable<object[]> Data
@@ -171,6 +213,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
                     // Uln: 1111111113 - Registration(Withdrawn), TqPathwayAssessments(Withdrawn) and TqSpecialismAssessments(Withdrawn)
                     new object[] { 10011881, 1111111113, 3, RegistrationPathwayStatus.Withdrawn, true },
+
+                    // Uln: 1111111114 - Registration(Active), TqPathwayAssessments(Active) and Results
+                    new object[] { 10011881, 1111111114, 4, RegistrationPathwayStatus.Active, true },
                 };
             }
         }

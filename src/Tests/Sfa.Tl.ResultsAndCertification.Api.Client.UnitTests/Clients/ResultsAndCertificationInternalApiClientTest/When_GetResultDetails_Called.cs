@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         private readonly long _ukprn = 12345678;
         private readonly int _profileId = 1;
         private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Active;
-        protected AssessmentDetails _mockHttpResult;
+        protected ResultDetails _mockHttpResult;
 
         private ITokenServiceClient _tokenServiceClient;
         private ResultsAndCertificationConfiguration _configuration;
@@ -35,21 +36,29 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://tlevel.api.com" }
             };
 
-            _mockHttpResult = new AssessmentDetails
+            _mockHttpResult = new ResultDetails
             {
                 ProfileId = 1,
                 Uln = 1234567890,
                 Firstname = "John",
                 Lastname = "Smith",
+                DateofBirth = DateTime.Now.AddYears(-30),
+                TlevelTitle = "Tlevel title",
+                ProviderName = "Test Provider",
                 ProviderUkprn = 1234567,
-                ProviderName = "Test Provider",                
+                PathwayName = "Pathway",
+                PathwayLarId = "7654321",
+                PathwayAssessmentSeries = "Summer 2021",
+                PathwayAssessmentId = 11,
+                PathwayResultId = 123,
+                PathwayResult = "A",
                 Status = RegistrationPathwayStatus.Active
             };
         }
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<AssessmentDetails>(_mockHttpResult, string.Format(ApiConstants.GetResultDetailsUri, _ukprn, _profileId, (int)_registrationPathwayStatus), HttpStatusCode.OK));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<ResultDetails>(_mockHttpResult, string.Format(ApiConstants.GetResultDetailsUri, _ukprn, _profileId, (int)_registrationPathwayStatus), HttpStatusCode.OK));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
@@ -62,11 +71,19 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
         public void Then_Returns_Expected_Results()
         {
             _result.Should().NotBeNull();
+            _result.ProfileId.Should().Be(_mockHttpResult.ProfileId);
             _result.Uln.Should().Be(_mockHttpResult.Uln);
             _result.Firstname.Should().Be(_mockHttpResult.Firstname);
             _result.Lastname.Should().Be(_mockHttpResult.Lastname);
+            _result.DateofBirth.Should().Be(_mockHttpResult.DateofBirth);
             _result.ProviderUkprn.Should().Be(_mockHttpResult.ProviderUkprn);
-            _result.ProviderName.Should().Be(_mockHttpResult.ProviderName);            
+            _result.ProviderName.Should().Be(_mockHttpResult.ProviderName);
+            _result.PathwayName.Should().Be(_mockHttpResult.PathwayName);
+            _result.PathwayLarId.Should().Be(_mockHttpResult.PathwayLarId);
+            _result.PathwayAssessmentSeries.Should().Be(_mockHttpResult.PathwayAssessmentSeries);
+            _result.PathwayAssessmentId.Should().Be(_mockHttpResult.PathwayAssessmentId);
+            _result.PathwayResultId.Should().Be(_mockHttpResult.PathwayResultId);
+            _result.PathwayResult.Should().Be(_mockHttpResult.PathwayResult);
             _result.Status.Should().Be(_mockHttpResult.Status);
         }
     }

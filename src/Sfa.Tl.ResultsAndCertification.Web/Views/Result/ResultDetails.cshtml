@@ -10,36 +10,25 @@
 }
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters result-details">
+    <div class="govuk-grid-column-three-quarters">
 
-        <h1 class="govuk-heading-l">@ResultDetails.Learners_Result_Heading_Text</h1>
-        <h2 class="govuk-heading-m">@string.Format(ResultDetails.Uln_Heading_Text, Model.Uln)</h2>
+        <h1 class="govuk-heading-l">@ResultDetails.Heading_Learners_Results</h1>
+        <h2 class="govuk-heading-m govuk-!-margin-top-7">@ResultDetails.Heading_Learners_Details</h2>
 
-        <p class="govuk-body">@string.Format(ResultDetails.Name_Heading_Text, Model.Name)</p>
-        <p class="govuk-body">@string.Format(ResultDetails.Provider_Heading_Text, Model.ProviderDisplayName)</p>
-        <hr class="govuk-section-break govuk-section-break--visible">
-        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@string.Format(ResultDetails.Core_Heading_Text, Model.PathwayDisplayName)</h3>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">
+            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+            <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+            <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+        </dl>
 
-        @if (Model.IsCoreAssessmentEntryAdded)
-        {
-            <dl class="govuk-summary-list">
-                <vc:summary-item model=Model.SummaryCoreResult></vc:summary-item>
-            </dl>
-        }
-        else
-        {
-            <p class="govuk-inset-text">@ResultDetails.Core_Result_Cannot_Be_Entered</p>
-        }
+        <h2 class="govuk-heading-m">@string.Format(ResultDetails.Heading_Core, Model.PathwayDisplayName)</h2>
 
-        <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-7">
-        <h3 class="govuk-!-font-size-19 govuk-hint govuk-!-margin-top-7 govuk-!-font-weight-bold">@string.Format(ResultDetails.Specialism_Heading_Text, !string.IsNullOrWhiteSpace(Model.SpecialismDisplayName) ? Model.SpecialismDisplayName : ResultDetails.Not_Specified_Text)</h3>
-
-        @if (!string.IsNullOrEmpty(Model.SpecialismDisplayName))
-        {
-            <p class="govuk-inset-text">@ResultDetails.Specialism_Result_Cannot_Be_Entered</p>
-        }
-        <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-7">
-        <p class="govuk-body govuk-!-margin-top-8"><a id="searchAgainLink" class="govuk-link" asp-route="SearchResults">@ResultDetails.Search_Again_Text</a></p>
-
+        <dl class="govuk-summary-list">
+            <vc:summary-item model=Model.SummaryAssessmentSeries></vc:summary-item>
+            <vc:summary-item model=Model.SummaryPathwayGrade></vc:summary-item>
+        </dl>
+        <a id="buttonSearchAgain" class="govuk-button govuk-!-margin-top-7" role="button" asp-route="PrsSearchLearner">@ResultDetails.Button_Search_Again</a>
     </div>
 </div>
