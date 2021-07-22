@@ -144,6 +144,9 @@
   <data name="Hidden_Value_Text_For" xml:space="preserve">
     <value>for </value>
   </data>
+  <data name="Inset_BeingAppealing_Grade_Text" xml:space="preserve">
+    <value>This learner's results cannot be changed because they are appealing a grade.</value>
+  </data>
   <data name="Not_Received_Text" xml:space="preserve">
     <value>Not received</value>
   </data>

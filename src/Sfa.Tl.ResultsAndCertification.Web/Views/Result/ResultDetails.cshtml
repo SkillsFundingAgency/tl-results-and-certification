@@ -13,6 +13,14 @@
     <div class="govuk-grid-column-three-quarters">
 
         <h1 class="govuk-heading-l">@ResultDetails.Heading_Learners_Results</h1>
+
+        @if (Model.IsValidPathwayPrsStatus)
+        {
+            <div class="govuk-inset-text">
+                @ResultDetails.Inset_BeingAppealing_Grade_Text
+            </div>
+        }
+
         <h2 class="govuk-heading-m govuk-!-margin-top-7">@ResultDetails.Heading_Learners_Details</h2>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list--no-border">

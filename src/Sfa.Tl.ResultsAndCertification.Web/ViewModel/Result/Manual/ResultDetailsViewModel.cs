@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public PrsStatus? PathwayPrsStatus { get; set; }
 
         public bool IsValid { get { return PathwayAssessmentId != 0; } }
-        private bool IsValidPathwayPrsStatus => PathwayPrsStatus.HasValue && PathwayPrsStatus != PrsStatus.NotSpecified;
+        public bool IsValidPathwayPrsStatus => PathwayPrsStatus.HasValue && PathwayPrsStatus != PrsStatus.NotSpecified;
         public bool IsCoreAssessmentEntryAdded { get { return !string.IsNullOrEmpty(PathwayAssessmentSeries); } }
         
         public SummaryItemModel SummaryAssessmentSeries => new SummaryItemModel

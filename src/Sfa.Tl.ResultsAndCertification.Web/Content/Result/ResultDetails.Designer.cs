@@ -142,6 +142,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This learner&apos;s results cannot be changed because they are appealing a grade..
+        /// </summary>
+        public static string Inset_BeingAppealing_Grade_Text {
+            get {
+                return ResourceManager.GetString("Inset_BeingAppealing_Grade_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not received.
         /// </summary>
         public static string Not_Received_Text {
