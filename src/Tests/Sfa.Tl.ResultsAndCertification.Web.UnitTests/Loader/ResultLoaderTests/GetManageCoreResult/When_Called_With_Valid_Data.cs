@@ -41,6 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             ActualResult.PathwayDisplayName.Should().Be($"{expectedApiResultDetails.PathwayName} ({expectedApiResultDetails.PathwayLarId})");
             ActualResult.ResultId.Should().BeNull();
             ActualResult.SelectedGradeCode.Should().Be(string.Empty);
+            ActualResult.PathwayPrsStatus.Should().Be(expectedApiResultDetails.PathwayPrsStatus);
+            ActualResult.IsValid.Should().BeTrue();
 
             ActualResult.Grades.Should().NotBeNull();
             ActualResult.Grades.Count.Should().Be(expectedApiLookupData.Count);

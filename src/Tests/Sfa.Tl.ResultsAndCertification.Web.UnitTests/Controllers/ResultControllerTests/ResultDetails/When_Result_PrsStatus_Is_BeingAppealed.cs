@@ -4,6 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ using ResultDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.R
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ResultDetails
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Result_PrsStatus_Is_BeingAppealed : TestSetup
     {
         private ResultDetailsViewModel _mockResult = null;
         private Dictionary<string, string> _routeAttributes;
@@ -34,14 +35,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayAssessmentId = 11,
                 PathwayResult = "A",
-                PathwayResultId = 123, 
+                PathwayResultId = 123,
+                PathwayPrsStatus = PrsStatus.BeingAppealed,
                 PathwayStatus = RegistrationPathwayStatus.Active
             };
 
-            _routeAttributes =  new Dictionary<string, string> 
-            { 
-                { Constants.ProfileId, ProfileId.ToString() }, 
-                { Constants.AssessmentId, _mockResult.PathwayAssessmentId.ToString() } 
+            _routeAttributes = new Dictionary<string, string>
+            {
+                { Constants.ProfileId, ProfileId.ToString() },
+                { Constants.AssessmentId, _mockResult.PathwayAssessmentId.ToString() }
             };
 
             ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_mockResult);
@@ -111,14 +113,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.SummaryPathwayGrade.Should().NotBeNull();
             model.SummaryPathwayGrade.Title.Should().Be(ResultDetailsContent.Title_Pathway_Grade);
             model.SummaryPathwayGrade.Value.Should().Be(_mockResult.PathwayResult);
-            model.SummaryPathwayGrade.Value2.Should().BeNull();
-            model.SummaryPathwayGrade.Value2CustomCssClass.Should().BeNull();
+            model.SummaryPathwayGrade.Value2.Should().Be(CommonHelper.GetPrsStatusDisplayText(_mockResult.PathwayPrsStatus));
+            model.SummaryPathwayGrade.Value2CustomCssClass.Should().Be(Constants.TagFloatRightClassName);
             model.SummaryPathwayGrade.RenderActionColumn.Should().Be(!_mockResult.IsValidPathwayPrsStatus);
-            model.SummaryPathwayGrade.ActionText.Should().Be(ResultDetailsContent.Change_Result_Action_Link_Text);
-            model.SummaryPathwayGrade.RenderHiddenActionText.Should().Be(true);
-            model.SummaryPathwayGrade.HiddenActionText.Should().Be(ResultDetailsContent.Hidden_Action_Text_Core);
-            model.SummaryPathwayGrade.HiddenValueText.Should().Be(ResultDetailsContent.Hidden_Value_Text_For); 
-            model.SummaryPathwayGrade.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
+            model.SummaryPathwayGrade.ActionText.Should().BeNull();
+            model.SummaryPathwayGrade.RouteName.Should().BeNull();
+            model.SummaryPathwayGrade.HiddenActionText.Should().BeNull();
+            model.SummaryPathwayGrade.HiddenValueText.Should().BeNull();
+            model.SummaryPathwayGrade.RouteAttributes.Should().BeNull();
 
             // Breadcrumbs
             model.Breadcrumb.Should().NotBeNull();

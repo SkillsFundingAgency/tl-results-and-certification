@@ -31,6 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.PathwayResultCode, opts =>
                                 opts.MapFrom(s => s.TqPathwayAssessments.Any() && s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.Any() ?
                                 s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.FirstOrDefault().TlLookup.Code : null))
+                .ForMember(d => d.PathwayPrsStatus, opts =>
+                                opts.MapFrom(s => s.TqPathwayAssessments.Any() && s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.Any() ?
+                                s.TqPathwayAssessments.FirstOrDefault().TqPathwayResults.FirstOrDefault().PrsStatus : null))
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status));
         }
     }

@@ -77,5 +77,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
                 return ResourceManager.GetString("Final_Display_Text", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;strong class=&quot;govuk-tag {0}&quot;&gt;{1}&lt;/strong&gt;.
+        /// </summary>
+        public static string PrsStatus_Display_Html {
+            get {
+                return ResourceManager.GetString("PrsStatus_Display_Html", resourceCulture);
+            }
+        }
     }
 }

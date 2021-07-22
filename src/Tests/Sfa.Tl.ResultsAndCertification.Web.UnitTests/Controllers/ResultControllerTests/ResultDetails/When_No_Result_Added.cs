@@ -71,6 +71,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.PathwayAssessmentId.Should().Be(_mockResult.PathwayAssessmentId);
             model.PathwayResult.Should().Be(_mockResult.PathwayResult);
             model.PathwayStatus.Should().Be(_mockResult.PathwayStatus);
+            model.IsValid.Should().Be(_mockResult.IsValid);
+            model.IsValidPathwayPrsStatus.Should().Be(_mockResult.IsValidPathwayPrsStatus);
 
             // Uln
             model.SummaryUln.Title.Should().Be(ResultDetailsContent.Title_Uln_Text);
@@ -100,6 +102,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.SummaryPathwayGrade.Should().NotBeNull();
             model.SummaryPathwayGrade.Title.Should().Be(ResultDetailsContent.Title_Pathway_Grade);
             model.SummaryPathwayGrade.Value.Should().Be(ResultDetailsContent.Not_Received_Text);
+            model.SummaryPathwayGrade.Value2.Should().BeNull();
+            model.SummaryPathwayGrade.Value2CustomCssClass.Should().BeNull();
+            model.SummaryPathwayGrade.RenderActionColumn.Should().Be(!_mockResult.IsValidPathwayPrsStatus);
             model.SummaryPathwayGrade.ActionText.Should().Be(ResultDetailsContent.Add_Result_Action_Link_Text);
             model.SummaryPathwayGrade.RenderHiddenActionText.Should().Be(true);
             model.SummaryPathwayGrade.HiddenActionText.Should().Be(ResultDetailsContent.Hidden_Action_Text_For_Core);

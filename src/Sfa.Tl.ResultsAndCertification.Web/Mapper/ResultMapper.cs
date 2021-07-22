@@ -47,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
                 .ForMember(d => d.PathwayResult, opts => opts.MapFrom(s => s.PathwayResult))
                 .ForMember(d => d.PathwayResultId, opts => opts.MapFrom(s => s.PathwayResultId))
+                .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Status));
 
             CreateMap<ManageCoreResultViewModel, AddResultRequest>()
@@ -64,6 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
                 .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.PathwayResultId))
+                .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus))
                 .ForMember(d => d.SelectedGradeCode, opts => opts.MapFrom(s => s.PathwayResultId.HasValue ? s.PathwayResultCode : string.Empty))
                 .ForMember(d => d.Grades, opts => opts.MapFrom((src, dest, destMember, context) => (IList<LookupData>)context.Items["grades"]));
 

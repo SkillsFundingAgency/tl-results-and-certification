@@ -52,6 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 PathwayAssessmentId = 11,
                 PathwayResultId = 123,
                 PathwayResult = "A",
+                PathwayPrsStatus = PrsStatus.BeingAppealed,
                 Status = RegistrationPathwayStatus.Active
             };
         }
@@ -84,6 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _result.PathwayAssessmentId.Should().Be(_mockHttpResult.PathwayAssessmentId);
             _result.PathwayResultId.Should().Be(_mockHttpResult.PathwayResultId);
             _result.PathwayResult.Should().Be(_mockHttpResult.PathwayResult);
+            _result.PathwayPrsStatus.Should().Be(_mockHttpResult.PathwayPrsStatus);
             _result.Status.Should().Be(_mockHttpResult.Status);
         }
     }

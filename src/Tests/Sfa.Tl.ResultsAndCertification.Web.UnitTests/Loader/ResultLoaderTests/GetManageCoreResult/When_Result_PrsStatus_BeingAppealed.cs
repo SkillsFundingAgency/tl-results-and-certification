@@ -7,12 +7,11 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.GetManageCoreResult
 {
-    public class When_ChangeMode_HasResult : TestSetup
+    public class When_Result_PrsStatus_BeingAppealed : TestSetup
     {
         public override void Given()
         {
             IsChangeMode = true;
-
             expectedApiLookupData = new List<LookupData>
             {
                 new LookupData { Id = 1, Code = "C1", Value = "V1" },
@@ -28,8 +27,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayLarId = "12345678",
                 PathwayName = "Construction",
-                PathwayResultCode = "C1",
                 PathwayResultId = 1,
+                PathwayResult = "A",
+                PathwayResultCode = "PCG2",
+                PathwayPrsStatus = PrsStatus.BeingAppealed
             };
             InternalApiClient.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(expectedApiResultDetails);
         }
@@ -42,9 +43,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             ActualResult.AssessmentId.Should().Be(expectedApiResultDetails.PathwayAssessmentId);
             ActualResult.AssessmentSeries.Should().Be(expectedApiResultDetails.PathwayAssessmentSeries);
             ActualResult.PathwayDisplayName.Should().Be($"{expectedApiResultDetails.PathwayName} ({expectedApiResultDetails.PathwayLarId})");
+            ActualResult.ResultId.Should().Be(expectedApiResultDetails.PathwayResultId);
             ActualResult.SelectedGradeCode.Should().Be(expectedApiResultDetails.PathwayResultCode);
             ActualResult.PathwayPrsStatus.Should().Be(expectedApiResultDetails.PathwayPrsStatus);
-            ActualResult.IsValid.Should().BeTrue();
+            ActualResult.IsValid.Should().BeFalse();
 
             ActualResult.Grades.Should().NotBeNull();
             ActualResult.Grades.Count.Should().Be(expectedApiLookupData.Count);
