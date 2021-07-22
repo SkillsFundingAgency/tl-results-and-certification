@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
             Value2 = IsValidPathwayPrsStatus ? CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus) : null,
             Value2CustomCssClass = IsValidPathwayPrsStatus ? Constants.TagFloatRightClassName : null,
             RenderActionColumn = !IsValidPathwayPrsStatus,
-            ActionText = IsValidPathwayPrsStatus ? CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus) : PathwayResultActionText,
+            ActionText = IsValidPathwayPrsStatus ? null : PathwayResultActionText,
             RouteName = IsValidPathwayPrsStatus ? null : PathwayAddResultRoute,
             HiddenValueText = IsValidPathwayPrsStatus ? null : ResultDetailsContent.Hidden_Value_Text_For,
             HiddenActionText = IsValidPathwayPrsStatus ? null : PathwayActionHiddenText,

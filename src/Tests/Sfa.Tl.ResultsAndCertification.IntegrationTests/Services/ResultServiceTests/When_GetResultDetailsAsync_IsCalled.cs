@@ -49,13 +49,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
 
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
-
+            var profilesWithResultsAndPrsStatus = new List<(long, PrsStatus?)> { (1111111111, null), (1111111112, null), (1111111113, null), (1111111114, PrsStatus.BeingAppealed) };
             foreach (var assessment in _pathwayAssessments)
             {
                 var inactiveResultUlns = new List<long> { 1111111112 };
                 var isLatestResultActive = !inactiveResultUlns.Any(x => x == assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber);
-
-                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(new List<TqPathwayAssessment> { assessment }, isLatestResultActive, false));
+                var prsStatus = profilesWithResultsAndPrsStatus.FirstOrDefault(p => p.Item1 == assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
+                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(new List<TqPathwayAssessment> { assessment }, isLatestResultActive, false, prsStatus));
             }
 
             SeedPathwayResultsData(tqPathwayResultsSeedData);
@@ -171,6 +171,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 PathwayResultId = expectedPathwayResult?.Id,
                 PathwayResult = expectedPathwayResult?.TlLookup?.Value,
                 PathwayResultCode = expectedPathwayResult?.TlLookup?.Code,
+                PathwayPrsStatus = expectedPathwayResult?.PrsStatus,
                 Status = expectedPathway.Status
             };
 
@@ -190,6 +191,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             _result.PathwayResultId.Should().Be(expectedResultDetails.PathwayResultId);
             _result.PathwayResult.Should().Be(expectedResultDetails.PathwayResult);
             _result.PathwayResultCode.Should().Be(expectedResultDetails.PathwayResultCode);
+            _result.PathwayPrsStatus.Should().Be(expectedResultDetails.PathwayPrsStatus);
             _result.Status.Should().Be(expectedResultDetails.Status);
         }
 

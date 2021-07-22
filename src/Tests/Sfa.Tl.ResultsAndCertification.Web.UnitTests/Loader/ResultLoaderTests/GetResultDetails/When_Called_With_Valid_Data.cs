@@ -26,7 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayAssessmentId = 11,
                 PathwayResultId = 123,
-                PathwayResult = "A",         
+                PathwayResult = "A",
+                PathwayPrsStatus = PrsStatus.BeingAppealed,
                 Status = RegistrationPathwayStatus.Active
             };
 
@@ -57,6 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             ActualResult.PathwayAssessmentId.Should().Be(expectedApiResult.PathwayAssessmentId);
             ActualResult.PathwayResult.Should().Be(expectedApiResult.PathwayResult);
             ActualResult.PathwayResultId.Should().Be(expectedApiResult.PathwayResultId);
+            ActualResult.PathwayPrsStatus.Should().Be(expectedApiResult.PathwayPrsStatus);
             ActualResult.PathwayStatus.Should().Be(expectedApiResult.Status);
         }
     }
