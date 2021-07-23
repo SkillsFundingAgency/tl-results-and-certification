@@ -32,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 TlevelTitle = "Tlevel title",
                 PathwayDisplayName = "Pathway (7654321)",
                 PathwayAssessmentSeries = "Summer 2021",
+                AppealEndDate = DateTime.Today.AddDays(7),
                 PathwayAssessmentId = 11,
                 PathwayResult = "A",
                 PathwayResultId = 123, 
@@ -76,6 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.TlevelTitle.Should().Be(_mockResult.TlevelTitle);
             model.PathwayDisplayName.Should().Be(_mockResult.PathwayDisplayName);
             model.PathwayAssessmentSeries.Should().Be(_mockResult.PathwayAssessmentSeries);
+            model.AppealEndDate.Should().Be(_mockResult.AppealEndDate);
             model.PathwayAssessmentId.Should().Be(_mockResult.PathwayAssessmentId);
             model.PathwayResult.Should().Be(_mockResult.PathwayResult);
             model.PathwayStatus.Should().Be(_mockResult.PathwayStatus);

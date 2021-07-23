@@ -1,5 +1,7 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ResultDetailsViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Result
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
+@using Sfa.Tl.ResultsAndCertification.Web.Helpers
 
 @{
     ViewData["Title"] = @ResultDetails.Page_Title;
@@ -17,7 +19,20 @@
         @if (Model.IsValidPathwayPrsStatus)
         {
             <div class="govuk-inset-text">
-                @ResultDetails.Inset_BeingAppealing_Grade_Text
+                @if (!CommonHelper.IsAppealsAllowed(Model.AppealEndDate))
+                {
+                    @ResultDetails.Inset_Appeal_Date_Ended
+                    <a class="govuk-link" asp-route="Contact">@ResultDetails.Contactus_Link</a>@ResultDetails.Fullstop
+                }
+                else if (Model.PathwayPrsStatus == PrsStatus.Final)
+                {
+                    @ResultDetails.Inset_Appeal_Final_Outcome_Recorded
+                    <a class="govuk-link" asp-route="Contact">@ResultDetails.Contactus_Link</a>@ResultDetails.Fullstop
+                }
+                else if (Model.PathwayPrsStatus == PrsStatus.BeingAppealed)
+                {
+                    @ResultDetails.Inset_BeingAppealing_Grade_Text
+                }
             </div>
         }
 

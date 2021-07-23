@@ -3,10 +3,10 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
-using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
-using ResultDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultDetails;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using System;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using ResultDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 {
@@ -32,9 +32,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public DateTime? AppealEndDate { get; set; }
 
         public bool IsValid { get { return PathwayAssessmentId != 0; } }
-        public bool IsValidPathwayPrsStatus => PathwayPrsStatus.HasValue && PathwayPrsStatus != PrsStatus.NotSpecified;
+        public bool IsValidPathwayPrsStatus => (PathwayPrsStatus.HasValue && PathwayPrsStatus != PrsStatus.NotSpecified) || !CommonHelper.IsAppealsAllowed(AppealEndDate);
         public bool IsCoreAssessmentEntryAdded { get { return !string.IsNullOrEmpty(PathwayAssessmentSeries); } }
-        
+
         public SummaryItemModel SummaryAssessmentSeries => new SummaryItemModel
         {
             Id = "assessmentperiod",

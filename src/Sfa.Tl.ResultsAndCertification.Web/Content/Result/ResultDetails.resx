@@ -126,6 +126,12 @@
   <data name="Change_Result_Action_Link_Text" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="Contactus_Link" xml:space="preserve">
+    <value>contact us</value>
+  </data>
+  <data name="Fullstop" xml:space="preserve">
+    <value>.</value>
+  </data>
   <data name="Heading_Core" xml:space="preserve">
     <value>Core (code): {0}</value>
   </data>
@@ -143,6 +149,12 @@
   </data>
   <data name="Hidden_Value_Text_For" xml:space="preserve">
     <value>for </value>
+  </data>
+  <data name="Inset_Appeal_Date_Ended" xml:space="preserve">
+    <value>This result is final, as the appeal end date finished. If you need to change the grade, please</value>
+  </data>
+  <data name="Inset_Appeal_Final_Outcome_Recorded" xml:space="preserve">
+    <value>This result is final, as the outcome of an appeal has been recorded. If you need to change the grade, please</value>
   </data>
   <data name="Inset_BeingAppealing_Grade_Text" xml:space="preserve">
     <value>This learner's results cannot be changed because they are appealing a grade.</value>
