@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using ResultDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultDetails;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 {
@@ -28,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public int PathwayResultId { get; set; }
         public RegistrationPathwayStatus PathwayStatus { get; set; }
         public PrsStatus? PathwayPrsStatus { get; set; }
+        public DateTime? AppealEndDate { get; set; }
 
         public bool IsValid { get { return PathwayAssessmentId != 0; } }
         public bool IsValidPathwayPrsStatus => PathwayPrsStatus.HasValue && PathwayPrsStatus != PrsStatus.NotSpecified;
@@ -42,21 +44,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
             RenderActionColumn = !IsValidPathwayPrsStatus
         };
 
-        public SummaryItemModel SummaryPathwayGrade => new SummaryItemModel
+        public SummaryItemModel SummaryPathwayGrade
         {
-            Id = "pathwaygrade",
-            Title = ResultDetailsContent.Title_Pathway_Grade,
-            Value = PathwayResultText,
-            Value2 = IsValidPathwayPrsStatus ? CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus) : null,
-            Value2CustomCssClass = IsValidPathwayPrsStatus ? Constants.TagFloatRightClassName : null,
-            RenderActionColumn = !IsValidPathwayPrsStatus,
-            ActionText = IsValidPathwayPrsStatus ? null : PathwayResultActionText,
-            RouteName = IsValidPathwayPrsStatus ? null : PathwayAddResultRoute,
-            HiddenValueText = IsValidPathwayPrsStatus ? null : ResultDetailsContent.Hidden_Value_Text_For,
-            HiddenActionText = IsValidPathwayPrsStatus ? null : PathwayActionHiddenText,
-            RouteAttributes = IsValidPathwayPrsStatus ? null : PathwayResultRouteAttributes
-        };
-
+            get
+            {
+                return IsValidPathwayPrsStatus
+                    ? new SummaryItemModel
+                    {
+                        Id = "pathwaygrade",
+                        Title = ResultDetailsContent.Title_Pathway_Grade,
+                        Value = PathwayResultText,
+                        Value2 = CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus, AppealEndDate),
+                        Value2CustomCssClass = Constants.TagFloatRightClassName,
+                    }
+                    : new SummaryItemModel
+                        {
+                            Id = "pathwaygrade",
+                            Title = ResultDetailsContent.Title_Pathway_Grade,
+                            Value = PathwayResultText,
+                            RenderActionColumn = true,
+                            ActionText = PathwayResultActionText,
+                            RouteName = PathwayAddResultRoute,
+                            HiddenValueText = ResultDetailsContent.Hidden_Value_Text_For,
+                            HiddenActionText = PathwayActionHiddenText,
+                            RouteAttributes = PathwayResultRouteAttributes
+                        };
+            }
+        }
+            
         public BreadcrumbModel Breadcrumb
         {
             get

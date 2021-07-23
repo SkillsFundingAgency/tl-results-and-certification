@@ -89,6 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                PathwayCode = tlPathway.LarId,
                                                PathwayAssessmentId = pAssessment.Id,
                                                PathwayAssessmentSeries = pAssessment.AssessmentSeries.Name,
+                                               AppealEndDate = pAssessment.AssessmentSeries.AppealEndDate,
                                                PathwayResultId = pResult.Id,
                                                PathwayGrade = pResult.TlLookup.Value,
                                                PathwayPrsStatus = pResult.PrsStatus,

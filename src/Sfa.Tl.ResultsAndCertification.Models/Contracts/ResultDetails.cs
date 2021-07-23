@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public string PathwayName { get; set; }
         public string PathwayAssessmentSeries { get; set; }
         public int? PathwayAssessmentId { get; set; }
+        public DateTime? AppealEndDate { get; set; }
 
         // Pathway Result
         public int? PathwayResultId { get; set; }
