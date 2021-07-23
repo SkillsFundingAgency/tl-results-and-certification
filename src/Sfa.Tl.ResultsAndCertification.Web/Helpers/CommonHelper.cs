@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
             return appealsEndDate.HasValue && DateTime.Today <= appealsEndDate.Value;
         }
 
-        public static string GetPrsStatusDisplayText(PrsStatus? prsStatus, DateTime? appealsEndDate = null)
+        public static string GetPrsStatusDisplayText(PrsStatus? prsStatus, DateTime? appealsEndDate)
         {
             if (prsStatus == PrsStatus.Final || !IsAppealsAllowed(appealsEndDate))
                 return FormatPrsStatusDisplayHtml(Constants.RedTagClassName, PrsStatusContent.Final_Display_Text);

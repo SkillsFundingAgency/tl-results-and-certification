@@ -33,6 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 TlevelTitle = "Tlevel title",
                 PathwayDisplayName = "Pathway (7654321)",
                 PathwayAssessmentSeries = "Summer 2021",
+                AppealEndDate = DateTime.Today.AddDays(7),
                 PathwayAssessmentId = 11,
                 PathwayResult = "A",
                 PathwayResultId = 123,
@@ -113,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.SummaryPathwayGrade.Should().NotBeNull();
             model.SummaryPathwayGrade.Title.Should().Be(ResultDetailsContent.Title_Pathway_Grade);
             model.SummaryPathwayGrade.Value.Should().Be(_mockResult.PathwayResult);
-            model.SummaryPathwayGrade.Value2.Should().Be(CommonHelper.GetPrsStatusDisplayText(_mockResult.PathwayPrsStatus));
+            model.SummaryPathwayGrade.Value2.Should().Be(CommonHelper.GetPrsStatusDisplayText(_mockResult.PathwayPrsStatus, _mockResult.AppealEndDate));
             model.SummaryPathwayGrade.Value2CustomCssClass.Should().Be(Constants.TagFloatRightClassName);
             model.SummaryPathwayGrade.RenderActionColumn.Should().Be(!_mockResult.IsValidPathwayPrsStatus);
             model.SummaryPathwayGrade.ActionText.Should().BeNull();

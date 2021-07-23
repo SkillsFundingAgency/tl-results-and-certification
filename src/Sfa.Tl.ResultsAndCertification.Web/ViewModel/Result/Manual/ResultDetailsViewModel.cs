@@ -56,13 +56,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
                         Value = PathwayResultText,
                         Value2 = CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus, AppealEndDate),
                         Value2CustomCssClass = Constants.TagFloatRightClassName,
+                        RenderActionColumn = false
                     }
                     : new SummaryItemModel
                         {
                             Id = "pathwaygrade",
                             Title = ResultDetailsContent.Title_Pathway_Grade,
                             Value = PathwayResultText,
-                            RenderActionColumn = true,
                             ActionText = PathwayResultActionText,
                             RouteName = PathwayAddResultRoute,
                             HiddenValueText = ResultDetailsContent.Hidden_Value_Text_For,

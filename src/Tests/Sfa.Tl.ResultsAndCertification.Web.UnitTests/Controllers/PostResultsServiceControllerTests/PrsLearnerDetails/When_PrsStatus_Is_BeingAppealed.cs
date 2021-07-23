@@ -44,6 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 PathwayResultId = 99,
                 PathwayGrade = "B",
                 PathwayPrsStatus = PrsStatus.BeingAppealed,
+                AppealEndDate = DateTime.Today.AddDays(7),
                 PathwayGradeLastUpdatedOn = DateTime.Today.AddDays(-15).ToString(),
                 PathwayGradeLastUpdatedBy = "Barsley User"
             };
@@ -81,6 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.PathwayTitle.Should().Be(_mockLearnerDetails.PathwayTitle);
 
             model.PathwayAssessmentSeries.Should().Be(_mockLearnerDetails.PathwayAssessmentSeries);
+            model.AppealEndDate.Should().Be(_mockLearnerDetails.AppealEndDate);
             model.PathwayResultId.Should().Be(_mockLearnerDetails.PathwayResultId);
             model.PathwayGrade.Should().Be(_mockLearnerDetails.PathwayGrade);
             model.PathwayPrsStatus.Should().Be(_mockLearnerDetails.PathwayPrsStatus);
@@ -118,7 +120,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             // Pathway Grade
             model.SummaryPathwayGrade.Title.Should().Be(LearnerDetailsContent.Title_Pathway_Grade);
             model.SummaryPathwayGrade.Value.Should().Be(_mockLearnerDetails.PathwayGrade);
-            model.SummaryPathwayGrade.Value2.Should().Be(CommonHelper.GetPrsStatusDisplayText(_mockLearnerDetails.PathwayPrsStatus));
+            model.SummaryPathwayGrade.Value2.Should().Be(CommonHelper.GetPrsStatusDisplayText(_mockLearnerDetails.PathwayPrsStatus, _mockLearnerDetails.AppealEndDate));
             model.SummaryPathwayGrade.NeedBorderBottomLine.Should().BeTrue();
             model.SummaryPathwayGrade.RenderEmptyRowForValue2.Should().Be(IsValidPathwayPrsStatus);
             model.SummaryPathwayGrade.RenderActionColumn.Should().BeTrue();
