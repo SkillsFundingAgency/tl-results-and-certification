@@ -84,7 +84,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.IsValid.Should().Be(_mockResult.IsValid);
             model.IsValidPathwayPrsStatus.Should().Be(_mockResult.IsValidPathwayPrsStatus);
 
-
             // Uln
             model.SummaryUln.Title.Should().Be(ResultDetailsContent.Title_Uln_Text);
             model.SummaryUln.Value.Should().Be(_mockResult.Uln.ToString());

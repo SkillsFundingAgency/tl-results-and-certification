@@ -160,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This result is final, as the appeal end date finished. If you need to change the grade, please.
+        ///   Looks up a localized string similar to This result is final and cannot be changed here. If you need to change the grade please.
         /// </summary>
         public static string Inset_Appeal_Date_Ended {
             get {
@@ -169,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This result is final, as the outcome of an appeal has been recorded. If you need to change the grade, please.
+        ///   Looks up a localized string similar to This result is final as the outcome of an appeal has been recorded. If you need to change the grade please.
         /// </summary>
         public static string Inset_Appeal_Final_Outcome_Recorded {
             get {
