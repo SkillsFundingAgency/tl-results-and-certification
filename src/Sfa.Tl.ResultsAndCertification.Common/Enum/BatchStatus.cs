@@ -6,6 +6,6 @@
         Created = 1,
         Accepted = 2,
         Error = 3,
-        Processed = 4
+        Completed = 4
     }
 }

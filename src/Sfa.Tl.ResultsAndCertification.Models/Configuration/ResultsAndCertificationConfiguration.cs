@@ -156,6 +156,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// </value>
         public LearningRecordServiceSettings LearningRecordServiceSettings { get; set; }
 
+        /// <summary>
+        /// Gets or sets the printing API settings.
+        /// </summary>
+        /// <value>
+        /// The printing API settings.
+        /// </value>
+        public PrintingApiSettings PrintingApiSettings { get; set; }
+
         public string KeyVaultUri { get; set; }
     }
 }
