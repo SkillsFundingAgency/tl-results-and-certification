@@ -24,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 PathwayName = "Pathway",
                 PathwayLarId = "7654321",
                 PathwayAssessmentSeries = "Summer 2021",
+                AppealEndDate = DateTime.Today.AddDays(7),
                 PathwayAssessmentId = 11,
                 PathwayResultId = 123,
                 PathwayResult = "A",
@@ -55,6 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             ActualResult.ProviderUkprn.Should().Be(expectedApiResult.ProviderUkprn);
             ActualResult.ProviderDisplayName.Should().Be($"{expectedApiResult.ProviderName}<br/>({expectedApiResult.ProviderUkprn})");
             ActualResult.PathwayAssessmentSeries.Should().Be(expectedApiResult.PathwayAssessmentSeries);
+            ActualResult.AppealEndDate.Should().Be(expectedApiResult.AppealEndDate);
             ActualResult.PathwayAssessmentId.Should().Be(expectedApiResult.PathwayAssessmentId);
             ActualResult.PathwayResult.Should().Be(expectedApiResult.PathwayResult);
             ActualResult.PathwayResultId.Should().Be(expectedApiResult.PathwayResultId);

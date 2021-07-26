@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System;
-using System.Collections.Generic;
 using Xunit;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using ResultDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultDetails;
@@ -17,7 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
     public class When_Result_PrsStatus_Is_BeingAppealed : TestSetup
     {
         private ResultDetailsViewModel _mockResult = null;
-        private Dictionary<string, string> _routeAttributes;
 
         public override void Given()
         {
@@ -39,12 +37,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 PathwayResultId = 123,
                 PathwayPrsStatus = PrsStatus.BeingAppealed,
                 PathwayStatus = RegistrationPathwayStatus.Active
-            };
-
-            _routeAttributes = new Dictionary<string, string>
-            {
-                { Constants.ProfileId, ProfileId.ToString() },
-                { Constants.AssessmentId, _mockResult.PathwayAssessmentId.ToString() }
             };
 
             ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(_mockResult);

@@ -49,6 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 PathwayName = "Pathway",
                 PathwayLarId = "7654321",
                 PathwayAssessmentSeries = "Summer 2021",
+                AppealEndDate = DateTime.Today.AddDays(7),
                 PathwayAssessmentId = 11,
                 PathwayResultId = 123,
                 PathwayResult = "A",
@@ -82,6 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _result.PathwayName.Should().Be(_mockHttpResult.PathwayName);
             _result.PathwayLarId.Should().Be(_mockHttpResult.PathwayLarId);
             _result.PathwayAssessmentSeries.Should().Be(_mockHttpResult.PathwayAssessmentSeries);
+            _result.AppealEndDate.Should().Be(_mockHttpResult.AppealEndDate);
             _result.PathwayAssessmentId.Should().Be(_mockHttpResult.PathwayAssessmentId);
             _result.PathwayResultId.Should().Be(_mockHttpResult.PathwayResultId);
             _result.PathwayResult.Should().Be(_mockHttpResult.PathwayResult);

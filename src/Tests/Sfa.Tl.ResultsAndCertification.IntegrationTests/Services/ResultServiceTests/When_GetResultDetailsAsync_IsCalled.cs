@@ -167,6 +167,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 PathwayLarId = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                 PathwayName = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                 PathwayAssessmentSeries = expectedPathwayAssessment?.AssessmentSeries?.Name,
+                AppealEndDate = expectedPathwayAssessment?.AssessmentSeries?.AppealEndDate,
                 PathwayAssessmentId = expectedPathwayAssessment?.Id,
                 PathwayResultId = expectedPathwayResult?.Id,
                 PathwayResult = expectedPathwayResult?.TlLookup?.Value,
@@ -187,6 +188,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             _result.PathwayLarId.Should().Be(expectedResultDetails.PathwayLarId);
             _result.PathwayName.Should().Be(expectedResultDetails.PathwayName);
             _result.PathwayAssessmentSeries.Should().Be(expectedResultDetails.PathwayAssessmentSeries);
+            _result.AppealEndDate.Should().Be(expectedResultDetails.AppealEndDate);
             _result.PathwayAssessmentId.Should().Be(expectedResultDetails.PathwayAssessmentId);
             _result.PathwayResultId.Should().Be(expectedResultDetails.PathwayResultId);
             _result.PathwayResult.Should().Be(expectedResultDetails.PathwayResult);
