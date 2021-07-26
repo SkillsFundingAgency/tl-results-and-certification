@@ -4,31 +4,20 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using Xunit;
-using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ChangeCoreResultGet
 {
-    public class When_Result_Has_PrsStatus_BeingAppealed : TestSetup
+    public class When_AppealEndDate_Completed : TestSetup
     {
         private ManageCoreResultViewModel _mockresult = null;
-        private List<LookupViewModel> grades;
 
         public override void Given()
         {
-            grades = new List<LookupViewModel> { new LookupViewModel { Id = 1, Code = "C1", Value = "V1" }, new LookupViewModel { Id = 2, Code = "C2", Value = "V2" } };
             _mockresult = new ManageCoreResultViewModel
             {
-                ProfileId = 1,
-                PathwayDisplayName = "Pathway (7654321)",
-                AssessmentSeries = "Summer 2021",
-                AssessmentId = 11,
-                ResultId = 111,
-                SelectedGradeCode = string.Empty,
-                Grades = grades,
-                AppealEndDate = DateTime.Today.AddDays(7),
-                PathwayPrsStatus = Common.Enum.PrsStatus.BeingAppealed
+                AppealEndDate = DateTime.Today.AddDays(-7),
+                PathwayPrsStatus = null
             };
 
             ResultLoader.GetManageCoreResultAsync(AoUkprn, ProfileId, AssessmentId, true).Returns(_mockresult);

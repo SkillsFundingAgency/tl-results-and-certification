@@ -11,7 +11,7 @@ using ResultDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.R
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ResultDetails
 {
-    public class When_AppealEndDate_Completed : TestSetup
+    public class When_HasActiveResult_AppealDate_Ended : TestSetup
     {
         private ResultDetailsViewModel _mockResult = null;
 
@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             {
                 PathwayStatus = RegistrationPathwayStatus.Active,
 
+                PathwayResultId = 1,
                 PathwayAssessmentId = 11,
                 PathwayResult = "A",
                 AppealEndDate = DateTime.Today.AddDays(-7),
@@ -42,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.SummaryPathwayGrade.Value.Should().Be(_mockResult.PathwayResult);
             model.SummaryPathwayGrade.Value2.Should().Be(CommonHelper.GetPrsStatusDisplayText(_mockResult.PathwayPrsStatus, _mockResult.AppealEndDate));
             model.SummaryPathwayGrade.Value2CustomCssClass.Should().Be(Constants.TagFloatRightClassName);
-            model.SummaryPathwayGrade.RenderActionColumn.Should().Be(!_mockResult.IsValidPathwayPrsStatus);
+            model.SummaryPathwayGrade.RenderActionColumn.Should().Be(_mockResult.IsResultAddOrChangeAllowed);
             model.SummaryPathwayGrade.ActionText.Should().BeNull();
             model.SummaryPathwayGrade.RouteName.Should().BeNull();
             model.SummaryPathwayGrade.HiddenActionText.Should().BeNull();

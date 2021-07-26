@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using Xunit;
 using System.Collections.Generic;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ChangeCoreResultGet
 {
@@ -23,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
                 ProfileId = 1,
                 PathwayDisplayName = "Pathway (7654321)",
                 AssessmentSeries = "Summer 2021",
+                AppealEndDate = DateTime.Today.AddDays(7),
                 AssessmentId = 11,
                 ResultId = 111,
                 SelectedGradeCode = string.Empty,
@@ -55,6 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.PathwayDisplayName.Should().Be(_mockResult.PathwayDisplayName);
             model.AssessmentId.Should().Be(_mockResult.AssessmentId);
             model.AssessmentSeries.Should().Be(_mockResult.AssessmentSeries);
+            model.AppealEndDate.Should().Be(_mockResult.AppealEndDate);
             model.ResultId.Should().Be(_mockResult.ResultId);
             model.SelectedGradeCode.Should().Be(_mockResult.SelectedGradeCode);
 

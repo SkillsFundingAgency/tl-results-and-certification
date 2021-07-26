@@ -16,22 +16,22 @@
 
         <h1 class="govuk-heading-l">@ResultDetails.Heading_Learners_Results</h1>
 
-        @if (Model.IsValidPathwayPrsStatus)
+        @if (!Model.IsResultAddOrChangeAllowed)
         {
             <div class="govuk-inset-text">
-                @if (!CommonHelper.IsAppealsAllowed(Model.AppealEndDate))
+                @if (Model.PathwayPrsStatus == PrsStatus.BeingAppealed)
                 {
-                    @ResultDetails.Inset_Appeal_Date_Ended
-                    <a class="govuk-link" asp-route="Contact">@ResultDetails.Contactus_Link</a>@ResultDetails.Fullstop
+                    @ResultDetails.Inset_BeingAppealing_Grade_Text
                 }
                 else if (Model.PathwayPrsStatus == PrsStatus.Final)
                 {
                     @ResultDetails.Inset_Appeal_Final_Outcome_Recorded
-                    <a class="govuk-link" asp-route="Contact">@ResultDetails.Contactus_Link</a>@ResultDetails.Fullstop
+                    <a class="govuk-link" asp-route="">@ResultDetails.Contactus_Link</a>@ResultDetails.Fullstop
                 }
-                else if (Model.PathwayPrsStatus == PrsStatus.BeingAppealed)
+                else
                 {
-                    @ResultDetails.Inset_BeingAppealing_Grade_Text
+                    @ResultDetails.Inset_Appeal_Date_Ended
+                    <a class="govuk-link" asp-route="">@ResultDetails.Contactus_Link</a>@ResultDetails.Fullstop
                 }
             </div>
         }

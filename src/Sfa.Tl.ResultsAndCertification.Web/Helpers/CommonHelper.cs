@@ -24,12 +24,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
 
         public static string GetPrsStatusDisplayText(PrsStatus? prsStatus, DateTime? appealsEndDate)
         {
-            if (prsStatus == PrsStatus.Final || !IsAppealsAllowed(appealsEndDate))
-                return FormatPrsStatusDisplayHtml(Constants.RedTagClassName, PrsStatusContent.Final_Display_Text);
-            
             if (prsStatus == PrsStatus.BeingAppealed)
                 return FormatPrsStatusDisplayHtml(Constants.PurpleTagClassName, PrsStatusContent.Being_Appealed_Display_Text);
 
+            if (prsStatus == PrsStatus.Final || !IsAppealsAllowed(appealsEndDate))
+                return FormatPrsStatusDisplayHtml(Constants.RedTagClassName, PrsStatusContent.Final_Display_Text);
+            
             return string.Empty;
         }
 

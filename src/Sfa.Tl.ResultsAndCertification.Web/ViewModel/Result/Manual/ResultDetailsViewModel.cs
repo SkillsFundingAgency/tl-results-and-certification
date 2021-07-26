@@ -32,7 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public DateTime? AppealEndDate { get; set; }
 
         public bool IsValid { get { return PathwayAssessmentId != 0; } }
-        public bool IsValidPathwayPrsStatus => (PathwayPrsStatus.HasValue && PathwayPrsStatus != PrsStatus.NotSpecified) || !CommonHelper.IsAppealsAllowed(AppealEndDate);
+        public bool IsResultAddOrChangeAllowed => PathwayResultId == 0 || 
+            ((!PathwayPrsStatus.HasValue || PathwayPrsStatus.Value == PrsStatus.NotSpecified) && CommonHelper.IsAppealsAllowed(AppealEndDate));
         public bool IsCoreAssessmentEntryAdded { get { return !string.IsNullOrEmpty(PathwayAssessmentSeries); } }
 
         public SummaryItemModel SummaryAssessmentSeries => new SummaryItemModel
@@ -40,16 +41,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
             Id = "assessmentperiod",
             Title = ResultDetailsContent.Title_Assessment_Series,
             Value = PathwayAssessmentSeries,
-            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus,
-            RenderActionColumn = !IsValidPathwayPrsStatus
+            RenderEmptyRowForValue2 = !IsResultAddOrChangeAllowed,
+            RenderActionColumn = IsResultAddOrChangeAllowed
         };
 
         public SummaryItemModel SummaryPathwayGrade
         {
             get
             {
-                return IsValidPathwayPrsStatus
+                return IsResultAddOrChangeAllowed
                     ? new SummaryItemModel
+                    {
+                        Id = "pathwaygrade",
+                        Title = ResultDetailsContent.Title_Pathway_Grade,
+                        Value = PathwayResultText,
+                        ActionText = PathwayResultActionText,
+                        RouteName = PathwayAddResultRoute,
+                        HiddenValueText = ResultDetailsContent.Hidden_Value_Text_For,
+                        HiddenActionText = PathwayActionHiddenText,
+                        RouteAttributes = PathwayResultRouteAttributes
+                    }
+                    : new SummaryItemModel
                     {
                         Id = "pathwaygrade",
                         Title = ResultDetailsContent.Title_Pathway_Grade,
@@ -57,18 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
                         Value2 = CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus, AppealEndDate),
                         Value2CustomCssClass = Constants.TagFloatRightClassName,
                         RenderActionColumn = false
-                    }
-                    : new SummaryItemModel
-                        {
-                            Id = "pathwaygrade",
-                            Title = ResultDetailsContent.Title_Pathway_Grade,
-                            Value = PathwayResultText,
-                            ActionText = PathwayResultActionText,
-                            RouteName = PathwayAddResultRoute,
-                            HiddenValueText = ResultDetailsContent.Hidden_Value_Text_For,
-                            HiddenActionText = PathwayActionHiddenText,
-                            RouteAttributes = PathwayResultRouteAttributes
-                        };
+                    };
             }
         }
             
