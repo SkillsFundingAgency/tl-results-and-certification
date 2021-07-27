@@ -34,10 +34,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<IList<PrintRequest>> GetPendingPrintRequestsAsync()
         {
-            //var batches = await _printCertificateRepository.GetManyAsync(b => b.PrintBatchItem.Batch.Status == BatchStatus.Created, b => b.TqRegistrationPathway.TqRegistrationProfile, b => b.PrintBatchItem,
-            //    b => b.PrintBatchItem.Batch, b => b.PrintBatchItem.TlProviderAddress, b => b.PrintBatchItem.TlProviderAddress.TlProvider, b => b.PrintBatchItem.TlProviderAddress).Select(x => x.PrintBatchItem.Batch).ToListAsync();
-
             var batches = await _printingRepository.GetPendingPrintRequestAsync();
+            
             if (batches == null) return null;
 
             return _mapper.Map<IList<PrintRequest>>(batches);

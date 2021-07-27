@@ -83,7 +83,7 @@
         public const string PlrServiceUri = "/LearnerServiceR9.svc";
 
         // Printing Api Uri's
-        public const string PrintingTokenUri = "/api/DFE/Token?username{0}&password={1}";
+        public const string PrintingTokenUri = "/api/DFE/Token?username={0}&password={1}";
         public const string PrintRequestUri = "/api/DFE/PrintRequest?token={0}";
         public const string PrintBatchSummaryRequestUri = "/api/DFE/BatchSummary?batchNumber={0}&token={1}";
         public const string PrintTrackBatchRequestUri = "/api/DFE/BatchSummary?batchNumber={0}&token={1}";

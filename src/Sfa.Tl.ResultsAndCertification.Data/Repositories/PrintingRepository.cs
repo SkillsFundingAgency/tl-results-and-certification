@@ -31,6 +31,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Include(x => x.PrintBatchItems)
                     .ThenInclude(x => x.TlProviderAddress)
                         .ThenInclude(x => x.TlProvider)
+                .Include(x => x.PrintBatchItems)
+                    .ThenInclude(x => x.PrintCertificates)
+                        .ThenInclude(x => x.TqRegistrationPathway)
+                            .ThenInclude(x => x.TqRegistrationProfile)
                 .ToListAsync();
             return batches;
         }

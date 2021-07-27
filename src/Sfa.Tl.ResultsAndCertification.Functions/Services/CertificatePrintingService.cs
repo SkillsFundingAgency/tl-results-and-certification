@@ -17,10 +17,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
     {
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        private readonly IPrinitingApiClient _printingApiClient;
+        private readonly IPrintingApiClient _printingApiClient;
         private readonly IPrintingService _printingService;
 
-        public CertificatePrintingService(IMapper mapper, ILogger<ICertificatePrintingService> logger, IPrinitingApiClient printingApiClient, IPrintingService printingService)
+        public CertificatePrintingService(IMapper mapper, ILogger<ICertificatePrintingService> logger, IPrintingApiClient printingApiClient, IPrintingService printingService)
         {
             _mapper = mapper;
             _logger = logger;
@@ -42,14 +42,14 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
             var printRequestResponses = new List<PrintRequestResponse>();
 
-            //// post data api and get respone
-            //foreach (var pendingPrintRequest in pendingPrintRequests)
-            //{
-            //    var printRequestResponse = await _printingApiClient.ProcessPrintRequestAsync(pendingPrintRequest);
+            // post data api and get respone
+            foreach (var pendingPrintRequest in pendingPrintRequests)
+            {
+                var printResponse = await _printingApiClient.ProcessPrintRequestAsync(pendingPrintRequest);
 
-            //    if (printRequestResponse != null)
-            //        printRequestResponses.Add(printRequestResponse);
-            //}
+                if (printResponse != null)
+                    printRequestResponses.Add(printResponse.PrintRequestResponse);
+            }
 
             // update batch based on response -- service call to update
             var response = await _printingService.UpdatePrintReqeustResponsesAsync(printRequestResponses);

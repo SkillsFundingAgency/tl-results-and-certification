@@ -13,11 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
     {
         public PrintingServiceMapper()
         {
-            CreateMap<Batch, PrintRequest>()
-                //.ForMember(d => d.Batch.BatchNumber, opts => opts.MapFrom(s => s.Id))
-                //.ForMember(d => d.Batch.BatchDate, opts => opts.MapFrom(s => s.CreatedOn))
-                //.ForMember(d => d.Batch.PostalContactCount, opts => opts.MapFrom(s => s.PrintBatchItems.Count))
-                //.ForMember(d => d.Batch.TotalCertificateCount, opts => opts.MapFrom(s => s.PrintBatchItems.Sum(x => x.PrintCertificates.Count)))
+            CreateMap<Batch, PrintRequest>()                
                 .ForMember(d => d.Batch, opts => opts.MapFrom(s => s))
                 .ForMember(d => d.PrintData, opts => opts.MapFrom(s => s.PrintBatchItems));
 
@@ -28,7 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.TotalCertificateCount, opts => opts.MapFrom(s => s.PrintBatchItems.Sum(x => x.PrintCertificates.Count)));
 
             CreateMap<PrintBatchItem, PrintData>()
-                //.ForMember(d => d.PostalContact, opts => opts.MapFrom(s => s.TlProviderAddress))
                 .ForMember(d => d.PostalContact, opts => opts.MapFrom(s => s))
                 .ForMember(d => d.Certificates, opts => opts.MapFrom(s => s.PrintCertificates));
 
@@ -41,17 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.AddressLine2, opts => opts.MapFrom(s => s.TlProviderAddress.AddressLine2 ?? string.Empty))
                 .ForMember(d => d.Town, opts => opts.MapFrom(s => s.TlProviderAddress.Town ?? string.Empty))
                 .ForMember(d => d.Postcode, opts => opts.MapFrom(s => s.TlProviderAddress.Postcode))
-                .ForMember(d => d.CertificateCount, opts => opts.MapFrom(s => s.PrintCertificates.Count));
-
-            //CreateMap<TlProviderAddress, PostalContact>()
-            //    .ForMember(d => d.DepartmentName, opts => opts.MapFrom(s => s.DepartmentName))
-            //    .ForMember(d => d.Name, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.OrganisationName) ? s.OrganisationName : s.TlProvider.Name))
-            //    .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.TlProvider.Name))
-            //    .ForMember(d => d.UKPRN, opts => opts.MapFrom(s => s.TlProvider.UkPrn))
-            //    .ForMember(d => d.AddressLine1, opts => opts.MapFrom(s => s.AddressLine1))
-            //    .ForMember(d => d.AddressLine2, opts => opts.MapFrom(s => s.AddressLine2))
-            //    .ForMember(d => d.Town, opts => opts.MapFrom(s => s.Town))
-            //    .ForMember(d => d.Postcode, opts => opts.MapFrom(s => s.Postcode));
+                .ForMember(d => d.CertificateCount, opts => opts.MapFrom(s => s.PrintCertificates.Count));            
 
             CreateMap<PrintCertificate, Certificate>()
                 .ForMember(d => d.CertificateNumber, opts => opts.MapFrom(s => s.CertificateNumber))

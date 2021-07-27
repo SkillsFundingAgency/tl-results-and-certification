@@ -12,19 +12,19 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 {
-    public class PrinitingApiClient : IPrinitingApiClient
+    public class PrintingApiClient : IPrintingApiClient
     {
         private readonly HttpClient _httpClient;
         private readonly string _printingApiUri;
         private ResultsAndCertificationConfiguration _configuration;
 
-        public PrinitingApiClient(HttpClient httpClient, ResultsAndCertificationConfiguration configuration)
+        public PrintingApiClient(HttpClient httpClient, ResultsAndCertificationConfiguration configuration)
         {
             _httpClient = httpClient;
             _configuration = configuration;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _printingApiUri = configuration.ResultsAndCertificationInternalApiSettings.Uri.TrimEnd('/');
+            _printingApiUri = configuration.PrintingApiSettings.Uri.TrimEnd('/');
             _httpClient.BaseAddress = new Uri(_printingApiUri);
         }
 
@@ -33,14 +33,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var requestUri = string.Format(ApiConstants.PrintingTokenUri, _configuration.PrintingApiSettings.Username, _configuration.PrintingApiSettings.Password);
             var tokenResponse = await GetAsync<string>(requestUri);
             var tokenResult = JObject.Parse(tokenResponse);
-            return tokenResult.HasValues ? tokenResult.SelectToken("id").ToString() : null;
+            return tokenResult.HasValues ? tokenResult.SelectToken("Token")?.ToString() : null;
         }
 
-        public async Task<PrintRequestResponse> ProcessPrintRequestAsync(PrintRequest printRequest)
+        public async Task<PrintResponse> ProcessPrintRequestAsync(PrintRequest printRequest)
         {
             var token = await GetTokenAsync();
             var requestUri = string.Format(ApiConstants.PrintRequestUri, token);
-            return await PostAsync<PrintRequest, PrintRequestResponse>(requestUri, printRequest);
+            return await PostAsync<PrintRequest, PrintResponse>(requestUri, printRequest);
         }
 
         public async Task<BatchSummaryResponse> GetBatchSummaryInfoAsync(int batchNumber)
@@ -72,9 +72,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         private async Task<TResponse> PostAsync<TRequest, TResponse>(string requestUri, TRequest content)
         {
-            var response = await _httpClient.PostAsync(requestUri, CreateHttpContent<TRequest>(content));
+            var response = await _httpClient.PostAsync(requestUri, CreateHttpContent(content));
             response.EnsureSuccessStatusCode();
-            return JsonConvert.DeserializeObject<TResponse>(await response.Content.ReadAsStringAsync());
+            var result = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<TResponse>(result);
         }
 
         /// <summary>
@@ -86,7 +87,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         private HttpContent CreateHttpContent<T>(T content)
         {
             var json = JsonConvert.SerializeObject(content, IsoDateFormatSettings);
-            return new StringContent(json, Encoding.UTF8, "application/json");
+            var result = new StringContent(json, Encoding.UTF8, "application/json");
+            return result;
         }
 
         /// <summary>
