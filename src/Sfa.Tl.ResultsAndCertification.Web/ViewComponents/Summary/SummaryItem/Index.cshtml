@@ -30,7 +30,7 @@
         <dd class="govuk-summary-list__value @Model.BorderBottomCssClass">
             @if (!string.IsNullOrWhiteSpace(Model.Value2))
             {
-                <p class="govuk-body">@Html.Raw(Model?.Value2)</p>
+                <p class="govuk-body @Model.Value2CustomCssClass">@Html.Raw(Model?.Value2)</p>
             }
         </dd>
     }

@@ -1,8 +1,10 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using System;
 using System.Collections.Generic;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using PrsLearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsLearnerDetails;
@@ -29,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public int PathwayAssessmentId { get; set; }
         public string PathwayAssessmentSeries { get; set; }
+        public DateTime AppealEndDate { get; set; }
         public int PathwayResultId { get; set; }
         public string PathwayGrade { get; set; }
         public PrsStatus? PathwayPrsStatus { get; set; }
@@ -48,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Id = "pathwaygrade",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade,
             Value = PathwayGrade,
-            Value2 = GetPrsStatusDisplayText,
+            Value2 = CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus, AppealEndDate),
             RenderEmptyRowForValue2 = IsValidPathwayPrsStatus,
             ActionText = PrsLearnerDetailsContent.Action_Link_Update,
             RouteName = GetUpdatePathwayGradeRouteName,
@@ -90,21 +93,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         }
 
         private bool IsValidPathwayPrsStatus => PathwayPrsStatus.HasValue && PathwayPrsStatus != PrsStatus.NotSpecified;
-
-        private string GetPrsStatusDisplayText
-        {
-            get
-            {
-                return PathwayPrsStatus switch
-                {
-                    PrsStatus.BeingAppealed => FormatPrsStatusDisplayHtml(Constants.PurpleTagClassName, PrsStatusContent.Being_Appealed_Display_Text),
-                    PrsStatus.Final => FormatPrsStatusDisplayHtml(Constants.RedTagClassName, PrsStatusContent.Final_Display_Text),
-                    _ => string.Empty,
-                };
-            }
-        }
-
-        private string FormatPrsStatusDisplayHtml(string tagClassName, string statusText) => string.Format(PrsLearnerDetailsContent.PrsStatus_Display_Html, tagClassName, statusText);
 
         private string GetUpdatePathwayGradeRouteName
         {

@@ -9,13 +9,16 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsServiceLoaderTests.FindPrsLearnerRecord
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_Called_With_ProfileId : TestSetup
     {
         private Models.Contracts.PostResultsService.FindPrsLearnerRecord _expectedApiResult;
         private IList<PrsAssessment> _pathwayAssessments;
 
         public override void Given()
         {
+            ProfileId = 1;
+            Uln = null;
+
             _pathwayAssessments = new List<PrsAssessment>
             {
                 new PrsAssessment { AssessmentId = 11, SeriesName = "Summer 2021", HasResult = true },
@@ -34,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 Status = RegistrationPathwayStatus.Active,
                 PathwayAssessments = _pathwayAssessments
             };
-            InternalApiClient.FindPrsLearnerRecordAsync(AoUkprn, Uln).Returns(_expectedApiResult);
+            InternalApiClient.FindPrsLearnerRecordAsync(AoUkprn, Uln, ProfileId).Returns(_expectedApiResult);
         }
 
         [Fact]
@@ -63,6 +66,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 ActualResult.PathwayAssessments.ElementAt(i).SeriesName.Should().Be(_pathwayAssessments[i].SeriesName);
                 ActualResult.PathwayAssessments.ElementAt(i).HasResult.Should().Be(_pathwayAssessments[i].HasResult);
             }
+        }
+
+        [Fact]
+        public void Then_Expected_Method_Is_Called()
+        {
+            InternalApiClient.Received(1).FindPrsLearnerRecordAsync(AoUkprn, Uln, ProfileId);
         }
     }
 }

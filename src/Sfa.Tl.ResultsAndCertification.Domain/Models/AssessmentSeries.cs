@@ -9,6 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public int Year { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public DateTime AppealEndDate { get; set; }
 
         //public virtual TlAwardingOrganisation TlAwardingOrganisation { get; set; }
     }

@@ -45,7 +45,7 @@
         public const string AtleastOneEntryRequired = "File must contain at least one ULN on one row";
         public const string NoDataAfterUln = "No data after ULN - need at least one core code or one specialism code";
 
-        // Assesments - Bulk stage 3 validsions
+        // Assesments - Bulk stage 3 validations
         public const string UlnNotRegistered = "ULN not registered with awarding organisation";
         public const string CannotAddAssessmentToWithdrawnRegistration = "Cannot add assessment entries to a withdrawn registration";
         public const string InvalidCoreCode = "Core code either not recognised or not registered for this ULN";
@@ -61,12 +61,16 @@
         public const string InvalidCoreAssessmentSeries = "Core assessment series format must be text followed by a space and a 4-digit year";
         public const string NoDataAfterUlnNeedCoreCode = "No data after ULN - need a core component code";
 
-        // Results - Bulk stage 3 validsions
+        // Results - Bulk stage 3 validations
         public const string CannotAddResultToWithdrawnRegistration = "Cannot add results to a withdrawn registration";
         public const string InvalidCoreComponentCode = "Core component code either not recognised or not registered for this ULN";
         public const string InvalidCoreAssessmentSeriesEntry = "Assessment series does not exist - see results data format and rules guide for examples of valid series";
         public const string NoCoreAssessmentEntryCurrentlyActive = "No assessment entry is currently active for the core component on this registration - needs adding first through assessment entries file upload or manual entry";
         public const string AssessmentSeriesDoesNotMatchTheSeriesOnTheRegistration = "Assessment series does not match the series on the registration";
         public const string InvalidCoreComponentGrade = "Core component grade not valid - needs to be A* to E, or Unclassified";
+
+        // Results - Bulk stage 4 validations
+        public const string ResultCannotBeInBeingAppealedStatus = "This learner's results cannot be changed because they are appealing a grade. Please remove this learner and try again.";
+        public const string ResultIsInFinal = "This learner's grade is now final. Please remove this learner and try again.";
     }
 }

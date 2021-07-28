@@ -123,4 +123,7 @@
   <data name="Final_Display_Text" xml:space="preserve">
     <value>Final</value>
   </data>
+  <data name="PrsStatus_Display_Html" xml:space="preserve">
+    <value>&lt;strong class="govuk-tag {0}"&gt;{1}&lt;/strong&gt;</value>
+  </data>
 </root>

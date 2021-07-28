@@ -147,8 +147,14 @@
   <data name="Para_Check_Information_Is_Correct" xml:space="preserve">
     <value>Check the information is correct before submitting the grade.</value>
   </data>
+  <data name="Success_Banner_Message" xml:space="preserve">
+    <value>{0} grade is final</value>
+  </data>
   <data name="Title_DateofBirth_Text" xml:space="preserve">
     <value>Date of birth</value>
+  </data>
+  <data name="Title_ExamPeriod_Text" xml:space="preserve">
+    <value>Exam Period</value>
   </data>
   <data name="Title_Name_Text" xml:space="preserve">
     <value>Name</value>
