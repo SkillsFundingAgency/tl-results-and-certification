@@ -6,6 +6,7 @@
         UnderReview = 1,
         Reviewed = 2,
         BeingAppealed = 3,
-        Final = 4
+        Final = 4,
+        Withdraw = 5
     };
 }

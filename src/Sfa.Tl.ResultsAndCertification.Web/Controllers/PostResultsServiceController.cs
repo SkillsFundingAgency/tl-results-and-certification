@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
@@ -87,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else if (prsLearnerRecord.HasMultipleAssessments)
             {
-                return RedirectToRoute(RouteConstants.PrsSelectAssessmentSeries, new { profileId = prsLearnerRecord .ProfileId });
+                return RedirectToRoute(RouteConstants.PrsSelectAssessmentSeries, new { profileId = prsLearnerRecord.ProfileId });
             }
 
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId, assessmentId = prsLearnerRecord.PathwayAssessments.FirstOrDefault().AssessmentId });
@@ -231,10 +232,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
                 return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
             }
+            else if (model.AppealOutcome == AppealOutcomeType.WithdrawAppeal)
+                return await PrsWithdrawAppealAsync(model);
             else
-            {
                 return RedirectToRoute(RouteConstants.PrsAppealUpdatePathwayGrade, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId, resultId = model.PathwayResultId });
-            }
         }
 
         [HttpGet]
@@ -303,6 +304,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync(CacheKey, checkAndSubmitViewModel);
 
             return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
+        }
+
+        [NonAction]
+        public async Task<IActionResult> PrsWithdrawAppealAsync(AppealOutcomePathwayGradeViewModel model)
+        {
+            bool isSuccess = await _postResultsServiceLoader.WithdrawAppealCoreGradeAsync(User.GetUkPrn(), model);
+            if (!isSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            var notificationBanner = new NotificationBannerModel { Message = "TODO: which VM?" };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
         }
 
         [HttpGet]

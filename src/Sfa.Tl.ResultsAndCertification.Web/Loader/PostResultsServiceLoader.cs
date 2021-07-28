@@ -63,5 +63,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             return _mapper.Map<T>(prsLearnerRecord);
         }
+
+        public async Task<bool> WithdrawAppealCoreGradeAsync(long aoUkprn, AppealOutcomePathwayGradeViewModel model)
+        {
+            var request = _mapper.Map<AppealGradeRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.AppealGradeAsync(request);
+        }
     }
 }

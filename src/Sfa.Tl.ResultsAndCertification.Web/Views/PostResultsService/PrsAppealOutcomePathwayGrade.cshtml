@@ -52,6 +52,12 @@
                                 @AppealOutcomePathwayGrade.Radio_Button_UpdateGrade
                             </label>
                         </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="appealoutcome-withdraw" asp-for="AppealOutcome" type="radio" value="@AppealOutcomeType.WithdrawAppeal">
+                            <label class="govuk-label govuk-radios__label" for="appealoutcome-withdraw">
+                                @AppealOutcomePathwayGrade.Radio_Button_WithdrawAppeal
+                            </label>
+                        </div>
                     </div>
                 </fieldset>
             </div>
