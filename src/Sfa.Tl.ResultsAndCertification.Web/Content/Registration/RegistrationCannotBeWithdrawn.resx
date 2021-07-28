@@ -130,7 +130,7 @@
     <value>Registration cannot be withdrawn</value>
   </data>
   <data name="Para_If_You_Think_This_Is_Incorrect_Please_To_Result_Editor" xml:space="preserve">
-    <value>If you think this is incorrect please speak to your organisation’s result editor.</value>
+    <value>If you think this is incorrect please speak to your organisation’s results editor.</value>
   </data>
   <data name="Para_This_Registration_Has_A_Grade" xml:space="preserve">
     <value>This registration has a grade which is being appealed so cannot be withdrawn at the moment.</value>

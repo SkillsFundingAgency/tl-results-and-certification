@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you think this is incorrect please speak to your organisation’s result editor..
+        ///   Looks up a localized string similar to If you think this is incorrect please speak to your organisation’s results editor..
         /// </summary>
         public static string Para_If_You_Think_This_Is_Incorrect_Please_To_Result_Editor {
             get {
