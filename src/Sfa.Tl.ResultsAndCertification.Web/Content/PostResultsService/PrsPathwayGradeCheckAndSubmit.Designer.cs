@@ -152,11 +152,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} grade is final.
+        /// </summary>
+        public static string Success_Banner_Message {
+            get {
+                return ResourceManager.GetString("Success_Banner_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of birth.
         /// </summary>
         public static string Title_DateofBirth_Text {
             get {
                 return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exam Period.
+        /// </summary>
+        public static string Title_ExamPeriod_Text {
+            get {
+                return ResourceManager.GetString("Title_ExamPeriod_Text", resourceCulture);
             }
         }
         

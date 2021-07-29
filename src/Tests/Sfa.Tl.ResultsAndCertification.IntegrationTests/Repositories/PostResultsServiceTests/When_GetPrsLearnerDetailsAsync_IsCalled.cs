@@ -115,6 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
             var expectedAssessment = expectedPathway.TqPathwayAssessments.FirstOrDefault();
             _actualResult.PathwayAssessmentId.Should().Be(expectedAssessment.Id);
             _actualResult.PathwayAssessmentSeries.Should().Be(expectedAssessment.AssessmentSeries.Name);
+            _actualResult.AppealEndDate.Should().Be(expectedAssessment.AssessmentSeries.AppealEndDate);
 
             var expectedResult = expectedAssessment.TqPathwayResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
             _actualResult.PathwayResultId.Should().Be(expectedResult.Id);

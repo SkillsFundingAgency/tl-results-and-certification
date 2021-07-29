@@ -4,28 +4,35 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
+using System;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControllerTests.ResultDetails
 {
     public class When_Called_With_Withdrawn_Status_Data : TestSetup
     {
-        private ResultDetailsViewModel mockresult = null;
+        private ResultDetailsViewModel _mockResult = null;
         public override void Given()
         {
-            mockresult = new ResultDetailsViewModel
+            _mockResult = new ResultDetailsViewModel
             {
                 ProfileId = 1,
                 Uln = 1234567890,
-                Name = "Test",
-                ProviderDisplayName = "Test Provider (1234567)",
+                Firstname = "First",
+                Lastname = "Last",
+                DateofBirth = DateTime.Now.AddYears(-30),
+                ProviderName = "Test Provider",
+                ProviderUkprn = 1234567891,
+                TlevelTitle = "Tlevel title",
                 PathwayDisplayName = "Pathway (7654321)",
                 PathwayAssessmentSeries = "Summer 2021",
-                SpecialismDisplayName = "Specialism1 (2345678)",
+                PathwayAssessmentId = 11,
+                PathwayResult = "A",
+                PathwayResultId = 123,
                 PathwayStatus = RegistrationPathwayStatus.Withdrawn
             };
 
-            ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(mockresult);
+            ResultLoader.GetResultDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(_mockResult);
         }
 
         [Fact]

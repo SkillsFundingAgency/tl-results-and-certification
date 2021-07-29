@@ -32,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         protected IList<TqProvider> TqProviders;
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
+        protected IList<TlLookup> PathwayComponentGrades;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IResultRepository ResultRepository;
         protected ILogger<ResultRepository> ResultRepositoryLogger;
@@ -64,6 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
+            PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
             DbContext.SaveChangesAsync();
         }
 
@@ -145,7 +147,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             return tqPathwayAssessments;
         }
 
-        public List<TqPathwayResult> GetPathwayResultsDataToProcess(List<TqPathwayAssessment> pathwayAssessments, bool seedPathwayResultsAsActive = true, bool isHistorical = false)
+        public List<TqPathwayResult> GetPathwayResultsDataToProcess(List<TqPathwayAssessment> pathwayAssessments, bool seedPathwayResultsAsActive = true, bool isHistorical = false, PrsStatus? prsStatus = null)
         {
             var tqPathwayResults = new List<TqPathwayResult>();
 
@@ -155,8 +157,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 {
                     // Historical record
                     var pathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment);
-                    pathwayAssessment.IsOptedin = false;
-                    pathwayAssessment.EndDate = DateTime.UtcNow.AddDays(-1);
+                    pathwayResult.IsOptedin = false;
+                    pathwayResult.EndDate = DateTime.UtcNow.AddDays(-1);
 
                     var tqPathwayResultHistorical = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, pathwayResult);
                     tqPathwayResults.Add(tqPathwayResultHistorical);
@@ -169,7 +171,23 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                     tqPathwayResult.IsOptedin = pathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn;
                     tqPathwayResult.EndDate = DateTime.UtcNow;
                 }
+                else
+                {
+                    tqPathwayResult.PrsStatus = prsStatus;
+                }
+                tqPathwayResults.Add(tqPathwayResult);
+            }
+            return tqPathwayResults;
+        }
 
+        public List<TqPathwayResult> GetPathwayResultsDataToProcess(List<TqPathwayAssessment> pathwayAssessments)
+        {
+            var tqPathwayResults = new List<TqPathwayResult>();
+
+            foreach (var (pathwayAssessment, index) in pathwayAssessments.Select((value, i) => (value, i)))
+            {
+                var pathwayResult = new TqPathwayResultBuilder().Build(pathwayAssessment, PathwayComponentGrades[index]);
+                var tqPathwayResult = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, pathwayResult);
                 tqPathwayResults.Add(tqPathwayResult);
             }
             return tqPathwayResults;

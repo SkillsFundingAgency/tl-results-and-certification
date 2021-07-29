@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s component grades status.
+        ///   Looks up a localized string similar to Learner’s component grade status.
         /// </summary>
         public static string Heading_Learner_Component_Grades_Status {
             get {
@@ -124,20 +124,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s component grades status.
+        ///   Looks up a localized string similar to Learner’s component grade status.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;strong class=&quot;govuk-tag {0}&quot;&gt;{1}&lt;/strong&gt;.
-        /// </summary>
-        public static string PrsStatus_Display_Html {
-            get {
-                return ResourceManager.GetString("PrsStatus_Display_Html", resourceCulture);
             }
         }
         

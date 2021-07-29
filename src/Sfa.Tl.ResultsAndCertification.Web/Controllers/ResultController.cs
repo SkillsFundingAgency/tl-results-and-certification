@@ -212,7 +212,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
 
-            if (viewModel == null)
+            if (viewModel == null || !viewModel.IsValid)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No result details found. Method: GetResultDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
@@ -272,12 +272,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _resultLoader.GetManageCoreResultAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: true);
 
-            if (viewModel == null)
+            if (viewModel == null || !viewModel.IsValid)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetManageCoreResultViewModelAsync({User.GetUkPrn()}, {profileId}, {assessmentId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
             return View(viewModel);
         }
 

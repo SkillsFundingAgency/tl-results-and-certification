@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<PrintRequestSnapshot> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId);
 
         // Post Results Service 
-        Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln);
+        Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null);
         Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentId);
         Task<bool> AppealGradeAsync(AppealGradeRequest request);
 

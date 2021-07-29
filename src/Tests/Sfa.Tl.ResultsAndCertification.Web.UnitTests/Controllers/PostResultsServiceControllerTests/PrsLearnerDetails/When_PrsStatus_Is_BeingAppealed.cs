@@ -1,17 +1,17 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using System;
-using Xunit;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsLearnerDetails;
-using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
-using PrsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsStatus;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using System;
 using System.Collections.Generic;
+using Xunit;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
+using LearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsLearnerDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsLearnerDetails
 {
@@ -44,6 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 PathwayResultId = 99,
                 PathwayGrade = "B",
                 PathwayPrsStatus = PrsStatus.BeingAppealed,
+                AppealEndDate = DateTime.Today.AddDays(7),
                 PathwayGradeLastUpdatedOn = DateTime.Today.AddDays(-15).ToString(),
                 PathwayGradeLastUpdatedBy = "Barsley User"
             };
@@ -81,6 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.PathwayTitle.Should().Be(_mockLearnerDetails.PathwayTitle);
 
             model.PathwayAssessmentSeries.Should().Be(_mockLearnerDetails.PathwayAssessmentSeries);
+            model.AppealEndDate.Should().Be(_mockLearnerDetails.AppealEndDate);
             model.PathwayResultId.Should().Be(_mockLearnerDetails.PathwayResultId);
             model.PathwayGrade.Should().Be(_mockLearnerDetails.PathwayGrade);
             model.PathwayPrsStatus.Should().Be(_mockLearnerDetails.PathwayPrsStatus);
@@ -118,7 +120,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             // Pathway Grade
             model.SummaryPathwayGrade.Title.Should().Be(LearnerDetailsContent.Title_Pathway_Grade);
             model.SummaryPathwayGrade.Value.Should().Be(_mockLearnerDetails.PathwayGrade);
-            model.SummaryPathwayGrade.Value2.Should().Be(GetPrsStatusDisplayText);
+            model.SummaryPathwayGrade.Value2.Should().Be(CommonHelper.GetPrsStatusDisplayText(_mockLearnerDetails.PathwayPrsStatus, _mockLearnerDetails.AppealEndDate));
             model.SummaryPathwayGrade.NeedBorderBottomLine.Should().BeTrue();
             model.SummaryPathwayGrade.RenderEmptyRowForValue2.Should().Be(IsValidPathwayPrsStatus);
             model.SummaryPathwayGrade.RenderActionColumn.Should().BeTrue();
@@ -155,19 +157,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         }
 
         private bool IsValidPathwayPrsStatus => _mockLearnerDetails.PathwayPrsStatus.HasValue && _mockLearnerDetails.PathwayPrsStatus != PrsStatus.NotSpecified;
-
-        private string GetPrsStatusDisplayText
-        {
-            get
-            {
-                return _mockLearnerDetails.PathwayPrsStatus switch
-                {
-                    PrsStatus.BeingAppealed => string.Format(LearnerDetailsContent.PrsStatus_Display_Html, Constants.PurpleTagClassName, PrsStatusContent.Being_Appealed_Display_Text),
-                    PrsStatus.Final => string.Format(LearnerDetailsContent.PrsStatus_Display_Html, Constants.RedTagClassName, PrsStatusContent.Final_Display_Text),
-                    _ => string.Empty,
-                };
-            }
-        }
 
         private string GetUpdatePathwayGradeRouteName
         {

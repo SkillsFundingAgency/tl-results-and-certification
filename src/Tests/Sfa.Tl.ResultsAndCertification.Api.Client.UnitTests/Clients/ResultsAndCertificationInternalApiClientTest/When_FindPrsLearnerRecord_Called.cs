@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ProviderName = "Barnsley College",
                 ProviderUkprn = 123456789,
                 TlevelTitle = "Title",
-                Status = RegistrationPathwayStatus.Active                ,
+                Status = RegistrationPathwayStatus.Active,
                 PathwayAssessments = _pathwayAssessments
             };
         }

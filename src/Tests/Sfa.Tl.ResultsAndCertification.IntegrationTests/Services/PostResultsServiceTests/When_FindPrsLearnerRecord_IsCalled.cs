@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                 { 1111111113, RegistrationPathwayStatus.Active },    // Assessment + Result
                 { 1111111114, RegistrationPathwayStatus.Active }     // Multi Assessment 
             };
-            
+
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
 
@@ -45,6 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             _tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
 
             var profilesWithAssessment = new List<long> { 1111111112, 1111111113, 1111111114 };
+            var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, null) };
             foreach (var profile in _profiles.Where(x => profilesWithAssessment.Contains(x.UniqueLearnerNumber)))
             {
                 var isLatestActive = _ulns[profile.UniqueLearnerNumber] != RegistrationPathwayStatus.Withdrawn;
@@ -52,7 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                 _tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
 
                 // Seed Pathway results
-                var profilesWithResults = new List<(long, PrsStatus?)> { (1111111112, null), (1111111113, null), (1111111114, null) };
                 foreach (var assessment in pathwayAssessments.Where(x => profilesWithResults.Any(p => p.Item1 == x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber)))
                 {
                     var hasHitoricData = new List<long> { 1111111113 };
@@ -86,19 +86,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(long providerUkprn, long uln)
+        public async Task WhenAsync(long aoUkprn, long? uln, int? profileId, bool callWithUln)
         {
             if (_actualResult != null)
                 return;
 
-            _actualResult = await PostResultsServiceService.FindPrsLearnerRecordAsync(providerUkprn, uln);
+            if (callWithUln)
+                _actualResult = await PostResultsServiceRepository.FindPrsLearnerRecordAsync(aoUkprn, uln);
+            else
+                _actualResult = await PostResultsServiceRepository.FindPrsLearnerRecordAsync(aoUkprn, null, profileId);
         }
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(long uln, AwardingOrganisation ao, bool isRecordFound)
+        public async Task Then_Returns_Expected_Results(long uln, AwardingOrganisation ao, bool callWithUln, bool isRecordFound)
         {
-            await WhenAsync((long)ao, uln);
+            var expectedProfile = _profiles.FirstOrDefault(x => x.UniqueLearnerNumber == uln);
+
+            // When
+            await WhenAsync((long)ao, uln, expectedProfile?.Id, callWithUln);
 
             if (isRecordFound == false)
             {
@@ -106,7 +112,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                 return;
             }
 
-            var expectedProfile = _profiles.FirstOrDefault(x => x.UniqueLearnerNumber == uln);
             _actualResult.Should().NotBeNull();
             _actualResult.Uln.Should().Be(expectedProfile.UniqueLearnerNumber);
             _actualResult.Firstname.Should().Be(expectedProfile.Firstname);
@@ -152,14 +157,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
         {
             get
             {
+                bool callWithUln = true;
+                bool recoundFound = true;
                 return new[]
                 {
-                    new object[] { 9999999999, AwardingOrganisation.Pearson, false }, // Invalid Uln
-                    new object[] { 1111111111, AwardingOrganisation.Pearson, true }, // Active + No Assessments
-                    new object[] { 1111111111, AwardingOrganisation.Ncfe, false },
-                    new object[] { 1111111112, AwardingOrganisation.Pearson, true }, // Withdrawn
-                    new object[] { 1111111113, AwardingOrganisation.Pearson, true }, // Active + Single Assessment
-                    new object[] { 1111111114, AwardingOrganisation.Pearson, true } // Active + Multiple Assessments
+                    // Call with Uln
+                    new object[] { 9999999999, AwardingOrganisation.Pearson, callWithUln, !recoundFound }, // Invalid Uln
+                    new object[] { 1111111111, AwardingOrganisation.Pearson, callWithUln, recoundFound }, // Active + No Assessments
+                    new object[] { 1111111111, AwardingOrganisation.Ncfe, callWithUln, !recoundFound },
+                    new object[] { 1111111112, AwardingOrganisation.Pearson, callWithUln, recoundFound }, // Withdrawn
+                    new object[] { 1111111113, AwardingOrganisation.Pearson, callWithUln, recoundFound }, // Active + Single Assessment
+                    new object[] { 1111111114, AwardingOrganisation.Pearson, callWithUln, recoundFound }, // Active + Multiple Assessments
+
+                    // Call with ProfileId
+                    new object[] { 9999999999, AwardingOrganisation.Pearson, !callWithUln, !recoundFound }, // Invalid Uln
+                    new object[] { 1111111111, AwardingOrganisation.Pearson, !callWithUln, recoundFound }, // Active + No Assessments
+                    new object[] { 1111111111, AwardingOrganisation.Ncfe, !callWithUln, !recoundFound },
+                    new object[] { 1111111112, AwardingOrganisation.Pearson, !callWithUln, recoundFound }, // Withdrawn
+                    new object[] { 1111111113, AwardingOrganisation.Pearson, !callWithUln, recoundFound }, // Active + Single Assessment
+                    new object[] { 1111111114, AwardingOrganisation.Pearson, !callWithUln, recoundFound }, // Active + Multiple Assessments
                 };
             }
         }

@@ -28,8 +28,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 DateofBirth = DateTime.Today.AddYears(-20),
                 TlevelTitle = "Tlevel in Education",
                 PathwayTitle = "Educateion (1234455)",
+                PathwayAssessmentSeries = "Summer 2021",
                 ProviderName = "Barsley College",
-                ProviderUkprn = 87654321,
+                ProviderUkprn = 87654321,                
                 NewGrade = newGrade,
                 OldGrade = previousGrade,
                 IsGradeChanged = true,
@@ -82,6 +83,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(LearnerDetailsContent.Title_TLevel_Text);
             model.SummaryTlevelTitle.Value.Should().Be(_mockCache.TlevelTitle);
+
+            // ExamPeriod
+            model.SummaryCoreExamPeriod.Title.Should().Be(LearnerDetailsContent.Title_ExamPeriod_Text);
+            model.SummaryCoreExamPeriod.Value.Should().Be(_mockCache.PathwayAssessmentSeries);
 
             // Old Grade
             model.SummaryOldGrade.Title.Should().Be(LearnerDetailsContent.Title_Old_Grade);

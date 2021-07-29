@@ -30,9 +30,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _logger = logger;
         }
 
-        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln)
+        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null)
         {
-            return await _postResultsServiceRepository.FindPrsLearnerRecordAsync(aoUkprn, uln);
+            return await _postResultsServiceRepository.FindPrsLearnerRecordAsync(aoUkprn, uln, profileId);
         }
 
         public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId, int assessmentId)
@@ -54,6 +54,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (existingPathwayResult == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No record found to change Pathway Result for ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: AppealGradeAsync({request})");
+                return false;
+            }
+
+            if (!IsResultStatusValid(request.PrsStatus, existingPathwayResult.PrsStatus))
+            {
+                _logger.LogWarning(LogEvent.StateChanged, $"Requested status: {request.PrsStatus} is not valid. Current result status = {existingPathwayResult.PrsStatus}, ProfileId = {request.ProfileId} and ResultId = {request.ResultId}. Method: AppealGradeAsync({request})");
                 return false;
             }
 
@@ -80,6 +86,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             });
 
             return await _pathwayResultRepository.UpdateManyAsync(pathwayResultsToUpdate) > 0;
+        }
+
+        private bool IsResultStatusValid(PrsStatus requestPrsStatus, PrsStatus? currentPrsStatus)
+        {
+            if (requestPrsStatus == PrsStatus.BeingAppealed)
+                return currentPrsStatus == null || currentPrsStatus == PrsStatus.NotSpecified;
+
+            if (requestPrsStatus == PrsStatus.Final)
+                return currentPrsStatus == PrsStatus.BeingAppealed;
+
+            return false;
         }
     }
 }

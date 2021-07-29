@@ -131,6 +131,7 @@
         public const string SubmitDeleteRegistration = "SubmitDeleteRegistration";
         public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
         public const string RegistrationCannotBeDeleted = "RegistrationCannotBeDeleted";
+        public const string RegistrationCannotBeWithdrawn = "RegistrationCannotBeWithdrawn";
 
         // Assessment Entries
         public const string AssessmentDashboard = "AssessmentDashboard";
@@ -293,11 +294,15 @@
         public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";
         public const string SubmitPrsAppealOutcomePathwayGrade = "SubmitPrsAppealOutcomePathwayGrade";
         public const string PrsPathwayGradeCheckAndSubmit = "PrsPathwayGradeCheckAndSubmit";
+        public const string SubmitPrsPathwayGradeCheckAndSubmit = "SubmitPrsPathwayGradeCheckAndSubmit";
         public const string PrsAppealUpdatePathwayGrade = "PrsAppealUpdatePathwayGrade";
         public const string SubmitPrsAppealUpdatePathwayGrade = "SubmitPrsAppealUpdatePathwayGrade";
         public const string PrsNoAssessmentEntry = "PrsNoAssessmentEntry";
         public const string PrsNoGradeRegistered = "PrsNoGradeRegistered";
         public const string PrsSelectAssessmentSeries = "PrsSelectAssessmentSeries";
+        public const string SubmitPrsSelectAssessmentSeries = "SubmitPrsSelectAssessmentSeries";
+        public const string PrsCancelAppealUpdate = "PrsCancelAppealUpdate";
+        public const string SubmitPrsCancelAppealUpdate = "SubmitPrsCancelAppealUpdate";
 
         #endregion
     }

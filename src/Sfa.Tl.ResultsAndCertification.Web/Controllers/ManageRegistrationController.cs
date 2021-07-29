@@ -376,25 +376,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            if (model.ChangeStatus == RegistrationChangeStatus.Withdrawn)
+            if (model.ChangeStatus == RegistrationChangeStatus.Withdrawn || model.ChangeStatus == RegistrationChangeStatus.Delete)
             {
-                return RedirectToRoute(RouteConstants.WithdrawRegistration, new { profileId = model.ProfileId, withdrawBackLinkOptionId = (int)WithdrawBackLinkOptions.AmendActiveRegistrationPage });
-            }
-
-            if (model.ChangeStatus == RegistrationChangeStatus.Delete)
-            {
-                var registrationDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), model.ProfileId, RegistrationPathwayStatus.Active);
-                if (registrationDetails == null)
+                var registrationAssessmentDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), model.ProfileId, RegistrationPathwayStatus.Active);
+                if (registrationAssessmentDetails == null)
                     return RedirectToRoute(RouteConstants.PageNotFound);
 
-                if (registrationDetails.IsResultExist || registrationDetails.IsIndustryPlacementExist)
+                if (model.ChangeStatus == RegistrationChangeStatus.Withdrawn)
                 {
-                    var cannotBeDeletedViewModel = new RegistrationCannotBeDeletedViewModel { ProfileId = registrationDetails.ProfileId };
-                    await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel), cannotBeDeletedViewModel, CacheExpiryTime.XSmall);
-                    return RedirectToRoute(RouteConstants.RegistrationCannotBeDeleted);
+                    if (registrationAssessmentDetails.HasAnyOutstandingPathwayPrsActivities)
+                    {
+                        var cannotBeWithdrawnViewModel = new RegistrationCannotBeWithdrawnViewModel { ProfileId = registrationAssessmentDetails.ProfileId };
+                        await _cacheService.SetAsync(CacheKey, cannotBeWithdrawnViewModel, CacheExpiryTime.XSmall);
+                        return RedirectToRoute(RouteConstants.RegistrationCannotBeWithdrawn);
+                    }
+                    return RedirectToRoute(RouteConstants.WithdrawRegistration, new { profileId = model.ProfileId, withdrawBackLinkOptionId = (int)WithdrawBackLinkOptions.AmendActiveRegistrationPage });
                 }
 
-                return RedirectToRoute(RouteConstants.DeleteRegistration, new { profileId = model.ProfileId });
+                if (model.ChangeStatus == RegistrationChangeStatus.Delete)
+                {
+                    if (registrationAssessmentDetails.IsResultExist || registrationAssessmentDetails.IsIndustryPlacementExist)
+                    {
+                        var cannotBeDeletedViewModel = new RegistrationCannotBeDeletedViewModel { ProfileId = registrationAssessmentDetails.ProfileId };
+                        await _cacheService.SetAsync(string.Concat(CacheKey, Constants.RegistrationCannotBeDeletedViewModel), cannotBeDeletedViewModel, CacheExpiryTime.XSmall);
+                        return RedirectToRoute(RouteConstants.RegistrationCannotBeDeleted);
+                    }
+
+                    return RedirectToRoute(RouteConstants.DeleteRegistration, new { profileId = model.ProfileId });
+                }
             }
             return View(model);
         }
@@ -403,14 +412,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("withdraw-registration/{profileId}/{withdrawBackLinkOptionId:int?}", Name = RouteConstants.WithdrawRegistration)]
         public async Task<IActionResult> WithdrawRegistrationAsync(int profileId, int? withdrawBackLinkOptionId)
         {
-            var registrationDetails = await _registrationLoader.GetRegistrationDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
-            if (registrationDetails == null || registrationDetails.Status != RegistrationPathwayStatus.Active)
+            var registrationAssessmentDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
+            if (registrationAssessmentDetails == null || registrationAssessmentDetails.PathwayStatus != RegistrationPathwayStatus.Active || registrationAssessmentDetails.HasAnyOutstandingPathwayPrsActivities)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: WithdrawRegistrationAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var viewModel = new WithdrawRegistrationViewModel { ProfileId = registrationDetails.ProfileId, Uln = registrationDetails.Uln, WithdrawBackLinkOptionId = withdrawBackLinkOptionId };
+            var viewModel = new WithdrawRegistrationViewModel { ProfileId = registrationAssessmentDetails.ProfileId, Uln = registrationAssessmentDetails.Uln, WithdrawBackLinkOptionId = withdrawBackLinkOptionId };
             return View(viewModel);
         }
 
@@ -427,6 +436,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
+                var registrationAssessmentDetails = await _registrationLoader.GetRegistrationAssessmentAsync(User.GetUkPrn(), model.ProfileId, RegistrationPathwayStatus.Active);
+                if (registrationAssessmentDetails == null || registrationAssessmentDetails.HasAnyOutstandingPathwayPrsActivities)
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+
                 var response = await _registrationLoader.WithdrawRegistrationAsync(User.GetUkPrn(), model);
 
                 if (!response.IsSuccess)
@@ -557,7 +570,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             viewModel.ProfileId = profileId;
             viewModel.IsChangeMode = isChangeMode && cacheModel.IsChangeModeAllowedForProvider;
             viewModel.IsFromConfirmation = isFromConfirmation;
-            
+
             return View(viewModel);
         }
 
@@ -894,6 +907,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 _logger.LogWarning(LogEvent.NoDataFound,
                     $"Unable to read RegistrationCannotBeDeletedViewModel from cache. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("registration-cannot-be-withdrawn", Name = RouteConstants.RegistrationCannotBeWithdrawn)]
+        public async Task<IActionResult> RegistrationCannotBeWithdrawnAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<RegistrationCannotBeWithdrawnViewModel>(CacheKey);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound,
+                    $"Unable to read RegistrationCannotBeWithdrawnViewModel from cache. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 

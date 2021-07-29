@@ -85,13 +85,15 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 // Step: Map data to DB model type.
                 var results = _resultService.TransformResultsModel(stage3Response, request.PerformedBy);
 
-                // Step: DB operation
-                var resultsProcessResult = await _resultService.CompareAndProcessResultsAsync(results);
+                // Step: Process Stage 4 validation and DB operation
+                var resultsProcessResult = await _resultService.CompareAndProcessResultsAsync(results);                
 
                 // update total assessment records stats
                 resultsProcessResult.BulkUploadStats = new BulkUploadStats { TotalRecordsCount = stage3Response.Count };
-                
-                return await ProcessResultsResponse(request, response, resultsProcessResult);
+
+                return resultsProcessResult.IsValid ?
+                    await ProcessResultsResponse(request, response, resultsProcessResult) :
+                    await SaveErrorsAndUpdateResponse(request, response, resultsProcessResult.ValidationErrors);
             }
             catch(Exception ex)
             {

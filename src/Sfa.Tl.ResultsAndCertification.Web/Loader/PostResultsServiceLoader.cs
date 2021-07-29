@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -20,9 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln)
+        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null)
         {
-            return await _internalApiClient.FindPrsLearnerRecordAsync(aoUkprn, uln);
+            return await _internalApiClient.FindPrsLearnerRecordAsync(aoUkprn, uln, profileId);
         }
 
         public async Task<T> GetPrsLearnerDetailsAsync<T>(long aoUkprn, int profileId, int assessementId)
@@ -41,6 +42,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<bool> AppealCoreGradeAsync(long aoUkprn, AppealCoreGradeViewModel model)
         {
             var request = _mapper.Map<AppealGradeRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
+            return await _internalApiClient.AppealGradeAsync(request);
+        }
+
+        public async Task<bool> AppealCoreGradeAsync(long aoUkprn, PrsPathwayGradeCheckAndSubmitViewModel model)
+        {
+            var request = _mapper.Map<AppealGradeRequest>(model, opt => opt.Items["aoUkprn"] = aoUkprn);
+            
+            // Assign new grade lookup id
+            var grades = await _internalApiClient.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
+            var newGrade = grades.FirstOrDefault(x => x.Value.Equals(model.NewGrade, StringComparison.InvariantCultureIgnoreCase));
+            if (newGrade == null)
+                return false;
+            request.ResultLookupId = newGrade.Id;
+            
             return await _internalApiClient.AppealGradeAsync(request);
         }
 

@@ -35,6 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 PathwayGrade = "A*",
                 PathwayResultId = 77,
                 PathwayPrsStatus = PrsStatus.BeingAppealed,
+                AppealEndDate = DateTime.Today.AddDays(7),
                 PathwayGradeLastUpdatedBy = "Barsley User",
                 PathwayGradeLastUpdatedOn = DateTime.Today
             };
@@ -63,6 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
             ActualResult.PathwayAssessmentId.Should().Be(_expectedApiResult.PathwayAssessmentId);
             ActualResult.PathwayAssessmentSeries.Should().Be(_expectedApiResult.PathwayAssessmentSeries);
+            ActualResult.AppealEndDate.Should().Be(_expectedApiResult.AppealEndDate);
             ActualResult.PathwayTitle.Should().Be($"{_expectedApiResult.PathwayName} ({_expectedApiResult.PathwayCode})");
             ActualResult.PathwayGrade.Should().Be(_expectedApiResult.PathwayGrade);
             ActualResult.PathwayResultId.Should().Be(_expectedApiResult.PathwayResultId);

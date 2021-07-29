@@ -109,6 +109,10 @@ body {
     background: #d2e2f1;
 }
 
+.tag-float-right {
+    float: right;
+}
+
 .assessment-details, .result-details {
     .govuk-summary-list__key, .govuk-summary-list__value, .govuk-summary-list__actions {
         border-bottom: none !important;
@@ -122,7 +126,11 @@ body {
         .float--right {
             float: none !important;
         }
-    }    
+    } 
+    
+    .tag-float-right {
+        float: unset;
+    }
 }
 
 input[type="radio"] {

@@ -17,40 +17,44 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln)
+        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null)
         {
-            var prsLearnerRecord = await (from tqPathway in _dbContext.TqRegistrationPathway
-                                          join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
-                                          join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
-                                          join tlProvider in _dbContext.TlProvider on tqProvider.TlProviderId equals tlProvider.Id
-                                          join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
-                                          join tlAo in _dbContext.TlAwardingOrganisation on tqAo.TlAwardingOrganisatonId equals tlAo.Id
-                                          join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
-                                          orderby tqPathway.CreatedOn descending
-                                          where
-                                            tlAo.UkPrn == aoUkprn && tqProfile.UniqueLearnerNumber == uln &&
-                                            (tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn)
-                                          select new FindPrsLearnerRecord
-                                          {
-                                              ProfileId = tqProfile.Id,
-                                              Uln = tqProfile.UniqueLearnerNumber,
-                                              Firstname = tqProfile.Firstname,
-                                              Lastname = tqProfile.Lastname,
-                                              DateofBirth = tqProfile.DateofBirth,
-                                              ProviderName = tlProvider.Name,
-                                              ProviderUkprn = tlProvider.UkPrn,
-                                              TlevelTitle = tlPathway.TlevelTitle,
-                                              Status = tqPathway.Status,
-                                              PathwayAssessments = _dbContext.TqPathwayAssessment.Where(a => a.TqRegistrationPathwayId == tqPathway.Id && a.IsOptedin && a.EndDate == null)
-                                                                  .Select(x => new PrsAssessment 
-                                                                  { 
-                                                                      AssessmentId = x.Id,
-                                                                      SeriesName = x.AssessmentSeries.Name,
-                                                                      HasResult = x.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null)
-                                                                  })
-                                          })
-                                          .FirstOrDefaultAsync();
-            return prsLearnerRecord;
+            var prsQuery = from tqPathway in _dbContext.TqRegistrationPathway
+                           join tqProfile in _dbContext.TqRegistrationProfile on tqPathway.TqRegistrationProfileId equals tqProfile.Id
+                           join tqProvider in _dbContext.TqProvider on tqPathway.TqProviderId equals tqProvider.Id
+                           join tlProvider in _dbContext.TlProvider on tqProvider.TlProviderId equals tlProvider.Id
+                           join tqAo in _dbContext.TqAwardingOrganisation on tqProvider.TqAwardingOrganisationId equals tqAo.Id
+                           join tlAo in _dbContext.TlAwardingOrganisation on tqAo.TlAwardingOrganisatonId equals tlAo.Id
+                           join tlPathway in _dbContext.TlPathway on tqAo.TlPathwayId equals tlPathway.Id
+                           orderby tqPathway.CreatedOn descending
+                           where
+                               tlAo.UkPrn == aoUkprn &&
+                               (tqPathway.Status == RegistrationPathwayStatus.Active || tqPathway.Status == RegistrationPathwayStatus.Withdrawn)
+                           select new FindPrsLearnerRecord
+                           {
+                               ProfileId = tqProfile.Id,
+                               Uln = tqProfile.UniqueLearnerNumber,
+                               Firstname = tqProfile.Firstname,
+                               Lastname = tqProfile.Lastname,
+                               DateofBirth = tqProfile.DateofBirth,
+                               ProviderName = tlProvider.Name,
+                               ProviderUkprn = tlProvider.UkPrn,
+                               TlevelTitle = tlPathway.TlevelTitle,
+                               Status = tqPathway.Status,
+                               PathwayAssessments = _dbContext.TqPathwayAssessment.Where(a => a.TqRegistrationPathwayId == tqPathway.Id && a.IsOptedin && a.EndDate == null)
+                                                    .OrderByDescending(o => o.AssessmentSeriesId)
+                                                    .Select(x => new PrsAssessment
+                                                    {
+                                                        AssessmentId = x.Id,
+                                                        SeriesName = x.AssessmentSeries.Name,
+                                                        HasResult = x.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null)
+                                                    })
+                           };
+
+            bool searchByUlnPredicate() => uln != null;
+            prsQuery = searchByUlnPredicate() ? prsQuery.Where(x => x.Uln == uln) : prsQuery.Where(x => x.ProfileId == profileId);
+
+            return await prsQuery.FirstOrDefaultAsync();
         }
 
         public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentId)
@@ -85,6 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                PathwayCode = tlPathway.LarId,
                                                PathwayAssessmentId = pAssessment.Id,
                                                PathwayAssessmentSeries = pAssessment.AssessmentSeries.Name,
+                                               AppealEndDate = pAssessment.AssessmentSeries.AppealEndDate,
                                                PathwayResultId = pResult.Id,
                                                PathwayGrade = pResult.TlLookup.Value,
                                                PathwayPrsStatus = pResult.PrsStatus,
