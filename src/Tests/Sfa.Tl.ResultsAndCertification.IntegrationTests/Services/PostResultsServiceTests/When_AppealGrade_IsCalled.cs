@@ -112,6 +112,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                 var latestResult = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessmentId == assessment.Id && x.IsOptedin && x.EndDate == null);
                 if (expectedResult == true)
                 {
+                    if (request.PrsStatus == PrsStatus.Withdraw)
+                    {
+                        var previousResult = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessmentId == assessment.Id && !x.IsOptedin && x.EndDate != null && x.PrsStatus == PrsStatus.BeingAppealed);
+                        
+                        latestResult.PrsStatus.Should().BeNull();
+                        latestResult.TlLookup.Value.Should().Be(previousResult.TlLookup.Value);
+                        return;
+                    }
+
                     latestResult.PrsStatus.Should().Be(request.PrsStatus);
 
                     if (request.ResultLookupId > 0)
@@ -178,6 +187,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                     new object[]
                     { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Reviewed, ResultLookupId = 3 },
                       false },
+
+                    // CurrentStatus is BeingAppeal -> Requesting Withdraw
+                    new object[]
+                    { new AppealGradeRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core, PrsStatus = PrsStatus.Withdraw, ResultLookupId = 0 },
+                      true },
                 };
             }
         }
