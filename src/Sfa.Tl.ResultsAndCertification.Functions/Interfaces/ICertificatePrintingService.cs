@@ -5,6 +5,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Interfaces
 {
     public interface ICertificatePrintingService
     {
-        Task<CertificatePrintingResponse> ProcessPrintRequestAsync();
+        Task<CertificatePrintingResponse> ProcessPrintingRequestAsync();
+        Task<CertificatePrintingResponse> ProcessBatchSummaryAsync();
+        Task<CertificatePrintingResponse> ProcessTrackBatchAsync();
     }
 }

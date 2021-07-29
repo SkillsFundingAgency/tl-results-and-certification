@@ -1,5 +1,4 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sfa.Tl.ResultsAndCertification.Domain.Models
@@ -16,9 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public string LearningDetails { get; set; }
         public string DisplaySnapshot { get; set; }
         public PrintCertificateStatus Status { get; set; }
-        public string Reason { get; set; }
-        public string TrackingId { get; set; }
-        public DateTime? StatusChangedOn { get; set; }
 
         public virtual PrintBatchItem PrintBatchItem { get; set; }
         public virtual TqRegistrationPathway TqRegistrationPathway { get; set; }

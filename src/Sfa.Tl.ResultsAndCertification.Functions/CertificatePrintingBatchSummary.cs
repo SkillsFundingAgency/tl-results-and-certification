@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
-    public class CertificatePrintingRequest
+    public class CertificatePrintingBatchSummary
     {
         private readonly ICertificatePrintingService _certificatePrintingService;
         private readonly ICommonService _commonService;
 
-        public CertificatePrintingRequest(ICommonService commonService, ICertificatePrintingService certificatePrintingService)
+        public CertificatePrintingBatchSummary(ICommonService commonService, ICertificatePrintingService certificatePrintingService)
         {
             _commonService = commonService;
             _certificatePrintingService = certificatePrintingService;
         }
 
-        [FunctionName("SubmitCertificatePrintingRequest")]
-        public async Task SubmitCertificatePrintingRequestAsync([TimerTrigger("%CertificatePrintingRequestTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+        [FunctionName("FetchCertificatePrintingBatchSummary")]
+        public async Task FetchCertificatePrintingBatchSummaryAsync([TimerTrigger("%CertificatePrintingBatchSummaryTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var response = await _certificatePrintingService.ProcessPrintingRequestAsync();
+                var response = await _certificatePrintingService.ProcessBatchSummaryAsync();
 
                 var message = $"Function {context.FunctionName} completed processing.\n" +
                                       $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}\n" +

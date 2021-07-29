@@ -73,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.Grade, opts => opts.MapFrom(s => string.Empty))
                 .ForMember(d => d.Date, opts => opts.MapFrom(s => DateTime.UtcNow.ToSoaFormat()))
                 .ForMember(d => d.Core, opts => opts.MapFrom(s => s.PathwayName))
-                .ForMember(d => d.CoreGrade, opts => opts.MapFrom(s => s.PathwayGrade ?? Constants.NotCompleted))
+                .ForMember(d => d.CoreGrade, opts => opts.MapFrom(s => s.PathwayGrade.Equals(RequestSoaCheckAndSubmitContent.None, StringComparison.InvariantCultureIgnoreCase) ? Constants.NotCompleted : s.PathwayGrade))
                 .ForMember(d => d.OccupationalSpecialism, opts => opts.MapFrom(s => s))
                 .ForMember(d => d.IndustryPlacement, opts => opts.MapFrom(s => (s.IndustryPlacementStatus == IndustryPlacementStatus.Completed 
                                                                              || s.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration) 
@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                         new OccupationalSpecialismDetails
                         {
                             Specialism = m.SpecialismName ?? string.Empty,
-                            Grade = m.SpecialismGrade ?? Constants.NotCompleted
+                            Grade = m.SpecialismGrade.Equals(RequestSoaCheckAndSubmitContent.None, StringComparison.InvariantCultureIgnoreCase) ? Constants.NotCompleted : m.SpecialismGrade
                         }
                     };
                 });

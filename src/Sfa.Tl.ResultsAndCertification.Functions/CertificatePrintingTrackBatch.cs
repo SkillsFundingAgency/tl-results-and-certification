@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
-    public class CertificatePrintingRequest
+    public class CertificatePrintingTrackBatch
     {
         private readonly ICertificatePrintingService _certificatePrintingService;
         private readonly ICommonService _commonService;
 
-        public CertificatePrintingRequest(ICommonService commonService, ICertificatePrintingService certificatePrintingService)
+        public CertificatePrintingTrackBatch(ICommonService commonService, ICertificatePrintingService certificatePrintingService)
         {
             _commonService = commonService;
             _certificatePrintingService = certificatePrintingService;
         }
 
-        [FunctionName("SubmitCertificatePrintingRequest")]
-        public async Task SubmitCertificatePrintingRequestAsync([TimerTrigger("%CertificatePrintingRequestTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+        [FunctionName("FetchCertificatePrintingTrackBatch")]
+        public async Task FetchCertificatePrintingTrackBatchAsync([TimerTrigger("%CertificatePrintingTrackBatchTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
@@ -36,13 +36,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var response = await _certificatePrintingService.ProcessPrintingRequestAsync();
+                var response = await _certificatePrintingService.ProcessTrackBatchAsync();
 
                 var message = $"Function {context.FunctionName} completed processing.\n" +
                                       $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}\n" +
                                       $"\tTotal batches to process: {response.TotalCount}\n" +
                                       $"\tProcessed printing requests: {response.PrintingProcessedCount}\n" +
-                                      $"\tModified batches to process: {response.ModifiedCount}\n" +
+                                      $"\tModified batch items to process: {response.ModifiedCount}\n" +
                                       $"\tRows saved: {response.SavedCount}\n" +
                                       $"\tAdditional message: {response.Message}";
 

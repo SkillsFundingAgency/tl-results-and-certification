@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 {
     public class CertificatePrintingService : ICertificatePrintingService
@@ -28,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _printingService = printingService;
         }
 
-        public async Task<CertificatePrintingResponse> ProcessPrintRequestAsync()
+        public async Task<CertificatePrintingResponse> ProcessPrintingRequestAsync()
         {
             // service call to get printing request
             var pendingPrintRequests = await _printingService.GetPendingPrintRequestsAsync();
@@ -54,6 +53,64 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             // update batch based on response -- service call to update
             var response = await _printingService.UpdatePrintReqeustResponsesAsync(printRequestResponses);
             response.TotalCount = pendingPrintRequests.Count();
+            return response;
+        }
+
+        public async Task<CertificatePrintingResponse> ProcessBatchSummaryAsync()
+        {
+            // service call to get printing request
+            var batchIds = await _printingService.GetPendingPrintBatchesForBatchSummaryAsync();
+
+            if (batchIds == null || !batchIds.Any())
+            {
+                var message = $"No pending print batches found to process batch summary. Method: ProcessBatchSummaryAsync()";
+                _logger.LogWarning(LogEvent.NoDataFound, message);
+                return new CertificatePrintingResponse { IsSuccess = true, Message = message };
+            }
+
+            var printBatchSummaryResponses = new List<BatchSummaryResponse>();
+
+            // post data api and get respone
+            foreach (var batchId in batchIds)
+            {
+                var batchSummaryResponse = await _printingApiClient.GetBatchSummaryInfoAsync(batchId);
+
+                if (batchSummaryResponse != null)
+                    printBatchSummaryResponses.Add(batchSummaryResponse);
+            }
+
+            // update print batch based on response -- service call to update
+            var response = await _printingService.UpdateBatchSummaryResponsesAsync(printBatchSummaryResponses);
+            response.TotalCount = batchIds.Count();
+            return response;
+        }
+
+        public async Task<CertificatePrintingResponse> ProcessTrackBatchAsync()
+        {
+            // service call to get printing request
+            var batchIds = await _printingService.GetPendingItemsForTrackBatchAsync();
+
+            if (batchIds == null || !batchIds.Any())
+            {
+                var message = $"No pending items found to process track batch. Method: ProcessTrackBatchAsync()";
+                _logger.LogWarning(LogEvent.NoDataFound, message);
+                return new CertificatePrintingResponse { IsSuccess = true, Message = message };
+            }
+
+            var trackBatchResponses = new List<TrackBatchResponse>();
+
+            // post data api and get respone
+            foreach (var batchId in batchIds)
+            {
+                var trackBatchResponse = await _printingApiClient.GetTrackBatchInfoAsync(batchId);
+
+                if (trackBatchResponse != null)
+                    trackBatchResponses.Add(trackBatchResponse);
+            }
+
+            // update print batch items based on response -- service call to update
+            var response = await _printingService.UpdateTrackBatchResponsesAsync(trackBatchResponses);
+            response.TotalCount = batchIds.Count();
             return response;
         }
     }

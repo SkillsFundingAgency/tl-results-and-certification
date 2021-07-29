@@ -71,7 +71,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IPersonalLearningRecordService, PersonalLearningRecordService>();
             services.AddTransient<ILearnerRecordService, LearnerRecordService>();
             services.AddTransient<IPrintingService, PrintingService>();
-            services.AddTransient<ICertificatePrintingService, CertificatePrintingService>();                    
+            services.AddTransient<ICertificatePrintingService, CertificatePrintingService>();
+            services.AddTransient<INotificationService, NotificationService>();
         }
 
         private void RegisterApiClients(IServiceCollection services)

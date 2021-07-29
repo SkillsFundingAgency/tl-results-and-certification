@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         public async Task<string> GetTokenAsync()
         {
             var requestUri = string.Format(ApiConstants.PrintingTokenUri, _configuration.PrintingApiSettings.Username, _configuration.PrintingApiSettings.Password);
-            var tokenResponse = await GetAsync<string>(requestUri);
+            var tokenResponse = await GetAsync<string>(requestUri, false);
             var tokenResult = JObject.Parse(tokenResponse);
             return tokenResult.HasValues ? tokenResult.SelectToken("Token")?.ToString() : null;
         }
@@ -63,11 +63,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         /// <typeparam name="T"></typeparam>
         /// <param name="requestUri">The request URI.</param>
         /// <returns></returns>
-        private async Task<T> GetAsync<T>(string requestUri)
+        private async Task<T> GetAsync<T>(string requestUri, bool deserializeToString = true)
         {            
             var response = await _httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
-            return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+            var result = deserializeToString ? JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()) : await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(result);
         }
 
         private async Task<TResponse> PostAsync<TRequest, TResponse>(string requestUri, TRequest content)

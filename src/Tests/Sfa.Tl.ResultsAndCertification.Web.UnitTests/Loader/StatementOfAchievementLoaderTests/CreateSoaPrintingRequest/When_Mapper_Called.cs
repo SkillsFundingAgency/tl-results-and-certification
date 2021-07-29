@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                     new OccupationalSpecialismDetails
                     {
                         Specialism = SoaLearnerRecordDetailsViewModel.SpecialismName ?? string.Empty,
-                        Grade = SoaLearnerRecordDetailsViewModel.SpecialismGrade ?? Constants.NotCompleted
+                        Grade = SoaLearnerRecordDetailsViewModel.SpecialismGrade.Equals("None", StringComparison.InvariantCultureIgnoreCase) ? Constants.NotCompleted : SoaLearnerRecordDetailsViewModel.SpecialismGrade
                     }
                 },
                 IndustryPlacement = SoaLearnerRecordDetailsViewModel.IsIndustryPlacementCompleted ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted,
