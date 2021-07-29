@@ -117,25 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Learners_Results_Heading_Text" xml:space="preserve">
-    <value>Learner's results</value>
+  <data name="Button_Back_To_Home" xml:space="preserve">
+    <value>Back to home</value>
   </data>
-  <data name="Name_Heading_Text" xml:space="preserve">
-    <value>Name: {0}</value>
-  </data>
-  <data name="Page_Title" xml:space="preserve">
-    <value>Learner’s results - Withdrawn learner page</value>
-  </data>
-  <data name="Provider_Heading_Text" xml:space="preserve">
-    <value>Provider: {0}</value>
-  </data>
-  <data name="Search_Again_Text" xml:space="preserve">
+  <data name="Button_Search_Again" xml:space="preserve">
     <value>Search again</value>
   </data>
-  <data name="This_Learners_Registration_Has_Been_Withdrawn_Text" xml:space="preserve">
-    <value>This learner's registration has been withdrawn.</value>
+  <data name="Heading_Learners_Details" xml:space="preserve">
+    <value>Learner’s details</value>
   </data>
-  <data name="Uln_Heading_Text" xml:space="preserve">
-    <value>ULN: {0}</value>
+  <data name="Heading_Learner_Has_Been_Withdrawn" xml:space="preserve">
+    <value>Learner has been withdrawn by the exam board</value>
+  </data>
+  <data name="Inset_This_Learner_Withdrawn_You_Can_Not_Change" xml:space="preserve">
+    <value>This learner’s registration has been withdrawn. You cannot change or add a result. Please speak to your organisation’s registrations editor to change this learner’s status.</value>
+  </data>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Learner withdrawn</value>
   </data>
 </root>

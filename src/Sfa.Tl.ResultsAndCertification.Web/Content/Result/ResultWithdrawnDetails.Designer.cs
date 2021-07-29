@@ -61,65 +61,56 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner&apos;s results.
+        ///   Looks up a localized string similar to Back to home.
         /// </summary>
-        public static string Learners_Results_Heading_Text {
+        public static string Button_Back_To_Home {
             get {
-                return ResourceManager.GetString("Learners_Results_Heading_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name: {0}.
-        /// </summary>
-        public static string Name_Heading_Text {
-            get {
-                return ResourceManager.GetString("Name_Heading_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Learner’s results - Withdrawn learner page.
-        /// </summary>
-        public static string Page_Title {
-            get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Provider: {0}.
-        /// </summary>
-        public static string Provider_Heading_Text {
-            get {
-                return ResourceManager.GetString("Provider_Heading_Text", resourceCulture);
+                return ResourceManager.GetString("Button_Back_To_Home", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Search again.
         /// </summary>
-        public static string Search_Again_Text {
+        public static string Button_Search_Again {
             get {
-                return ResourceManager.GetString("Search_Again_Text", resourceCulture);
+                return ResourceManager.GetString("Button_Search_Again", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This learner&apos;s registration has been withdrawn..
+        ///   Looks up a localized string similar to Learner has been withdrawn by the exam board.
         /// </summary>
-        public static string This_Learners_Registration_Has_Been_Withdrawn_Text {
+        public static string Heading_Learner_Has_Been_Withdrawn {
             get {
-                return ResourceManager.GetString("This_Learners_Registration_Has_Been_Withdrawn_Text", resourceCulture);
+                return ResourceManager.GetString("Heading_Learner_Has_Been_Withdrawn", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN: {0}.
+        ///   Looks up a localized string similar to Learner’s details.
         /// </summary>
-        public static string Uln_Heading_Text {
+        public static string Heading_Learners_Details {
             get {
-                return ResourceManager.GetString("Uln_Heading_Text", resourceCulture);
+                return ResourceManager.GetString("Heading_Learners_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This learner’s registration has been withdrawn. You cannot change or add a result. Please speak to your organisation’s registrations editor to change this learner’s status..
+        /// </summary>
+        public static string Inset_This_Learner_Withdrawn_You_Can_Not_Change {
+            get {
+                return ResourceManager.GetString("Inset_This_Learner_Withdrawn_You_Can_Not_Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner withdrawn.
+        /// </summary>
+        public static string Page_Title {
+            get {
+                return ResourceManager.GetString("Page_Title", resourceCulture);
             }
         }
     }
