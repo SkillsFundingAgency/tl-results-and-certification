@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
-        private ResultDetailsViewModel mockresult = null;
+        private readonly ResultDetailsViewModel mockresult = null;
 
         public override void Given()
         {

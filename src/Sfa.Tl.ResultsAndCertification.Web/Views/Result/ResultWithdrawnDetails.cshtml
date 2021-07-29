@@ -1,4 +1,4 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ResultDetailsViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ResultWithdrawnViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Result
 
 @{
@@ -6,7 +6,7 @@
 }
 
 @section NavigationBar {
-    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+    <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
 <div class="govuk-grid-row">
