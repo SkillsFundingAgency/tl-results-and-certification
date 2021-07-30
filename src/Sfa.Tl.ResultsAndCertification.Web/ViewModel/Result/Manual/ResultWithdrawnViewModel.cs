@@ -1,7 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System.Collections.Generic;
-using ResultDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultDetails;
+using WithdrawResultContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultWithdrawnDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 {
@@ -9,11 +9,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
     {
         public ResultWithdrawnViewModel()
         {
-            UlnLabel = ResultDetailsContent.Title_Uln_Text;
-            LearnerNameLabel = ResultDetailsContent.Title_Name_Text;
-            DateofBirthLabel = ResultDetailsContent.Title_DateofBirth_Text;
-            ProviderNameLabel = ResultDetailsContent.Title_Provider_Text;
-            TlevelTitleLabel = ResultDetailsContent.Title_TLevel_Text;
+            UlnLabel = WithdrawResultContent.Title_Uln_Text;
+            LearnerNameLabel = WithdrawResultContent.Title_Name_Text;
+            DateofBirthLabel = WithdrawResultContent.Title_DateofBirth_Text;
+            ProviderNameLabel = WithdrawResultContent.Title_Provider_Text;
+            TlevelTitleLabel = WithdrawResultContent.Title_TLevel_Text;
         }
 
         public override BackLinkModel BackLink => new BackLinkModel { RouteName = RouteConstants.SearchResults, RouteAttributes = new Dictionary<string, string> { { Constants.PopulateUln, true.ToString() } } };
