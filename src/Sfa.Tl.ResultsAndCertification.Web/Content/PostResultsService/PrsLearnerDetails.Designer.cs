@@ -133,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exam Period.
+        ///   Looks up a localized string similar to Exam period.
         /// </summary>
         public static string Title_Assessment_Series {
             get {
