@@ -13,6 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServiceTests
 {
-    public class When_UpdateBatchSummaryResponsesAsync_IsCalled : PrintingServiceBaseTest
+    public class When_UpdateTrackBatchResponsesAsync_IsCalled : PrintingServiceBaseTest
     {
         private CertificatePrintingResponse _actualResult;
 
@@ -39,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
                 { 1111111112, RegistrationPathwayStatus.Withdrawn },
                 { 1111111113, RegistrationPathwayStatus.Withdrawn },
                 { 1111111114, RegistrationPathwayStatus.Withdrawn },
-                { 1111111115, RegistrationPathwayStatus.Withdrawn }                
+                { 1111111115, RegistrationPathwayStatus.Withdrawn }
             };
 
             // Seed Registrations
@@ -54,13 +55,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
             foreach (var profile in _profiles)
                 _printCertificates.Add(SeedPrintCertificate(profile.TqRegistrationPathways.FirstOrDefault()));
 
-            var batchStatusItemsToSeed = new List<(int, BatchStatus, PrintingStatus?)>
+            var batchStatusItemsToSeed = new List<(int, BatchStatus, PrintingStatus?, PrintingBatchItemStatus?)>
             {
-                ( 1, BatchStatus.Error, null),
-                ( 2, BatchStatus.Created, null),
-                ( 3, BatchStatus.Accepted, null),
-                ( 4, BatchStatus.Accepted, null),
-                ( 5, BatchStatus.Accepted, null)
+                ( 1, BatchStatus.Error, null, null),
+                ( 2, BatchStatus.Accepted, PrintingStatus.AwaitingCollectionByCourier, null),
+                ( 3, BatchStatus.Accepted, PrintingStatus.CollectedByCourier, null),
+                ( 4, BatchStatus.Accepted, PrintingStatus.CollectedByCourier, null),
+                ( 5, BatchStatus.Accepted, PrintingStatus.CollectedByCourier, null),
             };
 
             foreach (var batchStatusItem in batchStatusItemsToSeed)
@@ -68,9 +69,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
                 var batch = _printCertificates.FirstOrDefault(p => p.PrintBatchItem.Batch.Id == batchStatusItem.Item1)?.PrintBatchItem.Batch;
                 batch.Status = batchStatusItem.Item2;
                 batch.PrintingStatus = batchStatusItem.Item3;
+
+                if (batchStatusItem.Item2 == BatchStatus.Error)
+                {
+                    batch.ResponseStatus = ResponseStatus.Error;
+                    batch.ResponseMessage = "Something went wrong";
+                }
+                else
+                {
+                    batch.ResponseStatus = ResponseStatus.Success;
+                }
+
+                batch.PrintBatchItems.ToList().ForEach(p => p.Status = batchStatusItem.Item4);
                 DbContext.SaveChanges();
             }
-
 
             BatchRepositoryLogger = new Logger<GenericRepository<Batch>>(new NullLoggerFactory());
             BatchRepository = new GenericRepository<Batch>(BatchRepositoryLogger, DbContext);
@@ -101,21 +113,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(BatchSummaryResponse batchSummaryResponse)
+        public async Task WhenAsync(TrackBatchResponse trackBatchResponse)
         {
             if (_actualResult != null)
                 return;
 
-            var batchSummaryResponses = batchSummaryResponse != null ? new List<BatchSummaryResponse> { batchSummaryResponse } : null;
+            var trackBatchResponses = trackBatchResponse != null ? new List<TrackBatchResponse> { trackBatchResponse } : null;
 
-            _actualResult = await PrintingService.UpdateBatchSummaryResponsesAsync(batchSummaryResponses);
+            _actualResult = await PrintingService.UpdateTrackBatchResponsesAsync(trackBatchResponses);
         }
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(BatchSummaryResponse batchSummaryResponse, CertificatePrintingResponse certificatePrintingResponse)
+        public async Task Then_Returns_Expected_Results(TrackBatchResponse trackBatchResponse, CertificatePrintingResponse certificatePrintingResponse)
         {
-            await WhenAsync(batchSummaryResponse);
+            await WhenAsync(trackBatchResponse);
 
             _actualResult.Should().NotBeNull();
 
@@ -124,26 +136,38 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
             _actualResult.ModifiedCount.Should().Be(certificatePrintingResponse.ModifiedCount);
             _actualResult.SavedCount.Should().Be(certificatePrintingResponse.SavedCount);
 
-            if (batchSummaryResponse != null)
+            if (trackBatchResponse != null)
             {
-                foreach (var batchSummary in batchSummaryResponse.BatchSummary)
+                foreach (var deliveryNotification in trackBatchResponse.DeliveryNotifications)
                 {
-                    var actualBatch = DbContext.Batch.FirstOrDefault(b => b.Id == batchSummary.BatchNumber);
+                    var actualBatch = DbContext.Batch.FirstOrDefault(b => b.Id == deliveryNotification.BatchNumber);
 
                     actualBatch.Should().NotBeNull();
 
-                    if (batchSummary.Status.Equals(ResponseStatus.Error.ToString(), System.StringComparison.InvariantCultureIgnoreCase))
+                    if (deliveryNotification.Status.Equals("Error", StringComparison.InvariantCultureIgnoreCase))
                     {
                         actualBatch.ResponseStatus.Should().Be(ResponseStatus.Error);
-                        actualBatch.ResponseMessage.Should().Be(batchSummary.ErrorMessage);
+                        actualBatch.ResponseMessage.Should().Be(deliveryNotification.ErrorMessage);
                     }
                     else
                     {
-                        var expectedBatchStatus = EnumExtensions.GetEnumByDisplayName<PrintingStatus>(batchSummary.Status);
-                        actualBatch.PrintingStatus.Should().Be(expectedBatchStatus);
-                        actualBatch.ResponseStatus.Should().Be(ResponseStatus.Success);
-                        actualBatch.ResponseMessage.Should().BeNullOrWhiteSpace();
-                    }                    
+                        foreach (var trackingDetail in deliveryNotification.TrackingDetails)
+                        {
+                            var actualBatchItem = actualBatch.PrintBatchItems.FirstOrDefault(x => x.TlProviderAddress.TlProvider.UkPrn == trackingDetail.UKPRN.ToLong());
+
+                            actualBatchItem.Should().NotBeNull();
+
+                            var printBatchItemStatus = EnumExtensions.GetEnumByDisplayName<PrintingBatchItemStatus>(trackingDetail.Status);
+                            actualBatchItem.Status.Should().Be(printBatchItemStatus);
+                            actualBatchItem.StatusChangedOn.Should().Be(trackingDetail.StatusChangeDate);
+                            actualBatchItem.Reason.Should().Be(trackingDetail.Reason);
+                            actualBatchItem.TrackingId.Should().Be(trackingDetail.TrackingID);
+                            actualBatchItem.SignedForBy.Should().Be(trackingDetail.SignedForBy);
+
+                            actualBatch.ResponseStatus.Should().Be(ResponseStatus.Success);
+                            actualBatch.ResponseMessage.Should().BeNullOrWhiteSpace();
+                        }
+                    }
                 }
             }
         }
@@ -154,14 +178,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
             {
                 return new[]
                 {
-                    new object[] { new BatchSummaryResponse { BatchSummary = new List<BatchSummary> { new BatchSummary { BatchNumber = 3, Status = EnumExtensions.GetDisplayName(PrintingStatus.AwaitingProcessing), ErrorMessage = string.Empty } } },
+                    new object[] { new TrackBatchResponse { DeliveryNotifications = new List<DeliveryNotification> { new DeliveryNotification { BatchNumber = 3, Status = EnumExtensions.GetDisplayName(ResponseStatus.Success), ErrorMessage = string.Empty, TrackingDetails = new List<TrackingDetail> { new TrackingDetail { Name = "Test", UKPRN = "10000536", Status = EnumExtensions.GetDisplayName(PrintingBatchItemStatus.Delivered), TrackingID = "5878AB44478", StatusChangeDate = DateTime.UtcNow, SignedForBy = "User" } } } } },
                     new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = 1, ModifiedCount = 1, SavedCount = 1,  }
                     },
-                    new object[] { new BatchSummaryResponse { BatchSummary = new List<BatchSummary> { new BatchSummary { BatchNumber = 4, Status = EnumExtensions.GetDisplayName(PrintingStatus.CollectedByCourier), ErrorMessage = string.Empty } } },
+                    new object[] { new TrackBatchResponse { DeliveryNotifications = new List<DeliveryNotification> { new DeliveryNotification { BatchNumber = 4, Status = EnumExtensions.GetDisplayName(ResponseStatus.Success), ErrorMessage = string.Empty, TrackingDetails = new List<TrackingDetail> { new TrackingDetail { Name = "Test", UKPRN = "10000536", Status = EnumExtensions.GetDisplayName(PrintingBatchItemStatus.NotDelivered), TrackingID = null, StatusChangeDate = DateTime.UtcNow, SignedForBy = null } } } } },
                     new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = 1, ModifiedCount = 1, SavedCount = 1,  }
                     },
-                    new object[] { new BatchSummaryResponse { BatchSummary = new List<BatchSummary> { new BatchSummary { BatchNumber = 5, Status = EnumExtensions.GetDisplayName(ResponseStatus.Error), ErrorMessage = "Batch does not exist" } } },
-                    new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = 1, ModifiedCount = 1, SavedCount = 1,  }
+                    new object[] { new TrackBatchResponse { DeliveryNotifications = new List<DeliveryNotification> { new DeliveryNotification { BatchNumber = 5, Status = EnumExtensions.GetDisplayName(ResponseStatus.Error), ErrorMessage = "Invalid token", TrackingDetails = new List<TrackingDetail>() } } },
+                    new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = 1, ModifiedCount = 1, SavedCount = 2,  }
                     },
                     new object[] { null,
                     new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = 0, ModifiedCount = 0, SavedCount = 0,  }

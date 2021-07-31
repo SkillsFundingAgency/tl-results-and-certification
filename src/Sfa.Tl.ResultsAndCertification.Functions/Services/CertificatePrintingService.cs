@@ -47,7 +47,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
                 var printResponse = await _printingApiClient.ProcessPrintRequestAsync(pendingPrintRequest);
 
                 if (printResponse != null)
+                {
+                    printResponse.PrintRequestResponse.BatchId = pendingPrintRequest.Batch.BatchNumber;
                     printRequestResponses.Add(printResponse.PrintRequestResponse);
+                }
             }
 
             // update batch based on response -- service call to update

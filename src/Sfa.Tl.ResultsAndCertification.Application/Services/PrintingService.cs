@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (printRequestResponses == null || printRequestResponses.Count == 0)
                 return new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = 0, ModifiedCount = 0, SavedCount = 0 };
 
-            var batchIds = printRequestResponses.Select(p => p.BatchNumber);
+            var batchIds = printRequestResponses.Select(p => p.BatchNumber < 1 ? p.BatchId : p.BatchNumber);
 
             var batches = await _batchRepository.GetManyAsync(b => batchIds.Contains(b.Id)).ToListAsync();
 
@@ -64,7 +64,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             foreach (var printRequestResponse in printRequestResponses)
             {
-                var batch = batches.FirstOrDefault(b => b.Id == printRequestResponse.BatchNumber);
+                var batchId = printRequestResponse.BatchNumber < 1 ? printRequestResponse.BatchId : printRequestResponse.BatchNumber;
+                var batch = batches.FirstOrDefault(b => b.Id == batchId);
 
                 if (batch != null)
                 {
@@ -74,8 +75,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         batch.Status = batchResponseStatus == ResponseStatus.Error ? BatchStatus.Error : BatchStatus.Accepted;
                         batch.Errors = batchResponseStatus == ResponseStatus.Error ? JsonConvert.SerializeObject(printRequestResponse.Errors) : null;
+                        batch.ResponseStatus = batchResponseStatus;
+                        batch.ResponseMessage = (printRequestResponse.BatchNumber < 1 && batchResponseStatus == ResponseStatus.Error) ? JsonConvert.SerializeObject(printRequestResponse.Errors) : null;
                         batch.ModifiedOn = DateTime.UtcNow;
-                        batch.ModifiedBy = "System";
+                        batch.ModifiedBy = Constants.FunctionPerformedBy;
 
                         modifiedBatches.Add(batch);
                     }
@@ -230,11 +233,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                     printBatchItem.ModifiedOn = DateTime.UtcNow;
                                     printBatchItem.ModifiedBy = Constants.FunctionPerformedBy;
 
+                                    if (printBatchItem.Batch.ResponseStatus == ResponseStatus.Error)
+                                    {
+                                        printBatchItem.Batch.ResponseStatus = ResponseStatus.Success;
+                                        printBatchItem.Batch.ResponseMessage = null;
+                                        printBatchItem.Batch.ModifiedOn = DateTime.UtcNow;
+                                        printBatchItem.Batch.ModifiedBy = Constants.FunctionPerformedBy;
+                                    }
+
                                     modifiedPrintBatchItems.Add(printBatchItem);
                                 }
                             }
                         }
-
                     }
                 }
             }

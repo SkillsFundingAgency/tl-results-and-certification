@@ -13,5 +13,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing
 
         [JsonProperty("Errors")]
         public List<Error> Errors { get; set; }
+
+        [JsonIgnore]
+        public int BatchId { get; set; }
     }
 }
