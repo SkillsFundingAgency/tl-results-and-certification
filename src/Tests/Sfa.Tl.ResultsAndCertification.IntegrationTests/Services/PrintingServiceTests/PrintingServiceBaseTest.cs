@@ -100,6 +100,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
             return profile;
         }
 
+        public PrintCertificate BuildPrintCertificate(TqRegistrationPathway tqRegistrationPathway)
+        {
+            var printCertificate = PrintCertificateDataProvider.CreatePrintCertificate(DbContext, new PrintCertificateBuilder().Build(null, tqRegistrationPathway));
+            printCertificate.Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber;
+            printCertificate.LearningDetails = JsonConvert.SerializeObject(new LearningDetails());
+            return printCertificate;
+        }
+
         public PrintCertificate SeedPrintCertificate(TqRegistrationPathway tqRegistrationPathway)
         {
             var printCertificate = PrintCertificateDataProvider.CreatePrintCertificate(DbContext, new PrintCertificateBuilder().Build(null, tqRegistrationPathway));

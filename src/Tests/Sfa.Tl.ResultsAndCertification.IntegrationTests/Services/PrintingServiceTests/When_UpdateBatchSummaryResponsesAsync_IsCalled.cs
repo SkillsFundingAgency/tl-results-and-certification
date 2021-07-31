@@ -5,6 +5,7 @@ using Notify.Interfaces;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -19,7 +20,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServiceTests
 {
-    public class When_UpdatePrintReqeustResponsesAsync_IsCalled : PrintingServiceBaseTest
+    public class When_UpdateBatchSummaryResponsesAsync_IsCalled : PrintingServiceBaseTest
     {
         private CertificatePrintingResponse _actualResult;
 
@@ -35,7 +36,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
             var ulns = new Dictionary<long, RegistrationPathwayStatus>
             {
                 { 1111111111, RegistrationPathwayStatus.Withdrawn },
-                { 1111111112, RegistrationPathwayStatus.Withdrawn }
+                { 1111111112, RegistrationPathwayStatus.Withdrawn },
+                { 1111111113, RegistrationPathwayStatus.Withdrawn },
+                { 1111111114, RegistrationPathwayStatus.Withdrawn },
+                { 1111111115, RegistrationPathwayStatus.Withdrawn }                
             };
 
             // Seed Registrations
@@ -49,6 +53,24 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
 
             foreach (var profile in _profiles)
                 _printCertificates.Add(SeedPrintCertificate(profile.TqRegistrationPathways.FirstOrDefault()));
+
+            var batchStatusItemsToSeed = new List<(int, BatchStatus, PrintingStatus?)>
+            {
+                ( 1, BatchStatus.Error, null),
+                ( 2, BatchStatus.Created, null),
+                ( 3, BatchStatus.Accepted, null),
+                ( 4, BatchStatus.Accepted, null),
+                ( 5, BatchStatus.Accepted, null)
+            };
+
+            foreach (var batchStatusItem in batchStatusItemsToSeed)
+            {
+                var batch = _printCertificates.FirstOrDefault(p => p.PrintBatchItem.Batch.Id == batchStatusItem.Item1)?.PrintBatchItem.Batch;
+                batch.Status = batchStatusItem.Item2;
+                batch.PrintingStatus = batchStatusItem.Item3;
+                DbContext.SaveChanges();
+            }
+
 
             BatchRepositoryLogger = new Logger<GenericRepository<Batch>>(new NullLoggerFactory());
             BatchRepository = new GenericRepository<Batch>(BatchRepositoryLogger, DbContext);
@@ -79,35 +101,50 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(PrintRequestResponse printRequestResponse)
+        public async Task WhenAsync(BatchSummaryResponse batchSummaryResponse)
         {
             if (_actualResult != null)
                 return;
 
-            var printingResponses = printRequestResponse != null ? new List<PrintRequestResponse> { printRequestResponse } : null;
+            var batchSummaryResponses = batchSummaryResponse != null ? new List<BatchSummaryResponse> { batchSummaryResponse } : null;
 
-            _actualResult = await PrintingService.UpdatePrintReqeustResponsesAsync(printingResponses);
+            _actualResult = await PrintingService.UpdateBatchSummaryResponsesAsync(batchSummaryResponses);
         }
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(PrintRequestResponse printRequestResponse, CertificatePrintingResponse certificatePrintingResponse)
+        public async Task Then_Returns_Expected_Results(BatchSummaryResponse batchSummaryResponse, CertificatePrintingResponse certificatePrintingResponse)
         {
-            await WhenAsync(printRequestResponse);
+            await WhenAsync(batchSummaryResponse);
 
-            _actualResult.Should().NotBeNull();            
+            _actualResult.Should().NotBeNull();
 
             _actualResult.IsSuccess.Should().Be(certificatePrintingResponse.IsSuccess);
             _actualResult.PrintingProcessedCount.Should().Be(certificatePrintingResponse.PrintingProcessedCount);
             _actualResult.ModifiedCount.Should().Be(certificatePrintingResponse.ModifiedCount);
             _actualResult.SavedCount.Should().Be(certificatePrintingResponse.SavedCount);
 
-            if(printRequestResponse != null)
+            if (batchSummaryResponse != null)
             {
-                var actualBatch = DbContext.Batch.FirstOrDefault(b => b.Id == printRequestResponse.BatchNumber);
+                foreach (var batchSummary in batchSummaryResponse.BatchSummary)
+                {
+                    var actualBatch = DbContext.Batch.FirstOrDefault(b => b.Id == batchSummary.BatchNumber);
 
-                var expectedBatchStatus = printRequestResponse.Status == ResponseStatus.Error.ToString() ? BatchStatus.Error : BatchStatus.Accepted;
-                actualBatch.Status.Should().Be(expectedBatchStatus);
+                    actualBatch.Should().NotBeNull();
+
+                    if (batchSummary.Status.Equals("Error", System.StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        actualBatch.ResponseStatus.Should().Be(ResponseStatus.Error);
+                        actualBatch.ResponseMessage.Should().Be(batchSummary.ErrorMessage);
+                    }
+                    else
+                    {
+                        var expectedBatchStatus = EnumExtensions.GetEnumByDisplayName<PrintingStatus>(batchSummary.Status);
+                        actualBatch.PrintingStatus.Should().Be(expectedBatchStatus);
+                        actualBatch.ResponseStatus.Should().Be(ResponseStatus.Success);
+                        actualBatch.ResponseMessage.Should().BeNullOrWhiteSpace();
+                    }                    
+                }
             }
         }
 
@@ -117,10 +154,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
             {
                 return new[]
                 {
-                    new object[] { new PrintRequestResponse { BatchNumber = 1, Status = ResponseStatus.Error.ToString(), Errors = new List<Error> { new Error { CertificateNumber = "000000001", Name = "Test Name", ErrorMessage = "Uln is required" }  } },
+                    new object[] { new BatchSummaryResponse { BatchSummary = new List<BatchSummary> { new BatchSummary { BatchNumber = 3, Status = EnumExtensions.GetDisplayName(PrintingStatus.AwaitingProcessing), ErrorMessage = string.Empty } } },
                     new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = 1, ModifiedCount = 1, SavedCount = 1,  }
                     },
-                    new object[] { new PrintRequestResponse { BatchNumber = 2, Status = ResponseStatus.Success.ToString(), Errors = new List<Error>() },
+                    new object[] { new BatchSummaryResponse { BatchSummary = new List<BatchSummary> { new BatchSummary { BatchNumber = 4, Status = EnumExtensions.GetDisplayName(PrintingStatus.CollectedByCourier), ErrorMessage = string.Empty } } },
+                    new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = 1, ModifiedCount = 1, SavedCount = 1,  }
+                    },
+                    new object[] { new BatchSummaryResponse { BatchSummary = new List<BatchSummary> { new BatchSummary { BatchNumber = 5, Status = EnumExtensions.GetDisplayName(ResponseStatus.Error), ErrorMessage = "Batch does not exist" } } },
                     new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = 1, ModifiedCount = 1, SavedCount = 1,  }
                     },
                     new object[] { null,
