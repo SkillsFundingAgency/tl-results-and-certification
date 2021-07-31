@@ -216,7 +216,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("no-assessment-entries", Name = RouteConstants.ResultNoAssessmentEntry)]
         public async Task<IActionResult> ResultNoAssessmentEntryAsync()
         {
-            var viewModel = await _cacheService.GetAndRemoveAsync<ResultNoAssessmentEntryViewModel>(Constants.ResultNoAssessmentEntry);
+            var viewModel = await _cacheService.GetAndRemoveAsync<ResultNoAssessmentEntryViewModel>(CacheKey);
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read ResultNoAssessmentEntryViewModel from redis cache in assessment no assessment entries page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
@@ -240,7 +240,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!viewModel.IsPathwayAssessmentEntryRegistered)
             {
                 await _cacheService.SetAsync(Constants.ResultsSearchCriteria, viewModel.Uln.ToString());
-                await _cacheService.SetAsync(Constants.ResultNoAssessmentEntry, _resultLoader.GetResultNoAssessmentEntryViewModel(viewModel));
+                await _cacheService.SetAsync(CacheKey, _resultLoader.GetResultNoAssessmentEntryViewModel(viewModel));
                 return RedirectToRoute(RouteConstants.ResultNoAssessmentEntry);
             }
 
