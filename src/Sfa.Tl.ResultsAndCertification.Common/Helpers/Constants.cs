@@ -57,6 +57,7 @@
         public const string SearchResultsUlnNotFound = "SearchResultsUlnNotFound";
         public const string ResultWithdrawn = "ResultWithdrawn";
         public const string ResultsSearchCriteria = "ResultsSearchCriteria";
+        public const string ResultNoAssessmentEntry = "ResultNoAssessmentEntry";
         public const string ResultsUploadSuccessfulViewModel = "ResultsUploadSuccessfulViewModel";
         public const string ResultConfirmationViewModel = "ResultConfirmationViewModel";
         public const string ChangeResultConfirmationViewModel = "ChangeResultConfirmationViewModel";

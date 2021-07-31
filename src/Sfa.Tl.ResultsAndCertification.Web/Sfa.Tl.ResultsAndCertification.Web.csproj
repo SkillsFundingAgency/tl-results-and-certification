@@ -285,6 +285,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ResultDetails.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Result\ResultNoAssessmentEntry.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ResultNoAssessmentEntry.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Result\ResultWithdrawnDetails.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1001,6 +1006,10 @@
     <EmbeddedResource Update="Content\Result\ResultDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResultDetails.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Result\ResultNoAssessmentEntry.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResultNoAssessmentEntry.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Result\ResultWithdrawnDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

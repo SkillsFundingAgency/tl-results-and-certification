@@ -84,6 +84,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<UlnResultsNotFoundViewModel>(response);
         }
 
+        public async Task<ResultWithdrawnViewModel> GetResultWithdrawnViewModelAsync(long aoUkprn, int profileId)
+        {
+            var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, RegistrationPathwayStatus.Withdrawn);
+            return _mapper.Map<ResultWithdrawnViewModel>(response);
+        }
+
+        public ResultNoAssessmentEntryViewModel GetResultNoAssessmentEntryViewModel(ResultDetailsViewModel resultDetails)
+        {
+            return _mapper.Map<ResultNoAssessmentEntryViewModel>(resultDetails);
+        }
+
         public async Task<ResultDetailsViewModel> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, status);
@@ -144,12 +155,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             }
             var request = _mapper.Map<ChangeResultRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             return await _internalApiClient.ChangeResultAsync(request);
-        }
-
-        public async Task<ResultWithdrawnViewModel> GetResultWithdrawnViewModelAsync(long aoUkprn, int profileId)
-        {
-            var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, RegistrationPathwayStatus.Withdrawn);
-            return _mapper.Map<ResultWithdrawnViewModel>(response);
         }
     }
 }
