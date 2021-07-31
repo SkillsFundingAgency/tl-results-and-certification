@@ -10,13 +10,13 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
     {
         public PrintCertificate Build(PrintBatchItem printBatchItem = null, TqRegistrationPathway tqRegistrationPathway = null)
         {
-
+            tqRegistrationPathway = tqRegistrationPathway ?? new TqRegistrationPathwayBuilder().Build();
             return new PrintCertificate
             {
                 PrintBatchItem = printBatchItem ?? new PrintBatchItemBuilder().Build(),
-                TqRegistrationPathway = tqRegistrationPathway ?? new TqRegistrationPathwayBuilder().Build(),
-                Uln = 1111111111,
-                LearnerName = "First 1 Last 1",
+                TqRegistrationPathway = tqRegistrationPathway,
+                Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                LearnerName = $"{tqRegistrationPathway.TqRegistrationProfile.Firstname} {tqRegistrationPathway.TqRegistrationProfile.Lastname}",
                 Type = PrintCertificateType.StatementOfAchievement,
                 LearningDetails = "Test",
                 DisplaySnapshot = "Display",
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 {
                     PrintBatchItem = printBatchItem,
                     TqRegistrationPathway = tqRegistrationPathway,
-                    Uln = 1111111111,
-                    LearnerName = "First 1 Last 1",
+                    Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                    LearnerName = $"{tqRegistrationPathway.TqRegistrationProfile.Firstname} {tqRegistrationPathway.TqRegistrationProfile.Lastname}",
                     Type = PrintCertificateType.StatementOfAchievement,
                     LearningDetails = "Test",
                     DisplaySnapshot = "Display",
@@ -54,8 +54,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 {
                     PrintBatchItem = printBatchItem,
                     TqRegistrationPathway = tqRegistrationPathway,
-                    Uln = 1111111112,
-                    LearnerName = "First 2 Last 2",
+                    Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                    LearnerName = $"{tqRegistrationPathway.TqRegistrationProfile.Firstname} {tqRegistrationPathway.TqRegistrationProfile.Lastname}",
                     Type = PrintCertificateType.StatementOfAchievement,
                     LearningDetails = "Details",
                     DisplaySnapshot = "Snapshot",
@@ -79,8 +79,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 {
                     PrintBatchItem = printBatchItem,
                     TqRegistrationPathway = tqRegistrationPathway[0],
-                    Uln = 1111111111,
-                    LearnerName = "First 1 Last 1",
+                    Uln = tqRegistrationPathway[0].TqRegistrationProfile.UniqueLearnerNumber,
+                    LearnerName = $"{tqRegistrationPathway[0].TqRegistrationProfile.Firstname} {tqRegistrationPathway[0].TqRegistrationProfile.Lastname}",
                     Type = PrintCertificateType.StatementOfAchievement,
                     LearningDetails = "Test",
                     DisplaySnapshot = "Display",
@@ -94,8 +94,8 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 {
                     PrintBatchItem = printBatchItem,
                     TqRegistrationPathway = tqRegistrationPathway[1],
-                    Uln = 1111111112,
-                    LearnerName = "First 2 Last 2",
+                    Uln = tqRegistrationPathway[1].TqRegistrationProfile.UniqueLearnerNumber,
+                    LearnerName = $"{tqRegistrationPathway[1].TqRegistrationProfile.Firstname} {tqRegistrationPathway[1].TqRegistrationProfile.Lastname}",
                     Type = PrintCertificateType.StatementOfAchievement,
                     LearningDetails = "Details",
                     DisplaySnapshot = "Snapshot",

@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly INotificationService _notificationService;
         private readonly ResultsAndCertificationConfiguration _configuration;
 
-        public PrintingService(IMapper mapper, ILogger<ILearnerRecordService> logger, IRepository<Batch> batchRepository,
+        public PrintingService(IMapper mapper, ILogger<IPrintingService> logger, IRepository<Batch> batchRepository,
             IRepository<PrintBatchItem> printBatchItemRepository, IPrintingRepository printingRepository,
             INotificationService notificationService, ResultsAndCertificationConfiguration configuration)
         {
