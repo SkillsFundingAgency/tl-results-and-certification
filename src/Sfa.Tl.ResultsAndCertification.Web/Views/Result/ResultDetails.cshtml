@@ -1,7 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ResultDetailsViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Result
 @using Sfa.Tl.ResultsAndCertification.Common.Enum
-@using Sfa.Tl.ResultsAndCertification.Web.Helpers
 
 @{
     ViewData["Title"] = @ResultDetails.Page_Title;
@@ -31,7 +30,6 @@
                 else
                 {
                     @ResultDetails.Inset_Appeal_Date_Ended
-                    <a class="govuk-link" asp-route="">@ResultDetails.Contactus_Link</a>@ResultDetails.Fullstop
                 }
             </div>
         }
