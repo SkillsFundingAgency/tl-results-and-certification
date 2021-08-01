@@ -141,6 +141,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public OrdnanceSurveyApiSettings OrdnanceSurveyApiSettings { get; set; }
 
         /// <summary>
+        /// Gets or sets the printing API settings.
+        /// </summary>
+        /// <value>
+        /// The printing API settings.
+        /// </value>
+        public PrintingApiSettings PrintingApiSettings { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this instance is dev.
         /// </summary>
         /// <value>
@@ -164,14 +172,12 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// </value>
         public LearningRecordServiceSettings LearningRecordServiceSettings { get; set; }
 
-        /// <summary>
-        /// Gets or sets the printing API settings.
+        // <summary>
+        /// Gets or sets the key vault uri.
         /// </summary>
         /// <value>
-        /// The printing API settings.
+        /// The key vault uri.
         /// </value>
-        public PrintingApiSettings PrintingApiSettings { get; set; }
-
         public string KeyVaultUri { get; set; }
     }
 }
