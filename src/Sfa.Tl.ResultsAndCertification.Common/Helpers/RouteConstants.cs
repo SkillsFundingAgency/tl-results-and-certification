@@ -175,6 +175,7 @@
         public const string SubmitSearchResults = "SubmitSearchResults";
         public const string SearchResultsNotFound = "SearchResultsNotFound";
         public const string ResultWithdrawnDetails = "ResultWithdrawnDetails";
+        public const string ResultNoAssessmentEntry = "ResultNoAssessmentEntry";
         public const string ResultDetails = "ResultDetails";
 
         // Error
@@ -303,6 +304,8 @@
         public const string SubmitPrsSelectAssessmentSeries = "SubmitPrsSelectAssessmentSeries";
         public const string PrsCancelAppealUpdate = "PrsCancelAppealUpdate";
         public const string SubmitPrsCancelAppealUpdate = "SubmitPrsCancelAppealUpdate";
+        public const string PrsGradeChangeRequest = "PrsGradeChangeRequest";
+        public const string SubmitPrsGradeChangeRequest = "SubmitPrsGradeChangeRequest";
 
         #endregion
     }

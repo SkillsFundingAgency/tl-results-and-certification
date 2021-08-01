@@ -1,7 +1,6 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual.ResultDetailsViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.Result
 @using Sfa.Tl.ResultsAndCertification.Common.Enum
-@using Sfa.Tl.ResultsAndCertification.Web.Helpers
 
 @{
     ViewData["Title"] = @ResultDetails.Page_Title;
@@ -26,12 +25,11 @@
                 else if (Model.PathwayPrsStatus == PrsStatus.Final)
                 {
                     @ResultDetails.Inset_Appeal_Final_Outcome_Recorded
-                    <a class="govuk-link" asp-route="">@ResultDetails.Contactus_Link</a>@ResultDetails.Fullstop
+                    <a class="govuk-link" asp-route="PrsGradeChangeRequest" asp-route-profileId="@Model.ProfileId" asp-route-assessmentId="@Model.PathwayAssessmentId" asp-route-isResultJourney="true">@ResultDetails.Contactus_Link</a>@ResultDetails.Fullstop
                 }
                 else
                 {
                     @ResultDetails.Inset_Appeal_Date_Ended
-                    <a class="govuk-link" asp-route="">@ResultDetails.Contactus_Link</a>@ResultDetails.Fullstop
                 }
             </div>
         }

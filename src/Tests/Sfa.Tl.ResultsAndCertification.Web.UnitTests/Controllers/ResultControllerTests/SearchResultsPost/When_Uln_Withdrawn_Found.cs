@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         public void Then_Expected_Methods_Called()
         {
             ResultLoader.Received(1).FindUlnResultsAsync(AoUkprn, SearchUln.ToLong());
+            CacheService.Received(1).SetAsync(Constants.ResultsSearchCriteria, SearchUln);
         }
 
         [Fact]

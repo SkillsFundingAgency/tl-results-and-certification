@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The grade is the same.
+        ///   Looks up a localized string similar to No change to the grade.
         /// </summary>
         public static string Radio_Button_SameGrade {
             get {
@@ -98,11 +98,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I need to update the grade.
+        ///   Looks up a localized string similar to The grade is changed.
         /// </summary>
         public static string Radio_Button_UpdateGrade {
             get {
                 return ResourceManager.GetString("Radio_Button_UpdateGrade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The appeal is withdrawn.
+        /// </summary>
+        public static string Radio_Button_WithdrawAppeal {
+            get {
+                return ResourceManager.GetString("Radio_Button_WithdrawAppeal", resourceCulture);
             }
         }
         
@@ -125,7 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exam Period.
+        ///   Looks up a localized string similar to Exam period.
         /// </summary>
         public static string Title_ExamPeriod_Text {
             get {

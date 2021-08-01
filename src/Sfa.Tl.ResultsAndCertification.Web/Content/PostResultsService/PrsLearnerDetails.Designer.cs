@@ -88,6 +88,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ..
+        /// </summary>
+        public static string Fullstop {
+            get {
+                return ResourceManager.GetString("Fullstop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Core (code): {0}.
         /// </summary>
         public static string Heading_Core {
@@ -124,6 +133,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This result is final as the outcome of an appeal has been recorded. If you need to change the grade please.
+        /// </summary>
+        public static string Inset_Result_Is_Final_Outcome_Registered {
+            get {
+                return ResourceManager.GetString("Inset_Result_Is_Final_Outcome_Registered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to contact us.
+        /// </summary>
+        public static string Link_Contactus {
+            get {
+                return ResourceManager.GetString("Link_Contactus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learner’s component grade status.
         /// </summary>
         public static string Page_Title {
@@ -133,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exam Period.
+        ///   Looks up a localized string similar to Exam period.
         /// </summary>
         public static string Title_Assessment_Series {
             get {

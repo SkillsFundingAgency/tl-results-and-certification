@@ -55,6 +55,7 @@
         public const string AddAssessmentEntryConfirmationViewModel = "AddAssessmentEntryConfirmationViewModel";
         public const string RemoveAssessmentEntryConfirmationViewModel = "RemoveAssessmentEntryConfirmationViewModel";
         public const string SearchResultsUlnNotFound = "SearchResultsUlnNotFound";
+        public const string ResultWithdrawn = "ResultWithdrawn";
         public const string ResultsSearchCriteria = "ResultsSearchCriteria";
         public const string ResultsUploadSuccessfulViewModel = "ResultsUploadSuccessfulViewModel";
         public const string ResultConfirmationViewModel = "ResultConfirmationViewModel";

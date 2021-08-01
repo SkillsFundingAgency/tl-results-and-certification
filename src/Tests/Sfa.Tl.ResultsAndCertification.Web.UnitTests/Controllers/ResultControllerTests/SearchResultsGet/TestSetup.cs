@@ -22,9 +22,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         protected ICacheService CacheService;
         protected ILogger<ResultController> Logger;
         protected ResultController Controller;
+        protected bool PopulateUln;
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; private set; }
-
+        
         public override void Setup()
         {
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
@@ -45,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 
         public async override Task When()
         {
-            Result = await Controller.SearchResultsAsync();
+            Result = await Controller.SearchResultsAsync(PopulateUln);
         }
     }
 }

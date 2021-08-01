@@ -13,6 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Linq;
 using System.Threading.Tasks;
+using WithdrawAppealContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsWithdrawAppeal;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -87,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else if (prsLearnerRecord.HasMultipleAssessments)
             {
-                return RedirectToRoute(RouteConstants.PrsSelectAssessmentSeries, new { profileId = prsLearnerRecord .ProfileId });
+                return RedirectToRoute(RouteConstants.PrsSelectAssessmentSeries, new { profileId = prsLearnerRecord.ProfileId });
             }
 
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = prsLearnerRecord.ProfileId, assessmentId = prsLearnerRecord.PathwayAssessments.FirstOrDefault().AssessmentId });
@@ -231,10 +232,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
                 return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
             }
+            else if (model.AppealOutcome == AppealOutcomeType.WithdrawAppeal)
+                return await PrsWithdrawAppealAsync(model);
             else
-            {
                 return RedirectToRoute(RouteConstants.PrsAppealUpdatePathwayGrade, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId, resultId = model.PathwayResultId });
-            }
         }
 
         [HttpGet]
@@ -305,6 +306,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
         }
 
+        [NonAction]
+        public async Task<IActionResult> PrsWithdrawAppealAsync(AppealOutcomePathwayGradeViewModel model)
+        {
+            bool isSuccess = await _postResultsServiceLoader.WithdrawAppealCoreGradeAsync(User.GetUkPrn(), model);
+            if (!isSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            var successMessage = string.Format(WithdrawAppealContent.Success_Banner_Message, model.PathwayName, model.PathwayCode);
+            var notificationBanner = new NotificationBannerModel { Message = successMessage };
+            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = model.ProfileId, assessmentId = model.PathwayAssessmentId });
+        }
+
         [HttpGet]
         [Route("select-exam-period/{profileId}", Name = RouteConstants.PrsSelectAssessmentSeries)]
         public async Task<IActionResult> PrsSelectAssessmentSeriesAsync(int profileId)
@@ -366,6 +380,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
                 return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
+        }
+
+        [HttpGet]
+        [Route("request-grade-change/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.PrsGradeChangeRequest)]
+        public async Task<IActionResult> PrsGradeChangeRequestAsync(int profileId, int assessmentId, bool isResultJourney)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), profileId, assessmentId);
+            if (viewModel == null || !viewModel.CanRequestFinalGradeChange)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            
+            viewModel.IsResultJourney = isResultJourney;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("request-grade-change", Name = RouteConstants.SubmitPrsGradeChangeRequest)]
+        public async Task<IActionResult> PrsGradeChangeRequestAsync(PrsGradeChangeRequestViewModel viewModel)
+        {
+            var learnerDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), viewModel.ProfileId, viewModel.AssessmentId);
+            if (!ModelState.IsValid)
+            {
+                learnerDetails.IsResultJourney = viewModel.IsResultJourney;
+                return View(learnerDetails);
+            }
+
+            return View(learnerDetails);
         }
     }
 }

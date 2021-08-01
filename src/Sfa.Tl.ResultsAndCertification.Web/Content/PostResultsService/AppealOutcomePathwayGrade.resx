@@ -127,10 +127,13 @@
     <value>Add outcome of core appeal</value>
   </data>
   <data name="Radio_Button_SameGrade" xml:space="preserve">
-    <value>The grade is the same</value>
+    <value>No change to the grade</value>
   </data>
   <data name="Radio_Button_UpdateGrade" xml:space="preserve">
-    <value>I need to update the grade</value>
+    <value>The grade is changed</value>
+  </data>
+  <data name="Radio_Button_WithdrawAppeal" xml:space="preserve">
+    <value>The appeal is withdrawn</value>
   </data>
   <data name="Title_Core_Text" xml:space="preserve">
     <value>Core &lt;br/&gt; (code)</value>
@@ -139,7 +142,7 @@
     <value>Date of birth</value>
   </data>
   <data name="Title_ExamPeriod_Text" xml:space="preserve">
-    <value>Exam Period</value>
+    <value>Exam period</value>
   </data>
   <data name="Title_Grade_Text" xml:space="preserve">
     <value>Grade</value>

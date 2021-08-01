@@ -1,0 +1,47 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsGradeChangeRequestViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+
+@{
+    ViewData["Title"] = PrsGradeChangeRequest.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <form asp-route="SubmitPrsGradeChangeRequest">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="AssessmentId" />
+            <input type="hidden" asp-for="IsResultJourney" />
+
+            <partial name="_ValidationSummary" />
+
+            <h1 class="govuk-heading-l">@PrsGradeChangeRequest.Heading_Request_To_Change_Learners_Grade</h1>
+
+            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-9 govuk-!-margin-top-7">
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCore></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCoreExamPeriod></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCoreGrade></vc:summary-item>
+            </dl>
+
+            <div class="govuk-form-group" sfa-validation-for="ChangeRequestData" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <h2 class="govuk-label-wrapper"><label class="govuk-label govuk-label--m">@PrsGradeChangeRequest.Heading_Please_Tell_Us_Why</label></h2>
+                    <div id="more-detail-hint" class="govuk-hint">@PrsGradeChangeRequest.Para_Please_Do_Not_Add_Any_Details</div>
+                    <textarea id="changerequestdata" class="govuk-textarea" asp-for="ChangeRequestData" rows="5" aria-describedby="more-detail-hint"></textarea>
+                </fieldset>
+            </div>
+
+            <div class="govuk-button-group">
+                <button id="sendButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsGradeChangeRequest.Button_Send</button>
+                <a id="cancelLink" class="govuk-link" href="#">@PrsGradeChangeRequest.Link_Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

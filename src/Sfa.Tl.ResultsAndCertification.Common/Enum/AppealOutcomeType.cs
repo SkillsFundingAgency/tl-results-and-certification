@@ -4,5 +4,6 @@
     {
         SameGrade = 1,
         UpdateGrade = 2,
+        WithdrawAppeal = 3
     }
 }

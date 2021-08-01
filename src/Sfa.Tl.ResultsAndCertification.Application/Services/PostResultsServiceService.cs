@@ -72,12 +72,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             pathwayResultsToUpdate.Add(existingPathwayResult);
 
-            var resultLookupId = request.PrsStatus == PrsStatus.UnderReview || request.PrsStatus == PrsStatus.BeingAppealed ? existingPathwayResult.TlLookupId : request.ResultLookupId;
+            var resultLookupId = request.PrsStatus == PrsStatus.UnderReview || request.PrsStatus == PrsStatus.BeingAppealed || request.PrsStatus == PrsStatus.Withdraw 
+                ? existingPathwayResult.TlLookupId 
+                : request.ResultLookupId;
+
             pathwayResultsToUpdate.Add(new TqPathwayResult
             {
                 TqPathwayAssessmentId = existingPathwayResult.TqPathwayAssessmentId,
                 TlLookupId = resultLookupId,
-                PrsStatus = request.PrsStatus,
+                PrsStatus = request.PrsStatus == PrsStatus.Withdraw ? (PrsStatus?)null : request.PrsStatus,
                 IsOptedin = true,
                 StartDate = DateTime.UtcNow,
                 EndDate = null,
@@ -94,6 +97,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return currentPrsStatus == null || currentPrsStatus == PrsStatus.NotSpecified;
 
             if (requestPrsStatus == PrsStatus.Final)
+                return currentPrsStatus == PrsStatus.BeingAppealed;
+
+            if (requestPrsStatus == PrsStatus.Withdraw)
                 return currentPrsStatus == PrsStatus.BeingAppealed;
 
             return false;
