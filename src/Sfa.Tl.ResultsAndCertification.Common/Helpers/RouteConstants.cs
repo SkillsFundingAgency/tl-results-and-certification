@@ -304,6 +304,8 @@
         public const string SubmitPrsSelectAssessmentSeries = "SubmitPrsSelectAssessmentSeries";
         public const string PrsCancelAppealUpdate = "PrsCancelAppealUpdate";
         public const string SubmitPrsCancelAppealUpdate = "SubmitPrsCancelAppealUpdate";
+        public const string PrsGradeChangeRequest = "PrsGradeChangeRequest";
+        public const string SubmitPrsGradeChangeRequest = "SubmitPrsGradeChangeRequest";
 
         #endregion
     }

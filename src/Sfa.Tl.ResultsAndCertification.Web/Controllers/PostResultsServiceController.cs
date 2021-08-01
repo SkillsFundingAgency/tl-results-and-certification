@@ -381,5 +381,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             else
                 return RedirectToRoute(RouteConstants.PrsPathwayGradeCheckAndSubmit);
         }
+
+        [HttpGet]
+        [Route("request-grade-change/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.PrsGradeChangeRequest)]
+        public async Task<IActionResult> PrsGradeChangeRequestAsync(int profileId, int assessmentId, bool isResultJourney)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), profileId, assessmentId);
+            if (viewModel == null || !viewModel.CanRequestFinalGradeChange)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            
+            viewModel.IsResultJourney = isResultJourney;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("request-grade-change", Name = RouteConstants.SubmitPrsGradeChangeRequest)]
+        public async Task<IActionResult> PrsGradeChangeRequestAsync(PrsGradeChangeRequestViewModel viewModel)
+        {
+            var learnerDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), viewModel.ProfileId, viewModel.AssessmentId);
+            if (!ModelState.IsValid)
+            {
+                learnerDetails.IsResultJourney = viewModel.IsResultJourney;
+                return View(learnerDetails);
+            }
+
+            return View(learnerDetails);
+        }
     }
 }

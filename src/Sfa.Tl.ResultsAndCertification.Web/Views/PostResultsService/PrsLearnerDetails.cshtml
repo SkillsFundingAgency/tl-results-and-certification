@@ -18,7 +18,7 @@
         @if (Model.IsFinalOutcomeRegistered)
         {
             <div class="govuk-inset-text">@PrsLearnerDetails.Inset_Result_Is_Final_Outcome_Registered 
-                <a id="contactusLink" class="govuk-link" href="#">@PrsLearnerDetails.Link_Contactus</a>@PrsLearnerDetails.Fullstop
+                <a id="contactusLink" class="govuk-link" asp-route="PrsGradeChangeRequest" asp-route-profileId="@Model.ProfileId" asp-route-assessmentId="@Model.PathwayAssessmentId">@PrsLearnerDetails.Link_Contactus</a>@PrsLearnerDetails.Fullstop
             </div>
         }
 
