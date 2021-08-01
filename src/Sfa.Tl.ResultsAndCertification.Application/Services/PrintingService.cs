@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         batch.Status = isResponseStatusError ? BatchStatus.Error : BatchStatus.Accepted;
                         batch.Errors = isResponseStatusError ? JsonConvert.SerializeObject(printRequestResponse.Errors) : null;
                         batch.ResponseStatus = batchResponseStatus;
-                        batch.ResponseMessage = (printRequestResponse.BatchNumber < 1 && batchResponseStatus == ResponseStatus.Error) ? JsonConvert.SerializeObject(printRequestResponse.Errors) : null;
+                        batch.ResponseMessage = (printRequestResponse.BatchNumber < 1 && isResponseStatusError) ? JsonConvert.SerializeObject(printRequestResponse.Errors) : null;
                         batch.ModifiedOn = DateTime.UtcNow;
                         batch.ModifiedBy = Constants.FunctionPerformedBy;
 
@@ -289,16 +289,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
         }
 
-        private async Task<bool> SendEmailAsync(List<int> batchIds, string functionName)
+        private async Task<bool> SendEmailAsync(List<int> batchIds, string jobName)
         {
             var tokens = new Dictionary<string, dynamic>
                 {
-                    { "function_name", functionName },
+                    { "job_name", jobName },
                     { "batch_ids", batchIds != null && batchIds.Any() ? string.Join(",", batchIds) : string.Empty },
                     { "sender_name", Constants.FunctionPerformedBy }
                 };
 
-            return await _notificationService.SendEmailNotificationAsync("", _configuration.TechnicalInternalNotificationEmailAddress, tokens);
+            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.PrintingJobFailedNotification.ToString(), _configuration.TechnicalInternalNotificationEmailAddress, tokens);
         }
     }
 }

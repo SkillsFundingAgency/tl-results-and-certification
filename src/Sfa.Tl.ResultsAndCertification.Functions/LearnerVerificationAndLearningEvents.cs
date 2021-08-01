@@ -62,7 +62,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
                 _ = (functionLogDetails.Id > 0) ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
-                
+
+                await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
                 throw;
             }
         }

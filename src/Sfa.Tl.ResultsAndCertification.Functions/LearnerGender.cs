@@ -63,6 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 _ = (functionLogDetails.Id > 0) ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
 
+                await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
                 throw;
             }
         }

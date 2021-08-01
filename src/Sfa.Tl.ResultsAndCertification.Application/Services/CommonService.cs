@@ -96,12 +96,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var tokens = new Dictionary<string, dynamic>
                 {
-                    { "function_name", jobName },
+                    { "job_name", jobName },
                     { "error_message", errorMessage },
                     { "sender_name", Constants.FunctionPerformedBy }
                 };
 
-            return await _notificationService.SendEmailNotificationAsync("", _configuration.TechnicalInternalNotificationEmailAddress, tokens);
+            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.FunctionJobFailedNotification.ToString(), _configuration.TechnicalInternalNotificationEmailAddress, tokens);
         }
     }
 }
