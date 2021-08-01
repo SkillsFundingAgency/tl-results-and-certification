@@ -76,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.Certificat
             PrintingApiClient.ProcessPrintRequestAsync(Arg.Any<PrintRequest>()).Returns(_apiResponse);
 
             _expectedResult = new CertificatePrintingResponse { IsSuccess = true, TotalCount = 1, PrintingProcessedCount = 1, ModifiedCount = 1, SavedCount = 1 };
-            PrintingService.UpdatePrintReqeustResponsesAsync(Arg.Any<List<PrintRequestResponse>>()).Returns(_expectedResult);
+            PrintingService.UpdatePrintRequestResponsesAsync(Arg.Any<List<PrintRequestResponse>>()).Returns(_expectedResult);
         }
 
         public async override Task When()
@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.Certificat
         {
             PrintingService.Received(1).GetPendingPrintRequestsAsync();
             PrintingApiClient.Received(1).ProcessPrintRequestAsync(Arg.Any<PrintRequest>());
-            PrintingService.Received(1).UpdatePrintReqeustResponsesAsync(Arg.Any<List<PrintRequestResponse>>());
+            PrintingService.Received(1).UpdatePrintRequestResponsesAsync(Arg.Any<List<PrintRequestResponse>>());
         }
 
         [Fact]

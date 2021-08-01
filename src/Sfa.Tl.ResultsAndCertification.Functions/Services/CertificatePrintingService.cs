@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             }
 
             // update batch based on response -- service call to update
-            var response = await _printingService.UpdatePrintReqeustResponsesAsync(printRequestResponses);
+            var response = await _printingService.UpdatePrintRequestResponsesAsync(printRequestResponses);
             response.TotalCount = pendingPrintRequests.Count();
             return response;
         }

@@ -8,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface IPrintingService
     {
         Task<IList<PrintRequest>> GetPendingPrintRequestsAsync();        
-        Task<CertificatePrintingResponse> UpdatePrintReqeustResponsesAsync(List<PrintRequestResponse> printRequestResponses);
+        Task<CertificatePrintingResponse> UpdatePrintRequestResponsesAsync(List<PrintRequestResponse> printRequestResponses);
 
         Task<IList<int>> GetPendingPrintBatchesForBatchSummaryAsync();
         Task<CertificatePrintingResponse> UpdateBatchSummaryResponsesAsync(List<BatchSummaryResponse> batchSummaryResponses);

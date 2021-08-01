@@ -39,7 +39,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _printingRepository = printingRepository;
             _notificationService = notificationService;
             _configuration = configuration;
-
         }
 
         public async Task<IList<PrintRequest>> GetPendingPrintRequestsAsync()
@@ -51,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<IList<PrintRequest>>(batches);
         }
 
-        public async Task<CertificatePrintingResponse> UpdatePrintReqeustResponsesAsync(List<PrintRequestResponse> printRequestResponses)
+        public async Task<CertificatePrintingResponse> UpdatePrintRequestResponsesAsync(List<PrintRequestResponse> printRequestResponses)
         {
             if (printRequestResponses == null || printRequestResponses.Count == 0)
                 return new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = 0, ModifiedCount = 0, SavedCount = 0 };
@@ -60,6 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var batches = await _batchRepository.GetManyAsync(b => batchIds.Contains(b.Id)).ToListAsync();
 
+            var batchIdsToSendEmail = new List<int>();
             var modifiedBatches = new List<Batch>();
 
             foreach (var printRequestResponse in printRequestResponses)
@@ -73,14 +73,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                     if (batchResponseStatus != ResponseStatus.NotSpecified)
                     {
-                        batch.Status = batchResponseStatus == ResponseStatus.Error ? BatchStatus.Error : BatchStatus.Accepted;
-                        batch.Errors = batchResponseStatus == ResponseStatus.Error ? JsonConvert.SerializeObject(printRequestResponse.Errors) : null;
+                        var isResponseStatusError = batchResponseStatus == ResponseStatus.Error;
+
+                        batch.Status = isResponseStatusError ? BatchStatus.Error : BatchStatus.Accepted;
+                        batch.Errors = isResponseStatusError ? JsonConvert.SerializeObject(printRequestResponse.Errors) : null;
                         batch.ResponseStatus = batchResponseStatus;
                         batch.ResponseMessage = (printRequestResponse.BatchNumber < 1 && batchResponseStatus == ResponseStatus.Error) ? JsonConvert.SerializeObject(printRequestResponse.Errors) : null;
                         batch.ModifiedOn = DateTime.UtcNow;
                         batch.ModifiedBy = Constants.FunctionPerformedBy;
 
                         modifiedBatches.Add(batch);
+
+                        if (isResponseStatusError)
+                            batchIdsToSendEmail.Add(batch.Id);
                     }
                 }
             }
@@ -88,6 +93,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (modifiedBatches.Any())
             {
                 var response = await _batchRepository.UpdateManyAsync(modifiedBatches);
+
+                if(response > 0 && batchIdsToSendEmail.Any())
+                    await SendEmailAsync(batchIdsToSendEmail, Constants.SubmitCertificatePrintingRequest);
+
                 return new CertificatePrintingResponse { IsSuccess = response > 0, PrintingProcessedCount = printRequestResponses.Count, ModifiedCount = modifiedBatches.Count, SavedCount = response };
             }
             else
@@ -120,6 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var printBatchesFromDb = await _batchRepository.GetManyAsync(b => batchIds.Contains(b.Id)).ToListAsync();
 
+            var batchIdsToSendEmail = new List<int>();
             var modifiedPrintBatches = new List<Batch>();
 
             foreach (var batchSummaryResponse in batchSummaryResponses)
@@ -137,8 +147,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             printBatch.ResponseMessage = batchSummary.ErrorMessage;
                             printBatch.ModifiedOn = DateTime.UtcNow;
                             printBatch.ModifiedBy = Constants.FunctionPerformedBy;
-
                             modifiedPrintBatches.Add(printBatch);
+                            batchIdsToSendEmail.Add(printBatch.Id);
                         }
                         else if (batchSummaryStatus != PrintingStatus.NotSpecified)
                         {
@@ -158,6 +168,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (modifiedPrintBatches.Any())
             {
                 var response = await _batchRepository.UpdateManyAsync(modifiedPrintBatches);
+
+                if (response > 0 && batchIdsToSendEmail.Any())
+                    await SendEmailAsync(batchIdsToSendEmail, Constants.FetchCertificatePrintingBatchSummary);
+
                 return new CertificatePrintingResponse { IsSuccess = response > 0, PrintingProcessedCount = batchSummaryResponses.Count, ModifiedCount = modifiedPrintBatches.Count, SavedCount = response };
             }
             else
@@ -192,6 +206,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var modifiedBatches = new List<Batch>();
             var modifiedPrintBatchItems = new List<PrintBatchItem>();
+            var batchIdsToSendEmail = new List<int>();
 
             foreach (var trackBatchResponse in trackBatchResponses)
             {
@@ -199,16 +214,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     if (HasErrorStatus(deliveryNotification.Status))
                     {
-                        var printBatch = printBatchItemsFromDb.FirstOrDefault(b => b.Id == deliveryNotification.BatchNumber);
+                        var batchItem = printBatchItemsFromDb.FirstOrDefault(b => b.Id == deliveryNotification.BatchNumber);
 
-                        if (printBatch != null)
+                        if (batchItem != null)
                         {
-                            printBatch.Batch.ResponseStatus = ResponseStatus.Error;
-                            printBatch.Batch.ResponseMessage = deliveryNotification.ErrorMessage;
-                            printBatch.Batch.ModifiedOn = DateTime.UtcNow;
-                            printBatch.Batch.ModifiedBy = Constants.FunctionPerformedBy;
-
-                            modifiedPrintBatchItems.Add(printBatch);
+                            batchItem.Batch.ResponseStatus = ResponseStatus.Error;
+                            batchItem.Batch.ResponseMessage = deliveryNotification.ErrorMessage;
+                            batchItem.Batch.ModifiedOn = DateTime.UtcNow;
+                            batchItem.Batch.ModifiedBy = Constants.FunctionPerformedBy;
+                            modifiedPrintBatchItems.Add(batchItem);
+                            batchIdsToSendEmail.Add(batchItem.Batch.Id);
                         }
                     }
                     else
@@ -252,6 +267,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (modifiedPrintBatchItems.Any())
             {
                 var response = await _printBatchItemRepository.UpdateManyAsync(modifiedPrintBatchItems);
+
+                if (response > 0 && batchIdsToSendEmail.Any())
+                    await SendEmailAsync(batchIdsToSendEmail, Constants.FetchCertificatePrintingTrackBatch);
+
                 return new CertificatePrintingResponse { IsSuccess = response > 0, PrintingProcessedCount = trackBatchResponses.Count, ModifiedCount = modifiedPrintBatchItems.Count, SavedCount = response };
             }
             else
@@ -259,7 +278,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = trackBatchResponses.Count, ModifiedCount = 0, SavedCount = 0 };
             }
         }
-
+        
         private bool HasErrorStatus(string value)
         {
             var responseStatus = EnumExtensions.GetEnumByDisplayName<ResponseStatus>(value);
@@ -270,12 +289,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
         }
 
-        private async Task<bool> SendEmailAsync()
+        private async Task<bool> SendEmailAsync(List<int> batchIds, string functionName)
         {
             var tokens = new Dictionary<string, dynamic>
                 {
-                    { "printing_job_name", "" },
-                    { "batch_ids", "" },
+                    { "function_name", functionName },
+                    { "batch_ids", batchIds != null && batchIds.Any() ? string.Join(",", batchIds) : string.Empty },
                     { "sender_name", Constants.FunctionPerformedBy }
                 };
 

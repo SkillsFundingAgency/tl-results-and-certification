@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using System;
@@ -21,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _certificatePrintingService = certificatePrintingService;
         }
 
-        [FunctionName("SubmitCertificatePrintingRequest")]
+        [FunctionName(Constants.SubmitCertificatePrintingRequest)]
         public async Task SubmitCertificatePrintingRequestAsync([TimerTrigger("%CertificatePrintingRequestTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));

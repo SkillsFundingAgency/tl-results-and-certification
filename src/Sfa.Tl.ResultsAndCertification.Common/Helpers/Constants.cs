@@ -122,5 +122,11 @@
         public const string TagFloatRightClassName = "tag-float-right";
         public const string PostcodeValidationRegex = "^(([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))(\\s?)?[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$";
         public const string UlnValidationRegex = @"^\d{10}$";
+
+
+        // Function Name Constants
+        public const string SubmitCertificatePrintingRequest = "SubmitCertificatePrintingRequest";
+        public const string FetchCertificatePrintingBatchSummary = "FetchCertificatePrintingBatchSummary";
+        public const string FetchCertificatePrintingTrackBatch = "FetchCertificatePrintingTrackBatch";
     }
 }

@@ -87,7 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
 
             var printingResponses = printRequestResponse != null ? new List<PrintRequestResponse> { printRequestResponse } : null;
 
-            _actualResult = await PrintingService.UpdatePrintReqeustResponsesAsync(printingResponses);
+            _actualResult = await PrintingService.UpdatePrintRequestResponsesAsync(printingResponses);
         }
 
         [Theory]
