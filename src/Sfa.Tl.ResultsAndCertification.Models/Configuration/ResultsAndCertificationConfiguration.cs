@@ -85,6 +85,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public string FeedbackEmailAddress { get; set; }
 
         /// <summary>
+        /// Gets or sets the technical internal notification email address.
+        /// </summary>
+        /// <value>
+        /// The technical internal notification email address.
+        /// </value>
+        public string TechnicalInternalNotificationEmailAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets the soa available date.
         /// </summary>
         /// <value>

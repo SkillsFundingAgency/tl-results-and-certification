@@ -298,7 +298,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     { "sender_name", Constants.FunctionPerformedBy }
                 };
 
-            return await _notificationService.SendEmailNotificationAsync("", _configuration.TlevelQueriedSupportEmailAddress, tokens);
+            return await _notificationService.SendEmailNotificationAsync("", _configuration.TechnicalInternalNotificationEmailAddress, tokens);
         }
     }
 }

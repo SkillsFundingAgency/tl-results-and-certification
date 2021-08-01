@@ -13,5 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         // FunctionLog
         Task<bool> CreateFunctionLog(FunctionLogDetails model);
         Task<bool> UpdateFunctionLog(FunctionLogDetails model);
+
+        Task<bool> SendFunctionJobFailedNotification(string jobName, string errorMessage);
     }
 }
