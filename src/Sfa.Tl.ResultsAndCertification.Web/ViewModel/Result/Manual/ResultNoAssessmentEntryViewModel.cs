@@ -1,7 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System.Collections.Generic;
-using NoAssessmentEntryContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultWithdrawnDetails; // TODO
+using NoAssessmentEntryContent = Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultNoAssessmentEntry;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
 {
