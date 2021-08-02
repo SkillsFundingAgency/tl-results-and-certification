@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ResultNoAssessmentEntry {
+    public class PrsCancelGradeChangeRequest {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ResultNoAssessmentEntry() {
+        internal PrsCancelGradeChangeRequest() {
         }
         
         /// <summary>
@@ -39,7 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Result.ResultNoAssessmentEntry", typeof(ResultNoAssessmentEntry).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsCancelGradeChang" +
+                            "eRequest", typeof(PrsCancelGradeChangeRequest).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,43 +62,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to home.
+        ///   Looks up a localized string similar to Continue.
         /// </summary>
-        public static string Button_Back_To_Home {
+        public static string Button_Continue {
             get {
-                return ResourceManager.GetString("Button_Back_To_Home", resourceCulture);
+                return ResourceManager.GetString("Button_Continue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search again.
+        ///   Looks up a localized string similar to Are you sure you want to cancel the request for a grade change?.
         /// </summary>
-        public static string Button_Search_Again {
+        public static string Heading_Are_You_Sure_You_Want_To_Cancel {
             get {
-                return ResourceManager.GetString("Button_Search_Again", resourceCulture);
+                return ResourceManager.GetString("Heading_Are_You_Sure_You_Want_To_Cancel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner does not have any registered assessments.
+        ///   Looks up a localized string similar to No, I do not want to cancel.
         /// </summary>
-        public static string Heading_Learner_Has_No_Assessments_Registered {
+        public static string Option_No {
             get {
-                return ResourceManager.GetString("Heading_Learner_Has_No_Assessments_Registered", resourceCulture);
+                return ResourceManager.GetString("Option_No", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This learner does not have any assessments registered in this system. Please contact a registrations editor in your organisation if you need to amend this..
+        ///   Looks up a localized string similar to Yes, I want to cancel.
         /// </summary>
-        public static string Inset_This_Learner_Withdrawn_You_Can_Not_Change {
+        public static string Option_Yes {
             get {
-                return ResourceManager.GetString("Inset_This_Learner_Withdrawn_You_Can_Not_Change", resourceCulture);
+                return ResourceManager.GetString("Option_Yes", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No registered assessments.
+        ///   Looks up a localized string similar to Cancel grade change request.
         /// </summary>
         public static string Page_Title {
             get {
@@ -106,47 +107,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date of birth.
+        ///   Looks up a localized string similar to Please select whether you want to cancel the request for a grade change.
         /// </summary>
-        public static string Title_DateofBirth_Text {
+        public static string Validation_Message {
             get {
-                return ResourceManager.GetString("Title_DateofBirth_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string Title_Name_Text {
-            get {
-                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Provider &lt;br/&gt; (UKPRN).
-        /// </summary>
-        public static string Title_Provider_Text {
-            get {
-                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to T Level.
-        /// </summary>
-        public static string Title_TLevel_Text {
-            get {
-                return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ULN.
-        /// </summary>
-        public static string Title_Uln_Text {
-            get {
-                return ResourceManager.GetString("Title_Uln_Text", resourceCulture);
+                return ResourceManager.GetString("Validation_Message", resourceCulture);
             }
         }
     }

@@ -1,0 +1,44 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsCancelGradeChangeRequestViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+
+@{
+    ViewData["Title"] = PrsCancelGradeChangeRequest.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="SubmitPrsCancelGradeChangeRequest">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="AssessmentId" />
+            <partial name="_ValidationSummary" />
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">@PrsCancelGradeChangeRequest.Heading_Are_You_Sure_You_Want_To_Cancel</h1>
+                    </legend>
+                    <div class="govuk-radios" sfa-validation-for="AreYouSureToCancel" sfa-validation-class="govuk-form-group--error">
+                        <span sfa-validation-for="AreYouSureToCancel"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="areyousuretocancel" asp-for="AreYouSureToCancel" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="areyousuretocancel">
+                                @PrsCancelGradeChangeRequest.Option_Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="areyousuretocancel-no" asp-for="AreYouSureToCancel" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="areyousuretocancel-no">
+                                @PrsCancelGradeChangeRequest.Option_No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsCancelGradeChangeRequest.Button_Continue</button>
+        </form>
+    </div>
+</div>

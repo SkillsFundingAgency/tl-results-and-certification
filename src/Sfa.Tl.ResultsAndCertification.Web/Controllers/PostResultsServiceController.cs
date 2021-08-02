@@ -389,13 +389,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), profileId, assessmentId);
             if (viewModel == null || !viewModel.CanRequestFinalGradeChange)
                 return RedirectToRoute(RouteConstants.PageNotFound);
-            
+
             viewModel.IsResultJourney = isResultJourney;
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("request-grade-change", Name = RouteConstants.SubmitPrsGradeChangeRequest)]
+        [Route("request-grade-change/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.SubmitPrsGradeChangeRequest)]
         public async Task<IActionResult> PrsGradeChangeRequestAsync(PrsGradeChangeRequestViewModel viewModel)
         {
             var learnerDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), viewModel.ProfileId, viewModel.AssessmentId);
@@ -406,6 +406,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(learnerDetails);
+        }
+
+        [HttpGet]
+        [Route("cancel-request-grade-change/{profileId}/{assessmentId}", Name = RouteConstants.PrsCancelGradeChangeRequest)]
+        public async Task<IActionResult> PrsCancelGradeChangeRequestAync(int profileId, int assessmentId)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(User.GetUkPrn(), profileId, assessmentId);
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("cancel-request-grade-change/{profileId}/{assessmentId}", Name = RouteConstants.SubmitPrsCancelGradeChangeRequest)]
+        public IActionResult PrsCancelGradeChangeRequestAync(PrsCancelGradeChangeRequestViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            if (!viewModel.AreYouSureToCancel.Value)
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = viewModel.ProfileId, assessmentId = viewModel.AssessmentId });
+
+            return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = viewModel.ProfileId, assessmentId = viewModel.AssessmentId });
         }
     }
 }
