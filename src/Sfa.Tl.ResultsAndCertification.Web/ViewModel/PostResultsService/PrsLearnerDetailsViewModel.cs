@@ -44,7 +44,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Id = "assessmentperiod",
             Title = PrsLearnerDetailsContent.Title_Assessment_Series,
             Value = PathwayAssessmentSeries,
-            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus
+            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus,
+            RenderActionColumn = IsResultUpdateAllowed
         };
 
         public SummaryItemModel SummaryPathwayGrade => new SummaryItemModel
@@ -53,7 +54,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade,
             Value = PathwayGrade,
             Value2 = CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus, AppealEndDate),
-            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus, // TODO:
+            Value2CustomCssClass = !IsResultUpdateAllowed ? Constants.TagFloatRightClassName : null,
+            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus,
+            RenderActionColumn = IsResultUpdateAllowed,
             
             // Update link
             ActionText = IsResultUpdateAllowed ? PrsLearnerDetailsContent.Action_Link_Update : null,
