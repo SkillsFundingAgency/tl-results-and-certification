@@ -170,6 +170,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayCode})"))
                 .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
                 .ForMember(d => d.PathwayGrade, opts => opts.MapFrom(s => s.PathwayGrade))
+                .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status))
+                .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus));
+
+            CreateMap<PrsLearnerDetails, PrsCancelGradeChangeRequestViewModel>()
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
+                .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status))
                 .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus));
         }
     }

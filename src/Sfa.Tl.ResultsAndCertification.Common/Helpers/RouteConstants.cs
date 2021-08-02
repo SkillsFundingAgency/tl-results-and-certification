@@ -306,6 +306,8 @@
         public const string SubmitPrsCancelAppealUpdate = "SubmitPrsCancelAppealUpdate";
         public const string PrsGradeChangeRequest = "PrsGradeChangeRequest";
         public const string SubmitPrsGradeChangeRequest = "SubmitPrsGradeChangeRequest";
+        public const string PrsCancelGradeChangeRequest = "PrsCancelGradeChangeRequest";
+        public const string SubmitPrsCancelGradeChangeRequest = "SubmitPrsCancelGradeChangeRequest";
 
         #endregion
     }
