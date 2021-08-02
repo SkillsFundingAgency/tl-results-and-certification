@@ -395,7 +395,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("request-grade-change", Name = RouteConstants.SubmitPrsGradeChangeRequest)]
+        [Route("request-grade-change/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.SubmitPrsGradeChangeRequest)]
         public async Task<IActionResult> PrsGradeChangeRequestAsync(PrsGradeChangeRequestViewModel viewModel)
         {
             var learnerDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), viewModel.ProfileId, viewModel.AssessmentId);
