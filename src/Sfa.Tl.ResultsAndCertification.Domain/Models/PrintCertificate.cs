@@ -13,8 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public string LearnerName { get; set; }
         public PrintCertificateType Type { get; set; }
         public string LearningDetails { get; set; }
-        public string DisplaySnapshot { get; set; }
-        public PrintCertificateStatus Status { get; set; }
+        public string DisplaySnapshot { get; set; }        
 
         public virtual PrintBatchItem PrintBatchItem { get; set; }
         public virtual TqRegistrationPathway TqRegistrationPathway { get; set; }

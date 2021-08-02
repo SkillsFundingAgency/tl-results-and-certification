@@ -36,7 +36,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PrintCertif
             _result.Type.Should().Be(_data.Type);
             _result.LearningDetails.Should().Be(_data.LearningDetails);
             _result.DisplaySnapshot.Should().Be(_data.DisplaySnapshot);
-            _result.Status.Should().Be(_data.Status);
             _result.CreatedBy.Should().Be(Constants.CreatedByUser);
             _result.CreatedOn.Should().Be(Constants.CreatedOn);
             _result.ModifiedBy.Should().Be(Constants.ModifiedByUser);

@@ -154,7 +154,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
                 actualPrintCertificate.Type.Should().Be(PrintCertificateType.StatementOfAchievement);
                 actualPrintCertificate.LearningDetails.Should().BeEquivalentTo(expectedLearnerDetails);
                 actualPrintCertificate.DisplaySnapshot.Should().BeEquivalentTo(expectedSoaPrintingDetails);
-                actualPrintCertificate.Status.Should().Be(PrintCertificateStatus.Created);
                 actualPrintCertificate.CreatedBy.Should().Be(performedBy);
 
                 // Assert PrintBatchItem
