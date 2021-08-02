@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No assessment entry.
+        ///   Looks up a localized string similar to No registered assessments.
         /// </summary>
         public static string Page_Title {
             get {
