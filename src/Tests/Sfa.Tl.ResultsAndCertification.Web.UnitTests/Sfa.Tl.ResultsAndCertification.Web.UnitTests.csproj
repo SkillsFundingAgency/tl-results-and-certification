@@ -10,6 +10,9 @@
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Invalid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Valid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Registration_HasResult.cs" />
+    <Compile Remove="Controllers\PostResultsServiceControllerTests\PrsGradeChangeRequestGet\When_PrsStatus_IsFinal.cs" />
+    <Compile Remove="Controllers\PostResultsServiceControllerTests\PrsGradeChangeRequestGet\When_PrsStatus_Is_BeingAppealed.cs" />
+    <Compile Remove="Controllers\PostResultsServiceControllerTests\PrsGradeChangeRequestGet\When_ViewModel_IsInvalid.cs" />
     <Compile Remove="Controllers\ResultControllerTests\AddCoreResultGet\When_Called_With_Withdrawn_Status_Data.cs" />
   </ItemGroup>
 
