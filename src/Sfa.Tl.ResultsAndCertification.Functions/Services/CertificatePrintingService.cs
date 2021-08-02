@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -44,6 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             // post data api and get respone
             foreach (var pendingPrintRequest in pendingPrintRequests)
             {
+                var jsonstring = JsonConvert.SerializeObject(pendingPrintRequest);
                 var printResponse = await _printingApiClient.ProcessPrintRequestAsync(pendingPrintRequest);
 
                 if (printResponse != null)

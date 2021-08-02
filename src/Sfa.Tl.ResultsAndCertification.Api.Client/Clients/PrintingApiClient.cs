@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
@@ -31,9 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         public async Task<string> GetTokenAsync()
         {
             var requestUri = string.Format(ApiConstants.PrintingTokenUri, _configuration.PrintingApiSettings.Username, _configuration.PrintingApiSettings.Password);
-            var tokenResponse = await GetAsync<string>(requestUri, false);
-            var tokenResult = JObject.Parse(tokenResponse);
-            return tokenResult.HasValues ? tokenResult.SelectToken("Token")?.ToString() : null;
+            var tokenResponse = await GetAsync<PrintToken>(requestUri);
+            return tokenResponse?.Token;
         }
 
         public async Task<PrintResponse> ProcessPrintRequestAsync(PrintRequest printRequest)
@@ -55,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var token = await GetTokenAsync();
             var requestUri = string.Format(ApiConstants.PrintTrackBatchRequestUri, batchNumber, token);
             return await GetAsync<TrackBatchResponse>(requestUri);
-        }        
+        }
 
         /// <summary>
         /// Gets the asynchronous.
@@ -63,20 +61,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         /// <typeparam name="T"></typeparam>
         /// <param name="requestUri">The request URI.</param>
         /// <returns></returns>
-        private async Task<T> GetAsync<T>(string requestUri, bool deserializeToString = true)
+        private async Task<T> GetAsync<T>(string requestUri)
         {            
             var response = await _httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
-            var result = deserializeToString ? JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()) : await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(result);
+            return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
         }
 
         private async Task<TResponse> PostAsync<TRequest, TResponse>(string requestUri, TRequest content)
         {
             var response = await _httpClient.PostAsync(requestUri, CreateHttpContent(content));
             response.EnsureSuccessStatusCode();
-            var result = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
-            return JsonConvert.DeserializeObject<TResponse>(result);
+            return JsonConvert.DeserializeObject<TResponse>(await response.Content.ReadAsStringAsync());
         }
 
         /// <summary>

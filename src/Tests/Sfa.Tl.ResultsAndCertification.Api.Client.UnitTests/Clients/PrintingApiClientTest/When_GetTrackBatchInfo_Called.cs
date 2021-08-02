@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -16,11 +15,10 @@ using Xunit;
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PrintingApiClientTest
 {
     public class When_GetTrackBatchInfo_Called : BaseTest<PrintingApiClient>
-    {
-        private string _apiToken;        
+    {         
         private int _batchId;
         private TrackBatchResponse _result;
-        protected string _mockTokenHttpResult;
+        protected PrintToken _mockTokenHttpResult;
         protected TrackBatchResponse _mockHttpResult;
         private PrintingApiClient _apiClient;
         private ResultsAndCertificationConfiguration _configuration;
@@ -32,9 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PrintingAp
                 PrintingApiSettings = new PrintingApiSettings { Uri = "http://apitest.taone.co.uk", Username = "test", Password = "test" }
             };
 
-            _batchId = 1;
-            _apiToken = "1a62f29845ac4fb4bd596b12f40e6881";
-            _mockTokenHttpResult = "{\"Token\" : \"1a62f29845ac4fb4bd596b12f40e6881\"}";
+            _batchId = 1;            
+            _mockTokenHttpResult = new PrintToken { Token = Guid.NewGuid().ToString() };
             _mockHttpResult = new TrackBatchResponse
             {
                 DeliveryNotifications = new List<DeliveryNotification>
@@ -64,9 +61,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PrintingAp
 
         public override void Given()
         {
-            var jsonMockHttpResult = JsonConvert.SerializeObject(_mockHttpResult);
-            var mockHttpHandler = new MockHttpMessageHandler<string>(_mockTokenHttpResult, string.Format(ApiConstants.PrintingTokenUri, _configuration.PrintingApiSettings.Username, _configuration.PrintingApiSettings.Password), HttpStatusCode.OK);
-            mockHttpHandler.AddHttpResponses(jsonMockHttpResult, string.Format(ApiConstants.PrintTrackBatchRequestUri, _batchId, _apiToken), HttpStatusCode.OK);
+            
+            var mockHttpHandler = new MockHttpMessageHandler<PrintToken>(_mockTokenHttpResult, string.Format(ApiConstants.PrintingTokenUri, _configuration.PrintingApiSettings.Username, _configuration.PrintingApiSettings.Password), HttpStatusCode.OK);
+            mockHttpHandler.AddHttpResponses(_mockHttpResult, string.Format(ApiConstants.PrintTrackBatchRequestUri, _batchId, _mockTokenHttpResult.Token), HttpStatusCode.OK);
 
             HttpClient = new HttpClient(mockHttpHandler);
             _apiClient = new PrintingApiClient(HttpClient, _configuration);

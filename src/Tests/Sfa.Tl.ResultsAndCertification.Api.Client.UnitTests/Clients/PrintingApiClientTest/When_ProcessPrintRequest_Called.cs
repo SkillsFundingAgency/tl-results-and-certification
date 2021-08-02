@@ -17,9 +17,8 @@ using Xunit;
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PrintingApiClientTest
 {
     public class When_ProcessPrintRequest_Called : BaseTest<PrintingApiClient>
-    {
-        private string _apiToken;
-        protected string _mockTokenHttpResult;
+    {        
+        protected PrintToken _mockTokenHttpResult;
         private PrintResponse _result;        
         private PrintRequest _printRequest;
         protected PrintResponse _mockHttpResult;        
@@ -83,16 +82,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PrintingAp
                 }
             };
 
-            _apiToken = "1a62f29845ac4fb4bd596b12f40e6881";
-            _mockTokenHttpResult = "{\"Token\" : \"1a62f29845ac4fb4bd596b12f40e6881\"}";
+            _mockTokenHttpResult = new PrintToken { Token = Guid.NewGuid().ToString() };
             _mockHttpResult = new PrintResponse { PrintRequestResponse = new PrintRequestResponse { BatchNumber = 1, Status = ResponseStatus.Success.ToString(), Errors = new List<Error>() } };
         }
 
         public override void Given()
-        {
-            var jsonMockHttpResult = JsonConvert.SerializeObject(_mockHttpResult);
-            var mockHttpHandler = new MockHttpMessageHandler<string>(_mockTokenHttpResult, string.Format(ApiConstants.PrintingTokenUri, _configuration.PrintingApiSettings.Username, _configuration.PrintingApiSettings.Password), HttpStatusCode.OK);
-            mockHttpHandler.AddHttpResponses(jsonMockHttpResult, string.Format(ApiConstants.PrintRequestUri, _apiToken), HttpStatusCode.OK, JsonConvert.SerializeObject(_printRequest));
+        {            
+            var mockHttpHandler = new MockHttpMessageHandler<PrintToken>(_mockTokenHttpResult, string.Format(ApiConstants.PrintingTokenUri, _configuration.PrintingApiSettings.Username, _configuration.PrintingApiSettings.Password), HttpStatusCode.OK);
+            mockHttpHandler.AddHttpResponses(_mockHttpResult, string.Format(ApiConstants.PrintRequestUri, _mockTokenHttpResult.Token), HttpStatusCode.OK, JsonConvert.SerializeObject(_printRequest));
 
             HttpClient = new HttpClient(mockHttpHandler);
             _apiClient = new PrintingApiClient(HttpClient, _configuration);

@@ -4,7 +4,7 @@
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
     "LearnerVerificationAndLearningEventsTrigger": "0 23 15 1-12 *",
     "LearnerGenderTrigger": "0 21 15 1-12 *",
-    "CertificatePrintingRequestTrigger": "0 0 19 * * *", //"0 */1 * * * *", //"0 20 15 1-12 *",
+    "CertificatePrintingRequestTrigger": "0 */1 * * * *", //"0 0 19 * * *", //"0 */1 * * * *", //"0 20 15 1-12 *",
     "CertificatePrintingBatchSummaryTrigger": "0 30 19 * * *", //"0 */1 * * * *", //"0 20 15 1-12 *",
     "CertificatePrintingTrackBatchTrigger": "0 0 20 * * *", //"0 */1 * * * *", //"0 20 15 1-12 *",
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
