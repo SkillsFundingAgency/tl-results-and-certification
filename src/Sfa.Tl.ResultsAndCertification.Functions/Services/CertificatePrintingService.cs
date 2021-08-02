@@ -45,7 +45,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             // post data api and get respone
             foreach (var pendingPrintRequest in pendingPrintRequests)
             {
-                var jsonstring = JsonConvert.SerializeObject(pendingPrintRequest);
                 var printResponse = await _printingApiClient.ProcessPrintRequestAsync(pendingPrintRequest);
 
                 if (printResponse != null)
