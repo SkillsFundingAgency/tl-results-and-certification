@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PrintCertif
             DbContext.Add(_data);
             DbContext.SaveChanges();
 
-            _data.Status = PrintCertificateStatus.Delivered;
+            _data.DisplaySnapshot = "New Text";
             _data.ModifiedOn = DateTime.UtcNow;
             _data.ModifiedBy = ModifiedUserName;
         }
@@ -43,10 +43,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PrintCertif
             _result.Type.Should().Be(_data.Type);
             _result.LearningDetails.Should().Be(_data.LearningDetails);
             _result.DisplaySnapshot.Should().Be(_data.DisplaySnapshot);
-            _result.Status.Should().Be(_data.Status);
-            _result.Reason.Should().Be(_data.Reason);
-            _result.TrackingId.Should().Be(_data.TrackingId);
-            _result.StatusChangedOn.Should().Be(_data.StatusChangedOn);
             _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);

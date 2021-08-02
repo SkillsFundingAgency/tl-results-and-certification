@@ -100,7 +100,6 @@
     <Build Include="Tables\Batch.sql" />
     <Build Include="Tables\PrintBatchItem.sql" />
     <Build Include="Tables\PrintCertificate.sql" />
-    <Build Include="Indexes\IX_Unique_PrintCertificate_Status.sql" />
     <Build Include="Indexes\IX_Unique_TqPathwayResult.sql" />
   </ItemGroup>
   <ItemGroup>

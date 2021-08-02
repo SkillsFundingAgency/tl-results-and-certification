@@ -70,9 +70,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<SoaLearnerRecordDetailsViewModel, LearningDetails>()
                 .ForMember(d => d.TLevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
+                .ForMember(d => d.Grade, opts => opts.MapFrom(s => string.Empty))
                 .ForMember(d => d.Date, opts => opts.MapFrom(s => DateTime.UtcNow.ToSoaFormat()))
                 .ForMember(d => d.Core, opts => opts.MapFrom(s => s.PathwayName))
-                .ForMember(d => d.CoreGrade, opts => opts.MapFrom(s => s.PathwayGrade))
+                .ForMember(d => d.CoreGrade, opts => opts.MapFrom(s => s.PathwayGrade.Equals(RequestSoaCheckAndSubmitContent.None, StringComparison.InvariantCultureIgnoreCase) ? Constants.NotCompleted : s.PathwayGrade))
                 .ForMember(d => d.OccupationalSpecialism, opts => opts.MapFrom(s => s))
                 .ForMember(d => d.IndustryPlacement, opts => opts.MapFrom(s => (s.IndustryPlacementStatus == IndustryPlacementStatus.Completed 
                                                                              || s.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration) 
@@ -86,8 +87,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                     {
                         new OccupationalSpecialismDetails
                         {
-                            Specialism = m.SpecialismName,
-                            Grade = m.SpecialismGrade
+                            Specialism = m.SpecialismName ?? string.Empty,
+                            Grade = m.SpecialismGrade.Equals(RequestSoaCheckAndSubmitContent.None, StringComparison.InvariantCultureIgnoreCase) ? Constants.NotCompleted : m.SpecialismGrade
                         }
                     };
                 });

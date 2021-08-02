@@ -3,6 +3,8 @@ using Lrs.PersonalLearningRecordService.Api.Client;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Notify.Client;
+using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
@@ -62,6 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IRegistrationRepository, RegistrationRepository>();
             services.AddTransient<IAssessmentRepository, AssessmentRepository>();
             services.AddTransient<IResultRepository, ResultRepository>();
+            services.AddTransient<IPrintingRepository, PrintingRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
@@ -69,6 +72,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<ILearnerService, LearnerService>();
             services.AddTransient<IPersonalLearningRecordService, PersonalLearningRecordService>();
             services.AddTransient<ILearnerRecordService, LearnerRecordService>();
+            services.AddTransient<IPrintingService, PrintingService>();
+            services.AddTransient<ICertificatePrintingService, CertificatePrintingService>();
+            services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
         }
 
         private void RegisterApiClients(IServiceCollection services)
@@ -92,6 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 return client;
             });
             services.AddTransient<ILearnerServiceApiClient, LearnerServiceApiClient>();
+            services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
         }
     }
 }

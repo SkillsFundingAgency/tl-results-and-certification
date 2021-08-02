@@ -58,16 +58,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             _expectedLearningDetails = new LearningDetails
             {
                 TLevelTitle = SoaLearnerRecordDetailsViewModel.TlevelTitle,
-                Grade = null,
+                Grade = string.Empty,
                 Date = DateTime.UtcNow.ToSoaFormat(),
                 Core = SoaLearnerRecordDetailsViewModel.PathwayName,
-                CoreGrade = SoaLearnerRecordDetailsViewModel.PathwayGrade,
+                CoreGrade = SoaLearnerRecordDetailsViewModel.PathwayGrade ?? Constants.NotCompleted,
                 OccupationalSpecialism = new List<OccupationalSpecialismDetails>
                 {
                     new OccupationalSpecialismDetails
                     {
-                        Specialism = SoaLearnerRecordDetailsViewModel.SpecialismName,
-                        Grade = SoaLearnerRecordDetailsViewModel.SpecialismGrade
+                        Specialism = SoaLearnerRecordDetailsViewModel.SpecialismName ?? string.Empty,
+                        Grade = SoaLearnerRecordDetailsViewModel.SpecialismGrade.Equals("None", StringComparison.InvariantCultureIgnoreCase) ? Constants.NotCompleted : SoaLearnerRecordDetailsViewModel.SpecialismGrade
                     }
                 },
                 IndustryPlacement = SoaLearnerRecordDetailsViewModel.IsIndustryPlacementCompleted ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted,

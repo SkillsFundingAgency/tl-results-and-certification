@@ -19,6 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Batch
             DbContext.Add(_data);
             DbContext.SaveChanges();
 
+            _data.PrintingStatus = PrintingStatus.CollectedByCourier;
+            _data.ResponseStatus = ResponseStatus.Success;
             _data.Status = BatchStatus.Accepted;
             _data.ModifiedOn = DateTime.UtcNow;
             _data.ModifiedBy = ModifiedUserName;
@@ -38,6 +40,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Batch
             _result.Id.Should().Be(1);
             _result.Type.Should().Be(_data.Type);
             _result.Status.Should().Be(_data.Status);
+            _result.Errors.Should().Be(_data.Errors);
+            _result.PrintingStatus.Should().Be(_data.PrintingStatus);
+            _result.RunOn.Should().Be(_data.RunOn);
+            _result.StatusChangedOn.Should().Be(_data.StatusChangedOn);
+            _result.ResponseStatus.Should().Be(_data.ResponseStatus);
+            _result.ResponseMessage.Should().Be(_data.ResponseMessage);
             _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);

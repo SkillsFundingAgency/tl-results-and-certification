@@ -15,6 +15,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return value.ToString("dd MMMM yyyy");
         }
 
+        public static string ToPrintBatchDateFormat(this DateTime value)
+        {
+            return value.ToString("yyyy-MM-dd");
+        }
+
         public static bool IsDateTimeWithFormat(this string value)
         {
             return DateTime.TryParseExact(value, "ddMMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
