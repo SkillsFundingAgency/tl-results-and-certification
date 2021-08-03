@@ -52,6 +52,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
         {
             ActualResult.Should().NotBeNull();
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
+            ActualResult.AssessmentId.Should().Be(_expectedApiResult.PathwayAssessmentId);
+            ActualResult.ResultId.Should().Be(_expectedApiResult.PathwayResultId);
             ActualResult.Uln.Should().Be(_expectedApiResult.Uln);
             ActualResult.Firstname.Should().Be(_expectedApiResult.Firstname);
             ActualResult.Lastname.Should().Be(_expectedApiResult.Lastname);

@@ -19,11 +19,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 11;
             AssessmentId = 1;
+            ResultId = 1;
 
             _mockGradeChangeRequestViewModel = new PrsGradeChangeRequestViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
+                ResultId = ResultId,
                 Uln = 1234567890,
                 Firstname = "John",
                 Lastname = "Smith",
@@ -57,6 +59,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             model.Should().NotBeNull();
             model.ProfileId.Should().Be(_mockGradeChangeRequestViewModel.ProfileId);
+            model.AssessmentId.Should().Be(_mockGradeChangeRequestViewModel.AssessmentId);
+            model.ResultId.Should().Be(_mockGradeChangeRequestViewModel.ResultId);
             model.Uln.Should().Be(_mockGradeChangeRequestViewModel.Uln);
             model.Firstname.Should().Be(_mockGradeChangeRequestViewModel.Firstname);
             model.Lastname.Should().Be(_mockGradeChangeRequestViewModel.Lastname);

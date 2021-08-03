@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using System;
 using System.Collections.Generic;
@@ -14,18 +15,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class PostResultsServiceService : IPostResultsServiceService
     {
+        private readonly ResultsAndCertificationConfiguration _configuration;
         public readonly IPostResultsServiceRepository _postResultsServiceRepository;
         private readonly IRepository<TqPathwayResult> _pathwayResultRepository;
+        private readonly INotificationService _notificationService;
         private readonly IMapper _mapper;
         private readonly ILogger<PostResultsServiceService> _logger;
 
-        public PostResultsServiceService(IPostResultsServiceRepository postResultsServiceRepository,
+        public PostResultsServiceService(ResultsAndCertificationConfiguration configuration, IPostResultsServiceRepository postResultsServiceRepository,
             IRepository<TqPathwayResult> pathwayResultRepository,
+            INotificationService notificationService,
             IMapper mapper,
             ILogger<PostResultsServiceService> logger)
         {
+            _configuration = configuration;
             _postResultsServiceRepository = postResultsServiceRepository;
             _pathwayResultRepository = pathwayResultRepository;
+            _notificationService = notificationService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -72,8 +78,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             pathwayResultsToUpdate.Add(existingPathwayResult);
 
-            var resultLookupId = request.PrsStatus == PrsStatus.UnderReview || request.PrsStatus == PrsStatus.BeingAppealed || request.PrsStatus == PrsStatus.Withdraw 
-                ? existingPathwayResult.TlLookupId 
+            var resultLookupId = request.PrsStatus == PrsStatus.UnderReview || request.PrsStatus == PrsStatus.BeingAppealed || request.PrsStatus == PrsStatus.Withdraw
+                ? existingPathwayResult.TlLookupId
                 : request.ResultLookupId;
 
             pathwayResultsToUpdate.Add(new TqPathwayResult
@@ -89,6 +95,36 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             });
 
             return await _pathwayResultRepository.UpdateManyAsync(pathwayResultsToUpdate) > 0;
+        }
+
+        public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request)
+        {
+            if (request == null) return false;
+
+            var technicalTeamTokens = new Dictionary<string, dynamic>
+                {
+                    { "reference_number", request.ReferenceNumber },
+                    { "sender_email_address", request.RequestedUserEmailAddress },
+                    { "profile_id", request.ProfileId },
+                    { "assessment_id", request.AssessmentId },
+                    { "result_id", request.ResultId },
+                    { "requested_message", request.RequestedMessage }
+                };
+
+            // send email to technical team
+            var hasEmailSent = await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.GradeChangeRequestTechnicalTeamNotification.ToString(), _configuration.TechnicalSupportEmailAddress, technicalTeamTokens);
+
+            if (hasEmailSent)
+            {
+                var userTokens = new Dictionary<string, dynamic>
+                {
+                    { "reference_number", request.ReferenceNumber }
+                };
+
+                // send email to requested user
+                return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.GradeChangeRequestUserNotification.ToString(), request.RequestedUserEmailAddress, userTokens);
+            }
+            return false;
         }
 
         private bool IsResultStatusValid(PrsStatus requestPrsStatus, PrsStatus? currentPrsStatus)

@@ -8,6 +8,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Enum
         TlevelDetailsQueried,
         EnglishAndMathsLrsDataQueried,
         FunctionJobFailedNotification,
-        PrintingJobFailedNotification
+        PrintingJobFailedNotification,
+        GradeChangeRequestUserNotification,
+        GradeChangeRequestTechnicalTeamNotification
     }
 }

@@ -44,5 +44,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _postResultsServiceService.AppealGradeAsync(request);
         }
+
+        [HttpPost]
+        [Route("PrsGradeChangeRequest")]
+        public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request)
+        {
+            return await _postResultsServiceService.PrsGradeChangeRequestAsync(request);
+        }        
     }
 }

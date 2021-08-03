@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Notify.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -17,11 +21,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
     public abstract class PostResultsServiceServiceBaseTest : BaseTest<TlProvider>
     {
         protected PostResultsServiceService PostResultsServiceService;
-
         protected IPostResultsServiceRepository PostResultsServiceRepository;
         protected IRepository<TqPathwayResult> PathwayResultsRepository;
+        protected IAsyncNotificationClient NotificationsClient;
+        protected ILogger<NotificationService> NotificationLogger;
+        protected IRepository<NotificationTemplate> NotificationTemplateRepository;
+        protected ILogger<GenericRepository<NotificationTemplate>> NotificationTemplateRepositoryLogger;
+        protected ILogger<INotificationService> NotificationServiceLogger;
+        protected INotificationService NotificationService;
         protected IMapper PostResultsServiceMapper;
         protected ILogger<PostResultsServiceService> PostResultsServiceServiceLogger;
+        protected ResultsAndCertificationConfiguration Configuration;
 
         // Data Seed variables
         protected TlAwardingOrganisation TlAwardingOrganisation;

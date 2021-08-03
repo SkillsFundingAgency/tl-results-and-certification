@@ -16,11 +16,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 11;
             AssessmentId = 1;
+            ResultId = 1;
 
             _mockGradeChangeRequestViewModel = new PrsGradeChangeRequestViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
+                ResultId = ResultId,
                 Status = RegistrationPathwayStatus.Withdrawn,
                 PathwayPrsStatus = PrsStatus.BeingAppealed
             };
