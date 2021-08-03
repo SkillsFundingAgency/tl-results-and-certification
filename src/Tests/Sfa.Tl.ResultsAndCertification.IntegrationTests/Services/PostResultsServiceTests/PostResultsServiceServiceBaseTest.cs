@@ -45,11 +45,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
         protected List<TqPathwayAssessment> TqPathwayAssessment;
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
+        protected IList<NotificationTemplate> NotificationTemplates;
 
         protected virtual void CreateMapper()
         {
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(PostResultsServiceMapper).Assembly));
             PostResultsServiceMapper = new Mapper(mapperConfig);
+        }
+
+        protected virtual void SeedNotificationTestData()
+        {
+            NotificationTemplates = NotificationDataProvider.CreateNotificationTemplates(DbContext);
+            DbContext.SaveChangesAsync();
         }
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
