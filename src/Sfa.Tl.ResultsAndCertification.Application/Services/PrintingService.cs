@@ -243,7 +243,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                     printBatchItem.Status = trackingDetailStatus;
                                     printBatchItem.StatusChangedOn = trackingDetail.StatusChangeDate;
                                     printBatchItem.Reason = !string.IsNullOrWhiteSpace(trackingDetail.Reason) ? trackingDetail.Reason : null;
-                                    printBatchItem.TrackingId = !string.IsNullOrWhiteSpace(trackingDetail.TrackingID) ? trackingDetail.TrackingID : null;
+                                    printBatchItem.TrackingId = !string.IsNullOrWhiteSpace(trackingDetail.TrackingId) ? trackingDetail.TrackingId : null;
                                     printBatchItem.SignedForBy = !string.IsNullOrWhiteSpace(trackingDetail.SignedForBy) ? trackingDetail.SignedForBy : null;
                                     printBatchItem.ModifiedOn = DateTime.UtcNow;
                                     printBatchItem.ModifiedBy = Constants.FunctionPerformedBy;

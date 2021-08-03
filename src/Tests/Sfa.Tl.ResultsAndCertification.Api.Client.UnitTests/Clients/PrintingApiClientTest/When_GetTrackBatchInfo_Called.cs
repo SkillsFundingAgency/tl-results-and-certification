@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.PrintingAp
                                 Status = PrintingBatchItemStatus.Delivered.ToString(),
                                 Reason = string.Empty,
                                 SignedForBy = string.Empty,
-                                TrackingID = "4578YA879153637",
+                                TrackingId = "4578YA879153637",
                                 StatusChangeDate = DateTime.UtcNow
                             }
                         },
