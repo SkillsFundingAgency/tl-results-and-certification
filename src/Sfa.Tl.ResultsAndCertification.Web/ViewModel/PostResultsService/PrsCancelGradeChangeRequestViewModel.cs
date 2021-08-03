@@ -13,16 +13,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public int AssessmentId { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
         public PrsStatus PathwayPrsStatus { get; set; }
-
         public bool IsValid { get { return Status == RegistrationPathwayStatus.Active && PathwayPrsStatus == PrsStatus.Final; } }
-
         [Required(ErrorMessageResourceType = typeof(ValidationContent.PrsCancelGradeChangeRequest), ErrorMessageResourceName = "Validation_Message")]
         public bool? AreYouSureToCancel { get; set; }
+        public bool IsResultJourney { get; set; }
 
         public virtual BackLinkModel BackLink => new BackLinkModel
         {
-            RouteName = RouteConstants.PrsLearnerDetails,
-            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() } }
+            RouteName = RouteConstants.PrsGradeChangeRequest,
+            RouteAttributes = IsResultJourney
+                    ? new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() }, { Constants.IsResultJourney, true.ToString() } }
+                    : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, AssessmentId.ToString() } }
         };
     }
 }

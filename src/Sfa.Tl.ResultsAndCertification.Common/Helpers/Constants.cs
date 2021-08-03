@@ -98,6 +98,7 @@
         public const string IsAddressMissing = "isFromAddressMissing";
         public const string PopulateUln = "populateUln";
         public const string AppealOutcomeTypeId = "outcomeTypeId";
+        public const string IsResultJourney = "isResultJourney";
 
         // Assessments
         public const int AssessmentEndInYears = 4;
@@ -105,7 +106,6 @@
         public const int SpecialismAssessmentStartInYears = 1;
 
         public const int MaxFileSizeInMb = 5;
-
 
         // Printing Constants
         public const string Completed = "Completed";

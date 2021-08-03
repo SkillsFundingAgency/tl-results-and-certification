@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         [Required(ErrorMessageResourceType = typeof(GradeChangeContent), ErrorMessageResourceName = "Validation_Message")]
         public string ChangeRequestData { get; set; }
 
-        public bool IsResultJourney { get; set; }
+        public bool? IsResultJourney { get; set; }
 
         public SummaryItemModel SummaryCore => new SummaryItemModel
         {
@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         };
 
         public override BackLinkModel BackLink =>
-            IsResultJourney ? new BackLinkModel
+            IsResultJourney.HasValue && IsResultJourney == true ? new BackLinkModel
             {
                 RouteName = RouteConstants.ResultDetails,
                 RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } }

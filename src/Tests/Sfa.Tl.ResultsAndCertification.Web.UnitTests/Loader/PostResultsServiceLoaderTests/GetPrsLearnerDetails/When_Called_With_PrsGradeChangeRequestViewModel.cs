@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.PathwayAssessmentSeries.Should().Be(_expectedApiResult.PathwayAssessmentSeries);
             ActualResult.PathwayGrade.Should().Be(_expectedApiResult.PathwayGrade);
             ActualResult.PathwayPrsStatus.Should().Be(_expectedApiResult.PathwayPrsStatus);
-            ActualResult.IsResultJourney.Should().BeFalse();
+            ActualResult.IsResultJourney.Should().BeNull();
             ActualResult.ChangeRequestData.Should().BeNull();
         }
     }

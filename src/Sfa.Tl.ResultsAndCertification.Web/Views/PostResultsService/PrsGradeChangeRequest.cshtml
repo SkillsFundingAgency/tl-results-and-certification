@@ -40,7 +40,10 @@
 
             <div class="govuk-button-group">
                 <button id="sendButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsGradeChangeRequest.Button_Send</button>
-                <a id="cancelLink" class="govuk-link" asp-route="PrsCancelGradeChangeRequest" asp-route-profileId="@Model.ProfileId" asp-route-assessmentId="@Model.AssessmentId">@PrsGradeChangeRequest.Link_Cancel</a>
+                <a id="cancelLink" class="govuk-link" asp-route="PrsCancelGradeChangeRequest" 
+                   asp-route-profileId="@Model.ProfileId" 
+                   asp-route-assessmentId="@Model.AssessmentId" 
+                   asp-route-isResultJourney="@Model.IsResultJourney">@PrsGradeChangeRequest.Link_Cancel</a>
             </div>
         </form>
     </div>
