@@ -1,0 +1,58 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.PrsGradeChangeRequestConfirmationViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
+
+@{
+    ViewData["Title"] = PrsGradeChangeRequestConfirmation.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">@PrsGradeChangeRequestConfirmation.Request_Grade_Change_Successful</h1>
+        </div>
+
+        <h2 class="govuk-heading-m">@PrsGradeChangeRequestConfirmation.What_Happens_Now</h2>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@PrsGradeChangeRequestConfirmation.Para_We_Will_Send_You_Confirmation_Email</li>
+            <li>@PrsGradeChangeRequestConfirmation.Para_We_Will_Contact_You</li>
+        </ul>
+
+        <p class="govuk-body">@PrsGradeChangeRequestConfirmation.If_You_Have_Not_Heard_From_Us</p>
+
+        <form asp-route="SubmitPrsGradeChangeRequestConfirmation">
+            <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+            <input type="hidden" asp-for="AssessmentId" value="@Model.AssessmentId" />
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                        <h1 class="govuk-fieldset__heading">
+                            @PrsGradeChangeRequestConfirmation.What_Would_You_Like_To_Do_Next
+                        </h1>
+                    </legend>
+                    <div class="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="navigationoption" asp-for="NavigationOption" type="radio" value="@PrsGradeChangeConfirmationNavigationOptions.BackToLearnersPage">
+                            <label class="govuk-label govuk-radios__label" for="navigationoption">
+                                @PrsGradeChangeRequestConfirmation.Back_To_Learners_Page
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="navigationoption-search-another-learner" asp-for="NavigationOption" type="radio" value="@PrsGradeChangeConfirmationNavigationOptions.SearchForAnotherLearner">
+                            <label class="govuk-label govuk-radios__label" for="navigationoption-search-another-learner">
+                                @PrsGradeChangeRequestConfirmation.Search_For_Another_Learner
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="navigationoption-back-to-home" asp-for="NavigationOption" type="radio" value="@PrsGradeChangeConfirmationNavigationOptions.BackToHome">
+                            <label class="govuk-label govuk-radios__label" for="navigationoption-back-to-home">
+                                @PrsGradeChangeRequestConfirmation.Back_To_Home
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continueButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@PrsGradeChangeRequestConfirmation.Continue_Button</button>
+        </form>
+    </div>
+</div>

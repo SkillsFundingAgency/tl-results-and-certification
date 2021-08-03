@@ -179,6 +179,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))                
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status))
                 .ForMember(d => d.PathwayPrsStatus, opts => opts.MapFrom(s => s.PathwayPrsStatus));
+
+            CreateMap<PrsGradeChangeRequestViewModel, PrsGradeChangeRequest>()
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.AssessmentId, opts => opts.MapFrom(s => s.AssessmentId))
+                .ForMember(d => d.ResultId, opts => opts.MapFrom(s => s.ResultId))
+                .ForMember(d => d.RequestedMessage, opts => opts.MapFrom(s => s.ChangeRequestData))
+                .ForMember(d => d.RequestedUserEmailAddress, opts => opts.MapFrom<UserEmailResolver<PrsGradeChangeRequestViewModel, PrsGradeChangeRequest>>());
         }
     }
 }
