@@ -161,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
                             actualBatchItem.Status.Should().Be(printBatchItemStatus);
                             actualBatchItem.StatusChangedOn.Should().Be(trackingDetail.StatusChangeDate);
                             actualBatchItem.Reason.Should().Be(trackingDetail.Reason);
-                            actualBatchItem.TrackingId.Should().Be(trackingDetail.TrackingID);
+                            actualBatchItem.TrackingId.Should().Be(trackingDetail.TrackingId);
                             actualBatchItem.SignedForBy.Should().Be(trackingDetail.SignedForBy);
 
                             actualBatch.ResponseStatus.Should().Be(ResponseStatus.Success);
@@ -178,10 +178,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
             {
                 return new[]
                 {
-                    new object[] { new TrackBatchResponse { DeliveryNotifications = new List<DeliveryNotification> { new DeliveryNotification { BatchNumber = 3, Status = EnumExtensions.GetDisplayName(ResponseStatus.Success), ErrorMessage = string.Empty, TrackingDetails = new List<TrackingDetail> { new TrackingDetail { Name = "Test", UKPRN = "10000536", Status = EnumExtensions.GetDisplayName(PrintingBatchItemStatus.Delivered), TrackingID = "5878AB44478", StatusChangeDate = DateTime.UtcNow, SignedForBy = "User" } } } } },
+                    new object[] { new TrackBatchResponse { DeliveryNotifications = new List<DeliveryNotification> { new DeliveryNotification { BatchNumber = 3, Status = EnumExtensions.GetDisplayName(ResponseStatus.Success), ErrorMessage = string.Empty, TrackingDetails = new List<TrackingDetail> { new TrackingDetail { Name = "Test", UKPRN = "10000536", Status = EnumExtensions.GetDisplayName(PrintingBatchItemStatus.Delivered), TrackingId = "5878AB44478", StatusChangeDate = DateTime.UtcNow, SignedForBy = "User" } } } } },
                     new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = 1, ModifiedCount = 1, SavedCount = 1,  }
                     },
-                    new object[] { new TrackBatchResponse { DeliveryNotifications = new List<DeliveryNotification> { new DeliveryNotification { BatchNumber = 4, Status = EnumExtensions.GetDisplayName(ResponseStatus.Success), ErrorMessage = string.Empty, TrackingDetails = new List<TrackingDetail> { new TrackingDetail { Name = "Test", UKPRN = "10000536", Status = EnumExtensions.GetDisplayName(PrintingBatchItemStatus.NotDelivered), TrackingID = null, StatusChangeDate = DateTime.UtcNow, SignedForBy = null } } } } },
+                    new object[] { new TrackBatchResponse { DeliveryNotifications = new List<DeliveryNotification> { new DeliveryNotification { BatchNumber = 4, Status = EnumExtensions.GetDisplayName(ResponseStatus.Success), ErrorMessage = string.Empty, TrackingDetails = new List<TrackingDetail> { new TrackingDetail { Name = "Test", UKPRN = "10000536", Status = EnumExtensions.GetDisplayName(PrintingBatchItemStatus.NotDelivered), TrackingId = null, StatusChangeDate = DateTime.UtcNow, SignedForBy = null } } } } },
                     new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = 1, ModifiedCount = 1, SavedCount = 1,  }
                     },
                     new object[] { new TrackBatchResponse { DeliveryNotifications = new List<DeliveryNotification> { new DeliveryNotification { BatchNumber = 5, Status = EnumExtensions.GetDisplayName(ResponseStatus.Error), ErrorMessage = "Invalid token", TrackingDetails = new List<TrackingDetail>() } } },
