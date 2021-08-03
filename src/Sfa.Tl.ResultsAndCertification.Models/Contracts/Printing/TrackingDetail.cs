@@ -15,6 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing
 
         [JsonProperty("Tracking ID")]
         public string TrackingID { get; set; }
-        public DateTime StatusChangeDate { get; set; }
+        public DateTime? StatusChangeDate { get; set; }
     }
 }

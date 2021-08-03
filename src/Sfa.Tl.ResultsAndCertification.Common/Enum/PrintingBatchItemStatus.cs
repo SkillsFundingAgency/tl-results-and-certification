@@ -18,6 +18,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Enum
         [Display(Name = "Delivered")]
         Delivered = 6,
         [Display(Name = "Not Delivered")]
-        NotDelivered = 7        
+        NotDelivered = 7,
+        [Display(Name = "Cancelled")]
+        Cancelled = 8
     }
 }
