@@ -126,6 +126,9 @@
   <data name="Heading_Request_To_Change_Learners_Grade" xml:space="preserve">
     <value>Request a change to this learner’s grade</value>
   </data>
+  <data name="Hint_Your_Message_Must_Be_1000_Char_Or_Fewer" xml:space="preserve">
+    <value>Your message must be 1,000 characters or fewer.</value>
+  </data>
   <data name="Link_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -133,7 +136,7 @@
     <value>Request grade change</value>
   </data>
   <data name="Para_Please_Do_Not_Add_Any_Details" xml:space="preserve">
-    <value>Please do not add any details here that identify the learner, for example their name, date of birth or unique learner number</value>
+    <value>Please do not add any details here that identify the learner, for example their name, date of birth or unique learner number.</value>
   </data>
   <data name="Title_Core_Text" xml:space="preserve">
     <value>Core &lt;br/&gt; (code)</value>

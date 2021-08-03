@@ -89,6 +89,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your message must be 1,000 characters or fewer..
+        /// </summary>
+        public static string Hint_Your_Message_Must_Be_1000_Char_Or_Fewer {
+            get {
+                return ResourceManager.GetString("Hint_Your_Message_Must_Be_1000_Char_Or_Fewer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Link_Cancel {
@@ -107,7 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please do not add any details here that identify the learner, for example their name, date of birth or unique learner number.
+        ///   Looks up a localized string similar to Please do not add any details here that identify the learner, for example their name, date of birth or unique learner number..
         /// </summary>
         public static string Para_Please_Do_Not_Add_Any_Details {
             get {
