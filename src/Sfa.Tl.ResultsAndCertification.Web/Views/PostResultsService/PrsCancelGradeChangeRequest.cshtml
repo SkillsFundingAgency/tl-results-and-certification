@@ -17,12 +17,12 @@
             <input type="hidden" asp-for="IsResultJourney" />
             <partial name="_ValidationSummary" />
 
-            <div class="govuk-form-group">
+            <div class="govuk-form-group" sfa-validation-for="AreYouSureToCancel" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                         <h1 class="govuk-fieldset__heading">@PrsCancelGradeChangeRequest.Heading_Are_You_Sure_You_Want_To_Cancel</h1>
                     </legend>
-                    <div class="govuk-radios" sfa-validation-for="AreYouSureToCancel" sfa-validation-class="govuk-form-group--error">
+                    <div class="govuk-radios">
                         <span sfa-validation-for="AreYouSureToCancel"></span>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="areyousuretocancel" asp-for="AreYouSureToCancel" type="radio" value="true">

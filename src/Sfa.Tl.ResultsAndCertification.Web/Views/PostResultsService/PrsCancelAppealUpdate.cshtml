@@ -15,7 +15,8 @@
             <input type="hidden" asp-for="ProfileId" />
             <input type="hidden" asp-for="AssessmentId" />
             <partial name="_ValidationSummary" />
-            <div class="govuk-form-group">
+
+            <div class="govuk-form-group" sfa-validation-for="CancelRequest" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                         <h1 class="govuk-fieldset__heading">
@@ -23,7 +24,7 @@
                         </h1>
                     </legend>
 
-                    <div class="govuk-radios" sfa-validation-for="CancelRequest" sfa-validation-class="govuk-form-group--error">
+                    <div class="govuk-radios">
                         <span sfa-validation-for="CancelRequest"></span>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="cancelrequest" asp-for="CancelRequest" type="radio" value="true">
