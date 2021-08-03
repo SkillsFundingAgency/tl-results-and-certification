@@ -59,6 +59,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.AppealGradeAsync(request);
         }
 
+        public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequestViewModel model)
+        {
+            var request = _mapper.Map<PrsGradeChangeRequest>(model);
+            return await _internalApiClient.PrsGradeChangeRequestAsync(request);
+        }
+
         public T TransformLearnerDetailsTo<T>(FindPrsLearnerRecord prsLearnerRecord)
         {
             return _mapper.Map<T>(prsLearnerRecord);

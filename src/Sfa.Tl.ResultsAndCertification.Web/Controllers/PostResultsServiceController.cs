@@ -399,13 +399,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> PrsGradeChangeRequestAsync(PrsGradeChangeRequestViewModel viewModel)
         {
             var learnerDetails = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(User.GetUkPrn(), viewModel.ProfileId, viewModel.AssessmentId);
+
+            if (learnerDetails == null || !learnerDetails.CanRequestFinalGradeChange)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
             if (!ModelState.IsValid)
             {
                 learnerDetails.IsResultJourney = viewModel.IsResultJourney;
                 return View(learnerDetails);
             }
 
-            return View(learnerDetails);
+            var isSuccess = await _postResultsServiceLoader.PrsGradeChangeRequestAsync(viewModel);
+
+            if (!isSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            var confirmationViewModel = new PrsGradeChangeRequestConfirmationViewModel { ProfileId = viewModel.ProfileId, AssessmentId = viewModel.AssessmentId };
+            await _cacheService.SetAsync(CacheKey, confirmationViewModel, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.PrsGradeChangeRequestConfirmation);
         }
 
         [HttpGet]
@@ -439,6 +451,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PrsGradeChangeRequest, new { profileId = viewModel.ProfileId, assessmentId = viewModel.AssessmentId });
 
             return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = viewModel.ProfileId, assessmentId = viewModel.AssessmentId });
+        }
+
+        [HttpGet]
+        [Route("grade-change-request-sent", Name = RouteConstants.PrsGradeChangeRequestConfirmation)]
+        public async Task<IActionResult> PrsGradeChangeRequestConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<PrsGradeChangeRequestConfirmationViewModel>(CacheKey);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read PrsGradeChangeRequestConfirmationViewModel from redis cache in request Prs grade change confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("grade-change-request-sent", Name = RouteConstants.SubmitPrsGradeChangeRequestConfirmation)]
+        public IActionResult PrsGradeChangeRequestConfirmation(PrsGradeChangeRequestConfirmationViewModel viewModel)
+        {
+            if (viewModel == null)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return viewModel.NavigationOption switch
+            {
+                PrsGradeChangeConfirmationNavigationOptions.BackToLearnersPage => RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = viewModel.ProfileId, assessmentId = viewModel.AssessmentId }),
+                PrsGradeChangeConfirmationNavigationOptions.SearchForAnotherLearner => RedirectToRoute(RouteConstants.PrsSearchLearner),
+                PrsGradeChangeConfirmationNavigationOptions.BackToHome => RedirectToRoute(RouteConstants.Home),
+                _ => RedirectToRoute(RouteConstants.Home)
+            };
         }
     }
 }
