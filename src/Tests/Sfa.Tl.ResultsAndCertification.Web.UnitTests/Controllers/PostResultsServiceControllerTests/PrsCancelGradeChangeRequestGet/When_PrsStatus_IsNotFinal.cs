@@ -6,28 +6,26 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsGradeChangeRequestGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsCancelGradeChangeRequestGet
 {
     public class When_PrsStatus_IsNotFinal : TestSetup
     {
-        private PrsGradeChangeRequestViewModel _mockGradeChangeRequestViewModel;
+        private PrsCancelGradeChangeRequestViewModel _mockCancelGradeChangeRequestViewModel;
 
         public override void Given()
         {
             ProfileId = 11;
             AssessmentId = 1;
-            ResultId = 1;
 
-            _mockGradeChangeRequestViewModel = new PrsGradeChangeRequestViewModel
+            _mockCancelGradeChangeRequestViewModel = new PrsCancelGradeChangeRequestViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
-                ResultId = ResultId,
                 Status = RegistrationPathwayStatus.Active,
                 PathwayPrsStatus = PrsStatus.BeingAppealed
             };
 
-            Loader.GetPrsLearnerDetailsAsync<PrsGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_mockGradeChangeRequestViewModel);
+            Loader.GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_mockCancelGradeChangeRequestViewModel);
         }
 
         [Fact]

@@ -38,6 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             var model = viewResult.Model as PrsGradeChangeRequestViewModel;
 
             model.Should().NotBeNull();
+            model.IsResultJourney = true;
 
             // Back link
             model.BackLink.Should().NotBeNull();
