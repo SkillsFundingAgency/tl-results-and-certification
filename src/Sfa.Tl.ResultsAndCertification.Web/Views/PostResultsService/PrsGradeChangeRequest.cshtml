@@ -33,13 +33,13 @@
 
             <div class="govuk-form-group" sfa-validation-for="ChangeRequestData" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
-                    <h2 class="govuk-label-wrapper"><label class="govuk-label govuk-label--m">@PrsGradeChangeRequest.Heading_Please_Tell_Us_Why</label></h2>
+                    <h2 class="govuk-label-wrapper"><label class="govuk-label govuk-label--m" for="changerequestdata">@PrsGradeChangeRequest.Heading_Please_Tell_Us_Why</label></h2>
                     <div id="more-detail-hint" class="govuk-hint">
                         @PrsGradeChangeRequest.Para_Please_Do_Not_Add_Any_Details
                         <p>@PrsGradeChangeRequest.Hint_Your_Message_Must_Be_1000_Char_Or_Fewer</p>
                     </div>
                     <span sfa-validation-for="ChangeRequestData"></span>
-                    <textarea id="changerequestdata" class="govuk-textarea" asp-for="ChangeRequestData" rows="5" aria-describedby="more-detail-hint"></textarea>
+                    <textarea id="changerequestdata" maxlength="1000" class="govuk-textarea" asp-for="ChangeRequestData" rows="5" aria-describedby="more-detail-hint"></textarea>
                 </fieldset>
             </div>
 

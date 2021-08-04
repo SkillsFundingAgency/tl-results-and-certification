@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
 {
     public class PrsGradeChangeRequest
     {
