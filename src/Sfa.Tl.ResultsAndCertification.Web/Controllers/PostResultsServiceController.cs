@@ -421,7 +421,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("cancel-request-grade-change/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.PrsCancelGradeChangeRequest)]
+        [Route("cancel-grade-change-request/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.PrsCancelGradeChangeRequest)]
         public async Task<IActionResult> PrsCancelGradeChangeRequestAsync(int profileId, int assessmentId, bool isResultJourney)
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<PrsCancelGradeChangeRequestViewModel>(User.GetUkPrn(), profileId, assessmentId);
@@ -433,7 +433,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("cancel-request-grade-change/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.SubmitPrsCancelGradeChangeRequest)]
+        [Route("cancel-grade-change-request/{profileId}/{assessmentId}/{isResultJourney:bool?}", Name = RouteConstants.SubmitPrsCancelGradeChangeRequest)]
         public IActionResult PrsCancelGradeChangeRequest(PrsCancelGradeChangeRequestViewModel viewModel)
         {
             if (!ModelState.IsValid)
