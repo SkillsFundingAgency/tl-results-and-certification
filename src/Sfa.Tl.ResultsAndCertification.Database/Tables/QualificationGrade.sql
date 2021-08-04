@@ -3,6 +3,7 @@
 	[Id] INT IDENTITY(1,1) NOT NULL,
 	[QualificationTypeId] INT NOT NULL,
 	[Grade] NVARCHAR(50) NOT NULL,
+	[GradeRank] INT NOT NULL DEFAULT 0,
 	[IsAllowable] BIT NOT NULL DEFAULT 0,
 	[IsSendGrade] BIT NOT NULL DEFAULT 0,
 	[IsActive] BIT NOT NULL DEFAULT 1,		
