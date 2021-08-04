@@ -5,6 +5,7 @@
         public string QualificationCode { get; set; }
         public string QualificationTitle { get; set; }
         public string Grade { get; set; }
+        public int GradeRank { get; set; }
         public bool IsAchieved { get; set; }
 
         public int QualificationId { get; set; }
