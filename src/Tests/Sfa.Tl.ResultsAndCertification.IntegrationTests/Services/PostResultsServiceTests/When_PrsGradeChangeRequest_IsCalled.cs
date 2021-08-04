@@ -72,7 +72,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             {
                 return new[]
                 {
-                    new object[] { null, false },
                     new object[] { new PrsGradeChangeRequest { ProfileId = 1, AssessmentId = 2, ResultId = 3, RequestedMessage = "Test", RequestedUserEmailAddress = "test@test.com" }, true }                    
                 };
             }

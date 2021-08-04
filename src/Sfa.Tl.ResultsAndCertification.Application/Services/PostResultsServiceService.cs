@@ -99,11 +99,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request)
         {
-            if (request == null) return false;
-
+            var referenceNumber = Guid.NewGuid().ToString();
             var technicalTeamTokens = new Dictionary<string, dynamic>
                 {
-                    { "reference_number", request.ReferenceNumber },
+                    { "reference_number", referenceNumber },
                     { "sender_email_address", request.RequestedUserEmailAddress },
                     { "profile_id", request.ProfileId },
                     { "assessment_id", request.AssessmentId },
@@ -118,7 +117,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 var userTokens = new Dictionary<string, dynamic>
                 {
-                    { "reference_number", request.ReferenceNumber }
+                    { "reference_number", referenceNumber }
                 };
 
                 // send email to requested user
