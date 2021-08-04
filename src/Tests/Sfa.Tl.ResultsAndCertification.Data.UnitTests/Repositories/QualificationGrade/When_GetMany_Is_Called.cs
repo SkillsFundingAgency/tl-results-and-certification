@@ -39,6 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Qualificati
             result.Should().NotBeNull();
             result.Id.Should().Be(1);
             result.Grade.Should().Be(testData.Grade);
+            result.GradeRank.Should().Be(testData.GradeRank);
             result.IsAllowable.Should().Be(testData.IsAllowable);
             result.IsSendGrade.Should().Be(testData.IsSendGrade);
             result.IsActive.Should().Be(testData.IsActive);
