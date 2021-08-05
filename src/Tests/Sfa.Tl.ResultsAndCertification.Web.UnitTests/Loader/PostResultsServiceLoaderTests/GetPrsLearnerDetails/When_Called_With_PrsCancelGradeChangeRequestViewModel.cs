@@ -33,12 +33,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 PathwayName = "Childcare Education",
                 PathwayGrade = "A*",
                 PathwayResultId = 77,
-                PathwayPrsStatus = PrsStatus.BeingAppealed,
+                PathwayPrsStatus = PrsStatus.Final,
                 AppealEndDate = DateTime.Today.AddDays(7),
                 PathwayGradeLastUpdatedBy = "Barsley User",
                 PathwayGradeLastUpdatedOn = DateTime.Today
             };
-
             InternalApiClient.GetPrsLearnerDetailsAsync(AoUkprn, ProfileId, AssessmentId).Returns(_expectedApiResult);
         }
 
@@ -52,8 +51,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
         {
             ActualResult.Should().NotBeNull();
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
+            ActualResult.AssessmentId.Should().Be(_expectedApiResult.PathwayAssessmentId);
             ActualResult.Status.Should().Be(_expectedApiResult.Status);
-            ActualResult.PathwayPrsStatus.Should().Be(_expectedApiResult.PathwayPrsStatus);            
+            ActualResult.PathwayPrsStatus.Should().Be(_expectedApiResult.PathwayPrsStatus);
+            ActualResult.IsValid.Should().BeTrue();
+            ActualResult.AreYouSureToCancel.Should().BeNull();
+            ActualResult.IsResultJourney.Should().BeFalse();
         }
     }
 }

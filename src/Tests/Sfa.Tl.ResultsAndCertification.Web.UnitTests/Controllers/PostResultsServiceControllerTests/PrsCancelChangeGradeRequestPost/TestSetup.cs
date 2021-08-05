@@ -2,7 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsCancelChangeGraderRequestPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsCancelChangeGradeRequestPost
 {
     public abstract class TestSetup : PostResultsServiceControllerTestBase
     {

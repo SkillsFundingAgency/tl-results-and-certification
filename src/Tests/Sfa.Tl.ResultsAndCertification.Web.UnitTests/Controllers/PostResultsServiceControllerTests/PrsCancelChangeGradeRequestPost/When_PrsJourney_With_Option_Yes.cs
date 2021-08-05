@@ -4,9 +4,9 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsCancelChangeGraderRequestPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsCancelChangeGradeRequestPost
 {
-    public class When_PrsJourney_With_Option_No : TestSetup
+    public class When_PrsJourney_With_Option_Yes : TestSetup
     {
         public override void Given()
         {
@@ -14,16 +14,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             { 
                 ProfileId = 1, 
                 AssessmentId = 10, 
-                AreYouSureToCancel = false,
+                AreYouSureToCancel = true,
                 IsResultJourney = false
             };
         }
 
         [Fact]
-        public void Then_Redirected_To_PrsGradeChangeRequest()
+        public void Then_Redirected_To_PrsLearnerDetails()
         {
             var route = Result as RedirectToRouteResult;
-            route.RouteName.Should().Be(RouteConstants.PrsGradeChangeRequest);
+            route.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);
             route.RouteValues.Count.Should().Be(2);
             route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
             route.RouteValues[Constants.AssessmentId].Should().Be(ViewModel.AssessmentId);
