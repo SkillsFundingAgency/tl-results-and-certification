@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidators;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
@@ -14,9 +15,9 @@ using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelperServiceTests.Registrations
 {
-    public class When_Upload_File_IsValid : RegistrationsCsvHelperServiceBaseTest
+    public class When_Upload_File_Header_Order_Different : RegistrationsCsvHelperServiceBaseTest
     {
-        private const string _dataFilePath = @"CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Valid_File.csv";
+        private const string _dataFilePath = @"CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Header_Order_Different.csv";
 
         public override void Given()
         {

@@ -54,6 +54,9 @@
     <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Duplicate_Specialisms.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Header_ExpectedColumn_Missing.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Header_Validation.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -64,6 +67,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Validation.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Header_Case_Different.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Header_Order_Different.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="CommonServices\CsvHelperServiceTests\Registrations\TestData\Registrations_Stage_2_Valid_File.csv">
