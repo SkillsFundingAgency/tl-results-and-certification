@@ -169,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s component grades status.
+        ///   Looks up a localized string similar to Learner’s component grade status.
         /// </summary>
         public static string Prs_Learner_Component_Grade_Status {
             get {
