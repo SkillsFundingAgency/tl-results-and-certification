@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<SoaLearnerRecordDetailsViewModel, SoaPrintingRequest>>());
 
             CreateMap<SoaLearnerRecordDetailsViewModel, LearningDetails>()
-                .ForMember(d => d.TLevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
+                .ForMember(d => d.TLevelTitle, opts => opts.MapFrom(s => s.TlevelTitle.Replace(Constants.TLevelIn, string.Empty, StringComparison.InvariantCultureIgnoreCase).Trim()))
                 .ForMember(d => d.Grade, opts => opts.MapFrom(s => string.Empty))
                 .ForMember(d => d.Date, opts => opts.MapFrom(s => DateTime.UtcNow.ToSoaFormat()))
                 .ForMember(d => d.Core, opts => opts.MapFrom(s => s.PathwayName))

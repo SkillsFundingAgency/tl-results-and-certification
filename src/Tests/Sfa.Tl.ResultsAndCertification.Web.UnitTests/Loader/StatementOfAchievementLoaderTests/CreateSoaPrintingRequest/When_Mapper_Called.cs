@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 ProviderName = "Barsley College",
                 ProviderUkprn = 456789123,
 
-                TlevelTitle = "Design, Surveying and Planning for Construction",
+                TlevelTitle = "T Level in Design, Surveying and Planning for Construction",
                 RegistrationPathwayId = 1,
                 PathwayDisplayName = "Design, Surveying and Planning for Construction (60358300)",
                 PathwayName = "Design, Surveying and Planning for Construction",
@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
 
             _expectedLearningDetails = new LearningDetails
             {
-                TLevelTitle = SoaLearnerRecordDetailsViewModel.TlevelTitle,
+                TLevelTitle = "Design, Surveying and Planning for Construction",
                 Grade = string.Empty,
                 Date = DateTime.UtcNow.ToSoaFormat(),
                 Core = SoaLearnerRecordDetailsViewModel.PathwayName,

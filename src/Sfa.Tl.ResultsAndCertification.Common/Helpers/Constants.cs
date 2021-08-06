@@ -114,6 +114,7 @@
         public const string IndustryPlacementNotCompleted = "Not completed";
         public const string EnglishAndMathsMet = "Met";
         public const string EnglishAndMathsNotMet = "Not met";
+        public const string TLevelIn = "T Level in ";
 
 
         // Other constants
