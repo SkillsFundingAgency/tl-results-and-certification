@@ -1,23 +1,22 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAchievementServiceTests
 {
@@ -155,7 +154,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
                 actualPrintCertificate.Type.Should().Be(PrintCertificateType.StatementOfAchievement);
                 actualPrintCertificate.LearningDetails.Should().BeEquivalentTo(expectedLearnerDetails);
                 actualPrintCertificate.DisplaySnapshot.Should().BeEquivalentTo(expectedSoaPrintingDetails);
-                actualPrintCertificate.Status.Should().Be(PrintCertificateStatus.Created);
                 actualPrintCertificate.CreatedBy.Should().Be(performedBy);
 
                 // Assert PrintBatchItem

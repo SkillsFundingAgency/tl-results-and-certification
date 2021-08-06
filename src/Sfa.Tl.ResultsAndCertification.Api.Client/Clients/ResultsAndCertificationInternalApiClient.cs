@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
@@ -315,6 +316,36 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var requestUri = string.Format(ApiConstants.GetPrintRequestSnapshotUri, providerUkprn, profileId, pathwayId);
             return await GetAsync<PrintRequestSnapshot>(requestUri);
         }
+
+        #region PRS
+        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null)
+        {
+            var requestUri = uln != null ? 
+                string.Format(ApiConstants.FindPrsLearnerRecordUri, aoUkprn, uln) :
+                string.Format(ApiConstants.FindPrsLearnerRecordByProfileIdUri, aoUkprn, profileId);
+
+            return await GetAsync<FindPrsLearnerRecord>(requestUri);
+        }
+
+        public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentId)
+        {
+            var requestUri = string.Format(ApiConstants.GetPrsLearnerDetailsUri, aoUkprn, profileId, assessmentId);
+            return await GetAsync<PrsLearnerDetails>(requestUri);
+        }
+
+        public async Task<bool> AppealGradeAsync(AppealGradeRequest request)
+        {
+            var requestUri = ApiConstants.AppealGradeUri;
+            return await PostAsync<AppealGradeRequest, bool>(requestUri, request);
+        }
+
+        public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request)
+        {
+            var requestUri = ApiConstants.PrsGradeChangeRequestUri;
+            return await PostAsync<PrsGradeChangeRequest, bool>(requestUri, request);
+        }
+
+        #endregion 
 
         #region Private Methods
 

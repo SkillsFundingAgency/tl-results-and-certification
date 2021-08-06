@@ -169,6 +169,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learner’s component grade status.
+        /// </summary>
+        public static string Prs_Learner_Component_Grade_Status {
+            get {
+                return ResourceManager.GetString("Prs_Learner_Component_Grade_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registrations.
         /// </summary>
         public static string Registration_Dashboard {
@@ -205,6 +214,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reviews and appeals.
+        /// </summary>
+        public static string Reviews_And_Appeals {
+            get {
+                return ResourceManager.GetString("Reviews_And_Appeals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for a learner.
         /// </summary>
         public static string Search_For_Assessments {
@@ -237,6 +255,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Search_For_Results {
             get {
                 return ResourceManager.GetString("Search_For_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reviews and appeals.
+        /// </summary>
+        public static string StartReviewsAndAppeals {
+            get {
+                return ResourceManager.GetString("StartReviewsAndAppeals", resourceCulture);
             }
         }
         

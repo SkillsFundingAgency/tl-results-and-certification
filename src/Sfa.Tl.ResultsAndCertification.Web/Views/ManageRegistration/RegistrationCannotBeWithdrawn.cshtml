@@ -1,0 +1,29 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.RegistrationCannotBeWithdrawnViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = @RegistrationCannotBeWithdrawn.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">
+            @RegistrationCannotBeWithdrawn.Page_Heading
+        </h1>
+
+        <p class="govuk-body">@RegistrationCannotBeWithdrawn.Para_This_Registration_Has_A_Grade</p>
+
+        <p class="govuk-body">@RegistrationCannotBeWithdrawn.Para_If_You_Think_This_Is_Incorrect_Please_To_Result_Editor</p>
+
+        <div class="govuk-button-group govuk-!-margin-top-6">
+            <a id="buttonBackToRegistrationDetails" class="govuk-button" role="button" data-module="govuk-button" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">@RegistrationCannotBeWithdrawn.Back_To_Registration_Details_Button</a>
+            <a id="buttonBackToHome" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="Home">@RegistrationCannotBeWithdrawn.Back_To_Home_Button</a>
+        </div>
+
+    </div>
+</div>

@@ -153,6 +153,9 @@
   <data name="Provider_Your_Providers" xml:space="preserve">
     <value>Your providers</value>
   </data>
+  <data name="Prs_Learner_Component_Grade_Status" xml:space="preserve">
+    <value>Learner’s component grade status</value>
+  </data>
   <data name="Registration_Dashboard" xml:space="preserve">
     <value>Registrations</value>
   </data>
@@ -165,6 +168,9 @@
   <data name="Result_Dashboard" xml:space="preserve">
     <value>Results</value>
   </data>
+  <data name="Reviews_And_Appeals" xml:space="preserve">
+    <value>Reviews and appeals</value>
+  </data>
   <data name="Search_For_Assessments" xml:space="preserve">
     <value>Search for a learner</value>
   </data>
@@ -176,6 +182,9 @@
   </data>
   <data name="Search_For_Results" xml:space="preserve">
     <value>Search for a learner</value>
+  </data>
+  <data name="StartReviewsAndAppeals" xml:space="preserve">
+    <value>Reviews and appeals</value>
   </data>
   <data name="StatementOfAchievementRequested" xml:space="preserve">
     <value>Statement of achievement requested</value>

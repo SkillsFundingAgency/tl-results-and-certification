@@ -16,6 +16,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients
 
         public MockHttpMessageHandler(T response, string requestUrl, HttpStatusCode statusCode, string requestContent = null)
         {
+            AddHttpResponses(response, requestUrl, statusCode, requestContent);            
+        }
+
+        public void AddHttpResponses<TResponse>(TResponse response, string requestUrl, HttpStatusCode statusCode, string requestContent = null)
+        {
             if (response != null && !string.IsNullOrWhiteSpace(requestUrl))
             {
                 var requestKey = requestUrl + requestContent ?? string.Empty;

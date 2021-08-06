@@ -11,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         public const string RequireProviderEditorAccess = "RequireProviderEditorAccess";
         public const string RequireRegistrationsEditorAccess = "RequireRegistrationsEditorAccess";
         public const string RequireResultsEditorAccess = "RequireResultsEditorAccess";
+        public const string RequireReviewsAndAppealsEditorAccess = "RequireReviewsAndAppealsEditorAccess";
 
         // Awarding Organisation Roles
         public const string SiteAdministrator = "Site Administrator";

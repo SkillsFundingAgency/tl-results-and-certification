@@ -145,11 +145,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("results-learner-search", Name = RouteConstants.SearchResults)]
-        public async Task<IActionResult> SearchResultsAsync()
+        [Route("results-learner-search/{populateUln:bool?}", Name = RouteConstants.SearchResults)]
+        public async Task<IActionResult> SearchResultsAsync(bool populateUln)
         {
             var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.ResultsSearchCriteria);
-            var viewModel = new SearchResultsViewModel { SearchUln = defaultValue };
+            var viewModel = new SearchResultsViewModel { SearchUln = !string.IsNullOrWhiteSpace(defaultValue) && populateUln ? defaultValue : null };
+
             return View(viewModel);
         }
 
@@ -164,7 +165,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (searchResult?.IsAllowed == true)
             {
-                return RedirectToRoute(searchResult.IsWithdrawn ? RouteConstants.ResultWithdrawnDetails : RouteConstants.ResultDetails, new { profileId = searchResult.RegistrationProfileId });
+                if (searchResult.IsWithdrawn)
+                {
+                    await _cacheService.SetAsync(Constants.ResultsSearchCriteria, model.SearchUln);
+                    return RedirectToRoute(RouteConstants.ResultWithdrawnDetails, new { profileId = searchResult.RegistrationProfileId });
+                }
+
+                return RedirectToRoute(RouteConstants.ResultDetails, new { profileId = searchResult.RegistrationProfileId });
             }
             else
             {
@@ -182,12 +189,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> SearchResultsNotFoundAsync()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<UlnResultsNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchResultsUlnNotFound));
-
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchResultsUlnNotFound from redis cache in search results not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
+
             return View(viewModel);
         }
 
@@ -195,11 +202,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("learners-results-withdrawn-learner/{profileId}", Name = RouteConstants.ResultWithdrawnDetails)]
         public async Task<IActionResult> ResultWithdrawnDetailsAsync(int profileId)
         {
-            var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
-
+            var viewModel = await _resultLoader.GetResultWithdrawnViewModelAsync(User.GetUkPrn(), profileId);
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No result withdrawn details found. Method: GetResultDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Withdrawn}), User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No result withdrawn details found. Method: GetResultWithdrawnViewModelAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Withdrawn}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("no-assessment-entries", Name = RouteConstants.ResultNoAssessmentEntry)]
+        public async Task<IActionResult> ResultNoAssessmentEntryAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<ResultNoAssessmentEntryViewModel>(CacheKey);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read ResultNoAssessmentEntryViewModel from redis cache in assessment no assessment entries page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
@@ -211,11 +231,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> ResultDetailsAsync(int profileId)
         {
             var viewModel = await _resultLoader.GetResultDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
-
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No result details found. Method: GetResultDetailsAsync({User.GetUkPrn()}, {profileId}, {RegistrationPathwayStatus.Active}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            if (!viewModel.IsPathwayAssessmentEntryRegistered)
+            {
+                await _cacheService.SetAsync(Constants.ResultsSearchCriteria, viewModel.Uln.ToString());
+                await _cacheService.SetAsync(CacheKey, _resultLoader.GetResultNoAssessmentEntryViewModel(viewModel));
+                return RedirectToRoute(RouteConstants.ResultNoAssessmentEntry);
             }
 
             return View(viewModel);
@@ -272,12 +298,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _resultLoader.GetManageCoreResultAsync(User.GetUkPrn(), profileId, assessmentId, isChangeMode: true);
 
-            if (viewModel == null)
+            if (viewModel == null || !viewModel.IsValid)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No details found. Method: GetManageCoreResultViewModelAsync({User.GetUkPrn()}, {profileId}, {assessmentId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
             return View(viewModel);
         }
 

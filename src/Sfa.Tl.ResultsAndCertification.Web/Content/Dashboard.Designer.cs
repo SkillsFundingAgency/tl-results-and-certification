@@ -250,6 +250,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Let us know when a learner has requested a review or has appealed a grade.
+        /// </summary>
+        public static string Reviews_And_Appeals_Description_Text {
+            get {
+                return ResourceManager.GetString("Reviews_And_Appeals_Description_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reviews and appeals.
+        /// </summary>
+        public static string Reviews_And_Appeals_Text {
+            get {
+                return ResourceManager.GetString("Reviews_And_Appeals_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage T Level results.
         /// </summary>
         public static string Section_Heading_Text {

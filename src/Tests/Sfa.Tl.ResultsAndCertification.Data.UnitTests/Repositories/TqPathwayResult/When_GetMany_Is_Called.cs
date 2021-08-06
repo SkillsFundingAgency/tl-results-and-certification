@@ -41,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqPathwayRe
             result.TqPathwayAssessmentId.Should().Be(testData.TqPathwayAssessmentId);
             result.TlLookupId.Should().Be(testData.TlLookupId);
             result.StartDate.Should().Be(testData.StartDate);
+            result.PrsStatus.Should().Be(testData.PrsStatus);
             result.IsOptedin.Should().Be(testData.IsOptedin);
             result.IsBulkUpload.Should().Be(testData.IsBulkUpload);
             result.CreatedBy.Should().Be(Constants.CreatedByUser);

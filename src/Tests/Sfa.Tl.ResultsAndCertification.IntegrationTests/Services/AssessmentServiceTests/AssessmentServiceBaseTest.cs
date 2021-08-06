@@ -188,14 +188,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             foreach (var (pathwayAssessment, index) in pathwayAssessments.Select((value, i) => (value, i)))
             {
-                var tqresults = GetPathwayResultDataToProcess(pathwayAssessment, seedPathwayResultsAsActive, isHistorical, isBulkUpload);
+                var tqresults = GetPathwayResultDataToProcess(pathwayAssessment, seedPathwayResultsAsActive, isHistorical, null, isBulkUpload);
                 tqPathwayResults.AddRange(tqresults);
             }
 
             return tqPathwayResults;
         }
 
-        public List<TqPathwayResult> GetPathwayResultDataToProcess(TqPathwayAssessment pathwayAssessment, bool seedPathwayResultsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
+        public List<TqPathwayResult> GetPathwayResultDataToProcess(TqPathwayAssessment pathwayAssessment, bool seedPathwayResultsAsActive = true, bool isHistorical = false, PrsStatus? prsStatus = null, bool isBulkUpload = true)
         {
             var tqPathwayResults = new List<TqPathwayResult>();
 
@@ -216,6 +216,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             {
                 tqPathwayResult.IsOptedin = pathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn;
                 tqPathwayResult.EndDate = DateTime.UtcNow;
+            }
+            else
+            {
+                tqPathwayResult.PrsStatus = prsStatus;
             }
 
             tqPathwayResults.Add(tqPathwayResult);

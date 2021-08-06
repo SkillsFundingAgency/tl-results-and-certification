@@ -23,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public int? SpecialismAssessmentId { get; set; }
 
         public int? PathwayResultId { get; set; }
+        public bool HasAnyOutstandingPathwayPrsActivities  { get; set; }
         public bool IsIndustryPlacementExist { get; set; }
 
         public RegistrationPathwayStatus Status { get; set; }

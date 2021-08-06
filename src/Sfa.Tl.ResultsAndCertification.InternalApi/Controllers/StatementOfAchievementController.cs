@@ -19,9 +19,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpGet]
         [Route("FindSoaLearnerRecord/{providerUkprn}/{uln}")]
-        public Task<FindSoaLearnerRecord> FindSoaLearnerRecordAsync(long providerUkprn, long uln)
+        public async Task<FindSoaLearnerRecord> FindSoaLearnerRecordAsync(long providerUkprn, long uln)
         {
-            return _statementOfAchievementService.FindSoaLearnerRecordAsync(providerUkprn, uln);
+            return await _statementOfAchievementService.FindSoaLearnerRecordAsync(providerUkprn, uln);
         }
 
         [HttpGet]

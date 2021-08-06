@@ -172,7 +172,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Service
                 if (entityHeaderColumns.Count() != csvFileHeaderColumns.Count()) return false;
 
                 var hasAnyAdditionalHeaders = csvFileHeaderColumns.Except(entityHeaderColumns, StringComparer.OrdinalIgnoreCase).Any();
-                return !hasAnyAdditionalHeaders;
+                var hasAnyMissingHeader = entityHeaderColumns.Except(csvFileHeaderColumns, StringComparer.OrdinalIgnoreCase).Any();
+
+                return !hasAnyAdditionalHeaders && !hasAnyMissingHeader;
             }
             catch (Exception)
             {

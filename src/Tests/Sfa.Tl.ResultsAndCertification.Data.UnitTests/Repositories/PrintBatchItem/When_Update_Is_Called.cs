@@ -37,6 +37,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PrintBatchI
             _result.Id.Should().Be(1);
             _result.BatchId.Should().Be(_data.Batch.Id);
             _result.TlProviderAddressId.Should().Be(_data.TlProviderAddressId);
+            _result.Status.Should().Be(_data.Status);
+            _result.Reason.Should().Be(_data.Reason);
+            _result.TrackingId.Should().Be(_data.TrackingId);
+            _result.SignedForBy.Should().Be(_data.SignedForBy);
             _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);

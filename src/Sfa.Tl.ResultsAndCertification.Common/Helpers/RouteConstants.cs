@@ -131,6 +131,7 @@
         public const string SubmitDeleteRegistration = "SubmitDeleteRegistration";
         public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
         public const string RegistrationCannotBeDeleted = "RegistrationCannotBeDeleted";
+        public const string RegistrationCannotBeWithdrawn = "RegistrationCannotBeWithdrawn";
 
         // Assessment Entries
         public const string AssessmentDashboard = "AssessmentDashboard";
@@ -174,6 +175,7 @@
         public const string SubmitSearchResults = "SubmitSearchResults";
         public const string SearchResultsNotFound = "SearchResultsNotFound";
         public const string ResultWithdrawnDetails = "ResultWithdrawnDetails";
+        public const string ResultNoAssessmentEntry = "ResultNoAssessmentEntry";
         public const string ResultDetails = "ResultDetails";
 
         // Error
@@ -277,6 +279,37 @@
         public const string RequestSoaChangeComponentAchievements = "RequestSoaChangeComponentAchievements";
         public const string RequestSoaChangePostalAddress = "RequestSoaChangePostalAddress";
         public const string RequestSoaAlreadySubmitted = "RequestSoaAlreadySubmitted";
+
+        #endregion
+
+        #region Post Results Service
+
+        public const string StartReviewsAndAppeals = "StartReviewsAndAppeals";
+        public const string PrsSearchLearner = "PrsSearchLearner";
+        public const string SubmitPrsSearchLearner = "SubmitPrsSearchLearner";
+        public const string PrsUlnNotFound = "PrsUlnNotFound";
+        public const string PrsUlnWithdrawn = "PrsUlnWithdrawn";
+        public const string PrsLearnerDetails = "PrsLearnerDetails";
+        public const string PrsAppealCoreGrade = "PrsAppealCoreGrade";
+        public const string SubmitPrsAppealCoreGrade = "SubmitPrsAppealCoreGrade";
+        public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";
+        public const string SubmitPrsAppealOutcomePathwayGrade = "SubmitPrsAppealOutcomePathwayGrade";
+        public const string PrsPathwayGradeCheckAndSubmit = "PrsPathwayGradeCheckAndSubmit";
+        public const string SubmitPrsPathwayGradeCheckAndSubmit = "SubmitPrsPathwayGradeCheckAndSubmit";
+        public const string PrsAppealUpdatePathwayGrade = "PrsAppealUpdatePathwayGrade";
+        public const string SubmitPrsAppealUpdatePathwayGrade = "SubmitPrsAppealUpdatePathwayGrade";
+        public const string PrsNoAssessmentEntry = "PrsNoAssessmentEntry";
+        public const string PrsNoGradeRegistered = "PrsNoGradeRegistered";
+        public const string PrsSelectAssessmentSeries = "PrsSelectAssessmentSeries";
+        public const string SubmitPrsSelectAssessmentSeries = "SubmitPrsSelectAssessmentSeries";
+        public const string PrsCancelAppealUpdate = "PrsCancelAppealUpdate";
+        public const string SubmitPrsCancelAppealUpdate = "SubmitPrsCancelAppealUpdate";
+        public const string PrsGradeChangeRequest = "PrsGradeChangeRequest";
+        public const string SubmitPrsGradeChangeRequest = "SubmitPrsGradeChangeRequest";
+        public const string PrsCancelGradeChangeRequest = "PrsCancelGradeChangeRequest";
+        public const string SubmitPrsCancelGradeChangeRequest = "SubmitPrsCancelGradeChangeRequest";
+        public const string PrsGradeChangeRequestConfirmation = "PrsGradeChangeRequestConfirmation";
+        public const string SubmitPrsGradeChangeRequestConfirmation = "SubmitPrsGradeChangeRequestConfirmation";
 
         #endregion
     }

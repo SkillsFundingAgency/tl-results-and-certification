@@ -97,6 +97,18 @@
         "learnerGenderTrigger": {
             "type": "string",
             "defaultValue": "0 21 15 1-12 *"
+        },
+        "certificatePrintingRequestTrigger": {
+            "type": "string",
+            "defaultValue": "0 0 19 * * *"
+        },
+        "certificatePrintingBatchSummaryTrigger": {
+            "type": "string",
+            "defaultValue": "0 30 19 * * *"
+        },
+        "certificatePrintingTrackBatchTrigger": {
+            "type": "string",
+            "defaultValue": "0 0 20 * * *"
         }
     },
     "variables": {
@@ -565,6 +577,18 @@
                             {
                                 "name": "LearnerGenderTrigger",
                                 "value": "[parameters('learnerGenderTrigger')]"
+                            },
+							{
+                                "name": "CertificatePrintingRequestTrigger",
+                                "value": "[parameters('certificatePrintingRequestTrigger')]"
+                            },
+							{
+                                "name": "CertificatePrintingBatchSummaryTrigger",
+                                "value": "[parameters('certificatePrintingBatchSummaryTrigger')]"
+                            },
+							{
+                                "name": "CertificatePrintingTrackBatchTrigger",
+                                "value": "[parameters('certificatePrintingTrackBatchTrigger')]"
                             },
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",

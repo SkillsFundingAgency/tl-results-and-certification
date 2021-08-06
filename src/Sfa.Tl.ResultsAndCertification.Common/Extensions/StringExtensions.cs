@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
@@ -15,6 +13,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         public static string ToSoaFormat(this DateTime value)
         {
             return value.ToString("dd MMMM yyyy");
+        }
+
+        public static string ToPrintBatchDateFormat(this DateTime value)
+        {
+            return value.ToString("yyyy-MM-dd");
         }
 
         public static bool IsDateTimeWithFormat(this string value)
