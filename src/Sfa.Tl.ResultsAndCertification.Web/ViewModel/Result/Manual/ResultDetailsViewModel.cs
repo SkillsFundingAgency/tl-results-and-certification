@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
         public PrsStatus? PathwayPrsStatus { get; set; }
         public DateTime? AppealEndDate { get; set; }
 
-        public bool IsValid { get { return PathwayAssessmentId != 0; } }
+        public bool IsPathwayAssessmentEntryRegistered { get { return PathwayAssessmentId != 0; } }
         public bool IsResultAddOrChangeAllowed => PathwayResultId == 0 || 
             ((!PathwayPrsStatus.HasValue || PathwayPrsStatus.Value == PrsStatus.NotSpecified) && CommonHelper.IsAppealsAllowed(AppealEndDate));
         public bool IsCoreAssessmentEntryAdded { get { return !string.IsNullOrEmpty(PathwayAssessmentSeries); } }

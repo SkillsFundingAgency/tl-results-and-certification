@@ -14,6 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 
         public override void Given()
         {
+            PopulateUln = true;
             CacheService.GetAndRemoveAsync<string>(Arg.Any<string>()).Returns(_searchUln);
         }
 

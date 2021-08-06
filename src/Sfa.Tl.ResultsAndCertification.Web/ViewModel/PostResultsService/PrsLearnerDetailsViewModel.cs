@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using PrsLearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsLearnerDetails;
-using PrsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
@@ -39,24 +38,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string PathwayGradeLastUpdatedBy { get; set; }
         public NotificationBannerModel SuccessBanner { get; set; }
 
+        public bool IsFinalOutcomeRegistered { get { return PathwayPrsStatus.HasValue && PathwayPrsStatus == PrsStatus.Final; } }
         public SummaryItemModel SummaryAssessmentSeries => new SummaryItemModel
         {
             Id = "assessmentperiod",
             Title = PrsLearnerDetailsContent.Title_Assessment_Series,
             Value = PathwayAssessmentSeries,
-            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus
+            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus,
+            RenderActionColumn = IsResultUpdateAllowed
         };
+
         public SummaryItemModel SummaryPathwayGrade => new SummaryItemModel
         {
             Id = "pathwaygrade",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade,
             Value = PathwayGrade,
             Value2 = CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus, AppealEndDate),
+            Value2CustomCssClass = !IsResultUpdateAllowed ? Constants.TagFloatRightClassName : null,
             RenderEmptyRowForValue2 = IsValidPathwayPrsStatus,
-            ActionText = PrsLearnerDetailsContent.Action_Link_Update,
-            RouteName = GetUpdatePathwayGradeRouteName,
-            RouteAttributes = GetUpdatePathwayGradeRouteAttributes,
-            HiddenActionText = PrsLearnerDetailsContent.Hidden_Action_Text_Grade
+            RenderActionColumn = IsResultUpdateAllowed,
+            
+            // Update link
+            ActionText = IsResultUpdateAllowed ? PrsLearnerDetailsContent.Action_Link_Update : null,
+            RouteName = IsResultUpdateAllowed ? GetUpdatePathwayGradeRouteName : null,
+            RouteAttributes = IsResultUpdateAllowed ? GetUpdatePathwayGradeRouteAttributes : null,
+            HiddenActionText = IsResultUpdateAllowed ? PrsLearnerDetailsContent.Hidden_Action_Text_Grade : null
         };
 
         public SummaryItemModel SummaryPathwayGradeLastUpdatedOn => new SummaryItemModel
@@ -117,5 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 };
             }
         }
+
+        private bool IsResultUpdateAllowed { get { return PathwayPrsStatus != PrsStatus.Final && CommonHelper.IsAppealsAllowed(AppealEndDate); } }
     }
 }

@@ -74,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
             model.PathwayAssessmentId.Should().Be(_mockResult.PathwayAssessmentId);
             model.PathwayResult.Should().Be(_mockResult.PathwayResult);
             model.PathwayStatus.Should().Be(_mockResult.PathwayStatus);
-            model.IsValid.Should().Be(_mockResult.IsValid);
+            model.IsPathwayAssessmentEntryRegistered.Should().Be(_mockResult.IsPathwayAssessmentEntryRegistered);
             model.IsResultAddOrChangeAllowed.Should().Be(_mockResult.IsResultAddOrChangeAllowed);
 
 

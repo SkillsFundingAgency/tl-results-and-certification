@@ -16,6 +16,8 @@
             <input type="hidden" asp-for="ProfileId" />
             <input type="hidden" asp-for="PathwayAssessmentId" />
             <input type="hidden" asp-for="PathwayResultId" />
+            <input type="hidden" asp-for="PathwayName" />
+            <input type="hidden" asp-for="PathwayCode" />
 
             <partial name="_ValidationSummary" />
 
@@ -50,6 +52,12 @@
                             <input class="govuk-radios__input" id="appealoutcome-updategrade" asp-for="AppealOutcome" type="radio" value="@AppealOutcomeType.UpdateGrade">
                             <label class="govuk-label govuk-radios__label" for="appealoutcome-updategrade">
                                 @AppealOutcomePathwayGrade.Radio_Button_UpdateGrade
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="appealoutcome-withdraw" asp-for="AppealOutcome" type="radio" value="@AppealOutcomeType.WithdrawAppeal">
+                            <label class="govuk-label govuk-radios__label" for="appealoutcome-withdraw">
+                                @AppealOutcomePathwayGrade.Radio_Button_WithdrawAppeal
                             </label>
                         </div>
                     </div>

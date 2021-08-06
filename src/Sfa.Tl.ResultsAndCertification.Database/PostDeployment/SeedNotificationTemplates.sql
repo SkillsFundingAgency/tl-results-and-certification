@@ -5,7 +5,11 @@ Insert initial data for Notification Templates
 MERGE INTO [dbo].[NotificationTemplate] AS Target 
 USING (VALUES 
 (N'60581938-fcdd-4bcb-910a-04a136803092', N'TlevelDetailsQueried'),
-(N'a1b21a18-8555-45b8-9739-f18a902282dc', N'EnglishAndMathsLrsDataQueried')
+(N'a1b21a18-8555-45b8-9739-f18a902282dc', N'EnglishAndMathsLrsDataQueried'),
+(N'9a033adb-cc33-461c-8a77-e3fc15582dfb', N'FunctionJobFailedNotification'),
+(N'bc76d0c9-c92f-4cdb-8b7e-00fab2e7e046', N'PrintingJobFailedNotification'),
+(N'6b28c163-1730-4627-9120-2ae4510c4066', N'GradeChangeRequestUserNotification'),
+(N'83ea8be5-4de7-4dc2-b35d-5c9a6b7280cb', N'GradeChangeRequestTechnicalTeamNotification')
 )
   AS Source ([TemplateId], [TemplateName]) 
 ON Target.[TemplateName] = Source.[TemplateName] 

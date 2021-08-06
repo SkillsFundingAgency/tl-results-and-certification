@@ -85,6 +85,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public string FeedbackEmailAddress { get; set; }
 
         /// <summary>
+        /// Gets or sets the technical internal notification email address.
+        /// </summary>
+        /// <value>
+        /// The technical internal notification email address.
+        /// </value>
+        public string TechnicalInternalNotificationEmailAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets the soa available date.
         /// </summary>
         /// <value>
@@ -133,6 +141,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public OrdnanceSurveyApiSettings OrdnanceSurveyApiSettings { get; set; }
 
         /// <summary>
+        /// Gets or sets the printing API settings.
+        /// </summary>
+        /// <value>
+        /// The printing API settings.
+        /// </value>
+        public PrintingApiSettings PrintingApiSettings { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this instance is dev.
         /// </summary>
         /// <value>
@@ -156,6 +172,12 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// </value>
         public LearningRecordServiceSettings LearningRecordServiceSettings { get; set; }
 
+        // <summary>
+        /// Gets or sets the key vault uri.
+        /// </summary>
+        /// <value>
+        /// The key vault uri.
+        /// </value>
         public string KeyVaultUri { get; set; }
     }
 }

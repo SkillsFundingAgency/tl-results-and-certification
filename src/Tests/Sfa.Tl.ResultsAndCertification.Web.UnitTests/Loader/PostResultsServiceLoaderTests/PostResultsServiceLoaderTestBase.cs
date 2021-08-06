@@ -39,10 +39,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
             var mapperConfig = new MapperConfiguration(c =>
             {
-                c.AddMaps(typeof(ResultMapper).Assembly);
+                c.AddMaps(typeof(PostResultsServiceMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<AppealCoreGradeViewModel, AppealGradeRequest>(HttpContextAccessor) : null);
+                                new UserNameResolver<AppealCoreGradeViewModel, AppealGradeRequest>(HttpContextAccessor) :
+                                 type.Name.Contains("UserEmailResolver") ? (object)new UserEmailResolver<PrsGradeChangeRequestViewModel, Models.Contracts.PostResultsService.PrsGradeChangeRequest>(HttpContextAccessor) :
+                                null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);
 

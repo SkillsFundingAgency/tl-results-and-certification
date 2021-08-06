@@ -26,7 +26,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.SearchResults);
-            model.BackLink.RouteAttributes.Should().BeEmpty();
+            model.BackLink.RouteAttributes.Count.Should().Be(1);
+            model.BackLink.RouteAttributes.TryGetValue(Constants.PopulateUln, out string routeValue);
+            routeValue.Should().Be(true.ToString());
         }
     }
 }
