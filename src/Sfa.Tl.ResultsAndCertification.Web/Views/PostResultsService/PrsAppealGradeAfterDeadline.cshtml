@@ -1,0 +1,24 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+
+@{
+    ViewData["Title"] = PrsAppealGradeAfterDeadline.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">@PrsAppealGradeAfterDeadline.Heading_Appeal_Grade_After_The_Deadline</h1>
+
+        <p class="govuk-body">@PrsAppealGradeAfterDeadline.Para_We_Mark_All_Results_As_Final</p>
+
+        <p class="govuk-body">@PrsAppealGradeAfterDeadline.Para_If_A_Grade_Is_Being_Apealed_After_Deadline</p>
+
+        <p class="govuk-body">@PrsAppealGradeAfterDeadline.Para_This_Change_Will_Take</p>
+
+        <a id="continueButton" class="govuk-button govuk-!-margin-top-6" role="button" data-module="govuk-button" asp-route="">@PrsAppealGradeAfterDeadline.Button_Continue</a>
+    </div>
+</div>

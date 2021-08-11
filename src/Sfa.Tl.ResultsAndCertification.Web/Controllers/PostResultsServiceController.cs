@@ -483,5 +483,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _ => RedirectToRoute(RouteConstants.Home)
             };
         }
+
+        [HttpGet]
+        [Route("appeal-grade-after-deadline/{profileId}/{assessmentId}/{resultId}", Name = RouteConstants.PrsAppealGradeAfterDeadline)]
+        public async Task<IActionResult> PrsAppealGradeAfterDeadlineAsync(int profileId, int assessmentId, int resultId)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineViewModel>(User.GetUkPrn(), profileId, assessmentId);
+
+            if (viewModel == null || viewModel.ResultId != resultId || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
     }
 }

@@ -24,7 +24,7 @@
         else if (Model.IsFinalResult)
         {
             <div class="govuk-inset-text">@PrsLearnerDetails.Inset_Result_Is_Final 
-                <a id="raiseRequestLink" class="govuk-link" asp-route="">@PrsLearnerDetails.Link_Raise_Request</a>@PrsLearnerDetails.Fullstop
+                <a id="raiseRequestLink" class="govuk-link" asp-route="PrsAppealGradeAfterDeadline" asp-route-profileId="@Model.ProfileId" asp-route-assessmentId="@Model.PathwayAssessmentId" asp-route-resultId="@Model.PathwayResultId">@PrsLearnerDetails.Link_Raise_Request</a>@PrsLearnerDetails.Fullstop
             </div>
         }
 
