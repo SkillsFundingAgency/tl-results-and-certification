@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string PathwayGradeLastUpdatedBy { get; set; }
         public NotificationBannerModel SuccessBanner { get; set; }
 
-        public bool IsFinalResult { get { return !PathwayPrsStatus.HasValue && !CommonHelper.IsAppealsAllowed(AppealEndDate); } }
+        public bool IsAppealAllowedAfterDeadline { get { return !PathwayPrsStatus.HasValue && !CommonHelper.IsAppealsAllowed(AppealEndDate); } }
         public bool IsFinalOutcomeRegistered { get { return PathwayPrsStatus.HasValue && PathwayPrsStatus == PrsStatus.Final; } }
         public SummaryItemModel SummaryAssessmentSeries => new SummaryItemModel
         {

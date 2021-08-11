@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.PathwayGradeLastUpdatedOn.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedOn);
             model.PathwayGradeLastUpdatedBy.Should().Be(_mockLearnerDetails.PathwayGradeLastUpdatedBy);
             model.IsFinalOutcomeRegistered.Should().BeFalse();
-            model.IsFinalResult.Should().BeTrue();
+            model.IsAppealAllowedAfterDeadline.Should().BeTrue();
             model.SuccessBanner.Should().BeNull();
 
             // Uln
