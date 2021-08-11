@@ -133,6 +133,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This result is final as the date for appeal has passed. To tell us that the grade is being appealed please.
+        /// </summary>
+        public static string Inset_Result_Is_Final {
+            get {
+                return ResourceManager.GetString("Inset_Result_Is_Final", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This result is final as the outcome of an appeal has been recorded. If you need to change the grade please.
         /// </summary>
         public static string Inset_Result_Is_Final_Outcome_Registered {
@@ -147,6 +156,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         public static string Link_Contactus {
             get {
                 return ResourceManager.GetString("Link_Contactus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to raise a request.
+        /// </summary>
+        public static string Link_Raise_Request {
+            get {
+                return ResourceManager.GetString("Link_Raise_Request", resourceCulture);
             }
         }
         
