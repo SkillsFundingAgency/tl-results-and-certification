@@ -61,43 +61,34 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to search.
+        ///   Looks up a localized string similar to Back to home.
         /// </summary>
-        public static string Back_To_Search_Link_Text {
+        public static string Button_Back_To_Home {
             get {
-                return ResourceManager.GetString("Back_To_Search_Link_Text", resourceCulture);
+                return ResourceManager.GetString("Button_Back_To_Home", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you think that the ULN should exist it may be that it:.
+        ///   Looks up a localized string similar to Search again.
         /// </summary>
-        public static string If_you_Think_That_The_Uln_Should_Exists_Text {
+        public static string Button_Search_Again {
             get {
-                return ResourceManager.GetString("If_you_Think_That_The_Uln_Should_Exists_Text", resourceCulture);
+                return ResourceManager.GetString("Button_Search_Again", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to is not registered with us.
+        ///   Looks up a localized string similar to Unique learner number (ULN) {0} not found.
         /// </summary>
-        public static string Is_Not_Registered_With_Us_Text {
+        public static string Heading_Uln_Not_Found {
             get {
-                return ResourceManager.GetString("Is_Not_Registered_With_Us_Text", resourceCulture);
+                return ResourceManager.GetString("Heading_Uln_Not_Found", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to is registered with another awarding organisation.
-        /// </summary>
-        public static string Is_Registered_With_Another_Ao_Text {
-            get {
-                return ResourceManager.GetString("Is_Registered_With_Another_Ao_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Results - ULN cannot be found page.
+        ///   Looks up a localized string similar to ULN cannot be found – Results.
         /// </summary>
         public static string Page_Title {
             get {
@@ -106,11 +97,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ULN ({0}) cannot be found.
+        ///   Looks up a localized string similar to Check that you have entered the correct ULN. If you have, you will need to contact your organisation’s registrations editor for help..
         /// </summary>
-        public static string Uln_Cannot_Be_Found_Text {
+        public static string Para_Check_You_Have_Entered_The_Correct_Uln {
             get {
-                return ResourceManager.GetString("Uln_Cannot_Be_Found_Text", resourceCulture);
+                return ResourceManager.GetString("Para_Check_You_Have_Entered_The_Correct_Uln", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We cannot find a learner for the ULN you provided. This might be because the ULN is wrong or that they are not registered with us..
+        /// </summary>
+        public static string Para_We_Cannot_Find_Learner_Because_Uln_Wrong {
+            get {
+                return ResourceManager.GetString("Para_We_Cannot_Find_Learner_Because_Uln_Wrong", resourceCulture);
             }
         }
     }
