@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             Loader.Received(1).GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineViewModel>(AoUkprn, ProfileId, AssessmentId);
         }
 
-        [Fact]
+        [Fact(Skip = "TBD")]
         public void Then_Redirected_To_PageNotFound()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;

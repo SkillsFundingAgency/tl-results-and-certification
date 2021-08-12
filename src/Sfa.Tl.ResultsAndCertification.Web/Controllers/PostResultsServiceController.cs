@@ -485,13 +485,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("appeal-grade-after-deadline/{profileId}/{assessmentId}/{resultId}", Name = RouteConstants.PrsAppealGradeAfterDeadline)]
-        public async Task<IActionResult> PrsAppealGradeAfterDeadlineAsync(int profileId, int assessmentId, int resultId)
+        [Route("appeal-grade-after-deadline/{profileId}/{assessmentId}/{resultId:int?}", Name = RouteConstants.PrsAppealGradeAfterDeadline)]
+        public async Task<IActionResult> PrsAppealGradeAfterDeadlineAsync(int profileId, int assessmentId, int? resultId)
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineViewModel>(User.GetUkPrn(), profileId, assessmentId);
 
-            if (viewModel == null || viewModel.ResultId != resultId || !viewModel.IsValid)
+            // TODO: query: resultId not required, so made nullable for now. 
+            //if (viewModel == null || viewModel.ResultId != resultId || !viewModel.IsValid)
+            if (viewModel == null || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("confirm-appeal-after-deadline/{profileId}/{assessmentId}", Name = RouteConstants.PrsAppealAfterDeadlineConfirm)]
+        public async Task<IActionResult> PrsAppealGradeAfterDeadlineConfirmAsync(int profileId, int assessmentId)
+        {
+            var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineConfirmViewModel>(User.GetUkPrn(), profileId, assessmentId);
+            if (viewModel == null || !viewModel.IsValid)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("confirm-appeal-after-deadline/{profileId}/{assessmentId}", Name = RouteConstants.SubmitPrsAppealAfterDeadlineConfirm)]
+        public async Task<IActionResult> PrsAppealGradeAfterDeadlineConfirmAsync(AppealGradeAfterDeadlineConfirmViewModel viewModel)
+        {
+            var prsLearner = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineConfirmViewModel>(User.GetUkPrn(), viewModel.ProfileId, viewModel.PathwayAssessmentId);
+            if (!ModelState.IsValid)
+                return View(prsLearner);
 
             return View(viewModel);
         }

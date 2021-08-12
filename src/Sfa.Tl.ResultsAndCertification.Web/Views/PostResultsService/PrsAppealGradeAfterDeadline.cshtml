@@ -1,4 +1,5 @@
-﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.AppealGradeAfterDeadlineViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
 
 @{
     ViewData["Title"] = PrsAppealGradeAfterDeadline.Page_Title;
@@ -19,6 +20,6 @@
 
         <p class="govuk-body">@PrsAppealGradeAfterDeadline.Para_This_Change_Will_Take</p>
 
-        <a id="continueButton" class="govuk-button govuk-!-margin-top-6" role="button" data-module="govuk-button" asp-route="">@PrsAppealGradeAfterDeadline.Button_Continue</a>
+        <a id="continueButton" class="govuk-button govuk-!-margin-top-6" role="button" data-module="govuk-button" asp-route="PrsAppealAfterDeadlineConfirm" asp-route-profileId="@Model.ProfileId" asp-route-assessmentId="@Model.AssessmentId">@PrsAppealGradeAfterDeadline.Button_Continue</a>
     </div>
 </div>

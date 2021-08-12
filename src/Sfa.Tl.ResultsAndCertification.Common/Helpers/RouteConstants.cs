@@ -311,6 +311,8 @@
         public const string PrsGradeChangeRequestConfirmation = "PrsGradeChangeRequestConfirmation";
         public const string SubmitPrsGradeChangeRequestConfirmation = "SubmitPrsGradeChangeRequestConfirmation";
         public const string PrsAppealGradeAfterDeadline = "PrsAppealGradeAfterDeadline";
+        public const string PrsAppealAfterDeadlineConfirm = "PrsAppealAfterDeadlineConfirm";
+        public const string SubmitPrsAppealAfterDeadlineConfirm = "SubmitPrsAppealAfterDeadlineConfirm";
 
         #endregion
     }
