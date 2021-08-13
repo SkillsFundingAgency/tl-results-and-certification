@@ -313,6 +313,7 @@
         public const string PrsAppealGradeAfterDeadline = "PrsAppealGradeAfterDeadline";
         public const string PrsAppealAfterDeadlineConfirm = "PrsAppealAfterDeadlineConfirm";
         public const string SubmitPrsAppealAfterDeadlineConfirm = "SubmitPrsAppealAfterDeadlineConfirm";
+        public const string PrsAppealGradeAfterDeadlineRequestConfirmation = "PrsAppealGradeAfterDeadlineRequestConfirmation";        
 
         #endregion
     }

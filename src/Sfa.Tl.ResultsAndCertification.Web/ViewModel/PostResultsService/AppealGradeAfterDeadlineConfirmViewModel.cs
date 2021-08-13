@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public int ProfileId { get; set; }
         public int PathwayAssessmentId { get; set; }
+        public int PathwayResultId { get; set; }
         public string PathwayDisplayName { get; set; }
         public string PathwayAssessmentSeries { get; set; }
         public string PathwayGrade { get; set; }

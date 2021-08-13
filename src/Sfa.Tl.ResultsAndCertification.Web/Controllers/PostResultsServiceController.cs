@@ -515,8 +515,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 var prsLearner = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineConfirmViewModel>(User.GetUkPrn(), viewModel.ProfileId, viewModel.PathwayAssessmentId);
                 return View(prsLearner);
             }
-                
-            return View(viewModel);
+
+            var isSuccess = await _postResultsServiceLoader.AppealGradeAfterDeadlineRequestAsync(viewModel);
+
+            if (!isSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            var confirmationViewModel = new PrsAppealGradeAfterDeadlineRequestConfirmationViewModel { ProfileId = viewModel.ProfileId, AssessmentId = viewModel.PathwayAssessmentId };
+            await _cacheService.SetAsync(CacheKey, confirmationViewModel, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.PrsAppealGradeAfterDeadlineRequestConfirmation);
         }
+
+        [HttpGet]
+        [Route("appeal-after-deadline-request-sent", Name = RouteConstants.PrsAppealGradeAfterDeadlineRequestConfirmation)]
+        public async Task<IActionResult> PrsAppealGradeAfterDeadlineRequestConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<PrsAppealGradeAfterDeadlineRequestConfirmationViewModel>(CacheKey);
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read PrsAppealGradeAfterDeadlineRequestConfirmationViewModel from redis cache in request Prs appeal grade after deadline request confirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }        
     }
 }
