@@ -37,6 +37,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 }))
             });
 
+            CreateMapper();
+
+            InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
+            Loader = new PostResultsServiceLoader(InternalApiClient, Mapper);
+        }
+
+        public virtual void CreateMapper()
+        {
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddMaps(typeof(PostResultsServiceMapper).Assembly);
@@ -47,9 +55,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                 null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);
-
-            InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-            Loader = new PostResultsServiceLoader(InternalApiClient, Mapper);
         }
     }
 }
