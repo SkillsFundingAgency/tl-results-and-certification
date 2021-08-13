@@ -51,7 +51,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.Should().NotBeNull();
             ActualResult.ProfileId.Should().Be(_expectedApiResult.ProfileId);
             ActualResult.AssessmentId.Should().Be(_expectedApiResult.PathwayAssessmentId);
-            ActualResult.ResultId.Should().Be(_expectedApiResult.PathwayResultId);
             ActualResult.AppealEndDate.Should().Be(_expectedApiResult.AppealEndDate);
             ActualResult.PathwayPrsStatus.Should().Be(_expectedApiResult.PathwayPrsStatus);
             ActualResult.Status.Should().Be(_expectedApiResult.Status);

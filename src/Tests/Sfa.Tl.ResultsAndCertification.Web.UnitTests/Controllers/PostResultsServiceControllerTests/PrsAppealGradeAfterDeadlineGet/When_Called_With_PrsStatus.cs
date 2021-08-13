@@ -17,13 +17,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
-            ResultId = 9;
 
             _appealGradeAfterDeadlineViewModel = new AppealGradeAfterDeadlineViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
-                ResultId = ResultId,
                 AppealEndDate = DateTime.UtcNow.AddDays(-3),
                 PathwayPrsStatus = PrsStatus.Final,
                 Status = RegistrationPathwayStatus.Active

@@ -7,38 +7,36 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealGradeAfterDeadlineGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealGradeAfterDeadlineConfirmGet
 {
-    public class When_Called_With_Invalid_ResultId : TestSetup
+    public class When_Called_With_Registration_Status_Withdrawn : TestSetup
     {
-        private AppealGradeAfterDeadlineViewModel _appealGradeAfterDeadlineViewModel;
+        private AppealGradeAfterDeadlineConfirmViewModel _appealGradeAfterDeadlineViewModel;
 
         public override void Given()
         {
             ProfileId = 1;
             AssessmentId = 7;
-            ResultId = 9;
 
-            _appealGradeAfterDeadlineViewModel = new AppealGradeAfterDeadlineViewModel
+            _appealGradeAfterDeadlineViewModel = new AppealGradeAfterDeadlineConfirmViewModel
             {
                 ProfileId = ProfileId,
-                AssessmentId = AssessmentId,
-                ResultId = 10,
+                PathwayAssessmentId = AssessmentId,
                 AppealEndDate = DateTime.UtcNow.AddDays(-3),
                 PathwayPrsStatus = null,
-                Status = RegistrationPathwayStatus.Active
+                Status = RegistrationPathwayStatus.Withdrawn
             };
 
-            Loader.GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_appealGradeAfterDeadlineViewModel);
+            Loader.GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineConfirmViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_appealGradeAfterDeadlineViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineViewModel>(AoUkprn, ProfileId, AssessmentId);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineConfirmViewModel>(AoUkprn, ProfileId, AssessmentId);
         }
 
-        [Fact(Skip = "TBD")]
+        [Fact]
         public void Then_Redirected_To_PageNotFound()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;

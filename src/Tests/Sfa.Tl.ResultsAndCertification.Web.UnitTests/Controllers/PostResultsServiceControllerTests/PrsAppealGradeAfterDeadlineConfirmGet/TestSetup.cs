@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealGradeAfterDeadlineGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealGradeAfterDeadlineConfirmGet
 {
     public abstract class TestSetup : PostResultsServiceControllerTestBase
     {
@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
         public async override Task When()
         {
-            Result = await Controller.PrsAppealGradeAfterDeadlineAsync(ProfileId, AssessmentId);
+            Result = await Controller.PrsAppealGradeAfterDeadlineConfirmAsync(ProfileId, AssessmentId);
         }
     }
 }

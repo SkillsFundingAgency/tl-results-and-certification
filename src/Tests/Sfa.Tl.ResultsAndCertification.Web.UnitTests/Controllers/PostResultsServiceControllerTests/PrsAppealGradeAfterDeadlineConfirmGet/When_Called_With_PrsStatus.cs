@@ -7,33 +7,33 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealGradeAfterDeadlineGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealGradeAfterDeadlineConfirmGet
 {
-    public class When_Called_With_Valid_AppealsEndDate : TestSetup
+    public class When_Called_With_PrsStatus : TestSetup
     {
-        private AppealGradeAfterDeadlineViewModel _appealGradeAfterDeadlineViewModel;
+        private AppealGradeAfterDeadlineConfirmViewModel _appealGradeAfterDeadlineViewModel;
 
         public override void Given()
         {
             ProfileId = 1;
             AssessmentId = 7;
 
-            _appealGradeAfterDeadlineViewModel = new AppealGradeAfterDeadlineViewModel
+            _appealGradeAfterDeadlineViewModel = new AppealGradeAfterDeadlineConfirmViewModel
             {
                 ProfileId = ProfileId,
-                AssessmentId = AssessmentId,
-                AppealEndDate = DateTime.UtcNow.AddDays(3),
-                PathwayPrsStatus = null,
+                PathwayAssessmentId = AssessmentId,
+                AppealEndDate = DateTime.UtcNow.AddDays(-3),
+                PathwayPrsStatus = PrsStatus.Final,
                 Status = RegistrationPathwayStatus.Active
             };
 
-            Loader.GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_appealGradeAfterDeadlineViewModel);
+            Loader.GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineConfirmViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_appealGradeAfterDeadlineViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            Loader.Received(1).GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineViewModel>(AoUkprn, ProfileId, AssessmentId);
+            Loader.Received(1).GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineConfirmViewModel>(AoUkprn, ProfileId, AssessmentId);
         }
 
         [Fact]

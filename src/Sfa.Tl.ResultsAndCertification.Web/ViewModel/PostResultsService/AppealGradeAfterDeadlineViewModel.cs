@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
     {
         public int ProfileId { get; set; }
         public int AssessmentId { get; set; }
-        public int ResultId { get; set; }
+        //public int ResultId { get; set; }
         public DateTime AppealEndDate { get; set; }
         public PrsStatus? PathwayPrsStatus { get; set; }
         public RegistrationPathwayStatus Status { get; set; }

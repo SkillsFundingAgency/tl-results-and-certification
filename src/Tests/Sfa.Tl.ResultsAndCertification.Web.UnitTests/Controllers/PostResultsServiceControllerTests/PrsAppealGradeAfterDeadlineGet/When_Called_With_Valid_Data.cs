@@ -17,13 +17,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             ProfileId = 1;
             AssessmentId = 7;
-            ResultId = 9;
 
             _appealGradeAfterDeadlineViewModel = new AppealGradeAfterDeadlineViewModel
             {
                 ProfileId = ProfileId,
                 AssessmentId = AssessmentId,
-                ResultId = ResultId,
                 AppealEndDate = DateTime.UtcNow.AddDays(-3),
                 PathwayPrsStatus = null,
                 Status = RegistrationPathwayStatus.Active
@@ -48,7 +46,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.Should().NotBeNull();
             model.ProfileId.Should().Be(_appealGradeAfterDeadlineViewModel.ProfileId);
             model.AssessmentId.Should().Be(_appealGradeAfterDeadlineViewModel.AssessmentId);
-            model.ResultId.Should().Be(_appealGradeAfterDeadlineViewModel.ResultId);
             model.AppealEndDate.Should().Be(_appealGradeAfterDeadlineViewModel.AppealEndDate);
             model.PathwayPrsStatus.Should().Be(_appealGradeAfterDeadlineViewModel.PathwayPrsStatus);
             model.Status.Should().Be(_appealGradeAfterDeadlineViewModel.Status);
