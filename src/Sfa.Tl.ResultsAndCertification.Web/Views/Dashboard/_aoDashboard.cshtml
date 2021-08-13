@@ -1,0 +1,135 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Dashboard.DashboardViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard
+
+<!-- MAIN HEADING -->
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <div class="govuk-form-group">
+            <h1 class="govuk-heading-l">
+                @AoDashboard.Section_Heading_Text
+            </h1>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN ROW -->
+<div class="govuk-grid-row">
+    <!-- BLOCK 1 – T Levels -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="Tlevels">
+                        @AoDashboard.Tlevels_Text
+                    </a>
+                </h2>
+            </p>
+
+            <p class="govuk-body">
+                @AoDashboard.Tlevels_Description_Text
+            </p>
+        </div>
+    </div>
+
+    <!-- BLOCK 2 – Providers -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="FindProvider">
+                        @AoDashboard.Providers_Text
+                    </a>
+                </h2>
+            </p>
+
+            <p class="govuk-body">
+                @AoDashboard.Providers_Description_Text
+            </p>
+        </div>
+    </div>
+
+    <!-- BLOCK 3 – Registrations -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="RegistrationDashboard">
+                        @AoDashboard.Registrations_Text
+                    </a>
+                </h2>
+            </p>
+
+            <p class="govuk-body">
+                @AoDashboard.Registrations_Description_Text
+            </p>
+        </div>
+    </div>
+
+    <!-- BLOCK 4 – Assessment Entries -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="AssessmentDashboard">
+                        @AoDashboard.Assessment_Entries_Text
+                    </a>
+                </h2>
+            </p>
+
+            <p class="govuk-body">
+                @AoDashboard.Assessment_Entries_Description_Text
+            </p>
+        </div>
+    </div>
+
+    <!-- BLOCK 5 – Results -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="ResultsDashboard">
+                        @AoDashboard.Results_Text
+                    </a>
+                </h2>
+            </p>
+
+            <p class="govuk-body">
+                @AoDashboard.Results_Description_Text
+            </p>
+        </div>
+    </div>
+
+    <!-- BLOCK 6 – Reviews and appeals -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a id="reviewsAndAppealsLink" class="govuk-link" asp-route="StartReviewsAndAppeals">
+                        @AoDashboard.Reviews_And_Appeals_Text
+                    </a>
+                </h2>
+            </p>
+
+            <p class="govuk-body">
+                @AoDashboard.Reviews_And_Appeals_Description_Text
+            </p>
+        </div>
+    </div>
+
+    <!-- BLOCK 6 Account -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="AccountProfile">
+                        @AoDashboard.Account_Text
+                    </a>
+                </h2>
+            </p>
+
+            <p class="govuk-body">
+                @AoDashboard.Account_Description_Text
+            </p>
+        </div>
+    </div>
+</div>

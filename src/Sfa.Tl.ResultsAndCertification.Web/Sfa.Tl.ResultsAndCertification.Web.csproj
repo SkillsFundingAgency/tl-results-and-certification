@@ -5,7 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Content\Dashboard.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\javascripts\english-maths-question.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Content\Dashboard.resx" />
   </ItemGroup>
 
   <ItemGroup>
@@ -114,6 +122,21 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>UploadUnsuccessful.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Dashboard\AoDashboard.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AoDashboard.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Dashboard\CommonDashboard.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CommonDashboard.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Content\Dashboard\ProviderDashboard.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProviderDashboard.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Document\TlevelDataFormatAndRulesGuide.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -424,11 +447,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>TimeoutConfirmation.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Content\Dashboard.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Dashboard.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Error\AccessDenied.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -901,6 +919,18 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UploadUnsuccessful.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Content\Dashboard\AoDashboard.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AoDashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Dashboard\CommonDashboard.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommonDashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Dashboard\ProviderDashboard.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProviderDashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Document\TlevelDataFormatAndRulesGuide.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TlevelDataFormatAndRulesGuide.Designer.cs</LastGenOutput>
@@ -1144,10 +1174,6 @@
     <EmbeddedResource Update="Content\Timeout\TimeoutConfirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TimeoutConfirmation.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Content\Dashboard.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Error\AccessDenied.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
