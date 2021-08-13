@@ -99,6 +99,24 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
+            },
+            new NotificationTemplate
+            {
+                TemplateId = new Guid("61a21a18-8555-45b8-9739-f18a90229911"),
+                TemplateName = NotificationTemplateName.AppealGradeAfterDeadlineRequestUserNotification.ToString(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new NotificationTemplate
+            {
+                TemplateId = new Guid("77b21a18-8555-45b8-9739-f18a90227721"),
+                TemplateName = NotificationTemplateName.AppealGradeAfterDeadlineRequestTechnicalTeamNotification.ToString(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
             }
         };
     }
