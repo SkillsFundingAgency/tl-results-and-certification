@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.Uln.Should().Be(_expectedApiResult.Uln);
             ActualResult.LearnerName.Should().Be($"{_expectedApiResult.Firstname} {_expectedApiResult.Lastname}");
             ActualResult.DateofBirth.Should().Be(_expectedApiResult.DateofBirth);
-            ActualResult.PathwayDisplayName.Should().Be($"{_expectedApiResult.PathwayName}<br>({_expectedApiResult.PathwayCode})");
+            ActualResult.PathwayDisplayName.Should().Be($"{_expectedApiResult.PathwayName}<br/>({_expectedApiResult.PathwayCode})");
             ActualResult.PathwayGrade.Should().Be(_expectedApiResult.PathwayGrade);
             ActualResult.PathwayAssessmentSeries.Should().Be(_expectedApiResult.PathwayAssessmentSeries);
             ActualResult.IsThisGradeBeingAppealed.Should().BeNull();
