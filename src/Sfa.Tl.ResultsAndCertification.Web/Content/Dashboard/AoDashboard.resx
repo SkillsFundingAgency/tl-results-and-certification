@@ -117,82 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account_Description_Text" xml:space="preserve">
-    <value>Manage your profile and permissions</value>
-  </data>
-  <data name="Account_Text" xml:space="preserve">
-    <value>Account</value>
-  </data>
-  <data name="Assessment_Entries_Description_Text" xml:space="preserve">
-    <value>Add and amend assessment entries</value>
-  </data>
-  <data name="Assessment_Entries_Text" xml:space="preserve">
-    <value>Assessment entries</value>
-  </data>
-  <data name="Exams_Board_Text" xml:space="preserve">
-    <value>Exam boards, also known as awarding organisations, are responsible for registering each learner onto a T Level course and recording their technical qualification results.</value>
-  </data>
-  <data name="Manage_Learner_TLevel_Records_Description_Text" xml:space="preserve">
-    <value>Add or change your learners' English and maths achievements and industry placement completion status</value>
-  </data>
-  <data name="Manage_Learner_TLevel_Records_Text" xml:space="preserve">
-    <value>Manage learner T Level records</value>
-  </data>
-  <data name="Manage_Your_Account_Description_Text" xml:space="preserve">
-    <value>View your account profile and permissions</value>
-  </data>
-  <data name="Manage_Your_Account_Text" xml:space="preserve">
-    <value>Manage your account</value>
-  </data>
-  <data name="Page_Title" xml:space="preserve">
-    <value>Home page</value>
-  </data>
-  <data name="Providers_Description_Text" xml:space="preserve">
-    <value>Tell us which T Levels each provider is offering</value>
-  </data>
-  <data name="Providers_Manage_Postal_Address_Heading" xml:space="preserve">
-    <value>Manage your organisation’s postal address</value>
-  </data>
-  <data name="Providers_Manage_Postal_Address_Text" xml:space="preserve">
-    <value>Add or update the address you want certificates and statements of achievement sent to</value>
-  </data>
-  <data name="Providers_Request_Statement_Of_Achievement_Heading" xml:space="preserve">
-    <value>Request statement of achievement</value>
-  </data>
-  <data name="Providers_Request_Statement_Of_Achievement_Text" xml:space="preserve">
-    <value>Learners who withdraw from their T Level course must be issued with a statement of achievement</value>
-  </data>
-  <data name="Providers_Schools_And_Colleges_Text" xml:space="preserve">
-    <value>Providers, for example, schools and colleges, can use this service to record a T Level learner's English and maths achievements and industry placement completion. These records will be added to the learner's T Level registration.</value>
-  </data>
-  <data name="Providers_Text" xml:space="preserve">
-    <value>Providers</value>
-  </data>
-  <data name="Registrations_Description_Text" xml:space="preserve">
-    <value>Add and amend registrations</value>
-  </data>
-  <data name="Registrations_Text" xml:space="preserve">
-    <value>Registrations</value>
-  </data>
-  <data name="Results_Description_Text" xml:space="preserve">
-    <value>Add and amend results</value>
-  </data>
-  <data name="Results_Text" xml:space="preserve">
-    <value>Results</value>
-  </data>
-  <data name="Reviews_And_Appeals_Description_Text" xml:space="preserve">
-    <value>Let us know when a learner has requested a review or has appealed a grade</value>
-  </data>
-  <data name="Reviews_And_Appeals_Text" xml:space="preserve">
-    <value>Reviews and appeals</value>
-  </data>
-  <data name="Section_Heading_Text" xml:space="preserve">
+  <data name="Heading_Manage_Tlevel_Results" xml:space="preserve">
     <value>Manage T Level results</value>
   </data>
-  <data name="Tlevels_Description_Text" xml:space="preserve">
-    <value>Review T Level details and tell us if they are correct</value>
+  <data name="Para_Item_Tlevels_You_Deliver_And_Which_Providers_Are_Offering_Them" xml:space="preserve">
+    <value>the T Levels you deliver and which providers are offering them</value>
   </data>
-  <data name="Tlevels_Text" xml:space="preserve">
+  <data name="Para_Item_Your_Registered_Learners_When_They_Will_Be_Assessed" xml:space="preserve">
+    <value>your registered learners, when they will be assessed and the results they achieve</value>
+  </data>
+  <data name="Para_The_Information_Gives_Us_Used_To_Calculate_Overall_Grade" xml:space="preserve">
+    <value>The information you give us will be used to calculate learners' overall grades and printed on their certificates.</value>
+  </data>
+  <data name="Para_Use_This_Service_To_Tell" xml:space="preserve">
+    <value>Use this service to tell us about:</value>
+  </data>
+  <data name="Tile_Account_Heading" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Tile_Account_Item_Change_Email_Password" xml:space="preserve">
+    <value>Change your email address or password</value>
+  </data>
+  <data name="Tile_Account_Item_Manage_Other_Users" xml:space="preserve">
+    <value>Manage other users (admin only)</value>
+  </data>
+  <data name="Tile_Account_Item_View_Profile_Permissions" xml:space="preserve">
+    <value>View your profile and permissions</value>
+  </data>
+  <data name="Tile_Appeals_Heading" xml:space="preserve">
+    <value>Appeals</value>
+  </data>
+  <data name="Tile_Appeals_Item_Tell_Us_Appealed_Grade" xml:space="preserve">
+    <value>Tell us when a learner has appealed a grade</value>
+  </data>
+  <data name="Tile_Appeals_Item_Tell_Us_Result_Of_Appeal" xml:space="preserve">
+    <value>Tell us the result of an appeal</value>
+  </data>
+  <data name="Tile_Assessments_Heading" xml:space="preserve">
+    <value>Assessments</value>
+  </data>
+  <data name="Tile_Assessments_Item_Tell_Us_When_To_Assessed" xml:space="preserve">
+    <value>Tell us when your learners will be assessed</value>
+  </data>
+  <data name="Tile_Providers_Heading" xml:space="preserve">
+    <value>Providers</value>
+  </data>
+  <data name="Tile_Providers_Item_Add_Or_Remove" xml:space="preserve">
+    <value>Add or remove providers</value>
+  </data>
+  <data name="Tile_Providers_Item_Review_Providers" xml:space="preserve">
+    <value>Review existing providers</value>
+  </data>
+  <data name="Tile_Providers_Item_Select_Tlevel" xml:space="preserve">
+    <value>Select the T Levels each provider offers</value>
+  </data>
+  <data name="Tile_Registrations_Heading" xml:space="preserve">
+    <value>Registrations</value>
+  </data>
+  <data name="Tile_Registrations_Item_Change_Personal_Details" xml:space="preserve">
+    <value>Change a learner's personal details</value>
+  </data>
+  <data name="Tile_Registrations_Item_Change_Tlevels" xml:space="preserve">
+    <value>Change the T Level a learner is studying</value>
+  </data>
+  <data name="Tile_Registrations_Item_Manage_Movers_Leavers_Rejoiners" xml:space="preserve">
+    <value>Manage movers, leavers and rejoiners</value>
+  </data>
+  <data name="Tile_Registrations_Item_Register_Courses" xml:space="preserve">
+    <value>Register learners onto T Level courses</value>
+  </data>
+  <data name="Tile_Results_Heading" xml:space="preserve">
+    <value>Results</value>
+  </data>
+  <data name="Tile_Results_Item_Tell_Us_Initial_Grades" xml:space="preserve">
+    <value>Tell us the initial grades learners achieved</value>
+  </data>
+  <data name="Tile_Tlevel_Heading" xml:space="preserve">
     <value>T Levels</value>
+  </data>
+  <data name="Tile_Tlevel_Item_Confirm_Tlevels" xml:space="preserve">
+    <value>Confirm each T Level's details are correct</value>
+  </data>
+  <data name="Tile_Tlevel_Item_Request_Amendments" xml:space="preserve">
+    <value>Request amendments</value>
+  </data>
+  <data name="Tile_Tlevel_Item_Review_The_Tlevels" xml:space="preserve">
+    <value>Review the T Levels you are licensed to deliver</value>
   </data>
 </root>
