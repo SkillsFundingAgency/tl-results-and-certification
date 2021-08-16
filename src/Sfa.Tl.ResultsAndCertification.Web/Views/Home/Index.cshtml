@@ -4,19 +4,19 @@
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">@StartPage.Page_Heading</h1>
 
-        <p class="govuk-body">
-            @StartPage.Caption_This_Section_IsFor
-        </p>
+        <p class="govuk-body">@StartPage.Para_Manage_TLevel_Results_Is_Run_By</p>
+
+        <p class="govuk-body">@StartPage.Para_This_Service_IsFor</p>
 
         <h2 class="govuk-heading-m">@StartPage.Heading_AwardingOrganisation_Can_Use_Service_To</h2>
 
         <ul class="govuk-list govuk-list--bullet">
             <li>@StartPage.Service_TellUs_Tlevel_Details_Correct</li>
             <li>@StartPage.Service_TellUs_Provider_Offering</li>
-            <li>@StartPage.Service_TellUs_Add_Amend_Registrations</li>
-            <li>@StartPage.Service_TellUs_Add_Amend_Assessments</li>
-            <li>@StartPage.Service_TellUs_Add_Amend_Results</li>
-            <li>@StartPage.Service_Access_The<a class="govuk-link" asp-route="UserGuide">@StartPage.Link_Tlevel_Results_UserGuide</a></li>
+            <li>@StartPage.Service_TellUs_Add_Update_Registrations</li>
+            <li>@StartPage.Service_TellUs_Add_Update_Assessments</li>
+            <li>@StartPage.Service_TellUs_Add_Update_Results</li>
+            <li>@StartPage.Service_TellUs_About_Grade_Appeal</li>
         </ul>
 
         <h2 class="govuk-heading-m">@StartPage.Heading_Provider_Can_Use_Service_To</h2>
@@ -26,7 +26,8 @@
             <li>@StartPage.Service_TellUs_IndustryPlacement_Status</li>
         </ul>
 
-        <p class="govuk-body govuk-!-margin-top-7">@StartPage.Para_You_Will_Be_Signed_Out</p>
+        <p class="govuk-body govuk-!-margin-top-7">@StartPage.Para_For_Security_Reasons_You_Should_Always_Signout</p>
+        <p class="govuk-body">@StartPage.Para_You_Will_Be_Signed_Out</p>
 
         <a asp-route="SignIn" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-6" data-module="govuk-button">
             @StartPage.Start_Button_Text
@@ -36,33 +37,32 @@
         </a>
 
         <h2 class="govuk-heading-m govuk-!-margin-top-4">@StartPage.Before_You_Start_Text</h2>
-        <p class="govuk-body">
-            @StartPage.You_Need_DfE_SignIn_Account_To_Use_This_Service_Text
-        </p>
+        <p class="govuk-body">@StartPage.You_Need_DfE_SignIn_Account_To_Use_This_Service_Text</p>
+        <p class="govuk-body">@StartPage.Para_User_Can_Be_Given_More_Than_One_Role</p>
 
         <details class="govuk-details" data-module="govuk-details" closed>
             <summary class="govuk-details__summary">
                 <span class="govuk-details__summary-text">
-                    @StartPage.Collapsable_Awarding_Organisation_Service_Roles
+                    @StartPage.Collapsable_Awarding_Organisation_Roles
                 </span>
             </summary>
             <div class="govuk-details__text">
-                <p class="govuk-body"><strong>@StartPage.Role_TLevels_Reviewer</strong>@StartPage.Role_TLevels_Reviewer_Info</p>
-                <p class="govuk-body"><strong>@StartPage.Role_Providers_Editor</strong>@StartPage.Role_Providers_Editor_Info</p>
-                <p class="govuk-body"><strong>@StartPage.Role_Registrations_Editor</strong>@StartPage.Role_Registrations_Editor_Info</p>
-                <p class="govuk-body"><strong>@StartPage.Role_Results_Editor</strong>@StartPage.Role_Results_Editor_Info</p>
-                <p class="govuk-body"><strong>@StartPage.Role_Site_Administrator</strong>@StartPage.Role_Site_Administrator_Info</p>
+                <p class="govuk-body"><strong>@StartPage.Role_TLevels_Reviewers</strong>@StartPage.Role_TLevels_Reviewers_Info</p>
+                <p class="govuk-body"><strong>@StartPage.Role_Providers_Editors</strong>@StartPage.Role_Providers_Editors_Info</p>
+                <p class="govuk-body"><strong>@StartPage.Role_Registrations_Editors</strong>@StartPage.Role_Registrations_Editors_Info</p>
+                <p class="govuk-body"><strong>@StartPage.Role_Results_Editors</strong>@StartPage.Role_Results_Editors_Info</p>
+                <p class="govuk-body"><strong>@StartPage.Role_Site_Administrators</strong>@StartPage.Role_Site_Administrators_Info</p>
             </div>
         </details>
         <details class="govuk-details" data-module="govuk-details" closed>
             <summary class="govuk-details__summary">
                 <span class="govuk-details__summary-text">
-                    @StartPage.Collapsable_Provider_service_Roles
+                    @StartPage.Collapsable_Provider_Roles
                 </span>
             </summary>
             <div class="govuk-details__text">
                 <p class="govuk-body"><strong>@StartPage.Learner_Records_Editors_Role</strong>@StartPage.Learner_Records_Editors_Role_Info</p>
-                <p class="govuk-body"><strong>@StartPage.Provider_Administrator_Role</strong>@StartPage.Provider_Administrator_Role_Info</p>
+                <p class="govuk-body"><strong>@StartPage.Provider_Administrators_Role</strong>@StartPage.Provider_Administrators_Role_Info</p>
             </div>
         </details>
     </div>

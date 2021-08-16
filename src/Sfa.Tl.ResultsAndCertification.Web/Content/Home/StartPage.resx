@@ -120,14 +120,11 @@
   <data name="Before_You_Start_Text" xml:space="preserve">
     <value>Before you start</value>
   </data>
-  <data name="Caption_This_Section_IsFor" xml:space="preserve">
-    <value>This service is for awarding organisations and providers who deliver T Level qualifications.</value>
+  <data name="Collapsable_Awarding_Organisation_Roles" xml:space="preserve">
+    <value>Awarding organisation roles</value>
   </data>
-  <data name="Collapsable_Awarding_Organisation_Service_Roles" xml:space="preserve">
-    <value>Awarding organisation service roles</value>
-  </data>
-  <data name="Collapsable_Provider_service_Roles" xml:space="preserve">
-    <value>Provider service roles</value>
+  <data name="Collapsable_Provider_Roles" xml:space="preserve">
+    <value>Provider roles</value>
   </data>
   <data name="Heading_AwardingOrganisation_Can_Use_Service_To" xml:space="preserve">
     <value>Awarding organisations (also known as exam boards) can use this service to:</value>
@@ -136,10 +133,10 @@
     <value>Providers (for example, schools and colleges) can use this service to:</value>
   </data>
   <data name="Learner_Records_Editors_Role" xml:space="preserve">
-    <value>Learner Records Editor </value>
+    <value>Learner records editors </value>
   </data>
   <data name="Learner_Records_Editors_Role_Info" xml:space="preserve">
-    <value>– can upload, amend, view, delete and add English and maths achievements and update industry placement completion status</value>
+    <value>can upload, amend, view, delete and add English and maths achievements and update industry placement completion status</value>
   </data>
   <data name="Link_Tlevel_Results_UserGuide" xml:space="preserve">
     <value>Manage T Level results user guide</value>
@@ -148,58 +145,73 @@
     <value>Manage T Level results</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Sign in to manage your T Level results</value>
+    <value>Manage T Level results</value>
+  </data>
+  <data name="Para_For_Security_Reasons_You_Should_Always_Signout" xml:space="preserve">
+    <value>For security reasons you should always sign out when you have finished using the service. Select ‘Sign out’ in the top right-hand corner of the screen to sign out and return to the 'Start' page.</value>
+  </data>
+  <data name="Para_Manage_TLevel_Results_Is_Run_By" xml:space="preserve">
+    <value>Manage T Level results is run by the Education and Skills Funding Agency (ESFA), an executive agency of the Department for Education (DfE).</value>
+  </data>
+  <data name="Para_This_Service_IsFor" xml:space="preserve">
+    <value>This service is for awarding organisations and providers who deliver T Level qualifications.</value>
+  </data>
+  <data name="Para_User_Can_Be_Given_More_Than_One_Role" xml:space="preserve">
+    <value>A user can be given more than one role. More details on the roles in this service can be read below.</value>
   </data>
   <data name="Para_You_Will_Be_Signed_Out" xml:space="preserve">
     <value>You will be signed out if you are inactive for 30 minutes.</value>
   </data>
-  <data name="Provider_Administrator_Role" xml:space="preserve">
-    <value>Provider Administrator </value>
+  <data name="Provider_Administrators_Role" xml:space="preserve">
+    <value>Provider administrators </value>
   </data>
-  <data name="Provider_Administrator_Role_Info" xml:space="preserve">
-    <value>– has all roles: Learner Records Editor</value>
+  <data name="Provider_Administrators_Role_Info" xml:space="preserve">
+    <value>have all the permissions of learner records editor and can add users and assign the above role to them</value>
   </data>
-  <data name="Role_Providers_Editor" xml:space="preserve">
-    <value>Providers Editor </value>
+  <data name="Role_Providers_Editors" xml:space="preserve">
+    <value>Providers editors </value>
   </data>
-  <data name="Role_Providers_Editor_Info" xml:space="preserve">
-    <value>– can enter and amend the T Levels each provider is offering</value>
+  <data name="Role_Providers_Editors_Info" xml:space="preserve">
+    <value>can set up new providers and enter and update the T Levels each provider is offering</value>
   </data>
-  <data name="Role_Registrations_Editor" xml:space="preserve">
-    <value>Registrations Editor </value>
+  <data name="Role_Registrations_Editors" xml:space="preserve">
+    <value>Registrations editors </value>
   </data>
-  <data name="Role_Registrations_Editor_Info" xml:space="preserve">
-    <value>– can upload, amend, view, remove and add learner registrations and assessment entries</value>
+  <data name="Role_Registrations_Editors_Info" xml:space="preserve">
+    <value>can upload, view, update, remove and add learner registrations and assessment entries</value>
   </data>
-  <data name="Role_Results_Editor" xml:space="preserve">
-    <value>Results Editor </value>
+  <data name="Role_Results_Editors" xml:space="preserve">
+    <value>Results editors </value>
   </data>
-  <data name="Role_Results_Editor_Info" xml:space="preserve">
-    <value>– can upload, amend, view, remove and add learners’ core component results</value>
+  <data name="Role_Results_Editors_Info" xml:space="preserve">
+    <value>can upload, view, update, remove and add learners’ results</value>
   </data>
-  <data name="Role_Site_Administrator" xml:space="preserve">
-    <value>Site Administrator </value>
+  <data name="Role_Site_Administrators" xml:space="preserve">
+    <value>Site administrators </value>
   </data>
-  <data name="Role_Site_Administrator_Info" xml:space="preserve">
-    <value>– has all roles: T Levels Reviewer, Providers Editor, Registrations Editor, Results Editor</value>
+  <data name="Role_Site_Administrators_Info" xml:space="preserve">
+    <value>have all the permissions of the above roles and can add users and assign the above roles to them</value>
   </data>
-  <data name="Role_TLevels_Reviewer" xml:space="preserve">
-    <value>T Levels Reviewer </value>
+  <data name="Role_TLevels_Reviewers" xml:space="preserve">
+    <value>T Levels reviewers </value>
   </data>
-  <data name="Role_TLevels_Reviewer_Info" xml:space="preserve">
-    <value>– reviews T Level Technical Qualification titles and confirms that details are correct or not</value>
+  <data name="Role_TLevels_Reviewers_Info" xml:space="preserve">
+    <value>review T Level titles and confirm that details are correct and raise a query if they are incorrect</value>
   </data>
   <data name="Service_Access_The" xml:space="preserve">
     <value>access the </value>
   </data>
-  <data name="Service_TellUs_Add_Amend_Assessments" xml:space="preserve">
-    <value>add and amend assessment entries</value>
+  <data name="Service_TellUs_About_Grade_Appeal" xml:space="preserve">
+    <value>tell us about a grade appeal</value>
   </data>
-  <data name="Service_TellUs_Add_Amend_Registrations" xml:space="preserve">
-    <value>add and amend learner registrations</value>
+  <data name="Service_TellUs_Add_Update_Assessments" xml:space="preserve">
+    <value>add or update assessment entries</value>
   </data>
-  <data name="Service_TellUs_Add_Amend_Results" xml:space="preserve">
-    <value>add and amend core component results</value>
+  <data name="Service_TellUs_Add_Update_Registrations" xml:space="preserve">
+    <value>add or update learner registrations</value>
+  </data>
+  <data name="Service_TellUs_Add_Update_Results" xml:space="preserve">
+    <value>add or update core component results</value>
   </data>
   <data name="Service_TellUs_English_And_Maths_Qualification" xml:space="preserve">
     <value>tell us if a learner has met the minimum standard for English and maths</value>
@@ -217,6 +229,6 @@
     <value>Start now</value>
   </data>
   <data name="You_Need_DfE_SignIn_Account_To_Use_This_Service_Text" xml:space="preserve">
-    <value>You will need a DfE Sign-in account and an assigned service role.</value>
+    <value>You will need a DfE Sign-in account and an assigned role.</value>
   </data>
 </root>
