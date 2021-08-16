@@ -61,236 +61,263 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage your profile and permissions.
+        ///   Looks up a localized string similar to Manage T Level results.
         /// </summary>
-        public static string Account_Description_Text {
+        public static string Heading_Manage_Tlevel_Results {
             get {
-                return ResourceManager.GetString("Account_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Heading_Manage_Tlevel_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the T Levels you deliver and which providers are offering them.
+        /// </summary>
+        public static string Para_Item_Tlevels_You_Deliver_And_Which_Providers_Are_Offering_Them {
+            get {
+                return ResourceManager.GetString("Para_Item_Tlevels_You_Deliver_And_Which_Providers_Are_Offering_Them", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to your registered learners, when they will be assessed and the results they achieve.
+        /// </summary>
+        public static string Para_Item_Your_Registered_Learners_When_They_Will_Be_Assessed {
+            get {
+                return ResourceManager.GetString("Para_Item_Your_Registered_Learners_When_They_Will_Be_Assessed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The information you give us will be used to calculate learners&apos; overall grades and printed on their certificates..
+        /// </summary>
+        public static string Para_The_Information_Gives_Us_Used_To_Calculate_Overall_Grade {
+            get {
+                return ResourceManager.GetString("Para_The_Information_Gives_Us_Used_To_Calculate_Overall_Grade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use this service to tell us about:.
+        /// </summary>
+        public static string Para_Use_This_Service_To_Tell {
+            get {
+                return ResourceManager.GetString("Para_Use_This_Service_To_Tell", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
-        public static string Account_Text {
+        public static string Tile_Account_Heading {
             get {
-                return ResourceManager.GetString("Account_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Account_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add and amend assessment entries.
+        ///   Looks up a localized string similar to Change your email address or password.
         /// </summary>
-        public static string Assessment_Entries_Description_Text {
+        public static string Tile_Account_Item_Change_Email_Password {
             get {
-                return ResourceManager.GetString("Assessment_Entries_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Account_Item_Change_Email_Password", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment entries.
+        ///   Looks up a localized string similar to Manage other users (admin only).
         /// </summary>
-        public static string Assessment_Entries_Text {
+        public static string Tile_Account_Item_Manage_Other_Users {
             get {
-                return ResourceManager.GetString("Assessment_Entries_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Account_Item_Manage_Other_Users", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exam boards, also known as awarding organisations, are responsible for registering each learner onto a T Level course and recording their technical qualification results..
+        ///   Looks up a localized string similar to View your profile and permissions.
         /// </summary>
-        public static string Exams_Board_Text {
+        public static string Tile_Account_Item_View_Profile_Permissions {
             get {
-                return ResourceManager.GetString("Exams_Board_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Account_Item_View_Profile_Permissions", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add or change your learners&apos; English and maths achievements and industry placement completion status.
+        ///   Looks up a localized string similar to Appeals.
         /// </summary>
-        public static string Manage_Learner_TLevel_Records_Description_Text {
+        public static string Tile_Appeals_Heading {
             get {
-                return ResourceManager.GetString("Manage_Learner_TLevel_Records_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Appeals_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage learner T Level records.
+        ///   Looks up a localized string similar to Tell us when a learner has appealed a grade.
         /// </summary>
-        public static string Manage_Learner_TLevel_Records_Text {
+        public static string Tile_Appeals_Item_Tell_Us_Appealed_Grade {
             get {
-                return ResourceManager.GetString("Manage_Learner_TLevel_Records_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Appeals_Item_Tell_Us_Appealed_Grade", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View your account profile and permissions.
+        ///   Looks up a localized string similar to Tell us the result of an appeal.
         /// </summary>
-        public static string Manage_Your_Account_Description_Text {
+        public static string Tile_Appeals_Item_Tell_Us_Result_Of_Appeal {
             get {
-                return ResourceManager.GetString("Manage_Your_Account_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Appeals_Item_Tell_Us_Result_Of_Appeal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage your account.
+        ///   Looks up a localized string similar to Assessments.
         /// </summary>
-        public static string Manage_Your_Account_Text {
+        public static string Tile_Assessments_Heading {
             get {
-                return ResourceManager.GetString("Manage_Your_Account_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Assessments_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Home page.
+        ///   Looks up a localized string similar to Tell us when your learners will be assessed.
         /// </summary>
-        public static string Page_Title {
+        public static string Tile_Assessments_Item_Tell_Us_When_To_Assessed {
             get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tell us which T Levels each provider is offering.
-        /// </summary>
-        public static string Providers_Description_Text {
-            get {
-                return ResourceManager.GetString("Providers_Description_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Manage your organisation’s postal address.
-        /// </summary>
-        public static string Providers_Manage_Postal_Address_Heading {
-            get {
-                return ResourceManager.GetString("Providers_Manage_Postal_Address_Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add or update the address you want certificates and statements of achievement sent to.
-        /// </summary>
-        public static string Providers_Manage_Postal_Address_Text {
-            get {
-                return ResourceManager.GetString("Providers_Manage_Postal_Address_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Request statement of achievement.
-        /// </summary>
-        public static string Providers_Request_Statement_Of_Achievement_Heading {
-            get {
-                return ResourceManager.GetString("Providers_Request_Statement_Of_Achievement_Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Learners who withdraw from their T Level course must be issued with a statement of achievement.
-        /// </summary>
-        public static string Providers_Request_Statement_Of_Achievement_Text {
-            get {
-                return ResourceManager.GetString("Providers_Request_Statement_Of_Achievement_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Providers, for example, schools and colleges, can use this service to record a T Level learner&apos;s English and maths achievements and industry placement completion. These records will be added to the learner&apos;s T Level registration..
-        /// </summary>
-        public static string Providers_Schools_And_Colleges_Text {
-            get {
-                return ResourceManager.GetString("Providers_Schools_And_Colleges_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Assessments_Item_Tell_Us_When_To_Assessed", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Providers.
         /// </summary>
-        public static string Providers_Text {
+        public static string Tile_Providers_Heading {
             get {
-                return ResourceManager.GetString("Providers_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Providers_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add and amend registrations.
+        ///   Looks up a localized string similar to Add or remove providers.
         /// </summary>
-        public static string Registrations_Description_Text {
+        public static string Tile_Providers_Item_Add_Or_Remove {
             get {
-                return ResourceManager.GetString("Registrations_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Providers_Item_Add_Or_Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Review existing providers.
+        /// </summary>
+        public static string Tile_Providers_Item_Review_Providers {
+            get {
+                return ResourceManager.GetString("Tile_Providers_Item_Review_Providers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the T Levels each provider offers.
+        /// </summary>
+        public static string Tile_Providers_Item_Select_Tlevel {
+            get {
+                return ResourceManager.GetString("Tile_Providers_Item_Select_Tlevel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Registrations.
         /// </summary>
-        public static string Registrations_Text {
+        public static string Tile_Registrations_Heading {
             get {
-                return ResourceManager.GetString("Registrations_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Registrations_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add and amend results.
+        ///   Looks up a localized string similar to Change a learner&apos;s personal details.
         /// </summary>
-        public static string Results_Description_Text {
+        public static string Tile_Registrations_Item_Change_Personal_Details {
             get {
-                return ResourceManager.GetString("Results_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Registrations_Item_Change_Personal_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the T Level a learner is studying.
+        /// </summary>
+        public static string Tile_Registrations_Item_Change_Tlevels {
+            get {
+                return ResourceManager.GetString("Tile_Registrations_Item_Change_Tlevels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage movers, leavers and rejoiners.
+        /// </summary>
+        public static string Tile_Registrations_Item_Manage_Movers_Leavers_Rejoiners {
+            get {
+                return ResourceManager.GetString("Tile_Registrations_Item_Manage_Movers_Leavers_Rejoiners", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register learners onto T Level courses.
+        /// </summary>
+        public static string Tile_Registrations_Item_Register_Courses {
+            get {
+                return ResourceManager.GetString("Tile_Registrations_Item_Register_Courses", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Results.
         /// </summary>
-        public static string Results_Text {
+        public static string Tile_Results_Heading {
             get {
-                return ResourceManager.GetString("Results_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Results_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Let us know when a learner has requested a review or has appealed a grade.
+        ///   Looks up a localized string similar to Tell us the initial grades learners achieved.
         /// </summary>
-        public static string Reviews_And_Appeals_Description_Text {
+        public static string Tile_Results_Item_Tell_Us_Initial_Grades {
             get {
-                return ResourceManager.GetString("Reviews_And_Appeals_Description_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reviews and appeals.
-        /// </summary>
-        public static string Reviews_And_Appeals_Text {
-            get {
-                return ResourceManager.GetString("Reviews_And_Appeals_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Manage T Level results.
-        /// </summary>
-        public static string Section_Heading_Text {
-            get {
-                return ResourceManager.GetString("Section_Heading_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Review T Level details and tell us if they are correct.
-        /// </summary>
-        public static string Tlevels_Description_Text {
-            get {
-                return ResourceManager.GetString("Tlevels_Description_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Results_Item_Tell_Us_Initial_Grades", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to T Levels.
         /// </summary>
-        public static string Tlevels_Text {
+        public static string Tile_Tlevel_Heading {
             get {
-                return ResourceManager.GetString("Tlevels_Text", resourceCulture);
+                return ResourceManager.GetString("Tile_Tlevel_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm each T Level&apos;s details are correct.
+        /// </summary>
+        public static string Tile_Tlevel_Item_Confirm_Tlevels {
+            get {
+                return ResourceManager.GetString("Tile_Tlevel_Item_Confirm_Tlevels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request amendments.
+        /// </summary>
+        public static string Tile_Tlevel_Item_Request_Amendments {
+            get {
+                return ResourceManager.GetString("Tile_Tlevel_Item_Request_Amendments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Review the T Levels you are licensed to deliver.
+        /// </summary>
+        public static string Tile_Tlevel_Item_Review_The_Tlevels {
+            get {
+                return ResourceManager.GetString("Tile_Tlevel_Item_Review_The_Tlevels", resourceCulture);
             }
         }
     }

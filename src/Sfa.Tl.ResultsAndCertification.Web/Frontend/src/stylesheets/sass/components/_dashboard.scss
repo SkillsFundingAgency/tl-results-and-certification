@@ -83,9 +83,25 @@
     }
 }
 
-@media screen and (max-width: 640px) {
-    .card, .training-provider-card, .manage-learner-records-card {
-        min-height: unset;
+.ao-dashboard-card {
+    @extend .card;
+    min-height: 185px;
+}
+
+@media screen and (max-width: 837px) and (min-width: 808px) {
+    .ao-dashboard-card {
+        min-height: 205px;
     }
 }
 
+@media screen and (max-width: 807px) and (min-width: 640px) {
+    .ao-dashboard-card {
+        min-height: 285px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .card, .ao-dashboard-card, .training-provider-card, .manage-learner-records-card {
+        min-height: unset;
+    }
+}
