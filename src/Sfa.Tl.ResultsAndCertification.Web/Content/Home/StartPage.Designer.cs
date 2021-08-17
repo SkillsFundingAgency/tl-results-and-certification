@@ -394,7 +394,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You will need a DfE Sign-in account and an assigned role..
+        ///   Looks up a localized string similar to You will need a DfE Sign in account and an assigned role..
         /// </summary>
         public static string You_Need_DfE_SignIn_Account_To_Use_This_Service_Text {
             get {
