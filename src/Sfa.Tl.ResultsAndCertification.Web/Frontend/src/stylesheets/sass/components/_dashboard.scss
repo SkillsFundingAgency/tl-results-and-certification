@@ -86,6 +86,7 @@
 .ao-dashboard-card {
     @extend .card;
     min-height: 185px;
+    padding-top: 10px;
 }
 
 @media screen and (max-width: 837px) and (min-width: 808px) {
@@ -104,4 +105,10 @@
     .card, .ao-dashboard-card, .training-provider-card, .manage-learner-records-card {
         min-height: unset;
     }
+}
+
+.tlevels-dashboard-card {
+    @extend .card;
+    margin-bottom: 20px;
+    min-height: unset;
 }

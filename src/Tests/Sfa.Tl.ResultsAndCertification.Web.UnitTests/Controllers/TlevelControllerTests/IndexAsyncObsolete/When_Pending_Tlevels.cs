@@ -7,7 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Index
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.IndexAsyncObsolete
 {
     public class When_Pending_Tlevels : TestSetup
     {

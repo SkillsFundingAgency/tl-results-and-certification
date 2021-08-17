@@ -10,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -27,10 +28,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [Route("tlevels", Name = RouteConstants.Tlevels)]
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult Index()
+        {
+            return View(new TlevelsDashboardViewModel());
+        }
+
+        // TODO: remove or re-use this method - fix associate UT and View/Viewmodel/Constatnts files. 
+        [Route("tlevels-obsolete", Name = RouteConstants.Tlevels)]
+        public async Task<IActionResult> IndexAsyncObsolete()
         {
             var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
-            
+
             if (pendingTlevels?.Count() > 0)
                 return RedirectToRoute(RouteConstants.SelectTlevel);
 

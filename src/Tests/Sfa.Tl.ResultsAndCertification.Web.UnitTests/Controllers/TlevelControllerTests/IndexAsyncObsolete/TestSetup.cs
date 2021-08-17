@@ -9,7 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Index
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.IndexAsyncObsolete
 {
     public abstract class TestSetup : BaseTest<TlevelController>
     {
@@ -42,8 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
         public async override Task When()
         {
-            Result = Controller.Index();
-            await Task.CompletedTask;
+            Result = await Controller.IndexAsyncObsolete();
         }
     }
 }

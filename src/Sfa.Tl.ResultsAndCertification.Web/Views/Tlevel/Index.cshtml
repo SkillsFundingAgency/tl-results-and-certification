@@ -1,0 +1,61 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels.TlevelsDashboardViewModel
+
+@{
+    ViewData["Title"] = TlevelsDashboard.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:breadcrumb model="Model.Breadcrumb"></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <div class="govuk-form-group">
+            <h1 class="govuk-heading-l">@TlevelsDashboard.Heading_Tlevels</h1>
+            <p class="govuk-body-l">@TlevelsDashboard.Para_Check_And_Confirm</p>
+        </div>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group tlevels-dashboard-card">
+            <h2 class="govuk-heading-m govuk-!-padding-top-3">
+                <a id="reviewTlevelsLink" class="govuk-link" asp-route="">
+                    @TlevelsDashboard.Tile_Review_Heading
+                </a>
+            </h2>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@TlevelsDashboard.Tile_Review_Item_Confirm_Tlevels</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group tlevels-dashboard-card">
+            <h2 class="govuk-heading-m govuk-!-padding-top-3">
+                <a id="confirmedTlevelsLink" class="govuk-link" asp-route="">
+                    @TlevelsDashboard.Tile_Confirmed_Heading
+                </a>
+            </h2>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@TlevelsDashboard.Tile_Confirmed_Item_View_Tlevels</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group tlevels-dashboard-card">
+            <h2 class="govuk-heading-m govuk-!-padding-top-3">
+                <a id="queriedTlevelsLink" class="govuk-link" asp-route="">
+                    @TlevelsDashboard.Tile_Queries_Heading
+                </a>
+            </h2>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@TlevelsDashboard.Tile_Queried_Item_View_Queries</li>
+            </ul>
+        </div>
+    </div>
+</div>
