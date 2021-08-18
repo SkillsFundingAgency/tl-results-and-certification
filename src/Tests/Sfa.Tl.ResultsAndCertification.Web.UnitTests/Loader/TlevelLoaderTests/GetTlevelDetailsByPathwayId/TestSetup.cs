@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelDetailsByPathwayId
 {
@@ -25,11 +28,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         protected readonly string PathwayName = "Pathway Name1";
         protected readonly string RouteName = "Route Name1";
         protected readonly bool ShowSomethingIsNotRight = true;
-        protected readonly bool ShowQueriedInfo = true;
+        protected readonly bool ShowQueriedInfo = false;
         protected List<SpecialismDetails> Specialisms;
+
+        protected readonly string Givenname = "test";
+        protected readonly string Surname = "user";
+        protected readonly string Email = "test.user@test.com";
+
+        // Dependencies
+        protected IHttpContextAccessor HttpContextAccessor;
 
         public override void Setup()
         {
+            HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
+            HttpContextAccessor.HttpContext.Returns(new DefaultHttpContext
+            {
+                User = new ClaimsPrincipal(new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.GivenName, Givenname),
+                    new Claim(ClaimTypes.Surname, Surname),
+                    new Claim(ClaimTypes.Email, Email)
+                }))
+            });
+
             Specialisms = new List<SpecialismDetails> {
                 new SpecialismDetails { Name = "Civil Engineering", Code = "97865897" },
                 new SpecialismDetails { Name = "Assisting teaching", Code = "7654321" }
@@ -38,22 +59,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
             ApiClientResponse = new TlevelPathwayDetails { PathwayId = 1, PathwayName = PathwayName, RouteName = RouteName, PathwayStatusId = 2, Specialisms = Specialisms };
             ExpectedResult = new TLevelDetailsViewModel { PathwayId = 1, PathwayName = PathwayName, RouteName = RouteName, ShowSomethingIsNotRight = ShowSomethingIsNotRight, ShowQueriedInfo = ShowQueriedInfo, Specialisms = new List<string> { "Civil Engineering<br/>(97865897)", "Assisting teaching<br/>(7654321)" } };
 
-            Mapper = Substitute.For<IMapper>();
-            Mapper.Map<TLevelDetailsViewModel>(ApiClientResponse).Returns(ExpectedResult);
+            CreateMapper();
 
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-            InternalApiClient.GetTlevelDetailsByPathwayIdAsync(Ukprn, Id)
-                .Returns(ApiClientResponse);
         }
 
-        public override void Given()
+        protected virtual void CreateMapper()
         {
-            Loader = new TlevelLoader(InternalApiClient, Mapper);
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddMaps(typeof(TlevelMapper).Assembly);
+                c.ConstructServicesUsing(type =>
+                            type.Name.Contains("UserNameResolver") ?
+                                new UserNameResolver<TlevelPathwayDetails, TLevelDetailsViewModel>(HttpContextAccessor) :
+                                null);
+            });
+            Mapper = new AutoMapper.Mapper(mapperConfig);
         }
-
-        public async override Task When()
-        {
-            ActualResult = await Loader.GetTlevelDetailsByPathwayIdAsync(Ukprn, Id);
-        }
+               
     }
 }
