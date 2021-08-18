@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             _logger = logger;
         }
 
-        [Route("tlevels", Name = RouteConstants.Tlevels)]
+        [Route("tlevels", Name = RouteConstants.TlevelsDashboard)]
         public IActionResult Index()
         {
             return View(new TlevelsDashboardViewModel());
@@ -38,11 +38,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> IndexAsyncObsolete()
         {
             var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
-
-            if (pendingTlevels?.Count() > 0)
+            if (pendingTlevels?.Count() > 1)
                 return RedirectToRoute(RouteConstants.SelectTlevel);
 
-            return RedirectToRoute(RouteConstants.YourTlevels);
+            if (pendingTlevels?.Count() == 1)
+                return RedirectToRoute(RouteConstants.SelectTlevel); // TODO: Redirect to 'Review T Level Page'
+
+            return RedirectToRoute(RouteConstants.AllTlevelsReviewed);
+        }
+
+        [Route("all-tlevels-reviewed", Name = RouteConstants.AllTlevelsReviewed)]
+        public async Task<IActionResult> AllTlevelsReviewedAsync()
+        {
+            var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
+            if (pendingTlevels?.Count() != 0)
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(new AllTlevelsReviewedViewModel());
         }
 
         [Route("your-tlevels", Name = RouteConstants.YourTlevels)]

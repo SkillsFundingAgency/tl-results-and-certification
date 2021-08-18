@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public void Then_Redirected_To_YourTlevels()
         {
             var actualRouteName = (Result as RedirectToRouteResult).RouteName;
-            actualRouteName.Should().Be(RouteConstants.YourTlevels);
+            actualRouteName.Should().Be(RouteConstants.AllTlevelsReviewed);
         }
     }
 }

@@ -15,7 +15,7 @@
         public const string Home = "Home";
 
         // Tlevel
-        public const string Tlevels = "Tlevels";
+        public const string TlevelsDashboard = "TlevelsDashboard";
         public const string YourTlevels = "YourTlevels";
         public const string TlevelDetails = "TlevelDetails";
         public const string SelectTlevel = "SelectTlevel";
@@ -27,6 +27,7 @@
         public const string QueryTlevelDetails = "QueryTlevelDetails";  // QueryTlevelDetails_Get
         public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // QueryTlevelDetails_Post
         public const string QueryServiceProblem = "QueryServiceProblem";
+        public const string AllTlevelsReviewed = "AllTlevelsReviewed";
 
         // Providers
         public const string YourProviders = "YourProviders";

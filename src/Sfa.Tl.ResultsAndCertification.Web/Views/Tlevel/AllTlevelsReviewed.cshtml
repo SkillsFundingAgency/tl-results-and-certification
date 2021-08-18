@@ -1,0 +1,33 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels.AllTlevelsReviewedViewModel
+
+@{
+    ViewData["Title"] = "TODO";
+}
+
+@section NavigationBar
+{
+    <vc:breadcrumb model="Model.Breadcrumb"></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">
+            You have reviewed all of your T Levels
+        </h1>
+
+        <h2 class="govuk-heading-m">You can now:</h2>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>View your <a class="govuk-link" href="confirmed-t-levels.html">confirmed T Levels</a></li>
+            <li><a class="govuk-link" href="/1-19/dynamic/registrations/student-registrations.html">Register</a> your learners</li>
+            <li><a class="govuk-link" href="">Add T Levels</a> to your providers</li>
+        </ul>
+
+        <div class="govuk-button-group govuk-!-margin-top-7">
+            <a class="govuk-button" role="button" href="/1-19/dynamic/t-levels/student-t-levels">Back to T Levels</a>
+            <a class="govuk-button govuk-button--secondary" role="button" href="/1-19/dynamic/tlevels-dashboard.html">Back to home</a>
+        </div>
+
+    </div>
+</div>
