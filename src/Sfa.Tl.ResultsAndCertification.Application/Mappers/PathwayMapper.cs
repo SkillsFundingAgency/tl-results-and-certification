@@ -14,6 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.Name))
                 .ForMember(d => d.PathwayCode, opts => opts.MapFrom(s => s.LarId))
+                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
                 .ForMember(d => d.RouteId, opts => opts.MapFrom(s => s.TlRouteId))
                 .ForMember(d => d.RouteName, opts => opts.MapFrom(s => s.TlRoute.Name))
                 .ForMember(d => d.PathwayStatusId, opts => opts.MapFrom(s => s.TqAwardingOrganisations.FirstOrDefault(x => x.TlPathwayId == s.Id).ReviewStatus))
