@@ -7,9 +7,9 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.IndexAsyncObsolete
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ReviewTlevels
 {
-    public class When_Pending_Tlevels : TestSetup
+    public class When_Awaiting_Tlevels_Are_MoreThan_One : TestSetup
     {
         public override void Given()
         {

@@ -33,16 +33,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(new TlevelsDashboardViewModel());
         }
 
-        // TODO: remove or re-use this method - fix associate UT and View/Viewmodel/Constatnts files. 
-        //[Route("tlevels-obsolete", Name = RouteConstants.Tlevels)]
-        public async Task<IActionResult> IndexAsyncObsolete()
+        [Route("tlevels-review", Name = RouteConstants.ReviewTlevels)]
+        public async Task<IActionResult> ReviewTlevelsAsync()
         {
             var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
             if (pendingTlevels?.Count() > 1)
                 return RedirectToRoute(RouteConstants.SelectTlevel);
 
             if (pendingTlevels?.Count() == 1)
-                return RedirectToRoute(RouteConstants.SelectTlevel); // TODO: Redirect to 'Review T Level Page'
+                return RedirectToRoute(RouteConstants.SelectTlevel); // TODO: upcoming story to redirect different page.
 
             return RedirectToRoute(RouteConstants.AllTlevelsReviewed);
         }

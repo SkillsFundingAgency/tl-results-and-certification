@@ -713,6 +713,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>WithdrawRegistration.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Tlevel\AllTlevelsReviewed.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AllTlevelsReviewed.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Tlevel\Confirmation.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1391,6 +1396,10 @@
     <EmbeddedResource Update="Content\Registration\WithdrawRegistration.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>WithdrawRegistration.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Tlevel\AllTlevelsReviewed.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AllTlevelsReviewed.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Tlevel\Confirmation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
