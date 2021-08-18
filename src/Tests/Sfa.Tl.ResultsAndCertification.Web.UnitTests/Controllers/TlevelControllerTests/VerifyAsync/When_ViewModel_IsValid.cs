@@ -23,8 +23,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
                 PathwayId = pathwayId,
                 PathwayStatusId = (int)TlevelReviewStatus.AwaitingConfirmation,
                 IsEverythingCorrect = true,
-                PathwayName = "Pathway 1",
-                Specialisms = new List<string> { "sp1", "sp2" }
+                TlevelTitle = "Tlevel title",
+                PathwayDisplayName = "Pathway1<br/>(45789465489)",
+                Specialisms = new List<string> { "sp1<br/>(567565)", "sp2<br/>(564547)" }
             };
 
             TlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(ukprn, pathwayId)
@@ -42,7 +43,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             model.RouteId.Should().Be(expectedModel.RouteId);
             model.PathwayId.Should().Be(expectedModel.PathwayId);
             model.PathwayStatusId.Should().Be(expectedModel.PathwayStatusId);
-            model.PathwayName.Should().Be(expectedModel.PathwayName);
+            model.TlevelTitle.Should().Be(expectedModel.TlevelTitle);
+            model.PathwayDisplayName.Should().Be(expectedModel.PathwayDisplayName);
+            model.Specialisms.Should().BeEquivalentTo(expectedModel.Specialisms);
             model.IsEverythingCorrect.Should().Be(expectedModel.IsEverythingCorrect);
             model.Specialisms.Should().NotBeNull();
             model.Specialisms.Count().Should().Be(2);

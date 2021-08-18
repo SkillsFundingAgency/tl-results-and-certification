@@ -20,7 +20,7 @@
         public const string TlevelDetails = "TlevelDetails";
         public const string SelectTlevel = "SelectTlevel";
         public const string SelectTlevelSubmit = "SelectTlevelSubmit";
-        public const string AreDetailsCorrect = "AreDetailsCorrect";
+        public const string ReviewTlevelDetails = "ReviewTlevelDetails";
         public const string ConfirmTlevel = "ConfirmTlevel";
         public const string TlevelDetailsConfirmed = "TlevelDetailsConfirmed";
         public const string TlevelDetailsQueriedConfirmation = "TlevelDetailsQueriedConfirmation";

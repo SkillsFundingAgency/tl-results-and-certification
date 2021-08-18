@@ -28,15 +28,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
 
         public override void Setup()
         {
-            ApiClientResponse = new TlevelPathwayDetails 
+            ApiClientResponse = new TlevelPathwayDetails
             {
                 TqAwardingOrganisationId = 1,
                 RouteId = 2,
-                PathwayId = 3, 
+                PathwayId = 3,
                 RouteName = "Test Route",
                 PathwayName = "Test Pathway",
                 PathwayStatusId = 1,
-                Specialisms = new List<string> { "Spl1", "Spl2" }
+                Specialisms = new List<SpecialismDetails> {
+                    new SpecialismDetails { Name = "Civil Engineering", Code = "97865897" },
+                    new SpecialismDetails { Name = "Assisting teaching", Code = "7654321" }
+                }
             };
 
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();

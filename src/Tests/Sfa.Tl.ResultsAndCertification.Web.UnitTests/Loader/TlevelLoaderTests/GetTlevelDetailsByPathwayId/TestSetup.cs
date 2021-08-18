@@ -26,12 +26,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         protected readonly string RouteName = "Route Name1";
         protected readonly bool ShowSomethingIsNotRight = true;
         protected readonly bool ShowQueriedInfo = true;
-        protected readonly List<string> Specialisms = new List<string> { "Spl1", "Spl2" };
+        protected List<SpecialismDetails> Specialisms;
 
         public override void Setup()
         {
+            Specialisms = new List<SpecialismDetails> {
+                new SpecialismDetails { Name = "Civil Engineering", Code = "97865897" },
+                new SpecialismDetails { Name = "Assisting teaching", Code = "7654321" }
+            };
+
             ApiClientResponse = new TlevelPathwayDetails { PathwayId = 1, PathwayName = PathwayName, RouteName = RouteName, PathwayStatusId = 2, Specialisms = Specialisms };
-            ExpectedResult = new TLevelDetailsViewModel { PathwayId = 1, PathwayName = PathwayName, RouteName = RouteName, ShowSomethingIsNotRight = ShowSomethingIsNotRight, ShowQueriedInfo = ShowQueriedInfo, Specialisms = Specialisms };
+            ExpectedResult = new TLevelDetailsViewModel { PathwayId = 1, PathwayName = PathwayName, RouteName = RouteName, ShowSomethingIsNotRight = ShowSomethingIsNotRight, ShowQueriedInfo = ShowQueriedInfo, Specialisms = new List<string> { "Civil Engineering<br/>(97865897)", "Assisting teaching<br/>(7654321)" } };
 
             Mapper = Substitute.For<IMapper>();
             Mapper.Map<TLevelDetailsViewModel>(ApiClientResponse).Returns(ExpectedResult);
