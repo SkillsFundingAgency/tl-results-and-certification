@@ -19,12 +19,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             expectedResult = new ConfirmTlevelViewModel
             {
                 PathwayId = pathwayId,
-                PathwayName = "PathName",
                 RouteId = 5,
                 IsEverythingCorrect = false,
                 PathwayStatusId = 1,
                 TqAwardingOrganisationId = 7,
-                Specialisms = new List<string> { "spl1", "spl2" }
+                TlevelTitle = "Tlevel title",
+                PathwayDisplayName = "Pathway1<br/>(45789465489)",
+                Specialisms = new List<string> { "sp1<br/>(567565)", "sp2<br/>(564547)" }
             };
 
             InputModel = new ConfirmTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.AwaitingConfirmation, PathwayId = pathwayId };
@@ -47,13 +48,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         {
             var actualViewModel = (ConfirmTlevelViewModel) (Result as ViewResult).Model;
             actualViewModel.PathwayId.Should().Be(expectedResult.PathwayId);
-            actualViewModel.PathwayName.Should().Be(expectedResult.PathwayName);
+            actualViewModel.PathwayDisplayName.Should().Be(expectedResult.PathwayDisplayName);
             actualViewModel.PathwayStatusId.Should().Be(expectedResult.PathwayStatusId);
             actualViewModel.RouteId.Should().Be(expectedResult.RouteId);
             actualViewModel.IsEverythingCorrect.Should().Be(expectedResult.IsEverythingCorrect);
             actualViewModel.TqAwardingOrganisationId.Should().Be(expectedResult.TqAwardingOrganisationId);
+            actualViewModel.TlevelTitle.Should().Be(expectedResult.TlevelTitle);
             actualViewModel.Specialisms.Count().Should().Be(expectedResult.Specialisms.Count());
-            actualViewModel.Specialisms.First().Should().Be(expectedResult.Specialisms.First());
+            actualViewModel.Specialisms.Should().BeEquivalentTo(expectedResult.Specialisms);
         }
     }
 }

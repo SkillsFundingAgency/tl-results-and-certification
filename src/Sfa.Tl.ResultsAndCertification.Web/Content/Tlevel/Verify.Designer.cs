@@ -70,15 +70,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Core.
-        /// </summary>
-        public static string Core_Field_Label {
-            get {
-                return ResourceManager.GetString("Core_Field_Label", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Select yes if this T Level’s details are correct.
         /// </summary>
         public static string IsEverythingCorrect_Required_Validation_Message {
@@ -88,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No - tell us what&apos;s wrong.
+        ///   Looks up a localized string similar to No, tell us what’s wrong.
         /// </summary>
         public static string No_Radio_Button_Text {
             get {
@@ -97,11 +88,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are these details correct page.
+        ///   Looks up a localized string similar to Review T Level details.
+        /// </summary>
+        public static string Page_Heading {
+            get {
+                return ResourceManager.GetString("Page_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Review T Level details.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These details will be printed on learners&apos; certificates..
+        /// </summary>
+        public static string Para_These_Details_Will_Be_Printed_On_Learners_Certificate {
+            get {
+                return ResourceManager.GetString("Para_These_Details_Will_Be_Printed_On_Learners_Certificate", resourceCulture);
             }
         }
         
@@ -115,20 +124,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Specialisms.
+        ///   Looks up a localized string similar to Core &lt;br/&gt; (code).
         /// </summary>
-        public static string Specialisms_Field_Label {
+        public static string Title_Core_Code_Text {
             get {
-                return ResourceManager.GetString("Specialisms_Field_Label", resourceCulture);
+                return ResourceManager.GetString("Title_Core_Code_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to These details will be used on T Level certificates..
+        ///   Looks up a localized string similar to Occupational specialism &lt;br/&gt; (code).
         /// </summary>
-        public static string Verify_Text {
+        public static string Title_Occupational_Specialism_Text {
             get {
-                return ResourceManager.GetString("Verify_Text", resourceCulture);
+                return ResourceManager.GetString("Title_Occupational_Specialism_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level title.
+        /// </summary>
+        public static string Title_TLevel_Text {
+            get {
+                return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
             }
         }
         

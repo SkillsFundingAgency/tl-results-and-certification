@@ -18,34 +18,23 @@
         <div class="govuk-grid-column-two-thirds">
             <partial name="_ValidationSummary" />
 
-            <h1 class="govuk-heading-xl">@Verify.Section_Heading</h1>
-            <p class="govuk-heading-m">@Verify.Verify_Text</p>
+            <h1 class="govuk-heading-l">@Verify.Page_Heading</h1>
+            <p class="govuk-body">@Verify.Para_These_Details_Will_Be_Printed_On_Learners_Certificate</p>
 
-            <dl class="govuk-summary-list govuk-!-margin-bottom-7">
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        @Verify.Core_Field_Label
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        @Model?.PathwayName
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        @Verify.Specialisms_Field_Label
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        @foreach (var splsm in Model?.Specialisms)
-                        {
-                            <p class="govuk-body">@splsm</p>
-                        }
-                    </dd>
-                </div>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-!-margin-top-7 govuk-summary-list--no-border">
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCore></vc:summary-item>
+                <vc:summary-list model=Model.SummarySpecialisms></vc:summary-list>
             </dl>
 
             <div class="govuk-form-group govuk-!-margin-bottom-7" sfa-validation-for="IsEverythingCorrect" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
-                    <legend><span class="govuk-visually-hidden">@Verify.Section_Heading</span></legend>
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" for="IsEverythingCorrect">
+                        <h2 class="govuk-fieldset__heading">
+                            @Verify.Section_Heading
+                        </h2>
+                    </legend>
+                    
                     <div class="govuk-radios">
                         <span sfa-validation-for="IsEverythingCorrect"></span>
                         <div class="govuk-radios__item">
