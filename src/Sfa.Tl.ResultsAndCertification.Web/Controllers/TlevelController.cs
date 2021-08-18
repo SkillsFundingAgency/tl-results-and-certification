@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(new TlevelsDashboardViewModel());
         }
 
-        [Route("tlevels-review", Name = RouteConstants.ReviewTlevels)]
+        [Route("review-tlevels", Name = RouteConstants.ReviewTlevels)]
         public async Task<IActionResult> ReviewTlevelsAsync()
         {
             var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
