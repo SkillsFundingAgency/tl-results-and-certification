@@ -295,7 +295,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Review T Levels.
+        ///   Looks up a localized string similar to Review new T Levels.
         /// </summary>
         public static string Tlevel_Review_Select {
             get {

@@ -117,31 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Continue_Button_Label" xml:space="preserve">
+  <data name="Button_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
-  <data name="More_Page_Title" xml:space="preserve">
-    <value>Select a T Level to review page</value>
+  <data name="Confirmed_Text" xml:space="preserve">
+    <value>confirmed</value>
   </data>
-  <data name="More_Review_Heading" xml:space="preserve">
+  <data name="Contact_Us" xml:space="preserve">
+    <value>contact us</value>
+  </data>
+  <data name="Fullstop" xml:space="preserve">
+    <value>.</value>
+  </data>
+  <data name="If_You_Cannot_Find_It" xml:space="preserve">
+    <value>If you still cannot find it, </value>
+  </data>
+  <data name="If_You_Cannot_Find_The_TLevel" xml:space="preserve">
+    <value>If you cannot find the T Level you are looking for, please check you have not already</value>
+  </data>
+  <data name="It_Text" xml:space="preserve">
+    <value>it</value>
+  </data>
+  <data name="I_Cannot_Find_A_Tlevel" xml:space="preserve">
+    <value>I cannot find a T Level</value>
+  </data>
+  <data name="Or_Text" xml:space="preserve">
+    <value> or </value>
+  </data>
+  <data name="Page_Heading" xml:space="preserve">
+    <value>Which T Level do you want to review?</value>
+  </data>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Select T Level</value>
+  </data>
+  <data name="Para_Review_Text" xml:space="preserve">
+    <value>You must check and confirm each T Level is correctly set up before you can add them to a provider.</value>
+  </data>
+  <data name="Para_These_Details_Will_Be_Printed" xml:space="preserve">
+    <value>These details will be printed on learners' certificates.</value>
+  </data>
+  <data name="Queried_Text" xml:space="preserve">
+    <value>queried</value>
+  </data>
+  <data name="Validation_Error_Message" xml:space="preserve">
     <value>Select a T Level to review</value>
-  </data>
-  <data name="More_Review_Text" xml:space="preserve">
-    <value>You need to confirm the details of each T Level before you can tell us which providers are offering it.</value>
-  </data>
-  <data name="More_SelectTlevel_Validation_Error_Message" xml:space="preserve">
-    <value>Select a T Level to review</value>
-  </data>
-  <data name="One_Page_Title" xml:space="preserve">
-    <value>You have a T Level to review page</value>
-  </data>
-  <data name="One_Review_Heading" xml:space="preserve">
-    <value>You have one T Level to review</value>
-  </data>
-  <data name="One_Review_Text" xml:space="preserve">
-    <value>You need to confirm this T Level's details before you can tell us which providers are offering it.</value>
-  </data>
-  <data name="ViewReviewedTlevelsLink" xml:space="preserve">
-    <value>View reviewed T levels</value>
   </data>
 </root>

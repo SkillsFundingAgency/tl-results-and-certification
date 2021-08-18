@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         // TODO: remove or re-use this method - fix associate UT and View/Viewmodel/Constatnts files. 
-        [Route("tlevels-obsolete", Name = RouteConstants.Tlevels)]
+        //[Route("tlevels-obsolete", Name = RouteConstants.Tlevels)]
         public async Task<IActionResult> IndexAsyncObsolete()
         {
             var pendingTlevels = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);

@@ -46,8 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle));
 
             CreateMap<IEnumerable<AwardingOrganisationPathwayStatus>, SelectToReviewPageViewModel>()
-                .ForMember(d => d.TlevelsToReview, opts => opts.MapFrom(s => s.Where(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation)))
-                .ForMember(d => d.ShowViewReviewedTlevelsLink, opts => opts.MapFrom(s => s.Any(a => a.StatusId == (int)TlevelReviewStatus.Confirmed || a.StatusId == (int)TlevelReviewStatus.Queried)));
+                .ForMember(d => d.TlevelsToReview, opts => opts.MapFrom(s => s.Where(x => x.StatusId == (int)TlevelReviewStatus.AwaitingConfirmation)));
 
             CreateMap<ConfirmTlevelViewModel, VerifyTlevelDetails>()
                 .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
