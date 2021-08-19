@@ -22,7 +22,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             {
                 ProfileId = ProfileId,
                 PathwayAssessmentId = AssessmentId,
-                PathwayResultId = 3
+                PathwayResultId = 3,
+                IsThisGradeBeingAppealed = true
             };
 
             _appealGradeAfterDeadlineViewModel = new AppealGradeAfterDeadlineConfirmViewModel

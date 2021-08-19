@@ -518,6 +518,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(prsLearner);
 
+            if (viewModel.IsThisGradeBeingAppealed == false)
+                return RedirectToRoute(RouteConstants.PrsLearnerDetails, new { profileId = viewModel.ProfileId, assessmentId = viewModel.PathwayAssessmentId });
+
             var isSuccess = await _postResultsServiceLoader.AppealGradeAfterDeadlineRequestAsync(viewModel);
 
             if (!isSuccess)
