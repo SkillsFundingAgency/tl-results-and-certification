@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Called_Expeccted_Methods()
         {
-            TlevelLoader.Received().GetTlevelsToReviewByUkprnAsync(ukprn);
+            TlevelLoader.Received().GetTlevelsToReviewByUkprnAsync(AoUkprn);
         }
 
         [Fact]

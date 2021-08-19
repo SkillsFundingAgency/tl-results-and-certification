@@ -14,13 +14,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         {
             InputViewModel = new TlevelQueryViewModel { PathwayStatusId = (int)TlevelReviewStatus.AwaitingConfirmation };
             Controller.ModelState.AddModelError("Query", "Please enter a query.");
-            TlevelLoader.GetQueryTlevelViewModelAsync(Ukprn, PathwayId).Returns(ExpectedResult);
+            TlevelLoader.GetQueryTlevelViewModelAsync(AoUkprn, PathwayId).Returns(ExpectedResult);
         }
 
         [Fact]
         public void Then_Called_Expected_Methods()
         {
-            TlevelLoader.Received(1).GetQueryTlevelViewModelAsync(Ukprn, PathwayId);
+            TlevelLoader.Received(1).GetQueryTlevelViewModelAsync(AoUkprn, PathwayId);
         }
 
         [Fact]

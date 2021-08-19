@@ -11,6 +11,8 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -18,12 +20,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class TlevelController : Controller
     {
         private readonly ITlevelLoader _tlevelLoader;
+        private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
+        private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TlevelCacheKey); } }
 
-        public TlevelController(ITlevelLoader tlevelLoader, 
+
+        public TlevelController(ITlevelLoader tlevelLoader, ICacheService cacheService,
             ILogger<TlevelController> logger)
         {
             _tlevelLoader = tlevelLoader;
+            _cacheService = cacheService;
             _logger = logger;
         }
 
@@ -123,13 +129,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]        
         [Route("tlevel-details-queried-confirmation/{id}", Name = RouteConstants.TlevelDetailsQueriedConfirmation)]
-        [Route("tlevel-details-confirmed/{id}", Name = RouteConstants.TlevelDetailsConfirmed)]
+        [Route("review-more-tlevels/{id}", Name = RouteConstants.TlevelDetailsConfirmed)]
         public async Task<IActionResult> ConfirmationAsync(int id)
         {
-            if (id == 0 || TempData[Constants.IsRedirect] == null || !(bool.TryParse(TempData[Constants.IsRedirect].ToString(), out bool isRedirect) && isRedirect))
+            var isValid = await _cacheService.GetAndRemoveAsync<bool>(string.Concat(CacheKey, Constants.TlevelConfirmation));
+
+            if (id == 0 || isValid == false)
             {
                 _logger.LogWarning(LogEvent.ConfirmationPageFailed,
-                    $"Unable to read T level confirmation page temp data. Ukprn: {User.GetUkPrn()}, PathwayId: {id}, User: {User.GetUserEmail()}");
+                    $"Unable to read T level confirmation result response from redis cache. Ukprn: {User.GetUkPrn()}, PathwayId: {id}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
@@ -154,7 +162,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel.IsEverythingCorrect == false)
             {
-                TempData.Set(Constants.IsBackToVerifyPage, true);
+                TempData.Set(Constants.IsBackToVerifyPage, true);                
                 return RedirectToRoute(RouteConstants.QueryTlevelDetails, new { id = viewModel.PathwayId });
             }
 
@@ -162,7 +170,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             
             if(isSuccess)
             {
-                TempData["IsRedirect"] = true;
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.TlevelConfirmation), true, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.TlevelDetailsConfirmed, new { id = viewModel.PathwayId });
             }
             else

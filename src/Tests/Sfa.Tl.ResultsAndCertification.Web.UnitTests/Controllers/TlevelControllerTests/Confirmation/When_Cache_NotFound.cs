@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Confirmation
 {
-    public class When_Tempdata_Notfound : TestSetup
+    public class When_Cache_NotFound : TestSetup
     {
         public override void Given()
         {
@@ -15,7 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Redirected_To_PageNotFound()
         {
-            // Controller
             var routeName = (Result as RedirectToRouteResult).RouteName;
             routeName.Should().Be(RouteConstants.PageNotFound);
         }
