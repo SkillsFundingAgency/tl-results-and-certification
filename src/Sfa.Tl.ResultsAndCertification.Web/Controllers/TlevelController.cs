@@ -129,7 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]        
         [Route("tlevel-details-queried-confirmation/{id}", Name = RouteConstants.TlevelDetailsQueriedConfirmation)]
-        [Route("tlevel-details-confirmed/{id}", Name = RouteConstants.TlevelDetailsConfirmed)]
+        [Route("review-more-tlevels/{id}", Name = RouteConstants.TlevelDetailsConfirmed)]
         public async Task<IActionResult> ConfirmationAsync(int id)
         {
             var isValid = await _cacheService.GetAndRemoveAsync<bool>(string.Concat(CacheKey, Constants.TlevelConfirmation));
@@ -170,7 +170,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             
             if(isSuccess)
             {
-                //TempData["IsRedirect"] = true;
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.TlevelConfirmation), true, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.TlevelDetailsConfirmed, new { id = viewModel.PathwayId });
             }

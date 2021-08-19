@@ -20,6 +20,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
+        public void Then_Expected_Methods_AreCalled()
+        {
+            TlevelLoader.Received(1).ConfirmTlevelAsync(InputModel);
+            CacheService.Received(1).SetAsync(string.Concat(CacheKey, Constants.TlevelConfirmation),
+                Arg.Is<bool>(x => x == true), CacheExpiryTime.XSmall);
+        }
+
+        [Fact]
         public void Then_Redirected_To_TlevelDetailsConfirmed()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;

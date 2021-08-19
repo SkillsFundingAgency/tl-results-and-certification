@@ -26,6 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public void Then_Called_Expected_Methods()
         {
             TlevelLoader.Received(1).GetTlevelConfirmationDetailsAsync(AoUkprn, Id);
+            CacheService.Received(1).GetAndRemoveAsync<bool>(_cacheKey);
         }
 
         [Fact]
