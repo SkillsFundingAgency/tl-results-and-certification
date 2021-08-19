@@ -26,14 +26,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
                 Specialisms = new List<string> { "Specialism1", "Specialism2" }
             };
 
-            TlevelLoader.GetTlevelDetailsByPathwayIdAsync(ukPrn, id)
+            TlevelLoader.GetTlevelDetailsByPathwayIdAsync(AoUkprn, id)
                 .Returns(mockresult);
         }
 
         [Fact]
         public void Then_Called_GetTlevelDetailsByPathwayId()
         {
-            TlevelLoader.Received().GetTlevelDetailsByPathwayIdAsync(ukPrn, id);
+            TlevelLoader.Received().GetTlevelDetailsByPathwayIdAsync(AoUkprn, id);
         }
 
         [Fact]

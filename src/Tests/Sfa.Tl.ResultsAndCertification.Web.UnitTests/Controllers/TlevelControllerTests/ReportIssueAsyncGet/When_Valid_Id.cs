@@ -12,14 +12,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
     {
         public override void Given()
         {
-            TlevelLoader.GetQueryTlevelViewModelAsync(ukprn, pathwayId)
+            TlevelLoader.GetQueryTlevelViewModelAsync(AoUkprn, pathwayId)
                 .Returns(expectedResult);
         }
 
         [Fact]
         public void Then_Called_Expected_Method()
         {
-            TlevelLoader.Received(1).GetQueryTlevelViewModelAsync(ukprn, pathwayId);
+            TlevelLoader.Received(1).GetQueryTlevelViewModelAsync(AoUkprn, pathwayId);
         }
 
         [Fact]

@@ -61,6 +61,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back to home.
+        /// </summary>
+        public static string Button_Back_To_Home {
+            get {
+                return ResourceManager.GetString("Button_Back_To_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Review another T Level.
+        /// </summary>
+        public static string Button_Review_Another_Tlevel {
+            get {
+                return ResourceManager.GetString("Button_Review_Another_Tlevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to confirmed.
         /// </summary>
         public static string Confirmed_Text {
@@ -88,11 +106,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level details confirmed page.
+        ///   Looks up a localized string similar to T Level Confirmed.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can still query this T Level’s details at a later date..
+        /// </summary>
+        public static string Para_You_Can_Still_Query_This_Tlevel_Details {
+            get {
+                return ResourceManager.GetString("Para_You_Can_Still_Query_This_Tlevel_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have more T levels to review..
+        /// </summary>
+        public static string Para_You_Have_More_Tlevels_To_Review {
+            get {
+                return ResourceManager.GetString("Para_You_Have_More_Tlevels_To_Review", resourceCulture);
             }
         }
         

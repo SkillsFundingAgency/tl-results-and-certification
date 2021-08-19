@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             pathwayId = 10;
             viewModel = new ConfirmTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.Confirmed };
 
-            TlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(ukprn, pathwayId)
+            TlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(AoUkprn, pathwayId)
                 .Returns(viewModel);
         }
 

@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
         public override void Given()
         {
-            TlevelLoader.GetTlevelDetailsByPathwayIdAsync(ukPrn, id)
+            TlevelLoader.GetTlevelDetailsByPathwayIdAsync(AoUkprn, id)
                 .Returns(mockresult);
         }
 

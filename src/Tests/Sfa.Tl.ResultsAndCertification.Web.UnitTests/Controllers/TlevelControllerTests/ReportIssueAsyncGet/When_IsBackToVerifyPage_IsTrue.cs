@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public override void Given()
         {
             TempData[Constants.IsBackToVerifyPage] = "true";
-            TlevelLoader.GetQueryTlevelViewModelAsync(ukprn, pathwayId)
+            TlevelLoader.GetQueryTlevelViewModelAsync(AoUkprn, pathwayId)
                 .Returns(expectedResult);
         }
 

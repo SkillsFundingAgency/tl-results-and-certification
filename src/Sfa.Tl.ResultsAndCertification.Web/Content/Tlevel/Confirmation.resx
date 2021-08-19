@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Button_Back_To_Home" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
+  <data name="Button_Review_Another_Tlevel" xml:space="preserve">
+    <value>Review another T Level</value>
+  </data>
   <data name="Confirmed_Text" xml:space="preserve">
     <value>confirmed</value>
   </data>
@@ -127,7 +133,13 @@
     <value>You still have more T Levels to review.</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>T Level details confirmed page</value>
+    <value>T Level Confirmed</value>
+  </data>
+  <data name="Para_You_Can_Still_Query_This_Tlevel_Details" xml:space="preserve">
+    <value>You can still query this T Level’s details at a later date.</value>
+  </data>
+  <data name="Para_You_Have_More_Tlevels_To_Review" xml:space="preserve">
+    <value>You have more T levels to review.</value>
   </data>
   <data name="Queried_Info_Text" xml:space="preserve">
     <value>We will investigate your query and update you within 3 working days.</value>

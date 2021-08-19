@@ -16,11 +16,19 @@
         {
             <p class="govuk-body">@Confirmation.Queried_Info_Text</p>
         }
-        <p class="govuk-body govuk-!-padding-bottom-4">@(Model.ShowMoreTlevelsToReview ? @Confirmation.More_Tlevels_Text : @Confirmation.Finished_Reviewing_All_Tlevels_Text)</p>
+
+        @*<p class="govuk-body govuk-!-padding-bottom-4">@(Model.ShowMoreTlevelsToReview ? @Confirmation.More_Tlevels_Text : @Confirmation.Finished_Reviewing_All_Tlevels_Text)</p>*@
 
         @if (Model.ShowMoreTlevelsToReview)
         {
-            <a class="govuk-button" asp-route="SelectTlevel">@Confirmation.Review_Another_Tlevel_Button_Text</a>
+            <p class="govuk-body">@Confirmation.Para_You_Can_Still_Query_This_Tlevel_Details</p>
+
+            <p class="govuk-body govuk-!-padding-bottom-4">@Confirmation.Para_You_Have_More_Tlevels_To_Review</p>
+
+            <div class="govuk-button-group">
+                <a id="reviewAnotherTlevelButton" class="govuk-button" role="button" asp-route="ReviewTlevels">@Confirmation.Button_Review_Another_Tlevel</a>
+                <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="Home">@Confirmation.Button_Back_To_Home</a>
+            </div>
         }
         else
         {
