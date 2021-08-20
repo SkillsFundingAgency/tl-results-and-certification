@@ -11,7 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             ExpectedResult = new TlevelQueryViewModel
             {
                 PathwayId = 1,
-                PathwayName = "Test Pathway",
+                //PathwayName = "Test Pathway", // TODO:
                 PathwayStatusId = 1,
                 Query = "Test query",
                 Specialisms = new List<string> { "Spl1", "Spl2" },

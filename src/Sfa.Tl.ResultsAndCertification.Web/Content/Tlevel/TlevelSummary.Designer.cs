@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Query {
+    public class TlevelSummary {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Query() {
+        internal TlevelSummary() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel.Query", typeof(Query).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel.TlevelSummary", typeof(TlevelSummary).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,74 +61,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Query T Level details.
+        ///   Looks up a localized string similar to Core &lt;br/&gt; (code).
         /// </summary>
-        public static string Heading_Query_Tlevel_Details {
+        public static string Title_Core_Code_Text {
             get {
-                return ResourceManager.GetString("Heading_Query_Tlevel_Details", resourceCulture);
+                return ResourceManager.GetString("Title_Core_Code_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us what is wrong with this T Levels details.
+        ///   Looks up a localized string similar to Occupational specialism &lt;br/&gt; (code).
         /// </summary>
-        public static string Heading_Tell_Us_What_Is_Wrong {
+        public static string Title_Occupational_Specialism_Text {
             get {
-                return ResourceManager.GetString("Heading_Tell_Us_What_Is_Wrong", resourceCulture);
+                return ResourceManager.GetString("Title_Occupational_Specialism_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your message must be 1,000 characters or fewer..
+        ///   Looks up a localized string similar to T Level title.
         /// </summary>
-        public static string Hint_Message_Must_Be_1000_Or_Less {
+        public static string Title_TLevel_Text {
             get {
-                return ResourceManager.GetString("Hint_Message_Must_Be_1000_Or_Less", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You do not need to include any of the above information..
-        /// </summary>
-        public static string Hint_You_Do_Not_Need_Include_Above_Info {
-            get {
-                return ResourceManager.GetString("Hint_You_Do_Not_Need_Include_Above_Info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Query T Level.
-        /// </summary>
-        public static string Page_Title {
-            get {
-                return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The maximum character limit 10000 exceeded.
-        /// </summary>
-        public static string Query_CharLimitExceeded_Validation_Message {
-            get {
-                return ResourceManager.GetString("Query_CharLimitExceeded_Validation_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter what is wrong with this T Level’s details.
-        /// </summary>
-        public static string Query_Required_Validation_Message {
-            get {
-                return ResourceManager.GetString("Query_Required_Validation_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Submit.
-        /// </summary>
-        public static string Submit_Button {
-            get {
-                return ResourceManager.GetString("Submit_Button", resourceCulture);
+                return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
             }
         }
     }

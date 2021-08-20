@@ -182,7 +182,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("query-tlevel-details/{id}", Name=RouteConstants.QueryTlevelDetails)]
+        [Route("query-t-level/{id}", Name=RouteConstants.QueryTlevelDetails)]
         public async Task<IActionResult> ReportIssueAsync(int id)
         {
             var tlevelDetails = await _tlevelLoader.GetQueryTlevelViewModelAsync(User.GetUkPrn(), id);
@@ -193,14 +193,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            tlevelDetails.IsBackToVerifyPage = TempData.Get<bool>(Constants.IsBackToVerifyPage);
+            tlevelDetails.IsBackToVerifyPage = TempData.Get<bool>(Constants.IsBackToVerifyPage); // TODO: next story.
 
             return View(tlevelDetails);
         }
 
         [HttpPost]
-        [Route("query-tlevel-details", Name = RouteConstants.SubmitTlevelIssue)]
-        public async Task<IActionResult> ReportIssueAsync(TlevelQueryViewModel viewModel) 
+        [Route("query-t-level/{id}", Name = RouteConstants.SubmitTlevelIssue)]
+        public async Task<IActionResult> ReportIssueAsync(TlevelQueryViewModel viewModel)
         {
             if (viewModel == null || viewModel.PathwayStatusId == (int)TlevelReviewStatus.Queried)
             {
@@ -211,7 +211,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 var tlevelDetails = await _tlevelLoader.GetQueryTlevelViewModelAsync(User.GetUkPrn(), viewModel.PathwayId);
                 tlevelDetails.IsBackToVerifyPage = viewModel.IsBackToVerifyPage;
-                
+
                 return View(tlevelDetails);
             }
 

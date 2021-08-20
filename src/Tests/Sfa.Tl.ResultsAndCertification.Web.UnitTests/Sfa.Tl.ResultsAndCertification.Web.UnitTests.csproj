@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\TlevelControllerTests\ReportIssueAsyncGet\**" />
+    <Compile Remove="Controllers\TlevelControllerTests\ReportIssueAsyncPost\**" />
+    <Compile Remove="Loader\TlevelLoaderTests\GetQueryTlevelViewModel\**" />
+    <EmbeddedResource Remove="Controllers\TlevelControllerTests\ReportIssueAsyncGet\**" />
+    <EmbeddedResource Remove="Controllers\TlevelControllerTests\ReportIssueAsyncPost\**" />
+    <EmbeddedResource Remove="Loader\TlevelLoaderTests\GetQueryTlevelViewModel\**" />
+    <None Remove="Controllers\TlevelControllerTests\ReportIssueAsyncGet\**" />
+    <None Remove="Controllers\TlevelControllerTests\ReportIssueAsyncPost\**" />
+    <None Remove="Loader\TlevelLoaderTests\GetQueryTlevelViewModel\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Invalid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Valid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Registration_HasResult.cs" />
