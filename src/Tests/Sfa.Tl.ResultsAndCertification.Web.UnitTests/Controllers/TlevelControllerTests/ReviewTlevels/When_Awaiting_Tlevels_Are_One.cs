@@ -11,15 +11,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 {
     public class When_Awaiting_Tlevels_Are_One : TestSetup
     {
+        private List<YourTlevelViewModel> _mockResult;
+
         public override void Given()
         {
-            var mockresult = new List<YourTlevelViewModel>
+            _mockResult = new List<YourTlevelViewModel>
             {
-                    new YourTlevelViewModel { PathwayId = 1, TlevelTitle = "RouteName1: Pathway1" }
+                new YourTlevelViewModel { PathwayId = 1, TlevelTitle = "RouteName1: Pathway1" }
             };
 
-            TlevelLoader.GetTlevelsByStatusIdAsync(Arg.Any<long>(), Arg.Any<int>())
-                .Returns(mockresult);
+            TlevelLoader.GetTlevelsByStatusIdAsync(Arg.Any<long>(), Arg.Any<int>()).Returns(_mockResult);
         }
 
         [Fact]
@@ -29,10 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_Redirected_To_SelectTlevel()
+        public void Then_Redirected_To_ReviewTlevelDetails()
         {
-            var actualRouteName = (Result as RedirectToRouteResult).RouteName;
-            actualRouteName.Should().Be(RouteConstants.SelectTlevel);
+            var actualRoute = Result as RedirectToRouteResult;
+            actualRoute.RouteName.Should().Be(RouteConstants.ReviewTlevelDetails);
+            actualRoute.RouteValues.Count.Should().Be(1);
+            actualRoute.RouteValues["id"].Should().Be(_mockResult[0].PathwayId);
         }
     }
 }

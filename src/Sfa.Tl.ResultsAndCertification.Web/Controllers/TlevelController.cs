@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.SelectTlevel);
 
             if (pendingTlevels?.Count() == 1)
-                return RedirectToRoute(RouteConstants.SelectTlevel); // TODO: upcoming story to redirect different page.
+                return RedirectToRoute(RouteConstants.ReviewTlevelDetails, new { id = pendingTlevels.FirstOrDefault().PathwayId });
 
             return RedirectToRoute(RouteConstants.AllTlevelsReviewed);
         }
@@ -129,6 +129,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]        
         [Route("tlevel-details-queried-confirmation/{id}", Name = RouteConstants.TlevelDetailsQueriedConfirmation)]
+        [Route("all-tlevels-reviewed-success/{id}", Name = RouteConstants.AllTlevelsReviewedSuccess)]
         [Route("review-more-tlevels/{id}", Name = RouteConstants.TlevelDetailsConfirmed)]
         public async Task<IActionResult> ConfirmationAsync(int id)
         {
@@ -171,7 +172,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if(isSuccess)
             {
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.TlevelConfirmation), true, CacheExpiryTime.XSmall);
-                return RedirectToRoute(RouteConstants.TlevelDetailsConfirmed, new { id = viewModel.PathwayId });
+                
+                var tlevelsToReview = await _tlevelLoader.GetTlevelsToReviewByUkprnAsync(User.GetUkPrn());
+                return tlevelsToReview?.TlevelsToReview?.Count() == 0 
+                    ? RedirectToRoute(RouteConstants.AllTlevelsReviewedSuccess, new { id = viewModel.PathwayId }) 
+                    : RedirectToRoute(RouteConstants.TlevelDetailsConfirmed, new { id = viewModel.PathwayId });
             }
             else
             {

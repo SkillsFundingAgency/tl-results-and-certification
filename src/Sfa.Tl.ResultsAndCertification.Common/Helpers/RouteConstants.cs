@@ -24,6 +24,7 @@
         public const string ReviewTlevelDetails = "ReviewTlevelDetails";
         public const string ConfirmTlevel = "ConfirmTlevel";
         public const string TlevelDetailsConfirmed = "TlevelDetailsConfirmed";
+        public const string AllTlevelsReviewedSuccess = "AllTlevelsReviewedSuccess";
         public const string TlevelDetailsQueriedConfirmation = "TlevelDetailsQueriedConfirmation";
         public const string QueryTlevelDetails = "QueryTlevelDetails";  // QueryTlevelDetails_Get
         public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // QueryTlevelDetails_Post
