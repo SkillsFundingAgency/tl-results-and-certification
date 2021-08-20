@@ -19,7 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             {
                 ProfileId = 1,
                 PathwayAssessmentId = 2,
-                PathwayResultId = 3
+                PathwayResultId = 3,
+                IsThisGradeBeingAppealed = true
             };
 
             _mockAppealGradeAfterDeadlineRequestViewModel = new AppealGradeAfterDeadlineConfirmViewModel

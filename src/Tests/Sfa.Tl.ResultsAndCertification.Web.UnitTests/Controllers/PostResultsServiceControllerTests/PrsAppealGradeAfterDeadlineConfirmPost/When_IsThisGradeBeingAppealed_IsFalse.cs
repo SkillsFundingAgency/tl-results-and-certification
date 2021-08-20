@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealGradeAfterDeadlineConfirmPost
 {
-    public class When_Registration_NotActive : TestSetup
+    public class When_IsThisGradeBeingAppealed_IsFalse : TestSetup
     {
         private AppealGradeAfterDeadlineConfirmViewModel _mockAppealGradeAfterDeadlineRequestViewModel;
 
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProfileId = 1,
                 PathwayAssessmentId = 2,
                 PathwayResultId = 3,
-                IsThisGradeBeingAppealed = true
+                IsThisGradeBeingAppealed = false
             };
 
             _mockAppealGradeAfterDeadlineRequestViewModel = new AppealGradeAfterDeadlineConfirmViewModel
@@ -27,18 +27,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 ProfileId = ViewModel.ProfileId,
                 PathwayAssessmentId = ViewModel.PathwayAssessmentId,
                 PathwayResultId = 10,
-                Status = RegistrationPathwayStatus.Withdrawn,
-                PathwayPrsStatus = PrsStatus.Final
+                Status = RegistrationPathwayStatus.Active
             };
 
             Loader.GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineConfirmViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.PathwayAssessmentId).Returns(_mockAppealGradeAfterDeadlineRequestViewModel);
         }
+       
+        [Fact]
+        public void Then_Expected_Methods_AreCalled()
+        {
+            Loader.Received(1).GetPrsLearnerDetailsAsync<AppealGradeAfterDeadlineConfirmViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.PathwayAssessmentId);
+        }
 
         [Fact]
-        public void Then_Redirected_To_PageNotFound()
+        public void Then_Redirected_To_PrsLearnerDetails()
         {
-            var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.PageNotFound);
+            var route = Result as RedirectToRouteResult;
+            route.RouteName.Should().Be(RouteConstants.PrsLearnerDetails);
+            route.RouteValues.Count.Should().Be(2);
+            route.RouteValues[Constants.ProfileId].Should().Be(ViewModel.ProfileId);
+            route.RouteValues[Constants.AssessmentId].Should().Be(ViewModel.PathwayAssessmentId);
         }
     }
 }
