@@ -7,15 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\TlevelControllerTests\ReportIssueAsyncGet\**" />
+    <Compile Remove="Controllers\TlevelControllerTests\NewFolder\**" />
     <Compile Remove="Controllers\TlevelControllerTests\ReportIssueAsyncPost\**" />
-    <Compile Remove="Loader\TlevelLoaderTests\GetQueryTlevelViewModel\**" />
-    <EmbeddedResource Remove="Controllers\TlevelControllerTests\ReportIssueAsyncGet\**" />
+    <EmbeddedResource Remove="Controllers\TlevelControllerTests\NewFolder\**" />
     <EmbeddedResource Remove="Controllers\TlevelControllerTests\ReportIssueAsyncPost\**" />
-    <EmbeddedResource Remove="Loader\TlevelLoaderTests\GetQueryTlevelViewModel\**" />
-    <None Remove="Controllers\TlevelControllerTests\ReportIssueAsyncGet\**" />
+    <None Remove="Controllers\TlevelControllerTests\NewFolder\**" />
     <None Remove="Controllers\TlevelControllerTests\ReportIssueAsyncPost\**" />
-    <None Remove="Loader\TlevelLoaderTests\GetQueryTlevelViewModel\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +23,7 @@
     <Compile Remove="Controllers\PostResultsServiceControllerTests\PrsGradeChangeRequestGet\When_PrsStatus_Is_BeingAppealed.cs" />
     <Compile Remove="Controllers\PostResultsServiceControllerTests\PrsGradeChangeRequestGet\When_ViewModel_IsInvalid.cs" />
     <Compile Remove="Controllers\ResultControllerTests\AddCoreResultGet\When_Called_With_Withdrawn_Status_Data.cs" />
+    <Compile Remove="Controllers\TlevelControllerTests\ReportIssueAsyncGet\When_IsBackToVerifyPage_IsTrue.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,10 +43,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj" />
     <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Web\Sfa.Tl.ResultsAndCertification.Web.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\TlevelControllerTests\NewFolder\" />
   </ItemGroup>
 
 </Project>

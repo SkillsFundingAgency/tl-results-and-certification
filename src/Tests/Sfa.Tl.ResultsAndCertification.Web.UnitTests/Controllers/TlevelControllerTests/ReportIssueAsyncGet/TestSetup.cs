@@ -52,17 +52,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             HttpContextAccessor.HttpContext.Returns(httpContext);
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.TlevelCacheKey);
 
-            TempData = new TempDataDictionary(HttpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
-            Controller.TempData = TempData;
-
             expectedResult = new TlevelQueryViewModel
             {
+                TqAwardingOrganisationId = pathwayId,
+                RouteId = 2,
                 PathwayId = 1,
-                PathwayName = "Test Pathway",
                 PathwayStatusId = 1,
+
+                TlevelTitle = "T Level in Education",
+                PathwayDisplayName = "Education (12345678)",
+                Specialisms = new List<string> { "Spl1 (11111111)", "Spl2 (22222222)" },
+
+                IsBackToVerifyPage = false,
                 Query = "Test query",
-                Specialisms = new List<string> { "Spl1", "Spl2" },
-                TqAwardingOrganisationId = pathwayId
             };
         }
 
