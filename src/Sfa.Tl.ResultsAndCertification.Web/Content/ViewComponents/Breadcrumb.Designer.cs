@@ -214,7 +214,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reviews and appeals.
+        ///   Looks up a localized string similar to Appeals.
         /// </summary>
         public static string Reviews_And_Appeals {
             get {
@@ -259,7 +259,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reviews and appeals.
+        ///   Looks up a localized string similar to Appeals.
         /// </summary>
         public static string StartReviewsAndAppeals {
             get {
