@@ -5,6 +5,7 @@ Insert initial data for Notification Templates
 MERGE INTO [dbo].[NotificationTemplate] AS Target 
 USING (VALUES 
 (N'60581938-fcdd-4bcb-910a-04a136803092', N'TlevelDetailsQueried'),
+(N'99a03bd6-89e5-4fc7-9248-e8c695245d3f', N'TlevelDetailsQueriedUserNotification'),
 (N'a1b21a18-8555-45b8-9739-f18a902282dc', N'EnglishAndMathsLrsDataQueried'),
 (N'9a033adb-cc33-461c-8a77-e3fc15582dfb', N'FunctionJobFailedNotification'),
 (N'bc76d0c9-c92f-4cdb-8b7e-00fab2e7e046', N'PrintingJobFailedNotification'),

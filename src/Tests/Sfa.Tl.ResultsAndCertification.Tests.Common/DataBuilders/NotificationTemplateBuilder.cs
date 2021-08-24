@@ -75,6 +75,15 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new NotificationTemplate
             {
+                TemplateId = new Guid("7F23DD3A-EEE4-4248-9D28-E33FD8487295"),
+                TemplateName = NotificationTemplateName.TlevelDetailsQueriedUserNotification.ToString(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new NotificationTemplate
+            {
                 TemplateId = new Guid("a1b21a18-8555-45b8-9739-f18a902282dc"),
                 TemplateName = NotificationTemplateName.EnglishAndMathsLrsDataQueried.ToString(),
                 CreatedBy = Constants.CreatedByUser,

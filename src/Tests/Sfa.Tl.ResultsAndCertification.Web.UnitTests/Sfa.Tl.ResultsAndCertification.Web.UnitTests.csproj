@@ -7,15 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\TlevelControllerTests\NewFolder\**" />
-    <Compile Remove="Controllers\TlevelControllerTests\ReportIssueAsyncPost\**" />
-    <EmbeddedResource Remove="Controllers\TlevelControllerTests\NewFolder\**" />
-    <EmbeddedResource Remove="Controllers\TlevelControllerTests\ReportIssueAsyncPost\**" />
-    <None Remove="Controllers\TlevelControllerTests\NewFolder\**" />
-    <None Remove="Controllers\TlevelControllerTests\ReportIssueAsyncPost\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Invalid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Called_With_Valid_Data.cs" />
     <Compile Remove="Controllers\ManageRegistrationControllerTests\AmendActiveRegistrationPost\When_Registration_HasResult.cs" />

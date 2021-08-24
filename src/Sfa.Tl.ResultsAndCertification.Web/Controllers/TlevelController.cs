@@ -212,27 +212,36 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
+            var tlevelDetails = await _tlevelLoader.GetQueryTlevelViewModelAsync(User.GetUkPrn(), viewModel.PathwayId);
             if (!ModelState.IsValid)
             {
-                var tlevelDetails = await _tlevelLoader.GetQueryTlevelViewModelAsync(User.GetUkPrn(), viewModel.PathwayId);
-                tlevelDetails.IsBackToVerifyPage = viewModel.IsBackToVerifyPage;
-
+                tlevelDetails.IsBackToVerifyPage = viewModel.IsBackToVerifyPage; // TODO
                 return View(tlevelDetails);
             }
 
             var isSuccess = await _tlevelLoader.ReportIssueAsync(viewModel);
-
-            if (isSuccess)
+            if (!isSuccess)
             {
-                TempData["IsRedirect"] = true;
-                return RedirectToRoute(RouteConstants.TlevelDetailsQueriedConfirmation, new { id = viewModel.PathwayId });
-            }
-            else
-            {
-                _logger.LogWarning(LogEvent.TlevelReportIssueFailed,
-                    $"Unable to report T level issue. Method: ReportIssueAsync, Ukprn: {User.GetUkPrn()}, TqAwardingOrganisationId: {viewModel.TqAwardingOrganisationId}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.TlevelReportIssueFailed, $"Unable to report T level issue. Method: ReportIssueAsync, Ukprn: {User.GetUkPrn()}, TqAwardingOrganisationId: {viewModel.TqAwardingOrganisationId}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.QueryServiceProblem);
             }
+
+            await _cacheService.SetAsync(CacheKey, new TlevelQuerySentViewModel { TlevelTitle = tlevelDetails.TlevelTitle });
+            return RedirectToRoute(RouteConstants.QueryTlevelSent);
+        }
+
+        [HttpGet]
+        [Route("tlevel-query-sent", Name = RouteConstants.QueryTlevelSent)]
+        public async Task<IActionResult> ReportIssueSentAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<TlevelQuerySentViewModel>(CacheKey);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read TlevelQuerySentViewModel from redis cache in T level query sent page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
         }
 
         [HttpGet]

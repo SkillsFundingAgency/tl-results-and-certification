@@ -6,6 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Enum
     {
         [Description("Tlevel Details Queried")]
         TlevelDetailsQueried,
+        TlevelDetailsQueriedUserNotification,
         EnglishAndMathsLrsDataQueried,
         FunctionJobFailedNotification,
         PrintingJobFailedNotification,

@@ -11,12 +11,10 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ReportIssueAsyncGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ReportIssueSent
 {
     public abstract class TestSetup : BaseTest<TlevelController>
     {
@@ -27,10 +25,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
         protected IHttpContextAccessor HttpContextAccessor;
+        public TempDataDictionary TempData { get; private set; }
         protected IActionResult Result;
         protected int pathwayId;
-
-        protected TlevelQueryViewModel expectedResult;
 
         public override void Setup()
         {
@@ -50,26 +47,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
             CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.TlevelCacheKey);
-
-            expectedResult = new TlevelQueryViewModel
-            {
-                TqAwardingOrganisationId = pathwayId,
-                RouteId = 2,
-                PathwayId = 1,
-                PathwayStatusId = 1,
-
-                TlevelTitle = "T Level in Education",
-                PathwayDisplayName = "Education (12345678)",
-                Specialisms = new List<string> { "Spl1 (11111111)", "Spl2 (22222222)" },
-
-                IsBackToVerifyPage = false,
-                Query = "Test query",
-            };
         }
 
         public async override Task When()
         {
-            Result = await Controller.ReportIssueAsync(pathwayId);
+            Result = await Controller.ReportIssueSentAsync();
         }
     }
 }

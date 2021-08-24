@@ -744,6 +744,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Content\Tlevel\TlevelQuerySent.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TlevelQuerySent.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Tlevel\TlevelsDashboard.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1426,6 +1431,10 @@
     <EmbeddedResource Update="Content\Tlevel\SelectToReview.resx">
       <LastGenOutput>SelectToReview.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Tlevel\TlevelQuerySent.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TlevelQuerySent.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Tlevel\TlevelsDashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
