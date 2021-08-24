@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public override void Given()
         {
             _expectedConfirmedTlevel = new YourTlevelViewModel { PathwayId = 10, TlevelTitle = "T Level in Education" };
-            var mockresult = new YourTlevelsViewModelNew
+            var mockresult = new ConfirmedTlevelsViewModel
             {
                 Tlevels = new List<YourTlevelViewModel> { _expectedConfirmedTlevel }
             };
@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public void Then_Returns_Expected_ViewModel()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as YourTlevelsViewModelNew;
+            var model = viewResult.Model as ConfirmedTlevelsViewModel;
 
             model.Should().NotBeNull();
             model.Tlevels.Should().NotBeNull();

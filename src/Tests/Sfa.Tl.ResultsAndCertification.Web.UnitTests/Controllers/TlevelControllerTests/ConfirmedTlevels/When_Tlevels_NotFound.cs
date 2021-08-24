@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
     {
         public override void Given()
         {
-            var mockresult = new YourTlevelsViewModelNew
+            var mockresult = new ConfirmedTlevelsViewModel
             {
                 Tlevels = new List<YourTlevelViewModel>()
             };

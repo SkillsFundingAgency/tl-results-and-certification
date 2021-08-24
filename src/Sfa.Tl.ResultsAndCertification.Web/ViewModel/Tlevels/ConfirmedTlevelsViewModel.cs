@@ -5,10 +5,10 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels
 {
-    public class YourTlevelsViewModelNew
+    public class ConfirmedTlevelsViewModel
     {
         // TODO: rename this when YourTlevelsViewModel is removed. 
-        public YourTlevelsViewModelNew()
+        public ConfirmedTlevelsViewModel()
         {
             Tlevels = new List<YourTlevelViewModel>();
         }

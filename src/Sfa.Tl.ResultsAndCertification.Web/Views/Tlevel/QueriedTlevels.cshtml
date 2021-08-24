@@ -1,0 +1,13 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels.ConfirmedTlevelsViewModel
+@inject Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper.IWebConfigurationService ConfigurationService
+
+@{
+    ViewData["Title"] = ConfirmedTlevels.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:breadcrumb model="Model.BreadCrumb"></vc:breadcrumb>
+}
+

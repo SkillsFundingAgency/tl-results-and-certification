@@ -19,6 +19,7 @@
         public const string ReviewTlevels = "ReviewTlevels";
         public const string YourTlevels = "YourTlevels";
         public const string ConfirmedTlevels = "ConfirmedTlevels";
+        public const string QueriedTlevels = "QueriedTlevels";
         public const string TlevelDetails = "TlevelDetails";
         public const string SelectTlevel = "SelectTlevel";
         public const string SelectTlevelSubmit = "SelectTlevelSubmit";

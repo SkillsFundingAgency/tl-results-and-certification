@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         protected int StatusId = 1;
 
         protected IEnumerable<AwardingOrganisationPathwayStatus> ApiClientResponse;
-        protected YourTlevelsViewModelNew ActualResult;
+        protected ConfirmedTlevelsViewModel ActualResult;
         protected AwardingOrganisationPathwayStatus ExpectedResult;
         protected string ExpectedTLevelTitle = "Tlevel Title";
 

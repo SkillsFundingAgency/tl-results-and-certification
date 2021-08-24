@@ -86,6 +86,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [Route("queried-tlevels", Name = RouteConstants.QueriedTlevels)]
+        public async Task<IActionResult> QueriedTlevelsAsync()
+        {
+            var viewModel = await _tlevelLoader.GetYourTlevelsByStatusAsync(User.GetUkPrn(), (int)TlevelReviewStatus.Queried);
+            if (viewModel == null || !viewModel.Tlevels.Any())
+                return RedirectToRoute(RouteConstants.Home); // TODO: Other story to show none present. 
+
+            return View(viewModel);
+        }
+
         [Route("tlevel-details/{id}", Name = RouteConstants.TlevelDetails)]
         public async Task<IActionResult> DetailsAsync(int id)
         {
