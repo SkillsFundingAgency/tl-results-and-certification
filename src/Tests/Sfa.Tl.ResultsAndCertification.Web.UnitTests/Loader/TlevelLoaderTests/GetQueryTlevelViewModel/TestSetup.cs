@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -35,6 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
                 PathwayId = 3,
                 RouteName = "Test Route",
                 PathwayName = "Test Pathway",
+                PathwayCode = "12345678",
+                TlevelTitle = "T Level in Education",
                 PathwayStatusId = 1,
                 Specialisms = new List<SpecialismDetails> {
                     new SpecialismDetails { Name = "Civil Engineering", Code = "97865897" },

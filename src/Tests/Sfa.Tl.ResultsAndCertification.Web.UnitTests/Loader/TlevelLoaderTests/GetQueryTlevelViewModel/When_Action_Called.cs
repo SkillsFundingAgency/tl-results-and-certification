@@ -12,15 +12,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         {
             var expectedSpecialisms = new List<string> { "Civil Engineering<br/>(97865897)", "Assisting teaching<br/>(7654321)" };
 
-            ActualResult.Should().NotBeNull();
-            ActualResult.PathwayId.Should().Be(ApiClientResponse.PathwayId);
-            ActualResult.PathwayName.Should().Be(ApiClientResponse.PathwayName);
-            ActualResult.PathwayStatusId.Should().Be(ApiClientResponse.PathwayStatusId);
             ActualResult.TqAwardingOrganisationId.Should().Be(ApiClientResponse.TqAwardingOrganisationId);
-            ActualResult.Specialisms.Should().NotBeNull();
-            ActualResult.Specialisms.Count().Should().Be(2);
-            ActualResult.Specialisms.Should().BeEquivalentTo(expectedSpecialisms);
+            ActualResult.RouteId.Should().Be(ApiClientResponse.RouteId);
+            ActualResult.PathwayId.Should().Be(ApiClientResponse.PathwayId);
+            ActualResult.PathwayStatusId.Should().Be(ApiClientResponse.PathwayStatusId);
+
+            ActualResult.IsBackToVerifyPage.Should().BeFalse();
             ActualResult.Query.Should().BeNull();
+
+            ActualResult.TlevelTitle.Should().Be(ApiClientResponse.TlevelTitle);
+            ActualResult.PathwayDisplayName.Should().Be($"{ApiClientResponse.PathwayName}<br/>({ApiClientResponse.PathwayCode})");
+            ActualResult.Specialisms.Should().NotBeNull();
+            ActualResult.Specialisms.Count().Should().Be(ApiClientResponse.Specialisms.Count());
+            ActualResult.Specialisms.Should().BeEquivalentTo(ApiClientResponse.Specialisms.Select(s => $"{s.Name}<br/>({s.Code})"));
         }
     }
 }
