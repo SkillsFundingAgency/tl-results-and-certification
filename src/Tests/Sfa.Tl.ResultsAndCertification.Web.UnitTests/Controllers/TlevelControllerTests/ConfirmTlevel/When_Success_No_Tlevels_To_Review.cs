@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ConfirmTlevel
 {
-    public class When_Success : TestSetup
+    public class When_Success_No_Tlevels_To_Review : TestSetup
     {
         private readonly int pathwayId = 99;
         private SelectToReviewPageViewModel _mockResult;
@@ -22,11 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
             _mockResult = new SelectToReviewPageViewModel
             {
-                TlevelsToReview = new List<TlevelToReviewViewModel>
-                {
-                    new TlevelToReviewViewModel { PathwayId = 1, TlevelTitle = "Route1: Pathway1"},
-                    new TlevelToReviewViewModel { PathwayId = 2, TlevelTitle = "Route1: Pathway2"}
-                }
+                TlevelsToReview = new List<TlevelToReviewViewModel>()
             };
 
             TlevelLoader.GetTlevelsToReviewByUkprnAsync(AoUkprn).Returns(_mockResult);
@@ -42,10 +38,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_Redirected_To_TlevelDetailsConfirmed()
+        public void Then_Redirected_To_AllTlevelsReviewedSuccess()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.TlevelDetailsConfirmed);
+            routeName.Should().Be(RouteConstants.AllTlevelsReviewedSuccess);
         }
     }
 }
