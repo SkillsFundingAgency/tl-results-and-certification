@@ -33,7 +33,7 @@
                         <label class="govuk-label govuk-label--m" for="query">@Query.Heading_Tell_Us_What_Is_Wrong</label>
                     </h2>
                     <div id="query-hint" class="govuk-hint">@Query.Hint_You_Do_Not_Need_Include_Above_Info</div>
-                    <div id="query-hint" class="govuk-hint">@Query.Hint_Message_Must_Be_1000_Or_Less</div>
+                    <div id="query-hint-char-limit" class="govuk-hint">@Query.Hint_Message_Must_Be_1000_Or_Less</div>
                     <span sfa-validation-for="Query"></span>
                     <textarea class="govuk-textarea" id="query" asp-for="Query" rows="5" aria-describedby="query-hint"></textarea>
                 </fieldset>
