@@ -18,6 +18,7 @@
         public const string TlevelsDashboard = "TlevelsDashboard";
         public const string ReviewTlevels = "ReviewTlevels";
         public const string YourTlevels = "YourTlevels";
+        public const string ConfirmedTlevels = "ConfirmedTlevels";
         public const string TlevelDetails = "TlevelDetails";
         public const string SelectTlevel = "SelectTlevel";
         public const string SelectTlevelSubmit = "SelectTlevelSubmit";
@@ -28,6 +29,7 @@
         public const string TlevelDetailsQueriedConfirmation = "TlevelDetailsQueriedConfirmation";
         public const string QueryTlevelDetails = "QueryTlevelDetails";  // QueryTlevelDetails_Get
         public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // QueryTlevelDetails_Post
+        public const string QueryTlevelSent = "QueryTlevelSent";
         public const string QueryServiceProblem = "QueryServiceProblem";
         public const string AllTlevelsReviewed = "AllTlevelsReviewed";
 

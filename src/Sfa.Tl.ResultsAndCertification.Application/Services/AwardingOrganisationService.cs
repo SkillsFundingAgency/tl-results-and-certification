@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var tqAwardingOrganisation = await _awardingOrganisationRepository
                 .GetSingleOrDefaultAsync(p => p.Id == model.TqAwardingOrganisationId,
                         navigationPropertyPath: new Expression<Func<TqAwardingOrganisation, object>>[]
-                        { 
+                        {
                             p => p.TlPathway
                         });
 
@@ -76,23 +76,30 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             if (model.PathwayStatusId == (int)TlevelReviewStatus.Queried && !string.IsNullOrWhiteSpace(model.Query))
             {
-                var hasEmailSent = await SendEmailAsync(model, tqAwardingOrganisation);
-                if (!hasEmailSent) return false;
+                var referenceNumber = Guid.NewGuid().ToString();
+                var hasTechTeamEmailSent = await SendEmailAsync(model, tqAwardingOrganisation, referenceNumber);
+
+                var userTokens = new Dictionary<string, dynamic> { { "reference_number", referenceNumber } };
+                var hasUserEmailSent = await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.TlevelDetailsQueriedUserNotification.ToString(), model.QueriedUserEmail, userTokens);
+
+                if (!hasTechTeamEmailSent || !hasUserEmailSent) return false;
             }
+
             return await _awardingOrganisationRepository.UpdateAsync(tqAwardingOrganisation) > 0;
         }
 
-        private async Task<bool> SendEmailAsync(VerifyTlevelDetails model, TqAwardingOrganisation tqAwardingOrganisation)
+        private async Task<bool> SendEmailAsync(VerifyTlevelDetails model, TqAwardingOrganisation tqAwardingOrganisation, string referenceNumber)
         {
             var tokens = new Dictionary<string, dynamic>
-                {
-                    { "tlevel_name", tqAwardingOrganisation.TlPathway.TlevelTitle },
-                    { "user_comments", model.Query },
-                    { "sender_name", model.ModifiedBy },
-                    { "sender_email_address", model.QueriedUserEmail }
-                };
-
-            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.TlevelDetailsQueried.ToString(), _resultsAndCertificationConfiguration.TlevelQueriedSupportEmailAddress, tokens);
+            {
+                { "reference_number", referenceNumber },
+                { "sender_email_address", model.QueriedUserEmail },
+                { "tqawardingorganisation_id", tqAwardingOrganisation.Id },
+                { "tlevel_name", tqAwardingOrganisation.TlPathway.TlevelTitle },
+                { "requested_message", model.Query }
+            };
+            
+            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.TlevelDetailsQueriedTechnicalTeamNotification.ToString(), _resultsAndCertificationConfiguration.TlevelQueriedSupportEmailAddress, tokens);
         }
     }
 }

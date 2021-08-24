@@ -6,8 +6,6 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using System.Linq;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader
@@ -39,6 +37,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var tLevels = await _internalApiClient.GetTlevelsByStatusIdAsync(ukprn, statusId);
             return _mapper.Map<IEnumerable<YourTlevelViewModel>>(tLevels);
+        }
+
+        public async Task<YourTlevelsViewModelNew> GetYourTlevelsByStatusAsync(long ukprn, int statusId)
+        {
+            var tLevels = await _internalApiClient.GetTlevelsByStatusIdAsync(ukprn, statusId);
+            return _mapper.Map<YourTlevelsViewModelNew>(tLevels);
         }
 
         public async Task<SelectToReviewPageViewModel> GetTlevelsToReviewByUkprnAsync(long ukprn)

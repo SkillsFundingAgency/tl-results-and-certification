@@ -724,6 +724,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Confirmation.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Tlevel\ConfirmedTlevels.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ConfirmedTlevels.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Tlevel\Details.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -743,6 +748,11 @@
       <DependentUpon>SelectToReview.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Content\Tlevel\TlevelQuerySent.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TlevelQuerySent.resx</DependentUpon>
     </Compile>
     <Compile Update="Content\Tlevel\TlevelsDashboard.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -1411,6 +1421,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Confirmation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Content\Tlevel\ConfirmedTlevels.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ConfirmedTlevels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Content\Tlevel\Details.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Details.Designer.cs</LastGenOutput>
@@ -1426,6 +1440,10 @@
     <EmbeddedResource Update="Content\Tlevel\SelectToReview.resx">
       <LastGenOutput>SelectToReview.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Tlevel\TlevelQuerySent.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TlevelQuerySent.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Tlevel\TlevelsDashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

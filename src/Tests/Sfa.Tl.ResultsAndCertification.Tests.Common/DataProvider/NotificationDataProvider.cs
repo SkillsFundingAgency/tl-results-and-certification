@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 {
     public class NotificationDataProvider
     {
-        public static NotificationTemplate CreateNotificationTemplate(ResultsAndCertificationDbContext _dbContext, NotificationTemplateName notificationTemplateName = NotificationTemplateName.TlevelDetailsQueried, bool addToDbContext = true)
+        public static NotificationTemplate CreateNotificationTemplate(ResultsAndCertificationDbContext _dbContext, NotificationTemplateName notificationTemplateName = NotificationTemplateName.TlevelDetailsQueriedTechnicalTeamNotification, bool addToDbContext = true)
         {
             var notificationTemplate = new NotificationTemplateBuilder().Build(notificationTemplateName);
 
