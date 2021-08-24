@@ -7,7 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels
 {
     public class ConfirmedTlevelsViewModel
     {
-        // TODO: rename this when YourTlevelsViewModel is removed. 
         public ConfirmedTlevelsViewModel()
         {
             Tlevels = new List<YourTlevelViewModel>();

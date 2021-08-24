@@ -19,14 +19,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
                 Tlevels = new List<YourTlevelViewModel>()
             };
 
-            TlevelLoader.GetYourTlevelsByStatusAsync(AoUkprn, (int)TlevelReviewStatus.Confirmed)
+            TlevelLoader.GetConfirmedTlevelsViewModelAsync(AoUkprn, (int)TlevelReviewStatus.Confirmed)
                 .Returns(mockresult);
         }
 
         [Fact]
         public void Then_Called_Expected_Method()
         {
-            TlevelLoader.Received(1).GetYourTlevelsByStatusAsync(AoUkprn, (int)TlevelReviewStatus.Confirmed);
+            TlevelLoader.Received(1).GetConfirmedTlevelsViewModelAsync(AoUkprn, (int)TlevelReviewStatus.Confirmed);
         }
 
         [Fact(Skip = "New Page Next story")]

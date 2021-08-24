@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetYourTlevelsByStatusAsync(Ukprn, statusId);
+            ActualResult = await Loader.GetConfirmedTlevelsViewModelAsync(Ukprn, statusId);
         }
     }
 }
