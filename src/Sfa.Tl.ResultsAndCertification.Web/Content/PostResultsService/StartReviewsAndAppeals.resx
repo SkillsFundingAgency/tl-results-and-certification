@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Bullet_Item_Appaled_A_Review_Decision" xml:space="preserve">
-    <value>appealed a review decision</value>
+  <data name="Bullet_Item_An_Active_Registration_Status" xml:space="preserve">
+    <value>an active registration status</value>
   </data>
-  <data name="Bullet_Item_Appealed_For_Grade_2021" xml:space="preserve">
-    <value>appealed a teacher-assessed grade for 2021</value>
+  <data name="Bullet_Item_An_Assessment_Entry" xml:space="preserve">
+    <value>an assessment entry</value>
+  </data>
+  <data name="Bullet_Item_A_Current_Recorded_Grade" xml:space="preserve">
+    <value>a current recorded grade</value>
   </data>
   <data name="Bullet_Item_Calculate_Overall_Result" xml:space="preserve">
     <value>calculate the learner’s overall T Level result</value>
@@ -129,25 +132,25 @@
   <data name="Bullet_Item_Issue_Certificate" xml:space="preserve">
     <value>issue a certificate</value>
   </data>
-  <data name="Bullet_Item_Request_A_Review" xml:space="preserve">
-    <value>requested a review</value>
-  </data>
   <data name="Button_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
-  <data name="Heading_Review_And_Appeal" xml:space="preserve">
-    <value>Reviews and appeals</value>
+  <data name="Heading_Before_You_Start" xml:space="preserve">
+    <value>Before you start</value>
   </data>
-  <data name="Inset_It_Is_Only_Possible_Record_Appeal_At_The_Moment" xml:space="preserve">
-    <value>It is only possible to record appeals at the moment. You will be able to record reviews from next year.</value>
+  <data name="Heading_Review_And_Appeal" xml:space="preserve">
+    <value>Appeals</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Reviews and appeals</value>
+    <value>Appeal after deadline request sent</value>
+  </data>
+  <data name="Para_The_Learner_Mush_Have" xml:space="preserve">
+    <value>The learner must have:</value>
   </data>
   <data name="Para_While_Review_We_Cannot" xml:space="preserve">
     <value>While a component is under review or being appealed we cannot:</value>
   </data>
   <data name="Para_You_Must_Tell_Component_Under_Review_Or_Appealed" xml:space="preserve">
-    <value>You must tell us if a component of a learner’s T Level is under review or being appealed for learners who have:</value>
+    <value>You must tell us if a component of a learner’s T Level is being appealed for a teacher-assessed grade.</value>
   </data>
 </root>

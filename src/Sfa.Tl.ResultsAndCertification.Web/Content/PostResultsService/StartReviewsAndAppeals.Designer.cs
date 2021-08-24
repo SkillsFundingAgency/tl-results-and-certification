@@ -62,20 +62,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to appealed a review decision.
+        ///   Looks up a localized string similar to a current recorded grade.
         /// </summary>
-        public static string Bullet_Item_Appaled_A_Review_Decision {
+        public static string Bullet_Item_A_Current_Recorded_Grade {
             get {
-                return ResourceManager.GetString("Bullet_Item_Appaled_A_Review_Decision", resourceCulture);
+                return ResourceManager.GetString("Bullet_Item_A_Current_Recorded_Grade", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to appealed a teacher-assessed grade for 2021.
+        ///   Looks up a localized string similar to an active registration status.
         /// </summary>
-        public static string Bullet_Item_Appealed_For_Grade_2021 {
+        public static string Bullet_Item_An_Active_Registration_Status {
             get {
-                return ResourceManager.GetString("Bullet_Item_Appealed_For_Grade_2021", resourceCulture);
+                return ResourceManager.GetString("Bullet_Item_An_Active_Registration_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to an assessment entry.
+        /// </summary>
+        public static string Bullet_Item_An_Assessment_Entry {
+            get {
+                return ResourceManager.GetString("Bullet_Item_An_Assessment_Entry", resourceCulture);
             }
         }
         
@@ -98,15 +107,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to requested a review.
-        /// </summary>
-        public static string Bullet_Item_Request_A_Review {
-            get {
-                return ResourceManager.GetString("Bullet_Item_Request_A_Review", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Button_Continue {
@@ -116,7 +116,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reviews and appeals.
+        ///   Looks up a localized string similar to Before you start.
+        /// </summary>
+        public static string Heading_Before_You_Start {
+            get {
+                return ResourceManager.GetString("Heading_Before_You_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appeals.
         /// </summary>
         public static string Heading_Review_And_Appeal {
             get {
@@ -125,20 +134,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to It is only possible to record appeals at the moment. You will be able to record reviews from next year..
-        /// </summary>
-        public static string Inset_It_Is_Only_Possible_Record_Appeal_At_The_Moment {
-            get {
-                return ResourceManager.GetString("Inset_It_Is_Only_Possible_Record_Appeal_At_The_Moment", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reviews and appeals.
+        ///   Looks up a localized string similar to Appeal after deadline request sent.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The learner must have:.
+        /// </summary>
+        public static string Para_The_Learner_Mush_Have {
+            get {
+                return ResourceManager.GetString("Para_The_Learner_Mush_Have", resourceCulture);
             }
         }
         
@@ -152,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You must tell us if a component of a learner’s T Level is under review or being appealed for learners who have:.
+        ///   Looks up a localized string similar to You must tell us if a component of a learner’s T Level is being appealed for a teacher-assessed grade..
         /// </summary>
         public static string Para_You_Must_Tell_Component_Under_Review_Or_Appealed {
             get {
