@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             return templateName switch
             {
-                NotificationTemplateName.TlevelDetailsQueried => new NotificationTemplate
+                NotificationTemplateName.TlevelDetailsQueriedTechnicalTeamNotification => new NotificationTemplate
                 {
                     TemplateId = new Guid("60581937-fcdd-4bcb-910a-04a136803091"),
                     TemplateName = templateName.ToString(),
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             new NotificationTemplate
             {
                 TemplateId = new Guid("90581937-dddd-4bcb-910a-04a136803091"),
-                TemplateName = NotificationTemplateName.TlevelDetailsQueried.ToString(),
+                TemplateName = NotificationTemplateName.TlevelDetailsQueriedTechnicalTeamNotification.ToString(),
                 CreatedBy = Constants.CreatedByUser,
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,

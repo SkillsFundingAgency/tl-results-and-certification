@@ -90,25 +90,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<bool> SendEmailAsync(VerifyTlevelDetails model, TqAwardingOrganisation tqAwardingOrganisation, string referenceNumber)
         {
-            // TODO: This might break existing template thereby cause trouble in live 
-            //var tokens = new Dictionary<string, dynamic>
-            //{
-            //    { "reference_number", referenceNumber },
-            //    { "sender_email_address", model.QueriedUserEmail },
-            //    { "tqawardingorganisation_id", tqAwardingOrganisation.Id },
-            //    { "tlevel_name", tqAwardingOrganisation.TlPathway.TlevelTitle },
-            //    { "requested_message", model.Query }
-            //};
-
             var tokens = new Dictionary<string, dynamic>
-                {
-                    { "tlevel_name", tqAwardingOrganisation.TlPathway.TlevelTitle },
-                    { "user_comments", model.Query },
-                    { "sender_name", model.ModifiedBy },
-                    { "sender_email_address", model.QueriedUserEmail }
-                };
-
-            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.TlevelDetailsQueried.ToString(), _resultsAndCertificationConfiguration.TlevelQueriedSupportEmailAddress, tokens);
+            {
+                { "reference_number", referenceNumber },
+                { "sender_email_address", model.QueriedUserEmail },
+                { "tqawardingorganisation_id", tqAwardingOrganisation.Id },
+                { "tlevel_name", tqAwardingOrganisation.TlPathway.TlevelTitle },
+                { "requested_message", model.Query }
+            };
+            
+            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.TlevelDetailsQueriedTechnicalTeamNotification.ToString(), _resultsAndCertificationConfiguration.TlevelQueriedSupportEmailAddress, tokens);
         }
     }
 }
