@@ -24,14 +24,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
                 Tlevels = new List<YourTlevelViewModel> { _expectedConfirmedTlevel }
             };
 
-            TlevelLoader.GetConfirmedTlevelsViewModelAsync(AoUkprn, (int)TlevelReviewStatus.Confirmed)
+            TlevelLoader.GetConfirmedTlevelsViewModelAsync(AoUkprn)
                 .Returns(mockresult);
         }
 
         [Fact]
         public void Then_Called_Expected_Method()
         {
-            TlevelLoader.Received(1).GetConfirmedTlevelsViewModelAsync(AoUkprn, (int)TlevelReviewStatus.Confirmed);
+            TlevelLoader.Received(1).GetConfirmedTlevelsViewModelAsync(AoUkprn);
         }
 
         [Fact]

@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("confirmed-tlevels", Name = RouteConstants.ConfirmedTlevels)]
         public async Task<IActionResult> ConfirmedTlevelsAsync()
         {
-            var viewModel = await _tlevelLoader.GetConfirmedTlevelsViewModelAsync(User.GetUkPrn(), (int)TlevelReviewStatus.Confirmed);
+            var viewModel = await _tlevelLoader.GetConfirmedTlevelsViewModelAsync(User.GetUkPrn());
             if (viewModel == null || !viewModel.Tlevels.Any())
                 return RedirectToRoute(RouteConstants.Home); // TODO: Other story to show none present. 
 
@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("queried-tlevels", Name = RouteConstants.QueriedTlevels)]
         public async Task<IActionResult> QueriedTlevelsAsync()
         {
-            var viewModel = await _tlevelLoader.GetConfirmedTlevelsViewModelAsync(User.GetUkPrn(), (int)TlevelReviewStatus.Queried);
+            var viewModel = await _tlevelLoader.GetConfirmedTlevelsViewModelAsync(User.GetUkPrn());
             if (viewModel == null || !viewModel.Tlevels.Any())
                 return RedirectToRoute(RouteConstants.Home); // TODO: Other story to show none present. 
 

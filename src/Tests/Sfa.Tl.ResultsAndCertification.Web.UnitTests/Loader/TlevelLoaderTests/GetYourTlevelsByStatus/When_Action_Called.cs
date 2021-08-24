@@ -2,6 +2,7 @@
 using NSubstitute;
 using FluentAssertions;
 using System.Linq;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetYourTlevelsByStatus
 {
@@ -10,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            InternalApiClient.Received(1).GetTlevelsByStatusIdAsync(Ukprn, statusId);
+            InternalApiClient.Received(1).GetTlevelsByStatusIdAsync(Ukprn, (int)TlevelReviewStatus.Confirmed);
         }
 
         [Fact]
