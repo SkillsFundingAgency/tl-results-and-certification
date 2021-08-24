@@ -313,6 +313,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirmed T Levels.
+        /// </summary>
+        public static string Tlevels_Confirmed_List {
+            get {
+                return ResourceManager.GetString("Tlevels_Confirmed_List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to T Levels.
         /// </summary>
         public static string Tlevels_Dashboard {
