@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("queried-tlevels", Name = RouteConstants.QueriedTlevels)]
         public async Task<IActionResult> QueriedTlevelsAsync()
         {
-            var viewModel = await _tlevelLoader.GetConfirmedTlevelsViewModelAsync(User.GetUkPrn());
+            var viewModel = await _tlevelLoader.GetQueriedTlevelsViewModelAsync(User.GetUkPrn());
             if (viewModel == null || !viewModel.Tlevels.Any())
                 return RedirectToRoute(RouteConstants.Home); // TODO: Other story to show none present. 
 

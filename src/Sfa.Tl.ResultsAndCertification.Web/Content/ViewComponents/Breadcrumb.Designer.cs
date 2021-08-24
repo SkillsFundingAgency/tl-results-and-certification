@@ -331,6 +331,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Queried T Levels.
+        /// </summary>
+        public static string Tlevels_Queried_List {
+            get {
+                return ResourceManager.GetString("Tlevels_Queried_List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upload assessment entries file.
         /// </summary>
         public static string Upload_Assessments_File {
