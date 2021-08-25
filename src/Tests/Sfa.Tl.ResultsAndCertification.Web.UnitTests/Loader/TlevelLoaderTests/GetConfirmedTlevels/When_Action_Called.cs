@@ -4,7 +4,7 @@ using FluentAssertions;
 using System.Linq;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetYourTlevelsByStatus
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetConfirmedTlevels
 {
     public class When_Action_Called : TestSetup
     {

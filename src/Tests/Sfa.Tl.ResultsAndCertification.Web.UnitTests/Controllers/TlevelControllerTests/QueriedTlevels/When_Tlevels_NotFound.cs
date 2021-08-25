@@ -7,25 +7,25 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ConfirmedTlevels
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.QueriedTlevels
 {
     public class When_Tlevels_NotFound : TestSetup
     {
         public override void Given()
         {
-            var mockresult = new ConfirmedTlevelsViewModel
+            var mockresult = new QueriedTlevelsViewModel
             {
                 Tlevels = new List<YourTlevelViewModel>()
             };
 
-            TlevelLoader.GetConfirmedTlevelsViewModelAsync(AoUkprn)
+            TlevelLoader.GetQueriedTlevelsViewModelAsync(AoUkprn)
                 .Returns(mockresult);
         }
 
         [Fact]
         public void Then_Called_Expected_Method()
         {
-            TlevelLoader.Received(1).GetConfirmedTlevelsViewModelAsync(AoUkprn);
+            TlevelLoader.Received(1).GetQueriedTlevelsViewModelAsync(AoUkprn);
         }
 
         [Fact(Skip = "New Page Next story")]

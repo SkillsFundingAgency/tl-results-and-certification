@@ -9,7 +9,7 @@ using System.Linq;
 using Xunit;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ConfirmedTlevels
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.QueriedTlevels
 {
     public class When_ViewModel_IsValid : TestSetup
     {
@@ -18,26 +18,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public override void Given()
         {
             _expectedConfirmedTlevel = new YourTlevelViewModel { PathwayId = 10, TlevelTitle = "T Level in Education" };
-            var mockresult = new ConfirmedTlevelsViewModel
+            var mockresult = new QueriedTlevelsViewModel
             {
                 Tlevels = new List<YourTlevelViewModel> { _expectedConfirmedTlevel }
             };
 
-            TlevelLoader.GetConfirmedTlevelsViewModelAsync(AoUkprn)
+            TlevelLoader.GetQueriedTlevelsViewModelAsync(AoUkprn)
                 .Returns(mockresult);
         }
 
         [Fact]
         public void Then_Called_Expected_Method()
         {
-            TlevelLoader.Received(1).GetConfirmedTlevelsViewModelAsync(AoUkprn);
+            TlevelLoader.Received(1).GetQueriedTlevelsViewModelAsync(AoUkprn);
         }
 
         [Fact]
         public void Then_Returns_Expected_ViewModel()
         {
             var viewResult = Result as ViewResult;
-            var model = viewResult.Model as ConfirmedTlevelsViewModel;
+            var model = viewResult.Model as QueriedTlevelsViewModel;
 
             model.Should().NotBeNull();
             model.Tlevels.Should().NotBeNull();
@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             model.BreadCrumb.BreadcrumbItems.ElementAt(0).RouteName.Should().Be(RouteConstants.Home);
             model.BreadCrumb.BreadcrumbItems.ElementAt(1).DisplayName.Should().Be(BreadcrumbContent.Tlevels_Dashboard);
             model.BreadCrumb.BreadcrumbItems.ElementAt(1).RouteName.Should().Be(RouteConstants.TlevelsDashboard);
-            model.BreadCrumb.BreadcrumbItems.ElementAt(2).DisplayName.Should().Be(BreadcrumbContent.Tlevels_Confirmed_List);
+            model.BreadCrumb.BreadcrumbItems.ElementAt(2).DisplayName.Should().Be(BreadcrumbContent.Tlevels_Queried_List);
             model.BreadCrumb.BreadcrumbItems.ElementAt(2).RouteName.Should().BeNull();
         }
     }

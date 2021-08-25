@@ -10,7 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetYourTlevelsByStatus
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetQueriedTlevels
 {
     public abstract class TestSetup : BaseTest<TlevelLoader>
     {
@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         protected int StatusId = 1;
 
         protected IEnumerable<AwardingOrganisationPathwayStatus> ApiClientResponse;
-        protected ConfirmedTlevelsViewModel ActualResult;
+        protected QueriedTlevelsViewModel ActualResult;
         protected AwardingOrganisationPathwayStatus ExpectedResult;
         protected string ExpectedTLevelTitle = "Tlevel Title";
 
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
             ApiClientResponse = new List<AwardingOrganisationPathwayStatus> { ExpectedResult };
 
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-            InternalApiClient.GetTlevelsByStatusIdAsync(Ukprn, (int)TlevelReviewStatus.Confirmed)
+            InternalApiClient.GetTlevelsByStatusIdAsync(Ukprn, (int)TlevelReviewStatus.Queried)
                 .Returns(ApiClientResponse);
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(TlevelMapper).Assembly));
@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetConfirmedTlevelsViewModelAsync(Ukprn);
+            ActualResult = await Loader.GetQueriedTlevelsViewModelAsync(Ukprn);
         }
     }
 }
