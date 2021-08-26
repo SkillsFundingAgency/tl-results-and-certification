@@ -5,7 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using System.Linq;
 using Xunit;
-
 using SummaryContent = Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel.TlevelSummary;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ReportIssueAsyncGet
