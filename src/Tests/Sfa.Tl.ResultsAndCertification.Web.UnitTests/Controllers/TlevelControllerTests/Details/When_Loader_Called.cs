@@ -13,16 +13,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 {
     public class When_Loader_Called : TestSetup
     {
-        private TLevelDetailsViewModel mockresult;
+        private TLevelConfirmedDetailsViewModel mockresult;
 
         public override void Given()
         {
-            mockresult = new TLevelDetailsViewModel 
+            mockresult = new TLevelConfirmedDetailsViewModel 
             { 
-                PageTitle = "Tlevel Details", 
-                PathwayName = "Education", 
-                ShowSomethingIsNotRight = true,
-                RouteName = "Digital Education", 
+                IsValid = true,
                 Specialisms = new List<string> { "Specialism1", "Specialism2" }
             };
 
@@ -40,12 +37,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as ViewResult;
-            var actualResult = viewResult.Model as TLevelDetailsViewModel;
+            var actualResult = viewResult.Model as TLevelConfirmedDetailsViewModel;
 
-            actualResult.PageTitle.Should().Be(mockresult.PageTitle);
-            actualResult.PathwayName.Should().Be(mockresult.PathwayName);
-            actualResult.ShowSomethingIsNotRight.Should().Be(mockresult.ShowSomethingIsNotRight);
-            actualResult.RouteName.Should().Be(mockresult.RouteName);
+            actualResult.IsValid.Should().Be(mockresult.IsValid);
             actualResult.Specialisms.Count().Should().Be(2);
             actualResult.Specialisms.First().Should().Be(mockresult.Specialisms.First());
 

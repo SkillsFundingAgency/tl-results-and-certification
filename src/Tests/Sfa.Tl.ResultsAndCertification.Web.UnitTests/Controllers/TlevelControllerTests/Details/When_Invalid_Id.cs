@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 {
     public class When_Invalid_Id : TestSetup
     {
-        private TLevelDetailsViewModel mockresult = null;
+        private TLevelConfirmedDetailsViewModel mockresult = null;
 
         public override void Given()
         {

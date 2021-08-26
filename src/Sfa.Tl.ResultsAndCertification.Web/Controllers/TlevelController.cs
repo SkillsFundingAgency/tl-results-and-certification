@@ -97,11 +97,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [Route("tlevel-details/{id}", Name = RouteConstants.TlevelDetails)]
+        [Route("tlevel-confirmed-details/{id}", Name = RouteConstants.TlevelConfirmedDetails)]        
         public async Task<IActionResult> DetailsAsync(int id)
         {
             var viewModel = await _tlevelLoader.GetTlevelDetailsByPathwayIdAsync(User.GetUkPrn(), id);
 
-            if(viewModel == null)
+            if(viewModel == null || !viewModel.IsValid)
             {
                 _logger.LogWarning(LogEvent.TlevelsNotFound, $"No T levels found. Method: GetTlevelDetailsByPathwayIdAsync(Ukprn: {User.GetUkPrn()}, id: {id}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
