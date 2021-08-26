@@ -7,7 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.NoConfirmedTlevels
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.NoConfirmedTlevels
 {
     public class When_Confirmed_Tlevels_Found : TestSetup
     {

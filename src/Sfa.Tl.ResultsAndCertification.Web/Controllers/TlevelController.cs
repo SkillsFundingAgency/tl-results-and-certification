@@ -96,12 +96,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(new NoConfirmedTlevelsViewModel());
         }
 
+        [Route("no-queried-tlevels", Name = RouteConstants.NoQueriedTlevels)]
+        public async Task<IActionResult> NoQueriedTlevelsAsync()
+        {
+            var viewModel = await _tlevelLoader.GetQueriedTlevelsViewModelAsync(User.GetUkPrn());
+            if (viewModel == null || viewModel.Tlevels.Any())
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(new NoQueriedTlevelsViewModel());
+        }
+
         [Route("queried-tlevels", Name = RouteConstants.QueriedTlevels)]
         public async Task<IActionResult> QueriedTlevelsAsync()
         {
             var viewModel = await _tlevelLoader.GetQueriedTlevelsViewModelAsync(User.GetUkPrn());
             if (viewModel == null || !viewModel.Tlevels.Any())
-                return RedirectToRoute(RouteConstants.Home); // TODO: Other story to show none present. 
+                return RedirectToRoute(RouteConstants.NoQueriedTlevels);
 
             return View(viewModel);
         }

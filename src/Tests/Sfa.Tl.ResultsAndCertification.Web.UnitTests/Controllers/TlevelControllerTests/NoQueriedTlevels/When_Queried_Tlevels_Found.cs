@@ -7,15 +7,15 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.QueriedTlevels
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.NoQueriedTlevels
 {
-    public class When_Tlevels_NotFound : TestSetup
+    public class When_Queried_Tlevels_Found : TestSetup
     {
         public override void Given()
         {
             var mockresult = new QueriedTlevelsViewModel
             {
-                Tlevels = new List<YourTlevelViewModel>()
+                Tlevels = new List<YourTlevelViewModel> { new YourTlevelViewModel { PathwayId = 1, TlevelTitle = "Tlevel in Education" } }
             };
 
             TlevelLoader.GetQueriedTlevelsViewModelAsync(AoUkprn)
@@ -29,10 +29,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_Redirected_To_NoQueriedTlevels()
+        public void Then_Redirected_To_PageNotFound()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.NoQueriedTlevels);
+            routeName.Should().Be(RouteConstants.PageNotFound);
         }
     }
 }

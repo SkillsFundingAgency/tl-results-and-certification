@@ -21,6 +21,7 @@
         public const string ConfirmedTlevels = "ConfirmedTlevels";
         public const string NoConfirmedTlevels = "NoConfirmedTlevels";
         public const string QueriedTlevels = "QueriedTlevels";
+        public const string NoQueriedTlevels = "NoQueriedTlevels";
         public const string TlevelDetails = "TlevelDetails";
         public const string TlevelConfirmedDetails = "TlevelConfirmedDetails";
         public const string SelectTlevel = "SelectTlevel";
