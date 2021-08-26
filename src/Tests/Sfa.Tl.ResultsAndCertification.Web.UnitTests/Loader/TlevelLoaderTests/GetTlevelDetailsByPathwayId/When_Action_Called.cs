@@ -30,10 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         {
             ActualResult.Should().NotBeNull();
             ActualResult.PathwayId.Should().Be(ExpectedResult.PathwayId);
-            ActualResult.RouteName.Should().Be(ExpectedResult.RouteName);
-            ActualResult.PathwayName.Should().Be(ExpectedResult.PathwayName);
-            ActualResult.ShowSomethingIsNotRight.Should().Be(ExpectedResult.ShowSomethingIsNotRight);
-            ActualResult.ShowQueriedInfo.Should().Be(ExpectedResult.ShowQueriedInfo);
+            ActualResult.IsValid.Should().Be(ExpectedResult.IsValid);
         }
     }
 }

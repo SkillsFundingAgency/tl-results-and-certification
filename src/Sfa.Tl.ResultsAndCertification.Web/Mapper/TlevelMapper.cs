@@ -30,14 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<IEnumerable<AwardingOrganisationPathwayStatus>, QueriedTlevelsViewModel>()
                 .ForMember(d => d.Tlevels, opts => opts.MapFrom(s => s));
 
-            CreateMap<TlevelPathwayDetails, TLevelDetailsViewModel>()
-               .ForMember(d => d.PageTitle, opts => opts.MapFrom(s => "T Level details"))
+            CreateMap<TlevelPathwayDetails, TLevelConfirmedDetailsViewModel>()
                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
-               .ForMember(d => d.ShowSomethingIsNotRight, opts => opts.MapFrom(s => s.PathwayStatusId == (int)TlevelReviewStatus.Confirmed))
-               .ForMember(d => d.ShowQueriedInfo, opts => opts.MapFrom(s => s.PathwayStatusId == (int)TlevelReviewStatus.Queried))
-               .ForMember(d => d.RouteName, opts => opts.MapFrom(s => s.RouteName))
-               .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
-               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms));
+               .ForMember(d => d.IsValid, opts => opts.MapFrom(s => s.PathwayStatusId == (int)TlevelReviewStatus.Confirmed))
+               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
+               .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
+               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms.Select(s => $"{s.Name}<br/>({s.Code})")));
 
             CreateMap<TlevelPathwayDetails, ConfirmTlevelViewModel>()
                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))

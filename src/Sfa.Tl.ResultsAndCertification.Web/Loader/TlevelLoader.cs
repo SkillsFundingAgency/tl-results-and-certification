@@ -22,10 +22,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<TLevelDetailsViewModel> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
+        public async Task<TLevelConfirmedDetailsViewModel> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id)
         {
             var tLevelPathwayInfo = await _internalApiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
-            return _mapper.Map<TLevelDetailsViewModel>(tLevelPathwayInfo);
+            return _mapper.Map<TLevelConfirmedDetailsViewModel>(tLevelPathwayInfo);
         }
 
         public async Task<YourTlevelsViewModel> GetYourTlevelsViewModel(long ukprn)

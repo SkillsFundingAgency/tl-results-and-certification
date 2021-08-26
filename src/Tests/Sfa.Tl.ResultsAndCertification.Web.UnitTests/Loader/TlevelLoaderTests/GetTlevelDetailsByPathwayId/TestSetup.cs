@@ -18,11 +18,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
         protected IMapper Mapper;
         protected TlevelLoader Loader;
-        protected TLevelDetailsViewModel ActualResult;
+        protected TLevelConfirmedDetailsViewModel ActualResult;
         protected readonly int Id = 9;
         protected readonly long Ukprn = 1024;
         protected TlevelPathwayDetails ApiClientResponse;
-        protected TLevelDetailsViewModel ExpectedResult;
+        protected TLevelConfirmedDetailsViewModel ExpectedResult;
 
         protected readonly int PathwayId = 1;
         protected readonly string PathwayName = "Pathway Name1";
@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
             };
 
             ApiClientResponse = new TlevelPathwayDetails { PathwayId = 1, PathwayName = PathwayName, RouteName = RouteName, PathwayStatusId = 2, Specialisms = Specialisms };
-            ExpectedResult = new TLevelDetailsViewModel { PathwayId = 1, PathwayName = PathwayName, RouteName = RouteName, ShowSomethingIsNotRight = ShowSomethingIsNotRight, ShowQueriedInfo = ShowQueriedInfo, Specialisms = new List<string> { "Civil Engineering<br/>(97865897)", "Assisting teaching<br/>(7654321)" } };
+            ExpectedResult = new TLevelConfirmedDetailsViewModel { PathwayId = 1, IsValid = ShowSomethingIsNotRight, Specialisms = new List<string> { "Civil Engineering<br/>(97865897)", "Assisting teaching<br/>(7654321)" } };
 
             CreateMapper();
 
@@ -71,11 +71,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
                 c.AddMaps(typeof(TlevelMapper).Assembly);
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
-                                new UserNameResolver<TlevelPathwayDetails, TLevelDetailsViewModel>(HttpContextAccessor) :
+                                new UserNameResolver<TlevelPathwayDetails, TLevelConfirmedDetailsViewModel>(HttpContextAccessor) :
                                 null);
             });
             Mapper = new AutoMapper.Mapper(mapperConfig);
-        }
-               
+        }               
     }
 }
