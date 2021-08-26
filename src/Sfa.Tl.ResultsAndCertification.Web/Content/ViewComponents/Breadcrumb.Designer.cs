@@ -331,6 +331,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No confirmed T Levels.
+        /// </summary>
+        public static string Tlevels_None_Confirmed {
+            get {
+                return ResourceManager.GetString("Tlevels_None_Confirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Queried T Levels.
         /// </summary>
         public static string Tlevels_Queried_List {
