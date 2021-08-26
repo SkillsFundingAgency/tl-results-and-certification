@@ -117,113 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Assessment_Dashboard" xml:space="preserve">
-    <value>Assessment entries</value>
+  <data name="Button_Tlevels" xml:space="preserve">
+    <value>Back to T Levels</value>
   </data>
-  <data name="Check_Learner_Details" xml:space="preserve">
-    <value>Check the learner’s details</value>
+  <data name="Dropout_Link_Cannot_Find_Tlevel" xml:space="preserve">
+    <value>I cannot find a T Level</value>
   </data>
-  <data name="Contact" xml:space="preserve">
-    <value>Contact us</value>
+  <data name="Dropout_Para_If_You_Cannot_Find_Check" xml:space="preserve">
+    <value>If you cannot find the T Level you are looking for, check if you need to</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
+  <data name="Dropout_Para_If_You_Still_Cannot_Find_ContactUs" xml:space="preserve">
+    <value>If you still cannot find it,</value>
   </data>
-  <data name="Learners_Assessment_entries" xml:space="preserve">
-    <value>Learner's assessment entries</value>
+  <data name="Dropout_Text_It" xml:space="preserve">
+    <value>it.</value>
   </data>
-  <data name="Learners_Results" xml:space="preserve">
-    <value>Learner's results</value>
+  <data name="Dropout_Text_Or_Have" xml:space="preserve">
+    <value>it or need to</value>
   </data>
-  <data name="Learner_TLevel_Record" xml:space="preserve">
-    <value>Learner T Level record</value>
+  <data name="Email_Subject_I_Cannot_Find_Tlevel" xml:space="preserve">
+    <value>I cannot find a T Level</value>
   </data>
-  <data name="Manage_Learner_TLevel_Records" xml:space="preserve">
-    <value>Manage learner T Level records</value>
+  <data name="Fullstop" xml:space="preserve">
+    <value>.</value>
   </data>
-  <data name="Manage_Postal_Address" xml:space="preserve">
-    <value>Manage your organisation’s postal address</value>
+  <data name="Heading_You_Have_Not_Queried_Tlevels" xml:space="preserve">
+    <value>You have not queried any T Levels</value>
   </data>
-  <data name="Provider_Find_Provider" xml:space="preserve">
-    <value>Find a provider</value>
+  <data name="Link_Confirmed" xml:space="preserve">
+    <value>confirmed</value>
   </data>
-  <data name="Provider_Tlevels" xml:space="preserve">
-    <value>Provider’s T Levels</value>
+  <data name="Link_ContactUs" xml:space="preserve">
+    <value>contact us</value>
   </data>
-  <data name="Provider_Your_Providers" xml:space="preserve">
-    <value>Your providers</value>
+  <data name="Link_Review" xml:space="preserve">
+    <value>review</value>
   </data>
-  <data name="Prs_Learner_Component_Grade_Status" xml:space="preserve">
-    <value>Learner’s component grade status</value>
-  </data>
-  <data name="Registration_Dashboard" xml:space="preserve">
-    <value>Registrations</value>
-  </data>
-  <data name="Registration_Details" xml:space="preserve">
-    <value>Registration details</value>
-  </data>
-  <data name="Request_Statement_Of_Achievement" xml:space="preserve">
-    <value>Request statement of achievement</value>
-  </data>
-  <data name="Result_Dashboard" xml:space="preserve">
-    <value>Results</value>
-  </data>
-  <data name="Reviews_And_Appeals" xml:space="preserve">
-    <value>Appeals</value>
-  </data>
-  <data name="Search_For_Assessments" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
-  <data name="Search_For_Learner" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
-  <data name="Search_For_Registration" xml:space="preserve">
-    <value>Search for a registration</value>
-  </data>
-  <data name="Search_For_Results" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
-  <data name="StartReviewsAndAppeals" xml:space="preserve">
-    <value>Appeals</value>
-  </data>
-  <data name="StatementOfAchievementRequested" xml:space="preserve">
-    <value>Statement of achievement requested</value>
-  </data>
-  <data name="Statement_Of_Achievement_Not_Available" xml:space="preserve">
-    <value>Statement of achievement not available</value>
-  </data>
-  <data name="Tlevels_Confirmed_List" xml:space="preserve">
-    <value>Confirmed T Levels</value>
-  </data>
-  <data name="Tlevels_Dashboard" xml:space="preserve">
-    <value>T Levels</value>
-  </data>
-  <data name="Tlevels_None_Confirmed" xml:space="preserve">
-    <value>No confirmed T Levels</value>
-  </data>
-  <data name="Tlevels_None_Queried" xml:space="preserve">
+  <data name="Page_Title" xml:space="preserve">
     <value>No queried T Levels</value>
   </data>
-  <data name="Tlevels_Queried_List" xml:space="preserve">
-    <value>Queried T Levels</value>
-  </data>
-  <data name="Tlevel_Details" xml:space="preserve">
-    <value>T Level details</value>
-  </data>
-  <data name="Tlevel_Review_Select" xml:space="preserve">
-    <value>Review new T Levels</value>
-  </data>
-  <data name="Tlevel_ViewAll" xml:space="preserve">
-    <value>Your T Levels</value>
-    <comment>TODO: Delete</comment>
-  </data>
-  <data name="Upload_Assessments_File" xml:space="preserve">
-    <value>Upload assessment entries file</value>
-  </data>
-  <data name="Upload_Registrations_File" xml:space="preserve">
-    <value>Upload registrations file</value>
-  </data>
-  <data name="Upload_Results_File" xml:space="preserve">
-    <value>Upload results file</value>
+  <data name="Para_Tlevels_You_Ask_To_Change_Appear_Here" xml:space="preserve">
+    <value>T Levels you ask us to change will appear here, until we have finished investigating your query.</value>
   </data>
 </root>

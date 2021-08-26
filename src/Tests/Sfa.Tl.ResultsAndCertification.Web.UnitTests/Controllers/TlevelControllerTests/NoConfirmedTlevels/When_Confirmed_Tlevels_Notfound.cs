@@ -10,7 +10,7 @@ using Xunit;
 
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.NoConfirmedTlevels
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.NoConfirmedTlevels
 {
     public class When_Confirmed_Tlevels_Notfound : TestSetup
     {

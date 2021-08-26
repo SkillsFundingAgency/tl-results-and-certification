@@ -25,12 +25,12 @@
             <div class="govuk-details__text">
                 @QueriedTlevels.Dropout_Para_If_You_Cannot_Find_Check
                 <a id="confirmedLink" asp-route="ConfirmedTlevels" class="govuk-link">@QueriedTlevels.Link_Confirmed</a> @QueriedTlevels.Dropout_Text_Or_Have
-                <a id="reviewLink" asp-route="ReviewTlevels" class="govuk-link">@QueriedTlevels.Link_Review</a> @ConfirmedTlevels.Dropout_Text_It<br><br>
+                <a id="reviewLink" asp-route="ReviewTlevels" class="govuk-link">@QueriedTlevels.Link_Review</a> @QueriedTlevels.Dropout_Text_It<br><br>
 
-                @ConfirmedTlevels.Dropout_Para_If_You_Still_Cannot_Find_ContactUs <a id="contactusLink" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@ConfirmedTlevels.Email_Subject_I_Cannot_Find_Tlevel" class="govuk-link">@ConfirmedTlevels.Link_ContactUs</a>@ConfirmedTlevels.Fullstop
+                @QueriedTlevels.Dropout_Para_If_You_Still_Cannot_Find_ContactUs <a id="contactusLink" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@QueriedTlevels.Email_Subject_I_Cannot_Find_Tlevel" class="govuk-link">@QueriedTlevels.Link_ContactUs</a>@QueriedTlevels.Fullstop
             </div>
         </details>
         
-        <a id="tLevelsButton" class="govuk-button" role="button" asp-route="TlevelsDashboard">@ConfirmedTlevels.Button_Back_To_Tlevels</a>
+        <a id="tLevelsButton" class="govuk-button" role="button" asp-route="TlevelsDashboard">@QueriedTlevels.Button_Back_To_Tlevels</a>
     </div>
 </div>

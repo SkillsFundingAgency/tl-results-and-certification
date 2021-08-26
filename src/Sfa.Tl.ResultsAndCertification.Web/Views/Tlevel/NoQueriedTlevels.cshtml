@@ -1,0 +1,35 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels.NoQueriedTlevelsViewModel
+@inject Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper.IWebConfigurationService ConfigurationService
+
+@{
+    ViewData["Title"] = NoQueriedTlevels.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:breadcrumb model="Model.BreadCrumb"></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">@NoQueriedTlevels.Heading_You_Have_Not_Queried_Tlevels </h1>
+        <p class="govuk-body">@NoQueriedTlevels.Para_Tlevels_You_Ask_To_Change_Appear_Here</p>
+
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">@NoQueriedTlevels.Dropout_Link_Cannot_Find_Tlevel</span>
+            </summary>
+            <div class="govuk-details__text">
+                @NoQueriedTlevels.Dropout_Para_If_You_Cannot_Find_Check
+                <a id="confirmedLink" asp-route="ConfirmedTlevels" class="govuk-link">@NoQueriedTlevels.Link_Confirmed</a> @NoQueriedTlevels.Dropout_Text_Or_Have
+                <a id="reviewLink" asp-route="ReviewTlevels" class="govuk-link">@NoQueriedTlevels.Link_Review</a> @NoQueriedTlevels.Dropout_Text_It<br><br>
+
+                @NoQueriedTlevels.Dropout_Para_If_You_Still_Cannot_Find_ContactUs <a id="contactusLink" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@NoQueriedTlevels.Email_Subject_I_Cannot_Find_Tlevel" class="govuk-link">@NoQueriedTlevels.Link_ContactUs</a>@NoQueriedTlevels.Fullstop
+            </div>
+        </details>
+
+        <a id="buttonTlevels" class="govuk-button" role="button" asp-route="TlevelsDashboard">@NoQueriedTlevels.Button_Tlevels</a>
+    </div>
+</div>
