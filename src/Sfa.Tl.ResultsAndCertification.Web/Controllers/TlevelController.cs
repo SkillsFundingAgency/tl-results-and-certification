@@ -24,7 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly ILogger _logger;
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TlevelCacheKey); } }
 
-
         public TlevelController(ITlevelLoader tlevelLoader, ICacheService cacheService,
             ILogger<TlevelController> logger)
         {

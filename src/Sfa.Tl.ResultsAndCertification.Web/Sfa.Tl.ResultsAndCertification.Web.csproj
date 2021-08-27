@@ -744,6 +744,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>NoQueriedTlevels.resx</DependentUpon>
     </Compile>
+    <Compile Update="Content\Tlevel\QueriedDetails.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>QueriedDetails.resx</DependentUpon>
+    </Compile>
     <Compile Update="Content\Tlevel\QueriedTlevels.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1451,6 +1456,10 @@
     <EmbeddedResource Update="Content\Tlevel\NoQueriedTlevels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NoQueriedTlevels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Content\Tlevel\QueriedDetails.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>QueriedDetails.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Content\Tlevel\QueriedTlevels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
