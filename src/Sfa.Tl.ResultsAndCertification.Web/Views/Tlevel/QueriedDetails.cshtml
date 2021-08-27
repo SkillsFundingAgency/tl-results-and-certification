@@ -1,0 +1,33 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels.TlevelQueriedDetailsViewModel
+
+@{
+    ViewData["Title"] = @Details.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">Queried T Level details</h1>
+        <div class="govuk-inset-text">
+            We are investigating this query and will update your organisation within 3 working days of it being submitted.<br><br>
+            If you do not hear from us within 3 working days, <a href="#" class="govuk-link">contact us</a>.
+        </div>
+
+        <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-top-7 govuk-!-margin-bottom-9">
+            <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+            <vc:summary-item model=Model.SummaryCore></vc:summary-item>
+            <vc:summary-list model=Model.SummarySpecialisms></vc:summary-list>
+
+            @*Additional fields to be added*@
+        </dl>
+
+        <a class="govuk-button" role="button" href="/1-19/dynamic/t-levels/queried-t-levels.html">Back to queried T Levels</a>
+
+    </div>
+</div>
