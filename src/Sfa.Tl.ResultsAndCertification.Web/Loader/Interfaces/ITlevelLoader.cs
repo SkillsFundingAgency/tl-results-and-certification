@@ -8,17 +8,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 {
     public interface ITlevelLoader
     {
-        Task<YourTlevelsViewModel> GetYourTlevelsViewModel(long ukprn);
-        Task<TLevelConfirmedDetailsViewModel> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id);
-        Task<TlevelQueriedDetailsViewModel> GetTlevelQueriedDetailsAsync(long ukprn, int id);
-        Task<ConfirmTlevelViewModel> GetVerifyTlevelDetailsByPathwayIdAsync(long ukprn, int id);
+        Task<YourTlevelsViewModel> GetYourTlevelsViewModel(long ukprn); // TODO: Is this in use?
+
+        // Verify
         Task<SelectToReviewPageViewModel> GetTlevelsToReviewByUkprnAsync(long ukprn);
-        Task<IEnumerable<YourTlevelViewModel>> GetTlevelsByStatusIdAsync(long ukprn, int statusId);
-        Task<ConfirmedTlevelsViewModel> GetConfirmedTlevelsViewModelAsync(long ukprn);
-        Task<QueriedTlevelsViewModel> GetQueriedTlevelsViewModelAsync(long ukprn);
+        Task<IEnumerable<YourTlevelViewModel>> GetTlevelsByStatusIdAsync(long ukprn, int statusId); 
+        Task<ConfirmTlevelViewModel> GetVerifyTlevelDetailsByPathwayIdAsync(long ukprn, int id); 
         Task<bool> ConfirmTlevelAsync(ConfirmTlevelViewModel viewModel);
         Task<bool> ReportIssueAsync(TlevelQueryViewModel viewModel);
-        Task<TlevelConfirmationViewModel> GetTlevelConfirmationDetailsAsync(long ukprn, int pathwayId);
-        Task<TlevelQueryViewModel> GetQueryTlevelViewModelAsync(long ukprn, int id);
+
+        // Confirmed
+        Task<ConfirmedTlevelsViewModel> GetConfirmedTlevelsViewModelAsync(long ukprn);
+        Task<TLevelConfirmedDetailsViewModel> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id); // TODO: method to GetQueriedTlevelsViewModelAsync 
+        Task<TlevelConfirmationViewModel> GetTlevelConfirmationDetailsAsync(long ukprn, int pathwayId); // TODO: Check where references are used.
+
+        // Queried
+        Task<TlevelQueryViewModel> GetQueryTlevelViewModelAsync(long ukprn, int id); 
+        Task<QueriedTlevelsViewModel> GetQueriedTlevelsViewModelAsync(long ukprn); 
+        Task<TlevelQueriedDetailsViewModel> GetQueriedTlevelDetailsAsync(long ukprn, int id);
     }
 }

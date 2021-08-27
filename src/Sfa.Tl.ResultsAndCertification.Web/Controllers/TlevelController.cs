@@ -38,6 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(new TlevelsDashboardViewModel());
         }
 
+        #region Tlevels
+
         [Route("review-tlevels", Name = RouteConstants.ReviewTlevels)]
         public async Task<IActionResult> ReviewTlevelsAsync()
         {
@@ -59,88 +61,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(new AllTlevelsReviewedViewModel());
-        }
-
-        [Route("your-tlevels", Name = RouteConstants.YourTlevels)]
-        public async Task<IActionResult> ViewAllAsync()
-        {
-            var viewModel = await _tlevelLoader.GetYourTlevelsViewModel(User.GetUkPrn());
-            
-            if (viewModel == null || (!viewModel.ConfirmedTlevels.Any() && !viewModel.QueriedTlevels.Any()))
-            {
-                _logger.LogWarning(LogEvent.TlevelsNotFound, $"No T levels available to view. Method: GetYourTlevelsViewModel(Ukprn: {User.GetUkPrn()}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
-        }
-
-        [Route("confirmed-tlevels", Name = RouteConstants.ConfirmedTlevels)]
-        public async Task<IActionResult> ConfirmedTlevelsAsync()
-        {
-            var viewModel = await _tlevelLoader.GetConfirmedTlevelsViewModelAsync(User.GetUkPrn());
-            if (viewModel == null || !viewModel.Tlevels.Any())
-                return RedirectToRoute(RouteConstants.NoConfirmedTlevels); 
-
-            return View(viewModel);
-        }
-
-        [Route("no-confirmed-tlevels", Name = RouteConstants.NoConfirmedTlevels)]
-        public async Task<IActionResult> NoConfirmedTlevelsAsync()
-        {
-            var viewModel = await _tlevelLoader.GetConfirmedTlevelsViewModelAsync(User.GetUkPrn());
-            if (viewModel == null || viewModel.Tlevels.Any())
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return View(new NoConfirmedTlevelsViewModel());
-        }
-
-        [Route("queried-tlevels", Name = RouteConstants.QueriedTlevels)]
-        public async Task<IActionResult> QueriedTlevelsAsync()
-        {
-            var viewModel = await _tlevelLoader.GetQueriedTlevelsViewModelAsync(User.GetUkPrn());
-            if (viewModel == null || !viewModel.Tlevels.Any())
-                return RedirectToRoute(RouteConstants.NoQueriedTlevels);
-
-            return View(viewModel);
-        }
-
-        [Route("no-queried-tlevels", Name = RouteConstants.NoQueriedTlevels)]
-        public async Task<IActionResult> NoQueriedTlevelsAsync()
-        {
-            var viewModel = await _tlevelLoader.GetQueriedTlevelsViewModelAsync(User.GetUkPrn());
-            if (viewModel == null || viewModel.Tlevels.Any())
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return View(new NoQueriedTlevelsViewModel());
-        }
-
-        [Route("tlevel-details/{id}", Name = RouteConstants.TlevelDetails)]
-        [Route("tlevel-confirmed-details/{id}", Name = RouteConstants.TlevelConfirmedDetails)]        
-        public async Task<IActionResult> DetailsAsync(int id)
-        {
-            var viewModel = await _tlevelLoader.GetTlevelDetailsByPathwayIdAsync(User.GetUkPrn(), id);
-
-            if(viewModel == null || !viewModel.IsValid)
-            {
-                _logger.LogWarning(LogEvent.TlevelsNotFound, $"No T levels found. Method: GetTlevelDetailsByPathwayIdAsync(Ukprn: {User.GetUkPrn()}, id: {id}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
-        }
-
-        [Route("tlevel-queried-details/{id}", Name = RouteConstants.TlevelQueriedDetails)]
-        public async Task<IActionResult> QueriedDetailsAsync(int id)
-        {
-            var viewModel = await _tlevelLoader.GetTlevelQueriedDetailsAsync(User.GetUkPrn(), id);
-            if (viewModel == null || !viewModel.IsValid)
-            {
-                _logger.LogWarning(LogEvent.TlevelsNotFound, $"No T level found. Method: GetTlevelQueriedDetailsAsync(Ukprn: {User.GetUkPrn()}, id: {id}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
         }
 
         [HttpGet]
@@ -180,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]        
+        [HttpGet]
         [Route("tlevel-details-queried-confirmation/{id}", Name = RouteConstants.TlevelDetailsQueriedConfirmation)]
         [Route("all-tlevels-reviewed-success/{id}", Name = RouteConstants.AllTlevelsReviewedSuccess)]
         [Route("review-more-tlevels/{id}", Name = RouteConstants.TlevelDetailsConfirmed)]
@@ -216,19 +136,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel.IsEverythingCorrect == false)
             {
-                TempData.Set(Constants.IsBackToVerifyPage, true);                
+                TempData.Set(Constants.IsBackToVerifyPage, true);
                 return RedirectToRoute(RouteConstants.QueryTlevelDetails, new { id = viewModel.PathwayId });
             }
 
             var isSuccess = await _tlevelLoader.ConfirmTlevelAsync(viewModel);
-            
-            if(isSuccess)
+
+            if (isSuccess)
             {
                 await _cacheService.SetAsync(string.Concat(CacheKey, Constants.TlevelConfirmation), true, CacheExpiryTime.XSmall);
-                
+
                 var tlevelsToReview = await _tlevelLoader.GetTlevelsToReviewByUkprnAsync(User.GetUkPrn());
-                return tlevelsToReview?.TlevelsToReview?.Count() == 0 
-                    ? RedirectToRoute(RouteConstants.AllTlevelsReviewedSuccess, new { id = viewModel.PathwayId }) 
+                return tlevelsToReview?.TlevelsToReview?.Count() == 0
+                    ? RedirectToRoute(RouteConstants.AllTlevelsReviewedSuccess, new { id = viewModel.PathwayId })
                     : RedirectToRoute(RouteConstants.TlevelDetailsConfirmed, new { id = viewModel.PathwayId });
             }
             else
@@ -240,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("query-t-level/{id}", Name=RouteConstants.QueryTlevelDetails)]
+        [Route("query-t-level/{id}", Name = RouteConstants.QueryTlevelDetails)]
         public async Task<IActionResult> ReportIssueAsync(int id)
         {
             var tlevelDetails = await _tlevelLoader.GetQueryTlevelViewModelAsync(User.GetUkPrn(), id);
@@ -302,6 +222,98 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public IActionResult QueryServiceProblem()
         {
             return View();
+        }
+
+        #endregion
+
+        #region Confirmed Tlevels
+
+        [Route("confirmed-tlevels", Name = RouteConstants.ConfirmedTlevels)]
+        public async Task<IActionResult> ConfirmedTlevelsAsync()
+        {
+            var viewModel = await _tlevelLoader.GetConfirmedTlevelsViewModelAsync(User.GetUkPrn());
+            if (viewModel == null || !viewModel.Tlevels.Any())
+                return RedirectToRoute(RouteConstants.NoConfirmedTlevels);
+
+            return View(viewModel);
+        }
+
+        [Route("no-confirmed-tlevels", Name = RouteConstants.NoConfirmedTlevels)]
+        public async Task<IActionResult> NoConfirmedTlevelsAsync()
+        {
+            var viewModel = await _tlevelLoader.GetConfirmedTlevelsViewModelAsync(User.GetUkPrn());
+            if (viewModel == null || viewModel.Tlevels.Any())
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(new NoConfirmedTlevelsViewModel());
+        }
+
+        [Route("tlevel-details/{id}", Name = RouteConstants.TlevelDetails)]
+        [Route("tlevel-confirmed-details/{id}", Name = RouteConstants.TlevelConfirmedDetails)] // TODO: refactoring required
+        public async Task<IActionResult> DetailsAsync(int id)
+        {
+            var viewModel = await _tlevelLoader.GetTlevelDetailsByPathwayIdAsync(User.GetUkPrn(), id);
+
+            if (viewModel == null || !viewModel.IsValid)
+            {
+                _logger.LogWarning(LogEvent.TlevelsNotFound, $"No T levels found. Method: GetTlevelDetailsByPathwayIdAsync(Ukprn: {User.GetUkPrn()}, id: {id}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        #endregion
+
+        #region Query Tlevels
+
+        [Route("queried-tlevels", Name = RouteConstants.QueriedTlevels)]
+        public async Task<IActionResult> QueriedTlevelsAsync()
+        {
+            var viewModel = await _tlevelLoader.GetQueriedTlevelsViewModelAsync(User.GetUkPrn());
+            if (viewModel == null || !viewModel.Tlevels.Any())
+                return RedirectToRoute(RouteConstants.NoQueriedTlevels);
+
+            return View(viewModel);
+        }
+
+        [Route("no-queried-tlevels", Name = RouteConstants.NoQueriedTlevels)]
+        public async Task<IActionResult> NoQueriedTlevelsAsync()
+        {
+            var viewModel = await _tlevelLoader.GetQueriedTlevelsViewModelAsync(User.GetUkPrn());
+            if (viewModel == null || viewModel.Tlevels.Any())
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(new NoQueriedTlevelsViewModel());
+        }
+
+        [Route("tlevel-queried-details/{id}", Name = RouteConstants.TlevelQueriedDetails)]
+        public async Task<IActionResult> QueriedDetailsAsync(int id)
+        {
+            var viewModel = await _tlevelLoader.GetQueriedTlevelDetailsAsync(User.GetUkPrn(), id);
+            if (viewModel == null || !viewModel.IsValid)
+            {
+                _logger.LogWarning(LogEvent.TlevelsNotFound, $"No T level found. Method: GetTlevelQueriedDetailsAsync(Ukprn: {User.GetUkPrn()}, id: {id}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        #endregion
+
+        [Route("your-tlevels", Name = RouteConstants.YourTlevels)]
+        public async Task<IActionResult> ViewAllAsync() // TODO: Is this in use anymore?
+        {
+            var viewModel = await _tlevelLoader.GetYourTlevelsViewModel(User.GetUkPrn());
+
+            if (viewModel == null || (!viewModel.ConfirmedTlevels.Any() && !viewModel.QueriedTlevels.Any()))
+            {
+                _logger.LogWarning(LogEvent.TlevelsNotFound, $"No T levels available to view. Method: GetYourTlevelsViewModel(Ukprn: {User.GetUkPrn()}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
         }
 
         private async Task<ConfirmTlevelViewModel> GetVerifyTlevelData(int pathwayId)
