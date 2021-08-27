@@ -115,15 +115,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I cannot find a T Level.
-        /// </summary>
-        public static string Email_Subject_I_Cannot_Find_Tlevel {
-            get {
-                return ResourceManager.GetString("Email_Subject_I_Cannot_Find_Tlevel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ..
         /// </summary>
         public static string Fullstop {

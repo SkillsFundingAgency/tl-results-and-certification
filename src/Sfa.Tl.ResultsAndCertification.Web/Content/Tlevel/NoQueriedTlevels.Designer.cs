@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you cannot find the T Level you are looking for, check if you need to.
+        ///   Looks up a localized string similar to if you cannot find the T Level you are looking for, check if you have.
         /// </summary>
         public static string Dropout_Para_If_You_Cannot_Find_Check {
             get {
@@ -111,15 +111,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         public static string Dropout_Text_Or_Have {
             get {
                 return ResourceManager.GetString("Dropout_Text_Or_Have", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to I cannot find a T Level.
-        /// </summary>
-        public static string Email_Subject_I_Cannot_Find_Tlevel {
-            get {
-                return ResourceManager.GetString("Email_Subject_I_Cannot_Find_Tlevel", resourceCulture);
             }
         }
         

@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you cannot find the T Level you are looking for, check if you need to.
+        ///   Looks up a localized string similar to if you cannot find the T Level you are looking for, check if you have.
         /// </summary>
         public static string Dropout_Para_If_You_Cannot_Find_Check {
             get {

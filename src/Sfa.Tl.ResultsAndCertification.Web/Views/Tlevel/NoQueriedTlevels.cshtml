@@ -1,6 +1,5 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels.NoQueriedTlevelsViewModel
-@inject Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper.IWebConfigurationService ConfigurationService
 
 @{
     ViewData["Title"] = NoQueriedTlevels.Page_Title;
@@ -25,8 +24,7 @@
                 @NoQueriedTlevels.Dropout_Para_If_You_Cannot_Find_Check
                 <a id="confirmedLink" asp-route="ConfirmedTlevels" class="govuk-link">@NoQueriedTlevels.Link_Confirmed</a> @NoQueriedTlevels.Dropout_Text_Or_Have
                 <a id="reviewLink" asp-route="ReviewTlevels" class="govuk-link">@NoQueriedTlevels.Link_Review</a> @NoQueriedTlevels.Dropout_Text_It<br><br>
-
-                @NoQueriedTlevels.Dropout_Para_If_You_Still_Cannot_Find_ContactUs <a id="contactusLink" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@NoQueriedTlevels.Email_Subject_I_Cannot_Find_Tlevel" class="govuk-link">@NoQueriedTlevels.Link_ContactUs</a>@NoQueriedTlevels.Fullstop
+                @NoQueriedTlevels.Dropout_Para_If_You_Still_Cannot_Find_ContactUs <a id="contactusLink" asp-route="Contact" class="govuk-link">@NoQueriedTlevels.Link_ContactUs</a>@NoQueriedTlevels.Fullstop
             </div>
         </details>
 

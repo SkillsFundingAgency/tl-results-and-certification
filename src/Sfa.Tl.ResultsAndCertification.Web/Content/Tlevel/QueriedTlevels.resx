@@ -124,7 +124,7 @@
     <value>I cannot find a T Level</value>
   </data>
   <data name="Dropout_Para_If_You_Cannot_Find_Check" xml:space="preserve">
-    <value>If you cannot find the T Level you are looking for, check if you need to</value>
+    <value>if you cannot find the T Level you are looking for, check if you have</value>
   </data>
   <data name="Dropout_Para_If_You_Still_Cannot_Find_ContactUs" xml:space="preserve">
     <value>If you still cannot find it,</value>

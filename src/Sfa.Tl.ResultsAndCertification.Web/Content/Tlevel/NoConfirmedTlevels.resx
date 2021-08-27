@@ -135,9 +135,6 @@
   <data name="Dropout_Text_Or_Have" xml:space="preserve">
     <value>it or have </value>
   </data>
-  <data name="Email_Subject_I_Cannot_Find_Tlevel" xml:space="preserve">
-    <value>I cannot find a T Level</value>
-  </data>
   <data name="Fullstop" xml:space="preserve">
     <value>.</value>
   </data>
