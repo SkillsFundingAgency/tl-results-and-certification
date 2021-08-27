@@ -37,6 +37,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
                .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms.Select(s => $"{s.Name}<br/>({s.Code})")));
 
+            CreateMap<TlevelPathwayDetails, TlevelQueriedDetailsViewModel>()
+               .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
+               .ForMember(d => d.IsValid, opts => opts.MapFrom(s => s.PathwayStatusId == (int)TlevelReviewStatus.Queried))
+               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
+               .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
+               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms.Select(s => $"{s.Name}<br/>({s.Code})")));
+
             CreateMap<TlevelPathwayDetails, ConfirmTlevelViewModel>()
                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                .ForMember(d => d.RouteId, opts => opts.MapFrom(s => s.RouteId))

@@ -28,6 +28,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<TLevelConfirmedDetailsViewModel>(tLevelPathwayInfo);
         }
 
+        public async Task<TlevelQueriedDetailsViewModel> GetTlevelQueriedDetailsAsync(long ukprn, int id)
+        {
+            var tLevelPathwayInfo = await _internalApiClient.GetTlevelDetailsByPathwayIdAsync(ukprn, id);
+            return _mapper.Map<TlevelQueriedDetailsViewModel>(tLevelPathwayInfo);
+        }
+
         public async Task<YourTlevelsViewModel> GetYourTlevelsViewModel(long ukprn)
         {
             var tLevels = await _internalApiClient.GetAllTlevelsByUkprnAsync(ukprn);
