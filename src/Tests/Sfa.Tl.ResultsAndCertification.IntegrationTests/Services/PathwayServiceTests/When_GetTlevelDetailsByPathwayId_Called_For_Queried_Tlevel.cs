@@ -5,17 +5,22 @@ using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServiceTests
 {
-    public class When_GetTlevelDetailsByPathwayId_Called_With_Valid_PathwayId : PathwayServiceBaseTest
+    public class When_GetTlevelDetailsByPathwayId_Called_For_Queried_Tlevel : PathwayServiceBaseTest
     {
         public override void Given()
         {
             SeedTlevelTestData();
+            _tqAwardingOrganisation.ModifiedBy = "Test User";
+            _tqAwardingOrganisation.ModifiedOn = DateTime.UtcNow;
+            DbContext.SaveChanges();
+            
             CreateMapper();
 
             _logger = Substitute.For<ILogger<IRepository<TlPathway>>>();
@@ -42,8 +47,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServic
             expectedResult.RouteName.Should().Be(_route.Name);
             expectedResult.Specialisms.Should().NotBeNull();
             expectedResult.Specialisms.Count.Should().Be(_specialisms.Count);
-            expectedResult.VerifiedBy.Should().BeNull();
-            expectedResult.VerifiedOn.Should().BeNull();
+            expectedResult.VerifiedBy.Should().Be(_tqAwardingOrganisation.ModifiedBy);
+            expectedResult.VerifiedOn.Should().Be(_tqAwardingOrganisation.ModifiedOn);
 
             var expectedSpecialisms = _specialisms.Select(s => new SpecialismDetails { Id = s.Id, Name = s.Name, Code = s.LarId }).ToList();
             expectedResult.Specialisms.Should().BeEquivalentTo(expectedSpecialisms);

@@ -15,6 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public int PathwayStatusId { get; set; }
         public List<SpecialismDetails> Specialisms { get; set; }
         public string VerifiedBy { get; set; }
-        public DateTime VerifiedOn { get; set; } 
+        public DateTime? VerifiedOn { get; set; } 
     }
 }

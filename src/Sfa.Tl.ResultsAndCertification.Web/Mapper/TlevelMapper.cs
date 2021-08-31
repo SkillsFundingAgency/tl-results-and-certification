@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
                .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms.Select(s => $"{s.Name}<br/>({s.Code})")))
                .ForMember(d => d.QueriedBy, opts => opts.MapFrom(s => s.VerifiedBy))
-               .ForMember(d => d.QueriedOn, opts => opts.MapFrom(s => s.VerifiedOn.ToDobFormat()));
+               .ForMember(d => d.QueriedOn, opts => opts.MapFrom(s => s.VerifiedOn.HasValue ? s.VerifiedOn.Value.ToDobFormat() : string.Empty));
 
             CreateMap<TlevelPathwayDetails, ConfirmTlevelViewModel>()
                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
