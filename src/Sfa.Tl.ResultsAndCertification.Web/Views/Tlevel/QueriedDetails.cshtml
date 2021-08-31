@@ -23,8 +23,8 @@
             <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
             <vc:summary-item model=Model.SummaryCore></vc:summary-item>
             <vc:summary-list model=Model.SummarySpecialisms></vc:summary-list>
-
-            @*Additional fields to be added*@
+            <vc:summary-item model=Model.SummaryQueriedBy></vc:summary-item>
+            <vc:summary-item model=Model.SummaryQueriedOn></vc:summary-item>
         </dl>
 
         <a id="queriedTlevelsButton" class="govuk-button" role="button" asp-route="QueriedTlevels">@QueriedDetails.Button_Queried_Tlevels</a>

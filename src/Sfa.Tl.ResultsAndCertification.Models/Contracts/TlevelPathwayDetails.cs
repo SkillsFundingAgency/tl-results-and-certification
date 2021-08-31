@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
@@ -13,5 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public string PathwayCode { get; set; }
         public int PathwayStatusId { get; set; }
         public List<SpecialismDetails> Specialisms { get; set; }
+        public string VerifiedBy { get; set; }
+        public DateTime VerifiedOn { get; set; } 
     }
 }

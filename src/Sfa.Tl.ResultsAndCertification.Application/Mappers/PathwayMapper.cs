@@ -18,7 +18,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.RouteId, opts => opts.MapFrom(s => s.TlRouteId))
                 .ForMember(d => d.RouteName, opts => opts.MapFrom(s => s.TlRoute.Name))
                 .ForMember(d => d.PathwayStatusId, opts => opts.MapFrom(s => s.TqAwardingOrganisations.FirstOrDefault(x => x.TlPathwayId == s.Id).ReviewStatus))
-                .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.TlSpecialisms));
+                .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.TlSpecialisms))
+                .ForMember(d => d.VerifiedBy, opts => opts.MapFrom(s => s.TqAwardingOrganisations.FirstOrDefault(x => x.TlPathwayId == s.Id).ModifiedBy))
+                .ForMember(d => d.VerifiedOn, opts => opts.MapFrom(s => s.TqAwardingOrganisations.FirstOrDefault(x => x.TlPathwayId == s.Id).ModifiedOn));
 
             CreateMap<TlPathway, PathwaySpecialisms>()
                 .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))

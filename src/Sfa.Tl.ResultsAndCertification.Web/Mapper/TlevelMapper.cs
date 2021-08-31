@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
@@ -38,11 +39,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms.Select(s => $"{s.Name}<br/>({s.Code})")));
 
             CreateMap<TlevelPathwayDetails, TlevelQueriedDetailsViewModel>()
-               .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.PathwayId))
                .ForMember(d => d.IsValid, opts => opts.MapFrom(s => s.PathwayStatusId == (int)TlevelReviewStatus.Queried))
                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName}<br/>({s.PathwayCode})"))
-               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms.Select(s => $"{s.Name}<br/>({s.Code})")));
+               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms.Select(s => $"{s.Name}<br/>({s.Code})")))
+               .ForMember(d => d.QueriedBy, opts => opts.MapFrom(s => s.VerifiedBy))
+               .ForMember(d => d.QueriedOn, opts => opts.MapFrom(s => s.VerifiedOn.ToDobFormat()));
 
             CreateMap<TlevelPathwayDetails, ConfirmTlevelViewModel>()
                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
