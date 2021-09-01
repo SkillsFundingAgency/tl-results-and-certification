@@ -10,7 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using System;
 using System.Threading.Tasks;
 
