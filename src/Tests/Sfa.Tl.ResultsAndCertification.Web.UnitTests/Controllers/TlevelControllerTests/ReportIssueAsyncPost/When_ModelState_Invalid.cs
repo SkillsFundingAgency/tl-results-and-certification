@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             model.PathwayId.Should().Be(ExpectedResult.PathwayId);
             model.PathwayStatusId.Should().Be(ExpectedResult.PathwayStatusId);
 
-            model.IsBackToVerifyPage.Should().Be(ExpectedResult.IsBackToVerifyPage);
+            model.IsBackToConfirmed.Should().Be(ExpectedResult.IsBackToConfirmed);
             model.Query.Should().Be(ExpectedResult.Query);
 
             model.TlevelTitle.Should().Be(ExpectedResult.TlevelTitle);

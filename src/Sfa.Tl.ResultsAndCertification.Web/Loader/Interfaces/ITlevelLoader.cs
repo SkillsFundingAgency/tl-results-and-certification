@@ -19,8 +19,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         // Confirmed
         Task<ConfirmedTlevelsViewModel> GetConfirmedTlevelsViewModelAsync(long ukprn);
-        Task<TLevelConfirmedDetailsViewModel> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id); // TODO: method to GetQueriedTlevelsViewModelAsync 
-        Task<TlevelConfirmationViewModel> GetTlevelConfirmationDetailsAsync(long ukprn, int pathwayId); // TODO: Check where references are used.
+        Task<TLevelConfirmedDetailsViewModel> GetTlevelDetailsByPathwayIdAsync(long ukprn, int id);
+        Task<TlevelConfirmationViewModel> GetTlevelConfirmationDetailsAsync(long ukprn, int pathwayId);
 
         // Queried
         Task<TlevelQueryViewModel> GetQueryTlevelViewModelAsync(long ukprn, int id); 

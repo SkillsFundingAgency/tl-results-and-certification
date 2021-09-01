@@ -159,8 +159,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("query-t-level/{id}", Name = RouteConstants.QueryTlevelDetails)]
-        public async Task<IActionResult> ReportIssueAsync(int id)
+        [Route("query-t-level/{id}/{isBackToConfirmed:bool?}", Name = RouteConstants.QueryTlevelDetails)]
+        public async Task<IActionResult> ReportIssueAsync(int id, bool isBackToConfirmed)
         {
             var tlevelDetails = await _tlevelLoader.GetQueryTlevelViewModelAsync(User.GetUkPrn(), id);
             if (tlevelDetails == null || (tlevelDetails.PathwayStatusId == (int)TlevelReviewStatus.Queried))
@@ -170,13 +170,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            tlevelDetails.IsBackToVerifyPage = TempData.Get<bool>(Constants.IsBackToVerifyPage); // TODO: next story.
-
+            tlevelDetails.IsBackToConfirmed = isBackToConfirmed;
             return View(tlevelDetails);
         }
 
         [HttpPost]
-        [Route("query-t-level/{id}", Name = RouteConstants.SubmitTlevelIssue)]
+        [Route("query-t-level/{id}/{isBackToConfirmed:bool?}", Name = RouteConstants.SubmitTlevelIssue)]
         public async Task<IActionResult> ReportIssueAsync(TlevelQueryViewModel viewModel)
         {
             if (viewModel == null || viewModel.PathwayStatusId == (int)TlevelReviewStatus.Queried)
@@ -187,7 +186,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var tlevelDetails = await _tlevelLoader.GetQueryTlevelViewModelAsync(User.GetUkPrn(), viewModel.PathwayId);
             if (!ModelState.IsValid)
             {
-                tlevelDetails.IsBackToVerifyPage = viewModel.IsBackToVerifyPage; // TODO
+                tlevelDetails.IsBackToConfirmed = viewModel.IsBackToConfirmed;
                 return View(tlevelDetails);
             }
 
@@ -248,7 +247,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [Route("tlevel-details/{id}", Name = RouteConstants.TlevelDetails)]
-        [Route("tlevel-confirmed-details/{id}", Name = RouteConstants.TlevelConfirmedDetails)] // TODO: refactoring required
+        [Route("tlevel-confirmed-details/{id}", Name = RouteConstants.TlevelConfirmedDetails)]
         public async Task<IActionResult> DetailsAsync(int id)
         {
             var viewModel = await _tlevelLoader.GetTlevelDetailsByPathwayIdAsync(User.GetUkPrn(), id);

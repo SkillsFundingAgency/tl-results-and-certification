@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels
         public int PathwayId { get; set; }
         public int PathwayStatusId { get; set; }
 
-        public bool IsBackToVerifyPage { get; set; }
+        public bool IsBackToConfirmed { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ErrorResource.Query), ErrorMessageResourceName = "Query_Required_Validation_Message")]
         [StringLength(10000, ErrorMessageResourceType = typeof(ErrorResource.Query), ErrorMessageResourceName = "Query_CharLimitExceeded_Validation_Message")]
@@ -29,18 +29,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels
         {
             get
             {
-                if (IsBackToVerifyPage)
+                if (IsBackToConfirmed)
                     return new BackLinkModel
                     {
-                        RouteName = RouteConstants.ReviewTlevelDetails, // TODO: in next story. 
-                        RouteAttributes = new Dictionary<string, string> { { "id", PathwayId.ToString() }, { "isback", "true" } }
+                        RouteName = RouteConstants.TlevelConfirmedDetails,
+                        RouteAttributes = new Dictionary<string, string> { { "id", PathwayId.ToString() } }
                     };
-
                 else
                     return new BackLinkModel
                     {
-                        RouteName = RouteConstants.TlevelDetails,
-                        RouteAttributes = new Dictionary<string, string> { { "id", PathwayId.ToString() } }
+                        RouteName = RouteConstants.ReviewTlevelDetails,
+                        RouteAttributes = new Dictionary<string, string> { { "id", PathwayId.ToString() }, { "isback", true.ToString() } }
                     };
             }
         }

@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             model.PathwayId.Should().Be(expectedResult.PathwayId);
             model.PathwayStatusId.Should().Be(expectedResult.PathwayStatusId);
 
-            model.IsBackToVerifyPage.Should().Be(expectedResult.IsBackToVerifyPage);
+            model.IsBackToConfirmed.Should().Be(expectedResult.IsBackToConfirmed);
             model.Query.Should().Be(expectedResult.Query);
 
             model.TlevelTitle.Should().Be(expectedResult.TlevelTitle);
@@ -65,11 +65,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             var viewResult = Result as ViewResult;
             var model = viewResult.Model as TlevelQueryViewModel;
 
-            model.IsBackToVerifyPage.Should().BeFalse();
+            model.IsBackToConfirmed.Should().BeFalse();
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.TlevelDetails);
-            model.BackLink.RouteAttributes.Count().Should().Be(1);
+            model.BackLink.RouteName.Should().Be(RouteConstants.ReviewTlevelDetails);
+            model.BackLink.RouteAttributes.Count().Should().Be(2);
             model.BackLink.RouteAttributes["id"].Should().Be(model.PathwayId.ToString());
+            model.BackLink.RouteAttributes["isback"].Should().Be(true.ToString());
         }
     }
 }

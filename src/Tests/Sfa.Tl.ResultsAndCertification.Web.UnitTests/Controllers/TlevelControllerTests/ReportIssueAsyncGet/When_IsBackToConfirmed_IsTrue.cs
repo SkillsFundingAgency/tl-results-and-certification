@@ -8,11 +8,11 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ReportIssueAsyncGet
 {
-    public class When_IsBackToVerifyPage_IsTrue : TestSetup
+    public class When_IsBackToConfirmed_IsTrue : TestSetup
     {
         public override void Given()
         {
-            TempData[Constants.IsBackToVerifyPage] = "true";
+            isBackToConfirmed = true;
             TlevelLoader.GetQueryTlevelViewModelAsync(AoUkprn, pathwayId)
                 .Returns(expectedResult);
         }
@@ -23,12 +23,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             var viewResult = Result as ViewResult;
             var model = viewResult.Model as TlevelQueryViewModel;
 
-            model.IsBackToVerifyPage.Should().BeTrue();
+            model.IsBackToConfirmed.Should().BeTrue();
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.ReviewTlevelDetails);
-            model.BackLink.RouteAttributes.Count().Should().Be(2);
+            model.BackLink.RouteName.Should().Be(RouteConstants.TlevelConfirmedDetails);
+            model.BackLink.RouteAttributes.Count().Should().Be(1);
             model.BackLink.RouteAttributes["id"].Should().Be(model.PathwayId.ToString());
-            model.BackLink.RouteAttributes["isback"].Should().Be("true");
         }
     }
 }

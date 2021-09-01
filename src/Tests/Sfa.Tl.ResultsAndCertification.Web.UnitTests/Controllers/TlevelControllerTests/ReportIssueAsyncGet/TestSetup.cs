@@ -29,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         protected IHttpContextAccessor HttpContextAccessor;
         protected IActionResult Result;
         protected int pathwayId;
+        protected bool isBackToConfirmed;
 
         protected TlevelQueryViewModel expectedResult;
 
@@ -62,14 +63,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
                 PathwayDisplayName = "Education (12345678)",
                 Specialisms = new List<string> { "Spl1 (11111111)", "Spl2 (22222222)" },
 
-                IsBackToVerifyPage = false,
+                IsBackToConfirmed = false,
                 Query = "Test query",
             };
         }
 
         public async override Task When()
         {
-            Result = await Controller.ReportIssueAsync(pathwayId);
+            Result = await Controller.ReportIssueAsync(pathwayId, isBackToConfirmed);
         }
     }
 }

@@ -15,7 +15,7 @@
         <h1 class="govuk-heading-l">@Details.Section_Heading</h1>
 
         <div class="govuk-inset-text">
-            @Details.Inset_You_Have_Told_Us_This_Tlevel_Details_Are_Correct<a class="govuk-link" asp-route="QueryTlevelDetails" asp-route-id="@Model.PathwayId">@Details.Inset_Raise_A_Query</a>@Details.Inset_And_We_Will_Investigate_And_Respond
+            @Details.Inset_You_Have_Told_Us_This_Tlevel_Details_Are_Correct<a class="govuk-link" asp-route="QueryTlevelDetails" asp-route-id="@Model.PathwayId" asp-route-isBackToConfirmed="true">@Details.Inset_Raise_A_Query</a>@Details.Inset_And_We_Will_Investigate_And_Respond
         </div>
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-!-margin-top-7 govuk-summary-list--no-border">

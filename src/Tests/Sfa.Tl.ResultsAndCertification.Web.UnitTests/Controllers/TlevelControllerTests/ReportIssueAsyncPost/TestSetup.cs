@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
                 PathwayDisplayName = "Education (12345678)",
                 Specialisms = new List<string> { "Spl1 (11111111)", "Spl2 (22222222)" },
 
-                IsBackToVerifyPage = false,
+                IsBackToConfirmed = false,
                 Query = "Test query",
             };
         }

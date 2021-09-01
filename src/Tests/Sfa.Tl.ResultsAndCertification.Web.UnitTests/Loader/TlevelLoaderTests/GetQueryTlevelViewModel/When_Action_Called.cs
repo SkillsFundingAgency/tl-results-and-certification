@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
             ActualResult.PathwayId.Should().Be(ApiClientResponse.PathwayId);
             ActualResult.PathwayStatusId.Should().Be(ApiClientResponse.PathwayStatusId);
 
-            ActualResult.IsBackToVerifyPage.Should().BeFalse();
+            ActualResult.IsBackToConfirmed.Should().BeFalse();
             ActualResult.Query.Should().BeNull();
 
             ActualResult.TlevelTitle.Should().Be(ApiClientResponse.TlevelTitle);
