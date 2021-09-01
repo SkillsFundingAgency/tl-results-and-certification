@@ -318,7 +318,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         private async Task<ConfirmTlevelViewModel> GetVerifyTlevelData(int pathwayId)
         {
-            return await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(User.GetUkPrn(), pathwayId);
+            var viewModel = await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(User.GetUkPrn(), pathwayId);
+            if (viewModel != null)
+            {
+                var awaitingReview = await _tlevelLoader.GetTlevelsByStatusIdAsync(User.GetUkPrn(), (int)TlevelReviewStatus.AwaitingConfirmation);
+                viewModel.HasMoreToReview = awaitingReview.Any() && awaitingReview.Count() > 1;
+            }
+            return viewModel;
         }
 
         private async Task<IActionResult> GetSelectToReviewByUkprn(long ukPrn, int? selectedPathwayId = null)

@@ -5,12 +5,11 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.VerifyAsync
 {
-    public class When_Route_WithBackTrue : TestSetup
+    public class When_Reviewing_LastTlevel : TestSetup
     {
         private ConfirmTlevelViewModel expectedModel;
         private IEnumerable<YourTlevelViewModel> pendingReviewTlevels;
@@ -28,7 +27,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             pendingReviewTlevels = new List<YourTlevelViewModel>
             {
                 new YourTlevelViewModel { PathwayId = 1, TlevelTitle = "T1" },
-                new YourTlevelViewModel { PathwayId = 2, TlevelTitle = "T2" },
             };
 
             TlevelLoader.GetTlevelsByStatusIdAsync(AoUkprn, (int)TlevelReviewStatus.AwaitingConfirmation).
@@ -36,18 +34,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         }
 
         [Fact]
-        public void Then_Returns_Expected_Results()
+        public void Then_BackLink_Is_TlevelDashboard()
         {
             var viewResult = Result as ViewResult;
             var model = viewResult.Model as ConfirmTlevelViewModel;
 
             model.Should().NotBeNull();
-            model.IsEverythingCorrect.Should().Be(false);
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.SelectTlevel);
-            model.BackLink.RouteAttributes.Count().Should().Be(1);
-            model.BackLink.RouteAttributes["id"].Should().Be(model.PathwayId.ToString());
+            model.BackLink.RouteName.Should().Be(RouteConstants.TlevelsDashboard);
+            model.BackLink.RouteAttributes.Should().BeEmpty();
         }
     }
 }

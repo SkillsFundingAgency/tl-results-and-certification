@@ -26,6 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
         [Required(ErrorMessageResourceType = typeof(Verify), ErrorMessageResourceName = "IsEverythingCorrect_Required_Validation_Message")]
         public bool? IsEverythingCorrect { get; set; }
         public IEnumerable<string> Specialisms { get; set; }
+        public bool HasMoreToReview { get; set; }
 
         public SummaryItemModel SummaryTlevelTitle => new SummaryItemModel
         {
@@ -50,14 +51,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
         };
 
         public BackLinkModel BackLink 
-        { 
-            get 
-            { 
-                return new BackLinkModel 
-                { 
-                    RouteName = RouteConstants.SelectTlevel, 
-                    RouteAttributes = new Dictionary<string, string> { {"id", PathwayId.ToString() } } }; 
-            } 
+        {
+            get
+            {
+                if (HasMoreToReview)
+                    return new BackLinkModel
+                    {
+                        RouteName = RouteConstants.SelectTlevel,
+                        RouteAttributes = new Dictionary<string, string> { { "id", PathwayId.ToString() } }
+                    };
+                else
+                    return new BackLinkModel
+                    {
+                        RouteName = RouteConstants.TlevelsDashboard
+                    };
+            }
         }
     }
 }
