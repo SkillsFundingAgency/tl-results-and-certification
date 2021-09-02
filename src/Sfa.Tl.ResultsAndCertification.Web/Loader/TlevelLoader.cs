@@ -22,12 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             _mapper = mapper;
         }
 
-        public async Task<YourTlevelsViewModel> GetYourTlevelsViewModel(long ukprn)
-        {
-            var tLevels = await _internalApiClient.GetAllTlevelsByUkprnAsync(ukprn);
-            return _mapper.Map<YourTlevelsViewModel>(tLevels);
-        }
-
         public async Task<SelectToReviewPageViewModel> GetTlevelsToReviewByUkprnAsync(long ukprn)
         {
             var tLevels = await _internalApiClient.GetAllTlevelsByUkprnAsync(ukprn);
