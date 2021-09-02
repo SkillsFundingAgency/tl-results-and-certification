@@ -18,6 +18,7 @@
 .assessment-card {
     @extend .card;
     margin-bottom: 30px;
+    min-height: 190px;
 }
 
 .result-card {
@@ -38,6 +39,10 @@
 @media screen and (max-width: 980px) and (min-width: 640px) {
     .card {
         min-height: 155px;
+    }
+
+    .assessment-card {
+        min-height: 270px;
     }
 
     .manage-learner-records-card {

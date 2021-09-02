@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment entries.
+        ///   Looks up a localized string similar to Assessments.
         /// </summary>
         public static string Assessment_Dashboard {
             get {

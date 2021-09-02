@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Assessment_Dashboard" xml:space="preserve">
-    <value>Assessment entries</value>
+    <value>Assessments</value>
   </data>
   <data name="Check_Learner_Details" xml:space="preserve">
     <value>Check the learner’s details</value>
