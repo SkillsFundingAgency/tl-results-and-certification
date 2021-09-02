@@ -8,8 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 {
     public interface ITlevelLoader
     {
-        Task<YourTlevelsViewModel> GetYourTlevelsViewModel(long ukprn); // TODO: Is this in use?
-
         // Verify
         Task<SelectToReviewPageViewModel> GetTlevelsToReviewByUkprnAsync(long ukprn);
         Task<IEnumerable<YourTlevelViewModel>> GetTlevelsByStatusIdAsync(long ukprn, int statusId); 

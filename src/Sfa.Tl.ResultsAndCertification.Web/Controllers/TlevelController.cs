@@ -300,20 +300,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         #endregion
 
-        [Route("your-tlevels", Name = RouteConstants.YourTlevels)]
-        public async Task<IActionResult> ViewAllAsync() // TODO: Is this in use anymore?
-        {
-            var viewModel = await _tlevelLoader.GetYourTlevelsViewModel(User.GetUkPrn());
-
-            if (viewModel == null || (!viewModel.ConfirmedTlevels.Any() && !viewModel.QueriedTlevels.Any()))
-            {
-                _logger.LogWarning(LogEvent.TlevelsNotFound, $"No T levels available to view. Method: GetYourTlevelsViewModel(Ukprn: {User.GetUkPrn()}), User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-
-            return View(viewModel);
-        }
-
         private async Task<ConfirmTlevelViewModel> GetVerifyTlevelData(int pathwayId)
         {
             var viewModel = await _tlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(User.GetUkPrn(), pathwayId);
