@@ -59,7 +59,7 @@
 
             @if (Model.ShowViewProvidersLink)
             {
-                <p class="govuk-body"><a class="govuk-button govuk-button--secondary" role="button" asp-route="YourProviders">@FindProvider.View_Existing_Providers_Button</a></p>
+                <p class="govuk-body"><a id="viewExistingProvidersButton" class="govuk-button govuk-button--secondary" role="button" asp-route="YourProviders">@FindProvider.View_Existing_Providers_Button</a></p>
             }
 
             <input type="hidden" asp-for="SelectedProviderId" />
