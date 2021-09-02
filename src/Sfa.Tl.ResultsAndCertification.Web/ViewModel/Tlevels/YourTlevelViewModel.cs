@@ -1,4 +1,4 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
+﻿namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels
 {
     public class YourTlevelViewModel
     {
