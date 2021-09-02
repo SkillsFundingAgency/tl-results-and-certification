@@ -10,7 +10,22 @@
         <div class="govuk-panel govuk-panel--confirmation">
             <h1 class="govuk-panel__title">@UploadSuccessful.Section_Heading</h1>
         </div>
+
         <p class="govuk-body govuk-!-padding-top-3">@Model.SuccessfulAssessmentEntriesText</p>
-        <p class="govuk-!-margin-top-8"><a asp-route="AssessmentDashboard" class="govuk-button" role="button">@UploadSuccessful.Back_To_Assessment_Entries_Button_Text</a></p>
+
+        <h2 class="govuk-heading-m">@UploadSuccessful.What_Happens_Next</h2>
+
+        <p class="govuk-body">@UploadSuccessful.Para_You_Can_Now</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li><a class="govuk-link" asp-route="SearchAssessments">@UploadSuccessful.Manage_Individual_Assessments</a>@UploadSuccessful.By_Searching_For_A_Learner</li>
+            <li><a class="govuk-link" asp-route="UploadAssessmentsFile">@UploadSuccessful.Upload_Another_Multiple_Assessments_File</a></li>
+            <li><a class="govuk-link" asp-route="ResultsDashboard">@UploadSuccessful.Add_Results</a>@UploadSuccessful.For_Registered_Learners_With_Assessment_Entries</li>
+        </ul>
+
+        <div class="govuk-button-group">
+            <a id="uploadAnotherFileButton" class="govuk-button" role="button" asp-route="UploadAssessmentsFile">@UploadSuccessful.Upload_Another_File_Button</a>
+            <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="Home">@UploadSuccessful.Back_To_Home_Button</a>
+        </div>
     </div>
 </div>

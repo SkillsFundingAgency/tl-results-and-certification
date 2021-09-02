@@ -61,16 +61,52 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to assessment entries.
+        ///   Looks up a localized string similar to add results.
         /// </summary>
-        public static string Back_To_Assessment_Entries_Button_Text {
+        public static string Add_Results {
             get {
-                return ResourceManager.GetString("Back_To_Assessment_Entries_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Add_Results", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment entries upload successful page.
+        ///   Looks up a localized string similar to Back to home.
+        /// </summary>
+        public static string Back_To_Home_Button {
+            get {
+                return ResourceManager.GetString("Back_To_Home_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  by searching for a learner.
+        /// </summary>
+        public static string By_Searching_For_A_Learner {
+            get {
+                return ResourceManager.GetString("By_Searching_For_A_Learner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  for registered learners with assessment entries.
+        /// </summary>
+        public static string For_Registered_Learners_With_Assessment_Entries {
+            get {
+                return ResourceManager.GetString("For_Registered_Learners_With_Assessment_Entries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to manage individual assessments.
+        /// </summary>
+        public static string Manage_Individual_Assessments {
+            get {
+                return ResourceManager.GetString("Manage_Individual_Assessments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assessments upload success.
         /// </summary>
         public static string Page_Title {
             get {
@@ -79,7 +115,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment entries upload successful.
+        ///   Looks up a localized string similar to You can now.
+        /// </summary>
+        public static string Para_You_Can_Now {
+            get {
+                return ResourceManager.GetString("Para_You_Can_Now", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assessments uploaded successfully.
         /// </summary>
         public static string Section_Heading {
             get {
@@ -102,6 +147,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string Successfully_Sent_Total_Assessment_Entries_Text {
             get {
                 return ResourceManager.GetString("Successfully_Sent_Total_Assessment_Entries_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload another file.
+        /// </summary>
+        public static string Upload_Another_File_Button {
+            get {
+                return ResourceManager.GetString("Upload_Another_File_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to upload another multiple assessments file.
+        /// </summary>
+        public static string Upload_Another_Multiple_Assessments_File {
+            get {
+                return ResourceManager.GetString("Upload_Another_Multiple_Assessments_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What happens next.
+        /// </summary>
+        public static string What_Happens_Next {
+            get {
+                return ResourceManager.GetString("What_Happens_Next", resourceCulture);
             }
         }
     }
