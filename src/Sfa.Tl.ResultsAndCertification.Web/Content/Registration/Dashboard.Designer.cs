@@ -61,56 +61,101 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add one new registration.
-        /// </summary>
-        public static string Card_Heading_Add_One_Registration {
-            get {
-                return ResourceManager.GetString("Card_Heading_Add_One_Registration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Manage existing registrations.
         /// </summary>
-        public static string Card_Heading_Search_Registration {
+        public static string Card_Heading_Link_Manage_Existing_Registration {
             get {
-                return ResourceManager.GetString("Card_Heading_Search_Registration", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Link_Manage_Existing_Registration", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload to add and amend registrations.
+        ///   Looks up a localized string similar to Upload multiple registrations.
         /// </summary>
-        public static string Card_Heading_Upload_Registration_File {
+        public static string Card_Heading_Link_Multiple_Registrations {
             get {
-                return ResourceManager.GetString("Card_Heading_Upload_Registration_File", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Link_Multiple_Registrations", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new registration.
+        ///   Looks up a localized string similar to Register a new learner.
         /// </summary>
-        public static string Card_Link_Add_One_Registration {
+        public static string Card_Heading_Link_Register_A_New_Learner {
             get {
-                return ResourceManager.GetString("Card_Link_Add_One_Registration", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Link_Register_A_New_Learner", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a registration.
+        ///   Looks up a localized string similar to Add or change registration details for more than one learner.
         /// </summary>
-        public static string Card_Link_Search_Registration {
+        public static string List_Add_Or_Change_Registration_Details_For_More_Than_One_Learner {
             get {
-                return ResourceManager.GetString("Card_Link_Search_Registration", resourceCulture);
+                return ResourceManager.GetString("List_Add_Or_Change_Registration_Details_For_More_Than_One_Learner", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload registrations file.
+        ///   Looks up a localized string similar to Change a learner&apos;s course.
         /// </summary>
-        public static string Card_Link_Upload_Registration_File {
+        public static string List_Change_A_Learners_Course {
             get {
-                return ResourceManager.GetString("Card_Link_Upload_Registration_File", resourceCulture);
+                return ResourceManager.GetString("List_Change_A_Learners_Course", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change registration detail.
+        /// </summary>
+        public static string List_Change_Registration_Detail {
+            get {
+                return ResourceManager.GetString("List_Change_Registration_Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download a template with registrations data formats and rules guidance.
+        /// </summary>
+        public static string List_Download_A_Template_With_Registrations_Data_Formats_And_Rules_Guidance {
+            get {
+                return ResourceManager.GetString("List_Download_A_Template_With_Registrations_Data_Formats_And_Rules_Guidance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reactivate a withdrawn learner.
+        /// </summary>
+        public static string List_Reactivate_A_Withdrawn_Learner {
+            get {
+                return ResourceManager.GetString("List_Reactivate_A_Withdrawn_Learner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register one new learner onto a course.
+        /// </summary>
+        public static string List_Register_One_Learner_Onto_A_Course {
+            get {
+                return ResourceManager.GetString("List_Register_One_Learner_Onto_A_Course", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to See registration details.
+        /// </summary>
+        public static string List_See_Registration_Details {
+            get {
+                return ResourceManager.GetString("List_See_Registration_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Withdraw a learner&apos;s registration.
+        /// </summary>
+        public static string List_Withdraw_A_Learners_Registration {
+            get {
+                return ResourceManager.GetString("List_Withdraw_A_Learners_Registration", resourceCulture);
             }
         }
         
@@ -124,11 +169,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrations page.
+        ///   Looks up a localized string similar to Registrations.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tell us about your learners and the T Levels they are studying.
+        /// </summary>
+        public static string Para_Tell_Us_About_Your_Learners_And_The_Tlevels_They_Are_Studying {
+            get {
+                return ResourceManager.GetString("Para_Tell_Us_About_Your_Learners_And_The_Tlevels_They_Are_Studying", resourceCulture);
             }
         }
     }
