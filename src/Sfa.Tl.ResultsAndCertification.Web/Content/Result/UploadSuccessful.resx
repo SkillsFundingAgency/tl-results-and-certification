@@ -117,19 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Appeal" xml:space="preserve">
+    <value>appeal</value>
+  </data>
+  <data name="Back_To_Home_Button" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
   <data name="Back_To_Results_Button_Text" xml:space="preserve">
     <value>Back to results</value>
   </data>
+  <data name="By_Searching_For_A_Learner" xml:space="preserve">
+    <value> by searching for a learner</value>
+  </data>
+  <data name="Manage_Individual_Results" xml:space="preserve">
+    <value>manage individual results</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Results upload confirmation page</value>
+    <value>Results upload success</value>
+  </data>
+  <data name="Para_You_Can_Now" xml:space="preserve">
+    <value>You can now</value>
+  </data>
+  <data name="Register_An" xml:space="preserve">
+    <value>register an </value>
   </data>
   <data name="Section_Heading" xml:space="preserve">
-    <value>Results upload successful</value>
+    <value>Results uploaded</value>
   </data>
   <data name="Successfully_Sent_One_Result_Text" xml:space="preserve">
     <value>You successfully sent results data for one registration.</value>
   </data>
   <data name="Successfully_Sent_Total_Results_Text" xml:space="preserve">
     <value>You successfully sent results for {0} registrations.</value>
+  </data>
+  <data name="Upload_Another_File_Button" xml:space="preserve">
+    <value>Upload another file</value>
+  </data>
+  <data name="Upload_Another_Multiple_Results_File" xml:space="preserve">
+    <value>upload another multiple results file</value>
+  </data>
+  <data name="What_Happens_Next" xml:space="preserve">
+    <value>What happens next</value>
   </data>
 </root>
