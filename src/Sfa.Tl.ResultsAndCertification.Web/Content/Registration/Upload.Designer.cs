@@ -61,11 +61,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to are in CSV format.
+        ///   Looks up a localized string similar to Download.
         /// </summary>
-        public static string Are_In_Csv_Format_Text {
+        public static string Download {
             get {
-                return ResourceManager.GetString("Are_In_Csv_Format_Text", resourceCulture);
+                return ResourceManager.GetString("Download", resourceCulture);
             }
         }
         
@@ -88,6 +88,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 172KB.
+        /// </summary>
+        public static string File_Size_Kb_Text {
+            get {
+                return ResourceManager.GetString("File_Size_Kb_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File size too large – must be no more than {0}MB.
         /// </summary>
         public static string File_Size_Too_Large_Validation_Message {
@@ -97,11 +106,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to include all mandatory fields.
+        ///   Looks up a localized string similar to XSLX.
         /// </summary>
-        public static string Include_All_Mandatory_Fields_Text {
+        public static string File_Type {
             get {
-                return ResourceManager.GetString("Include_All_Mandatory_Fields_Text", resourceCulture);
+                return ResourceManager.GetString("File_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Before you start.
+        /// </summary>
+        public static string Heading_Before_You_Start {
+            get {
+                return ResourceManager.GetString("Heading_Before_You_Start", resourceCulture);
             }
         }
         
@@ -124,6 +142,60 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to T Levels registrations data format and rules.
+        /// </summary>
+        public static string Link_Tlevels_Registration_Data_Format_Rules {
+            get {
+                return ResourceManager.GetString("Link_Tlevels_Registration_Data_Format_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the core code is different - you cannot change the core code here.
+        /// </summary>
+        public static string List_Core_Code_Different {
+            get {
+                return ResourceManager.GetString("List_Core_Code_Different", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If the data is not correctly formatted, nothing will be uploaded. You will be able to download an error report that tells you what&apos;s wrong..
+        /// </summary>
+        public static string List_Data_Not_Formatted_Correctly {
+            get {
+                return ResourceManager.GetString("List_Data_Not_Formatted_Correctly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If a ULN already has an active registration, we will update the data, unless:.
+        /// </summary>
+        public static string List_If_Uln_Already_Active {
+            get {
+                return ResourceManager.GetString("List_If_Uln_Already_Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If a unique learner number (ULN) doesn&apos;t already exist in our service, we will add a new registration..
+        /// </summary>
+        public static string List_If_Uln_Already_Exist {
+            get {
+                return ResourceManager.GetString("List_If_Uln_Already_Exist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the registration is active with another awarding organisation.
+        /// </summary>
+        public static string List_Registration_Active_With_Another_Ao {
+            get {
+                return ResourceManager.GetString("List_Registration_Active_With_Another_Ao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The selected file must be a CSV.
         /// </summary>
         public static string Must_Be_Csv_Validation_Message {
@@ -133,16 +205,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to contain between one and 10,000 registrations.
-        /// </summary>
-        public static string No_Of_Registrations_To_Upload_Text {
-            get {
-                return ResourceManager.GetString("No_Of_Registrations_To_Upload_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Upload registrations file.
+        ///   Looks up a localized string similar to Upload multiple registrations.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -151,11 +214,56 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload registrations file page.
+        ///   Looks up a localized string similar to Upload multiple registrations.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you export data from another system, you might need to adjust the format so that it can be uploaded into this system..
+        /// </summary>
+        public static string Para_If_You_Export_Data_From_Another_System {
+            get {
+                return ResourceManager.GetString("Para_If_You_Export_Data_From_Another_System", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can add or change registration details for one or more learners by uploading CSV files..
+        /// </summary>
+        public static string Para_You_Can_Add_Or_Change_Registration {
+            get {
+                return ResourceManager.GetString("Para_You_Can_Add_Or_Change_Registration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can download a template with data formats and rules guidance to help you..
+        /// </summary>
+        public static string Para_You_Can_Download_Template_With_Formats_And_Rules {
+            get {
+                return ResourceManager.GetString("Para_You_Can_Download_Template_With_Formats_And_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to published 3 September 2021.
+        /// </summary>
+        public static string Registrations_Published_On {
+            get {
+                return ResourceManager.GetString("Registrations_Published_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to version 1.5.
+        /// </summary>
+        public static string Registrations_Version {
+            get {
+                return ResourceManager.GetString("Registrations_Version", resourceCulture);
             }
         }
         
@@ -192,24 +300,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Upload_Processing_Spinner_Text {
             get {
                 return ResourceManager.GetString("Upload_Processing_Spinner_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to We can only accept files that:.
-        /// </summary>
-        public static string We_Can_Only_Accept_Files_Text {
-            get {
-                return ResourceManager.GetString("We_Can_Only_Accept_Files_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can &lt;strong&gt;add&lt;/strong&gt; new registrations and &lt;strong&gt;amend&lt;/strong&gt; existing registrations by uploading them in the same file or separate files..
-        /// </summary>
-        public static string You_Can_Add_New_Registrations_Text {
-            get {
-                return ResourceManager.GetString("You_Can_Add_New_Registrations_Text", resourceCulture);
             }
         }
     }

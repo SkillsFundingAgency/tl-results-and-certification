@@ -304,15 +304,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your T Levels.
-        /// </summary>
-        public static string Tlevel_ViewAll {
-            get {
-                return ResourceManager.GetString("Tlevel_ViewAll", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Confirmed T Levels.
         /// </summary>
         public static string Tlevels_Confirmed_List {
@@ -367,7 +358,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload registrations file.
+        ///   Looks up a localized string similar to Upload multiple registrations.
         /// </summary>
         public static string Upload_Registrations_File {
             get {

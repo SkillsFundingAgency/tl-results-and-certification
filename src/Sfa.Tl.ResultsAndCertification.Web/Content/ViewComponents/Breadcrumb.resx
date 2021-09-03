@@ -213,15 +213,11 @@
   <data name="Tlevel_Review_Select" xml:space="preserve">
     <value>Review new T Levels</value>
   </data>
-  <data name="Tlevel_ViewAll" xml:space="preserve">
-    <value>Your T Levels</value>
-    <comment>TODO: Delete</comment>
-  </data>
   <data name="Upload_Assessments_File" xml:space="preserve">
     <value>Upload assessment entries file</value>
   </data>
   <data name="Upload_Registrations_File" xml:space="preserve">
-    <value>Upload registrations file</value>
+    <value>Upload multiple registrations</value>
   </data>
   <data name="Upload_Results_File" xml:space="preserve">
     <value>Upload results file</value>
