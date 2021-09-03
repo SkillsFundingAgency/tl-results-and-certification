@@ -28,6 +28,19 @@
                 }
             </ul>
         }
-        <p class="govuk-!-margin-top-8"><a asp-route="RegistrationDashboard" class="govuk-button" role="button">@UploadSuccessful.Back_To_Registrations_Button_Text</a></p>
+
+        <h2 class="govuk-heading-m">@UploadSuccessful.What_Happens_Next</h2>
+        <p class="govuk-body">@UploadSuccessful.Para_You_Can_Now</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li><a class="govuk-link" asp-route="SearchRegistration">@UploadSuccessful.Manage_Individual_Regisrations</a> @UploadSuccessful.By_Searching_For_A_Learner</li>
+            <li><a class="govuk-link" asp-route="UploadRegistrationsFile">@UploadSuccessful.Upload_Another_Multiple_Registrations_File</a></li>
+            <li>@UploadSuccessful.Add <a class="govuk-link" asp-route="AssessmentDashboard">@UploadSuccessful.Assessment_Periods</a> @UploadSuccessful.For_Registered_Learners</li>
+        </ul>
+
+        <div class="govuk-button-group">
+            <a id="uploadAnotherButton" asp-route="UploadRegistrationsFile" class="govuk-button" role="button">@UploadSuccessful.Button_Upload_Another_File</a>
+            <a id="homeButton" asp-route="Home" class="govuk-button govuk-button--secondary" role="button">@UploadSuccessful.Button_Home</a>
+        </div>
     </div>
 </div>
