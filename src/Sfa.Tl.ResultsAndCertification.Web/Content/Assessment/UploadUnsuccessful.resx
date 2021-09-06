@@ -120,17 +120,11 @@
   <data name="Assessment_Error_Report_File_Name_Text" xml:space="preserve">
     <value>assessment-entries-error-report.csv</value>
   </data>
-  <data name="Back_To_Assessments_Button_Text" xml:space="preserve">
-    <value>Back to assessment entries</value>
-  </data>
   <data name="Back_To_Home_Button" xml:space="preserve">
     <value>Back to home</value>
   </data>
   <data name="Download_Text" xml:space="preserve">
     <value>Download</value>
-  </data>
-  <data name="Errors_Not_Accessible_On_Page_Exit_Text" xml:space="preserve">
-    <value>If you leave this page you will not be able to access this report.</value>
   </data>
   <data name="Error_Report_Heading" xml:space="preserve">
     <value>Error report</value>

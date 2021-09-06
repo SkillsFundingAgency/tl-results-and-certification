@@ -70,15 +70,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to assessment entries.
-        /// </summary>
-        public static string Back_To_Assessments_Button_Text {
-            get {
-                return ResourceManager.GetString("Back_To_Assessments_Button_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Back to home.
         /// </summary>
         public static string Back_To_Home_Button {
@@ -111,15 +102,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string Error_Report_Text {
             get {
                 return ResourceManager.GetString("Error_Report_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to If you leave this page you will not be able to access this report..
-        /// </summary>
-        public static string Errors_Not_Accessible_On_Page_Exit_Text {
-            get {
-                return ResourceManager.GetString("Errors_Not_Accessible_On_Page_Exit_Text", resourceCulture);
             }
         }
         
