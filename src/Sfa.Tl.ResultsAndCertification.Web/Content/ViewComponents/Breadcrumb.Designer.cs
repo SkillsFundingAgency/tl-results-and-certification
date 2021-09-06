@@ -349,7 +349,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload assessment entries file.
+        ///   Looks up a localized string similar to Upload multiple assessments.
         /// </summary>
         public static string Upload_Assessments_File {
             get {

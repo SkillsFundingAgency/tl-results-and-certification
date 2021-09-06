@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Submit (only click once).
+        ///   Looks up a localized string similar to Upload (only click once).
         /// </summary>
         public static string Js_Disabled_Upload_File_Button_Text {
             get {
