@@ -181,7 +181,7 @@
     <value>Processing assessment entries file</value>
   </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
-    <value>Please select assessment entries file</value>
+    <value>Select a file to upload</value>
   </data>
   <data name="Upload_File_Button_Text" xml:space="preserve">
     <value>Upload</value>

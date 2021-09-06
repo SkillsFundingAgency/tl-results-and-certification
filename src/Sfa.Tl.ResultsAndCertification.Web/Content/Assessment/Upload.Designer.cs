@@ -250,7 +250,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please select assessment entries file.
+        ///   Looks up a localized string similar to Select a file to upload.
         /// </summary>
         public static string Select_File_To_Upload_Required_Validation_Message {
             get {
