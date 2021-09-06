@@ -61,6 +61,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to published 3 September 2021.
+        /// </summary>
+        public static string Assessments_Published_On {
+            get {
+                return ResourceManager.GetString("Assessments_Published_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to version 1.1.
+        /// </summary>
+        public static string Assessments_Version {
+            get {
+                return ResourceManager.GetString("Assessments_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download.
         /// </summary>
         public static string Download {
@@ -228,24 +246,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string Processing_Assessment_Entries_File_Text {
             get {
                 return ResourceManager.GetString("Processing_Assessment_Entries_File_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to published 3 September 2021.
-        /// </summary>
-        public static string Registrations_Published_On {
-            get {
-                return ResourceManager.GetString("Registrations_Published_On", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to version 1.1.
-        /// </summary>
-        public static string Registrations_Version {
-            get {
-                return ResourceManager.GetString("Registrations_Version", resourceCulture);
             }
         }
         
