@@ -11,10 +11,12 @@
         <h1 class="govuk-heading-xl">
             @UploadUnsuccessful.Section_Heading
         </h1>
-        <p class="govuk-body govuk-inset-text">@UploadUnsuccessful.Section_Info_Text</p>
-        <p class="govuk-body govuk-!-margin-top-7">@UploadUnsuccessful.Send_Errors_TechTeam_Para_Text</p>
+        <p class="govuk-body govuk-inset-text">@UploadUnsuccessful.Inset_Para_Your_File_Contains_Formatting_Errors</p>
 
-        <section>
+        <h2 class="govuk-heading-m">@UploadUnsuccessful.Error_Report_Heading</h2>
+        <p class="govuk-body govuk-!-margin-top-7">@UploadUnsuccessful.Para_The_Error_Report_Will_Tell_You_What_Went_Wrong</p>
+        <p class="govuk-body govuk-inset-text">@UploadUnsuccessful.Inset_Para_If_You_Leave_This_Page_You_Will_Not_Able_To_Come_Back</p>
+        <section class="govuk-clearfix">
             <div class="gem-c-attachment__thumbnail">
                 <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="DownloadAssessmentErrors" asp-route-id="@Model.BlobUniqueReference">
                     <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
@@ -23,16 +25,15 @@
                 </a>
             </div>
             <div>
-                <h2 class="govuk-!-font-size-27 govuk-!-font-weight-regular">
-                    <a class="govuk-link" target="_self" asp-route="DownloadAssessmentErrors" asp-route-id="@Model.BlobUniqueReference">@UploadUnsuccessful.Download_Error_Report_Text</a>
-                </h2>
+                <h3 class="govuk-heading-s">
+                    @UploadUnsuccessful.Download_Text <a class="govuk-link" target="_self" asp-route="DownloadAssessmentErrors" asp-route-id="@Model.BlobUniqueReference">@UploadUnsuccessful.Error_Report_Text</a>
+                </h3>
                 <p class="govuk-body-s">@Model.FileType, @Model.FileSize @UploadUnsuccessful.File_Size_Kb_Text</p>
             </div>
         </section>
-    </div>
-
-    <div class="govuk-grid-column-two-thirds govuk-!-margin-top-3">
-        <p class="govuk-body">@UploadUnsuccessful.Errors_Not_Accessible_On_Page_Exit_Text</p>
-        <p class="govuk-!-margin-top-5"><a class="govuk-button govuk-button--secondary" role="button" asp-route="AssessmentDashboard">@UploadUnsuccessful.Back_To_Assessments_Button_Text</a></p>
+        <div class="govuk-button-group govuk-!-padding-top-3">
+            <a id="uploadAnotherFileButton" class="govuk-button" role="button" asp-route="UploadAssessmentsFile">@UploadUnsuccessful.Upload_Another_File_Button</a>
+            <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="Home">@UploadUnsuccessful.Back_To_Home_Button</a>
+        </div>
     </div>
 </div>

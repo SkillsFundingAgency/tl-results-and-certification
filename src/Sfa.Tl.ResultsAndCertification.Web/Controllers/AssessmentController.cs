@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("assessment-entries-upload-unsuccessful", Name = RouteConstants.AssessmentsUploadUnsuccessful)]
+        [Route("upload-assessments-file-error ", Name = RouteConstants.AssessmentsUploadUnsuccessful)]
         public async Task<IActionResult> UploadUnsuccessful()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<UploadUnsuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel));
