@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
         private string _fileName;
         public override void Given()
         {
-            _fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Registrations_Data_Format_And_Rules_Guide_File_Name_Text;
+            _fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Registrations_Data_Format_And_Rules_File_Name;
             DocumentLoader.GetBulkUploadRegistrationsTechSpecFileAsync(_fileName).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File for registration tech spec")));
         }
 
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
         {
             var viewResult = Result as FileStreamResult;
             viewResult.Should().NotBeNull();
-            viewResult.FileDownloadName.Should().Be(DocumentResource.TlevelDataFormatAndRulesGuide.Registrations_Data_Format_And_Rules_Guide_File_Name_Text);
+            viewResult.FileDownloadName.Should().Be(DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Registrations_Data_Format_And_Rules_File_Name);
             viewResult.ContentType.Should().Be("text/xlsx");
             viewResult.FileStream.Should().NotBeNull();
         }

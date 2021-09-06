@@ -129,9 +129,6 @@
   <data name="Assessment_Entries_Version_Text" xml:space="preserve">
     <value>version 1.0</value>
   </data>
-  <data name="Assessment_Entry_Data_Format_And_Rules_Guide_File_Name_Text" xml:space="preserve">
-    <value>TLevels_assessment_entry_data_format_and_rules_guide.xlsx</value>
-  </data>
   <data name="Choose_The_Right_Core_And_Specialism_Codes_Text" xml:space="preserve">
     <value>choose the right core and specialism codes</value>
   </data>
@@ -159,9 +156,6 @@
   <data name="Published_Text" xml:space="preserve">
     <value>published</value>
   </data>
-  <data name="Registrations_Data_Format_And_Rules_Guide_File_Name_Text" xml:space="preserve">
-    <value>Registrations_data_format_and_rules_guide.xlsx</value>
-  </data>
   <data name="Registrations_FileSize_Text" xml:space="preserve">
     <value>167</value>
   </data>
@@ -173,9 +167,6 @@
   </data>
   <data name="Registrations_Version_Text" xml:space="preserve">
     <value>version 1.4</value>
-  </data>
-  <data name="Results_Data_Format_And_Rules_Guide_File_Name_Text" xml:space="preserve">
-    <value>TLevels_results_data_format_and_rules_guide.xlsx</value>
   </data>
   <data name="Results_FileSize_Text" xml:space="preserve">
     <value>152</value>
@@ -197,6 +188,15 @@
   </data>
   <data name="Section_Info_Text" xml:space="preserve">
     <value>These guides show you how to create files that add and amend data for Manage T Level results by bulk upload.</value>
+  </data>
+  <data name="Tlevels_Assessment_Entry_Data_Format_And_Rules_File_Name" xml:space="preserve">
+    <value>tlevels-assessment-entry-data-format-and-rules.xlsx</value>
+  </data>
+  <data name="Tlevels_Registrations_Data_Format_And_Rules_File_Name" xml:space="preserve">
+    <value>tlevels-registrations-data-format-and-rules.xlsx</value>
+  </data>
+  <data name="Tlevels_Results_Data_Format_And_Rules_File_Name" xml:space="preserve">
+    <value>tlevels-results-data-format-and-rules.xlsx</value>
   </data>
   <data name="Use_The_Correct_Format_For_File_Data_Items_Text" xml:space="preserve">
     <value>use the correct format for file data items</value>
