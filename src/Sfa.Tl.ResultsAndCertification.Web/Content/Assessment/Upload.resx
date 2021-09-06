@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Assessments_Published_On" xml:space="preserve">
+    <value>published 3 September 2021</value>
+  </data>
+  <data name="Assessments_Version" xml:space="preserve">
+    <value>version 1.1</value>
+  </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
   </data>
@@ -173,12 +179,6 @@
   </data>
   <data name="Processing_Assessment_Entries_File_Text" xml:space="preserve">
     <value>Processing assessment entries file</value>
-  </data>
-  <data name="Registrations_Published_On" xml:space="preserve">
-    <value>published 3 September 2021</value>
-  </data>
-  <data name="Registrations_Version" xml:space="preserve">
-    <value>version 1.1</value>
   </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
     <value>Please select assessment entries file</value>

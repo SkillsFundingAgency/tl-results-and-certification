@@ -367,7 +367,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload results file.
+        ///   Looks up a localized string similar to Upload multiple results.
         /// </summary>
         public static string Upload_Results_File {
             get {
