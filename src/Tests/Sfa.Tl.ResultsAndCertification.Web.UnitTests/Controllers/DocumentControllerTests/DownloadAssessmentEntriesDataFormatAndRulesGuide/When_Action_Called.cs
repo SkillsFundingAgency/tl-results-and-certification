@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
         private string _fileName;
         public override void Given()
         {
-            _fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Assessment_Entry_Data_Format_And_Rules_Guide_File_Name_Text;
+            _fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Assessment_Entry_Data_Format_And_Rules_File_Name;
             DocumentLoader.GetBulkUploadAssessmentEntriesTechSpecFileAsync(_fileName).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File for assessment entries tech spec")));
         }
 
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
         {
             var viewResult = Result as FileStreamResult;
             viewResult.Should().NotBeNull();
-            viewResult.FileDownloadName.Should().Be(DocumentResource.TlevelDataFormatAndRulesGuide.Assessment_Entry_Data_Format_And_Rules_Guide_File_Name_Text);
+            viewResult.FileDownloadName.Should().Be(DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Assessment_Entry_Data_Format_And_Rules_File_Name);
             viewResult.ContentType.Should().Be("text/xlsx");
             viewResult.FileStream.Should().NotBeNull();
         }
