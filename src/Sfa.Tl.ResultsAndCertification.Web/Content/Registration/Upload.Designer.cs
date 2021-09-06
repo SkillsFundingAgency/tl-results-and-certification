@@ -250,7 +250,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 3 September 2021.
+        ///   Looks up a localized string similar to published 2 September 2021.
         /// </summary>
         public static string Registrations_Published_On {
             get {
@@ -277,7 +277,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Submit.
+        ///   Looks up a localized string similar to Upload.
         /// </summary>
         public static string Upload_File_Button_Text {
             get {

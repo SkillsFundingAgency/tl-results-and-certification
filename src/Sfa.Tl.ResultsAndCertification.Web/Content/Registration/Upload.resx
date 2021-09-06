@@ -181,7 +181,7 @@
     <value>You can download a template with data formats and rules guidance to help you.</value>
   </data>
   <data name="Registrations_Published_On" xml:space="preserve">
-    <value>published 3 September 2021</value>
+    <value>published 2 September 2021</value>
   </data>
   <data name="Registrations_Version" xml:space="preserve">
     <value>version 1.5</value>
@@ -190,7 +190,7 @@
     <value>Select a file to upload</value>
   </data>
   <data name="Upload_File_Button_Text" xml:space="preserve">
-    <value>Submit</value>
+    <value>Upload</value>
   </data>
   <data name="Upload_File_Text" xml:space="preserve">
     <value>Upload a file</value>
