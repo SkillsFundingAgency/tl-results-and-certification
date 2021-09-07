@@ -232,7 +232,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 3 September 2021.
+        ///   Looks up a localized string similar to published 15 September 2021.
         /// </summary>
         public static string Results_Published_On {
             get {
