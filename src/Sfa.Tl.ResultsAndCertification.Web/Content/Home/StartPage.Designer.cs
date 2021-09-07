@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to bulk upload records.
+        /// </summary>
+        public static string Bulk_Upload_Records {
+            get {
+                return ResourceManager.GetString("Bulk_Upload_Records", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Awarding organisation roles.
         /// </summary>
         public static string Collapsable_Awarding_Organisation_Roles {
@@ -304,6 +313,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to see.
+        /// </summary>
+        public static string See_Text {
+            get {
+                return ResourceManager.GetString("See_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to access the .
         /// </summary>
         public static string Service_Access_The {
@@ -390,6 +408,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         public static string Start_Button_Text {
             get {
                 return ResourceManager.GetString("Start_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level data format and rules.
+        /// </summary>
+        public static string Tlevel_Data_Format_And_Rules {
+            get {
+                return ResourceManager.GetString("Tlevel_Data_Format_And_Rules", resourceCulture);
             }
         }
         

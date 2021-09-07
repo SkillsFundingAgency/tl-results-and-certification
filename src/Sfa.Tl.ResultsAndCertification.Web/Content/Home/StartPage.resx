@@ -120,6 +120,9 @@
   <data name="Before_You_Start_Text" xml:space="preserve">
     <value>Before you start</value>
   </data>
+  <data name="Bulk_Upload_Records" xml:space="preserve">
+    <value>bulk upload records</value>
+  </data>
   <data name="Collapsable_Awarding_Organisation_Roles" xml:space="preserve">
     <value>Awarding organisation roles</value>
   </data>
@@ -198,6 +201,9 @@
   <data name="Role_TLevels_Reviewers_Info" xml:space="preserve">
     <value>review T Level titles and confirm that details are correct and raise a query if they are incorrect</value>
   </data>
+  <data name="See_Text" xml:space="preserve">
+    <value>see</value>
+  </data>
   <data name="Service_Access_The" xml:space="preserve">
     <value>access the </value>
   </data>
@@ -227,6 +233,9 @@
   </data>
   <data name="Start_Button_Text" xml:space="preserve">
     <value>Start now</value>
+  </data>
+  <data name="Tlevel_Data_Format_And_Rules" xml:space="preserve">
+    <value>T Level data format and rules</value>
   </data>
   <data name="You_Need_DfE_SignIn_Account_To_Use_This_Service_Text" xml:space="preserve">
     <value>You will need a DfE Sign-in account and an assigned role.</value>
