@@ -54,21 +54,21 @@
                         </svg>
                     </a>
                 </div>
-                <h3 class="govuk-heading-s">@Upload.Download 
+                <h3 class="govuk-heading-s">
+                    @Upload.Download
                     <a class="govuk-link" target="_self" asp-route="DownloadRegistrationDataFormatAndRulesGuide">@Upload.Link_Tlevels_Registration_Data_Format_Rules</a>
                 </h3>
                 <p class="govuk-body-s">@Upload.File_Type, @Upload.File_Size_Kb_Text, @Upload.Registrations_Version, @Upload.Registrations_Published_On</p>
             </section>
-            
+
+            <p class="govuk-body">@Upload.List_If_Uln_Already_Exist</p>
+            <p class="govuk-body">@Upload.List_If_Uln_Already_Active</p>
             <ul class="govuk-list govuk-list--bullet">
-                <li>@Upload.List_If_Uln_Already_Exist</li>
-                <li>@Upload.List_If_Uln_Already_Active</li>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>@Upload.List_Registration_Active_With_Another_Ao</li>
-                    <li>@Upload.List_Core_Code_Different</li>
-                </ul>
-                <li>@Upload.List_Data_Not_Formatted_Correctly</li>
+                <li>@Upload.List_Registration_Active_With_Another_Ao</li>
+                <li>@Upload.List_Core_Code_Different</li>
             </ul>
+            <p class="govuk-body">@Upload.List_Data_Not_Formatted_Correctly</p>
+
         </div>
     </div>
 </div>
