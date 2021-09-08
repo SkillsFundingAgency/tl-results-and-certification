@@ -127,7 +127,7 @@
     <value>File name must have no more than {0} characters</value>
   </data>
   <data name="File_Size_Kb_Text" xml:space="preserve">
-    <value>172KB</value>
+    <value>216KB</value>
   </data>
   <data name="File_Size_Too_Large_Validation_Message" xml:space="preserve">
     <value>File size too large – must be no more than {0}MB</value>

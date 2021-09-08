@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 172KB.
+        ///   Looks up a localized string similar to 216KB.
         /// </summary>
         public static string File_Size_Kb_Text {
             get {
