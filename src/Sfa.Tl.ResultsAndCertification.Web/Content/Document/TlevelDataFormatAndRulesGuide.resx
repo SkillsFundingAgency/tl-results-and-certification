@@ -117,29 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Assessment_Entries_DataFormat_And_Rules" xml:space="preserve">
+    <value>assessment entries data format and rules</value>
+  </data>
   <data name="Assessment_Entries_FileSize_Text" xml:space="preserve">
-    <value>158</value>
+    <value>212</value>
   </data>
   <data name="Assessment_Entries_Heading_Text" xml:space="preserve">
     <value>Assessment entries</value>
   </data>
   <data name="Assessment_Entries_PublishedDate_Text" xml:space="preserve">
-    <value>23 November 2020</value>
+    <value>15 September 2021</value>
   </data>
   <data name="Assessment_Entries_Version_Text" xml:space="preserve">
-    <value>version 1.0</value>
+    <value>version 1.1</value>
   </data>
   <data name="Choose_The_Right_Core_And_Specialism_Codes_Text" xml:space="preserve">
     <value>choose the right core and specialism codes</value>
   </data>
-  <data name="Download_Assessment_Entries_DataFormat_And_Rules_Guide_Text" xml:space="preserve">
-    <value>Download assessment entries data format and rules guide</value>
-  </data>
-  <data name="Download_Registration_DataFormat_And_Rules_Guide_Text" xml:space="preserve">
-    <value>Download registrations data format and rules guide</value>
-  </data>
-  <data name="Download_Result_DataFormat_And_Rules_Guide_Text" xml:space="preserve">
-    <value>Download results data format and rules guide</value>
+  <data name="Download_Text" xml:space="preserve">
+    <value>Download</value>
   </data>
   <data name="File_Size_Kb_Text" xml:space="preserve">
     <value>KB</value>
@@ -148,7 +145,7 @@
     <value>meet the technical requirements</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>T Level data format and rules guides page</value>
+    <value>T Levels data format and rules</value>
   </data>
   <data name="Present_Your_Data_Correctly_By_Viewing_An_Example_CSV_File_Text" xml:space="preserve">
     <value>present your data correctly, by viewing an example CSV file</value>
@@ -157,31 +154,37 @@
     <value>published</value>
   </data>
   <data name="Registrations_FileSize_Text" xml:space="preserve">
-    <value>167</value>
+    <value>216</value>
   </data>
   <data name="Registrations_Heading_Text" xml:space="preserve">
     <value>Registrations</value>
   </data>
   <data name="Registrations_PublishedDate_Text" xml:space="preserve">
-    <value>16 November 2020</value>
+    <value>15 September 2021</value>
   </data>
   <data name="Registrations_Version_Text" xml:space="preserve">
-    <value>version 1.4</value>
+    <value>version 1.5</value>
+  </data>
+  <data name="Registration_DataFormat_And_Rules" xml:space="preserve">
+    <value>registrations data format and rules</value>
   </data>
   <data name="Results_FileSize_Text" xml:space="preserve">
-    <value>152</value>
+    <value>208</value>
   </data>
   <data name="Results_Heading_Text" xml:space="preserve">
     <value>Results</value>
   </data>
   <data name="Results_PublishedDate_Text" xml:space="preserve">
-    <value>28 January 2021</value>
+    <value>15 September 2021</value>
   </data>
   <data name="Results_Version_Text" xml:space="preserve">
-    <value>version 1.0</value>
+    <value>version 1.1</value>
+  </data>
+  <data name="Result_DataFormat_And_Rules" xml:space="preserve">
+    <value>results data format and rules</value>
   </data>
   <data name="Section_Heading" xml:space="preserve">
-    <value>T Level data format and rules guides</value>
+    <value>T Levels data format and rules</value>
   </data>
   <data name="Section_Info_Explain_How_To_Text" xml:space="preserve">
     <value>They explain how to:</value>

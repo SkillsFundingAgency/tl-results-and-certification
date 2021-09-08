@@ -62,7 +62,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 158.
+        ///   Looks up a localized string similar to assessment entries data format and rules.
+        /// </summary>
+        public static string Assessment_Entries_DataFormat_And_Rules {
+            get {
+                return ResourceManager.GetString("Assessment_Entries_DataFormat_And_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 212.
         /// </summary>
         public static string Assessment_Entries_FileSize_Text {
             get {
@@ -80,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 23 November 2020.
+        ///   Looks up a localized string similar to 15 September 2021.
         /// </summary>
         public static string Assessment_Entries_PublishedDate_Text {
             get {
@@ -89,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to version 1.0.
+        ///   Looks up a localized string similar to version 1.1.
         /// </summary>
         public static string Assessment_Entries_Version_Text {
             get {
@@ -107,29 +116,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download assessment entries data format and rules guide.
+        ///   Looks up a localized string similar to Download.
         /// </summary>
-        public static string Download_Assessment_Entries_DataFormat_And_Rules_Guide_Text {
+        public static string Download_Text {
             get {
-                return ResourceManager.GetString("Download_Assessment_Entries_DataFormat_And_Rules_Guide_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download registrations data format and rules guide.
-        /// </summary>
-        public static string Download_Registration_DataFormat_And_Rules_Guide_Text {
-            get {
-                return ResourceManager.GetString("Download_Registration_DataFormat_And_Rules_Guide_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download results data format and rules guide.
-        /// </summary>
-        public static string Download_Result_DataFormat_And_Rules_Guide_Text {
-            get {
-                return ResourceManager.GetString("Download_Result_DataFormat_And_Rules_Guide_Text", resourceCulture);
+                return ResourceManager.GetString("Download_Text", resourceCulture);
             }
         }
         
@@ -152,7 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level data format and rules guides page.
+        ///   Looks up a localized string similar to T Levels data format and rules.
         /// </summary>
         public static string Page_Title {
             get {
@@ -179,7 +170,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 167.
+        ///   Looks up a localized string similar to registrations data format and rules.
+        /// </summary>
+        public static string Registration_DataFormat_And_Rules {
+            get {
+                return ResourceManager.GetString("Registration_DataFormat_And_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 216.
         /// </summary>
         public static string Registrations_FileSize_Text {
             get {
@@ -197,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 16 November 2020.
+        ///   Looks up a localized string similar to 15 September 2021.
         /// </summary>
         public static string Registrations_PublishedDate_Text {
             get {
@@ -206,7 +206,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to version 1.4.
+        ///   Looks up a localized string similar to version 1.5.
         /// </summary>
         public static string Registrations_Version_Text {
             get {
@@ -215,7 +215,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 152.
+        ///   Looks up a localized string similar to results data format and rules.
+        /// </summary>
+        public static string Result_DataFormat_And_Rules {
+            get {
+                return ResourceManager.GetString("Result_DataFormat_And_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 208.
         /// </summary>
         public static string Results_FileSize_Text {
             get {
@@ -233,7 +242,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 28 January 2021.
+        ///   Looks up a localized string similar to 15 September 2021.
         /// </summary>
         public static string Results_PublishedDate_Text {
             get {
@@ -242,7 +251,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to version 1.0.
+        ///   Looks up a localized string similar to version 1.1.
         /// </summary>
         public static string Results_Version_Text {
             get {
@@ -251,7 +260,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level data format and rules guides.
+        ///   Looks up a localized string similar to T Levels data format and rules.
         /// </summary>
         public static string Section_Heading {
             get {
