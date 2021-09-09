@@ -145,7 +145,7 @@
     <value>JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size.</value>
   </data>
   <data name="Link_Tlevels_Results_Data_Format_Rules" xml:space="preserve">
-    <value>T Levels results data format and rules guide</value>
+    <value>T Levels results data format and rules</value>
   </data>
   <data name="List_Blank_Will_Delete_Existing" xml:space="preserve">
     <value>If a result is already recorded and a blank one is submitted in the file, the existing result will be deleted.</value>

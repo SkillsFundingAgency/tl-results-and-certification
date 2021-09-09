@@ -142,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Levels results data format and rules guide.
+        ///   Looks up a localized string similar to T Levels results data format and rules.
         /// </summary>
         public static string Link_Tlevels_Results_Data_Format_Rules {
             get {
