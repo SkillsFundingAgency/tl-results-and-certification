@@ -5,7 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
@@ -19,7 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         // Dependencies
         protected IPostResultsServiceLoader Loader;
         protected ICacheService CacheService;
-        protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected ILogger<PostResultsServiceController> Logger;
         protected PostResultsServiceController Controller;
 
@@ -34,9 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             Loader = Substitute.For<IPostResultsServiceLoader>();
             CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<PostResultsServiceController>>();
-            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration { AppealsEndDate = DateTime.UtcNow.AddDays(7) };
 
-            Controller = new PostResultsServiceController(Loader, CacheService, ResultsAndCertificationConfiguration, Logger);
+            Controller = new PostResultsServiceController(Loader, CacheService, Logger);
 
             AoUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<PostResultsServiceController>(Controller)

@@ -6,8 +6,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
@@ -22,16 +20,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     {
         private readonly IPostResultsServiceLoader _postResultsServiceLoader;
         private readonly ICacheService _cacheService;
-        private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly ILogger _logger;
 
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.PrsCacheKey); } }
 
-        public PostResultsServiceController(IPostResultsServiceLoader postResultsServiceLoader, ICacheService cacheService, ResultsAndCertificationConfiguration configuration, ILogger<PostResultsServiceController> logger)
+        public PostResultsServiceController(IPostResultsServiceLoader postResultsServiceLoader, ICacheService cacheService, ILogger<PostResultsServiceController> logger)
         {
             _postResultsServiceLoader = postResultsServiceLoader;
             _cacheService = cacheService;
-            _configuration = configuration;
             _logger = logger;
         }
 
@@ -168,7 +164,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(User.GetUkPrn(), profileId, assessmentId);
 
-            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
+            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
@@ -182,7 +178,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!ModelState.IsValid)
                 return View(prsDetails);
 
-            if (prsDetails == null || !prsDetails.IsValid)
+            if (prsDetails == null || !prsDetails.IsValid) 
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             if (model.AppealGrade == false)
@@ -204,7 +200,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealOutcomePathwayGradeViewModel>(User.GetUkPrn(), profileId, assessmentId);
 
-            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
+            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             viewModel.SetOutcomeType(outcomeTypeId);
@@ -272,7 +268,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _postResultsServiceLoader.GetPrsLearnerDetailsAsync<AppealUpdatePathwayGradeViewModel>(User.GetUkPrn(), profileId, assessmentId);
 
-            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid || !CommonHelper.IsAppealsAllowed(_configuration.AppealsEndDate))
+            if (viewModel == null || viewModel.PathwayResultId != resultId || !viewModel.IsValid)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var checkAndSubmitDetails = await _cacheService.GetAsync<PrsPathwayGradeCheckAndSubmitViewModel>(CacheKey);

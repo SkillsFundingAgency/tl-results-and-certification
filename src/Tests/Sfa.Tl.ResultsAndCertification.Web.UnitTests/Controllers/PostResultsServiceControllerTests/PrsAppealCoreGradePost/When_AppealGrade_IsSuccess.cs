@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using System;
 using Xunit;
 using AppealCoreGradeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.AppealCoreGrade;
 
@@ -12,17 +13,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_AppealGrade_IsSuccess : TestSetup
     {
-        private AppealCoreGradeViewModel _mockLoderResponse;
         private readonly bool _appealGradeResponse = true;
         private string _expectedSuccessBannerMsg;
 
         public override void Given()
         {
-            ViewModel = new AppealCoreGradeViewModel { ProfileId = 1, PathwayAssessmentId = 11, PathwayName = "Education", PathwayCode = "9856231479", AppealGrade = true };
+            ViewModel = new AppealCoreGradeViewModel { ProfileId = 1, PathwayAssessmentId = 11, PathwayName = "Education", PathwayCode = "9856231479", AppealGrade = true, AppealEndDate = DateTime.Today.AddDays(7) };
 
-            _mockLoderResponse = new AppealCoreGradeViewModel { PathwayName = ViewModel.PathwayName, PathwayCode = ViewModel.PathwayCode } ;
             Loader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.PathwayAssessmentId)
-                .Returns(_mockLoderResponse);
+                .Returns(ViewModel);
 
             Loader.AppealCoreGradeAsync(AoUkprn, ViewModel).Returns(_appealGradeResponse);
             _expectedSuccessBannerMsg = string.Format(AppealCoreGradeContent.Banner_Message, $"{ViewModel.PathwayName} ({ViewModel.PathwayCode})");

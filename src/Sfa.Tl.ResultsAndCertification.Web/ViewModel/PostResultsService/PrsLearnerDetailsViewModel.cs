@@ -125,6 +125,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             }
         }
 
-        private bool IsResultUpdateAllowed { get { return PathwayPrsStatus != PrsStatus.Final && CommonHelper.IsAppealsAllowed(AppealEndDate); } }
+        private bool IsResultUpdateAllowed { get { return PathwayPrsStatus == PrsStatus.BeingAppealed || (PathwayPrsStatus != PrsStatus.Final && CommonHelper.IsAppealsAllowed(AppealEndDate)); } }
     }
 }
