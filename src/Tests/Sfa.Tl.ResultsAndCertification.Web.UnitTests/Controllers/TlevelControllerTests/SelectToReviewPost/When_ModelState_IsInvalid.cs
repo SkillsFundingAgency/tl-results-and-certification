@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
             var actualRouteName = route.RouteName;
             var routeParam = route.RouteValues["id"];
 
-            actualRouteName.Should().Be(RouteConstants.AreDetailsCorrect);
+            actualRouteName.Should().Be(RouteConstants.ReviewTlevelDetails);
             routeParam.Should().NotBeNull();
             routeParam.ToString().Should().Be(selectedPathwayId.ToString());
         }

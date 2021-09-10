@@ -34,7 +34,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                 PathwayResultId = 77,
                 PathwayPrsStatus = null,
                 PathwayGradeLastUpdatedBy = "Barsley User",
-                PathwayGradeLastUpdatedOn = DateTime.Today
+                PathwayGradeLastUpdatedOn = DateTime.Today,
+                AppealEndDate = DateTime.Today.AddDays(7)
             };
 
             InternalApiClient.GetPrsLearnerDetailsAsync(AoUkprn, ProfileId, AssessmentId).Returns(_expectedApiResult);
@@ -59,6 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             ActualResult.PathwayAssessmentSeries.Should().Be(_expectedApiResult.PathwayAssessmentSeries);
             ActualResult.PathwayGrade.Should().Be(_expectedApiResult.PathwayGrade);
             ActualResult.PathwayPrsStatus.Should().Be(_expectedApiResult.PathwayPrsStatus);
+            ActualResult.AppealEndDate.Should().Be(_expectedApiResult.AppealEndDate);
         }
     }
 }

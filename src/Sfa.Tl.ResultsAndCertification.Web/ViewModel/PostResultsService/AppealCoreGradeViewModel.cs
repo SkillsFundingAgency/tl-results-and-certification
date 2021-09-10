@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
@@ -30,7 +31,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         [Required(ErrorMessageResourceType = typeof(AppealCoreGradeContent), ErrorMessageResourceName = "Validation_Message")]
         public bool? AppealGrade { get; set; }
 
-        public bool IsValid => PathwayPrsStatus == null;
+        public DateTime AppealEndDate { get; set; }
+        public bool IsValid => PathwayPrsStatus == null && CommonHelper.IsAppealsAllowed(AppealEndDate);
 
         public SummaryItemModel SummaryUln => new SummaryItemModel
         {

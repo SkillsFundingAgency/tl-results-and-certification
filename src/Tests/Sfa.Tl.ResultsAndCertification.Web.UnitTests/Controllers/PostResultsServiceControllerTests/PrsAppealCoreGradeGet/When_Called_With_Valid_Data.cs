@@ -32,7 +32,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayGrade = "B",
                 PathwayPrsStatus = null,
-                HasPathwayResult = true
+                HasPathwayResult = true,
+                AppealEndDate = DateTime.Today.AddDays(7)
             };
 
             Loader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_appealCoreGradeViewModel);

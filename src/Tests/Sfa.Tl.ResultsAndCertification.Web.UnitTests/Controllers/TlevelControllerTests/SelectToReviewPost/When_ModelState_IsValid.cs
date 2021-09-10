@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Called_Expected_Method()
         {
-            TlevelLoader.Received().GetTlevelsToReviewByUkprnAsync(ukprn);
+            TlevelLoader.Received().GetTlevelsToReviewByUkprnAsync(AoUkprn);
         }
     }
 }

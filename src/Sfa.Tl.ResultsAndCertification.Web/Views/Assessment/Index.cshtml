@@ -15,6 +15,7 @@
             <h1 class="govuk-heading-xl">
                 @Dashboard.Page_Heading
             </h1>
+            <p class="govuk-body-l">@Dashboard.Para_Tell_Us_When_Your_Learners_Will_Be_Assessed</p>
         </div>
     </div>
 </div>
@@ -23,27 +24,29 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group assessment-card">
             <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                @Dashboard.Card_Heading_Upload_Assessment_File
-            </h2>
-
-            <p class="govuk-body">
                 <a class="govuk-link" asp-route="UploadAssessmentsFile">
-                    @Dashboard.Card_Link_Upload_Assessment_File
+                    @Dashboard.Card_Heading_Link_Upload_Multiple_Assessments
                 </a>
-            </p>
+            </h2>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Dashboard.List_Add_Or_Change_Assessment_Periods</li>
+                <li>@Dashboard.List_Download_A_Template_With_Assessments_Data_Formats_And_Rules_Guidance</li>
+            </ul>            
         </div>
     </div>
 
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group assessment-card">
             <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                @Dashboard.Card_Heading_Search_Assessment
-            </h2>
-            <p class="govuk-body">
                 <a class="govuk-link" asp-route="SearchAssessments">
-                    @Dashboard.Card_Link_Search_Assessment
+                    @Dashboard.Card_Heading_Link_Manage_An_Assessment
                 </a>
-            </p>
+            </h2>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Dashboard.List_View_A_Learners_AssessmentPeriod</li>
+                <li>@Dashboard.List_Add_An_Assessment_Period_For_One_Learner</li>
+                <li>@Dashboard.List_Change_An_Assessment_Period_For_One_Learner</li>
+            </ul>            
         </div>
     </div>    
 </div>

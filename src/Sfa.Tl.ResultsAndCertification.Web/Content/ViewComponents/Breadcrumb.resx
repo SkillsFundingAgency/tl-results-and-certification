@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Assessment_Dashboard" xml:space="preserve">
-    <value>Assessment entries</value>
+    <value>Assessments</value>
   </data>
   <data name="Check_Learner_Details" xml:space="preserve">
     <value>Check the learner’s details</value>
@@ -169,7 +169,7 @@
     <value>Results</value>
   </data>
   <data name="Reviews_And_Appeals" xml:space="preserve">
-    <value>Reviews and appeals</value>
+    <value>Appeals</value>
   </data>
   <data name="Search_For_Assessments" xml:space="preserve">
     <value>Search for a learner</value>
@@ -184,7 +184,7 @@
     <value>Search for a learner</value>
   </data>
   <data name="StartReviewsAndAppeals" xml:space="preserve">
-    <value>Reviews and appeals</value>
+    <value>Appeals</value>
   </data>
   <data name="StatementOfAchievementRequested" xml:space="preserve">
     <value>Statement of achievement requested</value>
@@ -192,22 +192,34 @@
   <data name="Statement_Of_Achievement_Not_Available" xml:space="preserve">
     <value>Statement of achievement not available</value>
   </data>
+  <data name="Tlevels_Confirmed_List" xml:space="preserve">
+    <value>Confirmed T Levels</value>
+  </data>
+  <data name="Tlevels_Dashboard" xml:space="preserve">
+    <value>T Levels</value>
+  </data>
+  <data name="Tlevels_None_Confirmed" xml:space="preserve">
+    <value>No confirmed T Levels</value>
+  </data>
+  <data name="Tlevels_None_Queried" xml:space="preserve">
+    <value>No queried T Levels</value>
+  </data>
+  <data name="Tlevels_Queried_List" xml:space="preserve">
+    <value>Queried T Levels</value>
+  </data>
   <data name="Tlevel_Details" xml:space="preserve">
     <value>T Level details</value>
   </data>
   <data name="Tlevel_Review_Select" xml:space="preserve">
-    <value>Review T Levels</value>
-  </data>
-  <data name="Tlevel_ViewAll" xml:space="preserve">
-    <value>Your T Levels</value>
+    <value>Review new T Levels</value>
   </data>
   <data name="Upload_Assessments_File" xml:space="preserve">
-    <value>Upload assessment entries file</value>
+    <value>Upload multiple assessments</value>
   </data>
   <data name="Upload_Registrations_File" xml:space="preserve">
-    <value>Upload registrations file</value>
+    <value>Upload multiple registrations</value>
   </data>
   <data name="Upload_Results_File" xml:space="preserve">
-    <value>Upload results file</value>
+    <value>Upload multiple results</value>
   </data>
 </root>

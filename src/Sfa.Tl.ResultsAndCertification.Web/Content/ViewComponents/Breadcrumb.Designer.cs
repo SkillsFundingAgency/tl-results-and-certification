@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment entries.
+        ///   Looks up a localized string similar to Assessments.
         /// </summary>
         public static string Assessment_Dashboard {
             get {
@@ -214,7 +214,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reviews and appeals.
+        ///   Looks up a localized string similar to Appeals.
         /// </summary>
         public static string Reviews_And_Appeals {
             get {
@@ -259,7 +259,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reviews and appeals.
+        ///   Looks up a localized string similar to Appeals.
         /// </summary>
         public static string StartReviewsAndAppeals {
             get {
@@ -295,7 +295,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Review T Levels.
+        ///   Looks up a localized string similar to Review new T Levels.
         /// </summary>
         public static string Tlevel_Review_Select {
             get {
@@ -304,16 +304,52 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your T Levels.
+        ///   Looks up a localized string similar to Confirmed T Levels.
         /// </summary>
-        public static string Tlevel_ViewAll {
+        public static string Tlevels_Confirmed_List {
             get {
-                return ResourceManager.GetString("Tlevel_ViewAll", resourceCulture);
+                return ResourceManager.GetString("Tlevels_Confirmed_List", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload assessment entries file.
+        ///   Looks up a localized string similar to T Levels.
+        /// </summary>
+        public static string Tlevels_Dashboard {
+            get {
+                return ResourceManager.GetString("Tlevels_Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No confirmed T Levels.
+        /// </summary>
+        public static string Tlevels_None_Confirmed {
+            get {
+                return ResourceManager.GetString("Tlevels_None_Confirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No queried T Levels.
+        /// </summary>
+        public static string Tlevels_None_Queried {
+            get {
+                return ResourceManager.GetString("Tlevels_None_Queried", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Queried T Levels.
+        /// </summary>
+        public static string Tlevels_Queried_List {
+            get {
+                return ResourceManager.GetString("Tlevels_Queried_List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload multiple assessments.
         /// </summary>
         public static string Upload_Assessments_File {
             get {
@@ -322,7 +358,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload registrations file.
+        ///   Looks up a localized string similar to Upload multiple registrations.
         /// </summary>
         public static string Upload_Registrations_File {
             get {
@@ -331,7 +367,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload results file.
+        ///   Looks up a localized string similar to Upload multiple results.
         /// </summary>
         public static string Upload_Results_File {
             get {

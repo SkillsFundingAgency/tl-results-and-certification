@@ -120,14 +120,44 @@
   <data name="AutoComplete_Help_Text" xml:space="preserve">
     <value>The following entry field has auto-complete. When autocomplete results are available use up and down arrows to review and enter to select. Touch device users, explore by touch or with swipe gestures.</value>
   </data>
+  <data name="Before_You_Start_Text" xml:space="preserve">
+    <value>Before you start</value>
+  </data>
+  <data name="Collapsable_I_Cannot_Find_Provider" xml:space="preserve">
+    <value>I cannot find a provider</value>
+  </data>
+  <data name="Contact_Us" xml:space="preserve">
+    <value>contact us</value>
+  </data>
   <data name="Continue_Button_Label" xml:space="preserve">
     <value>Continue</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Find a provider</value>
+    <value>Which provider do you want to manage?</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Find a provider page</value>
+    <value>Manage providers</value>
+  </data>
+  <data name="Para_Before_Adding_Them_To_Providers" xml:space="preserve">
+    <value> before adding them to providers.</value>
+  </data>
+  <data name="Para_Confirm_Your_TLevels" xml:space="preserve">
+    <value>confirm your T Levels</value>
+  </data>
+  <data name="Para_If_You_Cannot_Find_A_Provider" xml:space="preserve">
+    <value>If you cannot find a provider, please check you have entered the organisation's name correctly.</value>
+  </data>
+  <data name="Para_If_You_Have_Already_Added_A_Provider" xml:space="preserve">
+    <value>If you have already added a provider, you can view or change the T Levels they offer.</value>
+  </data>
+  <data name="Para_If_You_Have_Not_Added_A_Provider_You_Can_Add_Them" xml:space="preserve">
+    <value>If you have not added a provider, you can add them and select the T Levels they offer.</value>
+  </data>
+  <data name="Para_If_You_Still_Cannot_Find_It" xml:space="preserve">
+    <value>if you still cannot find it, </value>
+  </data>
+  <data name="Para_You_Should" xml:space="preserve">
+    <value>You should </value>
   </data>
   <data name="ProviderName_Char_Limit_Exceed_Validation_Message" xml:space="preserve">
     <value>The character limit exceeded</value>
@@ -141,10 +171,7 @@
   <data name="Provider_Input_Field_Label" xml:space="preserve">
     <value>Enter the provider's name</value>
   </data>
-  <data name="Section_Information_Text" xml:space="preserve">
-    <value>Tell us which T Levels a provider will offer.</value>
-  </data>
-  <data name="View_Providers_Link_Text" xml:space="preserve">
-    <value>View providers you have already set up</value>
+  <data name="View_Existing_Providers_Button" xml:space="preserve">
+    <value>View existing providers</value>
   </data>
 </root>

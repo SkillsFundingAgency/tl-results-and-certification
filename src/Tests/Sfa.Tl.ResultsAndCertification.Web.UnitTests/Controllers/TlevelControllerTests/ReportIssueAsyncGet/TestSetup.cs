@@ -3,68 +3,74 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.Session;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
+using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ReportIssueAsyncGet
 {
     public abstract class TestSetup : BaseTest<TlevelController>
     {
+        protected long AoUkprn;
+        protected string CacheKey;
         protected ITlevelLoader TlevelLoader;
+        protected ICacheService CacheService;
         protected ILogger<TlevelController> Logger;
         protected TlevelController Controller;
-        public TempDataDictionary TempData { get; private set; }
+        protected IHttpContextAccessor HttpContextAccessor;
         protected IActionResult Result;
-        protected long ukprn;
         protected int pathwayId;
+        protected bool isBackToConfirmed;
 
         protected TlevelQueryViewModel expectedResult;
 
         public override void Setup()
         {
-            var httpContextAccessor = Substitute.For<IHttpContextAccessor>();
-            httpContextAccessor.HttpContext.Returns(new DefaultHttpContext
-            {
-                User = new ClaimsPrincipal(new ClaimsIdentity(new[]
-                {
-                    new Claim(CustomClaimTypes.Ukprn, ukprn.ToString())
-                }))
-            });
+            AoUkprn = 1234567890;
 
+            HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             TlevelLoader = Substitute.For<ITlevelLoader>();
+            CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<TlevelController>>();
-            Controller = new TlevelController(TlevelLoader, Logger)
-            {
-                ControllerContext = new ControllerContext
-                {
-                    HttpContext = httpContextAccessor.HttpContext
-                }
-            };
+            Controller = new TlevelController(TlevelLoader, CacheService, Logger);
 
-            TempData = new TempDataDictionary(httpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
-            Controller.TempData = TempData;
+            var httpContext = new ClaimsIdentityBuilder<TlevelController>(Controller)
+               .Add(CustomClaimTypes.Ukprn, AoUkprn.ToString())
+               .Add(CustomClaimTypes.UserId, Guid.NewGuid().ToString())
+               .Build()
+               .HttpContext;
+
+            HttpContextAccessor.HttpContext.Returns(httpContext);
+            CacheKey = CacheKeyHelper.GetCacheKey(httpContext.User.GetUserId(), CacheConstants.TlevelCacheKey);
 
             expectedResult = new TlevelQueryViewModel
             {
+                TqAwardingOrganisationId = pathwayId,
+                RouteId = 2,
                 PathwayId = 1,
-                PathwayName = "Test Pathway",
                 PathwayStatusId = 1,
+
+                TlevelTitle = "T Level in Education",
+                PathwayDisplayName = "Education (12345678)",
+                Specialisms = new List<string> { "Spl1 (11111111)", "Spl2 (22222222)" },
+
+                IsBackToConfirmed = false,
                 Query = "Test query",
-                Specialisms = new List<string> { "Spl1", "Spl2" },
-                TqAwardingOrganisationId = pathwayId
             };
         }
 
         public async override Task When()
         {
-            Result = await Controller.ReportIssueAsync(pathwayId);
+            Result = await Controller.ReportIssueAsync(pathwayId, isBackToConfirmed);
         }
     }
 }

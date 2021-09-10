@@ -17,7 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             ProfileId = 1;
             AssessmentId = 7;
             ResultId = 9;
-            ResultsAndCertificationConfiguration.AppealsEndDate = DateTime.UtcNow.AddDays(-7);
             
             _appealCoreGradeViewModel = new AppealCoreGradeViewModel
             {
@@ -31,8 +30,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 PathwayCode = "12121212",
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayGrade = "A",
-                HasPathwayResult = true
-            };
+                HasPathwayResult = true,
+                AppealEndDate = DateTime.UtcNow.AddDays(-7)
+        };
 
             Loader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(AoUkprn, ProfileId, AssessmentId).Returns(_appealCoreGradeViewModel);
         }

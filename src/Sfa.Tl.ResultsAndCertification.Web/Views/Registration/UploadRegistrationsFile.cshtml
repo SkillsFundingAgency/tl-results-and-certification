@@ -15,17 +15,21 @@
 }
 
 <div id="uploadRegistrationsContainer">
+    
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-form-group">
+                <partial name="_ValidationSummary" />
+                <h1 class="govuk-heading-l">@Upload.Page_Heading</h1>
+            </div>
+        </div>
+    </div>
+
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <partial name="_ValidationSummary" />
-            <h1 class="govuk-heading-xl">@Upload.Page_Heading</h1>
-            <p class="govuk-body">@Html.Raw(@Upload.You_Can_Add_New_Registrations_Text)</p>
-            <p class="govuk-body">@Upload.We_Can_Only_Accept_Files_Text</p>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>@Upload.Are_In_Csv_Format_Text</li>
-                <li>@Upload.Include_All_Mandatory_Fields_Text</li>
-                <li>@Upload.No_Of_Registrations_To_Upload_Text</li>
-            </ul>
+
+            <p class="govuk-body">@Upload.Para_You_Can_Add_Or_Change_Registration</p>
+
             <form id="uploadRegistrationsForm" class="form" asp-route="SubmitUploadRegistrationsFile" enctype="multipart/form-data">
                 <div class="govuk-form-group" sfa-validation-for="File" sfa-validation-class="govuk-form-group--error">
                     <label for="file" class="govuk-label govuk-!-font-size-19 govuk-!-padding-top-5 govuk-!-font-weight-bold">
@@ -37,6 +41,34 @@
                 <button id="uploadRegistrationsButton" class="govuk-button tl-show-on-js-only" data-module="govuk-button" type="submit" data-prevent-double-click="true">@Upload.Upload_File_Button_Text</button>
                 <partial name="~/Views/Registration/Partials/_uploadRegistrationNoScriptSubmit.cshtml" />
             </form>
+
+            <h2 class="govuk-heading-m">@Upload.Heading_Before_You_Start</h2>
+            <p class="govuk-body">@Upload.Para_If_You_Export_Data_From_Another_System</p>
+            <p class="govuk-body">@Upload.Para_You_Can_Download_Template_With_Formats_And_Rules</p>
+
+            <section class="gem-c-attachment">
+                <div class="gem-c-attachment__thumbnail">
+                    <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="DownloadRegistrationDataFormatAndRulesGuide">
+                        <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                            <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
+                        </svg>
+                    </a>
+                </div>
+                <h3 class="govuk-heading-s">
+                    @Upload.Download
+                    <a class="govuk-link" target="_self" asp-route="DownloadRegistrationDataFormatAndRulesGuide">@Upload.Link_Tlevels_Registration_Data_Format_Rules</a>
+                </h3>
+                <p class="govuk-body-s">@Upload.File_Type, @Upload.File_Size_Kb_Text, @Upload.Registrations_Version, @Upload.Registrations_Published_On</p>
+            </section>
+
+            <p class="govuk-body">@Upload.List_If_Uln_Already_Exist</p>
+            <p class="govuk-body">@Upload.List_If_Uln_Already_Active</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Upload.List_Registration_Active_With_Another_Ao</li>
+                <li>@Upload.List_Core_Code_Different</li>
+            </ul>
+            <p class="govuk-body">@Upload.List_Data_Not_Formatted_Correctly</p>
+
         </div>
     </div>
 </div>

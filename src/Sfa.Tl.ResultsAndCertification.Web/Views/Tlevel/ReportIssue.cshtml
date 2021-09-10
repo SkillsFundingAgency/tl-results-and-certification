@@ -1,6 +1,5 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
-@using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink
-@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TlevelQueryViewModel
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels.TlevelQueryViewModel
 
 @{
     ViewData["Title"] = @Query.Page_Title;
@@ -15,48 +14,32 @@
     <div class="govuk-grid-column-two-thirds">
         <partial name="_ValidationSummary" />
 
-        <h1 class="govuk-heading-xl">@Query.Section_Heading</h1>
-
         <form asp-route="SubmitTlevelIssue">
             <input type="hidden" asp-for="PathwayId" />
             <input type="hidden" asp-for="TqAwardingOrganisationId" />
             <input type="hidden" asp-for="PathwayStatusId" />
-            <input type="hidden" asp-for="IsBackToVerifyPage" />
+            <input type="hidden" asp-for="IsBackToConfirmed" />
 
-            <div class="govuk-form-group" sfa-validation-for="Query" sfa-validation-class="govuk-form-group--error">
-                <label class="govuk-label" for="query">
-                    @Query.Query_Textbox_Title
-                </label>
-                <span sfa-validation-for="Query"></span>
-                <textarea class="govuk-textarea" id="query" asp-for="Query" rows="5"></textarea>
-            </div>
-
-            <dl class="govuk-summary-list govuk-!-margin-bottom-7">
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        @Query.Pathway_Field_Label
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        @Model.PathwayName
-                    </dd>
-                </div>
-
-                <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">
-                        @Query.Specialisms_Field_Label
-                    </dt>
-                    <dd class="govuk-summary-list__value">
-                        @foreach (var splsm in Model?.Specialisms)
-                        {
-                            <p class="govuk-body">@splsm</p>
-                        }
-                    </dd>
-                </div>
+            <h1 class="govuk-heading-l">@Query.Heading_Query_Tlevel_Details</h1>
+            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-9 govuk-!-margin-top-7">
+                <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCore></vc:summary-item>
+                <vc:summary-List model=Model.SummarySpecialisms></vc:summary-List>
             </dl>
 
-            <p class="govuk-body">@Query.Investigation_Information_Text</p>
+            <div class="govuk-form-group" sfa-validation-for="Query" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <h2 class="govuk-label-wrapper">
+                        <label class="govuk-label govuk-label--m" for="query">@Query.Heading_Tell_Us_What_Is_Wrong</label>
+                    </h2>
+                    <div id="query-hint" class="govuk-hint">@Query.Hint_You_Do_Not_Need_Include_Above_Info</div>
+                    <div id="query-hint-char-limit" class="govuk-hint">@Query.Hint_Message_Must_Be_1000_Or_Less</div>
+                    <span sfa-validation-for="Query"></span>
+                    <textarea class="govuk-textarea" id="query" asp-for="Query" rows="5" aria-describedby="query-hint"></textarea>
+                </fieldset>
+            </div>
 
-            <button class="govuk-button" data-module="govuk-button" type="submit" data-prevent-double-click="true">@Query.Submit_Button_Text</button>
+            <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@Query.Submit_Button</button>
         </form>
     </div>
 </div>

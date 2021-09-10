@@ -11,11 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
     {
         public override void Given()
         {
-
             expectedResult.PathwayStatusId = (int)TlevelReviewStatus.Queried;
-
-            TlevelLoader.GetQueryTlevelViewModelAsync(ukprn, pathwayId)
-                .Returns(expectedResult);
+            TlevelLoader.GetQueryTlevelViewModelAsync(AoUkprn, pathwayId).Returns(expectedResult);
         }
 
         [Fact]

@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -12,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
     public class When_Route_WithBackTrue : TestSetup
     {
         private ConfirmTlevelViewModel expectedModel;
+        private IEnumerable<YourTlevelViewModel> pendingReviewTlevels;
 
         public override void Given()
         {
@@ -20,8 +22,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 
             expectedModel = new ConfirmTlevelViewModel { PathwayStatusId = (int)TlevelReviewStatus.AwaitingConfirmation };
 
-            TlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(ukprn, pathwayId)
+            TlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(AoUkprn, pathwayId)
                 .Returns(expectedModel);
+
+            pendingReviewTlevels = new List<YourTlevelViewModel>
+            {
+                new YourTlevelViewModel { PathwayId = 1, TlevelTitle = "T1" },
+                new YourTlevelViewModel { PathwayId = 2, TlevelTitle = "T2" },
+            };
+
+            TlevelLoader.GetTlevelsByStatusIdAsync(AoUkprn, (int)TlevelReviewStatus.AwaitingConfirmation).
+                Returns(pendingReviewTlevels);
         }
 
         [Fact]

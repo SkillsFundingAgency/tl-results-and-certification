@@ -134,7 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 fileStream.Position = 0;
                 return new FileStreamResult(fileStream, "text/csv")
                 {
-                    FileDownloadName = ResultContent.UploadUnsuccessful.Result_Error_Report_File_Name_Text
+                    FileDownloadName = ResultContent.UploadUnsuccessful.Result_Error_Report_File_Name
                 };
             }
             else

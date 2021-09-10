@@ -117,17 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add_Tlevels" xml:space="preserve">
+    <value>Add T Levels</value>
+  </data>
+  <data name="Button_Back_To_Home" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
+  <data name="Button_Back_To_Tlevels" xml:space="preserve">
+    <value>Back to T Levels</value>
+  </data>
+  <data name="Button_Review_Another_Tlevel" xml:space="preserve">
+    <value>Review another T Level</value>
+  </data>
   <data name="Confirmed_Text" xml:space="preserve">
     <value>confirmed</value>
   </data>
-  <data name="Finished_Reviewing_All_Tlevels_Text" xml:space="preserve">
-    <value>You have no more T Levels to review.</value>
-  </data>
-  <data name="More_Tlevels_Text" xml:space="preserve">
-    <value>You still have more T Levels to review.</value>
+  <data name="Confirmed_Tlevels" xml:space="preserve">
+    <value>confirmed T Levels</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>T Level details confirmed page</value>
+    <value>T Level Confirmed</value>
+  </data>
+  <data name="Page_Title_All_Tlevels_Reviewed" xml:space="preserve">
+    <value>All T Levels reviewed</value>
+  </data>
+  <data name="Para_You_Can_Still_Query_This_Tlevel_Details" xml:space="preserve">
+    <value>You can still query this T Level’s details at a later date.</value>
+  </data>
+  <data name="Para_You_Have_More_Tlevels_To_Review" xml:space="preserve">
+    <value>You have more T levels to review.</value>
+  </data>
+  <data name="Para_You_Have_Reviewed_All_Of_Your_Tlevels" xml:space="preserve">
+    <value>You have reviewed all of your T Levels</value>
   </data>
   <data name="Queried_Info_Text" xml:space="preserve">
     <value>We will investigate your query and update you within 3 working days.</value>
@@ -138,13 +159,22 @@
   <data name="Queried_Text" xml:space="preserve">
     <value>queried</value>
   </data>
-  <data name="Review_Another_Tlevel_Button_Text" xml:space="preserve">
-    <value>Review another T Level</value>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
   </data>
   <data name="Section_Heading" xml:space="preserve">
     <value>T Level details {0}</value>
   </data>
-  <data name="View_Your_Tlevels_Button_Text" xml:space="preserve">
-    <value>View your T Levels</value>
+  <data name="To_Your_Providers" xml:space="preserve">
+    <value> to your providers</value>
+  </data>
+  <data name="View_Your" xml:space="preserve">
+    <value>View your </value>
+  </data>
+  <data name="Your_Learners" xml:space="preserve">
+    <value> your learners</value>
+  </data>
+  <data name="You_Can_Now" xml:space="preserve">
+    <value>You can now:</value>
   </data>
 </root>

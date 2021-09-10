@@ -117,14 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>add</value>
+  </data>
   <data name="Amended_Registrations_Singular_Text" xml:space="preserve">
     <value>{0} amended registration</value>
   </data>
   <data name="Amended_Registrations_Text" xml:space="preserve">
     <value>{0} amended registrations</value>
   </data>
-  <data name="Back_To_Registrations_Button_Text" xml:space="preserve">
-    <value>Back to registrations</value>
+  <data name="Assessment_Periods" xml:space="preserve">
+    <value>assessment periods</value>
+  </data>
+  <data name="Button_Home" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
+  <data name="Button_Upload_Another_File" xml:space="preserve">
+    <value>Upload another file</value>
+  </data>
+  <data name="By_Searching_For_A_Learner" xml:space="preserve">
+    <value>by searching for a learner</value>
+  </data>
+  <data name="For_Registered_Learners" xml:space="preserve">
+    <value>for registered learners</value>
+  </data>
+  <data name="Manage_Individual_Regisrations" xml:space="preserve">
+    <value>manage individual registrations</value>
   </data>
   <data name="New_Registrations_Singular_Text" xml:space="preserve">
     <value>{0} new registration</value>
@@ -133,10 +151,13 @@
     <value>{0} new registrations</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Registrations upload successful page</value>
+    <value>Registrations upload success</value>
+  </data>
+  <data name="Para_You_Can_Now" xml:space="preserve">
+    <value>You can now</value>
   </data>
   <data name="Section_Heading" xml:space="preserve">
-    <value>Registrations upload successful</value>
+    <value>Registrations uploaded successfully</value>
   </data>
   <data name="Successfully_Sent_Amended_Registrations_Singular_Text" xml:space="preserve">
     <value>You successfully sent {0} amended registration</value>
@@ -164,5 +185,11 @@
   </data>
   <data name="Unchanged_Registrations_Text" xml:space="preserve">
     <value>{0} unchanged registrations</value>
+  </data>
+  <data name="Upload_Another_Multiple_Registrations_File" xml:space="preserve">
+    <value>upload another multiple registrations file</value>
+  </data>
+  <data name="What_Happens_Next" xml:space="preserve">
+    <value>What happens next</value>
   </data>
 </root>

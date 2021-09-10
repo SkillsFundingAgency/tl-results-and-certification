@@ -108,13 +108,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// </value>
         public int SoaRerequestInDays { get; set; }
 
-        /// <summary>
-        /// Gets or sets the appeals end date.
-        /// </summary>
-        /// <value>
-        /// The appeals end date.
-        /// </value>
-        public DateTime? AppealsEndDate { get; set; }
 
         /// <summary>
         /// Gets or sets the dfe sign in settings.

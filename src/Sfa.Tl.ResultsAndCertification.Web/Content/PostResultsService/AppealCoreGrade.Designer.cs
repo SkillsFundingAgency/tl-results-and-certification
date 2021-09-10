@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Core (code): {0} status has been updated.
+        ///   Looks up a localized string similar to Core (code): {0} is being appealed.
         /// </summary>
         public static string Banner_Message {
             get {

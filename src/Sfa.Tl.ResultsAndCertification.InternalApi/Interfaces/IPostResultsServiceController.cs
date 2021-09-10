@@ -10,5 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId, int assessmentId);
         Task<bool> AppealGradeAsync(AppealGradeRequest request);
         Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request);
+        Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request);
     }
 }

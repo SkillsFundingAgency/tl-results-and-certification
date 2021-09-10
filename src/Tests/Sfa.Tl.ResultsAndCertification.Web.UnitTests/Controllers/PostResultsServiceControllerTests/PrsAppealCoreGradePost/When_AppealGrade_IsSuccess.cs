@@ -5,24 +5,26 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using System;
 using Xunit;
+using AppealCoreGradeContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.AppealCoreGrade;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealCoreGradePost
 {
     public class When_AppealGrade_IsSuccess : TestSetup
     {
-        private AppealCoreGradeViewModel _mockLoderResponse;
         private readonly bool _appealGradeResponse = true;
+        private string _expectedSuccessBannerMsg;
 
         public override void Given()
         {
-            ViewModel = new AppealCoreGradeViewModel { ProfileId = 1, PathwayAssessmentId = 11, AppealGrade = true };
+            ViewModel = new AppealCoreGradeViewModel { ProfileId = 1, PathwayAssessmentId = 11, PathwayName = "Education", PathwayCode = "9856231479", AppealGrade = true, AppealEndDate = DateTime.Today.AddDays(7) };
 
-            _mockLoderResponse = new AppealCoreGradeViewModel();
             Loader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.PathwayAssessmentId)
-                .Returns(_mockLoderResponse);
+                .Returns(ViewModel);
 
             Loader.AppealCoreGradeAsync(AoUkprn, ViewModel).Returns(_appealGradeResponse);
+            _expectedSuccessBannerMsg = string.Format(AppealCoreGradeContent.Banner_Message, $"{ViewModel.PathwayName} ({ViewModel.PathwayCode})");
         }
 
         [Fact]
@@ -30,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             Loader.Received(1).GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.PathwayAssessmentId);
             Loader.Received(1).AppealCoreGradeAsync(AoUkprn, ViewModel);
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Any<NotificationBannerModel>(), CacheExpiryTime.XSmall);
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(x => x.Message.Equals(_expectedSuccessBannerMsg)), CacheExpiryTime.XSmall);
         }
 
         [Fact]

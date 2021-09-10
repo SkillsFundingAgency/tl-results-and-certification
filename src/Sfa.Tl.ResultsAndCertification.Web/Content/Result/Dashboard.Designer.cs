@@ -61,38 +61,65 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manually add or amend a result.
+        ///   Looks up a localized string similar to Manage a result.
         /// </summary>
-        public static string Card_Heading_Manual_Add_Amend_Results {
+        public static string Card_Heading_Link_Manage_A_Result {
             get {
-                return ResourceManager.GetString("Card_Heading_Manual_Add_Amend_Results", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Link_Manage_A_Result", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload to add and amend results.
+        ///   Looks up a localized string similar to Upload multiple results.
         /// </summary>
-        public static string Card_Heading_Upload_Results {
+        public static string Card_Heading_Link_Upload_Multiple_Results {
             get {
-                return ResourceManager.GetString("Card_Heading_Upload_Results", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Link_Upload_Multiple_Results", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a learner.
+        ///   Looks up a localized string similar to Add a result for one learner.
         /// </summary>
-        public static string Card_Link_Search_Learner {
+        public static string List_Add_A_Result_For_One_Learner {
             get {
-                return ResourceManager.GetString("Card_Link_Search_Learner", resourceCulture);
+                return ResourceManager.GetString("List_Add_A_Result_For_One_Learner", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload results file.
+        ///   Looks up a localized string similar to Add or change results for more than one learner.
         /// </summary>
-        public static string Card_Link_Upload_Results {
+        public static string List_Add_Or_Change_Results_For_More_Than_One_Learner {
             get {
-                return ResourceManager.GetString("Card_Link_Upload_Results", resourceCulture);
+                return ResourceManager.GetString("List_Add_Or_Change_Results_For_More_Than_One_Learner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change a result for one learner.
+        /// </summary>
+        public static string List_Change_A_Result_For_One_Learner {
+            get {
+                return ResourceManager.GetString("List_Change_A_Result_For_One_Learner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download a template with results data formats and rules guidance.
+        /// </summary>
+        public static string List_Download_A_Template_With_Results_Data_Formats_And_Rules_Guidance {
+            get {
+                return ResourceManager.GetString("List_Download_A_Template_With_Results_Data_Formats_And_Rules_Guidance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View a learner&apos;s results.
+        /// </summary>
+        public static string List_View_A_Learners_Results {
+            get {
+                return ResourceManager.GetString("List_View_A_Learners_Results", resourceCulture);
             }
         }
         
@@ -106,11 +133,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Results page.
+        ///   Looks up a localized string similar to Results.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tell us what your learners have achieved.
+        /// </summary>
+        public static string Para_Tell_Us_When_Your_Learners_Have_Achieved {
+            get {
+                return ResourceManager.GetString("Para_Tell_Us_When_Your_Learners_Have_Achieved", resourceCulture);
             }
         }
     }

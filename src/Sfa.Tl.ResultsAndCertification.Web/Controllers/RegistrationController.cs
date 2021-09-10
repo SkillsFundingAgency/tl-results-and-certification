@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("registrations-upload-successful", Name = RouteConstants.RegistrationsUploadSuccessful)]
+        [Route("upload-registrations-file-success", Name = RouteConstants.RegistrationsUploadSuccessful)]
         public async Task<IActionResult> UploadSuccessful()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<UploadSuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadSuccessfulViewModel));

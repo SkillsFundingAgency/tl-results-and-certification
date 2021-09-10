@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.DocumentLoaderTest
 
         public override void Given()
         {
-            FileName = DocumentResource.TlevelDataFormatAndRulesGuide.Registrations_Data_Format_And_Rules_Guide_File_Name_Text;
+            FileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Registrations_Data_Format_And_Rules_File_Name;
             BlobStorageService.DownloadFileAsync(Arg.Any<BlobStorageData>()).Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test file for registration tech spec")));
             Loader = new DocumentLoader(Logger, BlobStorageService);
         }

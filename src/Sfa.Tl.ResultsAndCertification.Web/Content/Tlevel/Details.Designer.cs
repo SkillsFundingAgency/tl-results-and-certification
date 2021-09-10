@@ -61,83 +61,56 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirmed T Level Details page.
+        ///   Looks up a localized string similar to Back to confirmed T Levels.
         /// </summary>
-        public static string Confirmed_Page_Title {
+        public static string Button_Back_To_Confirmed_Tlevels {
             get {
-                return ResourceManager.GetString("Confirmed_Page_Title", resourceCulture);
+                return ResourceManager.GetString("Button_Back_To_Confirmed_Tlevels", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Core.
+        ///   Looks up a localized string similar to  and we will investigate and respond within 3 working days..
         /// </summary>
-        public static string Core_Field_Label {
+        public static string Inset_And_We_Will_Investigate_And_Respond {
             get {
-                return ResourceManager.GetString("Core_Field_Label", resourceCulture);
+                return ResourceManager.GetString("Inset_And_We_Will_Investigate_And_Respond", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level details queried by your organisation.
+        ///   Looks up a localized string similar to raise a query.
         /// </summary>
-        public static string Queried_Info_SubHeading {
+        public static string Inset_Raise_A_Query {
             get {
-                return ResourceManager.GetString("Queried_Info_SubHeading", resourceCulture);
+                return ResourceManager.GetString("Inset_Raise_A_Query", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We are investigating this query and will update your organisation within 3 working days of it being submitted..
+        ///   Looks up a localized string similar to You have told us this T Level’s details are correct. If something is wrong, .
         /// </summary>
-        public static string Queried_Info_Text {
+        public static string Inset_You_Have_Told_Us_This_Tlevel_Details_Are_Correct {
             get {
-                return ResourceManager.GetString("Queried_Info_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Queried T Level Details page.
-        /// </summary>
-        public static string Queried_Page_Title {
-            get {
-                return ResourceManager.GetString("Queried_Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Return to your T Levels list.
-        /// </summary>
-        public static string ReturnToTlevel_Button_Text {
-            get {
-                return ResourceManager.GetString("ReturnToTlevel_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Inset_You_Have_Told_Us_This_Tlevel_Details_Are_Correct", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to T Level details.
         /// </summary>
-        public static string Section_Heading_Text {
+        public static string Page_Title {
             get {
-                return ResourceManager.GetString("Section_Heading_Text", resourceCulture);
+                return ResourceManager.GetString("Page_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Query T Level details.
+        ///   Looks up a localized string similar to Confirmed T Level details.
         /// </summary>
-        public static string SomethingNotRight_Link_Text {
+        public static string Section_Heading {
             get {
-                return ResourceManager.GetString("SomethingNotRight_Link_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Specialisms.
-        /// </summary>
-        public static string Specialisms_Field_Label {
-            get {
-                return ResourceManager.GetString("Specialisms_Field_Label", resourceCulture);
+                return ResourceManager.GetString("Section_Heading", resourceCulture);
             }
         }
     }

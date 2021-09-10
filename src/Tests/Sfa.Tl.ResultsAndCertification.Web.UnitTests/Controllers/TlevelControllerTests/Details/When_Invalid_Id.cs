@@ -2,18 +2,18 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.Details
 {
     public class When_Invalid_Id : TestSetup
     {
-        private TLevelDetailsViewModel mockresult = null;
+        private TLevelConfirmedDetailsViewModel mockresult = null;
 
         public override void Given()
         {
-            TlevelLoader.GetTlevelDetailsByPathwayIdAsync(ukPrn, id)
+            TlevelLoader.GetTlevelDetailsByPathwayIdAsync(AoUkprn, id)
                 .Returns(mockresult);
         }
 

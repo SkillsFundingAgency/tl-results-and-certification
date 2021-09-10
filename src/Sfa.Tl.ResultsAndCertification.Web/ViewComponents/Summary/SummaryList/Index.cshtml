@@ -3,7 +3,7 @@
 
 <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
-        @Model?.Title
+        @Html.Raw(@Model?.Title)
     </dt>
     <dd class="govuk-summary-list__value">
         @{
@@ -15,7 +15,7 @@
             {
                 foreach (var val in Model?.Value)
                 {
-                    <p class="govuk-body">@val</p>
+                    <p class="govuk-body">@Html.Raw(@val)</p>
                 }
             }
         }
