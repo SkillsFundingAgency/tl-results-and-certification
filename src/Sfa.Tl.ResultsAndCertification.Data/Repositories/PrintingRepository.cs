@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         public async Task<IList<Batch>> GetPendingPrintRequestAsync()
         {
             var batches = await _dbContext.Batch
-                .Where(b => b.Status == BatchStatus.Created)
+                .Where(b => b.Type == BatchType.Printing && b.Status == BatchStatus.Created)
                 .Include(x => x.PrintBatchItems)
                     .ThenInclude(x => x.PrintCertificates)
                 .Include(x => x.PrintBatchItems)
