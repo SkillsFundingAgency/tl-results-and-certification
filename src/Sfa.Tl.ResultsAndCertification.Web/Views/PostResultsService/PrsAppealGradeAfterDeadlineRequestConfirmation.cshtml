@@ -1,0 +1,26 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+
+@{
+    ViewData["Title"] = PrsAppealGradeAfterDeadlineRequestConfirmation.Page_Title;
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">@PrsAppealGradeAfterDeadlineRequestConfirmation.Request_To_Record_An_Appeal_Complete</h1>
+        </div>
+
+        <h2 class="govuk-heading-m">@PrsAppealGradeAfterDeadlineRequestConfirmation.What_Happens_Now</h2>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@PrsAppealGradeAfterDeadlineRequestConfirmation.Para_We_Will_Send_You_Confirmation_Email</li>
+            <li>@PrsAppealGradeAfterDeadlineRequestConfirmation.Para_We_Will_Contact_You</li>
+        </ul>
+
+        <p class="govuk-body">@PrsAppealGradeAfterDeadlineRequestConfirmation.If_You_Have_Not_Heard_From_Us</p>
+
+        <div class="govuk-button-group govuk-!-margin-top-6">
+            <a id="buttonSearchAgain" class="govuk-button" role="button" data-module="govuk-button" asp-route="PrsSearchLearner">@PrsAppealGradeAfterDeadlineRequestConfirmation.Button_Search_Again</a>
+            <a id="buttonBackToHome" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="Home">@PrsAppealGradeAfterDeadlineRequestConfirmation.Button_Back_To_Home</a>
+        </div>
+    </div>
+</div>

@@ -62,6 +62,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to assessment entries data format and rules.
+        /// </summary>
+        public static string Assessment_Entries_DataFormat_And_Rules {
+            get {
+                return ResourceManager.GetString("Assessment_Entries_DataFormat_And_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 158.
         /// </summary>
         public static string Assessment_Entries_FileSize_Text {
@@ -98,15 +107,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TLevels_assessment_entry_data_format_and_rules_guide.xlsx.
-        /// </summary>
-        public static string Assessment_Entry_Data_Format_And_Rules_Guide_File_Name_Text {
-            get {
-                return ResourceManager.GetString("Assessment_Entry_Data_Format_And_Rules_Guide_File_Name_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to choose the right core and specialism codes.
         /// </summary>
         public static string Choose_The_Right_Core_And_Specialism_Codes_Text {
@@ -116,29 +116,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download assessment entries data format and rules guide.
+        ///   Looks up a localized string similar to Download.
         /// </summary>
-        public static string Download_Assessment_Entries_DataFormat_And_Rules_Guide_Text {
+        public static string Download_Text {
             get {
-                return ResourceManager.GetString("Download_Assessment_Entries_DataFormat_And_Rules_Guide_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download registrations data format and rules guide.
-        /// </summary>
-        public static string Download_Registration_DataFormat_And_Rules_Guide_Text {
-            get {
-                return ResourceManager.GetString("Download_Registration_DataFormat_And_Rules_Guide_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download results data format and rules guide.
-        /// </summary>
-        public static string Download_Result_DataFormat_And_Rules_Guide_Text {
-            get {
-                return ResourceManager.GetString("Download_Result_DataFormat_And_Rules_Guide_Text", resourceCulture);
+                return ResourceManager.GetString("Download_Text", resourceCulture);
             }
         }
         
@@ -161,7 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level data format and rules guides page.
+        ///   Looks up a localized string similar to T Levels data format and rules.
         /// </summary>
         public static string Page_Title {
             get {
@@ -188,11 +170,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrations_data_format_and_rules_guide.xlsx.
+        ///   Looks up a localized string similar to registrations data format and rules.
         /// </summary>
-        public static string Registrations_Data_Format_And_Rules_Guide_File_Name_Text {
+        public static string Registration_DataFormat_And_Rules {
             get {
-                return ResourceManager.GetString("Registrations_Data_Format_And_Rules_Guide_File_Name_Text", resourceCulture);
+                return ResourceManager.GetString("Registration_DataFormat_And_Rules", resourceCulture);
             }
         }
         
@@ -233,11 +215,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TLevels_results_data_format_and_rules_guide.xlsx.
+        ///   Looks up a localized string similar to results data format and rules.
         /// </summary>
-        public static string Results_Data_Format_And_Rules_Guide_File_Name_Text {
+        public static string Result_DataFormat_And_Rules {
             get {
-                return ResourceManager.GetString("Results_Data_Format_And_Rules_Guide_File_Name_Text", resourceCulture);
+                return ResourceManager.GetString("Result_DataFormat_And_Rules", resourceCulture);
             }
         }
         
@@ -278,7 +260,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T Level data format and rules guides.
+        ///   Looks up a localized string similar to T Levels data format and rules.
         /// </summary>
         public static string Section_Heading {
             get {
@@ -301,6 +283,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         public static string Section_Info_Text {
             get {
                 return ResourceManager.GetString("Section_Info_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tlevels-assessment-entry-data-format-and-rules.xlsx.
+        /// </summary>
+        public static string Tlevels_Assessment_Entry_Data_Format_And_Rules_File_Name {
+            get {
+                return ResourceManager.GetString("Tlevels_Assessment_Entry_Data_Format_And_Rules_File_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tlevels-registrations-data-format-and-rules.xlsx.
+        /// </summary>
+        public static string Tlevels_Registrations_Data_Format_And_Rules_File_Name {
+            get {
+                return ResourceManager.GetString("Tlevels_Registrations_Data_Format_And_Rules_File_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tlevels-results-data-format-and-rules.xlsx.
+        /// </summary>
+        public static string Tlevels_Results_Data_Format_And_Rules_File_Name {
+            get {
+                return ResourceManager.GetString("Tlevels_Results_Data_Format_And_Rules_File_Name", resourceCulture);
             }
         }
         

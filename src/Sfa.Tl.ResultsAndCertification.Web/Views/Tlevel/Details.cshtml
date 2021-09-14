@@ -1,56 +1,29 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
-@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TLevelDetailsViewModel
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels.TLevelConfirmedDetailsViewModel
 
 @{
-    ViewData["Title"] = Model.ShowQueriedInfo ? @Details.Queried_Page_Title : @Details.Confirmed_Page_Title;
+    ViewData["Title"] = @Details.Page_Title;
 }
 
 @section NavigationBar
 {
-    <vc:breadcrumb model="Model.BreadCrumb"></vc:breadcrumb>
+    <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">@Model?.PageTitle</h1>
+        <h1 class="govuk-heading-l">@Details.Section_Heading</h1>
 
-        @if (Model.ShowQueriedInfo)
-        {
-            <div class="govuk-inset-text">
-                <h2 class="govuk-heading-m">@Details.Queried_Info_SubHeading</h2>
-                <p>@Details.Queried_Info_Text</p>
-            </div>
-        }
+        <div class="govuk-inset-text">
+            @Details.Inset_You_Have_Told_Us_This_Tlevel_Details_Are_Correct<a class="govuk-link" asp-route="QueryTlevelDetails" asp-route-id="@Model.PathwayId" asp-route-isBackToConfirmed="true">@Details.Inset_Raise_A_Query</a>@Details.Inset_And_We_Will_Investigate_And_Respond
+        </div>
 
-        @{var marginBottomClassName = Model.ShowQueriedInfo ? "govuk-!-margin-bottom-9" : "govuk-!-margin-bottom-4"; }
-
-        <dl class="govuk-summary-list @marginBottomClassName">
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    @Details.Core_Field_Label
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    @Model?.PathwayName
-                </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">
-                    @Details.Specialisms_Field_Label
-                </dt>
-                <dd class="govuk-summary-list__value">
-                    @foreach (var splsm in Model?.Specialisms)
-                    {
-                        <p class="govuk-body">@splsm</p>
-                    }
-                </dd>
-            </div>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-!-margin-top-7 govuk-summary-list--no-border">
+            <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+            <vc:summary-item model=Model.SummaryCore></vc:summary-item>
+            <vc:summary-list model=Model.SummarySpecialisms></vc:summary-list>
         </dl>
-        @if (Model?.ShowSomethingIsNotRight == true)
-        {
-            <p class="govuk-body govuk-!-margin-bottom-9">
-                <a class="govuk-link" asp-route="QueryTlevelDetails" asp-route-id="@Model.PathwayId">@Details.SomethingNotRight_Link_Text</a>
-            </p>
-        }
-        <a asp-route="YourTlevels" class="govuk-button" data-module="govuk-button">@Details.ReturnToTlevel_Button_Text</a>
+
+        <a id="backToConfirmedTlevelsButton" asp-route="ConfirmedTlevels" class="govuk-button" data-module="govuk-button">@Details.Button_Back_To_Confirmed_Tlevels</a>
     </div>
 </div>

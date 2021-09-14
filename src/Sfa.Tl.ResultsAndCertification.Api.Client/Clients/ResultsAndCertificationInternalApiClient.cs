@@ -345,6 +345,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<PrsGradeChangeRequest, bool>(requestUri, request);
         }
 
+        public async Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request)
+        {
+            var requestUri = ApiConstants.AppealGradeAfterDeadlineRequestUri;
+            return await PostAsync<AppealGradeAfterDeadlineRequest, bool>(requestUri, request);
+        }
+
         #endregion 
 
         #region Private Methods

@@ -1,17 +1,17 @@
-﻿using System.Net;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Xunit;
+﻿using FluentAssertions;
 using NSubstitute;
-using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
@@ -25,7 +25,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         protected readonly string RouteName = "Construction";
         protected readonly string PathwayName = "Design";
-        protected readonly List<string> Specialisms = new List<string> { "Civil Engineering", "Assisting teaching" };
+        protected readonly string PathwayCode = "548515161";
+        protected readonly string TlevelTitle = "Construction Design";
+        protected List<SpecialismDetails> Specialisms;
         protected readonly int Status = 1;
 
         private ResultsAndCertificationInternalApiClient _apiClient;
@@ -40,9 +42,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 ResultsAndCertificationInternalApiSettings = new ResultsAndCertificationInternalApiSettings { Uri = "http://xtz.com" }
             };
 
+            Specialisms = new List<SpecialismDetails> {
+                new SpecialismDetails { Name = "Civil Engineering", Code = "97865897" },
+                new SpecialismDetails { Name = "Assisting teaching", Code = "7654321" }
+            };
+
             _mockHttpResult = new TlevelPathwayDetails
             {
+                TlevelTitle = TlevelTitle,
                 PathwayName = PathwayName,
+                PathwayCode = PathwayCode,
                 RouteName = RouteName,
                 Specialisms = Specialisms,
                 PathwayStatusId = Status
@@ -66,11 +75,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _result.Should().NotBeNull();
             _result.RouteName.Should().Be(RouteName);
             _result.PathwayName.Should().Be(PathwayName);
+            _result.PathwayCode.Should().Be(PathwayCode);
+            _result.TlevelTitle.Should().Be(TlevelTitle);
             _result.PathwayStatusId.Should().Be(Status);
 
             _result.Specialisms.Should().NotBeNullOrEmpty();
             _result.Specialisms.Count().Should().Be(2);
-            _result.Specialisms.First().Should().Be(Specialisms.First());
+            _result.Specialisms.Should().BeEquivalentTo(Specialisms);
         }
     }
 }

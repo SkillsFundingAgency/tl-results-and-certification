@@ -63,81 +63,135 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
-        public static string Continue_Button_Label {
+        public static string Button_Continue {
             get {
-                return ResourceManager.GetString("Continue_Button_Label", resourceCulture);
+                return ResourceManager.GetString("Button_Continue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a T Level to review page.
+        ///   Looks up a localized string similar to confirmed.
         /// </summary>
-        public static string More_Page_Title {
+        public static string Confirmed_Text {
             get {
-                return ResourceManager.GetString("More_Page_Title", resourceCulture);
+                return ResourceManager.GetString("Confirmed_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to contact us.
+        /// </summary>
+        public static string Contact_Us {
+            get {
+                return ResourceManager.GetString("Contact_Us", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ..
+        /// </summary>
+        public static string Fullstop {
+            get {
+                return ResourceManager.GetString("Fullstop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I cannot find a T Level.
+        /// </summary>
+        public static string I_Cannot_Find_A_Tlevel {
+            get {
+                return ResourceManager.GetString("I_Cannot_Find_A_Tlevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you still cannot find it, .
+        /// </summary>
+        public static string If_You_Cannot_Find_It {
+            get {
+                return ResourceManager.GetString("If_You_Cannot_Find_It", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you cannot find the T Level you are looking for, please check you have not already.
+        /// </summary>
+        public static string If_You_Cannot_Find_The_TLevel {
+            get {
+                return ResourceManager.GetString("If_You_Cannot_Find_The_TLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to it.
+        /// </summary>
+        public static string It_Text {
+            get {
+                return ResourceManager.GetString("It_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  or .
+        /// </summary>
+        public static string Or_Text {
+            get {
+                return ResourceManager.GetString("Or_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Which T Level do you want to review?.
+        /// </summary>
+        public static string Page_Heading {
+            get {
+                return ResourceManager.GetString("Page_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select T Level.
+        /// </summary>
+        public static string Page_Title {
+            get {
+                return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must check and confirm each T Level is correctly set up before you can add them to a provider..
+        /// </summary>
+        public static string Para_Review_Text {
+            get {
+                return ResourceManager.GetString("Para_Review_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These details will be printed on learners&apos; certificates..
+        /// </summary>
+        public static string Para_These_Details_Will_Be_Printed {
+            get {
+                return ResourceManager.GetString("Para_These_Details_Will_Be_Printed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to queried.
+        /// </summary>
+        public static string Queried_Text {
+            get {
+                return ResourceManager.GetString("Queried_Text", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Select a T Level to review.
         /// </summary>
-        public static string More_Review_Heading {
+        public static string Validation_Error_Message {
             get {
-                return ResourceManager.GetString("More_Review_Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You need to confirm the details of each T Level before you can tell us which providers are offering it..
-        /// </summary>
-        public static string More_Review_Text {
-            get {
-                return ResourceManager.GetString("More_Review_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select a T Level to review.
-        /// </summary>
-        public static string More_SelectTlevel_Validation_Error_Message {
-            get {
-                return ResourceManager.GetString("More_SelectTlevel_Validation_Error_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You have a T Level to review page.
-        /// </summary>
-        public static string One_Page_Title {
-            get {
-                return ResourceManager.GetString("One_Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You have one T Level to review.
-        /// </summary>
-        public static string One_Review_Heading {
-            get {
-                return ResourceManager.GetString("One_Review_Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You need to confirm this T Level&apos;s details before you can tell us which providers are offering it..
-        /// </summary>
-        public static string One_Review_Text {
-            get {
-                return ResourceManager.GetString("One_Review_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View reviewed T levels.
-        /// </summary>
-        public static string ViewReviewedTlevelsLink {
-            get {
-                return ResourceManager.GetString("ViewReviewedTlevelsLink", resourceCulture);
+                return ResourceManager.GetString("Validation_Error_Message", resourceCulture);
             }
         }
     }

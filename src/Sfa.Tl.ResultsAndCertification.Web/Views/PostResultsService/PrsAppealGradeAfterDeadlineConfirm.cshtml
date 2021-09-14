@@ -1,0 +1,58 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.AppealGradeAfterDeadlineConfirmViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+
+@{
+    ViewData["Title"] = PrsAppealGradeAfterDeadlineConfirm.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="SubmitAppealGradeAfterDeadlineConfirm">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="PathwayAssessmentId" />
+            <input type="hidden" asp-for="PathwayResultId" />
+            <partial name="_ValidationSummary" />
+
+            <h1 class="govuk-heading-l">@PrsAppealGradeAfterDeadlineConfirm.Heading_Appeal_Grade_After_Deadline</h1>
+            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-9 govuk-!-margin-top-7">
+                <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+                <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCore></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCoreExamPeriod></vc:summary-item>
+                <vc:summary-item model=Model.SummaryCoreGrade></vc:summary-item>
+            </dl>
+
+            <div class="govuk-form-group" sfa-validation-for="IsThisGradeBeingAppealed" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" for="exceptions-appeal">
+                        <h2 class="govuk-fieldset__heading">@PrsAppealGradeAfterDeadlineConfirm.Heading_Is_This_Grade_Being_Appealed</h2>
+                    </legend>
+
+                    <div class="govuk-radios">
+                        <span sfa-validation-for="IsThisGradeBeingAppealed"></span>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="isthisgradebeingappealed" asp-for="IsThisGradeBeingAppealed" type="radio" value="true">
+                            <label class="govuk-label govuk-radios__label" for="isthisgradebeingappealed">
+                                @PrsAppealGradeAfterDeadlineConfirm.Option_Yes
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="isthisgradebeingappealed-no" asp-for="IsThisGradeBeingAppealed" type="radio" value="false">
+                            <label class="govuk-label govuk-radios__label" for="isthisgradebeingappealed-no">
+                                @PrsAppealGradeAfterDeadlineConfirm.Option_No
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="govuk-inset-text">@PrsAppealGradeAfterDeadlineConfirm.Inset_We_Cannot_Calculate_Overall_Result</div>
+            <button id="submitButton" class="govuk-button govuk-!-margin-top-3" data-module="govuk-button" data-prevent-double-click="true">@PrsAppealGradeAfterDeadlineConfirm.Button_Submit</button>
+        </form>
+    </div>
+</div>

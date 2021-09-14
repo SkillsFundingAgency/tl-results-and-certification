@@ -5,22 +5,20 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using System;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.PrsAppealCoreGradePost
 {
     public class When_AppealGrade_IsNotSuccess : TestSetup
     {
-        private AppealCoreGradeViewModel _mockLoderResponse;
         private readonly bool _appealGradeResponse = false;
 
         public override void Given()
         {
-            ViewModel = new AppealCoreGradeViewModel { ProfileId = 1, PathwayAssessmentId = 11, AppealGrade = true };
-
-            _mockLoderResponse = new AppealCoreGradeViewModel();
+            ViewModel = new AppealCoreGradeViewModel { ProfileId = 1, PathwayAssessmentId = 11, AppealGrade = true, AppealEndDate = DateTime.Today.AddDays(7) };
             Loader.GetPrsLearnerDetailsAsync<AppealCoreGradeViewModel>(AoUkprn, ViewModel.ProfileId, ViewModel.PathwayAssessmentId)
-                .Returns(_mockLoderResponse);
+                .Returns(ViewModel);
 
             Loader.AppealCoreGradeAsync(AoUkprn, ViewModel).Returns(_appealGradeResponse);
         }

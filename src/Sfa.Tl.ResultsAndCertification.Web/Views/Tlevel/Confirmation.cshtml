@@ -1,8 +1,8 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
-@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.TlevelConfirmationViewModel
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels.TlevelConfirmationViewModel
 
 @{
-    ViewData["Title"] = Model.IsQueried ? Confirmation.Queried_Page_Title : @Confirmation.Page_Title;
+    ViewData["Title"] = Model.IsQueried ? Confirmation.Queried_Page_Title : Model.ShowMoreTlevelsToReview ? @Confirmation.Page_Title : Confirmation.Page_Title_All_Tlevels_Reviewed;
 }
 
 <div class="govuk-grid-row">
@@ -16,15 +16,33 @@
         {
             <p class="govuk-body">@Confirmation.Queried_Info_Text</p>
         }
-        <p class="govuk-body govuk-!-padding-bottom-4">@(Model.ShowMoreTlevelsToReview ? @Confirmation.More_Tlevels_Text : @Confirmation.Finished_Reviewing_All_Tlevels_Text)</p>
 
         @if (Model.ShowMoreTlevelsToReview)
         {
-            <a class="govuk-button" asp-route="SelectTlevel">@Confirmation.Review_Another_Tlevel_Button_Text</a>
+            <p class="govuk-body">@Confirmation.Para_You_Can_Still_Query_This_Tlevel_Details</p>
+
+            <p class="govuk-body govuk-!-padding-bottom-4">@Confirmation.Para_You_Have_More_Tlevels_To_Review</p>
+
+            <div class="govuk-button-group">
+                <a id="reviewAnotherTlevelButton" class="govuk-button" role="button" asp-route="ReviewTlevels" data-module="govuk-button">@Confirmation.Button_Review_Another_Tlevel</a>
+                <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="Home">@Confirmation.Button_Back_To_Home</a>
+            </div>
         }
         else
         {
-            <a class="govuk-button" asp-route="YourTlevels">@Confirmation.View_Your_Tlevels_Button_Text</a>
+            <p class="govuk-body">@Confirmation.Para_You_Have_Reviewed_All_Of_Your_Tlevels</p>
+
+            <h2 class="govuk-heading-m">@Confirmation.You_Can_Now</h2>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Confirmation.View_Your<a class="govuk-link" asp-route="ConfirmedTlevels">@Confirmation.Confirmed_Tlevels</a></li>
+                <li><a class="govuk-link" asp-route="RegistrationDashboard">@Confirmation.Register</a>@Confirmation.Your_Learners</li>
+                <li><a class="govuk-link" asp-route="FindProvider">@Confirmation.Add_Tlevels</a>@Confirmation.To_Your_Providers</li>
+            </ul>
+
+            <div class="govuk-button-group">
+                <a id="backToTlevelsButton" class="govuk-button" role="button" asp-route="TlevelsDashboard" data-module="govuk-button">@Confirmation.Button_Back_To_Tlevels</a>
+                <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="Home">@Confirmation.Button_Back_To_Home</a>
+            </div>
         }
     </div>
 </div>

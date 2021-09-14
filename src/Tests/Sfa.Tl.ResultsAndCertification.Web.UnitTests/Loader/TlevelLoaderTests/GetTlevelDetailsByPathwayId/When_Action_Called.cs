@@ -1,17 +1,28 @@
-﻿using Xunit;
+﻿using FluentAssertions;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
-using FluentAssertions;
+using Sfa.Tl.ResultsAndCertification.Web.Loader;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.GetTlevelDetailsByPathwayId
 {
     public class When_Action_Called : TestSetup
     {
+        public override void Given()
+        {
+            Loader = new TlevelLoader(InternalApiClient, Mapper);
+            InternalApiClient.GetTlevelDetailsByPathwayIdAsync(Ukprn, Id).Returns(ApiClientResponse);
+        }
+
+        public async override Task When()
+        {
+            ActualResult = await Loader.GetTlevelDetailsByPathwayIdAsync(Ukprn, Id);
+        }
+
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            Mapper.Received().Map<TLevelDetailsViewModel>(ApiClientResponse);
-            InternalApiClient.Received().GetTlevelDetailsByPathwayIdAsync(Ukprn, Id);
+            InternalApiClient.Received(1).GetTlevelDetailsByPathwayIdAsync(Ukprn, Id);
         }
 
         [Fact]
@@ -19,10 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
         {
             ActualResult.Should().NotBeNull();
             ActualResult.PathwayId.Should().Be(ExpectedResult.PathwayId);
-            ActualResult.RouteName.Should().Be(ExpectedResult.RouteName);
-            ActualResult.PathwayName.Should().Be(ExpectedResult.PathwayName);
-            ActualResult.ShowSomethingIsNotRight.Should().Be(ExpectedResult.ShowSomethingIsNotRight);
-            ActualResult.ShowQueriedInfo.Should().Be(ExpectedResult.ShowQueriedInfo);
+            ActualResult.IsValid.Should().Be(ExpectedResult.IsValid);
         }
     }
 }

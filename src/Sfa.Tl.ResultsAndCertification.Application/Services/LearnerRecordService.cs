@@ -188,9 +188,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                 {
                                     existingQualificationAchieved.ModifiedBy = learnerRecord.PerformedBy;
                                     existingQualificationAchieved.ModifiedOn = DateTime.UtcNow;
-                                }                                
+                                }
+                                isQualificationAchievedChanged = true;
                             }
-                            isQualificationAchievedChanged = true; // next release need to move this after line 191. This is done to take higher qual grade from lrs to existing learners in R&C
                         }
                         else
                         {

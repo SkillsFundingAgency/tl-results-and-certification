@@ -117,22 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Card_Heading_Search_Assessment" xml:space="preserve">
-    <value>Manually add or amend an assessment entry</value>
+  <data name="Card_Heading_Link_Manage_An_Assessment" xml:space="preserve">
+    <value>Manage an assessment</value>
   </data>
-  <data name="Card_Heading_Upload_Assessment_File" xml:space="preserve">
-    <value>Upload to add and amend assessment entries</value>
+  <data name="Card_Heading_Link_Upload_Multiple_Assessments" xml:space="preserve">
+    <value>Upload multiple assessments</value>
   </data>
-  <data name="Card_Link_Search_Assessment" xml:space="preserve">
-    <value>Search for a learner</value>
+  <data name="List_Add_An_Assessment_Period_For_One_Learner" xml:space="preserve">
+    <value>Add an assessment period for one learner</value>
   </data>
-  <data name="Card_Link_Upload_Assessment_File" xml:space="preserve">
-    <value>Upload assessment entries file</value>
+  <data name="List_Add_Or_Change_Assessment_Periods" xml:space="preserve">
+    <value>Add or change assessment periods for more than one learner</value>
+  </data>
+  <data name="List_Change_An_Assessment_Period_For_One_Learner" xml:space="preserve">
+    <value>Change an assessment period for one learner</value>
+  </data>
+  <data name="List_Download_A_Template_With_Assessments_Data_Formats_And_Rules_Guidance" xml:space="preserve">
+    <value>Download a template with assessments data formats and rules guidance</value>
+  </data>
+  <data name="List_View_A_Learners_AssessmentPeriod" xml:space="preserve">
+    <value>View a learner's assessment period</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Assessment entries</value>
+    <value>Assessments</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Assessment entries page</value>
+    <value>Assessments</value>
+  </data>
+  <data name="Para_Tell_Us_When_Your_Learners_Will_Be_Assessed" xml:space="preserve">
+    <value>Tell us when your learners will be assessed</value>
   </data>
 </root>

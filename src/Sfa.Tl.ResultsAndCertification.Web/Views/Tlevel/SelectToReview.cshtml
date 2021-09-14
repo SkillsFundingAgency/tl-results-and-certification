@@ -2,7 +2,7 @@
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview.SelectToReviewPageViewModel
 
 @{
-    ViewData["Title"] = Model.IsOnlyOneTlevelReviewPending ? @SelectToReview.One_Page_Title : @SelectToReview.More_Page_Title;
+    ViewData["Title"] = @SelectToReview.Page_Title;
 }
 
 @section NavigationBar
@@ -14,19 +14,51 @@
     <div class="govuk-grid-column-two-thirds">
         <form asp-route="SelectTlevelSubmit">
 
-            @if (Model.IsOnlyOneTlevelReviewPending)
-            {
-                <partial name="~/Views/Tlevel/SelectToReview/_one.cshtml" />
-            }
-            else
-            {
-                <partial name="~/Views/Tlevel/SelectToReview/_more.cshtml" />
-            }
-            <button type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@SelectToReview.Continue_Button_Label</button>
-            @if (Model.ShowViewReviewedTlevelsLink)
-            {
-                <p class="govuk-body"><a class="govuk-link" asp-route="YourTlevels">@SelectToReview.ViewReviewedTlevelsLink</a></p>
-            }
+            <partial name="_ValidationSummary" />
+
+            <div class="govuk-form-group" sfa-validation-for="SelectedPathwayId" sfa-validation-class="govuk-form-group--error">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">
+                            @SelectToReview.Page_Heading
+                        </h1>
+                    </legend>
+
+                    <p class="govuk-body">@SelectToReview.Para_Review_Text</p>
+                    <p class="govuk-body">@SelectToReview.Para_These_Details_Will_Be_Printed</p>
+
+                    <span sfa-validation-for="SelectedPathwayId"></span>
+                    <div class="govuk-radios govuk-!-padding-bottom-2">
+                        @foreach (var tlevel in Model.TlevelsToReview.Select((value, i) => (value, i)))
+                        {
+                            var elementId = (tlevel.i > 0) ? "selectedpathwayid-" + tlevel.value.PathwayId : "selectedpathwayid";
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="@elementId" type="radio" value=@tlevel.value.PathwayId asp-for="SelectedPathwayId">
+                                <label class="govuk-label govuk-radios__label" for="@elementId">
+                                    @tlevel.value.TlevelTitle
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </fieldset>
+            </div>
+
+            <button id="continueButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@SelectToReview.Button_Continue</button>
         </form>
+        <details class="govuk-details" data-module="govuk-details" closed>
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                    @SelectToReview.I_Cannot_Find_A_Tlevel
+                </span>
+            </summary>
+            <div class="govuk-details__text">
+                @SelectToReview.If_You_Cannot_Find_The_TLevel <a asp-route="ConfirmedTlevels" class="govuk-link">@SelectToReview.Confirmed_Text</a>
+                @SelectToReview.Or_Text
+                <a asp-route="QueriedTlevels" class="govuk-link">@SelectToReview.Queried_Text</a>
+                @SelectToReview.It_Text@SelectToReview.Fullstop <br /><br />
+                @SelectToReview.If_You_Cannot_Find_It
+                <a asp-route="Contact" class="govuk-link">@SelectToReview.Contact_Us</a>@SelectToReview.Fullstop
+            </div>
+        </details>
     </div>
 </div>

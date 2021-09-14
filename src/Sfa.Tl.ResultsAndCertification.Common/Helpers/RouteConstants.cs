@@ -15,18 +15,28 @@
         public const string Home = "Home";
 
         // Tlevel
-        public const string Tlevels = "Tlevels";
+        public const string TlevelsDashboard = "TlevelsDashboard";
+        public const string ReviewTlevels = "ReviewTlevels";
         public const string YourTlevels = "YourTlevels";
+        public const string ConfirmedTlevels = "ConfirmedTlevels";
+        public const string NoConfirmedTlevels = "NoConfirmedTlevels";
+        public const string QueriedTlevels = "QueriedTlevels";
+        public const string NoQueriedTlevels = "NoQueriedTlevels";
         public const string TlevelDetails = "TlevelDetails";
+        public const string TlevelConfirmedDetails = "TlevelConfirmedDetails";
+        public const string TlevelQueriedDetails = "TlevelQueriedDetails";
         public const string SelectTlevel = "SelectTlevel";
         public const string SelectTlevelSubmit = "SelectTlevelSubmit";
-        public const string AreDetailsCorrect = "AreDetailsCorrect";
+        public const string ReviewTlevelDetails = "ReviewTlevelDetails";
         public const string ConfirmTlevel = "ConfirmTlevel";
         public const string TlevelDetailsConfirmed = "TlevelDetailsConfirmed";
+        public const string AllTlevelsReviewedSuccess = "AllTlevelsReviewedSuccess";
         public const string TlevelDetailsQueriedConfirmation = "TlevelDetailsQueriedConfirmation";
         public const string QueryTlevelDetails = "QueryTlevelDetails";  // QueryTlevelDetails_Get
         public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // QueryTlevelDetails_Post
+        public const string QueryTlevelSent = "QueryTlevelSent";
         public const string QueryServiceProblem = "QueryServiceProblem";
+        public const string AllTlevelsReviewed = "AllTlevelsReviewed";
 
         // Providers
         public const string YourProviders = "YourProviders";
@@ -310,6 +320,10 @@
         public const string SubmitPrsCancelGradeChangeRequest = "SubmitPrsCancelGradeChangeRequest";
         public const string PrsGradeChangeRequestConfirmation = "PrsGradeChangeRequestConfirmation";
         public const string SubmitPrsGradeChangeRequestConfirmation = "SubmitPrsGradeChangeRequestConfirmation";
+        public const string PrsAppealGradeAfterDeadline = "PrsAppealGradeAfterDeadline";
+        public const string PrsAppealAfterDeadlineConfirm = "PrsAppealAfterDeadlineConfirm";
+        public const string SubmitPrsAppealAfterDeadlineConfirm = "SubmitPrsAppealAfterDeadlineConfirm";
+        public const string PrsAppealGradeAfterDeadlineRequestConfirmation = "PrsAppealGradeAfterDeadlineRequestConfirmation";        
 
         #endregion
     }

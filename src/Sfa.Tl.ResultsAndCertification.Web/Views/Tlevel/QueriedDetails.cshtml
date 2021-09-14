@@ -1,0 +1,32 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels.TlevelQueriedDetailsViewModel
+@inject Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper.IWebConfigurationService ConfigurationService
+
+@{
+    ViewData["Title"] = QueriedDetails.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">@QueriedDetails.Heading_Queried_Tlevel_Deetails</h1>
+        <div class="govuk-inset-text">
+            @QueriedDetails.Inset_We_Are_Investigating_Query<br><br>
+            @QueriedDetails.Inset_If_Do_Not_Hear_From_Us <a id="contactusLink" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@QueriedDetails.Email_Contactus_Subject" class="govuk-link">@QueriedDetails.Inset_Link_Contactus</a>.
+        </div>
+
+        <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-top-7 govuk-!-margin-bottom-9">
+            <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+            <vc:summary-item model=Model.SummaryCore></vc:summary-item>
+            <vc:summary-list model=Model.SummarySpecialisms></vc:summary-list>
+            <vc:summary-item model=Model.SummaryQueriedBy></vc:summary-item>
+            <vc:summary-item model=Model.SummaryQueriedOn></vc:summary-item>
+        </dl>
+
+        <a id="queriedTlevelsButton" class="govuk-button" role="button" asp-route="QueriedTlevels">@QueriedDetails.Button_Queried_Tlevels</a>
+    </div>
+</div>

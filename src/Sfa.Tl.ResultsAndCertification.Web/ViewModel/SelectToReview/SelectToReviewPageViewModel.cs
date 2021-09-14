@@ -16,11 +16,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview
         }
 
         public bool IsOnlyOneTlevelReviewPending { get { return TlevelsToReview.Count() == 1; } }
-        public bool ShowViewReviewedTlevelsLink { get; set; }
 
         public IEnumerable<TlevelToReviewViewModel> TlevelsToReview { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessageResourceType = typeof(ErrorResource.SelectToReview), ErrorMessageResourceName = "More_SelectTlevel_Validation_Error_Message")]
+        [Range(1, int.MaxValue, ErrorMessageResourceType = typeof(ErrorResource.SelectToReview), ErrorMessageResourceName = "Validation_Error_Message")]
         public int SelectedPathwayId { get; set; }
 
         public BreadcrumbModel BreadCrumb 
@@ -32,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview
                     BreadcrumbItems = new List<BreadcrumbItem> 
                     { 
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Tlevels_Dashboard, RouteName = RouteConstants.TlevelsDashboard },                        
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Tlevel_Review_Select }
                     } 
                 }; 

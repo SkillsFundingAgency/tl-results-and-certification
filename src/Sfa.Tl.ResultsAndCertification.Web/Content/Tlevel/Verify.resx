@@ -120,26 +120,32 @@
   <data name="Continue_Button_Text" xml:space="preserve">
     <value>Continue</value>
   </data>
-  <data name="Core_Field_Label" xml:space="preserve">
-    <value>Core</value>
-  </data>
   <data name="IsEverythingCorrect_Required_Validation_Message" xml:space="preserve">
     <value>Select yes if this T Level’s details are correct</value>
   </data>
   <data name="No_Radio_Button_Text" xml:space="preserve">
-    <value>No - tell us what's wrong</value>
+    <value>No, tell us what’s wrong</value>
+  </data>
+  <data name="Page_Heading" xml:space="preserve">
+    <value>Review T Level details</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Are these details correct page</value>
+    <value>Review T Level details</value>
+  </data>
+  <data name="Para_These_Details_Will_Be_Printed_On_Learners_Certificate" xml:space="preserve">
+    <value>These details will be printed on learners' certificates.</value>
   </data>
   <data name="Section_Heading" xml:space="preserve">
     <value>Are these details correct?</value>
   </data>
-  <data name="Specialisms_Field_Label" xml:space="preserve">
-    <value>Specialisms</value>
+  <data name="Title_Core_Code_Text" xml:space="preserve">
+    <value>Core &lt;br/&gt; (code)</value>
   </data>
-  <data name="Verify_Text" xml:space="preserve">
-    <value>These details will be used on T Level certificates.</value>
+  <data name="Title_Occupational_Specialism_Text" xml:space="preserve">
+    <value>Occupational specialism &lt;br/&gt; (code)</value>
+  </data>
+  <data name="Title_TLevel_Text" xml:space="preserve">
+    <value>T Level title</value>
   </data>
   <data name="Yes_Radio_Button_Text" xml:space="preserve">
     <value>Yes, everything is correct</value>

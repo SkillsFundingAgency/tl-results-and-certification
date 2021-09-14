@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ResultControl
         {
             var viewResult = Result as FileStreamResult;
             viewResult.Should().NotBeNull();
-            viewResult.FileDownloadName.Should().Be(ResultContent.UploadUnsuccessful.Result_Error_Report_File_Name_Text);
+            viewResult.FileDownloadName.Should().Be(ResultContent.UploadUnsuccessful.Result_Error_Report_File_Name);
             viewResult.ContentType.Should().Be("text/csv");
             viewResult.FileStream.Should().NotBeNull();
         }

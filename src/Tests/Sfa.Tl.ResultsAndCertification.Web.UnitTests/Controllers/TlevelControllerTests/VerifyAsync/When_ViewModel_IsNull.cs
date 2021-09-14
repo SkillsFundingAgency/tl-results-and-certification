@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.VerifyAsync
@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         {
             pathwayId = 10;
             
-            TlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(ukprn, pathwayId)
+            TlevelLoader.GetVerifyTlevelDetailsByPathwayIdAsync(AoUkprn, pathwayId)
                 .Returns(viewModel);
         }
 
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
         [Fact]
         public void Then_Called_Expected_Methods()
         {
-            TlevelLoader.Received(1).GetVerifyTlevelDetailsByPathwayIdAsync(ukprn, pathwayId);
+            TlevelLoader.Received(1).GetVerifyTlevelDetailsByPathwayIdAsync(AoUkprn, pathwayId);
         }
     }
 }

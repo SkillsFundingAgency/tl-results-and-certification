@@ -117,19 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Back_To_Assessment_Entries_Button_Text" xml:space="preserve">
-    <value>Back to assessment entries</value>
+  <data name="Add_Results" xml:space="preserve">
+    <value>add results</value>
+  </data>
+  <data name="Back_To_Home_Button" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
+  <data name="By_Searching_For_A_Learner" xml:space="preserve">
+    <value> by searching for a learner</value>
+  </data>
+  <data name="For_Registered_Learners_With_Assessment_Entries" xml:space="preserve">
+    <value> for registered learners with assessment entries</value>
+  </data>
+  <data name="Manage_Individual_Assessments" xml:space="preserve">
+    <value>manage individual assessments</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Assessment entries upload successful page</value>
+    <value>Assessments upload success</value>
+  </data>
+  <data name="Para_You_Can_Now" xml:space="preserve">
+    <value>You can now</value>
   </data>
   <data name="Section_Heading" xml:space="preserve">
-    <value>Assessment entries upload successful</value>
+    <value>Assessments uploaded successfully</value>
   </data>
   <data name="Successfully_Sent_One_Assessment_Entry_Text" xml:space="preserve">
     <value>You successfully sent assessment entry data for one registration.</value>
   </data>
   <data name="Successfully_Sent_Total_Assessment_Entries_Text" xml:space="preserve">
     <value>You successfully sent assessment entries for {0} registrations.</value>
+  </data>
+  <data name="Upload_Another_File_Button" xml:space="preserve">
+    <value>Upload another file</value>
+  </data>
+  <data name="Upload_Another_Multiple_Assessments_File" xml:space="preserve">
+    <value>upload another multiple assessments file</value>
+  </data>
+  <data name="What_Happens_Next" xml:space="preserve">
+    <value>What happens next</value>
   </data>
 </root>

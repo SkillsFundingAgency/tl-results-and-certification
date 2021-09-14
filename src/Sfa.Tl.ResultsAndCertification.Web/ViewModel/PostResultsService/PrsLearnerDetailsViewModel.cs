@@ -38,6 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string PathwayGradeLastUpdatedBy { get; set; }
         public NotificationBannerModel SuccessBanner { get; set; }
 
+        public bool IsAppealAllowedAfterDeadline { get { return !PathwayPrsStatus.HasValue && !CommonHelper.IsAppealsAllowed(AppealEndDate); } }
         public bool IsFinalOutcomeRegistered { get { return PathwayPrsStatus.HasValue && PathwayPrsStatus == PrsStatus.Final; } }
         public SummaryItemModel SummaryAssessmentSeries => new SummaryItemModel
         {
@@ -124,6 +125,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
             }
         }
 
-        private bool IsResultUpdateAllowed { get { return PathwayPrsStatus != PrsStatus.Final && CommonHelper.IsAppealsAllowed(AppealEndDate); } }
+        private bool IsResultUpdateAllowed { get { return PathwayPrsStatus == PrsStatus.BeingAppealed || (PathwayPrsStatus != PrsStatus.Final && CommonHelper.IsAppealsAllowed(AppealEndDate)); } }
     }
 }

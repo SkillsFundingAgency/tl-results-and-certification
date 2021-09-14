@@ -117,14 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Investigation_Information_Text" xml:space="preserve">
-    <value>We will investigate your query and update you within 3 working days.</value>
+  <data name="Heading_Query_Tlevel_Details" xml:space="preserve">
+    <value>Query T Level details</value>
+  </data>
+  <data name="Heading_Tell_Us_What_Is_Wrong" xml:space="preserve">
+    <value>Tell us what is wrong with this T Levels details</value>
+  </data>
+  <data name="Hint_Message_Must_Be_1000_Or_Less" xml:space="preserve">
+    <value>Your message must be 1,000 characters or fewer.</value>
+  </data>
+  <data name="Hint_You_Do_Not_Need_Include_Above_Info" xml:space="preserve">
+    <value>You do not need to include any of the above information.</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Query T Level details page</value>
-  </data>
-  <data name="Pathway_Field_Label" xml:space="preserve">
-    <value>Core</value>
+    <value>Query T Level</value>
   </data>
   <data name="Query_CharLimitExceeded_Validation_Message" xml:space="preserve">
     <value>The maximum character limit 10000 exceeded</value>
@@ -132,16 +138,7 @@
   <data name="Query_Required_Validation_Message" xml:space="preserve">
     <value>Enter what is wrong with this T Level’s details</value>
   </data>
-  <data name="Query_Textbox_Title" xml:space="preserve">
-    <value>Tell us what’s wrong with this T Level's details.</value>
-  </data>
-  <data name="Section_Heading" xml:space="preserve">
-    <value>Query T Level details</value>
-  </data>
-  <data name="Specialisms_Field_Label" xml:space="preserve">
-    <value>Specialisms</value>
-  </data>
-  <data name="Submit_Button_Text" xml:space="preserve">
+  <data name="Submit_Button" xml:space="preserve">
     <value>Submit</value>
   </data>
 </root>

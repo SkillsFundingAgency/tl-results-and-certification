@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -28,15 +28,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
 
         public override void Setup()
         {
-            ApiClientResponse = new TlevelPathwayDetails 
+            ApiClientResponse = new TlevelPathwayDetails
             {
                 TqAwardingOrganisationId = 1,
                 RouteId = 2,
-                PathwayId = 3, 
+                PathwayId = 3,
                 RouteName = "Test Route",
                 PathwayName = "Test Pathway",
+                PathwayCode = "12345678",
+                TlevelTitle = "T Level in Education",
                 PathwayStatusId = 1,
-                Specialisms = new List<string> { "Spl1", "Spl2" }
+                Specialisms = new List<SpecialismDetails> {
+                    new SpecialismDetails { Name = "Civil Engineering", Code = "97865897" },
+                    new SpecialismDetails { Name = "Assisting teaching", Code = "7654321" }
+                }
             };
 
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
