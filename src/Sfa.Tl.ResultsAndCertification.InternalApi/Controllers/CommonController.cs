@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -31,6 +32,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn)
         {
             return await _commonService.GetLoggedInUserTypeInfoAsync(ukprn);
+        }
+
+        [HttpGet]
+        [Route("CurrentAcademicYears")]
+        public async Task<IEnumerable<AcademicYear>> GetCurrentAcademicYears()
+        {
+            return await _commonService.GetCurrentAcademicYears();
         }
     }
 }

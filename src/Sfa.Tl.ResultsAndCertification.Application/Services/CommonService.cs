@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,6 +103,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 };
 
             return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.FunctionJobFailedNotification.ToString(), _configuration.TechnicalInternalNotificationEmailAddress, tokens);
+        }
+
+        public async Task<IEnumerable<AcademicYear>> GetCurrentAcademicYears()
+        {
+            await Task.CompletedTask;
+            return new List<AcademicYear> { };
         }
     }
 }
