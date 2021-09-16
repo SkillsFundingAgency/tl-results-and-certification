@@ -38,6 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<Batch> Batch { get; set; }
         public virtual DbSet<PrintBatchItem> PrintBatchItem { get; set; }
         public virtual DbSet<PrintCertificate> PrintCertificate { get; set; }
+        public virtual DbSet<AcademicYear> AcademicYear { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
