@@ -1,0 +1,42 @@
+﻿using FluentAssertions;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.AcademicYear
+{
+    public class When_GetFirstOrDefault_Is_Called : BaseTest<Domain.Models.AcademicYear>
+    {
+        private Domain.Models.AcademicYear _result;
+        private Domain.Models.AcademicYear _data;
+
+        public override void Given()
+        {
+            _data = new AcademicYearBuilder().Build();
+            DbContext.AddRange(_data);
+            DbContext.SaveChanges();
+        }
+
+        public async override Task When()
+        {
+            _result = await Repository.GetFirstOrDefaultAsync(x => x.Id == 1);
+        }
+
+        [Fact]
+        public void Then_Fields_Are_As_Expected()
+        {
+            _data.Should().NotBeNull();
+            _result.Should().NotBeNull();
+            _result.Id.Should().Be(1);
+            _result.Name.Should().Be(_data.Name);
+            _result.Year.Should().Be(_data.Year);
+            _result.StartDate.Should().Be(_data.StartDate);
+            _result.EndDate.Should().Be(_data.EndDate);
+            _result.CreatedBy.Should().Be(Constants.CreatedByUser);
+            _result.CreatedOn.Should().Be(Constants.CreatedOn);
+            _result.ModifiedBy.Should().Be(Constants.ModifiedByUser);
+            _result.ModifiedOn.Should().Be(Constants.ModifiedOn);
+        }
+    }
+}
