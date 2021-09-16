@@ -12,9 +12,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
     {
         public string SelectedAcademicYear { get; set; }
 
-        public IList<SelectListItem> AcademicYearSelectList => EnumExtensions.GetList<AcademicYear>()?.Select(e => new SelectListItem { Text = e.GetDisplayName(), Value = ((int)e).ToString() }).ToList();
+        public IList<SelectListItem> AcademicYearSelectList => EnumExtensions.GetList<AcademicYearDelete>()?.Select(e => new SelectListItem { Text = e.GetDisplayName(), Value = ((int)e).ToString() }).ToList();
 
-        public bool IsValidAcademicYear => EnumExtensions.IsValidValue<AcademicYear>(SelectedAcademicYear);
+        public bool IsValidAcademicYear => EnumExtensions.IsValidValue<AcademicYearDelete>(SelectedAcademicYear);
 
         public bool HasSpecialismsSelected { get; set; }
 

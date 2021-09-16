@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
         public static IRuleBuilderOptions<T, string> MusBeValidAcademicYear<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
-                .Must(y => EnumExtensions.IsValidDisplayName<AcademicYear>(y))
+                .Must(y => EnumExtensions.IsValidDisplayName<AcademicYearDelete>(y))
                 .WithMessage(string.Format(ValidationMessages.MustBeCurrentOne, "{PropertyName}"));
         }
 

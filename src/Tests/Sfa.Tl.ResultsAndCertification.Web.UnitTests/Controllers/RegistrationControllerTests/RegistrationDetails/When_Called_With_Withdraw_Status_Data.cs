@@ -101,7 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             // Summary Academic Year
             model.SummaryAcademicYear.Should().NotBeNull();
             model.SummaryAcademicYear.Title.Should().Be(RegistrationDetailsContent.Title_AcademicYear_Text);
-            model.SummaryAcademicYear.Value.Should().Be(EnumExtensions.GetDisplayName<AcademicYear>(mockresult.AcademicYear));
+            model.SummaryAcademicYear.Value.Should().Be(EnumExtensions.GetDisplayName<AcademicYearDelete>(mockresult.AcademicYear));
             model.SummaryAcademicYear.ActionText.Should().BeNull();
 
             model.Breadcrumb.Should().NotBeNull();

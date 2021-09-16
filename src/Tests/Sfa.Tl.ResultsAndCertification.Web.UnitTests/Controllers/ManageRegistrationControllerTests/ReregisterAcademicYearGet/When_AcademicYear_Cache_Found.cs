@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         public override void Given()
         {
-            _selectedAcademicYear = ((int)AcademicYear.Year2020).ToString();
+            _selectedAcademicYear = ((int)AcademicYearDelete.Year2020).ToString();
             _specialismQuestionViewModel = new ReregisterSpecialismQuestionViewModel { HasLearnerDecidedSpecialism = false };
             _reregisterAcademicYearViewModel = new ReregisterAcademicYearViewModel { SelectedAcademicYear = _selectedAcademicYear };
             

@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 LastName = reg.LastName.Trim(),
                 DateOfBirth = reg.DateOfBirth.Trim().ParseStringToDateTime(),
                 ProviderUkprn = reg.Ukprn.Trim().ToLong(),
-                AcademicYear = EnumExtensions.GetEnumValueByDisplayName<AcademicYear>(reg.AcademicYear.Trim()).Value,
+                AcademicYear = EnumExtensions.GetEnumValueByDisplayName<AcademicYearDelete>(reg.AcademicYear.Trim()).Value,
                 CoreCode = reg.Core.Trim(),
                 SpecialismCodes = reg.Specialism.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())),
                 RowNum = rownum,
