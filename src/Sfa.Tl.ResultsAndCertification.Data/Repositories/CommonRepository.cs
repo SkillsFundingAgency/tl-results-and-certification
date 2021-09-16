@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var aoQuery = _dbContext.TqAwardingOrganisation.Where(x => x.IsActive && x.TlAwardingOrganisaton.IsActive).Select(x => new LoggedInUserTypeInfo { Name = x.TlAwardingOrganisaton.Name, Ukprn = x.TlAwardingOrganisaton.UkPrn, UserType = LoginUserType.AwardingOrganisation });
             var tpQuery = _dbContext.TqProvider.Where(x => x.IsActive && x.TlProvider.IsActive).Select(x => new LoggedInUserTypeInfo { Name = x.TlProvider.Name, Ukprn = x.TlProvider.UkPrn, UserType = LoginUserType.TrainingProvider });
             return await aoQuery.Concat(tpQuery).Distinct().FirstOrDefaultAsync(x => x.Ukprn == ukprn);
+        }
+        
+        public async Task<IEnumerable<AcademicYear>> GetCurrentAcademicYears()
+        {
+            return await _dbContext.AcademicYear.Where(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate)
+                .Select(x => new AcademicYear 
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Year = x.Year
+                }).ToListAsync();
         }
     }
 }
