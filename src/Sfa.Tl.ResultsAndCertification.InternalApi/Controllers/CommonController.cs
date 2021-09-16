@@ -2,7 +2,6 @@
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;

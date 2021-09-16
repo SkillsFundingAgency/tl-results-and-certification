@@ -2,6 +2,7 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
 using System.Collections.Generic;
 using Xunit;

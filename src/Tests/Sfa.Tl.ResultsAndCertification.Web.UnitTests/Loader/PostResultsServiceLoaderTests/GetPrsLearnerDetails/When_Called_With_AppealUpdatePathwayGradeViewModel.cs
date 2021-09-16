@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using System.Collections.Generic;

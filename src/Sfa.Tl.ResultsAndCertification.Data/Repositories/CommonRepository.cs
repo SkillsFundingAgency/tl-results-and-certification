@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
