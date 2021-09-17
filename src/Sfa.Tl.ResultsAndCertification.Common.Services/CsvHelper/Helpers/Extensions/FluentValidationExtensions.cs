@@ -60,13 +60,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
                 .WithMessage(string.Format(ValidationMessages.MustBeInFormat, "{PropertyName}", "YYYY/YY"));
         }
 
-        public static IRuleBuilderOptions<T, string> MusBeValidAcademicYear<T>(this IRuleBuilder<T, string> ruleBuilder)
-        {
-            return ruleBuilder
-                .Must(y => EnumExtensions.IsValidDisplayName<AcademicYearDelete>(y))
-                .WithMessage(string.Format(ValidationMessages.MustBeCurrentOne, "{PropertyName}"));
-        }
-
         public static IRuleBuilderOptions<T, string> MusBeValidAssessmentSeries<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder

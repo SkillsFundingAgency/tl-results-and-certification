@@ -88,12 +88,6 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             {
                 RowNum = "2",
                 Uln = "111111111",
-                ErrorMessage = "Academic year must be the current one"
-            },
-            new BulkProcessValidationError
-            {
-                RowNum = "2",
-                Uln = "111111111",
                 ErrorMessage = "Core code must have 8 characters only"
             },
             new BulkProcessValidationError
