@@ -448,7 +448,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (cacheModel?.SelectAcademicYear == null)
             {
-                viewModel = new SelectAcademicYearViewModel { HasSpecialismsSelected = hasSpecialismsSelected };
+                viewModel = new SelectAcademicYearViewModel { HasSpecialismsSelected = hasSpecialismsSelected, AcademicYears = await _registrationLoader.GetCurrentAcademicYearsAsync() };
             }
             else
             {
@@ -464,8 +464,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> AddRegistrationAcademicYearAsync(SelectAcademicYearViewModel model)
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
+            model.AcademicYears = await _registrationLoader.GetCurrentAcademicYearsAsync();
 
-            if (model == null || !model.IsValidAcademicYear || cacheModel?.SpecialismQuestion == null || (cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == true && cacheModel?.SelectSpecialisms == null))
+            if (!model.IsValidAcademicYear || cacheModel?.SpecialismQuestion == null || (cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == true && cacheModel?.SelectSpecialisms == null))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             model.HasSpecialismsSelected = cacheModel?.SelectSpecialisms != null;
@@ -586,6 +587,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
+            viewModel.AcademicYears = await _registrationLoader.GetCurrentAcademicYearsAsync();
             return View(viewModel);
         }
 

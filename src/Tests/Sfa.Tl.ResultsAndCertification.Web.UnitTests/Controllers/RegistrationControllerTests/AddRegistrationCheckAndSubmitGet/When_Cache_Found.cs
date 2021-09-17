@@ -5,6 +5,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Collections.Generic;
@@ -26,12 +27,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private SelectSpecialismViewModel _selectSpecialismViewModel;
         private PathwaySpecialismsViewModel _pathwaySpecialismsViewModel;
         private SelectAcademicYearViewModel _academicYearViewModel;
+        private IList<AcademicYear> _academicYears;
         private string _coreCode = "12345678";
         private Dictionary<string, string> _routeAttributes;
 
         public override void Given()
         {
             _routeAttributes = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
+            _academicYears = new List<AcademicYear> { new AcademicYear { Id = 1, Name = "2020/21", Year = 2020 } };
             _ulnViewModel =  new UlnViewModel { Uln = "1234567890" };
             _learnersNameViewModel = new LearnersNameViewModel { Firstname = "First", Lastname = "Last" };
             _dateofBirthViewModel = new DateofBirthViewModel { Day = "01", Month = "01", Year = "2020" };
@@ -40,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             _specialismQuestionViewModel = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true };
             _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayCode = _coreCode, PathwayName = "Education", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Code = "7654321", Name = "Test Education", DisplayName = "Test Education (7654321)", IsSelected = true } } };
             _selectSpecialismViewModel = new SelectSpecialismViewModel { PathwaySpecialisms = _pathwaySpecialismsViewModel };
-            _academicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = "2020" };
+            _academicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = "2020", AcademicYears = _academicYears };
             
             cacheResult = new RegistrationViewModel
             {

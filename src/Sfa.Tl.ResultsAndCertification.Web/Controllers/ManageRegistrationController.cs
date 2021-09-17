@@ -812,7 +812,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             ReregisterAcademicYearViewModel viewModel;
             if (cacheModel.ReregisterAcademicYear == null)
             {
-                viewModel = new ReregisterAcademicYearViewModel { ProfileId = profileId, HasSpecialismsSelected = hasSpecialismsSelected };
+                viewModel = new ReregisterAcademicYearViewModel { ProfileId = profileId, HasSpecialismsSelected = hasSpecialismsSelected, AcademicYears = await _registrationLoader.GetCurrentAcademicYearsAsync() };
             }
             else
             {

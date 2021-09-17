@@ -5,6 +5,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Collections.Generic;
 using Xunit;
@@ -24,17 +25,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private SelectAcademicYearViewModel _academicYearViewModel;
         private string _coreCode = "12345678";
         private Dictionary<string, string> _routeAttributes;
+        private IList<AcademicYear> _academicYears;
 
         public override void Given()
         {
             _routeAttributes = new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
+            _academicYears = new List<AcademicYear> { new AcademicYear { Id = 1, Name = "2020/21", Year = 2020 } };
             _ulnViewModel = new UlnViewModel { Uln = "1234567890" };
             _learnersNameViewModel = new LearnersNameViewModel { Firstname = "First", Lastname = "Last" };
             _dateofBirthViewModel = new DateofBirthViewModel { Day = "01", Month = "01", Year = "2020" };
             _selectProviderViewModel = new SelectProviderViewModel { SelectedProviderUkprn = "98765432", SelectedProviderDisplayName = "Barnsley College (98765432)" };
             _selectCoreViewModel = new SelectCoreViewModel { SelectedCoreCode = _coreCode, SelectedCoreDisplayName = $"Education ({_coreCode})", CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = _coreCode } } };
             _specialismQuestionViewModel = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = false };
-            _academicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = "2020" };
+            _academicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = "2020", AcademicYears = _academicYears };
 
             cacheResult = new RegistrationViewModel
             {

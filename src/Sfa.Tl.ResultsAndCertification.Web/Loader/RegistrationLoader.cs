@@ -7,12 +7,14 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -263,6 +265,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var reregistrationRequest = _mapper.Map<ReregistrationRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             var isSuccess =  await _internalApiClient.ReregistrationAsync(reregistrationRequest);
             return new ReregistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsSuccess = isSuccess };
+        }
+
+        public async Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync()
+        {
+            return await _internalApiClient.GetCurrentAcademicYearsAsync();
         }
     }
 }

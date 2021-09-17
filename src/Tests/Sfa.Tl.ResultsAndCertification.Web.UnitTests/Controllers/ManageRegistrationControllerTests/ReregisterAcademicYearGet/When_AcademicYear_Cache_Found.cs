@@ -1,9 +1,13 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReregisterAcademicYearGet
@@ -14,13 +18,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         private ReregisterSpecialismQuestionViewModel _specialismQuestionViewModel;
         private ReregisterAcademicYearViewModel _reregisterAcademicYearViewModel;
+        private IList<AcademicYear> _academicYears;
         private string _selectedAcademicYear;
 
         public override void Given()
         {
-            _selectedAcademicYear = ((int)AcademicYearDelete.Year2020).ToString();
+            _academicYears = new List<AcademicYear> { new AcademicYear { Id = 1, Name = "2020/21", Year = 2020 } };
+            _selectedAcademicYear = "2020".ToString();
             _specialismQuestionViewModel = new ReregisterSpecialismQuestionViewModel { HasLearnerDecidedSpecialism = false };
-            _reregisterAcademicYearViewModel = new ReregisterAcademicYearViewModel { SelectedAcademicYear = _selectedAcademicYear };
+            _reregisterAcademicYearViewModel = new ReregisterAcademicYearViewModel { SelectedAcademicYear = _selectedAcademicYear, AcademicYears = _academicYears };
             
             cacheResult = new ReregisterViewModel
             {
@@ -33,6 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             RegistrationLoader
                 .GetRegistrationDetailsAsync(Ukprn, ProfileId, RegistrationPathwayStatus.Withdrawn)
                 .Returns(new RegistrationDetailsViewModel { Status = RegistrationPathwayStatus.Withdrawn });
+            RegistrationLoader.GetCurrentAcademicYearsAsync().Returns(_academicYears);
         }
 
         [Fact]
@@ -49,6 +56,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
             model.SelectedAcademicYear.Should().Be(_selectedAcademicYear);
             model.IsValidAcademicYear.Should().BeTrue();
+            model.AcademicYears.Should().BeEquivalentTo(_academicYears);
+            model.AcademicYearSelectList.Should().BeEquivalentTo(_academicYears.Select(a => new SelectListItem { Text = a.Name, Value = a.Year.ToString() }));
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.ReregisterSpecialismQuestion);

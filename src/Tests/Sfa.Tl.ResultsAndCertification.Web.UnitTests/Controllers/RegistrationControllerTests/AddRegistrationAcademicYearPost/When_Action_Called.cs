@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Collections.Generic;
@@ -16,11 +16,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private SpecialismQuestionViewModel _specialismQuestionViewModel;
         private SelectSpecialismViewModel _selectSpecialismViewModel;
         private PathwaySpecialismsViewModel _pathwaySpecialismsViewModel;
+        private IList<AcademicYear> _academicYears;
         private string _selectedAcademicYear;
 
         public override void Given()
         {
-            _selectedAcademicYear = ((int)AcademicYearDelete.Year2020).ToString();
+            _academicYears = new List<AcademicYear> { new AcademicYear { Id = 1, Name = "2020/21", Year = 2020 } };
+            _selectedAcademicYear = "2020".ToString();
             _specialismQuestionViewModel = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true };
             _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayName = "Test Pathway", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Id = 1, Code = "345678", Name = "Test Specialism", DisplayName = "Test Specialism (345678)", IsSelected = true } } };
             _selectSpecialismViewModel = new SelectSpecialismViewModel { PathwaySpecialisms = _pathwaySpecialismsViewModel };
@@ -31,6 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             };
 
             SelectAcademicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = _selectedAcademicYear };
+
+            RegistrationLoader.GetCurrentAcademicYearsAsync().Returns(_academicYears);
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
         }
 

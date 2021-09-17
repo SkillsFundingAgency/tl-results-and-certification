@@ -4,6 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         private RegistrationDetailsViewModel mockresult = null;
         private Dictionary<string, string> _routeAttributes;
+        private IList<AcademicYear> _academicYears;
+
         public override void Given()
         {
             mockresult = new RegistrationDetailsViewModel
@@ -33,7 +36,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } };
+            _academicYears = new List<AcademicYear> { new AcademicYear { Id = 1, Name = "2020/21", Year = 2020 } };
+
             RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId).Returns(mockresult);
+            RegistrationLoader.GetCurrentAcademicYearsAsync().Returns(_academicYears);
         }
 
         [Fact]
@@ -57,6 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.AcademicYear.Should().Be(mockresult.AcademicYear);
             model.Status.Should().Be(mockresult.Status);
             model.ShowAssessmentEntriesLink.Should().BeFalse();
+            model.AcademicYears.Should().BeEquivalentTo(_academicYears);
 
             // Summary Status
             model.SummaryStatus.Should().NotBeNull();

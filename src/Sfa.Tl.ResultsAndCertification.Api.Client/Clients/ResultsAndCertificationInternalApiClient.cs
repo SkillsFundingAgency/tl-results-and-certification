@@ -260,7 +260,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<LoggedInUserTypeInfo>(requestUri);
         }
 
-        public async Task<IEnumerable<AcademicYear>> GetCurrentAcademicYears()
+        public async Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync()
         {
             return await GetAsync<IEnumerable<AcademicYear>>(ApiConstants.GetCurrentAcademicYears);
         }
