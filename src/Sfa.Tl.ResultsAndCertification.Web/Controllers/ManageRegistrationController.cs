@@ -828,6 +828,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> ReregisterAcademicYearAsync(ReregisterAcademicYearViewModel viewModel)
         {
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+            viewModel.AcademicYears = await _registrationLoader.GetCurrentAcademicYearsAsync();
 
             if (cacheModel == null || cacheModel.SpecialismQuestion == null ||
                 (cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism == true && cacheModel.ReregisterSpecialisms == null) ||

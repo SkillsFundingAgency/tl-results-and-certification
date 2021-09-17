@@ -27,6 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             };
 
             CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(_cacheResult);
+            RegistrationLoader.GetCurrentAcademicYearsAsync().Returns(_academicYears);
         }
 
         [Fact]
@@ -39,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         [Fact]
         public void Then_Called_Expected_Method()
         {
+            RegistrationLoader.Received(1).GetCurrentAcademicYearsAsync();
             CacheService.Received(1)
                 .SetAsync(CacheKey, Arg.Is<ReregisterViewModel>(x => x.ReregisterAcademicYear == AcademicYearViewModel &&
                                     x.ReregisterAcademicYear.HasSpecialismsSelected == false));

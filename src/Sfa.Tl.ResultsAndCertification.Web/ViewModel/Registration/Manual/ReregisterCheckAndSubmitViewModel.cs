@@ -1,5 +1,4 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
@@ -24,8 +23,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public SummaryItemModel SummaryProvider => new SummaryItemModel { Id = "provider", Title = CheckAndSubmitContent.Title_Provider_Text, Value = ReregisterModel.ReregisterProvider.SelectedProviderDisplayName, RouteName = RouteConstants.ReregisterProvider, ActionText = CheckAndSubmitContent.Change_Action_Link_Text, RouteAttributes = ChangeLinkRouteAttributes };
         public SummaryItemModel SummaryCore => new SummaryItemModel { Id = "core", Title = CheckAndSubmitContent.Title_Core_Text, Value = ReregisterModel.ReregisterCore.SelectedCoreDisplayName, RouteName = RouteConstants.ReregisterCore, ActionText = CheckAndSubmitContent.Change_Action_Link_Text, RouteAttributes = ChangeLinkRouteAttributes };
         public SummaryListModel SummarySpecialisms => new SummaryListModel { Id = "specialisms", Title = CheckAndSubmitContent.Title_Specialism_Text, Value = GetSelectedSpecialisms, RouteName = GetSpecialismRouteName, ActionText = CheckAndSubmitContent.Change_Action_Link_Text, HiddenText = GetSpecialismHiddenText, RouteAttributes = ChangeLinkRouteAttributes };
-        public SummaryItemModel SummaryAcademicYear => new SummaryItemModel { Id = "academicyear", Title = CheckAndSubmitContent.Title_AcademicYear_Text, Value = EnumExtensions.GetDisplayName<AcademicYearDelete>(ReregisterModel.ReregisterAcademicYear.SelectedAcademicYear), RouteName = RouteConstants.ReregisterAcademicYear, ActionText = CheckAndSubmitContent.Change_Action_Link_Text, RouteAttributes = ChangeLinkRouteAttributes };
+        public SummaryItemModel SummaryAcademicYear => new SummaryItemModel { Id = "academicyear", Title = CheckAndSubmitContent.Title_AcademicYear_Text, Value = GetAcademicYearName, RouteName = RouteConstants.ReregisterAcademicYear, ActionText = CheckAndSubmitContent.Change_Action_Link_Text, RouteAttributes = ChangeLinkRouteAttributes };
 
+        public string GetAcademicYearName => ReregisterModel.ReregisterAcademicYear.AcademicYears.FirstOrDefault(a => a.Year == ReregisterModel.ReregisterAcademicYear.SelectedAcademicYear.ToInt())?.Name;
         public List<string> GetSelectedSpecialisms => ReregisterModel.ReregisterSpecialisms != null ? ReregisterModel.ReregisterSpecialisms.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).OrderBy(s => s.DisplayName).Select(s => s.DisplayName).ToList() : null;
         public string GetSpecialismHiddenText => (ReregisterModel.ReregisterSpecialisms == null || !ReregisterModel.ReregisterSpecialisms.PathwaySpecialisms.Specialisms.Any(x => x.IsSelected)) ? CheckAndSubmitContent.Specialism_None_Selected_Text : null;
         public string GetSpecialismRouteName => ReregisterModel.ReregisterSpecialisms == null ? RouteConstants.ReregisterSpecialisms : RouteConstants.ReregisterSpecialismQuestion;
