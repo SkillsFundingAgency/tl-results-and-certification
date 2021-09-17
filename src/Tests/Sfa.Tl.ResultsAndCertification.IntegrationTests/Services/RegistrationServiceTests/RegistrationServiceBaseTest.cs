@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Notify.Interfaces;
+using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -43,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected ILogger<RegistrationRepository> RegistrationRepositoryLogger;
         protected ILogger<GenericRepository<TqRegistrationPathway>> TqRegistrationPathwayRepositoryLogger;
         protected ILogger<GenericRepository<TqRegistrationSpecialism>> TqRegistrationSpecialismRepositoryLogger;
-
+        protected ICommonService CommonService;
         protected IMapper RegistrationMapper;
 
         protected virtual void CreateMapper()
@@ -51,6 +55,40 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly));
             RegistrationMapper = new Mapper(mapperConfig);
         }
+
+        protected void CreateCommonService()
+        {
+            // Temp code;
+            var academicYears = new List<Models.Contracts.Common.AcademicYear>
+            {
+               new Models.Contracts.Common.AcademicYear { Id = 1, Name = "2021/22", Year = 2021  }
+            };
+
+            CommonService = Substitute.For<ICommonService>();
+            CommonService.GetCurrentAcademicYears().Returns(academicYears);
+            
+            return; // TODO:
+            var commonServiceLogger = new Logger<CommonService>(new NullLoggerFactory());
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CommonMapper).Assembly));
+            var commonMapper = new Mapper(mapperConfig);
+
+            var tlLookupRepositoryLogger = new Logger<GenericRepository<TlLookup>>(new NullLoggerFactory());
+            var tlLookupRepository = new GenericRepository<TlLookup>(tlLookupRepositoryLogger, DbContext);
+
+            var functionLogRepositoryLogger = new Logger<GenericRepository<FunctionLog>>(new NullLoggerFactory());
+            var functionLogRepository = new GenericRepository<FunctionLog>(functionLogRepositoryLogger, DbContext);
+            var commonRepository = new CommonRepository(DbContext);
+
+            var notificationsClient = Substitute.For<IAsyncNotificationClient>();
+            var notificationLogger = new Logger<NotificationService>(new NullLoggerFactory());
+            var notificationTemplateRepositoryLogger = new Logger<GenericRepository<NotificationTemplate>>(new NullLoggerFactory());
+            var notificationTemplateRepository = new GenericRepository<NotificationTemplate>(notificationTemplateRepositoryLogger, DbContext);
+            var notificationService = new NotificationService(notificationTemplateRepository, notificationsClient, notificationLogger);
+
+            var configuration = new ResultsAndCertificationConfiguration { TlevelQueriedSupportEmailAddress = "test@test.com" };
+
+            CommonService = new CommonService(commonServiceLogger, commonMapper, tlLookupRepository, functionLogRepository, commonRepository, notificationService, configuration);
+        } 
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {

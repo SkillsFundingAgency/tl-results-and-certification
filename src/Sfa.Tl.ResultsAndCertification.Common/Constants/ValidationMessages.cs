@@ -12,8 +12,7 @@
         public const string MustBeValidDate = "{0} must be a valid date in DDMMYYYY format";
         public const string DateNotinFuture = "{0} must be in the past";
 
-        public const string MustBeInFormat = "{0} must be in the format {1}";
-        public const string MustBeCurrentOne = "{0} must be the current one";
+        public const string MustBeInFormat = "{0} must be in the format {1}";        
 
         // File based validation messages
         public const string FileHeaderNotFound = "File header is not valid";
@@ -27,6 +26,7 @@
         public const string UnexpectedError = "Unexpected error while reading file content.";
 
         // Bulk Registration Stage3 Validation Messages
+        public const string AcademicYearMustBeCurrentOne = "Academic year must be the current one"; 
         public const string ProviderNotRegisteredWithAo = "Provider not registered with awarding organisation";
         public const string CoreNotRegisteredWithProvider = "Core not registered with provider";
         public const string SpecialismNotValidWithCore = "Specialism not valid with core";

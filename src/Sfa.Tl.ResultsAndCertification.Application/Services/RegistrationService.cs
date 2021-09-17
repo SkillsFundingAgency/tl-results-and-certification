@@ -25,6 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRegistrationRepository _tqRegistrationRepository;
         private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
         private readonly IRepository<TqRegistrationSpecialism> _tqRegistrationSpecialismRepository;
+        private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
         private readonly ILogger<IRegistrationRepository> _logger;        
 
@@ -32,6 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IRegistrationRepository tqRegistrationRepository,
             IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
             IRepository<TqRegistrationSpecialism> tqRegistrationSpecialismRepository,
+            ICommonService commonService,
             IMapper mapper, 
             ILogger<IRegistrationRepository> logger
             )
@@ -40,6 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _tqRegistrationRepository = tqRegistrationRepository;
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
             _tqRegistrationSpecialismRepository = tqRegistrationSpecialismRepository;
+            _commonService = commonService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -48,9 +51,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var response = new List<RegistrationRecordResponse>();
             var aoProviderTlevels = await GetAllTLevelsByAoUkprnAsync(aoUkprn);
-
+            var currentAcademicYears = await _commonService.GetCurrentAcademicYears();
+            
             foreach (var registrationData in validRegistrationsData)
             {
+                var academicYear = currentAcademicYears.FirstOrDefault(x => x.Name.Equals(registrationData.AcademicYearName, StringComparison.InvariantCultureIgnoreCase));
+                if (academicYear == null)
+                {
+                    response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln, ValidationMessages.AcademicYearMustBeCurrentOne));
+                    continue;
+                }
+                else
+                    registrationData.AcademicYear = academicYear.Year;
+
                 var isProviderRegisteredWithAwardingOrganisation = aoProviderTlevels.Any(t => t.ProviderUkprn == registrationData.ProviderUkprn);
                 if (!isProviderRegisteredWithAwardingOrganisation)
                 {
