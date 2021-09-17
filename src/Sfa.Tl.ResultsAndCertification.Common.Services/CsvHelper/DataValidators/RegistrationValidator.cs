@@ -44,8 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             RuleFor(r => r.AcademicYear)
                 .Cascade(CascadeMode.Stop)
                 .Required()
-                .MustBeInAcademicYearPattern()
-                .MusBeValidAcademicYear();
+                .MustBeInAcademicYearPattern();
 
             // Core
             RuleFor(r => r.Core)
