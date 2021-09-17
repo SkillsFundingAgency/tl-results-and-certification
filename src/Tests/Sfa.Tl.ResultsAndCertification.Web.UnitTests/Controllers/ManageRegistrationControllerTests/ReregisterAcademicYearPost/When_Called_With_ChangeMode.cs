@@ -48,6 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
             AcademicYearViewModel = new ReregisterAcademicYearViewModel { ProfileId = ProfileId, SelectedAcademicYear = _selectedAcademicYear, AcademicYears = _academicYears, IsChangeMode = true };
             CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(cacheResult);
+            RegistrationLoader.GetCurrentAcademicYearsAsync().Returns(_academicYears);
         }
 
         [Fact]

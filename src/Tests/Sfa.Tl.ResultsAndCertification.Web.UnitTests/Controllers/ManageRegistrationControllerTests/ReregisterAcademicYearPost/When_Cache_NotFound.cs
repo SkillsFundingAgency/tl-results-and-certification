@@ -12,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         public override void Given()
         {
             ReregisterViewModel reregisterViewModel = null;
+            AcademicYearViewModel = new ReregisterAcademicYearViewModel();
             CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(reregisterViewModel);
         }
 
