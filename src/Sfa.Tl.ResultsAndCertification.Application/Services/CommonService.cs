@@ -106,9 +106,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.FunctionJobFailedNotification.ToString(), _configuration.TechnicalInternalNotificationEmailAddress, tokens);
         }
 
-        public async Task<IEnumerable<Contract.AcademicYear>> GetCurrentAcademicYears()
+        public async Task<IEnumerable<Contract.AcademicYear>> GetCurrentAcademicYearsAsync()
         {
-            return await _commonRepository.GetCurrentAcademicYears();
+            return await _commonRepository.GetCurrentAcademicYearsAsync();
         }
     }
 }

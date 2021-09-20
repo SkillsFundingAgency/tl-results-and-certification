@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             };
 
             CommonService = Substitute.For<ICommonService>();
-            CommonService.GetCurrentAcademicYears().Returns(academicYears);
+            CommonService.GetCurrentAcademicYearsAsync().Returns(academicYears);
             
             return; // TODO:
             var commonServiceLogger = new Logger<CommonService>(new NullLoggerFactory());

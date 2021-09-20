@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.CommonRep
         protected TlRoute Route;
         protected TlPathway Pathway;
         protected IList<TlProvider> TlProviders;
+        protected IList<AcademicYear> AcademicYears;
         protected TlAwardingOrganisation TlAwardingOrganisation;
         protected TqAwardingOrganisation TqAwardingOrganisation;
         protected ICommonRepository CommonRepository;
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.CommonRep
         {
             TlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
             Route = TlevelDataProvider.CreateTlRoute(DbContext, awardingOrganisation);
-            Pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, Route);
+            Pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, Route);            
 
             TlAwardingOrganisation.IsActive = isAoActive;
 
@@ -47,7 +48,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.CommonRep
                 }
             }          
 
-            DbContext.SaveChangesAsync();
-        }       
+            DbContext.SaveChanges();
+        }
+
+        public void SeedAcademicYears()
+        {
+            AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
+            DbContext.SaveChanges();
+        }
     }
 }

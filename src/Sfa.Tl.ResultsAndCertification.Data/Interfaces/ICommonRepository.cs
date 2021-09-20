@@ -7,6 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
     public interface ICommonRepository
     {
         Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn);
-        Task<IEnumerable<AcademicYear>> GetCurrentAcademicYears();
+        Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
     }
 }

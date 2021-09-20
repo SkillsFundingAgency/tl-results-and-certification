@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("CurrentAcademicYears")]
         public async Task<IEnumerable<AcademicYear>> GetCurrentAcademicYears()
         {
-            return await _commonService.GetCurrentAcademicYears();
+            return await _commonService.GetCurrentAcademicYearsAsync();
         }
     }
 }

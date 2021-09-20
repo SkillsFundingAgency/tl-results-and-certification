@@ -16,6 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<bool> UpdateFunctionLog(FunctionLogDetails model);
 
         Task<bool> SendFunctionJobFailedNotification(string jobName, string errorMessage);
-        Task<IEnumerable<AcademicYear>> GetCurrentAcademicYears();
+        Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
     }
 }
