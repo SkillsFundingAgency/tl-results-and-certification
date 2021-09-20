@@ -84,6 +84,18 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 AcademicYearName = GetAcademicYearName(getValid: true),
                 CoreCode = "10123456", // correct core code
                 SpecialismCodes = new List<string> { "99999999", "10123457" } // invalid specialisms
+            },
+            new RegistrationCsvRecordResponse
+            {
+                RowNum = 5,
+                Uln = 111111114,
+                FirstName = "First 4",
+                LastName = "Last 4",
+                DateOfBirth = DateTime.Parse("12/01/1985"),
+                ProviderUkprn = 10000536, // valid providerr
+                AcademicYearName = GetAcademicYearName(getValid: false),
+                CoreCode = "10123456", // correct core code
+                SpecialismCodes = new List<string> { "10123456", "10123457" } // correct specialisms
             }
         };
 

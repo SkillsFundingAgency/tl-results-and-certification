@@ -13,8 +13,6 @@ using System.Threading.Tasks;
 using Xunit;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
-using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {

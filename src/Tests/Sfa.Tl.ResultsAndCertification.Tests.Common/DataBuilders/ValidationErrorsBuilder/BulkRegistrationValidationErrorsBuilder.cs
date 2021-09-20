@@ -117,6 +117,12 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 RowNum = "4",
                 Uln = "111111113",
                 ErrorMessage = ValidationMessages.SpecialismNotValidWithCore
+            },
+            new BulkProcessValidationError
+            {
+                RowNum = "5",
+                Uln = "111111114",
+                ErrorMessage = ValidationMessages.AcademicYearMustBeCurrentOne
             }
         };
 
