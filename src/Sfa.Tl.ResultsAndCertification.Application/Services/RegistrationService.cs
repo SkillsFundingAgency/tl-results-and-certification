@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var response = new List<RegistrationRecordResponse>();
             var aoProviderTlevels = await GetAllTLevelsByAoUkprnAsync(aoUkprn);
-            var currentAcademicYears = await _commonService.GetCurrentAcademicYears();
+            var currentAcademicYears = await _commonService.GetCurrentAcademicYearsAsync();
             
             foreach (var registrationData in validRegistrationsData)
             {

@@ -25,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return await aoQuery.Concat(tpQuery).Distinct().FirstOrDefaultAsync(x => x.Ukprn == ukprn);
         }
         
-        public async Task<IEnumerable<AcademicYear>> GetCurrentAcademicYears()
+        public async Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync()
         {
             return await _dbContext.AcademicYear.Where(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate)
                 .Select(x => new AcademicYear 

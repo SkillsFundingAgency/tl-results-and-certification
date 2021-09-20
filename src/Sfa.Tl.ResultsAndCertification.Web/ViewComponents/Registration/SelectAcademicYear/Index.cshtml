@@ -8,5 +8,10 @@
         @SelectAcademicYear.Select_The_AcademicYear_Label_Text
     </label>
 </h1>
+<div class="govuk-inset-text">
+    <p class="govuk-body">
+       @string.Format(SelectAcademicYear.Inset_At_This_Time_You_Can_Only_Select, Model?.AcademicYearSelectList?.FirstOrDefault()?.Text)
+    </p>
+</div>
 <select class="govuk-select" id="selectedacademicyear" asp-for="SelectedAcademicYear" asp-items="Model.AcademicYearSelectList">
 </select>
