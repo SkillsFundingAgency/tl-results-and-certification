@@ -33,6 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected TqAwardingOrganisation TqAwardingOrganisation;
         protected List<TqPathwayAssessment> TqPathwayAssessment;
         protected IList<AssessmentSeries> AssessmentSeries;
+        protected IList<AcademicYear> AcademicYears;
         protected TqProvider TqProvider;
         protected IList<TlProvider> TlProviders;
         protected IList<TqProvider> TqProviders;
@@ -58,16 +59,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         protected void CreateCommonService()
         {
-            // Temp code;
-            var academicYears = new List<Models.Contracts.Common.AcademicYear>
-            {
-               new Models.Contracts.Common.AcademicYear { Id = 1, Name = "2021/22", Year = 2021  }
-            };
-
-            CommonService = Substitute.For<ICommonService>();
-            CommonService.GetCurrentAcademicYears().Returns(academicYears);
-            
-            return; // TODO:
             var commonServiceLogger = new Logger<CommonService>(new NullLoggerFactory());
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CommonMapper).Assembly));
             var commonMapper = new Mapper(mapperConfig);
@@ -100,6 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
+            AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
             DbContext.SaveChangesAsync();
         }
 

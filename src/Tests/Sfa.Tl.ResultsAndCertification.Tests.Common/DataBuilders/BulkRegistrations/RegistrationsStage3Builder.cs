@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrations
 {
@@ -16,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 LastName = "Last 1",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
                 ProviderUkprn = 10000536, // valid provider
-                AcademicYearName = "2021/22",
+                AcademicYearName = GetAcademicYearName(getValid: true),
                 CoreCode = "10123456", // correct core code
                 SpecialismCodes = new List<string> { "10123456", "10123457" }  // correct specialisms
             },
@@ -28,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 LastName = "Last 2",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
                 ProviderUkprn = 10000536,  // valid provider
-                AcademicYearName = "2021/22",
+                AcademicYearName = GetAcademicYearName(getValid: true),
                 CoreCode = "10123456", // valid core code
                 SpecialismCodes = new List<string> { "10123456", "10123457" } // correct specialisms
             },
@@ -40,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 LastName = "Last 3",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
                 ProviderUkprn = 10000536, // valid providerr
-                AcademicYearName = "2021/22",
+                AcademicYearName = GetAcademicYearName(getValid: true),
                 CoreCode = "10123456", // correct core code
                 SpecialismCodes = new List<string> { "10123456", "10123457" } // invalid specialisms
             }
@@ -56,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 LastName = "Last 1",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
                 ProviderUkprn = 123456789, // invalid provider
-                AcademicYearName = "2021/22",
+                AcademicYearName = GetAcademicYearName(getValid: true),
                 CoreCode = "10123456", // correct core code
                 SpecialismCodes = new List<string> { "10123456", "10123457" }  // correct specialisms
             },
@@ -68,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 LastName = "Last 2",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
                 ProviderUkprn = 10000536,  // valid provider
-                AcademicYearName = "2021/22",
+                AcademicYearName = GetAcademicYearName(getValid: true),
                 CoreCode = "10123333", // invalid core code
                 SpecialismCodes = new List<string> { "10123456", "10123457" } // correct specialisms
             },
@@ -80,10 +81,19 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 LastName = "Last 3",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
                 ProviderUkprn = 10000536, // valid providerr
-                AcademicYearName = "2021/22",
+                AcademicYearName = GetAcademicYearName(getValid: true),
                 CoreCode = "10123456", // correct core code
                 SpecialismCodes = new List<string> { "99999999", "10123457" } // invalid specialisms
             }
         };
+
+        private string GetAcademicYearName(bool getValid)
+        {
+            var academicYears = new AcademicYearBuilder().BuildList();
+            if (getValid)
+                return academicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Name;
+            else
+                return academicYears.FirstOrDefault(x => !(DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate)).Name;
+        }
     }
 }
