@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
@@ -108,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             // Summary Academic Year
             model.SummaryAcademicYear.Should().NotBeNull();
             model.SummaryAcademicYear.Title.Should().Be(RegistrationDetailsContent.Title_AcademicYear_Text);
-            model.SummaryAcademicYear.Value.Should().Be(EnumExtensions.GetDisplayName<AcademicYearDelete>(mockresult.AcademicYear));
+            model.SummaryAcademicYear.Value.Should().Be(mockresult.GetAcademicYearName);
             model.SummaryAcademicYear.ActionText.Should().BeNull();
 
             model.Breadcrumb.Should().NotBeNull();

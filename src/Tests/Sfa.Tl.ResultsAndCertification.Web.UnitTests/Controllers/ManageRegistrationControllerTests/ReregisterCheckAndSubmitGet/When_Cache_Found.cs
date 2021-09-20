@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
@@ -105,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             // Summary Academic Year
             model.SummaryAcademicYear.Should().NotBeNull();
             model.SummaryAcademicYear.Title.Should().Be(CheckAndSubmitContent.Title_AcademicYear_Text);
-            model.SummaryAcademicYear.Value.Should().Be(EnumExtensions.GetDisplayName<AcademicYearDelete>(_academicYearViewModel.SelectedAcademicYear));
+            model.SummaryAcademicYear.Value.Should().Be(_academicYearViewModel.AcademicYears.FirstOrDefault().Name);
             model.SummaryAcademicYear.RouteName.Should().Be(RouteConstants.ReregisterAcademicYear);
             model.SummaryAcademicYear.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
             model.SummaryAcademicYear.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
