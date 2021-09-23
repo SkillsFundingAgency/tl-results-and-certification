@@ -29,6 +29,7 @@ BEGIN
 :r ".\SeedTlRoutes.sql"
 :r ".\SeedTlPathways.sql"
 :r ".\SeedTlSpecialisms.sql"
+:r ".\SeedTlPathwaySpecialismCombinations.sql"
 :r ".\SeedTqAwardingOrganisations.sql"
 :r ".\SeedNotificationTemplates.sql"
 :r ".\SeedAssessmentSeries.sql"
