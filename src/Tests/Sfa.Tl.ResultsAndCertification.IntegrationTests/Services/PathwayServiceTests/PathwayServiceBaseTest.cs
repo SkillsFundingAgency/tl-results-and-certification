@@ -36,6 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServic
             _pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, _route);
             _specialisms = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, _pathway);
             _tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, _pathway, _tlAwardingOrganisation);
+            TlevelDataProvider.CreateP
             DbContext.SaveChangesAsync();
         }
     }

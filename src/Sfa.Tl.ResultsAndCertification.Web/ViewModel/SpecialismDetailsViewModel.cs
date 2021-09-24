@@ -2,9 +2,9 @@
 {
     public class SpecialismDetailsViewModel
     {
-        public int Id { get; set; }         // TODO: assess importance and remove
+        public int Id { get; set; }
         public string Code { get; set; }
-        public string Name { get; set; }    // TODO: assess importance and remove
+        public string Name { get; set; }
         public string DisplayName { get; set; }
         public bool IsSelected { get; set; }
     }
