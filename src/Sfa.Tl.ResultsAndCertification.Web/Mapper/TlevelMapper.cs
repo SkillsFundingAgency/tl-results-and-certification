@@ -91,13 +91,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.PathwayCode, opts => opts.MapFrom(s => s.PathwayCode))
                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
-               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms));
+               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.PathwaySpecialismCombinations));
 
-            CreateMap<SpecialismDetails, SpecialismDetailsViewModel>()
-               .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+            CreateMap<PathwaySpecialismCombination, SpecialismDetailsViewModel>()
                .ForMember(d => d.Code, opts => opts.MapFrom(s => s.Code))
-               .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
-               .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.Code})"));
+               .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => string.Join(" and ", s.SpecialismDetails.Select(x => $"{x.Name} ({x.Code})"))));
         }
     }
 }

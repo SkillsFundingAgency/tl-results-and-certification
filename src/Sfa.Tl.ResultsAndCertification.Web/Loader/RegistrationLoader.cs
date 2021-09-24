@@ -98,7 +98,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId)
         {
             var pathwaySpecialisms = await _internalApiClient.GetPathwaySpecialismsByPathwayLarIdAsync(aoUkprn, pathwayLarId);
-            return _mapper.Map<PathwaySpecialismsViewModel>(pathwaySpecialisms);
+            var pathwaySpecialismsViewModel = _mapper.Map<PathwaySpecialismsViewModel>(pathwaySpecialisms);
+
+            // TODO: sort required here.  
+            return pathwaySpecialismsViewModel;
         }
 
         public async Task<UlnRegistrationNotFoundViewModel> FindUlnAsync(long aoUkprn, long Uln)
