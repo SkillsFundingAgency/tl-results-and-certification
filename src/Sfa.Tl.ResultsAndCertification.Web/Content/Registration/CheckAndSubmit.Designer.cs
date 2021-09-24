@@ -187,7 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Specialism (code).
+        ///   Looks up a localized string similar to Occupational specialism(s) (code).
         /// </summary>
         public static string Title_Specialism_Text {
             get {

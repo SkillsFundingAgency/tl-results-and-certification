@@ -100,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var pathwaySpecialisms = await _internalApiClient.GetPathwaySpecialismsByPathwayLarIdAsync(aoUkprn, pathwayLarId);
             var pathwaySpecialismsViewModel = _mapper.Map<PathwaySpecialismsViewModel>(pathwaySpecialisms);
 
-            // TODO: sort required here.  
+            pathwaySpecialismsViewModel.Specialisms = pathwaySpecialismsViewModel.Specialisms.OrderBy(x => x.DisplayName).ToList();
             return pathwaySpecialismsViewModel;
         }
 

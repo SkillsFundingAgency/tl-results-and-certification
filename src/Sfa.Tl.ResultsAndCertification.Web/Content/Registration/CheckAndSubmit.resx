@@ -160,7 +160,7 @@
     <value>Provider (UKPRN)</value>
   </data>
   <data name="Title_Specialism_Text" xml:space="preserve">
-    <value>Specialism (code)</value>
+    <value>Occupational specialism(s) (code)</value>
   </data>
   <data name="Title_Uln_Text" xml:space="preserve">
     <value>ULN</value>

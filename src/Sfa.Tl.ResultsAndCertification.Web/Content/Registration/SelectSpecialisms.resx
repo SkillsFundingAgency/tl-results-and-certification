@@ -120,6 +120,9 @@
   <data name="Change_Button_Text" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="Combination_Separator" xml:space="preserve">
+    <value> and </value>
+  </data>
   <data name="Continue_Button_Text" xml:space="preserve">
     <value>Continue</value>
   </data>
