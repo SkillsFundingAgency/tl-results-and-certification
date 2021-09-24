@@ -91,7 +91,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.PathwayCode, opts => opts.MapFrom(s => s.PathwayCode))
                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
-               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.PathwaySpecialismCombinations));
+               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms));
 
             CreateMap<PathwaySpecialismCombination, SpecialismDetailsViewModel>()
                .ForMember(d => d.Code, opts => opts.MapFrom(s => s.Code))

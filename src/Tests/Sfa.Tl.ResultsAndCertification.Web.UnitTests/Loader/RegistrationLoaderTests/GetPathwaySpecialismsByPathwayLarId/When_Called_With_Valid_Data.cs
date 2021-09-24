@@ -12,15 +12,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             ActualResult.Should().NotBeNull();
             ActualResult.Specialisms.Should().NotBeNullOrEmpty();
 
-            ActualResult.Specialisms.Count.Should().Be(ApiClientResponse.Specialisms.Count);
+            ActualResult.Specialisms.Count.Should().Be(ApiClientResponse.Specialisms.Count());
 
-            var expectedSpecialismResult = ApiClientResponse.Specialisms.FirstOrDefault();
+            var expectedSpecialismResult = ApiClientResponse.Specialisms.FirstOrDefault().SpecialismDetails.FirstOrDefault();
             var actualSpecialismResult = ActualResult.Specialisms.FirstOrDefault();
             actualSpecialismResult.Should().NotBeNull();
 
-            actualSpecialismResult.Id.Should().Be(expectedSpecialismResult.Id);
             actualSpecialismResult.Code.Should().Be(expectedSpecialismResult.Code);
-            actualSpecialismResult.Name.Should().Be(expectedSpecialismResult.Name);
             actualSpecialismResult.DisplayName.Should().Be($"{expectedSpecialismResult.Name} ({expectedSpecialismResult.Code})");
         }
     }

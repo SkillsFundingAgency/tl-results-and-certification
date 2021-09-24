@@ -39,7 +39,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 Id = 1,
                 PathwayCode = "12345",
                 PathwayName = "Test 1",
-                Specialisms = new List<SpecialismDetails> { new SpecialismDetails { Id = 1, Code = "76543", Name = "Specialism 1" } }
+                Specialisms = new List<PathwaySpecialismCombination> 
+                { new PathwaySpecialismCombination { SpecialismDetails = new List<SpecialismDetails> 
+                { new SpecialismDetails { Id = 1, Code = "76543", Name = "Specialism 1" } } } }
             };
         }
 
@@ -61,10 +63,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _result.Id.Should().Be(_mockHttpResult.Id);
             _result.PathwayName.Should().Be(_mockHttpResult.PathwayName);
             _result.PathwayCode.Should().Be(_mockHttpResult.PathwayCode);
-            _result.Specialisms.Count().Should().Be(_mockHttpResult.Specialisms.Count);
+            _result.Specialisms.Count().Should().Be(_mockHttpResult.Specialisms.Count());
 
-            var expectedSpecialismResult = _mockHttpResult.Specialisms.FirstOrDefault();
-            var actualSpecialismResult = _result.Specialisms.FirstOrDefault();
+            var expectedSpecialismResult = _mockHttpResult.Specialisms.FirstOrDefault().SpecialismDetails.FirstOrDefault();
+            var actualSpecialismResult = _result.Specialisms.FirstOrDefault().SpecialismDetails.FirstOrDefault();
             actualSpecialismResult.Should().NotBeNull();
 
             actualSpecialismResult.Id.Should().Be(expectedSpecialismResult.Id);

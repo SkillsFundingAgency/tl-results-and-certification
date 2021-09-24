@@ -31,7 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 Id = 1,
                 PathwayCode = "12345",
                 PathwayName = "Test 1",
-                Specialisms = new List<SpecialismDetails> { new SpecialismDetails { Id = 1, Code = "76543", Name = "Specialism 1" } }
+                Specialisms = new List<PathwaySpecialismCombination>
+                { new PathwaySpecialismCombination { SpecialismDetails = new List<SpecialismDetails>
+                { new SpecialismDetails { Id = 1, Code = "76543", Name = "Specialism 1" } } } }
             };
 
             Logger = Substitute.For<ILogger<RegistrationLoader>>();

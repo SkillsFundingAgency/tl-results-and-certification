@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServic
             var expectedResult = _pathwaySpecialismsResult;
             expectedResult.Should().NotBeNull();
             expectedResult.Specialisms.Should().NotBeNull();
-            expectedResult.Specialisms.Count.Should().Be(_specialisms.Count);
+            expectedResult.Specialisms.Count().Should().Be(_specialisms.Count);
             expectedResult.Id.Should().Be(_pathway.Id);
             expectedResult.PathwayCode.Should().Be(_pathway.LarId);
             expectedResult.PathwayName.Should().Be(_pathway.Name);
@@ -45,7 +45,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServic
                 var actualSpecialism = _specialisms.FirstOrDefault(s => s.LarId == specialism.Code);
                 actualSpecialism.Should().NotBeNull();
                 actualSpecialism.LarId.Should().Be(specialism.Code);
-                actualSpecialism.Name.Should().Be(specialism.Name);
             }
         }
     }

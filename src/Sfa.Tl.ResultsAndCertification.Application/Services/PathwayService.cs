@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Id = pathway.Id,
                 PathwayCode = pathway.LarId,
                 PathwayName = pathway.Name,
-                PathwaySpecialismCombinations = pathway.TlPathwaySpecialismCombinations.GroupBy(c => c.GroupId)  // 1. Read only the couplets
+                Specialisms = pathway.TlPathwaySpecialismCombinations.GroupBy(c => c.GroupId)  // 1. Read only the couplets
                                                 .Select(x => new PathwaySpecialismCombination
                                                 {
                                                     SpecialismDetails = _mapper.Map<IEnumerable<SpecialismDetails>>(x.Select(s => s.TlSpecialism))
@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 .Select(x => new PathwaySpecialismCombination { SpecialismDetails = new List<SpecialismDetails> { _mapper.Map<SpecialismDetails>(x) } }).ToList();
 
             // 3. Concat 1 and 2 from above.
-            pathwaySpecialisms.PathwaySpecialismCombinations = pathwaySpecialisms.PathwaySpecialismCombinations.Concat(soloSpecialisms);
+            pathwaySpecialisms.Specialisms = pathwaySpecialisms.Specialisms.Concat(soloSpecialisms);
             return pathwaySpecialisms;
         }
     }
