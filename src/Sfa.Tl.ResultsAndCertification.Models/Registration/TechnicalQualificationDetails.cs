@@ -7,6 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration
         public TechnicalQualificationDetails()
         {
             TlSpecialismLarIds = new List<KeyValuePair<int, string>>();
+            TlSpecialismCombinations = new List<KeyValuePair<int, string>>();
         }
         public long ProviderUkprn { get; set; }
         public int TlPathwayId { get; set; }
@@ -17,5 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration
         public int TqAwardingOrganisationId { get; set; }
         public int TlAwardingOrganisatonId { get; set; }
         public IEnumerable<KeyValuePair<int, string>> TlSpecialismLarIds { get; set; }
+        public IEnumerable<KeyValuePair<int, string>> TlSpecialismCombinations { get; set; }
     }
 }

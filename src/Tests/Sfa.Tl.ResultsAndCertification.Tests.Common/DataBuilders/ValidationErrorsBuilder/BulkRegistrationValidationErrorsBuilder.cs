@@ -94,7 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             {
                 RowNum = "2",
                 Uln = "111111111",
-                ErrorMessage = "Specialism code must have 8 characters only"
+                ErrorMessage = "Specialism code(s) must have 8 characters only"
             }
         };
 
