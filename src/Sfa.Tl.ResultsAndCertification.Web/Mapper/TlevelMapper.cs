@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SelectToReview;
 using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using SelectSpecialismContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration.SelectSpecialisms;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 {
@@ -93,11 +94,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.PathwayName, opts => opts.MapFrom(s => s.PathwayName))
                .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms));
 
-            CreateMap<SpecialismDetails, SpecialismDetailsViewModel>()
-               .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+            CreateMap<PathwaySpecialismCombination, SpecialismDetailsViewModel>()
                .ForMember(d => d.Code, opts => opts.MapFrom(s => s.Code))
-               .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
-               .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.Code})"));
+               .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => string.Join(SelectSpecialismContent.Combination_Separator, s.SpecialismDetails.Select(x => $"{x.Name} ({x.Code})"))));
         }
     }
 }
