@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 ProviderUkprn = 10000536, // valid provider
                 AcademicYearName = GetAcademicYearName(getValid: true),
                 CoreCode = "10123456", // correct core code
-                SpecialismCodes = new List<string> { "10123456", "10123457" }  // correct specialisms
+                SpecialismCodes = new List<string> { { "10123456" }, { "10123457" } }  // correct specialisms
             },
             new RegistrationCsvRecordResponse
             {
@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 ProviderUkprn = 10000536,  // valid provider
                 AcademicYearName = GetAcademicYearName(getValid: true),
                 CoreCode = "10123456", // valid core code
-                SpecialismCodes = new List<string> { "10123456", "10123457" } // correct specialisms
+                SpecialismCodes = new List<string> { { "10123456" }, { "10123457" } } // correct specialisms
             },
             new RegistrationCsvRecordResponse
             {
@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 ProviderUkprn = 10000536, // valid providerr
                 AcademicYearName = GetAcademicYearName(getValid: true),
                 CoreCode = "10123456", // correct core code
-                SpecialismCodes = new List<string> { "10123456", "10123457" } // invalid specialisms
+                SpecialismCodes = new List<string> { { "10123456" }, { "10123457" } } // invalid specialisms
             }
         };
 
@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 ProviderUkprn = 123456789, // invalid provider
                 AcademicYearName = GetAcademicYearName(getValid: true),
                 CoreCode = "10123456", // correct core code
-                SpecialismCodes = new List<string> { "10123456", "10123457" }  // correct specialisms
+                SpecialismCodes = new List<string> { { "10123456" }, { "10123457" } }  // correct specialisms
             },
             new RegistrationCsvRecordResponse
             {
@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 ProviderUkprn = 10000536,  // valid provider
                 AcademicYearName = GetAcademicYearName(getValid: true),
                 CoreCode = "10123333", // invalid core code
-                SpecialismCodes = new List<string> { "10123456", "10123457" } // correct specialisms
+                SpecialismCodes = new List<string> { { "10123456" }, { "10123457" } } // correct specialisms
             },
             new RegistrationCsvRecordResponse
             {
@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 ProviderUkprn = 10000536, // valid providerr
                 AcademicYearName = GetAcademicYearName(getValid: true),
                 CoreCode = "10123456", // correct core code
-                SpecialismCodes = new List<string> { "99999999", "10123457" } // invalid specialisms
+                SpecialismCodes = new List<string> { { "99999999" } } // invalid specialisms
             },
             new RegistrationCsvRecordResponse
             {
@@ -93,9 +93,33 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 LastName = "Last 4",
                 DateOfBirth = DateTime.Parse("12/01/1985"),
                 ProviderUkprn = 10000536, // valid providerr
-                AcademicYearName = GetAcademicYearName(getValid: false),
+                AcademicYearName = GetAcademicYearName(getValid: false), // invalid academic year
                 CoreCode = "10123456", // correct core code
-                SpecialismCodes = new List<string> { "10123456", "10123457" } // correct specialisms
+                SpecialismCodes = new List<string> { { "10123456" }, { "10123457" } } // correct specialisms
+            },
+            new RegistrationCsvRecordResponse
+            {
+                RowNum = 6,
+                Uln = 111111115,
+                FirstName = "First 5",
+                LastName = "Last 5",
+                DateOfBirth = DateTime.Parse("12/01/1985"),
+                ProviderUkprn = 10000536, // valid providerr
+                AcademicYearName = GetAcademicYearName(getValid: true),
+                CoreCode = "10123456", // correct core code
+                SpecialismCodes = new List<string> { { "10123456" } } // Invalid - This specialism cannot be selected as a single option (couplet)
+            },
+            new RegistrationCsvRecordResponse
+            {
+                RowNum = 7,
+                Uln = 111111116,
+                FirstName = "First 6",
+                LastName = "Last 6",
+                DateOfBirth = DateTime.Parse("12/01/1985"),
+                ProviderUkprn = 10000536, // valid providerr
+                AcademicYearName = GetAcademicYearName(getValid: true),
+                CoreCode = "10123456", // correct core code
+                SpecialismCodes = new List<string> { {"10123456" }, { "10123458" } } // Invalid - Specialism is not valid (must be a paired specialism i.e couplet)
             }
         };
 

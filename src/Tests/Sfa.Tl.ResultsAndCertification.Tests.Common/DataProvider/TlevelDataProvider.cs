@@ -337,7 +337,19 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                 return tlPathwaySpecialismCombination;
             }
             return null;
-        }       
+        }
+
+        public static IList<TlPathwaySpecialismCombination> CreateTlPathwaySpecialismCombinationsList(ResultsAndCertificationDbContext _dbContext, IList<TlPathwaySpecialismCombination> tlPathwaySpecialismCombinations = null, bool addToDbContext = true)
+        {
+            if (tlPathwaySpecialismCombinations == null)
+                tlPathwaySpecialismCombinations = new TlPathwaySpecialismCombinationBuilder().BuildList();
+
+            if (addToDbContext)
+            {
+                _dbContext.AddRange(tlPathwaySpecialismCombinations);
+            }
+            return tlPathwaySpecialismCombinations;
+        }
 
         #endregion
     }

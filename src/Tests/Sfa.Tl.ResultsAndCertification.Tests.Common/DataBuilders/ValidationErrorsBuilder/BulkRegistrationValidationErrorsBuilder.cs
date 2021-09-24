@@ -123,6 +123,18 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 RowNum = "5",
                 Uln = "111111114",
                 ErrorMessage = ValidationMessages.AcademicYearMustBeCurrentOne
+            },
+            new BulkProcessValidationError
+            {
+                RowNum = "6",
+                Uln = "111111115",
+                ErrorMessage = ValidationMessages.SpecialismCannotBeSelectedAsSingleOption
+            },
+            new BulkProcessValidationError
+            {
+                RowNum = "7",
+                Uln = "111111116",
+                ErrorMessage = ValidationMessages.SpecialismIsNotValid
             }
         };
 

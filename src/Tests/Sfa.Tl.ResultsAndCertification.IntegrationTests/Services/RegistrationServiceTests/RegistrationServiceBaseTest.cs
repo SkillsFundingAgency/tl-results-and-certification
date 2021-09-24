@@ -39,6 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected IList<TqProvider> TqProviders;
         protected IList<TlLookup> TlLookup;
         protected IList<Qualification> Qualifications;
+        protected List<TlPathwaySpecialismCombination> TlPathwaySpecialismCombinations;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IProviderRepository ProviderRepository;
         protected IRegistrationRepository RegistrationRepository;
@@ -92,6 +93,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
+
+            var combinations = new TlPathwaySpecialismCombinationBuilder().BuildList();
+            TlPathwaySpecialismCombinations = new List<TlPathwaySpecialismCombination>();
+            foreach (var (specialism, index) in Specialisms.Take(combinations.Count).Select((value, i) => (value, i)))
+            {
+                combinations[index].TlPathwayId = Pathway.Id;
+                combinations[index].TlPathway = Pathway;
+                combinations[index].TlSpecialismId = specialism.Id;
+                combinations[index].TlSpecialism = specialism;
+                TlPathwaySpecialismCombinations.AddRange(TlevelDataProvider.CreateTlPathwaySpecialismCombinationsList(DbContext, combinations));
+            }
             DbContext.SaveChangesAsync();
         }
 

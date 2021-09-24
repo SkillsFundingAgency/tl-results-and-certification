@@ -46,73 +46,74 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
-            },
-            new Domain.Models.TlPathwaySpecialismCombination
-            {
-                TlPathwayId = 1,
-                TlSpecialismId = 3,
-                GroupId = 2,
-                IsActive = true,
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            },
-            new Domain.Models.TlPathwaySpecialismCombination
-            {
-                TlPathwayId = 1,
-                TlSpecialismId = 4,
-                GroupId = 2,
-                IsActive = true,
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            },
-            new Domain.Models.TlPathwaySpecialismCombination
-            {
-                TlPathwayId = 2,
-                TlSpecialismId = 5,
-                GroupId = 1,
-                IsActive = true,
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            },
-            new Domain.Models.TlPathwaySpecialismCombination
-            {
-                TlPathwayId = 2,
-                TlSpecialismId = 6,
-                GroupId = 1,
-                IsActive = true,
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            },
-            new Domain.Models.TlPathwaySpecialismCombination
-            {
-                TlPathwayId = 3,
-                TlSpecialismId = 7,
-                GroupId = 1,
-                IsActive = true,
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
-            },
-            new Domain.Models.TlPathwaySpecialismCombination
-            {
-                TlPathwayId = 3,
-                TlSpecialismId = 8,
-                GroupId = 1,
-                IsActive = true,
-                CreatedBy = Constants.CreatedByUser,
-                CreatedOn = Constants.CreatedOn,
-                ModifiedBy = Constants.ModifiedByUser,
-                ModifiedOn = Constants.ModifiedOn
             }
+            //,
+            //new Domain.Models.TlPathwaySpecialismCombination
+            //{
+            //    TlPathwayId = 1,
+            //    TlSpecialismId = 3,
+            //    GroupId = 2,
+            //    IsActive = true,
+            //    CreatedBy = Constants.CreatedByUser,
+            //    CreatedOn = Constants.CreatedOn,
+            //    ModifiedBy = Constants.ModifiedByUser,
+            //    ModifiedOn = Constants.ModifiedOn
+            //},
+            //new Domain.Models.TlPathwaySpecialismCombination
+            //{
+            //    TlPathwayId = 1,
+            //    TlSpecialismId = 4,
+            //    GroupId = 2,
+            //    IsActive = true,
+            //    CreatedBy = Constants.CreatedByUser,
+            //    CreatedOn = Constants.CreatedOn,
+            //    ModifiedBy = Constants.ModifiedByUser,
+            //    ModifiedOn = Constants.ModifiedOn
+            //},
+            //new Domain.Models.TlPathwaySpecialismCombination
+            //{
+            //    TlPathwayId = 2,
+            //    TlSpecialismId = 5,
+            //    GroupId = 1,
+            //    IsActive = true,
+            //    CreatedBy = Constants.CreatedByUser,
+            //    CreatedOn = Constants.CreatedOn,
+            //    ModifiedBy = Constants.ModifiedByUser,
+            //    ModifiedOn = Constants.ModifiedOn
+            //},
+            //new Domain.Models.TlPathwaySpecialismCombination
+            //{
+            //    TlPathwayId = 2,
+            //    TlSpecialismId = 6,
+            //    GroupId = 1,
+            //    IsActive = true,
+            //    CreatedBy = Constants.CreatedByUser,
+            //    CreatedOn = Constants.CreatedOn,
+            //    ModifiedBy = Constants.ModifiedByUser,
+            //    ModifiedOn = Constants.ModifiedOn
+            //},
+            //new Domain.Models.TlPathwaySpecialismCombination
+            //{
+            //    TlPathwayId = 3,
+            //    TlSpecialismId = 7,
+            //    GroupId = 1,
+            //    IsActive = true,
+            //    CreatedBy = Constants.CreatedByUser,
+            //    CreatedOn = Constants.CreatedOn,
+            //    ModifiedBy = Constants.ModifiedByUser,
+            //    ModifiedOn = Constants.ModifiedOn
+            //},
+            //new Domain.Models.TlPathwaySpecialismCombination
+            //{
+            //    TlPathwayId = 3,
+            //    TlSpecialismId = 8,
+            //    GroupId = 1,
+            //    IsActive = true,
+            //    CreatedBy = Constants.CreatedByUser,
+            //    CreatedOn = Constants.CreatedOn,
+            //    ModifiedBy = Constants.ModifiedByUser,
+            //    ModifiedOn = Constants.ModifiedOn
+            //}
         };
     }
 }
