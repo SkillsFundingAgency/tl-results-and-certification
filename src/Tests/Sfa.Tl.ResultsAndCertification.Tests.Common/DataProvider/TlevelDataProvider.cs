@@ -293,5 +293,52 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
         }
 
         #endregion
+
+        #region TlPathwaySpecialismCombination
+
+        public static TlPathwaySpecialismCombination CreateTlPathwaySpecialismCombination(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, bool addToDbContext = true)
+        {
+            var tlPathwaySpecialismCombination = new TlPathwaySpecialismCombinationBuilder().Build(awardingOrganisation);
+
+            if (addToDbContext && tlPathwaySpecialismCombination != null)
+            {
+                _dbContext.Add(tlPathwaySpecialismCombination);
+            }
+            return tlPathwaySpecialismCombination;
+        }
+
+        public static TlPathwaySpecialismCombination CreateTlPathwaySpecialismCombination(ResultsAndCertificationDbContext _dbContext, TlPathwaySpecialismCombination tlPathwaySpecialismCombination, bool addToDbContext = true)
+        {
+            if (addToDbContext && tlPathwaySpecialismCombination == null)
+            {
+                _dbContext.Add(tlPathwaySpecialismCombination);
+            }
+            return tlPathwaySpecialismCombination;
+        }
+
+        public static TlPathwaySpecialismCombination CreateTlPathwaySpecialismCombination(ResultsAndCertificationDbContext _dbContext, TlPathway tlPathway, TlSpecialism tlSpecialism, int groupId, bool addToDbContext = true)
+        {
+            if (tlPathway != null)
+            {
+                var tlPathwaySpecialismCombination = new TlPathwaySpecialismCombination
+                {                    
+                    TlPathwayId = tlPathway.Id,
+                    TlSpecialismId = tlSpecialism.Id,
+                    TlPathway = tlPathway,
+                    TlSpecialism = tlSpecialism,
+                    GroupId = groupId,
+                    IsActive = true
+                };
+
+                if (addToDbContext)
+                {
+                    _dbContext.Add(tlPathwaySpecialismCombination);
+                }
+                return tlPathwaySpecialismCombination;
+            }
+            return null;
+        }       
+
+        #endregion
     }
 }

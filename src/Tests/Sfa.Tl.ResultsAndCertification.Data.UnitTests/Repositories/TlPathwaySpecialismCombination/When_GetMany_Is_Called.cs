@@ -1,16 +1,17 @@
 ﻿using FluentAssertions;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PathwaySpecialismCombination
 {
-    public class When_PathwaySpecialismCombinationRepository_GetMany_Is_Called : BaseTest<TlPathwaySpecialismCombination>
+    public class When_GetMany_Is_Called : BaseTest<Domain.Models.TlPathwaySpecialismCombination>
     {
-        private IEnumerable<TlPathwaySpecialismCombination> _result;
-        private IEnumerable<TlPathwaySpecialismCombination> _data;
+        private IEnumerable<Domain.Models.TlPathwaySpecialismCombination> _result;
+        private IEnumerable<Domain.Models.TlPathwaySpecialismCombination> _data;
 
         public override void Given()
         {
@@ -19,24 +20,11 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PathwaySpec
             DbContext.SaveChanges();
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = Repository.GetManyAsync().ToList();
+            _result = await Repository.GetManyAsync().ToListAsync();
         }
-
-        [Fact]
-        public void Then_Results_Not_Null()
-        {
-            _result.Should().NotBeNull();
-        }
-
-
-        [Fact]
-        public void Then_The_Expected_Number_Of_Paths_Is_Returned()
-        {
-            _result.Count().Should().Be(8);
-        }
-
+                
         [Fact]
         public void Then_EntityFields_Are_As_Expected()
         {
@@ -48,7 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PathwaySpec
             actualResult.Id.Should().Be(1);
             actualResult.TlPathwayId.Should().Be(expectedResult.TlPathwayId);
             actualResult.TlSpecialismId.Should().Be(expectedResult.TlSpecialismId);
-            actualResult.Group.Should().Be(expectedResult.Group);
+            actualResult.GroupId.Should().Be(expectedResult.GroupId);
+            actualResult.IsActive.Should().Be(expectedResult.IsActive);
             actualResult.CreatedBy.Should().BeEquivalentTo(expectedResult.CreatedBy);
             actualResult.CreatedOn.Should().Be(expectedResult.CreatedOn);
             actualResult.ModifiedBy.Should().BeEquivalentTo(expectedResult.ModifiedBy);
