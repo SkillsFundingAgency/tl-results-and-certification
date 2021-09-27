@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServic
             // single specialism with id 3
             var singleSpecialism = actualResult.Specialisms.SingleOrDefault(x => x.SpecialismDetails.Count() == 1 &&
                     x.SpecialismDetails.Any(s => s.Id == 3));
-            coupletSpecialism.Should().NotBeNull();
+            singleSpecialism.Should().NotBeNull();
 
             foreach (var actualSpecialism in actualResult.Specialisms.SelectMany(x => x.SpecialismDetails))
             {
