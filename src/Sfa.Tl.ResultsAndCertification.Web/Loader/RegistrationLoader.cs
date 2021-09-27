@@ -274,5 +274,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             return await _internalApiClient.GetCurrentAcademicYearsAsync();
         }
+
+        public async Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync()
+        {
+            return await _internalApiClient.GetAcademicYearsAsync();
+        }
     }
 }

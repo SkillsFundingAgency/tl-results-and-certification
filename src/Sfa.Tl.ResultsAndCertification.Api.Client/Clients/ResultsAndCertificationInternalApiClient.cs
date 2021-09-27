@@ -265,6 +265,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IEnumerable<AcademicYear>>(ApiConstants.GetCurrentAcademicYears);
         }
 
+        public async Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync()
+        {
+            return await GetAsync<IEnumerable<AcademicYear>>(ApiConstants.GetAcademicYears);
+        }
+
         #endregion
 
         // Training Provider endpoints

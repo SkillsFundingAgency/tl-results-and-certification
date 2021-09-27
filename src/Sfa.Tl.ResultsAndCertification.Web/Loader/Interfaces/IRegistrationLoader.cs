@@ -38,5 +38,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<ReregistrationResponse> ReregistrationAsync(long aoUkprn, ReregisterViewModel viewModel);
 
         Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
+        Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
     }
 }

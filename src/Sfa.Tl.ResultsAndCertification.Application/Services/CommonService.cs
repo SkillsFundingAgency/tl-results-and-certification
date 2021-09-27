@@ -110,5 +110,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return await _commonRepository.GetCurrentAcademicYearsAsync();
         }
+
+        public async Task<IEnumerable<Contract.AcademicYear>> GetAcademicYearsAsync()
+        {
+            return await _commonRepository.GetCurrentAcademicYearsAsync();
+        }
     }
 }
