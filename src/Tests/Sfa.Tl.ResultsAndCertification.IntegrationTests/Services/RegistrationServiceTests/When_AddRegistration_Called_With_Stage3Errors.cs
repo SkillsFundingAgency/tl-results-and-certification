@@ -6,8 +6,10 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -47,15 +49,46 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             };
         }
 
-        public async override Task When()
+        public override Task When()
+        {
+            return Task.CompletedTask;
+        }
+
+        public async Task WhenAsync()
         {
             _result = await RegistrationService.AddRegistrationAsync(_registrationRequest);
         }
 
-        [Fact]
-        public void Then_Returns_Expected_Results()
+        [Theory()]
+        [MemberData(nameof(Data))]
+        public async Task Then_Returns_Expected_Results(long providerUkprn, string coreCode, List<string> specialismCodes)
         {
+            _registrationRequest.ProviderUkprn = providerUkprn;
+            _registrationRequest.CoreCode = coreCode;
+            _registrationRequest.SpecialismCodes = specialismCodes;
+
+            await WhenAsync();
+
             _result.Should().BeFalse();
+        }
+
+        public static IEnumerable<object[]> Data
+        {
+            get
+            {
+                var tlProvider = new TlProviderBuilder().Build();
+                var tlPathway = new TlPathwayBuilder().Build(EnumAwardingOrganisation.Pearson);
+                var tlSpecialisms = new TlSpecialismBuilder().BuildList(EnumAwardingOrganisation.Pearson, tlPathway);
+                return new[]
+                {
+                    new object[] { 10000000, tlPathway.LarId, new List<string> { tlSpecialisms.Last().LarId } }, // ProviderNotRegisteredWithAo
+                    new object[] { tlProvider.UkPrn, "00000000", new List<string> { tlSpecialisms.Last().LarId } }, // CoreNotRegisteredWithProvider
+                    new object[] { tlProvider.UkPrn, tlPathway.LarId, new List<string> { "XYZ456125" } }, // SpecialismNotValidWithCore
+                    new object[] { tlProvider.UkPrn, tlPathway.LarId, new List<string> { tlSpecialisms.First().LarId } }, // SpecialismCannotBeSelectedAsSingleOption
+                    new object[] { tlProvider.UkPrn, tlPathway.LarId, new List<string> { { tlSpecialisms.First().LarId }, { tlSpecialisms.Last().LarId } } }, // SpecialismIsNotValid
+                };
+            }
         }
     }
 }
+
