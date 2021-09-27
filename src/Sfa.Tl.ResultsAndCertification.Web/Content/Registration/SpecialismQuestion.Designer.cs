@@ -70,11 +70,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to change or remove your specialism?.
+        /// </summary>
+        public static string Change_Heading_Do_You_Want_To_Change_Or_Remove {
+            get {
+                return ResourceManager.GetString("Change_Heading_Do_You_Want_To_Change_Or_Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change registration.
         /// </summary>
         public static string Change_Page_Caption_Text {
             get {
                 return ResourceManager.GetString("Change_Page_Caption_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No, remove my occupational specialism(s).
+        /// </summary>
+        public static string Change_Radio_Option_No {
+            get {
+                return ResourceManager.GetString("Change_Radio_Option_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes, change my occupational specialism(s).
+        /// </summary>
+        public static string Change_Radio_Option_Yes {
+            get {
+                return ResourceManager.GetString("Change_Radio_Option_Yes", resourceCulture);
             }
         }
         

@@ -21,7 +21,32 @@
             <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
             <div class="govuk-form-group">
                 <span class="govuk-caption-xl">@SpecialismQuestion.Change_Page_Caption_Text</span>
-                <vc:specialism-question model=Model></vc:specialism-question>
+
+                <div sfa-validation-for="HasLearnerDecidedSpecialism" sfa-validation-class="govuk-form-group--error">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                                @SpecialismQuestion.Change_Heading_Do_You_Want_To_Change_Or_Remove
+                            </h1>
+                        </legend>
+                        <div class="govuk-radios">
+                            <span sfa-validation-for="HasLearnerDecidedSpecialism"></span>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="haslearnerdecidedspecialism" asp-for="HasLearnerDecidedSpecialism" type="radio" value="true">
+                                <label class="govuk-label govuk-radios__label" for="haslearnerdecidedspecialism">
+                                    @SpecialismQuestion.Change_Radio_Option_Yes
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="specialismdecided-no" asp-for="HasLearnerDecidedSpecialism" type="radio" value="false">
+                                <label class="govuk-label govuk-radios__label" for="specialismdecided-no">
+                                    @SpecialismQuestion.Change_Radio_Option_No
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
             </div>
             <p>
                 <button id="continueButton" type="submit" class="govuk-button" data-continue-text="@SpecialismQuestion.Continue_Button_Text" data-change-text="@SpecialismQuestion.Change_Button_Text" data-module="govuk-button" data-prevent-double-click="true">@SpecialismQuestion.Continue_Button_Text</button>

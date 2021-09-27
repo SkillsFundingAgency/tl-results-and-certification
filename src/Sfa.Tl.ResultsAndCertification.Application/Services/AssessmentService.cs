@@ -310,10 +310,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<AssessmentDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
-
             if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 
-            return _mapper.Map<AssessmentDetails>(tqRegistration);
+            var result = _mapper.Map<AssessmentDetails>(tqRegistration);
+            result.AvailableAssessmentSeries = await GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, ComponentType.Core);
+            return result;
         }
 
         public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)

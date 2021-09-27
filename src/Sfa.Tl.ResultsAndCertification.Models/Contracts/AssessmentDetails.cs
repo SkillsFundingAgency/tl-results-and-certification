@@ -16,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public string PathwayName { get; set; }
         public string PathwayAssessmentSeries { get; set; }
         public int? PathwayAssessmentId { get; set; }
+        public AvailableAssessmentSeries AvailableAssessmentSeries { get; set; }
 
         public string SpecialismLarId { get; set; }
         public string SpecialismName { get; set; }
