@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 ProviderUkprn = TlProvider.UkPrn,
                 AcademicYear = DateTime.UtcNow.Year,
                 CoreCode = Pathway.LarId,
-                SpecialismCodes = Specialisms.Select(s => s.LarId),
+                SpecialismCodes = TlPathwaySpecialismCombinations.Select(s => s.TlSpecialism.LarId),
                 PerformedBy = "Test User"
             };
         }

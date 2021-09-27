@@ -144,7 +144,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 if (invalidSpecialismCodes.Any())
                 {
                     return AddStage3ValidationError(0, registrationData.Uln, ValidationMessages.SpecialismNotValidWithCore);
-                }               
+                }
+
+                var isSpecialismPartOfCouplets = IsSpecialismPartOfCouplet(technicalQualification.TlSpecialismCombinations, registrationData.SpecialismCodes);
+
+                if (isSpecialismPartOfCouplets)
+                {
+                    if (!IsValidCouplet(technicalQualification.TlSpecialismCombinations, registrationData.SpecialismCodes))
+                    {
+                        return AddStage3ValidationError(0, registrationData.Uln, registrationData.SpecialismCodes.Count() == 1 ? ValidationMessages.SpecialismCannotBeSelectedAsSingleOption : ValidationMessages.SpecialismIsNotValid);
+                    }
+                }
             }
 
             return new RegistrationRecordResponse
