@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
 
             // 2. Other than couplets specialisms. 
-            var soloSpecialisms = pathway.TlSpecialisms.Where(x => !x.TlPathwaySpecialismCombinations.Select(c => c.TlSpecialism.LarId).Contains(x.LarId))
+            var soloSpecialisms = pathway.TlSpecialisms.Where(x => !x.TlPathwaySpecialismCombinations.Select(c => c.TlSpecialism.LarId).Contains(x.LarId, StringComparer.InvariantCultureIgnoreCase))
                 .Select(x => new PathwaySpecialismCombination { SpecialismDetails = new List<SpecialismDetails> { _mapper.Map<SpecialismDetails>(x) } }).ToList();
 
             // 3. Concat 1 and 2 from above.

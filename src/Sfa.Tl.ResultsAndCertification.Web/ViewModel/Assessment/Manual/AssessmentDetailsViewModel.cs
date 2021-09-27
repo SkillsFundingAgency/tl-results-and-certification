@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using AssessmentDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Assessment.AssessmentDetails;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 {
@@ -23,7 +24,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 
         private string SpecialismAssessmentActionText { get { return null; } }
 
-        private string PathwayAssessmentSeriesText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? PathwayAssessmentSeries : AssessmentDetailsContent.Not_Specified_Text; } }
+        private string PathwayAssessmentSeriesText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? PathwayAssessmentSeries :
+                                                        AvailableAssessmentSeries == null ? "Series not opned yet"  : AssessmentDetailsContent.Not_Specified_Text; } }
         private string SpecialismAssessmentSeriesText { get { return AssessmentDetailsContent.Available_After_Autumn2021; } }
 
         private string PathwayAddAssessmentRoute { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? RouteConstants.RemoveCoreAssessmentEntry : RouteConstants.AddCoreAssessmentEntry; } }
@@ -38,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public string PathwayDisplayName { get; set; }
         public string PathwayAssessmentSeries { get; set; }
         public int PathwayAssessmentId { get; set; }
+        public AvailableAssessmentSeries AvailableAssessmentSeries { get; set; }
 
         public string SpecialismDisplayName { get; set; }
         public string SpecialismAssessmentSeries { get; set; }
