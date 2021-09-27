@@ -35,10 +35,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } };
-            _academicYears = new List<AcademicYear> { new AcademicYear { Id = 1, Name = "2020/21", Year = 2020 } };
+            _academicYears = new List<AcademicYear> { new AcademicYear { Id = 1, Name = "2020/21", Year = 2020 }, new AcademicYear { Id = 2, Name = "2021/22", Year = 2021 } };
 
             RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId).Returns(mockresult);
-            RegistrationLoader.GetCurrentAcademicYearsAsync().Returns(_academicYears);
+            RegistrationLoader.GetAcademicYearsAsync().Returns(_academicYears);
         }
 
         [Fact]

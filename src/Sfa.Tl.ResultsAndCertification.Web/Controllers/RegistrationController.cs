@@ -587,7 +587,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            viewModel.AcademicYears = await _registrationLoader.GetCurrentAcademicYearsAsync();
+            viewModel.AcademicYears = await _registrationLoader.GetAcademicYearsAsync();
             return View(viewModel);
         }
 
