@@ -8,5 +8,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
     public interface ICommonController
     {
         Task<IEnumerable<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory);
+        Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn);
+        Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
+        Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
     }
 }

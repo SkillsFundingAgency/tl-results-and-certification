@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
     {
         protected readonly ResultsAndCertificationDbContext _dbContext;
 
-        public CommonRepository(ResultsAndCertificationDbContext dbContext) 
+        public CommonRepository(ResultsAndCertificationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -24,11 +24,22 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var tpQuery = _dbContext.TqProvider.Where(x => x.IsActive && x.TlProvider.IsActive).Select(x => new LoggedInUserTypeInfo { Name = x.TlProvider.Name, Ukprn = x.TlProvider.UkPrn, UserType = LoginUserType.TrainingProvider });
             return await aoQuery.Concat(tpQuery).Distinct().FirstOrDefaultAsync(x => x.Ukprn == ukprn);
         }
-        
+
         public async Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync()
         {
             return await _dbContext.AcademicYear.Where(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate)
-                .Select(x => new AcademicYear 
+                .Select(x => new AcademicYear
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Year = x.Year
+                }).ToListAsync();
+        }
+
+        public async Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync()
+        {
+            return await _dbContext.AcademicYear
+                .Select(x => new AcademicYear
                 {
                     Id = x.Id,
                     Name = x.Name,

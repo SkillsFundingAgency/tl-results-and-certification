@@ -92,5 +92,6 @@
         public const string GetLookupDataUri = "/api/common/GetLookupData/{0}";
         public const string GetLoggedInUserTypeInfoUri = "/api/common/GetLoggedInUserTypeInfo/{0}";
         public const string GetCurrentAcademicYears = "/api/common/CurrentAcademicYears";
+        public const string GetAcademicYears = "/api/common/AcademicYears";
     }
 }

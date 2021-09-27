@@ -8,5 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
     {
         Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn);
         Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
+        Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
     }
 }
