@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<PathwaySpecialisms> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId)
         {
-            var pathway = await _pathwayRepository.GetFirstOrDefaultAsync(p => p.LarId == pathwayLarId &&
+            var pathway = await _pathwayRepository.GetFirstOrDefaultAsync(p => p.LarId == pathwayLarId && 
                                                                          p.TqAwardingOrganisations.Any(x => x.TlPathwayId == p.Id && x.TlAwardingOrganisaton.UkPrn == aoUkprn),
                                                                          navigationPropertyPath: new Expression<Func<TlPathway, object>>[] { s => s.TlSpecialisms, s => s.TlPathwaySpecialismCombinations });
 
@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Id = pathway.Id,
                 PathwayCode = pathway.LarId,
                 PathwayName = pathway.Name,
-                Specialisms = pathway.TlPathwaySpecialismCombinations.GroupBy(c => c.GroupId)  // 1. Read only the couplets
+                Specialisms = pathway.TlPathwaySpecialismCombinations.Where(x => x.IsActive).GroupBy(c => c.GroupId)  // 1. Read only the couplets
                                                 .Select(x => new PathwaySpecialismCombination
                                                 {
                                                     SpecialismDetails = _mapper.Map<IEnumerable<SpecialismDetails>>(x.Select(s => s.TlSpecialism))
