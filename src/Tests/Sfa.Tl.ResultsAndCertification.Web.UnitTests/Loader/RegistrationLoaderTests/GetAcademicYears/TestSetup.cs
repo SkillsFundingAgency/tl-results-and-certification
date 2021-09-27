@@ -10,10 +10,10 @@ using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.GetCurrentAcademicYears
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.GetAcademicYears
 {
     public abstract class TestSetup : BaseTest<RegistrationLoader>
-    {        
+    {
         protected IMapper Mapper;
         protected ILogger<RegistrationLoader> Logger;
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 
         public async override Task When()
         {
-            ActualResult = await Loader.GetCurrentAcademicYearsAsync();
+            ActualResult = await Loader.GetAcademicYearsAsync();
         }
     }
 }
