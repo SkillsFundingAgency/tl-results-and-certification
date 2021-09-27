@@ -31,7 +31,7 @@
         public const string CoreNotRegisteredWithProvider = "Core not registered with provider";
         public const string SpecialismNotValidWithCore = "Specialism not valid with core";
         public const string SpecialismIsNotValid = "Specialism is not valid";
-        public const string SpecialismCannotBeSelectedAsSingleOption = "This specialism cannot be selected as a single option(for when only one code of a paired specialism has been entered)";        
+        public const string SpecialismCannotBeSelectedAsSingleOption = "This specialism cannot be selected as a single option (for when only one code of a paired specialism has been entered)";        
 
 
         // Bulk Registration Stage4 Validation Messages
