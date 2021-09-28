@@ -16,13 +16,13 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {
-    public class When_Reregistration_IsCalled : RegistrationServiceBaseTest
+    public class When_ReRegistration_Called_With_Stage3Errors : RegistrationServiceBaseTest
     {
         private bool _result;
-        private ReregistrationRequest _reRegistrationRequest;
         private long _uln;
         private IList<TlPathway> _tlPathways;
         private TqProvider _initialRegisteredTqProvider;
+        private ReregistrationRequest _reRegistrationRequest;
 
         public override void Given()
         {
@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 CoreCode = reregisterPathway.LarId,
                 SpecialismCodes = TlPathwaySpecialismCombinations.Select(s => s.TlSpecialism.LarId),
                 PerformedBy = "Test User"
-            };
+            };            
         }
 
         public override Task When()
@@ -64,38 +64,38 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(bool withdrawRegistration)
+        public async Task WhenAsync()
         {
-            if (withdrawRegistration)
-            {
-                await RegistrationService.WithdrawRegistrationAsync(new WithdrawRegistrationRequest { ProfileId = _reRegistrationRequest.ProfileId, AoUkprn = _reRegistrationRequest.AoUkprn });
-            }
             _result = await RegistrationService.ReregistrationAsync(_reRegistrationRequest);
         }
 
-        [Theory]
+        [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(int profileId, bool withdrawRegistration, bool isCoreSameAsWithdrawnCore, bool expectedResult)
+        public async Task Then_Returns_Expected_Results(long providerUkprn, string coreCode, List<string> specialismCodes)
         {
-            _reRegistrationRequest.ProfileId = profileId;
-            if(isCoreSameAsWithdrawnCore)
-            {
-                _reRegistrationRequest.CoreCode = _initialRegisteredTqProvider.TqAwardingOrganisation.TlPathway.LarId;
-            }
-            await WhenAsync(withdrawRegistration);
-            _result.Should().Be(expectedResult);
+            _reRegistrationRequest.ProviderUkprn = providerUkprn;
+            _reRegistrationRequest.CoreCode = coreCode;
+            _reRegistrationRequest.SpecialismCodes = specialismCodes;
+
+            await WhenAsync();
+
+            _result.Should().BeFalse();
         }
 
         public static IEnumerable<object[]> Data
         {
             get
             {
+                var tlProvider = new TlProviderBuilder().Build();
+                var tlPathway = new TlPathwayBuilder().Build(EnumAwardingOrganisation.Pearson);
+                var tlSpecialisms = new TlSpecialismBuilder().BuildList(EnumAwardingOrganisation.Pearson, tlPathway);
                 return new[]
                 {
-                    new object[] { 1, true, false, true },
-                    new object[] { 1, true, true, false},
-                    new object[] { 1, false, false, false},                    
-                    new object[] { 10000000, true, false, false }
+                    new object[] { 10000000, tlPathway.LarId, new List<string> { tlSpecialisms.Last().LarId } }, // ProviderNotRegisteredWithAo
+                    new object[] { tlProvider.UkPrn, "00000000", new List<string> { tlSpecialisms.Last().LarId } }, // CoreNotRegisteredWithProvider
+                    new object[] { tlProvider.UkPrn, tlPathway.LarId, new List<string> { "XYZ456125" } }, // SpecialismNotValidWithCore
+                    new object[] { tlProvider.UkPrn, tlPathway.LarId, new List<string> { tlSpecialisms.First().LarId } }, // SpecialismCannotBeSelectedAsSingleOption
+                    new object[] { tlProvider.UkPrn, tlPathway.LarId, new List<string> { { tlSpecialisms.First().LarId }, { tlSpecialisms.Last().LarId } } }, // SpecialismIsNotValid
                 };
             }
         }
