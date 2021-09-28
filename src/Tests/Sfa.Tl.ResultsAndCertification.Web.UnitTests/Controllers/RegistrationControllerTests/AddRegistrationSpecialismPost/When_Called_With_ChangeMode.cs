@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: Ravi")]
         public void Then_Redirected_To_AddRegistrationCheckAndSubmit()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;

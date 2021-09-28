@@ -420,12 +420,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (model == null || cacheModel?.SelectCore == null || cacheModel?.SpecialismQuestion == null || (!model.IsChangeMode && cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == false))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
-            if(model.IsChangeMode && cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism.Value == false)
+            if (model.IsChangeMode && cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism.Value == false)
             {
                 cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism = true;
             }
 
             model.PathwaySpecialisms?.Specialisms?.ToList().ForEach(x => { x.IsSelected = (x.Code == model.SelectedSpecialismCode); });
+            var pathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.SelectCore.SelectedCoreCode);
+            model.PathwaySpecialisms.SpecialismsLookup = pathwaySpecialisms?.SpecialismsLookup;
 
             cacheModel.SelectSpecialisms = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);

@@ -8,5 +8,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel
         public string PathwayName { get; set; }
         public string PathwayCode { get; set; }
         public IList<SpecialismDetailsViewModel> Specialisms { get; set; }
+        public IList<KeyValuePair<string, string>> SpecialismsLookup { get; set; }
     }
 }
