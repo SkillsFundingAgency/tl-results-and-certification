@@ -111,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     TqProviderId = technicalQualification.TqProviderId,
                     TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
                     TlPathwayId = technicalQualification.TlPathwayId,
-                    TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds.Where(s => registrationData.SpecialismCodes.Contains(s.Value)),
+                    TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds.Where(s => registrationData.SpecialismCodes.Any(sc => sc.Equals(s.Value, StringComparison.InvariantCultureIgnoreCase))),
                     TlAwardingOrganisatonId = technicalQualification.TlAwardingOrganisatonId,
                     TlProviderId = technicalQualification.TlProviderId
                 });
@@ -156,7 +156,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
             }
-
+            
             return new RegistrationRecordResponse
             {
                 Uln = registrationData.Uln,
@@ -167,11 +167,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 TqProviderId = technicalQualification.TqProviderId,
                 TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
                 TlPathwayId = technicalQualification.TlPathwayId,
-                TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds.Where(s => registrationData.SpecialismCodes.Contains(s.Value)),
+                TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds.Where(s => registrationData.SpecialismCodes.Any(sc => sc.Equals(s.Value, StringComparison.InvariantCultureIgnoreCase))),
                 TlAwardingOrganisatonId = technicalQualification.TlAwardingOrganisatonId,
                 TlProviderId = technicalQualification.TlProviderId
             };
-        }        
+        }
 
         public IList<TqRegistrationProfile> TransformRegistrationModel(IList<RegistrationRecordResponse> registrationsData, string performedBy)
         {
