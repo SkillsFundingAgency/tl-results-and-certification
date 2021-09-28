@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No, remove my occupational specialism(s).
+        ///   Looks up a localized string similar to No, remove my specialism(s).
         /// </summary>
         public static string Change_Radio_Option_No {
             get {
@@ -97,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes, change my occupational specialism(s).
+        ///   Looks up a localized string similar to Yes, change my specialism(s).
         /// </summary>
         public static string Change_Radio_Option_Yes {
             get {

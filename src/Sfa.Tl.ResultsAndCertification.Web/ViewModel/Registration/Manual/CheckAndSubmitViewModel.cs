@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public SummaryItemModel SummaryAcademicYear => new SummaryItemModel { Id = "academicyear", Title = CheckAndSubmitContent.Title_AcademicYear_Text, Value = GetSelectedAcademicYearName, RouteName = RouteConstants.AddRegistrationAcademicYear, ActionText = CheckAndSubmitContent.Change_Action_Link_Text, RouteAttributes = ChangeLinkRouteAttributes };
 
         public string GetSelectedAcademicYearName => RegistrationModel.SelectAcademicYear.AcademicYears.FirstOrDefault(a => a.Year == RegistrationModel.SelectAcademicYear.SelectedAcademicYear.ToInt())?.Name;
-        public List<string> GetSelectedSpecialisms => RegistrationModel.SelectSpecialisms?.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).OrderBy(s => s.DisplayName).Select(s => s.DisplayName).ToList();
+        public List<string> GetSelectedSpecialisms => RegistrationModel.SelectSpecialisms?.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).SelectMany(x => x.DisplayName.Split(Constants.AndSeperator)).ToList();
         public string GetSpecialismHiddenText => (RegistrationModel.SelectSpecialisms == null || !RegistrationModel.SelectSpecialisms.PathwaySpecialisms.Specialisms.Any(x => x.IsSelected)) ? CheckAndSubmitContent.Specialism_None_Selected_Text : null;
         public string GetSpecialismRouteName => RegistrationModel.SelectSpecialisms == null ? RouteConstants.AddRegistrationSpecialisms : RouteConstants.AddRegistrationSpecialismQuestion;
         public Dictionary<string, string> ChangeLinkRouteAttributes => new Dictionary<string, string> { { Constants.IsChangeMode, "true" } };
