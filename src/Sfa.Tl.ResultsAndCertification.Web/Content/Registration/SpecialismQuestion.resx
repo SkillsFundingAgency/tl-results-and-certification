@@ -130,11 +130,11 @@
     <comment>Change</comment>
   </data>
   <data name="Change_Radio_Option_No" xml:space="preserve">
-    <value>No, remove my occupational specialism(s)</value>
+    <value>No, remove my specialism(s)</value>
     <comment>Change</comment>
   </data>
   <data name="Change_Radio_Option_Yes" xml:space="preserve">
-    <value>Yes, change my occupational specialism(s)</value>
+    <value>Yes, change my specialism(s)</value>
     <comment>Change</comment>
   </data>
   <data name="Continue_Button_Text" xml:space="preserve">
