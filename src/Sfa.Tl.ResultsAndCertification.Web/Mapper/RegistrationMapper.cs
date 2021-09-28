@@ -115,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForAllOtherMembers(d => d.Ignore());
             CreateMap<ChangeSpecialismViewModel, ManageRegistration>()
                 .ForMember(d => d.HasSpecialismsChanged, opts => opts.MapFrom(s => true))
-                .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(x => x.Code)))
+                .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.SelectedSpecialismCode.Split(Constants.PipeSeperator, StringSplitOptions.None)))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeSpecialismViewModel, ManageRegistration>>());
             
             CreateMap<WithdrawRegistrationViewModel, WithdrawRegistrationRequest>()

@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             RegistrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(AoUkprn, mockChangeSpecialismViewModel.CoreCode).Returns(mockPathwaySpecialismsViewModel);
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: Ravi")]
         public void Then_Expected_BackLink_Route_Set()
         {
             Result.Should().NotBeNull();
