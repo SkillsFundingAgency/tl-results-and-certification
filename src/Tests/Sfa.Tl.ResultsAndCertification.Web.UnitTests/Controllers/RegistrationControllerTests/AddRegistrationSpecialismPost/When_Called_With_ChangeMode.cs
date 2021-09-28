@@ -45,13 +45,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
                 SelectAcademicYear = _academicYearViewModel
             };
             
-            _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayName = "Test Pathway", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Id = 1, Code = "345678", Name = "Test Specialism", DisplayName = "Test Specialism (345678)", IsSelected = true } } };
-            SelectSpecialismViewModel = new SelectSpecialismViewModel { IsChangeMode = true };
+            _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel 
+            { 
+                PathwayName = "Test Pathway", 
+                Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Id = 1, Code = "345678", Name = "Test Specialism", DisplayName = "Test Specialism (345678)", IsSelected = true } },
+                SpecialismsLookup = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("SPL12345", "Specialism 5"), new KeyValuePair<string, string>("SPL12346", "Specialism 6"), new KeyValuePair<string, string>("SPL12347", "Specialism 7") }
+            };
+            SelectSpecialismViewModel = new SelectSpecialismViewModel { IsChangeMode = true, PathwaySpecialisms = _pathwaySpecialismsViewModel };
             RegistrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(Ukprn, _coreCode).Returns(_pathwaySpecialismsViewModel);
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
         }
 
-        [Fact(Skip = "TODO: Ravi")]
+        [Fact]
         public void Then_Redirected_To_AddRegistrationCheckAndSubmit()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;

@@ -13,7 +13,7 @@ using CheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registr
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationCheckAndSubmitGet
 {
-    public class When_Cache_Found : TestSetup
+    public class When_Couplet_Specialism_Selected : TestSetup
     {
         private RegistrationViewModel cacheResult;
         private UlnViewModel _ulnViewModel;
@@ -43,8 +43,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             { 
                 PathwayCode = _coreCode, 
                 PathwayName = "Education", 
-                Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Code = "7654321", Name = "Test Education", DisplayName = "Test Education (7654321)", IsSelected = true } },
-                SpecialismsLookup = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("7654321", "Test Education"), new KeyValuePair<string, string>("7654322", "Test Design"), new KeyValuePair<string, string>("7654333", "Test Childcare") }
+                Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Code = "7654321|7654322", DisplayName = "Plubming (7654321) and Heating (7654322)", IsSelected = true } },
+                SpecialismsLookup = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("7654321", "Plubming"), new KeyValuePair<string, string>("7654322", "Heating"), new KeyValuePair<string, string>("7654333", "Test Childcare") }
             };
             _selectSpecialismViewModel = new SelectSpecialismViewModel { PathwaySpecialisms = _pathwaySpecialismsViewModel };
             _academicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = "2020", AcademicYears = _academicYears };
@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         }
 
         [Fact]
-        public void Then_Returns_Expected_Results()
+        public void Then_Expected_SummarySpecialisms_Is_Returned()
         {
             Result.Should().NotBeNull();
             Result.Should().BeOfType(typeof(ViewResult));
@@ -76,64 +76,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             var model = viewResult.Model as CheckAndSubmitViewModel;
             model.Should().NotBeNull();
 
-            // Summary ULN
-            model.SummaryUln.Should().NotBeNull();
-            model.SummaryUln.Title.Should().Be(CheckAndSubmitContent.Title_Uln_Text);
-            model.SummaryUln.Value.Should().Be(_ulnViewModel.Uln);
-            model.SummaryUln.RouteName.Should().Be(RouteConstants.AddRegistrationUln);
-            model.SummaryUln.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryUln.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
-
-            // Summary LearnerName
-            model.SummaryLearnerName.Should().NotBeNull();
-            model.SummaryLearnerName.Title.Should().Be(CheckAndSubmitContent.Title_Name_Text);
-            model.SummaryLearnerName.Value.Should().Be($"{_learnersNameViewModel.Firstname} {_learnersNameViewModel.Lastname}");
-            model.SummaryLearnerName.RouteName.Should().Be(RouteConstants.AddRegistrationLearnersName);
-            model.SummaryLearnerName.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryLearnerName.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
-
-            // Summary DateofBirth
-            model.SummaryDateofBirth.Should().NotBeNull();
-            model.SummaryDateofBirth.Title.Should().Be(CheckAndSubmitContent.Title_DateofBirth_Text);
-            model.SummaryDateofBirth.Value.Should().Be($"{_dateofBirthViewModel.Day}/{_dateofBirthViewModel.Month}/{_dateofBirthViewModel.Year}");
-            model.SummaryDateofBirth.RouteName.Should().Be(RouteConstants.AddRegistrationDateofBirth);
-            model.SummaryDateofBirth.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryDateofBirth.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
-
-            // Summary Provider
-            model.SummaryProvider.Should().NotBeNull();
-            model.SummaryProvider.Title.Should().Be(CheckAndSubmitContent.Title_Provider_Text);
-            model.SummaryProvider.Value.Should().Be(_selectProviderViewModel.SelectedProviderDisplayName);
-            model.SummaryProvider.RouteName.Should().Be(RouteConstants.AddRegistrationProvider);
-            model.SummaryProvider.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryProvider.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
-
-            // Summary Core
-            model.SummaryCore.Should().NotBeNull();
-            model.SummaryCore.Title.Should().Be(CheckAndSubmitContent.Title_Core_Text);
-            model.SummaryCore.Value.Should().Be(_selectCoreViewModel.SelectedCoreDisplayName);
-            model.SummaryCore.RouteName.Should().Be(RouteConstants.AddRegistrationCore);
-            model.SummaryCore.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryCore.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
-
             // Summary Specialisms
             model.SummarySpecialisms.Should().NotBeNull();
             model.SummarySpecialisms.Title.Should().Be(CheckAndSubmitContent.Title_Specialism_Text);
-            model.SummarySpecialisms.Value.Should().BeEquivalentTo(_selectSpecialismViewModel.PathwaySpecialisms.Specialisms.Where(s => s.IsSelected).Select(s => s.DisplayName));
+            model.SummarySpecialisms.Value.Should().NotBeNull();
+            model.SummarySpecialisms.Value.Count().Should().Be(2);
+            model.SummarySpecialisms.Value.First().Should().Be("Plubming (7654321)");
+            model.SummarySpecialisms.Value.Last().Should().Be("Heating (7654322)");
             model.SummarySpecialisms.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialismQuestion);
             model.SummarySpecialisms.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
             model.SummarySpecialisms.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
-
-            // Summary Academic Year
-            model.SummaryAcademicYear.Should().NotBeNull();
-            model.SummaryAcademicYear.Title.Should().Be(CheckAndSubmitContent.Title_AcademicYear_Text);
-            model.SummaryAcademicYear.Value.Should().Be(_academicYearViewModel.AcademicYears.FirstOrDefault().Name);
-            model.SummaryAcademicYear.RouteName.Should().Be(RouteConstants.AddRegistrationAcademicYear);
-            model.SummaryAcademicYear.ActionText.Should().Be(CheckAndSubmitContent.Change_Action_Link_Text);
-            model.SummaryAcademicYear.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
-
-            model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.AddRegistrationAcademicYear);
         }
     }
 }
