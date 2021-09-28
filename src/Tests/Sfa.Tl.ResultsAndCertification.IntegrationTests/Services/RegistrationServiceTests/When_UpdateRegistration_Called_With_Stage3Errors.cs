@@ -19,20 +19,19 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationServiceTests
 {
-    public class When_UpdateRegistrationAsyc_IsCalled : RegistrationServiceBaseTest
+    public class When_UpdateRegistration_Called_With_Stage3Errors : RegistrationServiceBaseTest
     {
         private bool _result;
         private ManageRegistration _updateRegistrationRequest;
         private int _profileId;
         private long _uln;
-        private TqRegistrationProfile _tqRegistrationProfile;
 
         public override void Given()
         {
             // Seed Tlevel data for pearson
             _uln = 1111111111;
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
-            _tqRegistrationProfile = SeedRegistrationData(_uln);
+            SeedRegistrationData(_uln);
 
             CreateMapper();
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
@@ -45,7 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
             RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
 
-            var newProvider = TlProviders.Last();
             _updateRegistrationRequest = new ManageRegistration
             {
                 ProfileId = _profileId,
@@ -54,57 +52,51 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 LastName = "Smith",
                 DateOfBirth = DateTime.UtcNow.AddYears(-20),
                 AoUkprn = TlAwardingOrganisation.UkPrn,
-                ProviderUkprn = newProvider.UkPrn,
+                ProviderUkprn = TlProviders.First().UkPrn,
                 CoreCode = Pathway.LarId,
-                SpecialismCodes = TlPathwaySpecialismCombinations.Select(s => s.TlSpecialism.LarId),
+                SpecialismCodes = new List<string>(),
                 PerformedBy = "Test User",
                 HasProviderChanged = false
-            };            
+            };
         }
 
-        public override Task When() 
+        public override Task When()
         {
             return Task.CompletedTask;
         }
 
         public async Task WhenAsync()
-        {            
+        {
             _result = await RegistrationService.UpdateRegistrationAsync(_updateRegistrationRequest);
         }
 
-        [Theory]
+        [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Returns_Expected_Results(bool hasProfileChanged, bool hasProviderChanged, bool hasSpecialismsChanged, bool expectedResult)
+        public async Task Then_Returns_Expected_Results(long providerUkprn, string coreCode, List<string> specialismCodes)
         {
-            _updateRegistrationRequest.HasProfileChanged = hasProfileChanged;
-            _updateRegistrationRequest.HasProviderChanged = hasProviderChanged;
-            _updateRegistrationRequest.HasSpecialismsChanged = hasSpecialismsChanged;
-
-            if(hasProviderChanged)
-            {
-                // Assessments seed
-                SeedPathwayAssessmentsData(GetPathwayAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.ToList()));
-            }
+            _updateRegistrationRequest.ProviderUkprn = providerUkprn;
+            _updateRegistrationRequest.CoreCode = coreCode;
+            _updateRegistrationRequest.SpecialismCodes = specialismCodes;
 
             await WhenAsync();
-            _result.Should().Be(expectedResult);
+
+            _result.Should().BeFalse();
         }
 
         public static IEnumerable<object[]> Data
         {
             get
             {
+                var tlProvider = new TlProviderBuilder().Build();
+                var tlPathway = new TlPathwayBuilder().Build(EnumAwardingOrganisation.Pearson);
+                var tlSpecialisms = new TlSpecialismBuilder().BuildList(EnumAwardingOrganisation.Pearson, tlPathway);
                 return new[]
                 {
-                    // Below is for Profile Changed
-                    new object[] { true, false, false, true },
-                    new object[] { false, false, false, false },
-
-                    // Below is for Provier Changed
-                    new object[] { false, true, false, true },
-
-                    // Below is for Specialisms Changed
-                    new object[] { false, false, true, true },
+                    new object[] { 10000000, tlPathway.LarId, new List<string> { tlSpecialisms.Last().LarId } }, // ProviderNotRegisteredWithAo
+                    new object[] { tlProvider.UkPrn, "00000000", new List<string> { tlSpecialisms.Last().LarId } }, // CoreNotRegisteredWithProvider
+                    new object[] { tlProvider.UkPrn, tlPathway.LarId, new List<string> { "XYZ456125" } }, // SpecialismNotValidWithCore
+                    new object[] { tlProvider.UkPrn, tlPathway.LarId, new List<string> { tlSpecialisms.First().LarId } }, // SpecialismCannotBeSelectedAsSingleOption
+                    new object[] { tlProvider.UkPrn, tlPathway.LarId, new List<string> { { tlSpecialisms.First().LarId }, { tlSpecialisms.Last().LarId } } }, // SpecialismIsNotValid
                 };
             }
         }
@@ -124,6 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             {
                 TqProviders.Add(ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, tlProvider));
             }
+
             var combinations = new TlPathwaySpecialismCombinationBuilder().BuildList();
             TlPathwaySpecialismCombinations = new List<TlPathwaySpecialismCombination>();
             foreach (var (specialism, index) in Specialisms.Take(combinations.Count).Select((value, i) => (value, i)))
@@ -134,6 +127,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 combinations[index].TlSpecialism = specialism;
                 TlPathwaySpecialismCombinations.AddRange(TlevelDataProvider.CreateTlPathwaySpecialismCombinationsList(DbContext, combinations));
             }
+
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             DbContext.SaveChangesAsync();
         }
