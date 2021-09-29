@@ -26,7 +26,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public SummaryItemModel SummaryAcademicYear => new SummaryItemModel { Id = "academicyear", Title = CheckAndSubmitContent.Title_AcademicYear_Text, Value = GetAcademicYearName, RouteName = RouteConstants.ReregisterAcademicYear, ActionText = CheckAndSubmitContent.Change_Action_Link_Text, RouteAttributes = ChangeLinkRouteAttributes };
 
         public string GetAcademicYearName => ReregisterModel.ReregisterAcademicYear.AcademicYears.FirstOrDefault(a => a.Year == ReregisterModel.ReregisterAcademicYear.SelectedAcademicYear.ToInt())?.Name;
-        public List<string> GetSelectedSpecialisms => ReregisterModel.ReregisterSpecialisms != null ? ReregisterModel.ReregisterSpecialisms.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).OrderBy(s => s.DisplayName).Select(s => s.DisplayName).ToList() : null;
+        //public List<string> GetSelectedSpecialisms => ReregisterModel.ReregisterSpecialisms != null ? ReregisterModel.ReregisterSpecialisms.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).OrderBy(s => s.DisplayName).Select(s => s.DisplayName).ToList() : null;
+
+        public List<string> GetSelectedSpecialisms => ReregisterModel.ReregisterSpecialisms != null ? ReregisterModel.ReregisterSpecialisms.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).SelectMany(x => x.Code.Split(Constants.PipeSeperator))
+            .Select(x => $"{ReregisterModel.ReregisterSpecialisms.PathwaySpecialisms.SpecialismsLookup.FirstOrDefault(lkp => lkp.Key.Equals(x, System.StringComparison.InvariantCultureIgnoreCase)).Value} ({x})").ToList() : null;
+        
         public string GetSpecialismHiddenText => (ReregisterModel.ReregisterSpecialisms == null || !ReregisterModel.ReregisterSpecialisms.PathwaySpecialisms.Specialisms.Any(x => x.IsSelected)) ? CheckAndSubmitContent.Specialism_None_Selected_Text : null;
         public string GetSpecialismRouteName => ReregisterModel.ReregisterSpecialisms == null ? RouteConstants.ReregisterSpecialisms : RouteConstants.ReregisterSpecialismQuestion;
         public Dictionary<string, string> ChangeLinkRouteAttributes => new Dictionary<string, string> { { Constants.ProfileId, ReregisterModel.ReregisterAcademicYear.ProfileId.ToString() }, { Constants.IsChangeMode, "true" } };

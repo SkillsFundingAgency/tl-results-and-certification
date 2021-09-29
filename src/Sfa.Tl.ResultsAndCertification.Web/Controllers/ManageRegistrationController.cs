@@ -784,7 +784,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (model.IsChangeMode && cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism.Value == false)
                 cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism = true;
 
-            model.PathwaySpecialisms?.Specialisms?.ToList().ForEach(x => { x.IsSelected = (x.Code == model.SelectedSpecialismCode); });
+            model.PathwaySpecialisms?.Specialisms?.ToList().ForEach(x => { x.IsSelected = x.Code == model.SelectedSpecialismCode; });
+            var pathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.ReregisterCore.SelectedCoreCode);
+            model.PathwaySpecialisms.SpecialismsLookup = pathwaySpecialisms?.SpecialismsLookup;
             cacheModel.ReregisterSpecialisms = model;
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
 

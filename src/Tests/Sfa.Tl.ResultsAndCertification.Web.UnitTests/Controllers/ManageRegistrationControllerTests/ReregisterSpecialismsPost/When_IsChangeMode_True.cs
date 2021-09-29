@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
@@ -12,10 +13,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 {
     public class When_IsChangeMode_True : TestSetup
     {
-        private ReregisterViewModel cacheResult;
+        private readonly string _coreCode = "12345678";
+        private ReregisterViewModel _cacheResult;
+        private ReregisterCoreViewModel _reregisterCoreViewModel;
 
         public override void Given()
         {
+            _reregisterCoreViewModel = new ReregisterCoreViewModel
+            {
+                SelectedCoreCode = _coreCode,
+                CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = _coreCode } }
+            };
+
             ViewModel = new ReregisterSpecialismViewModel
             {
                 SelectedSpecialismCode = "SPL12345",
@@ -31,8 +40,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                 }
             };
 
-            cacheResult = new ReregisterViewModel { SpecialismQuestion = new ReregisterSpecialismQuestionViewModel { HasLearnerDecidedSpecialism = false } };
-            CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(cacheResult);
+            _cacheResult = new ReregisterViewModel { ReregisterCore = _reregisterCoreViewModel, SpecialismQuestion = new ReregisterSpecialismQuestionViewModel { HasLearnerDecidedSpecialism = false } };
+            CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(_cacheResult);
+            RegistrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(AoUkprn, _coreCode).Returns(ViewModel.PathwaySpecialisms);
         }
 
         [Fact]
