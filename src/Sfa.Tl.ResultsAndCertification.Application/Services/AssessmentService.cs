@@ -312,9 +312,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
             if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 
-            var result = _mapper.Map<AssessmentDetails>(tqRegistration);
-            result.AvailableAssessmentSeries = await GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, ComponentType.Core);
-            return result;
+            var assessmentDetails = _mapper.Map<AssessmentDetails>(tqRegistration);
+
+            assessmentDetails.IsCoreEntryEligible = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, Constants.CoreAssessmentStartInYears) != null;
+            return assessmentDetails;
         }
 
         public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
@@ -336,6 +337,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             // Validate
             var tqRegistrationPathway = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
+            //var isValid = await GetAvailableAssessmentSeriesAsync(request.AoUkprn, tqRegistrationPathway.TqRegistrationProfileId, request.ComponentType) != null;  // TODO: discuss, is this too much or can we avoid this?
             var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, request.ComponentType);
             if (!isValid)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
