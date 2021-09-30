@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Heading_Additional_Cookies" xml:space="preserve">
+    <value>Additional cookies</value>
+  </data>
   <data name="Heading_Change_Your_Settings" xml:space="preserve">
     <value>Change your settings</value>
   </data>
-  <data name="Heading_Cookies_That_Measure_Website" xml:space="preserve">
-    <value>Cookies that measure website usage</value>
+  <data name="Heading_Essential_Cookies" xml:space="preserve">
+    <value>Essential cookies</value>
   </data>
   <data name="Heading_Logging_Authentication" xml:space="preserve">
     <value>Logging in and authentication</value>
@@ -131,9 +134,6 @@
   </data>
   <data name="Heading_Saving_Your_Consent" xml:space="preserve">
     <value>Saving your consent</value>
-  </data>
-  <data name="Heading_Strictly_Necessary" xml:space="preserve">
-    <value>Strictly necessary cookies</value>
   </data>
   <data name="Link_Text" xml:space="preserve">
     <value>change which cookies you’re happy for us to use</value>
@@ -241,10 +241,10 @@
     <value>Used to prevent cross site scripting attacks</value>
   </data>
   <data name="Table_Saving_Consent_Expire_Row1" xml:space="preserve">
-    <value>1 year</value>
+    <value>90 days</value>
   </data>
   <data name="Table_Saving_Consent_Expire_Row2" xml:space="preserve">
-    <value>1 year</value>
+    <value>90 days</value>
   </data>
   <data name="Table_Saving_Consent_Name_Row1" xml:space="preserve">
     <value>analytics_consent</value>
