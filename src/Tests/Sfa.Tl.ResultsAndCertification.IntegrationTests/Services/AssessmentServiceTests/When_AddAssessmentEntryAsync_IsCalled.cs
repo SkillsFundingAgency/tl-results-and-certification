@@ -26,11 +26,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             CreateMapper();
 
             // Parameters
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Withdrawn }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Active } };
+            _ulns = new Dictionary<long, RegistrationPathwayStatus> { { 1111111111, RegistrationPathwayStatus.Withdrawn }, { 1111111112, RegistrationPathwayStatus.Active }, { 1111111113, RegistrationPathwayStatus.Active }, { 1111111114, RegistrationPathwayStatus.Active } };
 
             // Registrations seed
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsData(_ulns, TqProvider);
+
+            var currentYearUln = new List<long> { 1111111114 };
+            RegisterUlnForNextAcademicYear(_registrations, currentYearUln);
 
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
@@ -117,7 +120,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                     // valid request - returns true
                     new object[]
                     { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 3, ComponentType = ComponentType.Core },
-                      new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111113 } }
+                      new AddAssessmentEntryResponse { IsSuccess = true, Uln = 1111111113 } },
+
+                     // There is no assessment entry window open.
+                    new object[]
+                    { new AddAssessmentEntryRequest { AoUkprn = 10011881, ProfileId = 4, ComponentType = ComponentType.Core },
+                      new AddAssessmentEntryResponse { IsSuccess = false, Uln = 1111111114} }
+
                 };
             }
         }
