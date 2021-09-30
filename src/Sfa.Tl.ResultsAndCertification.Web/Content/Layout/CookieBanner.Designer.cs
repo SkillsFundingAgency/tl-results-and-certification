@@ -187,24 +187,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We use some essential cookies to make this service work..
-        /// </summary>
-        public static string We_Use_Some_Essential_Cookies_To_Make_This_Service_Work {
-            get {
-                return ResourceManager.GetString("We_Use_Some_Essential_Cookies_To_Make_This_Service_Work", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to We’d like to set some additional cookies to understand how you use Manage T Level results, remember your settings and improve our services..
-        /// </summary>
-        public static string We_Would_Like_To_Set_Some_Additional_Cookies_To_Understand {
-            get {
-                return ResourceManager.GetString("We_Would_Like_To_Set_Some_Additional_Cookies_To_Understand", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to You can check and update your preferences using the.
         /// </summary>
         public static string You_Can_Check_And_Update_Your_Preferences {

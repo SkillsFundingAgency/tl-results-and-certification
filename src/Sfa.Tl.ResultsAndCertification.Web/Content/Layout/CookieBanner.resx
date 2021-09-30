@@ -159,12 +159,6 @@
   <data name="We_Use_Some" xml:space="preserve">
     <value>We use some</value>
   </data>
-  <data name="We_Use_Some_Essential_Cookies_To_Make_This_Service_Work" xml:space="preserve">
-    <value>We use some essential cookies to make this service work.</value>
-  </data>
-  <data name="We_Would_Like_To_Set_Some_Additional_Cookies_To_Understand" xml:space="preserve">
-    <value>We’d like to set some additional cookies to understand how you use Manage T Level results, remember your settings and improve our services.</value>
-  </data>
   <data name="Your_Cookie_Preferences_Have_Been_Set" xml:space="preserve">
     <value>Your cookie preferences have been set</value>
   </data>

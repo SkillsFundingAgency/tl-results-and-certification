@@ -3,7 +3,7 @@
 /* custom styles for cookie banner*/
 
 /*hide cookie button, cookie confirmation and cookie preferences section if javascript is disabled*/
-.tl-cookie-js, .tl-additional-cookies-button, .tl-cookie-confirmation, .cookie-preferences {
+.tl-additional-cookies-button, .tl-cookie-confirmation, .cookie-preferences {
     display: none;
 }
 
@@ -12,11 +12,11 @@
     .tl-cookie-banner {
         display: none;
 
-        .tl-cookie-confirmation, .tl-cookie-nojs {
+        .tl-cookie-confirmation {
             display: none;
         }        
 
-        .tl-additional-cookies-button, .tl-cookie-js {
+        .tl-additional-cookies-button {
             display: inline-block;
         }
     }

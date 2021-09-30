@@ -7,18 +7,14 @@
                 <h2 class="govuk-cookie-banner__heading govuk-heading-m">@CookieBanner.Cookie_On_Service</h2>
 
                 <div class="govuk-cookie-banner__content">
-                    <p class="govuk-body tl-cookie-js">@CookieBanner.We_Use_Some <a class="govuk-link" asp-route="CookieDetails" asp-fragment="essentialcookies">@CookieBanner.Essential_Cookies</a> @CookieBanner.To_Make_This_Service_Work.</p>
-                    <p class="govuk-body tl-cookie-js">@CookieBanner.To_Understand_How_You_Use_Service <a class="govuk-link" asp-route="CookieDetails" asp-fragment="additionalcookies">@CookieBanner.Additional_Cookies</a>.</p>
-
-                    <p class="govuk-body tl-cookie-nojs">@CookieBanner.We_Use_Some_Essential_Cookies_To_Make_This_Service_Work</p>
-                    <p class="govuk-body tl-cookie-nojs">@CookieBanner.We_Would_Like_To_Set_Some_Additional_Cookies_To_Understand</p>
+                    <p class="govuk-body">@CookieBanner.We_Use_Some <a class="govuk-link" asp-route="CookieDetails" asp-fragment="essentialcookies">@CookieBanner.Essential_Cookies</a> @CookieBanner.To_Make_This_Service_Work.</p>
+                    <p class="govuk-body">@CookieBanner.To_Understand_How_You_Use_Service <a class="govuk-link" asp-route="CookieDetails" asp-fragment="additionalcookies">@CookieBanner.Additional_Cookies</a>.</p>
                 </div>
             </div>
         </div>
-
         <div class="govuk-button-group">
-            <button id="accept-additional-cookies" type="button" class="govuk-button tl-additional-cookies-button" data-module="govuk-button">@CookieBanner.Accept_Additional_Cookies</button>
-            <button id="reject-additional-cookies" type="button" class="govuk-button tl-additional-cookies-button" data-module="govuk-button">@CookieBanner.Reject_Additional_Cookies</button>
+            <button id="accept-additional-cookies" class="govuk-button tl-additional-cookies-button" data-module="govuk-button">@CookieBanner.Accept_Additional_Cookies</button>
+            <button id="reject-additional-cookies" class="govuk-button tl-additional-cookies-button" data-module="govuk-button">@CookieBanner.Reject_Additional_Cookies</button>
             <a class="govuk-link" asp-route="CookieDetails">@CookieBanner.View_Cookies</a>
         </div>
     </div>
@@ -31,9 +27,8 @@
                 </div>
             </div>
         </div>
-
         <div class="govuk-button-group">
-            <a id="hide-cookie-confirmation-accept" role="button" draggable="false" class="govuk-button" data-module="govuk-button">@CookieBanner.Hide_This_Message</a>
+            <button id="hide-cookie-confirmation-accept" class="govuk-button" data-module="govuk-button">@CookieBanner.Hide_This_Message</button>
         </div>
     </div>
 
@@ -47,9 +42,8 @@
                 </div>
             </div>
         </div>
-
         <div class="govuk-button-group">
-            <a id="hide-cookie-confirmation-reject" role="button" draggable="false" class="govuk-button" data-module="govuk-button">@CookieBanner.Hide_This_Message</a>
+            <button id="hide-cookie-confirmation-reject" class="govuk-button" data-module="govuk-button">@CookieBanner.Hide_This_Message</button>
         </div>
     </div>
 </div>
