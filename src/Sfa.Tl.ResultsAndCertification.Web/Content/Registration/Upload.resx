@@ -133,7 +133,7 @@
     <value>File size too large – must be no more than {0}MB</value>
   </data>
   <data name="File_Type" xml:space="preserve">
-    <value>XSLX</value>
+    <value>XLSX</value>
   </data>
   <data name="Heading_Before_You_Start" xml:space="preserve">
     <value>Before you start</value>

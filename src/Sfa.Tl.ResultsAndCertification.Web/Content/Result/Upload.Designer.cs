@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to XSLX.
+        ///   Looks up a localized string similar to XLSX.
         /// </summary>
         public static string File_Type {
             get {
