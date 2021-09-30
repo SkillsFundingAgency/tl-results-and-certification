@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 23 November 2020.
+        ///   Looks up a localized string similar to published 30 September 2021.
         /// </summary>
         public static string Assessments_Published_On {
             get {
@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to version 1.0.
+        ///   Looks up a localized string similar to version 1.2.
         /// </summary>
         public static string Assessments_Version {
             get {
@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 158KB.
+        ///   Looks up a localized string similar to 212KB.
         /// </summary>
         public static string File_Size_Kb_Text {
             get {
