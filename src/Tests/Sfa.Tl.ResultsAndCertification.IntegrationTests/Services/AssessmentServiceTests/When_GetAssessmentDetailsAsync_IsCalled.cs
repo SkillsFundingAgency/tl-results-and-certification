@@ -207,6 +207,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             _result.PathwayResultId.Should().Be(expectedAssessmentDetails.PathwayResultId);
             _result.IsIndustryPlacementExist.Should().Be(expectedIsIndustryPlacementExist);
             _result.HasAnyOutstandingPathwayPrsActivities.Should().Be(expectedHasOutstandingPathwayPrsActivities);
+            _result.IsCoreEntryEligible.Should().BeTrue();
         }
 
         public static IEnumerable<object[]> Data

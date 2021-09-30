@@ -13,7 +13,6 @@ using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -337,9 +336,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             // Validate
             var tqRegistrationPathway = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
-            //var isValid = await GetAvailableAssessmentSeriesAsync(request.AoUkprn, tqRegistrationPathway.TqRegistrationProfileId, request.ComponentType) != null;  // TODO: discuss, is this too much or can we avoid this?
             var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, request.ComponentType);
-            if (!isValid)
+            var hasValidSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, Constants.CoreAssessmentStartInYears) != null;
+
+            if (!isValid || !hasValidSeries)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
 
             int status = 0;

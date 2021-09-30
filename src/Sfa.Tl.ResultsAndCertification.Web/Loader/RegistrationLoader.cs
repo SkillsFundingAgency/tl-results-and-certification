@@ -221,7 +221,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return null;
 
             var prevSpecialisms = reg.Specialisms.Select(x => x.Code.ToLowerInvariant());
-            var currentSpecialisms = viewModel.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code.ToLowerInvariant());
+            var currentSpecialisms = viewModel.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).SelectMany(s => s.Code.ToLowerInvariant().Split(Constants.PipeSeperator));
             var areSame = prevSpecialisms.Count() == currentSpecialisms.Count() && prevSpecialisms.All(x => currentSpecialisms.Contains(x));
 
             if (areSame)
