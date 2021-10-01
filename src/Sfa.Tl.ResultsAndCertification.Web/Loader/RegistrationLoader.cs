@@ -7,12 +7,14 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -96,7 +98,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId)
         {
             var pathwaySpecialisms = await _internalApiClient.GetPathwaySpecialismsByPathwayLarIdAsync(aoUkprn, pathwayLarId);
-            return _mapper.Map<PathwaySpecialismsViewModel>(pathwaySpecialisms);
+            var pathwaySpecialismsViewModel = _mapper.Map<PathwaySpecialismsViewModel>(pathwaySpecialisms);
+
+            if(pathwaySpecialismsViewModel != null)
+                pathwaySpecialismsViewModel.Specialisms = pathwaySpecialismsViewModel.Specialisms.OrderBy(x => x.DisplayName).ToList();
+
+            return pathwaySpecialismsViewModel;
         }
 
         public async Task<UlnRegistrationNotFoundViewModel> FindUlnAsync(long aoUkprn, long Uln)
@@ -213,10 +220,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (reg == null)
                 return null;
 
-            var prevSpecialisms = reg.Specialisms.Select(x => x.Code);
-            var currentSpecialisms = viewModel.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code);
-            var areSame = prevSpecialisms.Count() == currentSpecialisms.Count() &&
-                    prevSpecialisms.All(x => currentSpecialisms.Contains(x));
+            var prevSpecialisms = reg.Specialisms.Select(x => x.Code.ToLowerInvariant());
+            var currentSpecialisms = viewModel.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).SelectMany(s => s.Code.ToLowerInvariant().Split(Constants.PipeSeperator));
+            var areSame = prevSpecialisms.Count() == currentSpecialisms.Count() && prevSpecialisms.All(x => currentSpecialisms.Contains(x));
 
             if (areSame)
                 return new ManageRegistrationResponse { IsModified = false };
@@ -263,6 +269,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var reregistrationRequest = _mapper.Map<ReregistrationRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
             var isSuccess =  await _internalApiClient.ReregistrationAsync(reregistrationRequest);
             return new ReregistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsSuccess = isSuccess };
+        }
+
+        public async Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync()
+        {
+            return await _internalApiClient.GetCurrentAcademicYearsAsync();
+        }
+
+        public async Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync()
+        {
+            return await _internalApiClient.GetAcademicYearsAsync();
         }
     }
 }

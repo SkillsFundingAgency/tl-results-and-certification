@@ -1,11 +1,10 @@
 ﻿using FluentValidation.Results;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
-using System.Collections.Generic;
-using System.Linq;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 {
@@ -23,9 +22,9 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 LastName = reg.LastName.Trim(),
                 DateOfBirth = reg.DateOfBirth.Trim().ParseStringToDateTime(),
                 ProviderUkprn = reg.Ukprn.Trim().ToLong(),
-                AcademicYear = EnumExtensions.GetEnumValueByDisplayName<AcademicYear>(reg.AcademicYear.Trim()).Value,
+                AcademicYearName = reg.AcademicYear.Trim(),
                 CoreCode = reg.Core.Trim(),
-                SpecialismCodes = reg.Specialism.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())),
+                SpecialismCodes = reg.Specialisms.Trim().Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim()))?.Select(sp => sp.Trim()),
                 RowNum = rownum,
                 ValidationErrors = new List<BulkProcessValidationError>()
             };

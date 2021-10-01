@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Compile Remove="DataBuilders\TlMandatoryAdditionalRequirementBuilder.cs" />
-    <Compile Remove="DataBuilders\TlPathwaySpecialismCombinationBuilder.cs" />
     <Compile Remove="DataBuilders\TlPathwaySpecialismMarBuilder.cs" />
   </ItemGroup>
 

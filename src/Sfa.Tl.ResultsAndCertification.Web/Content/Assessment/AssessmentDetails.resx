@@ -123,6 +123,9 @@
   <data name="Available_After_Autumn2021" xml:space="preserve">
     <value>Available to add after Autumn 2021 series has passed</value>
   </data>
+  <data name="Available_After_Current_Assessment_Series" xml:space="preserve">
+    <value>Available to add after the current assessment series has passed</value>
+  </data>
   <data name="Core_Assessment_Entry_Hidden_Text" xml:space="preserve">
     <value> for core</value>
   </data>

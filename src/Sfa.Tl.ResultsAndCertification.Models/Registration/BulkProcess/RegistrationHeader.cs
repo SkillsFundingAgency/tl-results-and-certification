@@ -9,6 +9,6 @@
         public const string Ukprn = "UKPRN";
         public const string AcademicYear = "Academic year";
         public const string Core = "Core code";
-        public const string Specialism = "Specialism code";
+        public const string Specialisms = "Specialism code(s)";
     }
 }

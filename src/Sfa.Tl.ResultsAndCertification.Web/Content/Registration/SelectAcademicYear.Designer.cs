@@ -106,6 +106,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to At this time you can only select {0}.
+        /// </summary>
+        public static string Inset_At_This_Time_You_Can_Only_Select {
+            get {
+                return ResourceManager.GetString("Inset_At_This_Time_You_Can_Only_Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a new registration.
         /// </summary>
         public static string Page_Caption_Text {

@@ -45,10 +45,7 @@
         public const string GetResultDetailsUri = "/api/result/GetResultDetails/{0}/{1}/{2}";
         public const string AddResultUri = "/api/result/AddResult";
         public const string ChangeResultUri = "/api/result/ChangeResult";
-        public const string GetLookupDataUri = "/api/common/GetLookupData/{0}";
-
-        // LoggedIn UserType Related Uri's
-        public const string GetLoggedInUserTypeInfoUri = "/api/common/GetLoggedInUserTypeInfo/{0}";
+        
         
         // DocumentUploadHistory Related Uri's
         public const string GetDocumentUploadHistoryDetailsAsyncUri = "/api/DocumentUploadHistory/GetDocumentUploadHistoryDetails/{0}/{1}";
@@ -90,5 +87,11 @@
         public const string PrintRequestUri = "/api/DFE/PrintRequest?token={0}";
         public const string PrintBatchSummaryRequestUri = "/api/DFE/BatchSummary?batchNumber={0}&token={1}";
         public const string PrintTrackBatchRequestUri = "/api/DFE/TrackBatch?batchNumber={0}&token={1}";
+
+        // Common Api Uri's
+        public const string GetLookupDataUri = "/api/common/GetLookupData/{0}";
+        public const string GetLoggedInUserTypeInfoUri = "/api/common/GetLoggedInUserTypeInfo/{0}";
+        public const string GetCurrentAcademicYears = "/api/common/CurrentAcademicYears";
+        public const string GetAcademicYears = "/api/common/AcademicYears";
     }
 }

@@ -26,7 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 PathwayDisplayName = "Pathway (7654321)",
                 PathwayAssessmentSeries = null,
                 SpecialismAssessmentSeries = null,
-                PathwayStatus = RegistrationPathwayStatus.Active
+                PathwayStatus = RegistrationPathwayStatus.Active,
+                IsCoreEntryEligible = true
             };
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } };
             AssessmentLoader.GetAssessmentDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Active).Returns(mockresult);

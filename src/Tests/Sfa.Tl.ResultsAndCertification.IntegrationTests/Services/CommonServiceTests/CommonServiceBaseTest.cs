@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CommonService
         protected CommonService CommonService;
         protected ILogger<CommonService> CommonServiceLogger;
         protected IList<TlLookup> TlLookup;
+        protected IList<AcademicYear> AcademicYears;
         protected IRepository<TlLookup> TlLookupRepository;
         protected IRepository<FunctionLog> FunctionLogRepository;
         protected ICommonRepository CommonRepository;
@@ -54,6 +55,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CommonService
 
             DbContext.SaveChanges();
             return functionLogEntity;
+        }
+
+        public void SeedAcademicYears()
+        {
+            AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
+            DbContext.SaveChanges();
         }
     }
 }

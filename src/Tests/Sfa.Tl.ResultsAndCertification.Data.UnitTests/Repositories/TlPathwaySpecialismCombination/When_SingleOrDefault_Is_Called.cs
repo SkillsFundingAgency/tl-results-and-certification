@@ -1,25 +1,26 @@
 ﻿using FluentAssertions;
-using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PathwaySpecialismCombination
 {
-    public class When_PathwaySpecialismCombinationRepository_SingleOrDefault_Is_Called : BaseTest<TlPathwaySpecialismCombination>
+    public class When_SingleOrDefault_Is_Called : BaseTest<Domain.Models.TlPathwaySpecialismCombination>
     {
-        private TlPathwaySpecialismCombination _result;
-        private TlPathwaySpecialismCombination _data;
+        private Domain.Models.TlPathwaySpecialismCombination _result;
+        private Domain.Models.TlPathwaySpecialismCombination _data;
 
         public override void Given()
         {
-            _data = new TlPathwaySpecialismCombinationBuilder().Build();
+            _data = new TlPathwaySpecialismCombinationBuilder().Build(EnumAwardingOrganisation.Pearson);
             DbContext.Add(_data);
             DbContext.SaveChanges();
         }
 
-        public override void When()
+        public async override Task When()
         {
-            _result = Repository.GetSingleOrDefaultAsync(x => x.Id == 1).GetAwaiter().GetResult();
+            _result = await Repository.GetSingleOrDefaultAsync(x => x.Id == 1);
         }
 
         [Fact]
@@ -29,7 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.PathwaySpec
             _result.Id.Should().Be(1);
             _result.TlPathwayId.Should().Be(_data.TlPathwayId);
             _result.TlSpecialismId.Should().Be(_data.TlSpecialismId);
-            _result.Group.Should().Be(_data.Group);
+            _result.GroupId.Should().Be(_data.GroupId);
+            _result.IsActive.Should().Be(_data.IsActive);
             _result.TlPathwayId.Should().Be(_data.TlPathwayId);
             _result.CreatedBy.Should().BeEquivalentTo(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);

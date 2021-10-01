@@ -12,8 +12,7 @@
         public const string MustBeValidDate = "{0} must be a valid date in DDMMYYYY format";
         public const string DateNotinFuture = "{0} must be in the past";
 
-        public const string MustBeInFormat = "{0} must be in the format {1}";
-        public const string MustBeCurrentOne = "{0} must be the current one";
+        public const string MustBeInFormat = "{0} must be in the format {1}";        
 
         // File based validation messages
         public const string FileHeaderNotFound = "File header is not valid";
@@ -27,9 +26,13 @@
         public const string UnexpectedError = "Unexpected error while reading file content.";
 
         // Bulk Registration Stage3 Validation Messages
+        public const string AcademicYearMustBeCurrentOne = "Academic year must be the current one"; 
         public const string ProviderNotRegisteredWithAo = "Provider not registered with awarding organisation";
         public const string CoreNotRegisteredWithProvider = "Core not registered with provider";
         public const string SpecialismNotValidWithCore = "Specialism not valid with core";
+        public const string SpecialismIsNotValid = "Specialism is not valid";
+        public const string SpecialismCannotBeSelectedAsSingleOption = "This specialism cannot be selected as a single option (for when only one code of a paired specialism has been entered)";        
+
 
         // Bulk Registration Stage4 Validation Messages
         public const string ActiveUlnWithDifferentAo = "Active ULN with a different awarding organisation";
@@ -51,7 +54,7 @@
         public const string InvalidCoreCode = "Core code either not recognised or not registered for this ULN";
         public const string InvalidSpecialismCode = "Specialism code either not recognised or not registered for this ULN";
         public const string InvalidCoreAssessmentEntry = "Core assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the first academic year or subsequent approaching series)";
-        public const string InvalidNextCoreAssessmentEntry = "Core assessment entry is beyond the next available series - only the next available series is allowed (the second series of the first academic year or subsequent approaching series)";
+        public const string InvalidNextCoreAssessmentEntry = "Available to add after the current assessment series has passed";
         public const string InvalidSpecialismAssessmentEntry = "Specialism assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the second academic year or subsequent approaching series)";
         public const string InvalidNextSpecialismAssessmentEntry = "Specialism assessment entry is beyond the next available series - only the next available series is allowed (the second series of the second academic year or subsequent approaching series)";
 

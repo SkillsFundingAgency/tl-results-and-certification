@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
@@ -43,9 +46,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.DateOfBirth, opts => opts.MapFrom(s => $"{s.DateofBirth.Day}/{s.DateofBirth.Month}/{s.DateofBirth.Year}".ToDateTime()))
                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.SelectProvider.SelectedProviderUkprn.ToLong()))
                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.SelectCore.SelectedCoreCode))
-               .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.SelectSpecialisms != null ? s.SelectSpecialisms.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code) : new List<string>()))
+               .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom((src, dest, destMember, context) => src.SelectSpecialisms != null ? context.Mapper.Map<List<string>>(src.SelectSpecialisms.PathwaySpecialisms.Specialisms.Where(s => s.IsSelected)) : new List<string>()))
                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.SelectAcademicYear.SelectedAcademicYear))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<RegistrationViewModel, RegistrationRequest>>());
+
+            CreateMap<IEnumerable<SpecialismDetailsViewModel>, List<string>>()
+                .ConstructUsing((m, context) =>
+                {
+                    var codes = new List<string>();
+                    m.ToList().ForEach(s => codes.AddRange(s.Code.Split(Constants.PipeSeperator)));                    
+                    return codes;
+                });
 
             CreateMap<FindUlnResponse, UlnRegistrationNotFoundViewModel>()
                 .ForMember(d => d.RegistrationProfileId, opts => opts.MapFrom(s => s.RegistrationProfileId))
@@ -104,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForAllOtherMembers(d => d.Ignore());
             CreateMap<ChangeSpecialismViewModel, ManageRegistration>()
                 .ForMember(d => d.HasSpecialismsChanged, opts => opts.MapFrom(s => true))
-                .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(x => x.Code)))
+                .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom((src, dest, destMember, context) => context.Mapper.Map<List<string>>(src.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected))))
                 .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeSpecialismViewModel, ManageRegistration>>());
             
             CreateMap<WithdrawRegistrationViewModel, WithdrawRegistrationRequest>()
@@ -122,9 +133,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ReregisterProvider.ProfileId))
                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ReregisterProvider.SelectedProviderUkprn.ToLong()))
                .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.ReregisterCore.SelectedCoreCode))
-               .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.ReregisterSpecialisms != null ? s.ReregisterSpecialisms.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code) : new List<string>()))
+               .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom((src, dest, destMember, context) => src.ReregisterSpecialisms != null ? context.Mapper.Map<List<string>>(src.ReregisterSpecialisms.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected)) : new List<string>()))
                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.ReregisterAcademicYear.SelectedAcademicYear))
                .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ReregisterViewModel, ReregistrationRequest>>());
+
+            CreateMap<AcademicYear, SelectListItem>()
+                .ForMember(m => m.Text, o => o.MapFrom(s => s.Name))
+                .ForMember(m => m.Value, o => o.MapFrom(s => s.Id.ToString()))
+                .ForAllOtherMembers(s => s.Ignore());
         }
     }
 }

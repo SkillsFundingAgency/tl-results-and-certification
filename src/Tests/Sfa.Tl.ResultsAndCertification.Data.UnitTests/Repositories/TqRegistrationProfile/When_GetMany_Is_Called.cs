@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.TqRegistrat
 
         [Fact]
         public void Then_The_Expected_Number_Of_Records_Are_Returned() =>
-            _result.Count().Should().Be(5);
+            _result.Count().Should().Be(_data.Count);
 
         [Fact]
         public void Then_First_Record_Fields_Have_Expected_Values()

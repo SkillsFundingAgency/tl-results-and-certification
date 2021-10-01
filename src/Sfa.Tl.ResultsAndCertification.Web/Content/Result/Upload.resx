@@ -127,13 +127,13 @@
     <value>File name must have no more than {0} characters</value>
   </data>
   <data name="File_Size_Kb_Text" xml:space="preserve">
-    <value>152KB</value>
+    <value>204KB</value>
   </data>
   <data name="File_Size_Too_Large_Validation_Message" xml:space="preserve">
     <value>File size too large – must be no more than {0}MB</value>
   </data>
   <data name="File_Type" xml:space="preserve">
-    <value>XSLX</value>
+    <value>XLSX</value>
   </data>
   <data name="Heading_Before_You_Start" xml:space="preserve">
     <value>Before you start</value>
@@ -175,10 +175,10 @@
     <value>Processing results file</value>
   </data>
   <data name="Results_Published_On" xml:space="preserve">
-    <value>published 28 January 2021</value>
+    <value>published 30 September 2021</value>
   </data>
   <data name="Results_Version" xml:space="preserve">
-    <value>version 1.0</value>
+    <value>version 1.2</value>
   </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
     <value>Select a file to upload</value>

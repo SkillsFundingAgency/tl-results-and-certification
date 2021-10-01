@@ -1,4 +1,4 @@
-﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Common
 {
     public class LookupData
     {

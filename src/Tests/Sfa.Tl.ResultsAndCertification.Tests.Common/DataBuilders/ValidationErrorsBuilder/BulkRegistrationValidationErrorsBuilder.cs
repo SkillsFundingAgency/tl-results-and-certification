@@ -88,19 +88,13 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             {
                 RowNum = "2",
                 Uln = "111111111",
-                ErrorMessage = "Academic year must be the current one"
-            },
-            new BulkProcessValidationError
-            {
-                RowNum = "2",
-                Uln = "111111111",
                 ErrorMessage = "Core code must have 8 characters only"
             },
             new BulkProcessValidationError
             {
                 RowNum = "2",
                 Uln = "111111111",
-                ErrorMessage = "Specialism code must have 8 characters only"
+                ErrorMessage = "Specialism code(s) must have 8 characters only"
             }
         };
 
@@ -123,6 +117,24 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 RowNum = "4",
                 Uln = "111111113",
                 ErrorMessage = ValidationMessages.SpecialismNotValidWithCore
+            },
+            new BulkProcessValidationError
+            {
+                RowNum = "5",
+                Uln = "111111114",
+                ErrorMessage = ValidationMessages.AcademicYearMustBeCurrentOne
+            },
+            new BulkProcessValidationError
+            {
+                RowNum = "6",
+                Uln = "111111115",
+                ErrorMessage = ValidationMessages.SpecialismCannotBeSelectedAsSingleOption
+            },
+            new BulkProcessValidationError
+            {
+                RowNum = "7",
+                Uln = "111111116",
+                ErrorMessage = ValidationMessages.SpecialismIsNotValid
             }
         };
 

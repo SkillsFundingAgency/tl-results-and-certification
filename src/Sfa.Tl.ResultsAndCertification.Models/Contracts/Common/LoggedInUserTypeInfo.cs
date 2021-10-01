@@ -1,6 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 
-namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
+namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Common
 {
     public class LoggedInUserTypeInfo
     {

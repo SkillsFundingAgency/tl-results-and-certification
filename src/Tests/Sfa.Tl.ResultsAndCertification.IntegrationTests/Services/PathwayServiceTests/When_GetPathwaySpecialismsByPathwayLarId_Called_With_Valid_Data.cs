@@ -31,21 +31,34 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServic
         [Fact]
         public void Then_Expected_Results_Is_Returned()
         {
-            var expectedResult = _pathwaySpecialismsResult;
-            expectedResult.Should().NotBeNull();
-            expectedResult.Specialisms.Should().NotBeNull();
-            expectedResult.Specialisms.Count.Should().Be(_specialisms.Count);
-            expectedResult.Id.Should().Be(_pathway.Id);
-            expectedResult.PathwayCode.Should().Be(_pathway.LarId);
-            expectedResult.PathwayName.Should().Be(_pathway.Name);
-            expectedResult.Specialisms.Should().NotBeNullOrEmpty();
+            var actualResult = _pathwaySpecialismsResult;
+            actualResult.Should().NotBeNull();
+            actualResult.Specialisms.Should().NotBeNull();
+            actualResult.Id.Should().Be(_pathway.Id);
+            actualResult.PathwayCode.Should().Be(_pathway.LarId);
+            actualResult.PathwayName.Should().Be(_pathway.Name);
+            
+            // Should be two specialisms (one is couplet and other is single)
+            actualResult.Specialisms.Count().Should().Be(2);
+           
+            // Couplet is with id 1 and 2
+            var coupletSpecialism = actualResult.Specialisms.SingleOrDefault(x => x.SpecialismDetails.Count() == 2 && 
+                    x.SpecialismDetails.Any(s => s.Id == 1) && x.SpecialismDetails.Any(s => s.Id == 1));
+            coupletSpecialism.Should().NotBeNull();
 
-            foreach(var specialism in expectedResult.Specialisms)
+            // single specialism with id 3
+            var singleSpecialism = actualResult.Specialisms.SingleOrDefault(x => x.SpecialismDetails.Count() == 1 &&
+                    x.SpecialismDetails.Any(s => s.Id == 3));
+            singleSpecialism.Should().NotBeNull();
+
+            foreach (var actualSpecialism in actualResult.Specialisms.SelectMany(x => x.SpecialismDetails))
             {
-                var actualSpecialism = _specialisms.FirstOrDefault(s => s.LarId == specialism.Code);
-                actualSpecialism.Should().NotBeNull();
-                actualSpecialism.LarId.Should().Be(specialism.Code);
+                var specialism = _specialisms.FirstOrDefault(s => s.LarId == actualSpecialism.Code);
+                specialism.Should().NotBeNull();
+
+                actualSpecialism.Id.Should().Be(specialism.Id);
                 actualSpecialism.Name.Should().Be(specialism.Name);
+                actualSpecialism.Code.Should().Be(specialism.LarId);
             }
         }
     }
