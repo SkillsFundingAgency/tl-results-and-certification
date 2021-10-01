@@ -169,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Layout {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View Cookies.
+        ///   Looks up a localized string similar to View cookies.
         /// </summary>
         public static string View_Cookies {
             get {
