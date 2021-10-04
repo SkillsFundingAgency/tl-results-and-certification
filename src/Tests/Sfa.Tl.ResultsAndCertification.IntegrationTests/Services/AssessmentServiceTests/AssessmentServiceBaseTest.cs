@@ -32,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         protected IList<TqProvider> TqProviders;
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
+        public IList<AcademicYear> AcademicYears;
         protected IList<TlLookup> PathwayComponentGrades;
 
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
@@ -61,6 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
+            AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
             DbContext.SaveChangesAsync();
         }
@@ -224,6 +226,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             tqPathwayResults.Add(tqPathwayResult);
             return tqPathwayResults;
+        }
+
+        public void RegisterUlnForNextAcademicYear(List<TqRegistrationProfile> _registrations, IList<long> ulns)
+        {
+            ulns.ToList().ForEach(uln =>
+            {
+                var registration = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln);
+                registration.TqRegistrationPathways.FirstOrDefault().AcademicYear = AcademicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year + 1;
+            });
         }
     }
 }

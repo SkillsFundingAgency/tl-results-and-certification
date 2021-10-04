@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ChangeLearnersNameGet;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
@@ -21,12 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         private ReregisterSpecialismViewModel _reregisterSpecialismViewModel;
         private PathwaySpecialismsViewModel _pathwaySpecialismsViewModel;
         private ReregisterAcademicYearViewModel _reregisterAcademicYearViewModel;
+        private IList<AcademicYear> _academicYears;
         private readonly string _coreCode = "12345678";
         private string _selectedAcademicYear;
 
         public override void Given()
         {
-            _selectedAcademicYear = ((int)AcademicYear.Year2020).ToString();
+            _selectedAcademicYear = "2020".ToString();
+            _academicYears = new List<AcademicYear> { new AcademicYear { Id = 1, Name = "2020/21", Year = 2020 } };
             _reregisterProviderViewModel = new ReregisterProviderViewModel { SelectedProviderUkprn = "98765432", SelectedProviderDisplayName = "Barnsley College (98765432)" };
             _reregisterCoreViewModel = new ReregisterCoreViewModel { SelectedCoreCode = _coreCode, SelectedCoreDisplayName = $"Education ({_coreCode})", CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = _coreCode } } };
             _reregisterSpecialismQuestionViewModel = new ReregisterSpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true };
@@ -43,8 +46,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                 ReregisterAcademicYear = _reregisterAcademicYearViewModel
             };
 
-            AcademicYearViewModel = new ReregisterAcademicYearViewModel { ProfileId = ProfileId, SelectedAcademicYear = _selectedAcademicYear, IsChangeMode = true };
+            AcademicYearViewModel = new ReregisterAcademicYearViewModel { ProfileId = ProfileId, SelectedAcademicYear = _selectedAcademicYear, AcademicYears = _academicYears, IsChangeMode = true };
             CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(cacheResult);
+            RegistrationLoader.GetCurrentAcademicYearsAsync().Returns(_academicYears);
         }
 
         [Fact]

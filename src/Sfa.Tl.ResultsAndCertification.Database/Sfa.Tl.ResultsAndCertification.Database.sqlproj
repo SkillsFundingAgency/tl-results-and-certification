@@ -101,6 +101,8 @@
     <Build Include="Tables\PrintBatchItem.sql" />
     <Build Include="Tables\PrintCertificate.sql" />
     <Build Include="Indexes\IX_Unique_TqPathwayResult.sql" />
+    <Build Include="Tables\AcademicYear.sql" />
+    <Build Include="Tables\TlPathwaySpecialismCombination.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sfa.Tl.ResultsAndCertification.Database.refactorlog" />
@@ -120,6 +122,8 @@
     <None Include="Sfa.Tl.ResultsAndCertification.Database.Local.publish.xml" />
     <None Include="PostDeployment\SeedAssessmentSeries.sql" />
     <None Include="PostDeployment\SeedQualification.sql" />
+    <None Include="PostDeployment\SeedAcademicYear.sql" />
+    <None Include="PostDeployment\SeedTlPathwaySpecialismCombinations.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="environment">

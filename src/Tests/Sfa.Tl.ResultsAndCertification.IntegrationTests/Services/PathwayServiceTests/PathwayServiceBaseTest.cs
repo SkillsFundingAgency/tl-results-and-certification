@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServic
         protected IList<TlSpecialism> _specialisms;
         protected TlAwardingOrganisation _tlAwardingOrganisation;
         protected TqAwardingOrganisation _tqAwardingOrganisation;
+        protected IList<TlPathwaySpecialismCombination> _tlPathwaySpecialismCombinations;
         protected TlevelPathwayDetails _result;
 
         public void CreateMapper()
@@ -36,6 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PathwayServic
             _pathway = TlevelDataProvider.CreateTlPathway(DbContext, awardingOrganisation, _route);
             _specialisms = TlevelDataProvider.CreateTlSpecialisms(DbContext, awardingOrganisation, _pathway);
             _tqAwardingOrganisation = TlevelDataProvider.CreateTqAwardingOrganisation(DbContext, _pathway, _tlAwardingOrganisation);
+            _tlPathwaySpecialismCombinations = TlevelDataProvider.CreateTlPathwaySpecialismCombinationsList(DbContext);
             DbContext.SaveChangesAsync();
         }
     }

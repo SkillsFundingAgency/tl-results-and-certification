@@ -39,7 +39,24 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 Id = 1,
                 PathwayCode = "12345",
                 PathwayName = "Test 1",
-                Specialisms = new List<SpecialismDetails> { new SpecialismDetails { Id = 1, Code = "76543", Name = "Specialism 1" } }
+                Specialisms = new List<PathwaySpecialismCombination>
+                {
+                    new PathwaySpecialismCombination
+                    {
+                        SpecialismDetails = new List<SpecialismDetails>
+                        {
+                            new SpecialismDetails { Id = 1, Code = "11111111", Name = "Design" },
+                            new SpecialismDetails { Id = 2, Code = "22222222", Name = "Engineering" }
+                        }
+                    },
+                    new PathwaySpecialismCombination
+                    {
+                        SpecialismDetails = new List<SpecialismDetails>
+                        {
+                            new SpecialismDetails { Id = 3, Code = "33333333", Name = "Arts" },
+                        }
+                    }
+                }
             };
         }
 
@@ -61,15 +78,19 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _result.Id.Should().Be(_mockHttpResult.Id);
             _result.PathwayName.Should().Be(_mockHttpResult.PathwayName);
             _result.PathwayCode.Should().Be(_mockHttpResult.PathwayCode);
-            _result.Specialisms.Count().Should().Be(_mockHttpResult.Specialisms.Count);
+            _result.Specialisms.Count().Should().Be(_mockHttpResult.Specialisms.Count());
 
-            var expectedSpecialismResult = _mockHttpResult.Specialisms.FirstOrDefault();
-            var actualSpecialismResult = _result.Specialisms.FirstOrDefault();
-            actualSpecialismResult.Should().NotBeNull();
+            var expectedSpecialismCombination = _mockHttpResult.Specialisms.FirstOrDefault();
+            var actualSpecialismCombination = _result.Specialisms.FirstOrDefault();
+            actualSpecialismCombination.SpecialismDetails.Count().Should().Be(actualSpecialismCombination.SpecialismDetails.Count());
 
-            actualSpecialismResult.Id.Should().Be(expectedSpecialismResult.Id);
-            actualSpecialismResult.Name.Should().Be(expectedSpecialismResult.Name);
-            actualSpecialismResult.Code.Should().Be(expectedSpecialismResult.Code);
+            var expectedSpecialism = expectedSpecialismCombination.SpecialismDetails.FirstOrDefault();
+            var actualSpecialism = actualSpecialismCombination.SpecialismDetails.FirstOrDefault();
+            actualSpecialism.Should().NotBeNull();
+
+            actualSpecialism.Id.Should().Be(expectedSpecialism.Id);
+            actualSpecialism.Name.Should().Be(expectedSpecialism.Name);
+            actualSpecialism.Code.Should().Be(expectedSpecialism.Code);
         }
     }
 }

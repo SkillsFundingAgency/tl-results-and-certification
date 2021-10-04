@@ -13,7 +13,6 @@ using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -310,10 +309,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<AssessmentDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
-
             if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 
-            return _mapper.Map<AssessmentDetails>(tqRegistration);
+            var assessmentDetails = _mapper.Map<AssessmentDetails>(tqRegistration);
+
+            assessmentDetails.IsCoreEntryEligible = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, Constants.CoreAssessmentStartInYears) != null;
+            return assessmentDetails;
         }
 
         public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
@@ -336,7 +337,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             // Validate
             var tqRegistrationPathway = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
             var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, request.ComponentType);
-            if (!isValid)
+            var hasValidSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, Constants.CoreAssessmentStartInYears) != null;
+
+            if (!isValid || !hasValidSeries)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
 
             int status = 0;

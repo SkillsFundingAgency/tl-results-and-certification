@@ -12,9 +12,10 @@ Post-Deployment Script Template
 
 IF ('$(environment)' = 'test')
 BEGIN
-/* Below seed script is not applicable for test environment as testers are seeding their own data in test environment */
+/* Below seed script is applicable for test environment as testers are seeding their own data in test environment */
 :r ".\SeedNotificationTemplates.sql"
 :r ".\SeedAssessmentSeries.sql"
+:r ".\SeedAcademicYear.sql"
 :r ".\SeedTlLookup.sql"
 :r ".\SeedQualificationType.sql"
 :r ".\SeedQualificationGrade.sql"
@@ -28,9 +29,11 @@ BEGIN
 :r ".\SeedTlRoutes.sql"
 :r ".\SeedTlPathways.sql"
 :r ".\SeedTlSpecialisms.sql"
+:r ".\SeedTlPathwaySpecialismCombinations.sql"
 :r ".\SeedTqAwardingOrganisations.sql"
 :r ".\SeedNotificationTemplates.sql"
 :r ".\SeedAssessmentSeries.sql"
+:r ".\SeedAcademicYear.sql"
 :r ".\SeedTlLookup.sql"
 :r ".\SeedQualificationType.sql"
 :r ".\SeedQualificationGrade.sql"

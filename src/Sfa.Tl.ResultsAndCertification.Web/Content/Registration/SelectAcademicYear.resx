@@ -132,6 +132,9 @@
   <data name="Continue_Button_Text" xml:space="preserve">
     <value>Continue</value>
   </data>
+  <data name="Inset_At_This_Time_You_Can_Only_Select" xml:space="preserve">
+    <value>At this time you can only select {0}</value>
+  </data>
   <data name="Page_Caption_Text" xml:space="preserve">
     <value>Add a new registration</value>
   </data>

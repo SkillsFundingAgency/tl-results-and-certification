@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<TlProviderAddress> TlProviderAddress { get; set; }
         public virtual DbSet<TlRoute> TlRoute { get; set; }
         public virtual DbSet<TlSpecialism> TlSpecialism { get; set; }
+        public virtual DbSet<TlPathwaySpecialismCombination> TlPathwaySpecialismCombination { get; set; }
         public virtual DbSet<TqAwardingOrganisation> TqAwardingOrganisation { get; set; }
         public virtual DbSet<TqProvider> TqProvider { get; set; }
         public virtual DbSet<NotificationTemplate> NotificationTemplate { get; set; }
@@ -38,6 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<Batch> Batch { get; set; }
         public virtual DbSet<PrintBatchItem> PrintBatchItem { get; set; }
         public virtual DbSet<PrintCertificate> PrintCertificate { get; set; }
+        public virtual DbSet<AcademicYear> AcademicYear { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

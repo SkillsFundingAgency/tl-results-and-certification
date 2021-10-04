@@ -26,7 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 SpecialismName = "Specialism1",
                 SpecialismAssessmentSeries = "Autumn 2022",
                 SpecialismAssessmentId = 25,
-                Status = RegistrationPathwayStatus.Active
+                Status = RegistrationPathwayStatus.Active,
+                IsCoreEntryEligible = true
             };
 
             InternalApiClient.GetAssessmentDetailsAsync(AoUkprn, ProfileId).Returns(expectedApiResult);

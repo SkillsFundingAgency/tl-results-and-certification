@@ -1,10 +1,12 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.AddRegistrationAcademicYearGet
@@ -14,13 +16,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private RegistrationViewModel cacheResult;
         private SpecialismQuestionViewModel _specialismQuestionViewModel;
         private SelectAcademicYearViewModel _selectAcademicYearViewModel;
+        private IList<AcademicYear> _academicYears;
         private string _selectedAcademicYear;
 
         public override void Given()
         {
-            _selectedAcademicYear = ((int)AcademicYear.Year2020).ToString();
+            _selectedAcademicYear = "2020".ToString();
+            _academicYears = new List<AcademicYear> { new AcademicYear { Id = 1, Name = "2020/21", Year = 2020 } };
             _specialismQuestionViewModel = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = false };
-            _selectAcademicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = _selectedAcademicYear };
+            _selectAcademicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = _selectedAcademicYear, AcademicYears = _academicYears };
             cacheResult = new RegistrationViewModel
             {
                 SpecialismQuestion = _specialismQuestionViewModel,
@@ -43,7 +47,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
             model.SelectedAcademicYear.Should().Be(_selectedAcademicYear);
             model.IsValidAcademicYear.Should().BeTrue();
-
+            model.AcademicYears.Should().BeEquivalentTo(_academicYears);
+            model.AcademicYearSelectList.Should().BeEquivalentTo(_academicYears.Select(a => new SelectListItem { Text = a.Name, Value = a.Year.ToString() }));
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AddRegistrationSpecialismQuestion);
         }

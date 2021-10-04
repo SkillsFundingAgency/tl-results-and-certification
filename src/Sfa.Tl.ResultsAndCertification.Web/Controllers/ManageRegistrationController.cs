@@ -784,7 +784,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (model.IsChangeMode && cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism.Value == false)
                 cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism = true;
 
-            model.PathwaySpecialisms?.Specialisms?.ToList().ForEach(x => { x.IsSelected = (x.Code == model.SelectedSpecialismCode); });
+            model.PathwaySpecialisms?.Specialisms?.ToList().ForEach(x => { x.IsSelected = x.Code == model.SelectedSpecialismCode; });
+            var pathwaySpecialisms = await GetPathwaySpecialismsByCoreCode(cacheModel.ReregisterCore.SelectedCoreCode);
+            model.PathwaySpecialisms.SpecialismsLookup = pathwaySpecialisms?.SpecialismsLookup;
             cacheModel.ReregisterSpecialisms = model;
             await _cacheService.SetAsync(ReregisterCacheKey, cacheModel);
 
@@ -812,7 +814,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             ReregisterAcademicYearViewModel viewModel;
             if (cacheModel.ReregisterAcademicYear == null)
             {
-                viewModel = new ReregisterAcademicYearViewModel { ProfileId = profileId, HasSpecialismsSelected = hasSpecialismsSelected };
+                viewModel = new ReregisterAcademicYearViewModel { ProfileId = profileId, HasSpecialismsSelected = hasSpecialismsSelected, AcademicYears = await _registrationLoader.GetCurrentAcademicYearsAsync() };
             }
             else
             {
@@ -828,6 +830,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> ReregisterAcademicYearAsync(ReregisterAcademicYearViewModel viewModel)
         {
             var cacheModel = await _cacheService.GetAsync<ReregisterViewModel>(ReregisterCacheKey);
+            viewModel.AcademicYears = await _registrationLoader.GetCurrentAcademicYearsAsync();
 
             if (cacheModel == null || cacheModel.SpecialismQuestion == null ||
                 (cacheModel.SpecialismQuestion.HasLearnerDecidedSpecialism == true && cacheModel.ReregisterSpecialisms == null) ||
@@ -954,7 +957,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private async Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsAsync(ChangeSpecialismViewModel viewModel)
         {
             var coreSpecialisms = await _registrationLoader.GetPathwaySpecialismsByPathwayLarIdAsync(User.GetUkPrn(), viewModel.CoreCode);
-            viewModel.SelectedSpecialismCode = viewModel.SpecialismCodes.FirstOrDefault();
+            viewModel.SelectedSpecialismCode = coreSpecialisms?.Specialisms?.FirstOrDefault(x => viewModel.SpecialismCodes.All(vm => x.Code.Split(Constants.PipeSeperator).Any(x => x.Equals(vm, System.StringComparison.InvariantCultureIgnoreCase)))).Code;
 
             return coreSpecialisms;
         }

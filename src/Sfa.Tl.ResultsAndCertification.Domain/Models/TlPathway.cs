@@ -7,7 +7,8 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public TlPathway()
         {
             TlSpecialisms = new HashSet<TlSpecialism>();
-            TqAwardingOrganisations = new HashSet<TqAwardingOrganisation>();
+            TlPathwaySpecialismCombinations = new HashSet<TlPathwaySpecialismCombination>();
+            TqAwardingOrganisations = new HashSet<TqAwardingOrganisation>();            
         }
 
         public int TlRouteId { get; set; }
@@ -18,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
 
         public virtual TlRoute TlRoute { get; set; }
         public virtual ICollection<TlSpecialism> TlSpecialisms { get; set; }
+        public virtual ICollection<TlPathwaySpecialismCombination> TlPathwaySpecialismCombinations { get; set; }
         public virtual ICollection<TqAwardingOrganisation> TqAwardingOrganisations { get; set; }
     }
 }

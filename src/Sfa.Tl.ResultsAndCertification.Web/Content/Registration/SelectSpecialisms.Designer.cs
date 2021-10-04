@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  and .
+        /// </summary>
+        public static string Combination_Separator {
+            get {
+                return ResourceManager.GetString("Combination_Separator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Continue_Button_Text {
@@ -106,7 +115,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new registration - Select the specialism page.
+        ///   Looks up a localized string similar to Add a new registration - Select the specialism.
         /// </summary>
         public static string Page_Title_Add_Registration_Select_Specialism {
             get {
@@ -133,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the specialism for {0}.
+        ///   Looks up a localized string similar to Select the occupational specialism(s) for {0}.
         /// </summary>
         public static string Select_The_Specialism_Label_Text {
             get {

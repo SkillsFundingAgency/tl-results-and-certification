@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.GetPathwaySpecialismsByPathwayLarId
@@ -26,25 +25,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 
         public override void Setup()
         {
-            ApiClientResponse = new PathwaySpecialisms
-            {
-                Id = 1,
-                PathwayCode = "12345",
-                PathwayName = "Test 1",
-                Specialisms = new List<SpecialismDetails> { new SpecialismDetails { Id = 1, Code = "76543", Name = "Specialism 1" } }
-            };
-
             Logger = Substitute.For<ILogger<RegistrationLoader>>();
             BlobStorageService = Substitute.For<IBlobStorageService>();
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-            InternalApiClient.GetPathwaySpecialismsByPathwayLarIdAsync(Ukprn, PathwayLarId).Returns(ApiClientResponse);
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(TlevelLoader).Assembly));
             Mapper = new AutoMapper.Mapper(mapperConfig);
-        }
-
-        public override void Given()
-        {
+            
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
         }
 
