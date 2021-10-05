@@ -1,10 +1,17 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
 {
     public class FindPrsLearnerRecord
     {
+        public FindPrsLearnerRecord()
+        {
+            PathwayAssessments = new List<PrsAssessment>();
+        }
+
         public int ProfileId { get; set; }
         public long Uln { get; set; }
         public string Firstname { get; set; }
@@ -14,7 +21,11 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public string ProviderName { get; set; }
         public string TlevelTitle { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
+        public IEnumerable<PrsAssessment> PathwayAssessments { get; set; }
 
         public bool IsWithdrawn => Status == RegistrationPathwayStatus.Withdrawn;
+        public bool NoAssessmentEntryRegistered { get { return PathwayAssessments.Count() == 0; } }
+        public bool SingleAssessmentWithNoGrade { get { return PathwayAssessments.Count() == 1 && !PathwayAssessments.Any(x => x.HasResult); } }
+        public bool HasMultipleAssessments { get { return PathwayAssessments.Count() > 1; } }
     }
 }

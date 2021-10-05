@@ -1,0 +1,34 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels.NoConfirmedTlevelsViewModel
+
+@{
+    ViewData["Title"] = NoConfirmedTlevels.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:breadcrumb model="Model.BreadCrumb"></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l">@NoConfirmedTlevels.Heading_You_Have_Not_Confirmed_Any</h1>
+        <p class="govuk-body">@NoConfirmedTlevels.Para_You_Need_To_Review_All</p>
+        <p class="govuk-body">@NoConfirmedTlevels.Para_Confirmed_Will_Appear_Here</p>
+
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">@NoConfirmedTlevels.Dropout_Link_Cannot_Find_Tlevel</span>
+            </summary>
+            <div class="govuk-details__text">
+                @NoConfirmedTlevels.Dropout_Para_If_You_Cannot_Find_Check
+                <a id="reviewLink" asp-route="ReviewTlevels" class="govuk-link">@NoConfirmedTlevels.Link_Review</a> @NoConfirmedTlevels.Dropout_Text_Or_Have
+                <a id="queriedLink" asp-route="QueriedTlevels" class="govuk-link">@NoConfirmedTlevels.Link_Queried</a> @NoConfirmedTlevels.Dropout_Text_It<br><br>
+                @NoConfirmedTlevels.Dropout_Para_If_You_Still_Cannot_Find_ContactUs <a id="contactusLink" asp-route="Contact" class="govuk-link">@NoConfirmedTlevels.Link_ContactUs</a>@NoConfirmedTlevels.Fullstop
+            </div>
+        </details>
+
+        <a id="buttonTlevels" class="govuk-button" role="button" asp-route="TlevelsDashboard">@NoConfirmedTlevels.Button_Tlevels</a>
+    </div>
+</div>

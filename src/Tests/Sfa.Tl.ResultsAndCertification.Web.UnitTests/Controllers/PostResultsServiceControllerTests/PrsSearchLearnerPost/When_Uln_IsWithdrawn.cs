@@ -12,7 +12,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_Uln_IsWithdrawn : TestSetup
     {
-        private FindPrsLearnerRecord _findPrsLearner = null;
+        private FindPrsLearnerRecord _findPrsLearner;
+        private PrsUlnWithdrawnViewModel _prsUlnWithdrawnViewModel;
 
         public override void Given()
         {
@@ -29,8 +30,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Status = Common.Enum.RegistrationPathwayStatus.Withdrawn
             };
 
+            _prsUlnWithdrawnViewModel = new PrsUlnWithdrawnViewModel
+            {
+                Uln = _findPrsLearner.Uln,
+                Firstname = _findPrsLearner.Firstname,
+                Lastname = _findPrsLearner.Lastname,
+                DateofBirth = _findPrsLearner.DateofBirth,
+                ProviderName = _findPrsLearner.ProviderName,
+                ProviderUkprn = _findPrsLearner.ProviderUkprn,
+                TlevelTitle = _findPrsLearner.TlevelTitle
+            };
+
             ViewModel = new PrsSearchLearnerViewModel { SearchUln = _findPrsLearner.Uln.ToString() };
             Loader.FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong()).Returns(_findPrsLearner);
+            Loader.TransformLearnerDetailsTo<PrsUlnWithdrawnViewModel>(_findPrsLearner).Returns(_prsUlnWithdrawnViewModel);
         }
 
         [Fact]
@@ -38,6 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         {
             Loader.Received(1).FindPrsLearnerRecordAsync(AoUkprn, ViewModel.SearchUln.ToLong());
             CacheService.Received(1).SetAsync(CacheKey, ViewModel);
+            Loader.Received(1).TransformLearnerDetailsTo<PrsUlnWithdrawnViewModel>(_findPrsLearner);
             CacheService.Received(1).SetAsync(CacheKey, Arg.Is<PrsUlnWithdrawnViewModel>(x =>
                     x.Uln == _findPrsLearner.Uln &&
                     x.Firstname == _findPrsLearner.Firstname &&

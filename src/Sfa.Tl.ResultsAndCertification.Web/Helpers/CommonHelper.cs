@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using System;
+using PrsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
 {
@@ -18,5 +21,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
         {
             return appealsEndDate.HasValue && DateTime.Today <= appealsEndDate.Value;
         }
+
+        public static string GetPrsStatusDisplayText(PrsStatus? prsStatus, DateTime? appealsEndDate)
+        {
+            if (prsStatus == PrsStatus.BeingAppealed)
+                return FormatPrsStatusDisplayHtml(Constants.PurpleTagClassName, PrsStatusContent.Being_Appealed_Display_Text);
+
+            if (prsStatus == PrsStatus.Final || !IsAppealsAllowed(appealsEndDate))
+                return FormatPrsStatusDisplayHtml(Constants.RedTagClassName, PrsStatusContent.Final_Display_Text);
+            
+            return string.Empty;
+        }
+
+        private static string FormatPrsStatusDisplayHtml(string tagClassName, string statusText) => string.Format(PrsStatusContent.PrsStatus_Display_Html, tagClassName, statusText);
     }
 }

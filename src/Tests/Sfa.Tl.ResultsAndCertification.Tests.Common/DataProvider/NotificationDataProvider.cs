@@ -3,12 +3,13 @@ using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using System;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 {
     public class NotificationDataProvider
     {
-        public static NotificationTemplate CreateNotificationTemplate(ResultsAndCertificationDbContext _dbContext, NotificationTemplateName notificationTemplateName = NotificationTemplateName.TlevelDetailsQueried, bool addToDbContext = true)
+        public static NotificationTemplate CreateNotificationTemplate(ResultsAndCertificationDbContext _dbContext, NotificationTemplateName notificationTemplateName = NotificationTemplateName.TlevelDetailsQueriedTechnicalTeamNotification, bool addToDbContext = true)
         {
             var notificationTemplate = new NotificationTemplateBuilder().Build(notificationTemplateName);
 
@@ -46,6 +47,17 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
                 _dbContext.Add(notificationTemplate);
             }
             return notificationTemplate;
+        }
+
+        public static IList<NotificationTemplate> CreateNotificationTemplates(ResultsAndCertificationDbContext _dbContext, bool addToDbContext = true)
+        {
+            var notificationTemplates = new NotificationTemplateBuilder().BuildList();
+
+            if (addToDbContext)
+            {
+                _dbContext.AddRange(notificationTemplates);
+            }
+            return notificationTemplates;
         }
     }
 }

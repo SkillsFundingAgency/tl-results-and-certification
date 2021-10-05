@@ -9,6 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         public QualificationGrade Build(QualificationType qualificationType = null) => new QualificationGrade
         {
             Grade = "A",
+            GradeRank = 1,
             QualificationType = qualificationType ?? new QualificationTypeBuilder().Build(),
             IsAllowable = true,
             IsActive = true,
@@ -27,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new QualificationGrade
                 {
                     Grade = "A",
+                    GradeRank = 1,
                     QualificationTypeId = qualificationType.Id,
                     IsAllowable = true,
                     IsSendGrade = false,
@@ -39,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new QualificationGrade
                 {
                     Grade = "B",
+                    GradeRank = 2,
                     QualificationTypeId = qualificationType.Id,
                     IsAllowable = true,
                     IsSendGrade = false,
@@ -51,6 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new QualificationGrade
                 {
                     Grade = "C",
+                    GradeRank = 3,
                     QualificationTypeId = qualificationType.Id,
                     IsAllowable = true,
                     IsSendGrade = false,
@@ -63,6 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new QualificationGrade
                 {
                     Grade = "D",
+                    GradeRank = 4,
                     QualificationTypeId = qualificationType.Id,
                     IsAllowable = false,
                     IsSendGrade = false,
@@ -75,6 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 new QualificationGrade
                 {
                     Grade = "E",
+                    GradeRank = 5,
                     QualificationTypeId = qualificationType.Id,
                     IsAllowable = false,
                     IsSendGrade = true,

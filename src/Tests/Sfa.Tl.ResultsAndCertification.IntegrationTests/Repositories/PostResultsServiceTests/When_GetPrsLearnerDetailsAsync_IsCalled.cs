@@ -51,13 +51,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
                 _tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
 
                 // Seed Pathway results
-                var profilesWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
-                foreach (var assessment in pathwayAssessments.Where(x => profilesWithResults.Contains(x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber)))
-                {
+                var profilesWithResults = new List<(long, PrsStatus?)> { (1111111111, PrsStatus.BeingAppealed), (1111111112, null), (1111111113, null) };
+                foreach (var assessment in pathwayAssessments.Where(x => profilesWithResults.Any(p => p.Item1 == x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber)))
+                {                    
                     var hasHitoricData = new List<long> { 1111111112 };
                     var hasHistoricResult = hasHitoricData.Any(x => x == profile.UniqueLearnerNumber);
-
-                    var tqPathwayResultSeedData = GetPathwayResultDataToProcess(assessment, seedPathwayResultsAsActive: true, hasHistoricResult);
+                    var prsStatus = profilesWithResults.FirstOrDefault(p => p.Item1 == assessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
+                    var tqPathwayResultSeedData = GetPathwayResultDataToProcess(assessment, seedPathwayResultsAsActive: true, hasHistoricResult, prsStatus);
                     tqPathwayResultsSeedData.AddRange(tqPathwayResultSeedData);
                 }
             }
@@ -115,10 +115,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
             var expectedAssessment = expectedPathway.TqPathwayAssessments.FirstOrDefault();
             _actualResult.PathwayAssessmentId.Should().Be(expectedAssessment.Id);
             _actualResult.PathwayAssessmentSeries.Should().Be(expectedAssessment.AssessmentSeries.Name);
+            _actualResult.AppealEndDate.Should().Be(expectedAssessment.AssessmentSeries.AppealEndDate);
 
             var expectedResult = expectedAssessment.TqPathwayResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
             _actualResult.PathwayResultId.Should().Be(expectedResult.Id);
             _actualResult.PathwayGrade.Should().Be(expectedResult.TlLookup.Value);
+            _actualResult.PathwayPrsStatus.Should().Be(expectedResult.PrsStatus);
             _actualResult.PathwayGradeLastUpdatedBy.Should().Be(expectedResult.CreatedBy);
             _actualResult.PathwayGradeLastUpdatedOn.Should().Be(expectedResult.CreatedOn);
         }

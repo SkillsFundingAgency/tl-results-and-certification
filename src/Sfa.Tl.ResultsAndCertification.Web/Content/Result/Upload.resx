@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Are_In_Csv_Format_Text" xml:space="preserve">
-    <value>are in CSV format</value>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
   </data>
   <data name="File_Max_Record_Count_Validation_Message" xml:space="preserve">
     <value>File must contain results for between one and {0} registrations</value>
@@ -126,41 +126,65 @@
   <data name="File_Name_Length_Validation_Message" xml:space="preserve">
     <value>File name must have no more than {0} characters</value>
   </data>
+  <data name="File_Size_Kb_Text" xml:space="preserve">
+    <value>204KB</value>
+  </data>
   <data name="File_Size_Too_Large_Validation_Message" xml:space="preserve">
     <value>File size too large – must be no more than {0}MB</value>
   </data>
-  <data name="Include_All_Mandatory_Fields_Text" xml:space="preserve">
-    <value>include all mandatory fields</value>
+  <data name="File_Type" xml:space="preserve">
+    <value>XLSX</value>
+  </data>
+  <data name="Heading_Before_You_Start" xml:space="preserve">
+    <value>Before you start</value>
   </data>
   <data name="Js_Disabled_Upload_File_Button_Text" xml:space="preserve">
-    <value>Submit (only click once)</value>
+    <value>Upload (only click once)</value>
   </data>
   <data name="Js_Disabled_Upload_File_Help_Text" xml:space="preserve">
     <value>JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size.</value>
   </data>
+  <data name="Link_Tlevels_Results_Data_Format_Rules" xml:space="preserve">
+    <value>T Levels results data format and rules</value>
+  </data>
+  <data name="List_Blank_Will_Delete_Existing" xml:space="preserve">
+    <value>If a result is already recorded and a blank one is submitted in the file, the existing result will be deleted.</value>
+  </data>
+  <data name="List_If_Not_Correct_Format_Error_Report_To_Download" xml:space="preserve">
+    <value>If the data is not correctly formatted, nothing will be uploaded. You will be able to download an error report which tells you what's wrong.</value>
+  </data>
+  <data name="List_Uln_Must_Be_Active" xml:space="preserve">
+    <value>The ULN must have an active registration status and assessment entry. You cannot upload a result for a withdrawn learner.</value>
+  </data>
   <data name="Must_Be_Csv_Validation_Message" xml:space="preserve">
     <value>File extension not valid - must be a CSV file</value>
   </data>
-  <data name="No_Of_Results_To_Upload_Text" xml:space="preserve">
-    <value>contain results for between one and 10,000 registrations</value>
-  </data>
-  <data name="On_Existing_Registrations_You_Can_Add_Text" xml:space="preserve">
-    <value>On existing registrations you can add or amend results by uploading them in the same file or separate files.</value>
-  </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>Upload results file</value>
+    <value>Upload multiple results</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Upload results file page</value>
+    <value>Upload multiple results</value>
+  </data>
+  <data name="Para_If_You_Export_Data_From_Another_System" xml:space="preserve">
+    <value>If you export data from another system, you must check the data is in the right format. You can download a template with data formats and rules guidance to help you.</value>
+  </data>
+  <data name="Para_You_Can_Add_Or_Change_Registration" xml:space="preserve">
+    <value>You can add or change results for one or more learners by uploading CSV files.</value>
   </data>
   <data name="Processing_Result_Entries_File_Text" xml:space="preserve">
     <value>Processing results file</value>
   </data>
+  <data name="Results_Published_On" xml:space="preserve">
+    <value>published 30 September 2021</value>
+  </data>
+  <data name="Results_Version" xml:space="preserve">
+    <value>version 1.2</value>
+  </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
-    <value>Please select results file</value>
+    <value>Select a file to upload</value>
   </data>
   <data name="Upload_File_Button_Text" xml:space="preserve">
-    <value>Submit</value>
+    <value>Upload</value>
   </data>
   <data name="Upload_File_Text" xml:space="preserve">
     <value>Upload a file</value>
@@ -170,8 +194,5 @@
   </data>
   <data name="Warning_Text" xml:space="preserve">
     <value>Warning</value>
-  </data>
-  <data name="We_Can_Only_Accept_Files_Text" xml:space="preserve">
-    <value>We can only accept files that:</value>
   </data>
 </root>

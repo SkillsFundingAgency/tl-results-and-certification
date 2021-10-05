@@ -44,7 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                             Type = PrintCertificateType.StatementOfAchievement,
                             LearningDetails = JsonConvert.SerializeObject(m.LearningDetails),
                             DisplaySnapshot = JsonConvert.SerializeObject(m.SoaPrintingDetails),
-                            Status = PrintCertificateStatus.Created,
                             CreatedBy = m.PerformedBy
                         }
                     };

@@ -25,10 +25,38 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
+        [Route("FindPrsLearnerRecordByProfileId/{aoUkprn}/{profileId}")]
+        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordByProfileIdAsync(long aoUkprn, int profileId)
+        {
+            return await _postResultsServiceService.FindPrsLearnerRecordAsync(aoUkprn, null, profileId);
+        }
+
+        [HttpGet]
         [Route("GetPrsLearnerDetails/{aoUkprn}/{profileId}/{assessmentId}")]
         public async Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkPrn, int profileId, int assessmentId)
         {
             return await _postResultsServiceService.GetPrsLearnerDetailsAsync(aoUkPrn, profileId, assessmentId);
+        }
+
+        [HttpPost]
+        [Route("AppealGrade")]
+        public async Task<bool> AppealGradeAsync(AppealGradeRequest request)
+        {
+            return await _postResultsServiceService.AppealGradeAsync(request);
+        }
+
+        [HttpPost]
+        [Route("PrsGradeChangeRequest")]
+        public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request)
+        {
+            return await _postResultsServiceService.PrsGradeChangeRequestAsync(request);
+        }
+
+        [HttpPost]
+        [Route("AppealGradeAfterDeadlineRequest")]
+        public async Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request)
+        {
+            return await _postResultsServiceService.AppealGradeAfterDeadlineRequestAsync(request);
         }
     }
 }

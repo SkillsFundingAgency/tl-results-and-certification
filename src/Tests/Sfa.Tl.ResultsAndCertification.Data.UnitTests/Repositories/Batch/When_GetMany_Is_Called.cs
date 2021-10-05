@@ -40,6 +40,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Batch
             result.Id.Should().Be(1);
             result.Type.Should().Be(testData.Type);
             result.Status.Should().Be(testData.Status);
+            result.Errors.Should().Be(testData.Errors);
+            result.PrintingStatus.Should().Be(testData.PrintingStatus);
+            result.RunOn.Should().Be(testData.RunOn);
+            result.StatusChangedOn.Should().Be(testData.StatusChangedOn);
+            result.ResponseStatus.Should().Be(testData.ResponseStatus);
+            result.ResponseMessage.Should().Be(testData.ResponseMessage);
             result.CreatedBy.Should().Be(Constants.CreatedByUser);
             result.CreatedOn.Should().Be(Constants.CreatedOn);
             result.ModifiedBy.Should().Be(Constants.ModifiedByUser);

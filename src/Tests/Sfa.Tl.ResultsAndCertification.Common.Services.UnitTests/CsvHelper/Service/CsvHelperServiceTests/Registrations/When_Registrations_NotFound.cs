@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         private StringBuilder GetInputFilecontent()
         {
             StringBuilder csvData = new StringBuilder();
-            csvData.AppendLine("ULN,First Name,Last Name,Date of Birth,UKPRN,Academic year,Core code,Specialism code");
+            csvData.AppendLine("ULN,First Name,Last Name,Date of Birth,UKPRN,Academic year,Core code,Specialism code(s)");
             return csvData;
         }
     }

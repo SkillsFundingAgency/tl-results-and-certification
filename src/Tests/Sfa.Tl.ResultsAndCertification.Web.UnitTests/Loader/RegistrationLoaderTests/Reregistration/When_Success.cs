@@ -2,9 +2,13 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.Reregistration
@@ -25,7 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             {
                 ReregisterProvider = new ReregisterProviderViewModel { ProfileId = ProfileId, SelectedProviderUkprn = _providerUkprn.ToString() },
                 ReregisterCore = new ReregisterCoreViewModel { ProfileId = ProfileId, SelectedCoreCode = _coreCode },
-                SpecialismQuestion = new ReregisterSpecialismQuestionViewModel { HasLearnerDecidedSpecialism = false },
+                SpecialismQuestion = new ReregisterSpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true },
+                ReregisterSpecialisms = new ReregisterSpecialismViewModel { PathwaySpecialisms = new PathwaySpecialismsViewModel { PathwayCode = _coreCode, PathwayName = "Education", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Code = "7654321|36978455", Name = "Test Education", DisplayName = "Test Education (7654321)", IsSelected = true } } } },
                 ReregisterAcademicYear = new ReregisterAcademicYearViewModel { SelectedAcademicYear = "2020" }
             };
 
@@ -55,12 +60,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         {
             var result = Mapper.Map<ReregistrationRequest>(ViewModel, opt => opt.Items["aoUkprn"] = AoUkprn);
 
+            var expectedSpecialismCodes = new List<string>();
+            ViewModel.ReregisterSpecialisms.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code).ToList().ForEach(c => { expectedSpecialismCodes.AddRange(c.Split(Constants.PipeSeperator)); }); ;
+
+
             result.Should().NotBeNull();
             result.AoUkprn.Should().Be(AoUkprn);
             result.ProfileId.Should().Be(ProfileId);
             result.ProviderUkprn.Should().Be(ViewModel.ReregisterProvider.SelectedProviderUkprn.ToLong());
             result.CoreCode.Should().Be(ViewModel.ReregisterCore.SelectedCoreCode);
-            result.SpecialismCodes.Should().BeNullOrEmpty();
+            result.SpecialismCodes.Should().BeEquivalentTo(expectedSpecialismCodes);
             result.AcademicYear.Should().Be(ViewModel.ReregisterAcademicYear.SelectedAcademicYear.ToInt());
             result.PerformedBy.Should().Be($"{Givenname} {Surname}");
         }

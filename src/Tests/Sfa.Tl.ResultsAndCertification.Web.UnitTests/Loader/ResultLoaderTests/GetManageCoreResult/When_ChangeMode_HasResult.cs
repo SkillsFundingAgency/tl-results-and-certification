@@ -2,6 +2,8 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -26,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
                 ProfileId = ProfileId,
                 PathwayAssessmentId = AssessmentId,
                 PathwayAssessmentSeries = "Summer 2021",
+                AppealEndDate = DateTime.Today.AddDays(7),
                 PathwayLarId = "12345678",
                 PathwayName = "Construction",
                 PathwayResultCode = "C1",
@@ -41,8 +44,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ResultLoaderTests.
             ActualResult.ProfileId.Should().Be(expectedApiResultDetails.ProfileId);
             ActualResult.AssessmentId.Should().Be(expectedApiResultDetails.PathwayAssessmentId);
             ActualResult.AssessmentSeries.Should().Be(expectedApiResultDetails.PathwayAssessmentSeries);
+            ActualResult.AppealEndDate.Should().Be(expectedApiResultDetails.AppealEndDate);
             ActualResult.PathwayDisplayName.Should().Be($"{expectedApiResultDetails.PathwayName} ({expectedApiResultDetails.PathwayLarId})");
             ActualResult.SelectedGradeCode.Should().Be(expectedApiResultDetails.PathwayResultCode);
+            ActualResult.PathwayPrsStatus.Should().Be(expectedApiResultDetails.PathwayPrsStatus);
+            ActualResult.IsValid.Should().BeTrue();
 
             ActualResult.Grades.Should().NotBeNull();
             ActualResult.Grades.Count.Should().Be(expectedApiLookupData.Count);

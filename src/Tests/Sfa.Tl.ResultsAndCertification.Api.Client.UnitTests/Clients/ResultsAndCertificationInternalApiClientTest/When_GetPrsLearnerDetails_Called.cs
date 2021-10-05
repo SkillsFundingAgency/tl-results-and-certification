@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -56,8 +57,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
                 PathwayAssessmentId = 1,
                 PathwayAssessmentSeries = "Summer 2021",
+                AppealEndDate = DateTime.Today.AddDays(7),
                 PathwayResultId = 99,
                 PathwayGrade = "B",
+                PathwayPrsStatus = PrsStatus.BeingAppealed,
                 PathwayGradeLastUpdatedOn = System.DateTime.Today.AddDays(-15),
                 PathwayGradeLastUpdatedBy = "Barsley User"
             };
@@ -91,8 +94,10 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _actualResult.PathwayCode.Should().Be(_mockApiResponse.PathwayCode);
             _actualResult.PathwayAssessmentId.Should().Be(_mockApiResponse.PathwayAssessmentId);
             _actualResult.PathwayAssessmentSeries.Should().Be(_mockApiResponse.PathwayAssessmentSeries);
+            _actualResult.AppealEndDate.Should().Be(_mockApiResponse.AppealEndDate);
             _actualResult.PathwayResultId.Should().Be(_mockApiResponse.PathwayResultId);
             _actualResult.PathwayGrade.Should().Be(_mockApiResponse.PathwayGrade);
+            _actualResult.PathwayPrsStatus.Should().Be(_mockApiResponse.PathwayPrsStatus);
             _actualResult.PathwayGradeLastUpdatedOn.Should().Be(_mockApiResponse.PathwayGradeLastUpdatedOn);
             _actualResult.PathwayGradeLastUpdatedBy.Should().Be(_mockApiResponse.PathwayGradeLastUpdatedBy);
         }

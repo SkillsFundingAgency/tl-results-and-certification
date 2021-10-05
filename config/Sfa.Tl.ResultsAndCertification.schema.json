@@ -33,6 +33,10 @@
       "type": "string",
       "environmentVariable": "FeedbackEmailAddress"
     },
+	"TechnicalInternalNotificationEmailAddress": {
+      "type": "string",
+      "environmentVariable": "TechnicalInternalNotificationEmailAddress"
+    },
     "SoaAvailableDate": {
       "type": "string",
       "environmentVariable": "SoaAvailableDate"
@@ -40,10 +44,6 @@
     "SoaRerequestInDays": {
       "type": "integer",
       "environmentVariable": "SoaRerequestInDays"
-    },
-	"AppealsEndDate": {
-      "type": "string",
-      "environmentVariable": "AppealsEndDate"
     },
     "KeyVaultUri": {
       "type": "string",
@@ -266,6 +266,25 @@
       "required": [],
       "type": "object"
     },
+	"PrintingApiSettings": {
+      "properties": {
+        "Uri": {
+          "type": "string",
+          "environmentVariable": "PrintingApiUri"
+        },
+        "Username": {
+          "type": "string",
+          "environmentVariable": "PrintingApiUsername"
+        },
+        "Password": {
+          "type": "string",
+          "environmentVariable": "PrintingApiPassword"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
     "LearningRecordServiceSettings": {
       "properties": {
 		"BaseUri": {
@@ -319,13 +338,15 @@
     "TlevelQueriedSupportEmailAddress",
     "TechnicalSupportEmailAddress",
     "FeedbackEmailAddress",
-	  "KeyVaultUri",
+	"TechnicalInternalNotificationEmailAddress",
+	"KeyVaultUri",
     "RedisSettings",
   	"BlobStorageSettings",
     "DataProtectionSettings",
     "DfeSignInSettings",
     "ResultsAndCertificationInternalApiSettings",
-	  "LearningRecordServiceSettings"
+	"PrintingApiSettings",
+	"LearningRecordServiceSettings"
   ],
   "type": "object"
 }

@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Available to add after the current assessment series has passed.
+        /// </summary>
+        public static string Available_After_Current_Assessment_Series {
+            get {
+                return ResourceManager.GetString("Available_After_Current_Assessment_Series", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  for core.
         /// </summary>
         public static string Core_Assessment_Entry_Hidden_Text {

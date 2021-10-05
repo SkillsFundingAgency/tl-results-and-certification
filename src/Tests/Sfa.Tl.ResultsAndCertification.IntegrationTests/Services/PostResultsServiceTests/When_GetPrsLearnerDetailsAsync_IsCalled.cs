@@ -1,8 +1,13 @@
 ﻿using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Notify.Interfaces;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
@@ -62,10 +67,25 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
 
             SeedPathwayAssessmentsData(_tqPathwayAssessmentsSeedData, true);
 
-            // Test class.
+            // Test class and dependencies
             CreateMapper();
             PostResultsServiceRepository = new PostResultsServiceRepository(DbContext);
-            PostResultsServiceService = new PostResultsServiceService(PostResultsServiceRepository, PostResultsServiceMapper);
+            var pathwayResultRepositoryLogger = new Logger<GenericRepository<TqPathwayResult>>(new NullLoggerFactory());
+            PathwayResultsRepository = new GenericRepository<TqPathwayResult>(pathwayResultRepositoryLogger, DbContext);
+
+            NotificationsClient = Substitute.For<IAsyncNotificationClient>();
+            NotificationLogger = new Logger<NotificationService>(new NullLoggerFactory());
+            NotificationTemplateRepositoryLogger = new Logger<GenericRepository<NotificationTemplate>>(new NullLoggerFactory());
+            NotificationTemplateRepository = new GenericRepository<NotificationTemplate>(NotificationTemplateRepositoryLogger, DbContext);
+            NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
+
+            Configuration = new ResultsAndCertificationConfiguration
+            {
+                TlevelQueriedSupportEmailAddress = "test@test.com"
+            };
+
+            PostResultsServiceServiceLogger = new Logger<PostResultsServiceService>(new NullLoggerFactory());
+            PostResultsServiceService = new PostResultsServiceService(Configuration, PostResultsServiceRepository, PathwayResultsRepository, NotificationService, PostResultsServiceMapper, PostResultsServiceServiceLogger);
         }
 
         public override Task When()
@@ -115,6 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             var expectedAssessment = expectedPathway.TqPathwayAssessments.FirstOrDefault();
             _actualResult.PathwayAssessmentId.Should().Be(expectedAssessment.Id);
             _actualResult.PathwayAssessmentSeries.Should().Be(expectedAssessment.AssessmentSeries.Name);
+            _actualResult.AppealEndDate.Should().Be(expectedAssessment.AssessmentSeries.AppealEndDate);
 
             var expectedResult = expectedAssessment.TqPathwayResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
             _actualResult.PathwayResultId.Should().Be(expectedResult.Id);

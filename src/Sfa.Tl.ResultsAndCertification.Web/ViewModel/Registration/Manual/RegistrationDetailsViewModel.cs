@@ -9,6 +9,7 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 using System.Linq;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
 {
@@ -24,6 +25,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public IEnumerable<string> SpecialismsDisplayName { get; set; }
         public int AcademicYear { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
+        public IEnumerable<AcademicYear> AcademicYears { get; set; }
+
         public bool ShowAssessmentEntriesLink { get { return Status == RegistrationPathwayStatus.Active;  } }
 
         private string ChangeStatusRouteName => Status == RegistrationPathwayStatus.Active ? RouteConstants.AmendActiveRegistration : RouteConstants.AmendWithdrawRegistration;
@@ -37,7 +40,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public SummaryItemModel SummaryProvider => new SummaryItemModel { Id = "provider", Title = RegistrationDetailsContent.Title_Provider_Text, Value = ProviderDisplayName, ActionText = ActionText, RouteName = RouteConstants.ChangeRegistrationProvider, RouteAttributes = ChangeLinkRouteAttributes };
         public SummaryItemModel SummaryCore => new SummaryItemModel { Id = "core", Title = RegistrationDetailsContent.Title_Core_Text, Value = PathwayDisplayName, ActionText = ActionText, RouteName = RouteConstants.ChangeRegistrationCore, RouteAttributes = ChangeLinkRouteAttributes };
         public SummaryListModel SummarySpecialisms => new SummaryListModel { Id = "specialisms", Title = RegistrationDetailsContent.Title_Specialism_Text, Value = SpecialismsDisplayName, ActionText = ActionText, RouteName = GetSpecialismRouteName, RouteAttributes = ChangeLinkRouteAttributes, HiddenText = GetSpecialismHiddenText };
-        public SummaryItemModel SummaryAcademicYear => new SummaryItemModel { Id = "academicyear", Title = RegistrationDetailsContent.Title_AcademicYear_Text, Value = EnumExtensions.GetDisplayName<AcademicYear>(AcademicYear), ActionText = ActionText, RouteName = RouteConstants.ChangeAcademicYear, RouteAttributes = ChangeLinkRouteAttributes };
+        public SummaryItemModel SummaryAcademicYear => new SummaryItemModel { Id = "academicyear", Title = RegistrationDetailsContent.Title_AcademicYear_Text, Value = GetAcademicYearName, ActionText = ActionText, RouteName = RouteConstants.ChangeAcademicYear, RouteAttributes = ChangeLinkRouteAttributes };
+
+        public string GetAcademicYearName => AcademicYears?.FirstOrDefault(a => a.Year == AcademicYear)?.Name;
 
         public string GetSpecialismHiddenText => (SpecialismsDisplayName == null || !SpecialismsDisplayName.Any()) ? RegistrationDetailsContent.Specialism_None_Selected_Text : null;
 

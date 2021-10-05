@@ -17,13 +17,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
                 if (!string.IsNullOrWhiteSpace(PathwayAssessmentSeries))
                     return IsResultExist ? string.Empty : AssessmentDetailsContent.Remove_Entry_Action_Link_Text;
                 else
-                    return AssessmentDetailsContent.Add_Entry_Action_Link_Text;
+                    return IsCoreEntryEligible ? AssessmentDetailsContent.Add_Entry_Action_Link_Text : null;
             } 
         }
 
         private string SpecialismAssessmentActionText { get { return null; } }
 
-        private string PathwayAssessmentSeriesText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? PathwayAssessmentSeries : AssessmentDetailsContent.Not_Specified_Text; } }
+        private string PathwayAssessmentSeriesText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? PathwayAssessmentSeries :
+                                                        IsCoreEntryEligible ? AssessmentDetailsContent.Not_Specified_Text : AssessmentDetailsContent.Available_After_Current_Assessment_Series; } }
         private string SpecialismAssessmentSeriesText { get { return AssessmentDetailsContent.Available_After_Autumn2021; } }
 
         private string PathwayAddAssessmentRoute { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? RouteConstants.RemoveCoreAssessmentEntry : RouteConstants.AddCoreAssessmentEntry; } }
@@ -38,11 +39,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public string PathwayDisplayName { get; set; }
         public string PathwayAssessmentSeries { get; set; }
         public int PathwayAssessmentId { get; set; }
+        public bool IsCoreEntryEligible { get; set; }
 
         public string SpecialismDisplayName { get; set; }
         public string SpecialismAssessmentSeries { get; set; }
 
         public bool IsResultExist { get; set; }
+        public bool HasAnyOutstandingPathwayPrsActivities { get; set; }
         public bool IsIndustryPlacementExist { get; set; }
 
         public RegistrationPathwayStatus PathwayStatus { get; set; }

@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Additional cookies.
+        /// </summary>
+        public static string Heading_Additional_Cookies {
+            get {
+                return ResourceManager.GetString("Heading_Additional_Cookies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change your settings.
         /// </summary>
         public static string Heading_Change_Your_Settings {
@@ -70,11 +79,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cookies that measure website usage.
+        ///   Looks up a localized string similar to Essential cookies.
         /// </summary>
-        public static string Heading_Cookies_That_Measure_Website {
+        public static string Heading_Essential_Cookies {
             get {
-                return ResourceManager.GetString("Heading_Cookies_That_Measure_Website", resourceCulture);
+                return ResourceManager.GetString("Heading_Essential_Cookies", resourceCulture);
             }
         }
         
@@ -102,15 +111,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         public static string Heading_Saving_Your_Consent {
             get {
                 return ResourceManager.GetString("Heading_Saving_Your_Consent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Strictly necessary cookies.
-        /// </summary>
-        public static string Heading_Strictly_Necessary {
-            get {
-                return ResourceManager.GetString("Heading_Strictly_Necessary", resourceCulture);
             }
         }
         
@@ -430,7 +430,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1 year.
+        ///   Looks up a localized string similar to 90 days.
         /// </summary>
         public static string Table_Saving_Consent_Expire_Row1 {
             get {
@@ -439,7 +439,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Help {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1 year.
+        ///   Looks up a localized string similar to 90 days.
         /// </summary>
         public static string Table_Saving_Consent_Expire_Row2 {
             get {

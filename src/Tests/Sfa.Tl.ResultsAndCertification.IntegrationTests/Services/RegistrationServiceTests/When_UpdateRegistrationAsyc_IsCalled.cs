@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
             TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, RegistrationMapper, RegistrationRepositoryLogger);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
 
             var newProvider = TlProviders.Last();
             _updateRegistrationRequest = new ManageRegistration
@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 AoUkprn = TlAwardingOrganisation.UkPrn,
                 ProviderUkprn = newProvider.UkPrn,
                 CoreCode = Pathway.LarId,
-                SpecialismCodes = new List<string>(),
+                SpecialismCodes = TlPathwaySpecialismCombinations.Select(s => s.TlSpecialism.LarId),
                 PerformedBy = "Test User",
                 HasProviderChanged = false
             };            
@@ -123,6 +123,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             foreach (var tlProvider in TlProviders)
             {
                 TqProviders.Add(ProviderDataProvider.CreateTqProvider(DbContext, tqAwardingOrganisation, tlProvider));
+            }
+            var combinations = new TlPathwaySpecialismCombinationBuilder().BuildList();
+            TlPathwaySpecialismCombinations = new List<TlPathwaySpecialismCombination>();
+            foreach (var (specialism, index) in Specialisms.Take(combinations.Count).Select((value, i) => (value, i)))
+            {
+                combinations[index].TlPathwayId = Pathway.Id;
+                combinations[index].TlPathway = Pathway;
+                combinations[index].TlSpecialismId = specialism.Id;
+                combinations[index].TlSpecialism = specialism;
+                TlPathwaySpecialismCombinations.AddRange(TlevelDataProvider.CreateTlPathwaySpecialismCombinationsList(DbContext, combinations));
             }
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             DbContext.SaveChangesAsync();

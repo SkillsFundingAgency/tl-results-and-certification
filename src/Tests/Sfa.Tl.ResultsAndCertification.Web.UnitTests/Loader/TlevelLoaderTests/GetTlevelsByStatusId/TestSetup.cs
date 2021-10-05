@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

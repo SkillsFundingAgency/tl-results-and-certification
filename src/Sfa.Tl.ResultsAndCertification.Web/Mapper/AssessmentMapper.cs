@@ -42,11 +42,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
                 .ForMember(d => d.ProviderDisplayName, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"))
                 .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"))
-                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.PathwayAssessmentSeries))
+                .ForMember(d => d.IsCoreEntryEligible, opts => opts.MapFrom(s => s.IsCoreEntryEligible))
+                .ForMember(d => d.PathwayAssessmentSeries, opts => opts.MapFrom(s => s.IsCoreEntryEligible ? s.PathwayAssessmentSeries : null))
                 .ForMember(d => d.PathwayAssessmentId, opts => opts.MapFrom(s => s.PathwayAssessmentId))
                 .ForMember(d => d.SpecialismDisplayName, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.SpecialismLarId) ? $"{s.SpecialismName} ({s.SpecialismLarId})" : null))
                 .ForMember(d => d.SpecialismAssessmentSeries, opts => opts.MapFrom(s => s.SpecialismAssessmentSeries))
                 .ForMember(d => d.IsResultExist, opts => opts.MapFrom(s => s.PathwayResultId > 0))
+                .ForMember(d => d.HasAnyOutstandingPathwayPrsActivities, opts => opts.MapFrom(s => s.HasAnyOutstandingPathwayPrsActivities))
                 .ForMember(d => d.IsIndustryPlacementExist, opts => opts.MapFrom(s => s.IsIndustryPlacementExist))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Status));
 

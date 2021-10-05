@@ -70,6 +70,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Before you start.
+        /// </summary>
+        public static string Before_You_Start_Text {
+            get {
+                return ResourceManager.GetString("Before_You_Start_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I cannot find a provider.
+        /// </summary>
+        public static string Collapsable_I_Cannot_Find_Provider {
+            get {
+                return ResourceManager.GetString("Collapsable_I_Cannot_Find_Provider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to contact us.
+        /// </summary>
+        public static string Contact_Us {
+            get {
+                return ResourceManager.GetString("Contact_Us", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Continue_Button_Label {
@@ -79,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Find a provider.
+        ///   Looks up a localized string similar to Which provider do you want to manage?.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -88,11 +115,74 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Find a provider page.
+        ///   Looks up a localized string similar to Manage providers.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  before adding them to providers..
+        /// </summary>
+        public static string Para_Before_Adding_Them_To_Providers {
+            get {
+                return ResourceManager.GetString("Para_Before_Adding_Them_To_Providers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to confirm your T Levels.
+        /// </summary>
+        public static string Para_Confirm_Your_TLevels {
+            get {
+                return ResourceManager.GetString("Para_Confirm_Your_TLevels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you cannot find a provider, please check you have entered the organisation&apos;s name correctly..
+        /// </summary>
+        public static string Para_If_You_Cannot_Find_A_Provider {
+            get {
+                return ResourceManager.GetString("Para_If_You_Cannot_Find_A_Provider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you have already added a provider, you can view or change the T Levels they offer..
+        /// </summary>
+        public static string Para_If_You_Have_Already_Added_A_Provider {
+            get {
+                return ResourceManager.GetString("Para_If_You_Have_Already_Added_A_Provider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you have not added a provider, you can add them and select the T Levels they offer..
+        /// </summary>
+        public static string Para_If_You_Have_Not_Added_A_Provider_You_Can_Add_Them {
+            get {
+                return ResourceManager.GetString("Para_If_You_Have_Not_Added_A_Provider_You_Can_Add_Them", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if you still cannot find it, .
+        /// </summary>
+        public static string Para_If_You_Still_Cannot_Find_It {
+            get {
+                return ResourceManager.GetString("Para_If_You_Still_Cannot_Find_It", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You should .
+        /// </summary>
+        public static string Para_You_Should {
+            get {
+                return ResourceManager.GetString("Para_You_Should", resourceCulture);
             }
         }
         
@@ -133,20 +223,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Provider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us which T Levels a provider will offer..
+        ///   Looks up a localized string similar to View existing providers.
         /// </summary>
-        public static string Section_Information_Text {
+        public static string View_Existing_Providers_Button {
             get {
-                return ResourceManager.GetString("Section_Information_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View providers you have already set up.
-        /// </summary>
-        public static string View_Providers_Link_Text {
-            get {
-                return ResourceManager.GetString("View_Providers_Link_Text", resourceCulture);
+                return ResourceManager.GetString("View_Existing_Providers_Button", resourceCulture);
             }
         }
     }

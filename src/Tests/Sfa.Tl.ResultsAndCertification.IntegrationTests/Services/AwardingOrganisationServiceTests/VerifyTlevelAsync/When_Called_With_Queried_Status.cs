@@ -104,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
 
         private void SeedNotificationTestData()
         {
-            NotificationDataProvider.CreateNotificationTemplate(DbContext);
+            NotificationDataProvider. CreateNotificationTemplates(DbContext);
             DbContext.SaveChangesAsync();
         }
     }

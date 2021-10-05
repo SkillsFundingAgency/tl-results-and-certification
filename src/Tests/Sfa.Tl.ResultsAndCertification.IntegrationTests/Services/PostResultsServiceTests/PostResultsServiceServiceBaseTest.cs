@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Notify.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -18,12 +21,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
     public abstract class PostResultsServiceServiceBaseTest : BaseTest<TlProvider>
     {
         protected PostResultsServiceService PostResultsServiceService;
-
+        protected IPostResultsServiceRepository PostResultsServiceRepository;
+        protected IRepository<TqPathwayResult> PathwayResultsRepository;
+        protected IAsyncNotificationClient NotificationsClient;
+        protected ILogger<NotificationService> NotificationLogger;
+        protected IRepository<NotificationTemplate> NotificationTemplateRepository;
+        protected ILogger<GenericRepository<NotificationTemplate>> NotificationTemplateRepositoryLogger;
+        protected ILogger<INotificationService> NotificationServiceLogger;
+        protected INotificationService NotificationService;
         protected IMapper PostResultsServiceMapper;
         protected ILogger<PostResultsServiceService> PostResultsServiceServiceLogger;
-        protected IPostResultsServiceRepository PostResultsServiceRepository;
-        protected ILogger<PostResultsServiceRepository> PostResultsServiceRepositoryLogger;
-        protected ILogger<GenericRepository<Batch>> BatchRepositoryLogger;
+        protected ResultsAndCertificationConfiguration Configuration;
 
         // Data Seed variables
         protected TlAwardingOrganisation TlAwardingOrganisation;
@@ -37,11 +45,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
         protected List<TqPathwayAssessment> TqPathwayAssessment;
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
+        protected IList<NotificationTemplate> NotificationTemplates;
 
         protected virtual void CreateMapper()
         {
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(PostResultsServiceMapper).Assembly));
             PostResultsServiceMapper = new Mapper(mapperConfig);
+        }
+
+        protected virtual void SeedNotificationTestData()
+        {
+            NotificationTemplates = NotificationDataProvider.CreateNotificationTemplates(DbContext);
+            DbContext.SaveChangesAsync();
         }
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
@@ -124,7 +139,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             return tqPathwayAssessments;
         }
 
-        public List<TqPathwayResult> GetPathwayResultDataToProcess(TqPathwayAssessment pathwayAssessment, bool seedPathwayResultsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
+        public List<TqPathwayResult> GetPathwayResultDataToProcess(TqPathwayAssessment pathwayAssessment, bool seedPathwayResultsAsActive = true, bool isHistorical = false, PrsStatus? prsStatus = null, bool isBulkUpload = true)
         {
             var tqPathwayResults = new List<TqPathwayResult>();
 
@@ -136,6 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                 pathwayResult.EndDate = DateTime.UtcNow.AddDays(-1);
 
                 var tqPathwayResultHistorical = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, pathwayResult);
+                tqPathwayResultHistorical.PrsStatus = prsStatus;
                 tqPathwayResults.Add(tqPathwayResultHistorical);
             }
 
@@ -143,8 +159,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
             var tqPathwayResult = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, activePathwayResult);
             if (!seedPathwayResultsAsActive)
             {
-                tqPathwayResult.IsOptedin = pathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn;
+                tqPathwayResult.IsOptedin = pathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
                 tqPathwayResult.EndDate = DateTime.UtcNow;
+            }
+            else
+            {
+                tqPathwayResult.PrsStatus = prsStatus;
             }
 
             tqPathwayResults.Add(tqPathwayResult);
@@ -158,6 +178,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PostResultsSe
                 DbContext.SaveChanges();
 
             return TqPathwayAssessment;
+        }
+
+        public List<TqPathwayResult> SeedPathwayResultsData(List<TqPathwayResult> pathwayResults, bool saveChanges = true)
+        {
+            var tqPathwayResults = TqPathwayResultDataProvider.CreateTqPathwayResults(DbContext, pathwayResults);
+            if (saveChanges)
+                DbContext.SaveChanges();
+
+            return tqPathwayResults;
         }
     }
 

@@ -25,6 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRegistrationRepository _tqRegistrationRepository;
         private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
         private readonly IRepository<TqRegistrationSpecialism> _tqRegistrationSpecialismRepository;
+        private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
         private readonly ILogger<IRegistrationRepository> _logger;        
 
@@ -32,6 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             IRegistrationRepository tqRegistrationRepository,
             IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
             IRepository<TqRegistrationSpecialism> tqRegistrationSpecialismRepository,
+            ICommonService commonService,
             IMapper mapper, 
             ILogger<IRegistrationRepository> logger
             )
@@ -40,6 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _tqRegistrationRepository = tqRegistrationRepository;
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
             _tqRegistrationSpecialismRepository = tqRegistrationSpecialismRepository;
+            _commonService = commonService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -48,9 +51,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var response = new List<RegistrationRecordResponse>();
             var aoProviderTlevels = await GetAllTLevelsByAoUkprnAsync(aoUkprn);
-
+            var currentAcademicYears = await _commonService.GetCurrentAcademicYearsAsync();
+            
             foreach (var registrationData in validRegistrationsData)
             {
+                var academicYear = currentAcademicYears.FirstOrDefault(x => x.Name.Equals(registrationData.AcademicYearName, StringComparison.InvariantCultureIgnoreCase));
+                if (academicYear == null)
+                {
+                    response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln, ValidationMessages.AcademicYearMustBeCurrentOne));
+                    continue;
+                }
+                else
+                    registrationData.AcademicYear = academicYear.Year;
+
                 var isProviderRegisteredWithAwardingOrganisation = aoProviderTlevels.Any(t => t.ProviderUkprn == registrationData.ProviderUkprn);
                 if (!isProviderRegisteredWithAwardingOrganisation)
                 {
@@ -75,6 +88,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln, ValidationMessages.SpecialismNotValidWithCore));
                         continue;
                     }
+
+                    var isSpecialismPartOfCouplets = IsSpecialismPartOfCouplet(technicalQualification.TlSpecialismCombinations, registrationData.SpecialismCodes);
+
+                    if (isSpecialismPartOfCouplets)
+                    {
+                        if (!IsValidCouplet(technicalQualification.TlSpecialismCombinations, registrationData.SpecialismCodes))
+                        {
+                            response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln, registrationData.SpecialismCodes.Count() == 1 ? ValidationMessages.SpecialismCannotBeSelectedAsSingleOption : ValidationMessages.SpecialismIsNotValid));
+                            continue;
+                        }
+                    }
                 }
 
                 response.Add(new RegistrationRecordResponse
@@ -87,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     TqProviderId = technicalQualification.TqProviderId,
                     TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
                     TlPathwayId = technicalQualification.TlPathwayId,
-                    TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds.Where(s => registrationData.SpecialismCodes.Contains(s.Value)),
+                    TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds.Where(s => registrationData.SpecialismCodes.Any(sc => sc.Equals(s.Value, StringComparison.InvariantCultureIgnoreCase))),
                     TlAwardingOrganisatonId = technicalQualification.TlAwardingOrganisatonId,
                     TlProviderId = technicalQualification.TlProviderId
                 });
@@ -121,8 +145,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     return AddStage3ValidationError(0, registrationData.Uln, ValidationMessages.SpecialismNotValidWithCore);
                 }
-            }
 
+                var isSpecialismPartOfCouplets = IsSpecialismPartOfCouplet(technicalQualification.TlSpecialismCombinations, registrationData.SpecialismCodes);
+
+                if (isSpecialismPartOfCouplets)
+                {
+                    if (!IsValidCouplet(technicalQualification.TlSpecialismCombinations, registrationData.SpecialismCodes))
+                    {
+                        return AddStage3ValidationError(0, registrationData.Uln, registrationData.SpecialismCodes.Count() == 1 ? ValidationMessages.SpecialismCannotBeSelectedAsSingleOption : ValidationMessages.SpecialismIsNotValid);
+                    }
+                }
+            }
+            
             return new RegistrationRecordResponse
             {
                 Uln = registrationData.Uln,
@@ -133,7 +167,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 TqProviderId = technicalQualification.TqProviderId,
                 TqAwardingOrganisationId = technicalQualification.TqAwardingOrganisationId,
                 TlPathwayId = technicalQualification.TlPathwayId,
-                TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds.Where(s => registrationData.SpecialismCodes.Contains(s.Value)),
+                TlSpecialismLarIds = technicalQualification.TlSpecialismLarIds.Where(s => registrationData.SpecialismCodes.Any(sc => sc.Equals(s.Value, StringComparison.InvariantCultureIgnoreCase))),
                 TlAwardingOrganisatonId = technicalQualification.TlAwardingOrganisatonId,
                 TlProviderId = technicalQualification.TlProviderId
             };
@@ -691,20 +725,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private async Task<IList<TechnicalQualificationDetails>> GetAllTLevelsByAoUkprnAsync(long ukprn)
         {
             var result = await _tqProviderRepository.GetManyAsync(p => p.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn,
-                p => p.TlProvider, p => p.TqAwardingOrganisation, p => p.TqAwardingOrganisation.TlAwardingOrganisaton,
-                p => p.TqAwardingOrganisation.TlPathway, p => p.TqAwardingOrganisation.TlPathway.TlSpecialisms).Select(t => new TechnicalQualificationDetails
-                {
-                    ProviderUkprn = t.TlProvider.UkPrn,
-                    TlPathwayId = t.TqAwardingOrganisation.TlPathway.Id,
-                    PathwayLarId = t.TqAwardingOrganisation.TlPathway.LarId,
-                    TqProviderId = t.Id,
-                    TlProviderId = t.TlProviderId,
-                    TqAwardingOrganisationId = t.TqAwardingOrganisationId,
-                    TlAwardingOrganisatonId = t.TqAwardingOrganisation.TlAwardingOrganisatonId,
-                    TlSpecialismLarIds = t.TqAwardingOrganisation.TlPathway.TlSpecialisms.Select(s => new KeyValuePair<int, string>(s.Id, s.LarId))
-                }).ToListAsync();
+               p => p.TlProvider, p => p.TqAwardingOrganisation, p => p.TqAwardingOrganisation.TlAwardingOrganisaton,
+               p => p.TqAwardingOrganisation.TlPathway, p => p.TqAwardingOrganisation.TlPathway.TlPathwaySpecialismCombinations,
+               p => p.TqAwardingOrganisation.TlPathway.TlSpecialisms).ToListAsync();
 
-            return result;
+            return _mapper.Map<IList<TechnicalQualificationDetails>>(result);
         }
 
         private IList<TqRegistrationSpecialism> MapSpecialisms(IEnumerable<KeyValuePair<int, string>> specialismsList, string performedBy, int specialismStartIndex, bool isBulkUpload = true)
@@ -914,6 +939,29 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Uln = uln.ToString(),
                 ErrorMessage = errorMessage
             };
+        }
+
+        private bool IsSpecialismPartOfCouplet(IEnumerable<KeyValuePair<int, string>> coupletPairs, IEnumerable<string> specialismCodesToRegister)
+        {
+            if (!coupletPairs.Any() || !specialismCodesToRegister.Any()) return false;
+
+            var coupletSpecialismCodes = new List<string>();
+
+            coupletPairs.Select(x => x.Value).ToList().ForEach(c => { coupletSpecialismCodes.AddRange(c.Split(Constants.PipeSeperator)); });
+
+            var result = specialismCodesToRegister.Any(s => coupletSpecialismCodes.Any(c => c.Equals(s, StringComparison.InvariantCultureIgnoreCase)));
+            return result;
+        }
+
+        private bool IsValidCouplet(IEnumerable<KeyValuePair<int, string>> coupletPairs, IEnumerable<string> specialismCodesToRegister)
+        {
+            if (!coupletPairs.Any() || !specialismCodesToRegister.Any()) return false;
+
+            var coupletSpecialismCodes = coupletPairs.Select(x => x.Value).ToList();
+
+            var hasValidSpecialismCodes = coupletSpecialismCodes.Any(cs => specialismCodesToRegister.Except(cs.Split(Constants.PipeSeperator), StringComparer.InvariantCultureIgnoreCase).Count() == 0 );
+            var hasValidCoupletSpecialismCodes = coupletSpecialismCodes.Any(cs => cs.Split(Constants.PipeSeperator).Except(specialismCodesToRegister, StringComparer.InvariantCultureIgnoreCase).Count() == 0);
+            return hasValidSpecialismCodes && hasValidCoupletSpecialismCodes;
         }
 
         #endregion

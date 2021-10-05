@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Notify.Interfaces;
+using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -29,11 +33,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected TqAwardingOrganisation TqAwardingOrganisation;
         protected List<TqPathwayAssessment> TqPathwayAssessment;
         protected IList<AssessmentSeries> AssessmentSeries;
+        protected IList<AcademicYear> AcademicYears;
         protected TqProvider TqProvider;
         protected IList<TlProvider> TlProviders;
         protected IList<TqProvider> TqProviders;
         protected IList<TlLookup> TlLookup;
         protected IList<Qualification> Qualifications;
+        protected List<TlPathwaySpecialismCombination> TlPathwaySpecialismCombinations;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IProviderRepository ProviderRepository;
         protected IRegistrationRepository RegistrationRepository;
@@ -43,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected ILogger<RegistrationRepository> RegistrationRepositoryLogger;
         protected ILogger<GenericRepository<TqRegistrationPathway>> TqRegistrationPathwayRepositoryLogger;
         protected ILogger<GenericRepository<TqRegistrationSpecialism>> TqRegistrationSpecialismRepositoryLogger;
-
+        protected ICommonService CommonService;
         protected IMapper RegistrationMapper;
 
         protected virtual void CreateMapper()
@@ -51,6 +57,30 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly));
             RegistrationMapper = new Mapper(mapperConfig);
         }
+
+        protected void CreateCommonService()
+        {
+            var commonServiceLogger = new Logger<CommonService>(new NullLoggerFactory());
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CommonMapper).Assembly));
+            var commonMapper = new Mapper(mapperConfig);
+
+            var tlLookupRepositoryLogger = new Logger<GenericRepository<TlLookup>>(new NullLoggerFactory());
+            var tlLookupRepository = new GenericRepository<TlLookup>(tlLookupRepositoryLogger, DbContext);
+
+            var functionLogRepositoryLogger = new Logger<GenericRepository<FunctionLog>>(new NullLoggerFactory());
+            var functionLogRepository = new GenericRepository<FunctionLog>(functionLogRepositoryLogger, DbContext);
+            var commonRepository = new CommonRepository(DbContext);
+
+            var notificationsClient = Substitute.For<IAsyncNotificationClient>();
+            var notificationLogger = new Logger<NotificationService>(new NullLoggerFactory());
+            var notificationTemplateRepositoryLogger = new Logger<GenericRepository<NotificationTemplate>>(new NullLoggerFactory());
+            var notificationTemplateRepository = new GenericRepository<NotificationTemplate>(notificationTemplateRepositoryLogger, DbContext);
+            var notificationService = new NotificationService(notificationTemplateRepository, notificationsClient, notificationLogger);
+
+            var configuration = new ResultsAndCertificationConfiguration { TlevelQueriedSupportEmailAddress = "test@test.com" };
+
+            CommonService = new CommonService(commonServiceLogger, commonMapper, tlLookupRepository, functionLogRepository, commonRepository, notificationService, configuration);
+        } 
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
@@ -62,6 +92,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             TlProvider = ProviderDataProvider.CreateTlProvider(DbContext);
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
+            AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
+
+            var combinations = new TlPathwaySpecialismCombinationBuilder().BuildList();
+            TlPathwaySpecialismCombinations = new List<TlPathwaySpecialismCombination>();
+            foreach (var (specialism, index) in Specialisms.Take(combinations.Count).Select((value, i) => (value, i)))
+            {
+                combinations[index].TlPathwayId = Pathway.Id;
+                combinations[index].TlPathway = Pathway;
+                combinations[index].TlSpecialismId = specialism.Id;
+                combinations[index].TlSpecialism = specialism;
+                TlPathwaySpecialismCombinations.AddRange(TlevelDataProvider.CreateTlPathwaySpecialismCombinationsList(DbContext, combinations));
+            }
             DbContext.SaveChangesAsync();
         }
 

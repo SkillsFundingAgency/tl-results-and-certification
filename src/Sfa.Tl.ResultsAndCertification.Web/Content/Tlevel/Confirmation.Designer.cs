@@ -61,6 +61,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add T Levels.
+        /// </summary>
+        public static string Add_Tlevels {
+            get {
+                return ResourceManager.GetString("Add_Tlevels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back to home.
+        /// </summary>
+        public static string Button_Back_To_Home {
+            get {
+                return ResourceManager.GetString("Button_Back_To_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back to T Levels.
+        /// </summary>
+        public static string Button_Back_To_Tlevels {
+            get {
+                return ResourceManager.GetString("Button_Back_To_Tlevels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Review another T Level.
+        /// </summary>
+        public static string Button_Review_Another_Tlevel {
+            get {
+                return ResourceManager.GetString("Button_Review_Another_Tlevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to confirmed.
         /// </summary>
         public static string Confirmed_Text {
@@ -70,29 +106,56 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have no more T Levels to review..
+        ///   Looks up a localized string similar to confirmed T Levels.
         /// </summary>
-        public static string Finished_Reviewing_All_Tlevels_Text {
+        public static string Confirmed_Tlevels {
             get {
-                return ResourceManager.GetString("Finished_Reviewing_All_Tlevels_Text", resourceCulture);
+                return ResourceManager.GetString("Confirmed_Tlevels", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You still have more T Levels to review..
-        /// </summary>
-        public static string More_Tlevels_Text {
-            get {
-                return ResourceManager.GetString("More_Tlevels_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to T Level details confirmed page.
+        ///   Looks up a localized string similar to T Level Confirmed.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All T Levels reviewed.
+        /// </summary>
+        public static string Page_Title_All_Tlevels_Reviewed {
+            get {
+                return ResourceManager.GetString("Page_Title_All_Tlevels_Reviewed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can still query this T Level’s details at a later date..
+        /// </summary>
+        public static string Para_You_Can_Still_Query_This_Tlevel_Details {
+            get {
+                return ResourceManager.GetString("Para_You_Can_Still_Query_This_Tlevel_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have more T levels to review..
+        /// </summary>
+        public static string Para_You_Have_More_Tlevels_To_Review {
+            get {
+                return ResourceManager.GetString("Para_You_Have_More_Tlevels_To_Review", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have reviewed all of your T Levels.
+        /// </summary>
+        public static string Para_You_Have_Reviewed_All_Of_Your_Tlevels {
+            get {
+                return ResourceManager.GetString("Para_You_Have_Reviewed_All_Of_Your_Tlevels", resourceCulture);
             }
         }
         
@@ -124,11 +187,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Review another T Level.
+        ///   Looks up a localized string similar to Register.
         /// </summary>
-        public static string Review_Another_Tlevel_Button_Text {
+        public static string Register {
             get {
-                return ResourceManager.GetString("Review_Another_Tlevel_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Register", resourceCulture);
             }
         }
         
@@ -142,11 +205,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View your T Levels.
+        ///   Looks up a localized string similar to  to your providers.
         /// </summary>
-        public static string View_Your_Tlevels_Button_Text {
+        public static string To_Your_Providers {
             get {
-                return ResourceManager.GetString("View_Your_Tlevels_Button_Text", resourceCulture);
+                return ResourceManager.GetString("To_Your_Providers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View your .
+        /// </summary>
+        public static string View_Your {
+            get {
+                return ResourceManager.GetString("View_Your", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can now:.
+        /// </summary>
+        public static string You_Can_Now {
+            get {
+                return ResourceManager.GetString("You_Can_Now", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  your learners.
+        /// </summary>
+        public static string Your_Learners {
+            get {
+                return ResourceManager.GetString("Your_Learners", resourceCulture);
             }
         }
     }

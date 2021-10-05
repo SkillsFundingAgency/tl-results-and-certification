@@ -13,7 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
             ActualResult.TlevelsToReview.Should().NotBeNull();
             ActualResult.TlevelsToReview.Count().Should().Be(2);
             ActualResult.IsOnlyOneTlevelReviewPending.Should().BeFalse();
-            ActualResult.ShowViewReviewedTlevelsLink.Should().BeTrue();
         }
     }
 }

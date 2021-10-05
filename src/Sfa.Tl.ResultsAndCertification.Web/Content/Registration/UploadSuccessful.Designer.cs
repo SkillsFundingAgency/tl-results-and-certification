@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} amended registration.
         /// </summary>
         public static string Amended_Registrations_Singular_Text {
@@ -79,11 +88,56 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to registrations.
+        ///   Looks up a localized string similar to assessment periods.
         /// </summary>
-        public static string Back_To_Registrations_Button_Text {
+        public static string Assessment_Periods {
             get {
-                return ResourceManager.GetString("Back_To_Registrations_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Assessment_Periods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back to home.
+        /// </summary>
+        public static string Button_Home {
+            get {
+                return ResourceManager.GetString("Button_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload another file.
+        /// </summary>
+        public static string Button_Upload_Another_File {
+            get {
+                return ResourceManager.GetString("Button_Upload_Another_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to by searching for a learner.
+        /// </summary>
+        public static string By_Searching_For_A_Learner {
+            get {
+                return ResourceManager.GetString("By_Searching_For_A_Learner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to for registered learners.
+        /// </summary>
+        public static string For_Registered_Learners {
+            get {
+                return ResourceManager.GetString("For_Registered_Learners", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to manage individual registrations.
+        /// </summary>
+        public static string Manage_Individual_Regisrations {
+            get {
+                return ResourceManager.GetString("Manage_Individual_Regisrations", resourceCulture);
             }
         }
         
@@ -106,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrations upload successful page.
+        ///   Looks up a localized string similar to Registrations upload success.
         /// </summary>
         public static string Page_Title {
             get {
@@ -115,7 +169,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrations upload successful.
+        ///   Looks up a localized string similar to You can now.
+        /// </summary>
+        public static string Para_You_Can_Now {
+            get {
+                return ResourceManager.GetString("Para_You_Can_Now", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registrations uploaded successfully.
         /// </summary>
         public static string Section_Heading {
             get {
@@ -201,6 +264,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Unchanged_Registrations_Text {
             get {
                 return ResourceManager.GetString("Unchanged_Registrations_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to upload another multiple registrations file.
+        /// </summary>
+        public static string Upload_Another_Multiple_Registrations_File {
+            get {
+                return ResourceManager.GetString("Upload_Another_Multiple_Registrations_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What happens next.
+        /// </summary>
+        public static string What_Happens_Next {
+            get {
+                return ResourceManager.GetString("What_Happens_Next", resourceCulture);
             }
         }
     }

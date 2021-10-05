@@ -28,13 +28,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         {
             // Parameters
             AoUkprn = 10011881;
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> 
-            { 
-                { 1111111111, RegistrationPathwayStatus.Active }, 
-                { 1111111112, RegistrationPathwayStatus.Active }, 
+            _ulns = new Dictionary<long, RegistrationPathwayStatus>
+            {
+                { 1111111111, RegistrationPathwayStatus.Active },
+                { 1111111112, RegistrationPathwayStatus.Active },
                 { 1111111113, RegistrationPathwayStatus.Withdrawn },
                 { 1111111114, RegistrationPathwayStatus.Active },
                 { 1111111115, RegistrationPathwayStatus.Active },
+                { 1111111116, RegistrationPathwayStatus.Active }
             };
 
             // Create mapper
@@ -44,11 +45,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsData(_ulns, TqProvider);
 
+
+            var currentYearUln = new List<long> { 1111111116 };
+            RegisterUlnForNextAcademicYear(_registrations, currentYearUln);
+
             // Assessments seed
             var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
             var tqSpecialismAssessmentsSeedData = new List<TqSpecialismAssessment>();
             var tqPathwayResultsSeedData = new List<TqPathwayResult>();
             var industryPlacementUln = 1111111115;
+            var profilesWithPrsStatus = new List<(long, PrsStatus?)> { (1111111111, null), (1111111112, null), (1111111113, null), (1111111114, PrsStatus.BeingAppealed), (1111111115, null) };
 
             foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111111 && x.UniqueLearnerNumber != industryPlacementUln))
             {
@@ -65,7 +71,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 }
 
                 // Build Pathway results
-                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessments, isLatestActive, isHistoricAssessent));
+                foreach (var pathwayAssessment in pathwayAssessments)
+                {
+                    var prsStatus = profilesWithPrsStatus.FirstOrDefault(p => p.Item1 == pathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber).Item2;
+                    tqPathwayResultsSeedData.AddRange(GetPathwayResultDataToProcess(pathwayAssessment, isLatestActive, isHistoricAssessent, prsStatus));
+                }
             }
 
             _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData, false);
@@ -96,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(long aoUkprn, long uln, int profileId, RegistrationPathwayStatus status, bool expectedResponse)
+        public async Task Then_Expected_Results_Are_Returned(long aoUkprn, long uln, int profileId, RegistrationPathwayStatus status, bool expectedResponse, bool isCoreEntryEligible)
         {
             await WhenAsync(aoUkprn, profileId);
 
@@ -177,10 +187,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 SpecialismAssessmentId = expectedSpecialismAssessment != null ? expectedSpecialismAssessment.Id : (int?)null,
                 Status = expectedPathway.Status,
 
-                PathwayResultId = expectedPathwayResult?.Id
+                PathwayResultId = expectedPathwayResult?.Id                
             };
 
             var expectedIsIndustryPlacementExist = expectedRegistration.TqRegistrationPathways.FirstOrDefault().IndustryPlacements.Any();
+            var expectedHasOutstandingPathwayPrsActivities = expectedPathway.TqPathwayAssessments.Any(p => p.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null && r.PrsStatus == PrsStatus.BeingAppealed));
 
             // Assert
             _result.ProfileId.Should().Be(expectedAssessmentDetails.ProfileId);
@@ -200,6 +211,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             _result.Status.Should().Be(expectedAssessmentDetails.Status);
             _result.PathwayResultId.Should().Be(expectedAssessmentDetails.PathwayResultId);
             _result.IsIndustryPlacementExist.Should().Be(expectedIsIndustryPlacementExist);
+            _result.HasAnyOutstandingPathwayPrsActivities.Should().Be(expectedHasOutstandingPathwayPrsActivities);
+            _result.IsCoreEntryEligible.Should().Be(isCoreEntryEligible);
         }
 
         public static IEnumerable<object[]> Data
@@ -209,25 +222,28 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 return new[]
                 {
                     // Uln not found
-                    new object[] { 10011881, 0000000000, 0, RegistrationPathwayStatus.Active, false },
+                    new object[] { 10011881, 0000000000, 0, RegistrationPathwayStatus.Active, false, false },
 
                     // Uln not found for registered AoUkprn
-                    new object[] { 00000000, 1111111111, 1, RegistrationPathwayStatus.Active, false },
+                    new object[] { 00000000, 1111111111, 1, RegistrationPathwayStatus.Active, false, false },
                     
                     // Uln: 1111111111 - Registration(Active) but no asessment entries for pathway and specialism
-                    new object[] { 10011881, 1111111111, 1, RegistrationPathwayStatus.Active, true },
+                    new object[] { 10011881, 1111111111, 1, RegistrationPathwayStatus.Active, true, true },
 
                     // Uln: 1111111112 - Registration(Active), TqPathwayAssessments(Active + History) and TqSpecialismAssessments(Active + History)
-                    new object[] { 10011881, 1111111112, 2, RegistrationPathwayStatus.Active, true },
+                    new object[] { 10011881, 1111111112, 2, RegistrationPathwayStatus.Active, true, true },
 
                     // Uln: 1111111113 - Registration(Withdrawn), TqPathwayAssessments(Withdrawn) and TqSpecialismAssessments(Withdrawn)
-                    new object[] { 10011881, 1111111113, 3, RegistrationPathwayStatus.Withdrawn, true },
+                    new object[] { 10011881, 1111111113, 3, RegistrationPathwayStatus.Withdrawn, true, true },
 
                     // Uln: 1111111114 - Registration(Active), TqPathwayAssessments(Active), TqResult (Active)
-                    new object[] { 10011881, 1111111114, 4, RegistrationPathwayStatus.Active, true },
+                    new object[] { 10011881, 1111111114, 4, RegistrationPathwayStatus.Active, true, true },
 
                     // Uln: 1111111115 - Registration(Active) + IndustryPlacement(Completed)
-                    new object[] { 10011881, 1111111115, 5, RegistrationPathwayStatus.Active, true },
+                    new object[] { 10011881, 1111111115, 5, RegistrationPathwayStatus.Active, true, true },
+
+                    // IsCoreEntryEligible 
+                    new object[] { 10011881, 1111111116, 6, RegistrationPathwayStatus.Active, true, false },
                 };
             }
         }

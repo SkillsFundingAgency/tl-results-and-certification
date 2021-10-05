@@ -1,0 +1,50 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels.QueriedTlevelsViewModel
+@inject Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper.IWebConfigurationService ConfigurationService
+
+@{
+    ViewData["Title"] = QueriedTlevels.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:breadcrumb model="Model.BreadCrumb"></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">@QueriedTlevels.Heading_Queried_Tlevels</h1>
+        <p class="govuk-body">@QueriedTlevels.Para_Tlevels_You_Have_Asked_To_Change</p>
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-7">
+            @foreach (var tlevel in Model.Tlevels)
+            {
+                <div class="govuk-summary-list__row">
+                    <dd class="govuk-summary-list__value">
+                        @tlevel.TlevelTitle
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" asp-route="TlevelQueriedDetails" asp-route-id="@tlevel.PathwayId">
+                            @ViewAll.View_Link_Text<span class="govuk-visually-hidden"> @tlevel.TlevelTitle</span>
+                        </a>
+                    </dd>
+                </div>
+            }
+        </dl>
+
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">@QueriedTlevels.Dropout_Link_Cannot_Find_Tlevel</span>
+            </summary>
+            <div class="govuk-details__text">
+                @QueriedTlevels.Dropout_Para_If_You_Cannot_Find_Check
+                <a id="confirmedLink" asp-route="ConfirmedTlevels" class="govuk-link">@QueriedTlevels.Link_Confirmed</a> @QueriedTlevels.Dropout_Text_Or_Have
+                <a id="reviewLink" asp-route="ReviewTlevels" class="govuk-link">@QueriedTlevels.Link_Review</a> @QueriedTlevels.Dropout_Text_It<br><br>
+
+                @QueriedTlevels.Dropout_Para_If_You_Still_Cannot_Find_ContactUs <a id="contactusLink" href="mailto: @ConfigurationService.GetTechnicalSupportEmailAddress()?subject=@QueriedTlevels.Email_Subject_I_Cannot_Find_Tlevel" class="govuk-link">@QueriedTlevels.Link_ContactUs</a>@QueriedTlevels.Fullstop
+            </div>
+        </details>
+
+        <a id="tLevelsButton" class="govuk-button" role="button" asp-route="TlevelsDashboard">@QueriedTlevels.Button_Back_To_Tlevels</a>
+    </div>
+</div>

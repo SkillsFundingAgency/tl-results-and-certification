@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     ProcessLearningEvents(qualifications, learnerRecord);
 
-                    var modifiedProfile = ProcessProfileAndQualificationsAchieved(learnerRecord, registrationProfile);
+                    var modifiedProfile = ProcessProfileAndQualificationsAchieved(qualifications, learnerRecord, registrationProfile);
 
                     if (modifiedProfile != null)
                         profilesAndQualsToUpdate.Add(modifiedProfile);
@@ -139,14 +139,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     learnerEvent.IsQualificationAllowed = true;
                     learnerEvent.IsAchieved = qualificationGrade.IsAllowable;
                     learnerEvent.QualificationGradeId = qualificationGrade.Id;
+                    learnerEvent.GradeRank = qualificationGrade.GradeRank;
                     learnerEvent.QualificationId = qualification.Id;
                     learnerEvent.IsEnglishSubject = qualification.TlLookup?.Code.Equals("Eng", StringComparison.InvariantCultureIgnoreCase) ?? false;
                     learnerEvent.IsMathsSubject = qualification.TlLookup?.Code.Equals("Math", StringComparison.InvariantCultureIgnoreCase) ?? false;
                 }
             }
-        }
+        }        
 
-        private static TqRegistrationProfile ProcessProfileAndQualificationsAchieved(LearnerRecordDetails learnerRecord, TqRegistrationProfile profile)
+        private static TqRegistrationProfile ProcessProfileAndQualificationsAchieved(List<Qualification> qualifications, LearnerRecordDetails learnerRecord, TqRegistrationProfile profile)
         {
             if (learnerRecord.IsLearnerVerified == false && learnerRecord.IsLearnerVerified == profile.IsLearnerVerified)
                 return null;
@@ -174,12 +175,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                         if (existingQualificationAchieved != null)
                         {
-                            if (existingQualificationAchieved.QualificationGradeId != learnerLearningEvent.QualificationGradeId || existingQualificationAchieved.IsAchieved != learnerLearningEvent.IsAchieved)
+                            var existingQualification = qualifications.FirstOrDefault(q => q.Id == existingQualificationAchieved.QualificationId);
+                            var existingQualificationGrade = existingQualification?.QualificationType?.QualificationGrades?.FirstOrDefault(g => g.Id == existingQualificationAchieved.QualificationGradeId);
+                            var existingQualificationGradeRank = existingQualificationGrade?.GradeRank ?? 0;
+
+                            if (learnerLearningEvent.QualificationGradeId != existingQualificationAchieved.QualificationGradeId && learnerLearningEvent.GradeRank < existingQualificationGradeRank)
                             {
                                 existingQualificationAchieved.QualificationGradeId = learnerLearningEvent.QualificationGradeId;
                                 existingQualificationAchieved.IsAchieved = learnerLearningEvent.IsAchieved;
-                                existingQualificationAchieved.ModifiedBy = learnerRecord.PerformedBy;
-                                existingQualificationAchieved.ModifiedOn = DateTime.UtcNow;
+                                
+                                if (existingQualificationAchieved.Id > 0)
+                                {
+                                    existingQualificationAchieved.ModifiedBy = learnerRecord.PerformedBy;
+                                    existingQualificationAchieved.ModifiedOn = DateTime.UtcNow;
+                                }
                                 isQualificationAchievedChanged = true;
                             }
                         }

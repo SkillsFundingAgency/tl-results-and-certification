@@ -12,12 +12,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 {
     public class When_Cache_Found : TestSetup
     {
-        private readonly long uln = 1234567890;
+        private readonly long _uln = 1234567890;
         private PrsUlnWithdrawnViewModel _mockCache = null;
 
         public override void Given()
         {
-            _mockCache = new PrsUlnWithdrawnViewModel { Uln = uln, Firstname = "Test", Lastname = "User", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Provider", ProviderUkprn = 985647841, TlevelTitle = "Title" };
+            _mockCache = new PrsUlnWithdrawnViewModel { Uln = _uln, Firstname = "Test", Lastname = "User", DateofBirth = DateTime.UtcNow.AddYears(-30), ProviderName = "Provider", ProviderUkprn = 985647841, TlevelTitle = "Title" };
             CacheService.GetAndRemoveAsync<PrsUlnWithdrawnViewModel>(CacheKey).Returns(_mockCache);
         }
 

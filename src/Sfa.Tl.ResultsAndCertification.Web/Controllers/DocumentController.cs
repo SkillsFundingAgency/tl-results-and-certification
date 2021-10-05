@@ -24,10 +24,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }        
 
         [HttpGet]
-        [Route("download-registration-data-format-and-rules-guide-file", Name = RouteConstants.DownloadRegistrationDataFormatAndRulesGuide)]
+        [Route("tlevels-registration-data-format-and-rules", Name = RouteConstants.DownloadRegistrationDataFormatAndRulesGuide)]
         public async Task<IActionResult> DownloadRegistrationDataFormatAndRulesGuideAsync()
         {
-            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Registrations_Data_Format_And_Rules_Guide_File_Name_Text;
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Registrations_Data_Format_And_Rules_File_Name;
             var fileStream = await _documentLoader.GetBulkUploadRegistrationsTechSpecFileAsync(fileName);
             if (fileStream == null)
             {
@@ -43,10 +43,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("download-assessment-entries-data-format-and-rules-guide-file", Name = RouteConstants.DownloadAssessmentEntriesDataFormatAndRulesGuide)]
+        [Route("tlevels-assessment-entries-data-format-and-rules", Name = RouteConstants.DownloadAssessmentEntriesDataFormatAndRulesGuide)]
         public async Task<IActionResult> DownloadAssessmentEntriesDataFormatAndRulesGuideAsync()
         {
-            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Assessment_Entry_Data_Format_And_Rules_Guide_File_Name_Text;
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Assessment_Entry_Data_Format_And_Rules_File_Name;
             var fileStream = await _documentLoader.GetBulkUploadAssessmentEntriesTechSpecFileAsync(fileName);
             if (fileStream == null)
             {
@@ -62,10 +62,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("download-results-data-format-and-rules-guide-file", Name = RouteConstants.DownloadResultsDataFormatAndRulesGuide)]
+        [Route("tlevels-results-data-format-and-rules", Name = RouteConstants.DownloadResultsDataFormatAndRulesGuide)]
         public async Task<IActionResult> DownloadResultsDataFormatAndRulesGuideAsync()
         {
-            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Results_Data_Format_And_Rules_Guide_File_Name_Text;
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Data_Format_And_Rules_File_Name;
             var fileStream = await _documentLoader.GetTechSpecFileAsync(BlobStorageConstants.ResultsFolderName, fileName);
             if (fileStream == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);

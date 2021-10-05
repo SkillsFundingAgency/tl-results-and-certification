@@ -6,11 +6,14 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contract = Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
@@ -20,25 +23,29 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IMapper _mapper;
         private readonly IRepository<TlLookup> _tlLookupRepository;
         private readonly IRepository<FunctionLog> _functionLogRepository;
-        private readonly ICommonRepository _commonRepository;        
+        private readonly ICommonRepository _commonRepository;
+        private readonly INotificationService _notificationService;
+        private readonly ResultsAndCertificationConfiguration _configuration;
 
         public CommonService(ILogger<CommonService> logger, IMapper mapper,
             IRepository<TlLookup> tlLookupRepository,
             IRepository<FunctionLog> functionLogRepository,
-            ICommonRepository commonRepository)
+            ICommonRepository commonRepository, INotificationService notificationService,
+            ResultsAndCertificationConfiguration configuration)
         {
             _logger = logger;
             _mapper = mapper;
             _tlLookupRepository = tlLookupRepository;
             _functionLogRepository = functionLogRepository;
             _commonRepository = commonRepository;
+            _notificationService = notificationService;
+            _configuration = configuration;
         }
 
         public async Task<IEnumerable<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory)
         {
-            var lookupData = await _tlLookupRepository.GetManyAsync(x => x.IsActive &&
-                                                            x.Category == lookupCategory.ToString())
-                                                            .OrderBy(x => x.SortOrder).ToListAsync();
+            var lookupData = await _tlLookupRepository.GetManyAsync(x => x.IsActive && x.Category == lookupCategory.ToString())
+                                                      .OrderBy(x => x.SortOrder).ToListAsync();
             
             return _mapper.Map<IEnumerable<LookupData>>(lookupData);
         }
@@ -85,6 +92,28 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn)
         {
             return await _commonRepository.GetLoggedInUserTypeInfoAsync(ukprn);
+        }
+
+        public async Task<bool> SendFunctionJobFailedNotification(string jobName, string errorMessage)
+        {
+            var tokens = new Dictionary<string, dynamic>
+                {
+                    { "job_name", jobName },
+                    { "error_message", errorMessage },
+                    { "sender_name", Constants.FunctionPerformedBy }
+                };
+
+            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.FunctionJobFailedNotification.ToString(), _configuration.TechnicalInternalNotificationEmailAddress, tokens);
+        }
+
+        public async Task<IEnumerable<Contract.AcademicYear>> GetCurrentAcademicYearsAsync()
+        {
+            return await _commonRepository.GetCurrentAcademicYearsAsync();
+        }
+
+        public async Task<IEnumerable<Contract.AcademicYear>> GetAcademicYearsAsync()
+        {
+            return await _commonRepository.GetAcademicYearsAsync();
         }
     }
 }

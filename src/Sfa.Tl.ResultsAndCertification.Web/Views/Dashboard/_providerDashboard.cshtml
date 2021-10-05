@@ -1,0 +1,88 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard
+
+<!-- MAIN HEADING -->
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <div class="govuk-form-group">
+            <h1 class="govuk-heading-l">
+                @ProviderDashboard.Section_Heading_Text
+            </h1>
+        </div>
+        <p class="govuk-body">
+            @ProviderDashboard.Providers_Schools_And_Colleges_Text
+        </p>
+        <p class="govuk-body">
+            @ProviderDashboard.Exams_Board_Text
+        </p>
+    </div>
+</div>
+
+<!-- MAIN ROW -->
+<div class="govuk-grid-row">
+
+    <!-- Providers Dashboard -->
+    <!-- BLOCK: Manage Learning Records -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group training-provider-card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="ManageLearnerRecordsDashboard">
+                        @ProviderDashboard.Manage_Learner_TLevel_Records_Text
+                    </a>
+                </h2>
+            </p>
+            <p class="govuk-body">
+                @ProviderDashboard.Manage_Learner_TLevel_Records_Description_Text
+            </p>
+        </div>
+    </div>
+
+    <!-- BLOCK: Request statement of achievement -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group training-provider-card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="RequestStatementOfAchievement">
+                        @ProviderDashboard.Providers_Request_Statement_Of_Achievement_Heading
+                    </a>
+                </h2>
+            </p>
+            <p class="govuk-body">
+                @ProviderDashboard.Providers_Request_Statement_Of_Achievement_Text
+            </p>
+        </div>
+    </div>
+
+    <!-- BLOCK: Manage Postal Address -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group training-provider-card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="ManagePostalAddress">
+                        @ProviderDashboard.Providers_Manage_Postal_Address_Heading
+                    </a>
+                </h2>
+            </p>
+            <p class="govuk-body">
+                @ProviderDashboard.Providers_Manage_Postal_Address_Text
+            </p>
+        </div>
+    </div>
+
+    <!-- BLOCK: Manage Your Account -->
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group training-provider-card">
+            <p class="govuk-body">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" asp-route="AccountProfile">
+                        @ProviderDashboard.Manage_Your_Account_Text
+                    </a>
+                </h2>
+            </p>
+
+            <p class="govuk-body">
+                @ProviderDashboard.Manage_Your_Account_Description_Text
+            </p>
+        </div>
+    </div>
+</div>

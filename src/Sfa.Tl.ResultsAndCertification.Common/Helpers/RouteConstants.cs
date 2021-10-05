@@ -15,18 +15,28 @@
         public const string Home = "Home";
 
         // Tlevel
-        public const string Tlevels = "Tlevels";
+        public const string TlevelsDashboard = "TlevelsDashboard";
+        public const string ReviewTlevels = "ReviewTlevels";
         public const string YourTlevels = "YourTlevels";
+        public const string ConfirmedTlevels = "ConfirmedTlevels";
+        public const string NoConfirmedTlevels = "NoConfirmedTlevels";
+        public const string QueriedTlevels = "QueriedTlevels";
+        public const string NoQueriedTlevels = "NoQueriedTlevels";
         public const string TlevelDetails = "TlevelDetails";
+        public const string TlevelConfirmedDetails = "TlevelConfirmedDetails";
+        public const string TlevelQueriedDetails = "TlevelQueriedDetails";
         public const string SelectTlevel = "SelectTlevel";
         public const string SelectTlevelSubmit = "SelectTlevelSubmit";
-        public const string AreDetailsCorrect = "AreDetailsCorrect";
+        public const string ReviewTlevelDetails = "ReviewTlevelDetails";
         public const string ConfirmTlevel = "ConfirmTlevel";
         public const string TlevelDetailsConfirmed = "TlevelDetailsConfirmed";
+        public const string AllTlevelsReviewedSuccess = "AllTlevelsReviewedSuccess";
         public const string TlevelDetailsQueriedConfirmation = "TlevelDetailsQueriedConfirmation";
         public const string QueryTlevelDetails = "QueryTlevelDetails";  // QueryTlevelDetails_Get
         public const string SubmitTlevelIssue = "SubmitTlevelIssue";  // QueryTlevelDetails_Post
+        public const string QueryTlevelSent = "QueryTlevelSent";
         public const string QueryServiceProblem = "QueryServiceProblem";
+        public const string AllTlevelsReviewed = "AllTlevelsReviewed";
 
         // Providers
         public const string YourProviders = "YourProviders";
@@ -131,6 +141,7 @@
         public const string SubmitDeleteRegistration = "SubmitDeleteRegistration";
         public const string RegistrationCancelledConfirmation = "RegistrationCancelledConfirmation";
         public const string RegistrationCannotBeDeleted = "RegistrationCannotBeDeleted";
+        public const string RegistrationCannotBeWithdrawn = "RegistrationCannotBeWithdrawn";
 
         // Assessment Entries
         public const string AssessmentDashboard = "AssessmentDashboard";
@@ -174,6 +185,7 @@
         public const string SubmitSearchResults = "SubmitSearchResults";
         public const string SearchResultsNotFound = "SearchResultsNotFound";
         public const string ResultWithdrawnDetails = "ResultWithdrawnDetails";
+        public const string ResultNoAssessmentEntry = "ResultNoAssessmentEntry";
         public const string ResultDetails = "ResultDetails";
 
         // Error
@@ -290,6 +302,28 @@
         public const string PrsLearnerDetails = "PrsLearnerDetails";
         public const string PrsAppealCoreGrade = "PrsAppealCoreGrade";
         public const string SubmitPrsAppealCoreGrade = "SubmitPrsAppealCoreGrade";
+        public const string PrsAppealOutcomePathwayGrade = "PrsAppealOutcomePathwayGrade";
+        public const string SubmitPrsAppealOutcomePathwayGrade = "SubmitPrsAppealOutcomePathwayGrade";
+        public const string PrsPathwayGradeCheckAndSubmit = "PrsPathwayGradeCheckAndSubmit";
+        public const string SubmitPrsPathwayGradeCheckAndSubmit = "SubmitPrsPathwayGradeCheckAndSubmit";
+        public const string PrsAppealUpdatePathwayGrade = "PrsAppealUpdatePathwayGrade";
+        public const string SubmitPrsAppealUpdatePathwayGrade = "SubmitPrsAppealUpdatePathwayGrade";
+        public const string PrsNoAssessmentEntry = "PrsNoAssessmentEntry";
+        public const string PrsNoGradeRegistered = "PrsNoGradeRegistered";
+        public const string PrsSelectAssessmentSeries = "PrsSelectAssessmentSeries";
+        public const string SubmitPrsSelectAssessmentSeries = "SubmitPrsSelectAssessmentSeries";
+        public const string PrsCancelAppealUpdate = "PrsCancelAppealUpdate";
+        public const string SubmitPrsCancelAppealUpdate = "SubmitPrsCancelAppealUpdate";
+        public const string PrsGradeChangeRequest = "PrsGradeChangeRequest";
+        public const string SubmitPrsGradeChangeRequest = "SubmitPrsGradeChangeRequest";
+        public const string PrsCancelGradeChangeRequest = "PrsCancelGradeChangeRequest";
+        public const string SubmitPrsCancelGradeChangeRequest = "SubmitPrsCancelGradeChangeRequest";
+        public const string PrsGradeChangeRequestConfirmation = "PrsGradeChangeRequestConfirmation";
+        public const string SubmitPrsGradeChangeRequestConfirmation = "SubmitPrsGradeChangeRequestConfirmation";
+        public const string PrsAppealGradeAfterDeadline = "PrsAppealGradeAfterDeadline";
+        public const string PrsAppealAfterDeadlineConfirm = "PrsAppealAfterDeadlineConfirm";
+        public const string SubmitPrsAppealAfterDeadlineConfirm = "SubmitPrsAppealAfterDeadlineConfirm";
+        public const string PrsAppealGradeAfterDeadlineRequestConfirmation = "PrsAppealGradeAfterDeadlineRequestConfirmation";        
 
         #endregion
     }

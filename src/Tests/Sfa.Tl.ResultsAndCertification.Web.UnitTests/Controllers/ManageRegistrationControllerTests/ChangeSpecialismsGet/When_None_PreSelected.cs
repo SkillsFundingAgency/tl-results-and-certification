@@ -18,7 +18,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
             mockPathwaySpecialismsViewModel = new PathwaySpecialismsViewModel
             {
-                Specialisms = new List<SpecialismDetailsViewModel>()
+                Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Id = 1, Code = "12345678", Name = "Plumbing", DisplayName = "Plumbing (123456778)", IsSelected = false } },
+                SpecialismsLookup = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("12345678", "Plumbing"), new KeyValuePair<string, string>("8754321", "Heating") }
             };
 
             mockChangeSpecialismViewModel = new ChangeSpecialismViewModel

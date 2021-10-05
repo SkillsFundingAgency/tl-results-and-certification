@@ -32,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         protected IList<TqProvider> TqProviders;
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
+        public IList<AcademicYear> AcademicYears;
         protected IList<TlLookup> PathwayComponentGrades;
 
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
@@ -61,6 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             TqProvider = ProviderDataProvider.CreateTqProvider(DbContext, TqAwardingOrganisation, TlProvider);
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
+            AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
             DbContext.SaveChangesAsync();
         }
@@ -188,14 +190,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             foreach (var (pathwayAssessment, index) in pathwayAssessments.Select((value, i) => (value, i)))
             {
-                var tqresults = GetPathwayResultDataToProcess(pathwayAssessment, seedPathwayResultsAsActive, isHistorical, isBulkUpload);
+                var tqresults = GetPathwayResultDataToProcess(pathwayAssessment, seedPathwayResultsAsActive, isHistorical, null, isBulkUpload);
                 tqPathwayResults.AddRange(tqresults);
             }
 
             return tqPathwayResults;
         }
 
-        public List<TqPathwayResult> GetPathwayResultDataToProcess(TqPathwayAssessment pathwayAssessment, bool seedPathwayResultsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
+        public List<TqPathwayResult> GetPathwayResultDataToProcess(TqPathwayAssessment pathwayAssessment, bool seedPathwayResultsAsActive = true, bool isHistorical = false, PrsStatus? prsStatus = null, bool isBulkUpload = true)
         {
             var tqPathwayResults = new List<TqPathwayResult>();
 
@@ -217,9 +219,22 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 tqPathwayResult.IsOptedin = pathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn;
                 tqPathwayResult.EndDate = DateTime.UtcNow;
             }
+            else
+            {
+                tqPathwayResult.PrsStatus = prsStatus;
+            }
 
             tqPathwayResults.Add(tqPathwayResult);
             return tqPathwayResults;
+        }
+
+        public void RegisterUlnForNextAcademicYear(List<TqRegistrationProfile> _registrations, IList<long> ulns)
+        {
+            ulns.ToList().ForEach(uln =>
+            {
+                var registration = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln);
+                registration.TqRegistrationPathways.FirstOrDefault().AcademicYear = AcademicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year + 1;
+            });
         }
     }
 }

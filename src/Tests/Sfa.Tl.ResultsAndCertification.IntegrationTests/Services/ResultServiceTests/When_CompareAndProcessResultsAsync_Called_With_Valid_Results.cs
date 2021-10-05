@@ -27,6 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
             _bulkResultsTestFixture.TqPathwayAssessmentsData = _bulkResultsTestFixture.SeedPathwayAssessmentsData(registrationPathways.ToList());
             _bulkResultsTestFixture.TqPathwayResultsData = _bulkResultsTestFixture.GetPathwayResultsDataToProcess(_bulkResultsTestFixture.TqPathwayAssessmentsData.ToList());
         }
+
         [Fact]
         public async Task Then_Expected_Results_Are_Created()
         {

@@ -16,6 +16,7 @@
             <h1 class="govuk-heading-xl">
                 @Dashboard.Page_Heading
             </h1>
+            <p class="govuk-body-l">@Dashboard.Para_Tell_Us_About_Your_Learners_And_The_Tlevels_They_Are_Studying</p>
         </div>
     </div>
 </div>
@@ -24,41 +25,46 @@
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group registration-card">
             <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                @Dashboard.Card_Heading_Upload_Registration_File
-            </h2>
-
-            <p class="govuk-body">
                 <a class="govuk-link" asp-route="UploadRegistrationsFile">
-                    @Dashboard.Card_Link_Upload_Registration_File
+                    @Dashboard.Card_Heading_Link_Multiple_Registrations
                 </a>
-            </p>
+            </h2>
+
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Dashboard.List_Add_Or_Change_Registration_Details_For_More_Than_One_Learner</li>
+                <li>@Dashboard.List_Download_A_Template_With_Registrations_Data_Formats_And_Rules_Guidance</li>
+            </ul>
         </div>
     </div>
 
     <div class="govuk-grid-column-one-half">
         <div class="govuk-form-group registration-card">
             <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                @Dashboard.Card_Heading_Search_Registration
-            </h2>
-            <p class="govuk-body">
-                <a class="govuk-link" asp-route="SearchRegistration">
-                    @Dashboard.Card_Link_Search_Registration
-                </a>
-            </p>
-        </div>
-    </div>
-
-    <div class="govuk-grid-column-one-half">
-        <div class="govuk-form-group registration-card">
-            <h2 class="govuk-heading-m govuk-!-padding-top-3">
-                @Dashboard.Card_Heading_Add_One_Registration
-            </h2>
-
-            <p class="govuk-body">
                 <a class="govuk-link" asp-route="AddRegistration">
-                    @Dashboard.Card_Link_Add_One_Registration
+                    @Dashboard.Card_Heading_Link_Register_A_New_Learner
                 </a>
-            </p>
+            </h2>
+
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Dashboard.List_Register_One_Learner_Onto_A_Course</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group registration-card">
+            <h2 class="govuk-heading-m govuk-!-padding-top-3">
+                <a class="govuk-link" asp-route="SearchRegistration">
+                    @Dashboard.Card_Heading_Link_Manage_Existing_Registration
+                </a>                
+            </h2>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>@Dashboard.List_See_Registration_Details</li>
+                <li>@Dashboard.List_Change_Registration_Detail</li>
+                <li>@Dashboard.List_Change_A_Learners_Course</li>
+                <li>@Dashboard.List_Withdraw_A_Learners_Registration</li>
+                <li>@Dashboard.List_Reactivate_A_Withdrawn_Learner</li>
+            </ul>
         </div>
     </div>
 </div>

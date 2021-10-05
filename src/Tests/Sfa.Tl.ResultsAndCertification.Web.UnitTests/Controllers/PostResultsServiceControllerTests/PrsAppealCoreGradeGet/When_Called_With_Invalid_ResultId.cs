@@ -26,7 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
                 Uln = 1234567890,
                 LearnerName = "John Smith",
                 DateofBirth = DateTime.Today.AddYears(-20),
-                PathwayDisplayName = "Childcare<br/>(12121212)",
+                PathwayCode = "12121212",
+                PathwayName = "Childcare",
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayGrade = "A",
                 HasPathwayResult = true

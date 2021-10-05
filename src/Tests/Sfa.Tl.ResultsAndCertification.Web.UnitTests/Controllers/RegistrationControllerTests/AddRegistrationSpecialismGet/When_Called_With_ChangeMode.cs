@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
@@ -24,13 +23,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private PathwaySpecialismsViewModel _pathwaySpecialismsViewModel;
         private SelectAcademicYearViewModel _academicYearViewModel;
         private string _coreCode = "12345678";
-        private string _selectedAcademicYear;
         private readonly string _selectedSpecialismCode = "12345678";
 
         public override void Given()
         {
             IsChangeMode = true;
-            _selectedAcademicYear = ((int)AcademicYear.Year2020).ToString();
             _ulnViewModel = new UlnViewModel { Uln = "1234567890" };
             _learnersNameViewModel = new LearnersNameViewModel { Firstname = "First", Lastname = "Last" };
             _dateofBirthViewModel = new DateofBirthViewModel { Day = "01", Month = "01", Year = "2020" };
@@ -39,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             _specialismQuestionViewModel = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true };
             _pathwaySpecialismsViewModel = new PathwaySpecialismsViewModel { PathwayCode = _coreCode, PathwayName = "Education", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Code = _selectedSpecialismCode, Name = "Test Education", DisplayName = "Test Education (7654321)", IsSelected = true } } };
             _selectSpecialismViewModel = new SelectSpecialismViewModel { SelectedSpecialismCode = _selectedSpecialismCode, PathwaySpecialisms = _pathwaySpecialismsViewModel };
-            _academicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = _selectedAcademicYear.ToString() };
+            _academicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = "2020" };
 
             cacheResult = new RegistrationViewModel
             {

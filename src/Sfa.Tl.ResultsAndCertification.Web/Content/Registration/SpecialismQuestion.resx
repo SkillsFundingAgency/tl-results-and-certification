@@ -119,9 +119,23 @@
   </resheader>
   <data name="Change_Button_Text" xml:space="preserve">
     <value>Change</value>
+    <comment>Change</comment>
+  </data>
+  <data name="Change_Heading_Do_You_Want_To_Change_Or_Remove" xml:space="preserve">
+    <value>Do you want to change or remove your specialism?</value>
+    <comment>Change</comment>
   </data>
   <data name="Change_Page_Caption_Text" xml:space="preserve">
     <value>Change registration</value>
+    <comment>Change</comment>
+  </data>
+  <data name="Change_Radio_Option_No" xml:space="preserve">
+    <value>No, remove my specialism(s)</value>
+    <comment>Change</comment>
+  </data>
+  <data name="Change_Radio_Option_Yes" xml:space="preserve">
+    <value>Yes, change my specialism(s)</value>
+    <comment>Change</comment>
   </data>
   <data name="Continue_Button_Text" xml:space="preserve">
     <value>Continue</value>
@@ -143,6 +157,7 @@
   </data>
   <data name="Page_Title_Change_Registration_Has_Learner_Decided_On_Specialisms" xml:space="preserve">
     <value>Change registration - Has the learner decided on the specialism page</value>
+    <comment>Change</comment>
   </data>
   <data name="Page_Title_Reregister_Has_Learner_Decided_On_Specialisms" xml:space="preserve">
     <value>Register learner on a new course - Has the learner decided on the specialism page</value>

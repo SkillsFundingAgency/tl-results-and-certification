@@ -59,8 +59,8 @@
         return null;
     };
     GOVUK.acceptAllCookies = function (value) {
-        GOVUK.cookie('cookies_preferences_set', value, { days: 365 });
-        GOVUK.cookie('analytics_consent', value, { days: 365 });
+        GOVUK.cookie('cookies_preferences_set', value, { days: 90 });
+        GOVUK.cookie('analytics_consent', value, { days: 90 });
     };
 
 }).call(this);
@@ -72,24 +72,40 @@
     GOVUK.addCookieMessage = function () {
         var cookieBannerContainerElement = document.getElementById('tl-cookie-banner-container'),
             cookieMessageContainerElement = document.getElementById('tl-cookie-message-container'),
-            cookieConfirmationContainerElement = document.getElementById('tl-cookie-confirmation-container'),
+            cookieConfirmationAcceptContainerElement = document.getElementById('tl-cookie-confirmation-accept-container'),
+            cookieConfirmationRejectContainerElement = document.getElementById('tl-cookie-confirmation-reject-container'),
             showCookieMessage = (cookieBannerContainerElement && GOVUK.cookie('cookies_preferences_set') === null) &&
                 (document.getElementById('tl-cookie-preferences') === null);
 
         if (showCookieMessage) {
             cookieBannerContainerElement.style.display = 'block';
 
-            $('#accept-all-cookies').click(function (e) {
-                GOVUK.acceptAllCookies(true);
+            $('#accept-additional-cookies').click(function (e) {
+                GOVUK.acceptAllCookies('true');
                 cookieMessageContainerElement.style.display = 'none';
-                cookieConfirmationContainerElement.style.display = 'block';
-                cookieConfirmationContainerElement.setAttribute("role", "alert");
+                cookieConfirmationAcceptContainerElement.style.display = 'block';
+                cookieConfirmationAcceptContainerElement.setAttribute("role", "alert");
                 e.preventDefault();
             });
 
-            $('#hide-cookie-confirmation').click(function (e) {
-                cookieConfirmationContainerElement.removeAttribute("role");
-                cookieConfirmationContainerElement.style.display = 'none';
+            $('#hide-cookie-confirmation-accept').click(function (e) {
+                cookieConfirmationAcceptContainerElement.removeAttribute("role");
+                cookieConfirmationAcceptContainerElement.style.display = 'none';
+                cookieBannerContainerElement.style.display = 'none';
+                e.preventDefault();
+            });
+
+            $('#reject-additional-cookies').click(function (e) {
+                GOVUK.acceptAllCookies('false');
+                cookieMessageContainerElement.style.display = 'none';
+                cookieConfirmationRejectContainerElement.style.display = 'block';
+                cookieConfirmationRejectContainerElement.setAttribute("role", "alert");
+                e.preventDefault();
+            });
+
+            $('#hide-cookie-confirmation-reject').click(function (e) {
+                cookieConfirmationRejectContainerElement.removeAttribute("role");
+                cookieConfirmationRejectContainerElement.style.display = 'none';
                 cookieBannerContainerElement.style.display = 'none';
                 e.preventDefault();
             });

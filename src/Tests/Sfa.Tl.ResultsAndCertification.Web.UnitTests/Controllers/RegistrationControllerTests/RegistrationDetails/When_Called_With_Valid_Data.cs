@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.Collections.Generic;
@@ -17,6 +17,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
     {
         private RegistrationDetailsViewModel mockresult = null;
         private Dictionary<string, string> _routeAttributes;
+        private IList<AcademicYear> _academicYears;
+
         public override void Given()
         {
             mockresult = new RegistrationDetailsViewModel
@@ -33,7 +35,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, mockresult.ProfileId.ToString() } };
+            _academicYears = new List<AcademicYear> { new AcademicYear { Id = 1, Name = "2020/21", Year = 2020 }, new AcademicYear { Id = 2, Name = "2021/22", Year = 2021 } };
+
             RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId).Returns(mockresult);
+            RegistrationLoader.GetAcademicYearsAsync().Returns(_academicYears);
         }
 
         [Fact]
@@ -57,6 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             model.AcademicYear.Should().Be(mockresult.AcademicYear);
             model.Status.Should().Be(mockresult.Status);
             model.ShowAssessmentEntriesLink.Should().BeTrue();
+            model.AcademicYears.Should().BeEquivalentTo(_academicYears);
 
             // Summary Status
             model.SummaryStatus.Should().NotBeNull();
@@ -112,7 +118,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             // Summary Academic Year
             model.SummaryAcademicYear.Should().NotBeNull();
             model.SummaryAcademicYear.Title.Should().Be(RegistrationDetailsContent.Title_AcademicYear_Text);
-            model.SummaryAcademicYear.Value.Should().Be(EnumExtensions.GetDisplayName<AcademicYear>(mockresult.AcademicYear));
+            model.SummaryAcademicYear.Value.Should().Be(mockresult.GetAcademicYearName);
             model.SummaryAcademicYear.ActionText.Should().Be(RegistrationDetailsContent.Change_Action_Link_Text);
             model.SummaryAcademicYear.RouteName.Should().Be(RouteConstants.ChangeAcademicYear);
             model.SummaryAcademicYear.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);

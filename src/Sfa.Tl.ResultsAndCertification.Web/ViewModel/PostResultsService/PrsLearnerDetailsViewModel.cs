@@ -1,7 +1,10 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
+using System;
 using System.Collections.Generic;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 using PrsLearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.PrsLearnerDetails;
@@ -27,41 +30,56 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 
         public int PathwayAssessmentId { get; set; }
         public string PathwayAssessmentSeries { get; set; }
+        public DateTime AppealEndDate { get; set; }
         public int PathwayResultId { get; set; }
         public string PathwayGrade { get; set; }
+        public PrsStatus? PathwayPrsStatus { get; set; }
         public string PathwayGradeLastUpdatedOn { get; set; }
         public string PathwayGradeLastUpdatedBy { get; set; }
+        public NotificationBannerModel SuccessBanner { get; set; }
 
+        public bool IsAppealAllowedAfterDeadline { get { return !PathwayPrsStatus.HasValue && !CommonHelper.IsAppealsAllowed(AppealEndDate); } }
+        public bool IsFinalOutcomeRegistered { get { return PathwayPrsStatus.HasValue && PathwayPrsStatus == PrsStatus.Final; } }
         public SummaryItemModel SummaryAssessmentSeries => new SummaryItemModel
         {
             Id = "assessmentperiod",
             Title = PrsLearnerDetailsContent.Title_Assessment_Series,
-            Value = PathwayAssessmentSeries
+            Value = PathwayAssessmentSeries,
+            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus,
+            RenderActionColumn = IsResultUpdateAllowed
         };
+
         public SummaryItemModel SummaryPathwayGrade => new SummaryItemModel
         {
             Id = "pathwaygrade",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade,
             Value = PathwayGrade,
-
-            ActionText = PrsLearnerDetailsContent.Action_Link_Update,
-            RouteName = RouteConstants.PrsAppealCoreGrade,
-            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() }, { Constants.ResultId, PathwayResultId.ToString() } },
-            HiddenActionText = PrsLearnerDetailsContent.Hidden_Action_Text_Grade
+            Value2 = CommonHelper.GetPrsStatusDisplayText(PathwayPrsStatus, AppealEndDate),
+            Value2CustomCssClass = !IsResultUpdateAllowed ? Constants.TagFloatRightClassName : null,
+            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus,
+            RenderActionColumn = IsResultUpdateAllowed,
+            
+            // Update link
+            ActionText = IsResultUpdateAllowed ? PrsLearnerDetailsContent.Action_Link_Update : null,
+            RouteName = IsResultUpdateAllowed ? GetUpdatePathwayGradeRouteName : null,
+            RouteAttributes = IsResultUpdateAllowed ? GetUpdatePathwayGradeRouteAttributes : null,
+            HiddenActionText = IsResultUpdateAllowed ? PrsLearnerDetailsContent.Hidden_Action_Text_Grade : null
         };
 
         public SummaryItemModel SummaryPathwayGradeLastUpdatedOn => new SummaryItemModel
         {
             Id = "pathwaygradeupdatedon",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade_LastUpdatedOn,
-            Value = PathwayGradeLastUpdatedOn
+            Value = PathwayGradeLastUpdatedOn,
+            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus
         };
 
         public SummaryItemModel SummaryPathwayGradeLastUpdatedBy => new SummaryItemModel
         {
             Id = "pathwaygradeupdatedby",
             Title = PrsLearnerDetailsContent.Title_Pathway_Grade_LastUpdatedBy,
-            Value = PathwayGradeLastUpdatedBy
+            Value = PathwayGradeLastUpdatedBy,
+            RenderEmptyRowForValue2 = IsValidPathwayPrsStatus
         };
 
         public BreadcrumbModel Breadcrumb
@@ -80,5 +98,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 };
             }
         }
+
+        private bool IsValidPathwayPrsStatus => PathwayPrsStatus.HasValue && PathwayPrsStatus != PrsStatus.NotSpecified;
+
+        private string GetUpdatePathwayGradeRouteName
+        {
+            get
+            {
+                return PathwayPrsStatus switch
+                {
+                    PrsStatus.BeingAppealed => RouteConstants.PrsAppealOutcomePathwayGrade,                    
+                    _ => RouteConstants.PrsAppealCoreGrade,
+                };
+            }
+        }
+
+        private Dictionary<string, string> GetUpdatePathwayGradeRouteAttributes
+        {
+            get
+            {
+                return PathwayPrsStatus switch
+                {
+                    PrsStatus.BeingAppealed => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() }, { Constants.ResultId, PathwayResultId.ToString() } },
+                    _ => new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() }, { Constants.AssessmentId, PathwayAssessmentId.ToString() }, { Constants.ResultId, PathwayResultId.ToString() } },
+                };
+            }
+        }
+
+        private bool IsResultUpdateAllowed { get { return PathwayPrsStatus == PrsStatus.BeingAppealed || (PathwayPrsStatus != PrsStatus.Final && CommonHelper.IsAppealsAllowed(AppealEndDate)); } }
     }
 }

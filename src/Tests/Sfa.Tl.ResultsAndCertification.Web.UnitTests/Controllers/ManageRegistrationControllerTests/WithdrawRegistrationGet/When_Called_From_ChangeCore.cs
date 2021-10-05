@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using Xunit;
 
@@ -10,20 +11,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 {
     public class When_Called_From_ChangeCore : TestSetup
     {
-        private RegistrationDetailsViewModel mockresult = null;
+        private AssessmentDetailsViewModel _mockresult = null;
         private readonly RegistrationPathwayStatus _registrationPathwayStatus = RegistrationPathwayStatus.Active;
 
         public override void Given()
         {
             WithdrawBackLinkOption = WithdrawBackLinkOptions.ChangeCorePage;
-            mockresult = new RegistrationDetailsViewModel { Uln = 1234567890, ProfileId = ProfileId, Status = _registrationPathwayStatus };
-            RegistrationLoader.GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(mockresult);
+            _mockresult = new AssessmentDetailsViewModel { Uln = 1234567890, ProfileId = ProfileId, PathwayStatus = _registrationPathwayStatus };
+            RegistrationLoader.GetRegistrationAssessmentAsync(AoUkprn, ProfileId, _registrationPathwayStatus).Returns(_mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            RegistrationLoader.Received(1).GetRegistrationDetailsAsync(AoUkprn, ProfileId, _registrationPathwayStatus);
+            RegistrationLoader.Received(1).GetRegistrationAssessmentAsync(AoUkprn, ProfileId, _registrationPathwayStatus);
         }
 
         [Fact]
@@ -38,14 +39,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             var model = viewResult.Model as WithdrawRegistrationViewModel;
             model.Should().NotBeNull();
 
-            model.ProfileId.Should().Be(mockresult.ProfileId);
+            model.ProfileId.Should().Be(_mockresult.ProfileId);
             model.CanWithdraw.Should().BeNull();
 
             var backLink = model.BackLink;
             backLink.RouteName.Should().Be(RouteConstants.ChangeRegistrationCore);
             backLink.RouteAttributes.Count.Should().Be(1);
             backLink.RouteAttributes.TryGetValue(Constants.ProfileId, out string routeValue);
-            routeValue.Should().Be(mockresult.ProfileId.ToString());
+            routeValue.Should().Be(_mockresult.ProfileId.ToString());
         }
     }
 }

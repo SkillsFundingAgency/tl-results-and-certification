@@ -6,13 +6,12 @@
 
   <ItemGroup>
     <Compile Remove="DataBuilders\TlMandatoryAdditionalRequirementBuilder.cs" />
-    <Compile Remove="DataBuilders\TlPathwaySpecialismCombinationBuilder.cs" />
     <Compile Remove="DataBuilders\TlPathwaySpecialismMarBuilder.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.17" />
     <PackageReference Include="NSubstitute" Version="4.2.2" />
     <PackageReference Include="Respawn" Version="4.0.0" />
   </ItemGroup>

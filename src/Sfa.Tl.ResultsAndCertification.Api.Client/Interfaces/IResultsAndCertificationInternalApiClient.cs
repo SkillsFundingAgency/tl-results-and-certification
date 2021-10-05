@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
@@ -78,11 +79,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<PrintRequestSnapshot> GetPrintRequestSnapshotAsync(long providerUkprn, int profileId, int pathwayId);
 
         // Post Results Service 
-        Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln);
+        Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null);
         Task<PrsLearnerDetails> GetPrsLearnerDetailsAsync(long aoUkprn, int profileId, int assessmentId);
-
+        Task<bool> AppealGradeAsync(AppealGradeRequest request);
+        Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request);
+        Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request);
+        
         // Common
         Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade);
         Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn);
+        Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
+        Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
     }
 }

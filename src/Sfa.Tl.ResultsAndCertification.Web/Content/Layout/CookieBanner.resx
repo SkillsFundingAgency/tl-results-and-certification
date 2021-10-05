@@ -117,34 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About_How_To_Use_This_Service_Text" xml:space="preserve">
-    <value>about how you use this service. We use this information to make the site work as well as possible and improve this service.</value>
+  <data name="Accept_Additional_Cookies" xml:space="preserve">
+    <value>Accept additional cookies</value>
   </data>
-  <data name="Accept_All_Cookies_Button_Text" xml:space="preserve">
-    <value>Accept all cookies</value>
+  <data name="Additional_Cookies" xml:space="preserve">
+    <value>additional cookies</value>
   </data>
-  <data name="At_Any_Time_Text" xml:space="preserve">
+  <data name="At_Any_Time" xml:space="preserve">
     <value>at any time.</value>
   </data>
-  <data name="Change_Your_Cookie_Setting_Text" xml:space="preserve">
+  <data name="At_The_Bottom_Of" xml:space="preserve">
+    <value>at the bottom of all Manage your T Level results pages.</value>
+  </data>
+  <data name="Change_Your_Cookie_Settings" xml:space="preserve">
     <value>change your cookie settings</value>
   </data>
-  <data name="Cookies_To_Collect_Information_Text" xml:space="preserve">
-    <value>cookies to collect information</value>
+  <data name="Cookies_Link" xml:space="preserve">
+    <value>Cookies link</value>
   </data>
-  <data name="Hide_This_Message_Button_Text" xml:space="preserve">
+  <data name="Cookie_On_Service" xml:space="preserve">
+    <value>Cookies on Manage T Level results</value>
+  </data>
+  <data name="Essential_Cookies" xml:space="preserve">
+    <value>essential cookies</value>
+  </data>
+  <data name="Hide_This_Message" xml:space="preserve">
     <value>Hide this message</value>
   </data>
-  <data name="Set_Cookie_Preferences_Button_Text" xml:space="preserve">
-    <value>Set cookie preferences</value>
+  <data name="Reject_Additional_Cookies" xml:space="preserve">
+    <value>Reject additional cookies</value>
   </data>
-  <data name="Tell_Us_Wheather_You_Accept_Cookies_Text" xml:space="preserve">
-    <value>Tell us whether you accept cookies</value>
+  <data name="To_Make_This_Service_Work" xml:space="preserve">
+    <value>to make this service work.</value>
   </data>
-  <data name="We_Use_Text" xml:space="preserve">
-    <value>We use</value>
+  <data name="To_Understand_How_You_Use_Service" xml:space="preserve">
+    <value>To understand how you use Manage T Level results and to improve the service we’d like to set some</value>
   </data>
-  <data name="You_Have_Accepted_All_Cookies_Text" xml:space="preserve">
-    <value>You’ve accepted all cookies. You can</value>
+  <data name="View_Cookies" xml:space="preserve">
+    <value>View cookies</value>
+  </data>
+  <data name="We_Use_Some" xml:space="preserve">
+    <value>We use some</value>
+  </data>
+  <data name="Your_Cookie_Preferences_Have_Been_Set" xml:space="preserve">
+    <value>Your cookie preferences have been set</value>
+  </data>
+  <data name="You_Can_Check_And_Update_Your_Preferences" xml:space="preserve">
+    <value>You can check and update your preferences using the</value>
+  </data>
+  <data name="You_Have_Accepted_Additonal_Cookies" xml:space="preserve">
+    <value>You have accepted additional cookies. You can</value>
+  </data>
+  <data name="You_Have_Chosen_To_Reject_Additional_Cookies" xml:space="preserve">
+    <value>You have chosen to reject additional cookies. You will be asked for your preferences again in 90 days.</value>
   </data>
 </root>

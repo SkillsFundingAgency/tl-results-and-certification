@@ -61,43 +61,70 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manually add or amend an assessment entry.
+        ///   Looks up a localized string similar to Manage an assessment.
         /// </summary>
-        public static string Card_Heading_Search_Assessment {
+        public static string Card_Heading_Link_Manage_An_Assessment {
             get {
-                return ResourceManager.GetString("Card_Heading_Search_Assessment", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Link_Manage_An_Assessment", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload to add and amend assessment entries.
+        ///   Looks up a localized string similar to Upload multiple assessments.
         /// </summary>
-        public static string Card_Heading_Upload_Assessment_File {
+        public static string Card_Heading_Link_Upload_Multiple_Assessments {
             get {
-                return ResourceManager.GetString("Card_Heading_Upload_Assessment_File", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Link_Upload_Multiple_Assessments", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a learner.
+        ///   Looks up a localized string similar to Add an assessment period for one learner.
         /// </summary>
-        public static string Card_Link_Search_Assessment {
+        public static string List_Add_An_Assessment_Period_For_One_Learner {
             get {
-                return ResourceManager.GetString("Card_Link_Search_Assessment", resourceCulture);
+                return ResourceManager.GetString("List_Add_An_Assessment_Period_For_One_Learner", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload assessment entries file.
+        ///   Looks up a localized string similar to Add or change assessment periods for more than one learner.
         /// </summary>
-        public static string Card_Link_Upload_Assessment_File {
+        public static string List_Add_Or_Change_Assessment_Periods {
             get {
-                return ResourceManager.GetString("Card_Link_Upload_Assessment_File", resourceCulture);
+                return ResourceManager.GetString("List_Add_Or_Change_Assessment_Periods", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment entries.
+        ///   Looks up a localized string similar to Change an assessment period for one learner.
+        /// </summary>
+        public static string List_Change_An_Assessment_Period_For_One_Learner {
+            get {
+                return ResourceManager.GetString("List_Change_An_Assessment_Period_For_One_Learner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download a template with assessments data formats and rules guidance.
+        /// </summary>
+        public static string List_Download_A_Template_With_Assessments_Data_Formats_And_Rules_Guidance {
+            get {
+                return ResourceManager.GetString("List_Download_A_Template_With_Assessments_Data_Formats_And_Rules_Guidance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View a learner&apos;s assessment period.
+        /// </summary>
+        public static string List_View_A_Learners_AssessmentPeriod {
+            get {
+                return ResourceManager.GetString("List_View_A_Learners_AssessmentPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assessments.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -106,11 +133,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment entries page.
+        ///   Looks up a localized string similar to Assessments.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tell us when your learners will be assessed.
+        /// </summary>
+        public static string Para_Tell_Us_When_Your_Learners_Will_Be_Assessed {
+            get {
+                return ResourceManager.GetString("Para_Tell_Us_When_Your_Learners_Will_Be_Assessed", resourceCulture);
             }
         }
     }

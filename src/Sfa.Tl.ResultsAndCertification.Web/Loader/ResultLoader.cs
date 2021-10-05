@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual;
@@ -82,6 +83,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var response = await _internalApiClient.FindUlnAsync(aoUkprn, Uln);
             return _mapper.Map<UlnResultsNotFoundViewModel>(response);
+        }
+
+        public async Task<ResultWithdrawnViewModel> GetResultWithdrawnViewModelAsync(long aoUkprn, int profileId)
+        {
+            var response = await _internalApiClient.GetResultDetailsAsync(aoUkprn, profileId, RegistrationPathwayStatus.Withdrawn);
+            return _mapper.Map<ResultWithdrawnViewModel>(response);
+        }
+
+        public ResultNoAssessmentEntryViewModel GetResultNoAssessmentEntryViewModel(ResultDetailsViewModel resultDetails)
+        {
+            return _mapper.Map<ResultNoAssessmentEntryViewModel>(resultDetails);
         }
 
         public async Task<ResultDetailsViewModel> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)

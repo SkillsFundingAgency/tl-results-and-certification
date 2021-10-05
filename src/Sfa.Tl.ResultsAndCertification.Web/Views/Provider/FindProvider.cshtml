@@ -25,7 +25,6 @@
                             @FindProvider.Page_Heading
                         </h1>
                     </legend>
-                    <p class="govuk-body">@FindProvider.Section_Information_Text</p>
                     <div class="govuk-form-group" sfa-validation-for="Search" sfa-validation-class="govuk-form-group--error">
                         <label class="govuk-label" for="search">
                             @FindProvider.Provider_Input_Field_Label
@@ -37,11 +36,30 @@
                     </div>
                 </fieldset>
             </div>
+
+            <details class="govuk-details" data-module="govuk-details" closed>
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        @FindProvider.Collapsable_I_Cannot_Find_Provider
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    <p class="govuk-body">@FindProvider.Para_If_You_Cannot_Find_A_Provider</p>
+                    <p class="govuk-body">@FindProvider.Para_If_You_Still_Cannot_Find_It<a class="govuk-link" asp-route="Contact">@FindProvider.Contact_Us</a>.</p>
+                </div>
+            </details>
+
+
             <button type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@FindProvider.Continue_Button_Label</button>
+
+            <h2 class="govuk-heading-m govuk-!-margin-top-4">@FindProvider.Before_You_Start_Text</h2>
+            <p class="govuk-body">@FindProvider.Para_You_Should<a class="govuk-link" asp-route="TlevelsDashboard">@FindProvider.Para_Confirm_Your_TLevels</a>@FindProvider.Para_Before_Adding_Them_To_Providers</p>
+            <p class="govuk-body">@FindProvider.Para_If_You_Have_Already_Added_A_Provider</p>
+            <p class="govuk-body">@FindProvider.Para_If_You_Have_Not_Added_A_Provider_You_Can_Add_Them</p>
 
             @if (Model.ShowViewProvidersLink)
             {
-                <p class="govuk-body"><a class="govuk-link" asp-route="YourProviders">@FindProvider.View_Providers_Link_Text</a></p>
+                <p class="govuk-body"><a id="viewExistingProvidersButton" class="govuk-button govuk-button--secondary" role="button" asp-route="YourProviders">@FindProvider.View_Existing_Providers_Button</a></p>
             }
 
             <input type="hidden" asp-for="SelectedProviderId" />

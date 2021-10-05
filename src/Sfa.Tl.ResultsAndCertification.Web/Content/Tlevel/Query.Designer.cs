@@ -61,29 +61,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to We will investigate your query and update you within 3 working days..
+        ///   Looks up a localized string similar to Query T Level details.
         /// </summary>
-        public static string Investigation_Information_Text {
+        public static string Heading_Query_Tlevel_Details {
             get {
-                return ResourceManager.GetString("Investigation_Information_Text", resourceCulture);
+                return ResourceManager.GetString("Heading_Query_Tlevel_Details", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Query T Level details page.
+        ///   Looks up a localized string similar to Tell us what is wrong with this T Levels details.
+        /// </summary>
+        public static string Heading_Tell_Us_What_Is_Wrong {
+            get {
+                return ResourceManager.GetString("Heading_Tell_Us_What_Is_Wrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your message must be 1,000 characters or fewer..
+        /// </summary>
+        public static string Hint_Message_Must_Be_1000_Or_Less {
+            get {
+                return ResourceManager.GetString("Hint_Message_Must_Be_1000_Or_Less", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You do not need to include any of the above information..
+        /// </summary>
+        public static string Hint_You_Do_Not_Need_Include_Above_Info {
+            get {
+                return ResourceManager.GetString("Hint_You_Do_Not_Need_Include_Above_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query T Level.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Core.
-        /// </summary>
-        public static string Pathway_Field_Label {
-            get {
-                return ResourceManager.GetString("Pathway_Field_Label", resourceCulture);
             }
         }
         
@@ -106,38 +124,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us what’s wrong with this T Level&apos;s details..
-        /// </summary>
-        public static string Query_Textbox_Title {
-            get {
-                return ResourceManager.GetString("Query_Textbox_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Query T Level details.
-        /// </summary>
-        public static string Section_Heading {
-            get {
-                return ResourceManager.GetString("Section_Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Specialisms.
-        /// </summary>
-        public static string Specialisms_Field_Label {
-            get {
-                return ResourceManager.GetString("Specialisms_Field_Label", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
-        public static string Submit_Button_Text {
+        public static string Submit_Button {
             get {
-                return ResourceManager.GetString("Submit_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Submit_Button", resourceCulture);
             }
         }
     }

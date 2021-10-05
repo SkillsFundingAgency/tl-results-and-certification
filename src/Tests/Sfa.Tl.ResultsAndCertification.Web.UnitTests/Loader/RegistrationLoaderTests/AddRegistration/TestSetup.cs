@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 SelectProvider = new SelectProviderViewModel { SelectedProviderUkprn = "98765432", SelectedProviderDisplayName = "Barnsley College (98765432)" },
                 SelectCore = new SelectCoreViewModel { SelectedCoreCode = _coreCode, SelectedCoreDisplayName = $"Education ({_coreCode})", CoreSelectList = new List<SelectListItem> { new SelectListItem { Text = "Education", Value = _coreCode } } },
                 SpecialismQuestion = new SpecialismQuestionViewModel { HasLearnerDecidedSpecialism = true },
-                SelectSpecialisms = new SelectSpecialismViewModel { PathwaySpecialisms = new PathwaySpecialismsViewModel { PathwayCode = _coreCode, PathwayName = "Education", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Code = "7654321", Name = "Test Education", DisplayName = "Test Education (7654321)", IsSelected = true } } } },
+                SelectSpecialisms = new SelectSpecialismViewModel { PathwaySpecialisms = new PathwaySpecialismsViewModel { PathwayCode = _coreCode, PathwayName = "Education", Specialisms = new List<SpecialismDetailsViewModel> { new SpecialismDetailsViewModel { Code = "7654321|36978455", Name = "Test Education", DisplayName = "Test Education (7654321)", IsSelected = true } } } },
                 SelectAcademicYear = new SelectAcademicYearViewModel { SelectedAcademicYear = "2020" }
             };
 

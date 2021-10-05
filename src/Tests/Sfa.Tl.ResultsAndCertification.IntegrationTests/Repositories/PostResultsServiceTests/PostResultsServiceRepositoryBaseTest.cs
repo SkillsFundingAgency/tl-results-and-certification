@@ -127,7 +127,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
             return tqPathwayAssessments;
         }
 
-        public List<TqPathwayResult> GetPathwayResultDataToProcess(TqPathwayAssessment pathwayAssessment, bool seedPathwayResultsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
+        public List<TqPathwayResult> GetPathwayResultDataToProcess(TqPathwayAssessment pathwayAssessment, bool seedPathwayResultsAsActive = true, bool isHistorical = false, PrsStatus? prsStatus = null, bool isBulkUpload = true)
         {
             var tqPathwayResults = new List<TqPathwayResult>();
 
@@ -139,6 +139,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
                 pathwayResult.EndDate = DateTime.UtcNow.AddDays(-1);
 
                 var tqPathwayResultHistorical = TqPathwayResultDataProvider.CreateTqPathwayResult(DbContext, pathwayResult);
+                tqPathwayResultHistorical.PrsStatus = prsStatus;
                 tqPathwayResults.Add(tqPathwayResultHistorical);
             }
 
@@ -148,6 +149,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.PostResul
             {
                 tqPathwayResult.IsOptedin = pathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
                 tqPathwayResult.EndDate = DateTime.UtcNow;
+            }
+            else
+            {
+                tqPathwayResult.PrsStatus = prsStatus;
             }
 
             tqPathwayResults.Add(tqPathwayResult);

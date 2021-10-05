@@ -70,11 +70,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        public static string Banner_Title_Success {
+            get {
+                return ResourceManager.GetString("Banner_Title_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search again.
         /// </summary>
         public static string Button_Search_Again {
             get {
                 return ResourceManager.GetString("Button_Search_Again", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ..
+        /// </summary>
+        public static string Fullstop {
+            get {
+                return ResourceManager.GetString("Fullstop", resourceCulture);
             }
         }
         
@@ -88,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s component grades status.
+        ///   Looks up a localized string similar to Learner’s component grade status.
         /// </summary>
         public static string Heading_Learner_Component_Grades_Status {
             get {
@@ -115,7 +133,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner’s component grades status.
+        ///   Looks up a localized string similar to This result is final as the date for appeal has passed. To tell us that the grade is being appealed please.
+        /// </summary>
+        public static string Inset_Result_Is_Final {
+            get {
+                return ResourceManager.GetString("Inset_Result_Is_Final", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This result is final as the outcome of an appeal has been recorded. If you need to change the grade please.
+        /// </summary>
+        public static string Inset_Result_Is_Final_Outcome_Registered {
+            get {
+                return ResourceManager.GetString("Inset_Result_Is_Final_Outcome_Registered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to contact us.
+        /// </summary>
+        public static string Link_Contactus {
+            get {
+                return ResourceManager.GetString("Link_Contactus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to raise a request.
+        /// </summary>
+        public static string Link_Raise_Request {
+            get {
+                return ResourceManager.GetString("Link_Raise_Request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner’s component grade status.
         /// </summary>
         public static string Page_Title {
             get {
@@ -124,7 +178,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exam Period.
+        ///   Looks up a localized string similar to Exam period.
         /// </summary>
         public static string Title_Assessment_Series {
             get {

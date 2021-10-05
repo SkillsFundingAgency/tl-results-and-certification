@@ -27,7 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 SpecialismAssessmentSeries = "Autumn 2022",
                 SpecialismAssessmentId = 25,
                 Status = RegistrationPathwayStatus.Active,
-                IsIndustryPlacementExist = true
+                IsIndustryPlacementExist = true,
+                IsCoreEntryEligible = true
             };
 
             InternalApiClient.GetAssessmentDetailsAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
@@ -51,6 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             ActualResult.SpecialismAssessmentSeries.Should().Be(expectedApiResult.SpecialismAssessmentSeries);
             ActualResult.PathwayStatus.Should().Be(expectedApiResult.Status);
             ActualResult.IsIndustryPlacementExist.Should().BeTrue();
+            ActualResult.IsCoreEntryEligible.Should().BeTrue();
         }
     }
 }

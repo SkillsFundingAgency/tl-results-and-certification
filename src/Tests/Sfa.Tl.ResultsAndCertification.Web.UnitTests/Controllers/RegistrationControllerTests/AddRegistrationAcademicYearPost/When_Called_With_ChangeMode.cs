@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System.Collections.Generic;
@@ -23,12 +23,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private SelectSpecialismViewModel _selectSpecialismViewModel;
         private PathwaySpecialismsViewModel _pathwaySpecialismsViewModel;
         private SelectAcademicYearViewModel _academicYearViewModel;
+        private IList<AcademicYear> _academicYears;
         private string _coreCode = "12345678";
         private string _selectedAcademicYear;
 
         public override void Given()
         {
-            _selectedAcademicYear = ((int)AcademicYear.Year2020).ToString();
+            _academicYears = new List<AcademicYear> { new AcademicYear { Id = 1, Name = "2020/21", Year = 2020 } };
+            _selectedAcademicYear = "2020".ToString();
             _ulnViewModel = new UlnViewModel { Uln = "1234567890" };
             _learnersNameViewModel = new LearnersNameViewModel { Firstname = "First", Lastname = "Last" };
             _dateofBirthViewModel = new DateofBirthViewModel { Day = "01", Month = "01", Year = "2020" };
@@ -52,6 +54,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
             };
 
             SelectAcademicYearViewModel = new SelectAcademicYearViewModel { SelectedAcademicYear = _selectedAcademicYear, IsChangeMode = true };
+
+            RegistrationLoader.GetCurrentAcademicYearsAsync().Returns(_academicYears);
             CacheService.GetAsync<RegistrationViewModel>(CacheKey).Returns(cacheResult);
         }
 

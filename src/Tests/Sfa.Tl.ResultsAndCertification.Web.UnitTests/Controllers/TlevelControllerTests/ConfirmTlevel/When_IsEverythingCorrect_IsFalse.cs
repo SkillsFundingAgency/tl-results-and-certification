@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Tlevels;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControllerTests.ConfirmTlevel

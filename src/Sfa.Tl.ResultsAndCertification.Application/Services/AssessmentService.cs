@@ -13,7 +13,6 @@ using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -69,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 var validationErrors = new List<BulkProcessValidationError>();
                 // 3. Core Code is incorrect
-                if (!string.IsNullOrEmpty(assessment.CoreCode))
+                if (!string.IsNullOrWhiteSpace(assessment.CoreCode))
                 {
                     var isValidCoreCode = dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.LarId.Equals(assessment.CoreCode, StringComparison.InvariantCultureIgnoreCase);
                     if (!isValidCoreCode)
@@ -77,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 4. Specialism Code is incorrect
-                if (!string.IsNullOrEmpty(assessment.SpecialismCode))
+                if (!string.IsNullOrWhiteSpace(assessment.SpecialismCode))
                 {
                     var isValidSpecialismCode = dbRegistration.TqRegistrationSpecialisms.Any(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
                     if (!isValidSpecialismCode)
@@ -85,7 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 5. Core assessment entry must be no more than 4 years after the starting academic year
-                if (!string.IsNullOrEmpty(assessment.CoreAssessmentEntry))
+                if (!string.IsNullOrWhiteSpace(assessment.CoreAssessmentEntry))
                 {
                     var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
                     if (!isSeriesFound)
@@ -99,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 6. Specialism assessment entry must be between one and 4 years after the starting academic year
-                if (!string.IsNullOrEmpty(assessment.SpecialismAssessmentEntry))
+                if (!string.IsNullOrWhiteSpace(assessment.SpecialismAssessmentEntry))
                 {
                     var isSeriesFound = dbAssessmentSeries.Any(x => x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
                     if (!isSeriesFound)
@@ -119,8 +118,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var registrationSpecialism = dbRegistration.TqRegistrationSpecialisms
                                                     .FirstOrDefault(x => x.TlSpecialism.LarId.Equals(assessment.SpecialismCode, StringComparison.InvariantCultureIgnoreCase));
                     
-                    var csvCoreSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.CoreAssessmentEntry));
-                    var csvSpecialismSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.SpecialismAssessmentEntry));
+                    var csvCoreSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.CoreAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
+                    var csvSpecialismSeries = dbAssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessment.SpecialismAssessmentEntry, StringComparison.InvariantCultureIgnoreCase));
 
                     response.Add(new AssessmentRecordResponse
                     {
@@ -310,10 +309,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<AssessmentDetails> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var tqRegistration = await _assessmentRepository.GetAssessmentsAsync(aoUkprn, profileId);
-
             if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 
-            return _mapper.Map<AssessmentDetails>(tqRegistration);
+            var assessmentDetails = _mapper.Map<AssessmentDetails>(tqRegistration);
+
+            assessmentDetails.IsCoreEntryEligible = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, Constants.CoreAssessmentStartInYears) != null;
+            return assessmentDetails;
         }
 
         public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
@@ -336,7 +337,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             // Validate
             var tqRegistrationPathway = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
             var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, request.ComponentType);
-            if (!isValid)
+            var hasValidSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, Constants.CoreAssessmentStartInYears) != null;
+
+            if (!isValid || !hasValidSeries)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
 
             int status = 0;

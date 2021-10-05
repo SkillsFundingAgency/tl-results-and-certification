@@ -117,28 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Card_Heading_Add_One_Registration" xml:space="preserve">
-    <value>Add one new registration</value>
-  </data>
-  <data name="Card_Heading_Search_Registration" xml:space="preserve">
+  <data name="Card_Heading_Link_Manage_Existing_Registration" xml:space="preserve">
     <value>Manage existing registrations</value>
   </data>
-  <data name="Card_Heading_Upload_Registration_File" xml:space="preserve">
-    <value>Upload to add and amend registrations</value>
+  <data name="Card_Heading_Link_Multiple_Registrations" xml:space="preserve">
+    <value>Upload multiple registrations</value>
   </data>
-  <data name="Card_Link_Add_One_Registration" xml:space="preserve">
-    <value>Add a new registration</value>
+  <data name="Card_Heading_Link_Register_A_New_Learner" xml:space="preserve">
+    <value>Register a new learner</value>
   </data>
-  <data name="Card_Link_Search_Registration" xml:space="preserve">
-    <value>Search for a registration</value>
+  <data name="List_Add_Or_Change_Registration_Details_For_More_Than_One_Learner" xml:space="preserve">
+    <value>Add or change registration details for more than one learner</value>
   </data>
-  <data name="Card_Link_Upload_Registration_File" xml:space="preserve">
-    <value>Upload registrations file</value>
+  <data name="List_Change_A_Learners_Course" xml:space="preserve">
+    <value>Change a learner's course</value>
+  </data>
+  <data name="List_Change_Registration_Detail" xml:space="preserve">
+    <value>Change registration detail</value>
+  </data>
+  <data name="List_Download_A_Template_With_Registrations_Data_Formats_And_Rules_Guidance" xml:space="preserve">
+    <value>Download a template with registrations data formats and rules guidance</value>
+  </data>
+  <data name="List_Reactivate_A_Withdrawn_Learner" xml:space="preserve">
+    <value>Reactivate a withdrawn learner</value>
+  </data>
+  <data name="List_Register_One_Learner_Onto_A_Course" xml:space="preserve">
+    <value>Register one new learner onto a course</value>
+  </data>
+  <data name="List_See_Registration_Details" xml:space="preserve">
+    <value>See registration details</value>
+  </data>
+  <data name="List_Withdraw_A_Learners_Registration" xml:space="preserve">
+    <value>Withdraw a learner's registration</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
     <value>Registrations</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Registrations page</value>
+    <value>Registrations</value>
+  </data>
+  <data name="Para_Tell_Us_About_Your_Learners_And_The_Tlevels_They_Are_Studying" xml:space="preserve">
+    <value>Tell us about your learners and the T Levels they are studying</value>
   </data>
 </root>

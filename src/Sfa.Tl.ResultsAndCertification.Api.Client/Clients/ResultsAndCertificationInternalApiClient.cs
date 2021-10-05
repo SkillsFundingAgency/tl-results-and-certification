@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
@@ -134,7 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var requestUri = string.Format(ApiConstants.GetPathwaySpecialismsByPathwayLarIdAsyncUri, aoUkprn, pathwayLarId);
             return await GetAsync<PathwaySpecialisms>(requestUri);
         }
-        
+
         public async Task<bool> AddRegistrationAsync(RegistrationRequest model)
         {
             var requestUri = ApiConstants.AddRegistrationUri;
@@ -195,7 +196,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var requestUri = string.Format(ApiConstants.GetAssessmentDetailsUri, aoUkprn, profileId, (int?)status);
             return await GetAsync<AssessmentDetails>(requestUri);
         }
-        
+
         public async Task<AvailableAssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)
         {
             var requestUri = string.Format(ApiConstants.GetAvailableAssessmentSeriesUri, aoUkprn, profileId, (int)componentType);
@@ -245,6 +246,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PutAsync<ChangeResultRequest, ChangeResultResponse>(requestUri, model);
         }
 
+        # region Common controller
         public async Task<IList<LookupData>> GetLookupDataAsync(LookupCategory pathwayComponentGrade)
         {
             var requestUri = string.Format(ApiConstants.GetLookupDataUri, (int)pathwayComponentGrade);
@@ -257,6 +259,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             var requestUri = string.Format(ApiConstants.GetLoggedInUserTypeInfoUri, ukprn);
             return await GetAsync<LoggedInUserTypeInfo>(requestUri);
         }
+
+        public async Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync()
+        {
+            return await GetAsync<IEnumerable<AcademicYear>>(ApiConstants.GetCurrentAcademicYears);
+        }
+
+        public async Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync()
+        {
+            return await GetAsync<IEnumerable<AcademicYear>>(ApiConstants.GetAcademicYears);
+        }
+
+        #endregion
 
         // Training Provider endpoints
         public async Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln, bool? evaluateSendConfirmation = false)
@@ -318,9 +332,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         }
 
         #region PRS
-        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long uln)
+        public async Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null)
         {
-            var requestUri = string.Format(ApiConstants.FindPrsLearnerRecordUri, aoUkprn, uln);
+            var requestUri = uln != null ? 
+                string.Format(ApiConstants.FindPrsLearnerRecordUri, aoUkprn, uln) :
+                string.Format(ApiConstants.FindPrsLearnerRecordByProfileIdUri, aoUkprn, profileId);
+
             return await GetAsync<FindPrsLearnerRecord>(requestUri);
         }
 
@@ -328,6 +345,24 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = string.Format(ApiConstants.GetPrsLearnerDetailsUri, aoUkprn, profileId, assessmentId);
             return await GetAsync<PrsLearnerDetails>(requestUri);
+        }
+
+        public async Task<bool> AppealGradeAsync(AppealGradeRequest request)
+        {
+            var requestUri = ApiConstants.AppealGradeUri;
+            return await PostAsync<AppealGradeRequest, bool>(requestUri, request);
+        }
+
+        public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request)
+        {
+            var requestUri = ApiConstants.PrsGradeChangeRequestUri;
+            return await PostAsync<PrsGradeChangeRequest, bool>(requestUri, request);
+        }
+
+        public async Task<bool> AppealGradeAfterDeadlineRequestAsync(AppealGradeAfterDeadlineRequest request)
+        {
+            var requestUri = ApiConstants.AppealGradeAfterDeadlineRequestUri;
+            return await PostAsync<AppealGradeAfterDeadlineRequest, bool>(requestUri, request);
         }
 
         #endregion 

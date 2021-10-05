@@ -12,8 +12,7 @@
         public const string MustBeValidDate = "{0} must be a valid date in DDMMYYYY format";
         public const string DateNotinFuture = "{0} must be in the past";
 
-        public const string MustBeInFormat = "{0} must be in the format {1}";
-        public const string MustBeCurrentOne = "{0} must be the current one";
+        public const string MustBeInFormat = "{0} must be in the format {1}";        
 
         // File based validation messages
         public const string FileHeaderNotFound = "File header is not valid";
@@ -27,9 +26,13 @@
         public const string UnexpectedError = "Unexpected error while reading file content.";
 
         // Bulk Registration Stage3 Validation Messages
+        public const string AcademicYearMustBeCurrentOne = "Academic year must be the current one"; 
         public const string ProviderNotRegisteredWithAo = "Provider not registered with awarding organisation";
         public const string CoreNotRegisteredWithProvider = "Core not registered with provider";
         public const string SpecialismNotValidWithCore = "Specialism not valid with core";
+        public const string SpecialismIsNotValid = "Specialism is not valid";
+        public const string SpecialismCannotBeSelectedAsSingleOption = "This specialism cannot be selected as a single option (for when only one code of a paired specialism has been entered)";        
+
 
         // Bulk Registration Stage4 Validation Messages
         public const string ActiveUlnWithDifferentAo = "Active ULN with a different awarding organisation";
@@ -45,13 +48,13 @@
         public const string AtleastOneEntryRequired = "File must contain at least one ULN on one row";
         public const string NoDataAfterUln = "No data after ULN - need at least one core code or one specialism code";
 
-        // Assesments - Bulk stage 3 validsions
+        // Assesments - Bulk stage 3 validations
         public const string UlnNotRegistered = "ULN not registered with awarding organisation";
         public const string CannotAddAssessmentToWithdrawnRegistration = "Cannot add assessment entries to a withdrawn registration";
         public const string InvalidCoreCode = "Core code either not recognised or not registered for this ULN";
         public const string InvalidSpecialismCode = "Specialism code either not recognised or not registered for this ULN";
         public const string InvalidCoreAssessmentEntry = "Core assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the first academic year or subsequent approaching series)";
-        public const string InvalidNextCoreAssessmentEntry = "Core assessment entry is beyond the next available series - only the next available series is allowed (the second series of the first academic year or subsequent approaching series)";
+        public const string InvalidNextCoreAssessmentEntry = "Available to add after the current assessment series has passed";
         public const string InvalidSpecialismAssessmentEntry = "Specialism assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the second academic year or subsequent approaching series)";
         public const string InvalidNextSpecialismAssessmentEntry = "Specialism assessment entry is beyond the next available series - only the next available series is allowed (the second series of the second academic year or subsequent approaching series)";
 
@@ -61,12 +64,16 @@
         public const string InvalidCoreAssessmentSeries = "Core assessment series format must be text followed by a space and a 4-digit year";
         public const string NoDataAfterUlnNeedCoreCode = "No data after ULN - need a core component code";
 
-        // Results - Bulk stage 3 validsions
+        // Results - Bulk stage 3 validations
         public const string CannotAddResultToWithdrawnRegistration = "Cannot add results to a withdrawn registration";
         public const string InvalidCoreComponentCode = "Core component code either not recognised or not registered for this ULN";
         public const string InvalidCoreAssessmentSeriesEntry = "Assessment series does not exist - see results data format and rules guide for examples of valid series";
         public const string NoCoreAssessmentEntryCurrentlyActive = "No assessment entry is currently active for the core component on this registration - needs adding first through assessment entries file upload or manual entry";
         public const string AssessmentSeriesDoesNotMatchTheSeriesOnTheRegistration = "Assessment series does not match the series on the registration";
         public const string InvalidCoreComponentGrade = "Core component grade not valid - needs to be A* to E, or Unclassified";
+
+        // Results - Bulk stage 4 validations
+        public const string ResultCannotBeInBeingAppealedStatus = "This learner's results cannot be changed because they are appealing a grade. Please remove this learner and try again.";
+        public const string ResultIsInFinal = "This learner's grade is now final. Please remove this learner and try again.";
     }
 }

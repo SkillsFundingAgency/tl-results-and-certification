@@ -1,7 +1,7 @@
-﻿using AutoMapper.Internal;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
     public class When_Specialism_Changed : TestSetup
     {
         RegistrationDetails mockRegDetails = null;
-
+        List<string> _expectedSpecialismCodes;
         public override void Given()
         {
             var profileId = 1;
@@ -28,8 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                     PathwayId = profileId,
                     Specialisms = new List<SpecialismDetailsViewModel> // Changed 
                     { 
-                        new SpecialismDetailsViewModel { Code = "111", IsSelected = true },
-                        new SpecialismDetailsViewModel { Code = "555", IsSelected = true }
+                        new SpecialismDetailsViewModel { Code = "111|555", IsSelected = true }
                     } 
                 }
             };
@@ -42,14 +41,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 .Select(x => new SpecialismDetails { Code = "different" }),
             };
 
+            _expectedSpecialismCodes = new List<string>();
+            ViewModel.PathwaySpecialisms.Specialisms.Where(x => x.IsSelected).Select(s => s.Code).ToList().ForEach(c => { _expectedSpecialismCodes.AddRange(c.Split(Constants.PipeSeperator)); });
+
             InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active)
                 .Returns(mockRegDetails);
 
             InternalApiClient.UpdateRegistrationAsync(Arg.Is<ManageRegistration>
                 (x => x.Uln == mockRegDetails.Uln &&
                 x.ProfileId == mockRegDetails.ProfileId &&
-                x.SpecialismCodes.All(s => ViewModel.PathwaySpecialisms.Specialisms
-                    .Select(c => c.Code).Contains(s))))
+                x.SpecialismCodes.All(s => _expectedSpecialismCodes.Contains(s))))
                 .Returns(true);
         }
 
@@ -58,6 +59,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         {
             InternalApiClient.Received().GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active);
             InternalApiClient.Received().UpdateRegistrationAsync(Arg.Any<ManageRegistration>());
+        }
+        [Fact]
+        public void Then_Mapper_Returns_Expected_Results()
+        {           
+
+            var result = Mapper.Map<ManageRegistration>(mockRegDetails);
+            Mapper.Map(ViewModel, result);
+
+            result.Should().NotBeNull();
+            result.HasSpecialismsChanged.Should().BeTrue();
+            result.SpecialismCodes.Should().BeEquivalentTo(_expectedSpecialismCodes);
+            result.PerformedBy.Should().Be($"{Givenname} {Surname}");
         }
 
         [Fact]

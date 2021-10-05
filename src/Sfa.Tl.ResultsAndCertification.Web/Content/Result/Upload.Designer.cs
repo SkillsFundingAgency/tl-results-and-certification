@@ -61,11 +61,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to are in CSV format.
+        ///   Looks up a localized string similar to Download.
         /// </summary>
-        public static string Are_In_Csv_Format_Text {
+        public static string Download {
             get {
-                return ResourceManager.GetString("Are_In_Csv_Format_Text", resourceCulture);
+                return ResourceManager.GetString("Download", resourceCulture);
             }
         }
         
@@ -88,6 +88,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 204KB.
+        /// </summary>
+        public static string File_Size_Kb_Text {
+            get {
+                return ResourceManager.GetString("File_Size_Kb_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File size too large – must be no more than {0}MB.
         /// </summary>
         public static string File_Size_Too_Large_Validation_Message {
@@ -97,16 +106,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to include all mandatory fields.
+        ///   Looks up a localized string similar to XLSX.
         /// </summary>
-        public static string Include_All_Mandatory_Fields_Text {
+        public static string File_Type {
             get {
-                return ResourceManager.GetString("Include_All_Mandatory_Fields_Text", resourceCulture);
+                return ResourceManager.GetString("File_Type", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Submit (only click once).
+        ///   Looks up a localized string similar to Before you start.
+        /// </summary>
+        public static string Heading_Before_You_Start {
+            get {
+                return ResourceManager.GetString("Heading_Before_You_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload (only click once).
         /// </summary>
         public static string Js_Disabled_Upload_File_Button_Text {
             get {
@@ -124,6 +142,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to T Levels results data format and rules.
+        /// </summary>
+        public static string Link_Tlevels_Results_Data_Format_Rules {
+            get {
+                return ResourceManager.GetString("Link_Tlevels_Results_Data_Format_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If a result is already recorded and a blank one is submitted in the file, the existing result will be deleted..
+        /// </summary>
+        public static string List_Blank_Will_Delete_Existing {
+            get {
+                return ResourceManager.GetString("List_Blank_Will_Delete_Existing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If the data is not correctly formatted, nothing will be uploaded. You will be able to download an error report which tells you what&apos;s wrong..
+        /// </summary>
+        public static string List_If_Not_Correct_Format_Error_Report_To_Download {
+            get {
+                return ResourceManager.GetString("List_If_Not_Correct_Format_Error_Report_To_Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The ULN must have an active registration status and assessment entry. You cannot upload a result for a withdrawn learner..
+        /// </summary>
+        public static string List_Uln_Must_Be_Active {
+            get {
+                return ResourceManager.GetString("List_Uln_Must_Be_Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File extension not valid - must be a CSV file.
         /// </summary>
         public static string Must_Be_Csv_Validation_Message {
@@ -133,25 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to contain results for between one and 10,000 registrations.
-        /// </summary>
-        public static string No_Of_Results_To_Upload_Text {
-            get {
-                return ResourceManager.GetString("No_Of_Results_To_Upload_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to On existing registrations you can add or amend results by uploading them in the same file or separate files..
-        /// </summary>
-        public static string On_Existing_Registrations_You_Can_Add_Text {
-            get {
-                return ResourceManager.GetString("On_Existing_Registrations_You_Can_Add_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Upload results file.
+        ///   Looks up a localized string similar to Upload multiple results.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -160,11 +196,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload results file page.
+        ///   Looks up a localized string similar to Upload multiple results.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you export data from another system, you must check the data is in the right format. You can download a template with data formats and rules guidance to help you..
+        /// </summary>
+        public static string Para_If_You_Export_Data_From_Another_System {
+            get {
+                return ResourceManager.GetString("Para_If_You_Export_Data_From_Another_System", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can add or change results for one or more learners by uploading CSV files..
+        /// </summary>
+        public static string Para_You_Can_Add_Or_Change_Registration {
+            get {
+                return ResourceManager.GetString("Para_You_Can_Add_Or_Change_Registration", resourceCulture);
             }
         }
         
@@ -178,7 +232,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please select results file.
+        ///   Looks up a localized string similar to published 30 September 2021.
+        /// </summary>
+        public static string Results_Published_On {
+            get {
+                return ResourceManager.GetString("Results_Published_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to version 1.2.
+        /// </summary>
+        public static string Results_Version {
+            get {
+                return ResourceManager.GetString("Results_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a file to upload.
         /// </summary>
         public static string Select_File_To_Upload_Required_Validation_Message {
             get {
@@ -187,7 +259,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Submit.
+        ///   Looks up a localized string similar to Upload.
         /// </summary>
         public static string Upload_File_Button_Text {
             get {
@@ -219,15 +291,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Warning_Text {
             get {
                 return ResourceManager.GetString("Warning_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to We can only accept files that:.
-        /// </summary>
-        public static string We_Can_Only_Accept_Files_Text {
-            get {
-                return ResourceManager.GetString("We_Can_Only_Accept_Files_Text", resourceCulture);
             }
         }
     }

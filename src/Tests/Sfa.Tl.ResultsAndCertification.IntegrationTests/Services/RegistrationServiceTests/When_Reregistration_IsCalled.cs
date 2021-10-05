@@ -40,18 +40,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
             TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, RegistrationMapper, RegistrationRepositoryLogger);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
 
             var reregisterTlProvider = TqProviders.Last().TlProvider;
             var reregisterPathway = TqProviders.Last().TqAwardingOrganisation.TlPathway;
             var reregisterPathwaySpecialisms = new TlSpecialismBuilder().BuildList(EnumAwardingOrganisation.Pearson, reregisterPathway);
+
+            SeedTlPathwaySpecialismCombinations(reregisterPathway, reregisterPathwaySpecialisms);
+
             _reRegistrationRequest = new ReregistrationRequest
             {
                 AoUkprn = TlAwardingOrganisation.UkPrn,
                 ProviderUkprn = reregisterTlProvider.UkPrn,
                 AcademicYear = DateTime.UtcNow.Year,
                 CoreCode = reregisterPathway.LarId,
-                SpecialismCodes = reregisterPathwaySpecialisms.Select(s => s.LarId),
+                SpecialismCodes = TlPathwaySpecialismCombinations.Select(s => s.TlSpecialism.LarId),
                 PerformedBy = "Test User"
             };
         }
@@ -136,6 +139,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 tqRegistrationPathway.TqRegistrationSpecialisms.Add(RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, specialism));
             }
 
+            DbContext.SaveChangesAsync();
+        }
+
+        private void SeedTlPathwaySpecialismCombinations(TlPathway tlPathway, IList<TlSpecialism> specialisms)
+        {
+            var combinations = new TlPathwaySpecialismCombinationBuilder().BuildList();
+            TlPathwaySpecialismCombinations = new List<TlPathwaySpecialismCombination>();
+            foreach (var (specialism, index) in specialisms.Take(combinations.Count).Select((value, i) => (value, i)))
+            {
+                combinations[index].TlPathwayId = tlPathway.Id;
+                combinations[index].TlPathway = tlPathway;
+                combinations[index].TlSpecialismId = specialism.Id;
+                combinations[index].TlSpecialism = specialism;
+                TlPathwaySpecialismCombinations.AddRange(TlevelDataProvider.CreateTlPathwaySpecialismCombinationsList(DbContext, combinations));
+            }
             DbContext.SaveChangesAsync();
         }
     }
