@@ -11,8 +11,10 @@ resources:
 
 trigger:
   branches:
-    include:    
-    - feature/lrs-integration
+    include: 
+    - master   
+    - feature*
+    # - feature/lrs-integration
      
 pr: none
 
