@@ -126,13 +126,13 @@
   <data name="Download_Text" xml:space="preserve">
     <value>Download</value>
   </data>
+  <data name="Error_Report" xml:space="preserve">
+    <value>assessment error report</value>
+  </data>
   <data name="Error_Report_Heading" xml:space="preserve">
     <value>Error report</value>
   </data>
-  <data name="Error_Report_Text" xml:space="preserve">
-    <value>assessment error report</value>
-  </data>
-  <data name="File_Size_Kb_Text" xml:space="preserve">
+  <data name="File_Size_Kb" xml:space="preserve">
     <value>KB</value>
   </data>
   <data name="Inset_Para_If_You_Leave_This_Page_You_Will_Not_Able_To_Come_Back" xml:space="preserve">
