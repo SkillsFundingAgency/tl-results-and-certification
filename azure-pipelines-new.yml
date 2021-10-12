@@ -13,7 +13,7 @@ trigger:
   branches:
     include: 
     - master   
-    - feature*
+    - feature/*
     # - feature/lrs-integration
      
 pr: none
