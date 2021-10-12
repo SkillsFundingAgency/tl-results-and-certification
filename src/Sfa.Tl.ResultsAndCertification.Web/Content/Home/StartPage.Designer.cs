@@ -124,15 +124,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to can upload, amend, view, delete and add English and maths achievements and update industry placement completion status.
-        /// </summary>
-        public static string Learner_Records_Editors_Role_Info {
-            get {
-                return ResourceManager.GetString("Learner_Records_Editors_Role_Info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Manage T Level results user guide.
         /// </summary>
         public static string Link_Tlevel_Results_UserGuide {
@@ -214,11 +205,65 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to have all the permissions of learner records editor and can add users and assign the above role to them.
+        ///   Looks up a localized string similar to upload, amend, view, delete and add English and maths achievements.
         /// </summary>
-        public static string Provider_Administrators_Role_Info {
+        public static string Role_Learner_Record_Editor_Manage_English_Maths_Achievements {
             get {
-                return ResourceManager.GetString("Provider_Administrators_Role_Info", resourceCulture);
+                return ResourceManager.GetString("Role_Learner_Record_Editor_Manage_English_Maths_Achievements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to update industry placement completion status.
+        /// </summary>
+        public static string Role_Learner_Record_Editor_Manage_Industry_Placement {
+            get {
+                return ResourceManager.GetString("Role_Learner_Record_Editor_Manage_Industry_Placement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to add users and assign the above role to them.
+        /// </summary>
+        public static string Role_Provider_Administrator_Add_And_Assign_User_Roles {
+            get {
+                return ResourceManager.GetString("Role_Provider_Administrator_Add_And_Assign_User_Roles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to all the permissions of learner records editor.
+        /// </summary>
+        public static string Role_Provider_Administrator_All_Above_Permissions {
+            get {
+                return ResourceManager.GetString("Role_Provider_Administrator_All_Above_Permissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to add or remove providers.
+        /// </summary>
+        public static string Role_Provider_Editor_Add_Or_Remove_Provider {
+            get {
+                return ResourceManager.GetString("Role_Provider_Editor_Add_Or_Remove_Provider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to review existing providers.
+        /// </summary>
+        public static string Role_Provider_Editor_Review_Existing_Providers {
+            get {
+                return ResourceManager.GetString("Role_Provider_Editor_Review_Existing_Providers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select the T Levels each provider offers.
+        /// </summary>
+        public static string Role_Provider_Editor_Select_Tlevels {
+            get {
+                return ResourceManager.GetString("Role_Provider_Editor_Select_Tlevels", resourceCulture);
             }
         }
         
@@ -232,11 +277,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to can set up new providers and enter and update the T Levels each provider is offering.
+        ///   Looks up a localized string similar to change a learner&apos;s details.
         /// </summary>
-        public static string Role_Providers_Editors_Info {
+        public static string Role_Registrations_Editor_Change_Registration {
             get {
-                return ResourceManager.GetString("Role_Providers_Editors_Info", resourceCulture);
+                return ResourceManager.GetString("Role_Registrations_Editor_Change_Registration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to change the T Level a learner is studying.
+        /// </summary>
+        public static string Role_Registrations_Editor_Change_Tlevel_Study {
+            get {
+                return ResourceManager.GetString("Role_Registrations_Editor_Change_Tlevel_Study", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to manage movers, leavers and rejoiners.
+        /// </summary>
+        public static string Role_Registrations_Editor_Manage_Move_Leave_Rejoin {
+            get {
+                return ResourceManager.GetString("Role_Registrations_Editor_Manage_Move_Leave_Rejoin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to register learners on T Level courses.
+        /// </summary>
+        public static string Role_Registrations_Editor_Register_Learner {
+            get {
+                return ResourceManager.GetString("Role_Registrations_Editor_Register_Learner", resourceCulture);
             }
         }
         
@@ -250,11 +322,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to can upload, view, update, remove and add learner registrations and assessment entries.
+        ///   Looks up a localized string similar to upload, view, update, remove and add learners’ results.
         /// </summary>
-        public static string Role_Registrations_Editors_Info {
+        public static string Role_Results_Editor_Upload_Add_Or_Amend_Results {
             get {
-                return ResourceManager.GetString("Role_Registrations_Editors_Info", resourceCulture);
+                return ResourceManager.GetString("Role_Results_Editor_Upload_Add_Or_Amend_Results", resourceCulture);
             }
         }
         
@@ -268,11 +340,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to can upload, view, update, remove and add learners’ results.
+        ///   Looks up a localized string similar to add users and assign the above roles to them.
         /// </summary>
-        public static string Role_Results_Editors_Info {
+        public static string Role_Site_Administrator_Add_And_Assign_User_Roles {
             get {
-                return ResourceManager.GetString("Role_Results_Editors_Info", resourceCulture);
+                return ResourceManager.GetString("Role_Site_Administrator_Add_And_Assign_User_Roles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to all the permissions of the above roles.
+        /// </summary>
+        public static string Role_Site_Administrator_All_Above_Permissions {
+            get {
+                return ResourceManager.GetString("Role_Site_Administrator_All_Above_Permissions", resourceCulture);
             }
         }
         
@@ -286,11 +367,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to have all the permissions of the above roles and can add users and assign the above roles to them.
+        ///   Looks up a localized string similar to confirm each T Level’s details are correct.
         /// </summary>
-        public static string Role_Site_Administrators_Info {
+        public static string Role_Tlevel_Reviewer_Confirm_Tlevel_Details {
             get {
-                return ResourceManager.GetString("Role_Site_Administrators_Info", resourceCulture);
+                return ResourceManager.GetString("Role_Tlevel_Reviewer_Confirm_Tlevel_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to review the T Levels they are licensed to deliver.
+        /// </summary>
+        public static string Role_Tlevel_Reviewer_Licenced_To_Deliver {
+            get {
+                return ResourceManager.GetString("Role_Tlevel_Reviewer_Licenced_To_Deliver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to request amendments.
+        /// </summary>
+        public static string Role_Tlevel_Reviewer_Request_Amendments {
+            get {
+                return ResourceManager.GetString("Role_Tlevel_Reviewer_Request_Amendments", resourceCulture);
             }
         }
         
@@ -300,15 +399,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         public static string Role_TLevels_Reviewers {
             get {
                 return ResourceManager.GetString("Role_TLevels_Reviewers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to review T Level titles and confirm that details are correct and raise a query if they are incorrect.
-        /// </summary>
-        public static string Role_TLevels_Reviewers_Info {
-            get {
-                return ResourceManager.GetString("Role_TLevels_Reviewers_Info", resourceCulture);
             }
         }
         
