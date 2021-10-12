@@ -74,6 +74,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<ILearnerRecordService, LearnerRecordService>();
             services.AddTransient<IPrintingService, PrintingService>();
             services.AddTransient<ICertificatePrintingService, CertificatePrintingService>();
+            services.AddTransient<IUcasDataService, UcasDataService>();
+            services.AddTransient<IUcasDataTransferService, UcasDataTransferService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
         }
