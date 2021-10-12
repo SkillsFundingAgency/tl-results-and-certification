@@ -12,7 +12,7 @@ resources:
 trigger:
   branches:
     include:    
-    - feature/lrs-integration
+    - feature/*   #lrs-integration
      
 pr: none
 
