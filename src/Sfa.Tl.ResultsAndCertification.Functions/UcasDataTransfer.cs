@@ -9,7 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.Services
+namespace Sfa.Tl.ResultsAndCertification.Functions
 {
     public class UcasDataTransfer
     {
@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             try
             {
                 logger.LogInformation($"Function {context.FunctionName} started");
-                
+
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
-                _ = (functionLogDetails.Id > 0) ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
+                _ = functionLogDetails.Id > 0 ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
 
                 await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
             }

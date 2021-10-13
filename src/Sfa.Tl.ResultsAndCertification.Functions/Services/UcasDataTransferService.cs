@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             list.Add(ucasData.Trailer);
 
             var byteData = await CsvExtensions.WriteFileAsync(list);
+            File.WriteAllBytes(@"c:\temp\test.csv", byteData);
 
             var response = new UcasDataTransferResponse { IsSuccess = true };
             return response;
