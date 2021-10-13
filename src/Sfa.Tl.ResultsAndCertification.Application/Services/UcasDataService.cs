@@ -29,11 +29,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 UcasDataRecords = new List<UcasDataRecord> 
                 {
                     new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Header, SendingOrganisation = 99, ReceivingOrganisation = 90,
-                    CentreNumber = "1234567890", CandidateNumber = "1234567890", CandidateName = "Smith:John", CandidateDateofBirth = "20082000", Sex = (char)Gender.Male, 
+                    CentreNumber = "1234567890", CandidateNumber = "1234567890", CandidateName = "Smith:John", CandidateDateofBirth = "20082000", Sex = (char)UcasGender.Male, 
                         SubjectCode = "123456789", Grade = "A", PreviousGrade = null },
 
                     new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Header, SendingOrganisation = 99, ReceivingOrganisation = 90,
-                    CentreNumber = "1234567890", CandidateNumber = "1234567890", CandidateName = "Smith:John", CandidateDateofBirth = "20082000", Sex = (char)Gender.Male,
+                    CentreNumber = "1234567890", CandidateNumber = "1234567890", CandidateName = "Smith:John", CandidateDateofBirth = "20082000", Sex = (char)UcasGender.Male,
                         SubjectCode = "123456789", Grade = "A", PreviousGrade = null }
                 },
 
