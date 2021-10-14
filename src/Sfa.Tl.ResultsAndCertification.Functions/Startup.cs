@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddHttpContextAccessor();
 
             RegisterApplicationServices(services);
-            //RegisterApiClients(services);
+            RegisterApiClients(services);
         }
 
         private void RegisterApplicationServices(IServiceCollection services)
