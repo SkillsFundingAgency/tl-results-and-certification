@@ -5,6 +5,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Interfaces
 {
     public interface IUcasDataTransferService
     {
-        Task<UcasDataTransferResponse> ProcessDataTransferAsync();
+        Task<UcasDataTransferResponse> ProcessUcasEntriesAsync();
     }
 }
