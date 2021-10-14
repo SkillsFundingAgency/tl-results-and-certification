@@ -102,6 +102,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             });
             services.AddTransient<ILearnerServiceApiClient, LearnerServiceApiClient>();
             services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
+            services.AddHttpClient<IUcasApiClient, UcasApiClient>();
         }
     }
 }
