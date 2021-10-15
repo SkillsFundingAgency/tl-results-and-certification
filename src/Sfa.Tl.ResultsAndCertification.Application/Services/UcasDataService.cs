@@ -28,21 +28,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 UcasDataRecords = new List<UcasDataRecord> 
                 {
-                    new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Header, SendingOrganisation = 99, ReceivingOrganisation = 90,
-                    CentreNumber = "1234567890", CandidateNumber = "1234567890", CandidateName = "Smith:John", CandidateDateofBirth = "20082000", Sex = (char)UcasGender.Male, 
-                        SubjectCode = "123456789", Grade = "A", PreviousGrade = null },
+                    new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = 99, ReceivingOrganisation = 90,
+                    CentreNumber = "CEN111", CandidateNumber = "1234567890", CandidateName = "Smith:John", CandidateDateofBirth = "20082000", Sex = (char)UcasGender.Male, 
+                        SubjectCode = "111111", Grade = "A*", PreviousGrade = null },
 
-                    new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Header, SendingOrganisation = 99, ReceivingOrganisation = 90,
-                    CentreNumber = "1234567890", CandidateNumber = "1234567890", CandidateName = "Smith:John", CandidateDateofBirth = "20082000", Sex = (char)UcasGender.Male,
-                        SubjectCode = "123456789", Grade = "A", PreviousGrade = null }
+                    new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = 99, ReceivingOrganisation = 90,
+                    CentreNumber = "CEN222", CandidateNumber = "1234567891", CandidateName = "Smith:John", CandidateDateofBirth = "20082000", Sex = (char)UcasGender.Male,
+                        SubjectCode = "222222", Grade = "A", PreviousGrade = null },
+                    
+                    new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = 99, ReceivingOrganisation = 90,
+                    CentreNumber = "CEN333", CandidateNumber = "1234567892", CandidateName = "Smith:John", CandidateDateofBirth = "20082000", Sex = (char)UcasGender.Male,
+                        SubjectCode = "333333", Grade = "A", PreviousGrade = "B" }
                 },
 
                 Trailer = new UcasDataTrailer 
                 {
-                    UcasRecordType = (char)UcasRecordType.Header,
+                    UcasRecordType = (char)UcasRecordType.Trailer,
                     SendingOrganisation = 99,
                     ReceivingOrganisation = 90,
-                    Count = 2,
+                    Count = 3,
                     ExamDate = "092021"
                 }
             };

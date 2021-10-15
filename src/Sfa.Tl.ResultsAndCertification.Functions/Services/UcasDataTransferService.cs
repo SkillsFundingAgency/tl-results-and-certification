@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _logger = logger;
         }
 
-        public async Task<UcasDataTransferResponse> ProcessDataTransferAsync()
+        public async Task<UcasDataTransferResponse> ProcessUcasEntriesAsync()
         {
             // 1. Get Entries data
             var ucasData = await _ucasDataService.GetUcasEntriesAsync();
