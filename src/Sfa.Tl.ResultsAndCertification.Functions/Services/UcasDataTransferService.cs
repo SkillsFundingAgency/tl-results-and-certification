@@ -1,8 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
+using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Ucas;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using System.Collections.Generic;
@@ -15,11 +18,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
     public class UcasDataTransferService : IUcasDataTransferService
     {
         private readonly IUcasDataService _ucasDataService;
+        private readonly IUcasApiClient _ucasApiClient;
         private readonly ILogger _logger;
 
-        public UcasDataTransferService(IUcasDataService ucasDataService, ILogger<IUcasDataTransferService> logger)
+        public UcasDataTransferService(IUcasDataService ucasDataService, IUcasApiClient ucasApiClient, ILogger<IUcasDataTransferService> logger)
         {
             _ucasDataService = ucasDataService;
+            _ucasApiClient = ucasApiClient;
             _logger = logger;
         }
 
@@ -67,12 +72,19 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             var byteData = await CsvExtensions.WriteFileAsync(list);
 
             // 3. Send data to Ucas using ApiClient
-            var filename = $"{DateTime.UtcNow:yyyyMMddHHmmss}_{Guid.NewGuid()}";
-            File.WriteAllBytes(@"c:\temp\" + filename, byteData);
+            var filename = $"{Guid.NewGuid()}.{Constants.FileExtensionTxt}";
+            var fileHash = CommonHelper.ComputeSha256Hash(byteData);
+
+            // 4. Call Ucas Api client
+            var ucasFileId = await _ucasApiClient.SendData(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
+
+            File.WriteAllBytes(@"c:\temp\" + filename, byteData); // Need to remove after implementing Blob storage
+
+            // Need to write the file to Blob
+            var blobFileName = $"{ucasFileId}_{filename}";
 
             // 4. Update response
-            var response = new UcasDataTransferResponse { IsSuccess = true };
-            return response;
+            return new UcasDataTransferResponse { IsSuccess = true };
         }
     }
 }

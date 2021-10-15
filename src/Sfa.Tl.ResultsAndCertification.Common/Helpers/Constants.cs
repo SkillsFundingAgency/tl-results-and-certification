@@ -134,5 +134,8 @@
         public const string FetchCertificatePrintingBatchSummary = "FetchCertificatePrintingBatchSummary";
         public const string FetchCertificatePrintingTrackBatch = "FetchCertificatePrintingTrackBatch";
         public const string UcasTransferEntries = "UcasTransferEntries";
+
+        // File Extensions
+        public const string FileExtensionTxt = "txt";
     }
 }

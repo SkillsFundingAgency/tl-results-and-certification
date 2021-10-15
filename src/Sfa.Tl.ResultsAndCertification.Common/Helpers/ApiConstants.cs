@@ -88,11 +88,15 @@
         public const string PrintBatchSummaryRequestUri = "/api/DFE/BatchSummary?batchNumber={0}&token={1}";
         public const string PrintTrackBatchRequestUri = "/api/DFE/TrackBatch?batchNumber={0}&token={1}";
 
-        // Ucas Api Uri's
+        // Ucas Api Uri's        
+        public const string FormDataHashType = "hashtype";
+        public const string FormDataHash = "hash";
+        public const string FormDataFile = "file";
+        public const string SHA256 = "sha-256";
         public const string UcasTokenParameters = "grant_type={0}&username={1}&password={2}";
-        public const string UcasBaseUri = "{0}/api/v{1}";
+        public const string UcasBaseUri = "/api/v{0}";
         public const string UcasTokenUri = "/token";
-        public const string UcasFileUri = "/folders/{1}/files";
+        public const string UcasFileUri = "/folders/{0}/files";
 
         // Common Api Uri's
         public const string GetLookupDataUri = "/api/common/GetLookupData/{0}";

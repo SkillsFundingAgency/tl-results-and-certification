@@ -15,5 +15,11 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Ucas
 
         [JsonProperty("refresh_token")]
         public string RefreshToken { get; set; }
+
+        [JsonProperty("error")]
+        public string Error { get; set; }
+
+        [JsonProperty("error_description")]
+        public string ErrorDescription { get; set; }
     }
 }
