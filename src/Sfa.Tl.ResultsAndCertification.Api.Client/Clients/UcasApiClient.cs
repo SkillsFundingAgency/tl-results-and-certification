@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiUri;
-        private ResultsAndCertificationConfiguration _configuration;
+        private readonly ResultsAndCertificationConfiguration _configuration;
 
         public UcasApiClient(HttpClient httpClient, ResultsAndCertificationConfiguration configuration)
         {
@@ -24,45 +24,50 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             _configuration = configuration;
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _apiUri = string.Format(ApiConstants.UcasBaseUri, configuration?.UcasApiSettings?.Uri?.TrimEnd('/'), configuration?.UcasApiSettings?.Version);
+            _apiUri = configuration?.UcasApiSettings?.Uri?.TrimEnd('/');
             _httpClient.BaseAddress = new Uri(_apiUri);
         }
+        string FormatRequestUri(string path) => $"{string.Format(ApiConstants.UcasBaseUri, _configuration?.UcasApiSettings?.Version)}{path}";
 
         public async Task<string> GetTokenAsync()
         {
-            var requestUri = string.Format(ApiConstants.UcasTokenUri, _configuration.UcasApiSettings.Version);
-            string requestParameters = string.Format(ApiConstants.UcasTokenParameters, _configuration.UcasApiSettings.GrantType,_configuration.UcasApiSettings.GrantType,_configuration.UcasApiSettings.GrantType);
-
+            var requestUri = FormatRequestUri(ApiConstants.UcasTokenUri);
+            string requestParameters = string.Format(ApiConstants.UcasTokenParameters, _configuration.UcasApiSettings.GrantType,_configuration.UcasApiSettings.Username,_configuration.UcasApiSettings.Password);
             var tokenResponse = await PostAsync<string, UcasTokenResponse>(requestUri, requestParameters);
+            if (string.IsNullOrWhiteSpace(tokenResponse?.AccessToken))
+                throw new ApplicationException($"Ucas - Failed to retrive api token. Error = {tokenResponse.Error}; ErrorMessage = {tokenResponse.ErrorDescription}");
             return tokenResponse?.AccessToken;
         }
 
-        public async Task<bool> SendData(string fileName, byte[] data)
+        public async Task<string> SendData(UcasDataRequest request)
         {
-            var requestUri = string.Format(ApiConstants.UcasFileUri, _configuration.UcasApiSettings.FolderId);
-
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetTokenAsync());
-
+            
             using (var content = new MultipartFormDataContent())
             {
-                content.Add(new StreamContent(new MemoryStream(data))
+                content.Add(new StringContent(ApiConstants.SHA256), ApiConstants.FormDataHashType);
+                content.Add(new StringContent(request.FileHash), ApiConstants.FormDataHash);
+                content.Add(new StreamContent(new MemoryStream(request.FileData))
                 {
                     Headers =
                     {
-                        ContentLength = data.Length,
                         ContentType = new MediaTypeHeaderValue("multipart/form-data")
                     }
-                }, "file", fileName);
+                }, ApiConstants.FormDataFile, request.FileName);
 
+                var requestUri = FormatRequestUri(string.Format(ApiConstants.UcasFileUri, _configuration.UcasApiSettings.FolderId));
                 var response = await PostAsync<MultipartFormDataContent, UcasDataResponse>(requestUri, content);
-                return !string.IsNullOrWhiteSpace(response.Id);               
-            }            
+
+                if (string.IsNullOrWhiteSpace(response.Id))
+                    throw new ApplicationException($"Ucas - Failed to send data. Error Response : {JsonConvert.SerializeObject(response)}");
+
+                return response.Id;
+            }
         }
 
         private async Task<TResponse> PostAsync<TRequest, TResponse>(string requestUri, TRequest content)
         {
             var response = await _httpClient.PostAsync(requestUri, CreateHttpContent(content));
-            response.EnsureSuccessStatusCode();
             return JsonConvert.DeserializeObject<TResponse>(await response.Content.ReadAsStringAsync());
         }
 
@@ -74,8 +79,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         /// <returns></returns>
         private HttpContent CreateHttpContent<T>(T content)
         {
-            var json = content is string ? content.ToString() : JsonConvert.SerializeObject(content);
-            return new StringContent(json, Encoding.UTF8, "application/json");
+            if (content is MultipartFormDataContent)
+                return content as HttpContent;
+            else
+            {
+                var json = content is string ? content.ToString() : JsonConvert.SerializeObject(content);
+                return new StringContent(json, Encoding.UTF8, "application/json");
+            }
         }
     }
 }
