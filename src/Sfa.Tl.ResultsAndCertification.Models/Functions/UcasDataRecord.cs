@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Functions
 {
@@ -12,13 +13,19 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Functions
         public string CandidateName { get; set; }
         public char Sex { get; set; }
         public string CandidateDateofBirth { get; set; }
-        public IEnumerable<UcasDataResult> UcasDataResults { get; set; }
-    }
-
-    public class UcasDataResult
-    {
-        public string SubjectCode { get; set; }
-        public string Grade { get; set; }
-        public string PreviousGrade { get; set; }
+        public IEnumerable<UcasDataComponent> UcasDataComponents { get; set; }
+        public string UcaDataComponentRecord
+        {
+            get
+            {
+                var result = new List<string>();
+                UcasDataComponents.ToList().ForEach(r =>
+                {
+                    var data = $"_|{r.SubjectCode}|{r.Grade}|{r.PreviousGrade}";
+                    result.Add(data);
+                });
+                return $"{string.Join("|", result)}|_|";
+            }
+        }
     }
 }
