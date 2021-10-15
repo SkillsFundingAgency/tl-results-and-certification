@@ -1,12 +1,12 @@
-﻿using CsvHelper.Configuration.Attributes;
-
-namespace Sfa.Tl.ResultsAndCertification.Models.Functions
+﻿namespace Sfa.Tl.ResultsAndCertification.Models.Functions
 {
-    public class UcasDataTrailer : UcasBaseData
+    public class UcasDataTrailer
     {
-        [Index(3)]
+        public char UcasRecordType { get; set; }
+        public int SendingOrganisation { get; set; }
+        public int ReceivingOrganisation { get; set; }
         public int Count { get; set; }
-        [Index(5)]
         public string ExamDate { get; set; }
+        public string RecordTerminator { get { return string.Empty; } }
     }
 }

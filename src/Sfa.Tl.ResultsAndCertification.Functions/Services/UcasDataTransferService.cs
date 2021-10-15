@@ -36,7 +36,33 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
             // 2. Write to the file (in byte format)
             var list = new List<dynamic> { ucasData.Header };
-            ucasData.UcasDataRecords.ToList().ForEach(x => list.Add(x));
+            
+            ucasData.UcasDataRecords.ToList().ForEach(x => 
+            {
+                var result = new List<string>();
+                x.UcasDataResults.ToList().ForEach(r => 
+                {
+                    result.Add($"_|{r.SubjectCode}");
+                    result.Add(r.Grade);
+                    result.Add(r.PreviousGrade);
+                });
+               var resultData = $"{string.Join("|", result)}|_";
+
+                list.Add(new
+                {
+                    x.UcasRecordType,
+                    x.SendingOrganisation,
+                    x.ReceivingOrganisation,
+                    x.CentreNumber,
+                    x.CandidateNumber,
+                    x.CandidateName,
+                    x.Sex,
+                    x.CandidateDateofBirth,
+                    resultData,
+                    string.Empty
+                });
+            });
+            
             list.Add(ucasData.Trailer);
             var byteData = await CsvExtensions.WriteFileAsync(list);
 

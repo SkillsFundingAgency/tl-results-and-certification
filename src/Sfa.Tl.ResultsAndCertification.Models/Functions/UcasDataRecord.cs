@@ -1,24 +1,24 @@
-﻿using CsvHelper.Configuration.Attributes;
+﻿using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Functions
 {
-    public class UcasDataRecord : UcasBaseData
+    public class UcasDataRecord
     {
-        [Index(3)]
+        public char UcasRecordType { get; set; }
+        public int SendingOrganisation { get; set; }
+        public int ReceivingOrganisation { get; set; }
         public string CentreNumber { get; set; }
-        [Index(4)]
         public string CandidateNumber { get; set; }
-        [Index(5)]
         public string CandidateName { get; set; }
-        [Index(6)]
         public char Sex { get; set; }
-        [Index(7)]
         public string CandidateDateofBirth { get; set; }
-        [Index(8)]
+        public IEnumerable<UcasDataResult> UcasDataResults { get; set; }
+    }
+
+    public class UcasDataResult
+    {
         public string SubjectCode { get; set; }
-        [Index(9)]
         public string Grade { get; set; }
-        [Index(10)]
         public string PreviousGrade { get; set; }
     }
 }
