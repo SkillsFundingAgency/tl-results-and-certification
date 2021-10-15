@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
@@ -11,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
     {
         // Depedencies
         protected IUcasDataService UcasDataService;
+        private IUcasApiClient UcasApiClient;
         protected ILogger<IUcasDataTransferService> Logger;
 
         // Actual test instance
@@ -22,9 +24,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
         public override void Setup()
         {
             UcasDataService = Substitute.For<IUcasDataService>();
+            UcasApiClient = Substitute.For<IUcasApiClient>();
             Logger = Substitute.For<ILogger<IUcasDataTransferService>>();
 
-            Service = new Functions.Services.UcasDataTransferService(UcasDataService, Logger);
+            Service = new Functions.Services.UcasDataTransferService(UcasDataService, UcasApiClient, Logger);
         }
     }
 }

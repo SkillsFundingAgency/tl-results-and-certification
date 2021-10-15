@@ -14,7 +14,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 HasHeaderRecord = false,
-                Delimiter = "|"
+                Delimiter = "|",
+                ShouldQuote = args => false
             };
 
             await using var ms = new MemoryStream();
