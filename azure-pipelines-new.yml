@@ -16,7 +16,10 @@ trigger:
     - feature/*
     # - feature/lrs-integration
      
-pr: none
+pr: 
+  - feature/* 
+  - master
+  - develop
 
 pool:
   name: 'Azure Pipelines'
