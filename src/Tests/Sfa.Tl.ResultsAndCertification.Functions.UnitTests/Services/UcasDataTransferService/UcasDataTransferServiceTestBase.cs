@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
     {
         // Depedencies
         protected IUcasDataService UcasDataService;
-        private IUcasApiClient UcasApiClient;
+        protected IUcasApiClient UcasApiClient;
         protected ILogger<IUcasDataTransferService> Logger;
 
         // Actual test instance
