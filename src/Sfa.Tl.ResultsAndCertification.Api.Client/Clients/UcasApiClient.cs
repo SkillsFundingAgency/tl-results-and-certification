@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return tokenResponse?.AccessToken;
         }
 
-        public async Task<string> SendData(UcasDataRequest request)
+        public async Task<string> SendDataAsync(UcasDataRequest request)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetTokenAsync());
             
@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
                 content.Add(new StreamContent(new MemoryStream(request.FileData))
                 {
                     Headers =
-                    {
+                    {                        
                         ContentType = new MediaTypeHeaderValue("multipart/form-data")
                     }
                 }, ApiConstants.FormDataFile, request.FileName);

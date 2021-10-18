@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             var fileHash = CommonHelper.ComputeSha256Hash(byteData);
 
             // 4. Call Ucas Api client
-            var ucasFileId = await _ucasApiClient.SendData(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
+            var ucasFileId = await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
 
             File.WriteAllBytes(@"c:\temp\" + filename, byteData); // Need to remove after implementing Blob storage
 
