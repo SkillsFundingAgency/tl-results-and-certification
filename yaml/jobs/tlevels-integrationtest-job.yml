@@ -59,6 +59,11 @@
         SourcePath: '$(Agent.TempDirectory)\IntegrationTests\'
         TargetFileNames: '*.json'
 
+    - pwsh: | 
+        $IntTestSQLServiceAccountConnectionString = "Server=tcp:$(SharedSQLServerName).database.windows.net,1433;Initial Catalog=$(IntTestDatabaseName);Persist Security Info=False;User ID=$(SQLServerAdminUsername);Password=$(SQLServerAdminPassword);MultipleActiveResultSets=True;Encrypt=true;TrustServerCertificate=False;Connection Timeout=1200;"
+        Write-Host "##vso[task.setvariable variable=IntTestSQLServiceAccountConnectionString;isOutput=true]$IntTestSQLServiceAccountConnectionString"        
+      name: IntTestSqlVariables
+
     - task: VSTest@2
       displayName: 'Run Integration tests'
       inputs:
@@ -66,8 +71,3 @@
         searchFolder: '$(Agent.TempDirectory)\IntegrationTests'
         runInParallel: false
         failOnMinTestsNotRun: false
-
-    - pwsh: | 
-        $IntTestSQLServiceAccountConnectionString = "Server=tcp:$(SharedSQLServerName).database.windows.net,1433;Initial Catalog=$(IntTestDatabaseName);Persist Security Info=False;User ID=$(SQLServerAdminUsername);Password=$(SQLServerAdminPassword);MultipleActiveResultSets=True;Encrypt=true;TrustServerCertificate=False;Connection Timeout=1200;"
-        Write-Host "##vso[task.setvariable variable=IntTestSQLServiceAccountConnectionString;isOutput=true]$IntTestSQLServiceAccountConnectionString"        
-      name: IntTestSqlVariables
