@@ -11,11 +11,20 @@ resources:
 
 trigger:
   branches:
-    include:    
-    - feature/lrs-integration
+    include: 
+    - master   
+    - feature/*
+    # - feature/lrs-integration
      
-pr: none
+pr: 
+  - feature/* 
+  - master
+  - develop
 
+pool:
+  name: 'Azure Pipelines'
+  vmImage: 'vs2017-win2016'
+  
 variables:
   applicationName: resac
 stages:

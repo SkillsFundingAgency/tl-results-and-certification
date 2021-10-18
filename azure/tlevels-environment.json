@@ -32,7 +32,7 @@
         "uiCustomHostName": {
             "type": "string"
         },
-        "certificateName": {
+        "uiCertificateName": {
             "type": "string"
         },
         "internalApiCustomHostname": {
@@ -40,6 +40,14 @@
             "defaultValue": ""
         },
         "internalApiCertificateName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "functionCustomHostname": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "functionCertificateName": {
             "type": "string",
             "defaultValue": ""
         },
@@ -57,12 +65,13 @@
         }
     },
     "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/operations-devops-deployment/master/ArmTemplates/",
+        "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/operations-devops-deployment/reasc-staging-slot/ArmTemplates/",
         "uiAppName": "[concat(parameters('resourceNamePrefix'), '-web')]",
         "internalApiAppName": "[concat(parameters('resourceNamePrefix'), '-internal-api')]",
         "appInsightName": "[concat(parameters('resourceNamePrefix'), '-ai')]",
-        "workerFunctionAppName": "[concat(parameters('resourceNamePrefix'), '-func-worker')]",
+        "functionAppName": "[concat(parameters('resourceNamePrefix'), '-func')]",
         "sqlDatabaseName": "[concat(parameters('resourceNamePrefix'), '-sqldb')]",
+        "IntTestSQLDatabaseName": "[concat(parameters('resourceNamePrefix'), '-inttest-sqldb')]",
         "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]"
 
     },
@@ -136,8 +145,10 @@
             }
         },
         {
+            "condition": "[greater(length(parameters('uiCustomHostName')), 0)]",
             "apiVersion": "2017-05-10",
             "name": "[concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
+            "resourceGroup": "[resourceGroup().name]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
@@ -147,7 +158,7 @@
                 },
                 "parameters": {
                     "keyVaultCertificateName": {
-                        "value": "[parameters('certificateName')]"
+                        "value": "[parameters('uiCertificateName')]"
                     },
                     "keyVaultName": {
                         "value": "[parameters('sharedKeyVaultName')]"
@@ -202,102 +213,23 @@
                             }
                         ]
                     },
+                    "appServiceConnectionStrings": {
+                        "value": [
+                        ]
+                    },
                     "customHostName": {
                         "value": "[parameters('uiCustomHostName')]"
                     },
                     "certificateThumbprint": {
-                        "value": "[reference(concat('ui-app-service-certificate','-',parameters('environmentNameAbbreviation'))).outputs.certificateThumbprint.value]"
+                        "value": "[if(greater(length(parameters('uiCustomHostname')), 0), reference(concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
                     }
                 }
             },
             "dependsOn": [
-                "[concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation'))]"
+                "[concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
+                "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
             ]
         },
-        // {
-        //     "condition": "[greater(length(parameters('apiCustomHostName')), 0)]",
-        //     "apiVersion": "2017-05-10",
-        //     "name": "[concat('api-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
-        //     "type": "Microsoft.Resources/deployments",
-        //     "properties": {
-        //         "mode": "Incremental",
-        //         "templateLink": {
-        //             "uri": "[concat(variables('deploymentUrlBase'), 'app-service-certificate.json')]",
-        //             "contentVersion": "1.0.0.0"
-        //         },
-        //         "parameters": {
-        //             "keyVaultCertificateName": {
-        //                 "value": "[parameters('apiCertificateName')]"
-        //             },
-        //             "keyVaultName": {
-        //                 "value": "[parameters('sharedKeyVaultName')]"
-        //             },
-        //             "keyVaultResourceGroup": {
-        //                 "value": "[parameters('sharedEnvResourceGroup')]"
-        //             }
-        //         }
-        //     }
-        // },
-        // {
-        //     "apiVersion": "2017-05-10",
-        //     "name": "[concat('api-app-service','-', parameters('environmentNameAbbreviation'))]",
-        //     "type": "Microsoft.Resources/deployments",
-        //     "properties": {
-        //         "mode": "Incremental",
-        //         "templateLink": {
-        //             "uri": "[concat(variables('deploymentUrlBase'),'app-service.json')]",
-        //             "contentVersion": "1.0.0.0"
-        //         },
-        //         "parameters": {
-        //             "appServiceName": {
-        //                 "value": "[variables('apiAppName')]"
-        //             },
-        //             "appServicePlanName": {
-        //                 "value": "[parameters('sharedASPName')]"
-        //             },
-        //             "appServicePlanResourceGroup": {
-        //                 "value": "[parameters('sharedEnvResourceGroup')]"
-        //             },
-        //             "appServiceAppSettings": {
-        //                 "value": [
-        //                     {
-        //                         "name": "EnvironmentName",
-        //                         "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
-        //                     },
-        //                     {
-        //                         "name": "ConfigurationStorageConnectionString",
-        //                         "value": "[parameters('configurationStorageConnectionString')]"
-        //                     },
-        //                     {
-        //                         "name": "Version",
-        //                         "value": "1.0"
-        //                     },
-        //                     {
-        //                         "name": "ServiceName",
-        //                         "value": "Sfa.Tl.ResultsAndCertification"
-        //                     },
-        //                     {
-        //                         "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-        //                         "value": "[reference(concat('app-insights','-',parameters('environmentNameAbbreviation'))).outputs.InstrumentationKey.value]"
-        //                     }
-        //                 ]
-        //             },
-        //             "appServiceConnectionStrings": {
-        //                 "value": [
-        //                 ]
-        //             },
-        //             "customHostName": {
-        //                 "value": "[parameters('apiCustomHostname')]"
-        //             },
-        //             "certificateThumbprint": {
-        //                 "value": "[if(greater(length(parameters('apiCustomHostname')), 0), reference(concat('api-app-service-certificate','-',parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
-        //             }
-        //         }
-        //     },
-        //     "dependsOn": [
-        //         "[concat('api-app-service-certificate','-', parameters('environmentNameAbbreviation'))]"
-        //     ]
-        // },
         {
             "condition": "[greater(length(parameters('internalApiCustomHostName')), 0)]",
             "apiVersion": "2017-05-10",
@@ -380,8 +312,35 @@
                 }
             },
             "dependsOn": [
-                "[concat('internal-api-app-service-certificate','-', parameters('environmentNameAbbreviation'))]"
+                "[concat('internal-api-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
+                "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
+
             ]
+        },
+        {
+            "condition": "[greater(length(parameters('functionCertificateName')), 0)]",
+            "apiVersion": "2017-05-10",
+            "name": "[concat('function-app-certificate','-',parameters('environmentNameAbbreviation'))]",
+            "resourceGroup": "[resourceGroup().name]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'app-service-certificate.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultCertificateName": {
+                        "value": "[parameters('functionCertificateName')]"
+                    },
+                    "keyVaultName": {
+                        "value": "[parameters('sharedKeyVaultName')]"
+                    },
+                    "keyVaultResourceGroup": {
+                        "value": "[parameters('sharedEnvResourceGroup')]"
+                    }
+                }
+            }
         },
         {
             "apiVersion": "2017-05-10",
@@ -395,7 +354,7 @@
                 },
                 "parameters": {
                     "functionAppName": {
-                        "value": "[variables('workerFunctionAppName')]"
+                        "value": "[variables('functionAppName')]"
                     },
                     "appServicePlanName": {
                         "value": "[parameters('sharedASPName')]"
@@ -458,9 +417,23 @@
                                 "value": "1"
                             }
                         ]
+                    },
+                    "customHostName": {
+                        "value": "[parameters('functionCustomHostname')]"
+                    },
+                    "certificateThumbprint": {
+                        "value": "[if(greater(length(parameters('functionCertificateName')), 0), reference(concat('function-app-certificate','-',parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
+                    },
+                    "systemAssignedIdentity": {
+                        "value": "SystemAssigned"
                     }
                 }
-            }
+            },
+            "dependsOn": [
+                "[concat('function-app-certificate','-', parameters('environmentNameAbbreviation'))]",
+                "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
+
+            ]
         },
         {
             "apiVersion": "2017-05-10",
@@ -476,6 +449,33 @@
                 "parameters": {
                     "databaseName": {
                         "value": "[variables('sqlDatabaseName')]"
+                    },
+                    "sqlServerName": {
+                        "value": "[parameters('sharedSQLServerName')]"
+                    },
+                    "databaseSkuName": {
+                        "value": "[parameters('sqlDatabaseSkuName')]"
+                    },
+                    "databaseTier": {
+                        "value": "[parameters('sqlDatabaseTier')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[concat('inttest-sql-database','-', parameters('environmentNameAbbreviation'))]",
+            "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'sql-database.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "databaseName": {
+                        "value": "[variables('IntTestSQLDatabaseName')]"
                     },
                     "sqlServerName": {
                         "value": "[parameters('sharedSQLServerName')]"
@@ -523,17 +523,13 @@
             "type": "string",
             "value": "[variables('uiAppName')]"
         },
-        // "apiAppName": {
-        //     "type": "string",
-        //     "value": "[variables('apiAppName')]"
-        // },
         "internalApiAppName": {
             "type": "string",
             "value": "[variables('internalApiAppName')]"
         },
-        "workerFunctionAppName": {
+        "functionAppName": {
             "type": "string",
-            "value": "[variables('workerFunctionAppName')]"
+            "value": "[variables('functionAppName')]"
         },
         "BlobStorageConnectionString": {
             "type": "string",

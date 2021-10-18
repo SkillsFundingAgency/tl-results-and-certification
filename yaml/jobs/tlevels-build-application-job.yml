@@ -2,16 +2,16 @@ jobs:
 - job: 'CodeBuild'
   pool:
       name: 'Azure Pipelines'
-      vmImage: 'windows-latest'
+      vmImage: 'windows-latest' #'vs2017-win2016'
   workspace:
     clean: all
   steps:        
-    - task: UseDotNet@2
-      displayName: 'Use .NET Core SDK 2.x LTS'
-      inputs:
-        packageType: sdk
-        version: 2.x
-        installationPath: $(Agent.ToolsDirectory)/dotnet
+    # - task: UseDotNet@2
+    #   displayName: 'Use .NET Core SDK 2.x LTS'
+    #   inputs:
+    #     packageType: sdk
+    #     version: 2.x
+    #     installationPath: $(Agent.ToolsDirectory)/dotnet
 
     - task: GitVersion@5
       displayName: GitVersion
@@ -19,21 +19,21 @@ jobs:
         runtime: 'core'
         updateAssemblyInfo: true
     
-    - task: UseDotNet@2
-      displayName: 'Use .NET Core SDK $(dotnetVersion)'
-      inputs:
-        packageType: sdk
-        version: $(dotnetVersion)
-        installationPath: $(Agent.ToolsDirectory)/dotnet
+    # - task: UseDotNet@2
+    #   displayName: 'Use .NET Core SDK $(dotnetVersion)'
+    #   inputs:
+    #     packageType: sdk
+    #     version: $(dotnetVersion)
+    #     installationPath: $(Agent.ToolsDirectory)/dotnet
 
     - task: DotNetCoreCLI@2
       displayName: Restore
       inputs:
         command: restore
-        projects: 'src/**/*.csproj'
-        noCache: false
-        feedsToUse: config
-        nugetConfigPath: src/NuGet.config
+        projects: 'src/**/*.csproj' #'src/Sfa.Tl.ResultsAndCertification.sln' 
+        noCache: true
+        # feedsToUse: config
+        # nugetConfigPath: src/NuGet.config
     
     - task: Npm@1
       displayName: 'npm install'
@@ -54,18 +54,26 @@ jobs:
         arguments: '--configuration $(buildConfiguration)  --no-restore'        
     
     - task: DotNetCoreCLI@2
-      displayName: Test
+      displayName: Unit Tests
       inputs:
         command: test
         projects: '**/*.UnitTests.csproj'
-        arguments: '--configuration $(buildConfiguration)'
+        arguments: '--configuration $(buildConfiguration) --no-build'
     
     # - task: DotNetCoreCLI@2
     #   displayName: Integration Tests
     #   inputs:
     #     command: test
-    #     projects: '**/*.Web.IntegrationTests.csproj'
+    #     projects: '**/*.IntegrationTests.csproj'
     #     arguments: '--configuration $(buildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: Integration Tests
+      inputs:
+        command: publish
+        publishWebProjects: false
+        projects: '**/*.IntegrationTests.csproj'
+        arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
     
     - task: DotNetCoreCLI@2
       displayName: 'Publish Website'
@@ -91,6 +99,7 @@ jobs:
           config/**
         targetFolder: '$(build.artifactstagingdirectory)/publish'
         overWrite: true
+    
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact'
       inputs:

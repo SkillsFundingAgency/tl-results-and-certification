@@ -356,7 +356,7 @@
         "Ukprn",
         "Username",
         "Password",
-        "CertificateName"
+		    "CertificateName"
       ],
       "type": "object"
     }
@@ -372,7 +372,7 @@
 	"TechnicalInternalNotificationEmailAddress",
 	"KeyVaultUri",
     "RedisSettings",
-	"BlobStorageSettings",
+  	"BlobStorageSettings",
     "DataProtectionSettings",
     "DfeSignInSettings",
     "ResultsAndCertificationInternalApiSettings",

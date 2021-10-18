@@ -15,7 +15,7 @@ jobs:
       SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
       ConfigurationStorageConnectionString: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.configStorageConnectionString'] ]
       SharedResourceGroup: $[stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.SharedVariables.SharedResourceGroup']]
-      
+
     steps:
       - checkout: self
       - pwsh: |
@@ -24,7 +24,7 @@ jobs:
           'Write-Host "SharedKeyVaultName variable: $(SharedKeyVaultName)"'
           'Write-Host "SharedSQLServerName variable: $(SharedSQLServerName)"'
           'Write-Host "ConfigurationStorageConnectionString variable: $(ConfigurationStorageConnectionString)"'
-        displayName: 'Show Variables'
+        displayName: "Show Variables"
 
       - template: ./Infrastructure/steps/deploy-template.yml@devopsTemplates
         parameters:
@@ -44,8 +44,24 @@ jobs:
             -sqlDatabaseTier "$(SQLDatabaseTier)"
             -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"
             -uiCustomHostName "$(UICustomHostName)"
-            -certificateName "$(CertificateName)"
+            -uiCertificateName "$(CertificateName)"
+            -functionCertificateName "$(LearningRecordServiceCertificateName)"
             -storageAccountContainerArray "$(storageAccountContainerArray)"
             -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
             -learnerGenderTrigger "$(learnerGenderTrigger)"'
+          tags: $(Tags) 
           processOutputs: true
+
+      - task: AzureCLI@2
+        displayName: 'Add function access to Keyvault'
+        inputs:
+          azureSubscription: ${{ parameters.serviceConnection }}
+          scriptType: 'pscore'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            $functionAppObjectId = az functionapp identity show -n $(armOutputs.armOutput.functionAppName) -g $(ResourceGroupName) --query "principalId"
+            Write-Host $functionAppObjectId
+            az keyvault set-policy --name $(SharedKeyVaultName) --object-id $functionAppObjectId --secret-permissions "get" --key-permissions "get" --certificate-permissions "get"
+
+
+     

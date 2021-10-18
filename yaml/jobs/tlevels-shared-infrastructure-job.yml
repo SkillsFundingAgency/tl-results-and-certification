@@ -36,6 +36,7 @@ jobs:
                   -azureWebsitesRPObjectId "$(AzureWebsitesRPObjectId)"
                   -keyVaultReadWriteObjectIds "$(KeyVaultReadWriteObjectIds)"
                   -keyVaultFullAccessObjectIds "$(keyVaultFullAccessObjectIds)"'
+                tags: $(Tags)
                 processOutputs: true
             - pwsh: Write-Host "##vso[task.setvariable variable=SharedResourceGroup;isOutput=true]$(SharedResourceGroup)"
               name: SharedVariables
@@ -51,5 +52,21 @@ jobs:
                   if (!$table) {
                       New-AzStorageTable -Context $account.Context -Name Configuration
                   }
+                azurePowerShellVersion: LatestVersion
+                pwsh: true
+
+            - task: AzurePowerShell@5
+              displayName: 'Create Dataprotection Key'
+              name: DataprotectionKey
+              inputs:
+                azureSubscription: ${{ parameters.serviceConnection }}
+                ScriptType: InlineScript
+                Inline: |                  
+                  $KeyId = (Get-AzKeyVaultKey -VaultName $(armOutputs.armoutput.sharedKeyVaultName) -Name $(DataProtectionKeyVaultKeyName)).Id
+                  
+                  if (!$KeyId) {
+                      $KeyId = (Add-AzKeyVaultKey -VaultName $(armOutputs.armoutput.sharedKeyVaultName) -Name $(DataProtectionKeyVaultKeyName) -Destination Software).Id
+                  }
+                  Write-Host "##vso[task.setvariable variable=DataProtectionKeyVaultKeyId;isOutput=true]$($KeyId)"                  
                 azurePowerShellVersion: LatestVersion
                 pwsh: true
