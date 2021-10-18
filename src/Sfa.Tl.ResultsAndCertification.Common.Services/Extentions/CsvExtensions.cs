@@ -9,18 +9,21 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
     public static class CsvExtensions
     {
-        public static async Task<byte[]> WriteFileAsync<T>(IList<T> data)
+        public static async Task<byte[]> WriteFileAsync<T, TMap>(IList<T> data) where TMap : ClassMap
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 HasHeaderRecord = false,
-                Delimiter = "|"
+                Delimiter = "|",
+                ShouldQuote = args => false,
+                
             };
 
             await using var ms = new MemoryStream();
             await using (var sw = new StreamWriter(ms))
             await using (var cw = new CsvWriter(sw, config))
             {
+                cw.Context.RegisterClassMap<TMap>();
                 await cw.WriteRecordsAsync<T>(data);
             }
             return ms.ToArray();
