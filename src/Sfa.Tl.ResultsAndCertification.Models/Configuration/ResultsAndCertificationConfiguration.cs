@@ -142,6 +142,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public PrintingApiSettings PrintingApiSettings { get; set; }
 
         /// <summary>
+        /// Gets or sets the Ucas API settings.
+        /// </summary>
+        /// <value>
+        /// The Ucas API settings.
+        /// </value>
+        public UcasApiSettings UcasApiSettings { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this instance is dev.
         /// </summary>
         /// <value>

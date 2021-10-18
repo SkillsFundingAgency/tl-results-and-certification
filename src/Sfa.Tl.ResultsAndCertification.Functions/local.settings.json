@@ -7,6 +7,7 @@
     "CertificatePrintingRequestTrigger": "0 0 19 * * *",
     "CertificatePrintingBatchSummaryTrigger": "0 30 19 * * *",
     "CertificatePrintingTrackBatchTrigger": "0 0 20 * * *",
+    "UcasTransferEntriesTrigger": "0 * * * * *",
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "BlobStorageConnectionString": "UseDevelopmentStorage=true;",
     "ConfigurationStorageConnectionString": "UseDevelopmentStorage=true;",

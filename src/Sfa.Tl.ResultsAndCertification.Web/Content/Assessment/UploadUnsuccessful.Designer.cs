@@ -88,6 +88,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to assessment error report.
+        /// </summary>
+        public static string Error_Report {
+            get {
+                return ResourceManager.GetString("Error_Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error report.
         /// </summary>
         public static string Error_Report_Heading {
@@ -97,20 +106,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to assessment error report.
-        /// </summary>
-        public static string Error_Report_Text {
-            get {
-                return ResourceManager.GetString("Error_Report_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to KB.
         /// </summary>
-        public static string File_Size_Kb_Text {
+        public static string File_Size_Kb {
             get {
-                return ResourceManager.GetString("File_Size_Kb_Text", resourceCulture);
+                return ResourceManager.GetString("File_Size_Kb", resourceCulture);
             }
         }
         
