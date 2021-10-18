@@ -285,6 +285,37 @@
       "required": [],
       "type": "object"
     },
+	"UcasApiSettings": {
+      "properties": {
+        "Uri": {
+          "type": "string",
+          "environmentVariable": "UcasApiUri"
+        },
+		"Version": {
+          "type": "string",
+          "environmentVariable": "UcasApiVersion"
+        },		
+		"FolderId": {
+          "type": "string",
+          "environmentVariable": "UcasApiFolderId"
+        },
+        "GrantType": {
+          "type": "string",
+          "environmentVariable": "UcasApiGrantType"
+        },
+        "Username": {
+          "type": "string",
+          "environmentVariable": "UcasApiUsername"
+        },
+		"Password": {
+          "type": "string",
+          "environmentVariable": "UcasApiPassword"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
     "LearningRecordServiceSettings": {
       "properties": {
 		"BaseUri": {
@@ -346,6 +377,7 @@
     "DfeSignInSettings",
     "ResultsAndCertificationInternalApiSettings",
 	"PrintingApiSettings",
+	"UcasApiSettings",
 	"LearningRecordServiceSettings"
   ],
   "type": "object"
