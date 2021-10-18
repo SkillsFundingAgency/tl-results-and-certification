@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             list.AddRange(ucasData.UcasDataRecords);
             list.Add(ucasData.Trailer);
 
-            var byteData = await CsvExtensions.WriteFileAsync<dynamic, CsvMapper>(list);
+            var byteData = await CsvExtensions.WriteFileAsync(list, typeof(CsvMapper));
 
             // 3. Send data to Ucas using ApiClient
             var filename = $"{Guid.NewGuid()}.{Constants.FileExtensionTxt}";

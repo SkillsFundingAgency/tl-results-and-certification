@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -9,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
     public static class CsvExtensions
     {
-        public static async Task<byte[]> WriteFileAsync<T, TMap>(IList<T> data) where TMap : ClassMap
+        public static async Task<byte[]> WriteFileAsync<T>(IList<T> data, Type classMapType = null)
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -23,7 +24,12 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             await using (var sw = new StreamWriter(ms))
             await using (var cw = new CsvWriter(sw, config))
             {
-                cw.Context.RegisterClassMap<TMap>();
+                if (classMapType != null && typeof(ClassMap).IsAssignableFrom(classMapType))
+                {
+                    var map = (ClassMap)ObjectResolver.Current.Resolve(classMapType);
+                    cw.Context.RegisterClassMap(map);
+                }
+                
                 await cw.WriteRecordsAsync<T>(data);
             }
             return ms.ToArray();
