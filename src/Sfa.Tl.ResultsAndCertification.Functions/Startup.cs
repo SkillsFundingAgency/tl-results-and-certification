@@ -10,6 +10,8 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Certificates;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Configuration;
 using Sfa.Tl.ResultsAndCertification.Data;
@@ -78,6 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IUcasDataTransferService, UcasDataTransferService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
+            services.AddTransient<IBlobStorageService, BlobStorageService>();
         }
 
         private void RegisterApiClients(IServiceCollection services)

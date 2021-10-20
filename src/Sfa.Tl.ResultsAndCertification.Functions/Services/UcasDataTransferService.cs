@@ -1,11 +1,14 @@
 ﻿using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Mapper;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Ucas;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
@@ -19,17 +22,21 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
     public class UcasDataTransferService : IUcasDataTransferService
     {
         private readonly IUcasDataService _ucasDataService;
+        private readonly IBlobStorageService _blobStorageService;
         private readonly IUcasApiClient _ucasApiClient;
         private readonly ILogger _logger;
 
-        public UcasDataTransferService(IUcasDataService ucasDataService, IUcasApiClient ucasApiClient, ILogger<IUcasDataTransferService> logger)
+        public UcasDataTransferService(IUcasDataService ucasDataService,
+            IBlobStorageService blobStorageService,
+            IUcasApiClient ucasApiClient, ILogger<IUcasDataTransferService> logger)
         {
             _ucasDataService = ucasDataService;
+            _blobStorageService = blobStorageService;
             _ucasApiClient = ucasApiClient;
             _logger = logger;
         }
 
-        public async Task<UcasDataTransferResponse> ProcessUcasEntriesAsync()
+        public async Task<UcasDataTransferResponse> ProcessUcasEntriesAsync(UcasDataType ucasDataType = UcasDataType.Entries) // TODO: no default param. 
         {
             // 1. Get Entries data
             var ucasData = await _ucasDataService.GetUcasEntriesAsync();
@@ -44,22 +51,27 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             var ucasDataRecords = new List<dynamic> { ucasData.Header };
             ucasDataRecords.AddRange(ucasData.UcasDataRecords);
             ucasDataRecords.Add(ucasData.Trailer);
-
             var byteData = await CsvExtensions.WriteFileAsync(ucasDataRecords, typeof(CsvMapper));
 
             // 3. Send data to Ucas using ApiClient
             var filename = $"{Guid.NewGuid()}.{Constants.FileExtensionTxt}";
             var fileHash = CommonHelper.ComputeSha256Hash(byteData);
-
-            // 4. Call Ucas Api client
             var ucasFileId = await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
 
-            File.WriteAllBytes(@"c:\temp\" + filename, byteData); // Need to remove after implementing Blob storage
+            // 4. Write response to blob
+            using (Stream stream = new MemoryStream(byteData))
+            {
+                await _blobStorageService.UploadFileAsync(new BlobStorageData
+                {
+                    ContainerName = Constants.UcasDocumentContainerName,
+                    SourceFilePath = ucasDataType.ToString().ToLower(),
+                    BlobFileName = $"{ucasFileId}_{filename}",
+                    FileStream = stream,
+                    UserName = Constants.FunctionPerformedBy
+                });
+            }
 
-            // Need to write the file to Blob
-            var blobFileName = $"{ucasFileId}_{filename}";
-
-            // 4. Update response
+            // 5. Update response
             return new UcasDataTransferResponse { IsSuccess = true };
         }
     }
