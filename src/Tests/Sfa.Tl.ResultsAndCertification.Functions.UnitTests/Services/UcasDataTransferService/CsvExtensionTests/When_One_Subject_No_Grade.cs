@@ -5,16 +5,15 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.Extensions.CsvExtensionTests.WriteFile.UcasFileData
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService.CsvExtensionTests
 {
-    public class When_One_Subject_With_Grade : TestSetup
+    public class When_One_Subject_No_Grade : TestSetup
     {
-        private const string fileName = "When_One_Subject_With_Grade.txt";
+        private const string fileName = "When_One_Subject_No_Grade.txt";
 
-        public When_One_Subject_With_Grade()
+        public When_One_Subject_No_Grade()
         {
             var ucasData = GetUcasData();
-            ucasData.UcasDataRecords.First().UcasDataComponents.First().Grade = "B";
             PrepareUcasFileRecords(ucasData);
 
             ExpectedByteData = ReadAllBytesFromFile(fileName);

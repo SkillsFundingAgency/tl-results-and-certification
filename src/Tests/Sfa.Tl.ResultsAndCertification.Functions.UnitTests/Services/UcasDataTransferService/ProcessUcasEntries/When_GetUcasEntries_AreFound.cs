@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
         public void Then_Expected_Response_Returned()
         {
             UcasApiClient.Received(1).SendDataAsync(Arg.Is<UcasDataRequest>(x => x.FileName.EndsWith(Common.Helpers.Constants.FileExtensionTxt) &&
-                                                                            x.FileName.Length > 0 &&
+                                                                            x.FileName.Length == 40 && x.FileData.Length == 271 &&
                                                                             !string.IsNullOrEmpty(x.FileHash)));
         }
 

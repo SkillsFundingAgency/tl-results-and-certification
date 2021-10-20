@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.Extensions.CsvExtensionTests.WriteFile.UcasFileData
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService.CsvExtensionTests
 {
     public class TestSetup
     {
@@ -13,8 +13,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.Extensions.Cs
         protected byte[] ExpectedByteData;
 
         protected List<dynamic> UcasDataRecords;
-        private const string _filePath = @"Extensions\CsvExtensionTests\WriteFile\UcasFileData\TestData";
-        
+        private const string _filePath = @"Services\UcasDataTransferService\CsvExtensionTests\TestData";
+
         protected void PrepareUcasFileRecords(UcasData ucasData)
         {
             UcasDataRecords = new List<dynamic> { ucasData.Header };

@@ -8,13 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.Extensions.CsvExtensionTests.WriteFile.UcasFileData
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService.CsvExtensionTests
 {
-    public class When_Two_Subjects_With_Grade : TestSetup
+    public class When_Two_Subjects_With_Grade_PrevGrade : TestSetup
     {
-        private const string fileName = "When_Two_Subjects_With_Grade.txt";
+        private const string fileName = "When_Two_Subjects_With_Grade_PrevGrade.txt";
 
-        public When_Two_Subjects_With_Grade()
+        public When_Two_Subjects_With_Grade_PrevGrade()
         {
             var ucasData = GetUcasData();
             AddUcasDataRecords(ucasData);
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.Extensions.Cs
                 CentreNumber = "CENTRE-2", CandidateNumber = "1234567891", CandidateName = "Smity:Jony2", CandidateDateofBirth = "20082000", Sex = (char)UcasGender.Female,
                     UcasDataComponents = new List<UcasDataComponent>
                 {
-                    new UcasDataComponent { SubjectCode = "Sub21", Grade = "A*", PreviousGrade = null },
-                    new UcasDataComponent { SubjectCode = "Sub22", Grade = "Merit", PreviousGrade = null },
+                    new UcasDataComponent { SubjectCode = "Sub21", Grade = "A*", PreviousGrade = "B" },
+                    new UcasDataComponent { SubjectCode = "Sub22", Grade = "Merit", PreviousGrade = "Pass" },
                 } },
             };
         }

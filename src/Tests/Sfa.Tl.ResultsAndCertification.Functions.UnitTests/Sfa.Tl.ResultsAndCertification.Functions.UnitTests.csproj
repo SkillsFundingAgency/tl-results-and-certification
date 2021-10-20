@@ -36,4 +36,25 @@
     <Folder Include="UcasDataTransferTests\UcasTransferResults\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Services\UcasDataTransferService\CsvExtensionTests\TestData\When_One_Subject_No_Grade.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Services\UcasDataTransferService\CsvExtensionTests\TestData\When_One_Subject_With_Grade.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Services\UcasDataTransferService\CsvExtensionTests\TestData\When_One_Subject_With_Grade_PrevGrade.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Services\UcasDataTransferService\CsvExtensionTests\TestData\When_Two_Subjects_With_Grade.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Services\UcasDataTransferService\CsvExtensionTests\TestData\When_Two_Subjects_With_Grade_PrevGrade.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Services\UcasDataTransferService\CsvExtensionTests\TestData\When_Two_Subject_No_Grade.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
