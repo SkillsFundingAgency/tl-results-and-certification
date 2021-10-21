@@ -1,7 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService.ProcessUcasEntries
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService.ProcessUcasDataRecords
 {
     public abstract class TestBase : UcasDataTransferServiceTestBase
     {
@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
 
         public async override Task When()
         {
-            ActualResult = await Service.ProcessUcasEntriesAsync(UcasDataType);
+            ActualResult = await Service.ProcessUcasDataRecordsAsync(UcasDataType);
         }
     }
 }

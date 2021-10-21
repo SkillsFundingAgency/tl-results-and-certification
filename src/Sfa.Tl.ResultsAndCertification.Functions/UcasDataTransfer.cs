@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var response = await _ucasDataTransferService.ProcessUcasEntriesAsync(UcasDataType.Entries);
+                var response = await _ucasDataTransferService.ProcessUcasDataRecordsAsync(UcasDataType.Entries);
 
                 var message = $"Function {context.FunctionName} completed processing.\n" +
                                       $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var response = await _ucasDataTransferService.ProcessUcasEntriesAsync(UcasDataType.Results);
+                var response = await _ucasDataTransferService.ProcessUcasDataRecordsAsync(UcasDataType.Results);
 
                 var message = $"Function {context.FunctionName} completed processing.\n" +
                                       $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService.ProcessUcasEntries
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService.ProcessUcasDataRecords
 {
     public class When_GetUcasEntries_AreFound : TestBase
     {

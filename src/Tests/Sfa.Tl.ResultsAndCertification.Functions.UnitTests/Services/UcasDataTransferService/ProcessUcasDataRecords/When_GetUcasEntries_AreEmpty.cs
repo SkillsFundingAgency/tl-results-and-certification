@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService.ProcessUcasEntries
+namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService.ProcessUcasDataRecords
 {
     public class When_GetUcasEntries_AreEmpty : TestBase
     {
