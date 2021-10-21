@@ -1,4 +1,5 @@
 ﻿using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Xunit;
@@ -10,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
         public override void Given()
         {
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            UcasDataTransferService.ProcessUcasEntriesAsync().Returns(new UcasDataTransferResponse { IsSuccess = true });
+            UcasDataTransferService.ProcessUcasEntriesAsync(UcasDataType.Entries).Returns(new UcasDataTransferResponse { IsSuccess = true });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
@@ -18,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(1).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            UcasDataTransferService.Received(1).ProcessUcasEntriesAsync();
+            UcasDataTransferService.Received(1).ProcessUcasEntriesAsync(UcasDataType.Entries);
             CommonService.Received(1).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }
     }

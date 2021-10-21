@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Mapper;
@@ -29,10 +30,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _logger = logger;
         }
 
-        public async Task<UcasDataTransferResponse> ProcessUcasEntriesAsync()
+        public async Task<UcasDataTransferResponse> ProcessUcasEntriesAsync(UcasDataType ucasDataType)
         {
             // 1. Get Entries data
-            var ucasData = await _ucasDataService.GetUcasEntriesAsync();
+            var ucasData = await _ucasDataService.GetUcasEntriesAsync(ucasDataType);
             if (ucasData == null || !ucasData.UcasDataRecords.Any())
             {
                 var message = $"No entries are found. Method: GetUcasEntriesAsync()";

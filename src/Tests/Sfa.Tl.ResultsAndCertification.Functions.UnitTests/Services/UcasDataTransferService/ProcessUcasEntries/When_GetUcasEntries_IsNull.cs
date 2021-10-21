@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService.ProcessUcasEntries
@@ -11,7 +12,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
 
         public override void Given()
         {
-            UcasDataService.GetUcasEntriesAsync().Returns(_mockUcasData);
+            UcasDataType = UcasDataType.Entries;
+            UcasDataService.GetUcasEntriesAsync(UcasDataType).Returns(_mockUcasData);
         }
 
         [Fact]

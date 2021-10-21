@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System.Collections.Generic;
 using Xunit;
@@ -19,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
                 UcasDataRecords = new List<UcasDataRecord>()
             };
 
-            UcasDataService.GetUcasEntriesAsync().Returns(_mockUcasData);
+            UcasDataService.GetUcasEntriesAsync(UcasDataType.Entries).Returns(_mockUcasData);
         }
 
         [Fact]

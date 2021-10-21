@@ -6,5 +6,4 @@
         Results = 'R',
         Amendments = 'A'
     }
-
 }
