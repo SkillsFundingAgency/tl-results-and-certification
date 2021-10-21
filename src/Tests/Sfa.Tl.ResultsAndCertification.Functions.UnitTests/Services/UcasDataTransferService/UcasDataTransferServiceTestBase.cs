@@ -2,6 +2,7 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
@@ -12,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
     {
         // Depedencies
         protected IUcasDataService UcasDataService;
+        protected IBlobStorageService BlobStorageService;
         protected IUcasApiClient UcasApiClient;
         protected ILogger<IUcasDataTransferService> Logger;
 
@@ -24,10 +26,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
         public override void Setup()
         {
             UcasDataService = Substitute.For<IUcasDataService>();
+            BlobStorageService = Substitute.For<IBlobStorageService>();
             UcasApiClient = Substitute.For<IUcasApiClient>();
             Logger = Substitute.For<ILogger<IUcasDataTransferService>>();
 
-            Service = new Functions.Services.UcasDataTransferService(UcasDataService, UcasApiClient, Logger);
+            Service = new Functions.Services.UcasDataTransferService(UcasDataService, BlobStorageService, UcasApiClient, Logger);
         }
     }
 }

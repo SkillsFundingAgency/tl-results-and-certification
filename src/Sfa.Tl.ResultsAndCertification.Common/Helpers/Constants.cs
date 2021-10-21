@@ -138,5 +138,8 @@
 
         // File Extensions
         public const string FileExtensionTxt = "txt";
+
+        // Blob Storage
+        public const string UcasDocumentContainerName = "Ucas";
     }
 }

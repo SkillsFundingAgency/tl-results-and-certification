@@ -1,5 +1,6 @@
 ﻿using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Ucas;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
@@ -12,20 +13,32 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
     public class When_GetUcasEntries_AreFound : TestBase
     {
         private UcasData _mockUcasData;
+        private const string ucasFileId = "ucasFileId123";
 
         public override void Given()
         {
             UcasDataType = UcasDataType.Entries;
             _mockUcasData = GetUcasMockData();
             UcasDataService.GetUcasEntriesAsync(UcasDataType).Returns(_mockUcasData);
+            UcasApiClient.SendDataAsync(Arg.Any<UcasDataRequest>()).Returns(ucasFileId);
         }
 
         [Fact]
-        public void Then_Expected_Response_Returned()
+        public void Then_ApiClient_Is_Called()
         {
             UcasApiClient.Received(1).SendDataAsync(Arg.Is<UcasDataRequest>(x => x.FileName.EndsWith(Common.Helpers.Constants.FileExtensionTxt) &&
                                                                             x.FileName.Length == 40 && x.FileData.Length == 271 &&
                                                                             !string.IsNullOrEmpty(x.FileHash)));
+        }
+
+        [Fact]
+        public void Then_BlobStorage_Service_Is_Called()
+        {
+            BlobStorageService.Received(1).UploadFileAsync(Arg.Is<BlobStorageData>(x => x.ContainerName.Equals(Common.Helpers.Constants.UcasDocumentContainerName) &&
+            x.SourceFilePath == UcasDataType.Entries.ToString().ToLower() &&
+            //x.BlobFileName.Length == 50 &&
+            //x.FileStream.Length == 271 &&
+            x.UserName.Equals(Common.Helpers.Constants.FunctionPerformedBy)));
         }
 
         private UcasData GetUcasMockData()
