@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
                 UcasDataRecords = new List<UcasDataRecord>()
             };
 
-            UcasDataService.GetUcasEntriesAsync(UcasDataType.Entries).Returns(_mockUcasData);
+            UcasDataService.ProcessUcasDataRecordsAsync(UcasDataType.Entries).Returns(_mockUcasData);
         }
 
         [Fact]

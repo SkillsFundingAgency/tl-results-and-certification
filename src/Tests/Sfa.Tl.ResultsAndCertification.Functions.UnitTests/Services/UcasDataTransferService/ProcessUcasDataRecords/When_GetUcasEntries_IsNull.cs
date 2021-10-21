@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
         public override void Given()
         {
             UcasDataType = UcasDataType.Entries;
-            UcasDataService.GetUcasEntriesAsync(UcasDataType).Returns(_mockUcasData);
+            UcasDataService.ProcessUcasDataRecordsAsync(UcasDataType).Returns(_mockUcasData);
         }
 
         [Fact]

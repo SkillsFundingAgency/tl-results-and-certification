@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
         {
             UcasDataType = UcasDataType.Entries;
             _mockUcasData = GetUcasMockData();
-            UcasDataService.GetUcasEntriesAsync(UcasDataType).Returns(_mockUcasData);
+            UcasDataService.ProcessUcasDataRecordsAsync(UcasDataType).Returns(_mockUcasData);
             UcasApiClient.SendDataAsync(Arg.Any<UcasDataRequest>()).Returns(ucasFileId);
         }
 

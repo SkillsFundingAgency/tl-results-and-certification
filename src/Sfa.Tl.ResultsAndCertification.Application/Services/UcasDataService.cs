@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class UcasDataService : IUcasDataService
     {
-        public async Task<UcasData> GetUcasEntriesAsync(UcasDataType ucasDataType)
+        public async Task<UcasData> ProcessUcasDataRecordsAsync(UcasDataType ucasDataType)
         {
             await Task.CompletedTask;
 

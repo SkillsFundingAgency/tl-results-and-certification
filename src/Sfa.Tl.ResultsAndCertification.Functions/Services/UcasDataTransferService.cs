@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
         public async Task<UcasDataTransferResponse> ProcessUcasDataRecordsAsync(UcasDataType ucasDataType)
         {
             // 1. Get Entries data
-            var ucasData = await _ucasDataService.GetUcasEntriesAsync(ucasDataType);
+            var ucasData = await _ucasDataService.ProcessUcasDataRecordsAsync(ucasDataType);
             if (ucasData == null || !ucasData.UcasDataRecords.Any())
             {
                 var message = $"No entries are found. Method: GetUcasEntriesAsync()";
