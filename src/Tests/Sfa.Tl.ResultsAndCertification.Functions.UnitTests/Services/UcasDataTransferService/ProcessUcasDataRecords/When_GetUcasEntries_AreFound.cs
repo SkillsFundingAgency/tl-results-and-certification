@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
         [Fact]
         public void Then_BlobStorage_Service_Is_Called()
         {
-            BlobStorageService.Received(1).UploadFileAsync(Arg.Is<BlobStorageData>(x => x.ContainerName.Equals(Common.Helpers.Constants.UcasDocumentContainerName) &&
+            BlobStorageService.Received(1).UploadFromByteArrayAsync(Arg.Is<BlobStorageData>(x => x.ContainerName.Equals(Common.Helpers.Constants.UcasDocumentContainerName) &&
             x.SourceFilePath == UcasDataType.Entries.ToString().ToLower() &&
             //x.BlobFileName.Length == 50 &&
             //x.FileStream.Length == 271 &&

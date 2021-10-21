@@ -51,7 +51,14 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             var ucasDataRecords = new List<dynamic> { ucasData.Header };
             ucasDataRecords.AddRange(ucasData.UcasDataRecords);
             ucasDataRecords.Add(ucasData.Trailer);
+            
             var byteData = await CsvExtensions.WriteFileAsync(ucasDataRecords, typeof(CsvMapper));
+            
+            if (byteData.Length <= 0)
+            {
+                var message = $"No byte data available to send Ucas. Method: Csv WriteFileAsync()";
+                throw new ApplicationException(message);
+            }
 
             // 3. Send data to Ucas using ApiClient
             var filename = $"{Guid.NewGuid()}.{Constants.FileExtensionTxt}";
@@ -59,17 +66,14 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             var ucasFileId = await _ucasApiClient.SendDataAsync(new UcasDataRequest { FileName = filename, FileData = byteData, FileHash = fileHash });
 
             // 4. Write response to blob
-            using (Stream stream = new MemoryStream(byteData))
+            await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
             {
-                await _blobStorageService.UploadFileAsync(new BlobStorageData
-                {
-                    ContainerName = Constants.UcasDocumentContainerName,
-                    SourceFilePath = ucasDataType.ToString().ToLower(),
-                    BlobFileName = $"{ucasFileId}_{filename}",
-                    FileStream = stream,
-                    UserName = Constants.FunctionPerformedBy
-                });
-            }
+                ContainerName = Constants.UcasDocumentContainerName,
+                SourceFilePath = ucasDataType.ToString().ToLower(),
+                BlobFileName = $"{ucasFileId}_{filename}",
+                FileData = byteData,
+                UserName = Constants.FunctionPerformedBy
+            });
 
             // 5. Update response
             return new UcasDataTransferResponse { IsSuccess = true };
