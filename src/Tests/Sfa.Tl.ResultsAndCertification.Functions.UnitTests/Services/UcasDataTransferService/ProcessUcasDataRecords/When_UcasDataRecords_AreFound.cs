@@ -24,21 +24,17 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
         }
 
         [Fact]
-        public void Then_ApiClient_Is_Called()
+        public void Then_Expected_Methods_Are_Called()
         {
             UcasApiClient.Received(1).SendDataAsync(Arg.Is<UcasDataRequest>(x => x.FileName.EndsWith(Common.Helpers.Constants.FileExtensionTxt) &&
                                                                             x.FileName.Length == 40 && x.FileData.Length == 271 &&
                                                                             !string.IsNullOrEmpty(x.FileHash)));
-        }
 
-        [Fact]
-        public void Then_BlobStorage_Service_Is_Called()
-        {
             BlobStorageService.Received(1).UploadFromByteArrayAsync(Arg.Is<BlobStorageData>(x => x.ContainerName.Equals(Common.Helpers.Constants.UcasDocumentContainerName) &&
-            x.SourceFilePath == UcasDataType.Entries.ToString().ToLower() &&
-            x.BlobFileName.StartsWith($"{ucasFileId }-") &&
-            x.FileData != null &&
-            x.UserName.Equals(Common.Helpers.Constants.FunctionPerformedBy)));
+               x.SourceFilePath == UcasDataType.Entries.ToString().ToLower() &&
+               x.BlobFileName.StartsWith($"{ucasFileId }-") &&
+               x.FileData != null &&
+               x.UserName.Equals(Common.Helpers.Constants.FunctionPerformedBy)));
         }
 
         private UcasData GetUcasMockData()

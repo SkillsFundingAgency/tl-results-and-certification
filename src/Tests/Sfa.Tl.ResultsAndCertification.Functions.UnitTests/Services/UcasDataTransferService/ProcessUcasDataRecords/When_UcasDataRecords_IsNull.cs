@@ -3,6 +3,8 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Xunit;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Ucas;
+using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService.ProcessUcasDataRecords
 {
@@ -14,6 +16,14 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
         {
             UcasDataType = UcasDataType.Entries;
             UcasDataService.ProcessUcasDataRecordsAsync(UcasDataType).Returns(_mockUcasData);
+        }
+
+        [Fact]
+        public void Then_Expected_Methods_Are_Called()
+        {
+            UcasDataService.Received(1).ProcessUcasDataRecordsAsync(UcasDataType.Entries);
+            UcasApiClient.DidNotReceive().SendDataAsync(Arg.Any<UcasDataRequest>());
+            BlobStorageService.DidNotReceive().UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());
         }
 
         [Fact]
