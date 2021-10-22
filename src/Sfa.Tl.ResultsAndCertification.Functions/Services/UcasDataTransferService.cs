@@ -68,7 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             // 4. Write response to blob
             await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
             {
-                ContainerName = Constants.UcasDocumentContainerName,
+                ContainerName = DocumentType.Ucas.ToString().ToLower(),
                 SourceFilePath = ucasDataType.ToString().ToLower(),
                 BlobFileName = $"{ucasFileId}-{filename}",
                 FileData = byteData,

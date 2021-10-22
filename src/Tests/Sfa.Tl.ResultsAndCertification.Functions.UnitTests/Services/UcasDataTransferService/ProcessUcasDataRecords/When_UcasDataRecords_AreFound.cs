@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
                                                                             x.FileName.Length == 40 && x.FileData.Length == 271 &&
                                                                             !string.IsNullOrEmpty(x.FileHash)));
 
-            BlobStorageService.Received(1).UploadFromByteArrayAsync(Arg.Is<BlobStorageData>(x => x.ContainerName.Equals(Common.Helpers.Constants.UcasDocumentContainerName) &&
+            BlobStorageService.Received(1).UploadFromByteArrayAsync(Arg.Is<BlobStorageData>(x => x.ContainerName.Equals(DocumentType.Ucas.ToString().ToLower()) &&
                x.SourceFilePath == UcasDataType.Entries.ToString().ToLower() &&
                x.BlobFileName.StartsWith($"{ucasFileId }-") &&
                x.FileData != null &&
