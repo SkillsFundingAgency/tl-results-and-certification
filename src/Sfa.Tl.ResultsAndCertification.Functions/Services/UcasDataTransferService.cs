@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             {
                 ContainerName = Constants.UcasDocumentContainerName,
                 SourceFilePath = ucasDataType.ToString().ToLower(),
-                BlobFileName = $"{ucasFileId}_{filename}",
+                BlobFileName = $"{ucasFileId}-{filename}",
                 FileData = byteData,
                 UserName = Constants.FunctionPerformedBy
             });

@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return ucasDataType switch
             {
                 UcasDataType.Entries => await GetUcasAssessmentEntriesAsync(),
-                UcasDataType.Results => await GetUcasResultEntriesAsync(),
+                UcasDataType.Results => await GetUcasResultsAsync(),
                 _ => null,
             };
         }
@@ -76,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
         }
 
-        private async Task<UcasData> GetUcasResultEntriesAsync()
+        private async Task<UcasData> GetUcasResultsAsync()
         {
             await Task.CompletedTask;
 

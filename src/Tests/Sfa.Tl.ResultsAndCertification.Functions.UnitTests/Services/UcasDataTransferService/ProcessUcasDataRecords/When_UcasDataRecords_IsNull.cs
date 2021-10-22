@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService.ProcessUcasDataRecords
 {
-    public class When_GetUcasEntries_IsNull : TestBase
+    public class When_UcasDataRecords_IsNull : TestBase
     {
         private readonly UcasData _mockUcasData = null;
 

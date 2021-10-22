@@ -33,10 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UcasDataTransferTests\UcasTransferResults\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Services\UcasDataTransferService\CsvExtensionTests\TestData\When_One_Subject_No_Grade.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         }
 
         [FunctionName(Constants.UcasTransferResultEntries)]
-        public async Task UcasTransferResultAsync([TimerTrigger("%UcasTransferResultTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+        public async Task UcasTransferResultsAsync([TimerTrigger("%UcasTransferResultsTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
             var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName);

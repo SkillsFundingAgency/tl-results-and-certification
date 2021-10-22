@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTransferService.ProcessUcasDataRecords
 {
-    public class When_GetUcasEntries_AreFound : TestBase
+    public class When_UcasDataRecords_AreFound : TestBase
     {
         private UcasData _mockUcasData;
         private const string ucasFileId = "ucasFileId123";
@@ -36,8 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
         {
             BlobStorageService.Received(1).UploadFromByteArrayAsync(Arg.Is<BlobStorageData>(x => x.ContainerName.Equals(Common.Helpers.Constants.UcasDocumentContainerName) &&
             x.SourceFilePath == UcasDataType.Entries.ToString().ToLower() &&
-            //x.BlobFileName.Length == 50 &&
-            //x.FileStream.Length == 271 &&
+            x.BlobFileName.StartsWith($"{ucasFileId }-") &&
+            x.FileData != null &&
             x.UserName.Equals(Common.Helpers.Constants.FunctionPerformedBy)));
         }
 
