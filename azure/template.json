@@ -109,6 +109,14 @@
         "certificatePrintingTrackBatchTrigger": {
             "type": "string",
             "defaultValue": "0 0 20 * * *"
+        },
+        "ucasTransferEntriesTrigger": {
+            "type": "string",
+            "defaultValue": "0 10 20 * * *"
+        },
+        "ucasTransferResultsTrigger": {
+            "type": "string",
+            "defaultValue": "0 10 21 * * *"
         }
     },
     "variables": {
@@ -589,6 +597,14 @@
 							{
                                 "name": "CertificatePrintingTrackBatchTrigger",
                                 "value": "[parameters('certificatePrintingTrackBatchTrigger')]"
+                            },
+							{
+                                "name": "UcasTransferEntriesTrigger",
+                                "value": "[parameters('ucasTransferEntriesTrigger')]"
+                            },
+							{
+                                "name": "UcasTransferResultsTrigger",
+                                "value": "[parameters('ucasTransferResultsTrigger')]"
                             },
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",

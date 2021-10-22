@@ -62,6 +62,21 @@
         },
         "learnerGenderTrigger": {
             "type": "string"
+        },
+        "certificatePrintingRequestTrigger": {
+            "type": "string"
+        },
+        "certificatePrintingBatchSummaryTrigger": {
+            "type": "string"
+        },
+        "certificatePrintingTrackBatchTrigger": {
+            "type": "string"
+        },
+        "ucasTransferEntriesTrigger": {
+            "type": "string"
+        },
+        "ucasTransferResultsTrigger": {
+            "type": "string"
         }
     },
     "variables": {
@@ -411,6 +426,26 @@
                             {
                                 "name": "LearnerGenderTrigger",
                                 "value": "[parameters('learnerGenderTrigger')]"
+                            },
+                            {
+                                "name": "CertificatePrintingRequestTrigger",
+                                "value": "[parameters('certificatePrintingRequestTrigger')]"
+                            },
+                            {
+                                "name": "CertificatePrintingBatchSummaryTrigger",
+                                "value": "[parameters('certificatePrintingBatchSummaryTrigger')]"
+                            },
+                            {
+                                "name": "CertificatePrintingTrackBatchTrigger",
+                                "value": "[parameters('certificatePrintingTrackBatchTrigger')]"
+                            },
+                            {
+                                "name": "UcasTransferEntriesTrigger",
+                                "value": "[parameters('ucasTransferEntriesTrigger')]"
+                            },
+                            {
+                                "name": "UcasTransferResultsTrigger",
+                                "value": "[parameters('ucasTransferResultsTrigger')]"
                             },
                             {
                                 "name": "WEBSITE_LOAD_CERTIFICATES",
