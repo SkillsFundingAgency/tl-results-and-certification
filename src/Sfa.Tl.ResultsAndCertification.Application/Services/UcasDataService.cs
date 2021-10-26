@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class UcasDataService : IUcasDataService
     {
+        private readonly IUcasRepository _ucasRepository;
+
+        public UcasDataService(IUcasRepository ucasRepository)
+        {
+            _ucasRepository = ucasRepository;
+        }
+
         public async Task<UcasData> ProcessUcasDataRecordsAsync(UcasDataType ucasDataType)
         {
             await Task.CompletedTask;
@@ -20,6 +28,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 UcasDataType.Results => await GetUcasResultsAsync(),
                 _ => null,
             };
+        }
+
+        public async Task<UcasData> ProcessUcasDataRecordsTestAsync(UcasDataType ucasDataType)
+        {
+            var includeResults = ucasDataType != UcasDataType.Entries;
+            var result = await _ucasRepository.GetUcasDataRecordsAsync(includeResults);
+            
+            // TODO: mapping. 
+
+            return new UcasData();
         }
 
         private async Task<UcasData> GetUcasAssessmentEntriesAsync()

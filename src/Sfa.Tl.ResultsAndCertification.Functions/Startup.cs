@@ -69,6 +69,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IPrintingRepository, PrintingRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+            services.AddTransient<ICommonRepository, CommonRepository>();
+            services.AddTransient<IUcasRepository, UcasRepository>();
 
             services.AddTransient<ICommonService, CommonService>();
             services.AddTransient<ILearnerService, LearnerService>();
@@ -81,7 +83,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
             services.AddTransient<IBlobStorageService, BlobStorageService>();
-            services.AddTransient<IUcasRepository, UcasRepository>();
         }
 
         private void RegisterApiClients(IServiceCollection services)
