@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -33,11 +34,74 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<UcasData> ProcessUcasDataRecordsTestAsync(UcasDataType ucasDataType)
         {
             var includeResults = ucasDataType != UcasDataType.Entries;
-            var result = await _ucasRepository.GetUcasDataRecordsAsync(includeResults);
-            
-            // TODO: mapping. 
+            var registrationPathways = await _ucasRepository.GetUcasDataRecordsAsync(includeResults);
 
-            return new UcasData();
+            var records = new List<UcasDataRecord>();
+            foreach (var pathway in registrationPathways)
+            {
+                char gender = pathway.TqRegistrationProfile.Gender.ToLower() == "male" ? 'M' : 'F';  // TODO: move to constants.. .if not male then alternative can not be a female?
+                var ucasDataComponents = new List<UcasDataComponent>();
+
+                // Add Core
+                foreach (var assessment in pathway.TqPathwayAssessments)
+                    ucasDataComponents.Add(new UcasDataComponent
+                    {
+                        SubjectCode = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                        Grade = assessment.TqPathwayResults.FirstOrDefault().TlLookup.Value,
+                        PreviousGrade = ucasDataType != UcasDataType.Amendments ? null : "TODO"
+                    });
+
+                // Add Specialisms
+                foreach (var specialism in pathway.TqRegistrationSpecialisms)
+                {
+                    foreach (var assessment in specialism.TqSpecialismAssessments)
+                        ucasDataComponents.Add(new UcasDataComponent
+                        {
+                            SubjectCode = specialism.TlSpecialism.LarId,
+                            Grade = null,  // TODO: future story
+                            PreviousGrade = null // TODO
+                        });
+                }
+
+                records.Add(new UcasDataRecord
+                {
+                    UcasRecordType = (char)UcasRecordType.Subject,
+                    SendingOrganisation = 30,   // TODO
+                    ReceivingOrganisation = 90, // TODO,
+                    CentreNumber = "1111111",   //TODO
+                    CandidateName = $"{pathway.TqRegistrationProfile.Lastname}:{pathway.TqRegistrationProfile.Firstname}",
+                    CandidateDateofBirth = pathway.TqRegistrationProfile.DateofBirth.ToString(), // TODO: refer spec and format. 
+                    Sex = gender,
+                    UcasDataComponents = ucasDataComponents
+                });
+            }
+
+            var ucasData = new UcasData
+            {
+                Header = new UcasDataHeader
+                {
+                    UcasRecordType = (char)UcasRecordType.Header,
+                    SendingOrganisation = 30, // Todo: Config
+                    ReceivingOrganisation = 90,  // Todo: Config
+                    UcasDataType = (char)UcasDataType.Entries,
+                    ExamMonth = "06",      // Todo: Config
+                    ExamYear = DateTime.UtcNow.Year.ToString(),
+                    DateCreated = DateTime.Today.ToString("ddMMyyyy", CultureInfo.InvariantCulture)
+                },
+
+                UcasDataRecords = records,
+
+                Trailer = new UcasDataTrailer
+                {
+                    UcasRecordType = (char)UcasRecordType.Trailer,
+                    SendingOrganisation = 30,
+                    ReceivingOrganisation = 90,
+                    Count = registrationPathways.Count,
+                    ExamDate = $"{06}{DateTime.UtcNow.Year}"
+                }
+            };
+
+            return ucasData;
         }
 
         private async Task<UcasData> GetUcasAssessmentEntriesAsync()
