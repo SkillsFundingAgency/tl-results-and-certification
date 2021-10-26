@@ -81,6 +81,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
             services.AddTransient<IBlobStorageService, BlobStorageService>();
+            services.AddTransient<IUcasRepository, UcasRepository>();
         }
 
         private void RegisterApiClients(IServiceCollection services)
