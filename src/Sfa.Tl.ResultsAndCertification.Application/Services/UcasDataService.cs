@@ -47,19 +47,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var ucasDataComponents = new List<UcasDataComponent>();
 
                 // Add Core
-                TqPathwayResult tqPathwayResult = null;
-                if(includeResults)
-                {
-                    var allAssessmentResults = pathway.TqPathwayAssessments.Select(assessment => assessment.TqPathwayResults.OrderBy(r => r.TlLookup.SortOrder).FirstOrDefault());
-                    tqPathwayResult  = allAssessmentResults.OrderBy(r => r.TlLookup.SortOrder).FirstOrDefault();
-                }
-
-                ucasDataComponents.Add(new UcasDataComponent
-                {
-                    SubjectCode = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                    Grade = tqPathwayResult != null ? tqPathwayResult.TlLookup.Value : string.Empty,
-                    PreviousGrade = null
-                });  
+                var ucasCoreComponent = GetCoreComponentData(includeResults, pathway);
+                if (ucasCoreComponent != null)
+                    ucasDataComponents.Add(ucasCoreComponent);
 
                 // Add Specialisms
                 foreach (var specialism in pathway.TqRegistrationSpecialisms)
@@ -68,24 +58,26 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         ucasDataComponents.Add(new UcasDataComponent
                         {
                             SubjectCode = specialism.TlSpecialism.LarId,
-                            Grade = null,
-                            PreviousGrade = null
+                            Grade = string.Empty,
+                            PreviousGrade = string.Empty
                         });
                 }
 
                 // Add Overall result
                 // TODO: Upcoming story. 
-                records.Add(new UcasDataRecord
-                {
-                    UcasRecordType = (char)UcasRecordType.Subject,
-                    SendingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.SendingOrganisation,
-                    ReceivingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.ReceivingOrganisation,
-                    CentreNumber = _resultsAndCertificationConfiguration.UcasDataSettings.CentreNumber,
-                    CandidateName = $"{pathway.TqRegistrationProfile.Lastname}:{pathway.TqRegistrationProfile.Firstname}",
-                    CandidateDateofBirth = pathway.TqRegistrationProfile.DateofBirth.ToUcasFormat(),
-                    Sex = EnumExtensions.GetEnumValueStringByName<UcasGender>(pathway.TqRegistrationProfile.Gender) ?? string.Empty,
-                    UcasDataComponents = ucasDataComponents
-                });
+
+                if (ucasDataComponents.Any())
+                    records.Add(new UcasDataRecord
+                    {
+                        UcasRecordType = (char)UcasRecordType.Subject,
+                        SendingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.SendingOrganisation,
+                        ReceivingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.ReceivingOrganisation,
+                        CentreNumber = _resultsAndCertificationConfiguration.UcasDataSettings.CentreNumber,
+                        CandidateName = $"{pathway.TqRegistrationProfile.Lastname}:{pathway.TqRegistrationProfile.Firstname}",
+                        CandidateDateofBirth = pathway.TqRegistrationProfile.DateofBirth.ToUcasFormat(),
+                        Sex = EnumExtensions.GetEnumValueStringByName<UcasGender>(pathway.TqRegistrationProfile.Gender) ?? string.Empty,
+                        UcasDataComponents = ucasDataComponents
+                    });
             }
 
             var ucasData = new UcasData
@@ -114,6 +106,23 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
 
             return ucasData;
+        }
+
+        private static UcasDataComponent GetCoreComponentData(bool includeResults, TqRegistrationPathway pathway)
+        {
+            if (!pathway.TqPathwayAssessments.Any())
+                return null;
+
+            TqPathwayResult pathwayHigherResult = null;
+            if (includeResults)
+                pathwayHigherResult = pathway.TqPathwayAssessments.SelectMany(x => x.TqPathwayResults).OrderBy(x => x.TlLookup.Id).FirstOrDefault();
+
+            return new UcasDataComponent
+            {
+                SubjectCode = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                Grade = pathwayHigherResult != null ? pathwayHigherResult.TlLookup.Value : string.Empty,
+                PreviousGrade = string.Empty
+            };
         }
 
         private async Task<UcasData> GetUcasAssessmentEntriesAsync()
