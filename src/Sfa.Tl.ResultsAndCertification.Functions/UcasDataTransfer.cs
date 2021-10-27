@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _commonService = commonService;
         }
 
+        [Disable]
         [FunctionName(Constants.UcasTransferEntries)]
         public async Task UcasTransferEntriesAsync([TimerTrigger("%UcasTransferEntriesTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
@@ -62,6 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             }
         }
 
+        [Disable]
         [FunctionName(Constants.UcasTransferResultEntries)]
         public async Task UcasTransferResultsAsync([TimerTrigger("%UcasTransferResultsTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
