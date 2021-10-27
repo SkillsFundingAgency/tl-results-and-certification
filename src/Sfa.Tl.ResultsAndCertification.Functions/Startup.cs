@@ -69,6 +69,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IPrintingRepository, PrintingRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+            services.AddTransient<ICommonRepository, CommonRepository>();
+            services.AddTransient<IUcasRepository, UcasRepository>();
 
             services.AddTransient<ICommonService, CommonService>();
             services.AddTransient<ILearnerService, LearnerService>();
