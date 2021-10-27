@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             {
                 // TODO: For Amendments we need to consider PrsStatus flag to record the previous result. 
                 Func<TqPathwayResult, bool> pathwayResultPredicate = e => e.IsOptedin && e.EndDate == null;
-                var pathwayResult = pathwayAssessment.TqPathwayResults.Where(pathwayResultPredicate).OrderBy(x => x.TlLookup.SortOrder).FirstOrDefault();
+                var pathwayResult = pathwayAssessment.TqPathwayResults.FirstOrDefault(pathwayResultPredicate);
                 if (pathwayResult != null)
                     pathwayAssessment.TqPathwayResults = new List<TqPathwayResult> { pathwayResult };
                 else

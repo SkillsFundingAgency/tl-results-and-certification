@@ -47,6 +47,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return IsValidValue<T>(value) ? (int)System.Enum.Parse(typeof(T), value.ToString(), true) : (int?)null;
         }
 
+        public static string GetEnumValueStringByName<T>(object value) where T : System.Enum
+        {
+            return IsValidValue<T>(value) ? (string)System.Enum.Parse(typeof(T), value.ToString(), true) : null;
+        }
+
         public static int? GetEnumValueByDisplayName<T>(string value) where T : System.Enum
         {
             var enumType = GetList<T>().FirstOrDefault(x => x.GetDisplayName().Equals(value, StringComparison.InvariantCultureIgnoreCase));

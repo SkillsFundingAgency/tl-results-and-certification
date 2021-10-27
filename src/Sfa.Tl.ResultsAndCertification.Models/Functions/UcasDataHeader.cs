@@ -3,8 +3,8 @@
     public class UcasDataHeader
     {
         public char UcasRecordType { get; set; }
-        public int SendingOrganisation { get; set; }
-        public int ReceivingOrganisation { get; set; }
+        public string SendingOrganisation { get; set; }
+        public string ReceivingOrganisation { get; set; }
         public char UcasDataType { get; set; }
         public string ExamMonth { get; set; }
         public string ExamYear { get; set; }

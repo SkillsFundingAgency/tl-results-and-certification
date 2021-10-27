@@ -9,6 +9,5 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<UcasData> ProcessUcasDataRecordsAsync(UcasDataType ucasDataType);
 
         Task<UcasData> ProcessUcasDataRecordsTestAsync(UcasDataType ucasDataType);
-
     }
 }
