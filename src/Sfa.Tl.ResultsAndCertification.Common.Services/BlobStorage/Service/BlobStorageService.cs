@@ -1,8 +1,10 @@
-﻿using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -19,24 +21,26 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
 
         public async Task UploadFileAsync(BlobStorageData blobStorageData)
         {
-            var blobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
-            await blobReference.UploadFromStreamAsync(blobStorageData.FileStream);
+            var blobClient = await GetBlobClient(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
+            await blobClient.UploadAsync(blobStorageData.FileStream);
         }
 
         public async Task UploadFromByteArrayAsync(BlobStorageData blobStorageData)
         {
-            var blobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
-            await blobReference.UploadFromByteArrayAsync(blobStorageData.FileData, 0, blobStorageData.FileData.Length);
+            var blobClient = await GetBlobClient(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
+            await using var fileStream = new MemoryStream(blobStorageData.FileData);
+            await blobClient.UploadAsync(fileStream);
+            fileStream.Close();
         }
 
         public async Task<Stream> DownloadFileAsync(BlobStorageData blobStorageData)
         {
-            var blobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
+            var blobClient = await GetBlobClient(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
 
-            if (await blobReference.ExistsAsync())
+            if (await blobClient.ExistsAsync())
             {
                 var ms = new MemoryStream();
-                await blobReference.DownloadToStreamAsync(ms);
+                await blobClient.DownloadToAsync(ms);
                 return ms;
             }
             else
@@ -47,32 +51,47 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
 
         public async Task<bool> MoveFileAsync(BlobStorageData blobStorageData)
         {
-            var sourceBlobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
-            var destinationBlobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.DestinationFilePath, blobStorageData.BlobFileName);
+            var sourceBlobClient = await GetBlobClient(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
 
-            await destinationBlobReference.StartCopyAsync(sourceBlobReference);
-            return await sourceBlobReference.DeleteIfExistsAsync();
+            if(await sourceBlobClient.ExistsAsync())
+            {
+                var lease = sourceBlobClient.GetBlobLeaseClient();
+                await lease.AcquireAsync(TimeSpan.FromSeconds(-1));
+
+                var destinationBlobClient = await GetBlobClient(blobStorageData.ContainerName, blobStorageData.DestinationFilePath, blobStorageData.BlobFileName);
+
+                await destinationBlobClient.StartCopyFromUriAsync(sourceBlobClient.Uri);
+
+                var sourceBlobClientProperties = await sourceBlobClient.GetPropertiesAsync();
+
+                if (sourceBlobClientProperties.Value.LeaseState == LeaseState.Leased)
+                    await lease.BreakAsync();
+
+                return await sourceBlobClient.DeleteIfExistsAsync();
+            }
+            return false;
         }   
 
         public async Task<bool> DeleteFileAsync(BlobStorageData blobStorageData)
         {
-            var blobReference = await GetBlockBlobReference(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
-            return await blobReference.DeleteIfExistsAsync();
+            var blobClient= await GetBlobClient(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
+            return await blobClient.DeleteIfExistsAsync();
         }
 
-        private async Task<CloudBlockBlob> GetBlockBlobReference(string containerName, string filePath, string fileName)
+        private async Task<BlobClient> GetBlobClient(string containerName, string filePath, string fileName)
         {
-            var blobContainer = await GetContainerReferenceAsync(containerName);
+            var blobContainerClient = await GetContainerAsync(containerName);
             var blobFileReference = !string.IsNullOrWhiteSpace(filePath) ? $"{filePath}/{fileName}" : fileName;
-            return blobContainer.GetBlockBlobReference(blobFileReference?.ToLowerInvariant());
+            var blobClient = blobContainerClient.GetBlobClient(blobFileReference?.ToLowerInvariant());
+            return blobClient;
         }
 
-        private async Task<CloudBlobContainer> GetContainerReferenceAsync(string containerName)
+        private async Task<BlobContainerClient> GetContainerAsync(string containerName)
         {
-            var storageAccount = CloudStorageAccount.Parse(_configuration.BlobStorageConnectionString);
-            var containerReference = storageAccount.CreateCloudBlobClient().GetContainerReference(containerName?.ToLowerInvariant());
-            await containerReference.CreateIfNotExistsAsync();
-            return containerReference;
+            var blobServiceClient = new BlobServiceClient(_configuration.BlobStorageConnectionString);
+            var containerClient = blobServiceClient.GetBlobContainerClient(containerName?.ToLowerInvariant());
+            await containerClient.CreateIfNotExistsAsync();
+            return containerClient;
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.Services.AppAuthentication;
+﻿using Azure.Identity;
+using Azure.Security.KeyVault.Certificates;
 using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -18,15 +18,15 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.Certificates
         }
 
         public async Task<X509Certificate2> GetCertificateFromKeyVault()
-        {
-            var tokenProvider = new AzureServiceTokenProvider();
-            var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(tokenProvider.KeyVaultTokenCallback));         
-
+        {                           
             try
             {
-                var certificateItem = await keyVaultClient.GetCertificateAsync(_keyVaultUri, _certificateName);
-                var certificateSecretBundle = await keyVaultClient.GetSecretAsync(certificateItem.SecretIdentifier.Identifier);
-                var certificate = new X509Certificate2(Convert.FromBase64String(certificateSecretBundle.Value), (string)null);
+                var defaultAzureCredentialOptions = new DefaultAzureCredentialOptions();
+#if DEBUG
+                defaultAzureCredentialOptions = new DefaultAzureCredentialOptions { VisualStudioTenantId = "9c7d9dd3-840c-4b3f-818e-552865082e16" };
+#endif      
+                var certificateClient = new CertificateClient(vaultUri: new Uri(_keyVaultUri), credential: new DefaultAzureCredential(defaultAzureCredentialOptions));
+                var certificate = await certificateClient.DownloadCertificateAsync(_certificateName);
                 return certificate;
             }
             catch (Exception)
