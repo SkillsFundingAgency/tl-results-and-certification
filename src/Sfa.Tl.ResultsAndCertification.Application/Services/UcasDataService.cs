@@ -64,15 +64,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         });
                 }
 
-                // Add Overall result
-                ucasDataComponents.Add(new UcasDataComponent
-                {
-                    SubjectCode = _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode,
-                    Grade = string.Empty,
-                    PreviousGrade = string.Empty
-                });
-
                 if (ucasDataComponents.Any())
+                {
+                    // Add Overall result
+                    ucasDataComponents.Add(new UcasDataComponent
+                    {
+                        SubjectCode = _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode,
+                        Grade = string.Empty,
+                        PreviousGrade = string.Empty
+                    });
+
                     records.Add(new UcasDataRecord
                     {
                         UcasRecordType = (char)UcasRecordType.Subject,
@@ -84,7 +85,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         Sex = EnumExtensions.GetEnumValueStringByName<UcasGender>(pathway.TqRegistrationProfile.Gender) ?? string.Empty,
                         UcasDataComponents = ucasDataComponents
                     });
+                }
             }
+
+            if (!records.Any())
+                return null;
 
             var ucasData = new UcasData
             {
