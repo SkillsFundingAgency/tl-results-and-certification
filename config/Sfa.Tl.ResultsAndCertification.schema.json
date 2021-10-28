@@ -33,7 +33,7 @@
       "type": "string",
       "environmentVariable": "FeedbackEmailAddress"
     },
-	"TechnicalInternalNotificationEmailAddress": {
+    "TechnicalInternalNotificationEmailAddress": {
       "type": "string",
       "environmentVariable": "TechnicalInternalNotificationEmailAddress"
     },
@@ -266,7 +266,7 @@
       "required": [],
       "type": "object"
     },
-	"PrintingApiSettings": {
+    "PrintingApiSettings": {
       "properties": {
         "Uri": {
           "type": "string",
@@ -285,17 +285,17 @@
       "required": [],
       "type": "object"
     },
-	"UcasApiSettings": {
+    "UcasApiSettings": {
       "properties": {
         "Uri": {
           "type": "string",
           "environmentVariable": "UcasApiUri"
         },
-		"Version": {
+        "Version": {
           "type": "string",
           "environmentVariable": "UcasApiVersion"
-        },		
-		"FolderId": {
+        },
+        "FolderId": {
           "type": "string",
           "environmentVariable": "UcasApiFolderId"
         },
@@ -307,7 +307,7 @@
           "type": "string",
           "environmentVariable": "UcasApiUsername"
         },
-		"Password": {
+        "Password": {
           "type": "string",
           "environmentVariable": "UcasApiPassword"
         }
@@ -318,7 +318,7 @@
     },
     "LearningRecordServiceSettings": {
       "properties": {
-		"BaseUri": {
+        "BaseUri": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "LearningRecordServiceBaseUri"
@@ -351,12 +351,44 @@
       },
       "additionalProperties": false,
       "required": [
-	    "BaseUri",
+        "BaseUri",
         "VendorId",
         "Ukprn",
         "Username",
         "Password",
-		    "CertificateName"
+        "CertificateName"
+      ],
+      "type": "object"
+    },
+    "UcasDataSettings": {
+      "properties": {
+        "SendingOrganisation": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "UcasDataSendingOrganisation"
+        },
+        "ReceivingOrganisation": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "UcasDataReceivingOrganisation"
+        },
+        "ExamMonth": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "UcasDataExamMonth"
+        },
+        "CentreNumber": {
+          "minLength": 1,
+          "type": "string",
+          "environmentVariable": "UcasCentreNumber"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "SendingOrganisation",
+        "ReceivingOrganisation",
+        "ExamMonth",
+        "CentreNumber"
       ],
       "type": "object"
     }
@@ -369,16 +401,17 @@
     "TlevelQueriedSupportEmailAddress",
     "TechnicalSupportEmailAddress",
     "FeedbackEmailAddress",
-	"TechnicalInternalNotificationEmailAddress",
-	"KeyVaultUri",
+    "TechnicalInternalNotificationEmailAddress",
+    "KeyVaultUri",
     "RedisSettings",
-  	"BlobStorageSettings",
+    "BlobStorageSettings",
     "DataProtectionSettings",
     "DfeSignInSettings",
     "ResultsAndCertificationInternalApiSettings",
-	"PrintingApiSettings",
-	"UcasApiSettings",
-	"LearningRecordServiceSettings"
+    "PrintingApiSettings",
+    "UcasApiSettings",
+    "LearningRecordServiceSettings",
+    "UcasDataSettings"
   ],
   "type": "object"
 }

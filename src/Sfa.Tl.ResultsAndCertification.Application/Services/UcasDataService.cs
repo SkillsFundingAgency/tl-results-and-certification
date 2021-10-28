@@ -246,8 +246,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Header = new UcasDataHeader
                 {
                     UcasRecordType = (char)UcasRecordType.Header,
-                    SendingOrganisation = 30,
-                    ReceivingOrganisation = 90,
+                    SendingOrganisation = "30",
+                    ReceivingOrganisation = "90",
                     UcasDataType = (char)UcasDataType.Amendments,
                     ExamMonth = "06",
                     ExamYear = "2021",
@@ -256,16 +256,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 UcasDataRecords = new List<UcasDataRecord>
                 {
-                    new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = 30, ReceivingOrganisation = 90,
-                    CentreNumber = "1111111", CandidateNumber = "1234567890", CandidateName = "Smith:John1", CandidateDateofBirth = "20082000", Sex = (char)UcasGender.Male,
+                    new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = "30", ReceivingOrganisation = "90",
+                    CentreNumber = "1111111", CandidateNumber = "1234567890", CandidateName = "Smith:John1", CandidateDateofBirth = "20082000", Sex = "M",
                     UcasDataComponents = new List<UcasDataComponent>
                     {
                         new UcasDataComponent { SubjectCode = "60369176", Grade = "A*", PreviousGrade = "B" },
                         new UcasDataComponent { SubjectCode = "TLEVEL", Grade = null },
                     } },
 
-                    new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = 30, ReceivingOrganisation = 90,
-                    CentreNumber = "1111111", CandidateNumber = "1234567891", CandidateName = "Smity:Jony2", CandidateDateofBirth = "15031985", Sex = (char)UcasGender.Female,
+                    new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = "30", ReceivingOrganisation = "90",
+                    CentreNumber = "1111111", CandidateNumber = "1234567891", CandidateName = "Smity:Jony2", CandidateDateofBirth = "15031985", Sex = "F",
                         UcasDataComponents = new List<UcasDataComponent>
                     {
                         new UcasDataComponent { SubjectCode = "60358294", Grade = "A", PreviousGrade = "C" },
@@ -273,8 +273,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         new UcasDataComponent { SubjectCode = "TLEVEL", Grade = "Merit", PreviousGrade = "Pass" },
                     } },
 
-                    new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = 30, ReceivingOrganisation = 90,
-                    CentreNumber = "1111111", CandidateNumber = "1234567892", CandidateName = "Smith:John3", CandidateDateofBirth = "07051999", Sex = (char)UcasGender.Male,
+                    new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = "30", ReceivingOrganisation = "90",
+                    CentreNumber = "1111111", CandidateNumber = "1234567892", CandidateName = "Smith:John3", CandidateDateofBirth = "07051999", Sex = "M",
                         UcasDataComponents = new List<UcasDataComponent>
                     {
                         new UcasDataComponent { SubjectCode = "60369115", Grade = "A", PreviousGrade = "B" },
@@ -286,8 +286,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 Trailer = new UcasDataTrailer
                 {
                     UcasRecordType = (char)UcasRecordType.Trailer,
-                    SendingOrganisation = 30,
-                    ReceivingOrganisation = 90,
+                    SendingOrganisation = "30",
+                    ReceivingOrganisation = "90",
                     Count = 3,
                     ExamDate = "062021"
                 }
