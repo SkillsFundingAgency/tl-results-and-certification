@@ -150,6 +150,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     UcasDataComponents = new List<UcasDataComponent>
                     {
                         new UcasDataComponent { SubjectCode = "60369176", Grade = null },
+                        new UcasDataComponent { SubjectCode = "TLEVEL", Grade = null }
                     } },
 
                     new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = "30", ReceivingOrganisation = "90",
@@ -158,6 +159,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         new UcasDataComponent { SubjectCode = "60358294", Grade = null, PreviousGrade = null },
                         new UcasDataComponent { SubjectCode = "ZTLOS004", Grade = null, PreviousGrade = null },
+                        new UcasDataComponent { SubjectCode = "TLEVEL", Grade = null }
                     } },
 
                     new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = "30", ReceivingOrganisation = "90",
@@ -165,7 +167,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         UcasDataComponents = new List<UcasDataComponent>
                     {
                         new UcasDataComponent { SubjectCode = "60369115", Grade = null, PreviousGrade = null },
-                        new UcasDataComponent { SubjectCode = "ZTLOS028", Grade = null, PreviousGrade = null }
+                        new UcasDataComponent { SubjectCode = "ZTLOS028", Grade = null, PreviousGrade = null },
+                        new UcasDataComponent { SubjectCode = "TLEVEL", Grade = null },
                     } },
                 },
 
@@ -174,7 +177,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     UcasRecordType = (char)UcasRecordType.Trailer,
                     SendingOrganisation = "30",
                     ReceivingOrganisation = "90",
-                    Count = 3,
+                    Count = 5,
                     ExamDate = "062021"
                 }
             };
@@ -212,8 +215,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         UcasDataComponents = new List<UcasDataComponent>
                     {
                         new UcasDataComponent { SubjectCode = "60358294", Grade = "C", PreviousGrade = null },
-                        new UcasDataComponent { SubjectCode = "ZTLOS004", Grade = "Pass", PreviousGrade = null },
-                        new UcasDataComponent { SubjectCode = "TLEVEL", Grade = "Pass", PreviousGrade = null },
+                        new UcasDataComponent { SubjectCode = "ZTLOS004", Grade = "P", PreviousGrade = null },
+                        new UcasDataComponent { SubjectCode = "TLEVEL", Grade = "P", PreviousGrade = null },
                     } },
 
                     new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = "30", ReceivingOrganisation = "90",
@@ -221,8 +224,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         UcasDataComponents = new List<UcasDataComponent>
                     {
                         new UcasDataComponent { SubjectCode = "60369115", Grade = "B", PreviousGrade = null },
-                        new UcasDataComponent { SubjectCode = "ZTLOS028", Grade = "Merit", PreviousGrade = null },
-                        new UcasDataComponent { SubjectCode = "TLEVEL", Grade = "Merit", PreviousGrade = null },
+                        new UcasDataComponent { SubjectCode = "ZTLOS028", Grade = "M", PreviousGrade = null },
+                        new UcasDataComponent { SubjectCode = "TLEVEL", Grade = "M", PreviousGrade = null },
                     } },
                 },
 
@@ -231,7 +234,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     UcasRecordType = (char)UcasRecordType.Trailer,
                     SendingOrganisation = "30",
                     ReceivingOrganisation = "90",
-                    Count = 3,
+                    Count = 5,
                     ExamDate = "062021"
                 }
             };
@@ -269,8 +272,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         UcasDataComponents = new List<UcasDataComponent>
                     {
                         new UcasDataComponent { SubjectCode = "60358294", Grade = "A", PreviousGrade = "C" },
-                        new UcasDataComponent { SubjectCode = "ZTLOS004", Grade = "Pass", PreviousGrade = null },
-                        new UcasDataComponent { SubjectCode = "TLEVEL", Grade = "Merit", PreviousGrade = "Pass" },
+                        new UcasDataComponent { SubjectCode = "ZTLOS004", Grade = "P", PreviousGrade = null },
+                        new UcasDataComponent { SubjectCode = "TLEVEL", Grade = "M", PreviousGrade = "P" },
                     } },
 
                     new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = "30", ReceivingOrganisation = "90",
@@ -278,8 +281,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         UcasDataComponents = new List<UcasDataComponent>
                     {
                         new UcasDataComponent { SubjectCode = "60369115", Grade = "A", PreviousGrade = "B" },
-                        new UcasDataComponent { SubjectCode = "ZTLOS028", Grade = "Merit", PreviousGrade = null },
-                        new UcasDataComponent { SubjectCode = "TLEVEL", Grade = "Distinction", PreviousGrade = "Merit" },
+                        new UcasDataComponent { SubjectCode = "ZTLOS028", Grade = "M", PreviousGrade = null },
+                        new UcasDataComponent { SubjectCode = "TLEVEL", Grade = "D", PreviousGrade = "M" },
                     } },
                 },
 
@@ -288,7 +291,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     UcasRecordType = (char)UcasRecordType.Trailer,
                     SendingOrganisation = "30",
                     ReceivingOrganisation = "90",
-                    Count = 3,
+                    Count = 5,
                     ExamDate = "062021"
                 }
             };
