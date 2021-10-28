@@ -65,7 +65,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // Add Overall result
-                // TODO: Upcoming story. 
+                ucasDataComponents.Add(new UcasDataComponent
+                {
+                    SubjectCode = _resultsAndCertificationConfiguration.UcasDataSettings.OverallSubjectCode,
+                    Grade = string.Empty,
+                    PreviousGrade = string.Empty
+                });
 
                 if (ucasDataComponents.Any())
                     records.Add(new UcasDataRecord
@@ -101,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     UcasRecordType = (char)UcasRecordType.Trailer,
                     SendingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.SendingOrganisation,
                     ReceivingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.ReceivingOrganisation,
-                    Count = registrationPathways.Count,
+                    Count = records.Count + 2,
                     ExamDate = $"{_resultsAndCertificationConfiguration.UcasDataSettings.ExamMonth}{DateTime.UtcNow.Year}"
                 }
             };
