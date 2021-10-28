@@ -363,33 +363,28 @@
     "UcasDataSettings": {
       "properties": {
         "SendingOrganisation": {
-          "minLength": 1,
           "type": "string",
           "environmentVariable": "UcasDataSendingOrganisation"
         },
         "ReceivingOrganisation": {
-          "minLength": 1,
           "type": "string",
           "environmentVariable": "UcasDataReceivingOrganisation"
         },
         "ExamMonth": {
-          "minLength": 1,
           "type": "string",
           "environmentVariable": "UcasDataExamMonth"
         },
         "CentreNumber": {
-          "minLength": 1,
           "type": "string",
           "environmentVariable": "UcasCentreNumber"
+        },
+        "OverallSubjectCode": {
+          "type": "string",
+          "environmentVariable": "UcasOverallSubjectCode"
         }
       },
       "additionalProperties": false,
-      "required": [
-        "SendingOrganisation",
-        "ReceivingOrganisation",
-        "ExamMonth",
-        "CentreNumber"
-      ],
+      "required": [],
       "type": "object"
     }
   },

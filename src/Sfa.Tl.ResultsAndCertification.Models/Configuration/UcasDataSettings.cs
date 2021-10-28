@@ -6,5 +6,6 @@
         public string ReceivingOrganisation { get; set; }
         public string ExamMonth { get; set; }
         public string CentreNumber { get; set; }
+        public string OverallSubjectCode { get; set; }
     }
 }

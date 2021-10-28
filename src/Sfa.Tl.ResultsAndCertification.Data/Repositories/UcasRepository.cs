@@ -96,7 +96,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 regPathway.TqPathwayAssessments.Clear();
         }
 
-
         private static void BuildSpecialismsAssessmentPredicate(TqRegistrationPathway regPathway)
         {
             Func<TqRegistrationSpecialism, bool> specialismPredicate = e => e.IsOptedin && e.EndDate == null;
