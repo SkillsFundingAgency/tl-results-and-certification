@@ -35,8 +35,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.UcasDataTr
         {
             ucasData.UcasDataRecords = new List<UcasDataRecord>
             {
-                new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = 99, ReceivingOrganisation = 90,
-                CentreNumber = "CENTRE-2", CandidateNumber = "1234567891", CandidateName = "Smity:Jony2", CandidateDateofBirth = "20082000", Sex = (char)UcasGender.Female,
+                new UcasDataRecord { UcasRecordType = (char)UcasRecordType.Subject, SendingOrganisation = "99", ReceivingOrganisation = "90",
+                CentreNumber = "CENTRE-2", CandidateNumber = "1234567891", CandidateName = "Smity:Jony2", CandidateDateofBirth = "20082000", Sex = "F",
                     UcasDataComponents = new List<UcasDataComponent>
                 {
                     new UcasDataComponent { SubjectCode = "Sub21", Grade = "A*", PreviousGrade = null },
