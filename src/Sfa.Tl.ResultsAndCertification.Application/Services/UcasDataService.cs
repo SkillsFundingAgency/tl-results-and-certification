@@ -80,9 +80,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         SendingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.SendingOrganisation,
                         ReceivingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.ReceivingOrganisation,
                         CentreNumber = _resultsAndCertificationConfiguration.UcasDataSettings.CentreNumber,
+                        CandidateNumber = pathway.TqRegistrationProfile.UniqueLearnerNumber.ToString(),
                         CandidateName = $"{pathway.TqRegistrationProfile.Lastname}:{pathway.TqRegistrationProfile.Firstname}",
                         CandidateDateofBirth = pathway.TqRegistrationProfile.DateofBirth.ToUcasFormat(),
-                        Sex = EnumExtensions.GetEnumValueStringByName<UcasGender>(pathway.TqRegistrationProfile.Gender) ?? string.Empty,
+                        //Sex = string.Concat(EnumExtensions.GetEnumValueStringByName<UcasGender>(pathway.TqRegistrationProfile.Gender)) ?? string.Empty,
+                        Sex = "M",
                         UcasDataComponents = ucasDataComponents
                     });
                 }

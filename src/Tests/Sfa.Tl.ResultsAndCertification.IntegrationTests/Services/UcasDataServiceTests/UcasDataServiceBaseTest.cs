@@ -1,21 +1,23 @@
-﻿using Sfa.Tl.ResultsAndCertification.Application.Services;
+﻿using FluentAssertions;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
-
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepositoryTests
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServiceTests
 {
-    public abstract class UcasRepositoryBaseTest : BaseTest<TqRegistrationPathway>
+    public abstract class UcasDataServiceBaseTest : BaseTest<TqRegistrationPathway>
     {
         protected long AoUkprn = 10011881;
-        protected AssessmentService AssessmentService;
         protected TlRoute Route;
         protected TlPathway Pathway;
         protected TlSpecialism Specialism;
@@ -29,8 +31,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
 
-        protected IUcasRepository UcasRepository; 
+        protected IUcasRepository UcasRepository;
         protected ICommonRepository CommonRepository;
+        protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
+        protected IUcasDataService UcasDataService;
+        protected UcasData ActualResult;
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
@@ -95,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
                     tqPathwayAssessments.Add(tqPathwayAssessmentHistorical);
                 }
 
-                var assessmentSeries = AssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessmentSeriesName, StringComparison.InvariantCultureIgnoreCase)); 
+                var assessmentSeries = AssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessmentSeriesName, StringComparison.InvariantCultureIgnoreCase));
                 var activePathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, assessmentSeries);
                 var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, activePathwayAssessment);
                 if (!seedPathwayAssessmentsAsActive)
@@ -168,5 +173,37 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
 
             DbContext.SaveChanges();
         }
+
+        public void AssertHeaderRecord(UcasDataType ucasDataType)
+        {
+            ActualResult.Header.Should().NotBeNull();
+            ActualResult.Header.UcasRecordType.Should().Be((char)UcasRecordType.Header);
+            ActualResult.Header.SendingOrganisation.Should().Be(ResultsAndCertificationConfiguration.UcasDataSettings.SendingOrganisation);
+            ActualResult.Header.ReceivingOrganisation.Should().Be(ResultsAndCertificationConfiguration.UcasDataSettings.ReceivingOrganisation);
+            ActualResult.Header.UcasDataType.Should().Be((char)ucasDataType);
+            ActualResult.Header.ExamMonth.Should().Be(ResultsAndCertificationConfiguration.UcasDataSettings.ExamMonth);
+            ActualResult.Header.ExamYear.Should().Be(DateTime.UtcNow.Year.ToString());
+            ActualResult.Header.DateCreated.Should().Be(DateTime.Today.ToString("ddMMyyyy", CultureInfo.InvariantCulture));
+        }
+
+        public void AssertTrailerRecord()
+        {
+            ActualResult.Trailer.Should().NotBeNull();
+            ActualResult.Trailer.UcasRecordType.Should().Be((char)UcasRecordType.Trailer);
+            ActualResult.Trailer.SendingOrganisation.Should().Be(ResultsAndCertificationConfiguration.UcasDataSettings.SendingOrganisation);
+            ActualResult.Trailer.ReceivingOrganisation.Should().Be(ResultsAndCertificationConfiguration.UcasDataSettings.ReceivingOrganisation);
+            ActualResult.Trailer.Count.Should().Be(ActualResult.UcasDataRecords.Count() + 2);
+            ActualResult.Trailer.ExamDate.Should().Be($"{ResultsAndCertificationConfiguration.UcasDataSettings.ExamMonth}{DateTime.UtcNow.Year}");
+            ActualResult.Trailer.RecordTerminator.Should().BeEmpty();
+        }
+    }
+
+    public class ExepectedUcasDataRecord
+    {
+        public long Uln { get; set; }
+        public string Name { get; set; }
+        public string Sex { get; set; }
+        public string DateOfBirth { get; set; }
+        public string ComponentRecord { get; set; }
     }
 }

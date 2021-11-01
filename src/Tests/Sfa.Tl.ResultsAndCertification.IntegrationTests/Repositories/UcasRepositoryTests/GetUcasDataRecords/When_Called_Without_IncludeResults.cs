@@ -37,11 +37,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
 
             var pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115 };
             var pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
-            SeedAssessmentsAndResults(pathwaysWithAssessments, pathwaysWithResults, "Summer 2021");
+            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, "Summer 2021");
 
             pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113 };
             pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
-            SeedAssessmentsAndResults(pathwaysWithAssessments, pathwaysWithResults, "Autumn 2021");
+            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, "Autumn 2021");
 
             SetAssessmentResult(1111111111, "Summer 2021", "B");
             SetAssessmentResult(1111111112, "Autumn 2021", "B");
@@ -106,23 +106,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
                     new object[] { 1111111116, 0 },
                 };
             }
-        }
-
-        private void SeedAssessmentsAndResults(List<long> pathwaysWithAssessments, List<long> pathwaysWithResults, string assessmentSeriesName)
-        {
-            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
-            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
-
-            foreach (var registration in _registrations.Where(x => pathwaysWithAssessments.Contains(x.UniqueLearnerNumber)))
-            {
-                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), assessmentSeriesName);
-                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
-
-                var pathwayAssessmentsWithResults = pathwayAssessments.Where(x => pathwaysWithResults.Contains(x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber)).ToList();
-                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessmentsWithResults));
-            }
-
-            DbContext.SaveChanges();
         }
     }
 }
