@@ -11,9 +11,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepositoryTests
+namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepositoryTests.GetUcasDataRecords
 {
-    public class When_GetUcasDataRecords_IsCalled : UcasRepositoryBaseTest
+    public class When_Called_Without_IncludeResults : UcasRepositoryBaseTest
     {
         // TODO: InlucdeResult: false;
 
@@ -23,10 +23,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
 
         public override void Given()
         {
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> 
-            { 
-                { 1111111111, RegistrationPathwayStatus.Active }, 
-                { 1111111112, RegistrationPathwayStatus.Active }, 
+            _ulns = new Dictionary<long, RegistrationPathwayStatus>
+            {
+                { 1111111111, RegistrationPathwayStatus.Active },
+                { 1111111112, RegistrationPathwayStatus.Active },
                 { 1111111113, RegistrationPathwayStatus.Active },
                 { 1111111114, RegistrationPathwayStatus.Active },
                 { 1111111115, RegistrationPathwayStatus.Active },
@@ -74,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
         {
             await Task.CompletedTask;
 
-            var includeResults = true;
+            var includeResults = false;
             _result = await UcasRepository.GetUcasDataRecordsAsync(includeResults);
         }
 
@@ -93,9 +93,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
 
             var actualResults = actualPathwayAssessments.SelectMany(x => x.TqPathwayResults);
             actualResults.Count().Should().Be(expectedResultsCount);
-            
+
             var actualResult = actualResults.FirstOrDefault(x => x.TqPathwayAssessment.AssessmentSeries.Name.Equals(expectedSeriesName, StringComparison.InvariantCultureIgnoreCase));
-            if (expectedGrade !=null)
+            if (expectedGrade != null)
                 actualResult.TlLookup.Value.Should().Be(expectedGrade);
         }
 
@@ -112,14 +112,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             {
                 return new[]
                 {
-                    new object[] { 1111111111, 2, 2, "Summer 2021", "B" },
-                    new object[] { 1111111111, 2, 2, "Autumn 2021", "A*" },
+                    new object[] { 1111111111, 1, 1, "Summer 2021", null },
+                    new object[] { 1111111111, 1, 1, "Autumn 2021", null },
 
-                    new object[] { 1111111112, 2, 2, "Summer 2021", "A*" },
-                    new object[] { 1111111112, 2, 2, "Autumn 2021", "B" },
+                    new object[] { 1111111112, 1, 1, "Summer 2021", null },
+                    new object[] { 1111111112, 1, 1, "Autumn 2021", null },
 
-                    new object[] { 1111111113, 2, 2, "Summer 2021", "A*" },
-                    new object[] { 1111111113, 2, 2, "Autumn 2021", "A*" },
+                    new object[] { 1111111113, 1, 1, "Summer 2021", null },
+                    new object[] { 1111111113, 1, 1, "Autumn 2021", null },
 
                     new object[] { 1111111114, 1, 0, "Summer 2021", null },
                     new object[] { 1111111115, 1, 0, "Summer 2021", null },
