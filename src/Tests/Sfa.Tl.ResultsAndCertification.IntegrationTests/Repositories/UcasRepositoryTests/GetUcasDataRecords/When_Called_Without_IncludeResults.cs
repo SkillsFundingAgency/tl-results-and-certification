@@ -15,8 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
 {
     public class When_Called_Without_IncludeResults : UcasRepositoryBaseTest
     {
-        // TODO: InlucdeResult: false;
-
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
         private IList<TqRegistrationPathway> _result;
