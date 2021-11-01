@@ -48,7 +48,12 @@ jobs:
             -functionCertificateName "$(LearningRecordServiceCertificateName)"
             -storageAccountContainerArray "$(storageAccountContainerArray)"
             -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
-            -learnerGenderTrigger "$(learnerGenderTrigger)"'
+            -learnerGenderTrigger "$(learnerGenderTrigger)"
+            -certificatePrintingRequestTrigger "$(certificatePrintingRequestTrigger)"
+            -certificatePrintingBatchSummaryTrigger "$(certificatePrintingBatchSummaryTrigger)"
+            -certificatePrintingTrackBatchTrigger "$(certificatePrintingTrackBatchTrigger)"
+            -ucasTransferEntriesTrigger "$(ucasTransferEntriesTrigger)"
+            -ucasTransferResultsTrigger "$(ucasTransferResultsTrigger)"'
           tags: $(Tags) 
           processOutputs: true
 
