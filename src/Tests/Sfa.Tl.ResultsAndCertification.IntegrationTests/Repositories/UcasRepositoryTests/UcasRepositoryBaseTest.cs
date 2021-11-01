@@ -100,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
                 var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, activePathwayAssessment);
                 if (!seedPathwayAssessmentsAsActive)
                 {
-                    tqPathwayAssessment.IsOptedin = pathwayRegistration.Status == Common.Enum.RegistrationPathwayStatus.Withdrawn ? true : false;
+                    tqPathwayAssessment.IsOptedin = pathwayRegistration.Status == RegistrationPathwayStatus.Withdrawn ? true : false;
                     tqPathwayAssessment.EndDate = DateTime.UtcNow;
                 }
 

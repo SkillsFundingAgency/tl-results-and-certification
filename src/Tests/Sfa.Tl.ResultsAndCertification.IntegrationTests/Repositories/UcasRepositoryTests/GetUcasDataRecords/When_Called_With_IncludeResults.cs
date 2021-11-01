@@ -35,26 +35,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsDataByStatus(_ulns, null);
 
-            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
-            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+            var pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115 };
+            var pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
+            SeedAssessmentsAndResults(pathwaysWithAssessments, pathwaysWithResults, "Summer 2021");
 
-            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111116))
-            {
-                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), assessmentSeriesName: "Summer 2021");
-                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments); ;
+            pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113 };
+            pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 }; 
+            SeedAssessmentsAndResults(pathwaysWithAssessments, pathwaysWithResults, "Autumn 2021");
 
-                var multipleAssessmentPathways = new List<long> { 1111111111, 1111111112, 1111111113 };
-                if (multipleAssessmentPathways.Contains(registration.UniqueLearnerNumber))
-                    pathwayAssessments.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), assessmentSeriesName: "Autumn 2021"));
+            SetAssessmentResult(1111111111, "Summer 2021", "B");
+            SetAssessmentResult(1111111112, "Autumn 2021", "B");
 
-                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
-
-                var pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
-                var pathwayAssessmentsWithResults = pathwayAssessments.Where(x => pathwaysWithResults.Contains(x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber)).ToList();
-                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessmentsWithResults));
-            }
-
-            DbContext.SaveChanges();
             SetAssessmentResult(1111111111, "Summer 2021", "B");
             SetAssessmentResult(1111111112, "Autumn 2021", "B");
 
@@ -91,6 +82,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             var actualPathwayAssessments = actualPathwayRegistration.TqPathwayAssessments;
             actualPathwayAssessments.Count().Should().Be(expectedAssessmentsCount);
 
+            if (expectedAssessmentsCount > 0)
+            {
+                var hasExpectedAssessmentSeries = actualPathwayAssessments.FirstOrDefault(x => x.AssessmentSeries.Name.Equals(expectedSeriesName));
+                hasExpectedAssessmentSeries.Should().NotBeNull();
+            }
+
             var actualResults = actualPathwayAssessments.SelectMany(x => x.TqPathwayResults);
             actualResults.Count().Should().Be(expectedResultsCount);
 
@@ -126,6 +123,22 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
                     new object[] { 1111111116, 0, 0, null, null },
                 };
             }
+        }
+        private void SeedAssessmentsAndResults(List<long> pathwaysWithAssessments, List<long> pathwaysWithResults, string assessmentSeriesName)
+        {
+            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+
+            foreach (var registration in _registrations.Where(x => pathwaysWithAssessments.Contains(x.UniqueLearnerNumber)))
+            {
+                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), assessmentSeriesName);
+                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
+
+                var pathwayAssessmentsWithResults = pathwayAssessments.Where(x => pathwaysWithResults.Contains(x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber)).ToList();
+                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessmentsWithResults));
+            }
+
+            DbContext.SaveChanges();
         }
     }
 }

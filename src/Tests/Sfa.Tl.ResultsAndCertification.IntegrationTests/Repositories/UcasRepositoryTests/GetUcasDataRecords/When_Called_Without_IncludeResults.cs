@@ -35,28 +35,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsDataByStatus(_ulns, null);
 
-            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
-            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+            var pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115 };
+            var pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
+            SeedAssessmentsAndResults(pathwaysWithAssessments, pathwaysWithResults, "Summer 2021");
 
-            foreach (var registration in _registrations.Where(x => x.UniqueLearnerNumber != 1111111116))
-            {
-                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), assessmentSeriesName: "Summer 2021");
-                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments); ;
+            pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113 };
+            pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
+            SeedAssessmentsAndResults(pathwaysWithAssessments, pathwaysWithResults, "Autumn 2021");
 
-                var multipleAssessmentPathways = new List<long> { 1111111111, 1111111112, 1111111113 };
-                if (multipleAssessmentPathways.Contains(registration.UniqueLearnerNumber))
-                    pathwayAssessments.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), assessmentSeriesName: "Autumn 2021"));
-
-                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
-
-                var pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
-                var pathwayAssessmentsWithResults = pathwayAssessments.Where(x => pathwaysWithResults.Contains(x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber)).ToList();
-                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessmentsWithResults));
-            }
-
-            DbContext.SaveChanges();
             SetAssessmentResult(1111111111, "Summer 2021", "B");
             SetAssessmentResult(1111111112, "Autumn 2021", "B");
+
+            DetachAll();
 
             CommonRepository = Substitute.For<ICommonRepository>();
             var academicYears = new List<Models.Contracts.Common.AcademicYear> { new Models.Contracts.Common.AcademicYear { Year = 2021 } };
@@ -80,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
 
         [Theory()]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(long uln, int expectedAssessmentsCount, int expectedResultsCount, string expectedSeriesName, string expectedGrade)
+        public async Task Then_Expected_Results_Are_Returned(long uln, int expectedAssessmentsCount)
         {
             await WhenAsync();
             _result.Should().NotBeNull();
@@ -92,11 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             actualPathwayAssessments.Count().Should().Be(expectedAssessmentsCount);
 
             var actualResults = actualPathwayAssessments.SelectMany(x => x.TqPathwayResults);
-            actualResults.Count().Should().Be(expectedResultsCount);
-
-            var actualResult = actualResults.FirstOrDefault(x => x.TqPathwayAssessment.AssessmentSeries.Name.Equals(expectedSeriesName, StringComparison.InvariantCultureIgnoreCase));
-            if (expectedGrade != null)
-                actualResult.TlLookup.Value.Should().Be(expectedGrade);
+            actualResults.Count().Should().Be(0);
         }
 
         private void SetAssessmentResult(long uln, string seriesName, string grade)
@@ -112,20 +98,31 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             {
                 return new[]
                 {
-                    new object[] { 1111111111, 1, 1, "Summer 2021", null },
-                    new object[] { 1111111111, 1, 1, "Autumn 2021", null },
-
-                    new object[] { 1111111112, 1, 1, "Summer 2021", null },
-                    new object[] { 1111111112, 1, 1, "Autumn 2021", null },
-
-                    new object[] { 1111111113, 1, 1, "Summer 2021", null },
-                    new object[] { 1111111113, 1, 1, "Autumn 2021", null },
-
-                    new object[] { 1111111114, 1, 0, "Summer 2021", null },
-                    new object[] { 1111111115, 1, 0, "Summer 2021", null },
-                    new object[] { 1111111116, 0, 0, null, null },
+                    new object[] { 1111111111, 1 },
+                    new object[] { 1111111112, 1 },
+                    new object[] { 1111111113, 1 },
+                    new object[] { 1111111114, 1 },
+                    new object[] { 1111111115, 1 },
+                    new object[] { 1111111116, 0 },
                 };
             }
+        }
+
+        private void SeedAssessmentsAndResults(List<long> pathwaysWithAssessments, List<long> pathwaysWithResults, string assessmentSeriesName)
+        {
+            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+
+            foreach (var registration in _registrations.Where(x => pathwaysWithAssessments.Contains(x.UniqueLearnerNumber)))
+            {
+                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), assessmentSeriesName);
+                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
+
+                var pathwayAssessmentsWithResults = pathwayAssessments.Where(x => pathwaysWithResults.Contains(x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber)).ToList();
+                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessmentsWithResults));
+            }
+
+            DbContext.SaveChanges();
         }
     }
 }
