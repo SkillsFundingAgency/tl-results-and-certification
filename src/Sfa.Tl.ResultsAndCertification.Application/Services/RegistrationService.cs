@@ -51,14 +51,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var response = new List<RegistrationRecordResponse>();
             var aoProviderTlevels = await GetAllTLevelsByAoUkprnAsync(aoUkprn);
-            var currentAcademicYears = await _commonService.GetCurrentAcademicYearsAsync();
-            
+            var academicYears = await _commonService.GetAcademicYearsAsync();
+
             foreach (var registrationData in validRegistrationsData)
             {
-                var academicYear = currentAcademicYears.FirstOrDefault(x => x.Name.Equals(registrationData.AcademicYearName, StringComparison.InvariantCultureIgnoreCase));
+                var academicYear = academicYears.FirstOrDefault(x => x.Name.Equals(registrationData.AcademicYearName, StringComparison.InvariantCultureIgnoreCase));
                 if (academicYear == null)
                 {
-                    response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln, ValidationMessages.AcademicYearMustBeCurrentOne));
+                    response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln, ValidationMessages.AcademicYearIsNotValid));
                     continue;
                 }
                 else
@@ -238,6 +238,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var unchangedRegistrations = matchedRegistrations.Intersect(existingRegistrationsFromDb, new TqRegistrationRecordEqualityComparer()).ToList();
             var hasAnyMatchedRegistrationsToProcess = matchedRegistrations.Count != unchangedRegistrations.Count;
 
+            if (newRegistrations.Any())
+            {
+                var currentAcademicYears = await _commonService.GetCurrentAcademicYearsAsync();
+
+                foreach (var newReg in newRegistrations)
+                {
+                    var isValidAcademicYear = newReg.TqRegistrationPathways.All(p => currentAcademicYears.Any(a => a.Year == p.AcademicYear));
+
+                    if (!isValidAcademicYear)
+                        response.ValidationErrors.Add(GetRegistrationValidationError(newReg.UniqueLearnerNumber, ValidationMessages.AcademicYearMustBeCurrentOne));
+                }
+            }
+
             if (hasAnyMatchedRegistrationsToProcess)
             {
                 var tqRegistrationProfileComparer = new TqRegistrationProfileEqualityComparer();
@@ -259,6 +272,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         if (latestRegPathway != null && latestRegPathway.Status == RegistrationPathwayStatus.Withdrawn)
                         {
                             response.ValidationErrors.Add(GetRegistrationValidationError(existingRegistration.UniqueLearnerNumber, ValidationMessages.RegistrationCannotBeInWithdrawnStatus));
+                            return;
+                        }
+
+                        var isAcademicYearChanged = !amendedRegistration.TqRegistrationPathways.All(p => p.AcademicYear == latestRegPathway.AcademicYear);
+
+                        if (isAcademicYearChanged)
+                        {
+                            response.ValidationErrors.Add(GetRegistrationValidationError(amendedRegistration.UniqueLearnerNumber, ValidationMessages.AcademicYearCannotBeChanged));
                             return;
                         }
 
@@ -813,6 +834,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 pathwaysToUpdate.ForEach(pathwayToUpdate =>
                 {
                     var associatedPathwayToAdd = pathwaysToAdd.FirstOrDefault(x => x.TqRegistrationProfileId == pathwayToUpdate.TqRegistrationProfileId && x.AcademicYear == pathwayToUpdate.AcademicYear);
+
+                    if (associatedPathwayToAdd == null)
+                        throw new ApplicationException("AssociatedPathwayToAdd cannot be null");
+
                     pathwayToUpdate.Status = RegistrationPathwayStatus.Transferred;
                     pathwayToUpdate.EndDate = DateTime.UtcNow;
                     pathwayToUpdate.ModifiedBy = amendedRegistration.CreatedBy;
