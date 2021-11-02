@@ -28,6 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
+        protected IList<AcademicYear> AcademicYears;
 
         protected IUcasRepository UcasRepository; 
         protected ICommonRepository CommonRepository;
@@ -44,7 +45,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
-            DbContext.SaveChangesAsync();
+            AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
+            
+            DbContext.SaveChanges();
         }
 
         public List<TqRegistrationProfile> SeedRegistrationsDataByStatus(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null)
@@ -167,6 +170,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             }
 
             DbContext.SaveChanges();
+        }
+        
+        public int GetAcademicYear()
+        {
+            return AcademicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year;
         }
     }
 }

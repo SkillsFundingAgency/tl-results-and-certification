@@ -30,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
+        protected IList<AcademicYear> AcademicYears;
 
         protected IUcasRepository UcasRepository;
         protected ICommonRepository CommonRepository;
@@ -49,6 +50,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+            AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
+
             DbContext.SaveChanges();
         }
 
@@ -196,6 +199,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
             ActualResult.Trailer.Count.Should().Be(ActualResult.UcasDataRecords.Count() + 2);
             ActualResult.Trailer.ExamDate.Should().Be($"{ResultsAndCertificationConfiguration.UcasDataSettings.ExamMonth}{DateTime.UtcNow.Year}");
             ActualResult.Trailer.RecordTerminator.Should().BeEmpty();
+        }
+
+        public int GetAcademicYear()
+        {
+            return AcademicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year;
         }
     }
 

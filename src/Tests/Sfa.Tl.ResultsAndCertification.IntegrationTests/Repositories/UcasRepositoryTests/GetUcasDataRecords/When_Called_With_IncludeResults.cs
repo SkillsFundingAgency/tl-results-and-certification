@@ -1,7 +1,5 @@
 ﻿using FluentAssertions;
-using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -33,24 +31,24 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.UcasRepos
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsDataByStatus(_ulns, null);
 
+            var currentAcademicYear = GetAcademicYear();
+            _registrations.ForEach(x =>
+            {
+                x.TqRegistrationPathways.ToList().ForEach(p => p.AcademicYear = currentAcademicYear - 1);
+            });
+
             var pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115 };
             var pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
-            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, "Summer 2021");
+            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, $"Summer {currentAcademicYear}");
 
             pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113 };
-            pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 }; 
-            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, "Autumn 2021");
+            pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
+            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, $"Autumn {currentAcademicYear}");
 
-            SetAssessmentResult(1111111111, "Summer 2021", "B");
-            SetAssessmentResult(1111111112, "Autumn 2021", "B");
+            SetAssessmentResult(1111111111, $"Summer {currentAcademicYear}", "B");
+            SetAssessmentResult(1111111112, $"Autumn {currentAcademicYear}", "B");
 
-            SetAssessmentResult(1111111111, "Summer 2021", "B");
-            SetAssessmentResult(1111111112, "Autumn 2021", "B");
-
-            CommonRepository = Substitute.For<ICommonRepository>();
-            var academicYears = new List<Models.Contracts.Common.AcademicYear> { new Models.Contracts.Common.AcademicYear { Year = 2021 } };
-            CommonRepository.GetCurrentAcademicYearsAsync().Returns(academicYears);
-
+            CommonRepository = new CommonRepository(DbContext);
             UcasRepository = new UcasRepository(DbContext, CommonRepository);
         }
 

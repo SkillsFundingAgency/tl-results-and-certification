@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
-using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
@@ -33,21 +31,23 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
             };
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsDataByStatus(_ulns, null);
+            var currentAcademicYear = GetAcademicYear();
+            _registrations.ForEach(x =>
+            {
+                x.TqRegistrationPathways.ToList().ForEach(p => p.AcademicYear = currentAcademicYear - 1);
+            });
 
             var pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115 };
             var pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
-            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, "Summer 2021");
+            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, $"Summer {currentAcademicYear}");
 
             pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113 };
             pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111113 };
-            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, "Autumn 2021");
+            SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, $"Autumn {currentAcademicYear}");
 
-            SetAssessmentResult(1111111111, "Summer 2021", "B");
-            SetAssessmentResult(1111111112, "Autumn 2021", "B");
+            SetAssessmentResult(1111111111, $"Summer {currentAcademicYear}", "B");
+            SetAssessmentResult(1111111112, $"Autumn {currentAcademicYear}", "B");
 
-            CommonRepository = Substitute.For<ICommonRepository>();
-            var academicYears = new List<Models.Contracts.Common.AcademicYear> { new Models.Contracts.Common.AcademicYear { Year = 2021 } };
-            CommonRepository.GetCurrentAcademicYearsAsync().Returns(academicYears);
             ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
             {
                 UcasDataSettings = new UcasDataSettings
@@ -58,9 +58,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
                     ReceivingOrganisation = "90",
                     SendingOrganisation = "30"
                 }
-            };
+            }; 
+            CommonRepository = new CommonRepository(DbContext);
             UcasRepository = new UcasRepository(DbContext, CommonRepository);
-
             UcasDataService = new UcasDataService(UcasRepository, ResultsAndCertificationConfiguration);
         }
 
@@ -80,10 +80,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
 
             ActualResult.UcasDataRecords.Should().HaveCount(5);
 
-            var expectedDataRecords = new List<dynamic>
+            var expectedDataRecords = new List<ExepectedUcasDataRecord>
             {                
-                new ExepectedUcasDataRecord { Uln = 1111111111, Name = "Last 1:First 1", Sex = "M", DateOfBirth = "10101980", ComponentRecord = "_|10123456|B||_|TLEVEL|||_|" },  // TODO: expect A*
-                new ExepectedUcasDataRecord { Uln = 1111111112, Name = "Last 2:First 2", Sex = "M", DateOfBirth = "07051981", ComponentRecord = "_|10123456|B||_|TLEVEL|||_|" },  // TODO: expect A*
+                new ExepectedUcasDataRecord { Uln = 1111111111, Name = "Last 1:First 1", Sex = "M", DateOfBirth = "10101980", ComponentRecord = "_|10123456|A*||_|TLEVEL|||_|" },
+                new ExepectedUcasDataRecord { Uln = 1111111112, Name = "Last 2:First 2", Sex = "M", DateOfBirth = "07051981", ComponentRecord = "_|10123456|A*||_|TLEVEL|||_|" },
                 new ExepectedUcasDataRecord { Uln = 1111111113, Name = "Last 3:First 3", Sex = "M", DateOfBirth = "03071982", ComponentRecord = "_|10123456|A*||_|TLEVEL|||_|" },
                 new ExepectedUcasDataRecord { Uln = 1111111114, Name = "Last 4:First 4", Sex = "M", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|TLEVEL|||_|"},
                 new ExepectedUcasDataRecord { Uln = 1111111115, Name = "Last 5:First 5", Sex = "M", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|TLEVEL|||_|" }
