@@ -49,6 +49,7 @@ jobs:
             -storageAccountContainerArray "$(storageAccountContainerArray)"
             -learnerVerificationAndLearningEventsTrigger "$(LearnerVerificationAndLearningEventsTrigger)"
             -learnerGenderTrigger "$(learnerGenderTrigger)"
+            -IntTestSQLServiceAccountConnectionString "$(IntTestSQLServiceAccountConnectionString)"
             -certificatePrintingRequestTrigger "$(certificatePrintingRequestTrigger)"
             -certificatePrintingBatchSummaryTrigger "$(certificatePrintingBatchSummaryTrigger)"
             -certificatePrintingTrackBatchTrigger "$(certificatePrintingTrackBatchTrigger)"
