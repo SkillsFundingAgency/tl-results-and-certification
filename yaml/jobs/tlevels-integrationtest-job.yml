@@ -33,7 +33,7 @@
       displayName: 'Azure SQL Dacpac - Integration Test'
       inputs:
         azureSubscription: ${{ parameters.serviceConnection }}
-        ServerName: '$(SharedSqlServerFQDN)'
+        ServerName: '$(SharedSQLServerName).database.windows.net'
         DatabaseName: '$(IntTestDatabaseName)'
         SqlUsername: '$(SQLServerAdminUsername)'
         SqlPassword: '$(SQLServerAdminPassword)'
