@@ -36,6 +36,12 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return result;
         }
 
+        public static DateTime ParseStringToDateTimeWithFormat(this string value, string dateFormat = "dd/MM/yyyy")
+        {
+            DateTime.TryParseExact(value, dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result);
+            return result;
+        }
+
         public static bool IsInt(this string value)
         {
             return int.TryParse(value, out _);

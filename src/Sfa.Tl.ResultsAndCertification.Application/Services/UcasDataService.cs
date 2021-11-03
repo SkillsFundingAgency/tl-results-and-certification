@@ -83,8 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         CandidateNumber = pathway.TqRegistrationProfile.UniqueLearnerNumber.ToString(),
                         CandidateName = $"{pathway.TqRegistrationProfile.Lastname}:{pathway.TqRegistrationProfile.Firstname}",
                         CandidateDateofBirth = pathway.TqRegistrationProfile.DateofBirth.ToUcasFormat(),
-                        //Sex = string.Concat(EnumExtensions.GetEnumValueStringByName<UcasGender>(pathway.TqRegistrationProfile.Gender)) ?? string.Empty,
-                        Sex = "M",
+                        Sex = !string.IsNullOrWhiteSpace(pathway.TqRegistrationProfile.Gender) ? ((char)EnumExtensions.GetEnumByDisplayName<UcasGender>(pathway.TqRegistrationProfile.Gender)).ToString() : string.Empty,
                         UcasDataComponents = ucasDataComponents
                     });
                 }
