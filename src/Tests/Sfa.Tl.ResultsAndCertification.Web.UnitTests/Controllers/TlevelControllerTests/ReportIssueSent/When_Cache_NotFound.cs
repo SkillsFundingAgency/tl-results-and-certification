@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TlevelControl
 {
     public class When_Cache_NotFound : TestSetup
     {
-        private TlevelQuerySentViewModel _querySentViewModel;
+        private readonly TlevelQuerySentViewModel _querySentViewModel = null;
 
         public override void Given()
         {
