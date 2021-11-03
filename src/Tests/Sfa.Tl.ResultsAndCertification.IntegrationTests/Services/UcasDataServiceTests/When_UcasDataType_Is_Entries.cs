@@ -83,10 +83,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
             var expectedDataRecords = new List<ExepectedUcasDataRecord>
             {
                 new ExepectedUcasDataRecord { Uln = 1111111111, Name = "Last 1:First 1", Sex = "M", DateOfBirth = "10101980", ComponentRecord = "_|10123456|||_|TLEVEL|||_|" },
-                new ExepectedUcasDataRecord { Uln = 1111111112, Name = "Last 2:First 2", Sex = "M", DateOfBirth = "07051981", ComponentRecord = "_|10123456|||_|TLEVEL|||_|" },
-                new ExepectedUcasDataRecord { Uln = 1111111113, Name = "Last 3:First 3", Sex = "M", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|TLEVEL|||_|" },
+                new ExepectedUcasDataRecord { Uln = 1111111112, Name = "Last 2:First 2", Sex = "F", DateOfBirth = "07051981", ComponentRecord = "_|10123456|||_|TLEVEL|||_|" },
+                new ExepectedUcasDataRecord { Uln = 1111111113, Name = "Last 3:First 3", Sex = "F", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|TLEVEL|||_|" },
                 new ExepectedUcasDataRecord { Uln = 1111111114, Name = "Last 4:First 4", Sex = "M", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|TLEVEL|||_|"},
-                new ExepectedUcasDataRecord { Uln = 1111111115, Name = "Last 5:First 5", Sex = "M", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|TLEVEL|||_|" }
+                new ExepectedUcasDataRecord { Uln = 1111111115, Name = "Last 5:First 5", Sex = "", DateOfBirth = "03071982", ComponentRecord = "_|10123456|||_|TLEVEL|||_|" }
             };
 
             foreach (var expectedRecord in expectedDataRecords)
