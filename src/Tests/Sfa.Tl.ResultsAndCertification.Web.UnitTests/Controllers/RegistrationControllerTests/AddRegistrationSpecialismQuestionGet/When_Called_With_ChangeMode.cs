@@ -20,12 +20,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         private SpecialismQuestionViewModel _specialismQuestionViewModel;
         private SelectAcademicYearViewModel _academicYearViewModel;
         private string _coreCode = "12345678";
-        private string _selectedAcademicYear;
 
         public override void Given()
         {
             IsChangeMode = true;
-            //_selectedAcademicYear = ((int)AcademicYearDelete.Year2020).ToString();
             _ulnViewModel = new UlnViewModel { Uln = "1234567890" };
             _learnersNameViewModel = new LearnersNameViewModel { Firstname = "First", Lastname = "Last" };
             _dateofBirthViewModel = new DateofBirthViewModel { Day = "01", Month = "01", Year = "2020" };
