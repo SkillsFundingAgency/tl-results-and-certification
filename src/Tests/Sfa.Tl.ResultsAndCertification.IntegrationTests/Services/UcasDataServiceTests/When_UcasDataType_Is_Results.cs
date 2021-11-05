@@ -72,11 +72,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
         public async Task WhenAsync()
         {
             await Task.CompletedTask;
-            ActualResult = await UcasDataService.ProcessUcasDataRecordsTestAsync(UcasDataType.Results);
+            ActualResult = await UcasDataService.ProcessUcasDataRecordsAsync(UcasDataType.Results);
 
             ActualResult.Should().NotBeNull();
 
-            AssertHeaderRecord(UcasDataType.Entries);
+            AssertHeaderRecord(UcasDataType.Results);
 
             ActualResult.UcasDataRecords.Should().HaveCount(5);
 

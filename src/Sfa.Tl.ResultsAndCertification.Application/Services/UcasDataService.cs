@@ -26,19 +26,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<UcasData> ProcessUcasDataRecordsAsync(UcasDataType ucasDataType)
         {
-            await Task.CompletedTask;
-
-            return ucasDataType switch
-            {
-                UcasDataType.Entries => await GetUcasAssessmentEntriesAsync(),
-                UcasDataType.Results => await GetUcasResultsAsync(),
-                UcasDataType.Amendments => await GetUcasAmendmentsAsync(),
-                _ => null,
-            };
-        }
-
-        public async Task<UcasData> ProcessUcasDataRecordsTestAsync(UcasDataType ucasDataType)
-        {
             var includeResults = ucasDataType != UcasDataType.Entries;
             var registrationPathways = await _ucasRepository.GetUcasDataRecordsAsync(includeResults);
 
@@ -59,8 +46,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         ucasDataComponents.Add(new UcasDataComponent
                         {
                             SubjectCode = specialism.TlSpecialism.LarId,
-                            Grade = string.Empty,
+                            Grade = string.Empty, // TODO: need to be implmented once Occupations Specialisms is implemented.
                             PreviousGrade = string.Empty
+                            // Dev note: above PreviousGrade will be empty if UcasDataType is Entries or Results. This need to be populated as part of 'Amendments'
                         });
                 }
 
@@ -99,7 +87,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     UcasRecordType = (char)UcasRecordType.Header,
                     SendingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.SendingOrganisation,
                     ReceivingOrganisation = _resultsAndCertificationConfiguration.UcasDataSettings.ReceivingOrganisation,
-                    UcasDataType = (char)UcasDataType.Entries,
+                    UcasDataType = (char)ucasDataType,
                     ExamMonth = _resultsAndCertificationConfiguration.UcasDataSettings.ExamMonth,
                     ExamYear = DateTime.UtcNow.Year.ToString(),
                     DateCreated = DateTime.Today.ToString("ddMMyyyy", CultureInfo.InvariantCulture)
@@ -120,6 +108,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return ucasData;
         }
 
+        public async Task<UcasData> ProcessUcasDataRecordsTestAsync(UcasDataType ucasDataType)
+        {
+            await Task.CompletedTask;
+
+            return ucasDataType switch
+            {
+                UcasDataType.Entries => await GetUcasAssessmentEntriesAsync(),
+                UcasDataType.Results => await GetUcasResultsAsync(),
+                UcasDataType.Amendments => await GetUcasAmendmentsAsync(),
+                _ => null,
+            };
+        }
+
         private static UcasDataComponent GetCoreComponentData(bool includeResults, TqRegistrationPathway pathway)
         {
             if (!pathway.TqPathwayAssessments.Any())
@@ -127,7 +128,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             TqPathwayResult pathwayHigherResult = null;
             if (includeResults)
-                pathwayHigherResult = pathway.TqPathwayAssessments.SelectMany(x => x.TqPathwayResults).OrderBy(x => x.TlLookup.Id).FirstOrDefault();
+                pathwayHigherResult = pathway.TqPathwayAssessments.SelectMany(x => x.TqPathwayResults).OrderBy(x => x.TlLookup.SortOrder).FirstOrDefault();
 
             return new UcasDataComponent
             {

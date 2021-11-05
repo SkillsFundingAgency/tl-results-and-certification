@@ -72,7 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.UcasDataServi
         public async Task WhenAsync()
         {
             await Task.CompletedTask;
-            ActualResult = await UcasDataService.ProcessUcasDataRecordsTestAsync(UcasDataType.Entries);
+            ActualResult = await UcasDataService.ProcessUcasDataRecordsAsync(UcasDataType.Entries);
 
             ActualResult.Should().NotBeNull();
 
