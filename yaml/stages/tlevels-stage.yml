@@ -57,7 +57,7 @@ stages:
           serviceConnection: ${{ parameters.serviceConnection }}
           sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
           environmentName: ${{ parameters.environmentName }}
-          dependency:
+        dependsOn:
             - GenerateConfigs
 
       - template: ../jobs/tlevels-publish-site-job.yml
