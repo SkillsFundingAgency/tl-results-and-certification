@@ -16,6 +16,7 @@
     dependsOn:
     - DeployInfrastructure 
     - DeploySQLDatabase
+    - GenerateConfigs
     condition: or(eq('${{ parameters.environmentName }}', 'dev'), eq('${{ parameters.environmentName }}', 'tst'))
 
     variables:
