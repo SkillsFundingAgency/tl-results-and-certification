@@ -11,7 +11,7 @@
     "IntTestSqlConnectionString": {
       "minLength": 1,
       "type": "string",
-      "environmentVariable": "IntTestSQLServiceAccountConnectionString"
+      "environmentVariable": "IntTestSqlConnectionString" //"IntTestSQLServiceAccountConnectionString"
     },
     "BlobStorageConnectionString": {
       "type": "string",
@@ -391,6 +391,7 @@
   "additionalProperties": false,
   "required": [
     "SqlConnectionString",
+    "IntTestSqlConnectionString",
     "BlobStorageConnectionString",
     "GovUkNotifyApiKey",
     "TlevelQueriedSupportEmailAddress",

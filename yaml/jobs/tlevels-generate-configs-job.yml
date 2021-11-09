@@ -15,7 +15,7 @@ jobs:
       RedisCacheConnection: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.RedisConnectionString'] ]
       KeyVaultUri: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedKeyVaultUri'] ]
       DataProtectionKeyVaultKeyId: $[stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DataprotectionKey.DataProtectionKeyVaultKeyId']]
-      # IntTestSQLServiceAccountConnectionString: $[ dependencies.IntegrationTest.outputs['IntTestSqlVariables.IntTestSQLServiceAccountConnectionString'] ]
+      IntTestSqlConnectionString: $[ dependencies.DeploySQLDatabase.outputs['IntTestSqlVariables.IntTestSqlConnectionString'] ]
 
     pool:
       name: "Azure Pipelines"
@@ -32,7 +32,7 @@ jobs:
           'Write-Host "RedisCacheConnection variable: $(RedisCacheConnection)"'
           'Write-Host "KeyVaultUri variable: $(KeyVaultUri)"'
           'Write-Host "DataProtectionKeyVaultKeyId : $(DataProtectionKeyVaultKeyId)"'
-          'Write-Host "IntTestSQLServiceAccountConnectionString : $(IntTestSQLServiceAccountConnectionString)"'
+          'Write-Host "IntTestSqlConnectionString : $(IntTestSqlConnectionString)"'
         name: ShowVariables
 
       - task: DownloadBuildArtifacts@0

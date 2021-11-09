@@ -53,11 +53,6 @@
       inputs:
         archiveFilePatterns: '$(System.ArtifactsDirectory)\appdrop\Sfa.Tl.ResultsAndCertification.IntegrationTests.zip'
         destinationFolder: '$(Agent.TempDirectory)\IntegrationTests'
-
-    - pwsh: | 
-        $IntTestSQLServiceAccountConnectionString = "Server=tcp:$(SharedSQLServerName).database.windows.net,1433;Initial Catalog=$(IntTestDatabaseName);Persist Security Info=False;User ID=$(SQLServerAdminUsername);Password=$(SQLServerAdminPassword);MultipleActiveResultSets=True;Encrypt=true;TrustServerCertificate=False;Connection Timeout=1200;"
-        Write-Host "##vso[task.setvariable variable=IntTestSQLServiceAccountConnectionString;isOutput=true]$IntTestSQLServiceAccountConnectionString"        
-      name: IntTestSqlVariables
     
     - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
       displayName: 'Tokenization: Transform file *.json'
