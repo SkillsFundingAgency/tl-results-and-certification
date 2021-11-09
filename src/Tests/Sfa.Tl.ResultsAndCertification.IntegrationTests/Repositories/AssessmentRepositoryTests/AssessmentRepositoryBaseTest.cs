@@ -32,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
         protected IList<AssessmentSeries> AssessmentSeries;
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
+        protected IList<AcademicYear> AcademicYears;
 
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IAssessmentRepository AssessmentRepository;
@@ -51,6 +52,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookup = TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             PathwayComponentGrades = TlLookup.Where(x => x.Category.Equals(LookupCategory.PathwayComponentGrade.ToString(), StringComparison.InvariantCultureIgnoreCase)).ToList();
+            AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
+
             DbContext.SaveChangesAsync();
         }
 
@@ -91,7 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
         {
             var profile = new TqRegistrationProfileBuilder().BuildList().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
-            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProviders.First());
+            var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProvider);
             tqRegistrationPathway.Status = status;
 
             var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
@@ -134,7 +137,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             return tqPathwayResult;
         }
 
-        public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false)
+        public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false, string assessmentSeriesName = "Summer 2021")
         {
             var tqPathwayAssessments = new List<TqPathwayAssessment>();
 
@@ -151,7 +154,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
                     tqPathwayAssessments.Add(tqPathwayAssessmentHistorical);
                 }
 
-                var activePathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, AssessmentSeries[index]);
+                var assessmentSeries = AssessmentSeries.FirstOrDefault(x => x.Name.Equals(assessmentSeriesName, StringComparison.InvariantCultureIgnoreCase));
+                var activePathwayAssessment = new TqPathwayAssessmentBuilder().Build(pathwayRegistration, assessmentSeries);
                 var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessment(DbContext, activePathwayAssessment);
                 if (!seedPathwayAssessmentsAsActive)
                 {
@@ -235,6 +239,29 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
 
             tqPathwayResults.Add(tqPathwayResult);
             return tqPathwayResults;
+        }
+
+        public List<TqPathwayAssessment> SeedAssessmentsAndResults(List<TqRegistrationProfile> registrations, List<long> pathwaysWithAssessments, List<long> pathwaysWithResults, string assessmentSeriesName)
+        {
+            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
+            var tqPathwayResultsSeedData = new List<TqPathwayResult>();
+
+            foreach (var registration in registrations.Where(x => pathwaysWithAssessments.Contains(x.UniqueLearnerNumber)))
+            {
+                var pathwayAssessments = GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), assessmentSeriesName: assessmentSeriesName);
+                tqPathwayAssessmentsSeedData.AddRange(pathwayAssessments);
+
+                var pathwayAssessmentsWithResults = pathwayAssessments.Where(x => pathwaysWithResults.Contains(x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber)).ToList();
+                tqPathwayResultsSeedData.AddRange(GetPathwayResultsDataToProcess(pathwayAssessmentsWithResults));
+            }
+
+            DbContext.SaveChanges();
+            return tqPathwayAssessmentsSeedData;
+        }
+
+        public int GetAcademicYear()
+        {
+            return AcademicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year;
         }
 
         #region Assert Methods
