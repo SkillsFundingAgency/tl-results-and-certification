@@ -53,8 +53,7 @@ jobs:
             -certificatePrintingBatchSummaryTrigger "$(certificatePrintingBatchSummaryTrigger)"
             -certificatePrintingTrackBatchTrigger "$(certificatePrintingTrackBatchTrigger)"
             -ucasTransferEntriesTrigger "$(ucasTransferEntriesTrigger)"
-            -ucasTransferResultsTrigger "$(ucasTransferResultsTrigger)"
-            -IntTestSQLServiceAccountConnectionString "$(IntTestSQLServiceAccountConnectionString)"'
+            -ucasTransferResultsTrigger "$(ucasTransferResultsTrigger)"'
           tags: $(Tags) 
           processOutputs: true
 
