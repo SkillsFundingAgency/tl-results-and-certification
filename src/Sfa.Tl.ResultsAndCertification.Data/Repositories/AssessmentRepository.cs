@@ -58,7 +58,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         {
             var registrationPathwayIds = new HashSet<int>();
             pathwayAssessments.ToList().ForEach(r => registrationPathwayIds.Add(r.TqRegistrationPathwayId));
-            return await _dbContext.TqPathwayAssessment.Where(x => registrationPathwayIds.Contains(x.TqRegistrationPathwayId) && x.EndDate == null && x.IsOptedin).ToListAsync();
+            var assessments = await _dbContext.TqPathwayAssessment
+                .Include(x => x.TqPathwayResults)
+                .Include(x => x.AssessmentSeries)
+                .Where(x => registrationPathwayIds.Contains(x.TqRegistrationPathwayId) && x.EndDate == null && x.IsOptedin)
+                .ToListAsync();
+
+            return assessments
+               .GroupBy(x => x.TqRegistrationPathwayId)
+               .Select(x => x.OrderByDescending(o => o.AssessmentSeries.StartDate).First())
+               .ToList();
         }
 
         public async Task<IList<TqSpecialismAssessment>> GetBulkSpecialismAssessmentsAsync(IList<TqSpecialismAssessment> specialismAssessments)

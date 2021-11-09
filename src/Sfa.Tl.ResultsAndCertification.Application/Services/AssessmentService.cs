@@ -180,18 +180,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var response = new AssessmentProcessResponse();
 
             // Prepare Pathway Assessments
-            var newOrAmendedPathwayAssessmentRecords = await PrepareNewAndAmendedPathwayAssessments(pathwayAssessmentsToProcess);
+            var newOrAmendedPathwayAssessmentRecords = await PrepareNewAndAmendedPathwayAssessments(pathwayAssessmentsToProcess, response);
 
             // Prepare Specialism Assessments
-            var newOrAmendedSpecialismAssessmentRecords = await PrepareNewAndAmendedSpecialismAssessments(specialismAssessmentsToProcess);
+            var newOrAmendedSpecialismAssessmentRecords = await PrepareNewAndAmendedSpecialismAssessments(specialismAssessmentsToProcess, response);
 
             // Process Assessments
-            response.IsSuccess = await _assessmentRepository.BulkInsertOrUpdateAssessments(newOrAmendedPathwayAssessmentRecords, newOrAmendedSpecialismAssessmentRecords);
+            if (response.IsValid)
+                response.IsSuccess = await _assessmentRepository.BulkInsertOrUpdateAssessments(newOrAmendedPathwayAssessmentRecords, newOrAmendedSpecialismAssessmentRecords);
 
             return response;
         }
 
-        private async Task<List<TqPathwayAssessment>> PrepareNewAndAmendedPathwayAssessments(IList<TqPathwayAssessment> pathwayAssessmentsToProcess)
+        private async Task<List<TqPathwayAssessment>> PrepareNewAndAmendedPathwayAssessments(IList<TqPathwayAssessment> pathwayAssessmentsToProcess, AssessmentProcessResponse response)
         {
             var pathwayAssessmentComparer = new TqPathwayAssessmentEqualityComparer();
             var amendedPathwayAssessments = new List<TqPathwayAssessment>();
@@ -209,14 +210,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 amendedPathwayAssessments.ForEach(amendedPathwayAssessment =>
                 {
-                    var existingPathwayAssessment = existingPathwayAssessmentsFromDb.FirstOrDefault(existingPathwayAssessment => existingPathwayAssessment.TqRegistrationPathwayId == amendedPathwayAssessment.TqRegistrationPathwayId);
+                    var existingPathwayAssessment = existingPathwayAssessmentsFromDb
+                                                .OrderByDescending(x => x.AssessmentSeries.StartDate)
+                                                .FirstOrDefault(existingPathwayAssessment => existingPathwayAssessment.TqRegistrationPathwayId == amendedPathwayAssessment.TqRegistrationPathwayId);
 
                     if (existingPathwayAssessment != null)
                     {
+
                         var hasPathwayAssessmentChanged = amendedPathwayAssessment.AssessmentSeriesId != existingPathwayAssessment.AssessmentSeriesId;
 
                         if (hasPathwayAssessmentChanged)
                         {
+                            response = ValidateStage4Rules(existingPathwayAssessment, amendedPathwayAssessment, response);
+                            if (!response.IsValid)
+                                return;
+
                             existingPathwayAssessment.IsOptedin = false;
                             existingPathwayAssessment.EndDate = DateTime.UtcNow;
                             existingPathwayAssessment.ModifiedBy = amendedPathwayAssessment.CreatedBy;
@@ -231,13 +239,35 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 });
             }
 
-            if (newPathwayAssessments.Any())
-                newAndAmendedPathwayAssessmentRecords.AddRange(newPathwayAssessments.Where(p => p.TqRegistrationPathwayId > 0 && p.AssessmentSeriesId > 0));
+            if (response.IsValid)
+            {
+                if (newPathwayAssessments.Any())
+                    newAndAmendedPathwayAssessmentRecords.AddRange(newPathwayAssessments.Where(p => p.TqRegistrationPathwayId > 0 && p.AssessmentSeriesId > 0));
+            }
 
             return newAndAmendedPathwayAssessmentRecords;
         }
 
-        private async Task<List<TqSpecialismAssessment>> PrepareNewAndAmendedSpecialismAssessments(IList<TqSpecialismAssessment> specialismAssessmentsToProcess)
+        private AssessmentProcessResponse ValidateStage4Rules(TqPathwayAssessment existingPathwayAssessment, TqPathwayAssessment amendedPathwayAssessment, AssessmentProcessResponse response)
+        {
+            // Rule: Assessment entry can not be removed when results are associated to it. 
+            var hasResult = existingPathwayAssessment.TqPathwayResults.Any(x => x.EndDate == null && x.IsOptedin);
+            if (hasResult && amendedPathwayAssessment.AssessmentSeriesId == 0)
+                response.ValidationErrors.Add(GetAssessmentValidationError(existingPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.AssessmentEntryCannotBeRemovedHasResult));
+
+            return response;
+        }
+
+        private static BulkProcessValidationError GetAssessmentValidationError(long uln, string errorMessage)
+        {
+            return new BulkProcessValidationError
+            {
+                Uln = uln.ToString(),
+                ErrorMessage = errorMessage
+            };
+        }
+
+        private async Task<List<TqSpecialismAssessment>> PrepareNewAndAmendedSpecialismAssessments(IList<TqSpecialismAssessment> specialismAssessmentsToProcess, AssessmentProcessResponse response)
         {
             var specialismAssessmentComparer = new TqSpecialismAssessmentEqualityComparer();
             var amendedSpecialismAssessments = new List<TqSpecialismAssessment>();

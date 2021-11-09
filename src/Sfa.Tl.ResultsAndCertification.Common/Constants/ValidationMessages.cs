@@ -58,6 +58,9 @@
         public const string InvalidSpecialismAssessmentEntry = "Specialism assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the second academic year or subsequent approaching series)";
         public const string InvalidNextSpecialismAssessmentEntry = "Specialism assessment entry is beyond the next available series - only the next available series is allowed (the second series of the second academic year or subsequent approaching series)";
 
+        // Assessments - Bulk stage 4 validations
+        public const string AssessmentEntryCannotBeRemovedHasResult = "This assessment has a result so the assessment entry cannot be removed. Either remove the record from the bulk upload or enter the current assessment series to indicate a resit";
+
         // Results - Bulk Stage 2 validations
         public const string CorecodeRequiredWhenResultIncluded = "Core component code required when result is included";
         public const string AssessmentSeriesNeedsToBeProvided = "Assessment series needs to be provided";
