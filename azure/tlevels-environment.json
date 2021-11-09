@@ -554,6 +554,10 @@
             "type": "string",
             "value": "[variables('sqlDatabaseName')]"
         },
+        "IntTestSQLDatabaseName": {
+            "type": "string",
+            "value": "[variables('IntTestSQLDatabaseName')]"
+        },
         "uiAppName": {
             "type": "string",
             "value": "[variables('uiAppName')]"

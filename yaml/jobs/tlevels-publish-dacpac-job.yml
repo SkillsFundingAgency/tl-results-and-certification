@@ -14,6 +14,7 @@ jobs:
   variables:
     SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
     DatabaseName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.sqlDatabaseName'] ]
+    IntTestDatabaseName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.IntTestSQLDatabaseName'] ]
   steps:
     - task: DownloadBuildArtifacts@0
       inputs:
