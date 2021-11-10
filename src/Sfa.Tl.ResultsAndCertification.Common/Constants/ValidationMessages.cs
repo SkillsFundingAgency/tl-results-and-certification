@@ -26,7 +26,8 @@
         public const string UnexpectedError = "Unexpected error while reading file content.";
 
         // Bulk Registration Stage3 Validation Messages
-        public const string AcademicYearMustBeCurrentOne = "Academic year must be the current one"; 
+        public const string AcademicYearMustBeCurrentOne = "Academic year must be the current one";
+        public const string AcademicYearIsNotValid = "Academic year is not valid";
         public const string ProviderNotRegisteredWithAo = "Provider not registered with awarding organisation";
         public const string CoreNotRegisteredWithProvider = "Core not registered with provider";
         public const string SpecialismNotValidWithCore = "Specialism not valid with core";
@@ -38,6 +39,7 @@
         public const string ActiveUlnWithDifferentAo = "Active ULN with a different awarding organisation";
         public const string CoreForUlnCannotBeChangedYet = "Core for ULN cannot be changed yet";
         public const string RegistrationCannotBeInWithdrawnStatus = "Cannot upload data for a withdrawn registration or make it active - these can only be done manually";
+        public const string AcademicYearCannotBeChanged = "Year of registration cannot be changed - the learner must be withdrawn and re-registered";
 
         // Assessments - Bulk stage 2 validations
         public const string CorecodeMustBeDigitsOnly = "Core code must have 8 digits only";

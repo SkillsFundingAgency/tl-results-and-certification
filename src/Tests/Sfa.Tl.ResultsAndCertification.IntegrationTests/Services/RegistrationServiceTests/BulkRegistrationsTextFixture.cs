@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Notify.Interfaces;
 using NSubstitute;
 using Respawn;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
@@ -35,6 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         public IList<TqProvider> TqProviders;
         protected IList<TlSpecialism> TlSpecialisms;
         private IList<AssessmentSeries> AssessmentSeries;
+        protected IList<AcademicYear> AcademicYears;
         protected IList<TlLookup> TlLookup;
         protected IList<TlLookup> PathwayComponentGrades;
         protected RegistrationService RegistrationService;        
@@ -56,6 +58,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         public Checkpoint DbCheckpoint;
         public ResultsAndCertificationDbContext DbContext;
 
+        protected ILogger<CommonService> CommonServiceLogger;
+        protected IRepository<TlLookup> TlLookupRepository;
+        protected IRepository<FunctionLog> FunctionLogRepository;
+        protected ICommonRepository CommonRepository;
+        protected ResultsAndCertificationConfiguration Configuration;
+        protected ILogger<GenericRepository<TlLookup>> TlLookupRepositoryLogger;
+        protected ILogger<GenericRepository<FunctionLog>> FunctionLogRepositoryLogger;
+        protected IAsyncNotificationClient NotificationsClient;
+        protected ILogger<NotificationService> NotificationLogger;
+        protected IRepository<NotificationTemplate> NotificationTemplateRepository;
+        protected ILogger<GenericRepository<NotificationTemplate>> NotificationTemplateRepositoryLogger;
+        protected ILogger<INotificationService> NotificationServiceLogger;
+        protected INotificationService NotificationService;
+        protected IMapper CommonMapper;
+
         public BulkRegistrationsTextFixture()
         {
             DbCheckpoint = new Checkpoint { WithReseed = true };
@@ -74,7 +91,21 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
             TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
-            CommonService = Substitute.For<ICommonService>();
+
+            CommonServiceLogger = new Logger<CommonService>(new NullLoggerFactory());
+            TlLookupRepositoryLogger = new Logger<GenericRepository<TlLookup>>(new NullLoggerFactory());
+            TlLookupRepository = new GenericRepository<TlLookup>(TlLookupRepositoryLogger, DbContext);
+            FunctionLogRepositoryLogger = new Logger<GenericRepository<FunctionLog>>(new NullLoggerFactory());
+            FunctionLogRepository = new GenericRepository<FunctionLog>(FunctionLogRepositoryLogger, DbContext);
+            CommonRepository = new CommonRepository(DbContext);
+
+            NotificationsClient = Substitute.For<IAsyncNotificationClient>();
+            NotificationLogger = new Logger<NotificationService>(new NullLoggerFactory());
+            NotificationTemplateRepositoryLogger = new Logger<GenericRepository<NotificationTemplate>>(new NullLoggerFactory());
+            NotificationTemplateRepository = new GenericRepository<NotificationTemplate>(NotificationTemplateRepositoryLogger, DbContext);
+            NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
+
+            CommonService = new CommonService(CommonServiceLogger, CommonMapper, TlLookupRepository, FunctionLogRepository, CommonRepository, NotificationService, Configuration);
             RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
             
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null);
@@ -85,6 +116,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         {
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly));
             RegistrationMapper = new Mapper(mapperConfig);
+
+            var commonMapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CommonMapper).Assembly));
+            CommonMapper = new Mapper(commonMapperConfig);
         }
 
         public async Task WhenReJoinAsync(RejoinRegistrationRequest rejoinRegistrationRequest)
@@ -99,6 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         public void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson)
         {
+            AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
             TlProviders = ProviderDataProvider.CreateTlProviders(DbContext).ToList();
             TlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
             var routes = TlevelDataProvider.CreateTlRoutes(DbContext, awardingOrganisation);

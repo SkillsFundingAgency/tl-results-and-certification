@@ -122,7 +122,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             {
                 RowNum = "5",
                 Uln = "111111114",
-                ErrorMessage = ValidationMessages.AcademicYearMustBeCurrentOne
+                ErrorMessage = ValidationMessages.AcademicYearIsNotValid
             },
             new BulkProcessValidationError
             {
@@ -154,6 +154,11 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             {
                 Uln = "1111111113",
                 ErrorMessage = ValidationMessages.RegistrationCannotBeInWithdrawnStatus
+            },
+            new BulkProcessValidationError
+            {
+                Uln = "1111111114",
+                ErrorMessage = ValidationMessages.AcademicYearMustBeCurrentOne
             }
         };
     }

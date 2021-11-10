@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Models.Registration;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrations;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             // Given
             _bulkRegistrationTestFixture = bulkRegistrationTestFixture;
             _bulkRegistrationTestFixture.Uln = 1111111111;
-            _bulkRegistrationTestFixture.SeedTestData(EnumAwardingOrganisation.Pearson);            
-            _bulkRegistrationTestFixture.TqRegistrationProfilesData = _bulkRegistrationTestFixture.GetRegistrationsDataToProcess(new List<long> { _bulkRegistrationTestFixture.Uln });
+            _bulkRegistrationTestFixture.SeedTestData(EnumAwardingOrganisation.Pearson);
+            var validAcademicYear = new RegistrationsStage3Builder().GetAcademicYearName(getValid: true);
+            var registrationProfiles = _bulkRegistrationTestFixture.GetRegistrationsDataToProcess(new List<long> { _bulkRegistrationTestFixture.Uln });
+            registrationProfiles.ForEach(r => r.TqRegistrationPathways.ToList().ForEach(p => p.AcademicYear = validAcademicYear.Year));
+            _bulkRegistrationTestFixture.TqRegistrationProfilesData = registrationProfiles;
         }
 
         [Fact]
