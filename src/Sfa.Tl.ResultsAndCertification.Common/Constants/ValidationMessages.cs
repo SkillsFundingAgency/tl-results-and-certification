@@ -60,6 +60,7 @@
 
         // Assessments - Bulk stage 4 validations
         public const string AssessmentEntryCannotBeRemovedHasResult = "This assessment has a result so the assessment entry cannot be removed. Either remove the record from the bulk upload or enter the current assessment series to indicate a resit";
+        public const string AssessmentEntryCannotBeAddedUntilResultRecordedForExistingEntry = "Assessment entry cannot be added until the existing assessment entry has a result";
 
         // Results - Bulk Stage 2 validations
         public const string CorecodeRequiredWhenResultIncluded = "Core component code required when result is included";

@@ -204,19 +204,32 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var unchangedPathwayAssessments = matchedPathwayAssessments.Intersect(existingPathwayAssessmentsFromDb, new TqPathwayAssessmentRecordEqualityComparer()).ToList();
             var hasAnyMatchedPathwayAssessmentsToProcess = matchedPathwayAssessments.Count != unchangedPathwayAssessments.Count;
 
+            // Stage 4 Rule For new assessment entry: To add new Assessment entry previous assessment entry should have result
+            if (newPathwayAssessments.Any())
+            {
+                newPathwayAssessments.ForEach(newPathwayAssessment =>
+                {
+                    var existingPathwayAssessment = GetExistingPathwayAssessment(existingPathwayAssessmentsFromDb, newPathwayAssessment);
+
+                    if (existingPathwayAssessment != null)
+                    {
+                        var hasResultForExistingAssessment = existingPathwayAssessment.TqPathwayResults.Any(x => x.EndDate == null && x.IsOptedin);
+                        if (!hasResultForExistingAssessment)
+                            response.ValidationErrors.Add(GetAssessmentValidationError(existingPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.AssessmentEntryCannotBeAddedUntilResultRecordedForExistingEntry));
+                    }
+                });
+            }
+
             if (hasAnyMatchedPathwayAssessmentsToProcess)
             {
                 amendedPathwayAssessments = matchedPathwayAssessments.Except(unchangedPathwayAssessments, pathwayAssessmentComparer).ToList();
 
                 amendedPathwayAssessments.ForEach(amendedPathwayAssessment =>
                 {
-                    var existingPathwayAssessment = existingPathwayAssessmentsFromDb
-                                                .OrderByDescending(x => x.AssessmentSeries.StartDate)
-                                                .FirstOrDefault(existingPathwayAssessment => existingPathwayAssessment.TqRegistrationPathwayId == amendedPathwayAssessment.TqRegistrationPathwayId);
+                    var existingPathwayAssessment = GetExistingPathwayAssessment(existingPathwayAssessmentsFromDb, amendedPathwayAssessment);
 
                     if (existingPathwayAssessment != null)
                     {
-
                         var hasPathwayAssessmentChanged = amendedPathwayAssessment.AssessmentSeriesId != existingPathwayAssessment.AssessmentSeriesId;
 
                         if (hasPathwayAssessmentChanged)
@@ -248,11 +261,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return newAndAmendedPathwayAssessmentRecords;
         }
 
-        private AssessmentProcessResponse ValidateStage4Rules(TqPathwayAssessment existingPathwayAssessment, TqPathwayAssessment amendedPathwayAssessment, AssessmentProcessResponse response)
+        private static TqPathwayAssessment GetExistingPathwayAssessment(IList<TqPathwayAssessment> existingPathwayAssessmentsFromDb, TqPathwayAssessment amendedOrNewPathwayAssessment)
+        {
+            return existingPathwayAssessmentsFromDb.OrderByDescending(x => x.AssessmentSeries.StartDate)
+                                                   .FirstOrDefault(existingPathwayAssessment => existingPathwayAssessment.TqRegistrationPathwayId == amendedOrNewPathwayAssessment.TqRegistrationPathwayId);
+        }
+
+        private AssessmentProcessResponse ValidateStage4Rules(TqPathwayAssessment existingPathwayAssessment, TqPathwayAssessment amendedOrNewPathwayAssessment, AssessmentProcessResponse response)
         {
             // Rule: Assessment entry can not be removed when results are associated to it. 
             var hasResult = existingPathwayAssessment.TqPathwayResults.Any(x => x.EndDate == null && x.IsOptedin);
-            if (hasResult && amendedPathwayAssessment.AssessmentSeriesId == 0)
+            if (hasResult && amendedOrNewPathwayAssessment.AssessmentSeriesId == 0)
                 response.ValidationErrors.Add(GetAssessmentValidationError(existingPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, ValidationMessages.AssessmentEntryCannotBeRemovedHasResult));
 
             return response;
