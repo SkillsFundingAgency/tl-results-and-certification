@@ -29,7 +29,7 @@ stages:
       - name: ResourceGroupName
         value: "$(BaseName)"
       - name: EnvironmentName
-        value: "[toUpper(${{ parameters.environmentName }})]"
+        value: "[upper(${{ parameters.environmentName }})]"
       - name: environmentTagName
         value: ${{parameters.environmentTagName}}
 
