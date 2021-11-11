@@ -22,7 +22,7 @@
   
     variables:
       SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
-      EnvironmentName: $[toUpper(parameters('environmentName'))]
+      # EnvironmentName: $[toUpper(parameters('environmentName'))]
       IntTestSqlConnectionString: $[ dependencies.DeploySQLDatabase.outputs['IntTestSqlVariables.IntTestSqlConnectionString'] ]
     
     condition: or(eq('${{ parameters.environmentName }}', 'dev'), eq('${{ parameters.environmentName }}', 'tst'))
