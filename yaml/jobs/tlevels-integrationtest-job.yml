@@ -5,7 +5,7 @@
     type: string
   - name: environmentName
     type: string
-    value: "[toUpper(parameters('environmentName'))]"
+    # value: "[toUpper(parameters('environmentName'))]"
   
   jobs:
   - job: 'IntegrationTest'
