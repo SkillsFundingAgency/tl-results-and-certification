@@ -234,7 +234,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                     new object[] { 10011881, 1111111112, 2, RegistrationPathwayStatus.Active, true, true },
 
                     // Uln: 1111111113 - Registration(Withdrawn), TqPathwayAssessments(Withdrawn) and TqSpecialismAssessments(Withdrawn)
-                    new object[] { 10011881, 1111111113, 3, RegistrationPathwayStatus.Withdrawn, true, true },
+                    new object[] { 10011881, 1111111113, 3, RegistrationPathwayStatus.Withdrawn, true, false },
 
                     // Uln: 1111111114 - Registration(Active), TqPathwayAssessments(Active), TqResult (Active)
                     new object[] { 10011881, 1111111114, 4, RegistrationPathwayStatus.Active, true, true },

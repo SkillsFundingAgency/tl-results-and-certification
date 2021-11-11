@@ -214,7 +214,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var currentDate = DateTime.Now.Date;
             
             var series = await _dbContext.TqRegistrationPathway
-                .Where(rpw => rpw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && 
+                .Where(rpw => rpw.Status == RegistrationPathwayStatus.Active && rpw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && 
                        rpw.TqRegistrationProfile.Id == profileId)
                 .Select(reg => _dbContext.AssessmentSeries
                         .FirstOrDefault(s => s.Year > reg.AcademicYear + startInYear && s.Year <= reg.AcademicYear + Common.Helpers.Constants.AssessmentEndInYears && 
