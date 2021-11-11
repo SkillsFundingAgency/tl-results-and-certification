@@ -22,6 +22,7 @@
 
     variables:
       SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
+      environmentName: $[toUpper(parameters('environmentName'))]
 
     steps:
     - task: DownloadBuildArtifacts@0
