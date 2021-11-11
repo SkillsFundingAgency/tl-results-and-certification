@@ -3,6 +3,8 @@
     type: string
   - name: sharedEnvironmentId
     type: string
+  - name: environmentName
+    type: string  
   
   jobs:
   - job: 'IntegrationTest'
@@ -21,7 +23,8 @@
       SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
       ConfigurationStorageConnectionString: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.configStorageConnectionString'] ]
       IntTestSqlConnectionString: $[ dependencies.DeploySQLDatabase.outputs['IntTestSqlVariables.IntTestSqlConnectionString'] ]   
-    
+      EnvironmentName: upper('${{parameters.environmentName}}')
+
     steps:
     - task: DownloadBuildArtifacts@0
       inputs:
