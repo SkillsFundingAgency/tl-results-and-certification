@@ -23,7 +23,7 @@
       SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
       ConfigurationStorageConnectionString: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.configStorageConnectionString'] ]
       IntTestSqlConnectionString: $[ dependencies.DeploySQLDatabase.outputs['IntTestSqlVariables.IntTestSqlConnectionString'] ]   
-      EnvironmentName: upper('${{parameters.environmentName}}')
+      EnvironmentName: upper(${{parameters.environmentName}})
 
     steps:
     - task: DownloadBuildArtifacts@0
@@ -59,14 +59,13 @@
     
     - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
       displayName: 'Tokenization: Transform file *.json'
-      enabled: true
       inputs:
         SourcePath: '$(Agent.TempDirectory)\IntegrationTests\'
         TargetFileNames: '*.json'
         RecursiveSearch: true
         RequireVariable: false
-        TokenStart: "_"
-        TokenEnd: "_"
+        TokenStart: "__"
+        TokenEnd: "__"
 
 
     - task: VSTest@2
