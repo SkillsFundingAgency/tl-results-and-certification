@@ -56,7 +56,6 @@ stages:
         parameters:
           serviceConnection: ${{ parameters.serviceConnection }}
           sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
-          # environmentName: "[toUpper(parameters('environmentName'))]"
 
       - template: ../jobs/tlevels-publish-site-job.yml
         parameters:
