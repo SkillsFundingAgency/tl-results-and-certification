@@ -17,7 +17,7 @@
     - DeployInfrastructure 
     - DeploySQLDatabase
     - GenerateConfigs
-    condition: or(eq('${{ parameters.EnvironmentName }}', 'DEV'), eq('${{ parameters.EnvironmentName }}', 'TST'))
+    condition: or(eq('${{ parameters.environmentName }}', 'dev'), eq('${{ parameters.environmentName }}', 'tst'))
     
     variables:
       SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
