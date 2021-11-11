@@ -3,7 +3,7 @@
     type: string
   - name: sharedEnvironmentId
     type: string
-  - name: environmentName
+  - name: EnvironmentName
     type: string
   
   jobs:
@@ -17,7 +17,7 @@
     - DeployInfrastructure 
     - DeploySQLDatabase
     - GenerateConfigs
-    condition: or(eq('${{ parameters.environmentName }}', 'dev'), eq('${{ parameters.environmentName }}', 'tst'))
+    condition: or(eq('${{ parameters.EnvironmentName }}', 'DEV'), eq('${{ parameters.EnvironmentName }}', 'TST'))
     
     variables:
       SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
