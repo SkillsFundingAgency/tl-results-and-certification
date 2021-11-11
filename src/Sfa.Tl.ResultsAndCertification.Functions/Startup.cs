@@ -10,6 +10,8 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Certificates;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Configuration;
 using Sfa.Tl.ResultsAndCertification.Data;
@@ -67,6 +69,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IPrintingRepository, PrintingRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+            services.AddTransient<ICommonRepository, CommonRepository>();
+            services.AddTransient<IUcasRepository, UcasRepository>();
 
             services.AddTransient<ICommonService, CommonService>();
             services.AddTransient<ILearnerService, LearnerService>();
@@ -74,8 +78,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<ILearnerRecordService, LearnerRecordService>();
             services.AddTransient<IPrintingService, PrintingService>();
             services.AddTransient<ICertificatePrintingService, CertificatePrintingService>();
+            services.AddTransient<IUcasDataService, UcasDataService>();
+            services.AddTransient<IUcasDataTransferService, UcasDataTransferService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
+            services.AddTransient<IBlobStorageService, BlobStorageService>();
         }
 
         private void RegisterApiClients(IServiceCollection services)
@@ -100,6 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             });
             services.AddTransient<ILearnerServiceApiClient, LearnerServiceApiClient>();
             services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
+            services.AddHttpClient<IUcasApiClient, UcasApiClient>();
         }
     }
 }

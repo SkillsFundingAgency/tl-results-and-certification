@@ -32,7 +32,7 @@
 
         <a asp-route="SignIn" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-6" data-module="govuk-button">
             @StartPage.Start_Button_Text
-            <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" role="presentation" focusable="false">
+            <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
                 <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
             </svg>
         </a>
@@ -48,11 +48,39 @@
                 </span>
             </summary>
             <div class="govuk-details__text">
-                <p class="govuk-body"><strong>@StartPage.Role_TLevels_Reviewers</strong>@StartPage.Role_TLevels_Reviewers_Info</p>
-                <p class="govuk-body"><strong>@StartPage.Role_Providers_Editors</strong>@StartPage.Role_Providers_Editors_Info</p>
-                <p class="govuk-body"><strong>@StartPage.Role_Registrations_Editors</strong>@StartPage.Role_Registrations_Editors_Info</p>
-                <p class="govuk-body"><strong>@StartPage.Role_Results_Editors</strong>@StartPage.Role_Results_Editors_Info</p>
-                <p class="govuk-body"><strong>@StartPage.Role_Site_Administrators</strong>@StartPage.Role_Site_Administrators_Info</p>
+                <h3 class="govuk-heading-s">@StartPage.Role_TLevels_Reviewers</h3>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>@StartPage.Role_Tlevel_Reviewer_Licenced_To_Deliver</li>
+                    <li>@StartPage.Role_Tlevel_Reviewer_Confirm_Tlevel_Details</li>
+                    <li>@StartPage.Role_Tlevel_Reviewer_Request_Amendments</li>
+                </ul>
+
+                <h3 class="govuk-heading-s">@StartPage.Role_Providers_Editors</h3>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>@StartPage.Role_Provider_Editor_Review_Existing_Providers</li>
+                    <li>@StartPage.Role_Provider_Editor_Add_Or_Remove_Provider</li>
+                    <li>@StartPage.Role_Provider_Editor_Select_Tlevels</li>
+                </ul>
+
+                <h3 class="govuk-heading-s">@StartPage.Role_Registrations_Editors</h3>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>@StartPage.Role_Registrations_Editor_Register_Learner</li>
+                    <li>@StartPage.Role_Registrations_Editor_Change_Registration</li>
+                    <li>@StartPage.Role_Registrations_Editor_Change_Tlevel_Study</li>
+                    <li>@StartPage.Role_Registrations_Editor_Manage_Move_Leave_Rejoin</li>
+                </ul>
+
+                <h3 class="govuk-heading-s">@StartPage.Role_Results_Editors</h3>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>@StartPage.Role_Results_Editor_Upload_Add_Or_Amend_Results</li>
+                </ul>
+
+                <h3 class="govuk-heading-s">@StartPage.Role_Site_Administrators</h3>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>@StartPage.Role_Site_Administrator_All_Above_Permissions</li>
+                    <li>@StartPage.Role_Site_Administrator_Add_And_Assign_User_Roles</li>
+                </ul>
+
             </div>
         </details>
         <details class="govuk-details" data-module="govuk-details" closed>
@@ -62,8 +90,17 @@
                 </span>
             </summary>
             <div class="govuk-details__text">
-                <p class="govuk-body"><strong>@StartPage.Learner_Records_Editors_Role</strong>@StartPage.Learner_Records_Editors_Role_Info</p>
-                <p class="govuk-body"><strong>@StartPage.Provider_Administrators_Role</strong>@StartPage.Provider_Administrators_Role_Info</p>
+                <h3 class="govuk-heading-s">@StartPage.Learner_Records_Editors_Role</h3>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>@StartPage.Role_Learner_Record_Editor_Manage_English_Maths_Achievements</li>
+                    <li>@StartPage.Role_Learner_Record_Editor_Manage_Industry_Placement</li>
+                </ul>
+
+                <h3 class="govuk-heading-s">@StartPage.Provider_Administrators_Role</h3>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>@StartPage.Role_Provider_Administrator_All_Above_Permissions</li>
+                    <li>@StartPage.Role_Provider_Administrator_Add_And_Assign_User_Roles</li>
+                </ul>
             </div>
         </details>
     </div>

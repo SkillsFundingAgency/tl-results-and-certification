@@ -133,5 +133,10 @@
         public const string SubmitCertificatePrintingRequest = "SubmitCertificatePrintingRequest";
         public const string FetchCertificatePrintingBatchSummary = "FetchCertificatePrintingBatchSummary";
         public const string FetchCertificatePrintingTrackBatch = "FetchCertificatePrintingTrackBatch";
+        public const string UcasTransferEntries = "UcasTransferEntries";
+        public const string UcasTransferResultEntries = "UcasTransferResultEntries";
+
+        // File Extensions
+        public const string FileExtensionTxt = "txt";
     }
 }

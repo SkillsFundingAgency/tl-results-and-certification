@@ -138,9 +138,6 @@
   <data name="Learner_Records_Editors_Role" xml:space="preserve">
     <value>Learner records editors </value>
   </data>
-  <data name="Learner_Records_Editors_Role_Info" xml:space="preserve">
-    <value>can upload, amend, view, delete and add English and maths achievements and update industry placement completion status</value>
-  </data>
   <data name="Link_Tlevel_Results_UserGuide" xml:space="preserve">
     <value>Manage T Level results user guide</value>
   </data>
@@ -168,38 +165,71 @@
   <data name="Provider_Administrators_Role" xml:space="preserve">
     <value>Provider administrators </value>
   </data>
-  <data name="Provider_Administrators_Role_Info" xml:space="preserve">
-    <value>have all the permissions of learner records editor and can add users and assign the above role to them</value>
+  <data name="Role_Learner_Record_Editor_Manage_English_Maths_Achievements" xml:space="preserve">
+    <value>upload, amend, view, delete and add English and maths achievements</value>
+  </data>
+  <data name="Role_Learner_Record_Editor_Manage_Industry_Placement" xml:space="preserve">
+    <value>update industry placement completion status</value>
   </data>
   <data name="Role_Providers_Editors" xml:space="preserve">
     <value>Providers editors </value>
   </data>
-  <data name="Role_Providers_Editors_Info" xml:space="preserve">
-    <value>can set up new providers and enter and update the T Levels each provider is offering</value>
+  <data name="Role_Provider_Administrator_Add_And_Assign_User_Roles" xml:space="preserve">
+    <value>add users and assign the above role to them</value>
+  </data>
+  <data name="Role_Provider_Administrator_All_Above_Permissions" xml:space="preserve">
+    <value>all the permissions of learner records editor</value>
+  </data>
+  <data name="Role_Provider_Editor_Add_Or_Remove_Provider" xml:space="preserve">
+    <value>add or remove providers</value>
+  </data>
+  <data name="Role_Provider_Editor_Review_Existing_Providers" xml:space="preserve">
+    <value>review existing providers</value>
+  </data>
+  <data name="Role_Provider_Editor_Select_Tlevels" xml:space="preserve">
+    <value>select the T Levels each provider offers</value>
   </data>
   <data name="Role_Registrations_Editors" xml:space="preserve">
     <value>Registrations editors </value>
   </data>
-  <data name="Role_Registrations_Editors_Info" xml:space="preserve">
-    <value>can upload, view, update, remove and add learner registrations and assessment entries</value>
+  <data name="Role_Registrations_Editor_Change_Registration" xml:space="preserve">
+    <value>change a learner's details</value>
+  </data>
+  <data name="Role_Registrations_Editor_Change_Tlevel_Study" xml:space="preserve">
+    <value>change the T Level a learner is studying</value>
+  </data>
+  <data name="Role_Registrations_Editor_Manage_Move_Leave_Rejoin" xml:space="preserve">
+    <value>manage movers, leavers and rejoiners</value>
+  </data>
+  <data name="Role_Registrations_Editor_Register_Learner" xml:space="preserve">
+    <value>register learners on T Level courses</value>
   </data>
   <data name="Role_Results_Editors" xml:space="preserve">
     <value>Results editors </value>
   </data>
-  <data name="Role_Results_Editors_Info" xml:space="preserve">
-    <value>can upload, view, update, remove and add learners’ results</value>
+  <data name="Role_Results_Editor_Upload_Add_Or_Amend_Results" xml:space="preserve">
+    <value>upload, view, update, remove and add learners’ results</value>
   </data>
   <data name="Role_Site_Administrators" xml:space="preserve">
     <value>Site administrators </value>
   </data>
-  <data name="Role_Site_Administrators_Info" xml:space="preserve">
-    <value>have all the permissions of the above roles and can add users and assign the above roles to them</value>
+  <data name="Role_Site_Administrator_Add_And_Assign_User_Roles" xml:space="preserve">
+    <value>add users and assign the above roles to them</value>
+  </data>
+  <data name="Role_Site_Administrator_All_Above_Permissions" xml:space="preserve">
+    <value>all the permissions of the above roles</value>
   </data>
   <data name="Role_TLevels_Reviewers" xml:space="preserve">
     <value>T Levels reviewers </value>
   </data>
-  <data name="Role_TLevels_Reviewers_Info" xml:space="preserve">
-    <value>review T Level titles and confirm that details are correct and raise a query if they are incorrect</value>
+  <data name="Role_Tlevel_Reviewer_Confirm_Tlevel_Details" xml:space="preserve">
+    <value>confirm each T Level’s details are correct</value>
+  </data>
+  <data name="Role_Tlevel_Reviewer_Licenced_To_Deliver" xml:space="preserve">
+    <value>review the T Levels they are licensed to deliver</value>
+  </data>
+  <data name="Role_Tlevel_Reviewer_Request_Amendments" xml:space="preserve">
+    <value>request amendments</value>
   </data>
   <data name="See_Text" xml:space="preserve">
     <value>see</value>

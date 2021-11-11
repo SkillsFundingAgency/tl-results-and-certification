@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Functions\**" />
+    <EmbeddedResource Remove="Functions\**" />
+    <None Remove="Functions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
     <PackageReference Include="NSubstitute" Version="4.2.2" />
@@ -24,6 +30,27 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Sfa.Tl.ResultsAndCertification.Functions\Sfa.Tl.ResultsAndCertification.Functions.csproj" />
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Tests.Common\Sfa.Tl.ResultsAndCertification.Tests.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Services\UcasDataTransferService\CsvExtensionTests\TestData\When_One_Subject_No_Grade.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Services\UcasDataTransferService\CsvExtensionTests\TestData\When_One_Subject_With_Grade.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Services\UcasDataTransferService\CsvExtensionTests\TestData\When_One_Subject_With_Grade_PrevGrade.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Services\UcasDataTransferService\CsvExtensionTests\TestData\When_Two_Subjects_With_Grade.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Services\UcasDataTransferService\CsvExtensionTests\TestData\When_Two_Subjects_With_Grade_PrevGrade.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Services\UcasDataTransferService\CsvExtensionTests\TestData\When_Two_Subject_No_Grade.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

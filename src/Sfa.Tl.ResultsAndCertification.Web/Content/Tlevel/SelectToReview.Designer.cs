@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to and.
+        /// </summary>
+        public static string And_Text {
+            get {
+                return ResourceManager.GetString("And_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Button_Continue {
@@ -70,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to confirmed.
+        ///   Looks up a localized string similar to confirmed T Levels.
         /// </summary>
         public static string Confirmed_Text {
             get {
@@ -115,29 +124,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you cannot find the T Level you are looking for, please check you have not already.
+        ///   Looks up a localized string similar to If you cannot find the T Level you are looking for please check:.
         /// </summary>
         public static string If_You_Cannot_Find_The_TLevel {
             get {
                 return ResourceManager.GetString("If_You_Cannot_Find_The_TLevel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to it.
-        /// </summary>
-        public static string It_Text {
-            get {
-                return ResourceManager.GetString("It_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  or .
-        /// </summary>
-        public static string Or_Text {
-            get {
-                return ResourceManager.GetString("Or_Text", resourceCulture);
             }
         }
         
@@ -178,11 +169,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to queried.
+        ///   Looks up a localized string similar to queried T Levels.
         /// </summary>
-        public static string Queried_Text {
+        public static string Queried_Tlevels_Text {
             get {
-                return ResourceManager.GetString("Queried_Text", resourceCulture);
+                return ResourceManager.GetString("Queried_Tlevels_Text", resourceCulture);
             }
         }
         

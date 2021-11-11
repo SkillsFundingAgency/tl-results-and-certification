@@ -15,6 +15,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             return value.ToString("dd MMMM yyyy");
         }
 
+        public static string ToUcasFormat(this DateTime value)
+        {
+            return value.ToString("ddMMyyyy");
+        }
+
         public static string ToPrintBatchDateFormat(this DateTime value)
         {
             return value.ToString("yyyy-MM-dd");
@@ -28,6 +33,12 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         public static DateTime ParseStringToDateTime(this string value)
         {
             DateTime.TryParseExact(value, "ddMMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result);
+            return result;
+        }
+
+        public static DateTime ParseStringToDateTimeWithFormat(this string value, string dateFormat = "dd/MM/yyyy")
+        {
+            DateTime.TryParseExact(value, dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result);
             return result;
         }
 

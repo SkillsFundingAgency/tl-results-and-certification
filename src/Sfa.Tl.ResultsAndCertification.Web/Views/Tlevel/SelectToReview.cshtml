@@ -52,12 +52,12 @@
                 </span>
             </summary>
             <div class="govuk-details__text">
-                @SelectToReview.If_You_Cannot_Find_The_TLevel <a asp-route="ConfirmedTlevels" class="govuk-link">@SelectToReview.Confirmed_Text</a>
-                @SelectToReview.Or_Text
-                <a asp-route="QueriedTlevels" class="govuk-link">@SelectToReview.Queried_Text</a>
-                @SelectToReview.It_Text@SelectToReview.Fullstop <br /><br />
-                @SelectToReview.If_You_Cannot_Find_It
-                <a asp-route="Contact" class="govuk-link">@SelectToReview.Contact_Us</a>@SelectToReview.Fullstop
+                <p class="govuk-body">@SelectToReview.If_You_Cannot_Find_The_TLevel</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li><a asp-route="ConfirmedTlevels" class="govuk-link">@SelectToReview.Confirmed_Text</a>, @SelectToReview.And_Text</li>
+                    <li><a asp-route="QueriedTlevels" class="govuk-link">@SelectToReview.Queried_Tlevels_Text</a></li>
+                </ul>
+                <p class="govuk-body">@SelectToReview.If_You_Cannot_Find_It<a asp-route="Contact" class="govuk-link">@SelectToReview.Contact_Us</a>@SelectToReview.Fullstop</p>
             </div>
         </details>
     </div>

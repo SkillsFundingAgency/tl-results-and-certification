@@ -68,7 +68,7 @@ $(document).ready(function () {
                 GOVUK.checkSessionActiveDuration(0, 2, false);
             }
 
-            if (minutes === 0 && seconds === 0) {
+            if (minutes <= 0 && seconds <= 0) {
                 GOVUK.hideTimeoutModal();
                 GOVUK.clearAllTimeoutTimers();
                 window.location.href = "/signout";

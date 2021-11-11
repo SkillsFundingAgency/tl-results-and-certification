@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.DataProtection;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Sas;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Auth;
-using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
@@ -31,19 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
         private static Uri GetDataProtectionBlobTokenUri(ResultsAndCertificationConfiguration config)
         {
-            var cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(config.BlobStorageSettings.AccountName, config.BlobStorageSettings.AccountKey), useHttps: true);
-            var blobClient = cloudStorageAccount.CreateCloudBlobClient();
-            var container = blobClient.GetContainerReference(config.DataProtectionSettings.ContainerName);
-            var blob = container.GetBlockBlobReference(config.DataProtectionSettings.BlobName);
-            
-            var sharedAccessPolicy = new SharedAccessBlobPolicy()
-            {
-                SharedAccessExpiryTime = DateTime.UtcNow.AddYears(1),
-                Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
-            };
-
-            var sasToken = blob.GetSharedAccessSignature(sharedAccessPolicy);
-            return new Uri($"{blob.Uri}{sasToken}");
+            var blobServiceClient = new BlobServiceClient(config.BlobStorageConnectionString);
+            var blobContainerClient = blobServiceClient.GetBlobContainerClient(config.DataProtectionSettings.ContainerName?.ToLowerInvariant());
+            blobContainerClient.CreateIfNotExists();
+            var blobClient = blobContainerClient.GetBlobClient(config.DataProtectionSettings.BlobName?.ToLowerInvariant());
+            var sasUri = blobClient.GenerateSasUri(BlobSasPermissions.Read | BlobSasPermissions.Write | BlobSasPermissions.Create, DateTime.UtcNow.AddYears(1));
+            return sasUri;
         }
     }
 }

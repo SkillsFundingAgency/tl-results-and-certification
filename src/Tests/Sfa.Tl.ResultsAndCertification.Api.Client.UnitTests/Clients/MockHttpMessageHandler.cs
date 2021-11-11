@@ -28,12 +28,21 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients
             }
         }
 
+        public void AddMultipartHttpResponses<TResponse>(TResponse response, string requestUrl, HttpStatusCode statusCode, MultipartFormDataContent requestContent = null)
+        {
+            if (response != null && !string.IsNullOrWhiteSpace(requestUrl))
+            {
+                var requestKey = requestUrl + requestContent.Headers.ContentLength ?? string.Empty;
+                _httpResponses.Add(requestKey, new HttpResponseMessage { StatusCode = statusCode, Content = new StringContent(JsonConvert.SerializeObject(response), Encoding.UTF8, "application/json") });
+            }
+        }
+
         protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
             string responseContent = string.Empty;
             if (request?.Content != null)
-                responseContent = await request?.Content.ReadAsStringAsync();
+                responseContent = request.Content is MultipartFormDataContent ? request.Content.Headers.ContentLength.GetValueOrDefault().ToString() : await request.Content.ReadAsStringAsync();
 
             NumberOfCalls++;
 
