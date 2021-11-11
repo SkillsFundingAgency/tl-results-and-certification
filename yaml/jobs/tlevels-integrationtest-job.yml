@@ -5,6 +5,8 @@
     type: string
   - name: environmentName
     type: string
+  - name: ConfigurationStorageConnectionString 
+    type: string 
   
   jobs:
   - job: 'IntegrationTest'
@@ -20,7 +22,8 @@
   
     variables:
       SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
-      environmentName: $[toUpper(parameters('environmentName'))]
+      EnvironmentName: $[toUpper(parameters('environmentName'))]
+      IntTestSqlConnectionString: $[ dependencies.DeploySQLDatabase.outputs['IntTestSqlVariables.IntTestSqlConnectionString'] ]
     
     condition: or(eq('${{ parameters.environmentName }}', 'dev'), eq('${{ parameters.environmentName }}', 'tst'))
     steps:
