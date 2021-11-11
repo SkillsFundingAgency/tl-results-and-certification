@@ -43,12 +43,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             // Summer Assessment/Results
             var pathwaysWithAssessments = new List<long> { 1111111111 };
-            var pathwaysWithResults = new List<long>();
-            var summerAssessments = SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, $"Summer {currentAcademicYear}");
+            var summerAssessments = SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults: null, $"Summer {currentAcademicYear}");
 
             // Autumn Assessment/Results
             pathwaysWithAssessments = new List<long> { 1111111112 };
-            pathwaysWithResults = new List<long> { 1111111112 };
+            var pathwaysWithResults = new List<long> { 1111111112 };
             var autumnAssessments = SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, $"Autumn {currentAcademicYear}");
 
             // Create a test class instance.
