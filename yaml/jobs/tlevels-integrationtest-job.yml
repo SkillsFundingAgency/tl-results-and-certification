@@ -5,6 +5,7 @@
     type: string
   - name: environmentName
     type: string
+    value: "[toUpper(parameters('environmentName'))]"
   
   jobs:
   - job: 'IntegrationTest'
@@ -17,7 +18,7 @@
     - DeployInfrastructure 
     - DeploySQLDatabase
     - GenerateConfigs
-    condition: or(eq('${{ parameters.environmentName }}', 'dev'), eq('${{ parameters.environmentName }}', 'tst'))
+    condition: or(eq('${{ parameters.environmentName }}', 'DEV'), eq('${{ parameters.environmentName }}', 'TST'))
 
     variables:
       SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
@@ -56,9 +57,15 @@
     
     - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
       displayName: 'Tokenization: Transform file *.json'
+      enabled: true
       inputs:
         SourcePath: '$(Agent.TempDirectory)\IntegrationTests\'
         TargetFileNames: '*.json'
+        RecursiveSearch: true
+        RequireVariable: false
+        TokenStart: "_"
+        TokenEnd: "_"
+
 
     - task: VSTest@2
       displayName: 'Run Integration tests'
