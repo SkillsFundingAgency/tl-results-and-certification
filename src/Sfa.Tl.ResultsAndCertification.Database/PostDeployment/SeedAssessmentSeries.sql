@@ -9,7 +9,9 @@ USING (VALUES
   (1, 1, N'Summer 2021', N'Summer 2021', 2021, N'2020-11-26', N'2021-08-10', N'2021-09-24'),
   (2, 1, N'Autumn 2021', N'Autumn 2021', 2021, N'2021-08-11', N'2022-03-07', N'2022-04-21'),
   (3, 1, N'Summer 2022', N'Summer 2022', 2022, N'2022-03-08', N'2022-08-08', N'2022-09-22'),
-  (4, 1, N'Autumn 2022', N'Autumn 2022', 2022, N'2022-08-09', N'2022-03-06', N'2022-04-20')
+  (4, 1, N'Autumn 2022', N'Autumn 2022', 2022, N'2022-08-09', N'2023-03-06', N'2023-04-20'),
+  (5, 1, N'Summer 2023', N'Summer 2023', 2023, N'2023-03-07', N'2023-08-07', N'2023-09-18'),
+  (6, 1, N'Autumn 2023', N'Autumn 2023', 2023, N'2023-08-08', N'2024-03-11', N'2024-04-22')
   )
   AS Source ([Id], [ComponentType], [Name], [Description], [Year], [StartDate], [EndDate], [AppealEndDate]) 
 ON Target.[Id] = Source.[Id] 
@@ -25,8 +27,8 @@ WHEN MATCHED
 	 )
 THEN 
 UPDATE SET 
-	[Name] = Source.[Name],
 	[ComponentType] = Source.[ComponentType],
+	[Name] = Source.[Name],	
 	[Description] = Source.[Description],
 	[Year] = Source.[Year],
 	[StartDate] = Source.[StartDate],
