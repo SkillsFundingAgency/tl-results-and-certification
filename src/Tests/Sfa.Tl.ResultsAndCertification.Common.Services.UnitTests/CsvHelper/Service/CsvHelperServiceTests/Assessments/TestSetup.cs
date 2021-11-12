@@ -21,6 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.UnitTests.CsvHelper.Ser
         protected CsvHelperService<AssessmentCsvRecordRequest, CsvResponseModel<AssessmentCsvRecordResponse>, AssessmentCsvRecordResponse> Service { get; private set; }
         protected CsvResponseModel<AssessmentCsvRecordResponse> Response;
 
+        protected string AssessmentEntryHeader = "ULN,Core code,Core assessment entry,Specialism code(s),Specialism assessment entry";
+
         public StringBuilder InputFileContent;
 
         public override void Setup()
