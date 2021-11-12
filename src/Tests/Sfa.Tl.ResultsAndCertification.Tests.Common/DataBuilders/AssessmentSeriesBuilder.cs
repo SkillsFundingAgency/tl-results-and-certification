@@ -110,6 +110,48 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
+            },
+            new AssessmentSeries
+            {
+                ComponentType = ComponentType.Specialism,
+                Name = "Summer 2022",
+                Description = "Summer 2022",
+                Year = 2022,
+                StartDate = CurrentDate.AddYears(1).AddDays(-1),
+                EndDate = CurrentDate.AddYears(1).AddMonths(3),
+                AppealEndDate = CurrentDate.AddMonths(4),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new AssessmentSeries
+            {
+                ComponentType = ComponentType.Specialism,
+                Name = "Summer 2023",
+                Description = "Summer 2023",
+                Year = 2023,
+                StartDate = CurrentDate.AddYears(2).AddDays(-1),
+                EndDate = CurrentDate.AddYears(2).AddMonths(3),
+                AppealEndDate = CurrentDate.AddYears(2).AddMonths(4),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new AssessmentSeries
+            {
+                ComponentType = ComponentType.Specialism,
+                Name = "Summer 2024",
+                Description = "Summer 2024",
+                Year = 2024,
+                StartDate = CurrentDate.AddYears(3).AddDays(-1),
+                EndDate = CurrentDate.AddYears(3).AddMonths(3),
+                AppealEndDate = CurrentDate.AddYears(3).AddMonths(4),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
             }
         };
     }

@@ -58,10 +58,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
 
             var actualAssessmentSeries = _actualResult.FirstOrDefault(a => a.ComponentType == request.ComponentType);
 
-            // Assert
-            actualAssessmentSeries.Id.Should().Be(expectedResult.Id);
-            actualAssessmentSeries.Name.Should().Be(expectedResult.Name);
-            actualAssessmentSeries.Year.Should().Be(expectedResult.Year);
+            if (expectedResult == null)
+            {
+                actualAssessmentSeries.Should().BeNull();
+            }
+            else
+            {
+                // Assert
+                actualAssessmentSeries.Should().NotBeNull();
+                actualAssessmentSeries.Id.Should().Be(expectedResult.Id);
+                actualAssessmentSeries.Name.Should().Be(expectedResult.Name);
+                actualAssessmentSeries.Year.Should().Be(expectedResult.Year);
+            }
         }
 
         public static IEnumerable<object[]> Data
