@@ -209,17 +209,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return regPathway;
         }
 
-        public async Task<AssessmentSeries> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, int startInYear)
+        public async Task<IList<AssessmentSeries>> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, int startInYear)
         {
             var currentDate = DateTime.Now.Date;
             
             var series = await _dbContext.TqRegistrationPathway
                 .Where(rpw => rpw.Status == RegistrationPathwayStatus.Active && rpw.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn && 
                        rpw.TqRegistrationProfile.Id == profileId)
-                .Select(reg => _dbContext.AssessmentSeries
-                        .FirstOrDefault(s => s.Year > reg.AcademicYear + startInYear && s.Year <= reg.AcademicYear + Common.Helpers.Constants.AssessmentEndInYears && 
+                .SelectMany(reg => _dbContext.AssessmentSeries
+                        .Where(s => s.Year > reg.AcademicYear + startInYear && s.Year <= reg.AcademicYear + Common.Helpers.Constants.AssessmentEndInYears && 
                         currentDate >= s.StartDate && currentDate <= s.EndDate))
-                .FirstOrDefaultAsync();
+                .ToListAsync();
 
             return series;
         }

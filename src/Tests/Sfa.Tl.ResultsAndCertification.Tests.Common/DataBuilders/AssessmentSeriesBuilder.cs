@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Domain.Models;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 
         public AssessmentSeries Build() => new AssessmentSeries
         {
+            ComponentType = ComponentType.Core,
             Name = "Summer 2021",
             Description = "Summer 2021",
             Year = 2021,
@@ -27,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
         {
             new AssessmentSeries
             {
+                ComponentType = ComponentType.Core,
                 Name = "Summer 2021",
                 Description = "Summer 2021",
                 Year = 2021,
@@ -40,6 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new AssessmentSeries
             {
+                ComponentType = ComponentType.Core,
                 Name = "Autumn 2021",
                 Description = "Autumn 2021",
                 Year = 2021,
@@ -53,6 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new AssessmentSeries
             {
+                ComponentType = ComponentType.Core,
                 Name = "Summer 2022",
                 Description = "Summer 2022",
                 Year = 2022,
@@ -66,6 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             },
             new AssessmentSeries
             {
+                ComponentType = ComponentType.Core,
                 Name = "Autumn 2022",
                 Description = "Autumn 2022",
                 Year = 2022,

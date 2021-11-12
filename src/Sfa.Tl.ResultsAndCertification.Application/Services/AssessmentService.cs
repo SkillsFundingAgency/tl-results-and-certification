@@ -362,7 +362,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var assessmentDetails = _mapper.Map<AssessmentDetails>(tqRegistration);
 
-            assessmentDetails.IsCoreEntryEligible = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, Constants.CoreAssessmentStartInYears) != null;
+            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, Constants.CoreAssessmentStartInYears);
+            assessmentDetails.IsCoreEntryEligible = assessmentSeries?.FirstOrDefault(a => a.ComponentType == ComponentType.Core) != null;
             return assessmentDetails;
         }
 
@@ -374,7 +375,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (!isValid) return null;
 
             var startInYear = componentType == ComponentType.Specialism ? Constants.SpecialismAssessmentStartInYears : Constants.CoreAssessmentStartInYears;
-            var series = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, startInYear);
+            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(aoUkprn, profileId, startInYear);
+
+            var series = assessmentSeries?.FirstOrDefault(a => a.ComponentType == componentType);
             if (series == null)
                 return null;
 
@@ -386,7 +389,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             // Validate
             var tqRegistrationPathway = await _assessmentRepository.GetAssessmentsAsync(request.AoUkprn, request.ProfileId);
             var isValid = IsValidAddAssessmentRequestAsync(tqRegistrationPathway, request.ComponentType);
-            var hasValidSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, Constants.CoreAssessmentStartInYears) != null;
+
+            var assessmentSeries = await _assessmentRepository.GetAvailableAssessmentSeriesAsync(request.AoUkprn, request.ProfileId, Constants.CoreAssessmentStartInYears);
+            var hasValidSeries = assessmentSeries?.FirstOrDefault(a => a.ComponentType == request.ComponentType) != null;
 
             if (!isValid || !hasValidSeries)
                 return new AddAssessmentEntryResponse { IsSuccess = false };
