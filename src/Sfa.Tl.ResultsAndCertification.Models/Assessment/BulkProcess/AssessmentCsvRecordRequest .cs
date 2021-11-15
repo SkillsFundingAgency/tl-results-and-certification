@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess
         public string CoreAssessmentEntry { get; set; }
 
         [Column(AssessmentFileHeader.SpecialismCode, Order = 3)]
-        [Display(Name = AsessmentFluentHeader.SpecialismCode)]
+        [Display(Name = AsessmentFluentHeader.SpecialismCodes)]
         public string SpecialismCode { get; set; }
 
         [Column(AssessmentFileHeader.SpecialismAssessmentEntry, Order = 4)]
