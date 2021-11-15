@@ -44,7 +44,7 @@
         // Assessments - Bulk stage 2 validations
         public const string CorecodeMustBeDigitsOnly = "Core code must have 8 digits only";
         public const string CorecodeRequired = "Core code required when core assessment entry is included";
-        public const string SpecialismcodeRequired = "Specialism code required when core assessment entry is included";
+        public const string SpecialismcodeRequired = "Assessment entry series must be accompanied by a specialism code (or codes)";
         public const string CoreAssementEntryInvalidFormat = "Core assessment entry format must be text followed by a space and a 4-digit year";
         public const string SpecialismAssementEntryInvalidFormat = "Specialism assessment entry format must be text followed by a space and a 4-digit year";
         public const string AtleastOneEntryRequired = "File must contain at least one ULN on one row";
