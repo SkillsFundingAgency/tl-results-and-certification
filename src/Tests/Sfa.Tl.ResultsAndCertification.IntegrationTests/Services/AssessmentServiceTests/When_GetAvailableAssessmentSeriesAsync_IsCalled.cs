@@ -107,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                     // specialism assessment window not opened
                     new object[]
                     { new RequestParameter { AoUkprn = 10011881, ProfileId = 1, ComponentType = ComponentType.Specialism },
-                      null },
+                      new AvailableAssessmentSeries { ProfileId = 1, AssessmentSeriesId = 7, AssessmentSeriesName = "Summer 2022" } },
 
                     // Has an active assessment
                     new object[]

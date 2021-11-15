@@ -54,11 +54,11 @@
         public const string UlnNotRegistered = "ULN not registered with awarding organisation";
         public const string CannotAddAssessmentToWithdrawnRegistration = "Cannot add assessment entries to a withdrawn registration";
         public const string InvalidCoreCode = "Core code either not recognised or not registered for this ULN";
-        public const string InvalidSpecialismCode = "Specialism code either not recognised or not registered for this ULN";
+        public const string InvalidSpecialismCode = "Specialism code either not recognised or not registered for this learner";
         public const string InvalidCoreAssessmentEntry = "Core assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the first academic year or subsequent approaching series)";
         public const string InvalidNextCoreAssessmentEntry = "Available to add after the current assessment series has passed";
-        public const string InvalidSpecialismAssessmentEntry = "Specialism assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification and can only be for the next available series (the second series of the second academic year or subsequent approaching series)";
-        public const string InvalidNextSpecialismAssessmentEntry = "Specialism assessment entry is beyond the next available series - only the next available series is allowed (the second series of the second academic year or subsequent approaching series)";
+        public const string InvalidSpecialismAssessmentEntry = "Specialism assessment entry must be in the format detailed in the 'format rules' and 'example' columns in the technical specification. They can only be for the next available series.";
+        public const string InvalidNextSpecialismAssessmentEntry = "Specialism assessment entry is beyond the next available series - only the next available series is allowed";
 
         // Assessments - Bulk stage 4 validations
         public const string AssessmentEntryCannotBeRemovedHasResult = "This assessment has a result so the assessment entry cannot be removed. Either remove the record from the bulk upload or enter the current assessment series to indicate a resit";

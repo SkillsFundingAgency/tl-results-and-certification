@@ -141,11 +141,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 new AssessmentCsvRecordResponse { RowNum = 3, Uln = 1111111112, CoreCode = "Invalid", CoreAssessmentEntry = "Invalid", SpecialismCode = "Invalid", SpecialismAssessmentEntry = "Invalid" },
 
                 // 4. Core and Specialism assessment series are not open. 
-                new AssessmentCsvRecordResponse { RowNum = 4, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "Summer 2022", SpecialismCode = "10123456", SpecialismAssessmentEntry = "Summer 2022" },
+                new AssessmentCsvRecordResponse { RowNum = 4, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "Summer 2022", SpecialismCode = "10123456", SpecialismAssessmentEntry = "Summer 2023" },
 
                  // 5. Valid Row
                 new AssessmentCsvRecordResponse { RowNum = 5, Uln = 1111111113, CoreCode = "10123456", CoreAssessmentEntry = "Summer 2021" },
                 new AssessmentCsvRecordResponse { RowNum = 6, Uln = 1111111114, CoreCode = "10123456", CoreAssessmentEntry = "SUMMER 2021" },
+                new AssessmentCsvRecordResponse { RowNum = 7, Uln = 1111111115, SpecialismCode = "10123456", SpecialismAssessmentEntry = "Summer 2022" },
+                new AssessmentCsvRecordResponse { RowNum = 8, Uln = 1111111115, SpecialismCode = "10123456", SpecialismAssessmentEntry = "SUMMER 2022" }
             };
         }
     }
