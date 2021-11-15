@@ -18,25 +18,25 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             // Core code
             RuleFor(r => r.CoreCode)
                 .MustBeNumberWithLength(8, ValidationMessages.MustHaveDigitsWithLength)
-                .When(x => !string.IsNullOrEmpty(x.CoreCode));
+                .When(x => !string.IsNullOrWhiteSpace(x.CoreCode));
             RuleFor(r => r.CoreCode)
                 .Required()
                 .WithMessage(ValidationMessages.CorecodeRequiredWhenResultIncluded)
-                .When(x => !string.IsNullOrEmpty(x.CoreAssessmentSeries) || !string.IsNullOrEmpty(x.CoreGrade));
+                .When(x => !string.IsNullOrWhiteSpace(x.CoreAssessmentSeries) || !string.IsNullOrWhiteSpace(x.CoreGrade));
             RuleFor(r => r.CoreCode)
                 .Required()
                 .WithMessage(ValidationMessages.NoDataAfterUlnNeedCoreCode)
-                .When(x => !string.IsNullOrEmpty(x.Uln) && string.IsNullOrEmpty(x.CoreAssessmentSeries) && string.IsNullOrEmpty(x.CoreGrade));
+                .When(x => !string.IsNullOrWhiteSpace(x.Uln) && string.IsNullOrWhiteSpace(x.CoreAssessmentSeries) && string.IsNullOrWhiteSpace(x.CoreGrade));
 
             // Core Assessment Series
             RuleFor(r => r.CoreAssessmentSeries)
                 .Required()
                 .WithMessage(ValidationMessages.AssessmentSeriesNeedsToBeProvided)
-                .When(x => !string.IsNullOrEmpty(x.CoreCode) || !string.IsNullOrEmpty(x.CoreGrade));
+                .When(x => !string.IsNullOrWhiteSpace(x.CoreCode) || !string.IsNullOrWhiteSpace(x.CoreGrade));
             RuleFor(r => r.CoreAssessmentSeries)
                 .MusBeValidAssessmentSeries()
                 .WithMessage(ValidationMessages.InvalidCoreAssessmentSeries)
-                .When(x => !string.IsNullOrEmpty(x.CoreAssessmentSeries));
+                .When(x => !string.IsNullOrWhiteSpace(x.CoreAssessmentSeries));
         }
     }
 }

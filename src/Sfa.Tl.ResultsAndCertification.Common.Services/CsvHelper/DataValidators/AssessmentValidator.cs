@@ -19,38 +19,38 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             RuleFor(r => r.CoreCode)
                 .MustBeNumberWithLength(8)
                 .WithMessage(ValidationMessages.CorecodeMustBeDigitsOnly)
-                .When(x => !string.IsNullOrEmpty(x.CoreCode));
+                .When(x => !string.IsNullOrWhiteSpace(x.CoreCode));
 
             RuleFor(r => r.CoreCode)
                 .Required()
                 .WithMessage(ValidationMessages.CorecodeRequired)
-                .When(x => !string.IsNullOrEmpty(x.CoreAssessmentEntry));
+                .When(x => !string.IsNullOrWhiteSpace(x.CoreAssessmentEntry));
             
             RuleFor(r => r.CoreCode)
-                .Must(x => !string.IsNullOrEmpty(x))
+                .Must(x => !string.IsNullOrWhiteSpace(x))
                 .WithMessage(ValidationMessages.NoDataAfterUln)
-                .When(x => string.IsNullOrEmpty(x.CoreAssessmentEntry) && string.IsNullOrEmpty(x.SpecialismCode) && string.IsNullOrEmpty(x.SpecialismAssessmentEntry));
+                .When(x => string.IsNullOrWhiteSpace(x.CoreAssessmentEntry) && string.IsNullOrWhiteSpace(x.SpecialismCode) && string.IsNullOrWhiteSpace(x.SpecialismAssessmentEntry));
 
             // CoreAssessmentEntry
             RuleFor(r => r.CoreAssessmentEntry)
                 .MusBeValidAssessmentSeries()
                 .WithMessage(ValidationMessages.CoreAssementEntryInvalidFormat)
-                .When(x => !string.IsNullOrEmpty(x.CoreAssessmentEntry));
+                .When(x => !string.IsNullOrWhiteSpace(x.CoreAssessmentEntry));
 
             // SpecialismCode
             RuleFor(r => r.SpecialismCode)
                 .MustBeStringWithLength(8)
-                .When(x => !string.IsNullOrEmpty(x.SpecialismCode));
+                .When(x => !string.IsNullOrWhiteSpace(x.SpecialismCode));
             RuleFor(r => r.SpecialismCode)
                 .Required()
                 .WithMessage(ValidationMessages.SpecialismcodeRequired)
-                .When(x => !string.IsNullOrEmpty(x.SpecialismAssessmentEntry));
+                .When(x => !string.IsNullOrWhiteSpace(x.SpecialismAssessmentEntry));
 
             // SpecialismAssessmentEntry
             RuleFor(r => r.SpecialismAssessmentEntry)
                 .MusBeValidAssessmentSeries()
                 .WithMessage(ValidationMessages.SpecialismAssementEntryInvalidFormat)
-                .When(x => !string.IsNullOrEmpty(x.SpecialismAssessmentEntry));
+                .When(x => !string.IsNullOrWhiteSpace(x.SpecialismAssessmentEntry));
         }
     }
 }
