@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             RuleFor(r => r.SpecialismCodes)
                 .Required()
                 .WithMessage(ValidationMessages.SpecialismcodeRequired)
-                .When(x => !string.IsNullOrEmpty(x.SpecialismAssessmentEntry));
+                .When(x => !string.IsNullOrWhiteSpace(x.SpecialismAssessmentEntry));
 
             RuleFor(r => r.SpecialismCodes)
                 .Must(spl => !IsDuplicate(spl))
