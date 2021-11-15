@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidators
 {
@@ -29,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             RuleFor(r => r.CoreCode)
                 .Must(x => !string.IsNullOrWhiteSpace(x))
                 .WithMessage(ValidationMessages.NoDataAfterUln)
-                .When(x => string.IsNullOrWhiteSpace(x.CoreAssessmentEntry) && string.IsNullOrWhiteSpace(x.SpecialismCode) && string.IsNullOrWhiteSpace(x.SpecialismAssessmentEntry));
+                .When(x => string.IsNullOrWhiteSpace(x.CoreAssessmentEntry) && string.IsNullOrWhiteSpace(x.SpecialismCodes) && string.IsNullOrWhiteSpace(x.SpecialismAssessmentEntry));
 
             // CoreAssessmentEntry
             RuleFor(r => r.CoreAssessmentEntry)
@@ -38,19 +39,30 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .When(x => !string.IsNullOrWhiteSpace(x.CoreAssessmentEntry));
 
             // SpecialismCode
-            RuleFor(r => r.SpecialismCode)
-                .MustBeStringWithLength(8)
-                .When(x => !string.IsNullOrWhiteSpace(x.SpecialismCode));
-            RuleFor(r => r.SpecialismCode)
+            RuleFor(r => r.SpecialismCodes)
+                .Must(x => x.Split(',').Where(s => !string.IsNullOrWhiteSpace(s.Trim())).All(a => a.Trim().Length == 8))
+                .WithMessage(string.Format(ValidationMessages.MustBeStringWithLength, "{PropertyName}", 8))
+                .When(r => !string.IsNullOrWhiteSpace(r.SpecialismCodes));
+            RuleFor(r => r.SpecialismCodes)
                 .Required()
                 .WithMessage(ValidationMessages.SpecialismcodeRequired)
-                .When(x => !string.IsNullOrWhiteSpace(x.SpecialismAssessmentEntry));
+                .When(x => !string.IsNullOrEmpty(x.SpecialismAssessmentEntry));
+
+            RuleFor(r => r.SpecialismCodes)
+                .Must(spl => !IsDuplicate(spl))
+                .WithMessage(ValidationMessages.SpecialismCodesMustBeDifferent)
+                .When(r => !string.IsNullOrWhiteSpace(r.SpecialismCodes) && r.SpecialismCodes.Split(',').Count() > 1);
 
             // SpecialismAssessmentEntry
             RuleFor(r => r.SpecialismAssessmentEntry)
                 .MusBeValidAssessmentSeries()
                 .WithMessage(ValidationMessages.SpecialismAssementEntryInvalidFormat)
                 .When(x => !string.IsNullOrWhiteSpace(x.SpecialismAssessmentEntry));
+        }
+
+        private bool IsDuplicate(string commaSeparatedString)
+        {
+            return commaSeparatedString.Split(',').GroupBy(spl => spl.Trim()).Any(c => c.Count() > 1);
         }
     }
 }

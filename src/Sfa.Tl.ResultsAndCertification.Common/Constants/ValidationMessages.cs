@@ -47,6 +47,7 @@
         public const string SpecialismcodeRequired = "Assessment entry series must be accompanied by a specialism code (or codes)";
         public const string CoreAssementEntryInvalidFormat = "Core assessment entry format must be text followed by a space and a 4-digit year";
         public const string SpecialismAssementEntryInvalidFormat = "Specialism assessment entry format must be text followed by a space and a 4-digit year";
+        public const string SpecialismCodesMustBeDifferent = "Specialism codes must be two different numbers";
         public const string AtleastOneEntryRequired = "File must contain at least one ULN on one row";
         public const string NoDataAfterUln = "No data after ULN - need at least one core code or one specialism code";
 

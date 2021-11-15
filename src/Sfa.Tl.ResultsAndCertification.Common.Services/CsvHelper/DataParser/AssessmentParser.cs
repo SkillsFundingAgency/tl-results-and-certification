@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
             {
                 Uln = assessment.Uln.Trim().ToLong(),
                 CoreCode = assessment.CoreCode.Trim(),
-                SpecialismCode = assessment.SpecialismCode.Trim(),
+                SpecialismCode = assessment.SpecialismCodes.Trim(),
                 CoreAssessmentEntry = assessment.CoreAssessmentEntry.Trim(),
                 SpecialismAssessmentEntry = assessment.SpecialismAssessmentEntry.Trim(),
                 RowNum = rownum,

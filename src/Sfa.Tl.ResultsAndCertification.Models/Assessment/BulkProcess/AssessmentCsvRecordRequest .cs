@@ -18,9 +18,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess
         [Display(Name = AsessmentFluentHeader.CoreAssessmentEntry)]
         public string CoreAssessmentEntry { get; set; }
 
-        [Column(AssessmentFileHeader.SpecialismCode, Order = 3)]
+        [Column(AssessmentFileHeader.SpecialismCodes, Order = 3)]
         [Display(Name = AsessmentFluentHeader.SpecialismCodes)]
-        public string SpecialismCode { get; set; }
+        public string SpecialismCodes { get; set; }
 
         [Column(AssessmentFileHeader.SpecialismAssessmentEntry, Order = 4)]
         [Display(Name = AsessmentFluentHeader.SpecialismAssessmentEntry)]
