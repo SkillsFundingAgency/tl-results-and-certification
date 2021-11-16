@@ -33,13 +33,13 @@
             <ul class="govuk-list govuk-list--bullet">
                 @foreach (var tlevel in Model.Tlevels)
                 {
-                    <li><p class="govuk-body govuk-!-font-weight-bold">@tlevel.TlevelTitle</p></li>
+                    <li><p class="govuk-body">@tlevel.TlevelTitle</p></li>
                 }
             </ul>
         }
         else if (Model.Tlevels?.Count == 1)
         {
-            <p class="govuk-body govuk-!-font-weight-bold">@Model.Tlevels[0].TlevelTitle</p>
+            <p class="govuk-body">@Model.Tlevels[0].TlevelTitle</p>
         }
 
         <p class="govuk-body govuk-!-padding-bottom-5 govuk-!-padding-top-1">

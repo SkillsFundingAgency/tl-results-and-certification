@@ -11,7 +11,7 @@
     "IntTestSqlConnectionString": {
       "minLength": 1,
       "type": "string",
-      "environmentVariable": "IntTestSQLServiceAccountConnectionString"
+      "environmentVariable": "IntTestSqlConnectionString" //"IntTestSQLServiceAccountConnectionString"
     },
     "BlobStorageConnectionString": {
       "type": "string",
@@ -33,7 +33,7 @@
       "type": "string",
       "environmentVariable": "FeedbackEmailAddress"
     },
-	"TechnicalInternalNotificationEmailAddress": {
+    "TechnicalInternalNotificationEmailAddress": {
       "type": "string",
       "environmentVariable": "TechnicalInternalNotificationEmailAddress"
     },
@@ -266,7 +266,7 @@
       "required": [],
       "type": "object"
     },
-	"PrintingApiSettings": {
+    "PrintingApiSettings": {
       "properties": {
         "Uri": {
           "type": "string",
@@ -285,9 +285,40 @@
       "required": [],
       "type": "object"
     },
+    "UcasApiSettings": {
+      "properties": {
+        "Uri": {
+          "type": "string",
+          "environmentVariable": "UcasApiUri"
+        },
+        "Version": {
+          "type": "string",
+          "environmentVariable": "UcasApiVersion"
+        },
+        "FolderId": {
+          "type": "string",
+          "environmentVariable": "UcasApiFolderId"
+        },
+        "GrantType": {
+          "type": "string",
+          "environmentVariable": "UcasApiGrantType"
+        },
+        "Username": {
+          "type": "string",
+          "environmentVariable": "UcasApiUsername"
+        },
+        "Password": {
+          "type": "string",
+          "environmentVariable": "UcasApiPassword"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
     "LearningRecordServiceSettings": {
       "properties": {
-		"BaseUri": {
+        "BaseUri": {
           "minLength": 1,
           "type": "string",
           "environmentVariable": "LearningRecordServiceBaseUri"
@@ -320,7 +351,7 @@
       },
       "additionalProperties": false,
       "required": [
-	    "BaseUri",
+        "BaseUri",
         "VendorId",
         "Ukprn",
         "Username",
@@ -328,25 +359,55 @@
         "CertificateName"
       ],
       "type": "object"
+    },
+    "UcasDataSettings": {
+      "properties": {
+        "SendingOrganisation": {
+          "type": "string",
+          "environmentVariable": "UcasDataSendingOrganisation"
+        },
+        "ReceivingOrganisation": {
+          "type": "string",
+          "environmentVariable": "UcasDataReceivingOrganisation"
+        },
+        "ExamMonth": {
+          "type": "string",
+          "environmentVariable": "UcasDataExamMonth"
+        },
+        "CentreNumber": {
+          "type": "string",
+          "environmentVariable": "UcasCentreNumber"
+        },
+        "OverallSubjectCode": {
+          "type": "string",
+          "environmentVariable": "UcasOverallSubjectCode"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
     }
   },
   "additionalProperties": false,
   "required": [
     "SqlConnectionString",
+    "IntTestSqlConnectionString",
     "BlobStorageConnectionString",
     "GovUkNotifyApiKey",
     "TlevelQueriedSupportEmailAddress",
     "TechnicalSupportEmailAddress",
     "FeedbackEmailAddress",
-	"TechnicalInternalNotificationEmailAddress",
-	"KeyVaultUri",
+    "TechnicalInternalNotificationEmailAddress",
+    "KeyVaultUri",
     "RedisSettings",
-	"BlobStorageSettings",
+    "BlobStorageSettings",
     "DataProtectionSettings",
     "DfeSignInSettings",
     "ResultsAndCertificationInternalApiSettings",
-	"PrintingApiSettings",
-	"LearningRecordServiceSettings"
+    "PrintingApiSettings",
+    "UcasApiSettings",
+    "LearningRecordServiceSettings",
+    "UcasDataSettings"
   ],
   "type": "object"
 }

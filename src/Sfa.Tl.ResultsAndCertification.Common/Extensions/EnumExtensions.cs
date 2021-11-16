@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
         public static int? GetEnumValueByName<T>(object value) where T : System.Enum
         {
             return IsValidValue<T>(value) ? (int)System.Enum.Parse(typeof(T), value.ToString(), true) : (int?)null;
-        }
+        }        
 
         public static int? GetEnumValueByDisplayName<T>(string value) where T : System.Enum
         {

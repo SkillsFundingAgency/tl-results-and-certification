@@ -5,6 +5,7 @@
         Registrations = 1,
         Assessments = 2,
         Results = 3,
-        Documents = 4
+        Documents = 4,
+        Ucas = 5
     }
 }

@@ -3,17 +3,21 @@ parameters:
     type: string
   - name: sharedEnvironmentId
     type: string
+  - name: dependencies
+    type: object
+  - name: package
+    type: string
 jobs:
 - job: PublishFunction
   variables:
-    WorkerFunctionAppName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.WorkerFunctionAppName'] ]
+    functionAppName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.functionAppName'] ]
 
   pool:
     name: 'Azure Pipelines'
     vmImage: 'windows-2019'
-  dependsOn: 
-    - DeployInfrastructure
-    - GenerateConfigs
+  dependsOn:
+    - "${{ each dependency in parameters.dependencies }}":
+        - "${{dependency}}"  
   steps:
   - task: DownloadBuildArtifacts@0
     inputs:
@@ -23,9 +27,41 @@ jobs:
       downloadPath: '$(System.ArtifactsDirectory)'
   
   - task: AzureFunctionApp@1
+    displayName: 'Deploy Function App: $(FunctionAppName)'
     inputs:
       azureSubscription: ${{ parameters.serviceConnection }}
       appType: 'functionApp'
-      appName: '$(WorkerFunctionAppName)'
-      package: '$(System.ArtifactsDirectory)/appdrop/Sfa.Tl.ResultsAndCertification.Functions.zip'
+      appName: '$(functionAppName)'
+      DeployToSlotOrASE: true
+      ResourceGroupName: '$(ResourceGroupName)'
+      SlotName: 'staging'
+      package: '$(System.ArtifactsDirectory)/appdrop/${{ parameters.package }}'
       deploymentMethod: 'auto'
+
+  - task: AzureAppServiceManage@0
+    displayName: 'Start Staging Slot: $(FunctionAppName)'
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      Action: 'Start Azure App Service'
+      WebAppName: '$(FunctionAppName)'
+      SpecifySlotOrASE: true
+      ResourceGroupName: '$(ResourceGroupName)'
+      Slot: 'staging'
+
+  - task: AzureAppServiceManage@0
+    displayName: 'Swap Slots: $(FunctionAppName)'
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      WebAppName: '$(FunctionAppName)'
+      ResourceGroupName: '$(ResourceGroupName)'
+      SourceSlot: 'staging'    
+
+  - task: AzureAppServiceManage@0
+    displayName: 'Stop Staging Slot: $(FunctionAppName)'
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      Action: 'Stop Azure App Service'
+      WebAppName: '$(FunctionAppName)'
+      SpecifySlotOrASE: true
+      ResourceGroupName: '$(ResourceGroupName)'
+      Slot: 'staging'

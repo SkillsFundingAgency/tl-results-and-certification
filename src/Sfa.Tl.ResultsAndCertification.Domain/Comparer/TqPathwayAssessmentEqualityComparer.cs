@@ -14,7 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Comparer
             else if (x.GetType() != y.GetType())
                 return false;
             else
-                return x.TqRegistrationPathwayId == y.TqRegistrationPathwayId;
+                return x.TqRegistrationPathwayId == y.TqRegistrationPathwayId &&
+                    ((x.AssessmentSeriesId == y.AssessmentSeriesId) || (x.AssessmentSeriesId != y.AssessmentSeriesId && y.AssessmentSeriesId <= 0));
+                   //(sameSeriesId || (IsRemovalRequest))
         }
 
         public int GetHashCode(TqPathwayAssessment assessment)

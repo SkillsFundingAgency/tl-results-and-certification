@@ -91,7 +91,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 // update total assessment records stats
                 assessmentsProcessResult.BulkUploadStats = new BulkUploadStats { TotalRecordsCount = stage3Response.Count };
 
-                return await ProcessAssessmentsResponse(request, response, assessmentsProcessResult);
+                return assessmentsProcessResult.IsValid ?
+                    await ProcessAssessmentsResponse(request, response, assessmentsProcessResult) :
+                    await SaveErrorsAndUpdateResponse(request, response, assessmentsProcessResult.ValidationErrors);
             }
             catch (Exception ex)
             {

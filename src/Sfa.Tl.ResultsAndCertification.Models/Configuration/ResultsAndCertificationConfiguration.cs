@@ -142,6 +142,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public PrintingApiSettings PrintingApiSettings { get; set; }
 
         /// <summary>
+        /// Gets or sets the Ucas API settings.
+        /// </summary>
+        /// <value>
+        /// The Ucas API settings.
+        /// </value>
+        public UcasApiSettings UcasApiSettings { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this instance is dev.
         /// </summary>
         /// <value>
@@ -172,5 +180,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The key vault uri.
         /// </value>
         public string KeyVaultUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets ucas data record settings.
+        /// </summary>
+        /// <value>
+        /// The ucas data record settings.
+        /// </value>
+        public UcasDataSettings UcasDataSettings { get; set; }
     }
 }

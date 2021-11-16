@@ -26,9 +26,9 @@
             </div>
             <div>
                 <h3 class="govuk-heading-s">
-                    @UploadUnsuccessful.Download_Text <a class="govuk-link" target="_self" asp-route="DownloadAssessmentErrors" asp-route-id="@Model.BlobUniqueReference">@UploadUnsuccessful.Error_Report_Text</a>
+                    @UploadUnsuccessful.Download_Text <a class="govuk-link" target="_self" asp-route="DownloadAssessmentErrors" asp-route-id="@Model.BlobUniqueReference">
+                        @UploadUnsuccessful.Error_Report (@Model.FileType, @Model.FileSize <abbr title="Kilobyte">@UploadUnsuccessful.File_Size_Kb</abbr>)</a>
                 </h3>
-                <p class="govuk-body-s">@Model.FileType, @Model.FileSize @UploadUnsuccessful.File_Size_Kb_Text</p>
             </div>
         </section>
         <div class="govuk-button-group govuk-!-margin-top-3">

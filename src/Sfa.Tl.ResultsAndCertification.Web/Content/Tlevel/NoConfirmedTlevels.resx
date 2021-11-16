@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="And_Text" xml:space="preserve">
+    <value>and</value>
+  </data>
   <data name="Button_Tlevels" xml:space="preserve">
     <value>Back to T Levels</value>
   </data>
@@ -124,16 +127,10 @@
     <value>I cannot find a T Level</value>
   </data>
   <data name="Dropout_Para_If_You_Cannot_Find_Check" xml:space="preserve">
-    <value>If you cannot find the T Level you are looking for, check if you need to</value>
+    <value>If you cannot find the T Level you are looking for please check:</value>
   </data>
   <data name="Dropout_Para_If_You_Still_Cannot_Find_ContactUs" xml:space="preserve">
     <value>If you still cannot find it,</value>
-  </data>
-  <data name="Dropout_Text_It" xml:space="preserve">
-    <value>it.</value>
-  </data>
-  <data name="Dropout_Text_Or_Have" xml:space="preserve">
-    <value>it or have </value>
   </data>
   <data name="Fullstop" xml:space="preserve">
     <value>.</value>
@@ -145,10 +142,10 @@
     <value>contact us</value>
   </data>
   <data name="Link_Queried" xml:space="preserve">
-    <value>queried</value>
+    <value>queried T Levels</value>
   </data>
   <data name="Link_Review" xml:space="preserve">
-    <value>review</value>
+    <value>T Levels to review</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>No confirmed T Levels</value>

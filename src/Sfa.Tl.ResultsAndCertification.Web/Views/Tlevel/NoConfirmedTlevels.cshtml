@@ -22,11 +22,13 @@
                 <span class="govuk-details__summary-text">@NoConfirmedTlevels.Dropout_Link_Cannot_Find_Tlevel</span>
             </summary>
             <div class="govuk-details__text">
-                @NoConfirmedTlevels.Dropout_Para_If_You_Cannot_Find_Check
-                <a id="reviewLink" asp-route="ReviewTlevels" class="govuk-link">@NoConfirmedTlevels.Link_Review</a> @NoConfirmedTlevels.Dropout_Text_Or_Have
-                <a id="queriedLink" asp-route="QueriedTlevels" class="govuk-link">@NoConfirmedTlevels.Link_Queried</a> @NoConfirmedTlevels.Dropout_Text_It<br><br>
-                @NoConfirmedTlevels.Dropout_Para_If_You_Still_Cannot_Find_ContactUs <a id="contactusLink" asp-route="Contact" class="govuk-link">@NoConfirmedTlevels.Link_ContactUs</a>@NoConfirmedTlevels.Fullstop
-            </div>
+                <p class="govuk-body">@NoConfirmedTlevels.Dropout_Para_If_You_Cannot_Find_Check</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li><a id="reviewLink" asp-route="ReviewTlevels" class="govuk-link">@NoConfirmedTlevels.Link_Review</a>, @NoConfirmedTlevels.And_Text</li>
+                    <li><a id="queriedLink" asp-route="QueriedTlevels" class="govuk-link">@NoConfirmedTlevels.Link_Queried</a></li>
+                </ul>
+                <p class="govuk-body">@NoConfirmedTlevels.Dropout_Para_If_You_Still_Cannot_Find_ContactUs <a id="contactusLink" asp-route="Contact" class="govuk-link">@NoConfirmedTlevels.Link_ContactUs</a>@NoConfirmedTlevels.Fullstop</p>
+            </div>            
         </details>
 
         <a id="buttonTlevels" class="govuk-button" role="button" asp-route="TlevelsDashboard">@NoConfirmedTlevels.Button_Tlevels</a>

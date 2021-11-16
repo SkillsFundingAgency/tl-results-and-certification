@@ -61,6 +61,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to and.
+        /// </summary>
+        public static string And_Text {
+            get {
+                return ResourceManager.GetString("And_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back to T Levels.
         /// </summary>
         public static string Button_Tlevels {
@@ -79,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to if you cannot find the T Level you are looking for, check if you have.
+        ///   Looks up a localized string similar to If you cannot find the T Level you are looking for please check:.
         /// </summary>
         public static string Dropout_Para_If_You_Cannot_Find_Check {
             get {
@@ -93,24 +102,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         public static string Dropout_Para_If_You_Still_Cannot_Find_ContactUs {
             get {
                 return ResourceManager.GetString("Dropout_Para_If_You_Still_Cannot_Find_ContactUs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to it..
-        /// </summary>
-        public static string Dropout_Text_It {
-            get {
-                return ResourceManager.GetString("Dropout_Text_It", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to it or need to.
-        /// </summary>
-        public static string Dropout_Text_Or_Have {
-            get {
-                return ResourceManager.GetString("Dropout_Text_Or_Have", resourceCulture);
             }
         }
         
@@ -133,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to confirmed.
+        ///   Looks up a localized string similar to confirmed T Levels.
         /// </summary>
         public static string Link_Confirmed {
             get {
@@ -151,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to review.
+        ///   Looks up a localized string similar to T Levels to review.
         /// </summary>
         public static string Link_Review {
             get {

@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="And_Text" xml:space="preserve">
+    <value>and</value>
+  </data>
   <data name="Button_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
   <data name="Confirmed_Text" xml:space="preserve">
-    <value>confirmed</value>
+    <value>confirmed T Levels</value>
   </data>
   <data name="Contact_Us" xml:space="preserve">
     <value>contact us</value>
@@ -133,16 +136,10 @@
     <value>If you still cannot find it, </value>
   </data>
   <data name="If_You_Cannot_Find_The_TLevel" xml:space="preserve">
-    <value>If you cannot find the T Level you are looking for, please check you have not already</value>
-  </data>
-  <data name="It_Text" xml:space="preserve">
-    <value>it</value>
+    <value>If you cannot find the T Level you are looking for please check:</value>
   </data>
   <data name="I_Cannot_Find_A_Tlevel" xml:space="preserve">
     <value>I cannot find a T Level</value>
-  </data>
-  <data name="Or_Text" xml:space="preserve">
-    <value> or </value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
     <value>Which T Level do you want to review?</value>
@@ -156,8 +153,8 @@
   <data name="Para_These_Details_Will_Be_Printed" xml:space="preserve">
     <value>These details will be printed on learners' certificates.</value>
   </data>
-  <data name="Queried_Text" xml:space="preserve">
-    <value>queried</value>
+  <data name="Queried_Tlevels_Text" xml:space="preserve">
+    <value>queried T Levels</value>
   </data>
   <data name="Validation_Error_Message" xml:space="preserve">
     <value>Select a T Level to review</value>

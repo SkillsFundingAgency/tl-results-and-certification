@@ -1,9 +1,11 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,32 +15,44 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
 {
     public class When_GetBulkPathwayAssessments_IsCalled : AssessmentRepositoryBaseTest
     {
-        private List<long> _ulns;
-        private long _ulnForInactivePathways;        
+        private Dictionary<long, RegistrationPathwayStatus> _ulns;
+        private List<TqRegistrationProfile> _registrations;
+
         private List<TqPathwayAssessment> _pathwayAssessments;
         private IList<TqPathwayAssessment> _result;
 
         public override void Given()
         {
-            _ulns = new List<long> { 1111111111, 1111111112, 1111111113 };
-            _ulnForInactivePathways = 1111111113;
-
-            // Seed Tlevel data for pearson
-            SeedTestData(EnumAwardingOrganisation.Pearson, true);
-
-            // Seed Registrations Data
-            var registrations = SeedRegistrationsData(_ulns);
-            
-            var tqPathwayAssessmentsSeedData = new List<TqPathwayAssessment>();
-            
-            foreach (var registration in registrations)
+            _ulns = new Dictionary<long, RegistrationPathwayStatus>
             {
-                var seedPathwayAssessmentsAsActive = registration.UniqueLearnerNumber != _ulnForInactivePathways;
-                tqPathwayAssessmentsSeedData.AddRange(GetPathwayAssessmentsDataToProcess(registration.TqRegistrationPathways.ToList(), seedPathwayAssessmentsAsActive));
-            }
+                { 1111111111, RegistrationPathwayStatus.Active },
+                { 1111111112, RegistrationPathwayStatus.Active },
+                { 1111111113, RegistrationPathwayStatus.Active },
+                { 1111111114, RegistrationPathwayStatus.Active },
+                { 1111111115, RegistrationPathwayStatus.Active },
+                { 1111111116, RegistrationPathwayStatus.Active }
+            };
 
-            _pathwayAssessments = SeedPathwayAssessmentsData(tqPathwayAssessmentsSeedData);
+            SeedTestData(EnumAwardingOrganisation.Pearson, true);
+            _registrations = SeedRegistrationsDataByStatus(_ulns, null);
 
+            var currentAcademicYear = GetAcademicYear();
+            _registrations.ForEach(x =>
+            {
+                x.TqRegistrationPathways.ToList().ForEach(p => p.AcademicYear = currentAcademicYear - 1);
+            });
+
+            var pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115 };
+            var pathwaysWithResults = new List<long> { 1111111111, 1111111112, 1111111114 };
+            var summerAssessments = SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, $"Summer {currentAcademicYear}");
+
+            pathwaysWithAssessments = new List<long> { 1111111111, 1111111112, 1111111113 };
+            pathwaysWithResults = new List<long> { 1111111111 };
+            var autumnAssessments = SeedAssessmentsAndResults(_registrations, pathwaysWithAssessments, pathwaysWithResults, $"Autumn {currentAcademicYear}");
+
+            SetAssessmentResult(1111111111, $"Summer {currentAcademicYear}", "B");
+
+            _pathwayAssessments = summerAssessments.Concat(autumnAssessments).ToList();
             AssessmentRepositoryLogger = new Logger<AssessmentRepository>(new NullLoggerFactory());
             AssessmentRepository = new AssessmentRepository(AssessmentRepositoryLogger, DbContext);
         }
@@ -53,29 +67,51 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             _result = await AssessmentRepository.GetBulkPathwayAssessmentsAsync(_pathwayAssessments);
         }
 
-        [Fact]
-        public async Task Then_Expected_PathwayAssessments_Are_Returned()
+        [Theory()]
+        [MemberData(nameof(Data))]
+        public async Task Then_Expected_Results_Are_Returned(long uln, string expectedSeriesName, string expectedGrade)
         {
-            // when
             await WhenAsync();
-
-            // then
-            var expectedPathwayAssessments = _pathwayAssessments.Where(p => p.IsOptedin && p.EndDate == null).ToList();
-
             _result.Should().NotBeNull();
-            _result.Count.Should().Be(expectedPathwayAssessments.Count);
 
-            foreach(var expectedPathwayAssessment in expectedPathwayAssessments)
+            var actualAssessment = _result.FirstOrDefault(x => x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln);
+
+            if (!string.IsNullOrEmpty(expectedSeriesName))
             {
-                var actualPathwayAssessment = _result.FirstOrDefault(p => p.Id == expectedPathwayAssessment.Id);
+                actualAssessment.Should().NotBeNull();
+                actualAssessment.AssessmentSeries.Name.Should().Be(expectedSeriesName);
+            }
+            else
+                actualAssessment.Should().BeNull();
 
-                actualPathwayAssessment.TqRegistrationPathwayId.Should().Be(expectedPathwayAssessment.TqRegistrationPathwayId);
-                actualPathwayAssessment.AssessmentSeriesId.Should().Be(expectedPathwayAssessment.AssessmentSeriesId);
-                actualPathwayAssessment.IsOptedin.Should().Be(expectedPathwayAssessment.IsOptedin);
-                actualPathwayAssessment.IsBulkUpload.Should().Be(expectedPathwayAssessment.IsBulkUpload);
-                actualPathwayAssessment.StartDate.ToShortDateString().Should().Be(expectedPathwayAssessment.StartDate.ToShortDateString());
-                actualPathwayAssessment.EndDate.Should().BeNull();
-                actualPathwayAssessment.CreatedBy.Should().Be(expectedPathwayAssessment.CreatedBy);
+            if (!string.IsNullOrEmpty(expectedGrade))
+            {
+                actualAssessment.TqPathwayResults.Count.Should().Be(1);
+                var actualResult = actualAssessment.TqPathwayResults.FirstOrDefault();
+                actualResult.TlLookup.Value.Should().Be(expectedGrade);
+            }
+        }
+
+        private void SetAssessmentResult(long uln, string seriesName, string grade)
+        {
+            var currentResult = DbContext.TqPathwayResult.FirstOrDefault(x => x.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == uln && x.TqPathwayAssessment.AssessmentSeries.Name.Equals(seriesName, StringComparison.InvariantCultureIgnoreCase));
+            currentResult.TlLookup = PathwayComponentGrades.FirstOrDefault(x => x.Value.Equals(grade, StringComparison.InvariantCultureIgnoreCase));
+            DbContext.SaveChanges();
+        }
+
+        public static IEnumerable<object[]> Data
+        {
+            get
+            {
+                return new[]
+                {
+                    new object[] { 1111111111, "Autumn 2021", "A*" },
+                    new object[] { 1111111112, "Autumn 2021", null },
+                    new object[] { 1111111113, "Autumn 2021", null },
+                    new object[] { 1111111114, "Summer 2021", "A*" },
+                    new object[] { 1111111115, "Summer 2021", null },
+                    new object[] { 1111111116, null, null },
+                };
             }
         }
     }
