@@ -117,20 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Back_To_Search_Link_Text" xml:space="preserve">
-    <value>Back to search</value>
+  <data name="Button_Back_To_Home" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
+  <data name="Button_Search_Again" xml:space="preserve">
+    <value>Search again</value>
+  </data>
+  <data name="Has_Never_Been_Registered_With_Us_Text" xml:space="preserve">
+    <value>has never been registered with us</value>
   </data>
   <data name="If_you_Think_That_The_Uln_Should_Exists_Text" xml:space="preserve">
     <value>If you think that the ULN should exist it may be that it:</value>
-  </data>
-  <data name="Is_Not_Registered_With_Us_Text" xml:space="preserve">
-    <value>is not registered with us</value>
   </data>
   <data name="Is_Registered_With_Another_Ao_Text" xml:space="preserve">
     <value>is registered with another awarding organisation</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Assessment entries - ULN cannot be found page</value>
+    <value>ULN not found - Assessment entries</value>
   </data>
   <data name="Uln_Cannot_Be_Found_Text" xml:space="preserve">
     <value>ULN ({0}) cannot be found</value>

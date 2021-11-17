@@ -25,6 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
         protected IHttpContextAccessor HttpContextAccessor;
         public IActionResult Result { get; private set; }
+        public bool PopulateUln { get; set; }
 
         public override void Setup()
         {
@@ -46,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
         public async override Task When()
         {
-            Result = await Controller.SearchAssessmentsAsync();
+            Result = await Controller.SearchAssessmentsAsync(PopulateUln);
         }
     }
 }

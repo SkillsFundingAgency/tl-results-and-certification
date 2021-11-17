@@ -6,15 +6,17 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Xunit;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
+
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentControllerTests.SearchAssessmentsGet
 {
-    public class When_Called_With_Valid_Data : TestSetup
+    public class When_PopulateUln_IsTrue : TestSetup
     {
         private string _searchUln = "9895641231";
-        
+
         public override void Given()
         {
-            CacheService.GetAndRemoveAsync<string>(Arg.Any<string>()).Returns(_searchUln);
+            PopulateUln = true;
+            CacheService.GetAndRemoveAsync<string>(Constants.AssessmentsSearchCriteria).Returns(_searchUln);
         }
 
         [Fact]
@@ -28,19 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             var model = viewResult.Model as SearchAssessmentsViewModel;
             model.Should().NotBeNull();
             model.SearchUln.Should().Be(_searchUln);
-        }
 
-        [Fact]
-        public void Then_Expected_Breadcrumb_Returned()
-        {
-            Result.Should().BeOfType(typeof(ViewResult));
-
-            var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(SearchAssessmentsViewModel));
-
-            var model = viewResult.Model as SearchAssessmentsViewModel;
-            model.Should().NotBeNull();
-
+            // Breadcrumb
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Count.Should().Be(3);

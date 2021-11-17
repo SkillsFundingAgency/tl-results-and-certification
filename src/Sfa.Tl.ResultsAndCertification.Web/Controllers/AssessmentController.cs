@@ -146,11 +146,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("assessment-entries-learner-search", Name = RouteConstants.SearchAssessments)]
-        public async Task<IActionResult> SearchAssessmentsAsync()
+        [Route("assessment-entries-learner-search/{populateUln:bool?}", Name = RouteConstants.SearchAssessments)]
+        public async Task<IActionResult> SearchAssessmentsAsync(bool populateUln)
         {
             var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.AssessmentsSearchCriteria);
-            var viewModel = new SearchAssessmentsViewModel { SearchUln = defaultValue };
+            var viewModel = new SearchAssessmentsViewModel { SearchUln = populateUln ? defaultValue : null };
             return View(viewModel);
         }
 
@@ -179,7 +179,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("search-for-learner-ULN-not-found", Name = RouteConstants.SearchAssessmentsNotFound)]
+        [Route("assessment-entries-uln-not-found", Name = RouteConstants.SearchAssessmentsNotFound)]
         public async Task<IActionResult> SearchAssessmentsNotFoundAsync()
         {
             var viewModel = await _cacheService.GetAndRemoveAsync<UlnAssessmentsNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchAssessmentsUlnNotFound));
