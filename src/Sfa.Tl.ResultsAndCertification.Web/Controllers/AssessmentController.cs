@@ -165,6 +165,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (searchResult?.IsAllowed == true)
             {
+                if(searchResult.IsWithdrawn)
+                    await _cacheService.SetAsync(Constants.AssessmentsSearchCriteria, model.SearchUln);
+
                 return RedirectToRoute(searchResult.IsWithdrawn ? RouteConstants.AssessmentWithdrawnDetails : RouteConstants.AssessmentDetails, new { profileId = searchResult.RegistrationProfileId });
             }
             else
@@ -193,7 +196,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("learners-assessment-entries-withdrawn-learner/{profileId}", Name = RouteConstants.AssessmentWithdrawnDetails)]
+        [Route("assessment-entries-learner-withdrawn/{profileId}", Name = RouteConstants.AssessmentWithdrawnDetails)]
         public async Task<IActionResult> AssessmentWithdrawnDetailsAsync(int profileId)
         {
             var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);

@@ -162,6 +162,21 @@
   <data name="Title_Assessment_Entry_Text" xml:space="preserve">
     <value>First assessment entry</value>
   </data>
+  <data name="Title_DateofBirth_Text" xml:space="preserve">
+    <value>Date of birth</value>
+  </data>
+  <data name="Title_Name_Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Title_Provider_Text" xml:space="preserve">
+    <value>Provider &lt;br/&gt; (UKPRN)</value>
+  </data>
+  <data name="Title_TLevel_Text" xml:space="preserve">
+    <value>T Level</value>
+  </data>
+  <data name="Title_Uln_Text" xml:space="preserve">
+    <value>ULN</value>
+  </data>
   <data name="Uln_Heading_Text" xml:space="preserve">
     <value>ULN: {0}</value>
   </data>

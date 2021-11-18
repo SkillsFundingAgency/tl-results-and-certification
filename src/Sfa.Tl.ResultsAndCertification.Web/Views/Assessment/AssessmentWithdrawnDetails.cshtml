@@ -6,23 +6,27 @@
 }
 
 @section NavigationBar {
-    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+    <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <h1 class="govuk-heading-l">@AssessmentWithdrawnDetails.Learners_Assessment_Entries_Heading_Text</h1>
-        <h2 class="govuk-heading-m">@string.Format(AssessmentWithdrawnDetails.Uln_Heading_Text, Model.Uln)</h2>
+        <h1 class="govuk-heading-l">@AssessmentWithdrawnDetails.Learner_Has_Been_Withdrawn_Heading</h1>
+        <p class="govuk-body">@AssessmentWithdrawnDetails.Learner_Registration_Withdrawn_Info</p>
 
-        <p class="govuk-body">@string.Format(AssessmentWithdrawnDetails.Name_Heading_Text, Model.Name)</p>
-        <p class="govuk-body">@string.Format(AssessmentWithdrawnDetails.Provider_Heading_Text, Model.ProviderDisplayName)</p>
-        <hr class="govuk-section-break govuk-section-break--visible">
 
-        <p class="govuk-inset-text">@AssessmentWithdrawnDetails.This_Learners_Registration_Has_Been_Withdrawn_Text</p>
+        <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-top-7">
+            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+            <vc:summary-item model=Model.SummaryDateofBirth></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+            <vc:summary-item model=Model.SummaryTlevelTitle></vc:summary-item>
+        </dl>
 
-        <p class="govuk-body govuk-!-margin-top-8"><a class="govuk-link" asp-route="RegistrationDetails" asp-route-profileId="@Model.ProfileId">@AssessmentWithdrawnDetails.View_This_Learners_Registration_Details_Text</a></p>
-
-        <p class="govuk-body govuk-!-margin-top-8"><a id="searchAgainButton" class="govuk-link" asp-route="SearchAssessments">@AssessmentWithdrawnDetails.Search_Again_Text</a></p>
+        <div class="govuk-button-group">
+            <a id="searchAgainButton" class="govuk-button" role="button" asp-route="SearchAssessments">@AssessmentWithdrawnDetails.Button_Search_Again</a>
+            <a id="backToHomeButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="Home">@AssessmentWithdrawnDetails.Button_Back_To_Home</a>
+        </div>
     </div>
 </div>

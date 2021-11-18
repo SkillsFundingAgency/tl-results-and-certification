@@ -8,8 +8,17 @@ using AssessmentDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.Asse
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 {
-    public class AssessmentDetailsViewModel
+    public class AssessmentDetailsViewModel : AssessmentBaseViewModel
     {
+        public AssessmentDetailsViewModel()
+        {
+            UlnLabel = AssessmentDetailsContent.Title_Uln_Text;
+            LearnerNameLabel = AssessmentDetailsContent.Title_Name_Text;
+            DateofBirthLabel = AssessmentDetailsContent.Title_DateofBirth_Text;
+            ProviderNameLabel = AssessmentDetailsContent.Title_Provider_Text;
+            TlevelTitleLabel = AssessmentDetailsContent.Title_TLevel_Text;
+        }
+
         private string PathwayAssessmentActionText 
         { 
             get 
@@ -31,11 +40,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 
         private Dictionary<string, string> PathwayAssessmentRouteAttributes { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? new Dictionary<string, string> { { Constants.AssessmentId, PathwayAssessmentId.ToString() } } : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } } ; } }
 
-        public int ProfileId { get; set; }
-        public long Uln { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } // TODO: Remove this after implementing details page
 
-        public string ProviderDisplayName { get; set; }
         public string PathwayDisplayName { get; set; }
         public string PathwayAssessmentSeries { get; set; }
         public int PathwayAssessmentId { get; set; }

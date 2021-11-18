@@ -16,8 +16,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 Uln = 1234567890,
                 Firstname = "John",
                 Lastname = "Smith",
+                DateofBirth = System.DateTime.UtcNow.AddYears(-29),
                 ProviderUkprn = 1234567,
                 ProviderName = "Test Provider",
+                TlevelTitle = "TLevel in Construction",
                 PathwayLarId = "7654321",
                 PathwayName = "Pathway",
                 PathwayAssessmentSeries = "Summer 2021",
@@ -40,8 +42,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
 
             ActualResult.ProfileId.Should().Be(expectedApiResult.ProfileId);
             ActualResult.Uln.Should().Be(expectedApiResult.Uln);
+            ActualResult.Firstname.Should().Be(expectedApiResult.Firstname);
+            ActualResult.Lastname.Should().Be(expectedApiResult.Lastname);
+            ActualResult.DateofBirth.Should().Be(expectedApiResult.DateofBirth);
+            ActualResult.ProviderName.Should().Be(expectedApiResult.ProviderName);
+            ActualResult.ProviderUkprn.Should().Be(expectedApiResult.ProviderUkprn);
+            ActualResult.TlevelTitle.Should().Be(expectedApiResult.TlevelTitle);
             ActualResult.Name.Should().Be(string.Concat(expectedApiResult.Firstname, " ", expectedApiResult.Lastname));
-            ActualResult.ProviderDisplayName.Should().Be($"{expectedApiResult.ProviderName} ({expectedApiResult.ProviderUkprn})");
+            ActualResult.ProviderDisplayName.Should().Be($"{expectedApiResult.ProviderName}<br/>({expectedApiResult.ProviderUkprn})");
             ActualResult.PathwayDisplayName.Should().Be($"{expectedApiResult.PathwayName} ({expectedApiResult.PathwayLarId})");
             ActualResult.PathwayAssessmentSeries.Should().Be(expectedApiResult.PathwayAssessmentSeries);
             ActualResult.IsResultExist.Should().BeFalse();

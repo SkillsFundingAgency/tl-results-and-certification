@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
 {
@@ -8,8 +9,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public long Uln { get; set; }        
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+        public DateTime DateofBirth { get; set; }
         public long ProviderUkprn { get; set; }
         public string ProviderName { get; set; }
+        public string TlevelTitle { get; set; }
 
         public string PathwayLarId { get; set; }
         public string PathwayName { get; set; }

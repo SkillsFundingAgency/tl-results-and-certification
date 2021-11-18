@@ -174,8 +174,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 Uln = expectedRegistration.UniqueLearnerNumber,
                 Firstname = expectedRegistration.Firstname,
                 Lastname = expectedRegistration.Lastname,
+                DateofBirth = expectedRegistration.DateofBirth,
                 ProviderUkprn = expectedPathway.TqProvider.TlProvider.UkPrn,
                 ProviderName = expectedPathway.TqProvider.TlProvider.Name,
+                TlevelTitle = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.TlevelTitle,
                 PathwayLarId = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                 PathwayName = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                 PathwayAssessmentSeries = expectedPathwayAssessment?.AssessmentSeries.Name,
@@ -198,8 +200,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             _result.Uln.Should().Be(expectedAssessmentDetails.Uln);
             _result.Firstname.Should().Be(expectedAssessmentDetails.Firstname);
             _result.Lastname.Should().Be(expectedAssessmentDetails.Lastname);
+            _result.DateofBirth.Should().Be(expectedAssessmentDetails.DateofBirth);
             _result.ProviderUkprn.Should().Be(expectedAssessmentDetails.ProviderUkprn);
             _result.ProviderName.Should().Be(expectedAssessmentDetails.ProviderName);
+            _result.TlevelTitle.Should().Be(expectedAssessmentDetails.TlevelTitle);
             _result.PathwayLarId.Should().Be(expectedAssessmentDetails.PathwayLarId);
             _result.PathwayName.Should().Be(expectedAssessmentDetails.PathwayName);
             _result.PathwayAssessmentSeries.Should().Be(expectedAssessmentDetails.PathwayAssessmentSeries);

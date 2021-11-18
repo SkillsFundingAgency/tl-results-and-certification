@@ -23,7 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 ProfileId = 1,
                 Uln = 1234567890,
                 Name = "Test",
-                ProviderDisplayName = "Test Provider (1234567)",
+                ProviderName = "Test Provider",
+                ProviderUkprn = 1234567,
                 PathwayDisplayName = "Pathway (7654321)",
                 PathwayAssessmentSeries = "Summer 2021",
                 PathwayAssessmentId = 5,
@@ -51,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 
             model.Uln.Should().Be(mockresult.Uln);
             model.Name.Should().Be(mockresult.Name);
-            model.ProviderDisplayName.Should().Be(mockresult.ProviderDisplayName);
+            model.ProviderDisplayName.Should().Be($"{mockresult.ProviderName}<br/>({mockresult.ProviderUkprn})");
             model.PathwayDisplayName.Should().Be(mockresult.PathwayDisplayName);
             model.PathwayAssessmentSeries.Should().Be(mockresult.PathwayAssessmentSeries);
             model.SpecialismDisplayName.Should().Be(mockresult.SpecialismDisplayName);

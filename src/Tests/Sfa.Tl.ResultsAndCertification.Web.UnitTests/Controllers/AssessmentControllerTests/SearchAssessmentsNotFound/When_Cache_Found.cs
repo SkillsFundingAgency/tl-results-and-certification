@@ -12,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         public override void Given()
         {
             CacheService.GetAndRemoveAsync<UlnAssessmentsNotFoundViewModel>(Arg.Any<string>()).Returns(new UlnAssessmentsNotFoundViewModel { Uln = Uln });
+            CacheService.GetAndRemoveAsync<string>(Constants.AssessmentsSearchCriteria).Returns(Uln.ToString());
         }
 
         [Fact]
