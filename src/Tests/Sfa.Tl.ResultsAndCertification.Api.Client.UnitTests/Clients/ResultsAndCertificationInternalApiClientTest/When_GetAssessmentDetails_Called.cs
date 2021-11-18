@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -53,8 +54,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 SpecialismName = "Specialism1",
                 SpecialismAssessmentSeries = "Autumn 2022",
                 SpecialismAssessmentId = 25,
+                Specialisms = new List<SpecialismDetails> { new SpecialismDetails { Id = 1, Code = "2345678", Name = "Specialism1" } },
                 Status = RegistrationPathwayStatus.Active,
-                IsCoreEntryEligible = true
+                IsCoreEntryEligible = true,
+                NextAvailableCoreSeries = "Summer 2021",
+                IsSpecialismEntryEligible = false,
+                NextAvailableSpecialismSeries = "Autumn 2021"
             };
         }
 
@@ -84,12 +89,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
             _result.PathwayName.Should().Be(_mockHttpResult.PathwayName);
             _result.PathwayAssessmentSeries.Should().Be(_mockHttpResult.PathwayAssessmentSeries);
             _result.PathwayAssessmentId.Should().Be(_mockHttpResult.PathwayAssessmentId);
+            _result.Specialisms.Should().BeEquivalentTo(_mockHttpResult.Specialisms);
             _result.SpecialismLarId.Should().Be(_mockHttpResult.SpecialismLarId);
             _result.SpecialismName.Should().Be(_mockHttpResult.SpecialismName);
             _result.SpecialismAssessmentSeries.Should().Be(_mockHttpResult.SpecialismAssessmentSeries);
             _result.SpecialismAssessmentId.Should().Be(_mockHttpResult.SpecialismAssessmentId);
             _result.Status.Should().Be(_mockHttpResult.Status);
-            _result.IsCoreEntryEligible.Should().BeTrue();
+            _result.IsCoreEntryEligible.Should().Be(_mockHttpResult.IsCoreEntryEligible);
+            _result.NextAvailableCoreSeries.Should().Be(_mockHttpResult.NextAvailableCoreSeries);
+            _result.IsSpecialismEntryEligible.Should().Be(_mockHttpResult.IsSpecialismEntryEligible);
+            _result.NextAvailableSpecialismSeries.Should().Be(_mockHttpResult.NextAvailableSpecialismSeries);
         }
     }
 }

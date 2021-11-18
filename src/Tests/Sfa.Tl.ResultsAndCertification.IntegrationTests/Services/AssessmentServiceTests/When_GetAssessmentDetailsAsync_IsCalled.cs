@@ -182,18 +182,26 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
                 PathwayName = expectedPathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                 PathwayAssessmentSeries = expectedPathwayAssessment?.AssessmentSeries.Name,
                 PathwayAssessmentId = expectedPathwayAssessment != null ? expectedPathwayAssessment.Id : (int?)null,
-
+                Specialisms = new List<SpecialismDetails> { new SpecialismDetails { Id = expectedSpecialim.Id, Code = expectedSpecialim.TlSpecialism.LarId, Name = expectedSpecialim.TlSpecialism.Name } },
                 SpecialismLarId = expectedSpecialim?.TlSpecialism.LarId,
                 SpecialismName = expectedSpecialim?.TlSpecialism.Name,
                 SpecialismAssessmentSeries = expectedSpecialismAssessment?.AssessmentSeries.Name,
                 SpecialismAssessmentId = expectedSpecialismAssessment != null ? expectedSpecialismAssessment.Id : (int?)null,
                 Status = expectedPathway.Status,
-
                 PathwayResultId = expectedPathwayResult?.Id                
             };
 
             var expectedIsIndustryPlacementExist = expectedRegistration.TqRegistrationPathways.FirstOrDefault().IndustryPlacements.Any();
             var expectedHasOutstandingPathwayPrsActivities = expectedPathway.TqPathwayAssessments.Any(p => p.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null && r.PrsStatus == PrsStatus.BeingAppealed));
+
+            var assessmentService = new AssessmentService(null, null, null, null, null, null);
+
+            var coreAssessmentSeries = assessmentService.GetValidAssessmentSeries(AssessmentSeries, expectedPathway, ComponentType.Core);
+            var expectedNextAvailableCoreSeries = assessmentService.GetNextAvailableAssessmentSeries(AssessmentSeries, expectedPathway, ComponentType.Core)?.Name;
+
+            var specialismAssessmentSeries = assessmentService.GetValidAssessmentSeries(AssessmentSeries, expectedPathway, ComponentType.Specialism);
+            var isSpecialismEntryEligible = expectedPathway.Status == RegistrationPathwayStatus.Active && specialismAssessmentSeries != null && specialismAssessmentSeries.Any();
+            var expectedNextAvailableSpecialismSeries = assessmentService.GetNextAvailableAssessmentSeries(AssessmentSeries, expectedPathway, ComponentType.Specialism)?.Name;
 
             // Assert
             _result.ProfileId.Should().Be(expectedAssessmentDetails.ProfileId);
@@ -208,6 +216,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             _result.PathwayName.Should().Be(expectedAssessmentDetails.PathwayName);
             _result.PathwayAssessmentSeries.Should().Be(expectedAssessmentDetails.PathwayAssessmentSeries);
             _result.PathwayAssessmentId.Should().Be(expectedAssessmentDetails.PathwayAssessmentId);
+            _result.Specialisms.Should().BeEquivalentTo(expectedAssessmentDetails.Specialisms);
             _result.SpecialismLarId.Should().Be(expectedAssessmentDetails.SpecialismLarId);
             _result.SpecialismName.Should().Be(expectedAssessmentDetails.SpecialismName);
             _result.SpecialismAssessmentSeries.Should().Be(expectedAssessmentDetails.SpecialismAssessmentSeries);
@@ -217,6 +226,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             _result.IsIndustryPlacementExist.Should().Be(expectedIsIndustryPlacementExist);
             _result.HasAnyOutstandingPathwayPrsActivities.Should().Be(expectedHasOutstandingPathwayPrsActivities);
             _result.IsCoreEntryEligible.Should().Be(isCoreEntryEligible);
+            _result.NextAvailableCoreSeries.Should().Be(expectedNextAvailableCoreSeries);
+            _result.IsSpecialismEntryEligible.Should().Be(isSpecialismEntryEligible);
+            _result.NextAvailableSpecialismSeries.Should().Be(expectedNextAvailableSpecialismSeries);
         }
 
         public static IEnumerable<object[]> Data

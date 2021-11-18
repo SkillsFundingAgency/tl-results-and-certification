@@ -34,7 +34,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 SpecialismAssessmentId = 25,
                 Status = RegistrationPathwayStatus.Active,
                 IsIndustryPlacementExist = true,
-                IsCoreEntryEligible = true
+                IsCoreEntryEligible = true,
+                NextAvailableCoreSeries = "Summer 2021",
+                IsSpecialismEntryEligible = true,
+                NextAvailableSpecialismSeries = "Summer 2022"
             };
 
             InternalApiClient.GetAssessmentDetailsAsync(AoUkprn, ProfileId).Returns(expectedApiResult);
