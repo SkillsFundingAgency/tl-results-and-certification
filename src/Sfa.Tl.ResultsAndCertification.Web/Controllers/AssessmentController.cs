@@ -211,7 +211,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("learners-assessment-entries/{profileId}", Name = RouteConstants.AssessmentDetails)]
+        [Route("assessment-entry-learner-details/{profileId}", Name = RouteConstants.AssessmentDetails)]
         public async Task<IActionResult> AssessmentDetailsAsync(int profileId)
         {
             var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync<AssessmentDetailsViewModel>(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);

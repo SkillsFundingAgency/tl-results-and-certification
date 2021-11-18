@@ -32,9 +32,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 
         private string SpecialismAssessmentActionText { get { return null; } }
 
-        private string PathwayAssessmentSeriesText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? PathwayAssessmentSeries :
-                                                        IsCoreEntryEligible ? AssessmentDetailsContent.Not_Specified_Text : AssessmentDetailsContent.Available_After_Current_Assessment_Series; } }
-        private string SpecialismAssessmentSeriesText { get { return AssessmentDetailsContent.Available_After_Autumn2021; } }
+        //private string PathwayAssessmentSeriesText { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? PathwayAssessmentSeries :
+        //                                                IsCoreEntryEligible ? AssessmentDetailsContent.Not_Specified_Text : AssessmentDetailsContent.Available_After_Current_Assessment_Series; } }
+        //private string SpecialismAssessmentSeriesText { get { return AssessmentDetailsContent.Available_After_Autumn2021; } }
 
         private string PathwayAddAssessmentRoute { get { return !string.IsNullOrWhiteSpace(PathwayAssessmentSeries) ? RouteConstants.RemoveCoreAssessmentEntry : RouteConstants.AddCoreAssessmentEntry; } }
 
@@ -46,9 +46,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public string PathwayAssessmentSeries { get; set; }
         public int PathwayAssessmentId { get; set; }
         public bool IsCoreEntryEligible { get; set; }
+        public string NextAvailableCoreSeries { get; set; }
 
         public string SpecialismDisplayName { get; set; }
         public string SpecialismAssessmentSeries { get; set; }
+
+        public bool IsSpecialismEntryEligible { get; set; }
+        public string NextAvailableSpecialismSeries { get; set; }
 
         public bool IsResultExist { get; set; }
         public bool HasAnyOutstandingPathwayPrsActivities { get; set; }
@@ -56,8 +60,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
 
         public RegistrationPathwayStatus PathwayStatus { get; set; }
 
-        public SummaryItemModel SummaryCoreAssessmentEntry => new SummaryItemModel { Id = "coreassessmententry", Title = AssessmentDetailsContent.Title_Assessment_Entry_Text, Value = PathwayAssessmentSeriesText, ActionText = PathwayAssessmentActionText, HiddenActionText = AssessmentDetailsContent.Core_Assessment_Entry_Hidden_Text, RouteName = PathwayAddAssessmentRoute, RouteAttributes = PathwayAssessmentRouteAttributes };
-        public SummaryItemModel SummarySpecialismAssessmentEntry => new SummaryItemModel { Id = "specialismassessmententry", Title = AssessmentDetailsContent.Title_Assessment_Entry_Text, Value = SpecialismAssessmentSeriesText, ActionText = SpecialismAssessmentActionText, HiddenActionText = AssessmentDetailsContent.Specialism_Assessment_Entry_Hidden_Text };
+        //public SummaryItemModel SummaryCoreAssessmentEntry => new SummaryItemModel { Id = "coreassessmententry", Title = AssessmentDetailsContent.Title_Assessment_Entry_Text, Value = PathwayAssessmentSeriesText, ActionText = PathwayAssessmentActionText, HiddenActionText = AssessmentDetailsContent.Core_Assessment_Entry_Hidden_Text, RouteName = PathwayAddAssessmentRoute, RouteAttributes = PathwayAssessmentRouteAttributes };
+        //public SummaryItemModel SummarySpecialismAssessmentEntry => new SummaryItemModel { Id = "specialismassessmententry", Title = AssessmentDetailsContent.Title_Assessment_Entry_Text, Value = SpecialismAssessmentSeriesText, ActionText = SpecialismAssessmentActionText, HiddenActionText = AssessmentDetailsContent.Specialism_Assessment_Entry_Hidden_Text };
 
         public BreadcrumbModel Breadcrumb
         {

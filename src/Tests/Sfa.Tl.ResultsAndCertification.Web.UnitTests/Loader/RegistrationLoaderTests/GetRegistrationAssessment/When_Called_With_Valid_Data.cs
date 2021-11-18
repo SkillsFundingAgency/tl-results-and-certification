@@ -1,7 +1,10 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoaderTests.GetRegistrationAssessment
@@ -26,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 PathwayAssessmentId = 1,
                 SpecialismLarId = "2345678",
                 SpecialismName = "Specialism1",
+                Specialisms = new List<SpecialismDetails> { new SpecialismDetails { Id = 1, Code = "2345678", Name = "Specialism1" } },
                 SpecialismAssessmentSeries = "Autumn 2022",
                 SpecialismAssessmentId = 25,
                 Status = RegistrationPathwayStatus.Active,
@@ -54,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             ActualResult.PathwayAssessmentSeries.Should().Be(expectedApiResult.PathwayAssessmentSeries);
             ActualResult.IsResultExist.Should().BeFalse();
 
-            var expectedSpecialismDisplayName = !string.IsNullOrWhiteSpace(expectedApiResult.SpecialismLarId) ? $"{expectedApiResult.SpecialismName} ({expectedApiResult.SpecialismLarId})" : null;
+            var expectedSpecialismDisplayName = string.Join(Constants.AndSeperator, expectedApiResult.Specialisms.OrderBy(x => x.Name).Select(x => $"{x.Name} ({x.Code})"));
             ActualResult.SpecialismDisplayName.Should().Be(expectedSpecialismDisplayName);
             ActualResult.SpecialismAssessmentSeries.Should().Be(expectedApiResult.SpecialismAssessmentSeries);
             ActualResult.PathwayStatus.Should().Be(expectedApiResult.Status);
