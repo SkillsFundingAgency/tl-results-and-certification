@@ -11,11 +11,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        private AssessmentDetailsViewModel mockresult = null;
+        private AssessmentUlnWithdrawnViewModel mockresult = null;
 
         public override void Given()
         {
-            mockresult = new AssessmentDetailsViewModel
+            mockresult = new AssessmentUlnWithdrawnViewModel
             {
                 ProfileId = 1,
                 Uln = 1234567890,
@@ -24,11 +24,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
                 DateofBirth = System.DateTime.UtcNow.AddYears(-30),
                 TlevelTitle = "TLevel in Test",
                 ProviderName = "Test Provider",
-                ProviderUkprn = 1234567,                
-                PathwayStatus = RegistrationPathwayStatus.Withdrawn
+                ProviderUkprn = 1234567
             };
 
-            AssessmentLoader.GetAssessmentDetailsAsync(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(mockresult);         
+            AssessmentLoader.GetAssessmentDetailsAsync<AssessmentUlnWithdrawnViewModel>(AoUkprn, ProfileId, RegistrationPathwayStatus.Withdrawn).Returns(mockresult);         
         }        
 
         [Fact]
@@ -38,9 +37,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
             Result.Should().BeOfType(typeof(ViewResult));
 
             var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(AssessmentDetailsViewModel));
+            viewResult.Model.Should().BeOfType(typeof(AssessmentUlnWithdrawnViewModel));
 
-            var model = viewResult.Model as AssessmentDetailsViewModel;
+            var model = viewResult.Model as AssessmentUlnWithdrawnViewModel;
             model.Should().NotBeNull();
 
             model.Uln.Should().Be(mockresult.Uln);

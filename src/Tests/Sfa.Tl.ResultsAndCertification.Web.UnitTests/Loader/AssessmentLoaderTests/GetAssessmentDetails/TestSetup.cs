@@ -38,11 +38,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
             Loader = new AssessmentLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
-        }
-
-        public async override Task When()
-        {
-            ActualResult = await Loader.GetAssessmentDetailsAsync(AoUkprn, ProfileId);
-        }
+        }        
     }
 }

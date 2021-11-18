@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AssessmentCon
         private AssessmentDetailsViewModel mockresult = null;
         public override void Given()
         {
-            AssessmentLoader.GetAssessmentDetailsAsync(AoUkprn, ProfileId).Returns(mockresult);
+            AssessmentLoader.GetAssessmentDetailsAsync<AssessmentDetailsViewModel>(AoUkprn, ProfileId).Returns(mockresult);
         }
 
         [Fact]

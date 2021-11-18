@@ -83,10 +83,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<UlnAssessmentsNotFoundViewModel>(response);
         }
 
-        public async Task<AssessmentDetailsViewModel> GetAssessmentDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
+        public async Task<T> GetAssessmentDetailsAsync<T>(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var response = await _internalApiClient.GetAssessmentDetailsAsync(aoUkprn, profileId, status);
-            return _mapper.Map<AssessmentDetailsViewModel>(response);
+            return _mapper.Map<T>(response);
         }
 
         public async Task<AddAssessmentEntryViewModel> GetAvailableAssessmentSeriesAsync(long aoUkprn, int profileId, ComponentType componentType)

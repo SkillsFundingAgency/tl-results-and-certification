@@ -57,6 +57,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.IsIndustryPlacementExist, opts => opts.MapFrom(s => s.IsIndustryPlacementExist))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.Status));
 
+            CreateMap<AssessmentDetails, AssessmentUlnWithdrawnViewModel>()
+                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.Firstname))
+                .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.Lastname))
+                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
+                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.ProviderName))
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))
+                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle));
+
             CreateMap<AvailableAssessmentSeries, AddAssessmentEntryViewModel>();
             CreateMap<AddAssessmentEntryViewModel, AddAssessmentEntryRequest>()
                 .ForMember(d => d.AoUkprn, opts => opts.MapFrom((src, dest, destMember, context) => (long)context.Items["aoUkprn"]))

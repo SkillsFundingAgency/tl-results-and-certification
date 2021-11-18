@@ -199,7 +199,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("assessment-entries-learner-withdrawn/{profileId}", Name = RouteConstants.AssessmentWithdrawnDetails)]
         public async Task<IActionResult> AssessmentWithdrawnDetailsAsync(int profileId)
         {
-            var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
+            var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync<AssessmentUlnWithdrawnViewModel>(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Withdrawn);
 
             if (viewModel == null)
             {
@@ -214,7 +214,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("learners-assessment-entries/{profileId}", Name = RouteConstants.AssessmentDetails)]
         public async Task<IActionResult> AssessmentDetailsAsync(int profileId)
         {
-            var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
+            var viewModel = await _assessmentLoader.GetAssessmentDetailsAsync<AssessmentDetailsViewModel>(User.GetUkPrn(), profileId, RegistrationPathwayStatus.Active);
 
             if (viewModel == null)
             {
